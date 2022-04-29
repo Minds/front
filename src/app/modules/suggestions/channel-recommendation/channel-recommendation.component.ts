@@ -1,10 +1,22 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
+import { ExperimentsService } from '../../experiments/experiments.service';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
+
+const listAnimation = trigger('listAnimation', [
+  transition(':enter', [
+    style({ opacity: 0, height: 0 }),
+    animate('200ms ease-out', style({ opacity: 1, height: '*' })),
+  ]),
+  transition(
+    ':leave',
+    animate('200ms ease-out', style({ height: 0, opacity: 0 }))
+  ),
+]);
 
 /**
  * a component that shows channel recommendations
@@ -13,6 +25,7 @@ import { ResizedEvent } from './../../../common/directives/resized.directive';
   selector: 'm-channelRecommendation',
   templateUrl: './channel-recommendation.component.html',
   styleUrls: ['./channel-recommendation.component.ng.scss'],
+  animations: [listAnimation],
 })
 export class ChannelRecommendationComponent implements OnInit {
   /**
@@ -43,6 +56,10 @@ export class ChannelRecommendationComponent implements OnInit {
 
   /** a list of recommended channels */
   recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
+  /**
+   * How many recommendations to show at a time?
+   */
+  listSize$: BehaviorSubject<number> = new BehaviorSubject(3);
 
   constructor(
     private api: ApiService,
@@ -62,14 +79,12 @@ export class ChannelRecommendationComponent implements OnInit {
           location: this.location,
           mostRecentSubscriptions: this.recentSubscriptions.list(),
           currentChannelUserGuid: this.channelId,
-          limit: 3,
+          limit: 12,
         })
         .toPromise()
         .then(result => {
           if (result) {
-            this.recommendations$.next(
-              result.entities.map(e => e.entity).slice(0, 3)
-            );
+            this.recommendations$.next(result.entities.map(e => e.entity));
           }
         });
     }
@@ -80,5 +95,22 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   onResized(event: ResizedEvent): void {
     this.containerHeight$.next(event.newRect.height + 64);
+  }
+
+  /**
+   * When a recommendation is subscribed, remove it from the list——unless the list length is small
+   */
+  onSubscribed(user): void {
+    if (this.listSize$.getValue() === 3) {
+      this.listSize$.next(5);
+    }
+
+    if (this.recommendations$.getValue().length <= 3) {
+      return;
+    }
+
+    this.recommendations$.next(
+      this.recommendations$.getValue().filter(u => u.guid !== user.guid)
+    );
   }
 }

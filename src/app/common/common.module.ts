@@ -191,6 +191,7 @@ import { SubscriptionService } from './services/subscription.service';
 import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
 import { ResizedDirective } from './directives/resized.directive';
 import { DropdownMenuItemComponent } from './components/dropdown-menu-item/dropdown-menu-item.component';
+import { PreventDoubleClickDirective } from './directives/prevent-double-click.directive';
 
 const routes: Routes = [
   {
@@ -365,6 +366,7 @@ const routes: Routes = [
     RelativeTimeSpanComponent,
     ResizedDirective,
     DropdownMenuItemComponent,
+    PreventDoubleClickDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -514,6 +516,7 @@ const routes: Routes = [
     RelativeTimeSpanComponent,
     ResizedDirective,
     DropdownMenuItemComponent,
+    PreventDoubleClickDirective,
   ],
   providers: [
     SiteService,

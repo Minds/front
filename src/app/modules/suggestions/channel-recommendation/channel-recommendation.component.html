@@ -18,7 +18,12 @@
       >
     </header>
     <ul *ngIf="(recommendations$ | async).length">
-      <li *ngFor="let channel of recommendations$ | async">
+      <li
+        @listAnimation
+        *ngFor="
+          let channel of recommendations$ | async | slice: 0:(listSize$ | async)
+        "
+      >
         <section>
           <a
             [routerLink]="['/', channel.username]"
@@ -55,6 +60,7 @@
               subscribedIcon="check"
               sized="true"
               iconOnly="true"
+              (subscribed)="onSubscribed($event)"
             ></m-subscribeButton>
           </div>
         </section>

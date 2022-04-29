@@ -4,6 +4,7 @@
     #rotatorEl
     class="m-newsfeed__boostRotator"
     [style.min-height]="height"
+    [style.max-height]="activityV2Feature ? height : 'none'"
     [hidden]="!boosts.length"
   >
     <div
@@ -14,7 +15,9 @@
       <i class="material-icons">chevron_left</i>
     </div>
     <ng-container *ngFor="let entity of boosts; let i = index">
+      <!-- NOTE: nextBoost() and previousBoost() are only used by activityV2 -->
       <m-activity
+        *ngIf="shouldRender(i)"
         @fastFade
         [entity]="entity"
         [displayOptions]="{
@@ -29,8 +32,10 @@
         [slot]="i + 1"
         [canRecordAnalytics]="false"
         [style.visibility]="i === currentPosition ? 'visible' : 'hidden'"
-        *ngIf="shouldRender(i)"
-      ></m-activity>
+        (nextBoost)="next()"
+        (previousBoost)="prev()"
+      >
+      </m-activity>
     </ng-container>
     <div
       *ngIf="boosts.length > 0 && !activityV2Feature"

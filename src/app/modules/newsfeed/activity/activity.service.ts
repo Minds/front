@@ -89,7 +89,8 @@ export const ACTIVITY_V2_FIXED_HEIGHT_HEIGHT = 525;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
-
+export const ACTIVITY_V2_FIXED_HEIGHT_RATIO =
+  ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
 // Constants for grid layout
 export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
 
@@ -317,7 +318,7 @@ export class ActivityService {
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
 
-  activityV2Experiment: boolean = false;
+  activityV2Feature: boolean = false;
 
   constructor(
     private configs: ConfigsService,
@@ -327,7 +328,7 @@ export class ActivityService {
   ) {
     this.siteUrl = configs.get('site_url');
 
-    this.activityV2Experiment = experiments.hasVariation(
+    this.activityV2Feature = experiments.hasVariation(
       'front-5229-activities',
       true
     );
@@ -359,7 +360,7 @@ export class ActivityService {
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
-    if (this.activityV2Experiment) {
+    if (this.activityV2Feature) {
       this.displayOptions.isV2 = true;
       this.displayOptions.showOnlyCommentsInput = false;
       this.displayOptions.showOnlyCommentsToggle = true;

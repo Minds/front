@@ -52,7 +52,7 @@ post content to trigger upgrade modal -->
     </minds-rich-embed>
     <div
       class="m-activityContent__fixedHeightSpacer"
-      *ngIf="isFixedHeight && !bodyText"
+      *ngIf="isFixedHeight"
     ></div>
   </div>
   <!-- ----------------------------------- -->
@@ -66,32 +66,29 @@ post content to trigger upgrade modal -->
       'm-activityContent__media--video--modal': isModal
     }"
   >
-    <div>
-      <div
-        class="m-activityContent__fixedHeightSpacer"
-        *ngIf="isFixedHeight"
-      ></div>
-
-      <m-videoPlayer--scrollaware
-        #videoEl
-        [guid]="videoGuid"
-        [shouldPlayInModal]="!isModal"
-        (mediaModalRequested)="onModalRequested($event)"
-        [autoplay]="
-          service.displayOptions.autoplayVideo &&
-          !(service.shouldShowPaywall$ | async)
-        "
-        [style.height]="isModal ? null : videoHeight"
-        [style.width]="isModal ? null : videoWidth"
-        [isModal]="isModal"
-        [style.overflow]="videoHeight && !isModal ? 'hidden' : null"
-      >
-        <ng-container
-          *ngTemplateOutlet="paywallTemplate"
-          [ngTemplateOutletContext]="{ hideText: 'false' }"
-        ></ng-container>
-      </m-videoPlayer--scrollaware>
-    </div>
+    <div
+      class="m-activityContent__fixedHeightSpacer"
+      *ngIf="isFixedHeight"
+    ></div>
+    <m-videoPlayer--scrollaware
+      #videoEl
+      [guid]="videoGuid"
+      [shouldPlayInModal]="!isModal"
+      (mediaModalRequested)="onModalRequested($event)"
+      [autoplay]="
+        service.displayOptions.autoplayVideo &&
+        !(service.shouldShowPaywall$ | async)
+      "
+      [style.height]="isModal ? null : videoHeight"
+      [style.width]="isModal ? null : videoWidth"
+      [isModal]="isModal"
+      [style.overflow]="videoHeight && !isModal ? 'hidden' : null"
+    >
+      <ng-container
+        *ngTemplateOutlet="paywallTemplate"
+        [ngTemplateOutletContext]="{ hideText: 'false' }"
+      ></ng-container>
+    </m-videoPlayer--scrollaware>
     <div
       class="m-activityContent__fixedHeightSpacer"
       *ngIf="isFixedHeight"
@@ -109,8 +106,13 @@ post content to trigger upgrade modal -->
       'm-activityContent__media--extraWideImage':
         extraWideImage && service.displayOptions.isFeed
     }"
+    #imageContainerEl
   >
     <ng-container *ngIf="!isModal; else image">
+      <div
+        *ngIf="isFixedHeight"
+        class="m-activityContent__fixedHeightSpacer"
+      ></div>
       <a
         class="m-activityContentMedia__link"
         [routerLink]="['/newsfeed', imageGuid]"
@@ -127,6 +129,10 @@ post content to trigger upgrade modal -->
         </div>
         <ng-container [ngTemplateOutlet]="image"></ng-container
       ></a>
+      <div
+        *ngIf="isFixedHeight"
+        class="m-activityContent__fixedHeightSpacer"
+      ></div>
     </ng-container>
 
     <ng-template #image>
@@ -134,6 +140,7 @@ post content to trigger upgrade modal -->
         *ngTemplateOutlet="paywallTemplate"
         [ngTemplateOutletContext]="{ hideText: 'false' }"
       ></ng-container>
+
       <img
         #imageEl
         [src]="imageUrl"
@@ -144,8 +151,9 @@ post content to trigger upgrade modal -->
         [style.object-fit]="
           (service.shouldShowPaywall$ | async) ? 'cover' : undefined
         "
-        [style.height]="isModal ? imageHeight : 'auto'"
-    /></ng-template>
+        [style.height]="isModal || isFixedHeight ? imageHeight : 'auto'"
+      />
+    </ng-template>
   </div>
 </ng-container>
 <!-- ----------------------------------- -->
@@ -222,7 +230,7 @@ post content to trigger upgrade modal -->
             'm-activityContentText--translated': showTranslation
           }"
         ></p>
-        <p
+        <div
           *ngIf="bodyText && !hideBodyText"
           class="m-activityContentText__body"
           [class.m-activityContentText__body--shortStatus]="shortStatus"
@@ -231,7 +239,7 @@ post content to trigger upgrade modal -->
           [ngClass]="{
             'm-activityContentText--translated': showTranslation
           }"
-        ></p>
+        ></div>
         <m-read-more--button
           *ngIf="
             !(service.shouldShowPaywall$ | async) || isStatus;

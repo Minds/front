@@ -95,6 +95,11 @@ export class ActivityV2ContentComponent
   @ViewChild('imageEl', { read: ElementRef })
   imageEl: ElementRef;
 
+  // We use this to determine the height of
+  // images in the boost rotator (aka fixed height)
+  @ViewChild('imageContainerEl', { read: ElementRef })
+  imageContainerEl: ElementRef;
+
   @ViewChild('textEl', { read: ElementRef })
   textEl: ElementRef;
 
@@ -130,7 +135,7 @@ export class ActivityV2ContentComponent
     return this.service.displayOptions.fixedHeight;
   }
 
-  @HostBinding('class.m-activity__content--minimalMode')
+  @HostBinding('class.m-activityContent--minimalMode')
   get isMinimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
   }
@@ -549,9 +554,17 @@ export class ActivityV2ContentComponent
           originalHeight > 0
             ? `${originalHeight}px`
             : `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+      } else if (this.isFixedHeight) {
+        // For fixed height, calculate height based on
+        // client height
+
+        const height = this.imageContainerEl.nativeElement.clientHeight;
+
+        this.imageHeight = `${height}px`;
       } else {
         // For everything else, calculate height from
         // aspect ratio and clientWidth
+
         const height =
           this.imageEl.nativeElement.clientWidth * this.imageAspectRatio;
 

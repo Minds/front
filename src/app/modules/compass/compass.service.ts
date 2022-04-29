@@ -98,6 +98,15 @@ export class CompassService {
   }
 
   /**
+   * Whether compass answers are required.
+   * @returns { Promise<boolean> } - true if answers have been completed.
+   */
+  public async hasCompletedCompassAnswers(): Promise<boolean> {
+    await this.fetchQuestions();
+    return this.answersProvided$.getValue();
+  }
+
+  /**
    * For logged out users, save to cookies
    */
   storeEphemeralAnswers(): boolean {

@@ -15,4 +15,7 @@ export let compassServiceMock = new (function() {
   this.saveAnswers = jasmine.createSpy('saveAnswers').and.callFake(function() {
     return {};
   });
+  this.hasCompletedCompassAnswers = jasmine
+    .createSpy('hasCompletedCompassAnswers')
+    .and.returnValue(true);
 })();
