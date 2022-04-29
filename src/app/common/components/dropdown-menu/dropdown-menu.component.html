@@ -8,11 +8,9 @@
     [ngStyle]="anchorPosition"
     (click)="close()"
     #menuWrapperElement
-    [@dropDown]="!containsSubmenu"
+    [@dropDown]="!hasSubmenu"
   >
-    <ul>
-      <ng-container *ngTemplateOutlet="menu"></ng-container>
-    </ul>
+    <ng-container *ngTemplateOutlet="menu"></ng-container>
   </div>
 
   <m-overlay (onClick)="close($event)"></m-overlay>

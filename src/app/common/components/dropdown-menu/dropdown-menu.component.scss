@@ -20,10 +20,6 @@ m-dropdownMenu {
   .m-dropdownMenu__menu {
     display: none;
 
-    &:not(.m-dropdownMenu__menu--containsSubmenu) {
-      overflow: hidden;
-    }
-
     @include z-index(modal);
 
     @media screen and (min-width: $max-mobile + 1) {
@@ -55,56 +51,6 @@ m-dropdownMenu {
         border: 1px solid themed($m-borderColor--primary);
         background: themed($m-bgColor--primary);
       }
-
-      // > li {
-      // display: flex;
-      // align-items: center;
-      // justify-content: flex-start;
-
-      // white-space: nowrap;
-
-      // @include body2Medium;
-      // cursor: pointer;
-      // background: transparent;
-
-      // @include m-theme() {
-      //   color: themed($m-textColor--primary);
-
-      //   &:hover,
-      //   &:active {
-      //     background: themed($m-borderColor--primary);
-      //   }
-
-      // transition: 150ms background ease-in-out;
-      // }
-
-      // > * {
-      //   flex: 1;
-      //   margin: 0;
-      //   padding: $spacing3 $spacing4;
-
-      //   // ojm except icons should have no spacing right
-      //   &:m-icon {
-      //     padding-right: 0;
-      //   }
-      // }
-
-      // .m-dropdownMenu__item {
-      //   display: flex;
-      //   align-items: center;
-      //   justify-content: space-between;
-
-      //   m-icon + span,
-      //   span + m-icon {
-      //     margin-left: $spacing3;
-      //     //ojm this is unlikely
-      //   }
-
-      //   span {
-      //     flex: 1;
-      //   }
-      // }
-      // }
     }
   }
 

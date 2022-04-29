@@ -33,12 +33,12 @@
 
     //-----------------------------------
     [class*='m-dropdownMenuItem__text--label'] {
-      flex: 1;
       @include body2Medium;
     }
 
     //-----------------------------------
     [class*='m-dropdownMenuItem__text--icon'] {
+      font-size: 1.125rem;
     }
 
     [class*='m-dropdownMenuItem__text--icon--left'] {
@@ -53,18 +53,18 @@
 
     //-----------------------------------
     &.m-dropdownMenu__item--hasSubmenu {
+      [class*='m-dropdownMenuItem__text--label'] {
+        flex: 1;
+      }
+      [class*='m-dropdownMenuItem__text--icon--right'] {
+        font-weight: 600;
+      }
     }
     //-----------------------------------
-    &.m-dropdownMenu__item--persistant {
-      &.m-dropdownMenu__item--selected {
-      }
-
+    &.m-dropdownMenu__item--persistent {
       &:not(.m-dropdownMenu__item--selected) {
         [class*='m-dropdownMenuItem__text'] {
           margin-left: 2.125rem;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
         }
       }
     }

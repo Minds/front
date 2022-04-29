@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { DropDownAnimation } from '../../../animations';
 
 export interface AnchorPosition {
   top?: string;
@@ -27,7 +26,6 @@ export interface AnchorPosition {
   selector: 'm-dropdownMenu',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'dropdown-menu.component.html',
-  animations: [DropDownAnimation],
 })
 export class DropdownMenuComponent implements OnInit, OnDestroy {
   @Input() menu: TemplateRef<any>;
@@ -46,7 +44,7 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
   // We disable the dropDown animation in this case because the
   // animation requires `overflow:hidden`, which would
   // hide the submenus
-  @Input() containsSubmenu = false;
+  @Input() hasSubmenu = false;
 
   @ViewChild('triggerElement') triggerElement: ElementRef<HTMLSpanElement>;
 
@@ -118,10 +116,6 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
 
   get menuCssClasses() {
     const classList = ['m-dropdownMenu__menu'];
-
-    if (this.containsSubmenu) {
-      classList.push('dropdownMenu__menu--containsSubmenu');
-    }
 
     if (this.menuClass) {
       classList.push(
