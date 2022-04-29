@@ -94,12 +94,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
     });
 
+    // set here rather than in auth module so we can set join to false.
     this.metaService.setTitle(
       'Join Minds, and Elevate the Conversation',
       false
     );
-
-    this.metaService.setCanonicalUrl('/register');
 
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
