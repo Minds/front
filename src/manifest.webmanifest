@@ -11,23 +11,23 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "https://cdn.minds.com/static/en/assets/logos/logo.png",
+      "src": "/static/en/assets/logos/logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "https://cdn.minds.com/static/en/assets/logos/logo-large.png",
+      "src": "/static/en/assets/logos/logo-large.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "https://cdn.minds.com/static/en/assets/logos/logo-maskable.png",
+      "src": "/static/en/assets/logos/logo-maskable.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
     },
     {
-      "src": "https://cdn.minds.com/static/en/assets/logos/logo-maskable-large.png",
+      "src": "/static/en/assets/logos/logo-maskable-large.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
