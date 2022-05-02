@@ -94,17 +94,17 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
       this.hashtag = params.hashtag || null;
       this.all = Boolean(params.all);
     });
-
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
   }
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']); //force login
     }
+
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['message']) {

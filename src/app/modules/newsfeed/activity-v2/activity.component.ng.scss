@@ -34,13 +34,11 @@
 
   &.m-activity--fixedHeight {
     justify-content: space-between;
+    height: 100%;
 
     .m-activity__top {
-      height: calc(100% - 128px);
+      height: calc(100% - 76px);
       padding-top: $spacing2;
-    }
-    .m-activity__rightColumn {
-      justify-content: space-around;
     }
 
     .m-activity__flagRow {
@@ -202,9 +200,11 @@
     .m-activity__boostRotatorButtons {
       ::ng-deep m-icon {
         margin-right: $spacing2;
+        @include unselectable;
         i {
           cursor: pointer;
           @include heading2Regular;
+          @include unselectable;
         }
       }
     }
@@ -224,8 +224,8 @@
 
     img {
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: $activityAvatarWidth;
+      height: $activityAvatarWidth;
       object-fit: cover;
     }
   }

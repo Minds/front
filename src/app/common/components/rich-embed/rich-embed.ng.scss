@@ -1,12 +1,26 @@
 @import 'defaults.scss';
-@import '../../../modules/newsfeed/activity-v2/shared.scss';
 
 :host {
+  // ******************************************
+  // ** FIXED HEIGHT **
+  // ******************************************
+  .m-activityContent--fixedHeight & {
+    &[class*='m-richEmbed--activityV2'] {
+      .m-rich-embed-src {
+        a.thumbnail {
+          img {
+            max-height: 280px;
+          }
+        }
+      }
+    }
+  }
+
   // ******************************************
   // ** MINIMAL MODE **
   // ******************************************
 
-  .m-activity__content--minimalMode & {
+  .m-activityContent--minimalMode & {
     &[class*='m-richEmbed--activityV2'] {
       .m-rich-embed-src {
         border: none !important;

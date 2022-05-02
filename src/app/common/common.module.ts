@@ -190,6 +190,7 @@ import { RelativeTimeSpanComponent } from './components/relative-time-span/relat
 import { SubscriptionService } from './services/subscription.service';
 import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
 import { ResizedDirective } from './directives/resized.directive';
+import { PreventDoubleClickDirective } from './directives/prevent-double-click.directive';
 import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-button/see-latest-posts-button.component';
 
 const routes: Routes = [
@@ -365,6 +366,7 @@ const routes: Routes = [
     RelativeTimeSpanComponent,
     SeeLatestPostsButtonComponent,
     ResizedDirective,
+    PreventDoubleClickDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -514,6 +516,7 @@ const routes: Routes = [
     RelativeTimeSpanComponent,
     SeeLatestPostsButtonComponent,
     ResizedDirective,
+    PreventDoubleClickDirective,
   ],
   providers: [
     SiteService,
