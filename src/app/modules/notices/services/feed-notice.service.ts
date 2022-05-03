@@ -5,6 +5,7 @@ import { CompassService } from '../../compass/compass.service';
 import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
+import { DiscoveryTagsService } from '../../discovery/tags/tags.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import {
   NoticePosition,
@@ -39,6 +40,12 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
       dismissed: false,
       position: 'top',
     },
+    'update-tags': {
+      shown: false,
+      completed: false,
+      dismissed: false,
+      position: 'inline',
+    },
     'enable-push-notifications': {
       shown: false,
       completed: false,
@@ -52,6 +59,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private compass: CompassService,
     private notificationSettings: NotificationsSettingsV2Service,
     private emailConfirmation: EmailConfirmationService,
+    private tagsService: DiscoveryTagsService,
     private experiments: ExperimentsService
   ) {
     super();
@@ -68,6 +76,11 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     this.notices['build-your-algorithm'].dismissed = this.isNoticeDismissed(
       'build-your-algorithm'
     );
+
+    this.notices['update-tags'].dismissed = this.isNoticeDismissed(
+      'update-tags'
+    );
+
     this.notices[
       'enable-push-notifications'
     ].dismissed = this.isNoticeDismissed('enable-push-notifications');
@@ -76,6 +89,8 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     this.notices[
       'build-your-algorithm'
     ].completed = await this.hasCompletedCompassAnswers();
+
+    this.notices['update-tags'].completed = await this.hasSetTags();
 
     this.notices[
       'enable-push-notifications'
@@ -231,6 +246,15 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    */
   private async hasPushNotificationsEnabled(): Promise<boolean> {
     return this.notificationSettings.pushNotificationsEnabled$.toPromise();
+  }
+
+  /**
+   * Whether user has set tags.
+   * @returns { Promise<boolean> } - true if user has set tags.
+   */
+  private async hasSetTags(): Promise<boolean> {
+    const count = await this.tagsService.countTags();
+    return count > 1;
   }
 
   /**

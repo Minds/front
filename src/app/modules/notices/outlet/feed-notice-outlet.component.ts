@@ -28,6 +28,9 @@ import { Subscription } from 'rxjs';
       <m-feedNotice--enablePushNotifications
         *ngSwitchCase="'enable-push-notifications'"
       ></m-feedNotice--enablePushNotifications>
+      <m-feedNotice--updateTags
+        *ngSwitchCase="'update-tags'"
+      ></m-feedNotice--updateTags>
     </ng-container>
   `,
 })

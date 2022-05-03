@@ -172,6 +172,19 @@ export class DiscoveryTagsService {
     return await this.saveTags();
   }
 
+  /**
+   * Counts tags a user has set.
+   * @param { boolean } reload - reload tags before count.
+   * @returns { Promise<number> } amount of tags a user has set.
+   */
+  async countTags(reload: boolean = true): Promise<number> {
+    if (reload) {
+      await this.loadTags();
+    }
+    const tags = this.tags$.getValue();
+    return tags?.length ?? 0;
+  }
+
   async saveTags(): Promise<boolean> {
     this.saving$.next(true);
     try {
