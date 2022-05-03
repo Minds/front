@@ -112,11 +112,16 @@
             <ng-container i18n="@@COMMON__DISCOVERY">Discovery</ng-container>
           </m-tooltip>
 
-          <span
-            class="m-sidebarNavigationItem__text m-legible"
-            i18n="@@COMMON__DISCOVERY"
-            >Discovery</span
-          >
+          <span class="m-sidebarNavigationItem__text m-legible">
+            <ng-container
+              *ngIf="showExploreExperiment(); else showDiscoveryText"
+              i18n="@@COMMON__EXPLORE"
+              >Explore</ng-container
+            >
+            <ng-template #showDiscoveryText i18n="@@COMMON__DISCOVERY"
+              >Discovery</ng-template
+            >
+          </span>
         </a>
       </li>
 
