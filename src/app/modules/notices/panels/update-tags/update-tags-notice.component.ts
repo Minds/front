@@ -5,7 +5,8 @@ import { ContentSettingsComponent } from '../../../content-settings/content-sett
 import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
- * Update tag preferences notice.
+ * Update tag preferences notice. Allows a user to open the content settings
+ * modal to add or update their tags.
  */
 @Component({
   selector: 'm-feedNotice--updateTags',

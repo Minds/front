@@ -96,8 +96,6 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private async initSubscription(): Promise<void> {
-    await this.service.checkNoticeState();
-
     this.subscriptions.push(
       this.service.updatedState$.subscribe(val => {
         // if we're not showing multiple and this position already has shown notices.

@@ -63,6 +63,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private experiments: ExperimentsService
   ) {
     super();
+    this.checkNoticeState();
   }
 
   /**
@@ -254,7 +255,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    */
   private async hasSetTags(): Promise<boolean> {
     const count = await this.tagsService.countTags();
-    return count > 1;
+    return count > 0;
   }
 
   /**
