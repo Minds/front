@@ -11,6 +11,7 @@ import {
   Notices,
   NoticeIdentifier,
 } from '../feed-notice.types';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Determines which feed notices to show, and holds state on
@@ -52,7 +53,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private compass: CompassService,
     private notificationSettings: NotificationsSettingsV2Service,
     private emailConfirmation: EmailConfirmationService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     super();
   }
@@ -155,7 +156,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * @returns { boolean } - true if full width notices should be shown.
    */
   public shouldBeFullWidth(): boolean {
-    return this.experiments.hasVariation('front-5229-activities', true);
+    return this.activityV2Experiment.isActive();
   }
 
   /**
