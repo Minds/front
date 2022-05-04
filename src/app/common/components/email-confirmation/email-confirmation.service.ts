@@ -3,6 +3,9 @@ import { Client } from '../../../services/api/client';
 import { FormToastService } from '../../services/form-toast.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
+import { ModalService } from '../../../services/ux/modal.service';
+import { EmailConfirmationComponent } from './email-confirmation.component';
+import { EmailConfirmationModalComponent } from './modal/email-confirmation-modal.component';
 
 /**
  * Service handling the sending of new confirmation emails and whether a user
@@ -17,12 +20,32 @@ export class EmailConfirmationService {
     protected client: Client,
     private toasterService: FormToastService,
     private session: Session,
+    private modal: ModalService,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
   }
 
-  show() {
+  /**
+   * Open email confirmation modal.
+   * @returns { void }
+   */
+  public openModal(): void {
+    this.modal.present(EmailConfirmationModalComponent, {
+      beforeDismiss: () => !this.requiresEmailConfirmation(),
+      data: {
+        onSuccess: (success: any) => {
+          this.modal.dismissAll(); // TODO: should it be dismiss all?
+        },
+      },
+    });
+  }
+
+  /**
+   * Shows error to alert user that they must confirm their email address.
+   * @returns { void }
+   */
+  public showError(): void {
     this.toasterService.error('You must confirm your email address.');
   }
 

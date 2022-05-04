@@ -1,0 +1,80 @@
+@import 'defaults.scss';
+
+:host {
+  .m-modalV2__inner {
+    .m-modalV2__body {
+      min-height: 230px;
+      padding: $spacing8 $spacing10 $spacing5 $spacing10;
+
+      .m-emailConfirmationModal__link {
+        @include m-theme() {
+          color: themed($m-blue);
+          cursor: pointer;
+
+          &:hover {
+            color: themed($m-blue-dark);
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .m-emailConfirmationModal__form {
+        display: flex;
+        flex-direction: column;
+
+        .m-emailConfirmationModal__label {
+          padding-bottom: $spacing2;
+
+          @include body2Regular;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        .m-emailConfirmationModal__input {
+          width: 100%;
+          padding: $spacing2 $spacing3;
+          box-sizing: border-box;
+          border-radius: 2px;
+
+          @include body1Regular;
+
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+            border: 1px solid themed($m-borderColor--primary);
+            background-color: themed($m-bgColor--primary);
+          }
+        }
+      }
+
+      .m-emailConfirmationModal__goBackButton {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        @include body2Regular;
+
+        i {
+          height: 25px;
+          margin-right: $spacing1;
+        }
+
+        &:hover {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+    .m-modalV2__footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      padding: $spacing5 $spacing10;
+
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+}

@@ -58,6 +58,7 @@ export class Minds implements OnInit, OnDestroy {
   protected routerConfig: Route[];
 
   private multiFactorSuccessSubscription: Subscription;
+  private emailConfirmationLoginSubscription: Subscription;
 
   constructor(
     public session: Session,
@@ -108,6 +109,9 @@ export class Minds implements OnInit, OnDestroy {
     this.uploadError$ = this.upload.onError.subscribe(
       this.checkXHRError.bind(this)
     );
+
+    // display email confirmation modal if appropriate.
+    this.checkEmailConfirmation();
 
     // MH: does loading meta tags before the configs have been set cause issues?
     this.router$ = this.router.events
@@ -168,7 +172,7 @@ export class Minds implements OnInit, OnDestroy {
 
   checkXHRError(err: string | any) {
     if (err.status === 403 && err.error.must_verify) {
-      this.emailConfirmationService.show();
+      this.emailConfirmationService.showError();
     }
   }
 
@@ -223,6 +227,10 @@ export class Minds implements OnInit, OnDestroy {
     this.router$.unsubscribe();
     this.clientError$.unsubscribe();
     this.uploadError$.unsubscribe();
+
+    if (this.emailConfirmationLoginSubscription) {
+      this.emailConfirmationLoginSubscription.unsubscribe();
+    }
   }
 
   @HostBinding('class') get cssColorSchemeOverride() {
@@ -241,6 +249,26 @@ export class Minds implements OnInit, OnDestroy {
     let route = this.route;
     while (route.firstChild) route = route.firstChild;
     this.metaService.reset(route.snapshot.data);
+  }
+
+  /**
+   * Checks whether email confirmation modal should be shown and shows
+   * it if it should. If not, subscribes to login events so that we re-check on login.
+   * @returns { void }
+   */
+  private checkEmailConfirmation(): void {
+    if (!this.emailConfirmationLoginSubscription) {
+      // re-trigger on login events, so that when a user registers it opens.
+      this.emailConfirmationLoginSubscription = this.session.loggedinEmitter
+        .pipe(filter(Boolean))
+        .subscribe((loggedIn: boolean): void => {
+          this.checkEmailConfirmation();
+        });
+    }
+
+    if (this.emailConfirmationService.requiresEmailConfirmation()) {
+      this.emailConfirmationService.openModal();
+    }
   }
 
   detectChanges() {
