@@ -110,9 +110,6 @@ export class Minds implements OnInit, OnDestroy {
       this.checkXHRError.bind(this)
     );
 
-    // display email confirmation modal if appropriate.
-    this.checkEmailConfirmation();
-
     // MH: does loading meta tags before the configs have been set cause issues?
     this.router$ = this.router.events
       .pipe(
@@ -142,6 +139,9 @@ export class Minds implements OnInit, OnDestroy {
       // if (this.sso.isRequired()) {
       //   this.sso.connect();
       // }
+
+      // display email confirmation modal if appropriate.
+      this.checkEmailConfirmation();
 
       if (isPlatformBrowser(this.platformId)) {
         this.serviceWorkerService.watchForUpdates();
@@ -257,6 +257,10 @@ export class Minds implements OnInit, OnDestroy {
    * @returns { void }
    */
   private checkEmailConfirmation(): void {
+    if (!this.experimentsService.hasVariation('minds-3055-email-codes', true)) {
+      return; // feature not enabled.
+    }
+
     if (!this.emailConfirmationLoginSubscription) {
       // re-trigger on login events, so that when a user registers it opens.
       this.emailConfirmationLoginSubscription = this.session.loggedinEmitter
