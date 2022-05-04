@@ -148,6 +148,16 @@ export class DiscoverySearchComponent {
     return !!this.session.getLoggedInUser();
   }
 
+  /**
+   * scrolls to top
+   */
+  public scrollToTop(): void {
+    window.scrollTo({
+      behavior: 'smooth',
+      top: 0,
+    });
+  }
+
   detectChanges(): void {
     this.cd.detectChanges();
     this.cd.markForCheck();
