@@ -34,8 +34,10 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     data: {
-      title: 'Register',
-      description: 'Create a channel on Minds',
+      title: 'Join Minds, and Elevate the Conversation',
+      description:
+        'Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.',
+      canonicalUrl: '/register',
       ogImage: '/assets/og-images/register-v3.png',
       ogImageWidth: 1200,
       ogImageHeight: 1200,
