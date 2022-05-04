@@ -14,7 +14,7 @@ export default {
     docs: {
       description: {
         component:
-          'Component used for formatting of dropdown list items. Intended for use with the `<m-dropdownMenu>` component',
+          'Component used for formatting of dropdown list items. Intended for use with the `<m-dropdownMenu>` component. The label should be included in a `<span>` tag and will be displayed using content projection.',
       },
     },
   },
@@ -28,24 +28,6 @@ export default {
     ),
   ],
   argTypes: {
-    label: {
-      description: 'The text to be displayed',
-      type: { name: 'string', required: true },
-      control: 'text',
-      defaultValue: null,
-      table: {
-        defaultValue: { summary: null },
-      },
-    },
-    i18nId: {
-      description: 'Translation string for the displayed text',
-      type: { name: 'string', required: false },
-      control: 'text',
-      defaultValue: null,
-      table: {
-        defaultValue: { summary: null },
-      },
-    },
     icon: {
       description: 'ID of material icon to be displayed left of the label',
       type: { name: 'string', required: false },
@@ -55,7 +37,7 @@ export default {
         defaultValue: { summary: null },
       },
     },
-    persistent: {
+    selectable: {
       description:
         'For items that are part of a filter (or other selectable trait that persists whether the dropdown menu is open or closed). *TRUE* if the item is part of a menu of filters or some other selectable trait that persists after the item is clicked (e.g. "videos" in the feed filter). This will leave space for a checkmark that will display to the left of the item when `selected` is true. *FALSE* if the item is an ephemeral action (e.g. "leave group" / "report channel")',
 
@@ -67,7 +49,7 @@ export default {
     },
     selected: {
       description:
-        '*TRUE* if a `persistent` item is selected, making a checkmark appear on the left of the label.',
+        '*TRUE* if a `selectable` item is selected, making a checkmark appear on the left of the label.',
       control: 'boolean',
       defaultValue: false,
       table: {
@@ -110,24 +92,22 @@ const Template: Story<DropdownMenuItemComponent> = (
   props: args,
   template: `
   <m-dropdownMenu__item
-    [label]="label"
-    [persistent]="persistent"
+    [selectable]="selectable"
     [selected]="selected"
     [disabled]="disabled"
     [red]="red"
     [icon]="icon"
-    [i18nId]="i18nId"
     [hasSubmenu]="hasSubmenu"
   >
+    <span i18n="@@MY_TRANSLATION_ID">Item</span>
   </m-dropdownMenu__item>
   `,
 });
 
 export const Basic = Template.bind({});
 Basic.args = {
-  label: 'Item',
   icon: null,
-  persistent: false,
+  selectable: false,
   selected: false,
   red: false,
   disabled: false,
@@ -152,17 +132,17 @@ Red.args = {
   red: true,
 };
 
-export const PersistentUnselected = Template.bind({});
-PersistentUnselected.args = {
+export const SelectableUnselected = Template.bind({});
+SelectableUnselected.args = {
   ...Basic.args,
-  persistent: true,
+  selectable: true,
   selected: false,
 };
 
-export const PersistentSelected = Template.bind({});
-PersistentSelected.args = {
+export const SelectableSelected = Template.bind({});
+SelectableSelected.args = {
   ...Basic.args,
-  persistent: true,
+  selectable: true,
   selected: true,
 };
 

@@ -125,10 +125,40 @@
                 "defaultValue": "Basic.bind({})"
             },
             {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "Featured",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/common/components/publisher-card/publisher-card.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "HasIcon",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "HasSubmenu",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -155,6 +185,36 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "IconOnly.bind({})"
+            },
+            {
+                "name": "Red",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "SelectableSelected",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "SelectableUnselected",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Template",
@@ -184,7 +244,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<DropdownMenuComponent>",
-                "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n        <li>\n          <span class=\"m-dropdownMenu__item\">First Item</span>\n        </li>\n        <li>\n        <span class=\"m-dropdownMenu__item\">Second Item</span>\n      </li>\n    </ul>\n  </ng-template>\n  `,\n})"
+                "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n      <m-dropdownMenu__item label=\"Basic item 1\"></m-dropdownMenu__item>\n      <m-dropdownMenu__item label=\"Basic item 2\"></m-dropdownMenu__item>\n      <m-dropdownMenu__item label=\"Scary item\" red=\"true\"></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -194,7 +254,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<DropdownMenuItemComponent>",
-                "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n        <li>\n          <span class=\"m-dropdownMenu__item\">First Item</span>\n        </li>\n        <li>\n        <span class=\"m-dropdownMenu__item\">Second Item</span>\n      </li>\n    </ul>\n  </ng-template>\n  `,\n})"
+                "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu__item\n    [selectable]=\"selectable\"\n    [selected]=\"selected\"\n    [disabled]=\"disabled\"\n    [red]=\"red\"\n    [icon]=\"icon\"\n    [hasSubmenu]=\"hasSubmenu\"\n  >\n    <span i18n=\"@@MY_TRANSLATION_ID\">Item</span>\n  </m-dropdownMenu__item>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -404,12 +464,72 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<DropdownMenuComponent>",
-                    "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n        <li>\n          <span class=\"m-dropdownMenu__item\">First Item</span>\n        </li>\n        <li>\n        <span class=\"m-dropdownMenu__item\">Second Item</span>\n      </li>\n    </ul>\n  </ng-template>\n  `,\n})"
+                    "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n      <m-dropdownMenu__item label=\"Basic item 1\"></m-dropdownMenu__item>\n      <m-dropdownMenu__item label=\"Basic item 2\"></m-dropdownMenu__item>\n      <m-dropdownMenu__item label=\"Scary item\" red=\"true\"></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
                 }
             ],
             "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts": [
                 {
                     "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "HasIcon",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "HasSubmenu",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Red",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "SelectableSelected",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "SelectableUnselected",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
@@ -426,7 +546,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<DropdownMenuItemComponent>",
-                    "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n        <li>\n          <span class=\"m-dropdownMenu__item\">First Item</span>\n        </li>\n        <li>\n        <span class=\"m-dropdownMenu__item\">Second Item</span>\n      </li>\n    </ul>\n  </ng-template>\n  `,\n})"
+                    "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu__item\n    [selectable]=\"selectable\"\n    [selected]=\"selected\"\n    [disabled]=\"disabled\"\n    [red]=\"red\"\n    [icon]=\"icon\"\n    [hasSubmenu]=\"hasSubmenu\"\n  >\n    <span i18n=\"@@MY_TRANSLATION_ID\">Item</span>\n  </m-dropdownMenu__item>\n  `,\n})"
                 }
             ],
             "src/app/common/components/publisher-card/publisher-card.stories.ts": [
@@ -490,7 +610,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 18,
+        "count": 14,
         "status": "low",
         "files": [
             {
@@ -629,6 +749,66 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Disabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "HasIcon",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "HasSubmenu",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Red",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SelectableSelected",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SelectableUnselected",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

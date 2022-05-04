@@ -32,8 +32,12 @@
     }
 
     //-----------------------------------
-    [class*='m-dropdownMenuItem__text--label'] {
+    .m-dropdownMenuItem__text--label {
       @include body2Medium;
+      & > * {
+        margin: 0;
+        padding: 0;
+      }
     }
 
     //-----------------------------------
@@ -61,7 +65,7 @@
       }
     }
     //-----------------------------------
-    &.m-dropdownMenu__item--persistent {
+    &.m-dropdownMenu__item--selectable {
       &:not(.m-dropdownMenu__item--selected) {
         [class*='m-dropdownMenuItem__text'] {
           margin-left: 2.125rem;

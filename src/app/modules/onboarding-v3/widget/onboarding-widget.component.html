@@ -100,18 +100,14 @@
   <!-- Dropdown template -->
   <ng-template #dropdown>
     <ul>
-      <m-dropdownMenu__item
-        (click)="onHideClick('hide')"
-        *ngIf="!collapsed"
-        label="Hide this panel"
-        i18nId="@@ONBOARDING_WIDGET__HIDE_THIS_PANEL"
-      ></m-dropdownMenu__item>
-      <m-dropdownMenu__item
-        (click)="onHideClick('show')"
-        *ngIf="collapsed"
-        label="Show this panel"
-        i18nId="@@ONBOARDING_WIDGET__SHOW_THIS_PANEL"
-      ></m-dropdownMenu__item>
+      <m-dropdownMenu__item (click)="onHideClick('hide')" *ngIf="!collapsed"
+        ><span i18n="@@ONBOARDING_WIDGET__HIDE_THIS_PANEL"
+          >Hide this panel</span
+        ></m-dropdownMenu__item
+      >
+      <m-dropdownMenu__item (click)="onHideClick('show')" *ngIf="collapsed">
+        <span i18n="@@ONBOARDING_WIDGET__SHOW_THIS_PANEL">Show this panel</span>
+      </m-dropdownMenu__item>
     </ul>
   </ng-template>
 </ng-container>

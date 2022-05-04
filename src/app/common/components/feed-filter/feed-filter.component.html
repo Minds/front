@@ -40,10 +40,11 @@
     <m-dropdownMenu__item
       *ngFor="let typeEntry of types"
       (click)="typeChangeEmitter.emit(typeEntry.value)"
-      [label]="typeEntry.label"
-      persistent="true"
+      selectable="true"
       [selected]="type === typeEntry.value"
-    ></m-dropdownMenu__item>
+    >
+      <span>{{ typeEntry.label }}</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>
 
@@ -52,9 +53,9 @@
     <m-dropdownMenu__item
       *ngFor="let dateRangeEntry of dateRangeTypes"
       (click)="onDateRangeChange(dateRangeEntry.value)"
-      [label]="dateRangeEntry.menuLabel"
-      persistent="true"
+      selectable="true"
       [selected]="dateRangeType === dateRangeEntry.value"
-    ></m-dropdownMenu__item>
+      ><span>{{ dateRangeEntry.menuLabel }}</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>

@@ -9,32 +9,24 @@
 
 <ng-template #menu>
   <ul>
-    <m-dropdownMenu__item
-      label="Token analytics"
-      routerLink="/analytics/dashboard/token"
-    >
+    <m-dropdownMenu__item routerLink="/analytics/dashboard/token"
+      ><span>Token analytics</span>
     </m-dropdownMenu__item>
-    <m-dropdownMenu__item
-      (click)="onTransferTokensClick($event)"
-      label="Transfer On-chain"
-    >
+    <m-dropdownMenu__item (click)="onTransferTokensClick($event)"
+      ><span>Transfer On-chain</span>
     </m-dropdownMenu__item>
-    <m-dropdownMenu__item
-      (click)="onPurchaseTokensClick($event)"
-      label="Purchase tokens"
-    >
+    <m-dropdownMenu__item (click)="onPurchaseTokensClick($event)"
+      ><span>Purchase tokens</span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
       *ngIf="address$ | async"
       (click)="copyAddressToClipboard($event)"
-      label="Copy address to clipboard"
-    >
+      ><span>Copy address to clipboard</span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
       *ngIf="canDisconnect$ | async"
       (click)="onDisconnectClick($event)"
-      label="Disconnect Wallet"
-    >
+      ><span>Disconnect Wallet</span>
     </m-dropdownMenu__item>
   </ul>
 

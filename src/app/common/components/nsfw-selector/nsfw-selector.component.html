@@ -7,11 +7,9 @@
     [menu]="nsfwSubmenu"
     [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
   >
-    <m-dropdownMenu__item
-      i18nId="@@COMMON__NSFW"
-      label="NSFW"
-      hasSubmenu="true"
-    ></m-dropdownMenu__item>
+    <m-dropdownMenu__item hasSubmenu="true"
+      ><span i18n="@@COMMON__NSFW">NSFW</span></m-dropdownMenu__item
+    >
   </m-dropdownMenu>
 
   <ng-template #nsfwSubmenu>
@@ -19,11 +17,10 @@
       <m-dropdownMenu__item
         *ngFor="let reason of service.reasons"
         (click)="toggle(reason)"
-        [label]="reason.label"
-        persistent="true"
+        selectable="true"
         [selected]="reason.selected"
         [icon]="reason.locked ? 'locked' : null"
-      >
+        >{{ reason.label }}
       </m-dropdownMenu__item>
     </ul>
   </ng-template>

@@ -14,6 +14,6 @@ export class DropdownMenuItemComponent {
   @Input() disabled?: boolean = false;
   @Input() hasSubmenu?: boolean = false;
 
-  @Input() persistent?: boolean = false;
+  @Input() selectable?: boolean = false;
   @Input() selected?: boolean = false;
 }

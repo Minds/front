@@ -27,11 +27,8 @@
       [anchorPosition]="submenuAnchorPosition"
       data-cy="meatball-menu-visibility"
     >
-      <m-dropdownMenu__item
-        *ngIf="canChangeVisibility"
-        label="Visibility"
-        hasSubmenu="true"
-      >
+      <m-dropdownMenu__item *ngIf="canChangeVisibility" hasSubmenu="true"
+        ><span>Visibility</span>
       </m-dropdownMenu__item>
     </m-dropdownMenu>
 
@@ -41,7 +38,8 @@
       [anchorPosition]="submenuAnchorPosition"
       data-cy="meatball-menu-visibility"
     >
-      <m-dropdownMenu__item label="License" hasSubmenu="true">
+      <m-dropdownMenu__item hasSubmenu="true"
+        ><span>License</span>
       </m-dropdownMenu__item>
     </m-dropdownMenu>
 
@@ -52,7 +50,8 @@
       [anchorPosition]="submenuAnchorPosition"
       data-cy="meatball-menu-permaweb"
     >
-      <m-dropdownMenu__item label="Permaweb" hasSubmenu="true">
+      <m-dropdownMenu__item hasSubmenu="true"
+        ><span>Permaweb</span>
       </m-dropdownMenu__item>
     </m-dropdownMenu>
 
@@ -70,10 +69,9 @@
     <m-dropdownMenu__item
       *ngFor="let visibilityItem of visibilityItems"
       (click)="onVisibilityClick(visibilityItem.value)"
-      [label]="visibilityItem.text"
-      persistent="true"
+      selectable="true"
       [selected]="(accessId$ | async) === visibilityItem.value"
-    >
+      ><span>{{ visibilityItem.text }}</span>
     </m-dropdownMenu__item>
   </ul>
 </ng-template>
@@ -84,10 +82,9 @@
     <m-dropdownMenu__item
       *ngFor="let licenseItem of licenseItems"
       (click)="onLicenseClick(licenseItem.value)"
-      [label]="licenseItem.text"
-      persistent="true"
+      selectable="true"
       [selected]="(license$ | async) === licenseItem.value"
-    >
+      ><span>{{ licenseItem.text }}</span>
     </m-dropdownMenu__item>
   </ul>
 </ng-template>
@@ -97,9 +94,9 @@
   <ul data-cy="meatball-menu-license-menu">
     <m-dropdownMenu__item
       (click)="onPostToPermawebClick()"
-      label="Post to Permaweb"
-      persistent="true"
+      selectable="true"
       [selected]="service.postToPermaweb$ | async"
-    ></m-dropdownMenu__item>
+      ><span>Post to Permaweb</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>
