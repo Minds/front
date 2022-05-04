@@ -282,8 +282,7 @@ export class MetaService {
       .setNsfw(false)
       .setOgSiteName()
       .resetDynamicFavicon()
-      .resetOEmbed()
-      .setThemeColor();
+      .resetOEmbed();
   }
 
   private applyTitle(): void {
