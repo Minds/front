@@ -440,6 +440,9 @@ export class ActivityV2ContentComponent
     return !this.hideText && this.service.displayOptions.permalinkBelowContent;
   }
 
+  get sidebarMode(): boolean {
+    return this.service.displayOptions.permalinkBelowContent;
+  }
   ////////////////////////////////////////////////////////////////////////////
 
   calculateFixedContentHeight(): void {
@@ -594,7 +597,7 @@ export class ActivityV2ContentComponent
     }
 
     //if sidebarMode, navigate to canonicalUrl for all content types
-    if (this.service.displayOptions.sidebarMode) {
+    if (this.sidebarMode) {
       this.router.navigateByUrl(this.canonicalUrl);
       return;
     }
