@@ -66,7 +66,7 @@ const routes: Routes = [
         component: NewsfeedSubscribedComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
-          title: 'Newsfeed',
+          title: 'Newsfeed 2',
           description: 'Posts from channels your subscribe to',
           ogImage: '/assets/og-images/newsfeed-v3.png',
           ogImageWidth: 1200,
