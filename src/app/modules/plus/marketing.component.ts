@@ -1,3 +1,4 @@
+import { ModalService } from './../../services/ux/modal.service';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -7,6 +8,7 @@ import {
 } from '@angular/core';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Session } from '../../services/session';
+import { PlusVerifyComponent } from './verify/verify.component';
 
 @Component({
   selector: 'm-plus__marketing',
@@ -25,18 +27,14 @@ export class PlusMarketingComponent {
   constructor(
     protected cd: ChangeDetectorRef,
     configs: ConfigsService,
-    private session: Session
+    private session: Session,
+    private modalService: ModalService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   openVerifyModal() {
-    this.showVerifyModal = true;
-  }
-
-  closeVerifyModal() {
-    this.showVerifyModal = false;
-    this.detectChanges();
+    this.modalService.present(PlusVerifyComponent);
   }
 
   scrollToTop() {

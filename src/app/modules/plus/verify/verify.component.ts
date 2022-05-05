@@ -55,4 +55,6 @@ export class PlusVerifyComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+  setModalData() {}
 }
