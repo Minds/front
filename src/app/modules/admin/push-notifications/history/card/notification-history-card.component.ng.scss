@@ -1,15 +1,29 @@
+@import 'defaults';
+
 :host {
-  .m-notificationHistoryCard__wrapper {
-    border: 1px solid #e5e5e5;
+  @include m-theme() {
+    .m-notificationHistoryCard__wrapper {
+      margin-top: 16px;
+      border: 1px solid themed($m-borderColor--secondary);
 
-    .m-notificationHistoryCard__header {
-      display: flex;
-      flex-flow: row nowrap;
-      align-content: space-between;
-    }
+      .m-notificationHistoryCard__header {
+        padding: 16px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+      }
 
-    .m-notificationHistoryCard__sectionDivider {
-      border-top: 1px solid #e5e5e5;
+      .m-notificationHistoryCard__sectionDivider {
+        border-top: 1px solid themed($m-borderColor--secondary);
+        display: flex;
+      }
+
+      .m-notificationHistoryCard__body {
+        padding: 16px;
+        h4 {
+          margin: 0;
+        }
+      }
     }
   }
 }

@@ -38,9 +38,11 @@ export class AdminPushNotificationsHistoryComponent
     this.apiClient
       .get('api/v3/notifications/push/system')
       .then((response: ApiResponse) => {
-        this.notifications = response.notifications as Array<
-          NotificationDetails
-        >;
+        if (response.notifications.length) {
+          this.notifications = response.notifications as Array<
+            NotificationDetails
+          >;
+        }
       })
       .catch(e => {});
   }

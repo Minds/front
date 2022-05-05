@@ -4,6 +4,21 @@
     <span>{{ notification.timestamp | date: 'h:m a' }}</span>
   </div>
   <span class="m-notificationHistoryCard__sectionDivider"></span>
-  <div class="m-notificationHistoryCard__body"></div>
+  <div class="m-notificationHistoryCard__body">
+    <h4>{{ notification.title }}</h4>
+
+    <div>
+      {{ notification.message ?? "No message was provided with this push notification" }}
+    </div>
+
+    <div>
+      <a [href]="notification.link" *ngIf="notification.link" target="_blank">
+        {{ notification.link }}
+      </a>
+      <span *ngIf="!notification.link">
+        No link was provided with this push notification
+      </span>
+    </div>
+  </div>
   <div class="m-notificationHistoryCard__stats"></div>
 </div>

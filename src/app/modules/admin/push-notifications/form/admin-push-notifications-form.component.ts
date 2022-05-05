@@ -14,11 +14,23 @@ export class AdminPushNotificationsFormComponent {
   public pushNotificationsForm: FormGroup = this.formBuilder.group({
     notificationTitle: [
       '',
-      [Validators.required, Validators.minLength(4), Validators.maxLength(40)],
+      {
+        initialValueIsDefault: true,
+        validators: [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(40),
+        ],
+      },
     ],
     notificationMessage: ['', [Validators.maxLength(150)]],
     notificationLink: [''],
-    notificationTarget: ['all-devices'],
+    notificationTarget: [
+      'all-devices',
+      {
+        initialValueIsDefault: true,
+      },
+    ],
   });
 
   public inProgress: boolean = false;
