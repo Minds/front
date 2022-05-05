@@ -17,8 +17,6 @@ import { PlusVerifyComponent } from './verify/verify.component';
   styleUrls: ['marketing.component.ng.scss'],
 })
 export class PlusMarketingComponent {
-  showVerifyModal: boolean = false;
-
   readonly cdnAssetsUrl: string;
 
   @ViewChild('topAnchor')
