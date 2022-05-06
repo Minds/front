@@ -192,9 +192,6 @@ import { RecentSubscriptionsService } from './services/recent-subscriptions.serv
 import { ResizedDirective } from './directives/resized.directive';
 import { PreventDoubleClickDirective } from './directives/prevent-double-click.directive';
 import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-button/see-latest-posts-button.component';
-import { EmailConfirmationModalComponent } from './components/email-confirmation/modal/email-confirmation-modal.component';
-import { EmailConfirmationCodePanelComponent } from './components/email-confirmation/modal/code/email-confirmation-code-panel.component';
-import { EmailConfirmationEmailChangePanelComponent } from './components/email-confirmation/modal/email-change/email-confirmation-email-change-panel.component';
 
 const routes: Routes = [
   {
@@ -370,9 +367,6 @@ const routes: Routes = [
     SeeLatestPostsButtonComponent,
     ResizedDirective,
     PreventDoubleClickDirective,
-    EmailConfirmationModalComponent,
-    EmailConfirmationCodePanelComponent,
-    EmailConfirmationEmailChangePanelComponent,
   ],
   exports: [
     MINDS_PIPES,

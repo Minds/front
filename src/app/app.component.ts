@@ -140,7 +140,6 @@ export class Minds implements OnInit, OnDestroy {
       //   this.sso.connect();
       // }
 
-      // display email confirmation modal if appropriate.
       this.checkEmailConfirmation();
 
       if (isPlatformBrowser(this.platformId)) {
@@ -252,8 +251,10 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   /**
-   * Checks whether email confirmation modal should be shown and shows
-   * it if it should. If not, subscribes to login events so that we re-check on login.
+   * Checks whether email confirmation if required and sets up subscription so
+   * that the function is called again on login events (including register).
+   * If a user should confirm their email, will call verify function, which will
+   * cause MFA modal to trigger via MultiFactorHttpInterceptorService.
    * @returns { void }
    */
   private checkEmailConfirmation(): void {
@@ -271,7 +272,8 @@ export class Minds implements OnInit, OnDestroy {
     }
 
     if (this.emailConfirmationService.requiresEmailConfirmation()) {
-      this.emailConfirmationService.openModal();
+      // try to verify - this should cause MFA modal to trigger from interceptor.
+      this.emailConfirmationService.verify();
     }
   }
 

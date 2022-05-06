@@ -5,7 +5,7 @@ import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
 import { EmailConfirmationComponent } from './email-confirmation.component';
-import { EmailConfirmationModalComponent } from './modal/email-confirmation-modal.component';
+import { EmailConfirmationModalComponent } from './.modal/email-confirmation-modal.component';
 
 /**
  * Service handling the sending of new confirmation emails and whether a user
@@ -59,6 +59,19 @@ export class EmailConfirmationService {
     )) as any;
 
     return Boolean(response && response.sent);
+  }
+
+  /**
+   * Verify email code - will trigger MFA modal.
+   * On success will set email confirmation to verified.
+   * @returns { Promise<boolean> } - true if success
+   */
+  async verify(): Promise<boolean> {
+    const response = (await this.client.post(
+      'api/v3/two-factor/confirm-email'
+    )) as any;
+
+    return Boolean(response.status === 'success');
   }
 
   /**

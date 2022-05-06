@@ -26,6 +26,7 @@ export type MFAPayload = {
   smsSecretKey?: string;
   emailSecretKey?: string;
   code?: string;
+  resend?: boolean;
 };
 
 /**
@@ -102,13 +103,17 @@ export class MultiFactorAuthService {
    * @param { string } code - code for submission.
    * @returns { void }
    */
-  public completeMultiFactor(code?: string): void {
+  public completeMultiFactor(code?: string, resend: boolean = false): void {
     // It is the HTTP interceptor that handles the logic, so we just return
     // a mfaPayload object
 
     const payload: MFAPayload = {
       code,
     };
+
+    if (resend) {
+      payload.resend = true;
+    }
 
     if (this.mfaType$.getValue() === 'sms') {
       payload.smsSecretKey = this.mfaSecretKey$.getValue();
