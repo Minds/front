@@ -1,0 +1,56 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h2
+      class="m-modalV2Header__title"
+      i18n="@@EMAIL_CONFIRMATION__CHANGE_EMAIL_TITLE"
+      tabindex="4"
+    >
+      Change your email
+    </h2>
+  </div>
+
+  <div class="m-modalV2__body">
+    <form [formGroup]="form" class="m-emailConfirmationModal__form">
+      <label
+        for="email"
+        class="m-emailConfirmationModal__label"
+        i18n="@@EMAIL_CONFIRMATION__NEW_EMAIL_ADDRESS_LABEL"
+        >New email address</label
+      >
+      <input
+        formControlName="email"
+        type="email"
+        class="m-emailConfirmationModal__input"
+        placeholder="Change your email address"
+        i18n-placeholder="@@EMAIL_CONFIRMATION__EMAIL_CHANGE_PLACEHOLDER"
+        tabindex="1"
+        mAutofocus
+      />
+    </form>
+    <a
+      (click)="goBackClick()"
+      (keyup.enter)="goBackClick()"
+      class="m-emailConfirmationModal__goBackButton"
+    >
+      <i class="material-icons">chevron_left</i>
+      <span i18n="@@EMAIL_CONFIRMATION__GO_BACK_BUTTON" tabindex="3">
+        Go Back
+      </span>
+    </a>
+  </div>
+  <div class="m-modalV2__footer">
+    <m-button
+      color="blue"
+      solid="true"
+      size="xsmall"
+      tabindex="2"
+      (onAction)="onUpdateClick()"
+      (keyup.enter)="onUpdateClick()"
+      [saving]="inProgress$ | async"
+    >
+      <ng-container i18n="@@EMAIL_CONFIRMATION__UPDATE_BUTTON"
+        >Update</ng-container
+      >
+    </m-button>
+  </div>
+</div>

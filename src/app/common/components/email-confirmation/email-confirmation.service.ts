@@ -4,8 +4,7 @@ import { FormToastService } from '../../services/form-toast.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
-import { EmailConfirmationComponent } from './email-confirmation.component';
-import { EmailConfirmationModalComponent } from './.modal/email-confirmation-modal.component';
+import { EmailConfirmationModalComponent } from './modal/email-confirmation-modal.component';
 
 /**
  * Service handling the sending of new confirmation emails and whether a user
