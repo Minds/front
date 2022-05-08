@@ -106,6 +106,9 @@ export class DefaultFeedComponent implements OnInit {
    * @returns boolean
    */
   private isDiscoveryTopUnseenExperimentActive(): boolean {
-    return this.experiments.hasVariation('minds-3092-unseen-discovery-top', true);
+    return this.experiments.hasVariation(
+      'minds-3092-unseen-discovery-top',
+      true
+    );
   }
 }
