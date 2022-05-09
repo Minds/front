@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
 import { EmailResendService } from '../../../../common/services/email-resend.service';
-import { ExperimentsService } from '../../../experiments/experiments.service';
+import { EmailCodeExperimentService } from '../../../experiments/sub-services/email-code-experiment.service';
 
 /**
  * Verify email notice - will stick to top of feed.
@@ -14,7 +14,7 @@ export class VerifyEmailNoticeComponent {
   constructor(
     protected emailResend: EmailResendService,
     private emailConfirmation: EmailConfirmationService,
-    private experiments: ExperimentsService
+    private emailCodeExperiment: EmailCodeExperimentService
   ) {}
 
   /**
@@ -35,6 +35,6 @@ export class VerifyEmailNoticeComponent {
    * @returns { boolean } - true if email confirmation code experiment is active.
    */
   public isEmailCodeExperimentActive(): boolean {
-    return this.experiments.hasVariation('minds-3055-email-codes', true);
+    return this.emailCodeExperiment.isActive();
   }
 }
