@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { notificationsSettingsV2ServiceMock } from '../../../mocks/modules/settings-v2/account/notification-v3/notification-settings-v2-mock.spec';
 import { FeedNoticeService } from './feed-notice.service';
@@ -14,6 +14,8 @@ export let emailConfirmationServiceMock = new (function() {
   this.requiresEmailConfirmation = jasmine
     .createSpy('requiresEmailConfirmation')
     .and.returnValue(true);
+
+  this.success$ = new BehaviorSubject<boolean>(false);
 })();
 
 export let experimentsServiceMock = new (function() {
