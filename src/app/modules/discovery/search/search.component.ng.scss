@@ -19,6 +19,21 @@
     }
   }
 
+  // when the m-seeLatestPostsButton appears, make .m-goBack's position absolute
+  // because m-seeLatestPostsButton has a sticky position and its relative positioning
+  // should be defining the vertical spacing rather than .m-goBack's
+  m-seelatestpostsbutton + .m-goBack {
+    position: absolute;
+    top: 60px;
+  }
+
+  ::ng-deep m-seeLatestPostsButton > div {
+    position: sticky !important;
+    margin-top: 14px;
+    margin-bottom: -6px;
+    @include z-index(body);
+  }
+
   // *********************************
   // ** ACTIVITY V2 **
   // *********************************
