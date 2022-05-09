@@ -101,6 +101,7 @@ export class MultiFactorAuthService {
   /**
    * Call to validate code.
    * @param { string } code - code for submission.
+   * @param { string } resend - resend email.
    * @returns { void }
    */
   public completeMultiFactor(code?: string, resend: boolean = false): void {
