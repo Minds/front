@@ -8,8 +8,8 @@ import { EmailConfirmationModalComponent } from './modal/email-confirmation-moda
 import { BehaviorSubject } from 'rxjs';
 
 /**
- * Service handling the sending of new confirmation emails and whether a user
- * requires email confirmation at all.
+ * Service handling the sending of new confirmation emails, verification of email addresses
+ * and whether a user requires email confirmation at all.
  */
 @Injectable({ providedIn: 'root' })
 export class EmailConfirmationService {
@@ -76,8 +76,9 @@ export class EmailConfirmationService {
       const response = (await this.client.post(
         'api/v3/two-factor/confirm-email'
       )) as any;
-      this.success$.next(true);
-      return response.status === 'success';
+      const success = response.status === 'success';
+      this.success$.next(success);
+      return success;
     } catch (e) {
       console.warn(e);
       return false;

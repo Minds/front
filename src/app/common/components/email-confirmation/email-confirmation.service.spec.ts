@@ -5,9 +5,7 @@ import { toastServiceMock } from '../../../modules/auth/multi-factor-auth/servic
 import { EmailConfirmationService } from './email-confirmation.service';
 
 export let modalServiceMock = new (function() {
-  this.present = jasmine
-    .createSpy('present')
-    .and.returnValue(true);
+  this.present = jasmine.createSpy('present').and.returnValue(true);
 })();
 
 describe('EmailConfirmationService', () => {
@@ -32,12 +30,12 @@ describe('EmailConfirmationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call to verify an email address', async() => {
+  it('should call to verify an email address', async () => {
     service.success$.next(false);
-    clientMock.response = { 'status': 'success' };
-    
+    clientMock.response = { status: 'success' };
+
     const success = await service.verify();
-    
+
     expect(success).toBeTruthy();
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(
@@ -46,12 +44,12 @@ describe('EmailConfirmationService', () => {
     expect(service.success$.getValue()).toBeTruthy();
   });
 
-  it('should return false if unable to verify an email address', async() => {
+  it('should return false if unable to verify an email address', async () => {
     service.success$.next(false);
-    clientMock.response = { 'status': 'error' };
-    
+    clientMock.response = { status: 'error' };
+
     const success = await service.verify();
-    
+
     expect(success).toBeFalsy();
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(

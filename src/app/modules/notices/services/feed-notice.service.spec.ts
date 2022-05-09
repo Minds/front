@@ -263,4 +263,15 @@ describe('FeedNoticeService', () => {
     (service as any).experiments.hasVariation.and.returnValue(false);
     expect(service.shouldBeFullWidth()).toBeFalsy();
   });
+
+  it('should dismiss email on EmailConfirmationService success$ fire', () => {
+    (service as any).updatedState$.next(false);
+    (service as any).emailConfirmation.success$.next(true);
+    expect((service as any).notices['verify-email'].dismissed).toBeTruthy();
+    expect((service as any).notices['verify-email'].shown).toBeFalsy();
+    expect((service as any).dismissService.dismissNotice).toHaveBeenCalledWith(
+      'verify-email'
+    );
+    expect((service as any).updatedState$.getValue()).toBeTruthy();
+  });
 });
