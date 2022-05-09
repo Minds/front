@@ -4,10 +4,6 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { toastServiceMock } from '../../../modules/auth/multi-factor-auth/services/multi-factor-auth.service.spec';
 import { EmailConfirmationService } from './email-confirmation.service';
 
-export let modalServiceMock = new (function() {
-  this.present = jasmine.createSpy('present').and.returnValue(true);
-})();
-
 describe('EmailConfirmationService', () => {
   let service: EmailConfirmationService;
 
@@ -16,7 +12,6 @@ describe('EmailConfirmationService', () => {
       clientMock,
       toastServiceMock,
       sessionMock,
-      modalServiceMock,
       configMock
     );
   });
