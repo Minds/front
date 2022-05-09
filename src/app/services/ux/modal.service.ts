@@ -59,7 +59,6 @@ export class ModalService {
       injector,
       centered: true,
       keyboard: true,
-      beforeDismiss: modalOptions.beforeDismiss,
       // scrollable: true,
       // modalDialogClass:,
       // windowClass: 'm-modalV3__wrapper',
