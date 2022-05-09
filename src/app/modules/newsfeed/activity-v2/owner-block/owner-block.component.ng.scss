@@ -91,6 +91,16 @@
     .m-activity__ownerBlock {
       padding: 20px $activitySpacing--modal 0;
     }
+
+    a.m-activityOwnerBlock__groupName {
+      margin-left: 0;
+      span {
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
   }
 
   // *********************************
@@ -116,12 +126,15 @@
   }
 
   // *********************************
-  // ** SINGLE POST **
+  // ** SINGLE **
   // *********************************
 
   m-newsfeed--single & {
     .m-activity__ownerBlock {
       width: 105%;
+    }
+    ::ng-deep m-activityV2__views {
+      display: none;
     }
   }
 
@@ -203,17 +216,16 @@
     }
   }
 
+  a.m-activityOwnerBlock__groupName {
+    margin-left: $spacing1;
+  }
+
   a.m-activityOwnerBlock__username span,
-  .m-activityOwnerBlock__dot,
-  .m-activityOwnerBlock__edited {
+  .m-activityOwnerBlock__dot {
     @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
-  }
-
-  .m-activityOwnerBlock__edited {
-    padding-left: $spacing1;
   }
 
   .m-activityOwnerBlock__username {

@@ -1,11 +1,17 @@
 @import 'defaults.scss';
 
 :host {
-  m-sidebarwidget & {
-    // *********************************
-    // ** Sidebar **
-    // *********************************
+  // *********************************
+  // ** Feed **
+  // *********************************
+  .m-activity--isFeed & {
+    padding-left: $spacing1;
+  }
 
+  // *********************************
+  // ** Sidebar **
+  // *********************************
+  m-sidebarwidget & {
     display: none;
   }
 
@@ -18,7 +24,7 @@
   // *********************************
   .m-activity__views {
     display: inline-block;
-    @include body2Medium;
+    @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

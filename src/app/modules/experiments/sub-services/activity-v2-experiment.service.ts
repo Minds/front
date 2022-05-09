@@ -15,7 +15,7 @@ export class ActivityV2ExperimentService {
    */
   public isActive(): boolean {
     return true;
-    // ojm uncomment
+    // ojm uncomment !!!
     // return this.experiments.hasVariation('front-5229-activities', true);
   }
 }
