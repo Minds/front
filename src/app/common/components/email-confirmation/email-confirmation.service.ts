@@ -4,7 +4,6 @@ import { FormToastService } from '../../services/form-toast.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
-import { EmailConfirmationModalComponent } from './modal/email-confirmation-modal.component';
 import { BehaviorSubject } from 'rxjs';
 
 /**
@@ -29,21 +28,6 @@ export class EmailConfirmationService {
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
-  }
-
-  /**
-   * Open email confirmation modal.
-   * @returns { void }
-   */
-  public openModal(): void {
-    this.modal.present(EmailConfirmationModalComponent, {
-      beforeDismiss: () => !this.requiresEmailConfirmation(),
-      data: {
-        onSuccess: (success: any) => {
-          this.modal.dismissAll(); // TODO: should it be dismiss all?
-        },
-      },
-    });
   }
 
   /**
