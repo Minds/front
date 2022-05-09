@@ -50,7 +50,7 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
       headers = headers.set('X-MINDS-EMAIL-2FA-KEY', payload.emailSecretKey);
     }
 
-    if (payload.resend) {
+    if (payload.resendEmail) {
       headers = headers.set('X-MINDS-EMAIL-2FA-RESEND', '1');
     }
 

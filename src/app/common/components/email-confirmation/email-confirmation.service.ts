@@ -3,7 +3,6 @@ import { Client } from '../../../services/api/client';
 import { FormToastService } from '../../services/form-toast.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
-import { ModalService } from '../../../services/ux/modal.service';
 import { BehaviorSubject } from 'rxjs';
 
 /**
@@ -24,7 +23,6 @@ export class EmailConfirmationService {
     protected client: Client,
     private toasterService: FormToastService,
     private session: Session,
-    private modal: ModalService,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
