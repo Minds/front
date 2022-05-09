@@ -17,7 +17,7 @@ export class HomepageContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.metaService
-      .setTitle(`Minds: The Alternative Social Network`, false)
+      .setTitle(`Minds`, false)
       .setDescription(
         'Elevate the global conversation through Internet freedom. Speak freely, protect your privacy, earn crypto, and take back control of your social media'
       )
