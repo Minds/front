@@ -154,14 +154,17 @@ describe('FeedNoticeService', () => {
   });
 
   it('should get a list of all showable notices by position', () => {
+    service.notices['verify-email'].dismissed = false;
     service.notices['verify-email'].shown = false;
     service.notices['verify-email'].position = 'top';
     service.notices['verify-email'].completed = false;
 
+    service.notices['build-your-algorithm'].dismissed;
     service.notices['build-your-algorithm'].shown = false;
     service.notices['build-your-algorithm'].position = 'top';
     service.notices['build-your-algorithm'].completed = false;
 
+    service.notices['enable-push-notifications'].dismissed;
     service.notices['enable-push-notifications'].shown = false;
     service.notices['enable-push-notifications'].position = 'inline';
     service.notices['enable-push-notifications'].completed = false;
