@@ -4,7 +4,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EmailResendService } from '../../../../common/services/email-resend.service';
 import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
-import { ExperimentsService } from '../../../experiments/experiments.service';
+import { EmailCodeExperimentService } from '../../../experiments/sub-services/email-code-experiment.service';
 
 describe('VerifyEmailNoticeComponent', () => {
   let comp: VerifyEmailNoticeComponent;
@@ -37,8 +37,8 @@ describe('VerifyEmailNoticeComponent', () => {
             useValue: MockService(EmailConfirmationService),
           },
           {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
+            provide: EmailCodeExperimentService,
+            useValue: MockService(EmailCodeExperimentService),
           },
         ],
       }).compileComponents();
