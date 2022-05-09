@@ -5,6 +5,7 @@ import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
 import { EmailConfirmationModalComponent } from './modal/email-confirmation-modal.component';
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * Service handling the sending of new confirmation emails and whether a user
@@ -14,6 +15,11 @@ import { EmailConfirmationModalComponent } from './modal/email-confirmation-moda
 export class EmailConfirmationService {
   // whether config identifies email as unconfirmed.
   private readonly fromEmailConfirmation: boolean = false;
+
+  // called on email confirmation success.
+  public readonly success$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   constructor(
     protected client: Client,
@@ -66,11 +72,16 @@ export class EmailConfirmationService {
    * @returns { Promise<boolean> } - true if success
    */
   async verify(): Promise<boolean> {
-    const response = (await this.client.post(
-      'api/v3/two-factor/confirm-email'
-    )) as any;
-
-    return Boolean(response.status === 'success');
+    try {
+      const response = (await this.client.post(
+        'api/v3/two-factor/confirm-email'
+      )) as any;
+      this.success$.next(true);
+      return response.status === 'success';
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
   }
 
   /**

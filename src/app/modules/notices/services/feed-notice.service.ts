@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { CompassService } from '../../compass/compass.service';
 import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
@@ -55,6 +56,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private experiments: ExperimentsService
   ) {
     super();
+    this.initSubscriptions();
   }
 
   /**
@@ -243,5 +245,19 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
       return true;
     }
     return this.dismissService.isNoticeDismissed(notice);
+  }
+
+  /**
+   * Initialize subscriptions.
+   * @returns { void }
+   */
+  private initSubscriptions(): void {
+    this.subscriptions.push(
+      this.emailConfirmation.success$
+        .pipe(filter(Boolean))
+        .subscribe(success => {
+          this.dismiss('verify-email');
+        })
+    );
   }
 }
