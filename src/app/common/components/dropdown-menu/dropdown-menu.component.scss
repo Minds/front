@@ -19,6 +19,7 @@ m-dropdownMenu {
 
   .m-dropdownMenu__menu {
     display: none;
+
     @include z-index(modal);
 
     @media screen and (min-width: $max-mobile + 1) {
@@ -41,63 +42,14 @@ m-dropdownMenu {
       list-style: none;
       width: 100%;
       margin: 0;
-      padding: 14px 0;
+      padding: $spacing2 0;
       min-width: 222px;
-      border: 1px solid;
-      border-radius: 2px;
+      border-radius: $m-borderRadius;
+      box-sizing: border-box;
 
       @include m-theme() {
-        border-color: themed($m-borderColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
         background: themed($m-bgColor--primary);
-      }
-
-      @include m-on-theme(light) {
-        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
-      }
-
-      @include m-on-theme(dark) {
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-      }
-
-      > li {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: 15px;
-        line-height: 34px;
-        white-space: nowrap;
-        cursor: pointer;
-        background: transparent;
-
-        @include m-theme() {
-          color: themed($m-textColor--primary);
-
-          &:hover,
-          &:active {
-            background: themed($m-bgColor--secondary);
-          }
-        }
-
-        > * {
-          flex: 1;
-          margin: 0;
-          padding: 0 10px 0 20px;
-        }
-
-        .m-dropdownMenu__item {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          m-icon + span,
-          span + m-icon {
-            margin-left: 11px;
-          }
-
-          span {
-            flex: 1;
-          }
-        }
       }
     }
   }

@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { isPlatformBrowser } from '@angular/common';
 
 export interface AnchorPosition {
   top?: string;
@@ -39,6 +38,13 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
     top: '100%',
     left: '0',
   };
+
+  // True if any menu option opens up a nested submenu
+  // (e.g.composer meatball)
+  // We disable the dropDown animation in this case because the
+  // animation requires `overflow:hidden`, which would
+  // hide the submenus
+  @Input() hasSubmenu = false;
 
   @ViewChild('triggerElement') triggerElement: ElementRef<HTMLSpanElement>;
 
