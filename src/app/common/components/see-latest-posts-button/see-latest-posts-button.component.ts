@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FeedsService } from './../../../../common/services/feeds.service';
+import { FeedsService } from '../../services/feeds.service';
 
 @Component({
   selector: 'm-seeLatestPostsButton',
@@ -35,7 +35,7 @@ import { FeedsService } from './../../../../common/services/feeds.service';
       state(
         'hidden',
         style({
-          transform: 'translateY(-100px)',
+          transform: 'translateY(-150px)',
         })
       ),
       transition('* => shown', [
@@ -50,7 +50,7 @@ import { FeedsService } from './../../../../common/services/feeds.service';
         animate(
           '450ms ease',
           style({
-            transform: 'translateY(-100px)',
+            transform: 'translateY(-150px)',
           })
         ),
       ]),

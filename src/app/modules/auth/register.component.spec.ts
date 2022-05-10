@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { RegisterComponent } from './register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -7,18 +6,29 @@ import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { Client } from '../../services/api/client';
-import { signupModalServiceMock } from '../../mocks/modules/modals/signup/signup-modal-service.mock';
-import { SignupModalService } from '../modals/signup/service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MockComponent, MockService } from '../../utils/mock';
-import { FeaturesService } from '../../services/features.service';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { PagesService } from '../../common/services/pages.service';
+import { ConfigsService } from '../../common/services/configs.service';
+import { MetaService } from '../../common/services/meta.service';
+import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Navigation as NavigationService } from '../../services/navigation';
+import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
+import { BehaviorSubject } from 'rxjs';
+
+let activatedRouteMock = new (function() {
+  this.queryParams = new BehaviorSubject({
+    referrer: null,
+  });
+})();
 
 describe('RegisterComponent', () => {
   let comp: RegisterComponent;
@@ -31,21 +41,53 @@ describe('RegisterComponent', () => {
           MockComponent({
             selector: 'minds-form-register',
             template: '',
-            inputs: ['referrer'],
+            inputs: [
+              'referrer',
+              'showTitle',
+              'showBigButton',
+              'showPromotions',
+              'showLabels',
+              'showInlineErrors',
+            ],
             outputs: ['done'],
+          }),
+          MockComponent({
+            selector: 'm-marketing__footer',
           }),
           RegisterComponent,
           IfFeatureDirective,
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [
-          { provide: Session, useValue: sessionMock },
           { provide: Client, useValue: clientMock },
-          { provide: SignupModalService, useValue: signupModalServiceMock },
+          { provide: Router, useValue: MockService(Router) },
+          { provide: ActivatedRoute, useValue: activatedRouteMock },
+          { provide: PagesService, useValue: MockService(PagesService) },
           { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: Session, useValue: sessionMock },
+          {
+            provide: NavigationService,
+            useValue: MockService(NavigationService),
+          },
+          {
+            provide: SidebarNavigationService,
+            useValue: MockService(SidebarNavigationService),
+          },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
           { provide: TopbarService, useValue: MockService(TopbarService) },
-          PageLayoutService,
+          { provide: MetaService, useValue: MockService(MetaService) },
+          {
+            provide: PageLayoutService,
+            useValue: MockService(PageLayoutService),
+          },
+          {
+            provide: AuthRedirectService,
+            useValue: MockService(AuthRedirectService),
+          },
+          {
+            provide: OnboardingV3Service,
+            useValue: MockService(OnboardingV3Service),
+          },
         ],
       }).compileComponents();
     })
@@ -59,6 +101,10 @@ describe('RegisterComponent', () => {
     comp.flags.canPlayInlineVideos = true;
 
     fixture.detectChanges();
+  });
+
+  it('should initialize', () => {
+    expect(comp).toBeTruthy();
   });
 
   xit('should have a video with webm and mp4 sources', () => {
@@ -105,5 +151,13 @@ describe('RegisterComponent', () => {
     expect(
       loginReferrerServiceMock.navigate.calls.mostRecent().args[0]
     ).toEqual({ defaultUrl: '/test' });
+  });
+
+  it('should call to set title correctly with no referrer', () => {
+    comp.ngOnInit();
+    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(
+      'Join Minds, and Elevate the Conversation',
+      false
+    );
   });
 });

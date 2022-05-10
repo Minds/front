@@ -192,6 +192,7 @@ import { RecentSubscriptionsService } from './services/recent-subscriptions.serv
 import { ResizedDirective } from './directives/resized.directive';
 import { DropdownMenuItemComponent } from './components/dropdown-menu-item/dropdown-menu-item.component';
 import { PreventDoubleClickDirective } from './directives/prevent-double-click.directive';
+import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-button/see-latest-posts-button.component';
 
 const routes: Routes = [
   {
@@ -364,6 +365,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     RelativeTimeSpanComponent,
+    SeeLatestPostsButtonComponent,
     ResizedDirective,
     DropdownMenuItemComponent,
     PreventDoubleClickDirective,
@@ -514,6 +516,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     RelativeTimeSpanComponent,
+    SeeLatestPostsButtonComponent,
     ResizedDirective,
     DropdownMenuItemComponent,
     PreventDoubleClickDirective,
