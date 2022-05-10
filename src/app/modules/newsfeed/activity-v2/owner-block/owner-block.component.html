@@ -3,7 +3,7 @@
   <!-- AVATAR: MINIMAL REMIND / SIDEBAR BOOSTS / MODALS ONLY  -->
   <!-- ---------------------------- -->
   <div
-    class="m-activityOwnerBlock__avatar"
+    class="m-activityOwnerBlock__avatar m-activityOwnerBlock"
     *ngIf="minimalMode || isSidebarBoost || isModal"
   >
     <m-hovercard [publisher]="owner" [offset]="[0, 15]">
@@ -25,7 +25,7 @@
     <!-- DISPLAY NAME -->
     <!-- ---------------------------- -->
     <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
-      <span [title]="displayName">{{ displayName | truncate: 20 }}</span>
+      <span [title]="displayName">{{ displayName }}</span>
 
       <m-channel--badges
         class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges"
@@ -42,7 +42,7 @@
         class="m-activityOwnerBlock__groupName"
       >
         <span
-          >(<span [title]="group.name">{{ group.name | truncate: 20 }}</span
+          >(<span [title]="group.name">{{ group.name }}</span
           >)</span
         >
       </a>

@@ -254,4 +254,10 @@
       color: themed($m-link);
     }
   }
+
+  ::ng-deep m-activityV2__views {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
 }

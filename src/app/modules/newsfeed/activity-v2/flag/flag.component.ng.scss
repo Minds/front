@@ -19,6 +19,8 @@
   // *********************************
   // *********************************
 
+  max-width: 100%;
+
   [class*='m-activityFlag--'] {
     padding-right: $spacing4;
 
@@ -42,6 +44,10 @@
   }
 
   .m-activityFlag--remind {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
     span,
     a,
     i {

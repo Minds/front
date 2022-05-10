@@ -128,7 +128,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       this._compact = false;
       return;
     } else {
-      console.log('ojm val', value);
       this._compact = value;
     }
 

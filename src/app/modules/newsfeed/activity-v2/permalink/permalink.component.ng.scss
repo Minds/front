@@ -4,6 +4,17 @@
   display: inline-block;
 
   // *********************************
+  // ** FEED **
+  // *********************************
+  .m-activity--isFeed & {
+    .m-activityPermalink__text--edited {
+      @media screen and (max-width: $max-mobile) {
+        display: none !important;
+      }
+    }
+  }
+
+  // *********************************
   // ** MINIMAL MODE **
   // *********************************
 
