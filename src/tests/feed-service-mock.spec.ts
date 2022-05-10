@@ -26,6 +26,9 @@ export let feedsServiceMock = {
   setParams(params) {
     return this;
   },
+  setUnseen(params) {
+    return this;
+  },
   fetch() {
     return this;
   },

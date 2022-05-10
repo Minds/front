@@ -33,6 +33,10 @@ export class FeedsService implements OnDestroy {
   castToActivities: boolean = false;
   exportUserCounts: boolean = false;
   fromTimestamp: string = '';
+  /**
+   * whether or not to filter out unseen entities
+   */
+  unseen: boolean = false;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -212,6 +216,15 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Sets unseen
+   * @param { boolean } value - whether or not to filter out unseen entities
+   */
+  setUnseen(value: boolean): FeedsService {
+    this.unseen = value;
+    return this;
+  }
+
+  /**
    * Fetches the data.
    */
   fetch(refresh: boolean = false): Promise<any> {
@@ -245,6 +258,7 @@ export class FeedsService implements OnDestroy {
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
+          unseen: this.unseen,
           from_timestamp: fromTimestamp,
         },
       })

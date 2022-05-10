@@ -82,6 +82,7 @@ describe('DefaultFeedComponent', () => {
   it('should load', () => {
     spyOn(comp.feedsService, 'setEndpoint').and.returnValue(comp.feedsService);
     spyOn(comp.feedsService, 'setLimit').and.returnValue(comp.feedsService);
+    spyOn(comp.feedsService, 'setUnseen').and.returnValue(comp.feedsService);
     spyOn(comp.feedsService, 'fetch');
 
     (comp as any).load();
