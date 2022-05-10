@@ -6,13 +6,13 @@ import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 import { DiscoveryTagsService } from '../../discovery/tags/tags.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import {
   NoticePosition,
   Notices,
   NoticeIdentifier,
 } from '../feed-notice.types';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { first } from 'rxjs/operators';
 
 /**
  * Determines which feed notices to show, and holds state on
@@ -64,7 +64,6 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private notificationSettings: NotificationsSettingsV2Service,
     private emailConfirmation: EmailConfirmationService,
     private tagsService: DiscoveryTagsService,
-    private experiments: ExperimentsService,
     private activityV2Experiment: ActivityV2ExperimentService
   ) {
     super();
@@ -266,10 +265,17 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Whether user has set tags.
+   * Whether user has set tags. Will wait for inflight request to load tags,
+   * or fire a new one if no request is inflight.
    * @returns { Promise<boolean> } - true if user has set tags.
    */
   private async hasSetTags(): Promise<boolean> {
+    if (this.tagsService.inProgress$.getValue()) {
+      await this.tagsService.inProgress$.pipe(first()).toPromise();
+    }
+    if (!this.tagsService.loaded$.getValue()) {
+      await this.tagsService.loadTags();
+    }
     const count = await this.tagsService.countTags();
     return count > 0;
   }
