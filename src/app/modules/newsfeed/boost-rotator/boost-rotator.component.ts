@@ -39,6 +39,7 @@ import { BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -105,7 +106,7 @@ export class NewsfeedBoostRotatorComponent {
 
   @HostBinding('class.m-newsfeedBoostRotator--activityV2')
   get activityV2Feature(): boolean {
-    return this.experiments.hasVariation('front-5229-activities', true);
+    return this.activityV2Experiment.isActive();
   }
 
   constructor(
@@ -121,6 +122,7 @@ export class NewsfeedBoostRotatorComponent {
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     private experiments: ExperimentsService,
+    private activityV2Experiment: ActivityV2ExperimentService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;

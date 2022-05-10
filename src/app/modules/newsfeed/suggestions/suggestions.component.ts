@@ -6,7 +6,7 @@ import {
 } from '../../../common/services/related-content.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { Session } from '../../../services/session';
-import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { ActivityEntity } from '../activity/activity.service';
 
 @Component({
@@ -40,14 +40,11 @@ export class NewsfeedActivitySuggestionsComponent implements OnInit {
   constructor(
     public session: Session,
     protected relatedContent: RelatedContentService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {}
 
   ngOnInit(): void {
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activites',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   async onBaseEntityChange(e: ActivityEntity): Promise<void> {

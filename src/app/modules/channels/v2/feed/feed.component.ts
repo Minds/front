@@ -29,6 +29,7 @@ import { ComposerModalService } from '../../../composer/components/modal/modal.s
 import { ComposerService } from '../../../composer/services/composer.service';
 import { catchError, take } from 'rxjs/operators';
 import { ExperimentsService } from './../../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Channel feed component
@@ -110,7 +111,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ComposerModalService,
     private injector: Injector,
-    private experiments: ExperimentsService,
+    private activityV2Experiment: ActivityV2ExperimentService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -165,10 +166,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       )
     );
 
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   prepend(activity: any) {

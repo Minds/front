@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { ExperimentsService } from '../../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-topHighlights',
@@ -19,11 +20,12 @@ export class TopHighlightsComponent {
 
   @HostBinding('class.m-topHighlights--activityV2')
   get activityV2Feature(): boolean {
-    return this.experiments.hasVariation('front-5229-activities', true);
+    return this.activityV2Experiment.isActive();
   }
 
   constructor(
     public topFeedService: TopFeedService,
-    public experiments: ExperimentsService
+    public experiments: ExperimentsService,
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {}
 }

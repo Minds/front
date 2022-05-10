@@ -18,6 +18,7 @@ import { WireEventType } from '../v2/wire-v2.service';
 import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
@@ -48,7 +49,7 @@ export class WireLockScreenComponent implements OnInit {
 
   @HostBinding('class.m-wireLockScreen--activityV2')
   get isActivityV2Feature() {
-    return this.experiments.hasVariation('front-5229-activities', true);
+    return this.activityV2Experiment.isActive();
   }
 
   constructor(
@@ -60,7 +61,7 @@ export class WireLockScreenComponent implements OnInit {
     private configs: ConfigsService,
     private wirePaymentHandlers: WirePaymentHandlersService,
     private authModal: AuthModalService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.plusSupportTierUrn = configs.get('plus')['support_tier_urn'];
   }
