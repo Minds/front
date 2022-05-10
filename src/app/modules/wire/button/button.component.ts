@@ -6,6 +6,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { WireCreatorComponent } from '../v2/creator/wire-creator.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-wire-button',
@@ -23,14 +24,11 @@ export class WireButtonComponent implements OnInit {
     private modal: SignupModalService,
     public features: FeaturesService,
     private modalService: ModalService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {}
 
   ngOnInit(): void {
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   async wire() {

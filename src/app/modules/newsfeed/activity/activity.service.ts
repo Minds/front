@@ -7,6 +7,7 @@ import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
@@ -89,7 +90,8 @@ export const ACTIVITY_V2_FIXED_HEIGHT_HEIGHT = 525;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
-
+export const ACTIVITY_V2_FIXED_HEIGHT_RATIO =
+  ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
 // Constants for grid layout
 export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
 
@@ -317,20 +319,17 @@ export class ActivityService {
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
 
-  activityV2Experiment: boolean = false;
+  activityV2Feature: boolean = false;
 
   constructor(
     private configs: ConfigsService,
     private session: Session,
     private featuresService: FeaturesService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.siteUrl = configs.get('site_url');
 
-    this.activityV2Experiment = experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   /**
@@ -359,7 +358,7 @@ export class ActivityService {
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
-    if (this.activityV2Experiment) {
+    if (this.activityV2Feature) {
       this.displayOptions.isV2 = true;
       this.displayOptions.showOnlyCommentsInput = false;
       this.displayOptions.showOnlyCommentsToggle = true;

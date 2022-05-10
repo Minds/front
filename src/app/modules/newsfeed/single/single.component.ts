@@ -18,6 +18,7 @@ import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -55,17 +56,14 @@ export class NewsfeedSingleComponent {
     private headersService: HeadersService,
     private authModal: AuthModalService,
     protected jsonLdService: JsonLdService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
 
     this.context.set('activity');
 

@@ -5,6 +5,7 @@ import { DiscoveryService } from './discovery.service';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { ExperimentsService } from '../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-discovery',
@@ -18,7 +19,7 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.m-discovery--activityV2')
   get activityV2Feature(): boolean {
-    return this.experiments.hasVariation('front-5229-activities', true);
+    return this.activityV2Experiment.isActive();
   }
 
   constructor(
@@ -26,7 +27,7 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private service: DiscoveryService,
     public session: Session,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     /**
      * Determine if on Minds+ page

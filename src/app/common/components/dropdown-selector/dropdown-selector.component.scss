@@ -1,5 +1,5 @@
-$rounded-top: 3px 3px 0 0;
-$rounded-bottom: 0 0 3px 3px;
+$rounded-top: 2px 2px 0 0;
+$rounded-bottom: 0 0 2px 2px;
 
 m-dropdownSelector {
   // new stacking context
@@ -44,12 +44,9 @@ m-dropdownSelector {
   }
 
   &.expanded {
-    @include m-theme() {
-      box-shadow: 0px 1px 15px 0 rgba(themed($m-black-always), 0.15);
-    }
     .m-dropdownSelector__header {
       @include m-theme() {
-        border-color: themed($m-blue);
+        border-color: themed($m-borderColor--primary);
       }
     }
     .m-dropdownSelector__optionsContainer {
@@ -58,9 +55,7 @@ m-dropdownSelector {
 
     &:not(.dropUp) {
       .m-dropdownSelector__header {
-        @include m-theme() {
-          border-radius: $rounded-top;
-        }
+        border-radius: $rounded-top;
       }
       .m-dropdownSelector__optionsContainer {
         border-top: none;
@@ -75,9 +70,6 @@ m-dropdownSelector {
         bottom: 100%;
         border-radius: $rounded-top;
         border-bottom: none;
-        @include m-theme() {
-          box-shadow: 0px -4px 16px -4px rgba(themed($m-black-always), 0.15);
-        }
       }
     }
   }
@@ -90,16 +82,15 @@ m-dropdownSelector {
 
 .m-dropdownSelector__header {
   position: relative;
-  border-radius: 3px;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: $m-borderRadius;
+  transition: all 150ms ease-in-out;
 
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
-    color: themed($m-textColor--tertiary);
-  }
-  @include m-theme() {
+    color: themed($m-borderColor--primary);
     border: 1px solid themed($m-borderColor--primary);
   }
+
   .m-dropdownSelector__label {
     margin-right: 10px;
   }
@@ -113,6 +104,12 @@ m-dropdownSelector {
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
+
+    label {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
   }
 }
 
@@ -120,21 +117,22 @@ m-dropdownSelector {
   box-sizing: border-box;
   position: absolute;
   display: none;
-  border-radius: 3px;
+  border-radius: $m-borderRadius;
+  padding: $spacing2 0;
   left: 0px;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 150ms ease-in-out;
   @include m-theme() {
-    border: 1px solid themed($m-blue);
-    border-top: 1px solid themed($m-blue);
+    border: 1px solid themed($m-borderColor--primary);
     background-color: themed($m-bgColor--primary);
-    box-shadow: 0px 8px 16px 0px rgba(themed($m-black), 0.15);
   }
 
   .m-dropdownSelector__option {
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 0;
+    transition: all 150ms ease-in-out;
+
     &:hover:not(.unavailable) {
       @include m-theme() {
-        color: themed($m-textColor--primary);
+        background-color: themed($m-borderColor--primary);
       }
     }
     &:first-child {
@@ -150,19 +148,31 @@ m-dropdownSelector {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 10px;
+  padding-right: $spacing2;
 }
+
 .m-dropdownSelector__option {
   display: inline-block;
-  padding: 10px 0 10px 12px;
+  padding: $spacing3 $spacing4;
   box-sizing: border-box;
-  width: inherit;
-  border-radius: 3px;
+  width: 100%;
+  border-radius: $m-borderRadius;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @include body2Medium;
   @include m-theme() {
-    color: themed($m-textColor--secondary);
+    color: themed($m-textColor--primary);
+    background: themed($m-bgColor--primary);
+  }
+
+  &.unavailable {
+    display: none;
+    text-decoration: line-through;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
   }
 
   label {
@@ -174,14 +184,7 @@ m-dropdownSelector {
 
   span {
     @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-  }
-  &.unavailable {
-    display: none;
-    text-decoration: line-through;
-    @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--primary);
     }
   }
 }
@@ -203,24 +206,9 @@ m-dropdownSelector {
         width: 160px;
       }
       .m-dropdownSelector__header {
-        padding-right: 10px;
         i {
           display: none;
         }
-      }
-      .m-dropdownSelector__optionsContainer {
-        .m-dropdownSelector__option {
-          &:first-child {
-            padding-top: 11px;
-          }
-          &:last-child {
-            padding-bottom: 11px;
-          }
-        }
-      }
-      .m-dropdownSelector__option {
-        margin-right: 0;
-        padding: 8px 18px;
       }
     }
   }

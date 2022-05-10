@@ -37,44 +37,25 @@
 
 <ng-template #typeMenu>
   <ul>
-    <li
-      *ngFor="let typeEntry of types; let first = first"
-      [class.m-dropdownMenu__item--first]="first"
+    <m-dropdownMenu__item
+      *ngFor="let typeEntry of types"
       (click)="typeChangeEmitter.emit(typeEntry.value)"
+      selectable="true"
+      [selected]="type === typeEntry.value"
     >
-      <span
-        class="m-dropdownMenu__item"
-        [ngClass]="{
-          'm-dropdownMenu__item--selected': type === typeEntry.value
-        }"
-      >
-        <m-icon *ngIf="type === typeEntry.value" iconId="check"></m-icon>
-        <span>{{ typeEntry.label }}</span>
-      </span>
-    </li>
+      <span>{{ typeEntry.label }}</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>
 
 <ng-template #dateRangeMenu>
   <ul>
-    <li
-      *ngFor="let dateRangeEntry of dateRangeTypes; let first = first"
-      [class.m-dropdownMenu__item--first]="first"
+    <m-dropdownMenu__item
+      *ngFor="let dateRangeEntry of dateRangeTypes"
       (click)="onDateRangeChange(dateRangeEntry.value)"
-    >
-      <span
-        class="m-dropdownMenu__item"
-        [ngClass]="{
-          'm-dropdownMenu__item--selected':
-            dateRangeType === dateRangeEntry.value
-        }"
-      >
-        <m-icon
-          *ngIf="dateRangeType === dateRangeEntry.value"
-          iconId="check"
-        ></m-icon>
-        <span>{{ dateRangeEntry.menuLabel }}</span>
-      </span>
-    </li>
+      selectable="true"
+      [selected]="dateRangeType === dateRangeEntry.value"
+      ><span>{{ dateRangeEntry.menuLabel }}</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>

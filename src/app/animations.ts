@@ -91,3 +91,15 @@ export const SlowFadeAnimation = trigger('slowFade', [
   transition('out => in', [animate('600ms')]),
   transition('in => out', [animate('0ms')]),
 ]);
+
+// Note: must be used with `overflow: hidden`
+export const DropDownAnimation = trigger('dropDown', [
+  transition(':enter', [
+    style({ opacity: 0, height: 0 }),
+    animate('100ms ease-out', style({ opacity: 1, height: '*' })),
+  ]),
+  transition(
+    ':leave',
+    animate('100ms ease-out', style({ height: 0, opacity: 0 }))
+  ),
+]);

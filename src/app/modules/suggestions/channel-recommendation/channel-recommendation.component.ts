@@ -10,6 +10,7 @@ import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { DropdownMenuOption } from './../../../common/components/dropdown-menu-v2/dropdown-menu-v2.component';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 
@@ -88,12 +89,13 @@ export class ChannelRecommendationComponent implements OnInit {
     private api: ApiService,
     public experiments: ExperimentsService,
     private recentSubscriptions: RecentSubscriptionsService,
+    private activityV2Experiment: ActivityV2ExperimentService,
     private dismissalService: DismissalService
   ) {}
 
   @HostBinding('class.m-channelRecommendation--activityV2')
   get activityV2Feature(): boolean {
-    return this.experiments.hasVariation('front-5229-activities', true);
+    return this.activityV2Experiment.isActive();
   }
 
   ngOnInit(): void {

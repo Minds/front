@@ -42,7 +42,7 @@
 
         &:not(.m-sidebarMoreDropdown__spacer):not(.m-sidebarMoreDropdown__footer):hover {
           @include m-theme() {
-            background-color: themed($m-bgColor--secondary);
+            background-color: themed($m-borderColor--primary);
           }
         }
 
@@ -55,18 +55,8 @@
             margin-right: 15px;
             font-size: 22px;
             @include m-theme() {
-              color: themed($m-textColor--secondary);
-              fill: themed($m-textColor--secondary);
-            }
-          }
-
-          &:hover {
-            ::ng-deep m-icon,
-            i {
-              @include m-theme() {
-                color: themed($m-textColor--primary);
-                fill: themed($m-textColor--primary);
-              }
+              color: themed($m-textColor--primary);
+              fill: themed($m-textColor--primary);
             }
           }
         }

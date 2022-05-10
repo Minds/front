@@ -9,23 +9,28 @@
 
 <ng-template #menu>
   <ul>
-    <li>
-      <span routerLink="/analytics/dashboard/token">Token analytics</span>
-    </li>
-    <li (click)="onTransferTokensClick($event)">
-      <span>Transfer On-chain</span>
-    </li>
-    <li (click)="onPurchaseTokensClick($event)">
-      <span>Purchase tokens</span>
-    </li>
-    <li *ngIf="address$ | async" (click)="copyAddressToClipboard($event)">
-      <span>Copy address to clipboard</span>
-      <span #addressEl class="m-walletTokensDropdown__copyToClipboardContent">{{
-        address$ | async
-      }}</span>
-    </li>
-    <li *ngIf="canDisconnect$ | async" (click)="onDisconnectClick($event)">
-      <span>Disconnect Wallet</span>
-    </li>
+    <m-dropdownMenu__item routerLink="/analytics/dashboard/token"
+      ><span>Token analytics</span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item (click)="onTransferTokensClick($event)"
+      ><span>Transfer On-chain</span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item (click)="onPurchaseTokensClick($event)"
+      ><span>Purchase tokens</span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="address$ | async"
+      (click)="copyAddressToClipboard($event)"
+      ><span>Copy address to clipboard</span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="canDisconnect$ | async"
+      (click)="onDisconnectClick($event)"
+      ><span>Disconnect Wallet</span>
+    </m-dropdownMenu__item>
   </ul>
+
+  <span #addressEl class="m-walletTokensDropdown__copyToClipboardContent">{{
+    address$ | async
+  }}</span>
 </ng-template>

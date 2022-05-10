@@ -13,11 +13,11 @@
 
       <ng-template #dropdown>
         <ul>
-          <li (click)="onDeleteIntent.emit(supportTier)">
-            <span class="m-dropdownMenu__item">
-              <span i18n="@@SUPPORT_TIER_DELETE">Delete Tier</span>
-            </span>
-          </li>
+          <m-dropdownMenu__item (click)="onDeleteIntent.emit(supportTier)"
+            ><span i18n="@@SUPPORT_TIER_DELETE"
+              >Delete Tier</span
+            ></m-dropdownMenu__item
+          >
         </ul>
       </ng-template>
     </div>

@@ -13,6 +13,7 @@ import { ExcerptPipe } from '../../../common/pipes/excerpt';
 import { Component, Input } from '@angular/core';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { MockService } from '../../../utils/mock';
+import { TruncatePipe } from '../../../common/pipes/truncate.pipe';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -51,6 +52,7 @@ describe('BlogCard', () => {
           ThumbsDownMock,
           CommentsMock,
           BlogCard,
+          TruncatePipe,
         ],
         imports: [
           RouterTestingModule,

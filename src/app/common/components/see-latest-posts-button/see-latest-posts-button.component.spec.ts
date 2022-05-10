@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
-import { MockService } from '../../../../utils/mock';
-import { MINDS_PIPES } from './../../../../common/pipes/pipes';
-import { FeedsService } from './../../../../common/services/feeds.service';
+import { MockService } from '../../../utils/mock';
+import { MINDS_PIPES } from '../../pipes/pipes';
+import { FeedsService } from '../../services/feeds.service';
 import { SeeLatestPostsButtonComponent } from './see-latest-posts-button.component';
 
 describe('SeeLatestPostsButtonComponent', () => {
