@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-discovery__feedItem',
@@ -24,16 +25,13 @@ export class DiscoveryFeedItemComponent implements OnInit {
   constructor(
     private configs: ConfigsService,
     private cd: ChangeDetectorRef,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit(): void {
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   onDelete(activity): void {

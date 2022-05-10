@@ -43,8 +43,10 @@ m-videoPlayer--scrollaware {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  background-color: #222;
   position: relative;
+  @include m-theme() {
+    background-color: themed($m-black-always);
+  }
 
   i {
     opacity: 0.8;

@@ -22,6 +22,7 @@ import { CommentComponentV2 } from '../../../modules/comments/comment/comment.co
 import { ActivityService } from '../../services/activity.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'minds-card',
@@ -52,7 +53,7 @@ export class MindsCard implements OnInit, AfterViewInit {
   constructor(
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _injector: Injector,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {}
 
   @Input('object') set _object(value: any) {
@@ -87,10 +88,7 @@ export class MindsCard implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   ngAfterViewInit() {
