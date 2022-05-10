@@ -16,6 +16,7 @@ export class NSFWSelectorComponent {
   @Input('service') serviceRef: string = 'consumer';
   @Input('consumer') consumer: false;
   @Input('expanded') expanded: false;
+  @Input('v2') v2 = false;
   @Output('selectedChange') onSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(
