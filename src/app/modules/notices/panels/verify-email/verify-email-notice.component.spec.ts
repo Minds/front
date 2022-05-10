@@ -67,7 +67,7 @@ describe('VerifyEmailNoticeComponent', () => {
   it('should call to resend email on primary option click when experiment is not active', () => {
     (comp as any).emailCodeExperiment.isActive.and.returnValue(false);
     comp.onPrimaryOptionClick(null);
-    expect((comp as any).emailConfirmation.verify).not.toHaveBeenCalled();
+    expect((comp as any).emailConfirmation.confirm).not.toHaveBeenCalled();
     expect((comp as any).emailResend.send).toHaveBeenCalled();
   });
 
@@ -75,6 +75,6 @@ describe('VerifyEmailNoticeComponent', () => {
     (comp as any).emailCodeExperiment.isActive.and.returnValue(true);
     comp.onPrimaryOptionClick(null);
     expect((comp as any).emailResend.send).not.toHaveBeenCalled();
-    expect((comp as any).emailConfirmation.verify).toHaveBeenCalled();
+    expect((comp as any).emailConfirmation.confirm).toHaveBeenCalled();
   });
 });

@@ -24,7 +24,7 @@ export class VerifyEmailNoticeComponent {
    */
   public onPrimaryOptionClick($event: MouseEvent): void {
     if (this.isEmailCodeExperimentActive()) {
-      this.emailConfirmation.verify();
+      this.emailConfirmation.confirm();
       return;
     }
     this.emailResend.send();

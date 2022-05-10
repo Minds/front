@@ -49,15 +49,13 @@ export class EmailConfirmationService {
   }
 
   /**
-   * Verify email code - will trigger MFA modal.
+   * Confirm email code - will trigger MFA modal.
    * On success will set email confirmation to verified.
    * @returns { Promise<boolean> } - true if success
    */
-  async verify(): Promise<boolean> {
+  async confirm(): Promise<boolean> {
     try {
-      const response = (await this.client.post(
-        'api/v3/two-factor/confirm-email'
-      )) as any;
+      const response = (await this.client.post('api/v3/email/confirm')) as any;
       const success = response.status === 'success';
       this.success$.next(success);
       return success;

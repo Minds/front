@@ -25,30 +25,30 @@ describe('EmailConfirmationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call to verify an email address', async () => {
+  it('should call to confirm an email address', async () => {
     service.success$.next(false);
     clientMock.response = { status: 'success' };
 
-    const success = await service.verify();
+    const success = await service.confirm();
 
     expect(success).toBeTruthy();
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(
-      'api/v3/two-factor/confirm-email'
+      'api/v3/email/confirm'
     );
     expect(service.success$.getValue()).toBeTruthy();
   });
 
-  it('should return false if unable to verify an email address', async () => {
+  it('should return false if unable to confirm an email address', async () => {
     service.success$.next(false);
     clientMock.response = { status: 'error' };
 
-    const success = await service.verify();
+    const success = await service.confirm();
 
     expect(success).toBeFalsy();
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(
-      'api/v3/two-factor/confirm-email'
+      'api/v3/email/confirm'
     );
     expect(service.success$.getValue()).toBeFalsy();
   });

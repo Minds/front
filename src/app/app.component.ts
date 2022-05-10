@@ -255,7 +255,7 @@ export class Minds implements OnInit, OnDestroy {
   /**
    * Checks whether email confirmation if required and sets up subscription so
    * that the function is called again on login events (including register).
-   * If a user should confirm their email, will call verify function, which will
+   * If a user should confirm their email, will call confirm function, which will
    * cause MFA modal to trigger via MultiFactorHttpInterceptorService.
    * @returns { void }
    */
@@ -275,7 +275,7 @@ export class Minds implements OnInit, OnDestroy {
 
     if (this.emailConfirmationService.requiresEmailConfirmation()) {
       // try to verify - this should cause MFA modal to trigger from interceptor.
-      this.emailConfirmationService.verify();
+      this.emailConfirmationService.confirm();
     }
   }
 
