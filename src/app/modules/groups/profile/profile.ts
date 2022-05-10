@@ -35,6 +35,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { GroupsSearchService } from './feed/search.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -101,7 +102,7 @@ export class GroupsProfile {
     private injector: Injector,
     protected publisherSearchModal: PublisherSearchModalService,
     protected groupsSearch: GroupsSearchService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -111,10 +112,7 @@ export class GroupsProfile {
     this.listenForNewMessages();
     this.detectWidth(true);
 
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
 
     const params = this.route.snapshot.queryParamMap;
     if (params.has('query')) {

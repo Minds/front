@@ -22,8 +22,11 @@ import { PopupService } from '../../popup/popup.service';
   templateUrl: './dropdown.component.html',
 })
 export class ComposerTitleBarDropdownComponent implements OnDestroy {
-  @Input() anchorPosition = { top: '0', left: '0' };
   @Input() displayAsButton: boolean = false;
+  @Input() showNSFWMenu: boolean = false;
+
+  @Input() anchorPosition = { top: '0', left: '0' };
+  submenuAnchorPosition = { top: '0', right: 'calc(100% - 4px)' };
 
   /**
    * Visibility items list

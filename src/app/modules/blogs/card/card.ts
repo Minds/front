@@ -3,6 +3,7 @@ import { Session } from '../../../services/session';
 import { AttachmentService } from '../../../services/attachment';
 import { ACCESS } from '../../../services/list-options';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'minds-card-blog',
@@ -21,7 +22,7 @@ export class BlogCard implements OnInit {
   constructor(
     public session: Session,
     public attachment: AttachmentService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {}
 
   set _blog(value: any) {
@@ -31,9 +32,6 @@ export class BlogCard implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 }

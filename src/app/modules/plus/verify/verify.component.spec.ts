@@ -84,7 +84,7 @@ describe('PlusVerifyComponent', () => {
   });
 
   it('Should load correctly', () => {
-    const modal = fixture.debugElement.query(By.css('m-modal'));
+    const modal = fixture.debugElement.query(By.css('.m-plus--verify'));
     expect(modal).not.toBeNull();
     expect(comp.form).not.toBeNull();
   });

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 import { PaywallType } from '../../../modules/wire/lock-screen/wire-lock-screen.component';
 import { ConfigsService } from '../../services/configs.service';
 
@@ -31,16 +32,13 @@ export class PaywallBadgeComponent implements OnInit {
 
   constructor(
     private config: ConfigsService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.plusSupportTierUrn = config.get('plus')?.support_tier_urn;
   }
 
   ngOnInit(): void {
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   load(): void {

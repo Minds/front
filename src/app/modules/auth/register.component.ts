@@ -6,11 +6,9 @@ import { Subscription } from 'rxjs';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
-import { SignupModalService } from '../modals/signup/service';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { PagesService } from '../../common/services/pages.service';
-import { FeaturesService } from '../../services/features.service';
 import { MetaService } from '../../common/services/meta.service';
 import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
@@ -50,13 +48,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     public pagesService: PagesService,
-    private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
     public navigation: NavigationService,
     private navigationService: SidebarNavigationService,
     private configs: ConfigsService,
-    private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
@@ -98,7 +94,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.metaService.setTitle('Register');
+    // set here rather than in auth module so we can set join to false.
+    this.metaService.setTitle(
+      'Join Minds, and Elevate the Conversation',
+      false
+    );
 
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
@@ -117,12 +117,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.metaService.setOgImage(
           `${this.cdnUrl}icon/${ch.guid}/large/${ch.icontime}`
         );
+        this.setReferrerTitle(ch.name);
       } else {
         this.setPlaceholderMetaImage();
       }
     } catch (e) {
       console.error(e);
     }
+  }
+
+  /**
+   * Sets title and og:title for referrer URLs.
+   * @param { string } name - name of user to be interpolated into title. Defaults to 'us'.
+   * @return { void }
+   */
+  setReferrerTitle(name: string = 'us'): void {
+    this.metaService.setTitle(`Join ${name} on Minds`, false);
   }
 
   setPlaceholderMetaImage(): void {

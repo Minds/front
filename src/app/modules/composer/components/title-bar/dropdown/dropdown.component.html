@@ -2,99 +2,101 @@
   triggerClass="m-composerTitleBar__menuButton"
   menuClass="m-composerTitleBar__menu"
   [anchorPosition]="anchorPosition"
-  [menu]="menu"
+  [menu]="mainMenu"
   [hidden]="isPosting$ | async"
+  hasSubmenu="true"
   data-cy="meatball-menu-trigger"
 >
+  <!-- ------------------------------------ -->
+  <!-- MAIN MENU TRIGGER -->
+  <!-- ------------------------------------ -->
   <m-icon *ngIf="!displayAsButton" iconId="more_vert"></m-icon>
   <m-button *ngIf="displayAsButton" overlay="true" size="xsmall" iconOnly="true"
     ><i class="material-icons">more_vert</i></m-button
   >
 </m-dropdownMenu>
 
-<ng-template #menu>
+<!-- ------------------------------------ -->
+<!-- MAIN MENU ITEMS -->
+<!-- ------------------------------------ -->
+<ng-template #mainMenu>
   <ul data-cy="meatball-menu">
-    <li>
-      <m-dropdownMenu
-        *ngIf="canChangeVisibility"
-        [menu]="visibilityMenu"
-        [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
-        triggerClass="m-dropdownMenu__item"
-        data-cy="meatball-menu-visibility"
-      >
-        <span>Visibility</span>
-        <m-icon iconId="chevron_right"></m-icon>
-      </m-dropdownMenu>
-    </li>
+    <!-- VISIBILITY SUBMENU TRIGGER -->
+    <m-dropdownMenu
+      [menu]="visibilitySubmenu"
+      [anchorPosition]="submenuAnchorPosition"
+      data-cy="meatball-menu-visibility"
+    >
+      <m-dropdownMenu__item *ngIf="canChangeVisibility" hasSubmenu="true"
+        ><span>Visibility</span>
+      </m-dropdownMenu__item>
+    </m-dropdownMenu>
 
-    <li>
-      <m-dropdownMenu
-        [menu]="licenseMenu"
-        [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
-        triggerClass="m-dropdownMenu__item"
-        data-cy="meatball-menu-license"
-      >
-        <span>License</span>
-        <m-icon iconId="chevron_right"></m-icon>
-      </m-dropdownMenu>
-    </li>
-    <li>
-      <m-dropdownMenu
-        [menu]="permawebMenu"
-        [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
-        triggerClass="m-dropdownMenu__item"
-        data-cy="meatball-menu-permaweb"
-        *ngIf="shouldShowPermawebOption()"
-      >
-        <span>Permaweb</span>
-        <m-icon iconId="chevron_right"></m-icon>
-      </m-dropdownMenu>
-    </li>
+    <!-- LICENSE SUBMENU TRIGGER -->
+    <m-dropdownMenu
+      [menu]="licenseSubmenu"
+      [anchorPosition]="submenuAnchorPosition"
+      data-cy="meatball-menu-visibility"
+    >
+      <m-dropdownMenu__item hasSubmenu="true"
+        ><span>License</span>
+      </m-dropdownMenu__item>
+    </m-dropdownMenu>
+
+    <!-- PERMAWEB SUBMENU TRIGGER -->
+    <m-dropdownMenu
+      *ngIf="shouldShowPermawebOption()"
+      [menu]="permawebSubmenu"
+      [anchorPosition]="submenuAnchorPosition"
+      data-cy="meatball-menu-permaweb"
+    >
+      <m-dropdownMenu__item hasSubmenu="true"
+        ><span>Permaweb</span>
+      </m-dropdownMenu__item>
+    </m-dropdownMenu>
+
     <ng-content></ng-content>
   </ul>
 </ng-template>
 
-<ng-template #visibilityMenu>
+<!-- ------------------------------------ -->
+<!-- SUBMENUS -->
+<!-- ------------------------------------ -->
+
+<!-- VISIBILITY SUBMENU ITEMS -->
+<ng-template #visibilitySubmenu>
   <ul data-cy="meatball-menu-visibility-menu">
-    <li
+    <m-dropdownMenu__item
       *ngFor="let visibilityItem of visibilityItems"
       (click)="onVisibilityClick(visibilityItem.value)"
-    >
-      <span class="m-dropdownMenu__item">
-        <span>{{ visibilityItem.text }}</span>
-        <m-icon
-          iconId="check"
-          *ngIf="(accessId$ | async) === visibilityItem.value"
-        ></m-icon>
-      </span>
-    </li>
+      selectable="true"
+      [selected]="(accessId$ | async) === visibilityItem.value"
+      ><span>{{ visibilityItem.text }}</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>
 
-<ng-template #licenseMenu>
+<!-- LICENSE SUBMENU ITEMS -->
+<ng-template #licenseSubmenu>
   <ul data-cy="meatball-menu-license-menu">
-    <li
+    <m-dropdownMenu__item
       *ngFor="let licenseItem of licenseItems"
       (click)="onLicenseClick(licenseItem.value)"
-    >
-      <span class="m-dropdownMenu__item">
-        <span>{{ licenseItem.text }}</span>
-        <m-icon
-          iconId="check"
-          *ngIf="(license$ | async) === licenseItem.value"
-        ></m-icon>
-      </span>
-    </li>
+      selectable="true"
+      [selected]="(license$ | async) === licenseItem.value"
+      ><span>{{ licenseItem.text }}</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>
 
-<ng-template #permawebMenu>
+<!-- PERMAWEB SUBMENU ITEMS -->
+<ng-template #permawebSubmenu>
   <ul data-cy="meatball-menu-license-menu">
-    <li (click)="onPostToPermawebClick()">
-      <span class="m-dropdownMenu__item">
-        <span>Post to Permaweb</span>
-        <m-icon iconId="check" *ngIf="service.postToPermaweb$ | async"></m-icon>
-      </span>
-    </li>
+    <m-dropdownMenu__item
+      (click)="onPostToPermawebClick()"
+      selectable="true"
+      [selected]="service.postToPermaweb$ | async"
+      ><span>Post to Permaweb</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>

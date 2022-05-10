@@ -41,7 +41,7 @@ export class DiscoveryFeedsService {
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
-    @Self() private feedsService: FeedsService,
+    @Self() public feedsService: FeedsService,
     public nsfwService: NSFWSelectorConsumerService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private discoveryService: DiscoveryService,
@@ -89,6 +89,7 @@ export class DiscoveryFeedsService {
 
     this.feedsService
       .setEndpoint('api/v3/discovery/search')
+      .setCountEndpoint('api/v3/discovery/search/count')
       .setParams({
         q,
         period: this.period$.value,

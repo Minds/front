@@ -1,4 +1,35 @@
+<!-- ---------------------------------------- -->
+<!-- V2 -->
+<!-- (Used in admin view of channel menu -->
+<!-- ---------------------------------------- -->
+<ng-template #v2Template>
+  <m-dropdownMenu
+    [menu]="nsfwSubmenu"
+    [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
+  >
+    <m-dropdownMenu__item hasSubmenu="true"
+      ><span i18n="@@COMMON__NSFW">NSFW</span></m-dropdownMenu__item
+    >
+  </m-dropdownMenu>
+
+  <ng-template #nsfwSubmenu>
+    <ul>
+      <m-dropdownMenu__item
+        *ngFor="let reason of service.reasons"
+        (click)="toggle(reason)"
+        selectable="true"
+        [selected]="reason.selected"
+        [icon]="reason.locked ? 'locked' : null"
+        >{{ reason.label }}
+      </m-dropdownMenu__item>
+    </ul>
+  </ng-template>
+</ng-template>
+<!-- ---------------------------------------- -->
+<!-- V1 -->
+<!-- ---------------------------------------- -->
 <m-dropdown
+  *ngIf="!v2; else v2Template"
   class="m-nsfwSelector__dropdown"
   [expanded]="expanded"
   #dropdown

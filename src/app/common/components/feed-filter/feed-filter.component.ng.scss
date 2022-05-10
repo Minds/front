@@ -49,31 +49,4 @@
       display: flex;
     }
   }
-
-  ::ng-deep {
-    m-dropdownMenu {
-      .m-dropdownMenu__item {
-        span {
-          display: inline-block;
-          margin-left: 31px;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
-        }
-        m-icon {
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-        }
-      }
-      .m-dropdownMenu__item--selected {
-        span {
-          margin-left: 0;
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-        }
-      }
-    }
-  }
 }

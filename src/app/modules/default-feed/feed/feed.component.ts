@@ -62,6 +62,7 @@ export class DefaultFeedComponent implements OnInit {
       this.feedsService
         .setEndpoint(endpoint)
         .setLimit(12)
+        .setUnseen(this.isDiscoveryTopUnseenExperimentActive())
         .fetch(refresh);
     } catch (e) {
       console.error('DefaultFeedComponent', e);
@@ -98,5 +99,16 @@ export class DefaultFeedComponent implements OnInit {
     }
 
     return this.experiments.hasVariation('minds-2263-clustered-recs', true);
+  }
+
+  /**
+   * Check if the discovery top experiment is active for the current session
+   * @returns boolean
+   */
+  private isDiscoveryTopUnseenExperimentActive(): boolean {
+    return this.experiments.hasVariation(
+      'minds-3092-unseen-discovery-top',
+      true
+    );
   }
 }
