@@ -25,6 +25,9 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     boolean
   >(false);
 
+  // lock that is set to true once an outlet calls to init.
+  private loadingLock: boolean = false;
+
   // Object containing information on all notices, used to sync state.
   // Ordering indicates order of show priority.
   public notices: Notices = {
@@ -63,7 +66,18 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private experiments: ExperimentsService
   ) {
     super();
-    this.checkNoticeState();
+  }
+
+  /**
+   * Initial load - called from outlet async. Only one outlet will
+   * be able to trigger the initial load.
+   * @returns { Promise<void> }
+   */
+  public async checkInitialState(): Promise<void> {
+    if (!this.loadingLock) {
+      this.loadingLock = true;
+      await this.checkNoticeState();
+    }
   }
 
   /**

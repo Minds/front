@@ -8,6 +8,7 @@ import {
 import { FeedNoticeService } from '../services/feed-notice.service';
 import { NoticePosition, NoticeIdentifier } from '../feed-notice.types';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 /**
  * Outlet for feed notices - use this component to show a relevant
@@ -97,7 +98,8 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
    */
   private async initSubscription(): Promise<void> {
     this.subscriptions.push(
-      this.service.updatedState$.subscribe(val => {
+      // once true, service has completed initial load.
+      this.service.updatedState$.pipe(filter(Boolean)).subscribe(val => {
         // if we're not showing multiple and this position already has shown notices.
         if (!this.showMultiple && this.service.hasShownANotice()) {
           return;
@@ -109,10 +111,11 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
           this.activeNotice = null;
           return;
         }
-
         this.activeNotice = notice;
         this.service.setShown(notice, true);
       })
     );
+
+    await this.service.checkInitialState();
   }
 }
