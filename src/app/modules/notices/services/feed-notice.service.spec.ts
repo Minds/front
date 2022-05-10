@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { notificationsSettingsV2ServiceMock } from '../../../mocks/modules/settings-v2/account/notification-v3/notification-settings-v2-mock.spec';
 import { FeedNoticeService } from './feed-notice.service';
@@ -22,6 +22,8 @@ export let activityV2ExperimentServiceMock = new (function() {
 
 export let tagsServiceMock = new (function() {
   this.countTags = jasmine.createSpy('countTags').and.returnValue(0);
+  this.inProgress$ = new BehaviorSubject<boolean>(false);
+  this.loaded$ = new BehaviorSubject<boolean>(true);
 })();
 
 describe('FeedNoticeService', () => {
@@ -33,6 +35,7 @@ describe('FeedNoticeService', () => {
       compassServiceMock,
       notificationsSettingsV2ServiceMock,
       emailConfirmationServiceMock,
+      tagsServiceMock,
       activityV2ExperimentServiceMock
     );
   });
