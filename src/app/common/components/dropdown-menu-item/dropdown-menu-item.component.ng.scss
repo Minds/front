@@ -29,6 +29,8 @@
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     //-----------------------------------
