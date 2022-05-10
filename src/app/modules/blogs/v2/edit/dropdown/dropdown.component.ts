@@ -2,14 +2,8 @@
  * Dropdown menu for blogs v2
  */
 import { Component } from '@angular/core';
-import {
-  ACCESS,
-  LICENSES,
-  LicensesEntry,
-} from '../../../../../services/list-options';
 import { BlogsEditService } from '../blog-edit.service';
 import { NSFW_REASONS } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'm-blogEditor__dropdown',

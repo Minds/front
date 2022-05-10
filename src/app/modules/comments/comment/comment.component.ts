@@ -42,6 +42,7 @@ import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-comment',
@@ -149,7 +150,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     private activityModalCreator: ActivityModalCreatorService,
     private injector: Injector,
     public suggestions: AutocompleteSuggestionsService,
-    private experiments: ExperimentsService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -164,10 +165,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       );
     }
 
-    this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities',
-      true
-    );
+    this.activityV2Feature = this.activityV2Experiment.isActive();
 
     this.commentAgeOnLoadMs = Date.now() - this.comment.time_created * 1000;
 

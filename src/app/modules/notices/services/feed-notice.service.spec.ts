@@ -18,8 +18,8 @@ export let emailConfirmationServiceMock = new (function() {
   this.success$ = new BehaviorSubject<boolean>(false);
 })();
 
-export let experimentsServiceMock = new (function() {
-  this.hasVariation = jasmine.createSpy('hasVariation').and.returnValue(true);
+export let activityV2ExperimentServiceMock = new (function() {
+  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
 })();
 
 describe('FeedNoticeService', () => {
@@ -31,7 +31,7 @@ describe('FeedNoticeService', () => {
       compassServiceMock,
       notificationsSettingsV2ServiceMock,
       emailConfirmationServiceMock,
-      experimentsServiceMock
+      activityV2ExperimentServiceMock
     );
   });
 
@@ -260,10 +260,10 @@ describe('FeedNoticeService', () => {
   });
 
   it('should be aware of if experiment is active and notices should be full width', () => {
-    (service as any).experiments.hasVariation.and.returnValue(true);
+    (service as any).activityV2Experiment.isActive.and.returnValue(true);
     expect(service.shouldBeFullWidth()).toBeTruthy();
 
-    (service as any).experiments.hasVariation.and.returnValue(false);
+    (service as any).activityV2Experiment.isActive.and.returnValue(false);
     expect(service.shouldBeFullWidth()).toBeFalsy();
   });
 
