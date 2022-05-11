@@ -135,7 +135,6 @@ import { OverlayComponent } from './components/overlay/overlay.component';
 import { AttachmentApiService } from './api/attachment-api.service';
 import { ApiService } from './api/api.service';
 import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
-import { DropdownMenuV2Component } from './components/dropdown-menu-v2/dropdown-menu-v2.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import {
@@ -329,7 +328,6 @@ const routes: Routes = [
     IconComponent,
     OverlayComponent,
     DropdownMenuComponent,
-    DropdownMenuV2Component,
     CalendarComponent,
     LoadingSpinnerComponent,
     PageLayoutPaneDirective,
@@ -482,7 +480,6 @@ const routes: Routes = [
     IconComponent,
     OverlayComponent,
     DropdownMenuComponent,
-    DropdownMenuV2Component,
     CalendarComponent,
     LoadingSpinnerComponent,
     PageLayoutPaneDirective,
