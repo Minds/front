@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { Subscription, combineLatest, Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
 import { DiscoveryService } from '../discovery.service';
 
@@ -10,8 +11,13 @@ import { DiscoveryService } from '../discovery.service';
   templateUrl: './suggestions.component.html',
   providers: [SuggestionsService],
 })
-export class DiscoverySuggestionsComponent implements OnInit, OnDestroy {
+export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
+  implements OnInit, OnDestroy {
   type: string = 'user';
+  /**
+   * Whether the tabs should be hidden
+   */
+  hideTabs: boolean = false;
   offset: string = '';
   limit: number = 24;
   entities$ = this.service.suggestions$.pipe(
@@ -19,39 +25,37 @@ export class DiscoverySuggestionsComponent implements OnInit, OnDestroy {
   );
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
-  urlSubscription: Subscription;
-
-  parentPathSubscription: Subscription;
   parentPath: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private service: SuggestionsService,
     private discoveryService: DiscoveryService
-  ) {}
-
-  ngOnInit() {
-    this.urlSubscription = this.route.url.subscribe(
-      (segments: UrlSegment[]) => {
-        this.type = segments[0].path;
-        this.service.load({
-          limit: this.limit,
-          refresh: true,
-          type: this.type,
-        });
-      }
-    );
-
-    this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
-      parentPath => {
-        this.parentPath = parentPath;
-      }
-    );
+  ) {
+    super();
   }
 
-  ngOnDestroy() {
-    this.urlSubscription.unsubscribe();
-    this.parentPathSubscription.unsubscribe();
+  ngOnInit() {
+    this.subscriptions.push(
+      combineLatest([this.route.queryParamMap, this.route.url]).subscribe(
+        ([queryParamMap, segments]) => {
+          const contextualUser = queryParamMap.get('u');
+          this.type = segments[0].path;
+          // hide tabs to only show user recommendations for the contextual user
+          this.hideTabs = Boolean(contextualUser);
+
+          this.service.load({
+            limit: this.limit,
+            refresh: true,
+            type: this.type,
+            user: contextualUser,
+          });
+        }
+      ),
+      this.discoveryService.parentPath$.subscribe(parentPath => {
+        this.parentPath = parentPath;
+      })
+    );
   }
 
   loadMore(): void {
