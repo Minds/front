@@ -11,7 +11,6 @@ import { RecentSubscriptionsService } from '../../../common/services/recent-subs
 import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
-import { DropdownMenuOption } from './../../../common/components/dropdown-menu-v2/dropdown-menu-v2.component';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 
 const listAnimation = trigger('listAnimation', [
