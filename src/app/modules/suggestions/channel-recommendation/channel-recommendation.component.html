@@ -13,7 +13,7 @@
       </h2>
       <a
         [routerLink]="['/discovery/suggestions/user']"
-        [queryParams]="{ u: channelId }"
+        [queryParams]="channelId && { u: channelId }"
         i18n="@@COMMON__SEE_MORE__ACTION"
         >See more</a
       >
