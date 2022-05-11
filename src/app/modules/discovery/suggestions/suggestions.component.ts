@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
 import { DiscoveryService } from '../discovery.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'm-discovery__suggestions',
@@ -25,12 +26,12 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
   );
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
-  parentPath: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private service: SuggestionsService,
-    private discoveryService: DiscoveryService
+    private discoveryService: DiscoveryService,
+    public location: Location
   ) {
     super();
   }
@@ -51,10 +52,7 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
             user: contextualUser,
           });
         }
-      ),
-      this.discoveryService.parentPath$.subscribe(parentPath => {
-        this.parentPath = parentPath;
-      })
+      )
     );
   }
 

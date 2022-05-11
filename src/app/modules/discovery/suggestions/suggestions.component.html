@@ -18,7 +18,7 @@
 </div>
 
 <div class="m-goBack">
-  <a [routerLink]="parentPath" [queryParams]="{ reload: false }">
+  <a (click)="location.back()">
     <i class="material-icons">arrow_back</i
     ><span i18n="@@DISCOVERY_SUGGESTIONS__BACK">Back</span>
   </a>
