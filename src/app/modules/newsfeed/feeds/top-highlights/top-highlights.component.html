@@ -2,12 +2,12 @@
   <header>
     <h3 class="m-topHighlights__title">Highlights</h3>
 
-    <m-dropdownMenuV2
-      [options]="dropdownOptions"
+    <m-dropdownMenu
+      [menu]="dropdown"
       [anchorPosition]="{ top: '0', right: '0' }"
     >
       <m-icon iconId="more_vert"></m-icon>
-    </m-dropdownMenuV2>
+    </m-dropdownMenu>
   </header>
 
   <section>
@@ -37,3 +37,11 @@
     >
   </footer>
 </article>
+
+<ng-template #dropdown>
+  <ul>
+    <m-dropdownMenu__item (click)="dismiss()" icon="close">
+      <span i18n="@@COMMON__REMOVE_FROM_FEED">Remove from feed</span>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>

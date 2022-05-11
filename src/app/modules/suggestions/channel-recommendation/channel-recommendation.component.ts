@@ -71,19 +71,6 @@ export class ChannelRecommendationComponent implements OnInit {
    * How many recommendations to show at a time?
    */
   listSize$: BehaviorSubject<number> = new BehaviorSubject(3);
-  /**
-   * drop down items
-   */
-  dropdownOptions: DropdownMenuOption[] = [
-    {
-      title: $localize`:@@COMMON__REMOVE_FROM_FEED:Remove from feed`,
-      onPress: () => this.dismissalService.dismiss(this.widgetId),
-      icon: {
-        id: 'close',
-        from: 'md',
-      },
-    },
-  ];
 
   constructor(
     private api: ApiService,
@@ -114,6 +101,14 @@ export class ChannelRecommendationComponent implements OnInit {
           }
         });
     }
+  }
+
+  /**
+   * dismisses the component
+   * @returns { void }
+   */
+  dismiss(): void {
+    this.dismissalService.dismiss(this.widgetId);
   }
 
   /**

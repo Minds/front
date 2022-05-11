@@ -19,17 +19,6 @@ export class TopHighlightsComponent {
   @Output()
   onSeeMore: EventEmitter<void> = new EventEmitter();
 
-  dropdownOptions = [
-    {
-      title: $localize`:@@COMMON__REMOVE_FROM_FEED:Remove from feed`,
-      onPress: () => this.dismissalService.dismiss('top-highlights'),
-      icon: {
-        id: 'close',
-        from: 'md',
-      },
-    },
-  ];
-
   @HostBinding('class.m-topHighlights--activityV2')
   get activityV2Feature(): boolean {
     return this.activityV2Experiment.isActive();
@@ -41,4 +30,12 @@ export class TopHighlightsComponent {
     private activityV2Experiment: ActivityV2ExperimentService,
     private dismissalService: DismissalService
   ) {}
+
+  /**
+   * dismisses the component
+   * @returns { void }
+   */
+  dismiss(): void {
+    this.dismissalService.dismiss('top-highlights')
+  }
 }
