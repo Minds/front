@@ -36,6 +36,6 @@ export class TopHighlightsComponent {
    * @returns { void }
    */
   dismiss(): void {
-    this.dismissalService.dismiss('top-highlights')
+    this.dismissalService.dismiss('top-highlights');
   }
 }
