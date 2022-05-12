@@ -1,4 +1,9 @@
-<ng-container *ngIf="!(pushNotificationsEnabled$ | async)">
+<ng-container
+  *ngIf="
+    (pushNotificationsSupported$ | async) &&
+    !(pushNotificationsEnabled$ | async)
+  "
+>
   <div *mIfBrowser class="m-enablePushBanner__container">
     <span i18n="@@NOTIFICATIONS__ENABLE_PUSH_BANNER__ENABLE_NOTIFICATION_TEXT"
       >Enable notifications for alerts on your activity</span

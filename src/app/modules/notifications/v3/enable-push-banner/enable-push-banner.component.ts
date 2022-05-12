@@ -12,13 +12,17 @@ import { PushNotificationService } from '../../../../common/services/push-notifi
   styleUrls: ['./enable-push-banner.component.ng.scss'],
 })
 export class NotificationsEnablePushBannerComponent {
-  // true when push notifications are enabled.
-  public readonly pushNotificationsEnabled$ = this.pushNotifications.enabled$;
-
   // true when subscription attempt is in progress.
   public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
+
+  // true when push notifications are enabled.
+  public readonly pushNotificationsEnabled$ = this.pushNotifications.enabled$;
+
+  // true if push notifications are supported.
+  public readonly pushNotificationsSupported$ = this.pushNotifications
+    .supported$;
 
   constructor(
     private pushNotifications: PushNotificationService,
