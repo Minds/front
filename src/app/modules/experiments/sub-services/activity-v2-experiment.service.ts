@@ -14,8 +14,6 @@ export class ActivityV2ExperimentService {
    * @returns { boolean } whether guest mode experiment is active.
    */
   public isActive(): boolean {
-    return true;
-    // ojm uncomment !!!
-    // return this.experiments.hasVariation('front-5229-activities', true);
+    return this.experiments.hasVariation('front-5229-activities', true);
   }
 }

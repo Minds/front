@@ -58,14 +58,23 @@
   </ng-container>
 
   <!-- ---------------------------- -->
-  <!-- SINGLE  -->
+  <!-- SINGLE - NOT QUOTED -->
   <!-- ---------------------------- -->
-  <ng-container *ngIf="isSingle">
+  <ng-container *ngIf="isSingle && !wasQuoted">
     <ng-container [ngTemplateOutlet]="name"></ng-container>
     <ng-container [ngTemplateOutlet]="groupOrUsername"></ng-container>
     <ng-container [ngTemplateOutlet]="spacer"></ng-container>
     <ng-container [ngTemplateOutlet]="badges"></ng-container>
     <ng-container [ngTemplateOutlet]="menu"></ng-container>
+  </ng-container>
+  <!-- ---------------------------- -->
+  <!-- SINGLE - WAS QUOTED  -->
+  <!-- ---------------------------- -->
+  <ng-container *ngIf="isSingle && wasQuoted">
+    <ng-container [ngTemplateOutlet]="name"></ng-container>
+    <ng-container [ngTemplateOutlet]="groupOrUsername"></ng-container>
+    <ng-container [ngTemplateOutlet]="permalink"></ng-container>
+    <ng-container [ngTemplateOutlet]="spacer"></ng-container>
   </ng-container>
 </div>
 
@@ -149,6 +158,7 @@
   >
   <m-activityV2__permalink
     class="m-activityOwnerBlock__fixedWidth"
+    [wasQuoted]="wasQuoted"
   ></m-activityV2__permalink>
 </ng-template>
 <!-- ---------------------------- -->

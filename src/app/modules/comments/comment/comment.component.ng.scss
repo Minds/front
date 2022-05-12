@@ -10,26 +10,34 @@
     .m-comment {
       padding-right: 0;
     }
-    .m-commentOwnerRow__text {
-      flex-direction: row;
 
-      .m-commentOwnerRow__dot {
-        padding: 0 $spacing1;
-      }
+    .m-comment__ownerRow {
+      .m-commentOwnerRow__text {
+        flex-direction: row;
+        width: calc(100% - 55px);
+        max-width: calc(100% - 55px);
 
-      [class*='m-commentOwnerRowItem__'] {
-        @include body2Regular;
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
+        .m-commentOwnerRow__dot {
+          padding: 0 $spacing1;
         }
-        &.m-commentOwnerRowItem__name {
-          @include body2Medium;
+
+        [class*='m-commentOwnerRowItem__'] {
+          @include body2Regular;
           @include m-theme() {
-            color: themed($m-textColor--primary);
+            color: themed($m-textColor--secondary);
+          }
+          &.m-commentOwnerRowItem__name {
+            @include body2Medium;
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+
+            max-width: none;
           }
         }
       }
     }
+
     p.m-comment__message.m-mature-message-content {
       @include body2Regular;
 

@@ -1,4 +1,6 @@
 <ng-container *ngIf="service.entity$ | async as entity$">
+  <!-- AVATAR COLUMN -->
+  <!-- Avatar displayed in its own column if not displayed in sidebar -->
   <div
     *ngIf="
       !service.displayOptions.minimalMode &&
@@ -12,6 +14,7 @@
       </a>
     </m-hovercard>
   </div>
+  <!-- MAIN COLUMN -->
   <div class="m-activityTop__mainColumn">
     <m-activityV2__ownerBlock [wasQuoted]="true"></m-activityV2__ownerBlock>
     <m-activityV2__content

@@ -59,6 +59,20 @@
       }
     }
   }
+  // *********************************
+  // ** QUOTE **
+  // *********************************
+
+  m-activityV2__quote & {
+    .m-activityPermalink__text {
+      padding-top: 0;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+  }
 
   // *********************************
   // *********************************

@@ -31,13 +31,6 @@
     .m-activity__ownerBlock {
       width: 100%;
     }
-    &.m-activity__ownerBlock--groupPost {
-      // ojm this won't work with avatar
-      .m-activity__ownerBlock {
-        display: flex;
-        flex-direction: column;
-      }
-    }
 
     padding-left: $spacing4;
     padding-right: $spacing2;
