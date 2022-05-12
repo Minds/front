@@ -6,6 +6,7 @@ import { ConfigsService } from './configs.service';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { map } from 'rxjs/operators';
+import isBrave from '../../helpers/is-brave';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,10 @@ export class PushNotificationService implements OnDestroy {
    * @returns { Observable<boolean> }
    */
   get supported$(): Observable<boolean> {
+    if (isBrave()) {
+      return of(false);
+    }
+
     return of(this.swPush.isEnabled);
   }
 
