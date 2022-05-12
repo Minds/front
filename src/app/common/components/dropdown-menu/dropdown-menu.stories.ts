@@ -1,19 +1,27 @@
-import { Story, Meta } from '@storybook/angular';
+import {
+  Story,
+  Meta,
+  moduleMetadata,
+  componentWrapperDecorator,
+} from '@storybook/angular';
+import { DropdownMenuItemComponent } from '../dropdown-menu-item/dropdown-menu-item.component';
 import { DropdownMenuComponent } from './dropdown-menu.component';
 
 export default {
   title: 'Components / Dropdown Menu',
   component: DropdownMenuComponent,
-  // argTypes: {
-  //   size: {
-  //     options: ['xsmall', 'small', 'medium', 'large'],
-  //     control: { type: 'radio' },
-  //   }
-  // },
+  decorators: [
+    moduleMetadata({
+      // Imports both components to allow component composition with Storybook
+      declarations: [DropdownMenuComponent, DropdownMenuItemComponent],
+    }),
+    componentWrapperDecorator(
+      story => `<div style="min-height:200px">${story}</div>`
+    ),
+  ],
   args: {
     anchorPosition: { top: '100%', left: '0' },
   },
-  decorators: [],
 } as Meta;
 
 const Template: Story<DropdownMenuComponent> = (
@@ -30,12 +38,9 @@ const Template: Story<DropdownMenuComponent> = (
 
   <ng-template #actionsDropdown>
     <ul>
-        <li>
-          <span class="m-dropdownMenu__item">First Item</span>
-        </li>
-        <li>
-        <span class="m-dropdownMenu__item">Second Item</span>
-      </li>
+      <m-dropdownMenu__item label="Basic item 1"></m-dropdownMenu__item>
+      <m-dropdownMenu__item label="Basic item 2"></m-dropdownMenu__item>
+      <m-dropdownMenu__item label="Scary item" red="true"></m-dropdownMenu__item>
     </ul>
   </ng-template>
   `,

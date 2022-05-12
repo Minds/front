@@ -66,8 +66,8 @@ export class MetaService {
 
   setDescription(value: string): MetaService {
     value = this.stripHtml(value);
-    if (value.length > 160) {
-      value = value.substr(0, 157) + '...';
+    if (value.length > 200) {
+      value = value.substr(0, 197) + '...';
     }
     this.metaService.updateTag({ name: 'description', content: value });
     this.metaService.updateTag({ property: 'og:description', content: value });
@@ -282,8 +282,7 @@ export class MetaService {
       .setNsfw(false)
       .setOgSiteName()
       .resetDynamicFavicon()
-      .resetOEmbed()
-      .setThemeColor();
+      .resetOEmbed();
   }
 
   private applyTitle(): void {

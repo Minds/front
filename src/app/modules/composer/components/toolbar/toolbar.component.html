@@ -132,12 +132,13 @@
 </div>
 
 <ng-template #postButtonDropdown>
-  <ul *ngIf="canSchedule$ | async">
-    <li (click)="onSchedulerClick()">
-      <span class="m-dropdownMenu__item">
-        <m-icon iconId="alarm"></m-icon>
-        <span i18n="@@COMPOSER__SCHEDULE_POST">Schedule Post</span>
-      </span>
-    </li>
-  </ul>
+  <ng-container *ngIf="canSchedule$ | async">
+    <ul>
+      <m-dropdownMenu__item (click)="onSchedulerClick()" icon="alarm"
+        ><span i18n="@@COMPOSER__SCHEDULE_POST">
+          Schedule Post
+        </span></m-dropdownMenu__item
+      >
+    </ul>
+  </ng-container>
 </ng-template>

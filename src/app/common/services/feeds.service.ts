@@ -33,6 +33,10 @@ export class FeedsService implements OnDestroy {
   castToActivities: boolean = false;
   exportUserCounts: boolean = false;
   fromTimestamp: string = '';
+  /**
+   * whether or not to filter out unseen entities
+   */
+  unseen: boolean = false;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -54,7 +58,7 @@ export class FeedsService implements OnDestroy {
   /**
    * The last time we checked for new posts
    */
-  newPostsLastCheckedAt: number = Date.now();
+  newPostsLastCheckedAt: number;
   /**
    * feed length
    */
@@ -212,6 +216,15 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Sets unseen
+   * @param { boolean } value - whether or not to filter out unseen entities
+   */
+  setUnseen(value: boolean): FeedsService {
+    this.unseen = value;
+    return this;
+  }
+
+  /**
    * Fetches the data.
    */
   fetch(refresh: boolean = false): Promise<any> {
@@ -234,6 +247,10 @@ export class FeedsService implements OnDestroy {
       this.newPostsCount$.next(0);
     }
 
+    if (!this.newPostsLastCheckedAt) {
+      this.newPostsLastCheckedAt = Date.now();
+    }
+
     return this.client
       .get(this.endpoint, {
         ...this.params,
@@ -241,6 +258,7 @@ export class FeedsService implements OnDestroy {
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
+          unseen: this.unseen,
           from_timestamp: fromTimestamp,
         },
       })
@@ -289,7 +307,7 @@ export class FeedsService implements OnDestroy {
   /**
    * Counts posts created from a timestamp on
    */
-  count(fromTimestamp?: number): Observable<number> {
+  count(fromTimestamp: number = Date.now()): Observable<number> {
     if (!this.countEndpoint) {
       throw new Error('[FeedsService] countEndpoint missing');
     }
@@ -298,7 +316,11 @@ export class FeedsService implements OnDestroy {
 
     return this.api
       .get(this.countEndpoint, {
-        from_timestamp: fromTimestamp,
+        ...this.params,
+        ...{
+          limit: 100,
+          from_timestamp: fromTimestamp,
+        },
       })
       .pipe(tap(() => this.countInProgress$.next(false)))
       .pipe(map(response => response?.count));
@@ -349,6 +371,8 @@ export class FeedsService implements OnDestroy {
     this.fallbackAtIndex.next(null);
     this.offset.next(0);
     this.pagingToken = '';
+    this.newPostsLastCheckedAt = null;
+    this.newPostsCount$.next(0);
     if (clearFeed) {
       this.rawFeed.next([]);
     }

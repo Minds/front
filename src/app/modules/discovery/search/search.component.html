@@ -42,6 +42,16 @@
     <m-discovery__settingsButton modalType="feed"></m-discovery__settingsButton>
   </div>
 
+  <ng-container *mIfBrowser>
+    <ng-container *ngIf="filter === 'latest'">
+      <m-seeLatestPostsButton
+        *mExperiment="'front-5474-search-polling'; variation: true"
+        [feedService]="service.feedsService"
+        (click)="scrollToTop()"
+      ></m-seeLatestPostsButton>
+    </ng-container>
+  </ng-container>
+
   <div class="m-goBack">
     <a routerLink="../" [queryParams]="{ reload: false }">
       <i class="material-icons">arrow_back</i

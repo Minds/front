@@ -345,6 +345,12 @@
           display: inline-block;
           margin: 0 10px;
         }
+
+        m-dropdownMenu {
+          .m-dropdownMenu__item {
+            justify-content: flex-start;
+          }
+        }
       }
 
       .m-button__text--unsaved {
