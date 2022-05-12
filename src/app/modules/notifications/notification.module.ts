@@ -22,6 +22,7 @@ import { NotificationsV3ListComponent } from './v3/list.component';
 import { NotificationsV3NotificationComponent } from './v3/notification.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { NewNotificationsButtonComponent } from './v3/new-notifications-button/new-notifications-button.component';
+import { NotificationsEnablePushBannerComponent } from './v3/enable-push-banner/enable-push-banner.component';
 import { CommentsModule } from '../comments/comments.module';
 import { NotificationsV3ListFullscreenComponent } from './v3/fullscreen/fullscreen.component';
 import { AdsModule } from '../ads/ads.module';
@@ -53,6 +54,7 @@ import { AdsModule } from '../ads/ads.module';
     NotificationsV3ListFullscreenComponent,
     NotificationsV3NotificationComponent,
     NewNotificationsButtonComponent,
+    NotificationsEnablePushBannerComponent,
   ],
   providers: [NotificationService],
   exports: [

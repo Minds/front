@@ -1,0 +1,18 @@
+<ng-container *ngIf="!(pushNotificationsEnabled$ | async)">
+  <div *mIfBrowser class="m-enablePushBanner__container">
+    <span i18n="@@NOTIFICATIONS__ENABLE_PUSH_BANNER__ENABLE_NOTIFICATION_TEXT"
+      >Enable notifications for alerts on your activity</span
+    >
+    <m-button
+      size="xsmall"
+      color="blue"
+      solid="true"
+      [saving]="inProgress$ | async"
+      (onAction)="onButtonClick($event)"
+    >
+      <ng-container i18n="@@NOTIFICATIONS__ENABLE_PUSH_BANNER__TURN_ON_BUTTON"
+        >Turn On</ng-container
+      >
+    </m-button>
+  </div>
+</ng-container>
