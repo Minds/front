@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 import { PaywallType } from '../../../modules/wire/lock-screen/wire-lock-screen.component';
 import { ConfigsService } from '../../services/configs.service';
 
@@ -7,7 +9,7 @@ import { ConfigsService } from '../../services/configs.service';
   templateUrl: './paywall-badge.component.html',
   styleUrls: ['./paywall-badge.component.ng.scss'],
 })
-export class PaywallBadgeComponent {
+export class PaywallBadgeComponent implements OnInit {
   private _entity: any;
   @Input() set entity(value: any) {
     this._entity = value;
@@ -24,11 +26,19 @@ export class PaywallBadgeComponent {
   paywallType: PaywallType = 'custom';
   tierName: string;
   init: boolean = false;
+  activityV2Feature: boolean = false;
 
   readonly plusSupportTierUrn: string;
 
-  constructor(private config: ConfigsService) {
+  constructor(
+    private config: ConfigsService,
+    private activityV2Experiment: ActivityV2ExperimentService
+  ) {
     this.plusSupportTierUrn = config.get('plus')?.support_tier_urn;
+  }
+
+  ngOnInit(): void {
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   load(): void {

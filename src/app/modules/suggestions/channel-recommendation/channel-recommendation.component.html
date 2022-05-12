@@ -1,52 +1,70 @@
-<article *ngIf="(recommendations$ | async).length">
-  <header>
-    <h2 i18n="@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS">
-      Recommended Channels
-    </h2>
-    <a
-      [routerLink]="['/discovery/suggestions/user']"
-      i18n="@@COMMON__SEE_MORE__ACTION"
-      >See more</a
-    >
-  </header>
-  <ul *ngIf="(recommendations$ | async).length">
-    <li *ngFor="let channel of recommendations$ | async">
-      <section>
-        <a
-          [routerLink]="['/', channel.username]"
-          class="m-channelRecommendation__avatarContainer"
-        >
-          <m-hovercard [publisher]="channel" [offset]="[0, 15]">
-            <minds-avatar [object]="channel" [editMode]="false"></minds-avatar>
-          </m-hovercard>
-        </a>
-        <div class="m-channelRecommendation__contentContainer">
+<div
+  style="transition: all 0.3s; overflow: hidden; flex: 1;"
+  [style.height.px]="containerHeight$ | async"
+  *ngIf="visible"
+>
+  <article
+    (mResized)="onResized($event)"
+    *ngIf="(recommendations$ | async).length"
+  >
+    <header>
+      <h2>
+        {{ title }}
+      </h2>
+      <a
+        [routerLink]="['/discovery/suggestions/user']"
+        i18n="@@COMMON__SEE_MORE__ACTION"
+        >See more</a
+      >
+    </header>
+    <ul *ngIf="(recommendations$ | async).length">
+      <li
+        @listAnimation
+        *ngFor="
+          let channel of recommendations$ | async | slice: 0:(listSize$ | async)
+        "
+      >
+        <section>
           <a
             [routerLink]="['/', channel.username]"
-            class="m-channelRecommendation__title"
+            class="m-channelRecommendation__avatarContainer"
           >
-            <strong>{{ channel.name }}</strong>
-            <m-channel--badges
-              class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges"
-              [user]="channel"
-              badges="[ 'admin', 'verified' ]"
-            ></m-channel--badges>
+            <m-hovercard [publisher]="channel" [offset]="[0, 15]">
+              <minds-avatar
+                [object]="channel"
+                [editMode]="false"
+              ></minds-avatar>
+            </m-hovercard>
           </a>
-          <span class="m-channelRecommendation__description">{{
-            channel.briefdescription
-          }}</span>
-          <!-- <span>@userA and @userB are subscribed</span> -->
-        </div>
-        <div class="m-channelRecommendation__subscribeContainer">
-          <m-subscribeButton
-            [user]="channel"
-            enableRecheck="true"
-            subscribedIcon="check"
-            sized="true"
-            iconOnly="true"
-          ></m-subscribeButton>
-        </div>
-      </section>
-    </li>
-  </ul>
-</article>
+          <div class="m-channelRecommendation__contentContainer">
+            <a
+              [routerLink]="['/', channel.username]"
+              class="m-channelRecommendation__title"
+            >
+              <strong>{{ channel.name }}</strong>
+              <m-channel--badges
+                class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges"
+                [user]="channel"
+                badges="[ 'admin', 'verified' ]"
+              ></m-channel--badges>
+            </a>
+            <span class="m-channelRecommendation__description">{{
+              channel.briefdescription
+            }}</span>
+            <!-- <span>@userA and @userB are subscribed</span> -->
+          </div>
+          <div class="m-channelRecommendation__subscribeContainer">
+            <m-subscribeButton
+              [user]="channel"
+              enableRecheck="true"
+              subscribedIcon="check"
+              sized="true"
+              iconOnly="true"
+              (subscribed)="onSubscribed($event)"
+            ></m-subscribeButton>
+          </div>
+        </section>
+      </li>
+    </ul>
+  </article>
+</div>

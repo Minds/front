@@ -1,23 +1,38 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { DiscoveryFeedsService } from './feeds.service';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { MetaService } from '../../../common/services/meta.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-discovery__feedItem',
   templateUrl: './feed-item.component.html',
+  styleUrls: ['./feed-item.component.ng.scss'],
 })
 export class DiscoveryFeedItemComponent implements OnInit {
   @Input() entity; // TODO add type
+
   @Input() openComments: boolean = false;
   readonly cdnUrl: string;
 
-  constructor(private configs: ConfigsService, private cd: ChangeDetectorRef) {
+  activityV2Feature: boolean = false;
+
+  constructor(
+    private configs: ConfigsService,
+    private cd: ChangeDetectorRef,
+    private activityV2Experiment: ActivityV2ExperimentService
+  ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.activityV2Feature = this.activityV2Experiment.isActive();
+  }
 
   onDelete(activity): void {
     this.entity = null;

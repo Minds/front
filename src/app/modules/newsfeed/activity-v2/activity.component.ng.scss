@@ -1,0 +1,236 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 0 !important;
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+  }
+
+  // *********************************
+  // ** FEED **
+  // *********************************
+
+  &.m-activity--isFeed {
+    @include borderTop;
+
+    .m-activity__top {
+      padding-left: $activityAvatarSpacingLeft--feed;
+      padding-right: $activitySpacingRight--feed;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $activityAvatarSpacingLeft--feed--mobile;
+        padding-right: $activitySpacingRight--feed--mobile;
+      }
+    }
+  }
+
+  // *********************************
+  // ** FIXED HEIGHT **
+  // *********************************
+
+  &.m-activity--fixedHeight {
+    justify-content: space-between;
+    height: 100%;
+
+    .m-activity__top {
+      height: calc(100% - 76px);
+      padding-top: $spacing2;
+    }
+
+    .m-activity__flagRow {
+      padding-bottom: 0;
+    }
+
+    ::ng-deep {
+      m-activityV2__nsfwConsent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    ::ng-deep m-activityV2__quote {
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+  }
+
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
+
+  &.m-activity--minimalMode {
+    padding: 0;
+    border-radius: $borderRadius--activity !important;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary) !important;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      border-radius: 0 !important;
+      @include m-theme() {
+        border: none !important;
+        border-top: 1px solid themed($m-borderColor--primary) !important;
+      }
+    }
+    .m-activity__top {
+      padding-top: 0;
+    }
+
+    ::ng-deep .m-activityContent--paywalledStatus {
+      padding-top: $spacing7;
+    }
+    ::ng-deep .m-videoPlayer__placeholder i {
+      font-size: 70px;
+    }
+  }
+
+  // *********************************
+  // ** MODAL **
+  // *********************************
+
+  m-activityV2__modal & {
+    padding: 0;
+    @media screen and (max-width: $max-mobile) {
+      padding: 0;
+    }
+  }
+
+  // *********************************
+  // ** SIDEBAR BOOST **
+  // *********************************
+
+  m-ads-boost & {
+    padding: 0;
+    .m-activity__top {
+      padding-top: 0;
+    }
+    .m-activity__rightColumn {
+      width: 100%;
+    }
+  }
+
+  // *********************************
+  // ** SINGLE **
+  // *********************************
+
+  m-newsfeed--single & {
+    padding: 0;
+    @media screen and (max-width: $max-mobile) {
+      padding: 0;
+    }
+
+    &:not(.m-activity--minimalMode) {
+      .m-activity__top {
+        padding-left: $activityAvatarSpacingLeft--single;
+        padding-right: $activitySpacingRight--single;
+        padding-top: $spacing4;
+        padding-bottom: 0;
+
+        @media screen and (max-width: $max-mobile) {
+          padding-left: $activityAvatarSpacingLeft--single--mobile;
+          padding-right: $activitySpacingRight--single--mobile;
+        }
+      }
+    }
+
+    .m-activity__leftColumn,
+    ::ng-deep m-activityV2__quote .m-activity__leftColumn {
+      padding-right: $activityAvatarSpacingRight--single;
+    }
+
+    .m-activity__rightColumn,
+    ::ng-deep m-activityV2__quote .m-activity__rightColumn {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+  }
+  // *********************************
+  // ** PRO **
+  // *********************************
+
+  m-pro--channel & {
+    &.m-activity--isFeed {
+      .m-activity__top {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+
+  .m-activity__top {
+    display: flex;
+    flex-direction: row;
+    padding-top: $spacing4;
+  }
+
+  .m-activity__leftColumn,
+  ::ng-deep m-activityV2__quote .m-activity__leftColumn {
+    padding-right: $activityAvatarSpacingRight--feed;
+  }
+
+  .m-activity__rightColumn,
+  ::ng-deep m-activityV2__quote .m-activity__rightColumn {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .m-activity__flagRow {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: $spacing3;
+    align-items: center;
+
+    .m-activity__boostRotatorButtons {
+      ::ng-deep m-icon {
+        margin-right: $spacing2;
+        @include unselectable;
+        i {
+          cursor: pointer;
+          @include heading2Regular;
+          @include unselectable;
+        }
+      }
+    }
+  }
+
+  // *********************************
+  // ** AVATAR **
+  // *********************************
+
+  .m-activity__avatar,
+  ::ng-deep m-activityV2__quote .m-activity__avatar {
+    padding-right: $activityAvatarSpacingRight--feed;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-right: $activityAvatarSpacingRight--feed--mobile;
+    }
+
+    img {
+      border-radius: 50%;
+      width: $activityAvatarWidth;
+      height: $activityAvatarWidth;
+      object-fit: cover;
+    }
+  }
+
+  .m-activityLeftColumn__spacer {
+    height: $spacing8;
+  }
+}

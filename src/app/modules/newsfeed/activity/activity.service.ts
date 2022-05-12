@@ -6,12 +6,15 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
   showOwnerBlock: boolean;
   showComments: boolean;
   showOnlyCommentsInput: boolean;
+  showOnlyCommentsToggle: boolean;
   showToolbar: boolean;
   showInteractions: boolean;
   showBoostMenuOptions: boolean;
@@ -19,7 +22,7 @@ export type ActivityDisplayOptions = {
   showVisibilityState: boolean;
   showTranslation: boolean;
   fixedHeight: boolean;
-  fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
+  fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator?
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
   bypassMediaModal: boolean; // Go to media page instead
@@ -27,7 +30,11 @@ export type ActivityDisplayOptions = {
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
+  isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
+  showBoostRotatorButtons: boolean;
+  isV2: boolean; // isV2 design
+  permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock
 };
 
 export type ActivityEntity = {
@@ -46,7 +53,6 @@ export type ActivityEntity = {
   perma_url: string;
   time_created: number;
   edited: boolean;
-  modal_source_url?: string;
   ephemeral?: boolean;
   nsfw: Array<number>;
   paywall: boolean;
@@ -76,18 +82,24 @@ export const ACTIVITY_TOOLBAR_HEIGHT = 52;
 export const ACTIVITY_COMMENTS_POSTER_HEIGHT = 58;
 export const ACTIVITY_COMMENTS_MORE_HEIGHT = 42;
 export const ACTIVITY_CONTENT_PADDING = 16;
+export const ACTIVITY_V2_MAX_MEDIA_HEIGHT = 500;
 
 // Constants of fixed heights
 export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
+export const ACTIVITY_V2_FIXED_HEIGHT_HEIGHT = 525;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
-
+export const ACTIVITY_V2_FIXED_HEIGHT_RATIO =
+  ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
 // Constants for grid layout
 export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
 
 // Constants for content-specific displays
 export const ACTIVITY_SHORT_STATUS_MAX_LENGTH = 300;
+
+export const ACTIVITY_V2_SHORT_STATUS_MAX_LENGTH = 100;
+export const ACTIVITY_V2_MEDIUM_STATUS_MAX_LENGTH = 250;
 
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
@@ -182,6 +194,19 @@ export class ActivityService {
     })
   );
 
+  /**
+   * Show view counts for owners and admins
+   */
+  shouldShowViewCount$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return (
+        (this.session.getLoggedInUser() &&
+          entity.ownerObj.guid === this.session.getLoggedInUser().guid) ||
+        (this.session.isAdmin() && entity.impressions > 0)
+      );
+    })
+  );
+
   /** Only allow downloads of images s */
   canDownload$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
@@ -269,6 +294,7 @@ export class ActivityService {
     showOwnerBlock: true,
     showComments: true,
     showOnlyCommentsInput: true,
+    showOnlyCommentsToggle: false,
     showToolbar: true,
     showInteractions: false,
     showBoostMenuOptions: false,
@@ -278,23 +304,32 @@ export class ActivityService {
     showPostMenu: true,
     showPinnedBadge: true,
     showMetrics: true,
+    showBoostRotatorButtons: false,
     fixedHeight: false,
     fixedHeightContainer: false,
     isModal: false,
     minimalMode: false,
     bypassMediaModal: false,
     sidebarMode: false,
+    isSidebarBoost: false,
     isFeed: false,
+    isV2: false,
+    permalinkBelowContent: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
 
+  activityV2Feature: boolean = false;
+
   constructor(
     private configs: ConfigsService,
     private session: Session,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.siteUrl = configs.get('site_url');
+
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   /**
@@ -322,6 +357,13 @@ export class ActivityService {
    */
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
+
+    if (this.activityV2Feature) {
+      this.displayOptions.isV2 = true;
+      this.displayOptions.showOnlyCommentsInput = false;
+      this.displayOptions.showOnlyCommentsToggle = true;
+    }
+
     return this;
   }
 

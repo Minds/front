@@ -66,8 +66,8 @@ export class MetaService {
 
   setDescription(value: string): MetaService {
     value = this.stripHtml(value);
-    if (value.length > 160) {
-      value = value.substr(0, 157) + '...';
+    if (value.length > 200) {
+      value = value.substr(0, 197) + '...';
     }
     this.metaService.updateTag({ name: 'description', content: value });
     this.metaService.updateTag({ property: 'og:description', content: value });
@@ -332,6 +332,14 @@ export class MetaService {
     if (link) {
       this.dom.head.removeChild(link);
     }
+    return this;
+  }
+
+  setThemeColor(dark?: boolean): MetaService {
+    this.metaService.updateTag({
+      name: 'theme-color',
+      content: dark ? '#1F252C' : '#ffffff',
+    });
     return this;
   }
 }

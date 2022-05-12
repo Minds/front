@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  HostBinding,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -17,6 +18,8 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
 import { Session } from '../../../services/session';
+import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-discovery__search',
@@ -49,6 +52,11 @@ export class DiscoverySearchComponent {
     })
   );
 
+  @HostBinding('class.m-discovery__search--activityV2')
+  get activityV2Feature(): boolean {
+    return this.activityV2Experiment.isActive();
+  }
+
   constructor(
     private route: ActivatedRoute,
     public service: DiscoveryFeedsService,
@@ -57,7 +65,8 @@ export class DiscoverySearchComponent {
     private metaService: MetaService,
     private cd: ChangeDetectorRef,
     private session: Session,
-    public cardCarouselService: CardCarouselService
+    public cardCarouselService: CardCarouselService,
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -138,6 +147,16 @@ export class DiscoverySearchComponent {
    */
   public isLoggedIn(): boolean {
     return !!this.session.getLoggedInUser();
+  }
+
+  /**
+   * scrolls to top
+   */
+  public scrollToTop(): void {
+    window.scrollTo({
+      behavior: 'smooth',
+      top: 0,
+    });
   }
 
   detectChanges(): void {

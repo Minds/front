@@ -16,9 +16,8 @@ import { Client } from '../../../common/api/client.service';
 })
 export class PlusVerifyComponent {
   form: FormGroup;
-  open: boolean = true;
+  onDismiss: () => void;
   inProgress: boolean = false;
-  @Output() closed: EventEmitter<any> = new EventEmitter(true);
 
   constructor(
     private client: Client,
@@ -39,10 +38,9 @@ export class PlusVerifyComponent {
     this.detectChanges();
     this.client
       .post('api/v1/plus/verify', this.form.value)
-      .then(response => {
+      .then(() => {
         this.inProgress = false;
-        this.open = false;
-        this.closed.next(true);
+        this.onDismiss?.();
         this.detectChanges();
       })
       .catch(() => {
@@ -54,5 +52,14 @@ export class PlusVerifyComponent {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * Modal options
+   * @param onApply
+   * @param onDismissIntent
+   */
+  setModalData({ onDismiss }) {
+    this.onDismiss = onDismiss;
   }
 }

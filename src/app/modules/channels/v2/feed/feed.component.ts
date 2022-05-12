@@ -21,13 +21,15 @@ import {
 } from '../../../../common/components/feed-filter/feed-filter.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, of, Subscription, BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { catchError, take } from 'rxjs/operators';
+import { ExperimentsService } from './../../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Channel feed component
@@ -48,6 +50,13 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   isGrid: boolean = false;
 
   dateRangeEnabled: boolean = false;
+
+  activityV2Feature: boolean = false;
+  /**
+   * whether channel recs should be shown. Will get toggled when user
+   * subscribed to the channel
+   */
+  private shouldShowChannelRecommendation$ = new BehaviorSubject(false);
 
   @Input('layout') set _layout(layout: string) {
     this.isGrid = layout === 'grid';
@@ -83,6 +92,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   feed: Object[] = [];
 
+  readonly channelRecommendationTitle = $localize`:@@M__CHANNEL_RECOMMENDATION__CONSIDER_SUBSCRIBING_TO:Consider subscribing to`;
+
   /**
    * Constructor
    * @param feed
@@ -100,6 +111,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ComposerModalService,
     private injector: Injector,
+    private activityV2Experiment: ActivityV2ExperimentService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -144,8 +156,17 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
         ) {
           this.prepend(newPost);
         }
-      })
+      }),
+      this.service.onSubscriptionChanged.subscribe(subscribed =>
+        this.shouldShowChannelRecommendation$.next(subscribed)
+      ),
+      // Subscribe to user entity to reset channel recommendation
+      this.service.channel$.subscribe(() =>
+        this.shouldShowChannelRecommendation$.next(false)
+      )
     );
+
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   prepend(activity: any) {
@@ -243,5 +264,21 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       this.feedService.service.inProgress.getValue() ||
       this.feedService.service.rawFeed.getValue().length > 0
     );
+  }
+
+  /**
+   * Determines whether the channel recommendations should be shown
+   * @returns { Observable<boolean> }
+   */
+  get channelRecommendationVisible$(): Observable<boolean> {
+    if (this.feedService.service.inProgress.getValue()) {
+      return of(false);
+    }
+
+    if (!this.feedService.service.feedLength) {
+      return of(true);
+    }
+
+    return this.shouldShowChannelRecommendation$;
   }
 }

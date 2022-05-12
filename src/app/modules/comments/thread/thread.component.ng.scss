@@ -1,6 +1,51 @@
 @import 'defaults.scss';
 
 :host {
+  // ******************************************
+  // ** ACTIVITY V2 DEFAULT **
+  // ******************************************
+
+  m-activityV2 &,
+  m-activityV2__modal & {
+    .m-comments__thread {
+      margin: 0;
+    }
+    .m-comments__thread--nested {
+      ::ng-deep m-comment {
+        .m-comment {
+          padding-left: 0 !important;
+        }
+      }
+    }
+    .m-comments__thread--topLevel {
+      ::ng-deep {
+        > m-comment {
+          .m-comment {
+            padding-left: 0px;
+          }
+        }
+      }
+    }
+  }
+
+  // ******************************************
+  // ** MODAL **
+  // ******************************************
+
+  m-activityV2__modal & {
+    .m-comments__viewMore {
+      margin-top: 0;
+    }
+  }
+
+  // ******************************************
+  // ******************************************
+  // ******************************************
+  // ** DEFAULT **
+  // ******************************************
+  // ******************************************
+  // ******************************************
+
   display: block;
   ::ng-deep {
     .m-comment__repliesToggle + & {

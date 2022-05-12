@@ -1,9 +1,38 @@
 @import 'defaults.scss';
-@import '../activity/activity.component.scss';
 
-$padding: $activity-padding-lr--minimalMode;
+$layoutMax2ColWidth: '1040px';
 
 :host {
+  // ******************************************
+  // ** ACTIVITY V2 **
+  // ******************************************
+
+  .m-newsfeed__single--activityV2 {
+    .minds-list {
+      padding: 0;
+    }
+
+    ::ng-deep m-activityV2 {
+      &:not(.m-activity--minimalMode) {
+        border-top: none !important;
+      }
+    }
+
+    > div:first-child {
+      @media screen and (max-width: $layoutMax2ColWidth) {
+        @include borderRight;
+      }
+    }
+  }
+
+  // ******************************************
+  // ******************************************
+  // ******************************************
+  // ** DEFAULT **
+  // ******************************************
+  // ******************************************
+  // ******************************************
+
   .m-newsfeed__single--legacy {
     max-width: 600px;
     margin: auto;
@@ -18,6 +47,7 @@ $padding: $activity-padding-lr--minimalMode;
     display: none;
   }
 
+  // MOBILE
   @media screen and (max-width: $max-mobile) {
     .minds-list {
       padding: 0;
@@ -39,9 +69,9 @@ $padding: $activity-padding-lr--minimalMode;
         > * {
           display: block;
 
-          margin-top: $padding;
-          padding-top: $padding;
-          padding-bottom: $padding;
+          margin-top: $spacing4;
+          padding-top: $spacing4;
+          padding-bottom: $spacing4;
 
           @include m-theme() {
             border-top: 8px solid themed($m-borderColor--primary);
@@ -50,7 +80,7 @@ $padding: $activity-padding-lr--minimalMode;
 
         .m-sidebarWidget__title {
           @media screen and (max-width: $max-mobile) {
-            padding: $padding;
+            padding: $spacing4;
           }
         }
       }

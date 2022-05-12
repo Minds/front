@@ -11,9 +11,9 @@ import {
   Injector,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Observable, Subscription, timer } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {
   ACTIVITY_COMMENTS_MORE_HEIGHT,
   ACTIVITY_COMMENTS_POSTER_HEIGHT,

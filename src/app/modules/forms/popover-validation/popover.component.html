@@ -39,9 +39,11 @@
         Doesn't have spaces
       </li>
       <li
-        [class.m-popover__rule--checked]="riskCheck && !riskCheckInProgress"
+        [class.m-popover__rule--checked]="
+          riskCheck && !riskCheckInProgress && synchronousChecksValid
+        "
         [class.m-popover__rule--invalid]="
-          riskAssessed && !riskCheckInProgress && !riskCheck
+          !riskCheck && !riskCheckInProgress && synchronousChecksValid
         "
         class="m-popover__rule--risk"
       >

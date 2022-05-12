@@ -1,13 +1,19 @@
 import { Injectable, OnDestroy } from '@angular/core';
-
+import {
+  BehaviorSubject,
+  combineLatest,
+  interval,
+  Observable,
+  Subscription,
+} from 'rxjs';
+import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
-
-import { EntitiesService } from './entities.service';
+import { ApiService } from '../api/api.service';
 import { BlockListService } from './block-list.service';
+import { EntitiesService } from './entities.service';
 
-import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
-import { switchMap, map, tap, first } from 'rxjs/operators';
+export const NEW_POST_POLL_INTERVAL = 30000;
 
 /**
  * Enables the grabbing of data through observable feeds.
@@ -22,10 +28,15 @@ export class FeedsService implements OnDestroy {
   pagingToken: string = '';
   canFetchMore: boolean = true;
   endpoint: string = '';
+  countEndpoint: string = '';
   params: any = { sync: 1 };
   castToActivities: boolean = false;
   exportUserCounts: boolean = false;
   fromTimestamp: string = '';
+  /**
+   * whether or not to filter out unseen entities
+   */
+  unseen: boolean = false;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -33,12 +44,29 @@ export class FeedsService implements OnDestroy {
   hasMore: Observable<boolean>;
   blockListSubscription: Subscription;
   /**
+   * whether counting is in progress
+   */
+  countInProgress$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  /**
+   * The subscription for the new posts polling interval
+   */
+  newPostWatcherSubscription: Subscription;
+  /**
+   * The number indicating how many new posts exist since we last checked at {newPostsLastCheckedAt}
+   */
+  newPostsCount$: BehaviorSubject<number> = new BehaviorSubject(0);
+  /**
+   * The last time we checked for new posts
+   */
+  newPostsLastCheckedAt: number;
+  /**
    * feed length
    */
   feedLength: number;
 
   constructor(
     protected client: Client,
+    protected api: ApiService,
     protected session: Session,
     protected entitiesService: EntitiesService,
     protected blockListService: BlockListService
@@ -105,9 +133,8 @@ export class FeedsService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.blockListSubscription) {
-      this.blockListSubscription.unsubscribe();
-    }
+    this.blockListSubscription?.unsubscribe();
+    this.newPostWatcherSubscription?.unsubscribe();
   }
 
   /**
@@ -116,6 +143,15 @@ export class FeedsService implements OnDestroy {
    */
   setEndpoint(endpoint: string): FeedsService {
     this.endpoint = endpoint;
+    return this;
+  }
+
+  /**
+   * Sets the count endpoint for this instance.
+   * @param { string } endpoint - the count endpoint for this instance
+   */
+  setCountEndpoint(endpoint: string): FeedsService {
+    this.countEndpoint = endpoint;
     return this;
   }
 
@@ -180,9 +216,18 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Sets unseen
+   * @param { boolean } value - whether or not to filter out unseen entities
+   */
+  setUnseen(value: boolean): FeedsService {
+    this.unseen = value;
+    return this;
+  }
+
+  /**
    * Fetches the data.
    */
-  fetch(replace: boolean = false): Promise<any> {
+  fetch(refresh: boolean = false): Promise<any> {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -193,6 +238,19 @@ export class FeedsService implements OnDestroy {
       ? this.pagingToken
       : this.fromTimestamp;
 
+    const oldCount = this.newPostsCount$.getValue();
+    const oldTimestamp = this.newPostsLastCheckedAt;
+
+    if (refresh) {
+      fromTimestamp = '';
+      this.newPostsLastCheckedAt = Date.now();
+      this.newPostsCount$.next(0);
+    }
+
+    if (!this.newPostsLastCheckedAt) {
+      this.newPostsLastCheckedAt = Date.now();
+    }
+
     return this.client
       .get(this.endpoint, {
         ...this.params,
@@ -200,6 +258,7 @@ export class FeedsService implements OnDestroy {
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
+          unseen: this.unseen,
           from_timestamp: fromTimestamp,
         },
       })
@@ -207,10 +266,6 @@ export class FeedsService implements OnDestroy {
         if (this.endpoint !== endpoint) {
           // Avoid race conditions if endpoint changes
           return;
-        }
-
-        if (!this.offset.getValue()) {
-          this.inProgress.next(false);
         }
 
         if (!response.entities && response.activity) {
@@ -222,7 +277,7 @@ export class FeedsService implements OnDestroy {
         if (response.entities?.length) {
           this.fallbackAt = response['fallback_at'];
           this.fallbackAtIndex.next(null);
-          if (replace) {
+          if (refresh) {
             this.rawFeed.next(response.entities);
           } else {
             this.rawFeed.next(
@@ -238,7 +293,37 @@ export class FeedsService implements OnDestroy {
           this.canFetchMore = false;
         }
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+        this.newPostsLastCheckedAt = oldTimestamp;
+        this.newPostsCount$.next(oldCount);
+      })
+      .finally(() => {
+        if (!this.offset.getValue()) {
+          this.inProgress.next(false);
+        }
+      });
+  }
+
+  /**
+   * Counts posts created from a timestamp on
+   */
+  count(fromTimestamp: number = Date.now()): Observable<number> {
+    if (!this.countEndpoint) {
+      throw new Error('[FeedsService] countEndpoint missing');
+    }
+
+    this.countInProgress$.next(true);
+
+    return this.api
+      .get(this.countEndpoint, {
+        ...this.params,
+        ...{
+          limit: 100,
+          from_timestamp: fromTimestamp,
+        },
+      })
+      .pipe(tap(() => this.countInProgress$.next(false)))
+      .pipe(map(response => response?.count));
   }
 
   /**
@@ -286,6 +371,8 @@ export class FeedsService implements OnDestroy {
     this.fallbackAtIndex.next(null);
     this.offset.next(0);
     this.pagingToken = '';
+    this.newPostsLastCheckedAt = null;
+    this.newPostsCount$.next(0);
     if (clearFeed) {
       this.rawFeed.next([]);
     }
@@ -296,10 +383,36 @@ export class FeedsService implements OnDestroy {
 
   static _(
     client: Client,
+    api: ApiService,
     session: Session,
     entitiesService: EntitiesService,
     blockListService: BlockListService
   ) {
-    return new FeedsService(client, session, entitiesService, blockListService);
+    return new FeedsService(
+      client,
+      api,
+      session,
+      entitiesService,
+      blockListService
+    );
+  }
+
+  /**
+   * watch for new posts by polling the count endpoint
+   * @returns { Function } a function to unsubscribe the subscription
+   */
+  public watchForNewPosts(): () => void {
+    this.newPostWatcherSubscription?.unsubscribe();
+    this.newPostWatcherSubscription = interval(NEW_POST_POLL_INTERVAL)
+      // only poll when tab is active
+      .pipe(filter(() => document.hasFocus()))
+      .pipe(switchMap(() => this.count(this.newPostsLastCheckedAt)))
+      .subscribe(count => {
+        if (count) {
+          this.newPostsCount$.next(this.newPostsCount$.getValue() + count);
+        }
+        this.newPostsLastCheckedAt = Date.now();
+      });
+    return () => this.newPostWatcherSubscription?.unsubscribe();
   }
 }

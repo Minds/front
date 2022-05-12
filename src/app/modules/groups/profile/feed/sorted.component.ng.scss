@@ -1,6 +1,47 @@
 @import 'defaults.scss';
 
 :host {
+  .m-mindsList__tools {
+    padding: $spacing3;
+    border-radius: 0;
+    margin-bottom: 0;
+    @include m-theme() {
+      border: none;
+    }
+
+    ::ng-deep m-tooltip {
+      i {
+        font-size: 18px;
+        margin-left: $spacing2;
+      }
+    }
+  }
+  .m-mindsListTools__scheduled {
+    display: flex;
+    align-items: center;
+
+    span {
+      font-size: 15px;
+      display: inline-block;
+      margin-left: 8px;
+    }
+  }
+
+  ::ng-deep m-sort-selector {
+    .m-dropdown--list--item,
+    .m-dropdown .m-dropdown--label-container {
+      text-transform: capitalize;
+      font-size: 15px;
+      letter-spacing: 0;
+    }
+
+    m-dropdown--list {
+      @include m-theme() {
+        box-shadow: none;
+      }
+    }
+  }
+
   .m-groupSorted__searchDisplay {
     padding: 5px 0 20px 0;
 

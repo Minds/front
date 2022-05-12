@@ -1,0 +1,67 @@
+@import 'defaults';
+
+:host {
+  // *********************************
+  // ** MODAL **
+  // *********************************
+
+  m-activityV2__modal & {
+    padding-top: $spacing4;
+    padding-left: $activitySpacing--modal;
+    padding-right: $activitySpacing--modal;
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+
+  [class*='m-activityFlag--'] {
+    padding-right: $spacing4;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    span,
+    a {
+      @include body2Medium;
+      text-decoration: none;
+    }
+
+    span {
+      margin-left: $spacing2;
+    }
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+  .m-activityFlag--remind {
+    span,
+    a,
+    i {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .m-activityFlag--boost {
+    span,
+    a,
+    i {
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+}

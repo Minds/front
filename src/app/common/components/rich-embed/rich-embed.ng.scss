@@ -1,0 +1,180 @@
+@import 'defaults.scss';
+
+:host {
+  // ******************************************
+  // ** FIXED HEIGHT **
+  // ******************************************
+  .m-activityContent--fixedHeight & {
+    &[class*='m-richEmbed--activityV2'] {
+      .m-rich-embed-src {
+        a.thumbnail {
+          img {
+            max-height: 280px;
+          }
+        }
+      }
+    }
+  }
+
+  // ******************************************
+  // ** MINIMAL MODE **
+  // ******************************************
+
+  .m-activityContent--minimalMode & {
+    &[class*='m-richEmbed--activityV2'] {
+      .m-rich-embed-src {
+        border: none !important;
+
+        a.thumbnail {
+          img {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+          }
+        }
+      }
+      a.meta {
+        padding: $activitySpacing--minimalMode;
+
+        h2.m-rich-embed--title {
+          @include heading4Regular;
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+          margin: 0;
+        }
+        .m-blurb,
+        .m-url {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // ******************************************
+  // ******************************************
+  // ******************************************
+  // ** DEFAULT **
+  // ******************************************
+  // ******************************************
+  // ******************************************
+
+  &[class*='m-richEmbed--activityV2'] {
+    .m-rich-embed-src {
+      @include border;
+      border-radius: $borderRadius--activity;
+
+      &:hover {
+        a.meta {
+          .m-url {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      a.thumbnail {
+        img {
+          width: 100%;
+          display: block;
+          height: auto;
+          max-height: 400px;
+          object-fit: cover;
+
+          border-radius: 0;
+          border-top-left-radius: $borderRadius--activity;
+          border-top-right-radius: $borderRadius--activity;
+        }
+      }
+
+      a.meta {
+        display: block;
+        text-decoration: none;
+        padding: $spacing4;
+        .m-rich-embed--title {
+          @include body2Medium;
+          text-decoration: none;
+          margin-bottom: $spacing2;
+          max-height: $spacing10;
+          width: 100%;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+
+        .m-url {
+          @include body2Regular;
+
+          padding: 0;
+          margin: 0;
+          @include m-theme() {
+            color: themed($m-textColor--secondary) !important;
+          }
+        }
+
+        &.m-richEmbed--paywalled {
+          position: relative;
+          cursor: default;
+          @include m-theme() {
+            background-color: themed($m-bgColor--primary);
+          }
+
+          .m-blurb {
+            @include body2Regular;
+            display: block;
+
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+          .m-url {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .m-blurb {
+      display: none;
+    }
+
+    ////////////////////////////////////////////////
+
+    &.m-richEmbed--activityV2--row {
+      .m-rich-embed-src {
+        @media screen and (min-width: $max-mobile + 1) {
+          display: flex;
+          flex-direction: row;
+          a.meta {
+            padding: $spacing6 $spacing4;
+          }
+          a.thumbnail {
+            img {
+              display: inline-block;
+              width: $spacing3 * 10; // 120px
+              height: $spacing3 * 10;
+              max-height: $spacing3 * 10;
+              object-fit: cover;
+
+              border-radius: 0;
+              border-top-left-radius: $borderRadius--activity;
+              border-bottom-left-radius: $borderRadius--activity;
+            }
+          }
+        }
+      }
+    }
+    ////////////////////////////////////////////////
+
+    &.m-richEmbed--activityV2--column {
+      .m-rich-embed-src {
+        a.meta {
+          padding: $spacing3 $spacing4;
+        }
+      }
+    }
+    ////////////////////////////////////////////////
+  }
+}

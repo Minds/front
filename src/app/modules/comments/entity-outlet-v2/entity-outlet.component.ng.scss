@@ -1,0 +1,137 @@
+@import 'defaults.scss';
+
+:host {
+  // ******************************************
+  // ** FEED **
+  // ******************************************
+
+  .m-activity--isFeed & {
+    padding-left: $activitySpacingLeft--feed;
+    padding-right: $activitySpacingRight--feed;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $activitySpacingLeft--feed--mobile;
+      padding-right: $activitySpacingRight--feed--mobile;
+    }
+
+    [class*='m-commentsEntityOutlet__expand'] {
+      padding-top: 0;
+    }
+
+    & > :last-child {
+      padding-bottom: $spacing4;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-bottom: $spacing3;
+      }
+    }
+  }
+
+  // ******************************************
+  // ** MODAL **
+  // ******************************************
+
+  m-activityV2__modal & {
+    padding-left: $activitySpacing--modal;
+    padding-right: $activitySpacing--modal;
+
+    [class*='m-commentsEntityOutlet__expand'] {
+      display: none;
+    }
+
+    .m-commentsEntityOutlet__topBar {
+      margin-top: $spacing4;
+      margin-left: 0;
+    }
+  }
+
+  // ******************************************
+  // ** SINGLE **
+  // ******************************************
+
+  m-newsfeed--single & {
+    padding-top: $spacing6;
+    padding-left: $activitySpacingLeft--single;
+    padding-right: $activitySpacingRight--single;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $activityAvatarSpacingLeft--feed--mobile;
+      padding-right: $activityAvatarSpacingRight--feed--mobile;
+    }
+  }
+
+  // ******************************************
+  // ******************************************
+  // ******************************************
+  // ** DEFAULT **
+  // ******************************************
+  // ******************************************
+  // ******************************************
+  display: block;
+
+  .m-commentsEntityOutlet__topBar {
+    margin-left: 0 !important;
+  }
+
+  .m-commentsEntityOutlet__expand,
+  .m-commentsEntityOutlet__expand--hide {
+    @include body2Regular;
+    padding-top: $spacing6;
+    padding-bottom: $spacing2;
+    cursor: pointer;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+
+  .m-commentsEntityOutlet__topBar {
+    display: flex;
+    justify-content: space-between;
+    margin: $spacing3 $spacing3 $spacing4 0;
+  }
+
+  .m-commentsEntityOutlet__header {
+    display: flex;
+    align-items: baseline;
+
+    span {
+      cursor: pointer;
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      &:not(.m-commentsEntityOutlet__title) {
+        &::before {
+          content: '·';
+          margin: 0 5px;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      &.m-commentsEntityOutlet__title {
+        @include heading4Medium;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      &.m-commentsEntityOutlet__addComment {
+        @include m-theme() {
+          color: themed($m-link);
+        }
+      }
+    }
+  }
+  .m-commentsEntityOutlet__filter {
+    cursor: pointer;
+    i {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}

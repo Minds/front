@@ -2,18 +2,66 @@
 @import '../../../common/layout/layout.scss';
 
 :host {
-  article {
-    padding: $minds-padding * 4;
-    margin: $minds-margin * 2 $minds-margin * -5;
-
-    @media screen and (max-width: $layoutMin3ColWidth) {
-      margin: $minds-margin * 2 $minds-margin * -2.5;
-    }
-
+  // *********************************
+  // ** ACTIVITY V2 **
+  // *********************************
+  &.m-channelRecommendation--activityV2 {
+    display: block;
+    margin: 0;
     @include m-theme() {
-      border-top: 1px solid themed($m-borderColor--primary);
-      border-bottom: 1px solid themed($m-borderColor--primary);
+      border-bottom: none;
     }
+
+    article {
+      padding: $spacing7 $activitySpacingRight--feed $spacing3 $spacing6;
+      margin: 0;
+
+      @include m-theme() {
+        border-bottom: none;
+      }
+
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        margin: 0;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        padding: $spacing7 $activitySpacingRight--feed--mobile $spacing3
+          $activityAvatarSpacingLeft--feed--mobile;
+        margin: 0;
+      }
+
+      ul {
+        li section {
+          .m-channelRecommendation__avatarContainer {
+            margin-right: $activityAvatarSpacingRight--feed;
+
+            @media screen and (max-width: $max-mobile) {
+              margin-right: $activityAvatarSpacingRight--feed--mobile;
+            }
+
+            ::ng-deep minds-avatar {
+              .minds-avatar {
+                border-radius: 50%;
+                height: $activityAvatarWidth;
+                width: $activityAvatarWidth;
+                background-size: cover;
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  display: flex;
+
+  article {
+    width: 100%;
+    box-sizing: border-box;
+    padding: $minds-padding * 4;
 
     header {
       display: flex;
@@ -49,7 +97,7 @@
       li section {
         display: flex;
         flex-direction: row;
-        margin-bottom: $minds-margin * 2;
+        padding-bottom: $minds-margin * 2;
 
         .m-channelRecommendation__avatarContainer {
           margin-right: $minds-margin * 2;

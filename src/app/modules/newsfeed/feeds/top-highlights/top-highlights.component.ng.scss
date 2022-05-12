@@ -1,0 +1,96 @@
+@import 'defaults.scss';
+
+:host {
+  &.m-topHighlights--activityV2 {
+    .m-topHighlights__title {
+      @include borderTop;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: $spacing4;
+      padding-left: $spacing6;
+      padding-right: $spacing6;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $spacing4;
+        padding-right: $spacing4;
+      }
+    }
+
+    ul {
+      li:first-child {
+        ::ng-deep m-activityV2 {
+          @include m-theme() {
+            border-top: none;
+          }
+        }
+      }
+    }
+    .m-topHighlights__showMore__container {
+      .m-topHighlights__showMore__link {
+        padding-right: $spacing6;
+      }
+    }
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+
+    li {
+      list-style: none;
+    }
+
+    li:last-child m-activity {
+      margin-bottom: $minds-margin !important;
+    }
+  }
+
+  .m-topHighlights__title {
+    font-size: 20px;
+    font-weight: bold;
+    // padding-top: $spacing6;
+    // padding-bottom: $spacing2;
+  }
+
+  .m-topHighlights__showMore__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: $minds-padding 0 $minds-padding * 2;
+
+    ::ng-deep m-loadingSpinner {
+      width: unset;
+      margin: unset;
+
+      .m-loadingSpinner__wrapper {
+        padding: 0;
+        top: -1px;
+
+        .m-loadingSpinner__container {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+
+    .m-topHighlights__showMore__link {
+      padding: $minds-padding;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: $m-borderRadius;
+      transition: color 0.3s;
+      font-size: 16px;
+
+      @include m-theme() {
+        color: themed($m-link) !important;
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-link--hover) !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@import 'defaults.scss';
+@import 'typography';
+@import 'spacing';
+@import '../../../common/layout/layout.scss';
+
+:host {
+  &.m-feedNoticeOutlet__container--visible {
+    display: flex;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    &.m-feedNoticeOutlet__container--fullWidth {
+      margin-bottom: 0;
+
+      &:not(.m-feedNoticeOutlet__container--topPosition) {
+        border-bottom: unset;
+      }
+    }
+
+    &:not(.m-feedNoticeOutlet__container--fullWidth) {
+      margin-bottom: $spacing5;
+
+      @include m-theme() {
+        border-left: 1px solid themed($m-borderColor--primary);
+        border-right: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+}

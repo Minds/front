@@ -95,8 +95,8 @@ $themes: (
     m-textColor--secondaryInverted: #b8c1ca,
     m-textColor--tertiary: #9b9b9b,
     m-bgColor--primary: #ffffff,
-    m-bgColor--primaryInverted: #242a30,
-    m-bgColor--primaryDarkAlways: #242a30,
+    m-bgColor--primaryInverted: #1f252c,
+    m-bgColor--primaryDarkAlways: #1f252c,
     m-bgColor--primaryAlt: #e7edf3,
     m-bgColor--secondary: #f6f7f7,
     m-bgColor--secondaryAlt: #e6ebed,
@@ -165,6 +165,7 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    m-activity--hover: #f8fafd,
   ),
   dark: (
     m-textColor--primary: #ffffff,
@@ -172,9 +173,9 @@ $themes: (
     m-textColor--secondary: #b8c1ca,
     m-textColor--secondaryInverted: #72727c,
     m-textColor--tertiary: #797b82,
-    m-bgColor--primary: #242a30,
+    m-bgColor--primary: #1f252c,
     m-bgColor--primaryInverted: #ffffff,
-    m-bgColor--primaryDarkAlways: #242a30,
+    m-bgColor--primaryDarkAlways: #1f252c,
     m-bgColor--primaryAlt: #1e242a,
     m-bgColor--secondary: #1a2025,
     m-bgColor--secondaryAlt: #232b31,
@@ -243,6 +244,7 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    m-activity--hover: #282f38,
   ),
 );
 
@@ -329,6 +331,7 @@ $m-alert: 'm-alert';
 $m-link: 'm-link';
 $m-link--hover: 'm-link--hover';
 $m-positive: 'm-positive';
+$m-activity--hover: 'm-activity--hover';
 
 $m-borderRadius: 2px;
 $m-boxShadowBlur: 10px;

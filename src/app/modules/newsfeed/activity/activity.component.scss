@@ -7,7 +7,20 @@ m-activity {
   box-sizing: border-box;
 
   &,
-  &.m-border {
+  &.m-border,
+  &:not(.m-activity--v2) {
+    border-radius: $m-borderRadius;
+  }
+
+  &:not(.m-activity--v2) {
+    &.m-activity--fixedHeight {
+      height: 750px;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  &.m-activity--v2 {
+    border: none !important;
     border-radius: $m-borderRadius;
   }
 
@@ -33,14 +46,8 @@ m-activity {
   }
 }
 
-.m-activity--fixedHeight {
-  height: 750px;
-  display: flex;
-  flex-direction: column;
-}
-
 .m-activity--fixedHeightContainer {
-  height: 100%;
+  height: 100% !important;
   width: 100%;
 }
 

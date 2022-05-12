@@ -17,19 +17,36 @@
   <div class="m-discovery__sidebar" m-pageLayout__pane="right">
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-        <m-discovery__sidebarTags *ngIf="isPlusPage"></m-discovery__sidebarTags>
-        <m-language__sidebarPrompt
-          *ngIf="!isPlusPage"
-        ></m-language__sidebarPrompt>
-        <m-discovery__disclaimer *ngIf="!isPlusPage"></m-discovery__disclaimer>
-        <m-discovery__sidebarTags
-          *ngIf="!isPlusPage"
-        ></m-discovery__sidebarTags>
-        <m-suggestions__sidebar
-          type="user"
-          customTitle="popular_channels"
-          *mExperiment="'channel-recommendations'; variation: false"
-        ></m-suggestions__sidebar>
+        <!-- SIDEBAR ------------------------------------->
+        <m-discovery__disclaimer
+          *ngIf="!session.isLoggedIn()"
+        ></m-discovery__disclaimer>
+
+        <m-onboardingProgressWidget
+          *ngIf="session.isLoggedIn()"
+        ></m-onboardingProgressWidget>
+
+        <m-language__sidebarPrompt></m-language__sidebarPrompt>
+
+        <m-discovery__sidebarTags></m-discovery__sidebarTags>
+
+        <m-liquiditySpot></m-liquiditySpot>
+
+        <div class="m-spacer"></div>
+
+        <m-ads-boost
+          limit="8"
+          *ngIf="
+            !(
+              session.getLoggedInUser().plus &&
+              session.getLoggedInUser().disabled_boost
+            )
+          "
+        ></m-ads-boost>
+
+        <div class="m-spacer"></div>
+
+        <!------------------------------------------------>
       </div>
     </div>
   </div>

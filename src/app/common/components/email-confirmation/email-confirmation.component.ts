@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  HostBinding,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -12,6 +13,8 @@ import { ConfigsService } from '../../services/configs.service';
 import { Location } from '@angular/common';
 import { FormToastService } from '../../services/form-toast.service';
 import { EmailResendService } from '../../services/email-resend.service';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Component that displays an announcement-like banner
@@ -34,12 +37,16 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
 
   protected userEmitter$: Subscription;
 
+  @HostBinding('class.m-emailConfirmation--activityV2')
+  activityV2Feature: boolean;
+
   constructor(
     protected session: Session,
     protected cd: ChangeDetectorRef,
     protected location: Location,
     protected toast: FormToastService,
     protected emailResend: EmailResendService,
+    private activityV2Experiment: ActivityV2ExperimentService,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
@@ -54,6 +61,8 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
       this.setShouldShow(user);
       this.detectChanges();
     });
+
+    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   ngOnDestroy(): void {
