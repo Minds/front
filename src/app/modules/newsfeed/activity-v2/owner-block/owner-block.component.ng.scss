@@ -32,7 +32,8 @@
       width: 100%;
     }
     &.m-activity__ownerBlock--groupPost {
-      .m-activityOwnerBlock__body {
+      // ojm this won't work with avatar
+      .m-activity__ownerBlock {
         display: flex;
         flex-direction: column;
       }
@@ -78,10 +79,6 @@
         color: themed($m-textColor--secondary);
       }
     }
-
-    .m-activityOwnerBlock__right {
-      display: none;
-    }
   }
 
   // *********************************
@@ -92,17 +89,11 @@
       padding: 20px $activitySpacing--modal 0;
     }
 
+    a.m-activityOwnerBlock__username,
     a.m-activityOwnerBlock__groupName {
       margin-left: 0;
-      span {
-        @include body2Regular;
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
-      }
     }
   }
-
   // *********************************
   // ** SIDEBAR BOOST **
   // *********************************
@@ -110,11 +101,6 @@
   m-ads-boost & {
     .m-activity__ownerBlock {
       padding: $activitySpacing--minimalMode;
-    }
-    .m-activityOwnerBlock__body {
-      display: flex;
-      flex-direction: column;
-      overflow: visible;
     }
     .m-activityOwnerBlockPermalink__text {
       padding: 0;
@@ -131,7 +117,7 @@
 
   m-newsfeed--single & {
     .m-activity__ownerBlock {
-      width: 105%;
+      width: 102%;
     }
     ::ng-deep m-activityV2__views {
       display: none;
@@ -149,9 +135,18 @@
   .m-activity__ownerBlock {
     display: flex;
     align-items: center;
+    flex-direction: row;
+
     width: 100%;
     padding-bottom: $spacing2;
     box-sizing: border-box;
+
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   ::ng-deep {
@@ -168,45 +163,13 @@
     }
   }
 
-  .m-activityOwnerBlock__body {
-    flex: 1;
-    align-self: center;
-    overflow: hidden;
-
-    > a {
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .m-activityOwnerBlock__right {
-    display: inline-flex;
-    align-items: center;
-    flex-direction: row;
-  }
-
-  a.m-activityOwnerBlock__displayName,
-  a.m-activityOwnerBlock__groupName {
-    display: inline-flex;
-
+  a.m-activityOwnerBlock__displayName {
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
 
     span {
       @include body1Bold;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    > * {
-      display: inline-flex;
-      vertical-align: middle;
-      max-width: 100%;
-      text-overflow: ellipsis;
     }
 
     &:hover {
@@ -216,35 +179,36 @@
     }
   }
 
+  a.m-activityOwnerBlock__username,
   a.m-activityOwnerBlock__groupName {
     margin-left: $spacing1;
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+    span {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
   }
 
-  a.m-activityOwnerBlock__username span,
   .m-activityOwnerBlock__dot {
+    padding: 0 $spacing1;
     @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
   }
 
-  .m-activityOwnerBlock__username {
-    padding-left: $spacing1;
-    @media screen and (max-width: $max-mobile) {
-      display: none;
+  a.m-activityOwnerBlock__groupName {
+    text-decoration: none;
+    &:hover {
+      text-decoration: none !important;
+      span > span {
+        text-decoration: underline;
+      }
     }
-  }
-
-  .m-activityOwnerBlock__dot {
-    padding: 0 $spacing1;
-  }
-
-  .m-activityOwnerBlock__groupName {
-    display: block;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
   }
 
   .m-activityOwnerBlock__remindIcon {
@@ -258,6 +222,40 @@
   ::ng-deep m-activityV2__views {
     @media screen and (max-width: $max-mobile) {
       display: none;
+    }
+  }
+
+  // *********************************
+  // ** FLEX STRUCTURAL CLASSES **
+  // *********************************
+  .m-activityOwnerBlock__spacer {
+    flex: 1;
+  }
+
+  .m-activityOwnerBlock__column {
+    display: flex;
+    flex-direction: column;
+
+    .m-activityOwnerBlockColumn__displayNameWrapper {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  ::ng-deep .m-activityOwnerBlock__truncate {
+    &,
+    & > * {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  ::ng-deep .m-activityOwnerBlock__fixedWidth {
+    white-space: nowrap;
+
+    > div {
+      display: inline-block;
     }
   }
 }

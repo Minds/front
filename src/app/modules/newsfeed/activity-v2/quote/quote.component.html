@@ -4,7 +4,7 @@
       !service.displayOptions.minimalMode &&
       !service.displayOptions.isSidebarBoost
     "
-    class="m-activity__leftColumn m-activity__avatar"
+    class="m-activityTop__avatarColumn m-activity__avatar"
   >
     <m-hovercard [publisher]="remindObj.ownerObj" [offset]="[0, 15]">
       <a [routerLink]="['/', remindObj.ownerObj.username]">
@@ -12,7 +12,7 @@
       </a>
     </m-hovercard>
   </div>
-  <div class="m-activity__rightColumn">
+  <div class="m-activityTop__mainColumn">
     <m-activityV2__ownerBlock [wasQuoted]="true"></m-activityV2__ownerBlock>
     <m-activityV2__content
       *ngIf="service.shouldShowContent$ | async"

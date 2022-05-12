@@ -27,8 +27,8 @@
       }
     }
 
-    .m-activity__rightColumn,
-    ::ng-deep m-activityV2__quote .m-activity__rightColumn {
+    .m-activityTop__mainColumn,
+    ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
       // Prevents remind username overflow
       max-width: calc(100% - $activitySpacingLeft--feed);
       @media screen and (max-width: $max-mobile) {
@@ -90,6 +90,15 @@
     }
     .m-activity__top {
       padding-top: 0;
+
+      .m-activityTop__mainColumn,
+      ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
+        // Prevents remind username overflow
+        max-width: 100%;
+        @media screen and (max-width: $max-mobile) {
+          max-width: 100%;
+        }
+      }
     }
 
     ::ng-deep .m-activityContent--paywalledStatus {
@@ -109,9 +118,8 @@
     @media screen and (max-width: $max-mobile) {
       padding: 0;
     }
-
-    .m-activity__rightColumn,
-    ::ng-deep m-activityV2__quote .m-activity__rightColumn {
+    .m-activityTop__mainColumn,
+    ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
       // Prevents remind username overflow
       max-width: calc(100% - $activitySpacing--modal);
       @media screen and (max-width: $max-mobile) {
@@ -129,7 +137,7 @@
     .m-activity__top {
       padding-top: 0;
     }
-    .m-activity__rightColumn {
+    .m-activityTop__mainColumn {
       width: 100%;
       max-width: 100%;
     }
@@ -139,42 +147,43 @@
   // ** SINGLE **
   // *********************************
 
-  m-newsfeed--single & {
+  &.m-activity--isSingle {
     padding: 0;
+    border-top: none !important;
+
     @media screen and (max-width: $max-mobile) {
       padding: 0;
     }
 
-    &:not(.m-activity--minimalMode) {
-      .m-activity__top {
-        padding-left: $activityAvatarSpacingLeft--single;
-        padding-right: $activitySpacingRight--single;
-        padding-top: $spacing4;
-        padding-bottom: 0;
+    .m-activity__top {
+      padding-left: $activityAvatarSpacingLeft--single;
+      padding-right: $activitySpacingRight--single;
+      padding-top: $spacing4;
+      padding-bottom: 0;
 
-        @media screen and (max-width: $max-mobile) {
-          padding-left: $activityAvatarSpacingLeft--single--mobile;
-          padding-right: $activitySpacingRight--single--mobile;
-        }
-      }
-
-      .m-activity__rightColumn,
-      ::ng-deep m-activityV2__quote .m-activity__rightColumn {
-        // Prevents remind username overflow
-        max-width: calc(100% - $activitySpacingLeft--single);
-        @media screen and (max-width: $max-mobile) {
-          max-width: calc(100% - $activitySpacingLeft--single--mobile);
-        }
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $activityAvatarSpacingLeft--single--mobile;
+        padding-right: $activitySpacingRight--single--mobile;
       }
     }
 
-    .m-activity__leftColumn,
-    ::ng-deep m-activityV2__quote .m-activity__leftColumn {
+    .m-activityTop__mainColumn,
+    ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
+      // Prevents remind username overflow
+      max-width: calc(100% - $activitySpacingLeft--single);
+      @media screen and (max-width: $max-mobile) {
+        max-width: calc(100% - $activitySpacingLeft--single--mobile);
+      }
+    }
+
+    .m-activityTop__avatarColumn,
+    ::ng-deep m-activityV2__quote .m-activityTop__avatarColumn {
       padding-right: $activityAvatarSpacingRight--single;
+      //ojm here
     }
 
-    .m-activity__rightColumn,
-    ::ng-deep m-activityV2__quote .m-activity__rightColumn {
+    .m-activityTop__mainColumn,
+    ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
@@ -207,13 +216,13 @@
     padding-top: $spacing4;
   }
 
-  .m-activity__leftColumn,
-  ::ng-deep m-activityV2__quote .m-activity__leftColumn {
+  .m-activityTop__avatarColumn,
+  ::ng-deep m-activityV2__quote .m-activityTop__avatarColumn {
     padding-right: $activityAvatarSpacingRight--feed;
   }
 
-  .m-activity__rightColumn,
-  ::ng-deep m-activityV2__quote .m-activity__rightColumn {
+  .m-activityTop__mainColumn,
+  ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
     display: flex;
     flex-direction: column;
     flex-grow: 1;

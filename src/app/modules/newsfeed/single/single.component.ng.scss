@@ -12,11 +12,12 @@ $layoutMax2ColWidth: '1040px';
       padding: 0;
     }
 
-    ::ng-deep m-activityV2 {
-      &:not(.m-activity--minimalMode) {
-        border-top: none !important;
-      }
-    }
+    //ojm
+    // ::ng-deep m-activityV2 {
+    //   &:not(.m-activity--minimalMode) {
+    //     border-top: none !important;
+    //   }
+    // }
 
     > div:first-child {
       @media screen and (max-width: $layoutMax2ColWidth) {
