@@ -1,4 +1,5 @@
-import { ApplicationRef, Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { ApplicationRef, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { BehaviorSubject, concat, interval } from 'rxjs';
@@ -21,7 +22,8 @@ export class ServiceWorkerService extends AbstractSubscriberComponent {
   constructor(
     private swUpdate: SwUpdate,
     private router: Router,
-    private appRef: ApplicationRef
+    private appRef: ApplicationRef,
+    @Inject(PLATFORM_ID) private platformId
   ) {
     super();
   }
@@ -81,5 +83,17 @@ export class ServiceWorkerService extends AbstractSubscriberComponent {
         this.shouldRefreshOnNavigation = true;
       }),
     ];
+  }
+
+  /**
+   * Gets service worker controller. Will return null on server-side
+   * Or if service worker is not present, INCLUDING when using hard-refresh
+   * as the intended behavior here is that the refresh would be cacheless.
+   * @returns { ServiceWorker } - The controller.
+   */
+  public getController(): ServiceWorker {
+    return isPlatformBrowser(this.platformId)
+      ? window.navigator?.serviceWorker?.controller
+      : null;
   }
 }
