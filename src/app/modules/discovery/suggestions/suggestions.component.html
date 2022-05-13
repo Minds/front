@@ -18,7 +18,10 @@
 </div>
 
 <div class="m-goBack">
-  <a (click)="location.back()">
+  <a
+    href="#"
+    (click)="$event.preventDefault(); $event.stopPropagation(); location.back()"
+  >
     <i class="material-icons">arrow_back</i
     ><span i18n="@@DISCOVERY_SUGGESTIONS__BACK">Back</span>
   </a>
