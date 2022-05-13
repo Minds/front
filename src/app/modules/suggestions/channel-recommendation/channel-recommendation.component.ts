@@ -76,7 +76,7 @@ export class ChannelRecommendationComponent implements OnInit {
     public experiments: ExperimentsService,
     private recentSubscriptions: RecentSubscriptionsService,
     private activityV2Experiment: ActivityV2ExperimentService,
-    private dismissalService: DismissalService
+    private dismissal: DismissalService
   ) {}
 
   @HostBinding('class.m-channelRecommendation--activityV2')
@@ -107,7 +107,7 @@ export class ChannelRecommendationComponent implements OnInit {
    * @returns { void }
    */
   dismiss(): void {
-    this.dismissalService.dismiss(this.widgetId);
+    this.dismissal.dismiss(this.widgetId);
   }
 
   /**

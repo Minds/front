@@ -28,7 +28,7 @@ export class TopHighlightsComponent {
     public topFeedService: TopFeedService,
     public experiments: ExperimentsService,
     private activityV2Experiment: ActivityV2ExperimentService,
-    private dismissalService: DismissalService
+    private dismissal: DismissalService
   ) {}
 
   /**
@@ -36,6 +36,6 @@ export class TopHighlightsComponent {
    * @returns { void }
    */
   dismiss(): void {
-    this.dismissalService.dismiss('top-highlights');
+    this.dismissal.dismiss('top-highlights');
   }
 }
