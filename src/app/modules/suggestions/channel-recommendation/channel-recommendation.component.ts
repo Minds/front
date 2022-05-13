@@ -107,7 +107,11 @@ export class ChannelRecommendationComponent implements OnInit {
    * @returns { void }
    */
   dismiss(): void {
-    this.dismissal.dismiss(this.widgetId);
+    this.dismissal.dismiss(
+      `channel-recommendation:${
+        this.location === 'channel' ? 'channel' : 'feed'
+      }`
+    );
   }
 
   /**
@@ -115,15 +119,6 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   onResized(event: ResizedEvent): void {
     this.containerHeight$.next(event.newRect.height + 64);
-  }
-
-  /**
-   * A unique identifier for this component. Used for dismissing this widget. It varies depending on this.location
-   */
-  get widgetId(): DismissIdentifier {
-    return `channel-recommendation:${
-      this.location === 'channel' ? 'channel' : 'feed'
-    }`;
   }
 
   /**
