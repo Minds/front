@@ -37,26 +37,21 @@ export class DismissalService extends AbstractSubscriberComponent {
    * Returns a list of ids of items that are dismissed
    * @returns { [DismissIdentifier] } dismissed items
    */
-  get dismissedItems$(): Observable<DismissIdentifier[]> {
-    return this.dismisses$.pipe(
-      map(dismisses =>
-        dismisses.filter(item => Date.now() <= item.expiry).map(item => item.id)
-      )
-    );
-  }
+  dismissedItems$ = this.dismisses$.pipe(
+    map(dismisses =>
+      dismisses.filter(item => Date.now() <= item.expiry).map(item => item.id)
+    )
+  );
 
   /**
    * Whether an item is dismissed
    * @param { DismissIdentifier } id
-   * @returns { boolean }
+   * @returns { Observable<boolean> }
    */
-  isDismissed(id: DismissIdentifier): boolean {
-    const widget = this.dismisses$
-      .getValue()
-      .find(dismissedItem => dismissedItem.id === id);
-    if (!widget) return false;
-
-    return Date.now() <= widget.expiry;
+  isDismissed(id: DismissIdentifier): Observable<boolean> {
+    return this.dismissedItems$.pipe(
+      map(dismissedItems => dismissedItems.includes(id))
+    );
   }
 
   /**

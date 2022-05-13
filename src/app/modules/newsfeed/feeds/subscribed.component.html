@@ -77,7 +77,9 @@
         ></m-featured-content>
         <m-topHighlights
           (onSeeMore)="onShowMoreTopFeed()"
-          *ngIf="shouldShowTopHighlights(i)"
+          *ngIf="
+            shouldShowTopHighlights(i) && !(isTopHighlightsDismissed$ | async)
+          "
         ></m-topHighlights>
         <m-activity
           *ngIf="activity$ | async as activity"
@@ -93,7 +95,10 @@
         <m-channelRecommendation
           location="newsfeed"
           [dismissible]="true"
-          *ngIf="shouldShowChannelRecommendation('feed', i)"
+          *ngIf="
+            shouldShowChannelRecommendation('feed', i) &&
+            !(isChannelRecommendationDismissed$ | async)
+          "
         ></m-channelRecommendation>
       </ng-container>
 

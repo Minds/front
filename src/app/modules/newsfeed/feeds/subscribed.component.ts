@@ -15,8 +15,8 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, Observable, of } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -84,6 +84,16 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   private boostRotator: NewsfeedBoostRotatorComponent;
   @ViewChildren('feedViewChildren', { read: ElementRef })
   feedViewChildren: QueryList<ElementRef>;
+  /**
+   * Whether top highlights is dismissed
+   */
+  isTopHighlightsDismissed$ = this.dismissal.isDismissed('top-highlights');
+  /**
+   * Whether channel recommendation is dismissed
+   */
+  isChannelRecommendationDismissed$ = this.dismissal.isDismissed(
+    'channel-recommendation:feed'
+  );
 
   constructor(
     public client: Client,
@@ -102,7 +112,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private experiments: ExperimentsService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private dismissalService: DismissalService
+    private dismissal: DismissalService
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -335,10 +345,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    if (this.dismissalService.isDismissed('top-highlights')) {
-      return false;
-    }
-
     // before 4th post
     return index === 3;
   }
@@ -351,10 +357,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    */
   public shouldShowChannelRecommendation(location: string, index?: number) {
     if (this.feedService.inProgress && !this.feedService.feedLength) {
-      return false;
-    }
-
-    if (this.dismissalService.isDismissed('channel-recommendation:feed')) {
       return false;
     }
 

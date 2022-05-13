@@ -13,7 +13,10 @@
     <m-channelRecommendation
       [location]="location"
       [dismissible]="true"
-      *ngIf="shouldShowChannelRecommendation(i)"
+      *ngIf="
+        shouldShowChannelRecommendation(i) &&
+        !(isChannelRecommendationDismissed$ | async)
+      "
     ></m-channelRecommendation>
   </ng-container>
 
