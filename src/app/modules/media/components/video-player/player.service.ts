@@ -1,9 +1,17 @@
-import { FeaturesService } from './../../../../services/features.service';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { Client } from '../../../../services/api';
-import { map } from 'rxjs/operators';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { AnalyticsService } from '../../../../services/analytics';
+import { isPlatformBrowser } from '@angular/common';
+import * as snowplow from '@snowplow/browser-tracker';
+
+// Actions trackable by analytics.
+export type TrackableActionKey =
+  | 'fullscreen'
+  | 'unmuted'
+  | 'first_played'
+  | 'first_ended';
 
 export type VideoSource = {
   id: string;
@@ -64,7 +72,8 @@ export class VideoPlayerService implements OnDestroy {
   constructor(
     private client: Client,
     private modalService: ModalService,
-    private featuresService: FeaturesService
+    private analytics: AnalyticsService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.setShouldPlayInModal(true);
   }
@@ -134,5 +143,25 @@ export class VideoPlayerService implements OnDestroy {
    */
   awaitingTranscode(): Observable<boolean> {
     return of(this.status === 'transcoding');
+  }
+
+  /**
+   * Adds an action event to analytics.
+   * @param { TrackableActionKey } actionEventKey - action event key.
+   * @returns { void }
+   */
+  public trackActionEvent(actionEventKey: TrackableActionKey): void {
+    if (isPlatformBrowser(this.platformId)) {
+      snowplow.trackSelfDescribingEvent({
+        event: {
+          schema: 'iglu:com.minds/view/jsonschema/1-0-0',
+          data: {
+            action: actionEventKey,
+            entity_guid: this.guid,
+          },
+        },
+        context: this.analytics.getContexts(),
+      });
+    }
   }
 }

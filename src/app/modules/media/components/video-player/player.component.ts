@@ -1,10 +1,8 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
-  forwardRef,
   Inject,
   Input,
   OnChanges,
@@ -90,6 +88,31 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   showPlyr = false;
 
   /**
+   * True if player is muted when ready event fires.
+   * Allows us to track initial unmute event for initially
+   * muted autoplaying videos
+   * @type { boolean }
+   */
+  private isMutedWhenReady: boolean = false;
+
+  /**
+   * True if initial play event has been tracked.
+   * Allows us to track only first play event and not unpauses.
+   * @type { boolean }
+   */
+
+  private hasTrackedInitialPlay: boolean = false;
+
+  /**
+   * True if first video end event has been tracked.
+   * As we only track initial play, we are only tracking a matching
+   * initial end event, incase users replay.
+   * @type { boolean }
+   */
+
+  private hasTrackedInitialEnd: boolean = false;
+
+  /**
    * Plyr driver detrmined by source types (detects hls)
    */
   plyrDriver$: Observable<HlsjsPlyrDriver | null> = this.service.sources$.pipe(
@@ -134,12 +157,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   protected init: boolean = false;
 
-  subscriptions: Subscription[] = [
-    this.service.onReady$.subscribe(() => {
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    }),
-  ];
+  subscriptions: Subscription[] = [];
 
   constructor(
     public elementRef: ElementRef,
@@ -151,6 +169,10 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(
+      this.service.onReady$.subscribe(() => {
+        this.cd.markForCheck();
+        this.cd.detectChanges();
+      }),
       combineLatest([
         this.service.isPlayable$,
         this.service.sources$,
@@ -214,14 +236,6 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * Plyr call when play event is emitted
-   * @param event
-   */
-  onPlayed(event: Plyr.PlyrEvent): void {
-    // console.log('played', event);
-  }
-
-  /**
    * Placeholder clicked
    * @param e
    * @return void
@@ -253,10 +267,6 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     // if (this.player) {
     //   this.player.player.muted = true;
     // }
-  }
-
-  isMuted(): boolean {
-    return this.player ? this.player.player.muted : false;
   }
 
   async play(opts: { muted: boolean; hideControls?: boolean }) {
@@ -319,9 +329,74 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     }
   }
 
-  onReady() {}
+  /**
+   * Fired on ready state trigger.
+   * @returns { void }
+   */
+  public onReady(): void {
+    // track whether player is muted on ready state in a class variable.
+    this.isMutedWhenReady = this.isMuted();
+  }
 
-  onVolumeChange(): void {}
+  /**
+   * Fired on play event trigger.
+   * @returns { void }
+   */
+  public onPlayed(): void {
+    // only track play event for initial play - not unpauses.
+    if (!this.hasTrackedInitialPlay) {
+      this.service.trackActionEvent('first_played');
+      this.hasTrackedInitialPlay = true;
+    }
+  }
+
+  /**
+   * Fired when player video ends.
+   * @returns { void }
+   */
+  public onEnded(): void {
+    if (!this.hasTrackedInitialEnd) {
+      this.service.trackActionEvent('first_ended');
+      this.hasTrackedInitialEnd = true;
+    }
+    this.autoProgress.next();
+  }
+
+  /**
+   * Fired on volume change.
+   * @returns { void }
+   */
+  public onVolumeChange(): void {
+    // only track unmute event if the player started muted.
+    if (this.isMutedWhenReady) {
+      this.service.trackActionEvent('unmuted');
+      this.isMutedWhenReady = false;
+    }
+  }
+
+  /**
+   * Fired when full-screen is entered.
+   * @param { Plyr.PlyrEvent } plyrEvent - full screen entered event.
+   * @returns { void }
+   */
+  public onEnterFullScreen(plyrEvent: Plyr.PlyrEvent): void {
+    this.service.trackActionEvent('fullscreen');
+    this.fullScreenChange.next(plyrEvent);
+  }
+
+  /**
+   * Called on Plyr seek.
+   * @returns { void }
+   */
+  public onSeeking(): void {
+    this.subscriptions.push(
+      this.autoProgress.timer$.pipe(take(1)).subscribe(timer => {
+        if (timer > 0) {
+          this.autoProgress.cancel();
+        }
+      })
+    );
+  }
 
   onPlay(): void {}
 
@@ -349,20 +424,13 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     this.service.isPlayable$.next(false);
   }
 
-  onEnded($event: any): void {
-    this.autoProgress.next();
-  }
-
   /**
-   * Called on Plyr seek.
+   * Whether player is muted (or volume is 0).
+   * @returns { boolean } - true if player is muted.
    */
-  onSeeking(): void {
-    this.subscriptions.push(
-      this.autoProgress.timer$.pipe(take(1)).subscribe(timer => {
-        if (timer > 0) {
-          this.autoProgress.cancel();
-        }
-      })
-    );
+  private isMuted(): boolean {
+    return this.player
+      ? this.player.player.muted || this.player.player.volume === 0
+      : false;
   }
 }

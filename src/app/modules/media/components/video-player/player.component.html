@@ -24,12 +24,12 @@
       (plyrPlay)="onPlayed($event)"
       (plyrControlsShown)="onControlsShown.next($event)"
       (plyrControlsHidden)="onControlsHidden.next($event)"
-      (plyrEnterFullScreen)="fullScreenChange.next($event)"
+      (plyrEnterFullScreen)="onEnterFullScreen($event)"
       (plyrExitFullScreen)="fullScreenChange.next($event)"
       (plyrLoadedMetadata)="emitDimensions($event)"
       (plyrPlaying)="onPlay()"
       (plyrReady)="onReady()"
-      (plyrVolumeChange)="onVolumeChange()"
+      (plyrVolumeChange)="onVolumeChange($event)"
       (plyrSeeking)="onSeeking()"
     >
     </plyr>

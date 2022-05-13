@@ -1,0 +1,160 @@
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MindsVideoPlayerComponent } from './player.component';
+import { MockComponent, MockService } from '../../../../utils/mock';
+import { ChangeDetectorRef, ElementRef, PLATFORM_ID } from '@angular/core';
+import { VideoPlayerService, VideoSource } from './player.service';
+import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
+import { BehaviorSubject } from 'rxjs';
+
+describe('MindsVideoPlayerComponent', () => {
+  let comp: MindsVideoPlayerComponent;
+  let fixture: ComponentFixture<MindsVideoPlayerComponent>;
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MindsVideoPlayerComponent,
+          MockComponent({
+            selector: 'm-autoProgress__overlay',
+          }),
+          MockComponent({
+            selector: 'plyr',
+            inputs: [
+              'plyrDriver',
+              'plyrPoster',
+              'plyrPlaysInline',
+              'plyrSources',
+              'plyrOptions',
+            ],
+            outputs: [
+              'plyrEnded',
+              'plyrPlay',
+              'plyrControlsShown',
+              'plyrControlsHidden',
+              'plyrEnterFullScreen',
+              'plyrExitFullScreen',
+              'plyrLoadedMetadata',
+              'plyrPlaying',
+              'plyrReady',
+              'plyrVolumeChange',
+              'plyrSeeking',
+            ],
+          }),
+        ],
+        providers: [
+          {
+            provide: ElementRef,
+            useValue: MockService(ElementRef),
+          },
+          {
+            provide: VideoPlayerService,
+            useValue: null,
+          },
+          {
+            provide: ChangeDetectorRef,
+            useValue: MockService(ChangeDetectorRef),
+          },
+          {
+            provide: AutoProgressVideoService,
+            useValue: MockService(AutoProgressVideoService),
+          },
+          {
+            provide: PLATFORM_ID,
+            useValue: 'browser',
+          },
+        ],
+      })
+        .overrideProvider(VideoPlayerService, {
+          useValue: MockService(VideoPlayerService, {
+            has: ['isPlayable$', 'sources$', 'onReady$'],
+            props: {
+              isPlayable$: { get: () => new BehaviorSubject<boolean>(true) },
+              sources$: { get: () => new BehaviorSubject<VideoSource[]>([]) },
+              onReady$: { get: () => new BehaviorSubject<boolean>(true) },
+            },
+          }),
+        })
+        .compileComponents();
+    })
+  );
+
+  beforeEach(done => {
+    fixture = TestBed.createComponent(MindsVideoPlayerComponent);
+    comp = fixture.componentInstance;
+    fixture.detectChanges();
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
+    }
+  });
+
+  it('should instantiate', () => {
+    expect(comp).toBeTruthy();
+  });
+
+  it('should set initially muted state onReady when muted', () => {
+    (comp as any).isMutedWhenReady = false;
+    (comp as any).player = {
+      player: {
+        muted: true,
+      },
+    };
+    comp.onReady();
+    expect((comp as any).isMutedWhenReady).toBeTrue();
+  });
+
+  it('should set initially muted state onReady when NOT muted', () => {
+    (comp as any).isMutedWhenReady = false;
+    (comp as any).player = {
+      player: {
+        muted: false,
+        volume: 100,
+      },
+    };
+    comp.onReady();
+    expect((comp as any).isMutedWhenReady).toBeFalse();
+  });
+
+  it('should track action event when first played, but not on second play', () => {
+    (comp as any).hasTrackedInitialPlay = false;
+    comp.onPlayed();
+    comp.onPlayed();
+    expect((comp as any).hasTrackedInitialPlay).toBeTrue();
+    expect((comp as any).service.trackActionEvent).toHaveBeenCalledOnceWith(
+      'first_played'
+    );
+  });
+
+  it('should track action event when first ended, but not on second ended event', () => {
+    (comp as any).hasTrackedInitialEnd = false;
+    comp.onEnded();
+    comp.onEnded();
+    expect((comp as any).hasTrackedInitialEnd).toBeTrue();
+    expect((comp as any).service.trackActionEvent).toHaveBeenCalledOnceWith(
+      'first_ended'
+    );
+  });
+
+  it('should track action event when first unmuted, but not on second ended event', () => {
+    (comp as any).isMutedWhenReady = true;
+    comp.onVolumeChange();
+    comp.onVolumeChange();
+    expect((comp as any).isMutedWhenReady).toBeFalse();
+    expect((comp as any).service.trackActionEvent).toHaveBeenCalledOnceWith(
+      'unmuted'
+    );
+  });
+
+  it('should track action event when entering fullscreen', () => {
+    comp.onEnterFullScreen(null);
+    expect((comp as any).service.trackActionEvent).toHaveBeenCalledOnceWith(
+      'fullscreen'
+    );
+  });
+});
