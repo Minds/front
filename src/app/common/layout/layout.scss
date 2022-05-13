@@ -174,8 +174,6 @@ $layoutMin1ColWidth: 280px;
     text-decoration: none;
     padding: 20px 40px 0;
     display: block;
-    cursor: pointer;
-
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
