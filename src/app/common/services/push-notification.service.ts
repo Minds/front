@@ -41,10 +41,6 @@ export class PushNotificationService implements OnDestroy {
     this.subscriptions.map(subscription => subscription.unsubscribe());
   }
 
-  onNotificationClick({ action, notification }) {
-    this.analytics.trackClick('push-notification');
-  }
-
   /**
    * does the browser support push notifications?
    * @returns { Observable<boolean> }
@@ -162,6 +158,13 @@ export class PushNotificationService implements OnDestroy {
       service: 'webpush',
       token: encodeURIComponent(btoa(JSON.stringify(pushSubscription))),
     });
+  }
+
+  /**
+   * called when a notification is clicked
+   */
+  onNotificationClick({ action, notification }) {
+    this.analytics.trackClick('push-notification');
   }
 }
 
