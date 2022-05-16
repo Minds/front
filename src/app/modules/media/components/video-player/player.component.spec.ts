@@ -99,18 +99,18 @@ describe('MindsVideoPlayerComponent', () => {
   });
 
   it('should set initially muted state onReady when muted', () => {
-    (comp as any).shouldTrackMuteEvent = false;
+    (comp as any).shouldTrackUnmuteEvent = false;
     (comp as any).player = {
       player: {
         muted: true,
       },
     };
     comp.onReady();
-    expect((comp as any).shouldTrackMuteEvent).toBeTrue();
+    expect((comp as any).shouldTrackUnmuteEvent).toBeTrue();
   });
 
   it('should set initially muted state onReady when NOT muted', () => {
-    (comp as any).shouldTrackMuteEvent = false;
+    (comp as any).shouldTrackUnmuteEvent = false;
     (comp as any).player = {
       player: {
         muted: false,
@@ -118,14 +118,14 @@ describe('MindsVideoPlayerComponent', () => {
       },
     };
     comp.onReady();
-    expect((comp as any).shouldTrackMuteEvent).toBeFalse();
+    expect((comp as any).shouldTrackUnmuteEvent).toBeFalse();
   });
 
   it('should track action event when first unmuted, but not on second ended event', () => {
-    (comp as any).shouldTrackMuteEvent = true;
+    (comp as any).shouldTrackUnmuteEvent = true;
     comp.onVolumeChange();
     comp.onVolumeChange();
-    expect((comp as any).shouldTrackMuteEvent).toBeFalse();
+    expect((comp as any).shouldTrackUnmuteEvent).toBeFalse();
     expect(
       (comp as any).service.trackActionEventClick
     ).toHaveBeenCalledOnceWith('video-player-unmuted');

@@ -316,7 +316,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   public onReady(): void {
     // track whether player is muted on ready state in a class variable.
-    this.shouldTrackMuteEvent = this.isMuted();
+    this.shouldTrackUnmuteEvent = this.isMuted();
   }
 
   /**
