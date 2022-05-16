@@ -89,11 +89,9 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
 
   /**
    * True if player is muted when ready event fires.
-   * Allows us to track initial unmute event for initially
-   * muted autoplaying videos
-   * @type { boolean }
+   * Allows us to track initial unmute event.
    */
-  private shouldTrackMuteEvent: boolean = false;
+  private shouldTrackUnmuteEvent: boolean = false;
 
   /**
    * Plyr driver detrmined by source types (detects hls)
@@ -335,9 +333,9 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   public onVolumeChange(): void {
     // only track unmute event if the player started muted.
-    if (this.shouldTrackMuteEvent) {
+    if (this.shouldTrackUnmuteEvent) {
       this.service.trackActionEventClick('video-player-unmuted');
-      this.shouldTrackMuteEvent = false;
+      this.shouldTrackUnmuteEvent = false;
     }
   }
 
