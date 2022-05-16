@@ -193,7 +193,6 @@ import { ResizedDirective } from './directives/resized.directive';
 import { DropdownMenuItemComponent } from './components/dropdown-menu-item/dropdown-menu-item.component';
 import { PreventDoubleClickDirective } from './directives/prevent-double-click.directive';
 import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-button/see-latest-posts-button.component';
-import { I18nExtensionComponent } from './components/i18n-extension/i18n-extension.component';
 import { ReportService } from './services/report.service';
 
 const routes: Routes = [
@@ -371,7 +370,6 @@ const routes: Routes = [
     ResizedDirective,
     DropdownMenuItemComponent,
     PreventDoubleClickDirective,
-    I18nExtensionComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -523,7 +521,6 @@ const routes: Routes = [
     ResizedDirective,
     DropdownMenuItemComponent,
     PreventDoubleClickDirective,
-    I18nExtensionComponent,
   ],
   providers: [
     SiteService,
