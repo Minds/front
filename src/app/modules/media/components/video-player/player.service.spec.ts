@@ -24,9 +24,25 @@ describe('VideoPlayerService', () => {
   });
 
   it('should call to track event on trackActionEvent call', () => {
-    service.trackActionEventClick('video-player-unmuted');
-    // Can't check snowplow call as its a package so check a call made
-    // in the construction of that call is made.
-    expect((service as any).analytics.getContexts).toHaveBeenCalled();
+    const eventKey = 'video-player-unmuted';
+    const mockContext = {
+      schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
+      data: {
+        entity_guid: '123',
+        entity_type: 'object',
+        entity_subtype: 'video',
+        entity_owner_guid: '123',
+        entity_access_id: '2',
+        entity_container_guid: '123',
+      },
+    };
+    (service as any).analytics.buildEntityContext.and.returnValue(mockContext);
+
+    service.trackClick(eventKey);
+
+    expect((service as any).analytics.trackClick).toHaveBeenCalledWith(
+      eventKey,
+      [mockContext]
+    );
   });
 });

@@ -10,6 +10,10 @@ export let analyticsServiceMock = new (function() {
   this.getContexts = jasmine
     .createSpy('getContexts')
     .and.returnValue(undefined);
+  this.buildEntityContext = jasmine
+    .createSpy('buildEntityContext')
+    .and.returnValue(null);
+  this.trackClick = jasmine.createSpy('trackClick').and.returnValue(null);
 })();
 
 export let modalServiceMock = new (function() {
@@ -22,12 +26,29 @@ export let modalServiceMock = new (function() {
 describe('ActivityModalCreatorService', () => {
   let service: ActivityModalCreatorService;
 
+  const mockContext = {
+    schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
+    data: {
+      entity_guid: '123',
+      entity_type: 'object',
+      entity_subtype: 'video',
+      entity_owner_guid: '123',
+      entity_access_id: '2',
+      entity_container_guid: '123',
+    },
+  };
+  const eventKey = 'activity-modal-open';
+
   beforeEach(() => {
     service = new ActivityModalCreatorService(
       modalServiceMock,
       activityV2ExperimentServiceMock,
       analyticsServiceMock
     );
+
+    (service as any).analytics.buildEntityContext.calls.reset();
+    (service as any).analytics.trackClick.calls.reset();
+    (service as any).analytics.buildEntityContext.and.returnValue(mockContext);
   });
 
   afterEach(() => {
@@ -39,8 +60,6 @@ describe('ActivityModalCreatorService', () => {
   });
 
   it('should open the modal and not track events for activities', () => {
-    (service as any).analytics.getContexts.calls.reset();
-
     const entity = {
       type: 'activity',
       subtype: '',
@@ -48,8 +67,10 @@ describe('ActivityModalCreatorService', () => {
 
     service.create(entity as ActivityEntity, null);
 
-    // can't check snowplow sdk so check the analytics call made in the function.
-    expect((service as any).analytics.getContexts).not.toHaveBeenCalled();
+    expect(
+      (service as any).analytics.buildEntityContext
+    ).not.toHaveBeenCalled();
+    expect((service as any).analytics.trackClick).not.toHaveBeenCalled();
     expect((service as any).modalService.present).toHaveBeenCalledWith(
       ActivityV2ModalComponent,
       {
@@ -71,8 +92,13 @@ describe('ActivityModalCreatorService', () => {
 
     service.create(entity as ActivityEntity, null);
 
-    // can't check snowplow sdk so check the analytics call made in the function.
-    expect((service as any).analytics.getContexts).toHaveBeenCalled();
+    expect((service as any).analytics.buildEntityContext).toHaveBeenCalledWith(
+      entity
+    );
+    expect((service as any).analytics.trackClick).toHaveBeenCalledWith(
+      eventKey,
+      [mockContext]
+    );
     expect((service as any).modalService.present).toHaveBeenCalledWith(
       ActivityV2ModalComponent,
       {
@@ -94,8 +120,13 @@ describe('ActivityModalCreatorService', () => {
 
     service.create(entity as ActivityEntity, null);
 
-    // can't check snowplow sdk so check the analytics call made in the function.
-    expect((service as any).analytics.getContexts).toHaveBeenCalled();
+    expect((service as any).analytics.buildEntityContext).toHaveBeenCalledWith(
+      entity
+    );
+    expect((service as any).analytics.trackClick).toHaveBeenCalledWith(
+      eventKey,
+      [mockContext]
+    );
     expect((service as any).modalService.present).toHaveBeenCalledWith(
       ActivityV2ModalComponent,
       {

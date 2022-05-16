@@ -126,8 +126,8 @@ describe('MindsVideoPlayerComponent', () => {
     comp.onVolumeChange();
     comp.onVolumeChange();
     expect((comp as any).shouldTrackUnmuteEvent).toBeFalse();
-    expect(
-      (comp as any).service.trackActionEventClick
-    ).toHaveBeenCalledOnceWith('video-player-unmuted');
+    expect((comp as any).service.trackClick).toHaveBeenCalledOnceWith(
+      'video-player-unmuted'
+    );
   });
 });
