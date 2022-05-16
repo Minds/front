@@ -29,10 +29,25 @@
     </ng-template>
   </a>
   <!-- ------------------------------------------ -->
+  <!-- EDITED  -->
+  <!-- ------------------------------------------ -->
+  <div
+    class="m-activityPermalink__wrapper m-legible"
+    *ngIf="
+      !service.displayOptions.minimalMode &&
+      !service.displayOptions.isSidebarBoost &&
+      (service.isEdited$ | async)
+    "
+  >
+    <span class="m-activityPermalink__text m-activityPermalink__text--edited"
+      >(<ng-container i18n="@@M__COMMON__EDITED">edited</ng-container>)</span
+    >
+  </div>
+  <!-- ------------------------------------------ -->
   <!-- VIEW COUNT  -->
   <!-- ------------------------------------------ -->
   <m-activityV2__views
     *ngIf="entity.time_created && !service.displayOptions.isFeed"
-    class="m-activityPermalink__wrapper "
+    class="m-activityPermalink__wrapper"
   ></m-activityV2__views>
 </div>

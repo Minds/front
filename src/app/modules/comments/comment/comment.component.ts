@@ -118,12 +118,19 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   posterMenuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   // Compact view may be determined by input or window width
+  // and is not used by activity V2
   _compact: boolean = false;
 
   commentAgeOnLoadMs: number;
 
   @Input() set compact(value: boolean) {
-    this._compact = value;
+    if (this.activityV2Feature) {
+      this._compact = false;
+      return;
+    } else {
+      this._compact = value;
+    }
+
     if (!value) {
       this.onResize();
     }
@@ -208,6 +215,10 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
+    if (this.activityV2Experiment.isActive()) {
+      this._compact = false;
+      return;
+    }
     if (window.innerWidth <= 480) {
       this._compact = true;
     }
