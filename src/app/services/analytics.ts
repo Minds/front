@@ -18,6 +18,16 @@ import { SelfDescribingJson } from '@snowplow/tracker-core';
 
 export type SnowplowContext = SelfDescribingJson<Record<string, unknown>>;
 
+// entity that can be contextualized into an 'entity_context'.
+export type ContextualizableEntity = {
+  guid: string;
+  type: string;
+  subtype: string;
+  access_id: string;
+  container_guid: string;
+  owner_guid: string;
+};
+
 @Injectable()
 export class AnalyticsService implements OnDestroy {
   private defaultPrevented: boolean = false;
@@ -114,15 +124,44 @@ export class AnalyticsService implements OnDestroy {
 
     if (!dataRef) return; // We couldn't find a data-ref so nothing more to do here
 
+    this.trackClick(dataRefVal);
+  }
+
+  /**
+   * Tracks a click event.
+   * @param { string } ref - a string identifying the source of the click action.
+   * @param { SnowplowContext[] } contexts - additional contexts.
+   * @returns { void }
+   */
+  public trackClick(ref: string, contexts: SnowplowContext[] = []): void {
     snowplow.trackSelfDescribingEvent({
       event: {
         schema: 'iglu:com.minds/click_event/jsonschema/1-0-0',
         data: {
-          ref: dataRefVal,
+          ref: ref,
         },
       },
-      context: this.getContexts(),
+      context: [...(this.getContexts() ?? []), ...contexts],
     });
+  }
+
+  /**
+   * Build entity context for a given entity.
+   * @param { ActivityEntity } entity - entity to build entity_context for.
+   * @returns { SnowplowContext } - built entity context SnowplowContext.
+   */
+  public buildEntityContext(entity: ContextualizableEntity): SnowplowContext {
+    return {
+      schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
+      data: {
+        entity_guid: entity.guid,
+        entity_type: entity.type,
+        entity_subtype: entity.subtype,
+        entity_owner_guid: entity.owner_guid,
+        entity_access_id: entity.access_id,
+        entity_container_guid: entity.container_guid,
+      },
+    };
   }
 
   async onRouterInit() {}

@@ -4,10 +4,9 @@ import { Client } from '../../../../services/api';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { AnalyticsService } from '../../../../services/analytics';
 import { isPlatformBrowser } from '@angular/common';
-import * as snowplow from '@snowplow/browser-tracker';
 
-// Event tracking key.
-export type EventTrackingKey = 'video-player-unmuted';
+// key for click events.
+export type ClickEventRef = 'video-player-unmuted';
 
 export type VideoSource = {
   id: string;
@@ -42,6 +41,13 @@ export class VideoPlayerService implements OnDestroy {
    * @var BehaviorSubject<string>
    */
   poster$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  /**
+   * Video entity loaded from guid.
+   */
+  private readonly entity$: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
 
   /**
    * False would be inline
@@ -115,10 +121,13 @@ export class VideoPlayerService implements OnDestroy {
    */
   async load(): Promise<void> {
     try {
-      const response = await this.client.get('api/v2/media/video/' + this.guid);
-      this.sources$.next((<any>response).sources);
-      this.poster$.next((<any>response).poster);
-      this.status = (<any>response).transcode_status;
+      const response: any = await this.client.get(
+        'api/v2/media/video/' + this.guid
+      );
+      this.sources$.next(response.sources);
+      this.poster$.next(response.poster);
+      this.entity$.next(response.entity);
+      this.status = response.transcode_status;
       this.onReady$.next();
       this.onReady$.complete();
     } catch (e) {
@@ -142,22 +151,15 @@ export class VideoPlayerService implements OnDestroy {
   }
 
   /**
-   * Adds an action event click to analytics.
-   * @param { TrackableActionKey } actionEventKey - action event key.
+   * Tracks click event.
+   * @param { ClickEventRef } clickEventKey - click event reference.
    * @returns { void }
    */
-  public trackActionEventClick(actionEventKey: EventTrackingKey): void {
+  public trackClick(clickEventKey: ClickEventRef): void {
     if (isPlatformBrowser(this.platformId)) {
-      snowplow.trackSelfDescribingEvent({
-        event: {
-          schema: 'iglu:com.minds/view/jsonschema/1-0-0',
-          data: {
-            ref: actionEventKey,
-            entity_guid: this.guid,
-          },
-        },
-        context: this.analytics.getContexts(),
-      });
+      this.analytics.trackClick(clickEventKey, [
+        this.analytics.buildEntityContext(this.entity$.getValue()),
+      ]);
     }
   }
 }

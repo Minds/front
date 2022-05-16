@@ -4,8 +4,10 @@ import { ActivityModalComponent } from './modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { ActivityV2ModalComponent } from '../../activity-v2/modal/modal.component';
 import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
-import { AnalyticsService } from '../../../../services/analytics';
-import * as snowplow from '@snowplow/browser-tracker';
+import {
+  AnalyticsService,
+  ContextualizableEntity,
+} from '../../../../services/analytics';
 
 // TODO: this will need to move to activity-v2 when ready
 @Injectable()
@@ -39,32 +41,25 @@ export class ActivityModalCreatorService {
     };
 
     if (this.shouldTrackActionEvent(entity)) {
-      this.trackActionEvent(entity);
+      this.trackActionEvent(entity as ContextualizableEntity);
     }
 
     this.modalService.present(modalComp, opts);
   }
 
   /**
-   * Adds an action event to analytics for modal click.
+   * Tracks a click event with entity_context.
    * @param { ActivityEntity } entity - entity for event.
    * @returns { void }
    */
-  private trackActionEvent(entity: ActivityEntity): void {
-    snowplow.trackSelfDescribingEvent({
-      event: {
-        schema: 'iglu:com.minds/view/jsonschema/1-0-0',
-        data: {
-          ref: 'activity-modal-open',
-          entity_guid: entity.guid,
-        },
-      },
-      context: this.analytics.getContexts(),
-    });
+  private trackActionEvent(entity: ContextualizableEntity): void {
+    this.analytics.trackClick('activity-modal-open', [
+      this.analytics.buildEntityContext(entity),
+    ]);
   }
 
   /**
-   * Whether action event should be tracked in analytics.
+   * Whether click should be tracked in analytics.
    * @param { ActivityEntity } entity - entity to check.
    * @returns { boolean } - true if event should be tracked.
    */

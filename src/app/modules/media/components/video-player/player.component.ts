@@ -334,7 +334,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   public onVolumeChange(): void {
     // only track unmute event if the player started muted.
     if (this.shouldTrackUnmuteEvent) {
-      this.service.trackActionEventClick('video-player-unmuted');
+      this.service.trackClick('video-player-unmuted');
       this.shouldTrackUnmuteEvent = false;
     }
   }
