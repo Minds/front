@@ -54,6 +54,7 @@ export class AdminPushNotificationsFormComponent {
       timestamp: Date.now(),
       counter: null,
       target: 'all-devices',
+      status: 'Pending',
     };
 
     request
