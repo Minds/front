@@ -24,7 +24,7 @@
       (plyrPlay)="onPlayed($event)"
       (plyrControlsShown)="onControlsShown.next($event)"
       (plyrControlsHidden)="onControlsHidden.next($event)"
-      (plyrEnterFullScreen)="onEnterFullScreen($event)"
+      (plyrEnterFullScreen)="fullScreenChange.next($event)"
       (plyrExitFullScreen)="fullScreenChange.next($event)"
       (plyrLoadedMetadata)="emitDimensions($event)"
       (plyrPlaying)="onPlay()"

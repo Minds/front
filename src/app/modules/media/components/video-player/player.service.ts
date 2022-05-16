@@ -6,8 +6,8 @@ import { AnalyticsService } from '../../../../services/analytics';
 import { isPlatformBrowser } from '@angular/common';
 import * as snowplow from '@snowplow/browser-tracker';
 
-// Actions trackable by analytics.
-export type TrackableActionKey = 'video-player-unmuted';
+// Event tracking key.
+export type EventTrackingKey = 'video-player-unmuted';
 
 export type VideoSource = {
   id: string;
@@ -146,13 +146,13 @@ export class VideoPlayerService implements OnDestroy {
    * @param { TrackableActionKey } actionEventKey - action event key.
    * @returns { void }
    */
-  public trackActionEventClick(actionEventKey: TrackableActionKey): void {
+  public trackActionEventClick(actionEventKey: EventTrackingKey): void {
     if (isPlatformBrowser(this.platformId)) {
       snowplow.trackSelfDescribingEvent({
         event: {
           schema: 'iglu:com.minds/view/jsonschema/1-0-0',
           data: {
-            action: actionEventKey,
+            ref: actionEventKey,
             entity_guid: this.guid,
           },
         },

@@ -356,13 +356,6 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * Fired when full-screen is entered.
-   * @param { Plyr.PlyrEvent } plyrEvent - full screen entered event.
-   * @returns { void }
-   */
-  public onEnterFullScreen(plyrEvent: Plyr.PlyrEvent): void {}
-
-  /**
    * Fired on play event trigger.
    * @returns { void }
    */
