@@ -93,24 +93,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    * muted autoplaying videos
    * @type { boolean }
    */
-  private isMutedWhenReady: boolean = false;
-
-  /**
-   * True if initial play event has been tracked.
-   * Allows us to track only first play event and not unpauses.
-   * @type { boolean }
-   */
-
-  private hasTrackedInitialPlay: boolean = false;
-
-  /**
-   * True if first video end event has been tracked.
-   * As we only track initial play, we are only tracking a matching
-   * initial end event, incase users replay.
-   * @type { boolean }
-   */
-
-  private hasTrackedInitialEnd: boolean = false;
+  private shouldTrackMuteEvent: boolean = false;
 
   /**
    * Plyr driver detrmined by source types (detects hls)
@@ -335,19 +318,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   public onReady(): void {
     // track whether player is muted on ready state in a class variable.
-    this.isMutedWhenReady = this.isMuted();
-  }
-
-  /**
-   * Fired on play event trigger.
-   * @returns { void }
-   */
-  public onPlayed(): void {
-    // only track play event for initial play - not unpauses.
-    if (!this.hasTrackedInitialPlay) {
-      this.service.trackActionEvent('first_played');
-      this.hasTrackedInitialPlay = true;
-    }
+    this.shouldTrackMuteEvent = this.isMuted();
   }
 
   /**
@@ -355,10 +326,6 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    * @returns { void }
    */
   public onEnded(): void {
-    if (!this.hasTrackedInitialEnd) {
-      this.service.trackActionEvent('first_ended');
-      this.hasTrackedInitialEnd = true;
-    }
     this.autoProgress.next();
   }
 
@@ -368,20 +335,10 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   public onVolumeChange(): void {
     // only track unmute event if the player started muted.
-    if (this.isMutedWhenReady) {
-      this.service.trackActionEvent('unmuted');
-      this.isMutedWhenReady = false;
+    if (this.shouldTrackMuteEvent) {
+      this.service.trackActionEventClick('video-player-unmuted');
+      this.shouldTrackMuteEvent = false;
     }
-  }
-
-  /**
-   * Fired when full-screen is entered.
-   * @param { Plyr.PlyrEvent } plyrEvent - full screen entered event.
-   * @returns { void }
-   */
-  public onEnterFullScreen(plyrEvent: Plyr.PlyrEvent): void {
-    this.service.trackActionEvent('fullscreen');
-    this.fullScreenChange.next(plyrEvent);
   }
 
   /**
@@ -397,6 +354,19 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
       })
     );
   }
+
+  /**
+   * Fired when full-screen is entered.
+   * @param { Plyr.PlyrEvent } plyrEvent - full screen entered event.
+   * @returns { void }
+   */
+  public onEnterFullScreen(plyrEvent: Plyr.PlyrEvent): void {}
+
+  /**
+   * Fired on play event trigger.
+   * @returns { void }
+   */
+  public onPlayed(): void {}
 
   onPlay(): void {}
 

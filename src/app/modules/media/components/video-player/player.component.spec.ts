@@ -99,18 +99,18 @@ describe('MindsVideoPlayerComponent', () => {
   });
 
   it('should set initially muted state onReady when muted', () => {
-    (comp as any).isMutedWhenReady = false;
+    (comp as any).shouldTrackMuteEvent = false;
     (comp as any).player = {
       player: {
         muted: true,
       },
     };
     comp.onReady();
-    expect((comp as any).isMutedWhenReady).toBeTrue();
+    expect((comp as any).shouldTrackMuteEvent).toBeTrue();
   });
 
   it('should set initially muted state onReady when NOT muted', () => {
-    (comp as any).isMutedWhenReady = false;
+    (comp as any).shouldTrackMuteEvent = false;
     (comp as any).player = {
       player: {
         muted: false,
@@ -118,43 +118,16 @@ describe('MindsVideoPlayerComponent', () => {
       },
     };
     comp.onReady();
-    expect((comp as any).isMutedWhenReady).toBeFalse();
-  });
-
-  it('should track action event when first played, but not on second play', () => {
-    (comp as any).hasTrackedInitialPlay = false;
-    comp.onPlayed();
-    comp.onPlayed();
-    expect((comp as any).hasTrackedInitialPlay).toBeTrue();
-    expect((comp as any).service.trackActionEvent).toHaveBeenCalledOnceWith(
-      'first_played'
-    );
-  });
-
-  it('should track action event when first ended, but not on second ended event', () => {
-    (comp as any).hasTrackedInitialEnd = false;
-    comp.onEnded();
-    comp.onEnded();
-    expect((comp as any).hasTrackedInitialEnd).toBeTrue();
-    expect((comp as any).service.trackActionEvent).toHaveBeenCalledOnceWith(
-      'first_ended'
-    );
+    expect((comp as any).shouldTrackMuteEvent).toBeFalse();
   });
 
   it('should track action event when first unmuted, but not on second ended event', () => {
-    (comp as any).isMutedWhenReady = true;
+    (comp as any).shouldTrackMuteEvent = true;
     comp.onVolumeChange();
     comp.onVolumeChange();
-    expect((comp as any).isMutedWhenReady).toBeFalse();
-    expect((comp as any).service.trackActionEvent).toHaveBeenCalledOnceWith(
-      'unmuted'
-    );
-  });
-
-  it('should track action event when entering fullscreen', () => {
-    comp.onEnterFullScreen(null);
-    expect((comp as any).service.trackActionEvent).toHaveBeenCalledOnceWith(
-      'fullscreen'
-    );
+    expect((comp as any).shouldTrackMuteEvent).toBeFalse();
+    expect(
+      (comp as any).service.trackActionEventClick
+    ).toHaveBeenCalledOnceWith('video-player-unmuted');
   });
 });

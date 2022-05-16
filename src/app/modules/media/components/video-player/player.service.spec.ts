@@ -24,7 +24,7 @@ describe('VideoPlayerService', () => {
   });
 
   it('should call to track event on trackActionEvent call', () => {
-    service.trackActionEvent('unmuted');
+    service.trackActionEventClick('video-player-unmuted');
     // Can't check snowplow call as its a package so check a call made
     // in the construction of that call is made.
     expect((service as any).analytics.getContexts).toHaveBeenCalled();

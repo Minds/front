@@ -7,11 +7,7 @@ import { isPlatformBrowser } from '@angular/common';
 import * as snowplow from '@snowplow/browser-tracker';
 
 // Actions trackable by analytics.
-export type TrackableActionKey =
-  | 'fullscreen'
-  | 'unmuted'
-  | 'first_played'
-  | 'first_ended';
+export type TrackableActionKey = 'video-player-unmuted';
 
 export type VideoSource = {
   id: string;
@@ -146,11 +142,11 @@ export class VideoPlayerService implements OnDestroy {
   }
 
   /**
-   * Adds an action event to analytics.
+   * Adds an action event click to analytics.
    * @param { TrackableActionKey } actionEventKey - action event key.
    * @returns { void }
    */
-  public trackActionEvent(actionEventKey: TrackableActionKey): void {
+  public trackActionEventClick(actionEventKey: TrackableActionKey): void {
     if (isPlatformBrowser(this.platformId)) {
       snowplow.trackSelfDescribingEvent({
         event: {
