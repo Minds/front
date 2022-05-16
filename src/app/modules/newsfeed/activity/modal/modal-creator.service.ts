@@ -55,7 +55,7 @@ export class ActivityModalCreatorService {
       event: {
         schema: 'iglu:com.minds/view/jsonschema/1-0-0',
         data: {
-          action: 'activity-modal-open',
+          ref: 'activity-modal-open',
           entity_guid: entity.guid,
         },
       },
