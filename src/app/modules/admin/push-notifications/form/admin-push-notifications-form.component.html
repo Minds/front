@@ -1,0 +1,71 @@
+<form
+  [formGroup]="pushNotificationsForm"
+  (submit)="$event.preventDefault()"
+  class="m-form m-formWrapper"
+>
+  <h3>Create new notification</h3>
+  <div class="m-layout--spacer"></div>
+  <div class="m-form__field--text stretchedField">
+    <div class="m-form__input--details">
+      <div class="m-form__row--label">
+        <label for="notificationTitle">
+          Title
+        </label>
+      </div>
+    </div>
+    <div class="m-form__row--input">
+      <input
+        type="text"
+        id="notificationTitle"
+        formControlName="notificationTitle"
+      />
+    </div>
+  </div>
+  <div class="m-form__field--textarea stretchedField">
+    <div class="m-form__input--details">
+      <div class="m-form__row--label">
+        <label for="notificationMessage">
+          Message
+        </label>
+      </div>
+    </div>
+    <div class="m-form__row--input">
+      <textarea
+        id="notificationMessage"
+        formControlName="notificationMessage"
+      ></textarea>
+    </div>
+  </div>
+  <div class="m-form__field--text stretchedField">
+    <div class="m-form__input--details">
+      <div class="m-form__row--label">
+        <label for="notificationLink">
+          Link
+        </label>
+      </div>
+    </div>
+    <div class="m-form__row--input">
+      <input
+        type="text"
+        id="notificationLink"
+        formControlName="notificationLink"
+      />
+    </div>
+  </div>
+  <input
+    type="hidden"
+    id="notificationTarget"
+    formControlName="notificationTarget"
+  />
+  <div class="m-layout--spacer"></div>
+  <div class="m-form__row--actions">
+    <m-button
+      [disabled]="!this.pushNotificationsForm.valid || this.inProgress"
+      color="blue"
+      solid="true"
+      (onAction)="sendPushNotification($event)"
+    >
+      Send Now
+    </m-button>
+  </div>
+</form>
