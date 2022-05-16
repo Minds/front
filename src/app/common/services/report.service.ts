@@ -29,8 +29,9 @@ export class ReportService {
   private localizeReason = (reason: Reason, parentId?: string) => {
     let label = reason.label;
     let reasons;
+    const id = parentId ? `${parentId}.${reason.value}` : String(reason.value);
 
-    switch (String(reason.value)) {
+    switch (id) {
       case '1':
         label = $localize`:@@REPORT__1:Illegal`;
         break;
@@ -106,12 +107,7 @@ export class ReportService {
     }
 
     if (reason.hasMore && reason.reasons?.length) {
-      reasons = reason.reasons.map(r =>
-        this.localizeReason(
-          r,
-          parentId ? `${parentId}.${reason.value}` : String(reason.value)
-        )
-      );
+      reasons = reason.reasons.map(r => this.localizeReason(r, id));
     }
 
     return {
