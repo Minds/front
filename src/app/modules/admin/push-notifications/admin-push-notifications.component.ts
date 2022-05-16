@@ -7,6 +7,7 @@ export type NotificationDetails = {
   timestamp: number;
   counter: number | null;
   target: string;
+  status: string;
 };
 
 @Component({
