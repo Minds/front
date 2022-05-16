@@ -1,3 +1,4 @@
+import { ReportService } from './../../../common/services/report.service';
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
   ComponentFixture,
@@ -58,6 +59,12 @@ describe('ReportConsoleComponent', () => {
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),
+          },
+          {
+            provide: ReportService,
+            useValue: {
+              reasons: [],
+            },
           },
         ],
         schemas: [NO_ERRORS_SCHEMA],

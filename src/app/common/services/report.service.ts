@@ -1,7 +1,7 @@
 import { ConfigsService } from './configs.service';
 import { Injectable } from '@angular/core';
 
-type Reason = {
+export type Reason = {
   label: string;
   reasons?: Reason[];
   value: number;

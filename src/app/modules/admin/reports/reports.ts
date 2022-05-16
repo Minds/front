@@ -20,7 +20,7 @@ export class AdminReports {
   moreData: boolean = true;
   offset: string = '';
   paramsSubscription: Subscription;
-  reasons: Array<{ value; label }> = this.reportService.reasons;
+  reasons = this.reportService.reasons;
 
   constructor(
     public client: Client,
