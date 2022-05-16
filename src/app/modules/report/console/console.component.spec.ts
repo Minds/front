@@ -33,8 +33,6 @@ import {
   $afterEach,
   $afterAll,
 } from 'jasmine-ts-async';
-
-import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { MockService } from '../../../utils/mock';

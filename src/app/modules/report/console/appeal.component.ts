@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
-import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
+import { REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 

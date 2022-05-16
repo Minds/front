@@ -1,10 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { REASONS } from '../../../services/list-options';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { MindsUser } from '../../../interfaces/entities';
+import { ReportService } from './../../../common/services/report.service';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +28,7 @@ export class ReportCreatorComponent implements AfterViewInit {
 
   success: boolean = false;
   error: string = '';
-  subjects = REASONS;
+  subjects = this.reportService.reasons;
 
   next: boolean = false;
 
@@ -39,7 +39,8 @@ export class ReportCreatorComponent implements AfterViewInit {
     private _changeDetectorRef: ChangeDetectorRef,
     private modalService: ModalService,
     private client: Client,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    private reportService: ReportService
   ) {}
 
   setModalData(opts: {
@@ -102,10 +103,6 @@ export class ReportCreatorComponent implements AfterViewInit {
   setSubReason(reason) {
     this.subReason = reason;
   }
-
-  //onSelectionChange(item) {
-  //  this.subject = item.value;
-  //}
 
   close() {
     this.modalService.dismissAll();

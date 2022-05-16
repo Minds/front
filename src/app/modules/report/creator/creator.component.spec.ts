@@ -23,7 +23,6 @@ import { AbbrPipe } from '../../../common/pipes/abbr';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
-import { REASONS } from '../../../services/list-options';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
