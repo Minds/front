@@ -154,12 +154,12 @@ export class AnalyticsService implements OnDestroy {
     return {
       schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
       data: {
-        entity_guid: entity.guid,
-        entity_type: entity.type,
-        entity_subtype: entity.subtype,
-        entity_owner_guid: entity.owner_guid,
-        entity_access_id: entity.access_id,
-        entity_container_guid: entity.container_guid,
+        entity_guid: entity.guid ?? null,
+        entity_type: entity.type ?? null,
+        entity_subtype: entity.subtype ?? null,
+        entity_owner_guid: entity.owner_guid ?? null,
+        entity_access_id: entity.access_id ?? null,
+        entity_container_guid: entity.container_guid ?? null,
       },
     };
   }
