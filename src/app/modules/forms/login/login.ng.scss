@@ -168,6 +168,10 @@
       }
     }
   }
+  .m-reset-password-link {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 // .m-login-box {
@@ -182,10 +186,5 @@
 //     margin: 0;
 //     font-size: 24px;
 //     line-height: 26px;
-//   }
-
-//   .m-reset-password-link {
-//     padding-left: $minds-padding * 2;
-//     text-decoration: none;
 //   }
 // }

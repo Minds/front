@@ -167,4 +167,13 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   public async onJoinNowClick(): Promise<void> {
     this.router.navigate(['/register'], { queryParamsHandling: 'merge' });
   }
+
+  /**
+   * Called on forgot password click.
+   * @returns { void }
+   */
+  public onForgotPasswordClick(): void {
+    this.done.emit(true);
+    this.router.navigate(['/forgot-password']);
+  }
 }
