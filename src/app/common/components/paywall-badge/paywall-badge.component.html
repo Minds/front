@@ -6,7 +6,7 @@
       iconOnly:
         paywallType === 'custom' || (paywallType === 'tier' && !showTierName),
       topRightPosition: topRightPosition,
-      'm-paywallBadge--activityV2': activityV2Feature
+      'm-activityV2__badge m-activityV2__badge--paywall m-paywallBadge--activityV2': activityV2Feature
     }"
   >
     <i *ngIf="paywallType !== 'plus'" class="material-icons">lock</i>

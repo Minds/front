@@ -4,6 +4,17 @@
   display: inline-block;
 
   // *********************************
+  // ** FEED **
+  // *********************************
+  .m-activity--isFeed & {
+    .m-activityPermalink__text--edited {
+      @media screen and (max-width: $max-mobile) {
+        display: none !important;
+      }
+    }
+  }
+
+  // *********************************
   // ** MINIMAL MODE **
   // *********************************
 
@@ -41,6 +52,25 @@
   m-newsfeed--single & {
     .m-activityPermalink__text {
       padding-top: $spacing4;
+      cursor: text;
+
+      &:hover {
+        text-decoration: none !important;
+      }
+    }
+  }
+  // *********************************
+  // ** QUOTE **
+  // *********************************
+
+  m-activityV2__quote & {
+    .m-activityPermalink__text {
+      padding-top: 0;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline !important;
+      }
     }
   }
 
@@ -53,6 +83,7 @@
   // *********************************
   .m-activityPermalink__wrapper {
     text-decoration: none;
+    display: inline-block;
 
     &.m-activityPermalink__wrapper--link {
       .m-activityPermalink__text {
@@ -73,6 +104,10 @@
         font-size: initial;
         vertical-align: text-top;
       }
+    }
+
+    .m-activityPermalink__text--edited {
+      padding-left: $spacing1;
     }
   }
 }

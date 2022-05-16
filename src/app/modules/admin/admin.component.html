@@ -73,6 +73,13 @@
       >
         <span>Features</span>
       </a>
+      <a
+        class="m-topbar--navigation--item"
+        routerLink="/admin/push-notifications"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span>Push Notifications</span>
+      </a>
     </div>
   </div>
 </div>
@@ -96,6 +103,9 @@
   *ngIf="filter == 'reports-download'"
 ></m-admin--reports-download>
 <m-admin--features *ngIf="filter == 'features'"></m-admin--features>
+<m-admin--pushNotifications
+  *ngIf="filter == 'push-notifications'"
+></m-admin--pushNotifications>
 <m-admin__liquidityProvideers
   *ngIf="filter === 'liquidity-providers'"
 ></m-admin__liquidityProvideers>

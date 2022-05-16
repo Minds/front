@@ -23,12 +23,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { LegacyModule } from '../legacy/legacy.module';
 import { GroupsModule } from '../groups/groups.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentsModule } from '../comments/comments.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 import { AdminLiquidityProvidersComponent } from './liquidity-providers/liquidity-providers.component';
 import { AdminTransactionExplorersComponent } from './withdrawals/transaction-explorers/transaction-explorers.component';
+import { AdminPushNotificationsFormComponent } from './push-notifications/form/admin-push-notifications-form.component';
+import { AdminPushNotificationsHistoryComponent } from './push-notifications/history/admin-push-notifications-history.component';
+import { NotificationHistoryCardComponent } from './push-notifications/history/card/notification-history-card.component';
+import { AdminPushNotificationsComponent } from './push-notifications/admin-push-notifications.component';
 
 const routes: Routes = [
   {
@@ -48,6 +52,7 @@ const routes: Routes = [
     LegacyModule,
     GroupsModule,
     CommentsModule,
+    ReactiveFormsModule,
     ActivityModule, // delete during ActivityV2 cleanup
     ActivityV2Module,
   ],
@@ -72,6 +77,10 @@ const routes: Routes = [
     AdminReportsDownload,
     AdminFeaturesComponent,
     AdminLiquidityProvidersComponent,
+    AdminPushNotificationsComponent,
+    AdminPushNotificationsFormComponent,
+    AdminPushNotificationsHistoryComponent,
+    NotificationHistoryCardComponent,
   ],
 })
 export class AdminModule {}
