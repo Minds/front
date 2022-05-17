@@ -29,7 +29,7 @@
       }
       &.isPlus {
         @include m-theme() {
-          background-color: none !important;
+          background-color: transparent !important;
           color: themed($m-textColor--primary);
         }
       }

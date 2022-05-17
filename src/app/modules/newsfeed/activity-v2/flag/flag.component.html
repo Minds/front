@@ -21,8 +21,8 @@
       <i class="material-icons">repeat</i>
       <span>Reminded by </span>
       <ng-container *ngFor="let reminder of entity.remind_users; let i = index">
-        <a [routerLink]="['/', reminder.username]">
-          {{ reminder.name | excerpt: 50 }}
+        <a [routerLink]="['/', reminder.username]" [title]="reminder.name">
+          {{ reminder.name }}
         </a>
       </ng-container>
     </div>
