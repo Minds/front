@@ -32,9 +32,10 @@ export type ActivityDisplayOptions = {
   sidebarMode: boolean; // activity is a sidebar suggestion
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
+  isSingle: boolean; // is this the activity featured on a single post page?
   showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
-  permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock
+  permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
 };
 
 export type ActivityEntity = {
@@ -313,6 +314,7 @@ export class ActivityService {
     sidebarMode: false,
     isSidebarBoost: false,
     isFeed: false,
+    isSingle: false,
     isV2: false,
     permalinkBelowContent: false,
   };

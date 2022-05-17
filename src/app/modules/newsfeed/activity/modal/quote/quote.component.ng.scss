@@ -29,9 +29,6 @@
     }
     m-activity__ownerBlock {
       text-align: left;
-      ::ng-deep .m-activityOwnerBlock__right {
-        display: none !important;
-      }
     }
     m-activity__toolbar {
       display: none;

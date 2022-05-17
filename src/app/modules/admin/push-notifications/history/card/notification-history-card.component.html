@@ -1,7 +1,7 @@
 <div class="m-notificationHistoryCard__wrapper">
   <div class="m-notificationHistoryCard__header">
-    <span>{{ notification.timestamp | date: 'd MMM yyyy' }}</span>
-    <span>{{ notification.timestamp | date: 'h:m a' }}</span>
+    <span>Status: {{ notification.status }}</span>
+    <span>{{ notification.timestamp | date: 'd MMM yyyy h:m a' }}</span>
   </div>
   <span class="m-notificationHistoryCard__sectionDivider"></span>
   <div class="m-notificationHistoryCard__body">
