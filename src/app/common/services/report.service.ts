@@ -90,19 +90,19 @@ export class ReportService {
         label = $localize`:@@REPORT__10:Intellectual Property violation`;
         break;
       case '13':
-        label = $localize`:@@REPORT__13:Another reason`;
+        label = $localize`:@@REPORT__13:Malware`;
         break;
       case '16':
-        label = $localize`:@@REPORT__16:Malware`;
+        label = $localize`:@@REPORT__16:Inauthentic engagement`;
         break;
       case '17':
-        label = $localize`:@@REPORT__17:Inauthentic engagement`;
+        label = $localize`:@@REPORT__17:Security`;
         break;
       case '17.1':
-        label = $localize`:@@REPORT__17.1:Security`;
+        label = $localize`:@@REPORT__17.1:Hacked account`;
         break;
       case '11':
-        label = $localize`:@@REPORT__11:Hacked account`;
+        label = $localize`:@@REPORT__11:Another reason`;
         break;
     }
 
