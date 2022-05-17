@@ -163,9 +163,9 @@ export class PushNotificationService implements OnDestroy {
   /**
    * called when a notification is clicked
    */
-  onNotificationClick({ action, notification }) {
+  onNotificationClick = ({ action, notification }) => {
     this.analytics.trackClick('push-notification');
-  }
+  };
 }
 
 /**
