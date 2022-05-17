@@ -354,7 +354,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * Fired on play event trigger.
+   * Fired on played event trigger.
    * @returns { void }
    */
   public onPlayed(): void {}

@@ -49,7 +49,7 @@ export class ActivityModalCreatorService {
 
   /**
    * Tracks a click event with entity_context.
-   * @param { ActivityEntity } entity - entity for event.
+   * @param { ContextualizableEntity } entity - entity for event.
    * @returns { void }
    */
   private trackActionEvent(entity: ContextualizableEntity): void {

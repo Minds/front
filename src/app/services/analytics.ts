@@ -147,8 +147,8 @@ export class AnalyticsService implements OnDestroy {
 
   /**
    * Build entity context for a given entity.
-   * @param { ActivityEntity } entity - entity to build entity_context for.
-   * @returns { SnowplowContext } - built entity context SnowplowContext.
+   * @param { ContextualizableEntity } entity - entity to build entity_context for.
+   * @returns { SnowplowContext } - built entity_context.
    */
   public buildEntityContext(entity: ContextualizableEntity): SnowplowContext {
     return {
