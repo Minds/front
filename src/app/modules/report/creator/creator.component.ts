@@ -10,14 +10,19 @@ import { ReportService } from './../../../common/services/report.service';
   moduleId: module.id,
   selector: 'm-report--creator',
   templateUrl: 'creator.component.html',
+  styleUrls: ['./creator.component.ng.scss'],
 })
 export class ReportCreatorComponent implements AfterViewInit {
   subject = {
     value: null,
     hasMore: false,
+    label: '',
+    description: '',
   };
   subReason = {
     value: null,
+    label: '',
+    description: '',
   };
 
   note: string = '';
@@ -148,6 +153,35 @@ export class ReportCreatorComponent implements AfterViewInit {
       this.toasterService.error('There was an error sending your report.');
       this.toasterService.error(e.message ? e.message : e);
     }
+  }
+
+  /**
+   * Whether footer should be shown.
+   * @returns { boolean } - true if footer should be shown.
+   */
+  public shouldShowFooter(): boolean {
+    return (
+      (!!this.subject.label && !!this.subject.description) ||
+      (!!this.subReason.label && !!this.subReason.description)
+    );
+  }
+
+  /**
+   * Gets category name for footer.
+   * @returns { string } - category name.
+   */
+  public getFooterCategoryName(): string {
+    return this.subReason?.label ? this.subReason.label : this.subject.label;
+  }
+
+  /**
+   * Gets category description for footer.
+   * @returns { string } - category description.
+   */
+  public getFooterCategoryDescription(): string {
+    return this.subReason?.description
+      ? this.subReason.description
+      : this.subject.description;
   }
 
   /**
