@@ -5,13 +5,14 @@ import { CompassService } from '../../compass/compass.service';
 import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
+import { DiscoveryTagsService } from '../../discovery/tags/tags.service';
 import {
   NoticePosition,
   Notices,
   NoticeIdentifier,
 } from '../feed-notice.types';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { first } from 'rxjs/operators';
 
 /**
  * Determines which feed notices to show, and holds state on
@@ -24,6 +25,9 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   public readonly updatedState$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
+
+  // lock that is set to true once an outlet calls to init.
+  private loadingLock: boolean = false;
 
   // Object containing information on all notices, used to sync state.
   // Ordering indicates order of show priority.
@@ -40,6 +44,12 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
       dismissed: false,
       position: 'top',
     },
+    'update-tags': {
+      shown: false,
+      completed: false,
+      dismissed: false,
+      position: 'inline',
+    },
     'enable-push-notifications': {
       shown: false,
       completed: false,
@@ -53,9 +63,22 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private compass: CompassService,
     private notificationSettings: NotificationsSettingsV2Service,
     private emailConfirmation: EmailConfirmationService,
+    private tagsService: DiscoveryTagsService,
     private activityV2Experiment: ActivityV2ExperimentService
   ) {
     super();
+  }
+
+  /**
+   * Initial load - called from outlet async. Only one outlet will
+   * be able to trigger the initial load.
+   * @returns { Promise<void> }
+   */
+  public async checkInitialState(): Promise<void> {
+    if (!this.loadingLock) {
+      this.loadingLock = true;
+      await this.checkNoticeState();
+    }
   }
 
   /**
@@ -69,6 +92,11 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     this.notices['build-your-algorithm'].dismissed = this.isNoticeDismissed(
       'build-your-algorithm'
     );
+
+    this.notices['update-tags'].dismissed = this.isNoticeDismissed(
+      'update-tags'
+    );
+
     this.notices[
       'enable-push-notifications'
     ].dismissed = this.isNoticeDismissed('enable-push-notifications');
@@ -77,6 +105,8 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     this.notices[
       'build-your-algorithm'
     ].completed = await this.hasCompletedCompassAnswers();
+
+    this.notices['update-tags'].completed = await this.hasSetTags();
 
     this.notices[
       'enable-push-notifications'
@@ -232,6 +262,22 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    */
   private async hasPushNotificationsEnabled(): Promise<boolean> {
     return this.notificationSettings.pushNotificationsEnabled$.toPromise();
+  }
+
+  /**
+   * Whether user has set tags. Will wait for inflight request to load tags,
+   * or fire a new one if no request is inflight.
+   * @returns { Promise<boolean> } - true if user has set tags.
+   */
+  private async hasSetTags(): Promise<boolean> {
+    if (this.tagsService.inProgress$.getValue()) {
+      await this.tagsService.inProgress$.pipe(first()).toPromise();
+    }
+    if (!this.tagsService.loaded$.getValue()) {
+      await this.tagsService.loadTags();
+    }
+    const count = await this.tagsService.countTags();
+    return count > 0;
   }
 
   /**

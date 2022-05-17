@@ -3,7 +3,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { CommonModule } from '../../common/common.module';
-import { DiscoveryTagsService } from './tags/tags.service';
 import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
 import { DiscoveryTagSettingsComponent } from './tags/settings.component';
 import { DiscoveryFeedsSettingsComponent } from './feeds/settings.component';
@@ -116,7 +115,6 @@ import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
     DiscoveryService,
     SuggestionsService,
     CardCarouselService,
-    DiscoveryTagsService,
     DiscoveryService,
   ],
 })
