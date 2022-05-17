@@ -7,14 +7,7 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  Component,
-  Directive,
-  DebugElement,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Directive, DebugElement } from '@angular/core';
 
 import { ReportCreatorComponent } from './creator.component';
 import { Client } from '../../../services/api/client';
@@ -296,6 +289,94 @@ describe('ReportCreatorComponent', () => {
     );
     expect(button).not.toBeNull();
     button.nativeElement.click();
+  });
+
+  it('should show footer if there is a reason label and description', () => {
+    (comp as any).subject = {
+      label: 'label',
+      description: 'description',
+    };
+    comp.subReason = null;
+
+    expect(comp.shouldShowFooter()).toBeTrue();
+  });
+
+  it('should show footer if there is a sub-reason label and description', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: 'label',
+      description: 'description',
+    };
+
+    expect(comp.shouldShowFooter()).toBeTrue();
+  });
+
+  it('should NOT show footer if there is NO reason & subreason label OR description', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.shouldShowFooter()).toBeFalse();
+  });
+
+  it('should get footer category name if there is a reason label', () => {
+    (comp as any).subject = {
+      label: 'subjectLabel',
+      description: 'subjectDescription',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryName()).toBe('subjectLabel');
+  });
+
+  it('should get footer category name if there is a sub-reason label', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: 'subreasonLabel',
+      description: 'subreasonDescription',
+    };
+
+    expect(comp.getFooterCategoryName()).toBe('subreasonLabel');
+  });
+
+  it('should get footer category description if there is a reason description', () => {
+    (comp as any).subject = {
+      label: 'subjectLabel',
+      description: 'subjectDescription',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryDescription()).toBe('subjectDescription');
+  });
+
+  it('should get footer category description if there is a sub-reason description', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: 'subreasonLabel',
+      description: 'subreasonDescription',
+    };
+
+    expect(comp.getFooterCategoryDescription()).toBe('subreasonDescription');
   });
 });
 
