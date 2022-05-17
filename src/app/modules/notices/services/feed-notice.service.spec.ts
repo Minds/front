@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { notificationsSettingsV2ServiceMock } from '../../../mocks/modules/settings-v2/account/notification-v3/notification-settings-v2-mock.spec';
 import { FeedNoticeService } from './feed-notice.service';
@@ -20,6 +20,12 @@ export let activityV2ExperimentServiceMock = new (function() {
   this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
 })();
 
+export let tagsServiceMock = new (function() {
+  this.countTags = jasmine.createSpy('countTags').and.returnValue(0);
+  this.inProgress$ = new BehaviorSubject<boolean>(false);
+  this.loaded$ = new BehaviorSubject<boolean>(true);
+})();
+
 describe('FeedNoticeService', () => {
   let service: FeedNoticeService;
 
@@ -29,6 +35,7 @@ describe('FeedNoticeService', () => {
       compassServiceMock,
       notificationsSettingsV2ServiceMock,
       emailConfirmationServiceMock,
+      tagsServiceMock,
       activityV2ExperimentServiceMock
     );
   });
@@ -89,6 +96,8 @@ describe('FeedNoticeService', () => {
     expect((service as any).isShown('verify-email')).toBeFalsy();
     service.notices['build-your-algorithm'].shown = true;
     expect((service as any).isShown('build-your-algorithm')).toBeTruthy();
+    service.notices['update-tags'].shown = true;
+    expect((service as any).isShown('update-tags')).toBeTruthy();
   });
 
   it('should set shown state', () => {
@@ -103,6 +112,8 @@ describe('FeedNoticeService', () => {
     expect(service.isDismissed('verify-email')).toBeFalsy();
     service.notices['build-your-algorithm'].dismissed = true;
     expect(service.isDismissed('build-your-algorithm')).toBeTruthy();
+    service.notices['update-tags'].dismissed = true;
+    expect(service.isDismissed('update-tags')).toBeTruthy();
   });
 
   it('should set dismissed state', () => {
@@ -120,6 +131,7 @@ describe('FeedNoticeService', () => {
   it('should return whether notice should show in a given position', () => {
     service.notices['verify-email'].position = 'top';
     service.notices['build-your-algorithm'].position = 'inline';
+    service.notices['update-tags'].position = 'inline';
 
     expect(
       (service as any).shouldShowInPosition('verify-email', 'inline')
@@ -134,6 +146,13 @@ describe('FeedNoticeService', () => {
     expect(
       (service as any).shouldShowInPosition('build-your-algorithm', 'top')
     ).toBeFalsy();
+
+    expect(
+      (service as any).shouldShowInPosition('update-tags', 'inline')
+    ).toBeTruthy();
+    expect(
+      (service as any).shouldShowInPosition('update-tags', 'top')
+    ).toBeFalsy();
   });
 
   it('should check initial notice state', async () => {
@@ -142,12 +161,14 @@ describe('FeedNoticeService', () => {
     );
     (service as any).compass.hasCompletedCompassAnswers.and.returnValue(true);
     (service as any).notificationSettings.pushNotificationsEnabled$ = of(true);
+    (service as any).tagsService.countTags.and.returnValue(1);
 
     await (service as any).checkNoticeState();
 
     expect(service.notices['verify-email'].completed).toBeTruthy();
     expect(service.notices['build-your-algorithm'].completed).toBeTruthy();
     expect(service.notices['enable-push-notifications'].completed).toBeTruthy();
+    expect(service.notices['update-tags'].completed).toBeTruthy();
     expect(service.updatedState$.getValue()).toBeTruthy();
   });
 
@@ -155,14 +176,22 @@ describe('FeedNoticeService', () => {
     service.notices['verify-email'].shown = false;
     service.notices['verify-email'].position = 'top';
     service.notices['verify-email'].completed = false;
+    service.notices['verify-email'].dismissed = false;
 
     service.notices['build-your-algorithm'].shown = false;
     service.notices['build-your-algorithm'].position = 'top';
     service.notices['build-your-algorithm'].completed = false;
+    service.notices['build-your-algorithm'].dismissed = false;
 
     service.notices['enable-push-notifications'].shown = false;
     service.notices['enable-push-notifications'].position = 'inline';
     service.notices['enable-push-notifications'].completed = false;
+    service.notices['enable-push-notifications'].dismissed = false;
+
+    service.notices['update-tags'].shown = false;
+    service.notices['update-tags'].position = 'inline';
+    service.notices['update-tags'].completed = false;
+    service.notices['update-tags'].dismissed = false;
 
     expect((service as any).getShowableNoticesByPosition('top')).toEqual([
       'verify-email',
@@ -170,6 +199,7 @@ describe('FeedNoticeService', () => {
     ]);
 
     expect((service as any).getShowableNoticesByPosition('inline')).toEqual([
+      'update-tags',
       'enable-push-notifications',
     ]);
 
@@ -234,6 +264,16 @@ describe('FeedNoticeService', () => {
   it('should call to service to check whether user does NOT have push notifications enabled', async () => {
     (service as any).notificationSettings.pushNotificationsEnabled$ = of(false);
     expect(await (service as any).hasPushNotificationsEnabled()).toBeFalsy();
+  });
+
+  it('should get count of user set tags from service and determine a user needs to complete if they have set none', async () => {
+    (service as any).tagsService.countTags.and.returnValue(0);
+    expect(await (service as any).hasSetTags()).toBeFalsy();
+  });
+
+  it('should get count of user set tags from service and determine a user DOES NOT need to complete if they have set 1 or more', async () => {
+    (service as any).tagsService.countTags.and.returnValue(1);
+    expect(await (service as any).hasSetTags()).toBeTruthy();
   });
 
   it('should check whether a notice has already been dismissed', () => {
