@@ -156,22 +156,17 @@ export class ReportCreatorComponent implements AfterViewInit {
   }
 
   /**
-   * Whether footer should be shown.
-   * @returns { boolean } - true if footer should be shown.
-   */
-  public shouldShowFooter(): boolean {
-    return (
-      (!!this.subject.label && !!this.subject.description) ||
-      (!!this.subReason.label && !!this.subReason.description)
-    );
-  }
-
-  /**
    * Gets category name for footer.
    * @returns { string } - category name.
    */
   public getFooterCategoryName(): string {
-    return this.subReason?.label ? this.subReason.label : this.subject.label;
+    if (this.subReason?.label) {
+      return this.subReason.label;
+    }
+    if (this.subject?.label) {
+      return this.subject.label;
+    }
+    return $localize`:@@REPORT_CREATOR__REPORT_REASONS:Report Reasons`;
   }
 
   /**
@@ -179,9 +174,16 @@ export class ReportCreatorComponent implements AfterViewInit {
    * @returns { string } - category description.
    */
   public getFooterCategoryDescription(): string {
-    return this.subReason?.description
-      ? this.subReason.description
-      : this.subject.description;
+    if (this.subReason?.description) {
+      return this.subReason.description;
+    }
+    if (this.subject?.description) {
+      return this.subject.description;
+    }
+    if (this.subject?.hasMore) {
+      return $localize`:@@REPORT_CREATOR__SUB_REASON_SELECT:Select a sub-reason to complete your report`;
+    }
+    return $localize`:@@REPORT_CREATOR__REASON_SELECT:Select a reason above to complete your report`;
   }
 
   /**

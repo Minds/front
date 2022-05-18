@@ -178,6 +178,7 @@
     flex-flow: column nowrap;
     margin: 0 $spacing10 $spacing1 $spacing10;
     padding: $spacing5 $spacing3;
+    min-height: $spacing22;
 
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
@@ -193,6 +194,8 @@
     }
 
     .m-reportCreator__footerCategoryDescription {
+      margin-bottom: $spacing2;
+
       @include body2Medium;
     }
   }

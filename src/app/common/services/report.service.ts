@@ -94,7 +94,7 @@ export class ReportService {
         break;
       case '5':
         label = $localize`:@@REPORT__5:Personal and confidential information`;
-        description = $localize`:@@REPORT_DESCRIPTION__5:Sharing or threatening to share private, personal, or confidential information about someone.`;
+        description = $localize`:@@REPORT_DESCRIPTION__5:Sharing or threatening to share private, personal, or confidential information about someone`;
         break;
       case '7':
         label = $localize`:@@REPORT__7:Impersonation`;

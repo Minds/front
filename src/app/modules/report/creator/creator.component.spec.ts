@@ -20,7 +20,7 @@ import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec'
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { MockService } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
@@ -52,6 +52,9 @@ describe('ReportCreatorComponent', () => {
           AbbrPipe,
           ReportCreatorComponent,
           ButtonComponent,
+          MockComponent({
+            selector: 'm-modalCloseButton',
+          }),
         ], // declare the test component
         imports: [FormsModule],
         providers: [
@@ -291,42 +294,6 @@ describe('ReportCreatorComponent', () => {
     button.nativeElement.click();
   });
 
-  it('should show footer if there is a reason label and description', () => {
-    (comp as any).subject = {
-      label: 'label',
-      description: 'description',
-    };
-    comp.subReason = null;
-
-    expect(comp.shouldShowFooter()).toBeTrue();
-  });
-
-  it('should show footer if there is a sub-reason label and description', () => {
-    (comp as any).subject = {
-      label: '',
-      description: '',
-    };
-    (comp as any).subReason = {
-      label: 'label',
-      description: 'description',
-    };
-
-    expect(comp.shouldShowFooter()).toBeTrue();
-  });
-
-  it('should NOT show footer if there is NO reason & subreason label OR description', () => {
-    (comp as any).subject = {
-      label: '',
-      description: '',
-    };
-    (comp as any).subReason = {
-      label: '',
-      description: '',
-    };
-
-    expect(comp.shouldShowFooter()).toBeFalse();
-  });
-
   it('should get footer category name if there is a reason label', () => {
     (comp as any).subject = {
       label: 'subjectLabel',
@@ -338,6 +305,19 @@ describe('ReportCreatorComponent', () => {
     };
 
     expect(comp.getFooterCategoryName()).toBe('subjectLabel');
+  });
+
+  it('should get default footer category name if no reason is selected', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryName()).toBe('Report Reasons');
   });
 
   it('should get footer category name if there is a sub-reason label', () => {
@@ -377,6 +357,37 @@ describe('ReportCreatorComponent', () => {
     };
 
     expect(comp.getFooterCategoryDescription()).toBe('subreasonDescription');
+  });
+
+  it('should get default category description if no reason is selected', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryDescription()).toBe(
+      'Select a reason above to complete your report'
+    );
+  });
+
+  it('should get default category description if a reason is selected without a selected subreason', () => {
+    (comp as any).subject = {
+      label: '~label~',
+      description: '',
+      hasMore: true,
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryDescription()).toBe(
+      'Select a sub-reason to complete your report'
+    );
   });
 });
 

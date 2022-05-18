@@ -64,7 +64,7 @@ describe('ReportService', () => {
         reasons: undefined,
         label: 'Personal and confidential information',
         description:
-          'Sharing or threatening to share private, personal, or confidential information about someone.',
+          'Sharing or threatening to share private, personal, or confidential information about someone',
       }),
     ]);
   });
