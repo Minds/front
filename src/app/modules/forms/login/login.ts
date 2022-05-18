@@ -174,6 +174,5 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
    */
   public onForgotPasswordClick(): void {
     this.done.emit(true);
-    this.router.navigate(['/forgot-password']);
   }
 }

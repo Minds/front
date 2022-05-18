@@ -121,10 +121,6 @@ describe('LoginForm', () => {
               },
             }),
           },
-          {
-            provide: Router,
-            useValue: MockService(Router),
-          },
         ],
       }).compileComponents(); // compile template and css
     })
@@ -297,12 +293,7 @@ describe('LoginForm', () => {
 
   it('should emit done and navigate on forgot password click', () => {
     spyOn(comp.done, 'emit');
-
     comp.onForgotPasswordClick();
-
     expect(comp.done.emit).toHaveBeenCalledWith(true);
-    expect((comp as any).router.navigate).toHaveBeenCalledWith([
-      '/forgot-password',
-    ]);
   });
 });
