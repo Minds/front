@@ -114,11 +114,20 @@ export class AnalyticsService implements OnDestroy {
 
     if (!dataRef) return; // We couldn't find a data-ref so nothing more to do here
 
+    this.trackClick(dataRefVal);
+  }
+
+  /**
+   * Tracks a click event
+   * @param ref a string identifying the source of the click action
+   * @returns { void }
+   */
+  trackClick(ref: string): void {
     snowplow.trackSelfDescribingEvent({
       event: {
         schema: 'iglu:com.minds/click_event/jsonschema/1-0-0',
         data: {
-          ref: dataRefVal,
+          ref,
         },
       },
       context: this.getContexts(),
