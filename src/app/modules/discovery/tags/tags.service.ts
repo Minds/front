@@ -11,7 +11,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 
 export type DiscoveryTag = any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DiscoveryTagsService {
   tags$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   trending$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
@@ -63,6 +63,8 @@ export class DiscoveryTagsService {
   tagsChanged$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // true when tags have been loaded.
+  public loaded$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   plusHandler;
 
@@ -126,6 +128,8 @@ export class DiscoveryTagsService {
           : response.default
       );
 
+      this.loaded$.next(true);
+
       this.activityRelated$.next(
         response.activity_related
           ? response.activity_related.map(tag => {
@@ -170,6 +174,15 @@ export class DiscoveryTagsService {
   async removeSingleTag(tag: DiscoveryTag): Promise<boolean> {
     this.removeTag(tag);
     return await this.saveTags();
+  }
+
+  /**
+   * Counts tags a user has set.
+   * @returns { Promise<number> } - amount of tags a user has set.
+   */
+  async countTags(): Promise<number> {
+    const tags = this.tags$.getValue();
+    return tags?.length ?? 0;
   }
 
   async saveTags(): Promise<boolean> {
