@@ -154,7 +154,7 @@
   </div>
 </div>
 
-<div class="m-reportCreator__footer">
+<div class="m-reportCreator__footer" *ngIf="!success">
   <p class="m-reportCreator__footerCategoryName">
     {{ getFooterCategoryName() }}
   </p>
