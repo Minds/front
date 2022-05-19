@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
+import { ServiceWorkerService } from './service-worker.service';
 import { AnalyticsService } from './../../services/analytics';
 import { ConfigsService } from './configs.service';
 
@@ -22,6 +23,7 @@ export class PushNotificationService implements OnDestroy {
     private swPush: SwPush,
     private config: ConfigsService,
     private session: Session,
+    private serviceWorker: ServiceWorkerService,
     private analytics: AnalyticsService,
     @Inject(PLATFORM_ID) private platformId
   ) {
@@ -42,11 +44,12 @@ export class PushNotificationService implements OnDestroy {
   }
 
   /**
-   * does the browser support push notifications?
+   * does the browser support push notifications? Is there an active
+   * Service Worker controller?
    * @returns { Observable<boolean> }
    */
   get supported$(): Observable<boolean> {
-    return of(this.swPush.isEnabled);
+    return of(this.swPush.isEnabled && !!this.serviceWorker.getController());
   }
 
   /**
