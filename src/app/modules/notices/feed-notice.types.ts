@@ -2,7 +2,8 @@
 export type NoticeIdentifier =
   | 'verify-email'
   | 'build-your-algorithm'
-  | 'enable-push-notifications';
+  | 'enable-push-notifications'
+  | 'update-tags';
 
 // Positioning of component - where should it show 'top' or feed, or 'inline' in the feed.
 export type NoticePosition = 'top' | 'inline';

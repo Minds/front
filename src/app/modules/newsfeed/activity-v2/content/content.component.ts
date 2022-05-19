@@ -441,7 +441,7 @@ export class ActivityV2ContentComponent
   }
 
   get sidebarMode(): boolean {
-    return this.service.displayOptions.permalinkBelowContent;
+    return this.service.displayOptions.sidebarMode;
   }
   ////////////////////////////////////////////////////////////////////////////
 
@@ -587,6 +587,7 @@ export class ActivityV2ContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
+    // Don't try to open modal if on mobile device or already in a modal
     if (!this.modalService.canOpenInModal() || this.isModal) {
       return;
     }
@@ -596,7 +597,7 @@ export class ActivityV2ContentComponent
       event.stopPropagation();
     }
 
-    //if sidebarMode, navigate to canonicalUrl for all content types
+    // if sidebarMode, navigate to canonicalUrl for all content types
     if (this.sidebarMode) {
       this.router.navigateByUrl(this.canonicalUrl);
       return;

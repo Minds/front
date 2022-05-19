@@ -1,118 +1,197 @@
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- CONTEXTS -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+
 <div class="m-activity__ownerBlock m-legible">
   <!-- ---------------------------- -->
-  <!-- AVATAR: MINIMAL REMIND / SIDEBAR BOOSTS / MODALS ONLY  -->
+  <!-- FEED  -->
   <!-- ---------------------------- -->
+  <ng-container *ngIf="isFeed">
+    <ng-container [ngTemplateOutlet]="name"></ng-container>
+    <ng-container [ngTemplateOutlet]="groupOrUsername"></ng-container>
+    <ng-container [ngTemplateOutlet]="permalink"></ng-container>
+    <ng-container [ngTemplateOutlet]="spacer"></ng-container>
+    <ng-container [ngTemplateOutlet]="badges"></ng-container>
+    <ng-container [ngTemplateOutlet]="views"></ng-container>
+    <ng-container [ngTemplateOutlet]="menu"></ng-container>
+  </ng-container>
+
+  <!-- ---------------------------- -->
+  <!-- MINIMAL MODE: REMINDs/QUOTES ONLY  -->
+  <!-- ---------------------------- -->
+  <ng-container *ngIf="isMinimalMode && quoteOrRemind">
+    <ng-container [ngTemplateOutlet]="avatar"></ng-container>
+    <ng-container [ngTemplateOutlet]="name"></ng-container>
+  </ng-container>
+
+  <!-- ---------------------------- -->
+  <!-- MODAL  -->
+  <!-- ---------------------------- -->
+  <ng-container *ngIf="isModal">
+    <ng-container [ngTemplateOutlet]="avatar"></ng-container>
+    <div class="m-activityOwnerBlock__column m-activityOwnerBlock__truncate">
+      <div class="m-activityOwnerBlockColumn__displayNameWrapper">
+        <ng-container [ngTemplateOutlet]="name"></ng-container>
+      </div>
+      <ng-container [ngTemplateOutlet]="groupOrUsername"></ng-container>
+    </div>
+    <ng-container [ngTemplateOutlet]="spacer"></ng-container>
+    <ng-container [ngTemplateOutlet]="badges"></ng-container>
+    <ng-container [ngTemplateOutlet]="menu"></ng-container>
+  </ng-container>
+
+  <!-- ---------------------------- -->
+  <!-- SIDEBAR BOOST  -->
+  <!-- ---------------------------- -->
+  <ng-container *ngIf="isSidebarBoost">
+    <ng-container [ngTemplateOutlet]="avatar"></ng-container>
+    <div class="m-activityOwnerBlock__column m-activityOwnerBlock__truncate">
+      <div class="m-activityOwnerBlockColumn__displayNameWrapper">
+        <ng-container [ngTemplateOutlet]="name"></ng-container>
+      </div>
+      <ng-container [ngTemplateOutlet]="permalink"></ng-container>
+    </div>
+  </ng-container>
+
+  <!-- ---------------------------- -->
+  <!-- SINGLE - NOT QUOTED -->
+  <!-- ---------------------------- -->
+  <ng-container *ngIf="isSingle && !wasQuoted">
+    <ng-container [ngTemplateOutlet]="name"></ng-container>
+    <ng-container [ngTemplateOutlet]="groupOrUsername"></ng-container>
+    <ng-container [ngTemplateOutlet]="spacer"></ng-container>
+    <ng-container [ngTemplateOutlet]="badges"></ng-container>
+    <ng-container [ngTemplateOutlet]="menu"></ng-container>
+  </ng-container>
+  <!-- ---------------------------- -->
+  <!-- SINGLE - WAS QUOTED  -->
+  <!-- ---------------------------- -->
+  <ng-container *ngIf="isSingle && wasQuoted">
+    <ng-container [ngTemplateOutlet]="name"></ng-container>
+    <ng-container [ngTemplateOutlet]="groupOrUsername"></ng-container>
+    <ng-container [ngTemplateOutlet]="permalink"></ng-container>
+    <ng-container [ngTemplateOutlet]="spacer"></ng-container>
+  </ng-container>
+</div>
+
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- TEMPLATES -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
+
+<!-- ---------------------------- -->
+<!-- AVATAR: MINIMAL REMIND / SIDEBAR BOOSTS / MODALS ONLY  -->
+<!-- ---------------------------- -->
+<ng-template #avatar>
   <div
-    class="m-activityOwnerBlock__avatar"
-    *ngIf="minimalMode || isSidebarBoost || isModal"
+    class="m-activityOwnerBlock__avatar m-activityOwnerBlock m-activityOwnerBlock__fixedWidth"
   >
     <m-hovercard [publisher]="owner" [offset]="[0, 15]">
       <a [routerLink]="['/', username]">
-        <img [src]="avatarUrl" class="m-border" />
+        <img [src]="avatarUrl" />
       </a>
     </m-hovercard>
 
     <div
-      *ngIf="minimalMode && (isRemind || wasQuoted)"
+      *ngIf="isMinimalMode"
       class="m-activityOwnerBlock__remindIcon--minimalMode"
     >
       <i class="material-icons">repeat</i>
     </div>
   </div>
-  <!-- ---------------------------- -->
-  <div class="m-activityOwnerBlock__body">
-    <!-- ---------------------------- -->
-    <!-- DISPLAY NAME -->
-    <!-- ---------------------------- -->
-    <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
-      <span [title]="displayName">{{ displayName | truncate: 20 }}</span>
-
-      <m-channel--badges
-        class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges"
-        [user]="owner"
-        badges="[ 'admin', 'verified' ]"
-      ></m-channel--badges>
-    </a>
-    <!-- ---------------------------- -->
-    <!-- GROUP NAME -->
-    <!-- ---------------------------- -->
-    <ng-container *ngIf="group">
-      <a
-        [routerLink]="['/groups/profile', group.guid]"
-        class="m-activityOwnerBlock__groupName"
-      >
-        <span [title]="group.name">({{ group.name }})</span>
-      </a>
-    </ng-container>
-    <!-- ---------------------------- -->
-    <!-- @USERNAME -->
-    <!-- ---------------------------- -->
-    <ng-container *ngIf="!group && !isSidebarBoost">
-      <a [routerLink]="['/', username]" class="m-activityOwnerBlock__username">
-        <span [title]="username">@{{ username }}</span>
-      </a>
-    </ng-container>
-    <!-- ---------------------------- -->
-    <!-- PERMALINK -->
-    <!-- ---------------------------- -->
-    <ng-container
-      *ngIf="
-        !service.displayOptions.permalinkBelowContent &&
-        !service.displayOptions.minimalMode
-      "
-    >
-      <span class="m-activityOwnerBlock__dot">·</span>
-      <m-activityV2__permalink></m-activityV2__permalink>
-    </ng-container>
-    <!-- ---------------------------- -->
-    <!-- EDITED -->
-    <!-- ---------------------------- -->
-    <ng-container
-      *ngIf="
-        (!service.displayOptions.minimalMode &&
-          !service.displayOptions.isSidebarBoost &&
-          service.displayOptions.showEditedTag) ||
-        (service.isEdited$ | async)
-      "
-      ><span class="m-activityOwnerBlock__edited"
-        >(<ng-container i18n="@@M__COMMON__EDITED">edited</ng-container>)</span
-      >
-    </ng-container>
-  </div>
-
-  <div
-    class="m-activityOwnerBlock__right"
-    *ngIf="!service.displayOptions.minimalMode"
+</ng-template>
+<!-- ---------------------------- -->
+<!-- DISPLAY NAME + CHANNEL BADGES -->
+<!-- ---------------------------- -->
+<ng-template #name>
+  <a
+    class="m-activityOwnerBlock__displayName m-activityOwnerBlock__truncate"
+    [routerLink]="['/', username]"
   >
-    <!-- ---------------------------- -->
-    <!-- BADGES -->
-    <!-- ---------------------------- -->
-    <m-activityV2__badges
-      *ngIf="
-        !service.displayOptions.minimalMode &&
-        !service.displayOptions.isSidebarBoost &&
-        !wasQuoted &&
-        !wasReminded
-      "
-    ></m-activityV2__badges>
-    <!-- ---------------------------- -->
-    <!-- VIEWS -->
-    <!-- ---------------------------- -->
-    <m-activityV2__views
-      *ngIf="!service.displayOptions.isModal && !wasQuoted && !wasReminded"
-    ></m-activityV2__views>
-    <!-- ---------------------------- -->
-    <!-- MENU -->
-    <!-- ---------------------------- -->
-    <m-activityV2__menu
-      (deleted)="deleted.emit()"
-      *ngIf="
-        service.displayOptions.showPostMenu &&
-        (service.isLoggedIn$ | async) &&
-        !service.displayOptions.minimalMode &&
-        !wasQuoted &&
-        !wasReminded
-      "
-    ></m-activityV2__menu>
-  </div>
-</div>
+    <span [title]="displayName">{{ displayName }}</span>
+  </a>
+  <m-channel--badges
+    class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges m-activityOwnerBlock__fixedWidth"
+    [user]="owner"
+    badges="[ 'admin', 'verified' ]"
+  ></m-channel--badges>
+</ng-template>
+<!-- ---------------------------- -->
+<!-- @USERNAME / GROUP NAME -->
+<!-- (Show group name instead of @username -->
+<!-- if it's a group post) -->
+<!-- ---------------------------- -->
+<ng-template #groupOrUsername>
+  <ng-container *ngIf="group; else noGroup">
+    <a
+      [routerLink]="['/groups/profile', group.guid]"
+      class="m-activityOwnerBlock__groupName m-activityOwnerBlock__truncate"
+    >
+      <span
+        >(<span [title]="group.name">{{ group.name }}</span
+        >)</span
+      ></a
+    >
+  </ng-container>
+  <ng-template #noGroup>
+    <a
+      [routerLink]="['/', username]"
+      class="m-activityOwnerBlock__username m-activityOwnerBlock__truncate"
+    >
+      <span [title]="username">@{{ username }}</span>
+    </a>
+  </ng-template>
+</ng-template>
+<!-- ---------------------------- -->
+<!-- PERMALINK -->
+<!-- ---------------------------- -->
+<ng-template #permalink>
+  <span class="m-activityOwnerBlock__dot m-activityOwnerBlock__fixedWidth"
+    >·</span
+  >
+  <m-activityV2__permalink
+    class="m-activityOwnerBlock__fixedWidth"
+    [wasQuoted]="wasQuoted"
+  ></m-activityV2__permalink>
+</ng-template>
+<!-- ---------------------------- -->
+<!-- SPACER -->
+<!-- ---------------------------- -->
+<ng-template #spacer>
+  <div class="m-activityOwnerBlock__spacer"></div>
+</ng-template>
+<!-- ---------------------------- -->
+<!-- BADGES -->
+<!-- ---------------------------- -->
+<ng-template #badges>
+  <m-activityV2__badges
+    *ngIf="!quoteOrRemind"
+    class="m-activityOwnerBlock__fixedWidth"
+  ></m-activityV2__badges>
+</ng-template>
+<!-- ---------------------------- -->
+<!-- VIEWS -->
+<!-- ---------------------------- -->
+<ng-template #views>
+  <m-activityV2__views
+    *ngIf="!quoteOrRemind"
+    class="m-activityOwnerBlock__fixedWidth"
+  ></m-activityV2__views>
+</ng-template>
+<!-- ---------------------------- -->
+<!-- MENU -->
+<!-- ---------------------------- -->
+<ng-template #menu>
+  <m-activityV2__menu
+    (deleted)="deleted.emit()"
+    *ngIf="(service.isLoggedIn$ | async) && showPostMenu && !wasQuoted"
+    class="m-activityOwnerBlock__fixedWidth"
+  ></m-activityV2__menu>
+</ng-template>

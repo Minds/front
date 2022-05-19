@@ -1,12 +1,13 @@
 import { isPlatformServer } from '@angular/common';
-import { BehaviorSubject, Subscription, Observable, of } from 'rxjs';
 import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
-import { ConfigsService } from './configs.service';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
-import { map } from 'rxjs/operators';
 import { ServiceWorkerService } from './service-worker.service';
+import { AnalyticsService } from './../../services/analytics';
+import { ConfigsService } from './configs.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class PushNotificationService implements OnDestroy {
     private config: ConfigsService,
     private session: Session,
     private serviceWorker: ServiceWorkerService,
+    private analytics: AnalyticsService,
     @Inject(PLATFORM_ID) private platformId
   ) {
     if (isPlatformServer(platformId)) return;
@@ -32,7 +34,8 @@ export class PushNotificationService implements OnDestroy {
       this.session.userEmitter.subscribe(user => this.onUserChange(user)),
       this.swPush.subscription.subscribe(pushSubscription =>
         this.pushSubscription$.next(pushSubscription)
-      )
+      ),
+      this.swPush.notificationClicks.subscribe(this.onNotificationClick)
     );
   }
 
@@ -159,6 +162,13 @@ export class PushNotificationService implements OnDestroy {
       token: encodeURIComponent(btoa(JSON.stringify(pushSubscription))),
     });
   }
+
+  /**
+   * called when a notification is clicked
+   */
+  onNotificationClick = ({ action, notification }) => {
+    this.analytics.trackClick('push-notification');
+  };
 }
 
 /**

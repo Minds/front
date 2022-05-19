@@ -1,4 +1,10 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
@@ -18,11 +24,10 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
 
   entity: ActivityEntity;
 
-  @HostBinding('class.m-activity__permalink--isRemind')
   isRemind: boolean = false;
-
-  @HostBinding('class.m-activity__permalink--isQuote')
   isQuote: boolean = false;
+
+  @Input() wasQuoted: boolean = false;
 
   @HostBinding('class.m-activity__permalink--isStatusBehindPaywall')
   isStatusBehindPaywall: boolean = false;
@@ -35,13 +40,14 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
   constructor(public service: ActivityService, public session: Session) {}
 
   /**
-   * Show absolute dates for items outside the feed
+   * Show absolute dates for single pages and modal
    */
   get showRelativeDate(): boolean {
     return (
       (this.service.displayOptions.isFeed ||
         this.service.displayOptions.isSidebarBoost ||
-        this.service.displayOptions.minimalMode) &&
+        this.service.displayOptions.minimalMode ||
+        this.wasQuoted) &&
       !this.isScheduled()
     );
   }

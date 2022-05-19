@@ -1,4 +1,4 @@
-<div class="m-tabs__container">
+<div *ngIf="!hideTabs" class="m-tabs__container">
   <div class="m-tabs__tab">
     <a
       routerLink="../user"
@@ -18,7 +18,10 @@
 </div>
 
 <div class="m-goBack">
-  <a [routerLink]="parentPath" [queryParams]="{ reload: false }">
+  <a
+    href="#"
+    (click)="$event.preventDefault(); $event.stopPropagation(); location.back()"
+  >
     <i class="material-icons">arrow_back</i
     ><span i18n="@@DISCOVERY_SUGGESTIONS__BACK">Back</span>
   </a>

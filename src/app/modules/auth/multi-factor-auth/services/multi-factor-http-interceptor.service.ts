@@ -107,10 +107,15 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
           req = this.addHeaders(req, payload);
           return next.handle(req).pipe(
             catchError(err => {
-              if (err !== 'Front::TwoFactorAborted')
+              if (
+                err !== 'Front::TwoFactorAborted' &&
+                err?.error?.errorId !==
+                  'Minds::Core::Security::TwoFactor::TwoFactorRequiredException'
+              ) {
                 this.toastService.error(
                   err?.error?.message ?? `An unknown error has occurred`
                 );
+              }
               return this.handleResponseError(err, req, next);
             }),
             finalize(() => {

@@ -11,11 +11,21 @@
       <h2>
         {{ title }}
       </h2>
-      <a
-        [routerLink]="['/discovery/suggestions/user']"
-        i18n="@@COMMON__SEE_MORE__ACTION"
-        >See more</a
-      >
+      <div>
+        <a
+          [routerLink]="['/discovery/suggestions/user']"
+          [queryParams]="channelId && { u: channelId }"
+          i18n="@@COMMON__SEE_MORE__ACTION"
+          >See more</a
+        >
+        <m-dropdownMenu
+          [menu]="dropdown"
+          [anchorPosition]="{ top: '0', right: '0' }"
+          *ngIf="dismissible"
+        >
+          <m-icon iconId="more_vert"></m-icon>
+        </m-dropdownMenu>
+      </div>
     </header>
     <ul *ngIf="(recommendations$ | async).length">
       <li
@@ -68,3 +78,11 @@
     </ul>
   </article>
 </div>
+
+<ng-template #dropdown>
+  <ul>
+    <m-dropdownMenu__item (click)="dismiss()" icon="close">
+      <span i18n="@@COMMON__REMOVE_FROM_FEED">Remove from feed</span>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>

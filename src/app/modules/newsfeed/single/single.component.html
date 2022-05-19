@@ -16,7 +16,7 @@
     >
       <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
-      <div class="m--spam-notice mdl-shadow--2dp" *ngIf="activity?.spam">
+      <div class="m--spam-notice" *ngIf="activity?.spam">
         <ng-container i18n="@@MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM"
           >This activity is flagged as spam.</ng-container
         >
@@ -37,7 +37,8 @@
             showComments: !fixedHeight,
             showInteractions: true,
             autoplayVideo: false,
-            permalinkBelowContent: true
+            permalinkBelowContent: true,
+            isSingle: true
           }"
           [slot]="1"
           (deleted)="delete($event)"
