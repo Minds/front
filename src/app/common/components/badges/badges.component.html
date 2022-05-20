@@ -1,8 +1,11 @@
 <ul class="m-channel--badges">
-  <li *ngIf="showMidDot">
+  <li *ngIf="showMidDot && badgeVisible()">
     &middot;
   </li>
-  <li *ngIf="shouldShowVerifiedBadge()" (click)="verify($event)">
+  <!-- ---------------- -->
+  <!-- VERIFIED -->
+  <!-- ---------------- -->
+  <li *ngIf="showVerifiedBadge()" (click)="verify($event)">
     <m-tooltip
       icon="verified_user"
       [iconClass]="{ selected: user.verified }"
@@ -11,8 +14,10 @@
       Verified
     </m-tooltip>
   </li>
-
-  <li *ngIf="user.is_admin && badges.indexOf('admin') > -1">
+  <!-- ---------------- -->
+  <!-- ADMIN -->
+  <!-- ---------------- -->
+  <li *ngIf="showAdminBadge()">
     <m-tooltip
       icon="verified_user"
       [iconClass]="{ admin__badge: user.is_admin }"
@@ -21,11 +26,10 @@
       Admin
     </m-tooltip>
   </li>
-
-  <li
-    *ngIf="user.plus && !user.pro && badges.indexOf('plus') > -1"
-    routerLink="/plus"
-  >
+  <!-- ---------------- -->
+  <!-- PLUS -->
+  <!-- ---------------- -->
+  <li *ngIf="showPlusBadge()" routerLink="/plus">
     <m-tooltip
       icon="add_circle_outline"
       iconClass="selected"
@@ -34,8 +38,10 @@
       Minds+
     </m-tooltip>
   </li>
-
-  <li *ngIf="user.pro && badges.indexOf('pro') > -1" routerLink="/pro">
+  <!-- ---------------- -->
+  <!-- PRO -->
+  <!-- ---------------- -->
+  <li *ngIf="showProBadge()" routerLink="/pro">
     <m-tooltip
       iconSrc="{{ cdnAssetsUrl }}assets/badges/proDark.svg"
       i18n="@@COMMON__BADGES__PRO"
@@ -52,11 +58,10 @@
       Pro
     </m-tooltip>
   </li>
-
-  <li
-    *ngIf="user.founder && !session.isAdmin() && badges.indexOf('founder') > -1"
-    routerLink="/channels/founders"
-  >
+  <!-- ---------------- -->
+  <!-- FOUNDER -->
+  <!-- ---------------- -->
+  <li *ngIf="showFounderBadge()" routerLink="/channels/founders">
     <m-tooltip
       icon="flight_takeoff"
       i18n="Founder as user status@@COMMON__BADGES__FOUNDER"
@@ -65,10 +70,7 @@
     </m-tooltip>
   </li>
 
-  <li
-    *ngIf="session.isAdmin() && badges.indexOf('founder') > -1"
-    (click)="setFounder($event)"
-  >
+  <li *ngIf="showFounderSwitch()" (click)="setFounder($event)">
     <m-tooltip
       icon="flight_takeoff"
       i18n="Founder as user status@@COMMON__BADGES__FOUNDER"
@@ -76,7 +78,9 @@
       Founder
     </m-tooltip>
   </li>
-
+  <!-- ---------------- -->
+  <!-- ONCHAIN BOOST -->
+  <!-- ---------------- -->
   <li *ngIf="showOnchainBadge()" routerLink="/tokens">
     <m-tooltip icon="link" i18n="@@BADGES__BOOSTER"
       >Boosted OnChain in the last 7 days</m-tooltip
