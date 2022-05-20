@@ -1,3 +1,6 @@
+/**
+ * @returns { bool } whether the browser is the Brave browser or not
+ */
 export default function isBrave() {
   try {
     // @ts-ignore
