@@ -8,7 +8,6 @@ import { Session } from '../../services/session';
 import { ServiceWorkerService } from './service-worker.service';
 import { AnalyticsService } from './../../services/analytics';
 import { ConfigsService } from './configs.service';
-import { map } from 'rxjs/operators';
 import isBrave from '../../helpers/is-brave';
 
 @Injectable({
