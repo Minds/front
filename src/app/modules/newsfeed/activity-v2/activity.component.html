@@ -5,7 +5,7 @@
         !service.displayOptions.minimalMode &&
         !service.displayOptions.isSidebarBoost
       "
-      class="m-activity__leftColumn m-activity__avatar"
+      class="m-activityTop__avatarColumn m-activity__avatar"
     >
       <ng-container *ngIf="entity$ | async as entity">
         <div
@@ -26,7 +26,7 @@
         </a>
       </m-hovercard>
     </div>
-    <div class="m-activity__rightColumn" *ngIf="entity$ | async as entity">
+    <div class="m-activityTop__mainColumn" *ngIf="entity$ | async as entity">
       <div
         class="m-activity__flagRow"
         *ngIf="

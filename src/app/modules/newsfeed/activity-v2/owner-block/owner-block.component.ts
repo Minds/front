@@ -27,13 +27,11 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
 
   entity: ActivityEntity;
 
-  /** Is this activity the container of a quoted/reminded post? */
-  isQuote: boolean = false;
+  /** Is this activity the container of a reminded post? */
   isRemind: boolean = false;
 
   /** Is this activity the quoted/reminded post? */
   @Input() wasQuoted: boolean = false;
-  @Input() wasReminded: boolean = false;
 
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
 
@@ -49,11 +47,6 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
         this.entity = entity;
       }),
     ];
-    this.subscriptions.push(
-      this.service.isQuote$.subscribe((is: boolean) => {
-        this.isQuote = is;
-      })
-    );
     this.subscriptions.push(
       this.service.isRemind$.subscribe((is: boolean) => {
         this.isRemind = is;
@@ -80,6 +73,14 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
       : null;
   }
 
+  get isFeed(): boolean {
+    return this.service.displayOptions.isFeed;
+  }
+
+  get isMinimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
   get isModal(): boolean {
     return this.service.displayOptions.isModal;
   }
@@ -88,8 +89,16 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
     return this.service.displayOptions.isSidebarBoost;
   }
 
-  get isFeed(): boolean {
-    return this.service.displayOptions.isFeed;
+  get isSingle(): boolean {
+    return this.service.displayOptions.isSingle;
+  }
+
+  get showPostMenu(): boolean {
+    return this.service.displayOptions.showPostMenu;
+  }
+
+  get quoteOrRemind(): boolean {
+    return this.wasQuoted || this.isRemind;
   }
 
   get owner(): MindsUser {

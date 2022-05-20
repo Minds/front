@@ -1,4 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
+import { map } from 'rxjs/operators';
+import {
+  DismissalService,
+  DismissIdentifier,
+} from './../../../common/services/dismissal.service';
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
@@ -33,7 +38,7 @@ export class ChannelRecommendationComponent implements OnInit {
    * the location in which this component appears
    */
   @Input()
-  location: string;
+  location: 'newsfeed' | 'discovery-feed' | 'channel';
   /**
    * the channel id for which the recommendations should be contextualized.
    */
@@ -51,10 +56,14 @@ export class ChannelRecommendationComponent implements OnInit {
   @Input()
   title: string = $localize`:@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS:Recommended Channels`;
   /**
+   * Whether the widget should have a close button
+   */
+  @Input()
+  dismissible: boolean = false;
+  /**
    * the height of the container, used to animate the mount and unmount of this component
    */
   containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
-
   /** a list of recommended channels */
   recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
   /**
@@ -66,7 +75,8 @@ export class ChannelRecommendationComponent implements OnInit {
     private api: ApiService,
     public experiments: ExperimentsService,
     private recentSubscriptions: RecentSubscriptionsService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private activityV2Experiment: ActivityV2ExperimentService,
+    private dismissal: DismissalService
   ) {}
 
   @HostBinding('class.m-channelRecommendation--activityV2')
@@ -90,6 +100,18 @@ export class ChannelRecommendationComponent implements OnInit {
           }
         });
     }
+  }
+
+  /**
+   * dismisses the component
+   * @returns { void }
+   */
+  dismiss(): void {
+    this.dismissal.dismiss(
+      `channel-recommendation:${
+        this.location === 'channel' ? 'channel' : 'feed'
+      }`
+    );
   }
 
   /**

@@ -42,8 +42,8 @@
           <a
             class="m-commentOwnerRowItem__name"
             [routerLink]="['/', comment.ownerObj.username]"
-            title="{{ comment.ownerObj.name }}"
-            >{{ comment.ownerObj.name
+            [title]="comment.ownerObj.name"
+            >{{ comment.ownerObj.name | truncate: 20
             }}<ng-container *ngIf="activityV2Feature"
               ><ng-container
                 [ngTemplateOutlet]="badges"

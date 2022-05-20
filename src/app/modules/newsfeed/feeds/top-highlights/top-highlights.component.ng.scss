@@ -1,6 +1,13 @@
 @import 'defaults.scss';
 
 :host {
+  header {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &.m-topHighlights--activityV2 {
     .m-topHighlights__title {
       @include borderTop;

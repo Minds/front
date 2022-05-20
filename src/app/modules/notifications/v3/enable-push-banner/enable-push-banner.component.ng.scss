@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  .m-enablePushBanner__container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing5 $spacing6;
+
+    @include body2Regular;
+    @include unselectable;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+}

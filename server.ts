@@ -59,40 +59,40 @@ export function app() {
   });
 
   // cache
-  const NodeCache = require('node-cache');
-  const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
+  // const NodeCache = require('node-cache');
+  // const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
 
-  const cache = () => {
-    return (req, res, next) => {
-      const sessKey =
-        Object.entries(req.cookies)
-          .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
-          .join(':') || 'loggedout';
-      const key =
-        `__express__/${sessKey}/` +
-        `${req.headers.host}` +
-        (req.originalUrl || req.url) +
-        `/${req.headers['x-minds-locale']}` +
-        (isMobileOrTablet() ? '/mobile' : '/desktop');
-      const exists = myCache.has(key);
-      if (exists) {
-        console.log(`from cache: ${key}`);
-        const cachedBody = myCache.get(key);
-        res.send(cachedBody);
-        res.end();
-        return;
-      } else {
-        res.sendResponse = res.send;
-        res.send = body => {
-          if (res.status === 200) {
-            myCache.set(key, body);
-          }
-          res.sendResponse(body);
-        };
-        next();
-      }
-    };
-  };
+  // const cache = () => {
+  //   return (req, res, next) => {
+  //     const sessKey =
+  //       Object.entries(req.cookies)
+  //         .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
+  //         .join(':') || 'loggedout';
+  //     const key =
+  //       `__express__/${sessKey}/` +
+  //       `${req.headers.host}` +
+  //       (req.originalUrl || req.url) +
+  //       `/${req.headers['x-minds-locale']}` +
+  //       (isMobileOrTablet() ? '/mobile' : '/desktop');
+  //     const exists = myCache.has(key);
+  //     if (exists) {
+  //       console.log(`from cache: ${key}`);
+  //       const cachedBody = myCache.get(key);
+  //       res.send(cachedBody);
+  //       res.end();
+  //       return;
+  //     } else {
+  //       res.sendResponse = res.send;
+  //       res.send = body => {
+  //         if (res.status === 200) {
+  //           myCache.set(key, body);
+  //         }
+  //         res.sendResponse(body);
+  //       };
+  //       next();
+  //     }
+  //   };
+  // };
 
   const render = (
     bootstrap: any,
@@ -158,7 +158,7 @@ export function app() {
   // embed route loads its own module
   server.get(
     `/embed/*`,
-    cache(),
+    //cache(),
     render(EmbedServerModule, locale =>
       readFileSync(join(embedDistFolder, `${locale}/embed.html`)).toString()
     )
@@ -167,7 +167,7 @@ export function app() {
   // All regular routes use the Universal engine
   server.get(
     '*',
-    cache(),
+    //cache(),
     render(AppServerModule, locale =>
       readFileSync(join(browserDistFolder, `${locale}/index.html`)).toString()
     )

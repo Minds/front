@@ -6,6 +6,7 @@ import { BuildYourAlgorithmNoticeComponent } from './panels/build-your-algorithm
 import { VerifyEmailNoticeComponent } from './panels/verify-email/verify-email-notice.component';
 import { FeedNoticeOutletComponent } from './outlet/feed-notice-outlet.component';
 import { EnablePushNotificationsNoticeComponent } from './panels/enable-push-notifications/enable-push-notifications-notice.component';
+import { UpdateTagsNoticeComponent } from './panels/update-tags/update-tags-notice.component';
 
 @NgModule({
   imports: [CommonModule, NgCommonModule],
@@ -15,6 +16,7 @@ import { EnablePushNotificationsNoticeComponent } from './panels/enable-push-not
     BuildYourAlgorithmNoticeComponent,
     VerifyEmailNoticeComponent,
     EnablePushNotificationsNoticeComponent,
+    UpdateTagsNoticeComponent,
   ],
   exports: [FeedNoticeOutletComponent],
 })

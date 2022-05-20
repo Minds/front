@@ -85,8 +85,8 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
         this.user.guid,
         this.form.value
       );
-      if (response.status !== 'success') {
-        throw response.message;
+      if (!response || response.status !== 'success') {
+        throw response?.message ?? 'An error has occurred';
       }
       this.formSubmitted.emit({ formSubmitted: true });
       this.user.email_confirmed = false;
