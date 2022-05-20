@@ -284,18 +284,18 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const next = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--next button')
+      By.css('.m-reportCreator__button--dmca button')
     );
     expect(next).not.toBeNull();
+
+    spyOn(window, 'open').and.callFake(function(url, tss) {
+      return window;
+    });
     next.nativeElement.click();
-    expect(comp.subject.value).toEqual(10);
-    expect(comp.next).toBe(true);
-    fixture.detectChanges();
-    const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--close button')
+    expect(window.open).toHaveBeenCalledWith(
+      'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852',
+      '_blank'
     );
-    expect(button).not.toBeNull();
-    button.nativeElement.click();
   });
 });
 
