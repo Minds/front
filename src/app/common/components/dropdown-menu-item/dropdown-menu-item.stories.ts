@@ -8,7 +8,7 @@ import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component'
 import { DropdownMenuItemComponent } from './dropdown-menu-item.component';
 
 export default {
-  title: 'Components / Dropdown Menu Item',
+  title: 'Menus / Dropdown Menu Item',
   component: DropdownMenuItemComponent,
   parameters: {
     docs: {

@@ -1,7 +1,7 @@
 import { Story, Meta } from '@storybook/angular';
 
 export default {
-  title: 'Components / Tabs',
+  title: 'Tabs / Tabs',
   argTypes: {
     tabs: {
       defaultValue: [

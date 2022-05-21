@@ -18,6 +18,8 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { Client } from '../../../services/api';
 import { FeaturesService } from '../../../services/features.service';
 import { Session } from '../../../services/session';
+import { AnalyticsService } from '../../../services/analytics';
+import { CookieOptionsProvider, CookieService } from '@mindsorg/ngx-universal';
 
 export default {
   title: 'Components / Publisher Card',
