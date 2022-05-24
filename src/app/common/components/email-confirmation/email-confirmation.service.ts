@@ -3,15 +3,21 @@ import { Client } from '../../../services/api/client';
 import { FormToastService } from '../../services/form-toast.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
+import { BehaviorSubject } from 'rxjs';
 
 /**
- * Service handling the sending of new confirmation emails and whether a user
- * requires email confirmation at all.
+ * Service handling the sending of new confirmation emails, verification of email addresses
+ * and whether a user requires email confirmation at all.
  */
 @Injectable({ providedIn: 'root' })
 export class EmailConfirmationService {
   // whether config identifies email as unconfirmed.
   private readonly fromEmailConfirmation: boolean = false;
+
+  // called on email confirmation success.
+  public readonly success$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   constructor(
     protected client: Client,
@@ -22,7 +28,11 @@ export class EmailConfirmationService {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
   }
 
-  show() {
+  /**
+   * Shows error to alert user that they must confirm their email address.
+   * @returns { void }
+   */
+  public showError(): void {
     this.toasterService.error('You must confirm your email address.');
   }
 
@@ -36,6 +46,23 @@ export class EmailConfirmationService {
     )) as any;
 
     return Boolean(response && response.sent);
+  }
+
+  /**
+   * Confirm email code - will trigger MFA modal.
+   * On success will set email confirmation to verified.
+   * @returns { Promise<boolean> } - true if success
+   */
+  async confirm(): Promise<boolean> {
+    try {
+      const response = (await this.client.post('api/v3/email/confirm')) as any;
+      const success = response.status === 'success';
+      this.success$.next(success);
+      return success;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
   }
 
   /**
