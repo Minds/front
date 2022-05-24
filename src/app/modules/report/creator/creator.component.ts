@@ -10,14 +10,19 @@ import { ReportService } from './../../../common/services/report.service';
   moduleId: module.id,
   selector: 'm-report--creator',
   templateUrl: 'creator.component.html',
+  styleUrls: ['./creator.component.ng.scss'],
 })
 export class ReportCreatorComponent implements AfterViewInit {
   subject = {
     value: null,
     hasMore: false,
+    label: '',
+    description: '',
   };
   subReason = {
     value: null,
+    label: '',
+    description: '',
   };
 
   note: string = '';
@@ -148,6 +153,37 @@ export class ReportCreatorComponent implements AfterViewInit {
       this.toasterService.error('There was an error sending your report.');
       this.toasterService.error(e.message ? e.message : e);
     }
+  }
+
+  /**
+   * Gets category name for footer.
+   * @returns { string } - category name.
+   */
+  public getFooterCategoryName(): string {
+    if (this.subReason?.label) {
+      return this.subReason.label;
+    }
+    if (this.subject?.label) {
+      return this.subject.label;
+    }
+    return $localize`:@@REPORT_CREATOR__REPORT_REASONS:Report Reasons`;
+  }
+
+  /**
+   * Gets category description for footer.
+   * @returns { string } - category description.
+   */
+  public getFooterCategoryDescription(): string {
+    if (this.subReason?.description) {
+      return this.subReason.description;
+    }
+    if (this.subject?.description) {
+      return this.subject.description;
+    }
+    if (this.subject?.hasMore) {
+      return $localize`:@@REPORT_CREATOR__SUB_REASON_SELECT:Select a sub-reason to complete your report`;
+    }
+    return $localize`:@@REPORT_CREATOR__REASON_SELECT:Select a reason above to complete your report`;
   }
 
   /**

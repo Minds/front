@@ -7,14 +7,7 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  Component,
-  Directive,
-  DebugElement,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Directive, DebugElement } from '@angular/core';
 
 import { ReportCreatorComponent } from './creator.component';
 import { Client } from '../../../services/api/client';
@@ -27,7 +20,7 @@ import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec'
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { MockService } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
@@ -59,6 +52,9 @@ describe('ReportCreatorComponent', () => {
           AbbrPipe,
           ReportCreatorComponent,
           ButtonComponent,
+          MockComponent({
+            selector: 'm-modalCloseButton',
+          }),
         ], // declare the test component
         imports: [FormsModule],
         providers: [
@@ -295,6 +291,102 @@ describe('ReportCreatorComponent', () => {
     expect(window.open).toHaveBeenCalledWith(
       'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852',
       '_blank'
+    );
+  });
+
+  it('should get footer category name if there is a reason label', () => {
+    (comp as any).subject = {
+      label: 'subjectLabel',
+      description: 'subjectDescription',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryName()).toBe('subjectLabel');
+  });
+
+  it('should get default footer category name if no reason is selected', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryName()).toBe('Report Reasons');
+  });
+
+  it('should get footer category name if there is a sub-reason label', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: 'subreasonLabel',
+      description: 'subreasonDescription',
+    };
+
+    expect(comp.getFooterCategoryName()).toBe('subreasonLabel');
+  });
+
+  it('should get footer category description if there is a reason description', () => {
+    (comp as any).subject = {
+      label: 'subjectLabel',
+      description: 'subjectDescription',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryDescription()).toBe('subjectDescription');
+  });
+
+  it('should get footer category description if there is a sub-reason description', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: 'subreasonLabel',
+      description: 'subreasonDescription',
+    };
+
+    expect(comp.getFooterCategoryDescription()).toBe('subreasonDescription');
+  });
+
+  it('should get default category description if no reason is selected', () => {
+    (comp as any).subject = {
+      label: '',
+      description: '',
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryDescription()).toBe(
+      'Select a reason above to complete your report'
+    );
+  });
+
+  it('should get default category description if a reason is selected without a selected subreason', () => {
+    (comp as any).subject = {
+      label: '~label~',
+      description: '',
+      hasMore: true,
+    };
+    (comp as any).subReason = {
+      label: '',
+      description: '',
+    };
+
+    expect(comp.getFooterCategoryDescription()).toBe(
+      'Select a sub-reason to complete your report'
     );
   });
 });
