@@ -10,10 +10,10 @@ import { DropdownMenuItemComponent } from '../dropdown-menu-item/dropdown-menu-i
 
 // We can't reuse these stories because the item component
 // is accessed through a TemplateRef
-import * as DropdownMenuItemStories from '../dropdown-menu-item/dropdown-menu-item.stories';
+// import * as DropdownMenuItemStories from '../dropdown-menu-item/dropdown-menu-item.stories';
 
 export default {
-  title: 'Menus / Dropdown Menu',
+  title: 'Components / Menus / Dropdown Menu',
   component: DropdownMenuComponent,
   decorators: [
     moduleMetadata({

@@ -6,7 +6,7 @@ import { DropdownMenuItemComponent } from '../dropdown-menu-item/dropdown-menu-i
 
 // More on default export: https://storybook.js.org/docs/angular/writing-stories/introduction#default-export
 export default {
-  title: 'Buttons / Button',
+  title: 'Components / Buttons / Button',
   component: ButtonComponent,
   decorators: [
     moduleMetadata({
@@ -91,7 +91,7 @@ const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
       [solid]="solid"
       [saving]="saving"
       [pulsating]="pulsating"
-      [flat]="flat"
+      [borderless]="borderless"
       [color]="color"
       [size]="size"
       (onAction)="onAction($event)"
@@ -146,12 +146,12 @@ BasicDisabled.args = {
 };
 
 /**
- * Flat
+ * Borderless
  */
 export const Borderless = Template.bind({});
 Borderless.args = {
   label: 'Button',
-  flat: true,
+  borderless: true,
 };
 
 /**

@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/angular';
 import { LoadingEllipsisComponent } from './loading-ellipsis.component';
 
 export default {
-  title: 'Progress Indicators / Loading Ellipsis',
+  title: 'Components / Progress Indicators / Loading Ellipsis',
   component: LoadingEllipsisComponent,
   argTypes: {
     inProgress: {

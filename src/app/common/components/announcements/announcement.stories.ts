@@ -3,7 +3,7 @@ import { AnnouncementComponent } from './announcement.component';
 import { CookieService } from '../../../common/services/cookie.service';
 
 export default {
-  title: 'Banners / Announcement',
+  title: 'Components / Banners / Announcement',
   component: AnnouncementComponent,
   argTypes: {
     message: {

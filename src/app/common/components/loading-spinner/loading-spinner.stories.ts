@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/angular';
 import { LoadingSpinnerComponent } from './loading-spinner.component';
 
 export default {
-  title: 'Progress Indicators / Loading Spinner',
+  title: 'Components / Progress Indicators / Loading Spinner',
   component: LoadingSpinnerComponent,
   argTypes: {
     inProgress: {
