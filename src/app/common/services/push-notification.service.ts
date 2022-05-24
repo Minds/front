@@ -8,6 +8,7 @@ import { Session } from '../../services/session';
 import { ServiceWorkerService } from './service-worker.service';
 import { AnalyticsService } from './../../services/analytics';
 import { ConfigsService } from './configs.service';
+import isBrave from '../../helpers/is-brave';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,10 @@ export class PushNotificationService implements OnDestroy {
    * @returns { Observable<boolean> }
    */
   get supported$(): Observable<boolean> {
+    if (isBrave()) {
+      return of(false);
+    }
+
     return of(this.swPush.isEnabled && !!this.serviceWorker.getController());
   }
 
