@@ -23,6 +23,7 @@ import { ButtonComponent } from '../../../common/components/button/button.compon
 import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/multi-factor-auth-service';
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
+import { Router } from '@angular/router';
 
 describe('LoginForm', () => {
   let comp: LoginForm;
@@ -289,4 +290,10 @@ describe('LoginForm', () => {
     login({ status: 'error' }, 'test@minds.com');
     expect(errorMessage.nativeElement.hidden).toBeFalsy();
   }));
+
+  it('should emit done and navigate on forgot password click', () => {
+    spyOn(comp.done, 'emit');
+    comp.onForgotPasswordClick();
+    expect(comp.done.emit).toHaveBeenCalledWith(true);
+  });
 });
