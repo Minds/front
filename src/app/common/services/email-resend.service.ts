@@ -38,12 +38,12 @@ export class EmailResendService {
   /**
    * Checks timer and sends request if member is allowed to make another request.
    * @param { number } seconds - defaults to 60.
-   * @returns { Promise<void> }
+   * @returns { Promise<boolean> } - true if success, else false.
    */
-  async send(seconds: number = 60): Promise<void> {
+  async send(seconds: number = 60): Promise<boolean> {
     if (this.inProgress$.getValue()) {
       this.toast.warn('Email send already in progress.');
-      return;
+      return false;
     }
 
     if (!(this.retryInSeconds > 0)) {
@@ -62,7 +62,7 @@ export class EmailResendService {
           e.message ?? 'An error has occurred sending your email.'
         );
         this.inProgress$.next(false);
-        return;
+        return false;
       }
 
       // create new date x seconds ahead of now.
@@ -76,7 +76,9 @@ export class EmailResendService {
       this.toast.success(
         'Email sent, check your inbox for a verification email.'
       );
-      return;
+
+      this.inProgress$.next(false);
+      return true;
     }
 
     this.toast.inform(

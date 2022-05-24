@@ -3,6 +3,8 @@ import { VerifyEmailNoticeComponent } from './verify-email-notice.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EmailResendService } from '../../../../common/services/email-resend.service';
+import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
+import { EmailCodeExperimentService } from '../../../experiments/sub-services/email-code-experiment.service';
 
 describe('VerifyEmailNoticeComponent', () => {
   let comp: VerifyEmailNoticeComponent;
@@ -30,6 +32,14 @@ describe('VerifyEmailNoticeComponent', () => {
             provide: EmailResendService,
             useValue: MockService(EmailResendService),
           },
+          {
+            provide: EmailConfirmationService,
+            useValue: MockService(EmailConfirmationService),
+          },
+          {
+            provide: EmailCodeExperimentService,
+            useValue: MockService(EmailCodeExperimentService),
+          },
         ],
       }).compileComponents();
     })
@@ -54,8 +64,17 @@ describe('VerifyEmailNoticeComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should call email resend service on primary option click', () => {
+  it('should call to resend email on primary option click when experiment is not active', () => {
+    (comp as any).emailCodeExperiment.isActive.and.returnValue(false);
     comp.onPrimaryOptionClick(null);
+    expect((comp as any).emailConfirmation.confirm).not.toHaveBeenCalled();
     expect((comp as any).emailResend.send).toHaveBeenCalled();
+  });
+
+  it('should call to confirm email on primary option click when experiment IS active', () => {
+    (comp as any).emailCodeExperiment.isActive.and.returnValue(true);
+    comp.onPrimaryOptionClick(null);
+    expect((comp as any).emailResend.send).not.toHaveBeenCalled();
+    expect((comp as any).emailConfirmation.confirm).toHaveBeenCalled();
   });
 });

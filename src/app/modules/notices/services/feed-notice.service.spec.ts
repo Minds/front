@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { notificationsSettingsV2ServiceMock } from '../../../mocks/modules/settings-v2/account/notification-v3/notification-settings-v2-mock.spec';
 import { FeedNoticeService } from './feed-notice.service';
@@ -14,6 +14,8 @@ export let emailConfirmationServiceMock = new (function() {
   this.requiresEmailConfirmation = jasmine
     .createSpy('requiresEmailConfirmation')
     .and.returnValue(true);
+
+  this.success$ = new BehaviorSubject<boolean>(false);
 })();
 
 export let activityV2ExperimentServiceMock = new (function() {
@@ -152,14 +154,17 @@ describe('FeedNoticeService', () => {
   });
 
   it('should get a list of all showable notices by position', () => {
+    service.notices['verify-email'].dismissed = false;
     service.notices['verify-email'].shown = false;
     service.notices['verify-email'].position = 'top';
     service.notices['verify-email'].completed = false;
 
+    service.notices['build-your-algorithm'].dismissed;
     service.notices['build-your-algorithm'].shown = false;
     service.notices['build-your-algorithm'].position = 'top';
     service.notices['build-your-algorithm'].completed = false;
 
+    service.notices['enable-push-notifications'].dismissed;
     service.notices['enable-push-notifications'].shown = false;
     service.notices['enable-push-notifications'].position = 'inline';
     service.notices['enable-push-notifications'].completed = false;
@@ -260,5 +265,16 @@ describe('FeedNoticeService', () => {
 
     (service as any).activityV2Experiment.isActive.and.returnValue(false);
     expect(service.shouldBeFullWidth()).toBeFalsy();
+  });
+
+  it('should dismiss email on EmailConfirmationService success$ fire', () => {
+    (service as any).updatedState$.next(false);
+    (service as any).emailConfirmation.success$.next(true);
+    expect((service as any).notices['verify-email'].dismissed).toBeTruthy();
+    expect((service as any).notices['verify-email'].shown).toBeFalsy();
+    expect((service as any).dismissService.dismissNotice).toHaveBeenCalledWith(
+      'verify-email'
+    );
+    expect((service as any).updatedState$.getValue()).toBeTruthy();
   });
 });
