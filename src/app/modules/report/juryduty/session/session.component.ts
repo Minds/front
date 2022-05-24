@@ -1,16 +1,6 @@
-import {
-  Component,
-  Input,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
-import { REASONS } from '../../../../services/list-options';
 
 @Component({
   selector: 'm-juryduty__session',

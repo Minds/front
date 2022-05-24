@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
-import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
 import { FeaturesService } from '../../../services/features.service';
 
