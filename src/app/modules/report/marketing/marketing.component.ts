@@ -2,15 +2,12 @@ import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ViewChild,
-  ElementRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Client } from '../../../common/api/client.service';
-import { REASONS as REASONS_LIST } from '../../../services/list-options';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { ReportService } from './../../../common/services/report.service';
 
 @Component({
   selector: 'm-reports__marketing',
@@ -32,13 +29,14 @@ export class ReportsMarketingComponent {
     upheld: 0,
     overturned: 0,
   };
-  reasons = REASONS_LIST;
+  reasons = this.reportService.reasons;
 
   constructor(
     private client: Client,
     private cd: ChangeDetectorRef,
     private router: Router,
     public session: Session,
+    private reportService: ReportService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');

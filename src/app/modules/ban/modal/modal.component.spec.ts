@@ -1,3 +1,4 @@
+import { ReportService } from './../../../common/services/report.service';
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
   ComponentFixture,
@@ -48,6 +49,12 @@ describe('BanModalComponent', () => {
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),
+          },
+          {
+            provide: ReportService,
+            useValue: {
+              reasons: FAKE_REASONS,
+            },
           },
         ],
       }).compileComponents(); // compile template and css
@@ -134,7 +141,7 @@ describe('BanModalComponent', () => {
       By.css('.m-report-creator--subjects-subject')
     );
     expect(subjectList).not.toBeNull();
-    expect(subjectListInputs.length).toBe(13);
+    expect(subjectListInputs.length).toBeGreaterThan(0);
   });
 
   it('once a item is clicked submit shouldnt be disabled', () => {
@@ -236,3 +243,120 @@ describe('BanModalComponent', () => {
     expect(next).toBeNull();
   });
 });
+
+const FAKE_REASONS = [
+  {
+    value: 1,
+    label: 'Illegal',
+    hasMore: true,
+    reasons: [
+      {
+        value: 1,
+        label: 'Terrorism',
+      },
+      {
+        value: 2,
+        label: 'Sexualization of minors',
+      },
+      {
+        value: 3,
+        label: 'Extortion',
+      },
+      {
+        value: 4,
+        label: 'Fraud',
+      },
+      {
+        value: 5,
+        label: 'Revenge Porn',
+      },
+      {
+        value: 6,
+        label: 'Trafficking',
+      },
+    ],
+  },
+  {
+    value: 2,
+    label: 'NSFW (not safe for work)',
+    hasMore: true,
+    reasons: [
+      {
+        value: 1,
+        label: 'Nudity',
+      },
+      {
+        value: 2,
+        label: 'Pornography',
+      },
+      {
+        value: 3,
+        label: 'Profanity',
+      },
+      {
+        value: 4,
+        label: 'Violance and Gore',
+      },
+      {
+        value: 5,
+        label: 'Race, Religion, Gender',
+      },
+    ],
+  },
+  {
+    value: 3,
+    label: 'Incitement to violence',
+    hasMore: false,
+  },
+  {
+    value: 4,
+    label: 'Harassment',
+    hasMore: false,
+  },
+  {
+    value: 5,
+    label: 'Personal and confidential information',
+    hasMore: false,
+  },
+  {
+    value: 7,
+    label: 'Impersonation',
+    hasMore: false,
+  },
+  {
+    value: 8,
+    label: 'Spam',
+    hasMore: false,
+  },
+  {
+    value: 10,
+    label: 'Intellectual Property violation',
+    hasMore: true,
+  },
+  {
+    value: 13,
+    label: 'Malware',
+    hasMore: false,
+  },
+  {
+    value: 16,
+    label: 'Inauthentic engagement',
+    hasMore: false,
+  },
+  {
+    value: 17,
+    label: 'Security',
+    hasMore: true,
+    reasons: [
+      {
+        value: 1,
+        label: 'Hacked account',
+      },
+    ],
+  },
+  {
+    value: 11,
+    label: 'Another reason',
+    hasMore: true,
+  },
+];

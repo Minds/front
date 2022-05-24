@@ -1,3 +1,4 @@
+import { ReportService } from './../../../common/services/report.service';
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
   ComponentFixture,
@@ -23,7 +24,6 @@ import { AbbrPipe } from '../../../common/pipes/abbr';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
-import { REASONS } from '../../../services/list-options';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
@@ -68,6 +68,12 @@ describe('ReportCreatorComponent', () => {
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),
+          },
+          {
+            provide: ReportService,
+            useValue: {
+              reasons: FAKE_REASONS,
+            },
           },
         ],
       }).compileComponents(); // compile template and css
@@ -121,7 +127,7 @@ describe('ReportCreatorComponent', () => {
       By.css('.m-reportCreatorSubjects__subject')
     );
     expect(subjectList).not.toBeNull();
-    expect(subjectListInputs.length).toBe(13);
+    expect(subjectListInputs.length).toBeGreaterThan(0);
   });
 
   it('once a item is clicked submit shouldnt be disabled', () => {
@@ -278,17 +284,134 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const next = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--next button')
+      By.css('.m-reportCreator__button--dmca button')
     );
     expect(next).not.toBeNull();
+
+    spyOn(window, 'open').and.callFake(function(url, tss) {
+      return window;
+    });
     next.nativeElement.click();
-    expect(comp.subject.value).toEqual(10);
-    expect(comp.next).toBe(true);
-    fixture.detectChanges();
-    const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--close button')
+    expect(window.open).toHaveBeenCalledWith(
+      'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852',
+      '_blank'
     );
-    expect(button).not.toBeNull();
-    button.nativeElement.click();
   });
 });
+
+const FAKE_REASONS = [
+  {
+    value: 1,
+    label: 'Illegal',
+    hasMore: true,
+    reasons: [
+      {
+        value: 1,
+        label: 'Terrorism',
+      },
+      {
+        value: 2,
+        label: 'Sexualization of minors',
+      },
+      {
+        value: 3,
+        label: 'Extortion',
+      },
+      {
+        value: 4,
+        label: 'Fraud',
+      },
+      {
+        value: 5,
+        label: 'Revenge Porn',
+      },
+      {
+        value: 6,
+        label: 'Trafficking',
+      },
+    ],
+  },
+  {
+    value: 2,
+    label: 'NSFW (not safe for work)',
+    hasMore: true,
+    reasons: [
+      {
+        value: 1,
+        label: 'Nudity',
+      },
+      {
+        value: 2,
+        label: 'Pornography',
+      },
+      {
+        value: 3,
+        label: 'Profanity',
+      },
+      {
+        value: 4,
+        label: 'Violance and Gore',
+      },
+      {
+        value: 5,
+        label: 'Race, Religion, Gender',
+      },
+    ],
+  },
+  {
+    value: 3,
+    label: 'Incitement to violence',
+    hasMore: false,
+  },
+  {
+    value: 4,
+    label: 'Harassment',
+    hasMore: false,
+  },
+  {
+    value: 5,
+    label: 'Personal and confidential information',
+    hasMore: false,
+  },
+  {
+    value: 7,
+    label: 'Impersonation',
+    hasMore: false,
+  },
+  {
+    value: 8,
+    label: 'Spam',
+    hasMore: false,
+  },
+  {
+    value: 10,
+    label: 'Intellectual Property violation',
+    hasMore: true,
+  },
+  {
+    value: 13,
+    label: 'Malware',
+    hasMore: false,
+  },
+  {
+    value: 16,
+    label: 'Inauthentic engagement',
+    hasMore: false,
+  },
+  {
+    value: 17,
+    label: 'Security',
+    hasMore: true,
+    reasons: [
+      {
+        value: 1,
+        label: 'Hacked account',
+      },
+    ],
+  },
+  {
+    value: 11,
+    label: 'Another reason',
+    hasMore: true,
+  },
+];
