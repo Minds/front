@@ -6,6 +6,9 @@ export type NotificationDetails = {
   link: string;
   timestamp: number;
   counter: number | null;
+  successful_counter: number | null;
+  failed_counter: number | null;
+  skipped_counter: number | null;
   target: string;
   status: string;
 };
