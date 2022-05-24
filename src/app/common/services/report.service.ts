@@ -24,6 +24,7 @@ export class ReportService {
   get reasons(): Reason[] {
     return this.configs
       .get('report_reasons')
+      .filter(reason => reason.value !== 11) // filter out Another reason until we add support for it
       .map(reason => this.localizeReason(reason));
   }
 

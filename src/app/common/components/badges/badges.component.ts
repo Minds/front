@@ -53,7 +53,11 @@ export class ChannelBadgesComponent {
     );
   }
 
-  shouldShowVerifiedBadge() {
+  ngOnDestroy(): void {
+    this.themeSubscription?.unsubscribe();
+  }
+
+  showVerifiedBadge() {
     if (this.badges.indexOf('verified') === -1) {
       return false;
     }
@@ -71,6 +75,55 @@ export class ChannelBadgesComponent {
     return false;
   }
 
+  showAdminBadge(): boolean {
+    return this.user.is_admin && this.badges.indexOf('admin') > -1;
+  }
+
+  showPlusBadge(): boolean {
+    return this.user.plus && !this.user.pro && this.badges.indexOf('plus') > -1;
+  }
+
+  showProBadge(): boolean {
+    return this.user.pro && this.badges.indexOf('pro') > -1;
+  }
+
+  showFounderBadge(): boolean {
+    return (
+      this.user.founder &&
+      !this.session.isAdmin() &&
+      this.badges.indexOf('founder') > -1
+    );
+  }
+
+  showOnchainBadge() {
+    return (
+      this.user.onchain_booster &&
+      this.user.onchain_booster * 1000 > Date.now() &&
+      this.badges.indexOf('onchain_booster') > -1
+    );
+  }
+
+  badgeVisible(): boolean {
+    return (
+      this.showVerifiedBadge() ||
+      this.showAdminBadge() ||
+      this.showPlusBadge() ||
+      this.showProBadge() ||
+      this.showFounderBadge() ||
+      this.showOnchainBadge()
+    );
+  }
+
+  /**
+   * Admins only
+   */
+  showFounderSwitch(): boolean {
+    return this.session.isAdmin() && this.badges.indexOf('founder') > -1;
+  }
+
+  /**
+   * Admins only
+   */
   verify(e) {
     if (!this.session.isAdmin()) {
       e.preventDefault();
@@ -83,6 +136,9 @@ export class ChannelBadgesComponent {
     });
   }
 
+  /**
+   * Admins only
+   */
   unVerify() {
     this.user.verified = false;
     this.client.delete('api/v1/admin/verify/' + this.user.guid).catch(() => {
@@ -90,6 +146,9 @@ export class ChannelBadgesComponent {
     });
   }
 
+  /**
+   * Admins only
+   */
   setFounder(e) {
     if (!this.session.isAdmin()) {
       e.preventDefault();
@@ -102,22 +161,13 @@ export class ChannelBadgesComponent {
     });
   }
 
+  /**
+   * Admins only
+   */
   unsetFounder() {
     this.user.founder = false;
     this.client.delete('api/v1/admin/founder/' + this.user.guid).catch(() => {
       this.user.founder = true;
     });
-  }
-
-  showOnchainBadge() {
-    return (
-      this.user.onchain_booster &&
-      this.user.onchain_booster * 1000 > Date.now() &&
-      this.badges.indexOf('onchain_booster') > -1
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.themeSubscription?.unsubscribe();
   }
 }

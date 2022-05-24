@@ -193,4 +193,16 @@ export class ReportCreatorComponent implements AfterViewInit {
   get isAdmin(): boolean {
     return this.session.isAdmin();
   }
+
+  /**
+   * Opens a new zendesk tab
+   * @param { string } ticketFormId - ticket form id of zendesk
+   * @returns { void }
+   */
+  openZendeskRequest(ticketFormId: string): void {
+    window.open(
+      `https://support.minds.com/hc/en-us/requests/new?ticket_form_id=${ticketFormId}`,
+      '_blank'
+    );
+  }
 }

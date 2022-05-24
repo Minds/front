@@ -1,3 +1,5 @@
+import { ApiResponse, ApiService } from './../../../common/api/api.service';
+import { RecentSubscriptionsService } from './../../../common/services/recent-subscriptions.service';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Client } from '../../../services/api';
@@ -14,11 +16,18 @@ export class SuggestionsService {
 
   constructor(
     private client: Client,
+    private api: ApiService,
     private storage: Storage,
+    private recentSubscriptions: RecentSubscriptionsService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  async load(opts: { limit: number; refresh: boolean; type: string }) {
+  async load(opts: {
+    limit: number;
+    refresh: boolean;
+    type: string;
+    user?: string;
+  }) {
     this.error$.next(null);
     this.inProgress$.next(true);
 
@@ -34,14 +43,29 @@ export class SuggestionsService {
       : 0;
 
     try {
-      const response: any = await this.client.get(
-        `api/v2/suggestions/${opts.type}`,
-        {
-          limit: opts.limit,
-          offset: this.lastOffset,
-        }
-      );
-      for (let suggestion of response.suggestions) {
+      let suggestions = [];
+      if (opts.user) {
+        const response = await this.api
+          .get('api/v3/recommendations', {
+            location: 'channel',
+            mostRecentSubscriptions: this.recentSubscriptions.list(),
+            currentChannelUserGuid: opts.user,
+            limit: opts.limit,
+          })
+          .toPromise();
+        suggestions = response.entities;
+      } else {
+        const response: any = await this.client.get(
+          `api/v2/suggestions/${opts.type}`,
+          {
+            limit: opts.limit,
+            offset: this.lastOffset,
+          }
+        );
+        suggestions = response.suggestions;
+      }
+
+      for (let suggestion of suggestions) {
         const removed = this.storage.get(
           `suggestion:${suggestion.entity_guid}:removed`
         );
@@ -49,7 +73,12 @@ export class SuggestionsService {
           this.suggestions$.next([...this.suggestions$.getValue(), suggestion]);
         }
       }
-      this.hasMoreData$.next(response.suggestions.length >= opts.limit);
+      if (opts.user) {
+        // contextual channel recommendations doesn't support pagination
+        this.hasMoreData$.next(false);
+      } else {
+        this.hasMoreData$.next(suggestions.length >= opts.limit);
+      }
     } catch (err) {
       this.error$.next(err.message);
     } finally {
