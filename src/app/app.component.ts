@@ -38,6 +38,7 @@ import { EmailConfirmationService } from './common/components/email-confirmation
 import { ExperimentsService } from './modules/experiments/experiments.service';
 import { MultiFactorAuthConfirmationService } from './modules/auth/multi-factor-auth/services/multi-factor-auth-confirmation.service';
 import { CompassHookService } from './common/services/compass-hook.service';
+import { EmailCodeExperimentService } from './modules/experiments/sub-services/email-code-experiment.service';
 
 @Component({
   selector: 'm-app',
@@ -58,6 +59,7 @@ export class Minds implements OnInit, OnDestroy {
   protected routerConfig: Route[];
 
   private multiFactorSuccessSubscription: Subscription;
+  private emailConfirmationLoginSubscription: Subscription;
 
   constructor(
     public session: Session,
@@ -86,6 +88,7 @@ export class Minds implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private socketsService: SocketsService,
     private experimentsService: ExperimentsService,
+    private emailCodeExperiment: EmailCodeExperimentService,
     private multiFactorConfirmation: MultiFactorAuthConfirmationService,
     private compassHook: CompassHookService,
     private serviceWorkerService: ServiceWorkerService
@@ -139,6 +142,8 @@ export class Minds implements OnInit, OnDestroy {
       //   this.sso.connect();
       // }
 
+      this.checkEmailConfirmation();
+
       if (isPlatformBrowser(this.platformId)) {
         this.serviceWorkerService.watchForUpdates();
       }
@@ -168,7 +173,7 @@ export class Minds implements OnInit, OnDestroy {
 
   checkXHRError(err: string | any) {
     if (err.status === 403 && err.error.must_verify) {
-      this.emailConfirmationService.show();
+      this.emailConfirmationService.showError();
     }
   }
 
@@ -223,6 +228,10 @@ export class Minds implements OnInit, OnDestroy {
     this.router$.unsubscribe();
     this.clientError$.unsubscribe();
     this.uploadError$.unsubscribe();
+
+    if (this.emailConfirmationLoginSubscription) {
+      this.emailConfirmationLoginSubscription.unsubscribe();
+    }
   }
 
   @HostBinding('class') get cssColorSchemeOverride() {
@@ -241,6 +250,33 @@ export class Minds implements OnInit, OnDestroy {
     let route = this.route;
     while (route.firstChild) route = route.firstChild;
     this.metaService.reset(route.snapshot.data);
+  }
+
+  /**
+   * Checks whether email confirmation if required and sets up subscription so
+   * that the function is called again on login events (including register).
+   * If a user should confirm their email, will call confirm function, which will
+   * cause MFA modal to trigger via MultiFactorHttpInterceptorService.
+   * @returns { void }
+   */
+  private checkEmailConfirmation(): void {
+    if (!this.emailCodeExperiment.isActive()) {
+      return; // feature not enabled.
+    }
+
+    if (!this.emailConfirmationLoginSubscription) {
+      // re-trigger on login events, so that when a user registers it opens.
+      this.emailConfirmationLoginSubscription = this.session.loggedinEmitter
+        .pipe(filter(Boolean))
+        .subscribe((loggedIn: boolean): void => {
+          this.checkEmailConfirmation();
+        });
+    }
+
+    if (this.emailConfirmationService.requiresEmailConfirmation()) {
+      // try to verify - this should cause MFA modal to trigger from interceptor.
+      this.emailConfirmationService.confirm();
+    }
   }
 
   detectChanges() {

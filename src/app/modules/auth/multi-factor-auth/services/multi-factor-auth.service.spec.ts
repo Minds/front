@@ -70,4 +70,32 @@ describe('MultiFactorAuthService', () => {
     //   { headers: { 'X-MINDS-2FA-CODE': '123' } }
     // );
   });
+
+  it('should resend email code', () => {
+    service.mfaType$.next('email');
+    service.mfaSecretKey$.next('secretKey');
+    service.completeMultiFactor('123', true);
+
+    const sub = service.mfaPayload$.subscribe(payload => {
+      expect(payload.resendEmail).toBeTruthy();
+      expect(payload.emailSecretKey).toBe('secretKey');
+      expect(payload.code).toBe('123');
+    });
+
+    sub.unsubscribe(); // cleanup sub to avoid leak.
+  });
+
+  it('should submit email code without resend', () => {
+    service.mfaType$.next('email');
+    service.mfaSecretKey$.next('secretKey');
+    service.completeMultiFactor('123', false);
+
+    const sub = service.mfaPayload$.subscribe(payload => {
+      expect(payload.resendEmail).toBeFalsy();
+      expect(payload.emailSecretKey).toBe('secretKey');
+      expect(payload.code).toBe('123');
+    });
+
+    sub.unsubscribe(); // cleanup sub to avoid leak.
+  });
 });
