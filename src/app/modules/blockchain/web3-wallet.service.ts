@@ -8,6 +8,7 @@ import { ConfigsService } from '../../common/services/configs.service';
 import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
 import { FormToastService } from '../../common/services/form-toast.service';
 import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
+import { isSafari } from '../../helpers/is-safari';
 
 type Address = string;
 
@@ -305,6 +306,14 @@ export class Web3WalletService {
       );
       return false;
     }
+
+    if (isSafari()) {
+      this.toast.error(
+        'Sorry, this feature is not supported on Safari. Please use a different browser.'
+      );
+      return false;
+    }
+
     return true;
   }
 
