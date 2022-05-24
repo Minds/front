@@ -159,4 +159,13 @@
   </div>
 </div>
 
+<div class="m-reportCreator__footer" *ngIf="!success">
+  <p class="m-reportCreator__footerCategoryName">
+    {{ getFooterCategoryName() }}
+  </p>
+  <p class="m-reportCreator__footerCategoryDescription">
+    {{ getFooterCategoryDescription() }}
+  </p>
+</div>
+
 <m-modalCloseButton></m-modalCloseButton>
