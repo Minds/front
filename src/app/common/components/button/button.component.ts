@@ -38,9 +38,9 @@ export class ButtonComponent implements AfterViewChecked {
   /**
    * whether the button should be borderless or not
    */
-  @Input() flat: boolean = false;
+  @Input() borderless: boolean = false;
   /**
-   * whether the button should be borderless or not
+   * whether the button should have a solid background color or not
    */
   @Input() solid: boolean = false;
 
