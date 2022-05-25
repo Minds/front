@@ -3,24 +3,17 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Story, Meta, moduleMetadata } from '@storybook/angular';
 import { ApiService } from '../../api/api.service';
-import { ButtonComponent } from '../button/button.component';
 import { PublisherCardComponent } from './publisher-card.component';
-import { SubscribeButtonComponent } from '../subscribe-button/subscribe-button.component';
-import { AbbrPipe } from '../../pipes/abbr';
-import { TagsPipe } from '../../pipes/tags';
 import { ConfigsService } from '../../services/configs.service';
-import { FormToastService } from '../../services/form-toast.service';
-import { RegexService } from '../../services/regex.service';
-import { SiteService } from '../../services/site.service';
 import { MindsUser } from '../../../interfaces/entities';
-import { AuthModalModule } from '../../../modules/auth/modal/auth-modal.module';
-import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { Client } from '../../../services/api';
-import { FeaturesService } from '../../../services/features.service';
 import { Session } from '../../../services/session';
+import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
+import { CommonModule } from '../../common.module';
+import { Client } from '../../api/client.service';
+import { ThemeService } from '../../services/theme.service';
 
 export default {
-  title: 'Components / Publisher Card',
+  title: 'Composite Components / Publisher Card',
   component: PublisherCardComponent,
   argTypes: {
     publisher: {
@@ -31,11 +24,12 @@ export default {
         username: 'storybook',
         briefdescription: 'I am a description',
         time_created: Date.now(),
-        icontime: Date.now(),
+        icontime: 1635862076,
         mode: null,
         nsfw: [],
         subscribers_count: 128,
         subscriptions_count: 1,
+        plus: true,
       },
       control: { type: 'object' },
     },
@@ -66,14 +60,7 @@ export default {
      * This is VERY messy. How can we avoid declaring so many services and imports
      */
     moduleMetadata({
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      declarations: [
-        PublisherCardComponent,
-        SubscribeButtonComponent,
-        ButtonComponent,
-        AbbrPipe,
-        TagsPipe,
-      ],
+      imports: [CommonModule, RouterTestingModule, HttpClientTestingModule],
       providers: [
         {
           provide: Session,
@@ -89,10 +76,11 @@ export default {
           provide: ConfigsService,
           useValue: {
             get: () => {
-              return {};
+              return 'https://cdn.minds.com/';
             },
           },
         },
+        ThemeService,
         {
           provide: Client,
           useValue: {
@@ -101,14 +89,17 @@ export default {
             },
           },
         },
-        FeaturesService,
-        AuthModalService,
-        FormToastService,
-        SiteService,
-        RegexService,
         {
           provide: ApiService,
           useValue: null,
+        },
+        {
+          provide: ActivityV2ExperimentService,
+          useValue: {
+            isActive: () => {
+              return false;
+            },
+          },
         },
       ],
     }),

@@ -14,7 +14,6 @@ import { Observable, of } from 'rxjs';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
 export type PublisherCardSize = 'small' | 'medium' | 'large';

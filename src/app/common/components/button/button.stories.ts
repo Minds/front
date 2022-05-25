@@ -1,10 +1,23 @@
-import { Story, Meta } from '@storybook/angular';
+import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { action } from '@storybook/addon-actions';
 import { ButtonComponent } from './button.component';
+import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
+import { DropdownMenuItemComponent } from '../dropdown-menu-item/dropdown-menu-item.component';
 
 // More on default export: https://storybook.js.org/docs/angular/writing-stories/introduction#default-export
 export default {
-  title: 'Components / Button',
+  title: 'Components / Buttons / Button',
   component: ButtonComponent,
+  decorators: [
+    moduleMetadata({
+      // Imports components used for dropdown button
+      declarations: [
+        ButtonComponent,
+        DropdownMenuComponent,
+        DropdownMenuItemComponent,
+      ],
+    }),
+  ],
   parameters: {
     docs: {
       description: {
@@ -25,7 +38,8 @@ export default {
     },
     overlay: {
       defaultValue: false,
-      description: 'TDB',
+      description:
+        'Creates a semi-transparent background. Used when button is placed on top of images',
       control: 'boolean',
     },
     size: {
@@ -37,20 +51,37 @@ export default {
       defaultValue: 'Button',
       control: 'text',
     },
-    // Outputs
-    onAction: {
-      action: 'clicked',
+    // dropdown: {
+    //   defaultValue: '#template?',
+    //   control: TemplateRef,
+    // },
+    dropdownAnchorPosition: {
+      defaultValue: { top: '110%', left: '0' },
+      control: 'object',
+    },
+    showDropdownMenu: {
+      defaultValue: true,
+      control: 'boolean',
     },
   },
   args: {
     color: 'blue',
     type: 'submit',
   },
+  // Don't include the actions data as a story
+  excludeStories: /.*Data$/,
 } as Meta;
+
+export const actionsData = {
+  onClickButton: action('onAction'),
+};
 
 // More on component templates: https://storybook.js.org/docs/angular/writing-stories/introduction#using-args
 const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
-  props: args,
+  props: {
+    ...args,
+    onAction: actionsData.onClickButton,
+  },
   template: `
     <m-button
       [type]="type"
@@ -60,7 +91,7 @@ const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
       [solid]="solid"
       [saving]="saving"
       [pulsating]="pulsating"
-      [flat]="flat"
+      [borderless]="borderless"
       [color]="color"
       [size]="size"
       (onAction)="onAction($event)"
@@ -115,26 +146,32 @@ BasicDisabled.args = {
 };
 
 /**
+ * Borderless
+ */
+export const Borderless = Template.bind({});
+Borderless.args = {
+  label: 'Button',
+  borderless: true,
+};
+
+/**
+ * Saving
+ * */
+export const Saving = Template.bind({});
+Saving.args = {
+  label: 'Button',
+  saving: true,
+};
+
+/**
  * Warning
  */
 
-export const Warning: Story<ButtonComponent> = (args: ButtonComponent) => ({
-  props: {
-    ...args,
-    label: 'Warning',
-  },
-  template: `
-    <m-button
-      color="red"
-      [size]="size"
-      [solid]="solid"
-      [overlay]="overlay"
-      [saving]="saving"
-    >
-      {{ label }}
-    </m-button>
-  `,
-});
+export const Warning = Template.bind({});
+Warning.args = {
+  label: 'Warning',
+  color: 'red',
+};
 
 export const WarningDisabled = Warning.bind({});
 WarningDisabled.args = {
