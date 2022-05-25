@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-
 import { Subscription } from 'rxjs';
-
 import { Client } from '../../../services/api';
-import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
+import { REPORT_ACTIONS } from '../../../services/list-options';
+import { ReportService } from './../../../common/services/report.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
@@ -22,13 +20,13 @@ export class AdminReports {
   moreData: boolean = true;
   offset: string = '';
   paramsSubscription: Subscription;
-
-  reasons: Array<{ value; label }> = REASONS;
+  reasons = this.reportService.reasons;
 
   constructor(
     public client: Client,
     private route: ActivatedRoute,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    protected reportService: ReportService
   ) {}
 
   ngOnInit() {
@@ -94,7 +92,7 @@ export class AdminReports {
   parseReason(reasonValue: string | number) {
     let reason = reasonValue;
 
-    REASONS.forEach(item => {
+    this.reasons.forEach(item => {
       if (item.value === reasonValue) {
         reason = item.label;
       }

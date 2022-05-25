@@ -1,10 +1,12 @@
 import { Client } from '../../../../services/api';
 import { Injectable } from '@angular/core';
-import { REASONS } from '../../../../services/list-options';
+import { ReportService } from './../../../../common/services/report.service';
 
 @Injectable()
 export class JurySessionService {
-  constructor(private client: Client) {}
+  reportReasons = this.reportService.reasons;
+
+  constructor(private client: Client, private reportService: ReportService) {}
 
   async getList(opts) {
     let queryString = opts.offset ? `?offset=${opts.offset}&limit=12` : '';
@@ -39,16 +41,17 @@ export class JurySessionService {
   }
 
   getReasonString(report) {
-    return REASONS.filter(item => {
-      if (item.hasMore && item.reasons) {
-        return (
-          item.value === report.reason_code &&
-          item.reasons[report.sub_reason_code - 1].value ===
-            report.sub_reason_code
-        );
-      }
-      return item.value === report.reason_code;
-    })
+    return this.reportReasons
+      .filter(item => {
+        if (item.hasMore && item.reasons) {
+          return (
+            item.value === report.reason_code &&
+            item.reasons[report.sub_reason_code - 1].value ===
+              report.sub_reason_code
+          );
+        }
+        return item.value === report.reason_code;
+      })
       .map(item => {
         if (item.hasMore && item.reasons) {
           return item.reasons[report.sub_reason_code - 1].label;

@@ -60,13 +60,6 @@
     </ul>
   </div>
 
-  <div class="m-report-creator--copyright" *ngIf="next && subject.value === 10">
-    <p i18n="@@REPORT__CREATOR__DMCA_NOTICE">
-      Please submit a <a routerLink="/p/dmca" target="_blank">DMCA notice</a> to
-      copyright@minds.com.
-    </p>
-  </div>
-
   <!-- Submit or Next -->
   <div
     *ngIf="
@@ -122,8 +115,20 @@
           (onAction)="next = true"
           i18n="@@REPORT__CREATOR__NEXT_ACTION"
           color="blue"
+          *ngIf="subject.value !== 10"
         >
           Next
+        </m-button>
+
+        <m-button
+          class="m-reportCreator__button--next m-reportCreator__button--dmca"
+          (onAction)="openZendeskRequest('360003221852')"
+          i18n="@@REPORT__CREATOR__SUBMIT_DMCA_NOTICE"
+          color="blue"
+          *ngIf="subject.value === 10"
+        >
+          Submit a DMCA notice
+          <i class="material-icons" style="margin-left: 5px">launch</i>
         </m-button>
       </div>
     </section>
@@ -152,6 +157,15 @@
       <ng-container i18n="@@COMMON__CLOSE">Close</ng-container>
     </m-button>
   </div>
+</div>
+
+<div class="m-reportCreator__footer" *ngIf="!success">
+  <p class="m-reportCreator__footerCategoryName">
+    {{ getFooterCategoryName() }}
+  </p>
+  <p class="m-reportCreator__footerCategoryDescription">
+    {{ getFooterCategoryDescription() }}
+  </p>
 </div>
 
 <m-modalCloseButton></m-modalCloseButton>

@@ -10,7 +10,6 @@ import { interval, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
-import { REASONS } from '../../../../services/list-options';
 import { JurySessionService } from './session.service';
 import { SocketsService } from '../../../../services/sockets';
 

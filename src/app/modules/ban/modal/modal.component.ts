@@ -1,14 +1,7 @@
-import {
-  Component,
-  Input,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { ReportService } from './../../../common/services/report.service';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { REASONS } from '../../../services/list-options';
 import { MindsUser } from '../../../interfaces/entities';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ModalService } from '../../../services/ux/modal.service';
@@ -30,7 +23,7 @@ export class BanModalComponent implements AfterViewInit {
 
   success: boolean = false;
   error: string = '';
-  subjects = REASONS;
+  subjects = this.reportService.reasons;
 
   next: boolean = false;
 
@@ -45,7 +38,8 @@ export class BanModalComponent implements AfterViewInit {
     private _changeDetectorRef: ChangeDetectorRef,
     private modalService: ModalService,
     private client: Client,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    private reportService: ReportService
   ) {}
 
   ngAfterViewInit() {

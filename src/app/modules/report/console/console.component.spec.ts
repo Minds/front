@@ -1,3 +1,4 @@
+import { ReportService } from './../../../common/services/report.service';
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
   ComponentFixture,
@@ -33,8 +34,6 @@ import {
   $afterEach,
   $afterAll,
 } from 'jasmine-ts-async';
-
-import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { MockService } from '../../../utils/mock';
@@ -60,6 +59,12 @@ describe('ReportConsoleComponent', () => {
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),
+          },
+          {
+            provide: ReportService,
+            useValue: {
+              reasons: [],
+            },
           },
         ],
         schemas: [NO_ERRORS_SCHEMA],
