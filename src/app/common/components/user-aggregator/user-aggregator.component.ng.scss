@@ -1,0 +1,45 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  .m-userAggregator__avatarContainer {
+    display: flex;
+    flex-flow: row nowrap;
+
+    > * + * {
+      margin-left: -$spacing2;
+    }
+
+    .m-userAggregator__hoverCard {
+      .m-userAggregator__avatar {
+        border-radius: 50%;
+        max-width: 35px;
+        max-height: 35px;
+      }
+    }
+  }
+
+  .m-userAggregator__userSummary {
+    align-self: center;
+    margin-left: $spacing2;
+
+    @include body2Regular;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    .m-userAggregator__usernameHref {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+
+        &:hover {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+}

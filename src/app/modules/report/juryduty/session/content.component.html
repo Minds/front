@@ -16,6 +16,19 @@
       <p>{{ report.appeal_note }}</p>
     </div>
 
+    <div
+      *ngIf="report['reporting_users'] && report['reporting_users'].length > 0"
+      class="m-juryDutySessionContent__reportedByContainer"
+    >
+      <span class="m-juryDutySessionContent__reportedByText"
+        >Reported By:
+      </span>
+      <m-userAggregator
+        [users]="report['reporting_users']"
+        [totalCount]="report['reporting_users_count']"
+      ></m-userAggregator>
+    </div>
+
     <ng-container *ngIf="report.entity; else noEntity">
       <m-publisherCard
         *ngIf="

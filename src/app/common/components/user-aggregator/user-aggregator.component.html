@@ -1,0 +1,34 @@
+<div class="m-userAggregator__avatarContainer">
+  <ng-container *ngFor="let user of users; let i = index">
+    <m-hovercard
+      *ngIf="i < avatarAmount"
+      [publisher]="user"
+      [offset]="[0, 15]"
+      class="m-userAggregator__hoverCard"
+    >
+      <a [routerLink]="['/', user.username]">
+        <img
+          src="/icon/{{ user.guid }}/small/{{ user.icontime }}"
+          class="m-userAggregator__avatar"
+        />
+      </a>
+    </m-hovercard>
+  </ng-container>
+</div>
+<span
+  class="m-userAggregator__userSummary"
+  *ngIf="users.slice(0, usernameAmount) as slicedUsers"
+>
+  <span *ngFor="let user of slicedUsers; let i = index">
+    <a
+      [href]="'/' + user.username"
+      target="_blank"
+      class="m-userAggregator__usernameHref"
+      >@{{ user.username }}</a
+    >
+    <span *ngIf="i < slicedUsers.length - 1">,&nbsp;</span>
+  </span>
+  <span *ngIf="users.length > usernameAmount">
+    and {{(totalCount ?? users.length) - usernameAmount}} others</span
+  >
+</span>
