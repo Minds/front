@@ -11,8 +11,6 @@ import { CookieService } from '@mindsorg/ngx-universal';
 
 export type FriendlyCaptchaStartMode = 'auto' | 'focus' | 'none' | undefined;
 
-// do not merge this branch
-
 /**
  * FriendlyCaptcha widget component. Handles display of widget and
  * outputs solution in a ControlValueAccessor compliant way so that it can be used in forms.
