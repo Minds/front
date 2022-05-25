@@ -31,8 +31,12 @@
       <li
         @listAnimation
         *ngFor="
-          let channel of recommendations$ | async | slice: 0:(listSize$ | async)
+          let channel of recommendations$
+            | async
+            | slice: 0:(listSize$ | async);
+          let i = index
         "
+        (mViewed)="trackView(channel, i + 1)"
       >
         <section>
           <a

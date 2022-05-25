@@ -194,6 +194,7 @@ import { DropdownMenuItemComponent } from './components/dropdown-menu-item/dropd
 import { PreventDoubleClickDirective } from './directives/prevent-double-click.directive';
 import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-button/see-latest-posts-button.component';
 import { ReportService } from './services/report.service';
+import { ViewedDirective } from './directives/viewed.directive';
 
 const routes: Routes = [
   {
@@ -370,6 +371,7 @@ const routes: Routes = [
     ResizedDirective,
     DropdownMenuItemComponent,
     PreventDoubleClickDirective,
+    ViewedDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -521,6 +523,7 @@ const routes: Routes = [
     ResizedDirective,
     DropdownMenuItemComponent,
     PreventDoubleClickDirective,
+    ViewedDirective,
   ],
   providers: [
     SiteService,
