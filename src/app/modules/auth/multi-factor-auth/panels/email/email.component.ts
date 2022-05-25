@@ -47,7 +47,7 @@ export class MultiFactorAuthEmailComponent extends AbstractMFAFormComponent {
    */
   public resendTimer(): void {
     this.code = '';
-    this.service.completeMultiFactor(null, true);
+    this.service.completeMultiFactor(null);
 
     this.timer$ = timer(0, 1000).pipe(
       scan(acc => --acc, 30),
