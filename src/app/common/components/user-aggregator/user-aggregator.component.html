@@ -24,7 +24,7 @@
       [href]="'/' + user.username"
       target="_blank"
       class="m-userAggregator__usernameHref"
-      >@{{ user.username }}</a
+      >@{{ user.username | truncate: 15 }}</a
     >
     <span *ngIf="i < slicedUsers.length - 1">,&nbsp;</span>
   </span>
