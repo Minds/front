@@ -7,6 +7,7 @@ import {
   MultiFactorAuthService,
   MultiFactorRootPanel,
 } from './services/multi-factor-auth-service';
+import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 
 describe('MultiFactorAuthBaseComponent', () => {
   let comp: MultiFactorAuthBaseComponent;
@@ -20,6 +21,10 @@ describe('MultiFactorAuthBaseComponent', () => {
           {
             provide: MultiFactorAuthService,
             useValue: MockService(MultiFactorAuthService),
+          },
+          {
+            provide: EmailConfirmationService,
+            useValue: MockService(EmailConfirmationService),
           },
           {
             provide: ConfigsService,
@@ -66,5 +71,19 @@ describe('MultiFactorAuthBaseComponent', () => {
     const sub = (comp as any).service.activePanel$.subscribe(val => {
       expect(val).toBe('sms');
     });
+  });
+
+  it('should determine whether a user has confirmed their email', () => {
+    (comp as any).emailConfirmation.requiresEmailConfirmation.and.returnValue(
+      true
+    );
+    expect(comp.isConfirmingEmail()).toBeTruthy();
+  });
+
+  it('should determine whether a user has not confirmed their email', () => {
+    (comp as any).emailConfirmation.requiresEmailConfirmation.and.returnValue(
+      false
+    );
+    expect(comp.isConfirmingEmail()).toBeFalsy();
   });
 });
