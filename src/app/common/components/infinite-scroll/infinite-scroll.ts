@@ -22,6 +22,7 @@ import { AnalyticsService } from './../../../services/analytics';
         *ngIf="!inProgress"
         [disabled]="!moreData"
         (onAction)="manualLoad()"
+        (mViewed)="moreData ? undefined : trackEndReached()"
       >
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
@@ -31,7 +32,6 @@ import { AnalyticsService } from './../../../services/analytics';
 
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE"
-          (mViewed)="trackEndReached()"
           *ngIf="!moreData"
           >Nothing more to load</ng-container
         >
@@ -136,7 +136,10 @@ export class InfiniteScroll {
       this.scroll.unListen(this.subscription[0], this.subscription[1]);
   }
 
-  trackEndReached() {
+  /**
+   * tracks the feed end event with analytics
+   */
+  trackEndReached(): void {
     this.analytics.trackView('feed-end');
   }
 }
