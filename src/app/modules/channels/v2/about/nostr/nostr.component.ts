@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nostr.component.scss'],
 })
 export class ChannelNostrComponent implements OnInit {
-  publicKey$: BehaviorSubject<string> = new BehaviorSubject('0128ejd09e8rfj2308ur23908uj0');
+  publicKey$: BehaviorSubject<string> = new BehaviorSubject('');
   username: string = this.session.getLoggedInUser()?.username;
 
   constructor(private client: Client, private session: Session) {}
