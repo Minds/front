@@ -1,3 +1,4 @@
+import { AnalyticsService } from './../../../services/analytics';
 import { RecentSubscriptionsService } from './../../../common/services/recent-subscriptions.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApiService } from '../../../common/api/api.service';
@@ -25,6 +26,10 @@ describe('ChannelRecommendationComponent', () => {
         {
           provide: RecentSubscriptionsService,
           useValue: MockService(RecentSubscriptionsService),
+        },
+        {
+          provide: AnalyticsService,
+          useValue: MockService(AnalyticsService),
         },
       ],
     }).compileComponents();
