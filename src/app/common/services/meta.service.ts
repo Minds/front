@@ -4,7 +4,7 @@ import { SiteService } from './site.service';
 import { Location } from '@angular/common';
 import { ConfigsService } from './configs.service';
 import { DOCUMENT } from '@angular/common';
-import maxNum from 'src/app/helpers/max';
+import maxNum from '../../helpers/max';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
