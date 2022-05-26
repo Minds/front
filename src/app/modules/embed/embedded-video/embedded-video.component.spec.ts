@@ -40,6 +40,7 @@ import { EmbedModule } from '../embed.module';
 import * as Sentry from '@sentry/browser';
 import { EmbeddedVideoComponent } from './embedded-video.component';
 import { By } from '@angular/platform-browser';
+import { AnalyticsService } from '../../../services/analytics';
 
 const GUID = '1155576347020644352';
 const OWNER_GUID = '1153095520021913602';
@@ -290,6 +291,10 @@ describe('EmbeddedVideoComponent', () => {
           {
             provide: SENTRY,
             useValue: Sentry,
+          },
+          {
+            provide: AnalyticsService,
+            useValue: {},
           },
         ],
         imports: [EmbedModule],
