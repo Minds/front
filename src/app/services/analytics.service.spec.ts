@@ -10,8 +10,7 @@ import { clientMock } from '../../tests/client-mock.spec';
 import { sessionMock } from '../../tests/session-mock.spec';
 import { SiteService } from '../common/services/site.service';
 import { siteServiceMock } from '../modules/notifications/notification.service.spec';
-
-import { AnalyticsService } from './analytics';
+import { AnalyticsService, SnowplowContext } from './analytics';
 import { Client } from './api';
 import { Session } from './session';
 
@@ -46,5 +45,35 @@ describe('AnalyticsService', () => {
     clientMock.response['https://sp.minds.com/com.minds/t'] = {};
 
     service.onDocumentClick(new MouseEvent('click'));
+  });
+
+  it('should build an entity_context from a given entity', () => {
+    const guid = '~guid~',
+      type = '~type~',
+      subType = '~subtype~',
+      ownerGuid = '~ownerGuid~',
+      accessId = '~accessId~',
+      containerGuid = '~containerGuid~';
+
+    const builtEntityContext: SnowplowContext = service.buildEntityContext({
+      guid: guid,
+      type: type,
+      subtype: subType,
+      owner_guid: ownerGuid,
+      access_id: accessId,
+      container_guid: containerGuid,
+    });
+
+    expect(builtEntityContext).toEqual({
+      schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
+      data: {
+        entity_guid: guid,
+        entity_type: type,
+        entity_subtype: subType,
+        entity_owner_guid: ownerGuid,
+        entity_access_id: accessId,
+        entity_container_guid: containerGuid,
+      },
+    });
   });
 });

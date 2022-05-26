@@ -18,6 +18,16 @@ import { SelfDescribingJson } from '@snowplow/tracker-core';
 
 export type SnowplowContext = SelfDescribingJson<Record<string, unknown>>;
 
+// entity that can be contextualized into an 'entity_context'.
+export type ContextualizableEntity = {
+  guid: string;
+  type: string;
+  subtype: string;
+  access_id: string;
+  container_guid: string;
+  owner_guid: string;
+};
+
 @Injectable()
 export class AnalyticsService implements OnDestroy {
   private defaultPrevented: boolean = false;
@@ -118,20 +128,40 @@ export class AnalyticsService implements OnDestroy {
   }
 
   /**
-   * Tracks a click event
-   * @param ref a string identifying the source of the click action
+   * Tracks a click event.
+   * @param { string } ref - a string identifying the source of the click action.
+   * @param { SnowplowContext[] } contexts - additional contexts.
    * @returns { void }
    */
-  trackClick(ref: string): void {
+  public trackClick(ref: string, contexts: SnowplowContext[] = []): void {
     snowplow.trackSelfDescribingEvent({
       event: {
         schema: 'iglu:com.minds/click_event/jsonschema/1-0-0',
         data: {
-          ref,
+          ref: ref,
         },
       },
-      context: this.getContexts(),
+      context: [...(this.getContexts() ?? []), ...contexts],
     });
+  }
+
+  /**
+   * Build entity context for a given entity.
+   * @param { ContextualizableEntity } entity - entity to build entity_context for.
+   * @returns { SnowplowContext } - built entity_context.
+   */
+  public buildEntityContext(entity: ContextualizableEntity): SnowplowContext {
+    return {
+      schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
+      data: {
+        entity_guid: entity.guid ?? null,
+        entity_type: entity.type ?? null,
+        entity_subtype: entity.subtype ?? null,
+        entity_owner_guid: entity.owner_guid ?? null,
+        entity_access_id: entity.access_id ?? null,
+        entity_container_guid: entity.container_guid ?? null,
+      },
+    };
   }
 
   async onRouterInit() {}
