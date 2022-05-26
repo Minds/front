@@ -4,6 +4,7 @@ import { SiteService } from './site.service';
 import { Location } from '@angular/common';
 import { ConfigsService } from './configs.service';
 import { DOCUMENT } from '@angular/common';
+import maxNum from 'src/app/helpers/max';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
@@ -287,7 +288,7 @@ export class MetaService {
 
   private applyTitle(): void {
     if (this.counter) {
-      this.titleService.setTitle(`(*) ${this.title}`);
+      this.titleService.setTitle(`(${maxNum(this.counter)}) ${this.title}`);
     } else {
       this.titleService.setTitle(this.title);
     }
