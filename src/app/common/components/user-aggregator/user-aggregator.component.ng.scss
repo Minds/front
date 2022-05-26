@@ -14,10 +14,13 @@
     }
 
     .m-userAggregator__hoverCard {
-      .m-userAggregator__avatar {
+      .m-userAggregator__avatar ::ng-deep .minds-avatar {
         border-radius: 50%;
-        max-width: 35px;
-        max-height: 35px;
+        width: 35px;
+        height: 35px;
+        margin: 0;
+        background-position: center;
+        background-size: cover;
       }
     }
   }

@@ -7,10 +7,10 @@
       class="m-userAggregator__hoverCard"
     >
       <a [routerLink]="['/', user.username]">
-        <img
-          src="/icon/{{ user.guid }}/small/{{ user.icontime }}"
+        <minds-avatar
+          [object]="user"
           class="m-userAggregator__avatar"
-        />
+        ></minds-avatar>
       </a>
     </m-hovercard>
   </ng-container>
