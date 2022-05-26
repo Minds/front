@@ -84,7 +84,7 @@
         <ng-container [ngSwitch]="option.notificationGroup">
           <ng-template ngSwitchCase="wires">Pay</ng-template>
           <ng-template ngSwitchDefault>{{
-            option.notificationGroup | titlecase
+            option.notificationGroup | replace: '_':' ' | titlecase
           }}</ng-template>
         </ng-container></span
       >

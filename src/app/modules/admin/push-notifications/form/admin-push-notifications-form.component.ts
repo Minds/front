@@ -53,6 +53,9 @@ export class AdminPushNotificationsFormComponent {
       link: this.pushNotificationsForm.value.notificationLink,
       timestamp: Date.now(),
       counter: null,
+      successful_counter: null,
+      failed_counter: null,
+      skipped_counter: null,
       target: 'all-devices',
       status: 'Pending',
     };

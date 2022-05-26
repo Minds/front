@@ -55,6 +55,7 @@ export class SettingsV2PushNotificationsV3Component
     chats: 'When you receive chat requests.',
     groups: 'Activity in your groups.',
     reports: 'Progress on your reports.',
+    top_posts: "Get notifications for top posts you haven't yet seen",
     all: '',
   };
 

@@ -59,6 +59,9 @@ export type ActivityEntity = {
   paywall: boolean;
   impressions: number;
   boostToggle: boolean;
+  access_id?: string;
+  container_guid?: string;
+  owner_guid?: string;
   url?: string;
   urn?: string;
   boosted_guid?: string;

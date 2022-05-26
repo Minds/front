@@ -15,6 +15,7 @@ import { FileSizePipe } from './filesize';
 import { DecodeHtmlStringPipe } from './decode-html-string';
 import { TruncatePipe } from './truncate.pipe';
 import { MaxPipe } from './max';
+import { ReplacePipe } from './replace';
 
 export const MINDS_PIPES = [
   AbbrPipe,
@@ -36,4 +37,5 @@ export const MINDS_PIPES = [
   DecodeHtmlStringPipe,
   TruncatePipe,
   MaxPipe,
+  ReplacePipe,
 ];
