@@ -299,16 +299,6 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "sampleUsers",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "<MindsUser[]>[\n  {\n    guid: '0000',\n    username: 'user1',\n    icontime: 1635862076,\n    type: 'user',       \n    name: 'User 1',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n  },\n  {\n    guid: '2222',\n    username: 'user2',\n    icontime: 1635862076,\n    type: 'user',\n    name: 'User 2',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n\n  },\n  {\n    guid: '3333',\n    username: 'user3',\n    icontime: 1635862076,\n    type: 'user',\n    name: 'User 3',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n  },\n  {\n    guid: '4444',\n    username: 'user4',\n    icontime: 1635862076,\n    type: 'user',\n    name: 'User 4',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n  },\n  {\n    guid: '5555',\n    username: 'user5',\n    icontime: 1635862076,\n    type: 'user',\n    name: 'User 5',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n  }\n]"
-            },
-            {
                 "name": "Saving",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -897,16 +887,6 @@
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "sampleUsers",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "<MindsUser[]>[\n  {\n    guid: '0000',\n    username: 'user1',\n    icontime: 1635862076,\n    type: 'user',       \n    name: 'User 1',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n  },\n  {\n    guid: '2222',\n    username: 'user2',\n    icontime: 1635862076,\n    type: 'user',\n    name: 'User 2',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n\n  },\n  {\n    guid: '3333',\n    username: 'user3',\n    icontime: 1635862076,\n    type: 'user',\n    name: 'User 3',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n  },\n  {\n    guid: '4444',\n    username: 'user4',\n    icontime: 1635862076,\n    type: 'user',\n    name: 'User 4',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n  },\n  {\n    guid: '5555',\n    username: 'user5',\n    icontime: 1635862076,\n    type: 'user',\n    name: 'User 5',\n    briefdescription: 'I am a description',\n    time_created: Date.now(),\n    mode: null,\n    nsfw: [],\n    subscribers_count: 128,\n    subscriptions_count: 1,\n    plus: true,\n  }\n]"
-                },
-                {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -1389,16 +1369,6 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Basic",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "sampleUsers",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

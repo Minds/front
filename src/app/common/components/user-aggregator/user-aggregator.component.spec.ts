@@ -3,7 +3,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { sampleUsers } from '../../../../tests/samples/sample-users';
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockDirective } from '../../../utils/mock';
+import { TruncatePipe } from '../../pipes/truncate.pipe';
 import { UserAggregatorComponent } from './user-aggregator.component';
 
 describe('UserAggregatorComponent', () => {
@@ -24,6 +25,7 @@ describe('UserAggregatorComponent', () => {
             selector: 'minds-avatar',
             inputs: ['object'],
           }),
+          TruncatePipe,
         ],
       }).compileComponents();
     })
