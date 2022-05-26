@@ -287,7 +287,7 @@ export class MetaService {
   }
 
   private applyTitle(): void {
-    if (this.counter) {
+    if (this.counter && this.counter > 0) {
       this.titleService.setTitle(`(${maxNum(this.counter)}) ${this.title}`);
     } else {
       this.titleService.setTitle(this.title);
