@@ -1,9 +1,12 @@
-import { FeaturesService } from './../../../../services/features.service';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { Client } from '../../../../services/api';
-import { map } from 'rxjs/operators';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { AnalyticsService } from '../../../../services/analytics';
+import { isPlatformBrowser } from '@angular/common';
+
+// key for click events.
+export type ClickEventRef = 'video-player-unmuted';
 
 export type VideoSource = {
   id: string;
@@ -40,6 +43,13 @@ export class VideoPlayerService implements OnDestroy {
   poster$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   /**
+   * Video entity loaded from guid.
+   */
+  private readonly entity$: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
+
+  /**
    * False would be inline
    * @var boolean
    */
@@ -64,7 +74,8 @@ export class VideoPlayerService implements OnDestroy {
   constructor(
     private client: Client,
     private modalService: ModalService,
-    private featuresService: FeaturesService
+    private analytics: AnalyticsService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.setShouldPlayInModal(true);
   }
@@ -110,10 +121,13 @@ export class VideoPlayerService implements OnDestroy {
    */
   async load(): Promise<void> {
     try {
-      const response = await this.client.get('api/v2/media/video/' + this.guid);
-      this.sources$.next((<any>response).sources);
-      this.poster$.next((<any>response).poster);
-      this.status = (<any>response).transcode_status;
+      const response: any = await this.client.get(
+        'api/v2/media/video/' + this.guid
+      );
+      this.sources$.next(response.sources);
+      this.poster$.next(response.poster);
+      this.entity$.next(response.entity);
+      this.status = response.transcode_status;
       this.onReady$.next();
       this.onReady$.complete();
     } catch (e) {
@@ -134,5 +148,18 @@ export class VideoPlayerService implements OnDestroy {
    */
   awaitingTranscode(): Observable<boolean> {
     return of(this.status === 'transcoding');
+  }
+
+  /**
+   * Tracks click event.
+   * @param { ClickEventRef } clickEventKey - click event reference.
+   * @returns { void }
+   */
+  public trackClick(clickEventKey: ClickEventRef): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.analytics.trackClick(clickEventKey, [
+        this.analytics.buildEntityContext(this.entity$.getValue()),
+      ]);
+    }
   }
 }

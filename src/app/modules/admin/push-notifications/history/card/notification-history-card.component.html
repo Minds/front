@@ -1,7 +1,7 @@
 <div class="m-notificationHistoryCard__wrapper">
   <div class="m-notificationHistoryCard__header">
     <span>Status: {{ notification.status }}</span>
-    <span>{{ notification.timestamp | date: 'd MMM yyyy h:m a' }}</span>
+    <span>{{ notification.timestamp | date: 'd MMM yyyy hh:mm a' }}</span>
   </div>
   <span class="m-notificationHistoryCard__sectionDivider"></span>
   <div class="m-notificationHistoryCard__body">
@@ -20,5 +20,11 @@
       </span>
     </div>
   </div>
-  <div class="m-notificationHistoryCard__stats"></div>
+  <span class="m-notificationHistoryCard__sectionDivider"></span>
+  <div class="m-notificationHistoryCard__stats">
+    <span>Total: {{ notification.counter }}</span>
+    <span>Successful: {{ notification.successful_counter }}</span>
+    <span>Failed: {{ notification.failed_counter }}</span>
+    <span>Skipped: {{ notification.skipped_counter }}</span>
+  </div>
 </div>
