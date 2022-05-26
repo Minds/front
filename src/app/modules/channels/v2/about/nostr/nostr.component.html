@@ -1,0 +1,11 @@
+<div
+  *ngIf="publicKey$ | async as publicKey"
+  class="m-channelAbout__field m-channelAbout__field--fullWidth"
+>
+  <div class="m-channelAboutField__label" i18n="@@CHANNEL_ABOUT__NOSTR">
+    Nostr
+  </div>
+  <div class="m-channelAboutField__content">
+    {{ publicKey }}
+  </div>
+</div>
