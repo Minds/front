@@ -211,6 +211,7 @@ export class AttachmentService {
 
     const headers = new HttpHeaders({
       'Content-Type': file.type,
+      'Ngsw-Bypass': null,
     });
     const req = new HttpRequest('PUT', lease.presigned_url, file, {
       headers: headers,
