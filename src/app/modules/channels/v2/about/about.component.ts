@@ -18,8 +18,4 @@ export class ChannelAboutComponent {
    * @param session
    */
   constructor(public service: ChannelsV2Service, public session: Session) {}
-
-  get username() {
-    return this.session.getLoggedInUser()?.username;
-  }
 }
