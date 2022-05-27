@@ -6,8 +6,6 @@ import {
 } from '../../../common/api/attachment-api.service';
 import { of, OperatorFunction } from 'rxjs';
 import { catchError, last, map, switchAll, tap } from 'rxjs/operators';
-import { BoostConsolePublisherMock } from '../../boost/console/console.component.spec';
-import { ConnectWalletModalService } from '../../blockchain/connect-wallet/connect-wallet-modal.service';
 
 /**
  * Attachment types
@@ -67,7 +65,6 @@ export class AttachmentService {
             .pipe(
               // On every HTTP event:
               tap(uploadEvent => {
-                console.log('upload event');
                 // If no progress callback, do nothing
                 if (!progressFn) {
                   return;
@@ -78,7 +75,7 @@ export class AttachmentService {
                   progressFn(false, 0);
                   return;
                 }
-                console.log(uploadEvent);
+
                 // Check the type and send the progress state accordingly
                 switch (uploadEvent.type) {
                   case UploadEventType.Progress:
@@ -97,8 +94,6 @@ export class AttachmentService {
 
               // If something fails during upload:
               catchError(e => {
-                console.log(e);
-                console.log('caught err in attach serv');
                 // Pass the errors through the error callback
                 if (errorFn) {
                   errorFn(e);

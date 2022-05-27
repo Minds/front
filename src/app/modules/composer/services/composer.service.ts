@@ -1101,7 +1101,6 @@ export class ComposerService implements OnDestroy {
       activity.boostToggle = true;
       return activity;
     } catch (e) {
-      console.log('caught???');
       this.isPosting$.next(false);
       this.setProgress(false);
       throw e; // Re-throw
