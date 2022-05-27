@@ -21,6 +21,6 @@ export class ChannelNostrComponent {
           this.api.get(`.well-known/nostr.json?name=${channel?.username}`)
         )
       )
-      .pipe(map(response => response?.names?.[0]));
+      .pipe(map(response => Object.values(response?.names || {})[0] as string));
   }
 }
