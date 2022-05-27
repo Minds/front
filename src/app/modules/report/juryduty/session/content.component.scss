@@ -84,6 +84,27 @@
   }
 }
 
+.m-juryDutySessionContent__reportedByContainer {
+  display: flex;
+  align-items: center;
+  margin: $spacing4 0;
+
+  @media screen and (max-width: $min-tablet) {
+    flex-direction: column;
+    align-items: baseline;
+  }
+
+  .m-juryDutySessionContent__reportedByText {
+    margin-right: $spacing2;
+
+    @include body1Regular;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}
+
 // fix images showing as too wide.
 .m-comment-attachment img {
   max-width: 100%;
