@@ -2,7 +2,7 @@
   <div class="m-feedFilter__dropdownWrapper">
     <div *ngIf="options.indexOf('type') > -1" class="m-feedFilter__menu">
       <m-dropdownMenu [menu]="typeMenu">
-        <div class="m-feedFilterMenu__trigger">
+        <div class="m-feedFilterMenu__trigger" data-ref="feedcontrol-type">
           <span>Type: </span
           ><span class="m-feedFilterMenuTrigger__selectionLabel">{{
             typeLabel
@@ -13,7 +13,7 @@
     </div>
     <div *ngIf="options.indexOf('dateRange') > -1" class="m-feedFilter__menu">
       <m-dropdownMenu [menu]="dateRangeMenu">
-        <div class="m-feedFilterMenu__trigger">
+        <div class="m-feedFilterMenu__trigger" data-ref="feedcontrol-date">
           <span>Date: </span>
           <ng-container *ngIf="service.dateRangeEnabled$ | async"
             ><span *ngIf="service.dateRange$ | async as dateRange">
@@ -42,6 +42,7 @@
       (click)="typeChangeEmitter.emit(typeEntry.value)"
       selectable="true"
       [selected]="type === typeEntry.value"
+      [attr.data-ref]="'feedcontrol-type-' + typeEntry.value"
     >
       <span>{{ typeEntry.label }}</span>
     </m-dropdownMenu__item>
@@ -55,6 +56,7 @@
       (click)="onDateRangeChange(dateRangeEntry.value)"
       selectable="true"
       [selected]="dateRangeType === dateRangeEntry.value"
+      [attr.data-ref]="'feedcontrol-date-' + dateRangeEntry.value"
       ><span>{{ dateRangeEntry.menuLabel }}</span>
     </m-dropdownMenu__item>
   </ul>
