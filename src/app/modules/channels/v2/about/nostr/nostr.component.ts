@@ -7,7 +7,7 @@ import { ChannelsV2Service } from './../../channels-v2.service';
 @Component({
   selector: 'm-channel__nostr',
   templateUrl: './nostr.component.html',
-  styleUrls: ['./nostr.component.scss'],
+  styleUrls: ['./nostr.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChannelNostrComponent {
