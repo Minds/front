@@ -33,6 +33,16 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  onClickButton: action('onAction'),\n}"
+            },
+            {
                 "name": "ActionSolid",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -98,6 +108,26 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/common/components/publisher-card/publisher-card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -115,6 +145,36 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/forms/stories/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/forms/stories/radio.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "BasicDisabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -123,6 +183,18 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Basic.bind({})"
+            },
+            {
+                "name": "Borderless",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})",
+                "rawdescription": "Borderless",
+                "description": "<p>Borderless</p>\n"
             },
             {
                 "name": "Disabled",
@@ -145,6 +217,26 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Form",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/toggle/toggle.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "FormControlTemplate.bind({})"
+            },
+            {
+                "name": "FormControlTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/toggle/toggle.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ToggleComponent>",
+                "defaultValue": "(args: ToggleComponent) => {\n  const formGroup = new FormGroup({\n    opts: new FormControl('This'),\n  });\n\n  return {\n    component: ToggleComponent,\n    template: `\n      <form [formGroup]=\"form\">\n        <span>This</span>\n        <span>\n          <m-toggle\n            [mModel]=\"opts\"\n            (mModelChange)=\"setOpt($event)\"\n            leftValue=\"this\"\n            rightValue=\"that\"\n          ></m-toggle>\n        </span>\n        <span>That</span>\n      </form>\n\n      <div style=\"margin-top: 20px\">\n        <p style=\"white-space: pre\">Value: {{form.value}}</p>\n      </div>\n    `,\n    props: {\n      ...args,\n      form: formGroup,\n    },\n  };\n}"
+            },
+            {
                 "name": "HasIcon",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -163,6 +255,16 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "IconItems",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu/dropdown-menu.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<DropdownMenuComponent>",
+                "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsMenu\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n    <ng-template #actionsMenu>\n    <ul>\n      <m-dropdownMenu__item icon=\"visibility\"><span i18n >Icon item 1</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item icon=\"favorite\"><span>Icon item 2</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item icon=\"pets\"><span>Icon item 3</span></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
             },
             {
                 "name": "IconOnly",
@@ -195,6 +297,28 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Saving",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})",
+                "rawdescription": "Saving",
+                "description": "<p>Saving</p>\n"
+            },
+            {
+                "name": "SelectableItems",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu/dropdown-menu.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<DropdownMenuComponent>",
+                "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsMenu\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n    <ng-template #actionsMenu>\n    <ul>\n      <m-dropdownMenu__item selectable=\"true\" [selected]=\"true\"><span i18n >Selectable item 1</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item selectable=\"true\" [selected]=\"false\"><span>Selectable item 2</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item selectable=\"true\" [selected]=\"false\"><span>Selectable item 3</span></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
             },
             {
                 "name": "SelectableSelected",
@@ -234,7 +358,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<ButtonComponent>",
-                "defaultValue": "(args: ButtonComponent) => ({\n  props: args,\n  template: `\n    <m-button\n      [type]=\"type\"\n      [disabled]=\"disabled\"\n      [overlay]=\"overlay\"\n      [iconOnly]=\"iconOnly\"\n      [solid]=\"solid\"\n      [saving]=\"saving\"\n      [pulsating]=\"pulsating\"\n      [flat]=\"flat\"\n      [color]=\"color\"\n      [size]=\"size\"\n      (onAction)=\"onAction($event)\"\n    >\n      {{ label }}\n    </m-button>\n  `,\n})"
+                "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    onAction: actionsData.onClickButton,\n  },\n  template: `\n    <m-button\n      [type]=\"type\"\n      [disabled]=\"disabled\"\n      [overlay]=\"overlay\"\n      [iconOnly]=\"iconOnly\"\n      [solid]=\"solid\"\n      [saving]=\"saving\"\n      [pulsating]=\"pulsating\"\n      [borderless]=\"borderless\"\n      [color]=\"color\"\n      [size]=\"size\"\n      (onAction)=\"onAction($event)\"\n    >\n      {{ label }}\n    </m-button>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -244,7 +368,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<DropdownMenuComponent>",
-                "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n      <m-dropdownMenu__item label=\"Basic item 1\"></m-dropdownMenu__item>\n      <m-dropdownMenu__item label=\"Basic item 2\"></m-dropdownMenu__item>\n      <m-dropdownMenu__item label=\"Scary item\" red=\"true\"></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
+                "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsMenu\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsMenu>\n    <ul>\n      <m-dropdownMenu__item><span>Basic item 1</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item><span>Basic item 2</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item red=\"true\"><span>Red item</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item disabled=\"true\"><span>Disabled item</span></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -255,6 +379,26 @@
                 "deprecationMessage": "",
                 "type": "Story<DropdownMenuItemComponent>",
                 "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu__item\n    [selectable]=\"selectable\"\n    [selected]=\"selected\"\n    [disabled]=\"disabled\"\n    [red]=\"red\"\n    [icon]=\"icon\"\n    [hasSubmenu]=\"hasSubmenu\"\n  >\n    <span i18n=\"@@MY_TRANSLATION_ID\">Item</span>\n  </m-dropdownMenu__item>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<LoadingEllipsisComponent>",
+                "defaultValue": "(\n  args: LoadingEllipsisComponent\n) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<LoadingSpinnerComponent>",
+                "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -277,14 +421,44 @@
                 "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <ul class=\"m-tabs__container\">\n    <li class=\"m-tabs__tab\" *ngFor=\"let tab of tabs\">\n      <a [class.selected]=\"tab.selected\">{{ tab.label }}</a>\n    </li>\n  </ul>\n  `,\n})"
             },
             {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<UserAggregatorComponent>",
+                "defaultValue": "(\n  args: UserAggregatorComponent\n) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/forms/stories/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <div class=\"m-formWrapper\">\n  <div class=\"m-form__row--input\">\n      <label for=\"story\" class=\"m-form__customInputWrapper__checkbox\">\n        <ng-container\n          >Check me</ng-container\n        >\n        <input\n          type=\"checkbox\"\n          id=\"story\"\n          name=\"story\"\n          formControlName=\"story\"\n          class=\"form-control\"\n        />\n        <span class=\"m-form__customInput__checkbox\"></span>\n      </label>\n    </div>\n    </div>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/forms/stories/radio.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n    <div class=\"m-formWrapper\">\n      <div class=\"m-form__field--radio\">\n        <div class=\"m-form__row--label\">\n          <label>\n            Choose one\n           </label>\n        </div>\n        <div class=\"m-form__row--input\">\n          <ng-container *ngFor=\"let opt of opts\">\n            <label\n              [for]=\"opt\"\n              class=\"m-form__customInputWrapper__radio\"\n              >{{ opt }}\n              <input\n                type=\"radio\"\n                [id]=\"opt\"\n                name=\"opt\"\n                [value]=\"opt\"\n                formControlName=\"opts\"\n                class=\"form-control\"\n              />\n              <span class=\"m-form__customInput__radio\"></span>\n            </label>\n          </ng-container>\n        </div>\n      </div>\n    </div>\n  `,\n})"
+            },
+            {
                 "name": "Warning",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/common/components/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<ButtonComponent>",
-                "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    label: 'Warning',\n  },\n  template: `\n    <m-button\n      color=\"red\"\n      [size]=\"size\"\n      [solid]=\"solid\"\n      [overlay]=\"overlay\"\n      [saving]=\"saving\"\n    >\n      {{ label }}\n    </m-button>\n  `,\n})",
+                "type": "",
+                "defaultValue": "Template.bind({})",
                 "rawdescription": "Warning",
                 "description": "<p>Warning</p>\n"
             },
@@ -325,6 +499,16 @@
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  onClickButton: action('onAction'),\n}"
                 },
                 {
                     "name": "ActionSolid",
@@ -369,6 +553,18 @@
                     "defaultValue": "Basic.bind({})"
                 },
                 {
+                    "name": "Borderless",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})",
+                    "rawdescription": "Borderless",
+                    "description": "<p>Borderless</p>\n"
+                },
+                {
                     "name": "IconOnly",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -391,6 +587,18 @@
                     "defaultValue": "IconOnly.bind({})"
                 },
                 {
+                    "name": "Saving",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})",
+                    "rawdescription": "Saving",
+                    "description": "<p>Saving</p>\n"
+                },
+                {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -398,7 +606,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<ButtonComponent>",
-                    "defaultValue": "(args: ButtonComponent) => ({\n  props: args,\n  template: `\n    <m-button\n      [type]=\"type\"\n      [disabled]=\"disabled\"\n      [overlay]=\"overlay\"\n      [iconOnly]=\"iconOnly\"\n      [solid]=\"solid\"\n      [saving]=\"saving\"\n      [pulsating]=\"pulsating\"\n      [flat]=\"flat\"\n      [color]=\"color\"\n      [size]=\"size\"\n      (onAction)=\"onAction($event)\"\n    >\n      {{ label }}\n    </m-button>\n  `,\n})"
+                    "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    onAction: actionsData.onClickButton,\n  },\n  template: `\n    <m-button\n      [type]=\"type\"\n      [disabled]=\"disabled\"\n      [overlay]=\"overlay\"\n      [iconOnly]=\"iconOnly\"\n      [solid]=\"solid\"\n      [saving]=\"saving\"\n      [pulsating]=\"pulsating\"\n      [borderless]=\"borderless\"\n      [color]=\"color\"\n      [size]=\"size\"\n      (onAction)=\"onAction($event)\"\n    >\n      {{ label }}\n    </m-button>\n  `,\n})"
                 },
                 {
                     "name": "Warning",
@@ -407,8 +615,8 @@
                     "file": "src/app/common/components/button/button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Story<ButtonComponent>",
-                    "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    label: 'Warning',\n  },\n  template: `\n    <m-button\n      color=\"red\"\n      [size]=\"size\"\n      [solid]=\"solid\"\n      [overlay]=\"overlay\"\n      [saving]=\"saving\"\n    >\n      {{ label }}\n    </m-button>\n  `,\n})",
+                    "type": "",
+                    "defaultValue": "Template.bind({})",
                     "rawdescription": "Warning",
                     "description": "<p>Warning</p>\n"
                 },
@@ -457,6 +665,26 @@
                     "defaultValue": "Template.bind({})"
                 },
                 {
+                    "name": "IconItems",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu/dropdown-menu.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<DropdownMenuComponent>",
+                    "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsMenu\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n    <ng-template #actionsMenu>\n    <ul>\n      <m-dropdownMenu__item icon=\"visibility\"><span i18n >Icon item 1</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item icon=\"favorite\"><span>Icon item 2</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item icon=\"pets\"><span>Icon item 3</span></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
+                },
+                {
+                    "name": "SelectableItems",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu/dropdown-menu.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<DropdownMenuComponent>",
+                    "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsMenu\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n    <ng-template #actionsMenu>\n    <ul>\n      <m-dropdownMenu__item selectable=\"true\" [selected]=\"true\"><span i18n >Selectable item 1</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item selectable=\"true\" [selected]=\"false\"><span>Selectable item 2</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item selectable=\"true\" [selected]=\"false\"><span>Selectable item 3</span></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
+                },
+                {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -464,7 +692,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<DropdownMenuComponent>",
-                    "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n      <m-dropdownMenu__item label=\"Basic item 1\"></m-dropdownMenu__item>\n      <m-dropdownMenu__item label=\"Basic item 2\"></m-dropdownMenu__item>\n      <m-dropdownMenu__item label=\"Scary item\" red=\"true\"></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
+                    "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsMenu\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsMenu>\n    <ul>\n      <m-dropdownMenu__item><span>Basic item 1</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item><span>Basic item 2</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item red=\"true\"><span>Red item</span></m-dropdownMenu__item>\n      <m-dropdownMenu__item disabled=\"true\"><span>Disabled item</span></m-dropdownMenu__item>\n    </ul>\n  </ng-template>\n  `,\n})"
                 }
             ],
             "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts": [
@@ -549,6 +777,50 @@
                     "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu__item\n    [selectable]=\"selectable\"\n    [selected]=\"selected\"\n    [disabled]=\"disabled\"\n    [red]=\"red\"\n    [icon]=\"icon\"\n    [hasSubmenu]=\"hasSubmenu\"\n  >\n    <span i18n=\"@@MY_TRANSLATION_ID\">Item</span>\n  </m-dropdownMenu__item>\n  `,\n})"
                 }
             ],
+            "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<LoadingEllipsisComponent>",
+                    "defaultValue": "(\n  args: LoadingEllipsisComponent\n) => ({\n  props: args,\n})"
+                }
+            ],
+            "src/app/common/components/loading-spinner/loading-spinner.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<LoadingSpinnerComponent>",
+                    "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
+                }
+            ],
             "src/app/common/components/publisher-card/publisher-card.stories.ts": [
                 {
                     "name": "Basic",
@@ -602,6 +874,94 @@
                     "type": "Story<any>",
                     "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <ul class=\"m-tabs__container\">\n    <li class=\"m-tabs__tab\" *ngFor=\"let tab of tabs\">\n      <a [class.selected]=\"tab.selected\">{{ tab.label }}</a>\n    </li>\n  </ul>\n  `,\n})"
                 }
+            ],
+            "src/app/common/components/user-aggregator/user-aggregator.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<UserAggregatorComponent>",
+                    "defaultValue": "(\n  args: UserAggregatorComponent\n) => ({\n  props: args,\n})"
+                }
+            ],
+            "src/app/modules/forms/stories/checkbox.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/forms/stories/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/forms/stories/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <div class=\"m-formWrapper\">\n  <div class=\"m-form__row--input\">\n      <label for=\"story\" class=\"m-form__customInputWrapper__checkbox\">\n        <ng-container\n          >Check me</ng-container\n        >\n        <input\n          type=\"checkbox\"\n          id=\"story\"\n          name=\"story\"\n          formControlName=\"story\"\n          class=\"form-control\"\n        />\n        <span class=\"m-form__customInput__checkbox\"></span>\n      </label>\n    </div>\n    </div>\n  `,\n})"
+                }
+            ],
+            "src/app/modules/forms/stories/radio.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/forms/stories/radio.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/forms/stories/radio.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n    <div class=\"m-formWrapper\">\n      <div class=\"m-form__field--radio\">\n        <div class=\"m-form__row--label\">\n          <label>\n            Choose one\n           </label>\n        </div>\n        <div class=\"m-form__row--input\">\n          <ng-container *ngFor=\"let opt of opts\">\n            <label\n              [for]=\"opt\"\n              class=\"m-form__customInputWrapper__radio\"\n              >{{ opt }}\n              <input\n                type=\"radio\"\n                [id]=\"opt\"\n                name=\"opt\"\n                [value]=\"opt\"\n                formControlName=\"opts\"\n                class=\"form-control\"\n              />\n              <span class=\"m-form__customInput__radio\"></span>\n            </label>\n          </ng-container>\n        </div>\n      </div>\n    </div>\n  `,\n})"
+                }
+            ],
+            "src/app/common/components/toggle/toggle.stories.ts": [
+                {
+                    "name": "Form",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/toggle/toggle.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "FormControlTemplate.bind({})"
+                },
+                {
+                    "name": "FormControlTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/toggle/toggle.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ToggleComponent>",
+                    "defaultValue": "(args: ToggleComponent) => {\n  const formGroup = new FormGroup({\n    opts: new FormControl('This'),\n  });\n\n  return {\n    component: ToggleComponent,\n    template: `\n      <form [formGroup]=\"form\">\n        <span>This</span>\n        <span>\n          <m-toggle\n            [mModel]=\"opts\"\n            (mModelChange)=\"setOpt($event)\"\n            leftValue=\"this\"\n            rightValue=\"that\"\n          ></m-toggle>\n        </span>\n        <span>That</span>\n      </form>\n\n      <div style=\"margin-top: 20px\">\n        <p style=\"white-space: pre\">Value: {{form.value}}</p>\n      </div>\n    `,\n    props: {\n      ...args,\n      form: formGroup,\n    },\n  };\n}"
+                }
             ]
         },
         "groupedFunctions": {},
@@ -610,7 +970,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 14,
+        "count": 13,
         "status": "low",
         "files": [
             {
@@ -649,6 +1009,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "ActionDisabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "actionsData",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -698,6 +1068,16 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "Borderless",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/app/common/components/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "IconOnly",
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
@@ -712,6 +1092,16 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Saving",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
             },
             {
                 "filePath": "src/app/common/components/button/button.stories.ts",
@@ -838,6 +1228,66 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "IconItems",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu/dropdown-menu.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SelectableItems",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu/dropdown-menu.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -885,6 +1335,86 @@
             },
             {
                 "filePath": "src/app/common/components/tabs/tabs.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/toggle/toggle.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Form",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/toggle/toggle.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "FormControlTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/forms/stories/checkbox.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/forms/stories/checkbox.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/forms/stories/radio.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/forms/stories/radio.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
