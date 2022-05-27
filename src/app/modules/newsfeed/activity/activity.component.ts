@@ -164,6 +164,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
           .setEntity(this.service.entity$.value)
           .setElementRef(this.el)
           .onView((entity: ActivityEntity) => {
+            if (!entity) return;
+
             this.newsfeedService.recordView(
               entity,
               true,
