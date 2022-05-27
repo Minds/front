@@ -76,11 +76,6 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
   }
 
   open($event: MouseEvent) {
-    if ($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-    }
-
     this.isOpen = true;
     this.detectChanges();
 
