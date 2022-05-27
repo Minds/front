@@ -184,7 +184,7 @@ export class AttachmentApiService {
               .put(lease.presigned_url, file, {
                 headers: new HttpHeaders({
                   'Content-Type': file.type,
-                  'Ngsw-Bypass': null,
+                  'Ngsw-Bypass': '1',
                 }),
                 reportProgress: true,
                 observe: 'events',
