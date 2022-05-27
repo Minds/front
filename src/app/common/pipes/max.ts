@@ -1,4 +1,5 @@
 import { Pipe } from '@angular/core';
+import maxNum from '../../helpers/max';
 
 /**
  * Used to limit a number to a max value
@@ -9,6 +10,6 @@ import { Pipe } from '@angular/core';
 })
 export class MaxPipe {
   transform(num: number, limit: number) {
-    return num > limit ? `+${limit}` : String(num);
+    return maxNum(num, limit);
   }
 }
