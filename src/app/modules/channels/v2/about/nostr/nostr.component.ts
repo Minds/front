@@ -13,14 +13,12 @@ import { ChannelsV2Service } from './../../channels-v2.service';
 export class ChannelNostrComponent {
   constructor(private api: ApiService, public service: ChannelsV2Service) {}
 
-  get publicKey$(): Observable<string | null> {
-    return this.service.channel$
-      .pipe(takeWhile(channel => Boolean(channel)))
-      .pipe(
-        switchMap(channel =>
-          this.api.get(`.well-known/nostr.json?name=${channel?.username}`)
-        )
+  public publicKey$: Observable<string | null> = this.service.channel$
+    .pipe(takeWhile(channel => Boolean(channel)))
+    .pipe(
+      switchMap(channel =>
+        this.api.get(`.well-known/nostr.json?name=${channel?.username}`)
       )
-      .pipe(map(response => Object.values(response?.names || {})[0] as string));
-  }
+    )
+    .pipe(map(response => Object.values(response?.names || {})[0] as string));
 }
