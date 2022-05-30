@@ -1,5 +1,4 @@
 import {
-  HostListener,
   Inject,
   Injectable,
   OnDestroy,
@@ -10,11 +9,12 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Client } from './api/client';
 import { SiteService } from '../common/services/site.service';
 import { isPlatformServer } from '@angular/common';
-import { delay } from 'rxjs/operators';
 import { CookieService } from '../common/services/cookie.service';
 import { Session } from './session';
 import * as snowplow from '@snowplow/browser-tracker';
 import { SelfDescribingJson } from '@snowplow/tracker-core';
+import { MindsUser } from './../interfaces/entities';
+import { ActivityEntity } from './../modules/newsfeed/activity/activity.service';
 
 export type SnowplowContext = SelfDescribingJson<Record<string, unknown>>;
 
@@ -162,6 +162,25 @@ export class AnalyticsService implements OnDestroy {
         entity_container_guid: entity.container_guid ?? null,
       },
     };
+  }
+
+  /**
+   * Tracks an entity view event
+   * @returns { void }
+   */
+  public trackView(entity: ActivityEntity | MindsUser, clientMeta = {}): void {
+    snowplow.trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:com.minds/view/jsonschema/1-0-0',
+        data: {
+          entity_guid: entity.guid,
+          // @ts-ignore
+          entity_owner_guid: entity.owner_guid || entity.ownerObj?.guid,
+          ...clientMeta,
+        },
+      },
+      context: this.getContexts(),
+    });
   }
 
   async onRouterInit() {}
