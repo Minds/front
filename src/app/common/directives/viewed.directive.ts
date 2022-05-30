@@ -18,21 +18,17 @@ import { ElementVisibilityService } from './../services/element-visibility.servi
 })
 export class ViewedDirective implements AfterViewInit {
   @Output()
-  public readonly mViewed;
+  public readonly mViewed = new EventEmitter<any>();
 
   constructor(
     private elementVisibilityService: ElementVisibilityService,
     private el: ElementRef
-  ) {
-    this.mViewed = new EventEmitter<any>();
-  }
+  ) {}
 
   ngAfterViewInit(): void {
     this.elementVisibilityService
       .setElementRef(this.el)
-      .onView((entity: ActivityEntity) => {
-        this.mViewed.emit(entity);
-      });
-    this.elementVisibilityService.checkVisibility();
+      .onView((entity: ActivityEntity) => this.mViewed.emit(entity))
+      .checkVisibility();
   }
 }

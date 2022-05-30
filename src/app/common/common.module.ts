@@ -194,6 +194,7 @@ import { DropdownMenuItemComponent } from './components/dropdown-menu-item/dropd
 import { PreventDoubleClickDirective } from './directives/prevent-double-click.directive';
 import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-button/see-latest-posts-button.component';
 import { ReportService } from './services/report.service';
+import { UserAggregatorComponent } from './components/user-aggregator/user-aggregator.component';
 import { ViewedDirective } from './directives/viewed.directive';
 
 const routes: Routes = [
@@ -371,6 +372,7 @@ const routes: Routes = [
     ResizedDirective,
     DropdownMenuItemComponent,
     PreventDoubleClickDirective,
+    UserAggregatorComponent,
     ViewedDirective,
   ],
   exports: [
@@ -523,6 +525,7 @@ const routes: Routes = [
     ResizedDirective,
     DropdownMenuItemComponent,
     PreventDoubleClickDirective,
+    UserAggregatorComponent,
     ViewedDirective,
   ],
   providers: [

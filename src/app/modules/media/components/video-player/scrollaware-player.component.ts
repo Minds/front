@@ -91,6 +91,7 @@ export class ScrollAwareVideoPlayerComponent
 
   onExitViewport(): void {
     this.isInViewport = false;
+    this.player.shouldTrackUnmuteEvent = false;
     this.player.pause();
     this.detectChanges();
   }

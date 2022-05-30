@@ -16,7 +16,14 @@
 <!-- NOT embedded mode -->
 <ng-container *ngIf="!embedded">
   <div class="m-mfaBase__header" [ngStyle]="getBannerSrc()">
-    Two-factor Required
+    <ng-container
+      *ngIf="isConfirmingEmail(); else standardAuth"
+      i18n="@@MFA_AUTH_ROOT__CONFIRM_YOUR_EMAIL"
+      >Confirm Your Email</ng-container
+    >
+    <ng-template #standardAuth i18n="@@MFA_AUTH_ROOT__TWO_FACTOR_AUTH_REQUIRED"
+      >Two-factor Required</ng-template
+    >
   </div>
   <div class="m-mfaBase__panelContainer" [ngSwitch]="activePanel$ | async">
     <m-multiFactorAuth__totp

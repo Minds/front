@@ -57,6 +57,7 @@ export class EmailConfirmationService {
     try {
       const response = (await this.client.post('api/v3/email/confirm')) as any;
       const success = response.status === 'success';
+      this.updateLocalConfirmationState();
       this.success$.next(success);
       return success;
     } catch (e) {
@@ -74,5 +75,16 @@ export class EmailConfirmationService {
     return (
       !this.fromEmailConfirmation && user && user.email_confirmed === false
     );
+  }
+
+  /**
+   * Update local session services email confirmation state.
+   * @param { boolean } state - state to set to (defaults to true).
+   * @returns { void }
+   */
+  private updateLocalConfirmationState(state: boolean = true): void {
+    let updatedUser = this.session.getLoggedInUser();
+    updatedUser.email_confirmed = state;
+    this.session.inject(updatedUser);
   }
 }

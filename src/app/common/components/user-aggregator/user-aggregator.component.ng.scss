@@ -1,0 +1,58 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  @media screen and (max-width: $min-tablet) {
+    flex-direction: column;
+    align-items: baseline;
+  }
+
+  .m-userAggregator__avatarContainer {
+    display: flex;
+    flex-flow: row nowrap;
+
+    > * + * {
+      margin-left: -$spacing2;
+    }
+
+    .m-userAggregator__hoverCard {
+      .m-userAggregator__avatar ::ng-deep .minds-avatar {
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        margin: 0;
+        background-position: center;
+        background-size: cover;
+      }
+    }
+  }
+
+  .m-userAggregator__userSummary {
+    align-self: center;
+    margin-left: $spacing2;
+
+    @media screen and (max-width: $min-tablet) {
+      margin-left: 0;
+      margin-top: $spacing2;
+    }
+
+    @include body2Regular;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    .m-userAggregator__usernameHref {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+
+        &:hover {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+}
