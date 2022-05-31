@@ -211,12 +211,6 @@ export class SelectedCategoriesMock {
 }
 
 @Component({
-  selector: 'm--crypto-token-symbol',
-  template: '',
-})
-class CryptoTokenSymbolMock {}
-
-@Component({
   selector: 'm-checkout--blockchain',
   template: '',
 })

@@ -1,0 +1,19 @@
+<label class="m-dateSelector__label" *ngIf="label">{{ label }} </label>
+<input
+  class="m-dateSelector__input"
+  [ngClass]="{ 'm-dateSelector__input--hidden': hideInput }"
+  [owlDateTimeTrigger]="dt"
+  [owlDateTime]="dt"
+  [min]="min"
+  [max]="max"
+  [ngModel]="date"
+  (ngModelChange)="onDateChange($event)"
+/>
+<owl-date-time [pickerType]="calendarType" #dt></owl-date-time>
+<m-tooltip
+  *ngIf="tooltipIcon"
+  icon="{{ tooltipIcon }}"
+  [owlDateTimeTrigger]="dt"
+>
+  {{ tooltipText }}
+</m-tooltip>

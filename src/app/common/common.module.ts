@@ -50,20 +50,16 @@ import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
 import { MindsButton } from './components/button-v1/button-v1.component';
 
-import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
-import { AdminActionsButtonComponent } from './components/button-v1/admin-actions/admin-actions.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from '../services/attachment';
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 import { IfFeatureDirective } from './directives/if-feature.directive';
 import { IfBrowserDirective } from './directives/if-browser.directive';
-import { MindsEmoji } from './components/emoji/emoji';
 import { CategoriesSelectorComponent } from './components/categories/selector/selector.component';
 import { CategoriesSelectedComponent } from './components/categories/selected/selected.component';
 import { TreeComponent } from './components/tree/tree.component';
 import { AnnouncementComponent } from './components/announcements/announcement.component';
-import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.component';
 import { PhoneInputComponent } from './components/phone-input/phone-input.component';
 import { PhoneInputCountryComponent } from './components/phone-input/country.component';
 import { Session } from '../services/session';
@@ -72,7 +68,6 @@ import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.compon
 import { ThumbsUpButton } from './components/thumbs/thumbs-up.component';
 import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
 import { DismissableNoticeComponent } from './components/notice/notice.component';
-import { AnalyticsImpressions } from './components/analytics/impressions';
 import { LineGraph } from './components/graphs/line-graph';
 import { PieGraph } from './components/graphs/pie-graph';
 import { GraphSVG } from './components/graphs/svg';
@@ -90,7 +85,6 @@ import { FeaturedContentService } from './components/featured-content/featured-c
 import { FeedsService } from './services/feeds.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
-import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { RouterHistoryService } from './services/router-history.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
@@ -107,14 +101,12 @@ import {
 } from '@danielmoncada/angular-datetime-picker';
 import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
 import { ButtonComponent } from './components/button/button.component';
-import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
 import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
-import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { CookieService } from './services/cookie.service';
 import { MediaProxyService } from './services/media-proxy.service';
 import { RelatedContentService } from './services/related-content.service';
@@ -169,7 +161,7 @@ import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 import { DateRangeModalComponent } from './components/date-range-modal/date-range-modal.component';
-import { DateRangeModalService } from './components/date-range-modal/date-range-modal.services';
+import { DateRangeModalService } from './components/date-range-modal/date-range-modal.service';
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -217,19 +209,14 @@ const routes: Routes = [
   ],
   declarations: [
     MINDS_PIPES,
-
+    MDL_DIRECTIVES,
     TopbarComponent,
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
     TopbarWalletBalance,
-
-    // V2 Layout
     V3TopbarComponent,
     UserMenuV3Component,
-
-    //
-
     TooltipComponent,
     QualityScoreComponent,
     SizeableLoadingSpinnerComponent,
@@ -249,46 +236,32 @@ const routes: Routes = [
     TagcloudComponent,
     DropdownComponent,
     QRCodeComponent,
-
     AutoGrow,
     InlineAutoGrow,
     Emoji,
-    MindsEmoji,
     ScrollLock,
     TagsLinks,
     Tooltip,
-    MDL_DIRECTIVES,
     DateSelectorComponent,
     MindsAvatar,
     Textarea,
     InlineEditorComponent,
-
     DynamicHostDirective,
     MindsCard,
     MindsButton,
-
-    ChartComponent,
-
-    AdminActionsButtonComponent,
-
     MaterialBoundSwitchComponent,
-
     IfFeatureDirective,
     IfBrowserDirective,
-
     CategoriesSelectorComponent,
     CategoriesSelectedComponent,
     TreeComponent,
-
     AnnouncementComponent,
-    MindsTokenSymbolComponent,
     PhoneInputComponent,
     PhoneInputCountryComponent,
     SafeToggleComponent,
     ThumbsUpButton,
     ThumbsDownButton,
     DismissableNoticeComponent,
-    AnalyticsImpressions,
     LineGraph,
     PieGraph,
     GraphSVG,
@@ -296,11 +269,8 @@ const routes: Routes = [
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
-    ChannelModeSelectorComponent,
     NSFWSelectorComponent,
-
     SwitchComponent,
-
     FeaturedContentComponent,
     AttachmentPasteDirective,
     PosterDateSelectorComponent,
@@ -312,12 +282,10 @@ const routes: Routes = [
     ShadowboxLayoutComponent,
     ShadowboxHeaderComponent,
     DropdownSelectorComponent,
-    FormDescriptorComponent,
     FormToastComponent,
     ButtonComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
-    EmailConfirmationComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -373,18 +341,13 @@ const routes: Routes = [
   ],
   exports: [
     MINDS_PIPES,
-
+    MDL_DIRECTIVES,
     TopbarComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
     TopbarWalletBalance,
-
-    // V3 Layout
     V3TopbarComponent,
     UserMenuV3Component,
-
-    //
-
     TooltipComponent,
     QualityScoreComponent,
     SizeableLoadingSpinnerComponent,
@@ -404,45 +367,31 @@ const routes: Routes = [
     TagcloudComponent,
     DropdownComponent,
     QRCodeComponent,
-
     AutoGrow,
     InlineAutoGrow,
-    MindsEmoji,
     Emoji,
     ScrollLock,
     TagsLinks,
     Tooltip,
-    MDL_DIRECTIVES,
     DateSelectorComponent,
     MindsAvatar,
     Textarea,
     InlineEditorComponent,
-
     DynamicHostDirective,
     MindsCard,
     MindsButton,
-
-    ChartComponent,
-
-    AdminActionsButtonComponent,
-
     MaterialBoundSwitchComponent,
-
     IfFeatureDirective,
     IfBrowserDirective,
-
     CategoriesSelectorComponent,
     CategoriesSelectedComponent,
     TreeComponent,
-
     AnnouncementComponent,
-    MindsTokenSymbolComponent,
     PhoneInputComponent,
     SafeToggleComponent,
     ThumbsUpButton,
     ThumbsDownButton,
     DismissableNoticeComponent,
-    AnalyticsImpressions,
     GraphSVG,
     GraphPoints,
     LineGraph,
@@ -455,7 +404,6 @@ const routes: Routes = [
     FeaturedContentComponent,
     AttachmentPasteDirective,
     PosterDateSelectorComponent,
-    ChannelModeSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
     SidebarMenuComponent,
@@ -463,13 +411,11 @@ const routes: Routes = [
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
     DropdownSelectorComponent,
-    FormDescriptorComponent,
     FormToastComponent,
     ButtonComponent,
     ShadowboxHeaderComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
-    EmailConfirmationComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,

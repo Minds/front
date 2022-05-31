@@ -4,4 +4,4 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'minds-payments-stripe-checkout',
   template: '',
 })
-export class FooterComponentMock {}
+export class CheckoutComponentMock {}

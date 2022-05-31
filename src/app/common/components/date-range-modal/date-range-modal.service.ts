@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { DateRangeModalComponent } from '../date-range-modal/date-range-modal.component';
+import { DateRangeModalComponent } from './date-range-modal.component';
 import { FeedFilterDateRange } from '../feed-filter/feed-filter.component';
 import { ModalService } from '../../../services/ux/modal.service';
 

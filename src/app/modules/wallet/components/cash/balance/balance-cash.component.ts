@@ -3,9 +3,6 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Subscription } from 'rxjs';

@@ -363,24 +363,6 @@
       .m-boost--creator-autocomplete--result-content .material-icons {
         vertical-align: middle;
       }
-
-      m--crypto-token-symbol {
-        position: relative;
-        top: -0.15em;
-        margin-left: 0.15em;
-
-        .m--crypto-token-symbol--stroke {
-          @include m-theme() {
-            stroke: themed($m-grey-700);
-          }
-        }
-
-        .m--crypto-token-symbol--fill {
-          @include m-theme() {
-            fill: themed($m-grey-700);
-          }
-        }
-      }
     }
   }
 

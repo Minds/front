@@ -1,6 +1,9 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { CookieService } from '../../../common/services/cookie.service';
 
+/**
+ * Announcement banner
+ */
 @Component({
   selector: 'm-announcement',
   template: `

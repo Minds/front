@@ -18,46 +18,13 @@ export type MonthName =
   | 'December'
   | '';
 
+/**
+ * Allows user to input a specific date (e.g. their birthday)
+ * via three dropdowns (year, month, day)
+ */
 @Component({
   selector: 'm-date__dropdowns',
-  template: `
-    <div class="m-dateDropdowns__selectWrapper">
-      <select
-        class="m-dateDropdowns__select"
-        data-minds="yearDropdown"
-        [ngModel]="selectedYear"
-        (ngModelChange)="selectYear($event)"
-        [disabled]="disabled"
-      >
-        <option selected value="">Year</option>
-        <option *ngFor="let year of years">{{ year }}</option>
-      </select>
-    </div>
-    <div class="m-dateDropdowns__selectWrapper">
-      <select
-        class="m-dateDropdowns__select"
-        data-minds="monthDropdown"
-        [ngModel]="selectedMonth"
-        (ngModelChange)="selectMonth($event)"
-        [disabled]="disabled"
-      >
-        <option selected value="">Month</option>
-        <option *ngFor="let month of monthNames">{{ month }}</option>
-      </select>
-    </div>
-    <div class="m-dateDropdowns__selectWrapper">
-      <select
-        class="m-dateDropdowns__select"
-        data-minds="dayDropdown"
-        [ngModel]="selectedDay"
-        (ngModelChange)="selectDay($event)"
-        [disabled]="disabled"
-      >
-        <option selected value="">Day</option>
-        <option *ngFor="let day of days">{{ day }}</option>
-      </select>
-    </div>
-  `,
+  templateUrl: './date-dropdowns.component.html',
 })
 export class DateDropdownsComponent implements OnInit {
   @Input() disabled: boolean = false;

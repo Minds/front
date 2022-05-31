@@ -285,8 +285,7 @@ m-channel--carousel {
       padding: $minds-padding * 2;
       text-decoration: none;
 
-      i,
-      m--crypto-token-symbol {
+      i {
         margin-right: $minds-margin;
       }
     }
@@ -434,59 +433,6 @@ minds-graph-line {
 .m-bubble-popup {
   position: fixed;
   user-select: none;
-}
-
-minds-emoji .m-bubble-popup {
-  max-width: 180px + ($minds-padding * 2);
-  margin: $minds-padding;
-  border-radius: 3px;
-  user-select: none;
-  @include m-theme() {
-    background-color: themed($m-bgColor--primary);
-  }
-
-  .m-emoji-selector-title {
-    width: 100%;
-    position: relative;
-    padding: ($minds-padding * 0.5) $minds-padding;
-    box-sizing: border-box;
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: bold;
-    @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--primary);
-    }
-
-    .m-emoji-selector-close {
-      position: absolute;
-      right: $minds-padding;
-      top: $minds-padding * 0.5;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  }
-
-  .m-emoji-selector-list {
-    width: 100%;
-    max-height: 336px;
-    overflow-y: auto;
-    padding: $minds-padding;
-    box-sizing: border-box;
-  }
-
-  .m-emoji {
-    display: inline-block;
-    padding: $minds-padding;
-    cursor: pointer;
-    font-size: 16px;
-    box-sizing: border-box;
-    width: 36px;
-    height: 36px;
-    text-align: center;
-    vertical-align: middle;
-    font-family: minds_emoji;
-    line-height: 24px;
-  }
 }
 
 minds-tooltip .m-bubble-popup {
@@ -713,7 +659,6 @@ m-text-input--autocomplete-menu {
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
       border: 1px solid rgba(themed($m-black), 0.15);
-      box-shadow: 0 6px 12px rgba(themed($m-black), 0.175);
     }
 
     li {
