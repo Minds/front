@@ -22,6 +22,7 @@ m-activity {
   &.m-activity--v2 {
     border: none !important;
     border-radius: $m-borderRadius;
+    display: contents;
   }
 
   @include m-theme() {
