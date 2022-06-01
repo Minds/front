@@ -17,9 +17,7 @@ import { SizeableLoadingSpinnerComponent } from './components/sizeable-loading-s
 import { FooterComponent } from './components/footer/footer.component';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { CountryInputComponent } from './components/forms/country-input/country-input.component';
-import { DateInputComponent } from './components/forms/date-input/date-input.component';
 import { CityFinderComponent } from './components/forms/city-finder/city-finder.component';
-import { StateInputComponent } from './components/forms/state-input/state-input.component';
 import { ReadMoreDirective } from './read-more/read-more.directive';
 import { ReadMoreButtonComponent } from './read-more/button.component';
 import { ChannelBadgesComponent } from './components/badges/badges.component';
@@ -53,7 +51,6 @@ import { MindsButton } from './components/button-v1/button-v1.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from '../services/attachment';
-import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 import { IfFeatureDirective } from './directives/if-feature.directive';
 import { IfBrowserDirective } from './directives/if-browser.directive';
 import { CategoriesSelectorComponent } from './components/categories/selector/selector.component';
@@ -67,9 +64,6 @@ import { MindsHttpClient } from './api/client.service';
 import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.component';
 import { ThumbsUpButton } from './components/thumbs/thumbs-up.component';
 import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
-import { DismissableNoticeComponent } from './components/notice/notice.component';
-import { LineGraph } from './components/graphs/line-graph';
-import { PieGraph } from './components/graphs/pie-graph';
 import { GraphSVG } from './components/graphs/svg';
 import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
@@ -83,15 +77,12 @@ import { SwitchComponent } from './components/switch/switch.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
 import { FeedsService } from './services/feeds.service';
-import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { RouterHistoryService } from './services/router-history.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
 import { ToggleComponent } from './components/toggle/toggle.component';
-import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
-import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
 import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
@@ -222,10 +213,7 @@ const routes: Routes = [
     SizeableLoadingSpinnerComponent,
     FooterComponent,
     InfiniteScroll,
-    HorizontalInfiniteScroll,
     CountryInputComponent,
-    DateInputComponent,
-    StateInputComponent,
     CityFinderComponent,
     Scheduler,
     Modal,
@@ -249,7 +237,6 @@ const routes: Routes = [
     DynamicHostDirective,
     MindsCard,
     MindsButton,
-    MaterialBoundSwitchComponent,
     IfFeatureDirective,
     IfBrowserDirective,
     CategoriesSelectorComponent,
@@ -261,9 +248,6 @@ const routes: Routes = [
     SafeToggleComponent,
     ThumbsUpButton,
     ThumbsDownButton,
-    DismissableNoticeComponent,
-    LineGraph,
-    PieGraph,
     GraphSVG,
     GraphPoints,
     DynamicFormComponent,
@@ -276,8 +260,6 @@ const routes: Routes = [
     PosterDateSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
-    SidebarMenuComponent,
-    PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
     ShadowboxHeaderComponent,
@@ -353,11 +335,8 @@ const routes: Routes = [
     SizeableLoadingSpinnerComponent,
     FooterComponent,
     InfiniteScroll,
-    HorizontalInfiniteScroll,
     CountryInputComponent,
-    DateInputComponent,
     CityFinderComponent,
-    StateInputComponent,
     Scheduler,
     Modal,
     ReadMoreDirective,
@@ -380,7 +359,6 @@ const routes: Routes = [
     DynamicHostDirective,
     MindsCard,
     MindsButton,
-    MaterialBoundSwitchComponent,
     IfFeatureDirective,
     IfBrowserDirective,
     CategoriesSelectorComponent,
@@ -391,11 +369,8 @@ const routes: Routes = [
     SafeToggleComponent,
     ThumbsUpButton,
     ThumbsDownButton,
-    DismissableNoticeComponent,
     GraphSVG,
     GraphPoints,
-    LineGraph,
-    PieGraph,
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
@@ -406,8 +381,6 @@ const routes: Routes = [
     PosterDateSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
-    SidebarMenuComponent,
-    PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
     DropdownSelectorComponent,

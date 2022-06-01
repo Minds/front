@@ -4,6 +4,8 @@ import { SendWyreReservationResponse } from './wallet-order-reservation.interfac
 import { Client } from '../../../services/api';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
+// ojm mark says ok to remove
+
 /**
  * Service to handle redirection to SendWyre pay.
  * @author Ben Hayward
