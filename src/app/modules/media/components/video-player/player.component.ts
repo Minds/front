@@ -91,7 +91,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    * True if player is muted when ready event fires.
    * Allows us to track initial unmute event.
    */
-  private shouldTrackUnmuteEvent: boolean = false;
+  public shouldTrackUnmuteEvent: boolean = false;
 
   /**
    * Plyr driver detrmined by source types (detects hls)

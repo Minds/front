@@ -61,10 +61,15 @@
         <div class="m-channelAboutField__label" i18n="@@CHANNEL_ABOUT__DID">
           DID
         </div>
-        <div class="m-channelAboutField__content">
+        <a
+          [href]="'/' + channel.username + '/did.json'"
+          class="m-channelAboutField__content"
+        >
           {{ channel.did }}
-        </div>
+        </a>
       </div>
+
+      <m-channel__nostr></m-channel__nostr>
     </div>
 
     <div class="m-channelAbout__narrowExtraInfo">

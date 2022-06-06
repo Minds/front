@@ -43,10 +43,12 @@
 
   &.m-activity--fixedHeight {
     justify-content: space-between;
-    height: 100%;
+    //height: 100%;
+    height: 750px;
 
     .m-activity__top {
-      height: calc(100% - 76px);
+      //height: calc(100% - 76px);
+      height: 674px;
       padding-top: $spacing2;
     }
 
