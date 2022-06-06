@@ -38,7 +38,7 @@ export class NewsfeedService {
     // }
 
     if (isPlatformBrowser(this.platformId)) {
-      this.analyticsService.trackView(entity, clientMeta);
+      this.analyticsService.trackEntityView(entity, clientMeta);
     }
 
     // if it's a boost we record the boost view AND the activity view
