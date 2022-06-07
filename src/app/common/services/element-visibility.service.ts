@@ -18,7 +18,7 @@ export class ElementVisibilityService implements OnDestroy {
 
   protected visible: boolean = false;
 
-  protected onViewFn: (entity) => void;
+  protected onViewFn: (entity?) => void;
 
   protected enabled: boolean = true;
 
@@ -50,7 +50,7 @@ export class ElementVisibilityService implements OnDestroy {
     this.visibilitySubscription = this.visibility$
       //.pipe(debounceTime(300))
       .subscribe(() => {
-        if (this.entity && this.visible) {
+        if (this.visible) {
           this.scroll.unListen(this.scrollSubscription);
 
           if (this.onViewFn) {

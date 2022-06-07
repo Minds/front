@@ -38,17 +38,7 @@ export class NewsfeedService {
     // }
 
     if (isPlatformBrowser(this.platformId)) {
-      snowplow.trackSelfDescribingEvent({
-        event: {
-          schema: 'iglu:com.minds/view/jsonschema/1-0-0',
-          data: {
-            entity_guid: entity.guid,
-            entity_owner_guid: entity.owner_guid,
-            ...clientMeta,
-          },
-        },
-        context: this.analyticsService.getContexts(),
-      });
+      this.analyticsService.trackEntityView(entity, clientMeta);
     }
 
     // if it's a boost we record the boost view AND the activity view

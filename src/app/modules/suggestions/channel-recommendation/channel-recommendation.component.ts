@@ -1,10 +1,13 @@
+import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { map } from 'rxjs/operators';
 import {
-  DismissalService,
-  DismissIdentifier,
-} from './../../../common/services/dismissal.service';
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+  Component,
+  HostBinding,
+  Input,
+  OnInit,
+  Optional,
+  SkipSelf,
+} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
@@ -12,6 +15,8 @@ import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
+import { DismissalService } from './../../../common/services/dismissal.service';
+import { AnalyticsService } from './../../../services/analytics';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -76,7 +81,9 @@ export class ChannelRecommendationComponent implements OnInit {
     public experiments: ExperimentsService,
     private recentSubscriptions: RecentSubscriptionsService,
     private activityV2Experiment: ActivityV2ExperimentService,
-    private dismissal: DismissalService
+    private dismissal: DismissalService,
+    private analyticsService: AnalyticsService,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
   ) {}
 
   @HostBinding('class.m-channelRecommendation--activityV2')
@@ -99,6 +106,23 @@ export class ChannelRecommendationComponent implements OnInit {
             this.recommendations$.next(result.entities.map(e => e.entity));
           }
         });
+    }
+  }
+
+  /**
+   * tracks views of channel rec items
+   * @param { MindsUser } channel - the entity
+   * @param { number } position - position in the channel recs
+   */
+  trackView(channel: MindsUser, position: number) {
+    if (this.parentClientMeta) {
+      this.analyticsService.trackEntityView(
+        channel,
+        this.parentClientMeta.build({
+          position,
+          medium: 'channel-recs',
+        })
+      );
     }
   }
 

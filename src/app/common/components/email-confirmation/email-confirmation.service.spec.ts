@@ -18,6 +18,7 @@ describe('EmailConfirmationService', () => {
 
   afterEach(() => {
     clientMock.response = [];
+    sessionMock.inject.calls.reset();
     jasmine.clock().uninstall();
   });
 
@@ -36,6 +37,7 @@ describe('EmailConfirmationService', () => {
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(
       'api/v3/email/confirm'
     );
+    expect((service as any).session.inject).toHaveBeenCalled();
     expect(service.success$.getValue()).toBeTruthy();
   });
 
@@ -50,6 +52,7 @@ describe('EmailConfirmationService', () => {
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(
       'api/v3/email/confirm'
     );
+    expect(sessionMock.inject).not.toHaveBeenCalled();
     expect(service.success$.getValue()).toBeFalsy();
   });
 });
