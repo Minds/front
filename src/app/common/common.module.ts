@@ -5,10 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
 
-import { TopbarComponent } from './layout/topbar/topbar.component';
-import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
-import { TopbarOptionsComponent } from './layout/topbar/options.component';
 import { TopbarWalletBalance } from './layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
 
 import { TooltipComponent } from './components/tooltip/tooltip.component';
@@ -41,7 +38,6 @@ import { TagsLinks } from './directives/tags';
 import { Tooltip } from './directives/tooltip';
 import { MindsAvatar } from './components/avatar/avatar';
 import { Textarea } from './components/editors/textarea.component';
-import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
@@ -53,8 +49,6 @@ import { InlineEditorComponent } from './components/editors/inline-editor.compon
 import { AttachmentService } from '../services/attachment';
 import { IfFeatureDirective } from './directives/if-feature.directive';
 import { IfBrowserDirective } from './directives/if-browser.directive';
-import { CategoriesSelectorComponent } from './components/categories/selector/selector.component';
-import { CategoriesSelectedComponent } from './components/categories/selected/selected.component';
 import { TreeComponent } from './components/tree/tree.component';
 import { AnnouncementComponent } from './components/announcements/announcement.component';
 import { PhoneInputComponent } from './components/phone-input/phone-input.component';
@@ -73,11 +67,9 @@ import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
 import { HttpClient } from '@angular/common/http';
 import { AndroidAppDownloadComponent } from './components/android-app-download-button/button.component';
-import { SwitchComponent } from './components/switch/switch.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
 import { FeedsService } from './services/feeds.service';
-import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { RouterHistoryService } from './services/router-history.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
@@ -201,10 +193,7 @@ const routes: Routes = [
   declarations: [
     MINDS_PIPES,
     MDL_DIRECTIVES,
-    TopbarComponent,
-    TopbarNavigationComponent,
     SidebarNavigationComponent,
-    TopbarOptionsComponent,
     TopbarWalletBalance,
     V3TopbarComponent,
     UserMenuV3Component,
@@ -221,7 +210,6 @@ const routes: Routes = [
     ReadMoreButtonComponent,
     ChannelBadgesComponent,
     MindsRichEmbed,
-    TagcloudComponent,
     DropdownComponent,
     QRCodeComponent,
     AutoGrow,
@@ -239,8 +227,6 @@ const routes: Routes = [
     MindsButton,
     IfFeatureDirective,
     IfBrowserDirective,
-    CategoriesSelectorComponent,
-    CategoriesSelectedComponent,
     TreeComponent,
     AnnouncementComponent,
     PhoneInputComponent,
@@ -254,10 +240,8 @@ const routes: Routes = [
     AndroidAppDownloadComponent,
     SortSelectorComponent,
     NSFWSelectorComponent,
-    SwitchComponent,
     FeaturedContentComponent,
     AttachmentPasteDirective,
-    PosterDateSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
     DashboardLayoutComponent,
@@ -324,9 +308,7 @@ const routes: Routes = [
   exports: [
     MINDS_PIPES,
     MDL_DIRECTIVES,
-    TopbarComponent,
     SidebarNavigationComponent,
-    TopbarOptionsComponent,
     TopbarWalletBalance,
     V3TopbarComponent,
     UserMenuV3Component,
@@ -343,7 +325,6 @@ const routes: Routes = [
     ReadMoreButtonComponent,
     ChannelBadgesComponent,
     MindsRichEmbed,
-    TagcloudComponent,
     DropdownComponent,
     QRCodeComponent,
     AutoGrow,
@@ -361,8 +342,6 @@ const routes: Routes = [
     MindsButton,
     IfFeatureDirective,
     IfBrowserDirective,
-    CategoriesSelectorComponent,
-    CategoriesSelectedComponent,
     TreeComponent,
     AnnouncementComponent,
     PhoneInputComponent,
@@ -374,11 +353,9 @@ const routes: Routes = [
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
-    SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
     AttachmentPasteDirective,
-    PosterDateSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
     DashboardLayoutComponent,

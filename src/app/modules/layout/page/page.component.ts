@@ -44,7 +44,6 @@ export class PageComponent implements OnInit {
       });
     });
 
-    // ojm remove onboarding service??
     this.onboardingService.onClose.subscribe(() => {
       this.showOnboarding = false;
     });

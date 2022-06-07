@@ -9,7 +9,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
-  selector: 'm-mobile--marketing',
+  selector: 'm-mobile__marketing',
   templateUrl: 'marketing.component.html',
   styleUrls: [
     '../../aux-pages/aux-pages.component.ng.scss',

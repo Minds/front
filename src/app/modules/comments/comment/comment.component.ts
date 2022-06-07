@@ -27,7 +27,6 @@ import { Client } from '../../../services/api/client';
 import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
-import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -53,13 +52,7 @@ import { ActivityV2ExperimentService } from '../../experiments/sub-services/acti
   },
   templateUrl: 'comment.component.html',
   styleUrls: ['comment.component.ng.scss'],
-  providers: [
-    AttachmentService,
-    {
-      provide: CommentsListComponent,
-      useValue: forwardRef(() => CommentsListComponent),
-    },
-  ],
+  providers: [AttachmentService],
 })
 export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   comment: any;

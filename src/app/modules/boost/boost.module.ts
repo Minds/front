@@ -4,14 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CheckoutModule } from '../checkout/checkout.module';
 import { AdsModule } from '../ads/ads.module';
-
-import { BoostCreatorComponent } from './creator/creator.component';
-import { BoostCreatorPaymentMethodsComponent } from './creator/payment-methods/payment-methods.component';
-import { BoostCreatorCheckoutComponent } from './creator/checkout/checkout.component';
-import { BoostCreatorP2PSearchComponent } from './creator/p2p-search/p2p-search.component';
-import { BoostCreatorCategoriesComponent } from './creator/categories/categories.component';
 
 import { BoostConsoleComponent } from './console/console.component';
 import { BoostConsoleTypesComponent } from './console/types.component';
@@ -60,24 +53,18 @@ const boostRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(boostRoutes),
     CommonModule,
-    CheckoutModule,
     AdsModule,
     MarketingModule,
   ],
   declarations: [
-    BoostCreatorComponent,
     BoostConsoleComponent,
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
     BoostConsoleCard,
     BoostConsoleBooster,
-    BoostMarketingComponent,
-    BoostCreatorPaymentMethodsComponent,
-    BoostCreatorCheckoutComponent,
-    BoostCreatorP2PSearchComponent,
-    BoostCreatorCategoriesComponent,
     BoostConsoleTypesComponent,
     BoostConsoleHistoryComponent,
+    BoostMarketingComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,

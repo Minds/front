@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-// ojm tbd
 @Component({
   selector: 'm-androidApp__download',
   template: `

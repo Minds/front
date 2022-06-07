@@ -190,3 +190,125 @@ $layoutMin1ColWidth: 280px;
     padding-right: 8px;
   }
 }
+
+// NOTE: Below was moved from legacy topbar component. May be obsolete
+
+.hidden {
+  display: none;
+}
+
+.m-toolbar {
+  .m-topbar--row {
+    max-width: 1280px;
+    margin: auto;
+  }
+  .m-topbar--navigation--item {
+    cursor: pointer;
+    line-height: 15px;
+    border: 0 !important;
+
+    > * {
+      vertical-align: middle;
+    }
+  }
+}
+
+@media screen and (max-width: $max-mobile) {
+  .m-btn--boost {
+    display: none;
+  }
+}
+
+.m-topbar--navigation--item {
+  m-tooltip {
+    margin-left: 4px;
+
+    .m-tooltip--bubble {
+      min-width: 120px;
+    }
+
+    i {
+      font-size: 11px;
+      vertical-align: middle;
+      line-height: 1.1;
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
+    }
+  }
+}
+
+// NOTE: below was moved from legacy topbar navigation component, but classes are still used in admin module
+
+.m-topbar--navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 8px;
+
+  @media screen and (max-width: $min-tablet) {
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+
+  &.m-topbar--navigation__centered {
+    max-width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &:not(.m-topbar--navigation--text-only) .m-topbar--navigation--item span {
+    @media screen and (max-width: 840px) {
+      display: none;
+    }
+  }
+}
+
+.m-topbar--navigation--item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-decoration: none;
+  font-family: 'Roboto', Helvetica, sans-serif;
+  padding: 12px 8px;
+  //border-right: 1px solid themed($m-borderColor--primary);
+
+  @include m-theme() {
+    color: themed($m-grey-950);
+    border-top: 4px solid themed($m-white);
+    border-bottom: 4px solid themed($m-white);
+  }
+
+  &.m-topbar--navigation--item-active {
+    @include m-theme() {
+      color: themed($m-blue);
+      border-top: 4px solid themed($m-blue);
+    }
+
+    i {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+  }
+
+  i {
+    font-size: 18px;
+    @include m-theme() {
+      color: themed($m-grey-700);
+    }
+  }
+
+  span {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1.25px;
+    padding-left: 4px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+}

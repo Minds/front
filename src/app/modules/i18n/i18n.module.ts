@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { CheckoutModule } from '../checkout/checkout.module';
 import { I18nMarketingComponent } from './marketing.component';
 import { MarketingModule } from '../marketing/marketing.module';
 
@@ -26,7 +25,6 @@ const i18nRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    CheckoutModule,
     RouterModule.forChild(i18nRoutes),
     MarketingModule,
   ],

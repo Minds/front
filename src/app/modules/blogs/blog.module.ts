@@ -12,7 +12,6 @@ import { PostMenuModule } from '../../common/components/post-menu/post-menu.modu
 import { BlogCard } from './card/card';
 import { BlogView } from './view/view';
 import { BlogViewInfinite } from './view/infinite';
-import { BlogTileComponent } from './tile/tile.component';
 import { WireModule } from '../wire/wire.module';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
@@ -64,7 +63,7 @@ const routes: Routes = [
     ActivityModule,
     ActivityV2Module,
   ],
-  declarations: [BlogView, BlogCard, BlogViewInfinite, BlogTileComponent],
+  declarations: [BlogView, BlogCard, BlogViewInfinite],
   exports: [BlogEditorComponent, BlogView, BlogCard],
 })
 export class BlogModule {}

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { Session } from '../../../../services/session';
 
-import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { ModalService } from '../../../../services/ux/modal.service';

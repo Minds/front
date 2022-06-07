@@ -3,7 +3,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { CheckoutModule } from '../checkout/checkout.module';
 import { ModalsModule } from '../modals/modals.module';
 
 import { PaymentsNewCard } from './new-card/new-card.component';
@@ -19,7 +18,6 @@ import { NewCardModalComponent } from './new-card-modal/new-card-modal.component
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    CheckoutModule,
     ModalsModule,
   ],
   declarations: [

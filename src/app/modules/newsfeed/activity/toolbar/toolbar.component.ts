@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { ActivityEntity, ActivityService } from '../activity.service';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
-import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
