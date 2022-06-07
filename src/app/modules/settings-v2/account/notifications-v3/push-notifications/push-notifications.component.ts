@@ -56,6 +56,7 @@ export class SettingsV2PushNotificationsV3Component
     groups: 'Activity in your groups.',
     reports: 'Progress on your reports.',
     top_posts: "Get notifications for top posts you haven't yet seen",
+    community_updates: 'Get notifications for updates from the Minds platform',
     all: '',
   };
 
