@@ -6,7 +6,7 @@
   <div
     [ngClass]="menuCssClasses"
     [ngStyle]="anchorPosition"
-    (click)="hasSubmenu ? null : close()"
+    (click)="close()"
     #menuWrapperElement
     [@dropDown]="!hasSubmenu"
   >
