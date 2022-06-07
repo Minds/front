@@ -10,6 +10,7 @@ import {
   ScrollSubscription,
 } from '../../../services/ux/global-scroll.service';
 import { Subscription } from 'rxjs';
+import { AnalyticsService } from './../../../services/analytics';
 
 @Component({
   selector: 'infinite-scroll',
@@ -21,6 +22,7 @@ import { Subscription } from 'rxjs';
         *ngIf="!inProgress"
         [disabled]="!moreData"
         (onAction)="manualLoad()"
+        (mViewed)="moreData ? undefined : trackEndReached()"
       >
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
@@ -64,7 +66,11 @@ export class InfiniteScroll {
   _content: any;
   subscription: [ScrollSubscription, Subscription];
 
-  constructor(_element: ElementRef, private scroll: GlobalScrollService) {
+  constructor(
+    _element: ElementRef,
+    private scroll: GlobalScrollService,
+    private analytics: AnalyticsService
+  ) {
     this.element = _element.nativeElement;
   }
 
@@ -128,5 +134,12 @@ export class InfiniteScroll {
   ngOnDestroy() {
     if (this.subscription)
       this.scroll.unListen(this.subscription[0], this.subscription[1]);
+  }
+
+  /**
+   * tracks the feed end event with analytics
+   */
+  trackEndReached(): void {
+    this.analytics.trackView('feed-end');
   }
 }

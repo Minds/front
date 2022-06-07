@@ -116,7 +116,7 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   trackView(channel: MindsUser, position: number) {
     if (this.parentClientMeta) {
-      this.analyticsService.trackView(
+      this.analyticsService.trackEntityView(
         channel,
         this.parentClientMeta.build({
           position,
