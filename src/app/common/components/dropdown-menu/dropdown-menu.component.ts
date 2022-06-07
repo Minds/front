@@ -12,6 +12,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { AnalyticsService } from './../../../services/analytics';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -51,6 +52,8 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
   @ViewChild('menuWrapperElement')
   menuWrapperElement: ElementRef<HTMLDivElement>;
 
+  @Input('data-ref') dataRef: string;
+
   isOpen: boolean = false;
 
   protected windowSize$: Subject<{
@@ -62,6 +65,7 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     protected cd: ChangeDetectorRef,
+    protected analytics: AnalyticsService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -76,6 +80,17 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
   }
 
   open($event: MouseEvent) {
+    if ($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
+
+    // track the click event manually because stopPropagation will
+    // prevent the document click event from firing
+    if (this.dataRef) {
+      this.analytics.trackClick(this.dataRef);
+    }
+
     this.isOpen = true;
     this.detectChanges();
 
