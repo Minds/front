@@ -179,6 +179,7 @@ export class AnalyticsService implements OnDestroy {
         schema: 'iglu:com.minds/view/jsonschema/1-0-0',
         data: {
           entity_guid: entity.guid,
+          entity_type: entity.type ?? null,
           // @ts-ignore
           entity_owner_guid: entity.owner_guid || entity.ownerObj?.guid,
           ...clientMeta,
