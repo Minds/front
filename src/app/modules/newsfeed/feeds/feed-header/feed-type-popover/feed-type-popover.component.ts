@@ -19,7 +19,7 @@ const TOP_FEED_PROMPT_STORAGE_KEY = 'top-feed:recommended';
   styleUrls: ['./feed-type-popover.component.ng.scss'],
 })
 export class FeedTypePopoverComponent implements OnInit {
-  @Input() type: FeedAlgorithm = 'latest';
+  @Input() type: FeedAlgorithm = FeedAlgorithm.latest;
   shown: boolean = false;
   shouldShowTooltip$ = new BehaviorSubject<boolean>(false);
 

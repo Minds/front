@@ -1,5 +1,5 @@
 import { FeedAlgorithm } from './../subscribed.component';
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
@@ -20,5 +20,5 @@ export class FeedHeaderComponent {
   }
 
   @Input()
-  algorithm: FeedAlgorithm = 'latest';
+  algorithm: FeedAlgorithm = FeedAlgorithm.latest;
 }
