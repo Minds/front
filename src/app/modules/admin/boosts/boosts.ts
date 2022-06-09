@@ -113,8 +113,29 @@ export class AdminBoosts {
       });
   }
 
-  accept(boost: any = null, open: boolean = false, opts: any = { mature: 0 }) {
+  /**
+   * Called when accepting a boost as safe or open.
+   * @param { any } boost - boost to accept.
+   * @param { boolean } open - whether boost is open (else safe).
+   * @param { Object } opts - options - e.g. mature.
+   * @returns { void }
+   */
+  public accept(
+    boost: any = null,
+    open: boolean = false,
+    opts: any = { mature: 0 }
+  ): void {
     if (!boost) boost = this.boosts[0];
+
+    if (
+      !confirm(
+        'Are you sure you want to accept this boost as ' +
+          (open ? 'open' : 'safe') +
+          '?'
+      )
+    ) {
+      return;
+    }
 
     boost.rating = open ? 2 : 1;
 
