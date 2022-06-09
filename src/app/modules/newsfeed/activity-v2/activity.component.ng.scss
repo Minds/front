@@ -229,6 +229,7 @@
       width: $activityAvatarWidth;
       height: $activityAvatarWidth;
       object-fit: cover;
+      box-sizing: border-box;
     }
   }
 
