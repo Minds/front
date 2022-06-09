@@ -118,12 +118,6 @@ h1 {
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
-  @media screen and (max-width: 900px) {
-    // Markers sidebar
-    // width: 100%;
-    //padding-right: 20px;
-  }
-
   &.m-v3Topbar__top--noBackground {
     @include m-theme() {
       background-color: transparent;
@@ -185,8 +179,12 @@ h1 {
         padding: 0 40px;
         height: 100%;
 
+        .m-v3Topbar--isActivityV2 & {
+          padding: 0 $spacing4;
+        }
+
         @media screen and (max-width: $layoutMin3ColWidth) {
-          padding: 0 20px;
+          padding: 0 $spacing4;
         }
 
         @media screen and(max-width: $layoutMin2ColWidth) {
@@ -218,7 +216,7 @@ h1 {
           font-weight: normal;
 
           @media screen and (max-width: $layoutMin3ColWidth) {
-            padding-left: 20px;
+            padding-left: $spacing4;
           }
 
           @media screen and(max-width: $m-grid-max-mobile) {

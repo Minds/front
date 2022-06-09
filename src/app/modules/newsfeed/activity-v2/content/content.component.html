@@ -154,6 +154,7 @@ post content to trigger upgrade modal -->
           (service.shouldShowPaywall$ | async) ? 'cover' : undefined
         "
         [style.height]="isModal || isFixedHeight ? imageHeight : 'auto'"
+        class="m-border"
       />
     </ng-template>
   </div>
@@ -217,7 +218,6 @@ post content to trigger upgrade modal -->
     ></div>
     <div
       #textEl
-      m-read-more
       class="m-activityContent__textWrapper"
       [maxHeightAllowed]="maxHeightAllowed || maxTextHeight"
       *ngIf="bodyText?.length >= 1 || titleText?.length >= 1"
@@ -232,17 +232,18 @@ post content to trigger upgrade modal -->
             'm-activityContentText--translated': showTranslation
           }"
         ></p>
-        <div
+        <p
           *ngIf="bodyText && !hideBodyText"
           class="m-activityContentText__body"
           [class.m-activityContentText__body--shortStatus]="shortStatus"
           [class.m-activityContentText__body--mediumStatus]="mediumStatus"
-          [innerHtml]="bodyText | tags | codeHighlight"
           [ngClass]="{
             'm-activityContentText--translated': showTranslation
           }"
-        ></div>
-        <m-read-more--button
+        >
+          <m-readMore [text]="bodyText"></m-readMore>
+        </p>
+        <!-- <m-read-more--button
           *ngIf="
             !(service.shouldShowPaywall$ | async) || isStatus;
             else teaserFadeout
@@ -250,7 +251,7 @@ post content to trigger upgrade modal -->
           [v2]="true"
           [showOnlyFadeout]="sidebarMode"
           [redirectUrl]="getRedirectUrl()"
-        ></m-read-more--button>
+        ></m-read-more--button> -->
         <ng-template #teaserFadeout>
           <div class="m-activityContent__teaserFadeout" @fader></div
         ></ng-template>

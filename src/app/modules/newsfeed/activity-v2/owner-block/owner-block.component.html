@@ -10,7 +10,7 @@
   <!-- ---------------------------- -->
   <!-- FEED  -->
   <!-- ---------------------------- -->
-  <ng-container *ngIf="isFeed">
+  <ng-container *ngIf="isFeed && !isMinimalMode">
     <ng-container [ngTemplateOutlet]="name"></ng-container>
     <ng-container [ngTemplateOutlet]="groupOrUsername"></ng-container>
     <ng-container [ngTemplateOutlet]="permalink"></ng-container>

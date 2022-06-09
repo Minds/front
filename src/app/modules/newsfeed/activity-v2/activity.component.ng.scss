@@ -26,15 +26,6 @@
         padding-right: $activitySpacingRight--feed--mobile;
       }
     }
-
-    .m-activityTop__mainColumn,
-    ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
-      // Prevents remind username overflow
-      max-width: calc(100% - $activitySpacingLeft--feed);
-      @media screen and (max-width: $max-mobile) {
-        max-width: calc(100% - $activitySpacingLeft--feed--mobile);
-      }
-    }
   }
 
   // *********************************
@@ -90,24 +81,21 @@
         border-top: 1px solid themed($m-borderColor--primary) !important;
       }
     }
-    .m-activity__top {
-      padding-top: 0;
-
-      .m-activityTop__mainColumn,
-      ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
-        // Prevents remind username overflow
-        max-width: 100%;
-        @media screen and (max-width: $max-mobile) {
-          max-width: 100%;
-        }
-      }
-    }
 
     ::ng-deep .m-activityContent--paywalledStatus {
       padding-top: $spacing7;
     }
     ::ng-deep .m-videoPlayer__placeholder i {
       font-size: 70px;
+    }
+
+    .m-activity__top {
+      padding-top: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .m-activity__flagRow {
+      display: none;
     }
   }
 
@@ -120,14 +108,6 @@
     @media screen and (max-width: $max-mobile) {
       padding: 0;
     }
-    .m-activityTop__mainColumn,
-    ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
-      // Prevents remind username overflow
-      max-width: calc(100% - $activitySpacing--modal);
-      @media screen and (max-width: $max-mobile) {
-        max-width: calc(100% - $activitySpacing--modal);
-      }
-    }
   }
 
   // *********************************
@@ -138,10 +118,6 @@
     padding: 0;
     .m-activity__top {
       padding-top: 0;
-    }
-    .m-activityTop__mainColumn {
-      width: 100%;
-      max-width: 100%;
     }
   }
 
@@ -169,25 +145,9 @@
       }
     }
 
-    .m-activityTop__mainColumn,
-    ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
-      // Prevents remind username overflow
-      max-width: calc(100% - $activitySpacingLeft--single);
-      @media screen and (max-width: $max-mobile) {
-        max-width: calc(100% - $activitySpacingLeft--single--mobile);
-      }
-    }
-
     .m-activityTop__avatarColumn,
     ::ng-deep m-activityV2__quote .m-activityTop__avatarColumn {
       padding-right: $activityAvatarSpacingRight--single;
-    }
-
-    .m-activityTop__mainColumn,
-    ::ng-deep m-activityV2__quote .m-activityTop__mainColumn {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
     }
   }
   // *********************************
@@ -227,12 +187,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-
-    // Prevents remind username overflow
-    max-width: calc(100% - $activitySpacingLeft--feed);
-    @media screen and (max-width: $max-mobile) {
-      max-width: calc(100% - $activitySpacingLeft--feed--mobile);
-    }
+    min-width: 0; // See https://stackoverflow.com/a/66689926
   }
 
   .m-activity__flagRow {
@@ -243,12 +198,15 @@
 
     .m-activity__boostRotatorButtons {
       ::ng-deep m-icon {
-        margin-right: $spacing2;
+        margin-right: $spacing1;
         @include unselectable;
         i {
           cursor: pointer;
-          @include heading2Regular;
+          // @include heading2Regular;
           @include unselectable;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
         }
       }
     }

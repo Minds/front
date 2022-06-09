@@ -6,6 +6,7 @@ import {
   ViewChildren,
   HostBinding,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   first,
@@ -56,6 +57,7 @@ const BOOST_VIEW_THRESHOLD = 1000;
   providers: [FeedsService],
   templateUrl: 'boost-rotator.component.html',
   styleUrls: ['boost-rotator.component.ng.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fastFade', [
       transition(':enter', [
@@ -185,6 +187,8 @@ export class NewsfeedBoostRotatorComponent {
         setTimeout(() => this.calculateHeight());
         // distinctuntilchange is now safe
         this.viewsCollector$.next(this.currentPosition);
+
+        this.detectChanges();
       })
     );
   }
@@ -193,7 +197,7 @@ export class NewsfeedBoostRotatorComponent {
     setTimeout(() => this.calculateHeight()); // will only run for new nav
   }
 
-  load() {
+  async load(): Promise<boolean> {
     try {
       let params = {
         rating: this.rating,
@@ -205,7 +209,7 @@ export class NewsfeedBoostRotatorComponent {
       }
 
       this.feedsService.clear(); // Fresh each time
-      this.feedsService
+      await this.feedsService
         .setEndpoint('api/v2/boost/feed')
         .setParams(params)
         .setLimit(12)
@@ -305,7 +309,7 @@ export class NewsfeedBoostRotatorComponent {
    * If we're already at the last boost, load more
    * and then go to next boost.
    */
-  async next() {
+  async next(): Promise<void> {
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       try {
         this.load();
@@ -317,6 +321,7 @@ export class NewsfeedBoostRotatorComponent {
       this.currentPosition++;
     }
     this.viewsCollector$.next(this.currentPosition);
+    this.detectChanges();
   }
 
   shouldRender(index: number) {

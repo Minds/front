@@ -353,6 +353,11 @@
   // *********************************
 
   .m-activityContent__media--image {
+    img {
+      width: unset;
+      max-width: 100%;
+    }
+
     &.m-activityContent__media--extraTallImage,
     &.m-activityContent__media--extraWideImage {
       a {
