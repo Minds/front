@@ -18,12 +18,13 @@
 
     .m-blogEditor__bodyContainer {
       padding-bottom: 40px;
+      z-index: 0;
+      position: relative;
     }
 
     .m-blogEditor__bannerImageContainer {
       // new stacking context
       position: relative;
-      z-index: 0;
 
       img {
         width: 100%;
