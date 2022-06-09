@@ -1,0 +1,30 @@
+<div class="m-festivalBanner" *ngIf="shouldShow()">
+  <i class="m-festivalBanner__closeButton material-icons" (click)="dismiss()"
+    >close</i
+  >
+  <div class="m-festivalBanner__container">
+    <div class="m-festivalBanner__container--left">
+      <img class="m-festivalBanner__logo" [src]="logoUrl | async" />
+    </div>
+    <div class="m-festivalBanner__container--center">
+      <span class="m-festivalBanner__text">
+        Minds LIVE EVENT in NYC on June 25. </span
+      >&nbsp;
+      <span class="m-festivalBanner__text">
+        Tickets on sale now!
+      </span>
+    </div>
+    <div class="m-festivalBanner__container--right">
+      <m-button
+        [color]="'blue'"
+        (onAction)="buyTickets()"
+        class="m-festivalBanner__button"
+      >
+        <span class="m-festivalBannerButtonText__bigScreen">Buy tickets</span>
+        <span class="m-festivalBannerButtonText__smallScreen"
+          >Buy NYC event tickets!</span
+        >
+      </m-button>
+    </div>
+  </div>
+</div>

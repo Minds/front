@@ -1,25 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { FestivalBannerExperimentService } from '../../../modules/experiments/sub-services/festival-banner-experiment.service';
-import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
-import { Session } from '../../../services/session';
 import { SessionsStorageService } from '../../../services/session-storage.service';
-import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { ConfigsService } from '../../services/configs.service';
 import { ThemeService } from '../../services/theme.service';
 
 /**
- * Join banner, full width and fixed to bottom of page.
+ * Banner promoting festival of ideas, full width and fixed to bottom of page.
+ * Copied from join banner
  */
 @Component({
-  selector: 'm-joinBanner',
-  templateUrl: './join-banner.component.html',
-  styleUrls: ['./join-banner.component.ng.scss'],
+  selector: 'm-festivalBanner',
+  templateUrl: './festival-banner.component.html',
+  styleUrls: ['./festival-banner.component.ng.scss'],
 })
-export class JoinBannerComponent implements OnInit {
+export class FestivalBannerComponent implements OnInit {
   // asset url for logo.
   public readonly cdnAssetsUrl: string = '';
 
@@ -27,13 +23,8 @@ export class JoinBannerComponent implements OnInit {
   public dismissed = true;
 
   constructor(
-    private session: Session,
     private sessionStorage: SessionsStorageService,
-    private authModal: AuthModalService,
-    private guestModeExperiment: GuestModeExperimentService,
     private festivalBannerExperiment: FestivalBannerExperimentService,
-    private router: Router,
-    private authRedirectService: AuthRedirectService,
     private themes: ThemeService,
     configs: ConfigsService
   ) {
@@ -61,16 +52,11 @@ export class JoinBannerComponent implements OnInit {
   }
 
   /**
-   * Whether join banner should be shown.
+   * Whether festival banner should be shown.
    * @returns { boolean } - true if banner should be shown.
    */
   public shouldShow(): boolean {
-    return (
-      !this.festivalBannerExperiment.isActive() &&
-      this.guestModeExperiment.isActive() &&
-      !this.session.getLoggedInUser() &&
-      !this.dismissed
-    );
+    return this.festivalBannerExperiment.isActive() && !this.dismissed;
   }
 
   /**
@@ -79,20 +65,16 @@ export class JoinBannerComponent implements OnInit {
    */
   public dismiss(): void {
     this.dismissed = true;
-    this.sessionStorage.set('dismissed_join_banner', true);
+    this.sessionStorage.set('dismissed_festival_banner', true);
   }
 
   /**
-   * Join button clicked - fires auth modal
-   * @returns { Promise<void> }
+   * Action button clicked - opens new window with ticketing page
    */
-  public async join(): Promise<void> {
-    const user = await this.authModal.open();
-
-    if (user) {
-      if (this.router.url === '/' || this.router.url === '/about') {
-        this.router.navigate([this.authRedirectService.getRedirectUrl()]);
-      }
-    }
+  public buyTickets(): void {
+    window.open(
+      'https://www.ticketmaster.com/event/3B005CB2CF161F8D?utm_source=minds&utm_medium=banner&utm_campaign=festival',
+      '_blank'
+    );
   }
 }
