@@ -146,7 +146,7 @@ export class WireService {
       }
       return { done: true };
     } catch (e) {
-      if (e.message) {
+      if (e?.message) {
         this.toast.error(e.message);
       }
 
