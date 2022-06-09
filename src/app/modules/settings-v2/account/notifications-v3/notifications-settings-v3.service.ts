@@ -23,7 +23,6 @@ export class NotificationsSettingsV2Service {
   get pushSettings$(): Observable<PushNotificationGetResponse> {
     return this.api.get('api/v3/notifications/push/settings').pipe(
       take(1),
-      catchError(e => this.handleError(e)),
       throttleTime(1000)
     );
   }
