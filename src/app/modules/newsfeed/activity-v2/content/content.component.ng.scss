@@ -354,8 +354,8 @@
 
   .m-activityContent__media--image {
     img {
-      width: unset;
       max-width: 100%;
+      box-sizing: border-box;
     }
 
     &.m-activityContent__media--extraTallImage,

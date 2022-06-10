@@ -81,8 +81,8 @@ post content to trigger upgrade modal -->
         service.displayOptions.autoplayVideo &&
         !(service.shouldShowPaywall$ | async)
       "
-      [style.height]="isModal ? null : videoHeight"
-      [style.width]="isModal ? null : videoWidth"
+      [style.height.px]="isModal ? null : videoHeight"
+      [style.width.px]="isModal ? null : videoWidth"
       [isModal]="isModal"
       [style.overflow]="videoHeight && !isModal ? 'hidden' : null"
     >
@@ -153,7 +153,8 @@ post content to trigger upgrade modal -->
         [style.object-fit]="
           (service.shouldShowPaywall$ | async) ? 'cover' : undefined
         "
-        [style.height]="isModal || isFixedHeight ? imageHeight : 'auto'"
+        [style.height.px]="imageHeight"
+        [style.width.px]="imageWidth"
         class="m-border"
       />
     </ng-template>
