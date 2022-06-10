@@ -60,8 +60,8 @@ export class MultiFactorLazyService {
    * @returns { Observable<any> }
    */
   get dismissed() {
-    return this.modal?.dismissed
-  };
+    return this.modal?.dismissed;
+  }
 
   /**
    * Call to dismiss modal.
