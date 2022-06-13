@@ -4,6 +4,7 @@ import { FormToastService } from '../../services/form-toast.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { BehaviorSubject } from 'rxjs';
+import { FeedNoticeService } from '../../../modules/notices/services/feed-notice.service';
 
 /**
  * Service handling the sending of new confirmation emails, verification of email addresses
@@ -23,6 +24,7 @@ export class EmailConfirmationService {
     protected client: Client,
     private toasterService: FormToastService,
     private session: Session,
+    private feedNotice: FeedNoticeService,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
@@ -86,5 +88,6 @@ export class EmailConfirmationService {
     let updatedUser = this.session.getLoggedInUser();
     updatedUser.email_confirmed = state;
     this.session.inject(updatedUser);
+    this.feedNotice.dismiss('verify-email');
   }
 }
