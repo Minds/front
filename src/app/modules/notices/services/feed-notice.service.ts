@@ -136,25 +136,6 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Gets the next notice for a given location that is showable and not assigned a position.
-   * @param { NoticeLocation } location - location to get next notice for.
-   * @returns { FeedNotice } - the next notice.
-   */
-  private getNextNotice(location: NoticeLocation): FeedNotice {
-    let notices = this.notices$.getValue();
-
-    return (
-      notices.filter(notice => {
-        return (
-          this.isShowable(notice) &&
-          !this.isAssignedPosition(notice) &&
-          notice.location === location
-        );
-      })[0] ?? null
-    );
-  }
-
-  /**
    * Dismiss a notice, updating local state and storage.
    * @param { NoticeKey } noticeKey - key of notice to dismiss.
    */
@@ -171,7 +152,33 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     return this.activityV2Experiment.isActive();
   }
 
-  // TODO: Complete - force state locally.
+  /**
+   * Whether the outlet should be shown with styling to stick to top of feed.
+   * @param { FeedNotice } - notice to check.
+   * @returns { boolean } true if sticky top styling should be applied.
+   */
+  public shouldBeStickyTop(notice: FeedNotice): boolean {
+    return this.shouldBeFullWidth() && notice.key === 'verify-email';
+  }
+
+  /**
+   * Gets the next notice for a given location that is showable and not assigned a position.
+   * @param { NoticeLocation } location - location to get next notice for.
+   * @returns { FeedNotice } - the next notice.
+   */
+  protected getNextNotice(location: NoticeLocation): FeedNotice {
+    let notices = this.notices$.getValue();
+
+    return (
+      notices.filter(notice => {
+        return (
+          this.isShowable(notice) &&
+          !this.isAssignedPosition(notice) &&
+          notice.location === location
+        );
+      })[0] ?? null
+    );
+  }
 
   protected filterPriorityNotices(notices: FeedNotice[]): FeedNotice[] {
     const shouldShow = [];
@@ -186,15 +193,6 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     }
 
     return shouldShow;
-  }
-
-  /**
-   * Whether the outlet should be shown with styling to stick to top of feed.
-   * @param { FeedNotice } - notice to check.
-   * @returns { boolean } true if sticky top styling should be applied.
-   */
-  public shouldBeStickyTop(notice: FeedNotice): boolean {
-    return this.shouldBeFullWidth() && notice.key === 'verify-email';
   }
 
   /**

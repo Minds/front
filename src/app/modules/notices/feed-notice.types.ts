@@ -5,7 +5,7 @@ export type NoticeKey =
   | 'enable-push-notifications'
   | 'update-tags';
 
-// Positioning of component - where should it show 'top' or feed, or 'inline' in the feed.
+// Location of component - where should it show 'top' or feed, or 'inline' in the feed.
 export type NoticeLocation = 'top' | 'inline';
 
 // Object to hold notices and their relevant shared state.

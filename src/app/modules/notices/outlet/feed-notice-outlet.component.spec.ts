@@ -1,21 +1,14 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FeedNoticeOutletComponent } from './feed-notice-outlet.component';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FeedNoticeService } from '../services/feed-notice.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
+import { NoticeKey, NoticeLocation } from '../feed-notice.types';
 
 describe('FeedNoticeOutletComponent', () => {
   let comp: FeedNoticeOutletComponent;
   let fixture: ComponentFixture<FeedNoticeOutletComponent>;
-
-  const updatedState$ = new BehaviorSubject<boolean>(false);
 
   beforeEach(
     waitForAsync(() => {
@@ -26,14 +19,17 @@ describe('FeedNoticeOutletComponent', () => {
           MockComponent({ selector: 'm-feedNotice--verifyEmail' }),
           MockComponent({ selector: 'm-feedNotice--buildYourAlgorithm' }),
           MockComponent({ selector: 'm-feedNotice--enablePushNotifications' }),
+          MockComponent({ selector: 'm-feedNotice--updateTags' }),
         ],
         providers: [
           {
             provide: FeedNoticeService,
             useValue: MockService(FeedNoticeService, {
-              has: ['updatedState$'],
+              has: ['initialized$'],
               props: {
-                updatedState$: { get: () => updatedState$ },
+                initialized$: {
+                  get: () => new BehaviorSubject<boolean>(false),
+                },
               },
             }),
           },
@@ -61,40 +57,29 @@ describe('FeedNoticeOutletComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should get next next notice when not in showMultiple mode if one has not already been shown', fakeAsync(() => {
-    const notice = 'build-your-algorithm';
+  it('should set next notice', () => {
+    const notice = {
+      key: 'verify-email' as NoticeKey,
+      location: 'top' as NoticeLocation,
+      should_show: true,
+      dismissed: false,
+      position: -1,
+    };
 
-    (comp as any).showMultiple = false;
-    (comp as any).service.getNextShowableNotice.and.returnValue(notice);
-    (comp as any).service.hasShownANotice.and.returnValue(false);
+    (comp as any).service.initialized$.next(true);
+    (comp as any).service.register.and.returnValue(-1);
+    (comp as any).service.getNoticeForPosition$.and.returnValue(of(notice));
+    (comp as any).service.shouldBeStickyTop.and.returnValue(true);
 
-    (comp as any).initSubscription();
-    (comp as any).service.updatedState$.next(true);
-    tick();
+    comp.ngOnInit();
 
-    expect((comp as any).service.getNextShowableNotice).toHaveBeenCalled();
-    expect((comp as any).service.hasShownANotice).toHaveBeenCalled();
-    expect((comp as any).activeNotice).toBe(notice);
-    expect((comp as any).service.setShown).toHaveBeenCalledWith(notice, true);
-  }));
-
-  it('should get next showable notice when one has already shown, in showMultiple mode', fakeAsync(() => {
-    const notice = 'build-your-algorithm';
-    const position = 'top';
-
-    (comp as any).position = position;
-    (comp as any).showMultiple = true;
-    (comp as any).service.getNextShowableNotice.and.returnValue(notice);
-    (comp as any).service.hasShownANotice.and.returnValue(notice);
-
-    (comp as any).initSubscription();
-    (comp as any).service.updatedState$.next(true);
-    tick();
-
-    expect((comp as any).service.getNextShowableNotice).toHaveBeenCalledWith(
-      position
+    expect((comp as any).service.register).toHaveBeenCalledWith('top');
+    expect((comp as any).service.getNoticeForPosition$).toHaveBeenCalledWith(
+      -1
     );
-    expect((comp as any).activeNotice).toBe(notice);
-    expect((comp as any).service.setShown).toHaveBeenCalledWith(notice, true);
-  }));
+    expect((comp as any).service.shouldBeStickyTop).toHaveBeenCalledWith(
+      notice
+    );
+    expect(comp.notice$.getValue()).toEqual(notice);
+  });
 });

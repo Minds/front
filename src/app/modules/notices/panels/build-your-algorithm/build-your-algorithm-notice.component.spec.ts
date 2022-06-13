@@ -81,6 +81,7 @@ describe('BuildYourAlgorithmNoticeComponent', () => {
 
   it('should dismiss on answers provided', () => {
     answersProvided$.next(true);
+    answersProvided$.next(true); // second call as first happens on open, thus is skipped.
     expect((comp as any).modalService.dismissAll).toHaveBeenCalled();
     expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
       'build-your-algorithm'

@@ -6,9 +6,15 @@ import {
   OnInit,
 } from '@angular/core';
 import { FeedNotice, NoticeLocation } from '../feed-notice.types';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, EMPTY, Subscription } from 'rxjs';
 import { FeedNoticeService } from '../services/feed-notice.service';
-import { distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
+import {
+  catchError,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 
 /**
  * Outlet for feed notices - use this component to show a relevant
@@ -85,7 +91,7 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
     return this.location === 'top';
   }
 
-  constructor(public service: FeedNoticeService) {}
+  constructor(private service: FeedNoticeService) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -93,23 +99,29 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
       this.service.initialized$
         .pipe(
           // filter out non-true values.
-          filter(Boolean),
+          filter((completed: boolean) => !!completed),
           /**
-           * Register outlet with service and replace observable with
+           * register outlet with service and replace observable with
            * one representing the notice to show for this position.
            */
           switchMap((success: boolean) => {
             this.position = this.service.register(this.location);
             return this.service.getNoticeForPosition$(this.position);
           }),
-          // Only continue if the notice has changed.
+          // filter out null notices.
+          filter((notice: FeedNotice) => !!notice),
+          // only continue if the notice has changed.
           distinctUntilChanged(),
-          // Update this classes notice.
+          // update this classes notice.
           tap((notice: FeedNotice) => {
             if (this.service.shouldBeStickyTop(notice)) {
               this.stickyTop = true;
             }
             this.notice$.next(notice);
+          }),
+          catchError(e => {
+            console.error(e);
+            return EMPTY;
           })
         )
         .subscribe()
@@ -118,7 +130,7 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     const notice = this.notice$.getValue();
-    if (notice) {
+    if (notice && notice.key) {
       this.service.unregister(notice.key);
 
       if (this.stickyTop) {
