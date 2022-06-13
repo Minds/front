@@ -1,8 +1,8 @@
 <div class="m-feedFilter">
   <div class="m-feedFilter__dropdownWrapper">
     <div *ngIf="options.indexOf('type') > -1" class="m-feedFilter__menu">
-      <m-dropdownMenu [menu]="typeMenu">
-        <div class="m-feedFilterMenu__trigger" data-ref="feedcontrol-type">
+      <m-dropdownMenu [menu]="typeMenu" data-ref="feedcontrol-type">
+        <div class="m-feedFilterMenu__trigger">
           <span>Type: </span
           ><span class="m-feedFilterMenuTrigger__selectionLabel">{{
             typeLabel
@@ -12,8 +12,8 @@
       </m-dropdownMenu>
     </div>
     <div *ngIf="options.indexOf('dateRange') > -1" class="m-feedFilter__menu">
-      <m-dropdownMenu [menu]="dateRangeMenu">
-        <div class="m-feedFilterMenu__trigger" data-ref="feedcontrol-date">
+      <m-dropdownMenu [menu]="dateRangeMenu" data-ref="feedcontrol-date">
+        <div class="m-feedFilterMenu__trigger">
           <span>Date: </span>
           <ng-container *ngIf="service.dateRangeEnabled$ | async"
             ><span *ngIf="service.dateRange$ | async as dateRange">
