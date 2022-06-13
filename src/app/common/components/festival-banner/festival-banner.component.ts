@@ -39,7 +39,7 @@ export class FestivalBannerComponent implements OnInit {
    * Gets logo URL dependent on theme.
    * @returns { Observable<string> } Observable logo url.
    */
-  get logoUrl(): Observable<string> {
+  get largeLogoUrl(): Observable<string> {
     return this.themes.isDark$.pipe(
       map((isDarkTheme: boolean) => {
         return `${this.cdnAssetsUrl}${
