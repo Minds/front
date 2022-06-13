@@ -1,9 +1,14 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FeedNotice, NoticeLocation } from '../feed-notice.types';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { FeedNoticeService } from '../services/feed-notice.service';
 import { distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
-import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 
 /**
  * Outlet for feed notices - use this component to show a relevant
@@ -32,8 +37,7 @@ import { AbstractSubscriberComponent } from '../../../common/components/abstract
     </ng-container>
   `,
 })
-export class FeedNoticeOutletComponent extends AbstractSubscriberComponent
-  implements OnInit {
+export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
   // location of component - where should it show 'top' or 'inline' in the feed.
   @Input() location: NoticeLocation = 'top';
 
@@ -45,6 +49,9 @@ export class FeedNoticeOutletComponent extends AbstractSubscriberComponent
   // index of outlet relative to other outlets. Top outlets will be -1.
   protected position: number = null;
 
+  // array of subscriptions to be unsubscribed from on destroy.
+  private subscriptions: Subscription[] = [];
+
   /**
    * If experiment is active, full width class.
    * @returns { boolean } - true if should be shown as full width.
@@ -53,6 +60,11 @@ export class FeedNoticeOutletComponent extends AbstractSubscriberComponent
   get isFullWidth(): boolean {
     return this.service.shouldBeFullWidth();
   }
+
+  // Makes notice to stick to the top of the feed.
+  @HostBinding('class.m-feedNoticeOutlet__container--sticky')
+  @Input()
+  stickyTop: boolean;
 
   /**
    * If a notice is visible (helps us get rid of borders when no notice is shown).
@@ -73,9 +85,7 @@ export class FeedNoticeOutletComponent extends AbstractSubscriberComponent
     return this.location === 'top';
   }
 
-  constructor(public service: FeedNoticeService) {
-    super();
-  }
+  constructor(public service: FeedNoticeService) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -96,10 +106,27 @@ export class FeedNoticeOutletComponent extends AbstractSubscriberComponent
           distinctUntilChanged(),
           // Update this classes notice.
           tap((notice: FeedNotice) => {
+            if (this.service.shouldBeStickyTop(notice)) {
+              this.stickyTop = true;
+            }
             this.notice$.next(notice);
           })
         )
         .subscribe()
     );
+  }
+
+  ngOnDestroy(): void {
+    const notice = this.notice$.getValue();
+    if (notice) {
+      this.service.unregister(notice.key);
+
+      if (this.stickyTop) {
+        this.stickyTop = false;
+      }
+    }
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 }

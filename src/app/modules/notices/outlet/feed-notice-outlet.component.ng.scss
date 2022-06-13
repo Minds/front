@@ -3,6 +3,8 @@
 @import 'spacing';
 @import '../../../common/layout/layout.scss';
 
+$topbarHeight: 75px;
+
 :host {
   &.m-feedNoticeOutlet__container--visible {
     display: flex;
@@ -28,5 +30,11 @@
         border-right: 1px solid themed($m-borderColor--primary);
       }
     }
+  }
+
+  &.m-feedNoticeOutlet__container--sticky {
+    position: sticky;
+    top: $topbarHeight;
+    @include z-index(messenger);
   }
 }

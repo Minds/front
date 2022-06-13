@@ -107,6 +107,14 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
+   * Unregister an outlet by position.
+   * @param { NoticeKey } noticeKey - key of notice to unregister
+   */
+  public unregister(noticeKey: NoticeKey): void {
+    this.patchNoticeAttribute(noticeKey, 'position', null);
+  }
+
+  /**
    * Gets next notice to be shown for outlet position.
    * Note position !== location! - a position is an outlets index relative
    * to other outlets, and can be attained by calling the register function.
@@ -178,6 +186,15 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     }
 
     return shouldShow;
+  }
+
+  /**
+   * Whether the outlet should be shown with styling to stick to top of feed.
+   * @param { FeedNotice } - notice to check.
+   * @returns { boolean } true if sticky top styling should be applied.
+   */
+  public shouldBeStickyTop(notice: FeedNotice): boolean {
+    return this.shouldBeFullWidth() && notice.key === 'verify-email';
   }
 
   /**
