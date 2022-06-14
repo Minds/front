@@ -27,7 +27,13 @@
     "prepare": "husky install",
     "docs:json": "compodoc -p ./tsconfig.doc.json -e json -d .",
     "storybook": "npm run docs:json && ng run minds:storybook",
-    "build-storybook": "npm run docs:json && ng run minds:build-storybook"
+    "build-storybook": "npm run docs:json && ng run minds:build-storybook",
+    "test:coverage:doc": "npx compodoc --coverageTest 20 --coverageMinimumPerFile 25 --disableLifeCycleHooks -p tsconfig.doc.json"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "npm run test:coverage:doc"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -150,6 +156,7 @@
     "karma-jasmine": "^4.0.1",
     "karma-jasmine-html-reporter": "^1.7.0",
     "karma-mocha-reporter": "^2.2.5",
+    "lint-staged": "^13.0.1",
     "nodemon": "^2.0.12",
     "prettier": "^1.19.1",
     "pretty-quick": "^3.1.1",
