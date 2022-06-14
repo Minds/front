@@ -3,9 +3,8 @@
     <div class="m-walletModal__desc">
       <p class="m-walletPhoneVerification__disclaimer">
         Before you can start earning or purchase tokens, it is important that we
-        can simply verify your uniqueness. The less tokens spammers take, the
-        more that are left for you! To learn about how we keep your data
-        private,
+        verify your uniqueness. The less tokens spammers take, the more that are
+        left for you! To learn about how we keep your data private,
         <a [href]="'/p/privacy'" target="_blank">click here</a>.
       </p>
     </div>
@@ -15,20 +14,6 @@
     >
       <div class="m-form__fieldsContainer">
         <div class="m-form__field--text" *ngIf="!confirming">
-          <div class="m-form__row--label">
-            <label for="number" i18n="@@COMMON__MOBILE_PHONE_NUMBER"
-              >Mobile Phone Number</label
-            >
-            <m-tooltip icon="help">
-              <ng-container
-                i18n="@@PHONE_VERIFICATION__MINDS_WILL_NOT_STORE_TEXT"
-                >Minds will not store the number you provide. It will be hashed
-                using SHA-256 and combined with a salt key for privacy and
-                unique identification purposes. VOIP numbers are not
-                allowed.</ng-container
-              >
-            </m-tooltip>
-          </div>
           <div class="m-form__row--input">
             <m-phoneInput
               formControlName="number"
@@ -76,8 +61,8 @@
               id="code"
               name="code"
               formControlName="code"
-              class="form-control"
-              autofocus
+              class="form-control m-walletPhoneVerification__codeInput"
+              ngbAutofocus
             />
             <ng-container *ngTemplateOutlet="button"></ng-container>
           </div>
@@ -110,8 +95,10 @@
     [disabled]="inProgress"
     [saving]="inProgress"
     color="blue"
+    solid="true"
+    size="small"
     (onAction)="onSubmit()"
   >
-    {{ !confirming ? 'Send Verification' : 'Verify Code' }}
+    {{ !confirming ? 'Send' : 'Verify Code' }}
   </m-button>
 </ng-template>
