@@ -1,6 +1,9 @@
 // Identifier of a notice.
 export type NoticeKey =
   | 'verify-email'
+  | 'setup-channel'
+  | 'verify-uniqueness'
+  | 'connect-wallet'
   | 'build-your-algorithm'
   | 'enable-push-notifications'
   | 'update-tags';

@@ -30,6 +30,15 @@ import {
         <m-feedNotice--verifyEmail
           *ngSwitchCase="'verify-email'"
         ></m-feedNotice--verifyEmail>
+        <m-feedNotice--setupChannel
+          *ngSwitchCase="'setup-channel'"
+        ></m-feedNotice--setupChannel>
+        <m-feedNotice--verifyUniqueness
+          *ngSwitchCase="'verify-uniqueness'"
+        ></m-feedNotice--verifyUniqueness>
+        <m-feedNotice--connectWallet
+          *ngSwitchCase="'connect-wallet'"
+        ></m-feedNotice--connectWallet>
         <m-feedNotice--buildYourAlgorithm
           *ngSwitchCase="'build-your-algorithm'"
         ></m-feedNotice--buildYourAlgorithm>

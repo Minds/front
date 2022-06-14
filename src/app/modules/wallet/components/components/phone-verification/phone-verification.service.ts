@@ -8,7 +8,7 @@ import { ModalService } from '../../../../../services/ux/modal.service';
 /**
  * Global service to open a phone verification modal
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PhoneVerificationService {
   /**
    * phoneVerified subject

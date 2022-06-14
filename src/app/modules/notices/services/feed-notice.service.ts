@@ -3,6 +3,7 @@ import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { Session } from '../../../services/session';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { FeedNotice, NoticeKey, NoticeLocation } from '../feed-notice.types';
 import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
@@ -43,9 +44,18 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   constructor(
     private api: ApiService,
     private activityV2Experiment: ActivityV2ExperimentService,
-    private dismissalService: FeedNoticeDismissalService
+    private dismissalService: FeedNoticeDismissalService,
+    private session: Session
   ) {
     super();
+
+    this.subscriptions.push(
+      // fetch again on login - service can init mid login.
+      this.session.loggedinEmitter.subscribe(val => {
+        this.fetch();
+      })
+    );
+
     this.fetch();
   }
 
