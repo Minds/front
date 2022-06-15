@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
+  HostBinding,
   HostListener,
   Inject,
   OnDestroy,
@@ -24,6 +25,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { Observable } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -51,6 +53,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   router$;
 
+  @HostBinding('class.m-v3Topbar--isActivityV2')
+  activityV2Feature: boolean = this.activityV2Experiment.isActive();
+
   constructor(
     protected sidebarService: SidebarNavigationService,
     protected themeService: ThemeService,
@@ -62,10 +67,10 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     public pageLayoutService: PageLayoutService,
-    private featuresService: FeaturesService,
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
-    private guestModeExperiment: GuestModeExperimentService
+    private guestModeExperiment: GuestModeExperimentService,
+    protected activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 

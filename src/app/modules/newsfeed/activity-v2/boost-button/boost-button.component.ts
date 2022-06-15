@@ -10,6 +10,7 @@ import { BoostRecommendationService } from '../../../../common/services/boost-re
 @Component({
   selector: 'm-activityV2__boostButton',
   templateUrl: 'boost-button.html',
+  styleUrls: ['./boost-button.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActivityV2BoostButtonComponent implements OnInit {

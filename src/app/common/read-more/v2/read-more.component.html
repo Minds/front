@@ -1,0 +1,4 @@
+<span [innerHTML]="outputText | tags | codeHighlight"></span>
+<span class="m-readMore__cta" (click)="toggle()" *ngIf="shouldTruncate">{{
+  showAll ? 'See less' : 'See more'
+}}</span>

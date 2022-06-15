@@ -24,10 +24,10 @@
 
   &.m-feedHeader--activityV2 {
     .m-newsfeed__subscribed__feedType {
-      padding: $spacing6 $spacing9;
+      padding: $spacing6 $spacing4;
 
       @media screen and (max-width: $max-mobile) {
-        padding: $spacing5 $spacing5 $spacing4 $spacing6;
+        padding: $spacing5 $spacing4 $spacing4 $spacing4;
       }
     }
   }

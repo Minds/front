@@ -16,26 +16,31 @@
     </div>
     <ng-container *ngFor="let entity of boosts; let i = index">
       <!-- NOTE: nextBoost() and previousBoost() are only used by activityV2 -->
-      <m-activity
+      <div
+        class="m-newsfeedBoostRotator__item"
         *ngIf="shouldRender(i)"
         @fastFade
-        [entity]="entity"
-        [displayOptions]="{
-          showBoostRotatorButtons: true,
-          showOnlyCommentsInput: false,
-          showComments: false,
-          fixedHeight: true,
-          fixedHeightContainer: true,
-          isFeed: true
-        }"
-        [attr.data-minds-activity-guid]="entity.guid"
-        [slot]="i + 1"
-        [canRecordAnalytics]="false"
         [style.visibility]="i === currentPosition ? 'visible' : 'hidden'"
-        (nextBoost)="next()"
-        (previousBoost)="prev()"
+        [style.height.px]="height"
       >
-      </m-activity>
+        <m-activity
+          [entity]="entity"
+          [displayOptions]="{
+            showBoostRotatorButtons: true,
+            showOnlyCommentsInput: false,
+            showComments: false,
+            fixedHeight: true,
+            fixedHeightContainer: true,
+            isFeed: true
+          }"
+          [attr.data-minds-activity-guid]="entity.guid"
+          [slot]="i + 1"
+          [canRecordAnalytics]="false"
+          (nextBoost)="next()"
+          (previousBoost)="prev()"
+        >
+        </m-activity>
+      </div>
     </ng-container>
     <div
       *ngIf="boosts.length > 0 && !activityV2Feature"
