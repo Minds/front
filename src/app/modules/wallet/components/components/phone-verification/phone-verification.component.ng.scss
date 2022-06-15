@@ -1,15 +1,23 @@
 @import 'defaults.scss';
 
 :host {
-  max-width: 720px;
+  .m-modalV2__body {
+    padding: $spacing6 $spacing10;
+  }
 
   .m-walletPhoneVerification__disclaimer {
-    font-size: 16px;
+    @include body2Regular;
   }
 
   .m-walletModal__footnote {
+    margin-top: $spacing5;
+
     p {
-      font-size: 16px;
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
       &:first-child {
         margin-bottom: 18px;
         @include m-theme() {
@@ -23,8 +31,12 @@
   }
 
   .m-walletPhoneVerification__privacyNote {
-    margin-top: 20px;
-    line-height: 20px;
+    margin-top: $spacing5;
+
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
   }
 
   .m-formWrapper {
@@ -58,8 +70,23 @@
   .m-form__row--input {
     align-items: center;
 
+    @media screen and (max-width: $max-mobile) {
+      flex-flow: column nowrap;
+    }
+
     input {
       min-width: 200px;
+
+      @media screen and (max-width: $max-mobile) {
+        width: 100%;
+      }
+    }
+  }
+
+  .m-walletPhoneVerification__codeInput,
+  m-phoneInput {
+    @media screen and (min-width: $max-mobile) {
+      margin-right: $spacing5;
     }
   }
 
@@ -94,6 +121,18 @@
             }
           }
         }
+      }
+    }
+  }
+
+  m-button {
+    // make button full width for mobile only.
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+      margin-top: $spacing4;
+
+      ::ng-deep button {
+        width: 100%;
       }
     }
   }
