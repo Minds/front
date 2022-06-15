@@ -116,7 +116,7 @@ export class MultiFactorAuthService {
       payload.emailSecretKey = this.mfaSecretKey$.getValue();
     }
 
-    this.inProgress$.next(true);
+    this.inProgress$.next(Boolean(code)); // only get into inProgress if we're submitting, not resending
     this.mfaPayload$.next(payload);
   }
 
