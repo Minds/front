@@ -13,6 +13,7 @@ import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { catchError, scan, take, takeWhile, tap } from 'rxjs/operators';
 import { EmailResendService } from '../../../common/services/email-resend.service';
+import { OnboardingFeedNoticesExperimentService } from '../../experiments/sub-services/onboarding-feed-notices-experiment.service';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -38,16 +39,26 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     false
   );
 
+  // hidden when feed notice experiment is active.
+  public noticeExperimentActive: boolean = false;
+
   constructor(
     private onboarding: OnboardingV3Service,
     private panel: OnboardingV3PanelService,
     private composerModal: ComposerModalService,
     private injector: Injector,
     private toast: FormToastService,
-    private emailResend: EmailResendService
+    private emailResend: EmailResendService,
+    private noticeExperiment: OnboardingFeedNoticesExperimentService
   ) {}
 
   ngOnInit(): void {
+    this.noticeExperimentActive = this.noticeExperiment.isActive();
+
+    if (this.noticeExperimentActive) {
+      return; // no need to load if experiment is active.
+    }
+
     // load onboarding progress from server.
     this.onboarding.load();
 
