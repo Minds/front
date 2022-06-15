@@ -112,11 +112,11 @@ export class ActivityV2ContentComponent
 
   activityHeight: number;
   quoteHeight: number;
-  videoHeight: string;
-  videoWidth: string;
+  videoHeight: number;
+  videoWidth: number;
 
-  imageHeight: string;
-  imageWidth: string;
+  imageHeight: number;
+  imageWidth: number;
   imageAspectRatio: number = 0;
   imageOriginalHeight: number;
 
@@ -354,11 +354,10 @@ export class ActivityV2ContentComponent
 
   get mediaHeight(): number | null {
     if (this.isImage) {
-      const imageHeight = this.imageHeight || '410px';
-      return parseInt(imageHeight.slice(0, -2), 10);
+      return this.imageHeight || 410;
     }
     if (this.isVideo) {
-      return this.videoHeight ? parseInt(this.videoHeight.slice(0, -2), 10) : 0;
+      return this.videoHeight || 410;
     }
     if (this.isRichEmbed) {
       return 400;
@@ -521,8 +520,8 @@ export class ActivityV2ContentComponent
       scaledWidth = scaledHeight * aspectRatio;
     }
 
-    this.videoHeight = `${scaledHeight}px`;
-    this.videoWidth = `${scaledWidth}px`;
+    this.videoHeight = scaledHeight;
+    this.videoWidth = scaledWidth;
 
     this.detectChanges();
   }
@@ -554,32 +553,34 @@ export class ActivityV2ContentComponent
       // For modals, keep original dimensions
       if (this.isModal) {
         this.imageHeight =
-          originalHeight > 0
-            ? `${originalHeight}px`
-            : `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+          originalHeight > 0 ? originalHeight : ACTIVITY_MODAL_MIN_STAGE_HEIGHT;
       } else if (this.isFixedHeight) {
         // For fixed height, calculate height based on
         // client height
 
-        const height = this.imageContainerEl.nativeElement.clientHeight;
-
-        this.imageHeight = `${height}px`;
+        this.imageHeight = this.imageContainerEl.nativeElement.clientHeight;
+        this.imageWidth = this.imageHeight / this.imageAspectRatio;
       } else {
         // For everything else, calculate height from
         // aspect ratio and clientWidth
 
-        const height =
-          this.imageEl.nativeElement.clientWidth * this.imageAspectRatio;
+        this.imageWidth = this.imageContainerEl.nativeElement.clientWidth;
+        this.imageHeight = this.imageWidth * this.imageAspectRatio;
 
-        this.imageHeight = `${height}px`;
+        // if this ends up being taller than max height,
+        // scale it down to fit within max height
+        if (this.imageHeight > ACTIVITY_V2_MAX_MEDIA_HEIGHT) {
+          this.imageHeight = ACTIVITY_V2_MAX_MEDIA_HEIGHT;
+          this.imageWidth = this.imageHeight / this.imageAspectRatio;
+        }
       }
     } else {
       // If no custom dimensions data
       if (this.isModal) {
         // Size for modal stage
-        this.imageHeight = `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+        this.imageHeight = ACTIVITY_MODAL_MIN_STAGE_HEIGHT;
       } else {
-        this.imageHeight = null;
+        this.imageHeight = ACTIVITY_V2_MAX_MEDIA_HEIGHT * 0.75;
       }
     }
 

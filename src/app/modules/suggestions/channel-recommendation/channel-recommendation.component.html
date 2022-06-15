@@ -8,9 +8,9 @@
     *ngIf="(recommendations$ | async).length"
   >
     <header>
-      <h2>
+      <h3>
         {{ title }}
-      </h2>
+      </h3>
       <div>
         <a
           [routerLink]="['/discovery/suggestions/user']"
@@ -23,7 +23,11 @@
           [anchorPosition]="{ top: '0', right: '0' }"
           *ngIf="dismissible"
         >
-          <m-icon iconId="more_vert"></m-icon>
+          <m-icon
+            [iconId]="activityV2Feature ? 'more_horiz' : 'more_vert'"
+            sizeFactor="1.5"
+            rem="true"
+          ></m-icon>
         </m-dropdownMenu>
       </div>
     </header>

@@ -8,8 +8,12 @@
   .m-activityToolbar__actions {
     padding-left: $activitySpacingLeft--feed;
     padding-right: $activitySpacingRight--feed;
-    padding-top: $spacing6;
-    padding-bottom: $spacing6;
+    padding-top: $spacing5;
+    padding-bottom: $spacing5;
+
+    &.m-activityToolbar__actions--hasComments {
+      padding-bottom: $spacing4;
+    }
 
     @media screen and (max-width: $max-mobile) {
       padding-left: $activitySpacingLeft--feed--mobile;
@@ -24,15 +28,6 @@
     .m-activityToolbar__actions {
       ::ng-deep > * {
         flex-basis: 25%;
-
-        &:last-child {
-          flex-basis: 25%;
-          flex-grow: 1;
-
-          @media screen and (max-width: $max-mobile) {
-            flex-basis: 25%;
-          }
-        }
       }
     }
   }
@@ -52,8 +47,8 @@
   m-activityV2__modal & {
     .m-activityToolbar__actions,
     .m-activityToolbar__metrics {
-      padding-left: $activitySpacing--modal + $spacing3;
-      padding-right: $activitySpacing--modal + $spacing3;
+      padding-left: $activitySpacing--modal;
+      padding-right: $activitySpacing--modal;
       padding-top: $spacing4;
       padding-bottom: $spacing4;
     }
@@ -153,22 +148,13 @@
         flex-basis: auto;
       }
 
-      &:last-child {
-        flex-basis: 20px;
-        flex-grow: 0;
-
-        @media screen and (max-width: $max-mobile) {
-          flex-basis: 20px;
-        }
-      }
-
       > a,
       ::ng-deep .m-activityRemindButton__icon {
         line-height: 20px;
         cursor: pointer;
 
         .minds-counter {
-          @include body2Medium;
+          @include body3Medium;
         }
 
         i.material-icons {
@@ -232,9 +218,9 @@
         }
       }
 
-      @media screen and (max-width: $max-mobile) {
-        flex-grow: 0;
-      }
+      // @media screen and (max-width: $max-mobile) {
+      //   flex-grow: 0;
+      // }
     }
 
     ::ng-deep m-wire-button {
@@ -327,6 +313,7 @@
   .m-activityToolbar__metrics {
     @include borderTop;
     @include borderBottom;
+    justify-content: flex-start;
   }
 
   .m-activityToolbarMetrics__metric {

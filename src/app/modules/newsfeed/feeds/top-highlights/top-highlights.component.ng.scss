@@ -9,18 +9,16 @@
   }
 
   &.m-topHighlights--activityV2 {
-    .m-topHighlights__title {
+    header {
       @include borderTop;
+      padding-top: $spacing4;
+      padding-left: $spacing4;
+      padding-right: $spacing4;
+    }
+
+    .m-topHighlights__title {
       margin-top: 0;
       margin-bottom: 0;
-      padding-top: $spacing4;
-      padding-left: $spacing6;
-      padding-right: $spacing6;
-
-      @media screen and (max-width: $max-mobile) {
-        padding-left: $spacing4;
-        padding-right: $spacing4;
-      }
     }
 
     ul {
@@ -36,8 +34,18 @@
       .m-topHighlights__showMore__link {
         padding-right: $spacing6;
       }
+      margin-top: 0;
+      margin-bottom: $spacing2;
+    }
+
+    ::ng-deep m-icon i {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
   }
+
+  //
 
   ul {
     padding: 0;

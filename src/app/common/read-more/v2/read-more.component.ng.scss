@@ -1,0 +1,18 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+
+  .m-readMore__cta {
+    cursor: pointer;
+    margin-left: $spacing1;
+    font-weight: 500;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

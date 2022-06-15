@@ -4,36 +4,14 @@
   display: block;
 
   // *********************************
-  // ** FEED **
-  // *********************************
-
-  .m-activity--isFeed & {
-    .m-activity__ownerBlock {
-      width: 103%;
-    }
-  }
-
-  // *********************************
-  // ** GUEST MODE **
-  // *********************************
-
-  .m-activity--guestMode & {
-    .m-activity__ownerBlock {
-      width: 100% !important;
-    }
-  }
-
-  // *********************************
   // ** MINIMAL MODE **
   // *********************************
 
   &.m-activity__ownerBlock--minimalMode {
-    .m-activity__ownerBlock {
-      width: 100%;
-    }
-
     padding-left: $spacing4;
     padding-right: $spacing2;
+    padding-top: $spacing2;
+    padding-bottom: $spacing2;
 
     .m-activityOwnerBlock__avatar {
       ::ng-deep m-hovercard {
@@ -105,19 +83,6 @@
   }
 
   // *********************************
-  // ** SINGLE **
-  // *********************************
-
-  m-newsfeed--single & {
-    .m-activity__ownerBlock {
-      width: 102%;
-    }
-    ::ng-deep m-activityV2__views {
-      display: none;
-    }
-  }
-
-  // *********************************
   // *********************************
   // *********************************
   // ** DEFAULT **
@@ -131,7 +96,7 @@
     flex-direction: row;
 
     width: 100%;
-    padding-bottom: $spacing2;
+    padding-bottom: $spacing1;
     box-sizing: border-box;
 
     a {

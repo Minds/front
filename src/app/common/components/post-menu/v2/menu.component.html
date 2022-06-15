@@ -1,6 +1,6 @@
 <div class="m-dropdown--v2">
   <button class="m-postMenu__button" (click)="onButtonClick($event)">
-    <i class="material-icons">more_vert</i>
+    <i class="material-icons">{{ icon }}</i>
   </button>
 
   <ul class="m-dropdown__list" *ngIf="isOpened$ | async">

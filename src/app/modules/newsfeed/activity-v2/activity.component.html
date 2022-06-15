@@ -22,7 +22,7 @@
         [offset]="[0, 15]"
       >
         <a [routerLink]="['/', entity.ownerObj.username]">
-          <img [src]="avatarUrl" />
+          <img [src]="avatarUrl" class="m-border" />
         </a>
       </m-hovercard>
     </div>
@@ -42,14 +42,14 @@
         >
           <m-icon
             iconId="chevron_left"
-            [sizeFactor]="1.8"
+            [sizeFactor]="1.5"
             [rem]="true"
             (singleClick)="emitPreviousBoost()"
             mPreventDoubleClick
           ></m-icon
           ><m-icon
             iconId="chevron_right"
-            [sizeFactor]="1.8"
+            [sizeFactor]="1.5"
             [rem]="true"
             (singleClick)="emitNextBoost()"
             mPreventDoubleClick

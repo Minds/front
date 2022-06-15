@@ -35,6 +35,7 @@ import { ActivityV2FlagComponent } from './flag/flag.component';
 import { ActivityV2BadgesComponent } from './badges/badges.component';
 import { ActivityV2PermalinkComponent } from './permalink/permalink.component';
 import { ActivityV2ViewsComponent } from './views/views.component';
+import { ReadMoreModule } from '../../../common/read-more/v2/read-more.module';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { ActivityV2ViewsComponent } from './views/views.component';
     PostMenuModule,
     WireModule,
     CodeHighlightModule,
+    ReadMoreModule,
   ],
   declarations: [
     ActivityV2Component,

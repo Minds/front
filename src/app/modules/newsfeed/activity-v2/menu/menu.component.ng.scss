@@ -28,4 +28,9 @@
     top: 0;
     right: 0;
   }
+
+  ::ng-deep .m-postMenu__button button,
+  ::ng-deep .m-postMenu__button {
+    padding-right: 0;
+  }
 }
