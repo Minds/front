@@ -71,7 +71,6 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
           take(1),
           map((response: ApiResponse) => {
             if (response.status === 'success' && response.notices.length) {
-              let i = 0;
               for (let notice of response.notices) {
                 notice.dismissed = this.dismissalService.isNoticeDismissed(
                   notice.key
@@ -118,7 +117,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
 
   /**
    * Unregister an outlet by position.
-   * @param { NoticeKey } noticeKey - key of notice to unregister
+   * @param { NoticeKey } noticeKey - key of notice to unregister.
    */
   public unregister(noticeKey: NoticeKey): void {
     this.patchNoticeAttribute(noticeKey, 'position', null);
@@ -190,6 +189,12 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     );
   }
 
+  /**
+   * Filter out notices that are priority to be shown, based on how many notices
+   * should be shown, and which showable notices are first in line.
+   * @param { FeedNotice[] } notices - array of feed notices to check.
+   * @returns { FeedNotice[] } array of priority notices.
+   */
   protected filterPriorityNotices(notices: FeedNotice[]): FeedNotice[] {
     const shouldShow = [];
 

@@ -267,7 +267,7 @@
         <source> Verified </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/badges/badges.component.html</context>
-          <context context-type="linenumber">13,15</context>
+          <context context-type="linenumber">10,12</context>
         </context-group>
         <note priority="1" from="description">Verified as user status</note>
       </trans-unit>
@@ -275,7 +275,7 @@
         <source> Admin </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/badges/badges.component.html</context>
-          <context context-type="linenumber">25,27</context>
+          <context context-type="linenumber">20,22</context>
         </context-group>
         <note priority="1" from="description">Admin as user status</note>
       </trans-unit>
@@ -283,7 +283,7 @@
         <source> Minds+ </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/badges/badges.component.html</context>
-          <context context-type="linenumber">37,39</context>
+          <context context-type="linenumber">33,35</context>
         </context-group>
         <note priority="1" from="description">Plus as user status</note>
       </trans-unit>
@@ -291,22 +291,22 @@
         <source> Pro </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/badges/badges.component.html</context>
-          <context context-type="linenumber">49,51</context>
+          <context context-type="linenumber">43,45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/badges/badges.component.html</context>
-          <context context-type="linenumber">57,59</context>
+          <context context-type="linenumber">51,53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__BADGES__FOUNDER" datatype="html">
         <source> Founder </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/badges/badges.component.html</context>
-          <context context-type="linenumber">68,70</context>
+          <context context-type="linenumber">63,65</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/badges/badges.component.html</context>
-          <context context-type="linenumber">77,79</context>
+          <context context-type="linenumber">75,77</context>
         </context-group>
         <note priority="1" from="description">Founder as user status</note>
       </trans-unit>
@@ -314,7 +314,7 @@
         <source>Boosted OnChain in the last 7 days</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/badges/badges.component.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__ACTION__MARK_SPAM" datatype="html">
@@ -453,7 +453,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__COPYRIGHT_YEAR" datatype="html">
-        <source>© Minds <x id="INTERPOLATION" equiv-text="{{ &apos;2022&apos; }}"/></source>
+        <source>© Minds <x id="INTERPOLATION" equiv-text="{{ &apos;2021&apos; }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/footer/footer.component.html</context>
           <context context-type="linenumber">22</context>
@@ -517,7 +517,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/infinite-scroll/infinite-scroll.ts</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__INFINITE_SCROLL__NOTHING_MORE" datatype="html">
@@ -528,7 +528,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/infinite-scroll/infinite-scroll.ts</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="JOIN_BANNER__SPEAK_FREELY_EARN_CRYPTO" datatype="html">
@@ -545,41 +545,18 @@
           <context context-type="linenumber">24,30</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="COMMON__NSFW" datatype="html">
-        <source>NSFW</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/components/nsfw-selector/nsfw-selector.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/blogs/v2/edit/dropdown/dropdown.component.html</context>
-          <context context-type="linenumber">11,15</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/composer/components/popup/nsfw/nsfw.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/composer/components/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">51,56</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/discovery/feeds/settings.component.html</context>
-          <context context-type="linenumber">61,64</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="M__NSFW__FULL" datatype="html">
         <source>Not Safe for Work</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/nsfw-selector/nsfw-selector.component.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__NSFW" datatype="html">
         <source>NSFW</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/components/nsfw-selector/nsfw-selector.component.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__ACTION__VIEW" datatype="html">
@@ -932,14 +909,6 @@
           <context context-type="linenumber">36,37</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__NEWSFEED__SEE_LATEST_TITLE" datatype="html">
-        <source> See
-    <x id="count" equiv-text="count &gt; 99 ? &apos;+99&apos; : count"/> latest posts</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/components/see-latest-posts-button/see-latest-posts-button.component.ts</context>
-          <context context-type="linenumber">102</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL" datatype="html">
         <source>Unsubscribe</source>
         <context-group purpose="location">
@@ -1066,11 +1035,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">277,281</context>
+          <context context-type="linenumber">272,276</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">283,288</context>
+          <context context-type="linenumber">278,283</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__LESS" datatype="html">
@@ -1117,40 +1086,33 @@
         <source>Discovery</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">112,115</context>
+          <context context-type="linenumber">112,116</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">122,129</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="COMMON__EXPLORE" datatype="html">
-        <source>Explore</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">119,121</context>
+          <context context-type="linenumber">118,124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__MINDS+" datatype="html">
         <source>Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">144,148</context>
+          <context context-type="linenumber">139,143</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">150,156</context>
+          <context context-type="linenumber">145,151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__WALLET" datatype="html">
         <source>Wallet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">175,179</context>
+          <context context-type="linenumber">170,174</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">181,188</context>
+          <context context-type="linenumber">176,183</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/blockchain/marketing/v2/token.component.html</context>
@@ -1161,22 +1123,22 @@
         <source>Chat</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">203,206</context>
+          <context context-type="linenumber">198,201</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">207,210</context>
+          <context context-type="linenumber">202,205</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__GROUPS" datatype="html">
         <source>Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">232,235</context>
+          <context context-type="linenumber">227,230</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">237,243</context>
+          <context context-type="linenumber">232,238</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/about/extra-info.component.html</context>
@@ -1291,15 +1253,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/login/login.html</context>
-          <context context-type="linenumber">199,203</context>
+          <context context-type="linenumber">198,202</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/login/login.html</context>
-          <context context-type="linenumber">210,216</context>
+          <context context-type="linenumber">209,215</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/login/login.html</context>
-          <context context-type="linenumber">241,248</context>
+          <context context-type="linenumber">240,247</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__UPGRADE" datatype="html">
@@ -1354,7 +1316,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/suggestions/channel-recommendation/channel-recommendation.component.html</context>
-          <context context-type="linenumber">19,23</context>
+          <context context-type="linenumber">17,21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__READ_MORE__ACTION" datatype="html">
@@ -1362,321 +1324,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/common/read-more/button.component.ts</context>
           <context context-type="linenumber">44</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__1" datatype="html">
-        <source>Illegal</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__1.1" datatype="html">
-        <source>Terrorism</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__1.1" datatype="html">
-        <source>Advertizing or recruiting for terrorist organizations</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__1.2" datatype="html">
-        <source>Sexualization of minors</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__1.2" datatype="html">
-        <source>Implies or promotes child sexual activity or shows genitalia</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__1.3" datatype="html">
-        <source>Extortion</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__1.3" datatype="html">
-        <source>Material that aims to achieve a benefit through coercion</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__1.4" datatype="html">
-        <source>Fraud</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__1.4" datatype="html">
-        <source>Intent to deceive someone for monetary or personal gain</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__1.5" datatype="html">
-        <source>Revenge Porn</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__1.5" datatype="html">
-        <source>Distribution of pornographic materials without consent</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__1.6" datatype="html">
-        <source>Trafficking</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__1.6" datatype="html">
-        <source>Illegal sales of sex or paraphernalia (e.g. escort services, drugs)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__2" datatype="html">
-        <source>NSFW (not safe for work)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__2.1" datatype="html">
-        <source>Nudity</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">69</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__2.1" datatype="html">
-        <source>Exposure of genitalia or breasts</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__2.2" datatype="html">
-        <source>Pornography</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">73</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__2.2" datatype="html">
-        <source>Printed or visual material of explicit sexual activity</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__2.3" datatype="html">
-        <source>Profanity</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">77</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__2.3" datatype="html">
-        <source>Obscene language or sensational content</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__2.4" datatype="html">
-        <source>Violence and Gore</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">81</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__2.4" datatype="html">
-        <source>Vivid, brutal, and realistic acts of violence</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__2.5" datatype="html">
-        <source>Race, Religion, Gender</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">85</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__2.5" datatype="html">
-        <source>Extreme content relating to race, religion, or gender</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__3" datatype="html">
-        <source>Incitement to violence</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">89</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__3" datatype="html">
-        <source>Calls to violence that are imminent</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__4" datatype="html">
-        <source>Harassment</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__4" datatype="html">
-        <source>Intentionally targeting someone with the intent to torment or terrorize them</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">94</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__5" datatype="html">
-        <source>Personal and confidential information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">97</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__5" datatype="html">
-        <source>Sharing or threatening to share private, personal, or confidential information about someone</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">98</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__7" datatype="html">
-        <source>Impersonation</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">101</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__7" datatype="html">
-        <source>Assuming a false or fictitious identity, except for parody</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">102</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__8" datatype="html">
-        <source>Spam</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">105</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__8" datatype="html">
-        <source>Repeated, unwanted, or unsolicited manual or automated actions that negatively affect the Minds community</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">106</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__10" datatype="html">
-        <source>Intellectual Property violation</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">109</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__10" datatype="html">
-        <source>Content posted to Minds that infringes a copyright you own or control</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">110</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__13" datatype="html">
-        <source>Malware</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">113</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__13" datatype="html">
-        <source>Code delivered over the network for the purpose of an attack</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">114</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__16" datatype="html">
-        <source>Inauthentic engagement</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">117</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__16" datatype="html">
-        <source>Activity that seeks to artificially inflate activity on the site to increase interaction metrics</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__17" datatype="html">
-        <source>Security</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">121</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__17.1" datatype="html">
-        <source>Hacked account</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">124</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__17.1" datatype="html">
-        <source>If an account has been compromised by an unauthorized person or entity</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">125</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__11" datatype="html">
-        <source>Another reason</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">128</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_DESCRIPTION__11" datatype="html">
-        <source>A reason other than one listed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/common/services/report.service.ts</context>
-          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__ADMIN__NO_DATA" datatype="html">
@@ -1805,20 +1452,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/forgot-password/forgot-password.component.html</context>
           <context context-type="linenumber">125,131</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MFA_AUTH_ROOT__CONFIRM_YOUR_EMAIL" datatype="html">
-        <source>Confirm Your Email</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/auth/multi-factor-auth/multi-factor-auth.component.html</context>
-          <context context-type="linenumber">22,25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MFA_AUTH_ROOT__TWO_FACTOR_AUTH_REQUIRED" datatype="html">
-        <source>Two-factor Required</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/auth/multi-factor-auth/multi-factor-auth.component.html</context>
-          <context context-type="linenumber">25,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MFA_AUTH__SENT_SMS_CODE" datatype="html">
@@ -1951,7 +1584,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/report/creator/creator.component.html</context>
-          <context context-type="linenumber">140,147</context>
+          <context context-type="linenumber">135,142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__REVIEW_REPORT_ASAP" datatype="html">
@@ -1962,7 +1595,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/report/creator/creator.component.html</context>
-          <context context-type="linenumber">147,154</context>
+          <context context-type="linenumber">142,149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__ACTION__CLOSE__CAPS" datatype="html">
@@ -2773,6 +2406,25 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/blogs/v2/edit/bottom-bar/meta/meta.component.html</context>
           <context context-type="linenumber">62,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="COMMON__NSFW" datatype="html">
+        <source>NSFW</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/blogs/v2/edit/dropdown/dropdown.component.html</context>
+          <context context-type="linenumber">24,28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/composer/components/popup/nsfw/nsfw.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/composer/components/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">51,56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/discovery/feeds/settings.component.html</context>
+          <context context-type="linenumber">61,64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="BLOGS_EDITOR__UPLOAD_BANNER_IMAGE" datatype="html">
@@ -3893,13 +3545,6 @@
           <context context-type="linenumber">48,51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="CHANNEL_ABOUT__DID" datatype="html">
-        <source> DID </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/about/about.component.html</context>
-          <context context-type="linenumber">62,66</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="COMMON__READ_MORE" datatype="html">
         <source> Read More </source>
         <context-group purpose="location">
@@ -3986,134 +3631,12 @@
           <context context-type="linenumber">64,67</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="CHANNEL_ABOUT__NOSTR" datatype="html">
-        <source> Nostr </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/about/nostr/nostr.component.html</context>
-          <context context-type="linenumber">6,12</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="eb9062dd05394a25879f197ba90765bfffe6703f" datatype="html">
         <source> Edit Channel
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/actions/edit.component.html</context>
           <context context-type="linenumber">8,10</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="COMMON__UNSUBSCRIBE" datatype="html">
-        <source>Unsubscribe</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">15,19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="COMMON__SUBSCRIBE" datatype="html">
-        <source>Subscribe</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">20,25</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/subscribe.component.html</context>
-          <context context-type="linenumber">3,5</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/pro/channel/subscribe-button/subscribe-button.component.html</context>
-          <context context-type="linenumber">10,13</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__UNBAN_GLOBALLY" datatype="html">
-        <source>Un-ban globally</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">29,33</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER" datatype="html">
-        <source>View Ledger</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">34,38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">74,79</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS" datatype="html">
-        <source>View Withdrawals</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">39,43</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">82,87</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_NEWSFEED_BOOSTS" datatype="html">
-        <source>View Newsfeed Boosts</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">44,48</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_SIDEBAR_BOOSTS" datatype="html">
-        <source>View Sidebar Boosts</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">49,53</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR" datatype="html">
-        <source>E-mail Address</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">54,59</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">90,93</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__REMOVE_EXPLICIT" datatype="html">
-        <source>Remove explicit</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">75,81</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="M__ACTION__REINDEX" datatype="html">
-        <source>Reindex</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">90,94</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">130,134</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__UNBLOCK" datatype="html">
-        <source>Unblock</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">99,102</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__BLOCK" datatype="html">
-        <source>Block</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">103,107</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__REPORT" datatype="html">
-        <source>Report</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">109,116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__PRO_CHANNEL" datatype="html">
@@ -4123,6 +3646,17 @@
           <context context-type="linenumber">20,27</context>
         </context-group>
         <note priority="1" from="meaning">Users Minds Pro channel</note>
+      </trans-unit>
+      <trans-unit id="COMMON__SUBSCRIBE" datatype="html">
+        <source>Subscribe</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/channels/v2/actions/subscribe.component.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/pro/channel/subscribe-button/subscribe-button.component.html</context>
+          <context context-type="linenumber">10,13</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="COMMON__FEED" datatype="html">
         <source>Feed</source>
@@ -4475,7 +4009,7 @@
         <source>Consider subscribing to</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/feed/feed.component.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__CHANNEL_LIST__FILTER_ELLIPSIS" datatype="html">
@@ -4681,13 +4215,6 @@
           <context context-type="linenumber">77,83</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="SUPPORT_TIER_DELETE" datatype="html">
-        <source>Delete Tier</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/channels/v2/shop/memberships/support-tier.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="SUPPORT_TIER_TOKENS_PER_MONTH_AMOUNT" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span
         &gt;"/><x id="ICU" equiv-text="{supportTier.tokens, plural, =1 {{{supportTier.tokens | number}} token}
@@ -4695,25 +4222,25 @@
       &gt;"/> per month </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/shop/memberships/support-tier.component.html</context>
-          <context context-type="linenumber">34,39</context>
+          <context context-type="linenumber">32,37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9a9a02d13a10441b66af33a5062a81ee40360126" datatype="html">
         <source>{VAR_PLURAL, plural, =1 {<x id="INTERPOLATION"/> token} other {<x id="INTERPOLATION"/> tokens}}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/shop/memberships/support-tier.component.html</context>
-          <context context-type="linenumber">35,36</context>
+          <context context-type="linenumber">33,34</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/shop/memberships/support-tier.component.html</context>
-          <context context-type="linenumber">53,55</context>
+          <context context-type="linenumber">51,53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="SUPPORT_TIER_USD_PER_MONTH_AMOUNT" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>$<x id="INTERPOLATION" equiv-text="{{ supportTier.usd | number }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> per month </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/shop/memberships/support-tier.component.html</context>
-          <context context-type="linenumber">45,46</context>
+          <context context-type="linenumber">43,44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="SUPPORT_TIER_TOKENS_AND_USD_PER_MONTH_AMOUNT" datatype="html">
@@ -4724,14 +4251,14 @@
       &gt;"/> per month </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/shop/memberships/support-tier.component.html</context>
-          <context context-type="linenumber">52,58</context>
+          <context context-type="linenumber">50,56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="SUPPORT_TIER_POSTS_AMOUNT" datatype="html">
         <source>{VAR_PLURAL, plural, =1 {<x id="INTERPOLATION"/> post} other {<x id="INTERPOLATION"/> posts}}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/channels/v2/shop/memberships/support-tier.component.html</context>
-          <context context-type="linenumber">65,66</context>
+          <context context-type="linenumber">63,64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="CHECKOUT__WAITING_LABEL" datatype="html">
@@ -4773,8 +4300,8 @@
           <context context-type="linenumber">351,355</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/newsfeed/activity-v2/permalink/permalink.component.html</context>
-          <context context-type="linenumber">43,47</context>
+          <context context-type="sourcefile">src/app/modules/newsfeed/activity-v2/owner-block/owner-block.component.html</context>
+          <context context-type="linenumber">78,84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/newsfeed/activity/owner-block/owner-block.component.html</context>
@@ -5233,7 +4760,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/report/creator/creator.component.html</context>
-          <context context-type="linenumber">157,162</context>
+          <context context-type="linenumber">152,157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__SCHEDULE_POST" datatype="html">
@@ -5367,13 +4894,6 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
       </trans-unit>
-      <trans-unit id="COMPOSER__SCHEDULE_POST" datatype="html">
-        <source> Schedule Post </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/composer/components/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">139,145</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="M__CONTENT_SETTINGS_MODAL__SUBTITLE__TAGS" datatype="html">
         <source>The tags you select will allow us to recommend content relevant to your areas of interest</source>
         <context-group purpose="location">
@@ -5396,7 +4916,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/suggestions/channel-recommendation/channel-recommendation.component.ts</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="DISCOVERY_DISCLAIMER__SPEAK_YOUR_MIND" datatype="html">
@@ -5522,7 +5042,7 @@
         <source>Back</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/discovery/search/search.component.html</context>
-          <context context-type="linenumber">58,64</context>
+          <context context-type="linenumber">48,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="DISCOVERY_SETTINGS_BUTTON__MANAGE_RESULTS" datatype="html">
@@ -5550,14 +5070,14 @@
         <source>Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/discovery/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">15,23</context>
+          <context context-type="linenumber">15,21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="DISCOVERY_SUGGESTIONS__BACK" datatype="html">
         <source>Back</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/discovery/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">26,32</context>
+          <context context-type="linenumber">23,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__TOP" datatype="html">
@@ -5821,14 +5341,14 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/login/login.html</context>
-          <context context-type="linenumber">228,233</context>
+          <context context-type="linenumber">227,232</context>
         </context-group>
       </trans-unit>
       <trans-unit id="FORMS__LOGIN__FORGOT_PASSWORD_LINK" datatype="html">
         <source> Forgot Password? </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/login/login.html</context>
-          <context context-type="linenumber">177,182</context>
+          <context context-type="linenumber">176,181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="FORMS__ONBOARDING__AVATAR_LABEL" datatype="html">
@@ -5914,7 +5434,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">317,322</context>
+          <context context-type="linenumber">312,317</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__REGISTER__EXCEPTION__USERNAME_TOO_SHORT" datatype="html">
@@ -5999,18 +5519,18 @@
         <source> Signup </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">286,292</context>
+          <context context-type="linenumber">281,287</context>
         </context-group>
       </trans-unit>
       <trans-unit id="FORMS__REGISTER__JOIN_NOW_ACTION" datatype="html">
         <source> Join Now </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">298,305</context>
+          <context context-type="linenumber">293,300</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">331,337</context>
+          <context context-type="linenumber">326,332</context>
         </context-group>
       </trans-unit>
       <trans-unit id="FORMS__TUTORIAL__EARN_POINTS" datatype="html">
@@ -6950,11 +6470,39 @@
           <context context-type="linenumber">66,71</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER" datatype="html">
+        <source> View Ledger </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
+          <context context-type="linenumber">74,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS" datatype="html">
+        <source> View Withdrawals </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
+          <context context-type="linenumber">82,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR" datatype="html">
+        <source> E-mail Address </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
+          <context context-type="linenumber">90,93</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="M__ACTION__MARK_EXPLICIT" datatype="html">
         <source> Set as explicit </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
           <context context-type="linenumber">102,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="M__ACTION__REINDEX" datatype="html">
+        <source> Reindex </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/legacy/components/buttons/user-dropdown.ts</context>
+          <context context-type="linenumber">130,134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__ACTION__MARK_AS_SAFE" datatype="html">
@@ -7886,7 +7434,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="MOBILE__MARKETING__ANDROID__INTRO" datatype="html">
-        <source> For the best experience, download the mobile app directly from Minds. All content is accessible. Make sure your phone&apos;s software version is within the last 3 latest android versions and you update your phone settings to &quot;allow installation of apps from unknown sources.&quot; NSFW content is not currently accessible on Google Play due to their terms of service. </source>
+        <source> For the best experience, download the mobile app directly from Minds. All content is accessible. Make sure you are running Android 5 (Lollipop) or higher and update phone settings to &quot;allow installation of apps from unknown sources.&quot; NSFW content is not currently accessible on Google Play due to their terms of service. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/mobile/marketing/marketing.component.html</context>
           <context context-type="linenumber">9,17</context>
@@ -8192,6 +7740,14 @@
           <context context-type="linenumber">76,81</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__SEE_LATEST_TITLE" datatype="html">
+        <source> See
+    <x id="count" equiv-text="count &gt; 99 ? &apos;+99&apos; : count"/> latest posts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/newsfeed/feeds/see-latest-posts-button/see-latest-posts-button.component.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="NEWSFEED_SORTED__POSTS_OLDER_THAN" datatype="html">
         <source>Posts older than <x id="INTERPOLATION" equiv-text="{{ period | uppercase }}"/></source>
         <context-group purpose="location">
@@ -8203,25 +7759,14 @@
         <source>Have 200 free views on us. Hit post to be boosted. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/newsfeed/feeds/subscribed.component.html</context>
-          <context context-type="linenumber">9,15</context>
+          <context context-type="linenumber">10,16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__NEWSFEED__TOP_FEED__SHOW_MORE" datatype="html">
         <source>See more top posts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/newsfeed/feeds/top-highlights/top-highlights.component.html</context>
-          <context context-type="linenumber">36,43</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="COMMON__REMOVE_FROM_FEED" datatype="html">
-        <source>Remove from feed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/newsfeed/feeds/top-highlights/top-highlights.component.html</context>
-          <context context-type="linenumber">44,48</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/suggestions/channel-recommendation/channel-recommendation.component.html</context>
-          <context context-type="linenumber">89,93</context>
+          <context context-type="linenumber">29,33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM" datatype="html">
@@ -8373,133 +7918,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/nodes/marketing/marketing.component.html</context>
           <context context-type="linenumber">240,242</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__BUILD_YOUR_ALGORITHM_TITLE" datatype="html">
-        <source>Build your algorithm</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/build-your-algorithm/build-your-algorithm-notice.component.html</context>
-          <context context-type="linenumber">5,8</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__BUILD_YOUR_ALGORITHM_BODY" datatype="html">
-        <source> Take control of your social media. Your preferences will improve your Discovery and similar feeds. But don&apos;t worry, it won&apos;t impact your default newsfeed. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/build-your-algorithm/build-your-algorithm-notice.component.html</context>
-          <context context-type="linenumber">8,16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__BUILD_YOUR_ALGORITHM__COMPLETE_QUESTIONNAIRE" datatype="html">
-        <source> Complete Questionnaire </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/build-your-algorithm/build-your-algorithm-notice.component.html</context>
-          <context context-type="linenumber">23,29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__BUILD_YOUR_ALGORITHM__LEARN_MORE" datatype="html">
-        <source> Learn more </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/build-your-algorithm/build-your-algorithm-notice.component.html</context>
-          <context context-type="linenumber">33,37</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__TITLE" datatype="html">
-        <source>Enable Push Notifications</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/enable-push-notifications/enable-push-notifications-notice.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__BODY" datatype="html">
-        <source> Get alerted when someone replies to you, or likes, reminds, or subscribes to your content. Customize your settings to decide which notifications you want. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/enable-push-notifications/enable-push-notifications-notice.component.html</context>
-          <context context-type="linenumber">10,14</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__ENABLE" datatype="html">
-        <source> Enable </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/enable-push-notifications/enable-push-notifications-notice.component.html</context>
-          <context context-type="linenumber">23,25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__CUSTOMIZE" datatype="html">
-        <source> Customize </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/enable-push-notifications/enable-push-notifications-notice.component.html</context>
-          <context context-type="linenumber">33,35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__SETUP_CHANNEL__BODY" datatype="html">
-        <source> Let the Minds community know who you are by decking out your channel page. This step is required to join the token rewards program. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/setup-channel/setup-channel-notice.component.html</context>
-          <context context-type="linenumber">5,7</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__SETUP_CHANNEL__SETUP_MY_CHANNEL" datatype="html">
-        <source> Set up my channel </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/setup-channel/setup-channel-notice.component.html</context>
-          <context context-type="linenumber">18,20</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7059417348642831055" datatype="html">
-        <source>Who is <x id="username" equiv-text="this.username"/>?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/setup-channel/setup-channel-notice.component.ts</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__UPDATE_TAG_PREFERENCES__TITLE" datatype="html">
-        <source>Update your preferences</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/update-tags/update-tags-notice.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__UPDATE_TAG_PREFERENCES__BODY" datatype="html">
-        <source> Updating your interest tags improves your experience on Minds, and makes it easier to discover creators and content you haven&apos;t found yet. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/update-tags/update-tags-notice.component.html</context>
-          <context context-type="linenumber">10,13</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__UPDATE_TAG_PREFERENCES__UPDATE_BUTTON" datatype="html">
-        <source> Update </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/update-tags/update-tags-notice.component.html</context>
-          <context context-type="linenumber">22,24</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4e811eeacadfd2aba0d565c1c95bd50f6eb21ad0" datatype="html">
-        <source>Verify your email address</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/verify-email/verify-email-notice.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="description">FEED_NOTICE__VERIFY_EMAIL__TITLE</note>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__VERIFY_EMAIL__BODY" datatype="html">
-        <source> Before getting down to business on Minds, can we please ask that you verify your email address. (P.S. Check your spam folder 📥) </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/verify-email/verify-email-notice.component.html</context>
-          <context context-type="linenumber">5,8</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__VERIFY_EMAIL__RESEND_EMAIL" datatype="html">
-        <source> Re-send email </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/verify-email/verify-email-notice.component.html</context>
-          <context context-type="linenumber">20,22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="FEED_NOTICE__VERIFY_EMAIL__VERIFY_EMAIL" datatype="html">
-        <source> Verify email </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notices/panels/verify-email/verify-email-notice.component.html</context>
-          <context context-type="linenumber">26,28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="NOTIFICATIONS__FLYOUT__VIEW_ALL_ACTION_V3" datatype="html">
@@ -9483,20 +8901,6 @@
           <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="NOTIFICATIONS__ENABLE_PUSH_BANNER__ENABLE_NOTIFICATION_TEXT" datatype="html">
-        <source>Enable push notifications for this device</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notifications/v3/enable-push-banner/enable-push-banner.component.html</context>
-          <context context-type="linenumber">9,16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="NOTIFICATIONS__ENABLE_PUSH_BANNER__TURN_ON_BUTTON" datatype="html">
-        <source>Turn On</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/notifications/v3/enable-push-banner/enable-push-banner.component.html</context>
-          <context context-type="linenumber">19,24</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="M__NOTIFICATIONS__NEW" datatype="html">
         <source>new </source>
         <context-group purpose="location">
@@ -10072,20 +9476,6 @@
           <context context-type="linenumber">92,95</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ONBOARDING_WIDGET__HIDE_THIS_PANEL" datatype="html">
-        <source>Hide this panel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/onboarding-v3/widget/onboarding-widget.component.html</context>
-          <context context-type="linenumber">105,108</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="ONBOARDING_WIDGET__SHOW_THIS_PANEL" datatype="html">
-        <source>Show this panel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/onboarding-v3/widget/onboarding-widget.component.html</context>
-          <context context-type="linenumber">109,114</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="PAYMENTS__ADD__NEW__CARD__MODAL__HEADER" datatype="html">
         <source> Add a new card </source>
         <context-group purpose="location">
@@ -10364,21 +9754,21 @@
         <source> Please post your Minds channel page (eg. https://minds.com/YourUsername) on two other social media sites where you own the same username to verify yourself. They must link back to your Minds channel so we know it is you. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/plus/verify/verify.component.html</context>
-          <context context-type="linenumber">8,12</context>
+          <context context-type="linenumber">9,14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="PLUS__VERIFY__DESCRIPTION_LABEL" datatype="html">
         <source> Please give a brief statement as to why you should be verified </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/plus/verify/verify.component.html</context>
-          <context context-type="linenumber">32,34</context>
+          <context context-type="linenumber">34,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="PLUS__VERIFY__SUBMIT_ACTION" datatype="html">
         <source> Submit </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/plus/verify/verify.component.html</context>
-          <context context-type="linenumber">44,46</context>
+          <context context-type="linenumber">46,48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_PRO_CHANNEL__HAVE_ACCOUNT" datatype="html">
@@ -10925,46 +10315,25 @@
           <context context-type="linenumber">35,41</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="REPORT__CREATOR__DMCA_NOTICE" datatype="html">
+        <source> Please submit a <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/p/dmca&quot; target=&quot;_blank&quot;&gt;"/>DMCA notice<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> to copyright@minds.com. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/report/creator/creator.component.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="REPORT__CREATOR__SUBMIT_ACTION" datatype="html">
         <source> Submit </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/report/creator/creator.component.html</context>
-          <context context-type="linenumber">83,89</context>
+          <context context-type="linenumber">90,96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="REPORT__CREATOR__NEXT_ACTION" datatype="html">
         <source> Next </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/report/creator/creator.component.html</context>
-          <context context-type="linenumber">120,124</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT__CREATOR__SUBMIT_DMCA_NOTICE" datatype="html">
-        <source> Submit a DMCA notice <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;material-icons&quot; style=&quot;margin-left: 5px&quot;&gt;"/>launch<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/report/creator/creator.component.html</context>
-          <context context-type="linenumber">130,133</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_CREATOR__REPORT_REASONS" datatype="html">
-        <source>Report Reasons</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/report/creator/creator.component.ts</context>
-          <context context-type="linenumber">169</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_CREATOR__SUB_REASON_SELECT" datatype="html">
-        <source>Select a sub-reason to complete your report</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/report/creator/creator.component.ts</context>
-          <context context-type="linenumber">184</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="REPORT_CREATOR__REASON_SELECT" datatype="html">
-        <source>Select a reason above to complete your report</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/report/creator/creator.component.ts</context>
-          <context context-type="linenumber">186</context>
+          <context context-type="linenumber">126,132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__SEARCH" datatype="html">
