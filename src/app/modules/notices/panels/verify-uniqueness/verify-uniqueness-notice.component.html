@@ -1,0 +1,23 @@
+<m-feedNotice (dismissClick)="dismiss()" icon="info">
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__JOIN_REWARDS"
+    >You're invited! Join rewards</span
+  >
+  <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__BODY">
+    Verify your uniqueness to get started earning token rewards for engagement
+    on your content.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick($event)"
+    data-ref="feed-notice-verify-uniqueness-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__VERIFY_UNIQUENESS">
+      Verify uniqueness
+    </ng-container>
+  </m-button>
+</m-feedNotice>

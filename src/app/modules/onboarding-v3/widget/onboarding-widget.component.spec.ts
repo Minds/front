@@ -8,6 +8,7 @@ import { Injector } from '@angular/core';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { BehaviorSubject } from 'rxjs';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
+import { OnboardingFeedNoticesExperimentService } from '../../experiments/sub-services/onboarding-feed-notices-experiment.service';
 
 describe('OnboardingV3WidgetComponent', () => {
   let comp: OnboardingV3WidgetComponent;
@@ -47,6 +48,10 @@ describe('OnboardingV3WidgetComponent', () => {
           {
             provide: EmailConfirmationService,
             useValue: MockService(EmailConfirmationService),
+          },
+          {
+            provide: OnboardingFeedNoticesExperimentService,
+            useValue: MockService(OnboardingFeedNoticesExperimentService),
           },
         ],
         imports: [],

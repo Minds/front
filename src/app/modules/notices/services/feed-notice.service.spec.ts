@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { FeedNotice } from '../feed-notice.types';
 import { FeedNoticeService } from './feed-notice.service';
 
@@ -44,6 +44,10 @@ export let activityV2ExperimentServiceMock = new (function() {
   this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
 })();
 
+export let sessionMock = new (function() {
+  this.loggedinEmitter = new BehaviorSubject<boolean>(false);
+})();
+
 export let apiServiceMock = new (function() {
   this.get = jasmine.createSpy('get').and.returnValue(
     of({
@@ -81,7 +85,8 @@ describe('FeedNoticeService', () => {
     service = new FeedNoticeService(
       apiServiceMock,
       activityV2ExperimentServiceMock,
-      feedNoticeDismissalService
+      feedNoticeDismissalService,
+      sessionMock
     );
     (service as any).notices$.next(defaultNotices);
   });

@@ -28,6 +28,7 @@ describe('EmailConfirmationService', () => {
   afterEach(() => {
     clientMock.response = [];
     sessionMock.inject.calls.reset();
+    (service as any).feedNotice.dismiss.calls.reset();
     jasmine.clock().uninstall();
   });
 
