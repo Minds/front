@@ -48,6 +48,22 @@ export class MultiFactorLazyService {
   }
 
   /**
+   * Returns whether the 2fa modal is open
+   * @returns { bool }
+   */
+  public isOpen(): boolean {
+    return this.modalService.isOpen(MultiFactorAuthBaseComponent);
+  }
+
+  /**
+   * Observable for when the 2fa modal is dismissed
+   * @returns { Observable<any> }
+   */
+  get dismissed() {
+    return this.modal?.dismissed;
+  }
+
+  /**
    * Call to dismiss modal.
    * @param { success?: boolean } params - success will call the success service.
    */

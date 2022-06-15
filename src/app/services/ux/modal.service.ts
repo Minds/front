@@ -1,11 +1,18 @@
-import { Compiler, Component, Injectable, Injector } from '@angular/core';
+import { ComponentType } from '@angular/cdk/overlay';
+import {
+  Compiler,
+  Component,
+  Injectable,
+  Injector,
+  OnDestroy,
+} from '@angular/core';
 import {
   NgbModal,
   NgbModalOptions,
   NgbModalRef,
 } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import isMobile from '../../helpers/is-mobile';
-import { ComponentType } from '@angular/cdk/overlay';
 
 export interface Modal<T> {
   setModalData(data: T & ModalDefaultData): void;
@@ -37,8 +44,15 @@ const MINIMUM_MODAL_OPEN_WIDTH: number = 768;
 @Injectable({
   providedIn: 'root',
 })
-export class ModalService {
-  constructor(private service: NgbModal, private compiler: Compiler) {}
+export class ModalService implements OnDestroy {
+  activeInstancesSubscription: Subscription;
+  activeInstances: NgbModalRef[] = [];
+
+  constructor(private service: NgbModal, private compiler: Compiler) {
+    this.activeInstancesSubscription = service.activeInstances.subscribe(
+      activeInstances => (this.activeInstances = activeInstances)
+    );
+  }
 
   /**
    * Presents the modal and returns an Observable
@@ -92,6 +106,17 @@ export class ModalService {
   }
 
   /**
+   * Returns whether a modal with the given component instance is open
+   * @param { ModalComponent } component
+   * @returns { bool }
+   */
+  public isOpen<T>(component: ModalComponent<T>): boolean {
+    const topMostModal = [...this.activeInstances].reverse()[0];
+
+    return component === topMostModal.componentInstance.constructor;
+  }
+
+  /**
    * Whether modal can be opened given device / screen size.
    * @returns { boolean } true if modal can be opened given device / screen size.
    */
@@ -124,5 +149,9 @@ export class ModalService {
     }
 
     return (moduleRef as any).instance.resolveComponent();
+  }
+
+  ngOnDestroy(): void {
+    this.activeInstancesSubscription?.unsubscribe();
   }
 }
