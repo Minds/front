@@ -91,22 +91,27 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
         this.multiFactorAuthService.mfaSecretKey$.next(smsKey || emailKey);
       }
 
-      if (
-        err?.error.errorId ===
-        'Minds::Core::Security::TwoFactor::TwoFactorInvalidCodeException'
-      ) {
-        this.multiFactorAuthService.inProgress$.next(false);
-      }
+      // if (
+      //   err?.error.errorId ===
+      //   'Minds::Core::Security::TwoFactor::TwoFactorInvalidCodeException'
+      // ) {
+      //   this.multiFactorAuthService.inProgress$.next(false);
+      // }
 
       return race([
         this.multiFactorAuthService.mfaPayload$,
-        this.multiFactorModalService.isOpen()
-          ? this.multiFactorModalService.dismissed
-          : from(
-              this.multiFactorModalService.open({
-                authType: this.multiFactorAuthService.mfaType$.getValue(),
-              })
-            ),
+        from(
+          this.multiFactorModalService.open({
+            authType: this.multiFactorAuthService.mfaType$.getValue(),
+          })
+        ),
+        // this.multiFactorModalService.isOpen()
+        //   ? this.multiFactorModalService.dismissed
+        //   : from(
+        //       this.multiFactorModalService.open({
+        //         authType: this.multiFactorAuthService.mfaType$.getValue(),
+        //       })
+        //     ),
       ]).pipe(
         first(),
         switchMap(payload => {
