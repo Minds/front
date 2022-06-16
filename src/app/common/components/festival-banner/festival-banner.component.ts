@@ -32,7 +32,11 @@ export class FestivalBannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dismissed = !!this.sessionStorage.get('dismissed_join_banner');
+    console.log('*****************');
+    console.log(this.dismissed);
+    console.log(!!this.sessionStorage.get('dismissed_festival_banner'));
+    console.log('*****************');
+    this.dismissed = !!this.sessionStorage.get('dismissed_festival_banner');
   }
 
   /**
