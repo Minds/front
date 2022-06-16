@@ -158,6 +158,16 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/common/components/toggle/toggle.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -198,7 +208,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
+                "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -245,6 +255,18 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "HasIcon",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ButtonComponent>",
+                "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    label: 'Button',\n    icon: 'add',\n  },\n  template: `\n    <m-button\n      [color]=\"color\"\n      [size]=\"size\"\n      [solid]=\"solid\"\n      [overlay]=\"overlay\"\n      [saving]=\"saving\"\n    >\n      {{ label }}\n      <i class=\"material-icons\">{{icon}}</i>\n    </m-button>\n  `,\n})",
+                "rawdescription": "HasIcon",
+                "description": "<p>HasIcon</p>\n"
             },
             {
                 "name": "HasIcon",
@@ -391,16 +413,6 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "tagData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "string",
-                "defaultValue": "'anime'"
-            },
-            {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -494,6 +506,16 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<TagSelectorComponent>",
+                "defaultValue": "(args: TagSelectorComponent) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/common/components/toggle/toggle.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -544,11 +566,11 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
+                "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<DiscoveryTagWidgetComponent>",
-                "defaultValue": "(\n  args: DiscoveryTagWidgetComponent\n) => ({\n  props: args,\n})"
+                "type": "Story<OnboardingV3TagsComponent>",
+                "defaultValue": "(\n  args: OnboardingV3TagsComponent\n) => ({\n  props: args,\n})"
             },
             {
                 "name": "Tiny",
@@ -683,6 +705,18 @@
                     "defaultValue": "Template.bind({})",
                     "rawdescription": "Borderless",
                     "description": "<p>Borderless</p>\n"
+                },
+                {
+                    "name": "HasIcon",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ButtonComponent>",
+                    "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    label: 'Button',\n    icon: 'add',\n  },\n  template: `\n    <m-button\n      [color]=\"color\"\n      [size]=\"size\"\n      [solid]=\"solid\"\n      [overlay]=\"overlay\"\n      [saving]=\"saving\"\n    >\n      {{ label }}\n      <i class=\"material-icons\">{{icon}}</i>\n    </m-button>\n  `,\n})",
+                    "rawdescription": "HasIcon",
+                    "description": "<p>HasIcon</p>\n"
                 },
                 {
                     "name": "IconOnly",
@@ -1027,6 +1061,28 @@
                     "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <ul class=\"m-tabs__container\">\n    <li class=\"m-tabs__tab\" *ngFor=\"let tab of tabs\">\n      <a [class.selected]=\"tab.selected\">{{ tab.label }}</a>\n    </li>\n  </ul>\n  `,\n})"
                 }
             ],
+            "src/app/common/components/tag-selector/tag-selector.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<TagSelectorComponent>",
+                    "defaultValue": "(args: TagSelectorComponent) => ({\n  props: args,\n})"
+                }
+            ],
             "src/app/common/components/user-aggregator/user-aggregator.stories.ts": [
                 {
                     "name": "Basic",
@@ -1093,36 +1149,26 @@
                     "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n    <div class=\"m-formWrapper\">\n      <div class=\"m-form__field--radio\">\n        <div class=\"m-form__row--label\">\n          <label>\n            Choose one\n           </label>\n        </div>\n        <div class=\"m-form__row--input\">\n          <ng-container *ngFor=\"let opt of opts\">\n            <label\n              [for]=\"opt\"\n              class=\"m-form__customInputWrapper__radio\"\n              >{{ opt }}\n              <input\n                type=\"radio\"\n                [id]=\"opt\"\n                name=\"opt\"\n                [value]=\"opt\"\n                formControlName=\"opts\"\n                class=\"form-control\"\n              />\n              <span class=\"m-form__customInput__radio\"></span>\n            </label>\n          </ng-container>\n        </div>\n      </div>\n    </div>\n  `,\n})"
                 }
             ],
-            "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts": [
+            "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts": [
                 {
                     "name": "Basic",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
+                    "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "tagData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "defaultValue": "'anime'"
-                },
-                {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
+                    "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Story<DiscoveryTagWidgetComponent>",
-                    "defaultValue": "(\n  args: DiscoveryTagWidgetComponent\n) => ({\n  props: args,\n})"
+                    "type": "Story<OnboardingV3TagsComponent>",
+                    "defaultValue": "(\n  args: OnboardingV3TagsComponent\n) => ({\n  props: args,\n})"
                 }
             ],
             "src/app/common/components/avatar/avatar.stories.ts": [
@@ -1216,7 +1262,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 10,
+        "count": 11,
         "status": "low",
         "files": [
             {
@@ -1365,6 +1411,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Borderless",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/app/common/components/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "HasIcon",
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
@@ -1640,6 +1696,26 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/common/components/toggle/toggle.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -1720,36 +1796,6 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Basic",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "tagData",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/modules/discovery/tags/tag-widget/tag-widget.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
                 "filePath": "src/app/modules/forms/stories/checkbox.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -1781,6 +1827,26 @@
             },
             {
                 "filePath": "src/app/modules/forms/stories/radio.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
