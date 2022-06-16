@@ -131,7 +131,7 @@ const discoveryTagsMock: any = {
       type: 'user',
     },
     {
-      selected: true,
+      selected: false,
       value: 'coronavirus',
       type: 'user',
     },
@@ -166,7 +166,7 @@ const discoveryTagsMock: any = {
       type: 'default',
     },
     {
-      selected: true,
+      selected: false,
       value: 'outdoors',
       type: 'default',
     },
@@ -181,7 +181,7 @@ const discoveryTagsMock: any = {
       type: 'default',
     },
     {
-      selected: true,
+      selected: false,
       value: 'travel',
       type: 'default',
     },

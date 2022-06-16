@@ -20,7 +20,7 @@ export default {
     docs: {
       description: {
         component:
-          'A button that allows users to add or remove a single tag from their channel',
+          'A button that allows users to add or remove a single tag from their channel. Example: content settings modal',
       },
     },
   },

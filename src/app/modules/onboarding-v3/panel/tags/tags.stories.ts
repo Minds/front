@@ -1,22 +1,17 @@
-import { CommonModule } from '@angular/common';
 import {
   Story,
   Meta,
   moduleMetadata,
   componentWrapperDecorator,
 } from '@storybook/angular';
+import { BehaviorSubject } from 'rxjs';
 import discoveryTagsMock from '../../../../mocks/responses/discovery-tags.mock';
-
-import { ButtonComponent } from '../../../../common/components/button/button.component';
-
-//👇 Imports a specific story from Button stories
-import { IconOnly } from '../../../../common/components/button/button.stories';
 
 import { OnboardingV3TagsComponent } from './tags.component';
 import { OnboardingV3TagsService } from './tags.service';
 
 export default {
-  title: 'Components / Tags / Discovery Tag Button',
+  title: 'Components / Tags / Onboarding Tags',
   component: OnboardingV3TagsComponent,
   parameters: {
     docs: {
@@ -32,17 +27,23 @@ export default {
       providers: [
         {
           provide: OnboardingV3TagsService,
-          useValue: null,
+          useValue: {
+            tags$: new BehaviorSubject(discoveryTagsMock.default.slice(0, 15)),
+            loadTags: () => {
+              return null;
+            },
+            toggleTag: () => {
+              return null;
+            },
+          },
         },
       ],
     }),
     componentWrapperDecorator(
-      story => `<div style="max-width: 250px;">${story}</div>`
+      story =>
+        `<div>${story}</div><hr><div>Note: the actual component starts with none selected, and the tags can be toggled.`
     ),
   ],
-  args: {
-    tag: discoveryTagsMock.tags[0],
-  },
 } as Meta;
 
 const Template: Story<OnboardingV3TagsComponent> = (

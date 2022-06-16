@@ -27,7 +27,6 @@ const Template: Story<ToggleComponent> = (args: ToggleComponent) => ({
         <span>{{leftValue}}</span>
         <span>
           <m-toggle
-
             [leftValue]="leftValue"
             [rightValue]="RightValue"
             [mModel]="mModel"
@@ -36,9 +35,7 @@ const Template: Story<ToggleComponent> = (args: ToggleComponent) => ({
         </span>
         <span>{{rightValue}}</span>
       <hr>
-      <div style="margin-top: 20px">
-        <p style="white-space: pre">Value: {{mModel}}</p>
-      </div>
+      <div>TODO: enable toggle action</div>
     `,
 });
 
