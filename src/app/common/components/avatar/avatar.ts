@@ -11,38 +11,11 @@ import { Session } from '../../../services/session';
     '_src: src',
     '_editMode: editMode',
     'waitForDoneSignal',
-    'icon',
     'showPrompt',
   ],
   outputs: ['added'],
-  template: `
-    <div
-      class="minds-avatar"
-      [ngStyle]="{ 'background-image': 'url(' + (getSrc() | async) + ')' }"
-    >
-      <img
-        *ngIf="!(userAvatarService.src$ | async)"
-        src="{{ cdnAssetsUrl }}assets/avatars/blue/default-large.png"
-        class="mdl-shadow--4dp"
-      />
-      <div *ngIf="editing" class="overlay">
-        <i class="material-icons">{{ icon }}</i>
-        <ng-container *ngIf="showPrompt">
-          <span
-            *ngIf="userAvatarService.src$ | async"
-            i18n="@@COMMON__AVATAR__CHANGE"
-            >Change avatar</span
-          >
-          <span
-            *ngIf="!(userAvatarService.src$ | async)"
-            i18n="@@COMMON__AVATAR__ADD"
-            >Add an avatar</span
-          >
-        </ng-container>
-      </div>
-      <input *ngIf="editing" type="file" #file (change)="add($event)" />
-    </div>
-  `,
+  templateUrl: 'avatar.html',
+  styleUrls: ['avatar.ng.scss'],
 })
 export class MindsAvatar {
   readonly cdnAssetsUrl: string;
