@@ -24,9 +24,7 @@ export class FeaturedContentService {
       this.maximumOffset = this.feedLength - 1;
     });
 
-    if (this.experiments.hasVariation('new-user-boosts', true)) {
-      this.feedsService.setParams({ show_boosts_after_x: 604800 }); // 1 week
-    }
+    this.feedsService.setParams({ show_boosts_after_x: 604800 }); // 1 week
 
     this.feedsService
       .setLimit(12)

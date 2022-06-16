@@ -45,7 +45,6 @@
   <ng-container *mIfBrowser>
     <ng-container *ngIf="filter === 'latest'">
       <m-seeLatestPostsButton
-        *mExperiment="'front-5474-search-polling'; variation: true"
         [feedService]="service.feedsService"
         (click)="scrollToTop()"
       ></m-seeLatestPostsButton>

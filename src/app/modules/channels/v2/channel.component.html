@@ -26,10 +26,7 @@
             >
           </div>
 
-          <div
-            class="m-tabs__tab"
-            *mExperiment="'channel-gallery'; variation: true"
-          >
+          <div class="m-tabs__tab">
             <a
               [routerLink]="['/', username, '']"
               [queryParams]="getLayoutLinkQueryParams('grid')"
