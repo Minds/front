@@ -6,12 +6,18 @@
       margin-bottom: 20px;
     }
 
-    m-channelRecommendation {
+    m-channelRecommendation:not(.m-channelRecommendation--activityV2) {
       margin: $minds-margin * 2 $minds-margin * -5;
 
       @include m-theme() {
         border-top: 1px solid themed($m-borderColor--primary);
         border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    m-channelRecommendation.m-channelRecommendation--activityV2 {
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
       }
     }
   }

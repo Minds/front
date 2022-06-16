@@ -13,7 +13,7 @@
     }
 
     article {
-      padding: $spacing7 $activitySpacingRight--feed $spacing3 $spacing6;
+      padding: $spacing4;
       margin: 0;
 
       @include m-theme() {
@@ -46,6 +46,10 @@
                 width: $activityAvatarWidth;
                 background-size: cover;
                 margin: 0;
+
+                @include m-theme() {
+                  border: 1px solid themed($m-borderColor--primary);
+                }
               }
             }
           }
@@ -68,14 +72,14 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: $minds-padding * 4;
+      padding-bottom: $spacing4;
 
-      h2 {
+      h3 {
         flex: 1;
-        font-size: 20px;
+        font-size: 1.25rem;
         margin: 0;
         font-weight: bold;
-        line-height: inherit;
+        line-height: 2.5rem;
       }
 
       div {
@@ -84,6 +88,8 @@
 
         a {
           text-decoration: none;
+          line-height: 2.5rem;
+
           @include m-theme() {
             color: themed($m-link);
           }
@@ -95,6 +101,12 @@
 
         m-dropdownMenu {
           margin-left: $spacing4;
+        }
+
+        ::ng-deep m-dropdownMenu m-icon i {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
         }
       }
     }

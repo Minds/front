@@ -1,6 +1,9 @@
 <div
   class="m-activityToolbar__actions"
-  [ngClass]="{ 'm-activityToolbar__actions--noMetrics': !showMetrics }"
+  [ngClass]="{
+    'm-activityToolbar__actions--noMetrics': !showMetrics,
+    'm-activityToolbar__actions--hasComments': entity['comments:count'] > 0
+  }"
 >
   <minds-button-thumbs-up
     [object]="entity"

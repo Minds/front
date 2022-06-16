@@ -12,6 +12,7 @@
 
       .m-pageLayout__pane--main {
         @include borderRight;
+        box-sizing: content-box;
       }
 
       .m-pageLayout__pane--right {
@@ -30,11 +31,6 @@
           border-radius: 0;
           @include m-theme() {
             border-bottom: 4px solid themed($m-borderColor--primary) !important;
-          }
-
-          .m-composerBase__container {
-            padding-left: $spacing4;
-            width: auto;
           }
         }
       }

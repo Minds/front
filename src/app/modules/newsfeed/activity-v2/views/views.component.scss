@@ -24,7 +24,7 @@
   // *********************************
   .m-activity__views {
     display: inline-block;
-    @include body2Regular;
+    @include body3Regular;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

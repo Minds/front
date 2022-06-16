@@ -53,6 +53,7 @@ export class PostMenuV2Component implements OnInit {
   @Input() canDownload: boolean = false;
   @Input() isTranslatable: boolean = false;
   @Input() user: any;
+  @Input() icon: 'more_vert' | 'more_horiz' = 'more_vert';
 
   isOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 

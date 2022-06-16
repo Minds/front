@@ -1,4 +1,7 @@
-<div [@slideIn]="(newPostsCount$ | async) ? 'shown' : 'hidden'">
+<div
+  *ngIf="(newPostsCount$ | async) > 0"
+  [@slideIn]="(newPostsCount$ | async) ? 'shown' : 'hidden'"
+>
   <m-button
     class="m-seeLatestPostsButton"
     size="xsmall"
