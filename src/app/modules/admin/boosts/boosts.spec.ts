@@ -376,6 +376,10 @@ describe('AdminBoosts', () => {
     fixture.detectChanges();
     tick();
 
+    spyOn(window, 'confirm').and.callFake(function() {
+      return true;
+    });
+
     clientMock.post.calls.reset();
 
     comp.accept(comp.boosts[0], false);
@@ -395,6 +399,10 @@ describe('AdminBoosts', () => {
     fixture.detectChanges();
     tick();
 
+    spyOn(window, 'confirm').and.callFake(function() {
+      return true;
+    });
+
     clientMock.post.calls.reset();
 
     comp.accept(comp.boosts[0], true);
@@ -408,5 +416,20 @@ describe('AdminBoosts', () => {
       rating: 2,
       mature: 0,
     });
+  }));
+
+  it('calling accept(boost, true) should NOT call anything if confirm dialog is not accepted', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    spyOn(window, 'confirm').and.callFake(function() {
+      return false;
+    });
+
+    clientMock.post.calls.reset();
+
+    comp.accept(comp.boosts[0], true);
+
+    expect(clientMock.post).not.toHaveBeenCalled();
   }));
 });
