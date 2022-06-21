@@ -51,6 +51,7 @@ check-coverage:
   stage: test and build
   script:
     - git fetch origin
+    - ls src/app/modules/newsfeed/activity
     - npx lint-staged --no-stash --allow-empty --debug --diff="origin/master...${CI_COMMIT_SHA}"
   except:
     variables:
