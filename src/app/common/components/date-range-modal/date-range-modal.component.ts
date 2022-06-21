@@ -10,6 +10,10 @@ export type DateRange = {};
  */
 const noOp = () => {};
 
+/**
+ * Modal that allows user to select a range of time
+ * between 2 dates
+ */
 @Component({
   selector: 'm-dateRangeModal',
   templateUrl: './date-range-modal.component.html',

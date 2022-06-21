@@ -10,7 +10,6 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { ConfirmModal } from './confirm/confirm';
 import { ShareModalComponent } from './share/share';
 import { SignupOnActionModal } from './signup/signup-on-action';
-import { SignupOnScrollModal } from './signup/signup-on-scroll';
 import { ConfirmPasswordModalComponent } from './confirm-password/modal.component';
 import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
@@ -33,7 +32,6 @@ import { ConcertColorsModalComponent } from './concert-colors/concert-colors-mod
     ConcertColorsModalComponent,
     ShareModalComponent,
     SignupOnActionModal,
-    SignupOnScrollModal,
     SignupModal,
     ConfirmPasswordModalComponent,
     TOSUpdatedModal,
@@ -42,7 +40,6 @@ import { ConcertColorsModalComponent } from './concert-colors/concert-colors-mod
     ConfirmModal,
     ShareModalComponent,
     SignupOnActionModal,
-    SignupOnScrollModal,
     SignupModal,
     TOSUpdatedModal,
     ConcertColorsModalComponent,

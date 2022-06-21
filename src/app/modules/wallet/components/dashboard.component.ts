@@ -17,8 +17,8 @@ import { WalletV2Service, Wallet } from './wallet-v2.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import sidebarMenu from './sidebar-menu.default';
-import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
+import { Menu } from '../../../interfaces/menu';
 
 @Component({
   selector: 'm-walletDashboard',

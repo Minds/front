@@ -19,7 +19,6 @@ import { OffchainPaymentService } from './offchain-payment.service';
 import { GetMetamaskComponent } from './metamask/getmetamask.component';
 import { BlockchainEthModalComponent } from './eth-modal/eth-modal.component';
 import { BlockchainMarketingOnboardComponent } from './token-purchase/onboard.component';
-import { BlockchainPurchaseComponent } from './token-purchase/purchase.component';
 import { BlockchainPurchaseV2Component } from './token-purchase/v2/purchase/purchase.component';
 import { SendWyreService } from './sendwyre/sendwyre.service';
 import { ModalsModule } from '../modals/modals.module';
@@ -49,7 +48,6 @@ const cryptoRoutes: Routes = [];
     GetMetamaskComponent,
     BlockchainEthModalComponent,
     BlockchainMarketingOnboardComponent,
-    BlockchainPurchaseComponent,
     BlockchainPurchaseV2Component,
   ],
   providers: [
@@ -68,7 +66,6 @@ const cryptoRoutes: Routes = [];
     TransactionOverlayComponent,
     GetMetamaskComponent,
     BlockchainEthModalComponent,
-    BlockchainPurchaseComponent,
     BlockchainPurchaseV2Component,
     Web3ModalModule,
   ],

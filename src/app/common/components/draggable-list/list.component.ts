@@ -13,6 +13,11 @@ import {
   DndDragImageOffsetFunction,
 } from 'ngx-drag-drop';
 
+/**
+ * List that allows users to re-order contents
+ * by dragging and dropping.
+ * Uses ngx-drag-drop plugin
+ */
 @Component({
   selector: 'm-draggableList',
   templateUrl: 'list.component.html',

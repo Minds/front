@@ -3,7 +3,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CheckoutModule } from '../checkout/checkout.module';
 import { ModalsModule } from '../modals/modals.module';
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
@@ -15,7 +14,6 @@ import { YoutubeMigrationModule } from '../media/youtube-migration/youtube-migra
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 
 import { SettingsV2Component } from './settings-v2.component';
-import { SettingsV2DisplayNameComponent } from './account/display-name/display-name.component';
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
 import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
@@ -33,7 +31,6 @@ import { SettingsV2BlockedChannelsComponent } from './other/blocked-channels/blo
 import { SettingsV2SubscriptionTiersComponent } from './other/subscription-tiers/subscription-tiers.component';
 import { SettingsV2DeactivateAccountComponent } from './other/deactivate-account/deactivate-account.component';
 import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-account.component';
-import { SettingsV2ToasterNotificationsComponent } from './account/toaster-notifications/toaster-notifications.component';
 import { WalletV2Service } from '../wallet/components/wallet-v2.service';
 import { ProModule } from '../pro/pro.module';
 import { SettingsV2ProGeneralComponent } from './pro/general/general.component';
@@ -176,17 +173,6 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
-            path: 'email-notifications',
-            component: SettingsV2EmailNotificationsComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'Email Notifications',
-              description:
-                'Control what email notifications you receive, and when.',
-              id: 'email-notifications',
-            },
-          },
-          {
             path: 'push-notifications',
             component: SettingsV2PushNotificationsV3Component,
             canDeactivate: [CanDeactivateGuardService],
@@ -198,23 +184,14 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
-            path: 'email-notifications-v2',
+            path: 'email-notifications',
             component: SettingsV2EmailNotificationsV3Component,
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Email Notifications',
               description:
                 'Control what push notifications you receive, and when.',
-              id: 'email-notifications-v2',
-            },
-          },
-          {
-            path: 'toaster-notifications',
-            component: SettingsV2ToasterNotificationsComponent,
-            data: {
-              title: 'Notification Popovers',
-              description: 'Control whether you receive notification popovers.',
-              id: 'toaster-notifications',
+              id: 'email-notifications',
             },
           },
           {
@@ -503,7 +480,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    CheckoutModule,
     ModalsModule,
     LegacyModule,
     RouterModule.forChild(SETTINGS_V2_ROUTES),
@@ -521,7 +497,6 @@ const SETTINGS_V2_ROUTES: Routes = [
   ],
   declarations: [
     SettingsV2Component,
-    SettingsV2DisplayNameComponent,
     SettingsV2SessionsComponent,
     SettingsV2TwoFactorComponent,
     SettingsV2EmailAddressComponent,
@@ -539,7 +514,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2SubscriptionTiersComponent,
     SettingsV2DeactivateAccountComponent,
     SettingsV2DeleteAccountComponent,
-    SettingsV2ToasterNotificationsComponent,
     SettingsV2ProGeneralComponent,
     SettingsV2ProThemeComponent,
     SettingsV2ProAssetsComponent,

@@ -118,7 +118,7 @@ export class SettingsV2Component implements OnInit {
           },
           {
             label: 'Email Notifications',
-            id: 'email-notifications-v2',
+            id: 'email-notifications',
             route: null,
             shouldShow: null,
           },

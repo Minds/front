@@ -5,7 +5,7 @@ import { ApiService } from '../../../common/api/api.service';
 import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
-  selector: 'm-admin__liquidityProvideers',
+  selector: 'm-admin__liquidityProviders',
   templateUrl: 'liquidity-providers.component.html',
   styleUrls: ['./liquidity-providers.component.ng.scss'],
 })

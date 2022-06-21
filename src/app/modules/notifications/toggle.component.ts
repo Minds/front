@@ -8,6 +8,7 @@ import { NotificationService } from './notification.service';
   moduleId: module.id,
   selector: 'm-notifications--topbar-toggle',
   templateUrl: 'toggle.component.html',
+  styleUrls: ['toggle.component.ng.scss'],
 })
 export class NotificationsTopbarToggleComponent {
   toggled: boolean = false;

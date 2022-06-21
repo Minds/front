@@ -26,24 +26,10 @@
       </a>
       <a
         class="m-topbar--navigation--item"
-        routerLink="/admin/pages"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Pages</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
         routerLink="/moderation/juryduty/initial"
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span>Appeals</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/monetization"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Monetization</span>
       </a>
       <a
         class="m-topbar--navigation--item"
@@ -86,26 +72,16 @@
 <m-admin--interactions *ngIf="filter == 'interactions'"></m-admin--interactions>
 <minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>
 <minds-admin-firehose *ngIf="filter == 'firehose'"></minds-admin-firehose>
-<minds-admin-pages *ngIf="filter == 'pages'"></minds-admin-pages>
 <minds-admin-reports
   *ngIf="filter == 'reports' || filter == 'appeals'"
 ></minds-admin-reports>
-<minds-admin-monetization
-  *ngIf="filter == 'monetization'"
-></minds-admin-monetization>
-<minds-admin-payouts *ngIf="filter == 'payouts'"></minds-admin-payouts>
 <m-admin-withdrawals *ngIf="filter == 'withdrawals'"></m-admin-withdrawals>
-<minds-admin-featured *ngIf="filter == 'featured'"></minds-admin-featured>
 <minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
 <m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
-<m-admin--purchases *ngIf="filter == 'purchases'"></m-admin--purchases>
-<m-admin--reports-download
-  *ngIf="filter == 'reports-download'"
-></m-admin--reports-download>
 <m-admin--features *ngIf="filter == 'features'"></m-admin--features>
 <m-admin--pushNotifications
   *ngIf="filter == 'push-notifications'"
 ></m-admin--pushNotifications>
-<m-admin__liquidityProvideers
+<m-admin__liquidityProviders
   *ngIf="filter === 'liquidity-providers'"
-></m-admin__liquidityProvideers>
+></m-admin__liquidityProviders>
