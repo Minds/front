@@ -1,3 +1,5 @@
+//
+
 import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import { of, Observable } from 'rxjs';

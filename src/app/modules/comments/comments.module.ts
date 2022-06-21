@@ -8,7 +8,6 @@ import { CommonModule } from '../../common/common.module';
 import { VideoModule } from '../media/components/video/video.module';
 import { TranslateModule } from '../translate/translate.module';
 import { ModalsModule } from '../modals/modals.module';
-import { CommentsListComponent } from './list/list.component';
 import { CommentComponentV2 } from './comment/comment.component';
 import { CommentPosterComponent } from './poster/poster.component';
 import { CommentsTreeComponent } from './tree/tree.component';
@@ -35,7 +34,6 @@ import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outle
   ],
   declarations: [
     CommentsScrollDirective,
-    CommentsListComponent,
     CommentComponentV2,
     CommentPosterComponent,
     CommentsTreeComponent,
@@ -45,7 +43,6 @@ import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outle
   ],
   exports: [
     CommentsScrollDirective,
-    CommentsListComponent,
     CommentComponentV2,
     CommentPosterComponent,
     CommentsTreeComponent,

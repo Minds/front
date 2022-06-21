@@ -16,8 +16,8 @@ import { Session } from '../../../services/session';
 import { AnalyticsDashboardService } from './dashboard.service';
 import { Filter } from './../../../interfaces/dashboard';
 import sidebarMenu from './sidebar-menu.default';
-import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { MetaService } from '../../../common/services/meta.service';
+import { Menu } from '../../../interfaces/menu';
 
 @Component({
   selector: 'm-analytics__dashboard',
@@ -26,7 +26,7 @@ import { MetaService } from '../../../common/services/meta.service';
   providers: [AnalyticsDashboardService],
 })
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
-  menu: Menu = sidebarMenu;
+  menu: Menu;
   paramsSubscription: Subscription;
 
   loading$ = this.analyticsService.loading$;

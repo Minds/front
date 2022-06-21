@@ -13,7 +13,6 @@ import { CanDeactivateGuardService } from './services/can-deactivate-guard';
 import { DiscoveryModuleLazyRoutes } from './modules/discovery/discovery.lazy';
 import { CanaryModuleLazyRoutes } from './modules/canary/canary.lazy';
 import { MobileModuleLazyRoutes } from './modules/mobile/mobile.lazy';
-import { HelpdeskModuleLazyRoutes } from './modules/helpdesk/helpdesk.lazy';
 import { AuxModuleLazyRoutes } from './modules/aux-pages/aux-pages.lazy';
 import {
   BlogModuleLazyRoutes,
@@ -29,7 +28,6 @@ const routes: Routes = [
   DiscoveryModuleLazyRoutes,
   CanaryModuleLazyRoutes,
   MobileModuleLazyRoutes,
-  HelpdeskModuleLazyRoutes,
   AuxModuleLazyRoutes,
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,

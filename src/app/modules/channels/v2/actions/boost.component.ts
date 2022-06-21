@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 import { FeaturesService } from '../../../../services/features.service';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { ModalService } from '../../../../services/ux/modal.service';

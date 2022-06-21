@@ -7,7 +7,6 @@ import { CommonModule } from '../../common/common.module';
 
 import { LoginForm } from './login/login';
 import { RegisterForm } from './register/register';
-import { FbRegisterForm } from './fb-register/fb-register';
 import { OnboardingForm } from './onboarding/onboarding';
 import { Tutorial } from './tutorial/tutorial';
 import { CaptchaModule } from '../captcha/captcha.module';
@@ -29,7 +28,6 @@ import { MultiFactorAuthLazyModule } from '../auth/multi-factor-auth/multi-facto
   declarations: [
     LoginForm,
     RegisterForm,
-    FbRegisterForm,
     OnboardingForm,
     Tutorial,
     PopoverComponent,
@@ -37,7 +35,6 @@ import { MultiFactorAuthLazyModule } from '../auth/multi-factor-auth/multi-facto
   exports: [
     LoginForm,
     RegisterForm,
-    FbRegisterForm,
     OnboardingForm,
     Tutorial,
     PopoverComponent,

@@ -247,17 +247,10 @@
       ></textarea>
       <i
         class="material-icons mdl-color-text--blue-grey-600"
-        (emoji)="message = message + $event.character"
-        #emoji="emoji"
-        >mood</i
-      >
-      <i
-        class="material-icons mdl-color-text--blue-grey-600"
         (click)="send($event); emoji.close()"
         data-cy="data-minds-conversation-send"
         >send_arrow</i
       >
-      <minds-emoji [localDirective]="emoji"></minds-emoji>
     </div>
   </div>
 </div>
