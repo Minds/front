@@ -9,6 +9,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
+
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
   showOwnerBlock: boolean;
