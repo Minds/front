@@ -7,6 +7,7 @@ module.exports = {
     'storybook-addon-themes',
     // '@storybook/addon-queryparams',
     'storybook-addon-angular-router', //ojm choose one
+    'storybook-addon-designs',
   ],
   framework: '@storybook/angular',
   core: {
