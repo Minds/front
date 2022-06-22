@@ -1,6 +1,6 @@
 include:
   - template: Jobs/Build.gitlab-ci.yml
-  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  # - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
 
 stages:
@@ -147,7 +147,7 @@ qa:nightly:
 # Build Stage #
 ###############
 
-build:
+build:review:
   stage: build
   image: minds/ci-front:14
   before_script:
@@ -226,7 +226,7 @@ prepare:review:
     - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
     - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
   dependencies:
-    - build
+    - build:review
   except:
     refs:
       - master
@@ -249,7 +249,7 @@ prepare:review:sentry:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
   dependencies:
-    - build
+    - build:review
 
 prepare:production:
   stage: prepare
