@@ -9,6 +9,7 @@ import { Reason, rejectionReasons } from '../../boost/rejection-reasons';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ModalService } from '../../../services/ux/modal.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -42,9 +43,10 @@ export class AdminBoosts {
 
   constructor(
     public client: Client,
+    protected activityService: ActivityService,
     private modalService: ModalService,
     private route: ActivatedRoute,
-    protected activityService: ActivityService
+    private toast: FormToastService
   ) {}
 
   ngOnInit() {
@@ -118,13 +120,13 @@ export class AdminBoosts {
    * @param { any } boost - boost to accept.
    * @param { boolean } open - whether boost is open (else safe).
    * @param { Object } opts - options - e.g. mature.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  public accept(
+  public async accept(
     boost: any = null,
     open: boolean = false,
     opts: any = { mature: 0 }
-  ): void {
+  ): Promise<void> {
     if (!boost) boost = this.boosts[0];
 
     if (
@@ -141,18 +143,30 @@ export class AdminBoosts {
 
     if (!opts.mature) opts.mature = 0;
 
-    this.client.post(
-      'api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/accept',
-      {
-        quality: boost.quality,
-        rating: boost.rating,
-        mature: opts.mature,
-      }
-    );
+    try {
+      await this.client.post(
+        'api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/accept',
+        {
+          quality: boost.quality,
+          rating: boost.rating,
+          mature: opts.mature,
+        }
+      );
+    } catch (e) {
+      this.toast.error(e.message ?? 'An unknown error has occurred');
+      console.error(e);
+      return;
+    }
+
     this.pop(boost);
   }
 
-  reject(boost: any = null) {
+  /**
+   * Called when a boost is rejected (after reason selection).
+   * @param { any } boost - boost to reject.
+   * @returns { Promise<void> }
+   */
+  public async reject(boost: any = null): Promise<void> {
     if (!boost) boost = this.boosts[0];
 
     this.reasonModalOpened = false;
@@ -161,10 +175,17 @@ export class AdminBoosts {
       this.report(this.selectedBoost);
     }
 
-    this.client.post(
-      'api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/reject',
-      { reason: boost.rejection_reason }
-    );
+    try {
+      await this.client.post(
+        'api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/reject',
+        { reason: boost.rejection_reason }
+      );
+    } catch (e) {
+      this.toast.error(e.message ?? 'An unknown error has occurred');
+      console.error(e);
+      return;
+    }
+
     this.pop(boost);
   }
 
