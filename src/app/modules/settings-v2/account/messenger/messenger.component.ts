@@ -16,7 +16,7 @@ import { MessengerService } from '../../../messenger/messenger.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'm-settingsV2__Messenger',
+  selector: 'm-settingsV2__messenger',
   templateUrl: './messenger.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

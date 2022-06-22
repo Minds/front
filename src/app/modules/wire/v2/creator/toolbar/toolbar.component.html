@@ -43,11 +43,10 @@
         Send {{ service.amount$ | async | number: '1.0-6' }}
       </ng-container>
       <ng-container *ngTemplateOutlet="typeLabel"></ng-container>
-      <ng-container
-        *ngIf="service.recurring$ | async; else noRecurringLabel"
-        i18n="@@COMMON__MONTHLY"
-        >monthly</ng-container
-      >
+      <ng-container *ngIf="service.recurring$ | async; else noRecurringLabel">
+        &#8203;
+        <ng-container i18n="@@COMMON__MONTHLY">monthly</ng-container>
+      </ng-container>
     </ng-container>
     <ng-container
       *ngIf="service.isUpgrade$ | async"

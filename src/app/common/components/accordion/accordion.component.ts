@@ -1,3 +1,5 @@
+//
+
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -11,7 +13,8 @@ import { Subscription } from 'rxjs';
 import { AccordionPaneComponent } from './accordion-pane.component';
 
 /**
- * Accordion component. Children should be <m-accordion__pane>
+ * Vertical accordion component. Children should be <m-accordion__pane>
+ * Currently used only in channel edit modal
  */
 @Component({
   selector: 'm-accordion',

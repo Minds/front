@@ -113,7 +113,7 @@ export class ModalService implements OnDestroy {
   public isOpen<T>(component: ModalComponent<T>): boolean {
     const topMostModal = [...this.activeInstances].reverse()[0];
 
-    return component === topMostModal.componentInstance.constructor;
+    return component === topMostModal?.componentInstance?.constructor;
   }
 
   /**

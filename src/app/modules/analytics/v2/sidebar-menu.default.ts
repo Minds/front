@@ -30,30 +30,6 @@ const sidebarMenu = {
       label: 'Trending',
       permissions: ['admin', 'user'],
     },
-    // {
-    //   id: 'referrers',
-    //   label: 'Referrers',
-    //   permissions: ['admin', 'user'],
-    // },
-    // {
-    //   id: 'plus',
-    //   label: 'Plus',
-    //   permissions: ['admin'],
-    // },
-    // {
-    //   id: 'pro',
-    //   label: 'Pro',
-    //   permissions: ['admin'],
-    // {
-    //   id: 'boost',
-    //   label: 'Boost',
-    //   permissions: ['admin'],
-    // },
-    // {
-    //   id: 'nodes',
-    //   label: 'Nodes',
-    //   permissions: ['admin'],
-    // },
   ],
 };
 

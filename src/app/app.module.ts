@@ -18,7 +18,6 @@ import { Minds } from './app.component';
 import { MINDS_PROVIDERS } from './services/providers';
 
 import { CommonModule } from './common/common.module';
-import { CheckoutModule } from './modules/checkout/checkout.module';
 import { PlusModule } from './modules/plus/plus.module';
 import { I18nModule } from './modules/i18n/i18n.module';
 
@@ -26,7 +25,6 @@ import { AdsModule } from './modules/ads/ads.module';
 import { BoostModule } from './modules/boost/boost.module';
 import { WireModule } from './modules/wire/wire.module';
 import { ReportModule } from './modules/report/report.module';
-//import { ChannelsModule } from './modules/channels/channels.module';
 import { MindsFormsModule } from './modules/forms/forms.module';
 import { LegacyModule } from './modules/legacy/legacy.module';
 import { ModalsModule } from './modules/modals/modals.module';
@@ -84,7 +82,6 @@ import { CompassModule } from './modules/compass/compass.module';
     LayoutModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
-    //CheckoutModule,
     PlusModule,
     AboutModule,
     AdsModule,
@@ -116,7 +113,6 @@ import { CompassModule } from './modules/compass/compass.module';
     CommentsModule,
     JobsMarketingModule,
     IssuesModule,
-    //ChannelsModule,
     UpgradesModule,
     CodeHighlightModule,
     SharedModule,

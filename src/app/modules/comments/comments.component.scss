@@ -208,3 +208,491 @@
     }
   }
 }
+
+// **********************
+
+minds-comments,
+m-comments__tree,
+m-comments__entityOutlet,
+.m-comment-wrapper {
+  width: 100%;
+
+  m-comment:first-child {
+    margin-top: 20px;
+  }
+
+  .minds-comment {
+    min-height: 0;
+    margin: 0;
+    background-color: transparent;
+    overflow: visible;
+    padding: 5px 20px 25px 20px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 5px 20px 25px 20px;
+    }
+
+    .m-comment-message {
+      white-space: pre-line;
+    }
+
+    .minds-more {
+      display: inline-block;
+      visibility: hidden;
+
+      i {
+        font-size: 18px;
+        line-height: 18px;
+        width: 32px;
+        transform: initial;
+        position: static;
+      }
+    }
+    &:hover .minds-more {
+      visibility: visible;
+    }
+
+    .mdl-card__menu {
+      top: 0;
+    }
+
+    &.minds-comment-post {
+      border-bottom: 0;
+      padding-bottom: $minds-padding;
+    }
+
+    .minds-body {
+      font-size: 12px;
+      max-width: calc(100% - 55px);
+
+      @media screen and (max-width: $max-mobile) {
+        max-width: 100%;
+      }
+
+      .username {
+        font-size: 13px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .minds-comment-span {
+        font-size: 10px;
+        position: relative;
+        top: -1px;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+
+        &.minds-comment-bullet:before {
+          content: '·';
+          font-weight: bold;
+          padding: 0 $minds-padding;
+        }
+
+        @media screen and (max-width: $min-tablet) {
+          display: block;
+          position: initial;
+          top: initial;
+
+          &.minds-comment-bullet:before {
+            content: '';
+            padding: 0;
+          }
+        }
+      }
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .minds-comments-voting {
+      display: inline-block;
+      position: relative;
+      top: 6px;
+      height: 36px;
+      vertical-align: middle;
+
+      minds-button-thumbs-up,
+      minds-button-thumbs-down {
+        display: inline-block;
+        margin-left: 0.35em;
+      }
+
+      .material-icons {
+        font-size: 18px;
+        vertical-align: middle;
+      }
+
+      .minds-counter {
+        font-size: 12px;
+        line-height: 18px;
+        vertical-align: top;
+      }
+    }
+  }
+
+  .minds-editable-container {
+    padding: $minds-padding 0;
+  }
+
+  .m-comment-attachment,
+  .m-comments-composer,
+  .m-editable-attachment-container,
+  .m-attachmentPreviewWrapper {
+    background: transparent;
+
+    .m-rich-embed {
+      text-align: left;
+      margin: 0 0 $minds-padding;
+      border-radius: $m-borderRadius;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      minds-rich-embed .m-rich-embed-src,
+      minds-rich-embed .m-rich-embed-preview {
+        position: relative;
+
+        &.m-richEmbedPreview--noThumbnail,
+        &.m-richEmbedSrc--noThumbnail {
+          .meta {
+            padding-left: 20px;
+          }
+        }
+
+        .thumbnail {
+          display: block;
+          float: left;
+          width: 25%;
+          height: 100%;
+          position: absolute;
+
+          .m-rich-embed-thumbnail-wrapper {
+            padding-bottom: 0; // 1:1
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            border-radius: $m-borderRadius 0 0 $m-borderRadius;
+          }
+
+          > img {
+            width: 100%;
+          }
+
+          &.m-inline-embed {
+            width: 100%;
+            max-height: 200px;
+            display: block;
+            float: none;
+            position: initial;
+
+            .m-rich-embed-video-iframe {
+              padding-bottom: 200px;
+            }
+          }
+
+          .m-rich-embed-video-iframe > iframe {
+            height: 200px;
+          }
+        }
+
+        a.meta {
+          display: block;
+          padding: 10px 40px 10px calc(25% + 10px);
+
+          box-sizing: border-box;
+          width: 100%;
+          text-decoration: none;
+
+          &.m-rich-embed--title--no-padding {
+            padding: 8px;
+          }
+
+          h2 {
+            margin-bottom: 0;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 20px;
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+
+          p {
+            $lh: 1.2em;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-height: ($lh * 2) + 1em;
+            line-height: 20px;
+            font-size: 15px;
+
+            &.m-blurb {
+              display: none;
+            }
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .m-has-inline-embed .meta {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .m-comment__attachment {
+    img,
+    minds-video,
+    m-video {
+      max-width: 50%;
+      cursor: pointer;
+    }
+    .m-rich-embed img {
+      max-width: 100%;
+    }
+  }
+
+  .m-comment-attachment.mdl-card {
+    max-width: 550px;
+    box-sizing: border-box;
+    padding: 0;
+
+    .item-image {
+      max-width: 100%;
+    }
+  }
+
+  .m-comments-composer {
+    position: relative;
+
+    form {
+      display: flex;
+      margin: 0;
+
+      minds-textarea {
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 22px;
+        width: 0;
+        min-width: 0;
+        flex: 1;
+        margin-bottom: $minds-padding;
+        // border-radius: 2px; - change when new comments design in
+        border-radius: 26px;
+
+        .m-editor {
+          //min-height: 26px;
+        }
+      }
+    }
+  }
+
+  .m-comments-composer form m-text-input--autocomplete-container {
+    width: 100%;
+  }
+  .m-comments-composer form minds-textarea,
+  .minds-editable-container textarea {
+    width: 100%;
+    padding: $minds-padding ($minds-padding + 88px) $minds-padding
+      $minds-padding * 2;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+
+  .m-comments-composer .mdl-card__actions {
+    top: 6px;
+    right: $minds-padding;
+  }
+
+  .minds-editable-container .mdl-card__actions {
+    top: $minds-padding + 54px;
+    right: $minds-padding + 14px;
+  }
+
+  .m-comments-composer .mdl-card__actions,
+  .m-commentPoster__wrapper .mdl-card__actions,
+  .minds-editable-container .mdl-card__actions {
+    position: absolute;
+    width: auto;
+    display: inline-block;
+    padding: 0;
+    text-align: right;
+
+    .m-mature-button,
+    .m-post-button {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+
+      i {
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        &:hover {
+          @include m-theme() {
+            color: themed($m-textColor--tertiary);
+          }
+        }
+      }
+
+      &.m-button-disabled {
+        cursor: default;
+
+        i {
+          cursor: default;
+          opacity: 0.65;
+        }
+      }
+    }
+
+    .attachment-button:before {
+      font-family: 'material icons';
+      position: absolute;
+      top: 7px;
+      left: 6px;
+      @include m-theme() {
+        color: themed($m-grey-400);
+      }
+    }
+
+    .attachment-button {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+
+      input {
+        position: absolute;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        opacity: 0;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+      input::-webkit-file-upload-button {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .post-preview {
+    margin-bottom: $minds-padding;
+  }
+
+  .minds-comments-container {
+    $mcc-height: 300px;
+
+    .m-comment-attachment .item-image {
+      &.m-mature-content-shown .m-mature-overlay {
+        left: $minds-padding;
+        right: auto;
+      }
+
+      img,
+      minds-video {
+        width: auto;
+        max-width: 100%;
+        max-height: $mcc-height - ($minds-padding * 2) - 50px;
+      }
+    }
+    .m-comment-attachment .image-video {
+      height: $mcc-height;
+    }
+  }
+  .m-comments__viewMore {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0 20px;
+    m-button button {
+      min-height: 30px !important;
+      padding: 4px 11px !important;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary) !important;
+      }
+
+      div {
+        font-weight: 500 !important;
+        font-size: 13px !important;
+      }
+    }
+
+    &.m-comments__viewMore--newer {
+      margin: 15px 0;
+    }
+
+    &.m-comments__viewMore--older {
+      margin-top: 0;
+    }
+  }
+}
+
+.m-comment-wrapper {
+  margin-top: 0;
+
+  .m-ribbon {
+    display: none;
+  }
+}
+
+.m-comments--start-conversation-label {
+  font-size: 12px;
+  text-align: center;
+  margin: ($minds-padding * 2) 0;
+
+  @include m-theme() {
+    color: themed($m-textColor--tertiary);
+  }
+
+  a {
+    font-weight: inherit;
+    color: inherit;
+    cursor: pointer;
+
+    b {
+      font-weight: bold;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+  }
+}
+
+.m-comments--load-error-label {
+  font-size: 12px;
+  text-align: center;
+  margin: ($minds-padding * 2) 0;
+  @include m-theme() {
+    color: themed($m-red-dark);
+  }
+
+  i.material-icons {
+    font-size: 1.2em;
+  }
+
+  > * {
+    vertical-align: middle;
+  }
+}
+
+.m-comment--poster .minds-body {
+  overflow: visible;
+  min-height: 50px;
+  max-width: calc(100% - 60px);
+}

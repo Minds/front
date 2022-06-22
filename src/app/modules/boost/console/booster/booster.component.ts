@@ -1,3 +1,4 @@
+//
 import {
   Component,
   ComponentFactoryResolver,
@@ -16,6 +17,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
  * The component for the boost console.
+ * Route: /create
  */
 @Component({
   selector: 'm-boost-console-booster',
