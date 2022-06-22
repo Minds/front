@@ -31,7 +31,7 @@
     "test:coverage:doc": "npx compodoc --coverageTest 20 --coverageMinimumPerFile 25 --disableLifeCycleHooks -p tsconfig.doc.json"
   },
   "lint-staged": {
-    "src/**/*": [
+    "src/**/*.{js,jsx,ts,tsx}": [
       "npm run test:coverage:doc"
     ]
   },
