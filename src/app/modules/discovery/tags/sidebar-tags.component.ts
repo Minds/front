@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryTagsService } from './tags.service';
-import { DiscoveryService } from '../discovery.service';
 
 /**
  * Display tags 'for you', trending Minds+, or related to an activity post
@@ -25,10 +24,10 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
   visible = true;
   limit = 5;
-  trending$: Observable<any> = this.service.trending$;
-  foryou$: Observable<any> = this.service.foryou$;
-  activityRelated$: Observable<any> = this.service.activityRelated$;
-  inProgress$: Observable<boolean> = this.service.inProgress$;
+  trending$: Observable<any> = this.tagsService.trending$;
+  foryou$: Observable<any> = this.tagsService.foryou$;
+  activityRelated$: Observable<any> = this.tagsService.activityRelated$;
+  inProgress$: Observable<boolean> = this.tagsService.inProgress$;
 
   parentPathSubscription: Subscription;
   parentPath: string = '/discovery';
@@ -37,11 +36,7 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
   isPlusPage: boolean = false;
 
-  constructor(
-    private service: DiscoveryTagsService,
-    private discoveryService: DiscoveryService,
-    public tagsService: DiscoveryTagsService
-  ) {}
+  constructor(public tagsService: DiscoveryTagsService) {}
 
   ngOnInit() {
     if (!this._context) {
@@ -49,9 +44,9 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
     }
 
     if (this.entityGuid) {
-      this.service.loadTags(true, this.entityGuid);
-    } else if (!this.service.trending$.value.length) {
-      this.service.loadTags();
+      this.tagsService.loadTags(true, this.entityGuid);
+    } else if (!this.tagsService.trending$.value.length) {
+      this.tagsService.loadTags();
     }
 
     this.activityRelatedTagsSubscription = this.tagsService.activityRelated$.subscribe(
@@ -63,22 +58,11 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
         }
       }
     );
-
-    this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
-      parentPath => {
-        // TODOPLUS uncomment this when we're ready to handle plus tags
-        // this.parentPath = parentPath;
-        // this.isPlusPage = parentPath === '/discovery/plus' ? true : false;
-        // if (this.isPlusPage && this._context !== 'activity') {
-        //   this._context = 'plus';
-        // }
-      }
-    );
   }
 
   ngOnDestroy() {
-    if (this.parentPathSubscription) {
-      this.parentPathSubscription.unsubscribe();
+    if (this.activityRelatedTagsSubscription) {
+      this.activityRelatedTagsSubscription.unsubscribe();
     }
   }
 
