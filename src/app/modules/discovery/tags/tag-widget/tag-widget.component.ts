@@ -21,7 +21,6 @@ export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
   tagRegex: RegExp = new RegExp(this.regexService.getRegex('hash'));
   tag: string = '';
   alreadySubscribed: boolean = false;
-  init: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +40,6 @@ export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
     this.querySubscription = this.route.queryParamMap.subscribe(
       (params: ParamMap) => {
         this.parseQuery(params.get('q'));
-        this.init = true;
       }
     );
   }
@@ -49,6 +47,7 @@ export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
   parseQuery(q: string): void {
     if (q) {
       const matchArr = q.match(this.tagRegex);
+
       if (matchArr && matchArr.length === 1) {
         this.tag = matchArr[0]
           .trim()
