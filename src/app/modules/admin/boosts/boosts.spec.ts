@@ -437,47 +437,4 @@ describe('AdminBoosts', () => {
 
     expect(clientMock.post).not.toHaveBeenCalled();
   }));
-
-  it('should show error if there is an error returned on accept', fakeAsync(() => {
-    fixture.detectChanges();
-    tick();
-
-    spyOn(window, 'confirm').and.callFake(function() {
-      return true;
-    });
-
-    clientMock.post.calls.reset();
-    clientMock.post.and.throwError({
-      status: 'error',
-      message: 'An error occurred',
-    });
-
-    comp.accept(comp.boosts[0], true);
-
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
-      'api/v1/admin/boosts/newsfeed/123/accept'
-    );
-    expect((comp as any).toast.error).toHaveBeenCalledWith('An error occurred');
-  }));
-
-  it('should show error if there is an error returned on reject', fakeAsync(() => {
-    fixture.detectChanges();
-    tick();
-
-    clientMock.post.calls.reset();
-    clientMock.post.and.throwError({
-      status: 'error',
-      message: 'An error occurred',
-    });
-
-    comp.boosts[0].rejection_reason = 2;
-    comp.reject(comp.boosts[0]);
-
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
-      'api/v1/admin/boosts/newsfeed/123/reject'
-    );
-    expect((comp as any).toast.error).toHaveBeenCalledWith('An error occurred');
-  }));
 });
