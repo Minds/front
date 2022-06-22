@@ -1,7 +1,7 @@
 include:
   - template: Jobs/Build.gitlab-ci.yml
   # - template: Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/Container-Scanning.gitlab-ci.yml
+  # - template: Security/Container-Scanning.gitlab-ci.yml
 
 stages:
   - build
@@ -294,9 +294,9 @@ prepare:production:sentry:
 # Scan Stage #
 ##############
 
-container_scanning:
-  variables:
-    DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
+# container_scanning:
+#   variables:
+#     DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
 
 ################
 # Review Stage #
