@@ -24,7 +24,7 @@
 // import { SidebarNavigationComponent } from './navigation.component';
 // import { SidebarNavigationService } from './navigation.service';
 
-// ojm this is too much of a mess
+// TODO
 // export default {
 //   title: 'Layout / Navigation / Sidebar Left',
 //   component: SidebarNavigationComponent,

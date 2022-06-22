@@ -10,7 +10,7 @@
 // import { SidebarNavigationComponent } from './sidebar/navigation.component';
 // import { V3TopbarComponent } from './v3-topbar/v3-topbar.component';
 
-// ojm this is too messy
+// TODO
 // export default {
 //   title: 'Layout / Page',
 //   decorators: [

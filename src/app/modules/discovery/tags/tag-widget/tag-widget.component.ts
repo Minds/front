@@ -39,7 +39,6 @@ export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
 
     this.querySubscription = this.route.queryParamMap.subscribe(
       (params: ParamMap) => {
-        console.log('ojm query', params.get('q'));
         this.parseQuery(params.get('q'));
       }
     );
@@ -49,7 +48,6 @@ export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
     if (q) {
       const matchArr = q.match(this.tagRegex);
 
-      console.log('ojm matchArr', matchArr[0]);
       if (matchArr && matchArr.length === 1) {
         this.tag = matchArr[0]
           .trim()
@@ -59,8 +57,6 @@ export class DiscoveryTagWidgetComponent implements OnInit, OnDestroy {
         this.alreadySubscribed = this.service.tags$.value.some(
           t => t.value === this.tag
         );
-
-        console.log('ojm alreadySubscribed', this.tag, this.alreadySubscribed);
 
         return;
       }

@@ -5,8 +5,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     'storybook-addon-themes',
-    // '@storybook/addon-queryparams',
-    'storybook-addon-angular-router', //ojm choose one
+    'storybook-addon-angular-router',
   ],
   framework: '@storybook/angular',
   core: {
