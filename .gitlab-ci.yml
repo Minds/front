@@ -295,7 +295,6 @@ prepare:production:sentry:
 ##############
 
 container_scanning:
-  stage: test
   variables:
     DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
 
