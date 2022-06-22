@@ -74,7 +74,6 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
   constructor(
     public navigation: NavigationService,
     public session: Session,
-    private service: SidebarNavigationService,
     protected configs: ConfigsService,
     private _componentFactoryResolver: ComponentFactoryResolver,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -95,7 +94,7 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
     this.chatUrl = this.configs.get('matrix')?.chat_url;
-    this.service.setContainer(this);
+    this.sidebarNavigationService.setContainer(this);
     this.getUser();
 
     /**
