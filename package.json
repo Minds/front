@@ -28,7 +28,7 @@
     "docs:json": "compodoc -p ./tsconfig.doc.json -e json -d .",
     "storybook": "npm run docs:json && ng run minds:storybook",
     "build-storybook": "npm run docs:json && ng run minds:build-storybook",
-    "test:coverage:doc": "npx compodoc --coverageTest 20 --coverageMinimumPerFile 25 --disableLifeCycleHooks -p tsconfig.doc.json"
+    "test:coverage:doc": "./node_modules/.bin/compodoc --coverageTest 20 --coverageMinimumPerFile 25 --disableLifeCycleHooks -p tsconfig.doc.json"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
