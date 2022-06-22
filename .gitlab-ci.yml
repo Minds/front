@@ -4,7 +4,7 @@ include:
   # - template: Security/Container-Scanning.gitlab-ci.yml
 
 stages:
-  - build
+  - test and build
   - prepare
   - test
   - review
@@ -30,7 +30,7 @@ cache:
 
 test:
   image: circleci/node:14-browsers
-  stage: build
+  stage: test and build
   script:
     - sudo npm install -g npm@7
     - npm i
@@ -41,7 +41,7 @@ test:
       - $CI_NIGHTLY_TESTS == "true"
 
 lint:
-  stage: build
+  stage: test and build
   image: minds/ci-front:14
   script:
     - npm i -g prettier@"^1.19.1"
@@ -148,7 +148,7 @@ qa:nightly:
 ###############
 
 build:review:
-  stage: build
+  stage: test and build
   image: minds/ci-front:14
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
@@ -173,7 +173,7 @@ build:review:
     - angular
 
 build:production:bundles:
-  stage: build
+  stage: test and build
   image: minds/ci-front:14
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
@@ -295,6 +295,7 @@ prepare:production:sentry:
 ##############
 
 # container_scanning:
+#   stage: test
 #   variables:
 #     DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
 
