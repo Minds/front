@@ -242,6 +242,6 @@ export class RegisterForm implements OnInit {
   }
 
   public trackView(): void {
-    this.analytics.trackView('signup:start')
+    this.analytics.trackView('signup:start');
   }
 }
