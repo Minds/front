@@ -1,12 +1,11 @@
 include:
-  - template: Jobs/Build.gitlab-ci.yml
-  # - template: Security/Dependency-Scanning.gitlab-ci.yml
-  # - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
 
 stages:
   - test and build
   - prepare
-  - test
+  - scan
   - review
   - deploy:staging
   - qa
@@ -294,10 +293,13 @@ prepare:production:sentry:
 # Scan Stage #
 ##############
 
-# container_scanning:
-#   stage: test
-#   variables:
-#     DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
+container_scanning:
+  stage: scan
+  variables:
+    DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
+
+dependency_scanning:
+  stage: scan
 
 ################
 # Review Stage #
