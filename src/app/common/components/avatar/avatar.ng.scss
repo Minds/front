@@ -1,0 +1,16 @@
+@import 'defaults.scss';
+
+:host {
+  // Used only to display in storybook
+  .m-avatar__wrapper & {
+    .minds-avatar {
+      background-position: center center;
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      max-width: none;
+      margin: 0;
+    }
+  }
+}

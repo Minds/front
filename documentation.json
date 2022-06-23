@@ -43,6 +43,16 @@
                 "defaultValue": "{\n  onClickButton: action('onAction'),\n}"
             },
             {
+                "name": "actionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/toggle/toggle.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  onClick: action('toggle'),\n}"
+            },
+            {
                 "name": "ActionSolid",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -148,7 +158,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
+                "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -158,7 +168,17 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/read-more/v2/read-more.stories.ts",
+                "file": "src/app/common/components/toggle/toggle.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -179,6 +199,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/modules/forms/stories/radio.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -227,24 +257,16 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "Form",
+                "name": "HasIcon",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/toggle/toggle.stories.ts",
+                "file": "src/app/common/components/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "FormControlTemplate.bind({})"
-            },
-            {
-                "name": "FormControlTemplate",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/common/components/toggle/toggle.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<ToggleComponent>",
-                "defaultValue": "(args: ToggleComponent) => {\n  const formGroup = new FormGroup({\n    opts: new FormControl('This'),\n  });\n\n  return {\n    component: ToggleComponent,\n    template: `\n      <form [formGroup]=\"form\">\n        <span>This</span>\n        <span>\n          <m-toggle\n            [mModel]=\"opts\"\n            (mModelChange)=\"setOpt($event)\"\n            leftValue=\"this\"\n            rightValue=\"that\"\n          ></m-toggle>\n        </span>\n        <span>That</span>\n      </form>\n\n      <div style=\"margin-top: 20px\">\n        <p style=\"white-space: pre\">Value: {{form.value}}</p>\n      </div>\n    `,\n    props: {\n      ...args,\n      form: formGroup,\n    },\n  };\n}"
+                "type": "Story<ButtonComponent>",
+                "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    label: 'Button',\n    icon: 'add',\n  },\n  template: `\n    <m-button\n      [color]=\"color\"\n      [size]=\"size\"\n      [solid]=\"solid\"\n      [overlay]=\"overlay\"\n      [saving]=\"saving\"\n    >\n      {{ label }}\n      <i class=\"material-icons\">{{icon}}</i>\n    </m-button>\n  `,\n})",
+                "rawdescription": "HasIcon",
+                "description": "<p>HasIcon</p>\n"
             },
             {
                 "name": "HasIcon",
@@ -299,6 +321,36 @@
                 "defaultValue": "IconOnly.bind({})"
             },
             {
+                "name": "Large",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "LongText",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/read-more/v2/read-more.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Medium",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "Red",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -351,6 +403,36 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Selected",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "ShortText",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/read-more/v2/read-more.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Small",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -359,6 +441,16 @@
                 "deprecationMessage": "",
                 "type": "Story<AnnouncementComponent>",
                 "defaultValue": "(\n  args: AnnouncementComponent\n) => ({\n  props: args,\n  template: `\n    <m-announcement [canClose]=\"canClose\">{{ message }}</m-announcement>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<MindsAvatar>",
+                "defaultValue": "(args: MindsAvatar) => ({\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -434,6 +526,26 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<TagSelectorComponent>",
+                "defaultValue": "(args: TagSelectorComponent) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/toggle/toggle.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ToggleComponent>",
+                "defaultValue": "(args: ToggleComponent) => ({\n  props: {\n    ...args,\n    toggle: actionsData.onClick,\n  },\n  template: `\n        <span>{{leftValue}}</span>\n        <span>\n          <m-toggle\n            [leftValue]=\"leftValue\"\n            [rightValue]=\"RightValue\"\n            [mModel]=\"mModel\"\n            (mModelChange)=\"mModel = $event\"\n          ></m-toggle>\n        </span>\n        <span>{{rightValue}}</span>\n      <hr>\n      <div>TODO: enable toggle action</div>\n    `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/common/components/user-aggregator/user-aggregator.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -447,8 +559,8 @@
                 "file": "src/app/common/read-more/v2/read-more.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n    props: args,\n    //   template: `\n    //     <div class=\"m-formWrapper\">\n    //       <div class=\"m-form__field--radio\">\n    //         <div class=\"m-form__row--label\">\n    //           <label>\n    //             Choose one\n    //            </label>\n    //         </div>\n    //         <div class=\"m-form__row--input\">\n    //           <ng-container *ngFor=\"let opt of opts\">\n    //             <label\n    //               [for]=\"opt\"\n    //               class=\"m-form__customInputWrapper__radio\"\n    //               >{{ opt }}\n    //               <input\n    //                 type=\"radio\"\n    //                 [id]=\"opt\"\n    //                 name=\"opt\"\n    //                 [value]=\"opt\"\n    //                 formControlName=\"opts\"\n    //                 class=\"form-control\"\n    //               />\n    //               <span class=\"m-form__customInput__radio\"></span>\n    //             </label>\n    //           </ng-container>\n    //         </div>\n    //       </div>\n    //     </div>\n    //   `,\n})"
+                "type": "Story<ReadMoreComponent>",
+                "defaultValue": "(args: any) => ({\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -469,6 +581,46 @@
                 "deprecationMessage": "",
                 "type": "Story<any>",
                 "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n    <div class=\"m-formWrapper\">\n      <div class=\"m-form__field--radio\">\n        <div class=\"m-form__row--label\">\n          <label>\n            Choose one\n           </label>\n        </div>\n        <div class=\"m-form__row--input\">\n          <ng-container *ngFor=\"let opt of opts\">\n            <label\n              [for]=\"opt\"\n              class=\"m-form__customInputWrapper__radio\"\n              >{{ opt }}\n              <input\n                type=\"radio\"\n                [id]=\"opt\"\n                name=\"opt\"\n                [value]=\"opt\"\n                formControlName=\"opts\"\n                class=\"form-control\"\n              />\n              <span class=\"m-form__customInput__radio\"></span>\n            </label>\n          </ng-container>\n        </div>\n      </div>\n    </div>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<DiscoveryTagButtonComponent>",
+                "defaultValue": "(\n  args: DiscoveryTagButtonComponent\n) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<OnboardingV3TagsComponent>",
+                "defaultValue": "(\n  args: OnboardingV3TagsComponent\n) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Tiny",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/avatar/avatar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Unselected",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Warning",
@@ -585,6 +737,18 @@
                     "description": "<p>Borderless</p>\n"
                 },
                 {
+                    "name": "HasIcon",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ButtonComponent>",
+                    "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    label: 'Button',\n    icon: 'add',\n  },\n  template: `\n    <m-button\n      [color]=\"color\"\n      [size]=\"size\"\n      [solid]=\"solid\"\n      [overlay]=\"overlay\"\n      [saving]=\"saving\"\n    >\n      {{ label }}\n      <i class=\"material-icons\">{{icon}}</i>\n    </m-button>\n  `,\n})",
+                    "rawdescription": "HasIcon",
+                    "description": "<p>HasIcon</p>\n"
+                },
+                {
                     "name": "IconOnly",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -649,6 +813,38 @@
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Warning.bind({})"
+                }
+            ],
+            "src/app/common/components/toggle/toggle.stories.ts": [
+                {
+                    "name": "actionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/toggle/toggle.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  onClick: action('toggle'),\n}"
+                },
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/toggle/toggle.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/toggle/toggle.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ToggleComponent>",
+                    "defaultValue": "(args: ToggleComponent) => ({\n  props: {\n    ...args,\n    toggle: actionsData.onClick,\n  },\n  template: `\n        <span>{{leftValue}}</span>\n        <span>\n          <m-toggle\n            [leftValue]=\"leftValue\"\n            [rightValue]=\"RightValue\"\n            [mModel]=\"mModel\"\n            (mModelChange)=\"mModel = $event\"\n          ></m-toggle>\n        </span>\n        <span>{{rightValue}}</span>\n      <hr>\n      <div>TODO: enable toggle action</div>\n    `,\n})"
                 }
             ],
             "src/app/common/components/announcements/announcement.stories.ts": [
@@ -895,6 +1091,28 @@
                     "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <ul class=\"m-tabs__container\">\n    <li class=\"m-tabs__tab\" *ngFor=\"let tab of tabs\">\n      <a [class.selected]=\"tab.selected\">{{ tab.label }}</a>\n    </li>\n  </ul>\n  `,\n})"
                 }
             ],
+            "src/app/common/components/tag-selector/tag-selector.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<TagSelectorComponent>",
+                    "defaultValue": "(args: TagSelectorComponent) => ({\n  props: args,\n})"
+                }
+            ],
             "src/app/common/components/user-aggregator/user-aggregator.stories.ts": [
                 {
                     "name": "Basic",
@@ -915,28 +1133,6 @@
                     "deprecationMessage": "",
                     "type": "Story<UserAggregatorComponent>",
                     "defaultValue": "(\n  args: UserAggregatorComponent\n) => ({\n  props: args,\n})"
-                }
-            ],
-            "src/app/common/read-more/v2/read-more.stories.ts": [
-                {
-                    "name": "Basic",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/read-more/v2/read-more.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/read-more/v2/read-more.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<any>",
-                    "defaultValue": "(args: any) => ({\n    props: args,\n    //   template: `\n    //     <div class=\"m-formWrapper\">\n    //       <div class=\"m-form__field--radio\">\n    //         <div class=\"m-form__row--label\">\n    //           <label>\n    //             Choose one\n    //            </label>\n    //         </div>\n    //         <div class=\"m-form__row--input\">\n    //           <ng-container *ngFor=\"let opt of opts\">\n    //             <label\n    //               [for]=\"opt\"\n    //               class=\"m-form__customInputWrapper__radio\"\n    //               >{{ opt }}\n    //               <input\n    //                 type=\"radio\"\n    //                 [id]=\"opt\"\n    //                 name=\"opt\"\n    //                 [value]=\"opt\"\n    //                 formControlName=\"opts\"\n    //                 class=\"form-control\"\n    //               />\n    //               <span class=\"m-form__customInput__radio\"></span>\n    //             </label>\n    //           </ng-container>\n    //         </div>\n    //       </div>\n    //     </div>\n    //   `,\n})"
                 }
             ],
             "src/app/modules/forms/stories/checkbox.stories.ts": [
@@ -983,26 +1179,142 @@
                     "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n    <div class=\"m-formWrapper\">\n      <div class=\"m-form__field--radio\">\n        <div class=\"m-form__row--label\">\n          <label>\n            Choose one\n           </label>\n        </div>\n        <div class=\"m-form__row--input\">\n          <ng-container *ngFor=\"let opt of opts\">\n            <label\n              [for]=\"opt\"\n              class=\"m-form__customInputWrapper__radio\"\n              >{{ opt }}\n              <input\n                type=\"radio\"\n                [id]=\"opt\"\n                name=\"opt\"\n                [value]=\"opt\"\n                formControlName=\"opts\"\n                class=\"form-control\"\n              />\n              <span class=\"m-form__customInput__radio\"></span>\n            </label>\n          </ng-container>\n        </div>\n      </div>\n    </div>\n  `,\n})"
                 }
             ],
-            "src/app/common/components/toggle/toggle.stories.ts": [
+            "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts": [
                 {
-                    "name": "Form",
+                    "name": "Basic",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/common/components/toggle/toggle.stories.ts",
+                    "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "FormControlTemplate.bind({})"
+                    "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "FormControlTemplate",
+                    "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/common/components/toggle/toggle.stories.ts",
+                    "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Story<ToggleComponent>",
-                    "defaultValue": "(args: ToggleComponent) => {\n  const formGroup = new FormGroup({\n    opts: new FormControl('This'),\n  });\n\n  return {\n    component: ToggleComponent,\n    template: `\n      <form [formGroup]=\"form\">\n        <span>This</span>\n        <span>\n          <m-toggle\n            [mModel]=\"opts\"\n            (mModelChange)=\"setOpt($event)\"\n            leftValue=\"this\"\n            rightValue=\"that\"\n          ></m-toggle>\n        </span>\n        <span>That</span>\n      </form>\n\n      <div style=\"margin-top: 20px\">\n        <p style=\"white-space: pre\">Value: {{form.value}}</p>\n      </div>\n    `,\n    props: {\n      ...args,\n      form: formGroup,\n    },\n  };\n}"
+                    "type": "Story<OnboardingV3TagsComponent>",
+                    "defaultValue": "(\n  args: OnboardingV3TagsComponent\n) => ({\n  props: args,\n})"
+                }
+            ],
+            "src/app/common/components/avatar/avatar.stories.ts": [
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/avatar/avatar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Medium",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/avatar/avatar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/avatar/avatar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/avatar/avatar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<MindsAvatar>",
+                    "defaultValue": "(args: MindsAvatar) => ({\n  props: args,\n})"
+                },
+                {
+                    "name": "Tiny",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/avatar/avatar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                }
+            ],
+            "src/app/common/read-more/v2/read-more.stories.ts": [
+                {
+                    "name": "LongText",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/read-more/v2/read-more.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "ShortText",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/read-more/v2/read-more.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/read-more/v2/read-more.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ReadMoreComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: args,\n})"
+                }
+            ],
+            "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts": [
+                {
+                    "name": "Selected",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<DiscoveryTagButtonComponent>",
+                    "defaultValue": "(\n  args: DiscoveryTagButtonComponent\n) => ({\n  props: args,\n})"
+                },
+                {
+                    "name": "Unselected",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
                 }
             ]
         },
@@ -1012,7 +1324,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 12,
+        "count": 11,
         "status": "low",
         "files": [
             {
@@ -1031,6 +1343,56 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/avatar/avatar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Large",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/avatar/avatar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Medium",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/avatar/avatar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Small",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/avatar/avatar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/avatar/avatar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Tiny",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1111,6 +1473,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Borderless",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/app/common/components/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "HasIcon",
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
@@ -1386,11 +1758,21 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/common/components/toggle/toggle.stories.ts",
+                "filePath": "src/app/common/components/tag-selector/tag-selector.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Form",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1400,7 +1782,27 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "FormControlTemplate",
+                "name": "actionsData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/toggle/toggle.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/toggle/toggle.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1430,7 +1832,17 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Basic",
+                "name": "LongText",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/read-more/v2/read-more.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ShortText",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1441,6 +1853,36 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Selected",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/discovery/tags/tag-button/tag-button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Unselected",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1477,6 +1919,26 @@
             },
             {
                 "filePath": "src/app/modules/forms/stories/radio.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",

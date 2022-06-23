@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CheckoutModule } from '../checkout/checkout.module';
 import { PaymentsModule } from '../payments/payments.module';
 
 import { WireButtonComponent } from './button/button.component';
@@ -39,7 +38,6 @@ const wireRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(wireRoutes),
     CommonModule,
-    CheckoutModule,
     PaymentsModule,
     WireV2Module,
     MarketingModule,

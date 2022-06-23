@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FestivalBannerExperimentService } from '../../../modules/experiments/sub-services/festival-banner-experiment.service';
 import { SessionsStorageService } from '../../../services/session-storage.service';
+import { Storage } from '../../../services/storage';
 import { ConfigsService } from '../../services/configs.service';
 import { ThemeService } from '../../services/theme.service';
 
@@ -23,7 +24,7 @@ export class FestivalBannerComponent implements OnInit {
   public dismissed = true;
 
   constructor(
-    private sessionStorage: SessionsStorageService,
+    private localStorage: Storage,
     private festivalBannerExperiment: FestivalBannerExperimentService,
     private themes: ThemeService,
     configs: ConfigsService
@@ -32,7 +33,7 @@ export class FestivalBannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dismissed = !!this.sessionStorage.get('dismissed_festival_banner');
+    this.dismissed = !!this.localStorage.get('dismissed_festival_banner');
   }
 
   /**
@@ -65,7 +66,7 @@ export class FestivalBannerComponent implements OnInit {
    */
   public dismiss(): void {
     this.dismissed = true;
-    this.sessionStorage.set('dismissed_festival_banner', true);
+    this.localStorage.set('dismissed_festival_banner', true);
   }
 
   /**

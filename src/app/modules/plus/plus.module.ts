@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { CheckoutModule } from '../checkout/checkout.module';
 import { PlusMarketingComponent } from './marketing.component';
 import { PlusSubscriptionComponent } from './subscription/subscription.component';
 import { PlusVerifyComponent } from './verify/verify.component';
@@ -33,7 +32,6 @@ const plusRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    CheckoutModule,
     RouterModule.forChild(plusRoutes),
     MarketingModule,
   ],

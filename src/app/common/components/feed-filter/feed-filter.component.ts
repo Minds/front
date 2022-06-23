@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FeedService } from '../../../modules/channels/v2/feed/feed.service';
-import { DateRangeModalService } from '../date-range-modal/date-range-modal.services';
+import { DateRangeModalService } from '../date-range-modal/date-range-modal.service';
 
 /**
  * Feed filter options

@@ -11,9 +11,7 @@ import { AnalyticsChartComponent } from './v2/components/chart/chart.component';
 import { AnalyticsTableComponent } from './v2/components/table/table.component';
 import { AnalyticsDashboardService } from './v2/dashboard.service';
 import { SearchModule } from '../search/search.module';
-import { AnalyticsSearchComponent } from './v2/components/search/search.component';
 import { FormsModule } from '@angular/forms';
-import { AnalyticsSearchSuggestionsComponent } from './v2/components/search-suggestions/search-suggestions.component';
 import { AnalyticsBenchmarkComponent } from './v2/components/benchmark/benchmark.component';
 import { ChartV2Module } from './components/chart-v2/chart-v2.module';
 import { AnalyticsGlobalTokensComponent } from './global-tokens/global-tokens.component';
@@ -74,8 +72,6 @@ const routes: Routes = [
     AnalyticsFiltersComponent,
     AnalyticsChartComponent,
     AnalyticsTableComponent,
-    AnalyticsSearchComponent,
-    AnalyticsSearchSuggestionsComponent,
     AnalyticsBenchmarkComponent,
     AnalyticsGlobalTokensComponent,
     AnalyticsGlobalTokensMetricItemComponent,

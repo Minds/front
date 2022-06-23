@@ -36,7 +36,10 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 
-export type FeedAlgorithm = 'top' | 'latest';
+export enum FeedAlgorithm {
+  top = 'top',
+  latest = 'latest',
+}
 
 @Injectable()
 export class LatestFeedService extends FeedsService {}
@@ -145,7 +148,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['algorithm']) {
-        this.changeFeedAlgorithm(params['algorithm']);
+        if (params['algorithm'] in FeedAlgorithm) {
+          this.changeFeedAlgorithm(params['algorithm']);
+        } else {
+          this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
+        }
       }
       this.load();
 
@@ -320,7 +327,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       behavior: 'smooth',
     });
     setTimeout(() => {
-      this.changeFeedAlgorithm('top');
+      this.changeFeedAlgorithm(FeedAlgorithm.top);
       this.load();
     }, 500);
   }

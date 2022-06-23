@@ -1,50 +1,43 @@
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { action } from '@storybook/addon-actions';
+import { Story, Meta } from '@storybook/angular';
 import { ToggleComponent } from './toggle.component';
 
 export default {
   title: 'Components / Inputs / Toggle',
   component: ToggleComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [
-        ReactiveFormsModule, // <--------- **This is important**
-      ],
-    }),
-  ],
+  args: {
+    leftValue: 'off',
+    rightValue: 'on',
+    mModel: 'off',
+  },
+  // Don't include the actions data as a story
+  excludeStories: /.*Data$/,
 } as Meta<ToggleComponent>;
 
-const FormControlTemplate: Story<ToggleComponent> = (args: ToggleComponent) => {
-  const formGroup = new FormGroup({
-    opts: new FormControl('This'),
-  });
-
-  return {
-    component: ToggleComponent,
-    template: `
-      <form [formGroup]="form">
-        <span>This</span>
-        <span>
-          <m-toggle
-            [mModel]="opts"
-            (mModelChange)="setOpt($event)"
-            leftValue="this"
-            rightValue="that"
-          ></m-toggle>
-        </span>
-        <span>That</span>
-      </form>
-
-      <div style="margin-top: 20px">
-        <p style="white-space: pre">Value: {{form.value}}</p>
-      </div>
-    `,
-    props: {
-      ...args,
-      form: formGroup,
-    },
-  };
+export const actionsData = {
+  onClick: action('toggle'),
 };
 
-export const Form = FormControlTemplate.bind({});
-Form.args = {};
+const Template: Story<ToggleComponent> = (args: ToggleComponent) => ({
+  props: {
+    ...args,
+    toggle: actionsData.onClick,
+  },
+  template: `
+        <span>{{leftValue}}</span>
+        <span>
+          <m-toggle
+            [leftValue]="leftValue"
+            [rightValue]="RightValue"
+            [mModel]="mModel"
+            (mModelChange)="mModel = $event"
+          ></m-toggle>
+        </span>
+        <span>{{rightValue}}</span>
+      <hr>
+      <div>TODO: enable toggle action</div>
+    `,
+});
+
+export const Basic = Template.bind({});
+Basic.args = {};
