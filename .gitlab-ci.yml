@@ -51,7 +51,7 @@ check-coverage:
   stage: test and build
   script:
     - git fetch origin
-    - npx lint-staged --shell "/bin/bash" --relative --no-stash --allow-empty --debug --diff="origin/master...${CI_COMMIT_SHA}"
+    - npx lint-staged --relative --no-stash --allow-empty --debug --diff="origin/master...${CI_COMMIT_SHA}"
   except:
     variables:
       - $CI_NIGHTLY_TESTS == "true"
