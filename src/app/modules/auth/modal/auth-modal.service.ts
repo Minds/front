@@ -32,10 +32,6 @@ export class AuthModalService {
         formDisplay: opts.formDisplay,
         onComplete: async (user: MindsUser) => {
           modal.close(user);
-
-          if (opts.formDisplay === 'register') {
-            await this.onboardingV3.open();
-          }
         },
       },
       keyboard: false,

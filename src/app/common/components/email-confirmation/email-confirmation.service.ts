@@ -4,6 +4,7 @@ import { FormToastService } from '../../services/form-toast.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { BehaviorSubject } from 'rxjs';
+import { OnboardingV3Service } from '../../../modules/onboarding-v3/onboarding-v3.service';
 
 /**
  * Service handling the sending of new confirmation emails, verification of email addresses
@@ -23,6 +24,7 @@ export class EmailConfirmationService {
     protected client: Client,
     private toasterService: FormToastService,
     private session: Session,
+    private onboardingV3: OnboardingV3Service,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
@@ -58,6 +60,8 @@ export class EmailConfirmationService {
       const response = (await this.client.post('api/v3/email/confirm')) as any;
       const success = response.status === 'success';
       this.updateLocalConfirmationState();
+      // TODO: Check if user has tags already.
+      await this.onboardingV3.open();
       this.success$.next(success);
       return success;
     } catch (e) {

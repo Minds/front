@@ -149,8 +149,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
        */
       this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
-
-    this.onboardingV3.open();
   }
 
   onSourceError() {
