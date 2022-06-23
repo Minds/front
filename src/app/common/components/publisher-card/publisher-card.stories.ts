@@ -11,26 +11,15 @@ import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-se
 import { CommonModule } from '../../common.module';
 import { Client } from '../../api/client.service';
 import { ThemeService } from '../../services/theme.service';
+import userMock from '../../../mocks/responses/user.mock';
+import configsMock from '../../../mocks/responses/configs.mock';
 
 export default {
   title: 'Composite Components / Publisher Card',
   component: PublisherCardComponent,
   argTypes: {
     publisher: {
-      defaultValue: <MindsUser>{
-        guid: '123',
-        type: 'user',
-        name: 'Storybook User',
-        username: 'storybook',
-        briefdescription: 'I am a description',
-        time_created: Date.now(),
-        icontime: 1635862076,
-        mode: null,
-        nsfw: [],
-        subscribers_count: 128,
-        subscriptions_count: 1,
-        plus: true,
-      },
+      defaultValue: userMock,
       control: { type: 'object' },
     },
     showDescription: {
@@ -56,9 +45,6 @@ export default {
   },
   args: {},
   decorators: [
-    /**
-     * This is VERY messy. How can we avoid declaring so many services and imports
-     */
     moduleMetadata({
       imports: [CommonModule, RouterTestingModule, HttpClientTestingModule],
       providers: [
@@ -76,7 +62,7 @@ export default {
           provide: ConfigsService,
           useValue: {
             get: () => {
-              return 'https://cdn.minds.com/';
+              return configsMock.cdn_url;
             },
           },
         },
