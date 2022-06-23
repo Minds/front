@@ -2,6 +2,7 @@ import { Component, Input, Inject, PLATFORM_ID } from '@angular/core';
 
 import { JurySessionService } from './session.service';
 import { isPlatformBrowser } from '@angular/common';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-juryDutySession__content',
@@ -13,6 +14,7 @@ export class JuryDutySessionContentComponent {
 
   constructor(
     private sessionService: JurySessionService,
+    private toast: FormToastService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -42,8 +44,13 @@ export class JuryDutySessionContentComponent {
       return;
     }
     if (confirm('Are you sure?')) {
-      this.decided = true;
-      await this.sessionService.overturn(this.report);
+      try {
+        await this.sessionService.overturn(this.report);
+        this.decided = true;
+      } catch (e) {
+        console.error(e);
+        this.toast.error(e?.message ?? 'An unknown error has occurred');
+      }
     }
   }
 
@@ -56,8 +63,13 @@ export class JuryDutySessionContentComponent {
       return;
     }
     if (confirm('Are you sure?')) {
-      this.decided = true;
-      await this.sessionService.uphold(this.report);
+      try {
+        await this.sessionService.uphold(this.report);
+        this.decided = true;
+      } catch (e) {
+        console.error(e);
+        this.toast.error(e?.message ?? 'An unknown error has occurred');
+      }
     }
   }
 }
