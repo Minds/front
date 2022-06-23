@@ -27,6 +27,7 @@ import { UsernameValidator } from '../username.validator';
 import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { PasswordRiskValidator } from '../password-risk.validator';
+import { AnalyticsService } from './../../../services/analytics';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -77,7 +78,8 @@ export class RegisterForm implements OnInit {
     private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService,
     private usernameValidator: UsernameValidator,
-    private passwordRiskValidator: PasswordRiskValidator
+    private passwordRiskValidator: PasswordRiskValidator,
+    private analytics: AnalyticsService
   ) {}
 
   ngOnInit(): void {
@@ -237,5 +239,9 @@ export class RegisterForm implements OnInit {
 
   get password() {
     return this.form.get('username');
+  }
+
+  public trackView(): void {
+    this.analytics.trackView('signup:start');
   }
 }
