@@ -80,7 +80,7 @@ describe('FestivalBannerComponent', () => {
     (comp as any).localStorage.get.and.returnValue('true');
     comp.ngOnInit();
     expect((comp as any).localStorage.get).toHaveBeenCalledWith(
-      'dismissed_festival_banner'
+      'dismissed_festival_banner_2'
     );
     expect(comp.dismissed).toBeTrue();
   });
@@ -89,7 +89,7 @@ describe('FestivalBannerComponent', () => {
     (comp as any).localStorage.get.and.returnValue(null);
     comp.ngOnInit();
     expect((comp as any).localStorage.get).toHaveBeenCalledWith(
-      'dismissed_festival_banner'
+      'dismissed_festival_banner_2'
     );
     expect(comp.dismissed).toBeFalse();
   });
@@ -136,7 +136,7 @@ describe('FestivalBannerComponent', () => {
 
     expect(comp.dismissed).toBe(true);
     expect((comp as any).localStorage.set).toHaveBeenCalledWith(
-      'dismissed_festival_banner',
+      'dismissed_festival_banner_2',
       true
     );
   });
