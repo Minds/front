@@ -50,8 +50,8 @@ lint:
 check-coverage:
   stage: test and build
   script:
-    - npm i
-    - git fetch origin
+    - npm i -g lint-staged
+    - git fetch origin master "${CI_COMMIT_BRANCH}"
     - npx lint-staged --relative --no-stash --allow-empty --debug --diff="origin/master...${CI_COMMIT_SHA}"
   except:
     refs:
