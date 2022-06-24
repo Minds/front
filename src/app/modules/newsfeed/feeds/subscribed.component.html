@@ -18,7 +18,7 @@
       ></m-composer>
     </ng-container>
 
-    <m-feedNotice__outlet position="top"></m-feedNotice__outlet>
+    <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
 
     <m-feedHeader
       *ngIf="topFeedExperimentActive"
@@ -29,7 +29,7 @@
         <ng-container *ngFor="let preActivity of prepended; let i = index">
           <m-feedNotice__outlet
             *ngIf="i > 0 && i % 6 === 0"
-            position="inline"
+            location="inline"
           ></m-feedNotice__outlet>
           <m-activity
             [entity]="preActivity"
@@ -64,7 +64,7 @@
       >
         <m-feedNotice__outlet
           *ngIf="i > 0 && i % 6 === 0"
-          position="inline"
+          location="inline"
         ></m-feedNotice__outlet>
         <m-featured-content
           *ngIf="(i > 0 && i % 5 === 0) || i === 3"

@@ -3,8 +3,6 @@
 @import 'spacing';
 @import '../../../common/layout/layout.scss';
 
-$topbarHeight: 75px;
-
 :host {
   display: flex;
   flex-flow: row nowrap;
@@ -20,12 +18,6 @@ $topbarHeight: 75px;
 
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
-  }
-
-  &.m-feedNotice__container--sticky {
-    position: sticky;
-    top: $topbarHeight;
-    @include z-index(messenger);
   }
 
   &:not(.m-feedNotice__container--fullWidth) {

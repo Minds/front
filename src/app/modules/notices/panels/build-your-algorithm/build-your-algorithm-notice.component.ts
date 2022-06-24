@@ -28,7 +28,8 @@ export class BuildYourAlgorithmNoticeComponent extends AbstractSubscriberCompone
     // listen for answers provided and dismiss modal if they are.
     this.subscriptions.push(
       this.compassService.answersProvided$
-        .pipe(skip(1))
+        // skip emission during subscription and emission during open.
+        .pipe(skip(2))
         .subscribe((provided: boolean) => {
           if (provided) {
             this.modalService.dismissAll();
