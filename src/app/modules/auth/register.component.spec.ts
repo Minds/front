@@ -23,6 +23,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { BehaviorSubject } from 'rxjs';
+import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
 
 let activatedRouteMock = new (function() {
   this.queryParams = new BehaviorSubject({
@@ -87,6 +88,10 @@ describe('RegisterComponent', () => {
           {
             provide: OnboardingV3Service,
             useValue: MockService(OnboardingV3Service),
+          },
+          {
+            provide: EmailCodeExperimentService,
+            useValue: MockService(EmailCodeExperimentService),
           },
         ],
       }).compileComponents();

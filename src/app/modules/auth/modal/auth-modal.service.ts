@@ -6,6 +6,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
+import { EmailCodeExperimentService } from '../../experiments/sub-services/email-code-experiment.service';
 
 @Injectable()
 export class AuthModalService {
@@ -15,7 +16,8 @@ export class AuthModalService {
     private modalService: ModalService,
     private features: FeaturesService,
     private onboardingV3: OnboardingV3Service,
-    private session: Session
+    private session: Session,
+    private emailCodeExperiment: EmailCodeExperimentService
   ) {}
 
   async open(
@@ -32,6 +34,13 @@ export class AuthModalService {
         formDisplay: opts.formDisplay,
         onComplete: async (user: MindsUser) => {
           modal.close(user);
+
+          if (
+            opts.formDisplay === 'register' &&
+            !this.emailCodeExperiment.isActive()
+          ) {
+            await this.onboardingV3.open();
+          }
         },
       },
       keyboard: false,

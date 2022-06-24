@@ -1,7 +1,7 @@
 import { Injectable, Injector, Inject, PLATFORM_ID } from '@angular/core';
 import { Client } from '../../../services/api';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { HashtagDefaultsService } from '../../hashtags/service/defaults.service';
 import { isPlatformServer } from '@angular/common';
 import { DiscoveryService } from '../discovery.service';
@@ -203,5 +203,20 @@ export class DiscoveryTagsService {
     } finally {
       this.saving$.next(false);
     }
+  }
+
+  /**
+   * Checks if a user HAS set tags already.
+   * @returns { Promise<boolean> }
+   */
+  public async hasSetTags(): Promise<boolean> {
+    if (this.inProgress$.getValue()) {
+      await this.inProgress$.pipe(first()).toPromise();
+    }
+    if (!this.loaded$.getValue()) {
+      await this.loadTags();
+    }
+    const count = await this.countTags();
+    return count > 0;
   }
 }

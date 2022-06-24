@@ -12,6 +12,14 @@ export let feedNoticeMock = new (function() {
   this.dismiss = jasmine.createSpy('dismiss');
 })();
 
+export let tagsServiceMock = new (function() {
+  this.hasSetTags = jasmine.createSpy('hasSetTags');
+})();
+
+export let onboardingV3Mock = new (function() {
+  this.open = jasmine.createSpy('open');
+})();
+
 describe('EmailConfirmationService', () => {
   let service: EmailConfirmationService;
 
@@ -20,7 +28,9 @@ describe('EmailConfirmationService', () => {
       clientMock,
       toastServiceMock,
       sessionMock,
+      onboardingV3Mock,
       feedNoticeMock,
+      tagsServiceMock,
       configMock
     );
   });
