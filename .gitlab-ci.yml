@@ -24,35 +24,38 @@ cache:
   paths:
     - node_modules/
 
-# test:
-#   image: circleci/node:14-browsers
-#   stage: test and build
-#   script:
-#     - sudo npm install -g npm@7
-#     - npm i
-#     - NODE_OPTIONS=--max_old_space_size=4096
-#     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-#   except:
-#     variables:
-#       - $CI_NIGHTLY_TESTS == "true"
+test:
+  image: circleci/node:14-browsers
+  stage: test and build
+  script:
+    - sudo npm install -g npm@7
+    - npm i
+    - NODE_OPTIONS=--max_old_space_size=4096
+    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
-# lint:
-#   stage: test and build
-#   script:
-#     - npm i -g prettier@"^1.19.1"
-#     - prettier --check "src/**/*.ts"
-#     - prettier --check "src/**/*.scss"
-#     - prettier --check "src/**/*.html"
-#   except:
-#     variables:
-#       - $CI_NIGHTLY_TESTS == "true"
+lint:
+  stage: test and build
+  script:
+    - npm i -g prettier@"^1.19.1"
+    - prettier --check "src/**/*.ts"
+    - prettier --check "src/**/*.scss"
+    - prettier --check "src/**/*.html"
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 check-coverage:
   stage: test and build
   script:
+    - npm i
     - git fetch origin
     - npx lint-staged --relative --no-stash --allow-empty --debug --diff="origin/master...${CI_COMMIT_SHA}"
   except:
+    refs:
+      - master
     variables:
       - $CI_NIGHTLY_TESTS == "true"
 
