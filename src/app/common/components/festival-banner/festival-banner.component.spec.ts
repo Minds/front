@@ -145,7 +145,7 @@ describe('FestivalBannerComponent', () => {
     spyOn(window, 'open');
     comp.buyTickets();
     expect(window.open).toHaveBeenCalledWith(
-      'https://www.ticketmaster.com/event/3B005CB2CF161F8D?utm_source=minds&utm_medium=banner&utm_campaign=festival',
+      'https://www.liveone.com/live-events/event/minds-festival-of-ideas',
       '_blank'
     );
   });
