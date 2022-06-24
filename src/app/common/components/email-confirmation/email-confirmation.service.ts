@@ -5,6 +5,8 @@ import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { BehaviorSubject } from 'rxjs';
 import { OnboardingV3Service } from '../../../modules/onboarding-v3/onboarding-v3.service';
+import { FeedNoticeService } from '../../../modules/notices/services/feed-notice.service';
+import { DiscoveryTagsService } from '../../../modules/discovery/tags/tags.service';
 
 /**
  * Service handling the sending of new confirmation emails, verification of email addresses
@@ -25,6 +27,8 @@ export class EmailConfirmationService {
     private toasterService: FormToastService,
     private session: Session,
     private onboardingV3: OnboardingV3Service,
+    private feedNotice: FeedNoticeService,
+    private tagsService: DiscoveryTagsService,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
@@ -60,9 +64,12 @@ export class EmailConfirmationService {
       const response = (await this.client.post('api/v3/email/confirm')) as any;
       const success = response.status === 'success';
       this.updateLocalConfirmationState();
-      // TODO: Check if user has tags already.
-      await this.onboardingV3.open();
       this.success$.next(success);
+
+      if (!(await this.tagsService.hasSetTags())) {
+        await this.onboardingV3.open();
+      }
+
       return success;
     } catch (e) {
       console.warn(e);
@@ -90,5 +97,6 @@ export class EmailConfirmationService {
     let updatedUser = this.session.getLoggedInUser();
     updatedUser.email_confirmed = state;
     this.session.inject(updatedUser);
+    this.feedNotice.dismiss('verify-email');
   }
 }

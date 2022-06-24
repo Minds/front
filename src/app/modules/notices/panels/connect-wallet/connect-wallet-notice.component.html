@@ -1,0 +1,23 @@
+<m-feedNotice (dismissClick)="dismiss()" icon="info">
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__CONNECT_WALLET__CONNECT_A_CRYPTO_WALLET"
+    >Connect a crypto wallet</span
+  >
+  <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__CONNECT_WALLET__BODY">
+    To earn tokens and access the decentralized web, connect Minds to your
+    crypto wallet. This step is required to join the token rewards program.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick($event)"
+    data-ref="feed-notice-connect-wallet-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__CONNECT_WALLET__CONNECT_WALLET">
+      Connect wallet
+    </ng-container>
+  </m-button>
+</m-feedNotice>

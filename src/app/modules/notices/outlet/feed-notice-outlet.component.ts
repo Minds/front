@@ -5,10 +5,16 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { FeedNotice, NoticeLocation } from '../feed-notice.types';
+import { BehaviorSubject, EMPTY, Subscription } from 'rxjs';
 import { FeedNoticeService } from '../services/feed-notice.service';
-import { NoticePosition, NoticeIdentifier } from '../feed-notice.types';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import {
+  catchError,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 
 /**
  * Outlet for feed notices - use this component to show a relevant
@@ -19,34 +25,47 @@ import { filter } from 'rxjs/operators';
   selector: 'm-feedNotice__outlet',
   styleUrls: ['./feed-notice-outlet.component.ng.scss'],
   template: `
-    <ng-container [ngSwitch]="activeNotice">
-      <m-feedNotice--verifyEmail
-        *ngSwitchCase="'verify-email'"
-      ></m-feedNotice--verifyEmail>
-      <m-feedNotice--buildYourAlgorithm
-        *ngSwitchCase="'build-your-algorithm'"
-      ></m-feedNotice--buildYourAlgorithm>
-      <m-feedNotice--enablePushNotifications
-        *ngSwitchCase="'enable-push-notifications'"
-      ></m-feedNotice--enablePushNotifications>
-      <m-feedNotice--updateTags
-        *ngSwitchCase="'update-tags'"
-      ></m-feedNotice--updateTags>
+    <ng-container *ngIf="(notice$ | async) && !(notice$ | async).dismissed">
+      <ng-container [ngSwitch]="(notice$ | async)?.key">
+        <m-feedNotice--verifyEmail
+          *ngSwitchCase="'verify-email'"
+        ></m-feedNotice--verifyEmail>
+        <m-feedNotice--setupChannel
+          *ngSwitchCase="'setup-channel'"
+        ></m-feedNotice--setupChannel>
+        <m-feedNotice--verifyUniqueness
+          *ngSwitchCase="'verify-uniqueness'"
+        ></m-feedNotice--verifyUniqueness>
+        <m-feedNotice--connectWallet
+          *ngSwitchCase="'connect-wallet'"
+        ></m-feedNotice--connectWallet>
+        <m-feedNotice--buildYourAlgorithm
+          *ngSwitchCase="'build-your-algorithm'"
+        ></m-feedNotice--buildYourAlgorithm>
+        <m-feedNotice--enablePushNotifications
+          *ngSwitchCase="'enable-push-notifications'"
+        ></m-feedNotice--enablePushNotifications>
+        <m-feedNotice--updateTags
+          *ngSwitchCase="'update-tags'"
+        ></m-feedNotice--updateTags>
+      </ng-container>
     </ng-container>
   `,
 })
 export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
-  // array of subscriptions destroyed if still present in onDestroy.
-  private subscriptions: Subscription[] = [];
+  // location of component - where should it show 'top' or 'inline' in the feed.
+  @Input() location: NoticeLocation = 'top';
 
   // name of currently active notice.
-  public activeNotice: NoticeIdentifier = null;
+  public notice$: BehaviorSubject<FeedNotice> = new BehaviorSubject<FeedNotice>(
+    null
+  );
 
-  // positioning of component - where should it show 'top' or feed, or 'inline' in the feed.
-  @Input() position: NoticePosition = 'top';
+  // index of outlet relative to other outlets. Top outlets will be -1.
+  protected position: number = null;
 
-  // should show new notices even when service identifies another notice has already been shown for this position.
-  @Input() showMultiple: boolean = false;
+  // array of subscriptions to be unsubscribed from on destroy.
+  private subscriptions: Subscription[] = [];
 
   /**
    * If experiment is active, full width class.
@@ -57,13 +76,19 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
     return this.service.shouldBeFullWidth();
   }
 
+  // Makes notice to stick to the top of the feed.
+  @HostBinding('class.m-feedNoticeOutlet__container--sticky')
+  @Input()
+  stickyTop: boolean;
+
   /**
    * If a notice is visible (helps us get rid of borders when no notice is shown).
    * @returns { boolean } - true if a notice is visible.
    */
   @HostBinding('class.m-feedNoticeOutlet__container--visible')
   get isVisible(): boolean {
-    return !!this.activeNotice;
+    const notice = this.notice$.getValue();
+    return !!notice && !notice.dismissed;
   }
 
   /**
@@ -71,51 +96,58 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
    * @returns { boolean } whether notice should be in top position.
    */
   @HostBinding('class.m-feedNoticeOutlet__container--topPosition')
-  get isTopPosition(): boolean {
-    return this.position === 'top';
+  get isTopLocation(): boolean {
+    return this.location === 'top';
   }
 
   constructor(private service: FeedNoticeService) {}
 
   ngOnInit(): void {
-    this.initSubscription();
+    this.subscriptions.push(
+      // wait till service has finished fetching from server.
+      this.service.initialized$
+        .pipe(
+          // filter out non-true values.
+          filter((completed: boolean) => !!completed),
+          /**
+           * register outlet with service and replace observable with
+           * one representing the notice to show for this position.
+           */
+          switchMap((success: boolean) => {
+            this.position = this.service.register(this.location);
+            return this.service.getNoticeForPosition$(this.position);
+          }),
+          // filter out null notices.
+          filter((notice: FeedNotice) => !!notice),
+          // only continue if the notice has changed.
+          distinctUntilChanged(),
+          // update this classes notice.
+          tap((notice: FeedNotice) => {
+            if (this.service.shouldBeStickyTop(notice)) {
+              this.stickyTop = true;
+            }
+            this.notice$.next(notice);
+          }),
+          catchError(e => {
+            console.error(e);
+            return EMPTY;
+          })
+        )
+        .subscribe()
+    );
   }
 
   ngOnDestroy(): void {
-    if (this.activeNotice) {
-      this.service.setShown(this.activeNotice, false);
-    }
+    const notice = this.notice$.getValue();
+    if (notice && notice.key) {
+      this.service.unregister(notice.key);
 
+      if (this.stickyTop) {
+        this.stickyTop = false;
+      }
+    }
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
-  }
-
-  /**
-   * Gets next active notice from service, sets it to local state to be shown
-   * and informs the service that this instance is showing that notice.
-   * @returns { void }
-   */
-  private async initSubscription(): Promise<void> {
-    this.subscriptions.push(
-      // once true, service has completed initial load.
-      this.service.updatedState$.pipe(filter(Boolean)).subscribe(val => {
-        // if we're not showing multiple and this position already has shown notices.
-        if (!this.showMultiple && this.service.hasShownANotice()) {
-          return;
-        }
-
-        const notice = this.service.getNextShowableNotice(this.position);
-
-        if (!notice) {
-          this.activeNotice = null;
-          return;
-        }
-        this.activeNotice = notice;
-        this.service.setShown(notice, true);
-      })
-    );
-
-    await this.service.checkInitialState();
   }
 }

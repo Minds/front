@@ -7,14 +7,20 @@ import { VerifyEmailNoticeComponent } from './panels/verify-email/verify-email-n
 import { FeedNoticeOutletComponent } from './outlet/feed-notice-outlet.component';
 import { EnablePushNotificationsNoticeComponent } from './panels/enable-push-notifications/enable-push-notifications-notice.component';
 import { UpdateTagsNoticeComponent } from './panels/update-tags/update-tags-notice.component';
+import { SetupChannelNoticeComponent } from './panels/setup-channel/setup-channel-notice.component';
+import { VerifyUniquenessNoticeComponent } from './panels/verify-uniqueness/verify-uniqueness-notice.component';
+import { ConnectWalletNoticeComponent } from './panels/connect-wallet/connect-wallet-notice.component';
 
 @NgModule({
   imports: [CommonModule, NgCommonModule],
   declarations: [
     FeedNoticeComponent,
     FeedNoticeOutletComponent,
-    BuildYourAlgorithmNoticeComponent,
     VerifyEmailNoticeComponent,
+    SetupChannelNoticeComponent,
+    VerifyUniquenessNoticeComponent,
+    ConnectWalletNoticeComponent,
+    BuildYourAlgorithmNoticeComponent,
     EnablePushNotificationsNoticeComponent,
     UpdateTagsNoticeComponent,
   ],

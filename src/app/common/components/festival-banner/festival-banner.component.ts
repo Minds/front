@@ -33,7 +33,7 @@ export class FestivalBannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dismissed = !!this.localStorage.get('dismissed_festival_banner');
+    this.dismissed = !!this.localStorage.get('dismissed_festival_banner_2');
   }
 
   /**
@@ -66,7 +66,7 @@ export class FestivalBannerComponent implements OnInit {
    */
   public dismiss(): void {
     this.dismissed = true;
-    this.localStorage.set('dismissed_festival_banner', true);
+    this.localStorage.set('dismissed_festival_banner_2', true);
   }
 
   /**
@@ -74,7 +74,7 @@ export class FestivalBannerComponent implements OnInit {
    */
   public buyTickets(): void {
     window.open(
-      'https://www.ticketmaster.com/event/3B005CB2CF161F8D?utm_source=minds&utm_medium=banner&utm_campaign=festival',
+      'https://www.liveone.com/live-events/event/minds-festival-of-ideas',
       '_blank'
     );
   }

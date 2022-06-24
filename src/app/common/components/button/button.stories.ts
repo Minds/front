@@ -33,7 +33,7 @@ export default {
     },
     solid: {
       defaultValue: false,
-      description: 'To be used to give prominance to a button',
+      description: 'To be used to give prominence to a button',
       control: 'boolean',
     },
     overlay: {
@@ -177,6 +177,37 @@ export const WarningDisabled = Warning.bind({});
 WarningDisabled.args = {
   ...Warning.args,
   disabled: true,
+};
+
+/**
+ * HasIcon
+ */
+
+export const HasIcon: Story<ButtonComponent> = (args: ButtonComponent) => ({
+  props: {
+    ...args,
+    label: 'Button',
+    icon: 'add',
+  },
+  template: `
+    <m-button
+      [color]="color"
+      [size]="size"
+      [solid]="solid"
+      [overlay]="overlay"
+      [saving]="saving"
+    >
+      {{ label }}
+      <i class="material-icons">{{icon}}</i>
+    </m-button>
+  `,
+});
+HasIcon.parameters = {
+  docs: {
+    description: {
+      story: 'For example, content settings tag selectors',
+    },
+  },
 };
 
 /**
