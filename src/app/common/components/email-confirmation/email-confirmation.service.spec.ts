@@ -4,6 +4,14 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { toastServiceMock } from '../../../modules/auth/multi-factor-auth/services/multi-factor-auth.service.spec';
 import { EmailConfirmationService } from './email-confirmation.service';
 
+export let activityV2ExperimentServiceMock = new (function() {
+  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
+})();
+
+export let feedNoticeMock = new (function() {
+  this.dismiss = jasmine.createSpy('dismiss');
+})();
+
 describe('EmailConfirmationService', () => {
   let service: EmailConfirmationService;
 
@@ -12,6 +20,7 @@ describe('EmailConfirmationService', () => {
       clientMock,
       toastServiceMock,
       sessionMock,
+      feedNoticeMock,
       configMock
     );
   });
@@ -19,6 +28,7 @@ describe('EmailConfirmationService', () => {
   afterEach(() => {
     clientMock.response = [];
     sessionMock.inject.calls.reset();
+    (service as any).feedNotice.dismiss.calls.reset();
     jasmine.clock().uninstall();
   });
 
@@ -38,6 +48,9 @@ describe('EmailConfirmationService', () => {
       'api/v3/email/confirm'
     );
     expect((service as any).session.inject).toHaveBeenCalled();
+    expect((service as any).feedNotice.dismiss).toHaveBeenCalledWith(
+      'verify-email'
+    );
     expect(service.success$.getValue()).toBeTruthy();
   });
 
@@ -53,6 +66,9 @@ describe('EmailConfirmationService', () => {
       'api/v3/email/confirm'
     );
     expect(sessionMock.inject).not.toHaveBeenCalled();
+    expect((service as any).feedNotice.dismiss).not.toHaveBeenCalledWith(
+      'verify-email'
+    );
     expect(service.success$.getValue()).toBeFalsy();
   });
 });

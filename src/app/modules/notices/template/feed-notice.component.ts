@@ -33,11 +33,6 @@ export class FeedNoticeComponent {
   // to analytics which notice has been dismissed.
   @Input() dataRefId: string = 'unknown';
 
-  // Makes notice to stick to the top of the feed.
-  @HostBinding('class.m-feedNotice__container--sticky')
-  @Input()
-  stickyTop: boolean;
-
   /**
    * If experiment is active, full width class.
    * @returns { boolean } - true if notice should be full width.
