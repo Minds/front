@@ -39,6 +39,8 @@ describe('EmailConfirmationService', () => {
     clientMock.response = [];
     sessionMock.inject.calls.reset();
     (service as any).feedNotice.dismiss.calls.reset();
+    (service as any).tagsService.hasSetTags.calls.reset();
+    (service as any).onboardingV3.open.calls.reset();
     jasmine.clock().uninstall();
   });
 
@@ -79,6 +81,19 @@ describe('EmailConfirmationService', () => {
     expect((service as any).feedNotice.dismiss).not.toHaveBeenCalledWith(
       'verify-email'
     );
+    expect((service as any).tagsService.hasSetTags).not.toHaveBeenCalled();
+    expect((service as any).onboardingV3.open).not.toHaveBeenCalled();
     expect(service.success$.getValue()).toBeFalsy();
+  });
+
+  it('should open tags modal if user has not set tags on confirm', async () => {
+    service.success$.next(false);
+    clientMock.response = { status: 'success' };
+    tagsServiceMock.hasSetTags.and.returnValue(false);
+
+    const success = await service.confirm();
+
+    expect((service as any).tagsService.hasSetTags).toHaveBeenCalled();
+    expect((service as any).onboardingV3.open).toHaveBeenCalled();
   });
 });

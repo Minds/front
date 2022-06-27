@@ -108,6 +108,12 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    loginReferrerServiceMock.navigate.calls.reset();
+    (comp as any).emailCodeExperiment.isActive.calls.reset();
+    (comp as any).onboardingV3.open.calls.reset();
+  });
+
   it('should initialize', () => {
     expect(comp).toBeTruthy();
   });
@@ -164,5 +170,21 @@ describe('RegisterComponent', () => {
       'Join Minds, and Elevate the Conversation',
       false
     );
+  });
+
+  it('should open onboarding on registered if no email experiment is NOT active', () => {
+    (comp as any).emailCodeExperiment.isActive.and.returnValue(false);
+    comp.registered();
+    expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
+    expect((comp as any).emailCodeExperiment.isActive).toHaveBeenCalled();
+    expect((comp as any).onboardingV3.open).toHaveBeenCalled();
+  });
+
+  it('should NOT open onboarding on registered if email experiment is active', () => {
+    (comp as any).emailCodeExperiment.isActive.and.returnValue(true);
+    comp.registered();
+    expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
+    expect((comp as any).emailCodeExperiment.isActive).toHaveBeenCalled();
+    expect((comp as any).onboardingV3.open).not.toHaveBeenCalled();
   });
 });
