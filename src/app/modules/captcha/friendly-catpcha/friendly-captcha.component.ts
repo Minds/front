@@ -2,8 +2,11 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  ViewChild,
+  EventEmitter,
   forwardRef,
+  Input,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WidgetInstance } from 'friendly-challenge';
@@ -11,9 +14,12 @@ import { CookieService } from '@mindsorg/ngx-universal';
 
 export type FriendlyCaptchaStartMode = 'auto' | 'focus' | 'none' | undefined;
 
+export type FriendlyCaptchaOrigin = 'registration' | 'vote_up' | null;
+
 /**
  * FriendlyCaptcha widget component. Handles display of widget and
  * outputs solution in a ControlValueAccessor compliant way so that it can be used in forms.
+ * Also emits done via an Output as an alternative.
  */
 @Component({
   selector: 'm-friendlyCaptcha',
@@ -45,19 +51,34 @@ export class FriendlyCaptchaComponent
   // ViewChild of widget.
   @ViewChild('friendlyWidget') container: ElementRef<HTMLElement>;
 
+  // TODO: Move to Common folder?
+
+  /**
+   * An input to define the origin for the captcha component
+   */
+  @Input()
+  public puzzleOrigin: FriendlyCaptchaOrigin = null;
+
+  /**
+   * Emits when puzzle solution is ready.
+   */
+  @Output()
+  public done: EventEmitter<string> = new EventEmitter<string>();
+
   constructor(private cookies: CookieService) {}
 
   /**
-   * Init widget after view init
+   * Init widget after view init.
    * @return { void }
    */
   ngAfterViewInit(): void {
     this.widget = new WidgetInstance(this.container.nativeElement, {
       startMode: this.startMode,
-      sitekey: this.siteKey,
-      puzzleEndpoint: this.puzzleEndpoint,
+      sitekey: `${this.siteKey}&origin=${this.puzzleOrigin}`,
+      puzzleEndpoint: `${this.puzzleEndpoint}`,
       doneCallback: (solution: string) => {
         this.propagateChange(solution);
+        this.done.emit(solution);
       },
     });
 

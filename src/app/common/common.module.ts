@@ -172,6 +172,7 @@ import { ReportService } from './services/report.service';
 import { UserAggregatorComponent } from './components/user-aggregator/user-aggregator.component';
 import { ViewedDirective } from './directives/viewed.directive';
 import { FestivalBannerComponent } from './components/festival-banner/festival-banner.component';
+import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
 
 const routes: Routes = [
   {
@@ -310,6 +311,7 @@ const routes: Routes = [
     UserAggregatorComponent,
     ViewedDirective,
     FestivalBannerComponent,
+    FriendlyCaptchaComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -426,6 +428,7 @@ const routes: Routes = [
     UserAggregatorComponent,
     ViewedDirective,
     FestivalBannerComponent,
+    FriendlyCaptchaComponent,
   ],
   providers: [
     SiteService,
