@@ -52,7 +52,7 @@ check-coverage:
   script:
     - npm i -g lint-staged
     - git fetch origin master "${CI_COMMIT_BRANCH}"
-    - npx lint-staged --relative --no-stash --allow-empty --debug --diff="origin/master...${CI_COMMIT_SHA}"
+    - npx lint-staged --relative --no-stash --allow-empty --debug --diff="${CI_COMMIT_SHA}...origin/master"
   except:
     refs:
       - master
