@@ -34,10 +34,6 @@ describe('OnboardingV3Service', () => {
     );
   });
 
-  afterEach(() => {
-    (service as any).tagsService.hasSetTags.calls.reset();
-  });
-
   it('should init', () => {
     expect(service).toBeTruthy();
   });
@@ -45,14 +41,5 @@ describe('OnboardingV3Service', () => {
   it('should call to api on load', () => {
     service.load();
     expect((service as any).api.get).toHaveBeenCalled();
-  });
-
-  it('should check if user has set tags when email confirmation success fires', () => {
-    emailConfirmationMock.success$.next(false);
-    tagsServiceMock.hasSetTags.and.returnValue(false);
-
-    emailConfirmationMock.success$.next(true);
-
-    expect((service as any).tagsService.hasSetTags).toHaveBeenCalled();
   });
 });
