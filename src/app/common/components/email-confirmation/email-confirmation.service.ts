@@ -4,9 +4,7 @@ import { FormToastService } from '../../services/form-toast.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { BehaviorSubject } from 'rxjs';
-import { OnboardingV3Service } from '../../../modules/onboarding-v3/onboarding-v3.service';
 import { FeedNoticeService } from '../../../modules/notices/services/feed-notice.service';
-import { DiscoveryTagsService } from '../../../modules/discovery/tags/tags.service';
 
 /**
  * Service handling the sending of new confirmation emails, verification of email addresses
@@ -26,9 +24,7 @@ export class EmailConfirmationService {
     protected client: Client,
     private toasterService: FormToastService,
     private session: Session,
-    private onboardingV3: OnboardingV3Service,
     private feedNotice: FeedNoticeService,
-    private tagsService: DiscoveryTagsService,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
@@ -65,11 +61,6 @@ export class EmailConfirmationService {
       const success = response.status === 'success';
       this.updateLocalConfirmationState();
       this.success$.next(success);
-
-      if (!(await this.tagsService.hasSetTags())) {
-        await this.onboardingV3.open();
-      }
-
       return success;
     } catch (e) {
       console.warn(e);

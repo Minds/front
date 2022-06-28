@@ -14,6 +14,11 @@ import { FeedsUpdateService } from '../../../../common/services/feeds-update.ser
 import { RegexService } from '../../../../common/services/regex.service';
 import { Session } from '../../../../services/session';
 import { Storage } from '../../../../services/storage';
+import { Client } from '../../../../services/api';
+import { FormToastService } from '../../../../common/services/form-toast.service';
+import { FeedNoticeService } from '../../../notices/services/feed-notice.service';
+import { DiscoveryTagsService } from '../../../discovery/tags/tags.service';
+import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
 
 describe('Composer Attachment Preview', () => {
   let comp: AttachmentPreviewComponent;
@@ -46,6 +51,22 @@ describe('Composer Attachment Preview', () => {
         {
           provide: BoostRecommendationService,
           useValue: MockService(BoostRecommendationService, {}),
+        },
+        {
+          provide: Client,
+          useValue: MockService(Client, {}),
+        },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService, {}),
+        },
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService, {}),
+        },
+        {
+          provide: DiscoveryTagsService,
+          useValue: MockService(DiscoveryTagsService, {}),
         },
       ],
     }).compileComponents();
