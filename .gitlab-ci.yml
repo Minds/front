@@ -8,7 +8,7 @@ stages:
   - qa
   - deploy:canary
   - deploy:production
-  - cleanup
+  - cleanup 
 
 variables:
   CYPRESS_INSTALL_BINARY: "0" # Speeds up the install process
