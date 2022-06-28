@@ -6,6 +6,7 @@ import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.componen
 
 /**
  * MFA input form for TOTP recovery.
+ * User enters recovery code in case of lost access to mobile device
  */
 @Component({
   selector: 'm-multiFactorAuth__totpRecovery',

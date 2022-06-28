@@ -1,5 +1,5 @@
 /**
- * Base for blogs v2
+ * Base container for blogs in edit mode v2.
  * Houses banner, content and title.
  */
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';

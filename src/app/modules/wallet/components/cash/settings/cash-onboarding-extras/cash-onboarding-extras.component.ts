@@ -1,7 +1,3 @@
-// Show this when stripe requires additional info/documents from certain users
-// from certain countries/regions (e.g. Australia, NZ, Europe)
-// before their accounts can be verified
-
 import {
   Component,
   ChangeDetectorRef,
@@ -13,6 +9,11 @@ import {
 import { WalletV2Service } from '../../../wallet-v2.service';
 import { Client, Upload } from '../../../../../../services/api';
 
+/**
+ * Show this form when Stripe requires additional info/documents from certain users from certain countries/regions
+ * (e.g Australia, NZ, Europe) before their accounts can be verified (and monetized).
+ * Not used for every country.
+ */
 @Component({
   selector: 'm-walletCashOnboardingExtras',
   templateUrl: './cash-onboarding-extras.component.html',

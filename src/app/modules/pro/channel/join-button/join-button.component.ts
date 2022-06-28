@@ -30,7 +30,8 @@ export class JoinButtonComponent {
   }
 
   /**
-   * Even though the pay modal has a built in auth trigger, we complete the auth modal separately here so we can subscribe
+   * Even though the pay modal has a built-in auth trigger,
+   * we complete the auth modal separately here so we can subscribe
    * new/existing users to channels that haven't set up support tiers
    */
   async authorize(): Promise<void> {

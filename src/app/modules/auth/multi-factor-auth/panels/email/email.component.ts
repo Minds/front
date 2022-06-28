@@ -8,7 +8,7 @@ import {
 import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.component';
 
 /**
- * MFA input form for SMS.
+ * MFA input form for Email.
  */
 @Component({
   selector: 'm-multiFactorAuth__email',

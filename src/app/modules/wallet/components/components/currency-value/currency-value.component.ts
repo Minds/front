@@ -3,6 +3,11 @@ import { TokenPricesService } from './token-prices.service';
 
 type Currency = 'tokens' | 'eth' | 'usd';
 
+/**
+ * Displays formatted values of various currencies.
+ * When incoming values are in eth/tokens, equivalent USD values are also
+ * calculated and displayed based on exchange rates.
+ */
 @Component({
   selector: 'm-wallet__currencyValue',
   templateUrl: './currency-value.component.html',

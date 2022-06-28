@@ -5,6 +5,7 @@ import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
 
 /**
  * Disable confirmation button for SMS.
+ * NOTE: SMS 2FA is deprecated, this component is only shown to users who already have SMS enabled.Deprecated - only show if SMS is already enabled
  **/
 @Component({
   selector: 'm-twoFactor__confirmDisable--sms',
