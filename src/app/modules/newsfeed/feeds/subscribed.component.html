@@ -20,10 +20,7 @@
 
     <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
 
-    <m-feedHeader
-      *ngIf="topFeedExperimentActive"
-      [algorithm]="algorithm"
-    ></m-feedHeader>
+    <m-feedHeader [algorithm]="algorithm"></m-feedHeader>
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
@@ -115,7 +112,6 @@
 <ng-container *ngIf="algorithm === 'latest'">
   <ng-container *mIfBrowser>
     <m-seeLatestPostsButton
-      *mExperiment="'front-4089-polling'; variation: true"
       [feedService]="feedService"
       (click)="scrollToUnderBoostRotator()"
     ></m-seeLatestPostsButton>
