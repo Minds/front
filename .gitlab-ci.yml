@@ -1,8 +1,11 @@
-image: minds/ci-front:14
+include:
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
 
 stages:
   - test and build
   - prepare
+  - scan
   - review
   - deploy:staging
   - qa
@@ -38,6 +41,7 @@ test:
 
 lint:
   stage: test and build
+  image: minds/ci-front:14
   script:
     - npm i -g prettier@"^1.19.1"
     - prettier --check "src/**/*.ts"
@@ -144,6 +148,7 @@ qa:nightly:
 
 build:review:
   stage: test and build
+  image: minds/ci-front:14
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
@@ -168,6 +173,7 @@ build:review:
 
 build:production:bundles:
   stage: test and build
+  image: minds/ci-front:14
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
@@ -282,6 +288,18 @@ prepare:production:sentry:
       - $CI_NIGHTLY_TESTS == "true"
   dependencies:
     - build:production:bundles
+
+##############
+# Scan Stage #
+##############
+
+container_scanning:
+  stage: scan
+  variables:
+    DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
+
+dependency_scanning:
+  stage: scan
 
 ################
 # Review Stage #

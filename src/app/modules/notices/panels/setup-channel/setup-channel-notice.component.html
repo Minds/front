@@ -1,0 +1,19 @@
+<m-feedNotice (dismissClick)="dismiss()" icon="info">
+  <span class="m-feedNotice__title">{{ headerText }}</span>
+  <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__SETUP_CHANNEL__BODY">
+    Let the Minds community know who you are by decking out your channel page.
+    This step is required to join the token rewards program.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick($event)"
+    data-ref="feed-notice-setup-channel-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__SETUP_CHANNEL__SETUP_MY_CHANNEL">
+      Set up my channel
+    </ng-container>
+  </m-button>
+</m-feedNotice>

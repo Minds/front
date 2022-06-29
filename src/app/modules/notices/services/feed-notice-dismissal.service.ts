@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { FeedNoticeStorageArray, NoticeIdentifier } from '../feed-notice.types';
+import { FeedNoticeStorageArray, NoticeKey } from '../feed-notice.types';
 import { isPlatformServer } from '@angular/common';
 import * as moment from 'moment';
 import { ObjectLocalStorageService } from '../../../common/services/object-local-storage.service';
@@ -23,10 +23,10 @@ export class FeedNoticeDismissalService {
 
   /**
    * Set a notice to a dismissed state.
-   * @param { NoticeIdentifier } noticeId - identifier of notice to set to dismissed state.
+   * @param { NoticeKey } noticeId - identifier of notice to set to dismissed state.
    * @returns { this }
    */
-  public dismissNotice(noticeId: NoticeIdentifier): this {
+  public dismissNotice(noticeId: NoticeKey): this {
     this.objectStorage.setSingle(this.storageKey, {
       [noticeId]: {
         timestamp: moment(),
@@ -37,10 +37,10 @@ export class FeedNoticeDismissalService {
 
   /**
    * Check whether a notice has been dismissed within last X days, set by class variable expirationDays.
-   * @param { NoticeIdentifier } noticeId - identifier of notice to check.
+   * @param { NoticeKey } noticeId - identifier of notice to check.
    * @returns { boolean } true if notice is in a dismissed state.
    */
-  public isNoticeDismissed(noticeId: NoticeIdentifier): boolean {
+  public isNoticeDismissed(noticeId: NoticeKey): boolean {
     const allDismissedNotices = this.objectStorage.getAll(this.storageKey);
 
     if (!allDismissedNotices || !allDismissedNotices[noticeId]) {

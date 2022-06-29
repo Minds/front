@@ -49,9 +49,6 @@ export class BoostRecommendationService {
    * and removing it after some time.
    **/
   recommendBoost(guid: string) {
-    if (this.experimentsService.run('boost-prompt-2') !== 'on') {
-      return;
-    }
     this.boostRecommendations$.next([
       ...this.boostRecommendations$.getValue(),
       guid,

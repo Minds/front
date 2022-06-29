@@ -18,7 +18,7 @@ describe('VerifyEmailNoticeComponent', () => {
           VerifyEmailNoticeComponent,
           MockComponent({
             selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible', 'stickyTop'],
+            inputs: ['icon', 'dismissible'],
             outputs: ['dismissClick'],
           }),
           MockComponent({

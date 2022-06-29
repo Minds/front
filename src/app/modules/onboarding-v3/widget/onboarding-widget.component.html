@@ -1,4 +1,8 @@
-<ng-container *ngIf="!(completed$ | async) && !(loading$ | async)">
+<ng-container
+  *ngIf="
+    !(completed$ | async) && !(loading$ | async) && !noticeExperimentActive
+  "
+>
   <div
     class="m-onboardingWidget__container"
     data-cy="data-minds-onboarding-widget"

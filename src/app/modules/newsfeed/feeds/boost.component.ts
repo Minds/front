@@ -75,9 +75,7 @@ export class NewsfeedBoostComponent {
       boostfeed: true,
     };
 
-    if (this.experiments.hasVariation('new-user-boosts', true)) {
-      params['show_boosts_after_x'] = 604800; // 1 week
-    }
+    params['show_boosts_after_x'] = 604800; // 1 week
 
     this.feedsService
       .setEndpoint('api/v2/boost/feed')
