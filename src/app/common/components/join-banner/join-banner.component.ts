@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { FestivalBannerExperimentService } from '../../../modules/experiments/sub-services/festival-banner-experiment.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { Session } from '../../../services/session';
 import { SessionsStorageService } from '../../../services/session-storage.service';
@@ -31,7 +30,6 @@ export class JoinBannerComponent implements OnInit {
     private sessionStorage: SessionsStorageService,
     private authModal: AuthModalService,
     private guestModeExperiment: GuestModeExperimentService,
-    private festivalBannerExperiment: FestivalBannerExperimentService,
     private router: Router,
     private authRedirectService: AuthRedirectService,
     private themes: ThemeService,
@@ -66,7 +64,6 @@ export class JoinBannerComponent implements OnInit {
    */
   public shouldShow(): boolean {
     return (
-      !this.festivalBannerExperiment.isActive() &&
       this.guestModeExperiment.isActive() &&
       !this.session.getLoggedInUser() &&
       !this.dismissed

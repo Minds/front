@@ -171,7 +171,6 @@ import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-but
 import { ReportService } from './services/report.service';
 import { UserAggregatorComponent } from './components/user-aggregator/user-aggregator.component';
 import { ViewedDirective } from './directives/viewed.directive';
-import { FestivalBannerComponent } from './components/festival-banner/festival-banner.component';
 
 const routes: Routes = [
   {
@@ -309,7 +308,6 @@ const routes: Routes = [
     PreventDoubleClickDirective,
     UserAggregatorComponent,
     ViewedDirective,
-    FestivalBannerComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -425,7 +423,6 @@ const routes: Routes = [
     PreventDoubleClickDirective,
     UserAggregatorComponent,
     ViewedDirective,
-    FestivalBannerComponent,
   ],
   providers: [
     SiteService,
