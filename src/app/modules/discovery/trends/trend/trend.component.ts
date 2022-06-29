@@ -14,6 +14,11 @@ import { MetaService } from '../../../../common/services/meta.service';
 import { Session } from '../../../../services/session';
 import { GuestModeExperimentService } from '../../../experiments/sub-services/guest-mode-experiment.service';
 
+/**
+ * A single activity page that has a back button
+ * so users can navigate back to the page of trends
+ * whence they came
+ */
 @Component({
   selector: 'm-discovery__trend',
   templateUrl: './trend.component.html',

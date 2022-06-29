@@ -34,7 +34,6 @@ import { WalletProEarningsCashComponent } from './components/cash/pro-earnings/p
 import { WalletTabHistoryService } from './components/tab-history.service';
 import { DefaultRedirectGuard } from './components/guards/default-redirect-guard.component';
 import { TabStorageGuard } from './components/guards/tab-storage-guard.component';
-import { WalletToggleComponent } from './toggle.component';
 import { WalletBalanceComponent } from './components/components/balance/balance.component';
 import { WalletTokenRewardsComponent } from './components/tokens/rewards/rewards.component';
 import { WalletEarningsComponent } from './components/components/earnings/earnings.component';
@@ -202,8 +201,6 @@ export const WALLET_ROUTES: Routes = [
     WalletV2CashComponent,
     WalletV2EthComponent,
     WalletV2BtcComponent,
-    // Legacy wallet
-    WalletToggleComponent,
     // V3 wallet
     WalletBalanceComponent,
     WalletTokenRewardsComponent,

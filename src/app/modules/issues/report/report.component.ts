@@ -3,6 +3,9 @@ import { Client } from '../../../services/api/client';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
+/**
+ * Form for users to report a bug
+ */
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',

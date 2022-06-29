@@ -3,6 +3,9 @@ import { ConfigsService } from '../../common/services/configs.service';
 import { Location } from '@angular/common';
 import { RedirectService } from '../../common/services/redirect.service';
 
+/**
+ * Redirects from a pro group url to a minds group page
+ */
 @Component({
   selector: 'm-pro__redirect',
   template: `

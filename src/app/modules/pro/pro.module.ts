@@ -10,23 +10,17 @@ import { ProChannelComponent } from './channel/channel.component';
 import { ProChannelLoginComponent } from './channel/login/login.component';
 import { MindsFormsModule } from '../forms/forms.module';
 import { ProChannelListComponent } from './channel/list/list.component';
-import { ProTileComponent } from './channel/tiles/media/tile.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
 import { LegacyModule } from '../legacy/legacy.module';
 import { WireModule } from '../wire/wire.module';
 import { VideoModule } from '../media/components/video/video.module';
-import { ProChannelHomeComponent } from './channel/home/home.component';
-import { ProChannelHomeCategoryContent } from './channel/home/category-content/category-content.component';
-import { ProGroupTileComponent } from './channel/tiles/group/group-tile.component';
-import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.component';
 import { ProCategoriesComponent } from './channel/categories/categories.component';
 import { ProChannelContentListComponent } from './channel/content-list/content-list.component';
 import { BlogView } from '../blogs/view/view';
 import { MediaModalComponent } from '../media/modal/modal.component';
 import { AuthModule } from '../auth/auth.module';
 import { ProHamburgerMenu } from './channel/hamburger-menu/hamburger-menu.component';
-import { SubscribeButtonComponent } from './channel/subscribe-button/subscribe-button.component';
 import { SearchBoxComponent } from './channel/search-box/search-box.component';
 import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password.component';
 import { NewsfeedSingleComponent } from '../newsfeed/single/single.component';
@@ -159,20 +153,14 @@ export const PRO_DOMAIN_ROUTES = [
   declarations: [
     ProMarketingComponent,
     ProSubscriptionComponent,
-    ProTileComponent,
-    ProChannelHomeComponent,
     ProCategoriesComponent,
     ProChannelComponent,
     ProChannelLoginComponent,
     ProChannelListComponent,
     ProChannelContentListComponent,
     ProChannelFooterComponent,
-    ProChannelHomeCategoryContent,
-    ProGroupTileComponent,
-    ProUnsubscribeModalComponent,
     ProHamburgerMenu,
     ProRedirectComponent,
-    SubscribeButtonComponent,
     SearchBoxComponent,
     JoinButtonComponent,
     ProChannelSplashComponent,

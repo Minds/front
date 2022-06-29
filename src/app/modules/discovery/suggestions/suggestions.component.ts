@@ -7,6 +7,10 @@ import { SuggestionsService } from '../../suggestions/channel/channel-suggestion
 import { DiscoveryService } from '../discovery.service';
 import { Location } from '@angular/common';
 
+/**
+ * List of suggested groups or users.
+ * For example, see it at /discovery/suggestions/groups or by clicking "Groups" in the sidebar, then "Discover Groups"
+ */
 @Component({
   selector: 'm-discovery__suggestions',
   templateUrl: './suggestions.component.html',

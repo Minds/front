@@ -9,6 +9,10 @@ import {
 } from '../../../wire/v2/support-tiers.service';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 
+/**
+ * Full page splash page shown to logged out visitors to pro pages.
+ * Can be disabled or enabled in channel settings > pro > general tab.
+ */
 @Component({
   selector: 'm-proChannel__splash',
   templateUrl: './splash.component.html',

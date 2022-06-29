@@ -2,6 +2,12 @@ import { Component, EventEmitter, Input } from '@angular/core';
 
 import { Client } from '../../../../services/api';
 
+/**
+ * Displays a banner image, with option to
+ * edit the image by uploading a new one.
+ *
+ * Seen on blogs and groups, for example.
+ */
 @Component({
   selector: 'minds-banner',
   inputs: [

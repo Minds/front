@@ -7,6 +7,9 @@ import { Session } from '../../../../services/session';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 
+/**
+ * Displayed on the topbar of pro sites for users who don't have a membership on the pro channel
+ */
 @Component({
   selector: 'm-pro__joinButton',
   templateUrl: 'join-button.component.html',

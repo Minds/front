@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Session } from '../../services/session';
 
+/**
+ * Marketing page that describes the benefits of upgrading to Pro
+ */
 @Component({
   selector: 'm-pro__marketing',
   templateUrl: 'marketing.component.html',
