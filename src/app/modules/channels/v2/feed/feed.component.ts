@@ -32,7 +32,7 @@ import { ExperimentsService } from './../../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
- * Channel feed component
+ * Container for channel feed, including filters and composer (if user is channel owner)
  */
 @Component({
   selector: 'm-channel__feed',

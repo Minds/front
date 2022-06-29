@@ -13,6 +13,10 @@ import { isPlatformServer } from '@angular/common';
 import { isIos } from '../../../../helpers/is-mobile-or-tablet';
 
 const noOp = () => {};
+
+/**
+ * Composer modal
+ */
 @Injectable()
 @Component({
   selector: 'm-composer__modal',

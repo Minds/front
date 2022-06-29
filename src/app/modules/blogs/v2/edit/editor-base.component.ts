@@ -16,6 +16,9 @@ import { Location } from '@angular/common';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { PopupService } from '../../../composer/components/popup/popup.service';
 
+/**
+ * Container for blogs in edit mode. Houses banner, content and title.
+ */
 @Component({
   selector: 'm-blogEditor--v2',
   host: {

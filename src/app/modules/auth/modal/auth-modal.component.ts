@@ -3,6 +3,9 @@ import { MindsUser } from '../../../interfaces/entities';
 import { SiteService } from '../../../common/services/site.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * Auth modal that can display either login or register form
+ */
 @Component({
   selector: 'm-auth__modal',
   templateUrl: './auth-modal.component.html',

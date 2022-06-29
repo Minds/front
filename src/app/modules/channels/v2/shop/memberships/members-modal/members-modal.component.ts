@@ -9,6 +9,9 @@ import { MindsUser } from '../../../../../../interfaces/entities';
 
 const ALL_TIERS: Option = { label: 'All tiers', id: '' };
 
+/**
+ * Modal that displays a list of users who are members of a channel's membership tiers
+ */
 @Component({
   selector: 'm-channelShopMemberships__membersModal',
   templateUrl: 'members-modal.component.html',

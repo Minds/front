@@ -6,6 +6,11 @@ import { ApiService } from '../../../common/api/api.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { BehaviorSubject } from 'rxjs';
 
+/**
+ * "In progress" modal that appears when you've clicked on
+ * a wallet option in the web3modal
+ * but haven't yet completed the signature.
+ */
 @Component({
   selector: 'm-connectWallet__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,

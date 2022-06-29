@@ -4,7 +4,9 @@ import { PostMenuService } from '../../../../common/components/post-menu/post-me
 import { ActivityService } from '../../../../common/services/activity.service';
 
 /**
- * Subscribe button (non-owner)
+ * Subscribe button (non-owner) - action button shown to channel visitors.
+ * Clicking it subscribes to the channel if the user is logged in,
+ * and opens the auth modal if they are logged out
  */
 @Component({
   selector: 'm-channelActions__subscribe',

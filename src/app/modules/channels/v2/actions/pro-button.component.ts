@@ -4,6 +4,7 @@ import { ChannelsV2Service } from '../channels-v2.service';
 
 /**
  * Pro channel button to visit a users pro channel.
+ * Displayed only if this channel has a pro site.
  */
 @Component({
   selector: 'm-channelActions__proChannel',

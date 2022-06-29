@@ -16,6 +16,9 @@ import { ComposerService } from '../../services/composer.service';
 import { Observable, Subscription } from 'rxjs';
 import { VideoPoster } from '../../services/video-poster.service';
 
+/**
+ * Renders a user-friendly preview of the embedded photo/video attachment
+ */
 @Component({
   selector: 'm-composerAttachmentPreview',
   changeDetection: ChangeDetectionStrategy.OnPush,

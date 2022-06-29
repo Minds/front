@@ -5,8 +5,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BlockchainWalletSelector } from './wallet-selector/wallet-selector.component';
-import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice/wallet-address-notice.component';
 import { TransactionOverlayComponent } from './transaction-overlay/transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { Web3WalletService } from './web3-wallet.service';
@@ -42,8 +40,6 @@ const cryptoRoutes: Routes = [];
     BuyTokensModalModule,
   ],
   declarations: [
-    BlockchainWalletSelector,
-    BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
     GetMetamaskComponent,
     BlockchainEthModalComponent,
@@ -61,8 +57,6 @@ const cryptoRoutes: Routes = [];
     BuyTokensModalService,
   ],
   exports: [
-    BlockchainWalletSelector,
-    BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
     GetMetamaskComponent,
     BlockchainEthModalComponent,

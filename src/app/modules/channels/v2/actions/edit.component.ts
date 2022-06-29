@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelEditIntentService } from '../services/edit-intent.service';
 
 /**
- * Edit channel button (owner)
+ * Edit channel button (for channel owners).
+ * Click it to open the edit accordion modal
  */
 @Component({
   selector: 'm-channelActions__edit',

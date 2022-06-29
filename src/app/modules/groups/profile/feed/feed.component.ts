@@ -3,6 +3,9 @@ import { GroupsService } from '../../groups.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
+/**
+ * Container for <m-group-profile-feed__sorted> component
+ */
 @Component({
   selector: 'm-group-profile__feed',
   templateUrl: 'feed.component.html',

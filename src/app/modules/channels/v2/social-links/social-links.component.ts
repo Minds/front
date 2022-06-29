@@ -7,6 +7,7 @@ import {
 
 /**
  * Social links (profiles) component. Standalone.
+ * Displays icons that link to a channel's associated social media accounts
  */
 @Component({
   selector: 'm-channel__socialLinks',

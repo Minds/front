@@ -39,7 +39,7 @@ type ChannelView =
   | 'groups';
 
 /**
- * 2020 Design channel component
+ * Base container for all channel page components
  */
 @Component({
   selector: 'm-channel-v2',

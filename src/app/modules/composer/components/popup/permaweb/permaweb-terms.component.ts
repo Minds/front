@@ -2,7 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
 
 /**
- * Permaweb Terms of Service component.
+ * Permaweb Terms of Service link and checkbox popup modal.
+ * Required before one can post to permaweb.
  */
 @Component({
   selector: 'm-composer__permawebTerms',
