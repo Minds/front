@@ -21,7 +21,7 @@ import { FormToastService } from '../../services/form-toast.service';
   inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'thumbs-up.component.html',
-  styleUrls: [`thumbs-up.component.scss`],
+  styleUrls: [`thumbs-up.component.ng.scss`],
 })
 export class ThumbsUpButton implements DoCheck, OnChanges {
   changesDetected: boolean = false;

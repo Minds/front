@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  a {
+    cursor: pointer;
+  }
+
+  m-friendlyCaptcha {
+    visibility: hidden;
+    display: none;
+  }
+
+  m-sizeableLoadingSpinner {
+    margin: 0;
+    width: initial;
+  }
+}
