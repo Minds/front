@@ -105,9 +105,7 @@ export class DiscoveryTagsService {
       params['wire_support_tier'] = this.plusHandler;
     }
 
-    if (this.experiments.hasVariation('trending-tags-v2', true)) {
-      params['trending_tags_v2'] = true;
-    }
+    params['trending_tags_v2'] = true;
 
     try {
       const response: any = await this.client.get(endpoint, params);
