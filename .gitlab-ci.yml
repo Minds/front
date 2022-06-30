@@ -8,7 +8,7 @@ stages:
   - scan
   - review
   - deploy:staging
-  - qa
+  - qa 
   - deploy:canary
   - deploy:production
   - cleanup
