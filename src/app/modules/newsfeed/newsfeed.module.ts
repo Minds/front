@@ -23,10 +23,8 @@ import { NewsfeedService } from './services/newsfeed.service';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
-import { NewsfeedSortedComponent } from './feeds/sorted.component';
 import { NewsfeedEntityComponent } from './feeds/entity.component';
 import { SearchModule } from '../search/search.module';
-import { NewsfeedTilesComponent } from './feeds/tiles.component';
 import { ActivityModule } from './activity/activity.module';
 import { FeedGridComponent } from './feed-grid/feed-grid.component';
 import { ComposerModule } from '../composer/composer.module';
@@ -124,9 +122,7 @@ const routes: Routes = [
     NewsfeedSubscribedComponent,
     NewsfeedBoostComponent,
     NewsfeedTagsComponent,
-    NewsfeedSortedComponent,
     NewsfeedEntityComponent,
-    NewsfeedTilesComponent,
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
     TopHighlightsComponent,
@@ -141,7 +137,6 @@ const routes: Routes = [
   exports: [
     NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,
-    NewsfeedTilesComponent,
     NewsfeedComponent,
     FeedGridComponent,
   ],

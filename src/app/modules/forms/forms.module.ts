@@ -7,7 +7,6 @@ import { CommonModule } from '../../common/common.module';
 
 import { LoginForm } from './login/login';
 import { RegisterForm } from './register/register';
-import { OnboardingForm } from './onboarding/onboarding';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { PopoverComponent } from './popover-validation/popover.component';
@@ -24,7 +23,7 @@ import { MultiFactorAuthLazyModule } from '../auth/multi-factor-auth/multi-facto
     ExperimentsModule,
     MultiFactorAuthLazyModule,
   ],
-  declarations: [LoginForm, RegisterForm, OnboardingForm, PopoverComponent],
-  exports: [LoginForm, RegisterForm, OnboardingForm, PopoverComponent],
+  declarations: [LoginForm, RegisterForm, PopoverComponent],
+  exports: [LoginForm, RegisterForm, PopoverComponent],
 })
 export class MindsFormsModule {}
