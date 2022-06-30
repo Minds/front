@@ -1,190 +1,160 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { catchError, map, take } from 'rxjs/operators';
+import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { CompassService } from '../../compass/compass.service';
-import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
-import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
-import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
-import { DiscoveryTagsService } from '../../discovery/tags/tags.service';
-import {
-  NoticePosition,
-  Notices,
-  NoticeIdentifier,
-} from '../feed-notice.types';
+import { Session } from '../../../services/session';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
-import { first } from 'rxjs/operators';
+import { FeedNotice, NoticeKey, NoticeLocation } from '../feed-notice.types';
+import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 
 /**
- * Determines which feed notices to show, and holds state on
- * which have already been shown / completed.
+ * Manages the handling of feed notices. An outlet should register with this service
+ * to receive a "position" which is an index of an outlets place relative to other outlets.
+ * An outlet can then check getNoticeForPosition$(position) to see what notice should
+ * be shown in the outlets position is (will be null if one should not be shown).
  */
 @Injectable({ providedIn: 'root' })
 export class FeedNoticeService extends AbstractSubscriberComponent {
-  // when state has been updated - subscribed to in outlet
-  // so we can decide what components to show AFTER initial load.
-  public readonly updatedState$: BehaviorSubject<boolean> = new BehaviorSubject<
+  /**
+   * True when fetch request is initialized, allowing outlets to act when
+   * notices are ready for registration.
+   * @type { BehaviorSubject<boolean> }
+   */
+  public readonly initialized$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
 
-  // lock that is set to true once an outlet calls to init.
-  private loadingLock: boolean = false;
+  /**
+   * Feed notices.
+   * @type { BehaviorSubject<FeedNotice[]> }
+   */
+  protected readonly notices$: BehaviorSubject<
+    FeedNotice[]
+  > = new BehaviorSubject<FeedNotice[]>([]);
 
-  // Object containing information on all notices, used to sync state.
-  // Ordering indicates order of show priority.
-  public notices: Notices = {
-    'verify-email': {
-      shown: false,
-      completed: false,
-      dismissed: false,
-      position: 'top',
-    },
-    'build-your-algorithm': {
-      shown: false,
-      completed: false,
-      dismissed: false,
-      position: 'top',
-    },
-    'update-tags': {
-      shown: false,
-      completed: false,
-      dismissed: false,
-      position: 'inline',
-    },
-    'enable-push-notifications': {
-      shown: false,
-      completed: false,
-      dismissed: false,
-      position: 'inline',
-    },
-  };
+  /**
+   * The amount of feed notices to show.
+   * TODO: build getters and setters for this when it becomes
+   * a requirement to have more than one notice at a time.
+   * @type { number }
+   */
+  protected showAmount: number = 1;
 
   constructor(
-    private dismissService: FeedNoticeDismissalService,
-    private compass: CompassService,
-    private notificationSettings: NotificationsSettingsV2Service,
-    private emailConfirmation: EmailConfirmationService,
-    private tagsService: DiscoveryTagsService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private api: ApiService,
+    private activityV2Experiment: ActivityV2ExperimentService,
+    private dismissalService: FeedNoticeDismissalService,
+    private session: Session
   ) {
     super();
-    this.initSubscriptions();
+
+    this.subscriptions.push(
+      // fetch again on login - service can init mid login.
+      this.session.loggedinEmitter.subscribe(val => {
+        this.fetch();
+      })
+    );
+
+    this.fetch();
   }
 
   /**
-   * Initial load - called from outlet async. Only one outlet will
-   * be able to trigger the initial load.
-   * @returns { Promise<void> }
+   * Fetch notices from server. Will set initialized to true on completion.
+   * @returns { void }
    */
-  public async checkInitialState(): Promise<void> {
-    if (!this.loadingLock) {
-      this.loadingLock = true;
-      await this.checkNoticeState();
+  public fetch(): void {
+    this.subscriptions.push(
+      this.api
+        .get('api/v3/feed-notices')
+        .pipe(
+          take(1),
+          map((response: ApiResponse) => {
+            if (response.status === 'success' && response.notices.length) {
+              for (let notice of response.notices) {
+                notice.dismissed = this.dismissalService.isNoticeDismissed(
+                  notice.key
+                );
+                notice.position = null;
+              }
+              this.notices$.next(response.notices);
+              this.initialized$.next(true);
+            }
+            return response.notices;
+          }),
+          catchError(e => {
+            // only reset this on error
+            console.error(e);
+            return EMPTY;
+          })
+        )
+        .subscribe()
+    );
+  }
+
+  /**
+   * Register an outlet, passing back the outlets position, that the outlet can use
+   * to ask this service what notice it should be showing.
+   * @param { NoticeLocation } location - location to register an outlet for.
+   * @returns { number } position given to the outlet.
+   */
+  public register(location: NoticeLocation): number {
+    const nextNotice = this.getNextNotice(location);
+
+    if (!nextNotice) {
+      return;
     }
+
+    if (location === 'top') {
+      nextNotice.position = -1;
+    } else {
+      nextNotice.position = this.getNextNoticePosition();
+    }
+
+    this.patchNoticeAttribute(nextNotice.key, 'position', nextNotice.position);
+    return nextNotice.position;
   }
 
   /**
-   * Checks notice state, setting their completed / dismissed attributes.
-   * @returns { Promise<void> } awaitable.
+   * Unregister an outlet by position.
+   * @param { NoticeKey } noticeKey - key of notice to unregister.
    */
-  public async checkNoticeState(): Promise<void> {
-    this.notices['verify-email'].completed = !this.requiresEmailConfirmation();
+  public unregister(noticeKey: NoticeKey): void {
+    this.patchNoticeAttribute(noticeKey, 'position', null);
+  }
 
-    // check dismissal first.
-    this.notices['build-your-algorithm'].dismissed = this.isNoticeDismissed(
-      'build-your-algorithm'
+  /**
+   * Gets next notice to be shown for outlet position.
+   * Note position !== location! - a position is an outlets index relative
+   * to other outlets, and can be attained by calling the register function.
+   * @param { number } position -  position to get notice for.
+   * @returns { Observable<FeedNotice> }
+   */
+  public getNoticeForPosition$(position: number): Observable<FeedNotice> {
+    return this.notices$.pipe(
+      map(notices => {
+        notices = this.filterPriorityNotices(notices);
+
+        return (
+          notices.filter(notice => {
+            return notice.position === position;
+          })[0] ?? null
+        );
+      })
     );
-
-    this.notices['update-tags'].dismissed = this.isNoticeDismissed(
-      'update-tags'
-    );
-
-    this.notices[
-      'enable-push-notifications'
-    ].dismissed = this.isNoticeDismissed('enable-push-notifications');
-
-    // check completion.
-    this.notices[
-      'build-your-algorithm'
-    ].completed = await this.hasCompletedCompassAnswers();
-
-    this.notices['update-tags'].completed = await this.hasSetTags();
-
-    this.notices[
-      'enable-push-notifications'
-    ].completed = await this.hasPushNotificationsEnabled();
-
-    this.updatedState$.next(true);
   }
 
   /**
-   * Gets next notice to be shown. Component should report after showing via setShown.
-   * @param { NoticePosition } position - position for notice to be shown.
-   * @returns { NoticeIdentifier } - name of the notice to be shown next.
+   * Dismiss a notice, updating local state and storage.
+   * @param { NoticeKey } noticeKey - key of notice to dismiss.
    */
-  public getNextShowableNotice(position: NoticePosition): NoticeIdentifier {
-    return this.getShowableNoticesByPosition(position)[0];
+  public dismiss(noticeKey: NoticeKey): void {
+    this.patchNoticeAttribute(noticeKey, 'dismissed');
+    this.dismissalService.dismissNotice(noticeKey);
   }
 
   /**
-   * Whether position already has notices that have been shown.
-   * @param { NoticePosition } position- position to check.
-   * @return { boolean } true if position has notices that have been shown.
-   */
-  public hasShownNoticeInPosition(position: NoticePosition): boolean {
-    const shownNoticesForPosition = Object.entries(this.notices).filter(
-      ([noticeKey, noticeValue]) => {
-        return noticeValue.position === position && noticeValue.shown;
-      }
-    );
-    return shownNoticesForPosition.length > 0;
-  }
-
-  /**
-   * Whether ANY notice has already been shown.
-   * @returns { boolean } - true if any notice has been shown already.
-   */
-  public hasShownANotice(): boolean {
-    const shownNoticesForPosition = Object.entries(this.notices).filter(
-      ([noticeKey, noticeValue]) => {
-        return noticeValue.shown;
-      }
-    );
-    return shownNoticesForPosition.length > 0;
-  }
-
-  /**
-   * Sets a notice state as shown to avoid, or cause it to be shown in multiple places.
-   * @param { NoticeIdentifier } notice - name of notice to set state for.
-   * @param { boolean } value - value to set the notice's shown state to.
-   */
-  public setShown(notice: NoticeIdentifier, value: boolean): void {
-    this.notices[notice].shown = value;
-  }
-
-  /**
-   * Whether notice has been dismissed.
-   * @param { NoticeIdentifier } notice - name of notice to check.
-   * @return { boolean } - true if notice has been dismissed.
-   */
-  public isDismissed(notice: NoticeIdentifier): boolean {
-    return this.notices[notice].dismissed;
-  }
-
-  /**
-   * Sets a notice dismissed state and saves state on dismissal to local storage.
-   * @param { NoticeIdentifier } notice - name of notice to set dismissed state for.
-   * @param { boolean } value - value to set the notice's dismissed state to.
-   */
-  public dismiss(notice: NoticeIdentifier): void {
-    this.notices[notice].dismissed = true;
-    this.setShown(notice, false);
-    this.dismissService.dismissNotice(notice);
-    this.updatedState$.next(true);
-  }
-
-  /**
-   * Whether full width notices should be shown. (if activity v3 experiment is active).
+   * Whether full width notices should be shown. (if activity v2 experiment is active).
    * @returns { boolean } - true if full width notices should be shown.
    */
   public shouldBeFullWidth(): boolean {
@@ -192,119 +162,100 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Whether notice should be shown in the given position.
-   * @param { NoticeIdentifier } notice - notice to check.
-   * @param { NoticePosition } position - the position we're checking the notice should be showable in.
-   * @returns { boolean } - true if notice can be shown in the given position.
+   * Whether the outlet should be shown with styling to stick to top of feed.
+   * @param { FeedNotice } - notice to check.
+   * @returns { boolean } true if sticky top styling should be applied.
    */
-  private shouldShowInPosition(
-    notice: NoticeIdentifier,
-    position: NoticePosition
-  ): boolean {
-    return this.notices[notice].position === position;
+  public shouldBeStickyTop(notice: FeedNotice): boolean {
+    return this.shouldBeFullWidth() && notice.key === 'verify-email';
   }
 
   /**
-   * Gets a list of all showable notice names for a given position.
-   * @param { NoticePosition } position - position of showable notices to get.
-   * @returns { NoticeIdentifier[] } - array of notice names that are showable.
+   * Gets the next notice for a given location that is showable and not assigned a position.
+   * @param { NoticeLocation } location - location to get next notice for.
+   * @returns { FeedNotice } - the next notice.
    */
-  private getShowableNoticesByPosition(
-    position: NoticePosition = 'top'
-  ): NoticeIdentifier[] {
-    return (Object.keys(this.notices) as NoticeIdentifier[]).filter(
-      (notice: NoticeIdentifier) => {
+  protected getNextNotice(location: NoticeLocation): FeedNotice {
+    let notices = this.notices$.getValue();
+
+    return (
+      notices.filter(notice => {
         return (
-          this.shouldShowInPosition(notice, position) &&
-          !this.isShown(notice) &&
-          !this.isCompleted(notice) &&
-          !this.isDismissed(notice)
+          this.isShowable(notice) &&
+          !this.isAssignedPosition(notice) &&
+          notice.location === location
         );
-      }
+      })[0] ?? null
     );
   }
 
   /**
-   * Whether notice is shown.
-   * @param { NoticeIdentifier } notice - notice to check.
-   * @returns { boolean } - true if notice is to be shown.
+   * Filter out notices that are priority to be shown, based on how many notices
+   * should be shown, and which showable notices are first in line.
+   * @param { FeedNotice[] } notices - array of feed notices to check.
+   * @returns { FeedNotice[] } array of priority notices.
    */
-  private isShown(notice: NoticeIdentifier): boolean {
-    return this.notices[notice].shown;
-  }
+  protected filterPriorityNotices(notices: FeedNotice[]): FeedNotice[] {
+    const shouldShow = [];
 
-  /**
-   * Whether notice action is already completed.
-   * @param { NoticeIdentifier } notice - notice to check.
-   * @returns { boolean } - true if notice action is already completed.
-   */
-  private isCompleted(notice: NoticeIdentifier): boolean {
-    return this.notices[notice].completed;
-  }
-
-  /**
-   * Whether user requires email confirmation.
-   * @returns { boolean } true if email confirmation is required.
-   */
-  private requiresEmailConfirmation(): boolean {
-    return this.emailConfirmation.requiresEmailConfirmation();
-  }
-
-  /**
-   * Whether compass answers are required.
-   * @returns { Promise<boolean> }
-   */
-  private async hasCompletedCompassAnswers(): Promise<boolean> {
-    return this.compass.hasCompletedCompassAnswers();
-  }
-
-  /**
-   * Whether push notifications are enabled.
-   * @returns { Promise<boolean> } true if user has push notifications enabled.
-   */
-  private async hasPushNotificationsEnabled(): Promise<boolean> {
-    return this.notificationSettings.pushNotificationsEnabled$.toPromise();
-  }
-
-  /**
-   * Whether user has set tags. Will wait for inflight request to load tags,
-   * or fire a new one if no request is inflight.
-   * @returns { Promise<boolean> } - true if user has set tags.
-   */
-  private async hasSetTags(): Promise<boolean> {
-    if (this.tagsService.inProgress$.getValue()) {
-      await this.tagsService.inProgress$.pipe(first()).toPromise();
+    for (let notice of notices) {
+      if (this.isShowable(notice)) {
+        shouldShow.push(notice);
+        if (shouldShow.length >= this.showAmount) {
+          break;
+        }
+      }
     }
-    if (!this.tagsService.loaded$.getValue()) {
-      await this.tagsService.loadTags();
-    }
-    const count = await this.tagsService.countTags();
-    return count > 0;
+
+    return shouldShow;
   }
 
   /**
-   * Determine whether notice has been dismissed within service specified time-frame.
-   * @param { NoticeIdentifier } notice - identifier of notice to check.
-   * @returns { boolean } true if notice has been dismissed within service specified time-frame.
+   * Gets next notice position by incrementing the existing highest position by 1.
+   * @returns { number } - next notice position.
    */
-  private isNoticeDismissed(notice: NoticeIdentifier): boolean {
-    if (this.notices[notice].dismissed) {
-      return true;
-    }
-    return this.dismissService.isNoticeDismissed(notice);
+  protected getNextNoticePosition(): number {
+    let notices = this.notices$.getValue();
+    return (Math.max(...notices.map(notice => notice.position)) ?? 0) + 1;
   }
 
   /**
-   * Initialize subscriptions.
+   * Whether notice show show, and is not dismissed.
+   * @param { FeedNotice } notice - notice to check.
+   * @returns { boolean } - true if notice is showable.
+   */
+  protected isShowable(notice: FeedNotice): boolean {
+    return notice.should_show && !notice.dismissed;
+  }
+
+  /**
+   * If notice is assigned position.
+   * @param { FeedNotice } notice - notice to check.
+   * @returns { boolean } - true if notice is already assigned position.
+   */
+  protected isAssignedPosition(notice: FeedNotice): boolean {
+    return !!notice.position;
+  }
+
+  /**
+   * Patch an individual attribute of a notice in the notices$ array.
+   * @param { NoticeKey } noticeKey - key of notice to replace attribute for.
+   * @param { string } attribute - string key of attribute.
+   * @param { any } value - value to set attribute to - defaults to true.
    * @returns { void }
    */
-  private initSubscriptions(): void {
-    this.subscriptions.push(
-      this.emailConfirmation.success$
-        .pipe(filter(Boolean))
-        .subscribe(success => {
-          this.dismiss('verify-email');
-        })
-    );
+  protected patchNoticeAttribute(
+    noticeKey: NoticeKey,
+    attribute: string,
+    value: any = true
+  ) {
+    let notices = this.notices$.getValue();
+    notices = notices.map(notice => {
+      if (notice.key === noticeKey) {
+        notice[attribute] = value;
+      }
+      return notice;
+    });
+    this.notices$.next(notices);
   }
 }

@@ -28,9 +28,10 @@ import { activityServiceMock } from '../../../../tests/activity-service-mock.spe
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-card-video',
@@ -158,6 +159,10 @@ describe('AdminBoosts', () => {
           { provide: Client, useValue: clientMock },
           { provide: ModalService, useValue: modalServiceMock },
           { provide: ActivityService, useValue: activityServiceMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
         ],
       }).compileComponents(); // compile template and css
     })

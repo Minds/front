@@ -49,11 +49,6 @@ type ChannelView =
   providers: [ChannelsV2Service, ChannelEditIntentService, SeoService],
 })
 export class ChannelComponent implements OnInit, OnDestroy {
-  galleryExperiment: Experiment<unknown> = {
-    key: 'channel-gallery',
-    variations: ['without-gallery', 'with-gallery'],
-  };
-
   /**
    * Input that sets the current channel
    * @param channel

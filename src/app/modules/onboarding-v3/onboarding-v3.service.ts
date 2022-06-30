@@ -112,8 +112,9 @@ export class OnboardingV3Service implements OnDestroy {
             switch (step) {
               case 'SetupChannelStep':
                 // only force complete if the channel had a bio (possibly make this more robust by applying more filters)
-                if (stepData?.briefdescription) {
+                if (stepData?.briefdescription && stepData?.name) {
                   this.forceCompletion(step);
+                  this.completed$.next(true);
                   onLoadFinished?.();
                 }
                 this.load().then(onLoadFinished);
@@ -121,6 +122,7 @@ export class OnboardingV3Service implements OnDestroy {
               default:
                 // force complete and get the onboarding progress from api
                 this.forceCompletion(step);
+                this.completed$.next(true);
                 onLoadFinished?.();
                 this.load().then(onLoadFinished);
             }

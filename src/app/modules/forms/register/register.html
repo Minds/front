@@ -36,6 +36,7 @@
   class="m-form m-login-box m-formWrapper"
   [hidden]="hideLogin"
   *ngIf="!showFbForm"
+  (mViewed)="trackView()"
 >
   <div class="m-layout__grid">
     <!-- ------------------------------- -->
