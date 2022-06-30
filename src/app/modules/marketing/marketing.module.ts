@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { ModalsModule } from '../modals/modals.module';
 
-import { MarketingFeaturesComponent } from './features.component';
 import { MarketingComponent } from './marketing.component';
 import { MarketingFooterComponent } from './footer.component';
 import { MarketingAsFeaturedInComponent } from './as-featured-in.component';
@@ -28,7 +27,6 @@ import { MarketingAsFeaturedInV2Component } from './v2/as-featured-in.component'
     LanguageModule,
   ],
   declarations: [
-    MarketingFeaturesComponent,
     MarketingComponent,
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
@@ -36,7 +34,6 @@ import { MarketingAsFeaturedInV2Component } from './v2/as-featured-in.component'
     MarketingAsFeaturedInBlockchainComponent,
   ],
   exports: [
-    MarketingFeaturesComponent,
     MarketingComponent,
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,

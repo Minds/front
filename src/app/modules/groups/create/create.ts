@@ -7,6 +7,11 @@ import { Session } from '../../../services/session';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
+/**
+ * Form for creating a new group.
+ *
+ * See it by clicking "Groups" in the sidebar, then the "Create Group" button
+ */
 @Component({
   moduleId: module.id,
   selector: 'minds-groups-create',

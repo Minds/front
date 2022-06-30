@@ -11,6 +11,9 @@ const SUM_CENTS = (arr): number => {
   }, 0);
 };
 
+/**
+ * Container for a wallet earnings table where the earned currency is cash
+ */
 @Component({
   selector: 'm-walletProEarnings--cash',
   templateUrl: './pro-earnings.component.html',

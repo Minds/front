@@ -10,7 +10,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
 
 /**
- * Multi-page rewards marketing component
+ * Rewards marketing page
  */
 @Component({
   selector: 'm-blockchainMarketing__rewards--v2',
