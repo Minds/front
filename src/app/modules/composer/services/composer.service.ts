@@ -9,6 +9,7 @@ import {
 import {
   debounceTime,
   distinctUntilChanged,
+  filter,
   map,
   pairwise,
   startWith,
@@ -567,6 +568,9 @@ export class ComposerService implements OnDestroy {
         // Value will be either an Attachment interface object or null
       ),
       this.richEmbed$.pipe(
+        // Filter out null values.
+        filter(Boolean),
+
         // Only react to rich-embed URL changes
         distinctUntilChanged(),
 
@@ -576,7 +580,7 @@ export class ComposerService implements OnDestroy {
         // Call the engine endpoint to resolve the URL, debouncing the request to avoid server overload,
         this.richEmbed.resolve(200),
 
-        // Update the preview
+        // Set preview
         tap((richEmbed: RichEmbed) => this.richEmbedPreview$.next(richEmbed)),
 
         // Set in progress state to null.

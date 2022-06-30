@@ -98,7 +98,7 @@ export class RichEmbedService {
               ),
               catchError(e => {
                 console.error(e);
-                return EMPTY;
+                return of(null);
               })
             );
         }),
