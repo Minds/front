@@ -4,7 +4,11 @@ import { Location } from '@angular/common';
 import { RedirectService } from '../../common/services/redirect.service';
 
 /**
- * Redirects from a pro group url to a minds group page
+ * Hacky!
+ * Redirects from a url presented on a pro site to a minds.com
+ * page (e.g. a group page). Workaround because router doesn't
+ * work between domains.
+ *
  */
 @Component({
   selector: 'm-pro__redirect',

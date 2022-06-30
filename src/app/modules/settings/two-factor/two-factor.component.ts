@@ -4,6 +4,13 @@ import { Client } from '../../../services/api';
 import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/modal.component';
 import { ModalService } from '../../../services/ux/modal.service';
 
+/**
+ * Old SMS 2FA settings components that is referenced by the
+ * SettingsTwoFactorDisableSMSComponent to allow users
+ * to disable SMS 2FA.
+ *
+ * NOTE: SMS 2FA is deprecated, this component should only shown to users who already have SMS enabled.
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-settings--two-factor',

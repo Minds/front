@@ -18,6 +18,12 @@ import {
 } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
 
+/**
+ * Container for forms and info related to the
+ * bank account that will receive cash rewards
+ *
+ * See it in wallet > cash > settings
+ */
 @Component({
   selector: 'm-walletSettings--cash',
   templateUrl: './settings-cash.component.html',

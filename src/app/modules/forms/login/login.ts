@@ -18,6 +18,11 @@ import { AbstractSubscriberComponent } from '../../../common/components/abstract
 
 export type Source = 'auth-modal' | 'other' | null;
 
+/**
+ * The login form for users that have already registered on the site.
+ *
+ * Includes name/password inputs and a link to join Minds
+ */
 @Component({
   moduleId: module.id,
   selector: 'minds-form-login',

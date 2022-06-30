@@ -18,11 +18,9 @@ import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator/boost-rotator.component';
 import { NewsfeedSubscribedComponent } from './feeds/subscribed.component';
-import { NewsfeedBoostComponent } from './feeds/boost.component';
 import { NewsfeedService } from './services/newsfeed.service';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
-import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
 import { NewsfeedEntityComponent } from './feeds/entity.component';
 import { SearchModule } from '../search/search.module';
 import { ActivityModule } from './activity/activity.module';
@@ -71,19 +69,6 @@ const routes: Routes = [
           ogImageHeight: 1200,
         },
       },
-      {
-        path: 'boost',
-        component: NewsfeedBoostComponent,
-        canDeactivate: [CanDeactivateGuardService],
-        data: {
-          title: 'Boost Feed',
-          description: 'Posts that have been boosted on the network',
-          ogImage: '/assets/og-images/boost-v3.png',
-          ogImageWidth: 1200,
-          ogImageHeight: 1200,
-        },
-      },
-      { path: 'tag/:tag', component: NewsfeedTagsComponent },
     ],
   },
   { path: 'newsfeed/:guid', component: NewsfeedSingleComponent },
@@ -120,8 +105,6 @@ const routes: Routes = [
     NewsfeedSingleComponent,
     NewsfeedBoostRotatorComponent,
     NewsfeedSubscribedComponent,
-    NewsfeedBoostComponent,
-    NewsfeedTagsComponent,
     NewsfeedEntityComponent,
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,

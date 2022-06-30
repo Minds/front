@@ -18,6 +18,11 @@ import {
 
 import * as moment from 'moment';
 
+/**
+ * List of cash-related transactions.
+ *
+ * See it in wallet > cash > transactions
+ */
 @Component({
   selector: 'm-walletTransactions--cash',
   templateUrl: './transactions-cash.component.html',

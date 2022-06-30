@@ -22,6 +22,13 @@ import { PhoneVerificationService } from '../../components/phone-verification/ph
 import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
 import { ApiService } from '../../../../../common/api/api.service';
 
+/**
+ * Displays:
+ * - token balance (with popover of offchain vs. onchain breakdown )
+ * - web3 wallet balance (ETH and USD equivalent)
+ * - web3 wallet address (truncated)
+ * - token-related actions dropdown menu
+ */
 @Component({
   selector: 'm-walletBalance--tokens',
   templateUrl: './balance-tokens.component.html',
