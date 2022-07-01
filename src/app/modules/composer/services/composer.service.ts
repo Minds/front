@@ -9,7 +9,6 @@ import {
 import {
   debounceTime,
   distinctUntilChanged,
-  filter,
   map,
   pairwise,
   startWith,
@@ -568,9 +567,6 @@ export class ComposerService implements OnDestroy {
         // Value will be either an Attachment interface object or null
       ),
       this.richEmbed$.pipe(
-        // Filter out null values.
-        filter(Boolean),
-
         // Only react to rich-embed URL changes
         distinctUntilChanged(),
 
