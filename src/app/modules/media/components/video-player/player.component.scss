@@ -7,10 +7,12 @@
 .plyr video {
   height: 100%;
 }
+
 .plyr--video.plyr--stopped {
   .plyr__controls {
     display: none;
   }
+
   .plyr__control {
     display: none;
   }
@@ -44,6 +46,7 @@ m-videoPlayer--scrollaware {
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
+
   @include m-theme() {
     background-color: themed($m-black-always);
   }
@@ -53,15 +56,23 @@ m-videoPlayer--scrollaware {
     display: block;
     text-align: center;
     top: 50%;
-    transform: translateY(-50%);
-    font-size: 100px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 70px;
     position: absolute;
     cursor: pointer;
-    width: 100%;
     transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    @include m-theme() {
-      color: themed($m-white-always);
-      text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
+
+    border-radius: 5px;
+    padding: 5px;
+    transition: all 0.1s ease-in-out;
+
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.75);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.65);
+      color: rgba(255, 255, 255, 0.85);
     }
   }
 

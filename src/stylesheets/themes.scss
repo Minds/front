@@ -12,6 +12,7 @@
   @each $theme, $colors in $themes {
     @include m-on-theme($theme) {
       $theme-map: () !global;
+
       @each $color-name, $color in $colors {
         $value: map-get(map-get($themes, $theme), '#{$color-name}');
         $theme-map: map-merge(
@@ -21,6 +22,7 @@
           )
         ) !global;
       }
+
       @content;
       $theme-map: null !global;
     }
@@ -61,7 +63,7 @@ $blue-grey-100: #cfd8dc;
 $blue-grey-50: #eceff1;
 
 $blue-dark: #206ab9;
-$blue: #4690df;
+$blue: #0865d1;
 $blue-bright: #44aaff;
 $blue-light: #71aae7;
 $green-dark: #388e3c;
@@ -89,27 +91,27 @@ $linkedin: #0071a1;
 // e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
 $themes: (
   light: (
-    m-textColor--primary: #43434d,
-    m-textColor--primaryInverted: #ffffff,
-    m-textColor--secondary: #72727c,
-    m-textColor--secondaryInverted: #b8c1ca,
-    m-textColor--tertiary: #9b9b9b,
+    m-textColor--primary: #424a53,
+    m-textColor--primaryInverted: #f6f8fa,
+    m-textColor--secondary: #57606a,
+    m-textColor--secondaryInverted: #d0d7de,
+    m-textColor--tertiary: #6e7781,
     m-bgColor--primary: #ffffff,
     m-bgColor--primaryInverted: #1f252c,
     m-bgColor--primaryDarkAlways: #1f252c,
     m-bgColor--primaryAlt: #e7edf3,
-    m-bgColor--secondary: #f6f7f7,
+    m-bgColor--secondary: #f6f8fa,
     m-bgColor--secondaryAlt: #e6ebed,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--btnHover: #f0f3f7,
     m-bgColor--btnHoverLightAlways: #f0f3f7,
     m-bgColor--btnActive: #dadfe5,
-    m-borderColor--primary: #d3dbe3,
+    m-borderColor--primary: #eaeef2,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
     m-overlay: rgba(176, 176, 176, 0.5),
-    m-alert: #e03c20,
-    m-link: #1b85d6,
+    m-alert: #b6112b,
+    m-link: #0865d1,
     m-link--hover: #0052a3,
     m-positive: #95c064,
     // legacy colors
@@ -138,7 +140,7 @@ $themes: (
     m-blue-grey-100: $blue-grey-100,
     m-blue-grey-50: $blue-grey-50,
     m-blue-dark: $blue-dark,
-    m-blue: $blue,
+    m-blue: #0865d1,
     m-blue-light: $blue-light,
     m-aqua: $aqua,
     m-green-dark: $green-dark,
@@ -168,27 +170,27 @@ $themes: (
     m-activity--hover: #f8fafd,
   ),
   dark: (
-    m-textColor--primary: #ffffff,
-    m-textColor--primaryInverted: #43434d,
-    m-textColor--secondary: #b8c1ca,
+    m-textColor--primary: #f6f8fa,
+    m-textColor--primaryInverted: #424a53,
+    m-textColor--secondary: #d0d7de,
     m-textColor--secondaryInverted: #72727c,
-    m-textColor--tertiary: #797b82,
+    m-textColor--tertiary: #afb8c1,
     m-bgColor--primary: #1f252c,
     m-bgColor--primaryInverted: #ffffff,
     m-bgColor--primaryDarkAlways: #1f252c,
     m-bgColor--primaryAlt: #1e242a,
-    m-bgColor--secondary: #1a2025,
+    m-bgColor--secondary: #32383f,
     m-bgColor--secondaryAlt: #232b31,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--btnHover: #343c44,
     m-bgColor--btnHoverLightAlways: #f0f3f7,
     m-bgColor--btnActive: #48525b,
-    m-borderColor--primary: #414c57,
+    m-borderColor--primary: #424a53,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #3a3f41,
     m-overlay: rgba(0, 0, 0, 0.5),
-    m-alert: #e03c20,
-    m-link: #1b85d6,
+    m-alert: #b6112b,
+    m-link: #40aaff,
     m-link--hover: #4eb8ff,
     m-positive: #95c064,
     // legacy colors
@@ -224,7 +226,7 @@ $themes: (
     m-marketing-bg-colored-gradient-start: #4e5965,
     m-marketing-bg-colored-gradient-end: #58565c,
     m-blue-dark: lighten($blue-bright, 15%),
-    m-blue: $blue-bright,
+    m-blue: #40aaff,
     m-blue-light: $blue-dark,
     m-aqua: $aqua,
     m-green-dark: lighten($green-dark, $percent),

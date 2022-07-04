@@ -27,8 +27,16 @@ minds-rich-embed {
       transform: translate(-50%, -50%);
       font-size: 4em;
       line-height: 1em;
-      @include m-theme() {
-        color: themed($m-white-always);
+      border-radius: 5px;
+      padding: 5px;
+      transition: all 0.1s ease-in-out;
+
+      background: rgba(0, 0, 0, 0.5);
+      color: rgba(255, 255, 255, 0.75);
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.65);
+        color: rgba(255, 255, 255, 0.85);
       }
     }
   }
@@ -36,7 +44,8 @@ minds-rich-embed {
   .m-rich-embed-thumbnail-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 */
+    padding-bottom: 56.25%;
+    /* 16:9 */
     height: 0;
     background: none no-repeat center center transparent;
     background-size: cover;
@@ -51,7 +60,8 @@ minds-rich-embed {
   .m-rich-embed-video-iframe {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 */
+    padding-bottom: 56.25%;
+    /* 16:9 */
     height: 0;
 
     @include m-theme() {
@@ -70,7 +80,8 @@ minds-rich-embed {
   .m-rich-embed-image-iframe {
     position: relative;
     width: 100%;
-    padding-bottom: 100%; /* 1:1 */
+    padding-bottom: 100%;
+    /* 1:1 */
     height: 0;
 
     @include m-theme() {
@@ -98,8 +109,10 @@ minds-rich-embed {
       box-sizing: border-box;
     }
   }
+
   .m-rich-embed--title {
     word-break: break-word;
+
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

@@ -16,6 +16,7 @@
     width: 100%;
     object-fit: contain;
     pointer-events: none;
+
     @media screen and (min-width: $max-mobile) {
       height: 100%;
     }
@@ -44,13 +45,16 @@
     left: 0;
     width: 100%;
     background: transparent;
+
     i {
       cursor: not-allowed;
     }
   }
+
   @media screen and (max-width: $max-mobile) {
     m-composerattachmentpreview {
       height: auto;
+
       & > img,
       & > video {
         height: auto;
@@ -60,6 +64,7 @@
       .m-videoPlayer__placeholder {
         height: 100%;
         max-height: 330px;
+
         i {
           opacity: 0.5;
         }
