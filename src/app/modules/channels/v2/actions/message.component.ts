@@ -11,7 +11,8 @@ import { ApiService } from '../../../../common/api/api.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
- * Message button (non-owner)
+ * Message button (non-owner) - action button shown to logged-in channel visitors.
+ * Clicking it opens a new tab to a Minds Chat room for the two relevant users.
  */
 @Component({
   selector: 'm-channelActions__message',

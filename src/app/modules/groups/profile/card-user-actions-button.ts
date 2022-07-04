@@ -2,6 +2,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 import { GroupsService } from '../groups.service';
 
+/**
+ * The settings cog on a user in a group members list,
+ * visible to those with access (admins and moderators?).
+ * Contains a list of actions that relate to the user's place in the group
+ */
 @Component({
   selector: 'minds-groups-card-user-actions-button',
   inputs: ['group', 'user'],

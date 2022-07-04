@@ -5,6 +5,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Modal } from '../../../services/ux/modal.service';
 
 const noOp = () => {};
+
+/**
+ * Modal that controls what content type(s) are shown in a
+ * discovery feed, and also whether NSFW content is to be shown
+ */
 @Component({
   selector: 'm-discovery__feedSettings',
   templateUrl: './settings.component.html',

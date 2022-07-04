@@ -18,6 +18,11 @@ import { ComposerService } from '../../../../../../services/composer.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ComposerMonetizeV2Service } from '../monetize.service';
 
+/**
+ * Radio button form of membership tiers a user may select
+ * when monetizing their post, along with a link to
+ * manage their existing memberships
+ */
 @Component({
   selector: 'm-composer__monetizeV2__memberships',
   changeDetection: ChangeDetectionStrategy.OnPush,

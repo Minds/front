@@ -20,6 +20,10 @@ import { AsyncPipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { GroupsSearchService } from './search.service';
 
+/**
+ * Container for group feeds. Includes content type filter, search results,
+ * and a feed of applicable activities.
+ */
 @Component({
   selector: 'm-group-profile-feed__sorted',
   providers: [SortedService, FeedsService],

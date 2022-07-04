@@ -1,5 +1,5 @@
 /**
- * Base for blogs v2
+ * Base container for blogs in edit mode v2.
  * Houses banner, content and title.
  */
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -16,6 +16,9 @@ import { Location } from '@angular/common';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { PopupService } from '../../../composer/components/popup/popup.service';
 
+/**
+ * Container for blogs in edit mode. Houses banner, content and title.
+ */
 @Component({
   selector: 'm-blogEditor--v2',
   host: {

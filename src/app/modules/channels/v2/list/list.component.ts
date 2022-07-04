@@ -7,6 +7,10 @@ import {
 } from '@angular/core';
 import { FeedsService } from '../../../../common/services/feeds.service';
 
+/**
+ * Contains lists of items available in the channel 'about' section.
+ * Includes tabs to toggle between lists and text filter.
+ */
 @Component({
   selector: 'm-channel__list',
   changeDetection: ChangeDetectionStrategy.OnPush,

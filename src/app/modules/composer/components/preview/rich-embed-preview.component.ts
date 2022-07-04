@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RichEmbed } from '../../services/rich-embed.service';
 import { MediaProxyService } from '../../../../common/services/media-proxy.service';
 
+/**
+ * Renders a user-friendly preview of the rich-embed
+ */
 @Component({
   selector: 'm-composerRichEmbedPreview',
   changeDetection: ChangeDetectionStrategy.OnPush,

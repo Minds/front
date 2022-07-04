@@ -4,7 +4,8 @@ import { FormToastService } from '../../../../../../common/services/form-toast.s
 import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
 
 /**
- * Disable confirmation button for SMS.
+ * Disable confirmation button for SMS 2FA.
+ * NOTE: SMS 2FA is deprecated, this component is only shown to users who already have SMS enabled.
  **/
 @Component({
   selector: 'm-twoFactor__confirmDisable--sms',

@@ -13,6 +13,9 @@ import { WireModalService } from '../../../../wire/wire-modal.service';
 import { ChannelShopMembershipsMembersComponent } from './members-modal/members-modal.component';
 import { ModalService } from '../../../../../services/ux/modal.service';
 
+/**
+ * Contains an 'm-carousel' that displays a channel's membership tiers, as well as a top action bar for viewing supporters, editing tiers
+ */
 @Component({
   selector: 'm-channelShop__memberships',
   changeDetection: ChangeDetectionStrategy.OnPush,

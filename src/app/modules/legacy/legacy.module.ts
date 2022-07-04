@@ -25,7 +25,6 @@ import { MindsFatBanner } from './components/banner/fat';
 import { SocialIcons } from './components/social-icons/social-icons';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
-import { CarouselComponent } from './components/carousel.component';
 import { CommentsModule } from '../comments/comments.module';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CommentComponentV2 } from '../comments/comment/comment.component';
@@ -59,8 +58,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     MindsFatBanner,
 
     SocialIcons,
-
-    CarouselComponent,
   ],
   exports: [
     UserCard,
@@ -74,7 +71,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     MindsFatBanner,
 
     SocialIcons,
-    CarouselComponent,
   ],
 })
 export class LegacyModule {}

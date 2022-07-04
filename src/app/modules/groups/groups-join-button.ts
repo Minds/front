@@ -13,6 +13,11 @@ import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { FormToastService } from '../../common/services/form-toast.service';
 
+/**
+ * Click this button to join/leave a group, accept/decline a group invitation,
+ * or cancel a request to join a group.
+ * (function changes depending on context)
+ */
 @Component({
   selector: 'minds-groups-join-button',
   inputs: ['_group: group'],

@@ -4,6 +4,15 @@ import { Client } from '../../../services/api/client';
 import { JurySessionService } from '../juryduty/session/session.service';
 import { FeaturesService } from '../../../services/features.service';
 
+/**
+ * Displays strikes against a channel for
+ * terms of service violations (or a notice
+ * that says you have no strikes).
+ *
+ * Includes reason and state of strike.
+ *
+ * Used in settings/other/reported-content/strikes
+ */
 @Component({
   selector: 'm-moderation__strikes',
   templateUrl: 'strikes.component.html',

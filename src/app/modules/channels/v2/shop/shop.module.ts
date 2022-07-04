@@ -8,7 +8,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../../../common/common.module';
 import { ChannelShopComponent } from './shop.component';
 import { ChannelShopBriefComponent } from './brief.component';
-import { ChannelShopBriefWireRewardsComponent } from './brief-wire-rewards.component';
 import { ChannelShopMembershipsComponent } from './memberships/memberships.component';
 import { ChannelShopMembershipsEditComponent } from './memberships/edit.component';
 import { ChannelShopMembershipsSupportTierComponent } from './memberships/support-tier.component';
@@ -21,7 +20,6 @@ const EXPORTS = [ChannelShopComponent, ChannelShopBriefComponent];
 @NgModule({
   imports: [NgCommonModule, RouterModule, FormsModule, CommonModule],
   declarations: [
-    ChannelShopBriefWireRewardsComponent,
     ChannelShopMembershipsComponent,
     ChannelShopMembershipsEditComponent,
     ChannelShopMembershipsSupportTierComponent,

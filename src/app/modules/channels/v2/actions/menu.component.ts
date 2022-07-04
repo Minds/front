@@ -12,7 +12,9 @@ export interface ProToggleResponse {
 }
 
 /**
- * Extra actions dropdown menu
+ * Extra actions dropdown menu - not visible to channel owners
+ * For channel-related actions that change depending on context (user, admin).
+ * E.g. (un)subscribe, report, (un)ban globally, view ledger, make pro
  */
 @Component({
   selector: 'm-channelActions__menu',

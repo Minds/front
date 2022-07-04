@@ -15,6 +15,9 @@ import { SidebarNavigationService } from '../../common/layout/sidebar/navigation
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { ConfigsService } from '../../common/services/configs.service';
 
+/**
+ * Standalone login page
+ */
 @Component({
   selector: 'm-login',
   templateUrl: 'login.component.html',

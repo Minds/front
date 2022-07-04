@@ -8,6 +8,10 @@ import {
 import { ProChannelService } from '../channel.service';
 import { Session } from '../../../../services/session';
 
+/**
+ * Navigation for mobile users on pro sites.
+ * Includes searchbar, content type filters, categories and footer
+ */
 @Component({
   selector: 'm-pro__hamburger-menu',
   templateUrl: 'hamburger-menu.component.html',

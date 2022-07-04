@@ -1,10 +1,14 @@
 /**
- * Dropdown menu for blogs v2
+ * Dropdown menu for blogs in edit mode v2
  */
 import { Component } from '@angular/core';
 import { BlogsEditService } from '../blog-edit.service';
 import { NSFW_REASONS } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
 
+/**
+ * Dropdown menu for editing blogs.
+ * Includes nested menus for permaweb, license, nsfw, visibility
+ */
 @Component({
   selector: 'm-blogEditor__dropdown',
   host: {

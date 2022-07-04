@@ -13,8 +13,8 @@ import {
 } from '../../services/composer.service';
 
 /**
- * Composer title bar component. It features a label and a dropdown menu
- * with not-that-important options.
+ * Topbar for composer. Contains titlebar dropdown, option to create blog,
+ * and the "Composer" label (a.k.a. NOT the title of the post)
  */
 @Component({
   selector: 'm-composer__titleBar',

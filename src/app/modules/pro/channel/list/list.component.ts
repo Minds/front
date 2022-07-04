@@ -16,6 +16,9 @@ import {
   RouterLinkToType,
 } from '../channel.service';
 
+/**
+ * List of tiles that contain activity content on a pro site. Displayed using the <m-feedGrid> component
+ */
 @Component({
   selector: 'm-proChannel__list',
   templateUrl: 'list.component.html',

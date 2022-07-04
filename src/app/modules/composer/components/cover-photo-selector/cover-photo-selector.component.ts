@@ -5,6 +5,10 @@ import { ComposerService } from '../../services/composer.service';
 import { Attachment } from '../../services/attachment.service';
 import { VideoPoster } from '../../services/video-poster.service';
 
+/**
+ * Allows users to upload a custom cover photo for a video post.
+ * Used in <m-composer__preview>
+ */
 @Component({
   selector: 'm-composer__coverPhotoSelector',
   templateUrl: './cover-photo-selector.component.html',

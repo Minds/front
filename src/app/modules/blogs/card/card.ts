@@ -5,6 +5,10 @@ import { ACCESS } from '../../../services/list-options';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
+/**
+ * Presents a small preview of a blog
+ * Used in boosted blogs in the newsfeed sidebar, for example
+ */
 @Component({
   selector: 'minds-card-blog',
   inputs: ['_blog : object'],

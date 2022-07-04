@@ -4,6 +4,11 @@ import { Session } from '../../../../../services/session';
 import { Client } from '../../../../../services/api';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
+/**
+ * User card
+ *
+ * Used only in group memberships, should be removed
+ */
 @Component({
   selector: 'minds-card-user',
   inputs: ['object', 'avatarSize'],

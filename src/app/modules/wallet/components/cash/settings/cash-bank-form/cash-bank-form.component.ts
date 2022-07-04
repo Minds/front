@@ -11,8 +11,9 @@ import { requiredFor, optionalFor } from '../settings-cash.validators';
 import { WalletV2Service } from '../../../wallet-v2.service';
 import { FormToastService } from '../../../../../../common/services/form-toast.service';
 
-import localLabels from './local-labels';
-
+/**
+ * Dynamic form that displays/updates the bank account that will receive cash rewards.
+ */
 @Component({
   selector: 'm-walletCashBankForm',
   templateUrl: './cash-bank-form.component.html',

@@ -10,7 +10,7 @@ import {
 
 /**
  * Composer preview container. Renders a user-friendly preview of
- * the embedded media or rich embed, and allows to change the video
+ * the embedded media/rich-embed/quote post, and allows to change the video
  * thumbnails and delete the embed as well.
  */
 @Component({

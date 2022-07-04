@@ -13,7 +13,8 @@ import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MruService } from '../service/mru.service';
 
 /**
- * Typeahead selector.
+ * Text input component that provides a list of
+ * autocompleted relevant hashtags as the user types
  */
 @Component({
   selector: 'm-hashtags__typeaheadInput',
