@@ -17,6 +17,9 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
 
+/**
+ * Standalone register page for new users to sign up
+ */
 @Component({
   selector: 'm-register',
   templateUrl: 'register.component.html',

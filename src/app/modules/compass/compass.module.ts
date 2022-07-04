@@ -7,20 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompassService } from './compass.service';
 
 import { CompassQuestionnaireModalComponent } from './questionnaire-modal/questionnaire-modal.component';
-import { CompassQuestionnaireBannerComponent } from './questionnaire-banner/questionnaire-banner.component';
 
 @NgModule({
   imports: [NgCommonModule, CommonModule, FormsModule, ReactiveFormsModule],
-  declarations: [
-    CompassFormComponent,
-    CompassQuestionnaireModalComponent,
-    CompassQuestionnaireBannerComponent,
-  ],
-  exports: [
-    CompassFormComponent,
-    CompassQuestionnaireModalComponent,
-    CompassQuestionnaireBannerComponent,
-  ],
+  declarations: [CompassFormComponent, CompassQuestionnaireModalComponent],
+  exports: [CompassFormComponent, CompassQuestionnaireModalComponent],
   providers: [CompassService],
 })
 export class CompassModule {}

@@ -5,6 +5,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
  * About Info accordion pane component
+ * Allows users to edit their channel's location, birthday, display name
  */
 @Component({
   selector: 'm-channelEdit__info',

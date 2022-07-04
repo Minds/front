@@ -6,6 +6,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * Channel groups component
+ * List of groups a channel is a member of.
+ * Located in the channel "about" section
  */
 @Component({
   selector: 'm-channelList__groups',

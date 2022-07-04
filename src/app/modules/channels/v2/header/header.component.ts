@@ -5,6 +5,11 @@ import { MindsUser } from '../../../../interfaces/entities';
 import entityToBannerUrl from '../../../../helpers/entity-to-banner-url';
 import { Session } from '../../../../services/session';
 
+/**
+ * Topmost section of channel page, containing
+ * banner (with avatar image and actions toolbar)
+ * and username/handle
+ */
 @Component({
   selector: 'm-channel__header',
   changeDetection: ChangeDetectionStrategy.OnPush,

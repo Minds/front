@@ -5,6 +5,7 @@ import { Session } from '../../../../services/session';
 
 /**
  * Channel About component
+ * Displayed when "about" tab is selected on a channel page
  */
 @Component({
   selector: 'm-channel__about',

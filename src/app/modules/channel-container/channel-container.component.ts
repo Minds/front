@@ -19,6 +19,9 @@ import { TRIGGER_EXCEPTION } from '../channels/v2/content/content.service';
 import { HeadersService } from '../../common/services/headers.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 
+/**
+ * Contains and controls access to to channel pages
+ */
 @Component({
   selector: 'm-channel-container',
   templateUrl: 'channel-container.component.html',

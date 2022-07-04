@@ -8,6 +8,8 @@ import { ChannelEditService } from './edit.service';
 
 /**
  * Hashtags accordion pane component
+ * Allows users to add/remove hashtags that are associated with their channel
+ * (Note: these hashtags are different from the ones in discovery)
  */
 @Component({
   selector: 'm-channelEdit__hashtags',

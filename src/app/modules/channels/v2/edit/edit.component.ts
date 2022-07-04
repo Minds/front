@@ -5,6 +5,7 @@ import { ChannelEditService } from './edit.service';
 
 /**
  * Edit modal component
+ * Container for vertical accordion modal with various panes for editing one's channel
  */
 @Component({
   selector: 'm-channel__edit',

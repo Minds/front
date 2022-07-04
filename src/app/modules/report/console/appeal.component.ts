@@ -5,6 +5,13 @@ import { REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
+/**
+ * Displays details of action taken against
+ * a reported post/comment. Allows users to
+ * appeal the decision and explain why.
+ *
+ * Includes a preview of the reported post/comment.
+ */
 @Component({
   selector: 'm-moderation__appeal',
   templateUrl: 'appeal.component.html',

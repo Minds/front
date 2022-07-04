@@ -10,6 +10,11 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+/**
+ * Modal used in the wallet.
+ * It wraps around forms so the modals in the wallet look consistent.
+ *
+ */
 @Component({
   selector: 'm-walletModal',
   templateUrl: './modal.component.html',

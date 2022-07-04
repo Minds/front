@@ -18,6 +18,11 @@ import {
 import * as moment from 'moment';
 import { PlusService } from '../../../../plus/plus.service';
 
+/**
+ * Balances of earnings, total transfers and pending transfers in the cash section of the wallet.
+ *
+ * Also contains onboarding notice if user hasn't set up bank account yet
+ */
 @Component({
   selector: 'm-walletBalance--cash',
   templateUrl: './balance-cash.component.html',

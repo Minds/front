@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
+/**
+ * Horizontal animation indicating composer media attachment is in progress
+ */
 @Component({
   selector: 'm-composer__progress',
   changeDetection: ChangeDetectionStrategy.OnPush,

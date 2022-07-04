@@ -13,6 +13,11 @@ import { Router } from '@angular/router';
 
 export type FooterLink = { title: string; href: string };
 
+/**
+ * Pro channel footer links, displayed at bottom of feed and mobile hamburger menu.
+ * Contains links selected by the owner (in pro settings) and
+ * optional links to social media profiles
+ */
 @Component({
   selector: 'm-pro--channel-footer',
   templateUrl: 'footer.component.html',

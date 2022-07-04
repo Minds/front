@@ -7,6 +7,9 @@ import {
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { UniswapAction } from './uniswap-modal.service';
 
+/**
+ * Uniswap modal (appears when you click 'Provide liquidity' in token wallet, for example)
+ */
 @Component({
   selector: 'm-uniswap__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,

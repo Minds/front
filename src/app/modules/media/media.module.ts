@@ -15,8 +15,6 @@ import { WireModule } from '../wire/wire.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 import { VideoModule } from './components/video/video.module';
 
-import { MediaModalComponent } from './modal/modal.component';
-import { ThumbnailSelectorComponent } from './components/thumbnail-selector.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 // import { BlogModule } from '../blogs/blog.module';
@@ -77,6 +75,5 @@ const routes: Routes = [
     //BlogModule,
     TranslateModule,
   ],
-  declarations: [ThumbnailSelectorComponent, MediaModalComponent],
 })
 export class MediaModule {}

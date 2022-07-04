@@ -20,8 +20,9 @@ interface DismissIntentAbleComponent {
 }
 
 /**
- * Popup component. It should be used as a singleton component in the root element. It relies on Popup Service
- * for inter-component communication.
+ * Popup component to display composer panels on top of the composer base.
+ * It should be used as a singleton component in the root element.
+ * It relies on Popup Service for inter-component communication.
  */
 @Component({
   selector: 'm-composer__popup',

@@ -15,6 +15,13 @@ import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
 
+/**
+ * Form that uses a Stripe iframe.
+ * Allows uers to add a new credit/debit card
+ * to use with Minds Pay.
+ *
+ * See it in the Minds Pay modal.
+ */
 @Component({
   selector: 'm-payments__newCard',
   templateUrl: 'new-card.component.html',

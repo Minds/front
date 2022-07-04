@@ -9,7 +9,7 @@ import { ModalService } from '../../../../../services/ux/modal.service';
 export type BlogsBottomBarContainerType = 'tags' | 'meta' | 'monetize' | '';
 
 /**
- * Base bottom bar component for blogs v2
+ * Base bottom bar component for blogs in edit mode v2.
  * Includes the popup drawer and logic.
  */
 @Component({

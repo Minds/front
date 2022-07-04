@@ -8,6 +8,9 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 
+/**
+ * Lazy loaded container for 'm-channelShop__brief'
+ */
 @Component({
   selector: 'm-channelShop__lazy',
   template: `

@@ -8,6 +8,9 @@ import {
 import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { Currency } from '../../../../../helpers/currency';
 
+/**
+ * Displays information related to a single membership tier
+ */
 @Component({
   selector: 'm-channelShopMemberships__supportTier',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -14,6 +14,9 @@ import { DynamicHostDirective } from '../../../../common/directives/dynamic-host
 import { ActivityComponent } from '../../../newsfeed/activity/activity.component';
 import { ComposerService } from '../../services/composer.service';
 
+/**
+ * Renders a user-friendly preview of the embedded post that is being quoted
+ */
 @Component({
   selector: 'm-composerRemindPreview',
   changeDetection: ChangeDetectionStrategy.OnPush,

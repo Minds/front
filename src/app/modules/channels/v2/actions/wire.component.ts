@@ -3,7 +3,9 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { WireModalService } from '../../../wire/wire-modal.service';
 
 /**
- * Wire (pay) button (non-owner)
+ * Wire (pay) button (non-owner) - action button shown to channel visitors.
+ * Clicking it opens the pay modal if the user is logged in,
+ * and opens the auth modal if they are logged out
  */
 @Component({
   selector: 'm-channelActions__wire',

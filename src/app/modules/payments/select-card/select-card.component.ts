@@ -11,13 +11,20 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Client } from '../../../services/api';
-import { WalletService } from '../../../services/wallet';
-import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
 import { NewCardModalComponent } from '../new-card-modal/new-card-modal.component';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/ux/modal.service';
 
+/**
+ * Dropdown menu that allows users to choose from a list
+ * of credit/debit cards that they've added already.
+ *
+ * Includes an option to add a new card,
+ * which opens the <m-payments__newCardModal>
+ *
+ * See it by clicking 'tip' on a post > USD tab > Payment method
+ */
 @Component({
   selector: 'm-payments__selectCard',
   templateUrl: 'select-card.component.html',

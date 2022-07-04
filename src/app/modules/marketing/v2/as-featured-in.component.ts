@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * A collection of images related to news media outlets
+ * that have featured Minds
+ */
 @Component({
   selector: 'm-marketing__asFeaturedInV2',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -4,6 +4,9 @@ import { map, switchMap, takeWhile } from 'rxjs/operators';
 import { ApiService } from './../../../../../common/api/api.service';
 import { ChannelsV2Service } from './../../channels-v2.service';
 
+/**
+ * Displays a channel's public nostr key
+ */
 @Component({
   selector: 'm-channel__nostr',
   templateUrl: './nostr.component.html',

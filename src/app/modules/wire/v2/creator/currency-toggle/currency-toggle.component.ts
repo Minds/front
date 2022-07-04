@@ -7,9 +7,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { WireV2Service } from '../../wire-v2.service';
-import { SupportTier, SupportTiersService } from '../../support-tiers.service';
-import { NewCardModalComponent } from '../../../../payments/new-card-modal/new-card-modal.component';
-import { PaymentsSelectCard } from '../../../../payments/select-card/select-card.component';
 
 /**
  * Support tier confirmation component

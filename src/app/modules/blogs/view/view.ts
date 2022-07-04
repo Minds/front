@@ -32,6 +32,11 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ModalService } from '../../../services/ux/modal.service';
 
+/**
+ * Container for a single blog.
+ * Includes barriers to view, e.g. paywall, nsfw overlay, notice about being spam
+ * Also includes banner, title, action bar, dropdown menu, contents, bottom bar, comments, etc.
+ */
 @Component({
   selector: 'm-blog-view',
   host: {

@@ -18,6 +18,10 @@ import { ThemeService } from '../../../../../common/services/theme.service';
 
 declare var require: any;
 
+/**
+ * Editor for blog content (i.e. not banner or title).
+ * Uses ckeditor plugin
+ */
 @Component({
   selector: 'm-blog__editor',
   host: {

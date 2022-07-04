@@ -5,6 +5,14 @@ import { REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
+/**
+ * Dashboard that displays various disciplinary measures taken against your channel.
+ *
+ * Includes tabs to filter by different types/states
+ * of infractions.
+ *
+ * See it at /settings/other/reported-content
+ */
 @Component({
   selector: 'm-report-console',
   templateUrl: 'console.component.html',

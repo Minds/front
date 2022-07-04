@@ -20,6 +20,9 @@ import sidebarMenu from './sidebar-menu.default';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
 import { Menu } from '../../../interfaces/menu';
 
+/**
+ * Top-level container for all things wallet
+ */
 @Component({
   selector: 'm-walletDashboard',
   templateUrl: './dashboard.component.html',

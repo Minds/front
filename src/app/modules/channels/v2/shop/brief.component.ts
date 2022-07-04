@@ -8,6 +8,10 @@ import {
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
+/**
+ * List of available channel membership tiers,
+ * displayed on the right sidebar of channel feed page in wider screens
+ */
 @Component({
   selector: 'm-channelShop__brief',
   changeDetection: ChangeDetectionStrategy.OnPush,

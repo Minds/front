@@ -40,7 +40,8 @@ import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-e
 import isMobile from '../../../../helpers/is-mobile';
 
 /**
- * Toolbar component. Interacts directly with the service.
+ * Composer toolbar. Displays important actions
+ * on the bottom row of the composer.
  */
 @Component({
   selector: 'm-composer__toolbar',

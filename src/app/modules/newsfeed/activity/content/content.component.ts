@@ -27,10 +27,8 @@ import {
   ActivityEntity,
   ActivityService,
 } from '../activity.service';
-import { MediaModalComponent } from '../../../media/modal/modal.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { RedirectService } from '../../../../common/services/redirect.service';
-import * as moment from 'moment';
 import { Session } from '../../../../services/session';
 import {
   animate,
