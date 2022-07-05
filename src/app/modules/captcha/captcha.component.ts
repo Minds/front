@@ -8,6 +8,9 @@ export const CAPTCHA_VALUE_ACCESSOR: any = {
   multi: true,
 };
 
+/**
+ * Contains captcha image and user input box
+ */
 export class Captcha {
   jwtToken: string;
   base64Image: string;

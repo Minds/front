@@ -13,6 +13,9 @@ import { WalletV2Service } from '../../../wallet-v2.service';
 import { Session } from '../../../../../../services/session';
 import { Client } from '../../../../../../services/api';
 
+/**
+ * The first time a user connects a bank account to receive cash rewards, they must fill in this form with personal and bank account info.
+ */
 @Component({
   selector: 'm-walletCashOnboarding',
   templateUrl: './cash-onboarding.component.html',

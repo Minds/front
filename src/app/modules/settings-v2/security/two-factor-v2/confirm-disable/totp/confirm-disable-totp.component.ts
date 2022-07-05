@@ -8,7 +8,7 @@ import {
 } from '../../two-factor-v2.service';
 
 /**
- * Disable confirmation button for 2fa.
+ * Disable confirmation button for TOTP 2FA.
  **/
 @Component({
   selector: 'm-twoFactor__confirmDisable--totp',

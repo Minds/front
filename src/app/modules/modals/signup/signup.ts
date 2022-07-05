@@ -165,10 +165,6 @@ export class SignupModal {
         });
         this.display = 'fb-username';
         break;
-      case 'tutorial':
-        this.display = 'initial';
-        this.close();
-        break;
     }
   }
 

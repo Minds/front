@@ -10,6 +10,12 @@ import { WalletV2Service } from '../../wallet-v2.service';
 
 import * as moment from 'moment';
 
+/**
+ * Popup in token transactions table that displays details of
+ * a user's daily rewards and a breakdown of how they earned them
+ *
+ * TODO: verify that this component is still used
+ */
 @Component({
   selector: 'm-walletRewardsPopup',
   templateUrl: './rewards-popup.component.html',

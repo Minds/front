@@ -7,6 +7,10 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import noOp from '../../../helpers/no-op';
 
+/**
+ * Ban modal that should be retired - is only used in the
+ * legacy `minds-button-user-dropdown` that is only used in the Pro footer
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-modal--ban',

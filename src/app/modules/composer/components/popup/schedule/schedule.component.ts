@@ -8,7 +8,8 @@ import { ComposerService } from '../../../services/composer.service';
 import { isSafari } from '../../../../../helpers/is-safari';
 
 /**
- * Composer's Schedule popup modal
+ * Composer popup modal that allows users to schedule posts
+ * to be posted in the future
  */
 @Component({
   selector: 'm-composer__schedule',

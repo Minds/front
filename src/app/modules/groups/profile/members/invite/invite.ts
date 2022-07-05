@@ -5,6 +5,12 @@ import { GroupsService } from '../../../groups.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 
+/**
+ * Panel shown to public group members and closed group owners
+ * that allows them to search for and invite users
+ * (who are already subscribed to them) to join the group.
+ *
+ */
 @Component({
   moduleId: module.id,
   selector: 'minds-groups-profile-members-invite',

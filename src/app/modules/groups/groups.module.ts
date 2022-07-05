@@ -15,8 +15,6 @@ import { GroupsCardUserActionsButton } from './profile/card-user-actions-button'
 import { GroupsSettingsButton } from './profile/groups-settings-button';
 import { GroupsProfileMembers } from './profile/members/members';
 import { GroupsProfileRequests } from './profile/requests/requests';
-import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
-import { GroupsMembersModuleComponent } from './members/members';
 import { GroupsTileComponent } from './tile/tile.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
@@ -98,8 +96,6 @@ const routes: Routes = [
     GroupProfileFeedSortedComponent,
     GroupsProfileRequests,
     GroupsSettingsButton,
-    GroupsProfileFilterSelector,
-    GroupsMembersModuleComponent,
     GroupsTileComponent,
     GroupMemberPreviews,
     GroupsProfileReviewComponent,
@@ -116,8 +112,6 @@ const routes: Routes = [
     GroupsProfileMembers,
     GroupsProfileRequests,
     GroupsSettingsButton,
-    GroupsProfileFilterSelector,
-    GroupsMembersModuleComponent,
   ],
   providers: [CanDeactivateGroupService, GroupsSearchService],
 })

@@ -11,7 +11,8 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 import { UniqueId } from '../../../../../helpers/unique-id.helper';
 
 /**
- * Tags popup component. Called programatically via PopupService.
+ * Composer hashtags popup component. Called programatically via PopupService.
+ * Select from a list of trending tags or enter a custom tag via text input
  */
 @Component({
   selector: 'm-composer__tags',

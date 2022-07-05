@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
 
 /**
- * Heading action bar
+ * Toolbar at top of channel banner, with options that change
+ * depending on context of channel ownership (edit, boost, pro, dropdown with add'l options)
  */
 @Component({
   selector: 'm-channel__actions',

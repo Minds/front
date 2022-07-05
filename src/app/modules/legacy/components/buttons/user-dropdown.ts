@@ -9,6 +9,10 @@ import { BlockListService } from '../../../../common/services/block-list.service
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
+/**
+ * Button containing a dropdown with user-related actions
+ * Used only in the pro footer, should be removed
+ */
 @Component({
   selector: 'minds-button-user-dropdown',
   inputs: ['user'],

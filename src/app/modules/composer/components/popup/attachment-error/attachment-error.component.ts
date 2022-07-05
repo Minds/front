@@ -3,7 +3,7 @@ import { Session } from '../../../../../services/session';
 import { AttachmentValidationPayload } from '../../../services/attachment-validator.service';
 
 /**
- * Attachment error component - popup for composer modal.
+ * Composer modal popup that appears when there's been an error uploading an attachment
  */
 @Component({
   selector: 'm-composer__attachmentError',

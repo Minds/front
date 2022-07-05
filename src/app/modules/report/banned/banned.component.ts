@@ -2,15 +2,19 @@ import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ViewChild,
-  ElementRef,
 } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Client } from '../../../common/api/client.service';
 import { JurySessionService } from '../juryduty/session/session.service';
 import { Session } from '../../../services/session';
 
+/**
+ * When you try to log in to a banned channel,
+ * this is the component that tells you that you've
+ * been banned, and the reason why.
+ *
+ * It will also display any appeals associated with the channel.
+ */
 @Component({
   selector: 'm-reports__banned',
   templateUrl: 'banned.component.html',

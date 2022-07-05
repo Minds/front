@@ -3,6 +3,11 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { Session } from '../../../../services/session';
 import { MindsUser } from '../../../../interfaces/entities';
 
+/**
+ * "Extra" info on the channel "about" page,
+ * such as location, subs, badges, groups, join date.
+ * Display location changes depending on screen width
+ */
 @Component({
   selector: 'm-channelAbout__extraInfo',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -12,6 +12,9 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Subscription } from 'rxjs';
 import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
 
+/**
+ * Modal that allows users to edit a membership tier
+ */
 @Component({
   selector: 'm-channelShopMemberships__edit',
   changeDetection: ChangeDetectionStrategy.OnPush,

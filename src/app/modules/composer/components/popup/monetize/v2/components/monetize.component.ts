@@ -15,6 +15,10 @@ import { map } from 'rxjs/operators';
 
 export type MonetizationTabType = 'plus' | 'membership' | 'custom';
 
+/**
+ * Container for forms users may use to monetize their post BEFORE it is published
+ * (e.g. with Minds+ pool or a membership tier)
+ */
 @Component({
   selector: 'm-composer__monetizeV2',
   templateUrl: 'monetize.component.html',

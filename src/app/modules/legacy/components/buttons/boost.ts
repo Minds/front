@@ -6,6 +6,10 @@ import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.ser
 import { FeaturesService } from '../../../../services/features.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
+/**
+ * Boost button that opens boost modal when clicked.
+ * Seen on the bottom bar of blogs.
+ */
 @Component({
   selector: 'minds-button-boost',
   inputs: ['object'],

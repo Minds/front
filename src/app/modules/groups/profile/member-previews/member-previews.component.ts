@@ -7,6 +7,10 @@ import { VideoChatService } from '../../../videochat/videochat.service';
 import { timer, Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 
+/**
+ * Displays a few avatars of group members and a button that
+ * goes to the full list of user
+ */
 @Component({
   selector: 'm-group--member-previews',
   templateUrl: 'member-previews.component.html',

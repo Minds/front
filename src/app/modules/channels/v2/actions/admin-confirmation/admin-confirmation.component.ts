@@ -8,7 +8,8 @@ import {
 } from './admin-confirmation.type';
 
 /**
- * Admin confirmation modal.
+ * Modal to confirm that an admin wishes to manually add/remove plus/pro.
+ * (i.e. via the <m-channelActions__menu>)
  */
 @Component({
   selector: 'm-channel__adminConfirmation',

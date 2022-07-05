@@ -5,6 +5,10 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { Client } from '../../../services/api/client';
 
+/**
+ * Embeddable video content for external sites.
+ * (A video component built in a way so that it has no other dependencies)
+ */
 @Component({
   selector: 'm-embedded-video',
   templateUrl: 'embedded-video.component.html',

@@ -17,6 +17,9 @@ import { Session } from '../../../../../services/session';
 import { take } from 'rxjs/operators';
 import { PopupService } from '../../popup/popup.service';
 
+/**
+ * A dropdown of nested menus for users to configure license/permaweb/visibility for a post
+ */
 @Component({
   selector: 'm-composerTitleBar__dropdown',
   templateUrl: './dropdown.component.html',

@@ -4,6 +4,12 @@ import { Client } from '../../../services/api';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * Displays a preview for a group
+ *
+ * TODO: replace with publisher card.
+ * This is only used in admin boosts
+ */
 @Component({
   selector: 'minds-card-group',
   inputs: ['group'],

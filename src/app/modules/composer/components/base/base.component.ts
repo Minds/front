@@ -29,6 +29,7 @@ import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service'
 
 /**
  * Base component for composer. It contains all the parts.
+ * Used to compose all activity types except for blogs and reminds.
  */
 @Component({
   selector: 'm-composer__base',

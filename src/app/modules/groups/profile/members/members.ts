@@ -7,6 +7,10 @@ import { map } from 'rxjs/operators';
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
 
+/**
+ * A list of cards containing details/links to group members' channels.
+ * Includes a search bar to find a specific member.
+ */
 @Component({
   moduleId: module.id,
   selector: 'minds-groups-profile-members',

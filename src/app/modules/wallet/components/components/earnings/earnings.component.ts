@@ -14,6 +14,10 @@ const SUM_AMOUNT = (arr, currencyType): number => {
   }, 0);
 };
 
+/**
+ * Wallet dashboard view of a selected month's earnings with totals and subtotals.
+ * Used for both tokens wallet and cash wallet.
+ */
 @Component({
   selector: 'm-wallet__earnings',
   templateUrl: './earnings.component.html',

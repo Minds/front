@@ -9,6 +9,11 @@ import { debounceTime } from 'rxjs/operators';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { DiscoveryService } from '../discovery.service';
 
+/**
+ * Discovery feed with actions on the top row
+ * e.g. a back button, settings cog and
+ * tabs that go to "Your Feed"/"Trending"
+ */
 @Component({
   selector: 'm-discovery__feeds',
   templateUrl: './feeds.component.html',

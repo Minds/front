@@ -7,6 +7,10 @@ import {
 import { Subscription, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+/**
+ * A list of discovery-related activities
+ * e.g. the feed that follows a list of trending activities
+ */
 @Component({
   selector: 'm-discovery__feedsList',
   templateUrl: './feeds-list.component.html',

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * Modal that contains a form to add a
+ * new credit/debit card to use with Minds Pay.
+ * Contains a Stripe iframe
+ */
 @Component({
   selector: 'm-payments__newCardModal',
   templateUrl: './new-card-modal.component.html',
