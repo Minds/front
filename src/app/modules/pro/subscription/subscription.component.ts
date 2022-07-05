@@ -23,6 +23,13 @@ import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.compone
 import * as moment from 'moment';
 import { ModalService } from '../../../services/ux/modal.service';
 
+/**
+ * Allows users to configure their purchase of a pro upgrade.
+ * Users can choose duration (month/year) and currency (tokens/usd).
+ * If user already has pro, it says how much longer they will be pro.
+ *
+ * See it on the pro marketing page.
+ */
 @Component({
   selector: 'm-pro--subscription',
   templateUrl: 'subscription.component.html',

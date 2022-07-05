@@ -31,6 +31,11 @@ import { AnalyticsService } from './../../../services/analytics';
 
 export type Source = 'auth-modal' | 'other' | null;
 
+/**
+ * The register form for users haven't joined Minds yet.
+ *
+ * Includes inputs and a link to the login form
+ */
 @Component({
   selector: 'minds-form-register',
   templateUrl: 'register.html',

@@ -8,7 +8,9 @@ import {
 import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.component';
 
 /**
- * MFA input form for SMS.
+ * MFA (multi-factor authentication) input form for SMS.
+ * DEPRECATED - now it is only used for users who were using SMS
+ * before the option was retired.
  */
 @Component({
   selector: 'm-multiFactorAuth__sms',

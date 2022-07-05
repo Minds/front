@@ -3,6 +3,7 @@ import { ChannelEditService } from './edit.service';
 
 /**
  * Social Links accordion pane content
+ * Allows users to add/remove links that connect their channel to their other social media accounts
  */
 @Component({
   selector: 'm-channelEdit__socialLinks',

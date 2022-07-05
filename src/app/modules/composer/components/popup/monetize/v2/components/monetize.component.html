@@ -20,14 +20,6 @@
           >Memberships</a
         >
       </div>
-      <!-- <div class="m-tabs__tab">
-        <a
-          [ngClass]="{ 'm-tabs__tab--selected': type === 'custom' }"
-          (click)="type = 'custom'"
-          data-cy="monetize-membership-custom-tab"
-          >Custom</a
-        >
-      </div> -->
     </div>
   </div>
   <m-composer__monetizeV2__plus
@@ -39,8 +31,4 @@
     (dismissIntent)="dismissIntent.emit()"
     *ngIf="type === 'membership'"
   ></m-composer__monetizeV2__memberships>
-  <m-composer__monetizeV2__custom
-    (dismissIntent)="dismissIntent.emit()"
-    *ngIf="type === 'custom'"
-  ></m-composer__monetizeV2__custom>
 </div>

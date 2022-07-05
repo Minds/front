@@ -11,6 +11,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * Channel connections (subscribers/subscriptions) component
+ * List of a channel's subscribers or subscriptions.
+ * Located in the channel "about" section
  */
 @Component({
   selector: 'm-channelList__connections',

@@ -14,7 +14,7 @@ import {
 import { ModalService } from '../../../../../services/ux/modal.service';
 
 /**
- * Opens admin confirmation box for enabling and disabling plus and pro manually.
+ * Opens admin confirmation box for enabling and disabling plus and pro manually
  */
 @Injectable({ providedIn: 'root' })
 export class ChannelAdminConfirmationService extends AbstractSubscriberComponent {

@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+/**
+ * Container for actions and information relating to a channel's membership tiers
+ */
 @Component({
   selector: 'm-channel__shop',
   changeDetection: ChangeDetectionStrategy.OnPush,

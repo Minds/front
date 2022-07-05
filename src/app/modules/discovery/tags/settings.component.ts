@@ -4,6 +4,11 @@ import { DiscoveryTag, DiscoveryTagsService } from './tags.service';
 
 const noOp = () => {};
 
+/**
+ * Tag settings for discovery feeds
+ * Add custom tags, add/remove your tags, see a list of other tags
+ * See it by clicking "Discovery" in the side nav and then clicking the settings cog
+ */
 @Component({
   selector: 'm-discovery__tagSettings',
   templateUrl: './settings.component.html',

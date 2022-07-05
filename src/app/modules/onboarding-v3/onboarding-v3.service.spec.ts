@@ -12,18 +12,25 @@ describe('OnboardingV3Service', () => {
     },
   });
 
-  const stackableModalMock: any = MockService(ApiService, {
-    dismiss() {
-      return true;
-    },
-  });
+  const stackableModalMock = new (function() {
+    this.present = jasmine.createSpy('present');
+  })();
+
+  const tagsServiceMock = new (function() {
+    this.hasSetTags = jasmine.createSpy('hasSetTags');
+  })();
+
+  const emailConfirmationMock = new (function() {
+    this.success$ = new BehaviorSubject<boolean>(false);
+  })();
 
   beforeEach(() => {
     service = new OnboardingV3Service(
       new (() => {})(),
-      new (() => {})(),
       stackableModalMock,
-      apiMock
+      apiMock,
+      emailConfirmationMock,
+      tagsServiceMock
     );
   });
 

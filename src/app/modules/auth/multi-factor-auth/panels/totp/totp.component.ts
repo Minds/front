@@ -4,7 +4,8 @@ import { MultiFactorAuthService } from '../../services/multi-factor-auth-service
 import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.component';
 
 /**
- * MFA input form for TOTP.
+ * MFA (multi-factor authentication) input form
+ * for TOTP (time-based one-time password)
  */
 @Component({
   selector: 'm-multiFactorAuth__totp',

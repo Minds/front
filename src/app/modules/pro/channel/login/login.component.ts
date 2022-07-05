@@ -5,6 +5,12 @@ import { Session } from '../../../../services/session';
 import { ProChannelService } from '../channel.service';
 import { CookieService } from '../../../../common/services/cookie.service';
 
+/**
+ * Login/register page for pro channels
+ *
+ * Displayed when a logged out user goes to
+ * the pro channel > /login
+ */
 @Component({
   selector: 'm-pro--channel-login',
   templateUrl: 'login.component.html',

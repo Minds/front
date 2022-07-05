@@ -6,6 +6,9 @@ import {
   Output,
 } from '@angular/core';
 
+/**
+ * Searchbox on topbar of pro sites
+ */
 @Component({
   selector: 'm-pro__searchBox',
   changeDetection: ChangeDetectionStrategy.OnPush,

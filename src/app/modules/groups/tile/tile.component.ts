@@ -6,6 +6,9 @@ import { UpdateMarkersService } from '../../../common/services/update-markers.se
 import { map, startWith, throttle } from 'rxjs/operators';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * Used by `m-newsfeed__entity` component to display a preview of a group (e.g. pro site 'groups' filter)
+ */
 @Component({
   selector: 'm-groups--tile',
   templateUrl: 'tile.component.html',

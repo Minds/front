@@ -11,6 +11,9 @@ import {
 import { AppPromptService, AppPromptState } from './app-prompt.service';
 import { BehaviorSubject } from 'rxjs';
 
+/**
+ * Bottom banner, prompts users on mobile/tablet to download the app
+ */
 @Component({
   selector: 'm-appPrompt',
   templateUrl: './app-prompt.component.html',

@@ -7,11 +7,10 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../../common/common.module';
 import { AuthModalComponent } from './auth-modal.component';
 import { MindsFormsModule } from '../../forms/forms.module';
-import { AuthModalProSiteHeader } from './pro-site-header/pro-site-header.component';
 
 @NgModule({
   imports: [NgCommonModule, CommonModule, MindsFormsModule],
-  declarations: [AuthModalComponent, AuthModalProSiteHeader],
+  declarations: [AuthModalComponent],
   exports: [AuthModalComponent],
 })
 export class AuthModalModule {

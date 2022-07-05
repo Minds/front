@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
 import { GuestModeExperimentService } from '../experiments/sub-services/guest-mode-experiment.service';
 
+/**
+ * Routes users to a "homepage" depending on active experiments.
+ */
 @Component({
   selector: 'm-homepagecontainer',
   templateUrl: 'container.component.html',
@@ -13,7 +16,6 @@ export class HomepageContainerComponent implements OnInit {
   ) {}
 
   isGuestMode: boolean;
-  isHomepageV3: boolean;
 
   ngOnInit(): void {
     this.metaService

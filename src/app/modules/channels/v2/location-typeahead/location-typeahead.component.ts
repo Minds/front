@@ -21,6 +21,7 @@ export interface LocationTypeaheadResponse {
 
 /**
  * Channel location typeahead input component
+ * Provides suggestions of real world locations based on user input
  */
 @Component({
   selector: 'm-channel__locationTypeahead',

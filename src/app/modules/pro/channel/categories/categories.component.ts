@@ -10,6 +10,11 @@ import { ProChannelService } from '../channel.service';
 import { Router } from '@angular/router';
 import { MindsUser, Tag } from '../../../../interfaces/entities';
 
+/**
+ * Category filters for pro sites.
+ * Click on a category to filter the feed to show only items
+ * that contain hashtags that match the selected category
+ */
 @Component({
   selector: 'm-pro--channel--categories',
   templateUrl: 'categories.component.html',

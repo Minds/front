@@ -37,6 +37,10 @@ import { GroupsSearchService } from './feed/search.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
+/**
+ * Base component for a group. Includes access (e.g. nsfw overlay),
+ * video chat, banner, profile, search, settings cog, feed, members, etc.
+ */
 @Component({
   selector: 'm-groups--profile',
   templateUrl: 'profile.html',

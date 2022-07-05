@@ -16,6 +16,9 @@ import { FeedsService } from '../../../../common/services/feeds.service';
 import { ProChannelService } from '../channel.service';
 import { isPlatformServer } from '@angular/common';
 
+/**
+ * Container for the pro feed, including category filters
+ */
 @Component({
   selector: 'm-proChannel__contentList',
   templateUrl: 'content-list.component.html',

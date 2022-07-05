@@ -5,6 +5,11 @@ import { ComposerModalService } from '../../composer/components/modal/modal.serv
 import { ComposerService } from '../../composer/services/composer.service';
 import { OnchainTransferModalService } from '../../wallet/components/components/onchain-transfer/onchain-transfer.service';
 
+/**
+ * Modal that provides a one-stop-shop for links to
+ * actions you can take to earn on Minds,
+ * as well as educational resources. Accessible through sidenav.
+ */
 @Component({
   selector: 'm-earn__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,

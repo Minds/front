@@ -1,5 +1,7 @@
 /**
- * Captcha modal component.
+ * Captcha modal component, including submit button.
+ * Appears when the backend requires a captcha (e.g. when publishing a blog)
+ *
  * Example of usage using the ModalService:
  *
     const modal = this.modalService.present(

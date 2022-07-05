@@ -10,6 +10,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * Displays a list of trending hashtags and emits an action when a tag is clicked
+ */
 @Component({
   selector: 'm-hashtags__trending',
   changeDetection: ChangeDetectionStrategy.OnPush,

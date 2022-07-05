@@ -34,8 +34,10 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../../common/services/activity.service';
 import { ActivityModalService } from './modal.service';
 import { RelatedContentService } from '../../../../common/services/related-content.service';
-import { MediaModalParams } from '../../../media/modal/modal.component';
 
+export type MediaModalParams = {
+  entity: any;
+};
 // Constants of dimensions calculations
 export const ACTIVITY_MODAL_MIN_STAGE_HEIGHT = 520;
 export const ACTIVITY_MODAL_MIN_STAGE_WIDTH = 660;

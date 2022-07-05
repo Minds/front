@@ -46,7 +46,6 @@ import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
-import { IssuesModule } from './modules/issues/issues.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
@@ -109,7 +108,6 @@ import { CompassModule } from './modules/compass/compass.module';
     BrandingModule,
     CommentsModule,
     JobsMarketingModule,
-    IssuesModule,
     UpgradesModule,
     CodeHighlightModule,
     SharedModule,

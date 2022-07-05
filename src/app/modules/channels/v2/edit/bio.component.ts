@@ -7,6 +7,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
  * Bio accordion pane component
+ * Allows users to edit their channel's description, banner and avatar
  */
 @Component({
   selector: 'm-channelEdit__bio',

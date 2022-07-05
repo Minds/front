@@ -34,6 +34,9 @@ import {
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ModalService } from '../../../services/ux/modal.service';
 
+/**
+ * Base container for pro sites
+ */
 @Component({
   providers: [
     ProChannelService,

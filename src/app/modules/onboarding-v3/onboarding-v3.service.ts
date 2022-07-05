@@ -1,10 +1,12 @@
-import { Compiler, Injectable, Injector, OnDestroy } from '@angular/core';
+import { Injectable, Injector, OnDestroy } from '@angular/core';
 import { BehaviorSubject, of, Subject, Subscription } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { catchError, filter, map, skip, take } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
 import { ModalService } from '../../services/ux/modal.service';
+import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
+import { DiscoveryTagsService } from '../discovery/tags/tags.service';
 
 /**
  * GET api/v3/onboarding response.
@@ -83,11 +85,22 @@ export class OnboardingV3Service implements OnDestroy {
   >(true);
 
   constructor(
-    private compiler: Compiler,
     private injector: Injector,
     private modalService: ModalService,
-    private api: ApiService
-  ) {}
+    private api: ApiService,
+    private emailConfirmation: EmailConfirmationService,
+    private tagsService: DiscoveryTagsService
+  ) {
+    this.subscriptions.push(
+      this.emailConfirmation.success$
+        .pipe(filter(Boolean), take(1))
+        .subscribe(async success => {
+          if (!(await this.tagsService.hasSetTags())) {
+            this.open();
+          }
+        })
+    );
+  }
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {

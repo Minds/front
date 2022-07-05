@@ -4,8 +4,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LegacyModule } from '../legacy/legacy.module';
 import { CommonModule } from '../../common/common.module';
-import { SuggestionsSidebar } from './channel/sidebar.component';
-import { GroupSuggestionsSidebarComponent } from './groups/sidebar.component';
 import { AutocompleteSuggestionsService } from './services/autocomplete-suggestions.service';
 import { ChannelRecommendationComponent } from './channel-recommendation/channel-recommendation.component';
 
@@ -18,16 +16,8 @@ import { ChannelRecommendationComponent } from './channel-recommendation/channel
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    SuggestionsSidebar,
-    GroupSuggestionsSidebarComponent,
-    ChannelRecommendationComponent,
-  ],
-  exports: [
-    SuggestionsSidebar,
-    GroupSuggestionsSidebarComponent,
-    ChannelRecommendationComponent,
-  ],
+  declarations: [ChannelRecommendationComponent],
+  exports: [ChannelRecommendationComponent],
   providers: [AutocompleteSuggestionsService],
 })
 export class SuggestionsModule {}

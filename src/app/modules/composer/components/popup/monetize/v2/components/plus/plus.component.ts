@@ -17,6 +17,10 @@ import { ModalService } from '../../../../../../../../services/ux/modal.service'
 
 export type PlusPostExpiry = number | null;
 
+/**
+ * Allows users to monetize a post by joining the Minds+ pool.
+ * If the user is not already a Minds+ user, they are prompted to upgrade
+ */
 @Component({
   selector: 'm-composer__monetizeV2__plus',
   templateUrl: './plus.component.html',
@@ -153,14 +157,6 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
       this.dismissIntent.emit();
       return;
     }
-
-    // if (
-    //   !this.dialogService.confirm(
-    //     "Are you sure? Once a post enters the Minds+ pool, you can't edit its monetization settings."
-    //   )
-    // ) {
-    //   return;
-    // }
 
     const support_tier: any = {
       urn: this.plusSupportTierUrn,
