@@ -16,6 +16,7 @@ import { SidebarNavigationService } from '../../common/layout/sidebar/navigation
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
+import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
 
 @Component({
   selector: 'm-register',
@@ -57,7 +58,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
     private authRedirectService: AuthRedirectService,
-    private onboardingV3: OnboardingV3Service
+    private onboardingV3: OnboardingV3Service,
+    private emailCodeExperiment: EmailCodeExperimentService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -149,8 +151,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
        */
       this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
-
-    this.onboardingV3.open();
+    if (!this.emailCodeExperiment.isActive()) {
+      this.onboardingV3.open();
+    }
   }
 
   onSourceError() {
