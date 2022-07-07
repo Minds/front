@@ -12,8 +12,7 @@
       <span
         suffix-text
         i18n="@@M__CHANNELS__MUTUAL_SUBSCRIPTIONS__ALSO_SUBSCRIBES"
-        >also { (totalCount$ | async), plural, =1 {subscribes} other {subscribe}
-        }</span
+        >{ (totalCount$ | async), plural, =1 {is} other {are} } subscribed</span
       >
     </m-userAggregator>
   </ng-container>
