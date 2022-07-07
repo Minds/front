@@ -55,18 +55,18 @@
       .m-channelFeed__grid,
       .m-channelFeed__toolbar,
       &.m-channelFeed__sidebar {
-        padding-left: 40px;
-        padding-right: 40px;
+        padding-left: $spacing8;
+        padding-right: $spacing8;
 
         @media screen and (max-width: $layoutMin3ColWidth) {
-          padding-left: 20px;
-          padding-right: 20px;
+          padding-left: $spacing4;
+          padding-right: $spacing4;
         }
       }
     }
     .m-channelFeed__toolbar {
-      padding-top: 15px;
-      padding-bottom: 15px;
+      padding-top: $spacing5;
+      padding-bottom: $spacing5;
 
       @include m-theme() {
         border-bottom: 1px solid themed($m-borderColor--primary);
@@ -197,7 +197,7 @@
       flex-direction: column;
     }
     .m-pageLayout__pane--right {
-      padding-top: 20px * 3;
+      padding-top: $spacing4;
       min-width: 310px;
     }
 

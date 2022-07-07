@@ -1,0 +1,25 @@
+<div
+  class="m-channel__mutualSubscriptions"
+  [@slowFade]="(inProgress$ | async) ? 'out' : 'in'"
+>
+  <ng-container *ngIf="(totalCount$ | async) > 0; else nobodyInCommon">
+    <m-userAggregator
+      [users]="users$ | async"
+      [totalCount]="totalCount$ | async"
+      [usernameAmount]="2"
+      [avatarAmount]="2"
+    >
+      <span
+        suffix-text
+        i18n="@@M__CHANNELS__MUTUAL_SUBSCRIPTIONS__ALSO_SUBSCRIBES"
+        >also { (totalCount$ | async), plural, =1 {subscribes} other {subscribe}
+        }</span
+      >
+    </m-userAggregator>
+  </ng-container>
+
+  <ng-template #nobodyInCommon>
+    <!-- TODO: Need copy for this text -->
+    <!-- <span class="m-channelMutualSubscriptions__nobodyInCommon">None of your subscriptions also subscribe</span> -->
+  </ng-template>
+</div>

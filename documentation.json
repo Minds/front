@@ -208,6 +208,16 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/modules/channels/v2/mutual-subscriptions/mutual-subscriptions.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -581,6 +591,16 @@
                 "deprecationMessage": "",
                 "type": "Story<any>",
                 "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n    <div class=\"m-formWrapper\">\n      <div class=\"m-form__field--radio\">\n        <div class=\"m-form__row--label\">\n          <label>\n            Choose one\n           </label>\n        </div>\n        <div class=\"m-form__row--input\">\n          <ng-container *ngFor=\"let opt of opts\">\n            <label\n              [for]=\"opt\"\n              class=\"m-form__customInputWrapper__radio\"\n              >{{ opt }}\n              <input\n                type=\"radio\"\n                [id]=\"opt\"\n                name=\"opt\"\n                [value]=\"opt\"\n                formControlName=\"opts\"\n                class=\"form-control\"\n              />\n              <span class=\"m-form__customInput__radio\"></span>\n            </label>\n          </ng-container>\n        </div>\n      </div>\n    </div>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/modules/channels/v2/mutual-subscriptions/mutual-subscriptions.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<MutualSubscriptionsComponent>",
+                "defaultValue": "(\n  args: MutualSubscriptionsComponent\n) => ({\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -1179,6 +1199,28 @@
                     "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n    <div class=\"m-formWrapper\">\n      <div class=\"m-form__field--radio\">\n        <div class=\"m-form__row--label\">\n          <label>\n            Choose one\n           </label>\n        </div>\n        <div class=\"m-form__row--input\">\n          <ng-container *ngFor=\"let opt of opts\">\n            <label\n              [for]=\"opt\"\n              class=\"m-form__customInputWrapper__radio\"\n              >{{ opt }}\n              <input\n                type=\"radio\"\n                [id]=\"opt\"\n                name=\"opt\"\n                [value]=\"opt\"\n                formControlName=\"opts\"\n                class=\"form-control\"\n              />\n              <span class=\"m-form__customInput__radio\"></span>\n            </label>\n          </ng-container>\n        </div>\n      </div>\n    </div>\n  `,\n})"
                 }
             ],
+            "src/app/modules/channels/v2/mutual-subscriptions/mutual-subscriptions.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/channels/v2/mutual-subscriptions/mutual-subscriptions.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/channels/v2/mutual-subscriptions/mutual-subscriptions.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<MutualSubscriptionsComponent>",
+                    "defaultValue": "(\n  args: MutualSubscriptionsComponent\n) => ({\n  props: args,\n})"
+                }
+            ],
             "src/app/modules/onboarding-v3/panel/tags/tags.stories.ts": [
                 {
                     "name": "Basic",
@@ -1324,7 +1366,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 11,
+        "count": 10,
         "status": "low",
         "files": [
             {
@@ -1849,6 +1891,26 @@
             },
             {
                 "filePath": "src/app/common/read-more/v2/read-more.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/channels/v2/mutual-subscriptions/mutual-subscriptions.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/modules/channels/v2/mutual-subscriptions/mutual-subscriptions.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
