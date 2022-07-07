@@ -23,6 +23,7 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { Experiment } from '../../experiments/experiments.service';
+import { MutualSubscriptionsService } from './mutual-subscriptions/mutual-subscriptions.service';
 
 /**
  * Views
@@ -46,7 +47,12 @@ type ChannelView =
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'channel.component.html',
   styleUrls: ['channel.component.ng.scss'],
-  providers: [ChannelsV2Service, ChannelEditIntentService, SeoService],
+  providers: [
+    ChannelsV2Service,
+    ChannelEditIntentService,
+    SeoService,
+    MutualSubscriptionsService, // Create new instance of MutualSubscriptionsService per channel to avoid cancelled replays
+  ],
 })
 export class ChannelComponent implements OnInit, OnDestroy {
   /**

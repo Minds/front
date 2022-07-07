@@ -35,4 +35,11 @@ export class UserAggregatorComponent {
    * @type { number }
    */
   @Input() avatarAmount: number = 3;
+
+  /**
+   * The count of others to show
+   */
+  get othersCount(): number {
+    return (this.totalCount ?? this.users.length) - this.usernameAmount;
+  }
 }
