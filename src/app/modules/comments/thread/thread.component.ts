@@ -360,7 +360,6 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
    */
   delete(i) {
     this.comments.splice(i, 1);
-    this.comments[i].replies_count--;
     this.detectChanges();
     return true;
   }
