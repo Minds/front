@@ -76,8 +76,8 @@ import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
-import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
-import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
+import { DataTabsLayoutComponent } from './components/data-tabs-layout/data-tabs-layout.component';
+import { DataTabsHeaderComponent } from './components/data-tabs-header/data-tabs-header.component';
 import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
@@ -86,7 +86,7 @@ import { DropdownSelectorComponent } from './components/dropdown-selector/dropdo
 import { ButtonComponent } from './components/button/button.component';
 import { ToasterComponent } from './components/toaster/toaster.component';
 import { SsoService } from './services/sso.service';
-import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
+import { DataTabsComponent } from './components/data-tabs/data-tabs.component';
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
@@ -247,12 +247,12 @@ const routes: Routes = [
     DraggableListComponent,
     ToggleComponent,
     DashboardLayoutComponent,
-    ShadowboxLayoutComponent,
-    ShadowboxHeaderComponent,
+    DataTabsLayoutComponent,
+    DataTabsHeaderComponent,
     DropdownSelectorComponent,
     ToasterComponent,
     ButtonComponent,
-    ShadowboxHeaderTabsComponent,
+    DataTabsComponent,
     TimespanFilterComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
@@ -363,12 +363,12 @@ const routes: Routes = [
     DraggableListComponent,
     ToggleComponent,
     DashboardLayoutComponent,
-    ShadowboxLayoutComponent,
+    DataTabsLayoutComponent,
     DropdownSelectorComponent,
     ToasterComponent,
     ButtonComponent,
-    ShadowboxHeaderComponent,
-    ShadowboxHeaderTabsComponent,
+    DataTabsHeaderComponent,
+    DataTabsComponent,
     TimespanFilterComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,

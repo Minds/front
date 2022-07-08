@@ -14,14 +14,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { horizontallyScrollElementIntoView } from '../../../helpers/scrollable-container-visibility';
 
 @Component({
-  selector: 'm-shadowboxHeader',
-  templateUrl: './shadowbox-header.component.html',
+  selector: 'm-dataTabsHeader',
+  templateUrl: './data-tabs-header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShadowboxHeaderComponent implements AfterViewInit {
+export class DataTabsHeaderComponent implements AfterViewInit {
   @Input() isScrollable: boolean = true;
   @Input() itemActivated;
-  @ViewChild('shadowboxHeaderContainer')
+  @ViewChild('dataTabsHeaderContainer')
   containerEl: ElementRef;
   container;
   public containerScrollLeft: number = 0;
@@ -50,12 +50,10 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
         this.container = this.containerEl.nativeElement;
 
         this.activeMetricEl = <HTMLElement>(
-          document.querySelector('.active.m-shadowboxHeaderTab')
+          document.querySelector('.active.m-dataTab')
         );
 
-        this.firstMetricEl = <HTMLElement>(
-          document.querySelector('.m-shadowboxHeaderTab')
-        );
+        this.firstMetricEl = <HTMLElement>document.querySelector('.m-dataTab');
 
         this.slideToActiveMetric(this.container, this.activeMetricEl);
         this.checkOverflow();
@@ -70,10 +68,10 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
   @HostListener('click', ['$event'])
   onClick($event) {
     const targetMetric = $event.target;
-    if (targetMetric.className === 'm-shadowboxHeader__overflowFade--left') {
+    if (targetMetric.className === 'm-dataTabsHeader__overflowFade--left') {
       this.slide('left');
     } else if (
-      targetMetric.className === 'm-shadowboxHeader__overflowFade--right'
+      targetMetric.className === 'm-dataTabsHeader__overflowFade--right'
     ) {
       this.slide('right');
     } else {
@@ -98,9 +96,7 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
       return;
     }
 
-    this.firstMetricEl = <HTMLElement>(
-      document.querySelector('.m-shadowboxHeaderTab')
-    );
+    this.firstMetricEl = <HTMLElement>document.querySelector('.m-dataTab');
 
     if (!this.firstMetricEl) {
       return;

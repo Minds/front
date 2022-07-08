@@ -8,15 +8,15 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
+import { DataTab } from '../../../interfaces/dashboard';
 
 @Component({
-  selector: 'm-shadowboxHeader__tabs',
-  styleUrls: ['./shadowbox-header-tabs.component.ng.scss'],
-  templateUrl: './shadowbox-header-tabs.component.html',
+  selector: 'm-dataTabs',
+  styleUrls: ['./data-tabs.component.ng.scss'],
+  templateUrl: './data-tabs.component.html',
 })
-export class ShadowboxHeaderTabsComponent implements AfterViewInit {
-  @Input() tabs: ShadowboxHeaderTab[];
+export class DataTabsComponent implements AfterViewInit {
+  @Input() tabs: DataTab[];
   @Input() activeTabId = '';
   @Input() friendlyVals: boolean = false;
   @Output() tabChanged: EventEmitter<any> = new EventEmitter();
@@ -29,13 +29,11 @@ export class ShadowboxHeaderTabsComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(() => {
-        const tabEl = <HTMLElement>(
-          document.querySelector('.m-shadowboxHeaderTab')
-        );
+        const tabEl = <HTMLElement>document.querySelector('.m-dataTab');
         this.tabWidth = tabEl.offsetWidth;
 
         this.container = <HTMLElement>(
-          document.querySelector('.m-shadowboxHeader__container')
+          document.querySelector('.m-dataTabsHeader__container')
         );
       }, 0);
     }
@@ -44,9 +42,7 @@ export class ShadowboxHeaderTabsComponent implements AfterViewInit {
   onMouseEnter($event: MouseEvent, i: number) {
     if (isPlatformBrowser(this.platformId)) {
       if (this.tabs[i].description) {
-        const mouseEnterTabEl = document.querySelector(
-          `#m-shadowboxHeaderTab--${i}`
-        );
+        const mouseEnterTabEl = document.querySelector(`#m-dataTab--${i}`);
 
         const bubbleEl = mouseEnterTabEl.getElementsByClassName(
           'm-tooltip--bubble'

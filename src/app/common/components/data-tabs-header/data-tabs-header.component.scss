@@ -1,4 +1,4 @@
-m-shadowboxHeader {
+m-dataTabsHeader {
   min-height: 116px;
   display: block;
   a {
@@ -9,10 +9,10 @@ m-shadowboxHeader {
     }
   }
 }
-.m-shadowboxHeader__section {
+.m-dataTabsHeader__section {
   position: relative;
 }
-.m-shadowboxHeader__wrapper {
+.m-dataTabsHeader__wrapper {
   position: relative;
   z-index: 1;
   height: 124px;
@@ -21,13 +21,13 @@ m-shadowboxHeader {
   }
 }
 m-body.has-v3-navbar {
-  .m-shadowboxHeader__wrapper {
+  .m-dataTabsHeader__wrapper {
     @include m-theme() {
       box-shadow: none;
     }
   }
 }
-.m-shadowboxHeader__container {
+.m-dataTabsHeader__container {
   overflow-x: hidden;
   overflow-y: hidden;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -47,7 +47,7 @@ m-body.has-v3-navbar {
     margin-left: 4px;
   }
 }
-[class*='m-shadowboxHeader__overflowFade--'] {
+[class*='m-dataTabsHeader__overflowFade--'] {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -56,7 +56,7 @@ m-body.has-v3-navbar {
   opacity: 0;
   transition: opacity 0.2s ease, width 0.4s ease;
 
-  &.m-shadowboxHeader__overflowFade--right {
+  &.m-dataTabsHeader__overflowFade--right {
     @include m-theme() {
       right: 0;
       background: linear-gradient(
@@ -66,7 +66,7 @@ m-body.has-v3-navbar {
       );
     }
   }
-  &.m-shadowboxHeader__overflowFade--left {
+  &.m-dataTabsHeader__overflowFade--left {
     @include m-theme() {
       left: 0;
       background: linear-gradient(
@@ -86,7 +86,7 @@ m-body.has-v3-navbar {
   }
 }
 
-[class*='m-shadowboxHeader__overflowScrollButton--'] {
+[class*='m-dataTabsHeader__overflowScrollButton--'] {
   position: absolute;
   top: 50%;
   border-radius: 50%;
@@ -109,10 +109,10 @@ m-body.has-v3-navbar {
       border: 1px solid themed($m-link);
     }
   }
-  &.m-shadowboxHeader__overflowScrollButton--right {
+  &.m-dataTabsHeader__overflowScrollButton--right {
     right: -12;
   }
-  &.m-shadowboxHeader__overflowScrollButton--left {
+  &.m-dataTabsHeader__overflowScrollButton--left {
     left: 12;
   }
   i {
@@ -121,10 +121,10 @@ m-body.has-v3-navbar {
     }
   }
 }
-.m-shadowboxLayout__header.hasTitle {
+.m-dataTabsLayout__header.hasTitle {
   padding: 34px 28px 34px 70px;
 }
-.m-shadowboxHeader__title {
+.m-dataTabsHeader__title {
   margin: 0 0 2px 0;
   line-height: 32px;
   font-weight: 500;
@@ -133,7 +133,7 @@ m-body.has-v3-navbar {
     font-size: 24px;
   }
 }
-.m-shadowboxHeader__subtitle {
+.m-dataTabsHeader__subtitle {
   line-height: 22px;
   margin: 0;
   @include m-theme() {
@@ -143,17 +143,17 @@ m-body.has-v3-navbar {
 }
 
 @media screen and (max-width: $min-tablet) {
-  .m-shadowboxLayout__header.hasTitle {
+  .m-dataTabsLayout__header.hasTitle {
     padding: 0 24px;
   }
-  .m-shadowboxHeader__section {
-    [class*='m-shadowboxHeader__overflowScrollButton--'] {
+  .m-dataTabsHeader__section {
+    [class*='m-dataTabsHeader__overflowScrollButton--'] {
       display: none;
     }
-    .m-shadowboxHeader__container {
+    .m-dataTabsHeader__container {
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
-      .m-shadowboxHeaderTab {
+      .m-dataTab {
         scroll-snap-align: start;
         &:first-child {
           margin-left: 16px;

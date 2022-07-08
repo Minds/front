@@ -1,7 +1,7 @@
-<ng-container *ngFor="let tab of tabs; let i = index" #shadowboxHeaderTabs>
+<ng-container *ngFor="let tab of tabs; let i = index" #dataTabs>
   <a
     *ngIf="tab.routerLink; else noLink"
-    class="m-shadowboxHeaderTab"
+    class="m-dataTab"
     (click)="changeTabs(tab)"
     [ngClass]="{ active: tab.id === activeTabId }"
     [routerLink]="tab.routerLink"
@@ -13,7 +13,7 @@
   </a>
   <ng-template #noLink>
     <div
-      class="m-shadowboxHeaderTab"
+      class="m-dataTab"
       (click)="changeTabs(tab)"
       [ngClass]="{ active: tab.id === activeTabId }"
     >
@@ -25,26 +25,26 @@
 </ng-container>
 
 <ng-template #tabContent let-tab let-i="i">
-  <div class="m-shadowboxHeaderTab__label">
+  <div class="m-dataTab__label">
     <span>{{ tab.label }}</span>
     <m-tooltip
       [anchor]="top"
       icon="help"
       *ngIf="tab.description"
       (mouseenter)="onMouseEnter($event, i)"
-      [id]="'m-shadowboxHeaderTab--' + i"
+      [id]="'m-dataTab--' + i"
     >
       {{ tab.description }}
     </m-tooltip>
   </div>
   <div
-    class="m-shadowboxHeaderTab__value"
+    class="m-dataTab__value"
     *ngIf="tab?.isLocalCurrency && (tab.value || tab.value === 0)"
   >
     {{ tab.value | currency: tab.label }}
   </div>
   <div
-    class="m-shadowboxHeaderTab__value"
+    class="m-dataTab__value"
     *ngIf="!tab?.isLocalCurrency && (tab.value || tab.value === 0)"
     [ngSwitch]="tab?.unit"
   >
@@ -80,7 +80,7 @@
   </div>
   <div
     *ngIf="tab.delta || tab.delta === 0"
-    class="m-shadowboxHeaderTab__delta"
+    class="m-dataTab__delta"
     [ngClass]="{
       goodChange: tab.hasChanged && tab.positiveTrend,
       badChange: tab.hasChanged && !tab.positiveTrend

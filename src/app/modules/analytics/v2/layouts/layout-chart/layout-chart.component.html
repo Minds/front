@@ -1,20 +1,20 @@
-<m-shadowboxLayout
+<m-dataTabsLayout
   *ngIf="selectedMetric && selectedMetric.visualisation"
   [hasHeader]="selectedMetric.visualisation.type === 'chart'"
   [ngClass]="{
-    'm-shadowboxLayout__noMetricTabs':
+    'm-dataTabsLayout__noMetricTabs':
       selectedMetric.visualisation.type === 'table'
   }"
 >
-  <m-shadowboxHeader__tabs
-    class="m-shadowboxLayout__header"
+  <m-dataTabs
+    class="m-dataTabsLayout__header"
     *ngIf="selectedMetric.visualisation.type === 'chart'"
     [tabs]="tabs"
     [activeTabId]="activeTabId"
     (tabChanged)="updateMetric($event)"
-  ></m-shadowboxHeader__tabs>
+  ></m-dataTabs>
   <div
-    class="m-shadowboxLayout__body"
+    class="m-dataTabsLayout__body"
     [ngClass]="{ isTable: isTable, isMobile: isMobile }"
   >
     <div class="m-analytics__spinnerContainer" *ngIf="loading$ | async">
@@ -30,4 +30,4 @@
       *ngIf="selectedMetric.visualisation.type === 'chart'"
     ></m-analytics__filters>
   </div>
-</m-shadowboxLayout>
+</m-dataTabsLayout>

@@ -17,7 +17,7 @@ import { WalletV2Service, Wallet } from './wallet-v2.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import sidebarMenu from './sidebar-menu.default';
-import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
+import { DataTab } from '../../../interfaces/dashboard';
 import { Menu } from '../../../interfaces/menu';
 
 /**
@@ -54,7 +54,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     btc: [{ id: 'settings', label: 'Settings', display: true }],
   };
 
-  tabs: ShadowboxHeaderTab[] = [];
+  tabs: DataTab[] = [];
 
   constructor(
     protected walletService: WalletV2Service,
@@ -92,7 +92,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     this.tabs = [];
     const headerCurrencies: string[] = ['cash', 'tokens', 'eth', 'btc'];
     headerCurrencies.forEach(currency => {
-      const headerTab: ShadowboxHeaderTab = {
+      const headerTab: DataTab = {
         id: currency,
         label: this.wallet[currency].label,
         unit: this.wallet[currency].unit,

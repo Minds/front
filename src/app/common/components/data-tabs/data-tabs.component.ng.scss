@@ -2,7 +2,7 @@
 @import '../../layout/layout.scss';
 
 :host {
-  .m-shadowboxHeaderTab {
+  .m-dataTab {
     cursor: pointer;
     flex: 0 0 auto;
     width: 160px;
@@ -28,7 +28,7 @@
       margin-right: 40px;
     }
 
-    .m-shadowboxHeaderTab__label {
+    .m-dataTab__label {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -46,7 +46,7 @@
         }
       }
     }
-    .m-shadowboxHeaderTab__value {
+    .m-dataTab__value {
       font-size: 17px;
       margin-top: 8px;
       overflow: hidden;
@@ -55,7 +55,7 @@
         color: themed($m-textColor--primary);
       }
     }
-    .m-shadowboxHeaderTab__delta {
+    .m-dataTab__delta {
       display: flex;
       align-items: baseline;
       padding-top: 4px;
@@ -77,7 +77,7 @@
   }
 
   @media screen and (max-width: $min-tablet) {
-    .m-shadowboxHeaderTab {
+    .m-dataTab {
       scroll-snap-align: start;
       &:first-child {
         margin-left: 20px;

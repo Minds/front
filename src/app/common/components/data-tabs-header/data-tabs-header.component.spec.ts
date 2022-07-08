@@ -10,22 +10,22 @@ import {
   HostListener,
 } from '@angular/core';
 
-import { ShadowboxHeaderComponent } from './shadowbox-header.component';
+import { DataTabsHeaderComponent } from './data-tabs-header.component';
 
-describe('ShadowboxHeaderComponent', () => {
-  let component: ShadowboxHeaderComponent;
-  let fixture: ComponentFixture<ShadowboxHeaderComponent>;
+describe('DataTabsHeaderComponent', () => {
+  let component: DataTabsHeaderComponent;
+  let fixture: ComponentFixture<DataTabsHeaderComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [ShadowboxHeaderComponent],
+        declarations: [DataTabsHeaderComponent],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShadowboxHeaderComponent);
+    fixture = TestBed.createComponent(DataTabsHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

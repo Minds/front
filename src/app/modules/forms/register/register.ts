@@ -37,7 +37,7 @@ export type Source = 'auth-modal' | 'other' | null;
  * Includes inputs and a link to the login form
  */
 @Component({
-  selector: 'minds-form-register',
+  selector: 'm-registerForm',
   templateUrl: 'register.html',
   styleUrls: ['./register.ng.scss'],
 })

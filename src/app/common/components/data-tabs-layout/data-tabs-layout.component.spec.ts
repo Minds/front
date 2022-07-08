@@ -1,29 +1,29 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
-import { ShadowboxLayoutComponent } from './shadowbox-layout.component';
+import { DataTabsLayoutComponent } from './data-tabs-layout.component';
 
 @Component({
-  selector: 'm-shadowboxHeader',
+  selector: 'm-dataTabsHeader',
   template: '',
 })
-class ShadowboxHeaderComponentMock {
+class DataTabsHeaderComponentMock {
   @Input() isScrollable;
 }
 
-describe('ShadowboxLayoutComponent', () => {
-  let component: ShadowboxLayoutComponent;
-  let fixture: ComponentFixture<ShadowboxLayoutComponent>;
+describe('DataTabsLayoutComponent', () => {
+  let component: DataTabsLayoutComponent;
+  let fixture: ComponentFixture<DataTabsLayoutComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [ShadowboxLayoutComponent, ShadowboxHeaderComponentMock],
+        declarations: [DataTabsLayoutComponent, DataTabsHeaderComponentMock],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShadowboxLayoutComponent);
+    fixture = TestBed.createComponent(DataTabsLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

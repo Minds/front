@@ -45,7 +45,7 @@ import { ModalService } from '../../services/ux/modal.service';
 import { modalServiceMock } from '../../../tests/modal-service-mock.spec';
 
 @Component({
-  selector: 'minds-form-login',
+  selector: 'm-loginForm',
   template: '',
 })
 class MindsFormLoginMock {
@@ -58,7 +58,7 @@ class MindsFormLoginMock {
 }
 
 @Component({
-  selector: 'minds-form-register',
+  selector: 'm-registerForm',
   template: '',
 })
 class MindsFormRegisterMock {
@@ -145,9 +145,7 @@ describe('LoginComponent', () => {
     // expect(h3).not.toBeNull();
     //expect(h3.nativeElement.textContent).toContain('Login to Minds');
 
-    expect(
-      fixture.debugElement.query(By.css('minds-form-login'))
-    ).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('m-loginForm'))).not.toBeNull();
   });
 
   it('should redirect after logging in', () => {
