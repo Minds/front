@@ -42,10 +42,10 @@
   </a>
 
   <div class="m-groups--tile-buttons">
-    <minds-groups-join-button
+    <m-group__membershipButton
       *ngIf="!entity['is:member']; else isMember"
       [group]="entity"
-    ></minds-groups-join-button>
+    ></m-group__membershipButton>
 
     <ng-template #isMember>
       <m-button color="blue" i18n="@@GROUPS__TILE__OPEN_ACTION"

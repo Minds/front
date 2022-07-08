@@ -7,15 +7,18 @@ import { Router } from '@angular/router';
 import { Client } from '../../../common/api/client.service';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { ReportService } from './../../../common/services/report.service';
+import { ReportService } from '../../../common/services/report.service';
 
 @Component({
-  selector: 'm-reports__marketing',
-  templateUrl: 'marketing.component.html',
-  styleUrls: ['../../aux-pages/aux-pages.component.ng.scss'],
+  selector: 'm-reports__contentPolicy',
+  templateUrl: 'content-policy.component.html',
+  styleUrls: [
+    '../../aux-pages/aux-pages.component.ng.scss',
+    './content-policy.component.ng.scss',
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReportsMarketingComponent {
+export class ReportsContentPolicyComponent {
   user;
   readonly cdnAssetsUrl: string;
   stats = {

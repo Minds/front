@@ -29,9 +29,9 @@
         #textAreaComponent
       ></m-composer__textArea>
 
-      <m-composerRemindPreview
+      <m-composerPreview--quote
         *ngIf="remind$ | async"
-      ></m-composerRemindPreview>
+      ></m-composerPreview--quote>
     </div>
     <m-composer__toolbar
       (onPost)="onPost($event)"

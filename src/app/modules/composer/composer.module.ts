@@ -30,7 +30,7 @@ import { ComposerMonetizeV2Component } from './components/popup/monetize/v2/comp
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete/text-input-autocomplete.module';
 import { RouterModule } from '@angular/router';
 import { ComposerTitleBarDropdownComponent } from './components/title-bar/dropdown/dropdown.component';
-import { RemindPreviewComponent } from './components/preview/remind-preview.component';
+import { QuotePreviewComponent } from './components/preview/quote-preview.component';
 import { AttachmentErrorComponent } from './components/popup/attachment-error/attachment-error.component';
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 /**
@@ -57,7 +57,7 @@ const INTERNAL_COMPONENTS = [
   BaseComponent,
   AttachmentPreviewComponent,
   RichEmbedPreviewComponent,
-  RemindPreviewComponent,
+  QuotePreviewComponent,
   PreviewWrapperComponent,
   ProgressComponent,
   ToolbarComponent,

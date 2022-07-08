@@ -10,8 +10,12 @@ import {
 
 /**
  * Composer preview wrapper. Renders a user-friendly preview of
- * the embedded media/rich-embed/quote post, and allows to change the video
- * thumbnails and delete the embed as well.
+ * the embedded media/rich-embed.
+ *
+ * Also allows user to change the video
+ * thumbnails and delete the embed.
+ *
+ * Previews for quote posts are elsewhere, in the composer base.
  */
 @Component({
   selector: 'm-composer__previewWrapper',

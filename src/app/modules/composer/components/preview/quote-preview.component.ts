@@ -18,12 +18,12 @@ import { ComposerService } from '../../services/composer.service';
  * Renders a user-friendly preview of the embedded post that is being quoted
  */
 @Component({
-  selector: 'm-composerRemindPreview',
+  selector: 'm-composerPreview--quote',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'remind-preview.component.html',
-  styleUrls: ['./remind-preview.component.ng.scss'],
+  templateUrl: 'quote-preview.component.html',
+  styleUrls: ['./quote-preview.component.ng.scss'],
 })
-export class RemindPreviewComponent {
+export class QuotePreviewComponent {
   @ViewChild(DynamicHostDirective, { static: true })
   outletRef: DynamicHostDirective;
 

@@ -1,4 +1,4 @@
-<m-concertColors__modal title="Buy Tokens">
+<m-photoBannerModal title="Buy Tokens">
   <div class="m-modalV2__body m-buyTokens__body">
     <div class="m-buyTokensBody__paymentMethod">
       <span class="m-buyTokensBodyPaymentMethod__text">Payment Method</span>
@@ -24,13 +24,6 @@
         Crypto
       </button>
     </div>
-    <!-- <span class="m-buyTokensBody__estimate">
-      Delivery estimate:
-      <span class="m-buyTokensBody__estimate--primary">
-        1-2 {{ paymentMethod === 'bank' ? 'days' : 'mins' }}
-      </span>
-    </span> -->
-
     <div
       *ngIf="paymentMethod === 'crypto'"
       class="m-buyTokensBody__uniswapWarning"
@@ -81,8 +74,8 @@
       </m-button>
     </div>
   </div>
-</m-concertColors__modal>
-<!-- 
+</m-photoBannerModal>
+<!--
   Non-templated component that applies CSS overrides
   globally for the Transak modal.
 -->

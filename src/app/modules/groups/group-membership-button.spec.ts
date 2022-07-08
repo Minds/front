@@ -15,7 +15,7 @@ import { SignupOnActionModalMock } from '../../mocks/modules/modals/signup/signu
 import { clientMock } from '../../../tests/client-mock.spec';
 import { uploadMock } from '../../../tests/upload-mock.spec';
 
-import { GroupsJoinButton } from './groups-join-button';
+import { GroupMembershipButton } from './group-membership-button';
 import { GroupsService } from './groups.service';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
@@ -26,9 +26,9 @@ import { MockService } from '../../utils/mock';
 import { ButtonComponent } from '../../common/components/button/button.component';
 import { ToasterService } from '../../common/services/toaster.service';
 
-describe('GroupsJoinButton', () => {
-  let fixture: ComponentFixture<GroupsJoinButton>;
-  let comp: GroupsJoinButton;
+describe('GroupMembershipButton', () => {
+  let fixture: ComponentFixture<GroupMembershipButton>;
+  let comp: GroupMembershipButton;
 
   /** Helpers */
 
@@ -47,21 +47,27 @@ describe('GroupsJoinButton', () => {
   }
 
   function getJoinButtons(): DebugElement[] {
-    return fixture.debugElement.queryAll(By.css('.m-groupsJoinButton__join'));
+    return fixture.debugElement.queryAll(
+      By.css('.m-group__membershipButton--join')
+    );
   }
 
   function getAcceptAndDeclineButtons(): DebugElement[] {
     return fixture.debugElement.queryAll(
-      By.css('.m-groupsJoinButton__verdict')
+      By.css('.m-group__membershipButton--verdict')
     );
   }
 
   function getLeaveButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-groupsJoinButton__leave'));
+    return fixture.debugElement.query(
+      By.css('.m-group__membershipButton--leave')
+    );
   }
 
   function getCancelRequestButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-groupsJoinButton__cancel'));
+    return fixture.debugElement.query(
+      By.css('.m-group__membershipButton--cancel')
+    );
   }
 
   /** /Helpers */
@@ -71,7 +77,7 @@ describe('GroupsJoinButton', () => {
       TestBed.configureTestingModule({
         declarations: [
           SignupOnActionModalMock,
-          GroupsJoinButton,
+          GroupMembershipButton,
           ButtonComponent,
         ],
         imports: [RouterTestingModule],
@@ -89,7 +95,7 @@ describe('GroupsJoinButton', () => {
   );
 
   beforeEach(done => {
-    fixture = TestBed.createComponent(GroupsJoinButton);
+    fixture = TestBed.createComponent(GroupMembershipButton);
     comp = fixture.componentInstance;
 
     setGroup({});

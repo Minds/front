@@ -2,6 +2,7 @@
   *ngIf="(attachmentPreview$ | async) || (richEmbedPreview$ | async)"
   class="m-composer__previewWrapper"
 >
+  <!-- MEDIA ATTACHMENT (IMAGE/VIDEO) ------------>
   <m-composerPreview--attachment
     *ngIf="attachmentPreview$ | async as attachmentPreview"
     [attachmentPreviewResource]="attachmentPreview"
@@ -20,6 +21,7 @@
     ></m-composer__coverPhotoSelector>
   </m-composerPreview--attachment>
 
+  <!-- RICH EMBED -------------------------------->
   <m-composerPreview--richEmbed
     [hidden]="attachmentPreview$ | async"
     *ngIf="richEmbedPreview$ | async as richEmbed"
