@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ComposerService } from '../../services/composer.service';
-import { PreviewComponent } from './preview.component';
+import { PreviewWrapperComponent } from './preview-wrapper.component';
 
 describe('Composer Preview', () => {
-  let comp: PreviewComponent;
-  let fixture: ComponentFixture<PreviewComponent>;
+  let comp: PreviewWrapperComponent;
+  let fixture: ComponentFixture<PreviewWrapperComponent>;
 
   const composerServiceMock: any = MockService(ComposerService, {
     removeAttachment: true,
@@ -15,18 +15,18 @@ describe('Composer Preview', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [
-          PreviewComponent,
+          PreviewWrapperComponent,
           MockComponent({
             selector: 'm-icon',
             inputs: ['from', 'iconId', 'sizeFactor'],
           }),
           MockComponent({
-            selector: 'm-composerAttachmentPreview',
+            selector: 'm-composerPreview--attachment',
             inputs: ['attachmentPreviewResource'],
             outputs: ['onPortraitOrientation'],
           }),
           MockComponent({
-            selector: 'm-composerRichEmbedPreview',
+            selector: 'm-composerPreview--richEmbed',
             inputs: ['richEmbed'],
           }),
           MockComponent({
@@ -45,7 +45,7 @@ describe('Composer Preview', () => {
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
-    fixture = TestBed.createComponent(PreviewComponent);
+    fixture = TestBed.createComponent(PreviewWrapperComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
 

@@ -1,4 +1,4 @@
-.m-composer__preview {
+.m-composer__previewWrapper {
   position: relative;
   width: 100%;
   height: 330px;
@@ -6,10 +6,6 @@
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
   }
-
-  // &.m-composer__preview--portrait {
-  //   height: 383px;
-  // }
 
   .m-composerPreview__image,
   .m-composerPreview__video {
@@ -49,7 +45,7 @@
     }
   }
   @media screen and (max-width: $max-mobile) {
-    m-composerattachmentpreview {
+    m-composerPreview--attachment {
       height: auto;
       & > img,
       & > video {

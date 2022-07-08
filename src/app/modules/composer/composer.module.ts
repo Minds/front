@@ -12,7 +12,7 @@ import { BaseComponent } from './components/base/base.component';
 import { AttachmentPreviewComponent } from './components/preview/attachment-preview.component';
 import { RichEmbedPreviewComponent } from './components/preview/rich-embed-preview.component';
 import { PreviewService } from './services/preview.service';
-import { PreviewComponent } from './components/preview/preview.component';
+import { PreviewWrapperComponent } from './components/preview/preview-wrapper.component';
 import { ProgressComponent } from './components/progress/progress.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
@@ -58,7 +58,7 @@ const INTERNAL_COMPONENTS = [
   AttachmentPreviewComponent,
   RichEmbedPreviewComponent,
   RemindPreviewComponent,
-  PreviewComponent,
+  PreviewWrapperComponent,
   ProgressComponent,
   ToolbarComponent,
   TitleBarComponent,

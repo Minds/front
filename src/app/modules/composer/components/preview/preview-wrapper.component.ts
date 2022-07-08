@@ -14,11 +14,11 @@ import {
  * thumbnails and delete the embed as well.
  */
 @Component({
-  selector: 'm-composer__preview',
+  selector: 'm-composer__previewWrapper',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'preview.component.html',
+  templateUrl: 'preview-wrapper.component.html',
 })
-export class PreviewComponent {
+export class PreviewWrapperComponent {
   /**
    * The attachment preview metadata subject from the service
    */

@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Toaster, ToasterService } from '../../services/toaster.service';
+import { ToasterService } from '../../services/toaster.service';
 import { Subscription } from 'rxjs';
 import {
   animate,

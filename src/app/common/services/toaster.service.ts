@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-export interface Toaster {
+export interface Toast {
   type?: 'success' | 'error' | 'warning' | 'info' | null;
   message?: string;
   dismissed?: boolean;
@@ -9,18 +9,18 @@ export interface Toaster {
 
 @Injectable()
 export class ToasterService {
-  toasts: Toaster[] = [];
+  toasts: Toast[] = [];
   timeoutIds: number[] = [];
 
-  private subject = new Subject<Toaster>();
+  private subject = new Subject<Toast>();
   constructor() {}
 
-  onToast(): Observable<Toaster> {
+  onToast(): Observable<Toast> {
     return this.subject.asObservable();
   }
 
   success(message: string) {
-    const toast: Toaster = {
+    const toast: Toast = {
       message: message,
       type: 'success',
     };
@@ -28,7 +28,7 @@ export class ToasterService {
   }
 
   error(message: string) {
-    const toast: Toaster = {
+    const toast: Toast = {
       message: message,
       type: 'error',
     };
@@ -36,7 +36,7 @@ export class ToasterService {
   }
 
   warn(message: string) {
-    const toast: Toaster = {
+    const toast: Toast = {
       message: message,
       type: 'warning',
     };
@@ -44,14 +44,14 @@ export class ToasterService {
   }
 
   inform(message: string) {
-    const toast: Toaster = {
+    const toast: Toast = {
       message: message,
       type: 'info',
     };
     this.trigger(toast);
   }
 
-  trigger(toast: Toaster) {
+  trigger(toast: Toast) {
     if (!toast.type) {
       toast.type = 'info';
     }
