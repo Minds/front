@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { NotificationsSettingsV2Service } from '../../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 
@@ -15,7 +15,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 export class EnablePushNotificationsNoticeComponent extends AbstractSubscriberComponent {
   constructor(
     private router: Router,
-    private toast: FormToastService,
+    private toast: ToasterService,
     private feedNotice: FeedNoticeService,
     private notificationSettings: NotificationsSettingsV2Service
   ) {

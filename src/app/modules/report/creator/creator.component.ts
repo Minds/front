@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ReportService } from './../../../common/services/report.service';
@@ -44,7 +44,7 @@ export class ReportCreatorComponent implements AfterViewInit {
     private _changeDetectorRef: ChangeDetectorRef,
     private modalService: ModalService,
     private client: Client,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     private reportService: ReportService
   ) {}
 

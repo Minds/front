@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
 
@@ -36,7 +36,7 @@ export class BlockchainMarketingTokenV2Component extends AbstractSubscriberCompo
     protected cd: ChangeDetectorRef,
     private linksService: BlockchainMarketingLinksService,
     private session: Session,
-    private toast: FormToastService,
+    private toast: ToasterService,
     configs: ConfigsService
   ) {
     super();

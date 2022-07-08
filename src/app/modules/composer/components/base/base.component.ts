@@ -20,7 +20,7 @@ import { PopupComponent } from '../popup/popup.component';
 import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { first, map, distinctUntilChanged } from 'rxjs/operators';
@@ -95,7 +95,7 @@ export class BaseComponent implements AfterViewInit {
     protected inMemoryStorage: InMemoryStorageService,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected featuresService: FeaturesService,
     protected blogPreloadService: BlogPreloadService,
     configs: ConfigsService

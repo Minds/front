@@ -9,7 +9,7 @@ import {
 } from '../../services/composer.service';
 
 /**
- * Composer preview container. Renders a user-friendly preview of
+ * Composer preview wrapper. Renders a user-friendly preview of
  * the embedded media/rich-embed/quote post, and allows to change the video
  * thumbnails and delete the embed as well.
  */

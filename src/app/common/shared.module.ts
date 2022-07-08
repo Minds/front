@@ -9,7 +9,7 @@ import { TransactionOverlayService } from '../modules/blockchain/transaction-ove
 import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../modules/blockchain/earn/earn-modal.service';
-import { FormToastService } from './services/form-toast.service';
+import { ToasterService } from './services/toaster.service';
 
 @NgModule({
   imports: [Web3ModalModule],
@@ -36,7 +36,7 @@ import { FormToastService } from './services/form-toast.service';
         PLATFORM_ID,
         ConfigsService,
         Web3ModalService,
-        FormToastService,
+        ToasterService,
       ],
     },
   ],

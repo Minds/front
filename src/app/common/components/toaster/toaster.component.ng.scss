@@ -13,15 +13,15 @@
 
   @include z-index(popover--modal);
 
-  .m-formToast__toastsContainer {
+  .m-toaster__toastsContainer {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
   }
-  .m-formToastContainer__spacer {
+  .m-toasterContainer__spacer {
     height: 24px;
   }
-  .m-formToast__wrapper {
+  .m-toaster__wrapper {
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -53,35 +53,35 @@
       font-weight: 500;
     }
   }
-  .m-formToast__spacer {
+  .m-toaster__spacer {
     height: 16px;
   }
 
-  [class*='m-formToast__iconWrapper--'] {
+  [class*='m-toaster__iconWrapper--'] {
     display: flex;
     justify-content: center;
     align-items: center;
     i {
       font-size: 24px;
     }
-    &:not(.m-formToast__iconWrapper--close) {
+    &:not(.m-toaster__iconWrapper--close) {
       align-self: stretch;
       min-width: 58px;
     }
   }
-  .m-formToast__iconWrapper--success i {
+  .m-toaster__iconWrapper--success i {
     color: #59a05e;
   }
-  .m-formToast__iconWrapper--error i {
+  .m-toaster__iconWrapper--error i {
     color: #ca4a34;
   }
-  .m-formToast__iconWrapper--warning i {
+  .m-toaster__iconWrapper--warning i {
     color: #d49538;
   }
-  .m-formToast__iconWrapper--info i {
+  .m-toaster__iconWrapper--info i {
     color: #5a91bb;
   }
-  .m-formToast__iconWrapper--close {
+  .m-toaster__iconWrapper--close {
     cursor: pointer;
     align-self: start;
     margin: 16px 19px 0 0;
@@ -96,18 +96,18 @@
   }
 
   @media screen and (max-width: $max-mobile) {
-    m-formToast {
+    m-toaster {
       width: 100%;
       bottom: 0;
     }
-    .m-formToast__wrapper {
+    .m-toaster__wrapper {
       border-radius: 0;
     }
-    .m-formToast__spacer {
+    .m-toaster__spacer {
       height: 8;
     }
 
-    .m-formToastContainer__spacer {
+    .m-toasterContainer__spacer {
       height: 0px;
     }
   }

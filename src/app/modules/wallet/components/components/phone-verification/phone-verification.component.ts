@@ -8,7 +8,7 @@ import {
   ViewRef,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 
@@ -60,7 +60,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
     private fb: FormBuilder,
     protected client: Client,
     protected cd: ChangeDetectorRef,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {}

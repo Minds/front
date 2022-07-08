@@ -9,7 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
     public client: Client,
     public router: Router,
     protected modalService: ModalService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

@@ -35,7 +35,7 @@ import { ComposerMonetizeV2Component } from '../popup/monetize/v2/components/mon
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { isPlatformBrowser } from '@angular/common';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 import isMobile from '../../../../helpers/is-mobile';
 
@@ -109,7 +109,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected service: ComposerService,
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
-    protected toaster: FormToastService,
+    protected toaster: ToasterService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 

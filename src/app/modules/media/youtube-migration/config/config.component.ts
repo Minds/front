@@ -9,7 +9,7 @@ import {
 import { FormGroup, FormControl } from '@angular/forms';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Router } from '@angular/router';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
 
@@ -29,7 +29,7 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected youtubeService: YoutubeMigrationService,
     protected router: Router,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected session: Session
   ) {}
 

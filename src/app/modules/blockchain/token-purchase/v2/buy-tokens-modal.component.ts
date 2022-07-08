@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import { PhoneVerificationService } from '../../../wallet/components/components/phone-verification/phone-verification.service';
 import { OrderReceivedModalService } from './order-received/order-received-modal.service';
@@ -24,7 +24,7 @@ export class BuyTokensModalComponent {
     private orderReceivedModalService: OrderReceivedModalService,
     private session: Session,
     private phoneVerificationService: PhoneVerificationService,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   canContinue() {

@@ -24,7 +24,7 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 import { MockService } from '../../utils/mock';
 import { ButtonComponent } from '../../common/components/button/button.component';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 
 describe('GroupsJoinButton', () => {
   let fixture: ComponentFixture<GroupsJoinButton>;
@@ -80,8 +80,8 @@ describe('GroupsJoinButton', () => {
           { provide: GroupsService, useValue: MockService(GroupsService) },
           { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

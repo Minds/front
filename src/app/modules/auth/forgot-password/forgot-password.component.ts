@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { RegexService } from '../../../common/services/regex.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class ForgotPasswordComponent {
     public route: ActivatedRoute,
     public session: Session,
     public regex: RegexService,
-    public toaster: FormToastService,
+    public toaster: ToasterService,
     private pageLayout: PageLayoutService
   ) {}
 

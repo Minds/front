@@ -22,14 +22,14 @@ import {
   MultiFactorAuthService,
   MultiFactorRootPanel,
 } from './multi-factor-auth-service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Injectable()
 export class MultiFactorHttpInterceptorService implements HttpInterceptor {
   constructor(
     private multiFactorModalService: MultiFactorLazyService,
     private multiFactorAuthService: MultiFactorAuthService,
-    private toastService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   /**
@@ -121,7 +121,7 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
                 err?.error?.errorId !==
                   'Minds::Core::Security::TwoFactor::TwoFactorRequiredException'
               ) {
-                this.toastService.error(
+                this.toasterService.error(
                   err?.error?.message ?? `An unknown error has occurred`
                 );
               }

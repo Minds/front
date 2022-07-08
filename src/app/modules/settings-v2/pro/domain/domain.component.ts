@@ -18,7 +18,7 @@ import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-settingsV2Pro__domain',
@@ -47,7 +47,7 @@ export class SettingsV2ProDomainComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     protected router: Router,
     protected route: ActivatedRoute,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

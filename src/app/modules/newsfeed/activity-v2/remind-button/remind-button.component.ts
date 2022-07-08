@@ -2,7 +2,7 @@ import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import {
   ActivityService,
   ActivityEntity,
@@ -30,7 +30,7 @@ export class ActivityV2RemindButtonComponent implements OnInit, OnDestroy {
     private injector: Injector,
     private composerService: ComposerService,
     private composerModalService: ComposerModalService,
-    private toasterService: FormToastService,
+    private toasterService: ToasterService,
     private session: Session,
     private authModal: AuthModalService,
     private client: Client

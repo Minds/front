@@ -84,7 +84,7 @@ import {
 } from '@danielmoncada/angular-datetime-picker';
 import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
 import { ButtonComponent } from './components/button/button.component';
-import { FormToastComponent } from './components/form-toast/form-toast.component';
+import { ToasterComponent } from './components/toaster/toaster.component';
 import { SsoService } from './services/sso.service';
 import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
@@ -250,7 +250,7 @@ const routes: Routes = [
     ShadowboxLayoutComponent,
     ShadowboxHeaderComponent,
     DropdownSelectorComponent,
-    FormToastComponent,
+    ToasterComponent,
     ButtonComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
@@ -365,7 +365,7 @@ const routes: Routes = [
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
     DropdownSelectorComponent,
-    FormToastComponent,
+    ToasterComponent,
     ButtonComponent,
     ShadowboxHeaderComponent,
     ShadowboxHeaderTabsComponent,

@@ -34,7 +34,7 @@
     }
   }
 
-  .m-wireCreatorMarketingBlock__copy {
+  .m-wireCreatorUpgradeBlock__copy {
     padding: 50px 50px 20px 50px;
 
     @include m-theme() {
@@ -45,7 +45,7 @@
       padding: 24px 12px;
     }
   }
-  .m-wireCreatorMarketingBlock__label {
+  .m-wireCreatorUpgradeBlock__label {
     margin-bottom: 5px;
     font-size: 17px;
     display: flex;
@@ -58,21 +58,21 @@
       }
     }
     &.isPro {
-      .m-wireCreatorMarketingBlock__badge {
+      .m-wireCreatorUpgradeBlock__badge {
         @include m-theme() {
           background-color: themed($m-amber);
         }
       }
     }
     &.badgeOnly {
-      .m-wireCreatorMarketingBlock__badge {
+      .m-wireCreatorUpgradeBlock__badge {
         padding: 3px 3px 2px 3px;
         span {
           font-weight: 500;
         }
       }
     }
-    .m-wireCreatorMarketingBlock__badge {
+    .m-wireCreatorUpgradeBlock__badge {
       display: inline-block;
       font-size: 14px;
       border-radius: 2px;
@@ -89,7 +89,7 @@
     }
   }
 
-  .m-wireCreatorMarketingBlock__title {
+  .m-wireCreatorUpgradeBlock__title {
     font-size: 22px;
     line-height: 30px;
     margin-bottom: 18px;
@@ -98,14 +98,14 @@
       text-shadow: 0 0 2px rgba(themed($m-black-always), 0.2);
     }
   }
-  .m-wireCreatorMarketingBlock__desc {
+  .m-wireCreatorUpgradeBlock__desc {
     margin-bottom: 10px;
     font-weight: 300;
     @include m-theme() {
       color: themed($m-white-always);
     }
   }
-  .m-wireCreatorMarketingBlock__learnMore {
+  .m-wireCreatorUpgradeBlock__learnMore {
     display: inline-block;
     cursor: pointer;
     text-decoration: none;

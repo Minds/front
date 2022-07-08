@@ -29,7 +29,7 @@ import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 
 /**
@@ -123,7 +123,7 @@ export class BlogView implements OnInit, OnDestroy {
     private modalService: ModalService,
     private clientMetaService: ClientMetaService,
     public featuresService: FeaturesService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     @SkipSelf() injector: Injector,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     configs: ConfigsService

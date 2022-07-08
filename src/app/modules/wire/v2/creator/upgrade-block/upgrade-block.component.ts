@@ -8,12 +8,12 @@ import { WireV2Service, WireUpgradeType } from '../../wire-v2.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'm-wireCreator__marketingBlock',
+  selector: 'm-wireCreator__upgradeBlock',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'marketing-block.component.html',
-  styleUrls: ['marketing-block.component.ng.scss'],
+  templateUrl: 'upgrade-block.component.html',
+  styleUrls: ['upgrade-block.component.ng.scss'],
 })
-export class WireCreatorMarketingBlockComponent implements OnInit, OnDestroy {
+export class WireCreatorUpgradeBlockComponent implements OnInit, OnDestroy {
   upgradeTypeSubscription: Subscription;
   upgradeType: WireUpgradeType;
   /**

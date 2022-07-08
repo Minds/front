@@ -14,7 +14,7 @@ import { PlusService } from '../../plus/plus.service';
 import { ProService } from '../../pro/pro.service';
 import { SupportTier } from './support-tiers.service';
 import { Session } from '../../../services/session';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
  * Wire event types
@@ -381,7 +381,7 @@ export class WireV2Service implements OnDestroy {
     private proService: ProService,
     private session: Session,
     configs: ConfigsService,
-    private toasterSevice: FormToastService
+    private toasterSevice: ToasterService
   ) {
     this.upgrades = configs.get('upgrades');
     this.handlers = configs.get('handlers');

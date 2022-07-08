@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Session } from '../../../../../services/session';
 import { MockService } from '../../../../../utils/mock';
 import { SettingsTwoFactorConnectAppComponent } from './connect-app.component';
@@ -38,8 +38,8 @@ xdescribe('SettingsTwoFactorConnectAppComponent', () => {
             useValue: modalServiceMock,
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

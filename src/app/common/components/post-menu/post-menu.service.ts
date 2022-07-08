@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { DialogService } from '../../services/confirm-leave-dialog.service';
-import { FormToastService } from '../../services/form-toast.service';
+import { ToasterService } from '../../services/toaster.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { SubscriptionService } from '../../services/subscription.service';
@@ -39,7 +39,7 @@ export class PostMenuService {
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
     private dialogService: DialogService,
-    protected formToastService: FormToastService,
+    protected toasterService: ToasterService,
     public embedService: EmbedServiceV2,
     public subscriptionService: SubscriptionService
   ) {}
@@ -75,7 +75,7 @@ export class PostMenuService {
       this.entityOwner.subscribed = true;
     } catch (e) {
       this.entityOwner.subscribed = false;
-      this.formToastService.error(
+      this.toasterService.error(
         e.message || "You can't subscribe to this user"
       );
     }
@@ -238,17 +238,17 @@ export class PostMenuService {
       const uri = `api/v1/admin/seed/${this.entity.ownerObj.guid}/`;
       if (seed) {
         await this.client.post(uri);
-        this.formToastService.success(
+        this.toasterService.success(
           `${this.entity.ownerObj.name} is now a seed.`
         );
       } else {
         await this.client.delete(uri);
-        this.formToastService.success(
+        this.toasterService.success(
           `${this.entity.ownerObj.name} is no longer a seed.`
         );
       }
     } catch (e) {
-      this.formToastService.error('Unable to make this channel a seed.');
+      this.toasterService.error('Unable to make this channel a seed.');
       throw e;
     }
   }
@@ -263,7 +263,7 @@ export class PostMenuService {
       this.blockListService.add(`${this.entity.ownerObj.guid}`);
     } catch (e) {
       if (e.errorId === 'Minds::Core::Security::Block::BlockLimitException') {
-        this.formToastService.error(
+        this.toasterService.error(
           `You have reached the limit of blocked users. Please unblock someone else before blocking @${this.entity.ownerObj.name}`
         );
         this.isBlocked$.next(false);
@@ -310,10 +310,10 @@ export class PostMenuService {
       this.entity.nsfw = nsfw;
     } catch (e) {
       if (e.message) {
-        this.formToastService.error(e.message);
+        this.toasterService.error(e.message);
         return;
       }
-      this.formToastService.error(e);
+      this.toasterService.error(e);
     }
   }
 

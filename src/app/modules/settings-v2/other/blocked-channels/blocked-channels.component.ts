@@ -9,7 +9,7 @@ import { BlockListService } from '../../../../common/services/block-list.service
 import { EntitiesService } from '../../../../common/services/entities.service';
 import { Client } from '../../../../services/api/client';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-settingsV2__blockedChannels',
@@ -32,7 +32,7 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     private configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

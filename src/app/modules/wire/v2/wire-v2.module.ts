@@ -10,7 +10,7 @@ import { WireCreatorOwnerBlock } from './creator/owner-block/owner-block.compone
 import { WireCreatorFormComponent } from './creator/form/form.component';
 import { WireCreatorToolbarComponent } from './creator/toolbar/toolbar.component';
 import { WireCreatorShopComponent } from './creator/shop/shop.component';
-import { WireCreatorMarketingBlockComponent } from './creator/marketing-block/marketing-block.component';
+import { WireCreatorUpgradeBlockComponent } from './creator/upgrade-block/upgrade-block.component';
 import { WireCreatorSupportTierConfirmationComponent } from './creator/support-tier-confirmation/support-tier-confirmation.component';
 import { WireCreatorCurrencyToggleComponent } from './creator/currency-toggle/currency-toggle.component';
 
@@ -21,7 +21,7 @@ const INTERNAL_COMPONENTS = [
   WireCreatorFormComponent,
   WireCreatorToolbarComponent,
   WireCreatorShopComponent,
-  WireCreatorMarketingBlockComponent,
+  WireCreatorUpgradeBlockComponent,
   WireCreatorSupportTierConfirmationComponent,
   WireCreatorCurrencyToggleComponent,
 ];

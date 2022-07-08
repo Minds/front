@@ -1,17 +1,17 @@
 <div
-  class="m-formToast__toastsContainer"
+  class="m-toaster__toastsContainer"
   *ngIf="visibleToasts"
   data-cy="data-minds-toaster-container"
 >
   <ng-container *ngFor="let toast of toasts; let i = index">
     <div
-      class="m-formToast__wrapper"
+      class="m-toaster__wrapper"
       [@fader]="toast.dismissed ? 'dismissed' : 'active'"
       (mouseover)="pauseTimeout(i)"
       (mouseleave)="resumeTimeout(i)"
-      data-cy="data-minds-form-toast-wrapper"
+      data-cy="data-minds-toaster-wrapper"
     >
-      <div [ngClass]="['m-formToast__iconWrapper--' + toast.type]">
+      <div [ngClass]="['m-toaster__iconWrapper--' + toast.type]">
         <i class="material-icons">
           <ng-container *ngIf="toast.type === 'success'">check</ng-container>
           <ng-container *ngIf="toast.type === 'error'">report</ng-container>
@@ -22,15 +22,15 @@
         </i>
       </div>
       <p>{{ toast.message }}</p>
-      <div class="m-formToast__iconWrapper--close">
+      <div class="m-toaster__iconWrapper--close">
         <i class="material-icons" (click)="dismiss(i)">clear</i>
       </div>
     </div>
     <!-- The spacer replaces margin-bottom b/c smoother animation -->
     <div
-      class="m-formToast__spacer"
+      class="m-toaster__spacer"
       [@fader]="toast.dismissed ? 'dismissed' : 'active'"
     ></div>
   </ng-container>
-  <div class="m-formToastContainer__spacer"></div>
+  <div class="m-toasterContainer__spacer"></div>
 </div>

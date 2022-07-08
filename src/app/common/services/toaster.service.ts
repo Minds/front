@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-export interface FormToast {
+export interface Toaster {
   type?: 'success' | 'error' | 'warning' | 'info' | null;
   message?: string;
   dismissed?: boolean;
 }
 
 @Injectable()
-export class FormToastService {
-  toasts: FormToast[] = [];
+export class ToasterService {
+  toasts: Toaster[] = [];
   timeoutIds: number[] = [];
 
-  private subject = new Subject<FormToast>();
+  private subject = new Subject<Toaster>();
   constructor() {}
 
-  onToast(): Observable<FormToast> {
+  onToast(): Observable<Toaster> {
     return this.subject.asObservable();
   }
 
   success(message: string) {
-    const toast: FormToast = {
+    const toast: Toaster = {
       message: message,
       type: 'success',
     };
@@ -28,7 +28,7 @@ export class FormToastService {
   }
 
   error(message: string) {
-    const toast: FormToast = {
+    const toast: Toaster = {
       message: message,
       type: 'error',
     };
@@ -36,7 +36,7 @@ export class FormToastService {
   }
 
   warn(message: string) {
-    const toast: FormToast = {
+    const toast: Toaster = {
       message: message,
       type: 'warning',
     };
@@ -44,14 +44,14 @@ export class FormToastService {
   }
 
   inform(message: string) {
-    const toast: FormToast = {
+    const toast: Toaster = {
       message: message,
       type: 'info',
     };
     this.trigger(toast);
   }
 
-  trigger(toast: FormToast) {
+  trigger(toast: Toaster) {
     if (!toast.type) {
       toast.type = 'info';
     }

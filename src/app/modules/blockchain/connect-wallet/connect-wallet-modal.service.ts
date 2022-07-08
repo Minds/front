@@ -2,7 +2,7 @@ import { Compiler, Injectable, Injector } from '@angular/core';
 import { Observable, of, Subject, Subscription } from 'rxjs';
 import { map, skipWhile, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { PhoneVerificationService } from '../../wallet/components/components/phone-verification/phone-verification.service';
 import { WalletV2Service } from '../../wallet/components/wallet-v2.service';
 import { ConnectWalletModalComponent } from './connect-wallet-modal.component';
@@ -18,7 +18,7 @@ export class ConnectWalletModalService {
     private compiler: Compiler,
     private injector: Injector,
     private phoneVerificationService: PhoneVerificationService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected api: ApiService,
     private walletService: WalletV2Service,
     private web3Wallet: Web3WalletService

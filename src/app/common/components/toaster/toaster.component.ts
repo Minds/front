@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormToast, FormToastService } from '../../services/form-toast.service';
+import { Toaster, ToasterService } from '../../services/toaster.service';
 import { Subscription } from 'rxjs';
 import {
   animate,
@@ -17,9 +17,9 @@ import {
 } from '@angular/animations';
 
 @Component({
-  selector: 'm-formToast',
-  templateUrl: './form-toast.component.html',
-  styleUrls: ['./form-toast.component.ng.scss'],
+  selector: 'm-toaster',
+  templateUrl: './toaster.component.html',
+  styleUrls: ['./toaster.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fader', [
@@ -71,7 +71,7 @@ import {
     ]),
   ],
 })
-export class FormToastComponent implements OnInit, OnDestroy {
+export class ToasterComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   get toasts() {
@@ -83,7 +83,7 @@ export class FormToastComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private service: FormToastService,
+    private service: ToasterService,
     protected cd: ChangeDetectorRef
   ) {}
 

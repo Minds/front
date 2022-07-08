@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { GroupsService } from './groups.service';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 
 /**
  * Click this button to join/leave a group, accept/decline a group invitation,
@@ -39,7 +39,7 @@ export class GroupsJoinButton {
     public service: GroupsService,
     private router: Router,
     private loginReferrer: LoginReferrerService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   set _group(value: any) {

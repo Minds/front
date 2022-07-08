@@ -18,7 +18,7 @@ import { Session } from '../../../../../services/session';
 import { WalletV2Service } from '../../wallet-v2.service';
 import { WithdrawContractService } from '../../../../blockchain/contracts/withdraw-contract.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { PhoneVerificationService } from '../phone-verification/phone-verification.service';
 import { WireCreatorComponent } from '../../../../wire/v2/creator/wire-creator.component';
 import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
@@ -66,7 +66,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     protected client: Client,
     protected contract: WithdrawContractService,
     protected walletService: WalletV2Service,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected modalService: ModalService,
     protected phoneVerificationService: PhoneVerificationService,
     protected wirePaymentHandlers: WirePaymentHandlersService,
