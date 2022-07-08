@@ -14,6 +14,9 @@ import { DialogService } from '../../../../common/services/confirm-leave-dialog.
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+/**
+ * Pro settings form for theme colors
+ */
 @Component({
   selector: 'm-settingsV2Pro__theme',
   templateUrl: './theme.component.html',

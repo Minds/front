@@ -36,6 +36,9 @@ import { ElementVisibilityService } from '../../../common/services/element-visib
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
+/**
+ * Base component for activity posts (excluding activities displayed in a modal)
+ */
 @Component({
   selector: 'm-activity',
   templateUrl: 'activity.component.html',

@@ -5,6 +5,9 @@ import { PaymentsNewCard } from '../../../payments/new-card/new-card.component';
 import * as moment from 'moment';
 import { ModalService } from '../../../../services/ux/modal.service';
 
+/**
+ * Settings form for managing credit cards associated with an account.
+ */
 @Component({
   selector: 'm-settingsV2__paymentMethods',
   templateUrl: './payment-methods.component.html',

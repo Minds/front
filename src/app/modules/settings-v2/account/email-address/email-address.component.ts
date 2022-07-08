@@ -18,6 +18,9 @@ import { SettingsV2Service } from '../../settings-v2.service';
 import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
 
+/**
+ * Settings form for changing the email address where notifications are sent.
+ */
 @Component({
   selector: 'm-settingsV2__emailAddress',
   templateUrl: './email-address.component.html',
