@@ -6,6 +6,7 @@ module.exports = {
     '@storybook/addon-interactions',
     'storybook-addon-themes',
     'storybook-addon-angular-router',
+    'storybook-addon-designs',
   ],
   framework: '@storybook/angular',
   core: {
