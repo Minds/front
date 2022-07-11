@@ -359,8 +359,12 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
    * @input {int} index of comment.
    */
   delete(i) {
-    this.comments.splice(i, 1);
-    this.comments[i].replies_count--;
+    if (this.direction === 'asc') {
+      this.comments.splice(i, 1);
+    } else {
+      this.comments.splice(this.comments.length - i - 1, 1);
+    }
+
     this.detectChanges();
     return true;
   }

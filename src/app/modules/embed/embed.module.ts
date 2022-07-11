@@ -23,6 +23,7 @@ import { VideoModule } from '../media/components/video/video.module';
 import { EmbedComponent } from './embed.component';
 import { EmbeddedVideoComponent } from './embedded-video/embedded-video.component';
 import { ModalService } from '../../services/ux/modal.service';
+import { AnalyticsService } from '../../services/analytics';
 
 const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
 
@@ -70,6 +71,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     Storage,
     RecentService,
     FeaturesService,
+    AnalyticsService,
     {
       provide: BlockListService,
       useFactory: BlockListService._,
