@@ -1003,10 +1003,13 @@ export class ComposerService implements OnDestroy {
       this.isGroupPost$.next(true);
     }
 
+    // Preventing paywallception: you cannot paywall an already paywalled remind
+    const monetized = !remind?.paywall && monetization;
+
     this.payload = {
       message: message || '',
-      wire_threshold: monetization || null,
-      paywall: Boolean(monetization),
+      wire_threshold: monetized ? monetization : null,
+      paywall: monetized,
       time_created: schedule || null,
       mature: nsfw && nsfw.length > 0,
       nsfw: nsfw || [],
