@@ -3,6 +3,13 @@ import { Router } from '@angular/router';
 import { ConfigsService } from '../../common/services/configs.service';
 import { BuyTokensModalService } from '../blockchain/token-purchase/v2/buy-tokens-modal.service';
 
+/**
+ * Eye-catching marketing component to inspire users to buy tokens
+ *
+ * Briefly describes how tokens are used and has a "Buy tokens" action button
+ *
+ * See it on the /upgrades marketing page
+ */
 @Component({
   selector: 'm-upgrades__buyTokens',
   changeDetection: ChangeDetectionStrategy.OnPush,

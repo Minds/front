@@ -13,6 +13,9 @@ import { Session } from '../../../../../services/session';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 
+/**
+ * DEPRECATED
+ */
 @Component({
   selector: 'm-token--onboarding--rewards',
   templateUrl: 'rewards.component.html',

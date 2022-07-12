@@ -6,6 +6,10 @@ import {
   ActivityService,
 } from '../../activity/activity.service';
 
+/**
+ * Displays badges of activity post owner (if applicable).
+ * See it in the activity owner block component.
+ */
 @Component({
   selector: 'm-activityV2__badges',
   templateUrl: './badges.component.html',

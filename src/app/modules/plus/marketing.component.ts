@@ -10,6 +10,11 @@ import { ConfigsService } from '../../common/services/configs.service';
 import { Session } from '../../services/session';
 import { PlusVerifyComponent } from './verify/verify.component';
 
+/**
+ * Marketing page for Minds+
+ *
+ * See it at /plus
+ */
 @Component({
   selector: 'm-plus__marketing',
   templateUrl: 'marketing.component.html',

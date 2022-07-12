@@ -20,6 +20,11 @@ import { JsonLdService } from '../../../common/services/jsonld.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
+/**
+ * Base component to display an activity on a standalone page
+ *
+ * See it by clicking the permalink (aka timestamp) in the ownerblock of an activity in the feed
+ */
 @Component({
   selector: 'm-newsfeed--single',
   templateUrl: 'single.component.html',

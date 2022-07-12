@@ -13,6 +13,9 @@ import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
 import * as moment from 'moment';
 
+/**
+ * A row displaying post owner info, permalink and meatball menu
+ */
 @Component({
   selector: 'm-activity__ownerBlock',
   templateUrl: 'owner-block.component.html',

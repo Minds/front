@@ -23,6 +23,11 @@ export interface AnchorPosition {
   left?: string;
 }
 
+/**
+ * Reusable dropdown menu component
+ *
+ * Uses <ng-content> to make a component of choice into the trigger that opens the menu
+ */
 @Component({
   selector: 'm-dropdownMenu',
   changeDetection: ChangeDetectionStrategy.OnPush,

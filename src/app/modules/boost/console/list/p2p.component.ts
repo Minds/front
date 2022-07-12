@@ -4,6 +4,9 @@ import { BoostConsoleFilter } from '../console.component';
 import { BoostService } from '../../boost.service';
 import { Router } from '@angular/router';
 
+/**
+ * Boost offers made from one user to another. Used in both the inbox and outbox of the boost console history section
+ */
 @Component({
   moduleId: module.id,
   providers: [BoostService],

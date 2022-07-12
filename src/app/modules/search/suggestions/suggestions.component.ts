@@ -14,6 +14,14 @@ import { Client } from '../../../services/api';
 import { RecentService } from '../../../services/ux/recent';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * Dropdown that appears under the topbar search bar on focus
+ *
+ * It presents recent searches from local storage
+ * or channel results from the api
+ *
+ * If no results are returned, it displays a link to go to discovery search results page
+ */
 @Component({
   selector: 'm-searchBar__suggestions',
   templateUrl: 'suggestions.component.html',

@@ -7,6 +7,11 @@ import {
 } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * The marketing page for nodes
+ *
+ * See it at /nodes
+ */
 @Component({
   selector: 'm-nodes__marketing',
   templateUrl: 'marketing.component.html',
