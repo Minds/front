@@ -135,6 +135,7 @@ export class FriendlyCaptchaComponent
   private handleBypass(): boolean {
     if (this.cookies.get('captcha_bypass')) {
       this.propagateChange('friendly_captcha_bypass');
+      this.done.emit('friendly_captcha_bypass');
       return true;
     }
     return false;
