@@ -10,7 +10,6 @@ import {
 
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
-import { WalletService } from '../../../services/wallet';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catpcha/friendly-captcha.component';
@@ -31,8 +30,15 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     'thumbs:up:user_guids': [],
   };
 
-  public initCaptcha = false;
-  public showSpinner = false;
+  /**
+   * Will display the friendly captcha component and complete puzzle if true
+   */
+  public showFriendlyCaptcha = false;
+
+  /**
+   * In progress state, eg. captcha working or api saving
+   */
+  @Input() inProgress = false;
 
   @Input() iconOnly = false;
 
@@ -42,7 +48,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
   constructor(
     public session: Session,
     public client: Client,
-    public wallet: WalletService,
     private authModal: AuthModalService,
     private cd: ChangeDetectorRef,
     private experiments: ExperimentsService,
@@ -56,19 +61,42 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       this.object['thumbs:up:user_guids'] = [];
   }
 
-  public preliminaryChecks(): void {
-    this.initCaptcha = true;
-    this.showSpinner = true;
+  /**
+   * Called when a mouse click / tap is made
+   * @param e
+   * @returns void
+   */
+  onClick(e: MouseEvent): void {
+    if (this.isFriendlyCaptchaFeatureEnabled() && !this.has()) {
+      this.showFriendlyCaptcha = true;
+      this.inProgress = true;
+    } else {
+      this.submit();
+    }
   }
 
-  async thumb(solution?: string): Promise<void> {
-    this.showSpinner = true;
+  /**
+   * Called when friendly captcha returns value
+   * @param solution
+   */
+  onFriendlyCaptchaComplete(solution: string): void {
+    this.submit(solution);
+  }
+
+  /**
+   * Submits the vote (or cancels it)
+   * @param solution
+   * @returns Promise<void>
+   */
+  async submit(solution?: string): Promise<void> {
+    this.inProgress = true;
     this.cd.detectChanges();
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
       if (!user) return;
     }
     let data = {};
+
     if (this.isFriendlyCaptchaFeatureEnabled()) {
       data = {
         puzzle_solution: solution,
@@ -84,8 +112,9 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       this.toast.error(e?.message ?? 'An unknown error has occurred');
     }
 
-    this.initCaptcha = false;
-    this.showSpinner = false;
+    this.showFriendlyCaptcha = false;
+    this.inProgress = false;
+
     if (!this.has()) {
       this.object['thumbs:up:user_guids'] = [
         this.session.getLoggedInUser().guid,
@@ -104,27 +133,21 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     this.cd.detectChanges();
   }
 
-  has() {
+  /**
+   * Returns if the current user has voted up
+   * @returns boolean
+   */
+  has(): boolean {
     for (var guid of this.object['thumbs:up:user_guids']) {
       if (guid === this.session.getLoggedInUser().guid) return true;
     }
     return false;
   }
 
-  public shouldShowSpinner(): boolean {
-    return this.showSpinner;
-  }
-
   public isFriendlyCaptchaFeatureEnabled(): boolean {
     return this.experiments.hasVariation(
       'minds-3119-captcha-for-engagement',
       true
-    );
-  }
-
-  public shouldFriendlyCaptchaShow(): boolean {
-    return (
-      this.isFriendlyCaptchaFeatureEnabled() && this.initCaptcha && !this.has()
     );
   }
 

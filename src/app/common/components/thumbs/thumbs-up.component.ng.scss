@@ -5,6 +5,32 @@
     cursor: pointer;
   }
 
+  .inProgress {
+    animation: gelatine 0.5s infinite;
+
+    @include m-theme() {
+      color: themed($m-blue) !important;
+    }
+  }
+
+  @keyframes gelatine {
+    from,
+    to {
+      transform: scale(1, 1);
+      opacity: 0.9;
+    }
+    25% {
+      transform: scale(0.9, 1.1);
+    }
+    50% {
+      transform: scale(1.1, 0.9);
+      opacity: 1;
+    }
+    75% {
+      transform: scale(0.95, 1.05);
+    }
+  }
+
   m-friendlyCaptcha {
     visibility: hidden;
     display: none;
