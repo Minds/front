@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ModalComponent } from './modal.component';
 import isMobile from '../../../../helpers/is-mobile';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
 
 /**
  * Composer data structure
@@ -23,7 +24,8 @@ export class ComposerModalService {
   constructor(
     protected modalService: ModalService,
     protected router: Router,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected emailConfirmation: EmailConfirmationService
   ) {}
 
   /**
@@ -40,6 +42,7 @@ export class ComposerModalService {
    * Presents the composer modal with a custom injector tree
    */
   present(): Promise<any> {
+    if (!this.emailConfirmation.ensureEmailConfirmed()) return;
     const modal = this.modalService.present(ModalComponent, {
       data: {
         onPost: response => modal.close(response),
