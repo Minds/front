@@ -4,15 +4,16 @@ import {
   WalletTokenRewardsService,
 } from './rewards.service';
 import * as moment from 'moment';
-import { Observable, of, Subscription, timer } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
 import { map, shareReplay } from 'rxjs/operators';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
-import { max } from 'bn.js';
 import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { MindsUser } from '../../../../../interfaces/entities';
 
 @Component({
   selector: 'm-wallet__tokenRewards',
@@ -98,6 +99,8 @@ export class WalletTokenRewardsComponent implements OnInit {
    */
   isConnected: boolean;
 
+  private user: MindsUser;
+
   /**
    * Subscriptions
    */
@@ -111,13 +114,18 @@ export class WalletTokenRewardsComponent implements OnInit {
     protected onchainTransferModal: OnchainTransferModalService,
     private walletService: WalletV2Service,
     private session: Session,
-    protected connectWalletModalService: ConnectWalletModalService
+    protected connectWalletModalService: ConnectWalletModalService,
+    private toast: FormToastService
   ) {}
 
   ngOnInit() {
     this.rewards.rewards$.subscribe(response => {
       this.total = response.total;
       this.data = response;
+    });
+
+    this.session.userEmitter.subscribe(user => {
+      this.user = user;
     });
 
     this.subscriptions.push(
