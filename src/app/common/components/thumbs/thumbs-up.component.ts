@@ -2,9 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DoCheck,
   Input,
-  OnChanges,
   ViewChild,
 } from '@angular/core';
 
@@ -14,6 +12,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catpcha/friendly-captcha.component';
 import { FormToastService } from '../../services/form-toast.service';
+import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -22,7 +21,7 @@ import { FormToastService } from '../../services/form-toast.service';
   templateUrl: 'thumbs-up.component.html',
   styleUrls: [`thumbs-up.component.ng.scss`],
 })
-export class ThumbsUpButton implements DoCheck, OnChanges {
+export class ThumbsUpButton {
   changesDetected: boolean = false;
   object = {
     guid: null,
@@ -51,7 +50,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     private authModal: AuthModalService,
     private cd: ChangeDetectorRef,
     private experiments: ExperimentsService,
-    private toast: FormToastService
+    private toast: FormToastService,
+    private activityService: ActivityService
   ) {}
 
   set _object(value: any) {
@@ -90,7 +90,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    */
   async submit(solution?: string): Promise<void> {
     this.inProgress = true;
-    this.cd.detectChanges();
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
       if (!user) return;
@@ -104,10 +103,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     }
 
     try {
-      let response = await this.client.put(
-        'api/v1/thumbs/' + this.object.guid + '/up',
-        data
-      );
+      await this.client.put('api/v1/thumbs/' + this.object.guid + '/up', data);
     } catch (e) {
       this.toast.error(e?.message ?? 'An unknown error has occurred');
     }
@@ -130,6 +126,9 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       }
       this.object['thumbs:up:count']--;
     }
+
+    this.activityService.entity$.next(this.object);
+
     this.cd.detectChanges();
   }
 
@@ -149,19 +148,5 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       'minds-3119-captcha-for-engagement',
       true
     );
-  }
-
-  ngOnChanges(changes) {}
-
-  ngDoCheck() {
-    this.changesDetected = false;
-    if (this.object['thumbs:up:count'] != this.object['thumbs:up:count:old']) {
-      this.object['thumbs:up:count:old'] = this.object['thumbs:up:count'];
-      this.changesDetected = true;
-    }
-
-    if (this.changesDetected) {
-      this.cd.detectChanges();
-    }
   }
 }
