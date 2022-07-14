@@ -12,14 +12,13 @@ import {
   DiscoveryFeedsContentFilter,
 } from '../feeds/feeds.service';
 import { FeedsService } from '../../../common/services/feeds.service';
-
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
 import { Session } from '../../../services/session';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { RouterHistoryService } from '../../../common/services/router-history.service';
 
 @Component({
   selector: 'm-discovery__search',
@@ -37,7 +36,7 @@ export class DiscoverySearchComponent {
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
   cardCarouselInProgress$ = this.cardCarouselService.inProgress$;
-  subscriptions: Subscription[];
+  subscriptions: Subscription[] = [];
   readonly cdnUrl: string;
 
   showSuggestedChannels$: Observable<boolean> = combineLatest([
@@ -66,7 +65,8 @@ export class DiscoverySearchComponent {
     private cd: ChangeDetectorRef,
     private session: Session,
     public cardCarouselService: CardCarouselService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private activityV2Experiment: ActivityV2ExperimentService,
+    private routerHistory: RouterHistoryService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -157,6 +157,18 @@ export class DiscoverySearchComponent {
       behavior: 'smooth',
       top: 0,
     });
+  }
+
+  /**
+   * Get navigation path for back button press.
+   * @returns { string } - navigation path for back button press.
+   */
+  public getBackNavigationPath(): string {
+    let previousUrl = this.routerHistory.getPreviousUrl();
+    if (previousUrl && previousUrl.startsWith('/discovery')) {
+      return previousUrl.split('?')[0];
+    }
+    return '../';
   }
 
   detectChanges(): void {
