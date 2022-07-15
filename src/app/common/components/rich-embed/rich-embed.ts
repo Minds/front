@@ -150,20 +150,28 @@ export class MindsRichEmbed {
 
     this.inlineEmbed = inlineEmbed;
 
-    if (
-      this.modalService.canOpenInModal() &&
-      this.modalRequestSubscribed &&
-      this.mediaSource === 'youtube'
-    ) {
-      if (this.inlineEmbed && this.inlineEmbed.htmlProvisioner) {
-        this.inlineEmbed.htmlProvisioner().then(html => {
-          this.inlineEmbed.html = html;
-          this.detectChanges();
-        });
-
-        // @todo: catch any error here and forcefully window.open to destination
+    if (this.mediaSource === 'youtube') {
+      if (this.modalService.canOpenInModal()) {
+        if (this.modalRequestSubscribed) {
+          this.renderHtml();
+        }
+      } else {
+        this.embeddedInline = true;
+        this.renderHtml();
       }
     }
+  }
+
+  /**
+   * renders the html of the inlineEmbed unto the component
+   * @returns { void }
+   */
+  renderHtml(): void {
+    this.inlineEmbed.htmlProvisioner?.().then(html => {
+      this.inlineEmbed.html = html;
+      this.detectChanges();
+    });
+    // @todo: catch any error here and forcefully window.open to destination
   }
 
   action($event) {
@@ -179,15 +187,7 @@ export class MindsRichEmbed {
       $event.stopPropagation();
 
       this.embeddedInline = true;
-
-      if (this.inlineEmbed.htmlProvisioner) {
-        this.inlineEmbed.htmlProvisioner().then(html => {
-          this.inlineEmbed.html = html;
-          this.detectChanges();
-        });
-
-        // @todo: catch any error here and forcefully window.open to destination
-      }
+      this.renderHtml();
     }
   }
 
