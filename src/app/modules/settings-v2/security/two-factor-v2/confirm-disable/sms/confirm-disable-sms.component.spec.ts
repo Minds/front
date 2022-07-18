@@ -5,8 +5,7 @@ import { clientMock } from '../../../../../../../tests/client-mock.spec';
 import { ButtonComponent } from '../../../../../../common/components/button/button.component';
 import { FormToastService } from '../../../../../../common/services/form-toast.service';
 import { Client } from '../../../../../../services/api';
-import { MockService } from '../../../../../../utils/mock';
-import { SettingsTwoFactorComponent } from '../../../../../settings/two-factor/two-factor.component';
+import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
 
 import { SettingsTwoFactorDisableSMSComponent } from './confirm-disable-sms.component';
@@ -23,7 +22,10 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
         imports: [FormsModule],
         declarations: [
           SettingsTwoFactorDisableSMSComponent,
-          SettingsTwoFactorComponent,
+          MockComponent({
+            selector: 'm-settings--two-factor',
+            outputs: ['onSave', 'onDisable'],
+          }),
           ButtonComponent,
         ],
         providers: [
