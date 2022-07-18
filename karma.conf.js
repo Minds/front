@@ -12,20 +12,22 @@ module.exports = function (config) {
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-mocha-reporter'),
+      require('karma-jasmine-order-reporter'),
     ],
     // webpack: { node: { fs: 'empty', } },
     client:{
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
-      // jasmine: {
-      //   random: false // run tests in the same order every time
-      // }
+      jasmine: {
+        random: true, // run tests in the same order every time
+        seed: process.env['SEED'] // set seed from env
+      }
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
     },
 
-    reporters: ['mocha'],
+    reporters: ['mocha', 'jasmine-order'],
     mochaReporter: {
       ignoreSkipped: true,
     },    

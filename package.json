@@ -150,6 +150,7 @@
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.1",
     "karma-jasmine-html-reporter": "^1.7.0",
+    "karma-jasmine-order-reporter": "^1.1.0",
     "karma-mocha-reporter": "^2.2.5",
     "nodemon": "^2.0.12",
     "prettier": "^1.19.1",
