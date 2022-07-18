@@ -158,7 +158,7 @@ export class MindsRichEmbed {
 
     this.inlineEmbed = inlineEmbed;
 
-    if (inlineEmbed.playable) {
+    if (inlineEmbed?.playable) {
       if (this.modalService.canOpenInModal()) {
         if (this.modalRequestSubscribed) {
           this.renderHtml();
