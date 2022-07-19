@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
-import { Client } from '../../../../services/api';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
   EntitiesService,
   EntityObservable,
 } from '../../../../common/services/entities.service';
-import { last, first, catchError } from 'rxjs/operators';
-import { Observable, of, BehaviorSubject, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
 import { FastFadeAnimation } from '../../../../animations';
 import { DiscoveryService } from '../../discovery.service';
 import { PaywallService } from '../../../wire/v2/paywall.service';
 import { MetaService } from '../../../../common/services/meta.service';
 import { Session } from '../../../../services/session';
 import { GuestModeExperimentService } from '../../../experiments/sub-services/guest-mode-experiment.service';
+import { RouterHistoryService } from '../../../../common/services/router-history.service';
 
 /**
  * A single activity page that has a back button
@@ -25,7 +25,7 @@ import { GuestModeExperimentService } from '../../../experiments/sub-services/gu
   animations: [FastFadeAnimation],
   providers: [PaywallService],
 })
-export class DiscoveryTrendComponent {
+export class DiscoveryTrendComponent implements OnInit {
   entity$: Observable<Object> = of(null);
   paramSubscription: Subscription;
   entitySubscription: Subscription;
@@ -37,6 +37,7 @@ export class DiscoveryTrendComponent {
     private paywallService: PaywallService,
     private metaService: MetaService,
     private session: Session,
+    private routerHistory: RouterHistoryService,
     private guestModeExperiment: GuestModeExperimentService
   ) {}
 
@@ -82,5 +83,22 @@ export class DiscoveryTrendComponent {
     return (
       this.guestModeExperiment.isActive() && !this.session.getLoggedInUser()
     ); // logged out
+  }
+
+  /**
+   * Get navigation path for back button press.
+   * @returns { string } - navigation path for back button press.
+   */
+  public getBackNavigationPath(): string {
+    if (this.shouldBeDiscoveryHomepage()) {
+      return '/';
+    }
+
+    let previousUrl = this.routerHistory.getPreviousUrl();
+    if (previousUrl) {
+      return previousUrl.split('?')[0];
+    }
+
+    return '../..';
   }
 }

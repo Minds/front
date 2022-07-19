@@ -70,7 +70,6 @@ import { AndroidAppDownloadComponent } from './components/android-app-download-b
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
 import { FeedsService } from './services/feeds.service';
-import { RouterHistoryService } from './services/router-history.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
@@ -453,11 +452,6 @@ const routes: Routes = [
       ): FeaturedContentService =>
         new FeaturedContentService(boostedContentService, experimentsService),
       deps: [FeedsService, ExperimentsService],
-    },
-    {
-      provide: RouterHistoryService,
-      useFactory: router => new RouterHistoryService(router),
-      deps: [Router],
     },
     MediaProxyService,
     SidebarNavigationService,
