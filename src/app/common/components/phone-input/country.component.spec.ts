@@ -64,9 +64,6 @@ describe('PhoneInputCountryComponent', () => {
       )
     ).not.toBeNull();
   }));
-  it('should have a flag button', fakeAsync(() => {
-    expect(getSelectedFlagButton()).not.toBeNull();
-  }));
 
   it('should have a hidden dropdown list', fakeAsync(() => {
     expect(getFlagDropdown()).not.toBeNull();

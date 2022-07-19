@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, ReplaySubject } from 'rxjs';
 import {
+  catchError,
   distinctUntilChanged,
   map,
   shareReplay,
@@ -26,9 +27,15 @@ export class MutualSubscriptionsService {
       this.inProgress$.next(true);
     }),
     map(userGuid => {
-      return this.api.get('api/v3/subscriptions/relational/also-subscribe-to', {
-        guid: userGuid,
-      });
+      return this.api
+        .get('api/v3/subscriptions/relational/also-subscribe-to', {
+          guid: userGuid,
+        })
+        .pipe(
+          catchError(e => {
+            return EMPTY;
+          })
+        );
     }),
     switchAll(),
     shareReplay({ bufferSize: 1, refCount: true }),

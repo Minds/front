@@ -70,16 +70,6 @@ describe('OnboardingV3ModalComponent', () => {
     );
   });
 
-  it('should return CSS for the modals banner src', () => {
-    comp.currentStep$.next('SuggestedHashtagsStep');
-    let bannerElement: HTMLElement = fixture.debugElement.query(
-      By.css('.m-modalV2__header')
-    ).nativeElement;
-    expect(bannerElement.style['background-image']).toBe(
-      'url("nullassets/photos/confetti-concert-colors.jpg")'
-    );
-  });
-
   it('it should show the banner for suggested hashtags welcome step', () => {
     comp.currentStep$.next('SuggestedHashtagsStep');
     comp.showBanner$.subscribe(val => {

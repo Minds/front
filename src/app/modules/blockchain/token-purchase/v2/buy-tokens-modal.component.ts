@@ -5,6 +5,7 @@ import { PhoneVerificationService } from '../../../wallet/components/components/
 import { OrderReceivedModalService } from './order-received/order-received-modal.service';
 import { TransakService } from './transak.service';
 import { UniswapModalService } from './uniswap/uniswap-modal.service';
+import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
 
 type PaymentMethod = 'card' | 'bank' | 'crypto' | '';
 
@@ -24,7 +25,8 @@ export class BuyTokensModalComponent {
     private orderReceivedModalService: OrderReceivedModalService,
     private session: Session,
     private phoneVerificationService: PhoneVerificationService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private emailConfirmation: EmailConfirmationService
   ) {}
 
   canContinue() {
@@ -41,6 +43,8 @@ export class BuyTokensModalComponent {
 
   async openPaymentModal() {
     if (!this.session.getLoggedInUser().rewards) {
+      if (!this.emailConfirmation.ensureEmailConfirmed()) return;
+
       await this.phoneVerificationService.open();
 
       const hasPhoneNumber = this.phoneVerificationService.phoneVerified$.getValue();

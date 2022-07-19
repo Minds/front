@@ -51,6 +51,19 @@ export class EmailConfirmationService {
   }
 
   /**
+   * returns true or
+   * @returns { boolean }
+   */
+  public ensureEmailConfirmed(): boolean {
+    if (this.requiresEmailConfirmation()) {
+      this.toasterService.warn('You must confirm your email address');
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Confirm email code - will trigger MFA modal.
    * On success will set email confirmation to verified.
    * @returns { Promise<boolean> } - true if success

@@ -1,0 +1,20 @@
+<a
+  (click)="onClick($event)"
+  [ngClass]="{ selected: has() }"
+  data-cy="data-minds-thumbs-up-button"
+>
+  <i class="material-icons" [class.inProgress]="inProgress">thumb_up</i>
+  <span
+    class="minds-counter"
+    *ngIf="object['thumbs:up:count'] > 0 && !iconOnly"
+    data-cy="data-minds-thumbs-up-counter"
+    >{{ object['thumbs:up:count'] | number }}</span
+  >
+</a>
+
+<ng-container *ngIf="showFriendlyCaptcha">
+  <m-friendlyCaptcha
+    (done)="onFriendlyCaptchaComplete($event)"
+    [puzzleOrigin]="'vote_up'"
+  ></m-friendlyCaptcha>
+</ng-container>

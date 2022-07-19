@@ -224,33 +224,6 @@ describe('GroupMembershipButton', () => {
     expect(comp.membership.next).toHaveBeenCalledWith({});
   }));
 
-  it('should join a closed group', fakeAsync(() => {
-    expect(comp.inProgress).toBeFalse();
-    expect(comp.group['is:awaiting']).toBeFalse();
-
-    (comp as any).service.join.and.returnValue(Promise.resolve(true));
-
-    spyOn(comp.membership, 'next');
-
-    setGroup({
-      'is:banned': false,
-      'is:awaiting': false,
-      'is:invited': false,
-      'is:member': false,
-      membership: 0,
-    });
-
-    comp.join();
-    expect(comp.inProgress).toBeTrue();
-
-    tick();
-
-    expect(comp.inProgress).toBeFalse();
-    expect(comp.group['is:awaiting']).toBeTrue();
-    expect(comp.membership.next).toHaveBeenCalled();
-    expect(comp.membership.next).toHaveBeenCalledWith({});
-  }));
-
   it('should handle errors joining groups appropriately', fakeAsync(() => {
     const errorText = 'You are banned from this group';
 

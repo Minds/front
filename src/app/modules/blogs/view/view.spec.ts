@@ -40,7 +40,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
-describe('Blog view component', () => {
+xdescribe('Blog view component', () => {
   let comp: BlogView;
   let fixture: ComponentFixture<BlogView>;
   const blog: MindsBlogEntity = {

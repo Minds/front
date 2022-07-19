@@ -47,7 +47,7 @@ describe('HashtagsFromStringService', () => {
     ]);
   });
 
-  it('should parse linear hashtags', () => {
+  it('should parse linear hashtags padding by non-hashtags', () => {
     expect(
       service.parseHashtagsFromString(
         '#1 split #2 split #3 split #4 split #5 split #6 split #7 split #8'

@@ -81,7 +81,7 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
     });
   });
 
-  it('should copy code to clipboard and enable progress', () => {
+  it('should download code and enable progress', () => {
     (comp as any).service.recoveryCode$ = new BehaviorSubject<string>('123');
     comp.disabled$.next(true);
 

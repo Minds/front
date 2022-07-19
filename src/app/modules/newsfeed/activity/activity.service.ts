@@ -40,7 +40,7 @@ export type ActivityDisplayOptions = {
 
 export type ActivityEntity = {
   guid: string;
-  remind_object?: Object;
+  remind_object?: any;
   remind_users?: Array<MindsUser>;
   ownerObj: MindsUser;
   containerObj: MindsGroup | null;
@@ -175,6 +175,8 @@ export class ActivityService {
     map((entity: ActivityEntity) => {
       return (
         !!entity.paywall &&
+        // don't show a paywall if the entity is a quote of another paywalled post
+        !entity.remind_object?.paywall &&
         entity.ownerObj.guid !== this.session.getLoggedInUser().guid
       );
     })
