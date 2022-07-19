@@ -106,7 +106,7 @@ describe('Service: Attachment Service', () => {
     expect(service.parseMaturity(mockObject)).toEqual(true);
   });
 
-  it('service should should prioritice flag as mature when repeated value', () => {
+  it('service should should prioritice flag as mature when repeated value when mature is undefined', () => {
     mockObject.mature = undefined;
     expect(service.parseMaturity(mockObject)).toEqual(true);
   });

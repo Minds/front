@@ -133,9 +133,4 @@ describe('BlogEditorV2Component', () => {
     comp.onTitleChange('1');
     expect(comp.service.title$.getValue()).toBe('1');
   });
-
-  it('should dispatch content changes to service', () => {
-    comp.onContentChange('1');
-    expect(comp.service.content$.getValue()).toBe('1');
-  });
 });
