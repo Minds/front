@@ -17,7 +17,13 @@ import { Observable, combineLatest, Subscription } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 
 /**
- * Support tier confirmation component
+ * A variation of the tip modal (aka wire creator) that is shown when
+ * a user is joining a membership from another user's shop page.
+ *
+ * Contains a dropdown of membership tiers, descriptions of the selected tier,
+ * and a currency toggle.
+ *
+ * Allows paying user to select/set up a payment method if they haven't done so already.
  */
 @Component({
   selector: 'm-wireCreator__supportTierConfirmation',

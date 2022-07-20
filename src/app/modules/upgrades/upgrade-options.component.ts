@@ -7,6 +7,16 @@ export type UpgradeOptionInterval = 'yearly' | 'monthly' | 'lifetime';
 
 export type UpgradeOptionCurrency = Currency;
 
+/**
+ * Displays benefits of the different available upgrades,
+ * With toggles for currency (USD/tokens) and duration.
+ *
+ * Users paying with USD can get yearly/monthly upgrades.
+ * Users paying with tokens get it for life.
+ *
+ *
+ * See it at the /upgrades marketing page
+ */
 @Component({
   selector: 'm-upgrades__upgradeOptions',
   changeDetection: ChangeDetectionStrategy.OnPush,

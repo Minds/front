@@ -14,6 +14,7 @@ import {
 
 /**
  * Common calendar component, supports minimum and maximum date.
+ * Set the current date via the 'date' input.
  */
 @Component({
   selector: 'm-calendar',

@@ -7,6 +7,11 @@ import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 
+/**
+ * Menu of token-related actions
+ *
+ * See it in wallet > tokens page, at the end of the wallet address excerpt
+ */
 @Component({
   selector: 'm-walletTokens__dropdownMenu',
   templateUrl: './dropdown-menu.component.html',

@@ -8,6 +8,11 @@ import {
 import { Session } from '../../../../services/session';
 import { MindsUser } from '../../../../interfaces/entities';
 
+/**
+ * Settings page with a link to allow users to
+ * leave the settings page and go to their channel,
+ * with the channel editor modal open
+ */
 @Component({
   selector: 'm-settingsV2__profile',
   templateUrl: './profile.component.html',

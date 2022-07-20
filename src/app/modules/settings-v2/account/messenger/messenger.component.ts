@@ -15,6 +15,9 @@ import { FeaturesService } from '../../../../services/features.service';
 import { MessengerService } from '../../../messenger/messenger.service';
 import { Subscription } from 'rxjs';
 
+/**
+ * Settings form for toggling whether to display legacy messenger.
+ */
 @Component({
   selector: 'm-settingsV2__messenger',
   templateUrl: './messenger.component.html',

@@ -7,6 +7,9 @@ import {
 import { WireV2Service, WireUpgradeType } from '../../wire-v2.service';
 import { Subscription } from 'rxjs';
 
+/**
+ * Displayed at the top of the tip modal when a user is making a payment to upgrade to pro/plus
+ */
 @Component({
   selector: 'm-wireCreator__marketingBlock',
   changeDetection: ChangeDetectionStrategy.OnPush,

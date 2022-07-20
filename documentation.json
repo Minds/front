@@ -118,7 +118,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -128,7 +128,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
+                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -158,7 +158,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "file": "src/app/common/components/thumbs/thumbs-up.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -169,6 +169,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/common/components/toggle/toggle.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -331,6 +341,16 @@
                 "defaultValue": "IconOnly.bind({})"
             },
             {
+                "name": "InProgress",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/thumbs/thumbs-up.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -476,21 +496,21 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/button/button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<ButtonComponent>",
-                "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    onAction: actionsData.onClickButton,\n  },\n  template: `\n    <m-button\n      [type]=\"type\"\n      [disabled]=\"disabled\"\n      [overlay]=\"overlay\"\n      [iconOnly]=\"iconOnly\"\n      [solid]=\"solid\"\n      [saving]=\"saving\"\n      [pulsating]=\"pulsating\"\n      [borderless]=\"borderless\"\n      [color]=\"color\"\n      [size]=\"size\"\n      (onAction)=\"onAction($event)\"\n    >\n      {{ label }}\n    </m-button>\n  `,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/common/components/avatar/avatar.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<MindsAvatar>",
                 "defaultValue": "(args: MindsAvatar) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ButtonComponent>",
+                "defaultValue": "(args: ButtonComponent) => ({\n  props: {\n    ...args,\n    onAction: actionsData.onClickButton,\n  },\n  template: `\n    <m-button\n      [type]=\"type\"\n      [disabled]=\"disabled\"\n      [overlay]=\"overlay\"\n      [iconOnly]=\"iconOnly\"\n      [solid]=\"solid\"\n      [saving]=\"saving\"\n      [pulsating]=\"pulsating\"\n      [borderless]=\"borderless\"\n      [color]=\"color\"\n      [size]=\"size\"\n      (onAction)=\"onAction($event)\"\n    >\n      {{ label }}\n    </m-button>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -516,21 +536,21 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<LoadingSpinnerComponent>",
-                "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<LoadingEllipsisComponent>",
                 "defaultValue": "(\n  args: LoadingEllipsisComponent\n) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<LoadingSpinnerComponent>",
+                "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -556,11 +576,11 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "file": "src/app/common/components/thumbs/thumbs-up.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<TagSelectorComponent>",
-                "defaultValue": "(args: TagSelectorComponent) => ({\n  props: args,\n})"
+                "type": "Story<ThumbsUpButton>",
+                "defaultValue": "(\n    args: ThumbsUpButton\n) => ({\n    props: args,\n})"
             },
             {
                 "name": "Template",
@@ -571,6 +591,16 @@
                 "deprecationMessage": "",
                 "type": "Story<ToggleComponent>",
                 "defaultValue": "(args: ToggleComponent) => ({\n  props: {\n    ...args,\n    toggle: actionsData.onClick,\n  },\n  template: `\n        <span>{{leftValue}}</span>\n        <span>\n          <m-toggle\n            [leftValue]=\"leftValue\"\n            [rightValue]=\"RightValue\"\n            [mModel]=\"mModel\"\n            (mModelChange)=\"mModel = $event\"\n          ></m-toggle>\n        </span>\n        <span>{{rightValue}}</span>\n      <hr>\n      <div>TODO: enable toggle action</div>\n    `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<TagSelectorComponent>",
+                "defaultValue": "(args: TagSelectorComponent) => ({\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -1073,28 +1103,6 @@
                     "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu__item\n    [selectable]=\"selectable\"\n    [selected]=\"selected\"\n    [disabled]=\"disabled\"\n    [red]=\"red\"\n    [icon]=\"icon\"\n    [hasSubmenu]=\"hasSubmenu\"\n  >\n    <span i18n=\"@@MY_TRANSLATION_ID\">Item</span>\n  </m-dropdownMenu__item>\n  `,\n})"
                 }
             ],
-            "src/app/common/components/loading-spinner/loading-spinner.stories.ts": [
-                {
-                    "name": "Basic",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<LoadingSpinnerComponent>",
-                    "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
-                }
-            ],
             "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts": [
                 {
                     "name": "Basic",
@@ -1115,6 +1123,28 @@
                     "deprecationMessage": "",
                     "type": "Story<LoadingEllipsisComponent>",
                     "defaultValue": "(\n  args: LoadingEllipsisComponent\n) => ({\n  props: args,\n})"
+                }
+            ],
+            "src/app/common/components/loading-spinner/loading-spinner.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<LoadingSpinnerComponent>",
+                    "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
                 }
             ],
             "src/app/common/components/publisher-card/publisher-card.stories.ts": [
@@ -1169,6 +1199,38 @@
                     "deprecationMessage": "",
                     "type": "Story<any>",
                     "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <ul class=\"m-tabs__container\">\n    <li class=\"m-tabs__tab\" *ngFor=\"let tab of tabs\">\n      <a [class.selected]=\"tab.selected\">{{ tab.label }}</a>\n    </li>\n  </ul>\n  `,\n})"
+                }
+            ],
+            "src/app/common/components/thumbs/thumbs-up.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/thumbs/thumbs-up.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "InProgress",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/thumbs/thumbs-up.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/thumbs/thumbs-up.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ThumbsUpButton>",
+                    "defaultValue": "(\n    args: ThumbsUpButton\n) => ({\n    props: args,\n})"
                 }
             ],
             "src/app/common/components/tag-selector/tag-selector.stories.ts": [
@@ -1486,7 +1548,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 10,
+        "count": 9,
         "status": "low",
         "files": [
             {
@@ -1931,6 +1993,36 @@
             },
             {
                 "filePath": "src/app/common/components/tag-selector/tag-selector.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/thumbs/thumbs-up.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/thumbs/thumbs-up.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "InProgress",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/thumbs/thumbs-up.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",

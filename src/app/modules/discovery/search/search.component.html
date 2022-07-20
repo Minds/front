@@ -52,7 +52,7 @@
   </ng-container>
 
   <div class="m-goBack">
-    <a routerLink="../" [queryParams]="{ reload: false }">
+    <a [routerLink]="getBackNavigationPath()" [queryParams]="{ reload: false }">
       <i class="material-icons">arrow_back</i
       ><span i18n="@@DISCOVERY_SEARCH__BACK">Back</span>
     </a>

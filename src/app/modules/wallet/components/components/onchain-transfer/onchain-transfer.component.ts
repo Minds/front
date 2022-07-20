@@ -27,6 +27,11 @@ import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/
 import { ModalService } from '../../../../../services/ux/modal.service';
 import { EmailConfirmationService } from '../../../../../common/components/email-confirmation/email-confirmation.service';
 
+/**
+ * Modal that allows users to transfer tokens from off-chain to on-chain wallets
+ *
+ * See it by selecting "transfer on-chain" in the wallet > tokens > meatball menu (next to wallet address)
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-walletOnchainTransfer',

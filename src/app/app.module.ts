@@ -1,7 +1,7 @@
 import {
+  APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
   NgModule,
-  APP_INITIALIZER,
 } from '@angular/core';
 import {
   BrowserModule,
@@ -10,7 +10,6 @@ import {
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { CaptchaModule } from './modules/captcha/captcha.module';
 
 import { Minds } from './app.component';
@@ -52,8 +51,6 @@ import { ProModule } from './modules/pro/pro.module';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { UpgradesModule } from './modules/upgrades/upgrades.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
-
-import * as Sentry from '@sentry/browser';
 import { CookieModule } from '@mindsorg/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
@@ -79,6 +76,7 @@ import { CompassModule } from './modules/compass/compass.module';
     HttpClientModule,
     CaptchaModule,
     LayoutModule,
+    MindsFormsModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
     PlusModule,
@@ -93,7 +91,6 @@ import { CompassModule } from './modules/compass/compass.module';
     TranslateModule,
     ModalsModule,
     PaymentsModule,
-    MindsFormsModule,
     OnboardingModule,
     OnboardingV2Module,
     NotificationModule,

@@ -1,34 +1,17 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  Component,
-  DebugElement,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-
-import { Client } from '../../../services/api/client';
-import { clientMock } from '../../../../tests/client-mock.spec';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   BoostConsoleComponent,
   BoostConsoleFilter,
   BoostConsoleType,
 } from './console.component';
-import { BoostService } from '../boost.service';
 import { TooltipComponentMock } from '../../../mocks/common/components/tooltip/tooltip.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { By } from '@angular/platform-browser';
-import { DateSelectorComponent } from '../../../common/components/date-selector/date-selector.component';
-import { MindsCardMock } from '../../../../tests/minds-card-mock.spec';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
+import { MockService } from '../../../utils/mock';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   selector: 'm-date-selector',
@@ -94,36 +77,6 @@ describe('BoostConsoleComponent', () => {
   let comp: BoostConsoleComponent;
   let fixture: ComponentFixture<BoostConsoleComponent>;
 
-  function getBecomeAPublisher(): DebugElement {
-    return fixture.debugElement.query(
-      By.css('.m-boost-console--options-toggle > button')
-    );
-  }
-
-  function getPointsCount(): DebugElement {
-    return fixture.debugElement.query(
-      By.css('.m-boost-console--overview-points-count > span')
-    );
-  }
-
-  function getUSDCount(): DebugElement {
-    return fixture.debugElement.query(
-      By.css('.m-boost-console--overview-usd-count > span')
-    );
-  }
-
-  function getPointEarnings(): DebugElement {
-    return fixture.debugElement.query(
-      By.css('.m-boost-console--overview-point-earnings > span')
-    );
-  }
-
-  function getUSDEarnings(): DebugElement {
-    return fixture.debugElement.query(
-      By.css('.m-boost-console--overview-usd-earnings > span')
-    );
-  }
-
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
@@ -139,15 +92,15 @@ describe('BoostConsoleComponent', () => {
         ],
         imports: [RouterTestingModule],
         providers: [
-          { provide: Client, useValue: clientMock },
           {
             provide: ActivatedRoute,
             useValue: {
-              params: of({ type: 'newsfeed' }),
-              snapshot: { params: { type: 'newsfeed' } },
+              firstChild: {
+                url: of([{ path: 'newsfeed' }]),
+              },
             },
           },
-          BoostService,
+          { provide: MetaService, useValue: MockService(MetaService) },
         ],
       }).compileComponents();
     })
@@ -159,9 +112,6 @@ describe('BoostConsoleComponent', () => {
     jasmine.clock().install();
     fixture = TestBed.createComponent(BoostConsoleComponent);
     comp = fixture.componentInstance;
-
-    // Set up mock HTTP client
-    clientMock.response = {};
 
     fixture.detectChanges();
 
@@ -177,5 +127,9 @@ describe('BoostConsoleComponent', () => {
   afterEach(() => {
     // reset jasmine clock after each test
     jasmine.clock().uninstall();
+  });
+
+  it('should create', () => {
+    expect(comp).toBeTruthy();
   });
 });

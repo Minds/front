@@ -16,6 +16,9 @@ import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
 
+/**
+ * Settings form for how NSFW content is displayed in the newsfeed.
+ */
 @Component({
   selector: 'm-settingsV2__nsfwContent',
   templateUrl: './nsfw-content.component.html',

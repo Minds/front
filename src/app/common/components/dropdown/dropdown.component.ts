@@ -1,5 +1,12 @@
 import { Component, Input } from '@angular/core';
 
+/**
+ * DEPRECATED
+ *
+ * Legacy dropdown component.
+ *
+ * TODO: replace all instances of this component with the newer 'm-dropdownMenu'
+ */
 @Component({
   selector: 'm-dropdown',
   template: `

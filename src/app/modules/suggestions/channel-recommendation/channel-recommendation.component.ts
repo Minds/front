@@ -30,7 +30,9 @@ const listAnimation = trigger('listAnimation', [
 ]);
 
 /**
- * a component that shows channel recommendations
+ * Displays channel recommendations
+ *
+ * See it in the newsfeed
  */
 @Component({
   selector: 'm-channelRecommendation',

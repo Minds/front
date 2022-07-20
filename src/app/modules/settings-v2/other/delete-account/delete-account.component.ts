@@ -12,6 +12,10 @@ import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
+/**
+ * Settings page with shareable referral links
+ * and a list of users who you have successfully referred to Minds (and whether or not the referral has been converted by the referee signing up for rewards)
+ */
 @Component({
   selector: 'm-settingsV2__deleteAccount',
   templateUrl: './delete-account.component.html',

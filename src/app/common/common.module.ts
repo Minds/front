@@ -70,7 +70,6 @@ import { AndroidAppDownloadComponent } from './components/android-app-download-b
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
 import { FeedsService } from './services/feeds.service';
-import { RouterHistoryService } from './services/router-history.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
@@ -171,6 +170,7 @@ import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-but
 import { ReportService } from './services/report.service';
 import { UserAggregatorComponent } from './components/user-aggregator/user-aggregator.component';
 import { ViewedDirective } from './directives/viewed.directive';
+import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
 
 const routes: Routes = [
   {
@@ -308,6 +308,7 @@ const routes: Routes = [
     PreventDoubleClickDirective,
     UserAggregatorComponent,
     ViewedDirective,
+    FriendlyCaptchaComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -423,6 +424,7 @@ const routes: Routes = [
     PreventDoubleClickDirective,
     UserAggregatorComponent,
     ViewedDirective,
+    FriendlyCaptchaComponent,
   ],
   providers: [
     SiteService,
@@ -453,11 +455,6 @@ const routes: Routes = [
       ): FeaturedContentService =>
         new FeaturedContentService(boostedContentService, experimentsService),
       deps: [FeedsService, ExperimentsService],
-    },
-    {
-      provide: RouterHistoryService,
-      useFactory: router => new RouterHistoryService(router),
-      deps: [Router],
     },
     MediaProxyService,
     SidebarNavigationService,

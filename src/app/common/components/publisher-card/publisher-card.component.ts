@@ -17,6 +17,14 @@ import { UserAvatarService } from '../../services/user-avatar.service';
 import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
 export type PublisherCardSize = 'small' | 'medium' | 'large';
+
+/**
+ * Reusable card to display info about users
+ *
+ * Configurable to display different types of information
+ *
+ * Displays differently depending on size of wrapper component
+ */
 @Component({
   selector: 'm-publisherCard',
   templateUrl: './publisher-card.component.html',

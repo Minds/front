@@ -10,6 +10,10 @@ import { Client } from '../../../../services/api';
 import { map } from 'rxjs/operators';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 
+/**
+ * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating a remind or a quote post.
+ * If the post is already reminded, the dropdown menu provides an option to delete the remind.
+ */
 @Component({
   selector: 'm-activity__remindButton',
   templateUrl: 'remind-button.component.html',

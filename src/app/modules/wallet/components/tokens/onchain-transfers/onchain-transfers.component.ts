@@ -6,6 +6,9 @@ import { Withdrawal } from './onchain-transfers.types';
 
 /**
  * Displays a summary of a users withdrawals
+ * from their off-chain to on-chain wallet.
+ *
+ * See it at wallet > tokens > on-chain transfers
  */
 @Component({
   selector: 'm-walletTransactions--onchainTransfers',

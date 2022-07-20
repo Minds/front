@@ -10,6 +10,7 @@ import { DiscoveryDisclaimerModule } from '../discovery/disclaimer/disclaimer.mo
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { NoticesModule } from '../notices/notices.module';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     DiscoveryDisclaimerModule,
     SuggestionsModule,
     ExperimentsModule,
+    NoticesModule,
   ],
   declarations: [DefaultFeedComponent, DefaultFeedContainerComponent],
   exports: [DefaultFeedComponent, DefaultFeedContainerComponent],

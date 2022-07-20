@@ -13,6 +13,11 @@ import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { horizontallyScrollElementIntoView } from '../../../helpers/scrollable-container-visibility';
 
+/**
+ * A selection of items that can be scrolled horizontally
+ *
+ * See it in a channel's shop/memberships
+ */
 @Component({
   selector: 'm-carousel',
   templateUrl: './carousel.component.html',

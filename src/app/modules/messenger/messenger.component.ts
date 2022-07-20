@@ -12,6 +12,10 @@ import { MessengerSounds } from './sounds/service';
 import { MessengerUserlist } from './userlist/userlist.component';
 import { MessengerSetupChat } from './setup/setup.component';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   selector: 'm-messenger',
   templateUrl: 'messenger.component.html',

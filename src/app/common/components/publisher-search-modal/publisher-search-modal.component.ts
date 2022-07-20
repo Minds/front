@@ -16,6 +16,11 @@ export type PublisherType = 'user' | 'group';
  */
 const noOp = () => {};
 
+/**
+ * Modal used to input a search query on a channel or group page
+ *
+ * When a query is entered, the channel/group page is filtered to show relevant content
+ */
 @Component({
   selector: 'm-publisherSearchModal',
   templateUrl: './publisher-search-modal.component.html',

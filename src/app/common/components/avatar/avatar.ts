@@ -6,6 +6,13 @@ import { of, Observable } from 'rxjs';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 
+/**
+ * Displays the avatar for a channel
+ *
+ * Also includes an edit mode, to upload a new image
+ *
+ * TODO: retire this component and make a new one instead
+ */
 @Component({
   selector: 'minds-avatar',
   inputs: [

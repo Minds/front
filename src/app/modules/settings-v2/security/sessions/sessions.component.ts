@@ -13,6 +13,9 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { Client } from '../../../../services/api';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 
+/**
+ * Settings page for session management
+ */
 @Component({
   selector: 'm-settingsV2__sessions',
   templateUrl: './sessions.component.html',

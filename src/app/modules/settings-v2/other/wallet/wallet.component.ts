@@ -6,7 +6,10 @@ import { Session } from '../../../../services/session';
 import { SettingsV2WalletService } from './wallet.service';
 
 /**
- * Settings v2 Wallet settings component.
+ * Wallet settings component.
+ *
+ * Controls whether wallet balance appears in topbar
+ * (e.g. for privacy during screenshares and screencasts)
  */
 @Component({
   selector: 'm-settingsV2__wallet',

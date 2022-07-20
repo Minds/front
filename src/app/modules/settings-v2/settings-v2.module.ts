@@ -19,7 +19,6 @@ import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.c
 import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
 import { SettingsV2LanguageComponent } from './account/language/language.component';
 import { SettingsV2PasswordComponent } from './account/password/password.component';
-import { SettingsV2EmailNotificationsComponent } from './account/email-notifications/email-notifications.component';
 import { SettingsV2NsfwContentComponent } from './account/nsfw-content/nsfw-content.component';
 import { SettingsV2ShareButtonsComponent } from './account/share-buttons/share-buttons.component';
 import { MindsFormsModule } from '../forms/forms.module';
@@ -408,7 +407,6 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'subscription-tiers',
             component: SettingsV2SubscriptionTiersComponent,
-            // canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Subscription Tiers',
               description:
@@ -502,7 +500,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2EmailAddressComponent,
     SettingsV2LanguageComponent,
     SettingsV2PasswordComponent,
-    SettingsV2EmailNotificationsComponent,
     SettingsV2EmailNotificationsV3Component,
     SettingsV2PushNotificationsV3Component,
     SettingsV2NsfwContentComponent,

@@ -26,6 +26,16 @@ import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.compone
 import * as moment from 'moment';
 import { ModalService } from '../../../services/ux/modal.service';
 
+/**
+ * Contains an action button for upgrading to plus and
+ * information about plus subscription options
+ * in different currencies (usd/tokens) and
+ * durations (yearly/monthly/lifetime).
+ *
+ * Includes free trial promotion handling, if applicable.
+ *
+ * See it on the /plus marketing page
+ */
 @Component({
   selector: 'm-plus--subscription',
   templateUrl: 'subscription.component.html',
