@@ -6,6 +6,11 @@ import { ModalService } from '../../../services/ux/modal.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ReportService } from './../../../common/services/report.service';
 
+/**
+ * Modal for creating reports of content policy violations
+ *
+ * See it by clicking "report post" from the meatball menu of an activity post that is not your own
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-report--creator',

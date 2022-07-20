@@ -14,6 +14,13 @@ import {
 } from '../../activity/activity.service';
 import * as moment from 'moment';
 
+/**
+ * Displays the date/time the post was made. When clicked, it navigates to the post's single activity page.
+ *
+ * Date/time is displayed in one of two ways (absolute or relative), depending on context.
+ * It is absolute if it is a scheduled post, in the modal, or in the single activity page.
+ * All other contexts are relative.
+ */
 @Component({
   selector: 'm-activityV2__permalink',
   templateUrl: './permalink.component.html',

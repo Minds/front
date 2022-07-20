@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { WireType, WireV2Service } from '../../wire-v2.service';
 
+/**
+ * Used in the tip modal to collect information about a payment
+ * (e.g. amount, which bank account/wallet, whether it is recurring)
+ *
+ * Includes tabs for different currencies (tokens/usd).
+ *
+ */
 @Component({
   selector: 'm-wireCreator__form',
   changeDetection: ChangeDetectionStrategy.OnPush,

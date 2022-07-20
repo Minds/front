@@ -6,6 +6,9 @@ import {
   ActivityService,
 } from '../../activity/activity.service';
 
+/**
+ * Displays a stripped-down activity (e.g. without toolbar action buttons or comments) within an activity, with the quoted content on top.
+ */
 @Component({
   selector: 'm-activityV2__quote',
   templateUrl: 'quote.component.html',

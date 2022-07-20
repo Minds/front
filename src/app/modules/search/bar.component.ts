@@ -28,6 +28,10 @@ import {
 } from '../discovery/feeds/feeds.service';
 import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
 
+/**
+ * Base component for the search bar used in the topbar
+ *
+ */
 @Component({
   selector: 'm-search--bar',
   templateUrl: 'bar.component.html',

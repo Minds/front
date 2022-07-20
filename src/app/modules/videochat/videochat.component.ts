@@ -12,6 +12,11 @@ import { ConfigsService } from '../../common/services/configs.service';
 
 declare const JitsiMeetExternalAPI: any;
 
+/**
+ * Component to have a jitsi video chat with members of a group
+ *
+ * See it by clicking the video chat icon in a group profile
+ */
 @Component({
   selector: 'm-videochat',
   templateUrl: './videochat.component.html',

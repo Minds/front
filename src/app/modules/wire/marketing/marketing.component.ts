@@ -8,6 +8,10 @@ import {
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * Marketing page for Minds Pay
+ * See it at /pay
+ */
 @Component({
   selector: 'm-pay__marketing',
   templateUrl: 'marketing.component.html',

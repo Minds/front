@@ -13,6 +13,10 @@ import { Subscription, combineLatest } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
+
+/**
+ * Base component for the tip (formerly "wire") creator modal
+ */
 @Component({
   selector: 'm-wireCreator',
   changeDetection: ChangeDetectionStrategy.OnPush,

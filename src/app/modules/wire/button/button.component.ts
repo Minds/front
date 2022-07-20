@@ -8,6 +8,13 @@ import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
+/**
+ * Button that triggers the wire modal
+ *
+ * Note: "wires" are now called "tips"
+ *
+ * See it in an activity toolbar of a post that is not your own
+ */
 @Component({
   selector: 'm-wire-button',
   templateUrl: './button.component.html',

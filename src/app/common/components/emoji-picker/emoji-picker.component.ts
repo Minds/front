@@ -13,6 +13,14 @@ import {
 import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 import { Subscription } from 'rxjs';
 
+/**
+ * Emoji picker icon trigger and popup component
+ * Used to insert emojis
+ *
+ * Uses emoji mart and popper plugins
+ *
+ * See it in the composer toolbar
+ */
 @Component({
   selector: 'm-emojiPicker',
   templateUrl: './emoji-picker.component.html',
@@ -60,7 +68,7 @@ export class EmojiPickerComponent {
   }
 
   /**
-   * Asyncronously loads in the emoji mark module
+   * Asyncronously loads in the emoji mart module
    */
   async loadEmojiMartComponent() {
     // Import our module

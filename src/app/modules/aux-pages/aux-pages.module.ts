@@ -84,9 +84,9 @@ const AUX_ROUTES: Routes = [
         path: 'monetization-terms',
         component: AuxMonetizationTermsComponent,
         data: {
-          title: 'Minds Pro Terms of Service',
+          title: 'Minds Monetization Terms of Service',
           description:
-            'If  you  have  been  invited  to  or  joined  Minds  Pro  ("Minds Pro"),  and  your  participation  in  Minds Pro has  not  been  terminated,  then  the  following  terms  shall  apply.',
+            'If you have been invited to or joined Minds+, Minds Pro, or monetized your free account with Stripe, (collectively the "Minds Monetization Services"), and your participation has not been terminated, then the following terms shall apply.',
           ogImage: '/assets/og-images/monetization-terms-v3.png',
           ogImageWidth: 1200,
           ogImageHeight: 1200,

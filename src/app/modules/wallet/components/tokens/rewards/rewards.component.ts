@@ -14,6 +14,14 @@ import { Session } from '../../../../../services/session';
 import { max } from 'bn.js';
 import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
 
+/**
+ * Dashboard view of token rewards.
+ * Includes date filter, estimated rewards,
+ * breakdowns of where the rewards came from,
+ * as well as daily vs. all time subtotals
+ *
+ * See it at wallet > tokens > rewards
+ */
 @Component({
   selector: 'm-wallet__tokenRewards',
   templateUrl: './rewards.component.html',

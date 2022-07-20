@@ -10,6 +10,10 @@ import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 
+/**
+ * Settings form with a button for deactivating account
+ * (but not deleting it)
+ */
 @Component({
   selector: 'm-settingsV2__deactivateAccount',
   templateUrl: './deactivate-account.component.html',

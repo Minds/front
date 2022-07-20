@@ -1,5 +1,13 @@
 import { Component, Input } from '@angular/core';
 
+/**
+ * Table that displays details about token/usd transactions, grouped by day
+ *
+ * Each row contains a timestamp, transaction type, amount,
+ * and a colored visual indicator of whether the tx was a credit (green) or debit (red)
+ *
+ * See it at wallet > tokens > transactions
+ */
 @Component({
   selector: 'm-walletTransactionsTable',
   templateUrl: './transactions-table.component.html',

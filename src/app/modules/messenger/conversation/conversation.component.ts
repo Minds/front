@@ -17,6 +17,10 @@ import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.se
 import { BlockListService } from '../../../common/services/block-list.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   selector: 'm-messenger--conversation',
   host: {

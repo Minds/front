@@ -2,6 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Client } from '../../../../../services/api/client';
 import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
+/**
+ * A list of users who you have successfully referred
+ * to Minds (and whether or not the referral has been
+ * converted by the referral signing up for rewards)
+ *
+ * Incomplete referral rows have a 'ping' button that
+ * triggers a notification to remind them
+ * to sign up for rewards
+ *
+ * See it in the settings referrals page.
+ */
 @Component({
   selector: 'm-settingsV2__referralsDashboard',
   templateUrl: 'dashboard.component.html',

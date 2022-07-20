@@ -13,6 +13,9 @@ export type BoostConsoleFilter =
   | 'inbox'
   | 'outbox';
 
+/**
+ * Base component for the boost console
+ */
 @Component({
   selector: 'm-boost-console',
   templateUrl: 'console.component.html',

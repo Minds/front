@@ -10,6 +10,12 @@ import { Session } from '../../../../../services/session';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Subscription } from 'rxjs';
 
+/**
+ * In the modal's full screen mode, additional information about the post
+ * is displayed as an overlay on mouseover (or tap, on tablet).
+ *
+ * The overlay includes the post owner's avatar/username, a title, and a button to exit fullscreen.
+ */
 @Component({
   selector: 'm-activityV2__modalTitleOverlay',
   templateUrl: './title-overlay.component.html',

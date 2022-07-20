@@ -22,6 +22,13 @@ import { TranslationService } from '../../../../services/translation';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { DownloadActivityMediaService } from '../../../../common/services/download-activity-media.service';
 
+/**
+ * Options for the activity's meatball menu (different options show for owners).
+ * Mostly just a wrapper around 'm-postMenu--v2', but also handles actions for a few of the options,
+ * if selected (e.g. 'delete' is handled here, but 'report' is handled in the post menu.)
+ *
+ * TODO: consolidate/centralise where actions are handled?
+ */
 @Component({
   selector: 'm-activityV2__menu',
   templateUrl: 'menu.component.html',

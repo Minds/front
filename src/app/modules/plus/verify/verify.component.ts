@@ -9,6 +9,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../common/api/client.service';
 
+/**
+ * Opens a modal with a form for Minds+ users to get verified.
+ *
+ * See it on the /plus marketing page of a user who isn't verified yet.
+ */
 @Component({
   selector: 'm-plus--verify',
   templateUrl: 'verify.component.html',

@@ -4,6 +4,12 @@ import { WireV2Service } from '../../wire-v2.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import entityToBannerUrl from '../../../../../helpers/entity-to-banner-url';
 
+/**
+ * Displays a banner that features the user who is a recipient of payment.
+ *
+ * See it at the top of the tip modal when one user is sending payment to another.
+ *
+ */
 @Component({
   selector: 'm-wireCreator__ownerBlock',
   changeDetection: ChangeDetectionStrategy.OnPush,

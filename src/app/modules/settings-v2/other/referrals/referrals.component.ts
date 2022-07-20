@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Session } from '../../../../services/session';
 
+/**
+ * Settings page for referrals links and a dashboard that contains a list of referrals associated with your channel
+ */
 @Component({
   selector: 'm-settingsV2__referrals',
   templateUrl: 'referrals.component.html',
