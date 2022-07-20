@@ -61,7 +61,7 @@ describe('GroupsSettingsButton', () => {
             outputs: ['closed'],
           }),
           MockComponent({
-            selector: 'm-nsfw-selector',
+            selector: 'm-nsfwSelector',
             inputs: ['selected'],
             outputs: ['selected'],
           }),

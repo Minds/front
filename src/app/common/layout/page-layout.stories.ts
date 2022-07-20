@@ -8,7 +8,7 @@
 // import { PageComponent } from '../../modules/layout/page/page.component';
 // import { TopbarWrapperComponent } from '../../modules/layout/topbar-wrapper/topbar.component';
 // import { SidebarNavigationComponent } from './sidebar/navigation.component';
-// import { V3TopbarComponent } from './v3-topbar/v3-topbar.component';
+// import { TopbarComponent } from './v3-topbar/v3-topbar.component';
 
 // TODO
 // export default {
@@ -20,7 +20,7 @@
 //       declarations: [
 //         SidebarNavigationComponent,
 //         TopbarWrapperComponent,
-//         V3TopbarComponent,
+//         TopbarComponent,
 //         PageComponent,
 //       ],
 //     }),
@@ -36,7 +36,7 @@
 //   template: `
 //   <m-app>
 //     <m-topbarWrapper>
-//       <m-v3Topbar></m-v3Topbar>
+//       <m-topbar></m-topbar>
 //     </m-topbarWrapper>
 //     <m-page>
 //       <m-body>

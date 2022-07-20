@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { UserMenuV3Component } from './user-menu.component';
+import { UserMenuComponent } from './user-menu.component';
 import { FormsModule } from '@angular/forms';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
@@ -16,9 +16,9 @@ import { By } from '@angular/platform-browser';
 import { UserMenuService } from './user-menu.service';
 import { userMenuServiceMock } from './user-menu.service-mock.spec';
 
-describe('UserMenuV3Component', () => {
-  let comp: UserMenuV3Component;
-  let fixture: ComponentFixture<UserMenuV3Component>;
+describe('UserMenuComponent', () => {
+  let comp: UserMenuComponent;
+  let fixture: ComponentFixture<UserMenuComponent>;
 
   beforeEach(
     waitForAsync(() => {
@@ -29,7 +29,7 @@ describe('UserMenuV3Component', () => {
             inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
           }),
           IfFeatureDirective,
-          UserMenuV3Component,
+          UserMenuComponent,
         ],
         imports: [FormsModule, RouterTestingModule, NgCommonModule],
         providers: [
@@ -50,7 +50,7 @@ describe('UserMenuV3Component', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    fixture = TestBed.createComponent(UserMenuV3Component);
+    fixture = TestBed.createComponent(UserMenuComponent);
 
     comp = fixture.componentInstance;
 

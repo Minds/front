@@ -98,10 +98,10 @@ import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v
 import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
 import { RegexService } from './services/regex.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
-import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
+import { TopbarComponent } from './layout/topbar/topbar.component';
 import { SidebarNavigationService } from './layout/sidebar/navigation.service';
 import { TopbarService } from './layout/topbar.service';
-import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
+import { UserMenuComponent } from './layout/topbar/user-menu/user-menu.component';
 import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { IconComponent } from './components/icon/icon.component';
@@ -126,7 +126,7 @@ import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
-import { UserMenuService } from './layout/v3-topbar/user-menu/user-menu.service';
+import { UserMenuService } from './layout/topbar/user-menu/user-menu.service';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 import { MarkedDirective } from './directives/marked.directive';
@@ -237,7 +237,6 @@ const MINDS_COMMON_COMPONENTS_AND_DIRECTIVES = [
   Modal,
   ModalCloseButtonComponent,
   NestedMenuComponent,
-  NgxPopperjsModule,
   NSFWSelectorComponent,
   OverlayComponent,
   PageLayoutContainerDirective,
@@ -285,8 +284,8 @@ const MINDS_COMMON_COMPONENTS_AND_DIRECTIVES = [
   TopbarWalletBalance,
   TreeComponent,
   UserAggregatorComponent,
-  UserMenuV3Component,
-  V3TopbarComponent,
+  UserMenuComponent,
+  TopbarComponent,
   ViewedDirective,
 ];
 
@@ -319,6 +318,7 @@ const routes: Routes = [
     MINDS_PIPES,
     MDL_DIRECTIVES,
     MINDS_COMMON_COMPONENTS_AND_DIRECTIVES,
+    NgxPopperjsModule,
   ],
   providers: [
     SiteService,

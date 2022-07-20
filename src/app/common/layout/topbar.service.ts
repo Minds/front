@@ -1,7 +1,7 @@
-import { V3TopbarComponent } from './v3-topbar/v3-topbar.component';
+import { TopbarComponent } from './topbar/topbar.component';
 import { Injectable } from '@angular/core';
 
-type TopbarComponentT = V3TopbarComponent;
+type TopbarComponentT = TopbarComponent;
 
 @Injectable()
 export class TopbarService {
@@ -26,7 +26,7 @@ export class TopbarService {
 
   toggleSearchBar(visible: boolean): void {
     if (this.container) {
-      (<V3TopbarComponent>this.container).toggleSearchBar(visible);
+      (<TopbarComponent>this.container).toggleSearchBar(visible);
     }
   }
 }

@@ -120,12 +120,12 @@
       class="m-dropdownList__item m-groups-settings-dropdown__item--nsfw"
       *ngIf="session.isAdmin()"
     >
-      <m-nsfw-selector
+      <m-nsfwSelector
         service="editing"
         [selected]="group.nsfw"
         (selectedChange)="onNSFWSelected($event)"
       >
-      </m-nsfw-selector>
+      </m-nsfwSelector>
     </li>
   </ul>
   <div

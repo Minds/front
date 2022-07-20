@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Session } from '../../../../services/session';
-import { ThemeService } from '../../../../common/services/theme.service';
+import { ThemeService } from '../../../services/theme.service';
 import { Subscription } from 'rxjs';
 import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
@@ -15,11 +15,11 @@ import { UserMenuService } from './user-menu.service';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 
 @Component({
-  selector: 'm-usermenu__v3',
+  selector: 'm-userMenu',
   templateUrl: 'user-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserMenuV3Component implements OnInit, OnDestroy {
+export class UserMenuComponent implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;
 
   isDark: boolean = false;

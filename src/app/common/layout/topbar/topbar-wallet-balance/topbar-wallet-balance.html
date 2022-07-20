@@ -1,25 +1,25 @@
 <a
-  class="m-topbar-wallet-balance"
+  class="m-topbar__walletBalance"
   routerLink="/wallet/tokens/rewards"
   data-ref="topnav-wallet"
   *ngIf="showWalletBalance()"
 >
-  <div class="m-topbar-wallet-balance__tokens">
+  <div class="m-topbar__walletBalance__tokens">
     <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
     {{ formatTokens(tokenBalance) }}
   </div>
-  <div class="m-topbar-wallet-balance__usd">
+  <div class="m-topbar__walletBalance__usd">
     ${{ formatUSD(usdBalance) }}
   </div>
 </a>
 
 <a
-  class="m-topbar-wallet-balance"
+  class="m-topbar__walletBalance"
   (click)="connectWallet($event)"
   data-ref="topnav-connect-wallet"
   *ngIf="!isConnected"
 >
-  <div class="m-topbar-wallet-balance__connect">
+  <div class="m-topbar__walletBalance__connect">
     <m-icon iconId="add_circle" m-tooltip--icon></m-icon>
     <span i18n="@@MARKETING__CONNECT_WALLET">Connect Wallet</span>
   </div>
