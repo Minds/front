@@ -491,10 +491,10 @@ export class ActivityContentComponent
     }
 
     //if sidebarMode, navigate to canonicalUrl for all content types
-    if (this.service.displayOptions.sidebarMode) {
-      this.router.navigateByUrl(this.canonicalUrl);
-      return;
-    }
+    // if (this.service.displayOptions.sidebarMode) {
+    this.router.navigateByUrl(this.canonicalUrl);
+    return;
+    // }
 
     if (
       this.service.displayOptions.bypassMediaModal &&

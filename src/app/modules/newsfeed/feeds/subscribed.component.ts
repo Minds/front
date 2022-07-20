@@ -1,6 +1,6 @@
-import { DismissalService } from './../../../common/services/dismissal.service';
-import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
+import { isPlatformServer } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   Inject,
@@ -15,26 +15,31 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { Subscription, Observable, of } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
 import {
   ActivatedRoute,
   NavigationEnd,
   Router,
   RouterEvent,
 } from '@angular/router';
-import { Client, Upload } from '../../../services/api';
-import { Navigation as NavigationService } from '../../../services/navigation';
-import { ContextService } from '../../../services/context.service';
-import { FeedsService } from '../../../common/services/feeds.service';
-import { NewsfeedService } from '../services/newsfeed.service';
-import { isPlatformServer } from '@angular/common';
-import { ComposerComponent } from '../../composer/composer.component';
-import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
+import { IPageInfo, VirtualScrollerComponent } from 'ngx-virtual-scroller';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { ApiResource } from '../../../common/api/api-resource.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
+import { FeedsService } from '../../../common/services/feeds.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { Client, Upload } from '../../../services/api';
+import { ContextService } from '../../../services/context.service';
+import { Navigation as NavigationService } from '../../../services/navigation';
+import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
+import { ComposerComponent } from '../../composer/composer.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
+import { NewsfeedService } from '../services/newsfeed.service';
+import { DismissalService } from './../../../common/services/dismissal.service';
+import { EntityObservable } from './../../../common/services/entities.service';
+import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 
 export enum FeedAlgorithm {
   top = 'top',
@@ -42,7 +47,13 @@ export enum FeedAlgorithm {
 }
 
 @Injectable()
-export class LatestFeedService extends FeedsService {}
+export class LatestFeedService extends FeedsService {
+  feedQuery = this.apiResource.query('api/v2/feeds/subscribed/activities', {
+    cacheStorage: ApiResource.CacheStorage.Memory,
+    cachePolicy: ApiResource.CachePolicy.cacheThenFetch,
+    skip: true, // TODO: rename to autoFetch: false
+  });
+}
 
 @Injectable()
 export class TopFeedService extends FeedsService {}
@@ -52,11 +63,11 @@ export class TopFeedService extends FeedsService {}
   providers: [LatestFeedService, TopFeedService],
   templateUrl: 'subscribed.component.html',
 })
-export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
+export class NewsfeedSubscribedComponent
+  implements OnInit, OnDestroy, AfterViewInit {
   prepended: Array<any> = [];
   offset: string | number = '';
   showBoostRotator: boolean = true;
-  inProgress: boolean = false;
   moreData: boolean = true;
   algorithm: FeedAlgorithm;
   message: string = '';
@@ -77,7 +88,13 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    * Listening for new posts.
    */
   private feedsUpdatedSubscription: Subscription;
+  /**
+   * whether we've restored the scroll position
+   */
+  isScrollRestored: boolean;
 
+  @ViewChild('scroll')
+  virtualScroller: VirtualScrollerComponent;
   @ViewChild('composer') private composer: ComposerComponent;
   @ViewChild('boostRotator')
   private boostRotator: NewsfeedBoostRotatorComponent;
@@ -109,6 +126,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public feedsUpdate: FeedsUpdateService,
     private toast: FormToastService,
     private experiments: ExperimentsService,
+    private scrollRestoration: ScrollRestorationService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
     private dismissal: DismissalService
@@ -196,6 +214,29 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.context.set('activity');
   }
 
+  // when an entity is updated in a way that their height is changed, invalidate the cachedMeasurement
+  ngAfterViewInit() {
+    // TODO: this is not smooth enough. just for demo
+    this.feedViewChildren.changes.subscribe(feedChanges => {
+      if (feedChanges.length && !this.isScrollRestored) {
+        window.scrollTo({
+          top: this.scrollRestoration.getOffsetForRoute(this.router.url),
+        });
+        const scrollOffsetTop = this.scrollRestoration.getOffsetForRoute(
+          this.router.url
+        );
+
+        if (scrollOffsetTop) {
+          window.scrollTo({
+            top: scrollOffsetTop,
+          });
+        }
+
+        this.isScrollRestored = true;
+      }
+    });
+  }
+
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
     this.reloadFeedSubscription.unsubscribe();
@@ -220,7 +261,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.moreData = true;
     this.offset = 0;
     this.showBoostRotator = false;
-    this.inProgress = true;
 
     let queryParams = {
       algorithm: this.algorithm,
@@ -237,11 +277,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
           await this.topFeedService.setLimit(12).fetch(true);
           break;
         case 'latest':
-          this.latestFeedService.clear(true);
+          // this.latestFeedService.clear(true);
           this.topFeedService.clear(true);
           this.prepended = [];
           await Promise.all([
-            this.topFeedService.setLimit(3).fetch(true),
+            // this.topFeedService.setLimit(3).fetch(true),
             this.latestFeedService.fetch(true),
           ]);
           break;
@@ -250,18 +290,22 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       console.error('Load Feed', e);
     }
 
-    this.inProgress = false;
     this.showBoostRotator = true;
   }
 
-  loadNext() {
+  loadNext(event: IPageInfo) {
+    // only load next if we're in the proximity of the last 3 posts
+    if (!this.feedService.feedLength) return;
+    if (this.feedService.feedLength - event.endIndex > 3) return;
+
     if (
       this.feedService.canFetchMore &&
       !this.feedService.inProgress.getValue() &&
       this.feedService.offset.getValue()
     ) {
-      this.feedService.fetch(); // load the next 150 in the background
+      // this.feedService.fetch(); // load the next 150 in the background
     }
+
     this.feedService.loadMore();
   }
 
@@ -394,5 +438,29 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         this.boostRotator.rotatorEl.nativeElement?.offsetTop +
           this.boostRotator.height || 0,
     });
+  }
+
+  compareItems(item1: EntityObservable, item2: EntityObservable) {
+    // @ts-ignore FIX
+    return item1?.getValue().guid === item2?.getValue().guid;
+  }
+
+  activityTrackBy(index: number, activity: any) {
+    return activity.getValue().guid;
+  }
+
+  /**
+   * called when activity size changed. we want to invalidate the
+   * height measurement cache of the virtual scroller when the activity
+   * height changed.
+   * @param { ResizedEvent } event
+   * @param { object } activity
+   * @param { number } index
+   * @returns { void }
+   */
+  onResized(event: any, index: number) {
+    if (event.isFirst) return null;
+
+    // this.virtualScroller.invalidateCachedMeasurementAtIndex(index);
   }
 }

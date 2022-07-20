@@ -130,57 +130,60 @@ export class NewsfeedSingleComponent {
 
     this.inProgress = true;
 
-    const fetchSingleGuid = this.loadFromFeedsService(guid);
+    this.singleGuidSubscription = this.entitiesService
+      .get(guid)
+      // TODO: fix
+      .subscribe(activitySubscription => {
+        activitySubscription.subscribe(
+          activity => {
+            if (activity === null) {
+              return; // Not yet loaded
+            }
 
-    this.singleGuidSubscription = fetchSingleGuid.subscribe(
-      (activity: any) => {
-        if (activity === null) {
-          return; // Not yet loaded
-        }
+            this.activity = activity;
 
-        this.activity = activity;
+            switch (this.activity.subtype) {
+              case 'image':
+              case 'video':
+              case 'album':
+                break;
+              case 'blog':
+                break;
+            }
 
-        switch (this.activity.subtype) {
-          case 'image':
-          case 'video':
-          case 'album':
-            break;
-          case 'blog':
-            break;
-        }
+            this.updateMeta();
 
-        this.updateMeta();
+            if (this.activity.require_login) this.openLoginModal();
 
-        if (this.activity.require_login) this.openLoginModal();
+            this.inProgress = false;
 
-        this.inProgress = false;
+            if (this.activity.ownerObj) {
+              this.context.set('activity', {
+                label: `@${this.activity.ownerObj.username} posts`,
+                nameLabel: `@${this.activity.ownerObj.username}`,
+                id: this.activity.ownerObj.guid,
+              });
+            } else if (this.activity.owner_guid) {
+              this.context.set('activity', {
+                label: `this user's posts`,
+                id: this.activity.owner_guid,
+              });
+            } else {
+              this.context.reset();
+            }
+          },
+          err => {
+            this.inProgress = false;
 
-        if (this.activity.ownerObj) {
-          this.context.set('activity', {
-            label: `@${this.activity.ownerObj.username} posts`,
-            nameLabel: `@${this.activity.ownerObj.username}`,
-            id: this.activity.ownerObj.guid,
-          });
-        } else if (this.activity.owner_guid) {
-          this.context.set('activity', {
-            label: `this user's posts`,
-            id: this.activity.owner_guid,
-          });
-        } else {
-          this.context.reset();
-        }
-      },
-      err => {
-        this.inProgress = false;
-
-        if (err.status === 0) {
-          this.error = 'Sorry, there was a timeout error.';
-        } else {
-          this.error = "Sorry, we couldn't load the activity";
-          this.headersService.setCode(404);
-        }
-      }
-    );
+            if (err.status === 0) {
+              this.error = 'Sorry, there was a timeout error.';
+            } else {
+              this.error = "Sorry, we couldn't load the activity";
+              this.headersService.setCode(404);
+            }
+          }
+        );
+      });
   }
 
   loadFromFeedsService(guid: string) {

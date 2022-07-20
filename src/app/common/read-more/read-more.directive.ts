@@ -12,50 +12,46 @@ import { ReadMoreButtonComponent } from './button.component';
 })
 export class ReadMoreDirective {
   _element: any;
-  realHeight: any;
+  realHeight: number;
   expandable: boolean = false;
   @ContentChild(ReadMoreButtonComponent) button;
-  _maxHeightAllowed: number;
+  _maxHeightAllowed: number = 320;
 
-  constructor(private element: ElementRef, private cd: ChangeDetectorRef) {
+  constructor(element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
   }
 
   @Input() set maxHeightAllowed(value: number) {
     if (this._maxHeightAllowed !== value) {
       this._maxHeightAllowed = value;
-      this._element.style.maxHeight = null;
       this.hideIfNeeded();
     }
   }
 
   ngAfterViewInit() {
-    if (!this._maxHeightAllowed) {
-      this._maxHeightAllowed = 320;
-      this.hideIfNeeded();
-    }
+    this.hideIfNeeded();
   }
 
   hideIfNeeded(): void {
-    setTimeout(() => {
-      this.realHeight = this._element.clientHeight;
+    // setTimeout(() => {
+    this.realHeight = this._element.clientHeight;
 
-      if (this.button && !this.button.content) {
-        this.button.content = this;
-      }
+    if (this.button && !this.button.content) {
+      this.button.content = this;
+    }
 
-      if (this.realHeight > this._maxHeightAllowed) {
-        this._element.style.maxHeight = this._maxHeightAllowed + 'px';
-        this._element.style.position = 'relative';
-        this._element.style.overflow = 'hidden';
-        setTimeout(() => {
-          this.expandable = true;
-          this.detectChanges();
-        }, 0);
-      } else {
-        this.expand();
-      }
-    }, 0);
+    if (this.realHeight > this._maxHeightAllowed) {
+      this._element.style.maxHeight = this._maxHeightAllowed + 'px';
+      this._element.style.position = 'relative';
+      this._element.style.overflow = 'hidden';
+      setTimeout(() => {
+        this.expandable = true;
+        this.detectChanges();
+      }, 0);
+    } else {
+      this.expand();
+    }
+    // }, 0);
   }
 
   expand() {

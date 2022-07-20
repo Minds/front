@@ -94,3 +94,10 @@
     </m-dropdownMenu__item>
   </ul>
 </ng-template>
+
+<ng-template #loadingOrError>
+  <m-loadingSpinner
+    [inProgress]="channelRecommendations.loading$ | async"
+  ></m-loadingSpinner>
+  <span *ngIf="channelRecommendations.error$">Something went wrong</span>
+</ng-template>

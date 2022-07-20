@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Injectable, OnDestroy } from '@angular/core';
 import {
   BehaviorSubject,
@@ -6,12 +7,22 @@ import {
   Observable,
   Subscription,
 } from 'rxjs';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import {
+  filter,
+  first,
+  map,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { ApiService } from '../api/api.service';
 import { BlockListService } from './block-list.service';
 import { EntitiesService } from './entities.service';
+import { ApiResource, QueryRef } from '../api/api-resource.service';
+import { StorageV2 } from '../../services/storage/v2';
 
 export const NEW_POST_POLL_INTERVAL = 30000;
 
@@ -43,6 +54,7 @@ export class FeedsService implements OnDestroy {
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasMore: Observable<boolean>;
   blockListSubscription: Subscription;
+  feedQuerySubscription: Subscription;
   /**
    * whether counting is in progress
    */
@@ -63,18 +75,21 @@ export class FeedsService implements OnDestroy {
    * feed length
    */
   feedLength: number;
+  feedQuery: QueryRef<any, any>;
 
   constructor(
     protected client: Client,
     protected api: ApiService,
     protected session: Session,
     protected entitiesService: EntitiesService,
-    protected blockListService: BlockListService
+    protected blockListService: BlockListService,
+    protected storage: StorageV2,
+    protected route: ActivatedRoute,
+    protected apiResource: ApiResource
   ) {
     this.pageSize = this.offset.pipe(
       map(offset => this.limit.getValue() + offset)
     );
-
     this.feed = this.rawFeed.pipe(
       tap(feed => {
         if (feed.length) this.inProgress.next(true);
@@ -182,6 +197,10 @@ export class FeedsService implements OnDestroy {
    */
   setOffset(offset: number): FeedsService {
     this.offset.next(offset);
+    // TODO: don't always do this
+    if (this.feedQuery) {
+      this.persistOffset(offset);
+    }
     return this;
   }
 
@@ -227,7 +246,7 @@ export class FeedsService implements OnDestroy {
   /**
    * Fetches the data.
    */
-  fetch(refresh: boolean = false): Promise<any> {
+  async fetch(replace: boolean = false): Promise<any> {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -241,7 +260,7 @@ export class FeedsService implements OnDestroy {
     const oldCount = this.newPostsCount$.getValue();
     const oldTimestamp = this.newPostsLastCheckedAt;
 
-    if (refresh) {
+    if (replace) {
       fromTimestamp = '';
       this.newPostsLastCheckedAt = Date.now();
       this.newPostsCount$.next(0);
@@ -251,57 +270,84 @@ export class FeedsService implements OnDestroy {
       this.newPostsLastCheckedAt = Date.now();
     }
 
-    return this.client
-      .get(this.endpoint, {
-        ...this.params,
-        ...{
-          limit: 150, // Over 12 scrolls
-          as_activities: this.castToActivities ? 1 : 0,
-          export_user_counts: this.exportUserCounts ? 1 : 0,
-          unseen: this.unseen,
-          from_timestamp: fromTimestamp,
-        },
-      })
-      .then((response: any) => {
-        if (this.endpoint !== endpoint) {
-          // Avoid race conditions if endpoint changes
-          return;
-        }
+    const postProcessResponse = response => {
+      if (this.endpoint !== endpoint) {
+        // Avoid race conditions if endpoint changes
+        return;
+      }
 
-        if (!response.entities && response.activity) {
-          response.entities = response.activity;
-        } else if (!response.entities && response.users) {
-          response.entities = response.users;
-        }
+      if (!response.entities && response.activity) {
+        response.entities = response.activity;
+      } else if (!response.entities && response.users) {
+        response.entities = response.users;
+      }
 
-        if (response.entities?.length) {
-          this.fallbackAt = response['fallback_at'];
-          this.fallbackAtIndex.next(null);
-          if (refresh) {
-            this.rawFeed.next(response.entities);
-          } else {
-            this.rawFeed.next(
-              this.rawFeed.getValue().concat(response.entities)
-            );
-          }
-          this.pagingToken = response['load-next'];
-
-          if (!this.pagingToken) {
-            this.canFetchMore = false;
-          }
+      if (response.entities?.length) {
+        this.fallbackAt = response['fallback_at'];
+        this.fallbackAtIndex.next(null);
+        if (replace) {
+          this.rawFeed.next(response.entities);
         } else {
+          this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
+        }
+        this.pagingToken = response['load-next'];
+
+        if (!this.pagingToken) {
           this.canFetchMore = false;
         }
-      })
-      .catch(e => {
-        this.newPostsLastCheckedAt = oldTimestamp;
-        this.newPostsCount$.next(oldCount);
-      })
-      .finally(() => {
-        if (!this.offset.getValue()) {
-          this.inProgress.next(false);
-        }
-      });
+      } else {
+        this.canFetchMore = false;
+      }
+
+      if (!this.offset.getValue()) {
+        this.inProgress.next(false);
+      }
+    };
+
+    let response;
+
+    try {
+      if (this.feedQuery) {
+        // TODO: rehydrate only if you were told to do so
+        this.rehydrateOffset();
+
+        this.feedQuerySubscription?.unsubscribe();
+        this.feedQuerySubscription = this.feedQuery
+          .fetch({
+            ...this.params,
+            limit: 150, // Over 12 scrolls
+            as_activities: this.castToActivities ? 1 : 0,
+            export_user_counts: this.exportUserCounts ? 1 : 0,
+            unseen: this.unseen,
+            from_timestamp: fromTimestamp,
+          })
+          .data$.pipe(
+            tap(response => {
+              if (!response) return;
+              postProcessResponse(response);
+            })
+          )
+          .subscribe();
+      } else {
+        response = await this.client.get(this.endpoint, {
+          ...this.params,
+          ...{
+            limit: 150, // Over 12 scrolls
+            as_activities: this.castToActivities ? 1 : 0,
+            export_user_counts: this.exportUserCounts ? 1 : 0,
+            from_timestamp: fromTimestamp,
+          },
+        });
+        postProcessResponse(response);
+      }
+    } catch (e) {
+      this.newPostsLastCheckedAt = oldTimestamp;
+      this.newPostsCount$.next(oldCount);
+
+      if (!this.offset.getValue()) {
+        this.inProgress.next(false);
+      }
+    }
   }
 
   /**
@@ -381,19 +427,52 @@ export class FeedsService implements OnDestroy {
 
   async destroy() {}
 
+  /**
+   * persists the offset to memory
+   * @returns { void }
+   */
+  persistOffset(offset: number) {
+    this.storage.memory.setFeedOffset(
+      this.feedQuery.options.url,
+      window.location.pathname,
+      offset
+    );
+  }
+
+  /**
+   * rehydrates the offset from memory
+   * @returns { void }
+   */
+  rehydrateOffset() {
+    const inMemoryFeedOffset = this.storage.memory.getFeedOffset(
+      this.feedQuery.options.url,
+      window.location.pathname
+    );
+
+    if (inMemoryFeedOffset) {
+      this.offset.next(inMemoryFeedOffset);
+    }
+  }
+
   static _(
     client: Client,
     api: ApiService,
     session: Session,
     entitiesService: EntitiesService,
-    blockListService: BlockListService
+    blockListService: BlockListService,
+    storage: StorageV2,
+    route: ActivatedRoute,
+    apiResource: ApiResource
   ) {
     return new FeedsService(
       client,
       api,
       session,
       entitiesService,
-      blockListService
+      blockListService,
+      storage,
+      route,
+      apiResource
     );
   }
 

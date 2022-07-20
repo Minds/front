@@ -39,6 +39,7 @@ import { FeedHeaderComponent } from './feeds/feed-header/feed-header.component';
 import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
 import { ActivityV2Module } from './activity-v2/activity.module';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 
 const routes: Routes = [
   {
@@ -99,6 +100,7 @@ const routes: Routes = [
     LiquiditySpotModule,
     ExperimentsModule,
     CompassModule,
+    VirtualScrollerModule,
   ],
   declarations: [
     NewsfeedComponent,

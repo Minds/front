@@ -40,7 +40,7 @@
       </ng-container>
 
       <!--boost rotator-->
-      <ng-container *mIfFeature="'boost-rotator'">
+      <!-- <ng-container *mIfFeature="'boost-rotator'">
         <ng-container *mIfBrowser>
           <m-newsfeed--boost-rotator
             *ngIf="showBoostRotator"
@@ -53,58 +53,75 @@
       <m-channelRecommendation
         location="newsfeed"
         *ngIf="shouldShowChannelRecommendation('emptyState')"
-      ></m-channelRecommendation>
+      ></m-channelRecommendation> -->
 
       <!--actual feed-->
-      <ng-container
-        *ngFor="let activity$ of feedService.feed | async; let i = index"
+      <virtual-scroller
+        #scroll
+        [bufferAmount]="20"
+        [items]="feedService.feed | async"
+        [parentScroll]="scroll.window"
+        [enableUnequalChildrenSizes]="true"
+        [modifyOverflowStyleOfParentScroll]="false"
+        [compareItems]="compareItems"
+        [ssrChildHeight]="300"
+        (vsEnd)="loadNext($event)"
       >
-        <m-feedNotice__outlet
-          *ngIf="i > 0 && i % 6 === 0"
-          location="inline"
-        ></m-feedNotice__outlet>
-        <m-featured-content
-          *ngIf="(i > 0 && i % 5 === 0) || i === 3"
-          [slot]="i + 1"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          #feedViewChildren
-        ></m-featured-content>
-        <m-topHighlights
-          (onSeeMore)="onShowMoreTopFeed()"
-          *ngIf="
-            shouldShowTopHighlights(i) && !(isTopHighlightsDismissed$ | async)
+        <ng-container
+          *ngFor="
+            let activity$ of scroll.viewPortItems;
+            let i = index;
+            trackBy: activityTrackBy
           "
-        ></m-topHighlights>
-        <m-activity
-          *ngIf="activity$ | async as activity"
-          [entity]="activity"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          [slot]="i + 1"
-          (deleted)="delete(activity)"
-          #feedViewChildren
-        ></m-activity>
-        <m-channelRecommendation
-          location="newsfeed"
-          [dismissible]="true"
-          *ngIf="
-            shouldShowChannelRecommendation('feed', i) &&
-            !(isChannelRecommendationDismissed$ | async)
-          "
-        ></m-channelRecommendation>
-      </ng-container>
+        >
+          <!-- <m-feedNotice__outlet
+            *ngIf="i > 0 && i % 6 === 0"
+            location="inline"
+          ></m-feedNotice__outlet>
+          <m-featured-content
+            *ngIf="(i > 0 && i % 5 === 0) || i === 3"
+            [slot]="i + 1"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            #feedViewChildren
+          ></m-featured-content>
+          <m-topHighlights
+            (onSeeMore)="onShowMoreTopFeed()"
+            *ngIf="
+              shouldShowTopHighlights(i) && !(isTopHighlightsDismissed$ | async)
+            "
+          ></m-topHighlights> -->
+          <m-activity
+            *ngIf="activity$ | async as activity"
+            [entity]="activity"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            [slot]="i + 1"
+            (deleted)="delete(activity)"
+            (mResized)="onResized($event, i)"
+            #feedViewChildren
+          ></m-activity>
+          <!-- <m-channelRecommendation
+            location="newsfeed"
+            [dismissible]="true"
+            *ngIf="
+              shouldShowChannelRecommendation('feed', i) &&
+              !(isChannelRecommendationDismissed$ | async)
+            "
+          ></m-channelRecommendation> -->
+        </ng-container>
 
-      <infinite-scroll
-        (load)="loadNext()"
-        [moreData]="feedService.hasMore | async"
-        [inProgress]="feedService.inProgress | async"
-      >
-      </infinite-scroll>
+        <!-- <infinite-scroll
+          (load)="loadNext()"
+          [moreData]="feedService.hasMore | async"
+          [inProgress]="feedService.inProgress | async"
+        >
+        </infinite-scroll> -->
+      </virtual-scroller>
     </div>
   </ng-container>
 </div>
