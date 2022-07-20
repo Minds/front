@@ -1,10 +1,10 @@
 import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
   ViewRef,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -86,8 +86,9 @@ export class WalletPhoneVerificationComponent implements OnInit {
       this.confirming = true;
     } catch (e) {
       this.toast.error(e.message || e);
-      this.invalidNumber = true;
-      console.error(e.message);
+      if (e.type === 'InvalidPhoneException') {
+        this.invalidNumber = true;
+      }
     }
     this.inProgress = false;
     this.detectChanges();
