@@ -10,6 +10,11 @@ import { InteractionsModalService } from '../../interactions-modal/interactions-
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
+/**
+ * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners), tip (for non-owners), displayed below activity post content.
+ *
+ * If 'interactions' is enabled, the toolbar also includes a second row that displays how many people reminded the post, upvoted the post, etc.
+ */
 @Component({
   selector: 'm-activity__toolbar',
   templateUrl: 'toolbar.component.html',

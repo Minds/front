@@ -30,6 +30,9 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { PASSWORD_VALIDATOR } from '../../../forms/password.validator';
 import { PasswordRiskValidator } from '../../../forms/password-risk.validator';
 
+/**
+ * Settings form for resetting password.
+ */
 @Component({
   selector: 'm-settingsV2__password',
   templateUrl: './password.component.html',

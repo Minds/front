@@ -15,6 +15,9 @@ import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
 
+/**
+ * Settings form for controlling whether the share buttons overlay appears at the bottom of relevant pages (e.g. a single activity page)
+ */
 @Component({
   selector: 'm-settingsV2__shareButtons',
   templateUrl: './share-buttons.component.html',

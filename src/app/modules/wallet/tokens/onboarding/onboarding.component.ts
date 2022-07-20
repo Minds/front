@@ -13,6 +13,9 @@ import { TokenOnboardingService } from './onboarding.service';
 import { DynamicHostDirective } from '../../../../common/directives/dynamic-host.directive';
 import { Storage } from '../../../../services/storage';
 
+/**
+ * DEPRECATED
+ */
 @Component({
   selector: 'm-token--onboarding',
   templateUrl: 'onboarding.component.html',

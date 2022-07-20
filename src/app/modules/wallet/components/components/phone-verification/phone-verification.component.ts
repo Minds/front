@@ -12,6 +12,10 @@ import { FormToastService } from '../../../../../common/services/form-toast.serv
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 
+/**
+ * Form that verifies a user's phone number by sending a secret code
+ * via text that the user must input upon receipt
+ */
 @Component({
   selector: 'm-walletPhoneVerification',
   templateUrl: './phone-verification.component.html',

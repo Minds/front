@@ -11,6 +11,10 @@ import { MessengerEncryptionService } from '../encryption/encryption.service';
 import { MessengerEncryption } from '../encryption/encryption.component';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-messenger--userlist',

@@ -6,6 +6,10 @@ import {
   ActivityEntity,
 } from '../../activity/activity.service';
 
+/**
+ * Blocks the activity post content until the user has permission to view.
+ * It's just a wrapper around 'm-wire--lock-screen'.
+ */
 @Component({
   selector: 'm-activityV2__paywall',
   templateUrl: './paywall.component.html',

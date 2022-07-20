@@ -24,6 +24,14 @@ import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.c
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
+/**
+ * Generic component that receives an entity, figures out the entity type,
+ * then presents the entity with its corresponding presentation component
+ *
+ * e.g. if it determines the entity is a blog, it creates and presents the BlogCardComponent
+ *
+ * See it in the boost console "Create a Boost" section
+ */
 @Component({
   selector: 'minds-card',
   template: `

@@ -7,6 +7,10 @@ import {
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { BoostRecommendationService } from '../../../../common/services/boost-recommendation.service';
 
+/**
+ * Boost button used in activity toolbar.
+ * Displayed for owners only (non-owners see the 'tip' button instead)
+ */
 @Component({
   selector: 'm-activityV2__boostButton',
   templateUrl: 'boost-button.html',

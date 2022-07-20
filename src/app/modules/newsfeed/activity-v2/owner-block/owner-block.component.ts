@@ -17,6 +17,14 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
 
+/**
+ * A row dedicated to information about the owner of the post, among other things.
+ *
+ * Depending on context, it may show username, badges, user handle (not in mobile),
+ * avatar (only in modal and minimal/sidebar modes),
+ * permalink (not in single activity page or modal), view count (only for owners),
+ * the post dropdown menu, etc...
+ */
 @Component({
   selector: 'm-activityV2__ownerBlock',
   templateUrl: 'owner-block.component.html',

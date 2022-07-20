@@ -14,6 +14,9 @@ import { DialogService } from '../../../../common/services/confirm-leave-dialog.
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+/**
+ * Pro settings form for payout currency
+ */
 @Component({
   selector: 'm-settingsV2Pro__payouts',
   templateUrl: './payouts.component.html',

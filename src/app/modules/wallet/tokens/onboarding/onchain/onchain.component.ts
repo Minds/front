@@ -21,6 +21,9 @@ enum Views {
   UseExternal,
 }
 
+/**
+ * DEPRECATED
+ */
 @Component({
   selector: 'm-token--onboarding--onchain',
   templateUrl: 'onchain.component.html',

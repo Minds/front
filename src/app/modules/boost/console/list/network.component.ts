@@ -4,6 +4,9 @@ import { BoostConsoleType } from '../console.component';
 
 import { BoostService } from '../../boost.service';
 
+/**
+ * Boosts made on the Minds network (aka NOT p2p boost offers). Used in the history section of the boost console.
+ */
 @Component({
   moduleId: module.id,
   providers: [BoostService],

@@ -50,6 +50,18 @@ import { FeaturesService } from '../../../../services/features.service';
 import { ActivityV2ModalCreatorService } from '../modal/modal-creator.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
+/**
+ * The content of the activity and the paywall, if applicable.
+ * Content types include image, video, rich embed (includes blogs), status (i.e. text only), quote.
+ *
+ * Reminds are excluded, as they are displayed as activity posts.
+ *
+ * All posts may have accompanying text.
+ *
+ * Media posts (images and videos) have an optional title field.
+ *
+ * Status posts are displayed in varying sizes - shorter status posts have larger text and vice versa.
+ */
 @Component({
   selector: 'm-activityV2__content',
   templateUrl: 'content.component.html',

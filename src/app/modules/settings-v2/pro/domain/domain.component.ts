@@ -20,6 +20,9 @@ import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 
+/**
+ * Pro settings domain form
+ */
 @Component({
   selector: 'm-settingsV2Pro__domain',
   templateUrl: './domain.component.html',

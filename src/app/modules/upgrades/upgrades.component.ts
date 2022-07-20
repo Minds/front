@@ -6,6 +6,11 @@ import {
 } from '@angular/core';
 import { ConfigsService } from '../../common/services/configs.service';
 
+/**
+ * Upgrades marketing page
+ *
+ * See it at /upgrades
+ */
 @Component({
   selector: 'm-upgrades',
   changeDetection: ChangeDetectionStrategy.OnPush,
