@@ -1,4 +1,9 @@
 <div class="m-channelAbout__brief" *ngIf="service.channel$ | async as channel">
+  <m-channel__mutualSubscriptions
+    [userGuid]="channel.guid"
+    *ngIf="!(service.isOwner$ | async)"
+  ></m-channel__mutualSubscriptions>
+
   <ng-container *ngIf="channel.briefdescription">
     <div class="m-channelAboutBrief__bio" m-read-more [maxHeightAllowed]="200">
       <div

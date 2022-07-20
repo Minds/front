@@ -1,0 +1,19 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep m-useraggregator {
+    flex-flow: row nowrap;
+  }
+
+  .m-channel__mutualSubscriptions {
+    height: 35px;
+    margin-bottom: $spacing4;
+  }
+
+  .m-channelMutualSubscriptions__nobodyInCommon {
+    @include body3Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

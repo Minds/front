@@ -89,7 +89,7 @@ describe('PlusVerifyComponent', () => {
     expect(comp.form).not.toBeNull();
   });
 
-  it('Should load correctly', () => {
+  it('Should load correctly and call endpoint', () => {
     comp.submit({});
     fixture.detectChanges();
     expect(clientMock.post.calls.mostRecent().args[0]).toEqual(

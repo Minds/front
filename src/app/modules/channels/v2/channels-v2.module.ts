@@ -42,6 +42,7 @@ import { ComposerModule } from '../../composer/composer.module';
 import { ChannelAdminConfirmationComponent } from './actions/admin-confirmation/admin-confirmation.component';
 import { ExperimentsModule } from '../../experiments/experiments.module';
 import { ContentSettingsModule } from '../../content-settings/content-settings.module';
+import { MutualSubscriptionsComponent } from './mutual-subscriptions/mutual-subscriptions.component';
 
 /**
  * Generally available components
@@ -79,6 +80,8 @@ const INTERNAL_COMPONENTS = [
   ChannelListConnectionsComponent,
   ChannelListGroupsComponent,
   ChannelShopLazyComponent,
+  //
+  MutualSubscriptionsComponent,
 ];
 
 /**

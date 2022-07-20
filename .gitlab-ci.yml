@@ -101,7 +101,6 @@ lint:
 
 qa:sandbox:
   parallel: 2
-  allow_failure: false
   except:
     refs:
       - /^master$/
