@@ -35,6 +35,11 @@ enum Views {
   CurrentAddress,
 }
 
+/**
+ * Token wallet settings component,
+ * for users to set/update the addresses for their onchain wallet
+ * and btc wallet (if they have one)
+ */
 @Component({
   selector: 'm-walletSettings--tokens',
   templateUrl: './settings-tokens.component.html',

@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { ActivityEntity, ActivityService } from '../activity.service';
 
+/**
+ * Displays a stripped-down activity (e.g. without toolbar action buttons or comments)
+ * within an activity, with the quoted content on top.
+ */
 @Component({
   selector: 'm-activity__remind',
   templateUrl: 'remind.component.html',

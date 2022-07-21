@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { WalletV2Service } from '../../wallet-v2.service';
 import { Timespan } from '../../../../../interfaces/dashboard';
 
+/**
+ * Displays a plotly chart and with a timespan filter to see
+ * data in different lengths of time (e.g. 1m, 1y)
+ *
+ * See it in wallet > tokens > balance
+ */
 @Component({
   selector: 'm-walletChart',
   templateUrl: './chart.component.html',

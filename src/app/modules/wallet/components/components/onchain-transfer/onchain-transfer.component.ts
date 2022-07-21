@@ -25,7 +25,13 @@ import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handle
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { ModalService } from '../../../../../services/ux/modal.service';
+import { EmailConfirmationService } from '../../../../../common/components/email-confirmation/email-confirmation.service';
 
+/**
+ * Modal that allows users to transfer tokens from off-chain to on-chain wallets
+ *
+ * See it by selecting "transfer on-chain" in the wallet > tokens > meatball menu (next to wallet address)
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-walletOnchainTransfer',
@@ -71,6 +77,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     protected phoneVerificationService: PhoneVerificationService,
     protected wirePaymentHandlers: WirePaymentHandlersService,
     protected web3Wallet: Web3WalletService,
+    protected emailConfirmation: EmailConfirmationService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -223,6 +230,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   }
 
   async openPhoneVerificationModal() {
+    if (!this.emailConfirmation.ensureEmailConfirmed()) return;
     this.phoneVerificationService.open();
   }
 

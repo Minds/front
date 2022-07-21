@@ -12,6 +12,11 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { MediumFadeAnimation } from '../../../../../animations';
 import { AutoProgressVideoService } from '../../../../../modules/media/components/video/auto-progress-overlay/auto-progress-video.service';
 
+/**
+ * Allows user to page through related activities within the activity modal.
+ * Related activities provided by the related content service.
+ * Pager arrows are displayed as an overlay on mouseover (or tap, on tablet)
+ */
 @Component({
   selector: 'm-activityV2__modalPager',
   templateUrl: './pager.component.html',

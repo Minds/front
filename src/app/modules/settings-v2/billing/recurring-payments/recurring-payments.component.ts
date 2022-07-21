@@ -3,6 +3,10 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { Client } from '../../../../common/api/client.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 
+/**
+ * Settings page for managing a list of recurring payments
+ * made to other Minds channels
+ */
 @Component({
   selector: 'm-settingsV2__recurringPayments',
   templateUrl: './recurring-payments.component.html',

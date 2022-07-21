@@ -11,6 +11,9 @@ import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
+/**
+ * DEPRECATED
+ */
 @Component({
   selector: 'm-token--onboarding--introduction',
   templateUrl: 'introduction.component.html',

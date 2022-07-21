@@ -13,6 +13,9 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { Client } from '../../../../services/api';
 import { ToasterService } from '../../../../common/services/toaster.service';
 
+/**
+ * Settings page for session management
+ */
 @Component({
   selector: 'm-settingsV2__sessions',
   templateUrl: './sessions.component.html',

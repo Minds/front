@@ -27,6 +27,11 @@ import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
+/**
+ * The topbar of the site, visible almost everywhere
+ *
+ * (but not on the homepage)
+ */
 @Component({
   selector: 'm-v3topbar',
   templateUrl: 'v3-topbar.component.html',

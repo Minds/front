@@ -14,6 +14,14 @@ import {
 import { Client } from '../../../../../services/api/client';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { WalletV2Service } from '../../wallet-v2.service';
+
+/**
+ * Allows users to set/update a bitcoin wallet address
+ *
+ * Includes validation to make sure the address is in the correct format
+ *
+ * See it in wallet > tokens > settings
+ */
 @Component({
   selector: 'm-walletSettings--btc',
   templateUrl: './settings-btc.component.html',

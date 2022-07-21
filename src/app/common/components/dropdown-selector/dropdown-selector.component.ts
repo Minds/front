@@ -10,6 +10,11 @@ import {
 import { Session } from '../../../services/session';
 import { Filter, Option } from '../../../interfaces/dashboard';
 
+/**
+ * A specialized dropdown menu whose trigger component displays the currently selected item
+ *
+ * See it in the filters of analytics charts
+ */
 @Component({
   selector: 'm-dropdownSelector',
   templateUrl: './dropdown-selector.component.html',

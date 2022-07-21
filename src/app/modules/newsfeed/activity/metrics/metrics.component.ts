@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { ActivityService, ActivityEntity } from '../activity.service';
 import { map } from 'rxjs/operators';
 
+/**
+ * Displays view count and whether activity is boosted
+ */
 @Component({
   selector: 'm-activity__metrics',
   templateUrl: 'metrics.component.html',

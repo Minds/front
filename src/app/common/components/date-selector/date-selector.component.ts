@@ -9,6 +9,8 @@ import {
 /**
  * Date and time picker / selector.
  * Uses owl-date-time plugin
+ *
+ * See it in wallet rewards
  * @author Ben Hayward
  */
 @Component({

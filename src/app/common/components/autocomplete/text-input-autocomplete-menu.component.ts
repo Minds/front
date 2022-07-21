@@ -7,6 +7,11 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 
+/**
+ * The dropdown menu that appears with
+ * autocomplete suggestions of users or hashtags,
+ * based on what the user has typed already
+ */
 @Component({
   selector: 'm-text-input--autocomplete-menu',
   templateUrl: 'text-input-autocomplete-menu.component.html',

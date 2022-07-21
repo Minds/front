@@ -13,6 +13,10 @@ import { Session } from '../../../services/session';
 import { MessengerEncryptionService } from '../encryption/encryption.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   selector: 'm-messenger--onboarding--setup',
   templateUrl: 'setup.component.html',

@@ -9,6 +9,9 @@ import {
   EmailNotificationTopic,
 } from '../notifications-settings-v3.type';
 
+/**
+ * Settings form for controlling what email notifications you receive, and when.
+ */
 @Component({
   selector: 'm-settingsV2__emailNotifications--v3',
   templateUrl: './email-notifications-v3.component.html',

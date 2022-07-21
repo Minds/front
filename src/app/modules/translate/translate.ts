@@ -4,6 +4,13 @@ import { TranslationService } from '../../services/translation';
 import { FeaturesService } from '../../services/features.service';
 import { ToasterService } from '../../common/services/toaster.service';
 
+/**
+ * Displays translated text
+ *
+ * Users can select from a menu of languages
+ *
+ * See it by clicking 'translate' in an activity's dropdown menu
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-translate',

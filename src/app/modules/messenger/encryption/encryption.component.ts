@@ -6,6 +6,10 @@ import { Session } from '../../../services/session';
 import { MessengerEncryptionService } from './encryption.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-messenger--encryption',

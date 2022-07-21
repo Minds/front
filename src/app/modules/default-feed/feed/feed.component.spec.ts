@@ -1,19 +1,49 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { DefaultFeedComponent } from './feed.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { FeedsService } from '../../../common/services/feeds.service';
-import { feedsServiceMock } from '../../../../tests/feed-service-mock.spec';
 import { GlobalScrollService } from '../../../services/ux/global-scroll.service';
 import { By } from '@angular/platform-browser';
 import { Session } from './../../../services/session';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { BehaviorSubject, of } from 'rxjs';
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
   let fixture: ComponentFixture<DefaultFeedComponent>;
+
+  let feedsServiceMock = {
+    canFetchMore: true,
+    inProgress: new BehaviorSubject(false),
+    offset: new BehaviorSubject<number>(0),
+    feed: new BehaviorSubject(Array(25).fill(of({}))),
+    clear() {
+      of({ response: false }, { response: false }, { response: true });
+    },
+    response() {
+      return { response: true };
+    },
+    setEndpoint(str) {
+      return this;
+    }, //chainable
+    setLimit(limit) {
+      return this;
+    },
+    setParams(params) {
+      return this;
+    },
+    setUnseen(params) {
+      return this;
+    },
+    fetch() {
+      return this;
+    },
+    loadMore() {
+      return this;
+    },
+  };
 
   beforeEach(
     waitForAsync(() => {
@@ -32,6 +62,10 @@ describe('DefaultFeedComponent', () => {
             selector: 'infinite-scroll',
             inputs: ['moreData', 'inProgress'],
             outputs: ['load'],
+          }),
+          MockComponent({
+            selector: 'm-feedNotice__outlet',
+            inputs: ['location'],
           }),
           DefaultFeedComponent,
         ],
@@ -106,5 +140,19 @@ describe('DefaultFeedComponent', () => {
 
     expect(comp.feedsService.fetch).toHaveBeenCalled();
     expect(comp.feedsService.loadMore).toHaveBeenCalled();
+  });
+
+  it('should have a feed notice in top position', () => {
+    expect(
+      fixture.debugElement.query(By.css(`m-feedNotice__outlet[location="top"]`))
+    ).toBeTruthy();
+  });
+
+  it('should have a feed notice in inline position', () => {
+    let inlineElements = fixture.debugElement.queryAll(
+      By.css(`m-feedNotice__outlet[location="inline"]`)
+    );
+    expect(inlineElements).toBeTruthy();
+    expect(inlineElements.length).toBe(4); // pos 6, 12, 18, 24
   });
 });

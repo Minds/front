@@ -16,6 +16,10 @@ import {
   trigger,
 } from '@angular/animations';
 
+/**
+ * Displays one or more toast notifications with sliding animations
+ * and automatic fadeout (unless user's mouse is hovering over it)
+ */
 @Component({
   selector: 'm-toaster',
   templateUrl: './toaster.component.html',

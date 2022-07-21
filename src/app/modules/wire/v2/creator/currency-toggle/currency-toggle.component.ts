@@ -9,7 +9,7 @@ import {
 import { WireV2Service } from '../../wire-v2.service';
 
 /**
- * Support tier confirmation component
+ * Allows users to toggle between USD and tokens when making a payment
  */
 @Component({
   selector: 'm-wireCreator__currencyToggle',

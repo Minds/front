@@ -148,4 +148,13 @@ export class CommentsEntityOutletV2Component {
   ngOnChanges(changes) {
     //  console.log('[comment:list]: on changes', changes);
   }
+
+  /**
+   * deletes an optimistic comment from the array
+   * @param i index of the comment
+   */
+  delete(i: number) {
+    this.optimisticList.splice(i, 1);
+    this.detectChanges();
+  }
 }

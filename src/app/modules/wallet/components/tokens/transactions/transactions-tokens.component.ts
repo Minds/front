@@ -17,6 +17,10 @@ import toFriendlyCryptoVal from '../../../../../helpers/friendly-crypto';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
+/**
+ * Component that contains the token transactions table
+ * and also a filter for transaction type (e.g rewards, on-chain transfers, etc.)
+ */
 @Component({
   selector: 'm-walletTransactions--tokens',
   templateUrl: './transactions-tokens.component.html',

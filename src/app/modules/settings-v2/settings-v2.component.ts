@@ -15,7 +15,7 @@ import { FeaturesService } from '../../services/features.service';
 import { Subscription } from 'rxjs';
 
 /**
- * Determines what form/menu(s)
+ * Container that determines what form/menu(s)
  * should be displayed in the settings-v2 module
  */
 @Component({

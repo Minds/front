@@ -11,6 +11,9 @@ import { Client } from '../../../../services/api/client';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 
+/**
+ * Settings page for managing a list of blocked channels
+ */
 @Component({
   selector: 'm-settingsV2__blockedChannels',
   templateUrl: './blocked-channels.component.html',

@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { filter, pairwise } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RouterHistoryService {
   eventsSubscription: Subscription;
   history: Array<string> = [];

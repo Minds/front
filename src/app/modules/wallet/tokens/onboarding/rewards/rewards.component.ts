@@ -13,6 +13,9 @@ import { Session } from '../../../../../services/session';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 
+/**
+ * DEPRECATED
+ */
 @Component({
   selector: 'm-token--onboarding--rewards',
   templateUrl: 'rewards.component.html',

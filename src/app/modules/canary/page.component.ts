@@ -6,6 +6,9 @@ import { storageMock } from '../../../tests/storage-mock.spec';
 import { Storage } from '../../services/storage';
 import { ToasterService } from '../../common/services/toaster.service';
 
+/**
+ * Page that allows users to toggle Canary mode off/on
+ */
 @Component({
   selector: 'm-canary',
   templateUrl: 'page.component.html',

@@ -14,6 +14,9 @@ import { DialogService } from '../../../../common/services/confirm-leave-dialog.
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+/**
+ * Pro settings form for setting up category filter hashtags
+ */
 @Component({
   selector: 'm-settingsV2Pro__hashtags',
   templateUrl: './hashtags.component.html',

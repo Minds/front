@@ -570,11 +570,17 @@ export class ComposerService implements OnDestroy {
         // Only react to rich-embed URL changes
         distinctUntilChanged(),
 
-        // Call the engine endpoint to resolve the URL, debouncing the request to avoid server overload
+        // Trigger in progress state of indeterminate length.
+        tap(() => this.setProgress(true)),
+
+        // Call the engine endpoint to resolve the URL, debouncing the request to avoid server overload,
         this.richEmbed.resolve(200),
 
-        // Update the preview
-        tap((richEmbed: RichEmbed) => this.richEmbedPreview$.next(richEmbed))
+        // Set preview
+        tap((richEmbed: RichEmbed) => this.richEmbedPreview$.next(richEmbed)),
+
+        // Set in progress state to null.
+        tap(() => this.inProgress$.next(null))
 
         // Value will be either a RichEmbed interface object or null
       ),
@@ -1003,10 +1009,13 @@ export class ComposerService implements OnDestroy {
       this.isGroupPost$.next(true);
     }
 
+    // Preventing paywallception: you cannot paywall an already paywalled remind
+    const monetized = !remind?.paywall && monetization;
+
     this.payload = {
       message: message || '',
-      wire_threshold: monetization || null,
-      paywall: Boolean(monetization),
+      wire_threshold: monetized ? monetization : null,
+      paywall: monetized,
       time_created: schedule || null,
       mature: nsfw && nsfw.length > 0,
       nsfw: nsfw || [],

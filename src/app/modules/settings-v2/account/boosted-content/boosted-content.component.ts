@@ -14,6 +14,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Storage } from '../../../../services/storage';
 
+/**
+ * Form for setting boost-related preferences
+ */
 @Component({
   selector: 'm-settingsV2__boostedContent',
   templateUrl: './boosted-content.component.html',
