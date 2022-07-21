@@ -4,6 +4,10 @@ import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 
+/**
+ * Settings component that reroutes to the user's
+ * channel membership tiers
+ */
 @Component({
   selector: 'm-settingsV2__subscriptionTiers',
   template: ``,

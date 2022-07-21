@@ -17,6 +17,15 @@ export interface SocialProfileMeta {
   customIcon?: boolean;
 }
 
+/**
+ * Displays the badges associated with a channel
+ *
+ * Control which badges are shown by passing a
+ * subset of the available badge types as an input
+ *
+ * Admins may use this component to toggle whether a
+ * channel is verified or a founder
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-channel--badges',

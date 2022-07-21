@@ -41,6 +41,11 @@ import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * Base component for activity posts (excluding activities displayed in a modal).
+ *
+ * Includes activities displayed in feeds, on single activity pages, in pro pages, channel grid mode, sidebar boosts (excluding blogs), sidebar suggestions
+ */
 @Component({
   selector: 'm-activityV2',
   templateUrl: 'activity.component.html',

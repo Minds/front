@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
 
+/**
+ * Small marketing emblem for Minds pay
+ *
+ * See it in the tip modal
+ */
 @Component({
   selector: 'm-poweredBy',
   templateUrl: 'powered-by.component.html',

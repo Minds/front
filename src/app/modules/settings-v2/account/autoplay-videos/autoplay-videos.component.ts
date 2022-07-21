@@ -15,6 +15,9 @@ import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
 
+/**
+ * Setting that controls whether videos in your feed play automatically.
+ */
 @Component({
   selector: 'm-settingsV2__autoplayVideos',
   templateUrl: './autoplay-videos.component.html',

@@ -44,6 +44,11 @@ export const ACTIVITY_MODAL_PADDING = 60; // 20px on each side
 export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
   ACTIVITY_MODAL_CONTENT_WIDTH + ACTIVITY_MODAL_PADDING;
 
+/**
+ * Base component for activities displayed in a modal.
+ * Only media posts (images and videos) are allowed to be displayed in the modal.
+ * The modal is opened when the content of a media post is clicked (excluding mobile users)
+ */
 @Component({
   selector: 'm-activityV2__modal',
   templateUrl: './modal.component.html',

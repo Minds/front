@@ -15,6 +15,11 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
 } from '../../activity.service';
 
+/**
+ * DEPRECATED because modal only shows images and video posts.
+ *
+ * Displays quote posts in the media modal.
+ */
 @Component({
   selector: 'm-activity__modalQuote',
   templateUrl: './quote.component.html',

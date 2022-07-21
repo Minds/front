@@ -15,6 +15,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import * as moment from 'moment';
 
+/**
+ * Settings form cancelling Pro subscription
+ * (or upgrading to Pro, if you don't have it yet)
+ */
 @Component({
   selector: 'm-settingsV2Pro__cancel',
   templateUrl: './cancel.component.html',

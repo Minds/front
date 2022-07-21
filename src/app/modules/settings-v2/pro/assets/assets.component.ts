@@ -17,6 +17,9 @@ import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 
+/**
+ * Pro settings form for logo and background images
+ */
 @Component({
   selector: 'm-settingsV2Pro__assets',
   templateUrl: './assets.component.html',

@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { TokenPricesService } from '../currency-value/token-prices.service';
 
+/**
+ * 'Pill' component that displays the cost of 1 token in USD
+ *
+ * See it in analytics > tokens
+ */
 @Component({
   selector: 'm-wallet__tokenPriceBadge',
   templateUrl: './token-price-badge.component.html',

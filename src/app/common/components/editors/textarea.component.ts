@@ -10,6 +10,13 @@ import {
 
 declare var tinymce;
 
+/**
+ * Text area component that handles pasted media attachments
+ *
+ * Inputs include custom placeholder text and disabled state
+ *
+ * See it in the comment poster/editor
+ */
 @Component({
   selector: 'minds-textarea',
   template: `

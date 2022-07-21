@@ -3,6 +3,10 @@ import { Component, Injector } from '@angular/core';
 import { MessengerEncryptionService } from '../encryption/encryption.service';
 import { animations } from '../animations';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-messenger--setup',

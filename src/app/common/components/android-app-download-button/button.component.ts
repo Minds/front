@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+/**
+ * A link with an icon that points to the /mobile page
+ * So users can download the app
+ */
 @Component({
   selector: 'm-androidAppDownloadButton',
   template: `

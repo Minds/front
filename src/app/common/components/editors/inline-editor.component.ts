@@ -25,6 +25,11 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
   multi: true,
 };
 
+/**
+ * Inline editor that handles a variety of text formatting options and embedded attachments.
+ *
+ * See it in the blog editor.
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-inlineEditor',

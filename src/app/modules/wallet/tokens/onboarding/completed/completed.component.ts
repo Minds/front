@@ -11,6 +11,9 @@ import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { Storage } from '../../../../../services/storage';
 
+/**
+ * DEPRECATED
+ */
 @Component({
   selector: 'm-token--onboarding--completed',
   templateUrl: 'completed.component.html',

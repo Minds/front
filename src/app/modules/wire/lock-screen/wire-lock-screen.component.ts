@@ -20,6 +20,11 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
+/**
+ * Blocks access to paywalled activities for users who haven't paid
+ *
+ * See it in a paywalled activity
+ */
 export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
   moduleId: module.id,

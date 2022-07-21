@@ -14,6 +14,10 @@ import { DialogService } from '../../../../common/services/confirm-leave-dialog.
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+/**
+ * Pro settings form for pro site title and headline.
+ * Includes checkbox for enabling/disabling splash page.
+ */
 @Component({
   selector: 'm-settingsV2Pro__general',
   templateUrl: './general.component.html',

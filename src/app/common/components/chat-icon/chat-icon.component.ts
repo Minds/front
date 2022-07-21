@@ -6,6 +6,10 @@ import { Client } from '../../api/client.service';
 import { ConfigsService } from '../../services/configs.service';
 import { ChatIconService } from './chat-icon.service';
 
+/**
+ * Chat icon
+ * Used in navigation to get to Minds Chat
+ */
 @Component({
   selector: 'm-chatIcon',
   templateUrl: './chat-icon.component.html',

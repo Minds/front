@@ -14,6 +14,11 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { UserMenuService } from './user-menu.service';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 
+/**
+ * Menu that contains important links we want to be extra accessible to users
+ *
+ * See it by clicking your avatar (as a logged-in user) on the topbar
+ */
 @Component({
   selector: 'm-userMenu',
   templateUrl: 'user-menu.component.html',
