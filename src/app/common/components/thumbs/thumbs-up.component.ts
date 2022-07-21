@@ -127,7 +127,12 @@ export class ThumbsUpButton {
       this.object['thumbs:up:count']--;
     }
 
-    this.activityService.entity$.next(this.object);
+    if (
+      this.object['type'] === 'activity' ||
+      this.object['type'] === 'object'
+    ) {
+      this.activityService.entity$.next(this.object);
+    }
 
     this.cd.detectChanges();
   }
