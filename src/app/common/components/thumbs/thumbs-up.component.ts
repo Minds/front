@@ -126,7 +126,7 @@ export class ThumbsUpButton {
       }
       this.object['thumbs:up:count']--;
     }
-    console.log(this.object['type']);
+
     if (
       this.object['type'] === 'activity' ||
       this.object['type'] === 'object'
