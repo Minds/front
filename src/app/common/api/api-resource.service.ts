@@ -122,6 +122,11 @@ export class ResourceRef<T, P> {
     };
   }
 
+  setData(func: (oldData: any) => any) {
+    const newData = func(this.data$.getValue());
+    this.data$.next(newData);
+  }
+
   /**
    *
    * @param _params
@@ -187,7 +192,7 @@ export class ResourceRef<T, P> {
         .toPromise()
         .then(response => {
           this.data$.next(
-            this._updateState(response as any, this.data$.getValue())
+            this._updateState(response as any, this.data$.getValue(), options)
           );
 
           // only cache get requests
@@ -214,9 +219,13 @@ export class ResourceRef<T, P> {
    * updates the response based on the policy provided
    * TODO
    */
-  private _updateState(newDate: T, oldData: T): any {
-    if (this.options.updateState) {
-      return this.options.updateState(newDate, oldData);
+  private _updateState(
+    newDate: T,
+    oldData: T,
+    options: ApiResourceOptions<T, P> = this.options
+  ): any {
+    if (options.updateState) {
+      return options.updateState(newDate, oldData);
     }
     switch (this.options.updatePolicy) {
       case UpdatePolicy.merge:
