@@ -8,6 +8,7 @@
   <minds-button-thumbs-up
     [object]="entity"
     [iconOnly]="service.displayOptions.showInteractions"
+    (thumbsUpChange)="detectChanges()"
   ></minds-button-thumbs-up>
   <minds-button-thumbs-down
     [object]="entity"
