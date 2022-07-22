@@ -19,7 +19,7 @@ import {
 import currency from '../../../helpers/currency';
 import { Location } from '@angular/common';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { FeaturesService } from '../../../services/features.service';
 import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
@@ -79,7 +79,7 @@ export class PlusSubscriptionComponent implements OnInit {
     protected route: ActivatedRoute,
     protected router: Router,
     configs: ConfigsService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     private features: FeaturesService
   ) {
     this.upgrades = configs.get('upgrades');

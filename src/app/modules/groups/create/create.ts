@@ -5,7 +5,7 @@ import { GroupsService } from '../groups.service';
 
 import { Session } from '../../../services/session';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
  * Form for creating a new group.
@@ -31,7 +31,7 @@ export class GroupsCreator {
     public session: Session,
     public service: GroupsService,
     public router: Router,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   ngOnInit() {

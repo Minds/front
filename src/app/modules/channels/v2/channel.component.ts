@@ -20,7 +20,7 @@ import { Session } from '../../../services/session';
 import { RecentService } from '../../../services/ux/recent';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { Experiment } from '../../experiments/experiments.service';
 import { MutualSubscriptionsService } from './mutual-subscriptions/mutual-subscriptions.service';
@@ -143,7 +143,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     protected clientMetaService: ClientMetaService,
     protected cd: ChangeDetectorRef,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected injector: Injector,
     protected publisherSearchModal: PublisherSearchModalService
   ) {}

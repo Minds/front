@@ -90,7 +90,7 @@ export interface UserState {
   loading: boolean;
 }
 
-export interface ShadowboxHeaderTab {
+export interface DataTab {
   id: string;
   label: string;
   value?: string | number;

@@ -8,7 +8,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
 import { VideoChatModule } from '../videochat/videochat.module';
 
-import { GroupsJoinButton } from './groups-join-button';
+import { GroupMembershipButton } from './group-membership-button';
 import { GroupsProfileMembersInvite } from './profile/members/invite/invite';
 import { GroupsCard } from './card/card';
 import { GroupsCardUserActionsButton } from './profile/card-user-actions-button';
@@ -87,7 +87,7 @@ const routes: Routes = [
   declarations: [
     GroupsProfile,
     GroupsCreator,
-    GroupsJoinButton,
+    GroupMembershipButton,
     GroupsProfileMembersInvite,
     GroupsCard,
     GroupsCardUserActionsButton,
@@ -105,7 +105,7 @@ const routes: Routes = [
   exports: [
     GroupsProfile,
     GroupsCreator,
-    GroupsJoinButton,
+    GroupMembershipButton,
     GroupsProfileMembersInvite,
     GroupsCard,
     GroupsCardUserActionsButton,

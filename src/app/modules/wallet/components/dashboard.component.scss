@@ -201,21 +201,21 @@ m-walletDashboard,
       background-color: themed($m-bgColor--primary);
     }
   }
-  m-shadowboxHeader {
+  m-dataTabsHeader {
     min-height: 103px;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @media screen and (max-width: $max-mobile) {
       min-height: 85px;
     }
   }
-  .m-shadowboxHeader__wrapper {
+  .m-dataTabsHeader__wrapper {
     height: 103px;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @media screen and (max-width: $max-mobile) {
       height: 85px;
     }
   }
-  .m-shadowboxHeaderTab {
+  .m-dataTab {
     width: 149px;
     min-height: 103px;
     max-height: 103px;
@@ -228,7 +228,7 @@ m-walletDashboard,
       padding: 13px 15px 15px 20px;
     }
 
-    .m-shadowboxHeaderTab__label {
+    .m-dataTab__label {
       margin-top: 6px;
       font-size: 18px;
       @include m-theme() {
@@ -243,7 +243,7 @@ m-walletDashboard,
         }
       }
     }
-    .m-shadowboxHeaderTab__value {
+    .m-dataTab__value {
       font-weight: 300;
       font-size: 16px;
       @include m-theme() {

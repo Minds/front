@@ -10,7 +10,7 @@ import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
 import { Subscription } from 'rxjs';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-groups-profile__review',
@@ -39,7 +39,7 @@ export class GroupsProfileReviewComponent implements OnInit {
     protected router: Router,
     protected client: Client,
     protected cd: ChangeDetectorRef,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

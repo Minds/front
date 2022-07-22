@@ -12,8 +12,8 @@ import { OnchainTransferModalService } from '../../components/onchain-transfer/o
 import { WalletV2Service } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
 import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { MindsUser } from '../../../../../interfaces/entities';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
 /**
  * Dashboard view of token rewards.
@@ -123,7 +123,7 @@ export class WalletTokenRewardsComponent implements OnInit {
     private walletService: WalletV2Service,
     private session: Session,
     protected connectWalletModalService: ConnectWalletModalService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {

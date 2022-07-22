@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { Session } from '../../../services/session';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { BoostModalComponent } from './boost-modal.component';
@@ -47,8 +47,8 @@ describe('BoostModalComponent', () => {
             useValue: sessionMock,
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           {
             provide: ConfigsService,

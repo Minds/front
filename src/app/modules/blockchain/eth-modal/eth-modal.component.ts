@@ -17,7 +17,7 @@ import { SendWyreService } from '../sendwyre/sendwyre.service';
 import { SendWyreConfig } from '../sendwyre/sendwyre.interface';
 import { SiteService } from '../../../common/services/site.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-blockchain__eth-modal',
@@ -40,7 +40,7 @@ export class BlockchainEthModalComponent implements OnInit {
     public session: Session,
     public site: SiteService,
     private configs: ConfigsService,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   ngOnInit() {

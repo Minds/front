@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, interval, Observable } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { EmailConfirmationService } from '../components/email-confirmation/email-confirmation.service';
-import { FormToastService } from './form-toast.service';
+import { ToasterService } from './toaster.service';
 
 /**
  * Allows a member to attempt to resend a confirmation email.
@@ -32,7 +32,7 @@ export class EmailResendService {
 
   constructor(
     protected service: EmailConfirmationService,
-    protected toast: FormToastService
+    protected toast: ToasterService
   ) {}
 
   /**

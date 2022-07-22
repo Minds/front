@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
 import { map, shareReplay, switchMapTo, tap } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { Client } from '../../../services/api';
 import * as moment from 'moment';
 
@@ -64,7 +64,7 @@ export class AnalyticsGlobalTokensService {
 
   constructor(
     private client: Client,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   /**

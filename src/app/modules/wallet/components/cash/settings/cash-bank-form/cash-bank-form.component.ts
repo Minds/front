@@ -9,7 +9,7 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { requiredFor, optionalFor } from '../settings-cash.validators';
 import { WalletV2Service } from '../../../wallet-v2.service';
-import { FormToastService } from '../../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../../common/services/toaster.service';
 
 /**
  * Dynamic form that displays/updates the bank account that will receive cash rewards.
@@ -38,7 +38,7 @@ export class WalletCashBankFormComponent implements OnInit {
     private cd: ChangeDetectorRef,
     protected walletService: WalletV2Service,
     private fb: FormBuilder,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   ngOnInit() {

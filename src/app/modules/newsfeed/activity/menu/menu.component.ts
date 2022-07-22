@@ -16,7 +16,7 @@ import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { TranslationService } from '../../../../services/translation';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { DownloadActivityMediaService } from '../../../../common/services/download-activity-media.service';
 
 /**
@@ -46,7 +46,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private composerModal: ComposerModalService,
     private injector: Injector,
     public translationService: TranslationService,
-    private toasterService: FormToastService,
+    private toasterService: ToasterService,
     public downloadActivityMediaService: DownloadActivityMediaService
   ) {}
 

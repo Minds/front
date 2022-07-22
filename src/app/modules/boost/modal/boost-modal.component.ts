@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { Session } from '../../../services/session';
 import {
   BoostModalService,
@@ -26,7 +26,7 @@ export class BoostModalComponent implements OnInit, OnDestroy {
   constructor(
     private service: BoostModalService,
     private session: Session,
-    private toast: FormToastService,
+    private toast: ToasterService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');

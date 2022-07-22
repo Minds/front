@@ -19,7 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { ModalService } from '../../../services/ux/modal.service';
@@ -62,8 +62,8 @@ describe('ReportCreatorComponent', () => {
           { provide: Client, useValue: clientMock },
           { provide: ModalService, useValue: modalServiceMock },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           {
             provide: ReportService,
