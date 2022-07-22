@@ -187,7 +187,7 @@ export class ResourceRef<T, P> {
         .toPromise()
         .then(response => {
           this.data$.next(
-            this._updateState(response as T, this.data$.getValue())
+            this._updateState(response as any, this.data$.getValue())
           );
 
           // only cache get requests
