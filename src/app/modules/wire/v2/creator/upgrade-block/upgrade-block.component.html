@@ -1,0 +1,53 @@
+<div
+  class="m-wireCreator__upgradeBlock"
+  *ngIf="upgradeType"
+  [ngClass]="{ isPlus: isPlus, isPro: isPro }"
+>
+  <div class="m-wireCreatorUpgradeBlock__copy">
+    <div
+      class="m-wireCreatorUpgradeBlock__label"
+      [ngClass]="{
+        badgeOnly: isPlus,
+        isPro: isPro
+      }"
+    >
+      <span *ngIf="isPro" i18n>Minds</span>
+      <div class="m-wireCreatorUpgradeBlock__badge">
+        <span>
+          <ng-container *ngIf="isPlus">MINDS+</ng-container>
+          <ng-container *ngIf="isPro" i18n>Pro</ng-container></span
+        >
+      </div>
+    </div>
+    <div class="m-wireCreatorUpgradeBlock__title">
+      <span i18n="@@WIRE_CREATOR_MARKETING__UNLOCK_POWER"
+        >Unlock the power of Minds</span
+      >
+    </div>
+
+    <div class="m-wireCreatorUpgradeBlock__desc">
+      <ng-container *ngIf="isPlus" i18n="@@WIRE_CREATOR_MARKETING__PLUS_DESC"
+        >Support Minds and unlock features such as earning revenue for your
+        content, hiding ads, accessing exclusive content, receiving a badge and
+        verifying your channel.</ng-container
+      >
+      <ng-container *ngIf="isPro" i18n="@@WIRE_CREATOR_MARKETING__PRO_DESC"
+        >Get paid for your traffic and referrals, launch your own website,
+        receive multi-currency tips and subscription payments from fans and much
+        more.</ng-container
+      >
+      If you pay for your membership in tokens, you are only eligible to be paid
+      out in tokens. If you pay in cash, you are eligible to be paid out in
+      cash, Bitcoin, Ether or tokens.
+    </div>
+    <div class="m-wireCreatorUpgradeBlock__learnMore">
+      <a [routerLink]="['/', this.upgradeType]">
+        <span i18n="@@WIRE_CREATOR_MARKETING__LEARN_MORE"
+          >Learn More about Minds<ng-container *ngIf="isPlus">+</ng-container>
+          <ng-container *ngIf="isPro"> Pro</ng-container>
+        </span>
+        <i class="material-icons">trending_flat</i>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ApiService } from '../../../common/api/api.service';
 import { MindsUser } from '../../../interfaces/entities';
 
@@ -16,7 +16,7 @@ export class AdminLiquidityProvidersComponent {
 
   constructor(
     public api: ApiService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected cd: ChangeDetectorRef
   ) {}
 

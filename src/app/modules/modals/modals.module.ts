@@ -14,7 +14,7 @@ import { ConfirmPasswordModalComponent } from './confirm-password/modal.componen
 import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
-import { ConcertColorsModalComponent } from './concert-colors/concert-colors-modal.component';
+import { PhotoBannerModalComponent } from './photo-banner/photo-banner-modal.component';
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import { ConcertColorsModalComponent } from './concert-colors/concert-colors-mod
   ],
   declarations: [
     ConfirmModal,
-    ConcertColorsModalComponent,
+    PhotoBannerModalComponent,
     ShareModalComponent,
     SignupOnActionModal,
     SignupModal,
@@ -42,7 +42,7 @@ import { ConcertColorsModalComponent } from './concert-colors/concert-colors-mod
     SignupOnActionModal,
     SignupModal,
     TOSUpdatedModal,
-    ConcertColorsModalComponent,
+    PhotoBannerModalComponent,
   ],
 })
 export class ModalsModule {}

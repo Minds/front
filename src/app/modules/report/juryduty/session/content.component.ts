@@ -2,7 +2,7 @@ import { Component, Input, Inject, PLATFORM_ID } from '@angular/core';
 
 import { JurySessionService } from './session.service';
 import { isPlatformBrowser } from '@angular/common';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-juryDutySession__content',
@@ -14,7 +14,7 @@ export class JuryDutySessionContentComponent {
 
   constructor(
     private sessionService: JurySessionService,
-    private toast: FormToastService,
+    private toast: ToasterService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 

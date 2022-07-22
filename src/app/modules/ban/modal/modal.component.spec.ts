@@ -19,7 +19,7 @@ import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec'
 import { BanModalComponent } from './modal.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { MockService } from '../../../utils/mock';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
@@ -47,8 +47,8 @@ describe('BanModalComponent', () => {
           { provide: Client, useValue: clientMock },
           { provide: ModalService, useValue: modalServiceMock },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           {
             provide: ReportService,

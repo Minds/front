@@ -4,7 +4,7 @@ import { ComposerService } from './services/composer.service';
 import { MockComponent, MockService } from '../../utils/mock';
 import { ComposerModalService } from './components/modal/modal.service';
 import { By } from '@angular/platform-browser';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 import { composerMockService } from '../../mocks/modules/composer/services/composer.service.mock';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
@@ -43,8 +43,8 @@ describe('Composer', () => {
             useValue: MockService(ComposerModalService),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           {
             provide: Session,

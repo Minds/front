@@ -9,7 +9,7 @@ import { Session } from '../../../../services/session';
 import { InlineEditorComponent } from '../../../../common/components/editors/inline-editor.component';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { BlogsEditService } from './blog-edit.service';
 import { take } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -48,7 +48,7 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
     private dialogService: DialogService,
     configs: ConfigsService,
     protected location: Location,
-    private toasterService: FormToastService,
+    private toasterService: ToasterService,
     public service: BlogsEditService
   ) {
     this.cdnUrl = configs.get('cdn_url');

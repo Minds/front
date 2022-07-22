@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { BehaviorSubject, fromEvent } from 'rxjs';
 import { take, throttleTime } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import {
   SettingsTwoFactorV2Service,
   TwoFactorSetupPanel,
@@ -48,7 +48,7 @@ export class SettingsTwoFactorRecoveryCodeComponent
 
   constructor(
     private service: SettingsTwoFactorV2Service,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {
     super();
   }

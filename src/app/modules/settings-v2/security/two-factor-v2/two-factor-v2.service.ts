@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { catchError, map, skip, take, throttleTime } from 'rxjs/operators';
 import { ApiService } from '../../../../common/api/api.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import { SettingsV2Service } from '../../settings-v2.service';
 
@@ -80,7 +80,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
   >('');
 
   constructor(
-    private toast: FormToastService,
+    private toast: ToasterService,
     private api: ApiService,
     private settings: SettingsV2Service,
     private session: Session,

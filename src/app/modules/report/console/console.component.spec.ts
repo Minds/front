@@ -35,7 +35,7 @@ import {
   $afterAll,
 } from 'jasmine-ts-async';
 import { JurySessionService } from '../juryduty/session/session.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { MockService } from '../../../utils/mock';
 /* tslint:disable */
 describe('ReportConsoleComponent', () => {
@@ -57,8 +57,8 @@ describe('ReportConsoleComponent', () => {
           { provide: Client, useValue: clientMock },
           JurySessionService,
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           {
             provide: ReportService,

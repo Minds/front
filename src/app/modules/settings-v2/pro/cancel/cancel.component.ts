@@ -12,7 +12,7 @@ import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import * as moment from 'moment';
 
 /**
@@ -44,7 +44,7 @@ export class SettingsV2ProCancelComponent implements OnInit {
     private dialogService: DialogService,
     protected router: Router,
     protected route: ActivatedRoute,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

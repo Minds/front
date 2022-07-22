@@ -5,7 +5,7 @@
 // import { sessionMock } from '../../../../../tests/session-mock.spec';
 // import { YoutubeMigrationService } from '../youtube-migration.service';
 // import { MockService } from '../../../../utils/mock';
-// import { FormToastService } from '../../../../common/services/form-toast.service';
+// import { ToasterService } from '../../../../common/services/toaster.service';
 // import { Router } from '@angular/router';
 // import { RouterTestingModule } from '@angular/router/testing';
 
@@ -28,8 +28,8 @@
 //           useValue: MockService(YoutubeMigrationService),
 //         },
 //         {
-//           provide: FormToastService,
-//           useValue: MockService(FormToastService),
+//           provide: ToasterService,
+//           useValue: MockService(ToasterService),
 //         },
 //         // { provide: Router, useValue: routerMock },
 //       ],

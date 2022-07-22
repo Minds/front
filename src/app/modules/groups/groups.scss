@@ -5,7 +5,7 @@
   margin: 0 auto;
 }
 .minds-banner-card {
-  minds-groups-join-button {
+  m-group__membershipButton {
     position: absolute;
     margin: -38px 130px;
   }
@@ -190,7 +190,7 @@ minds-groups-profile {
     padding: $minds-padding * 2;
     text-align: center;
 
-    minds-groups-join-button {
+    m-group__membershipButton {
       margin-left: 0.5em;
     }
   }
@@ -577,7 +577,7 @@ minds-groups-create {
       font-size: 23px;
     }
   }
-  minds-groups-join-button {
+  m-group__membershipButton {
     padding: $minds-padding 0;
 
     .m-btn.subscribed {

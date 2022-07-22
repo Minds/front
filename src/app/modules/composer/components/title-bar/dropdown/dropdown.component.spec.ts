@@ -4,7 +4,7 @@ import { ComposerTitleBarDropdownComponent } from './dropdown.component';
 import { ComposerService } from '../../../services/composer.service';
 import { Session } from '../../../../../services/session';
 import { PopupService } from '../../popup/popup.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
 
 describe('Composer Title Bar Dropdown', () => {
@@ -54,8 +54,8 @@ describe('Composer Title Bar Dropdown', () => {
             useValue: MockService(PopupService),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

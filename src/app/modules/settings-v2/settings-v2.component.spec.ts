@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SettingsV2Component } from './settings-v2.component';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
@@ -40,8 +40,8 @@ describe('SettingsV2Component', () => {
           },
           { provide: FeaturesService, useValue: featuresServiceMock },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
         imports: [

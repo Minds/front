@@ -3,12 +3,12 @@ import { SendWyreConfig } from './sendwyre.interface';
 import { MockService } from '../../../utils/mock';
 import { SiteService } from '../../../common/services/site.service';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 describe('SendWyreService', () => {
   let service: SendWyreService;
 
-  const toasterMock: any = MockService(FormToastService);
+  const toasterMock: any = MockService(ToasterService);
 
   const sendWyreConfigMock: SendWyreConfig = {
     dest: `0x`,

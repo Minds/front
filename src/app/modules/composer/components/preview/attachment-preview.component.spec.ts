@@ -15,7 +15,7 @@ import { RegexService } from '../../../../common/services/regex.service';
 import { Session } from '../../../../services/session';
 import { Storage } from '../../../../services/storage';
 import { Client } from '../../../../services/api';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { FeedNoticeService } from '../../../notices/services/feed-notice.service';
 import { DiscoveryTagsService } from '../../../discovery/tags/tags.service';
 import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
@@ -57,8 +57,8 @@ describe('Composer Attachment Preview', () => {
           useValue: MockService(Client, {}),
         },
         {
-          provide: FormToastService,
-          useValue: MockService(FormToastService, {}),
+          provide: ToasterService,
+          useValue: MockService(ToasterService, {}),
         },
         {
           provide: FeedNoticeService,

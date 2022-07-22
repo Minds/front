@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from '@mindsorg/ngx-universal';
 import { BehaviorSubject } from 'rxjs';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 
@@ -38,7 +38,7 @@ export class CompassService {
 
   constructor(
     private client: Client,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected session: Session,
     private cookieService: CookieService
   ) {}

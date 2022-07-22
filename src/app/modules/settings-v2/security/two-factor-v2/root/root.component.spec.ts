@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { MockService } from '../../../../../utils/mock';
 import { SettingsTwoFactorV2RootComponent } from './root.component';
 import {
@@ -23,8 +23,8 @@ xdescribe('SettingsTwoFactorV2RootComponent', () => {
             useValue: MockService(SettingsTwoFactorV2Service),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

@@ -12,7 +12,7 @@ import { BaseComponent } from './components/base/base.component';
 import { AttachmentPreviewComponent } from './components/preview/attachment-preview.component';
 import { RichEmbedPreviewComponent } from './components/preview/rich-embed-preview.component';
 import { PreviewService } from './services/preview.service';
-import { PreviewComponent } from './components/preview/preview.component';
+import { PreviewWrapperComponent } from './components/preview/preview-wrapper.component';
 import { ProgressComponent } from './components/progress/progress.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
@@ -30,7 +30,7 @@ import { ComposerMonetizeV2Component } from './components/popup/monetize/v2/comp
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete/text-input-autocomplete.module';
 import { RouterModule } from '@angular/router';
 import { ComposerTitleBarDropdownComponent } from './components/title-bar/dropdown/dropdown.component';
-import { RemindPreviewComponent } from './components/preview/remind-preview.component';
+import { QuotePreviewComponent } from './components/preview/quote-preview.component';
 import { AttachmentErrorComponent } from './components/popup/attachment-error/attachment-error.component';
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 /**
@@ -57,8 +57,8 @@ const INTERNAL_COMPONENTS = [
   BaseComponent,
   AttachmentPreviewComponent,
   RichEmbedPreviewComponent,
-  RemindPreviewComponent,
-  PreviewComponent,
+  QuotePreviewComponent,
+  PreviewWrapperComponent,
   ProgressComponent,
   ToolbarComponent,
   TitleBarComponent,

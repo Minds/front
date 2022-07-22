@@ -8,7 +8,7 @@ import {
 import { Client } from '../../../services/api/client';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 type ServicesEntityStruc = {
   [service: string]: boolean | null;
@@ -43,7 +43,7 @@ export class AdminFeaturesComponent implements OnInit, OnDestroy {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected route: ActivatedRoute,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit(): void {

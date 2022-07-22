@@ -1,0 +1,121 @@
+m-dataTabsLayout {
+  display: block;
+  @include m-theme() {
+    box-shadow: 0px 0px 10px -3px rgba(themed($m-black-always), 0.3);
+  }
+  &.m-dataTabsLayout__noMetricTabs {
+    .m-dataTabsLayout__bottom {
+      @include m-theme() {
+        border-top-color: rgba(0, 0, 0, 0);
+      }
+    }
+  }
+}
+
+m-body.has-v3-navbar {
+  m-dataTabsLayout {
+    box-shadow: none;
+  }
+  .m-dataTabsLayout__bottom,
+  .m-dataTabsLayout__footer {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+}
+
+m-dataTabsHeader.isScrollable {
+  .m-dataTabsLayout__header {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}
+.m-dataTabsLayout__bottom {
+  position: relative;
+  transition: all 0.3s ease;
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+}
+.m-dataTabsLayout__footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+
+  @include m-theme() {
+    background-color: rgba(themed($m-borderColor--primary), 0.25);
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+button {
+  outline: 0;
+}
+
+// ---------------------------------------
+m-dataTabsLayout.isForm {
+  margin-top: 69px;
+  .m-dataTabsLayout__body {
+    padding: 50px 70px;
+  }
+  .m-dataTabsLayout__footer {
+    padding: 30px 70px;
+    align-items: center;
+  }
+
+  .m-dataTabsHeader__wrapper {
+    height: auto;
+  }
+}
+// ---------------------------------------
+
+@media screen and (max-width: $min-tablet) {
+  m-dataTabsLayout {
+    @include m-theme() {
+      box-shadow: none;
+    }
+  }
+  .m-dataTabsLayout__bottom {
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+  m-dataTabsLayout.isForm {
+    margin-top: 0px;
+    m-dataTabsHeader {
+      min-height: 80px;
+    }
+    .m-dataTabsLayout__bottom {
+      @include m-theme() {
+        border-top: none;
+      }
+    }
+    .m-dataTabsLayout__body {
+      padding: 24px 24px 36px 24px;
+    }
+    .m-dataTabsLayout__footer {
+      justify-content: center;
+      padding: 24px 24px 48px 24px;
+    }
+  }
+}
+
+@media screen and (max-width: $max-mobile) {
+  m-dataTabsLayout.isForm {
+    .m-dataTabsLayout__bottom {
+      @include m-theme() {
+        border-top-color: rgba(0, 0, 0, 0);
+      }
+    }
+    .m-dataTabsLayout__footer {
+      .m-dataTabsLayout__button {
+        min-width: 50%;
+      }
+    }
+  }
+  m-dataTabsLayout {
+    @include m-theme() {
+      box-shadow: none;
+    }
+  }
+}

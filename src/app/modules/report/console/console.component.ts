@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
  * Dashboard that displays various disciplinary measures taken against your channel.
@@ -29,7 +29,7 @@ export class ReportConsoleComponent implements OnInit {
   constructor(
     private client: Client,
     public service: JurySessionService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

@@ -8,7 +8,7 @@ import {
 import { Subscription, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AnalyticsDashboardService } from '../../dashboard.service';
-import { ShadowboxHeaderTab } from '../../../../../interfaces/dashboard';
+import { DataTab } from '../../../../../interfaces/dashboard';
 import { Session } from '../../../../../services/session';
 
 @Component({
@@ -20,7 +20,7 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
   user;
   userRoles: string[] = ['user'];
 
-  tabs: ShadowboxHeaderTab[] = [];
+  tabs: DataTab[] = [];
   activeTabId: string = '';
 
   metricsSubscription: Subscription;
@@ -72,7 +72,7 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
             this.userRoles.includes(role)
           );
 
-          const tab: ShadowboxHeaderTab = {
+          const tab: DataTab = {
             id: metric.id,
             label: metric.label,
           };

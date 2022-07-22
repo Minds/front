@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ActivityEntity, ActivityService } from '../activity.service';
@@ -35,7 +35,7 @@ export class ActivityToolbarComponent {
     private boostModal: BoostModalLazyService,
     private features: FeaturesService,
     private interactionsModalService: InteractionsModalService,
-    private injector: Injector
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -81,6 +81,11 @@ export class ActivityToolbarComponent {
         ? this.entity.entity_guid
         : this.entity.guid;
     await this.interactionsModalService.open(type, guid);
+  }
+
+  detectChanges(): void {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   /**

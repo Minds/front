@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class ConfirmPasswordModalComponent {
     public modalService: ModalService,
     private client: Client,
     public fb: FormBuilder,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.form = fb.group({
       password: ['', Validators.required],

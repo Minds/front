@@ -6,7 +6,7 @@ import {
 import { Session } from '../../../services/session';
 import { MobileService } from '../mobile.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-mobile__marketing',
@@ -34,7 +34,7 @@ export class MobileMarketingComponent {
     protected service: MobileService,
     protected cd: ChangeDetectorRef,
     configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }

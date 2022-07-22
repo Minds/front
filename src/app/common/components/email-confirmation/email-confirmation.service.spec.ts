@@ -1,7 +1,7 @@
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { configMock } from '../../../../tests/config-mock-service.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { toastServiceMock } from '../../../modules/auth/multi-factor-auth/services/multi-factor-auth.service.spec';
+import { toasterServiceMock } from '../../../modules/auth/multi-factor-auth/services/multi-factor-auth.service.spec';
 import { EmailConfirmationService } from './email-confirmation.service';
 
 export let activityV2ExperimentServiceMock = new (function() {
@@ -18,7 +18,7 @@ describe('EmailConfirmationService', () => {
   beforeEach(() => {
     service = new EmailConfirmationService(
       clientMock,
-      toastServiceMock,
+      toasterServiceMock,
       sessionMock,
       feedNoticeMock,
       configMock

@@ -2,12 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { MINDS_PIPES } from './pipes/pipes';
-
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarWalletBalance } from './layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
-
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { QualityScoreComponent } from './components/quality-score/quality-score.component';
 import { SizeableLoadingSpinnerComponent } from './components/sizeable-loading-spinner/sizeable-loading-spinner.component';
@@ -23,12 +20,10 @@ import {
   NSFWSelectorConsumerService,
   NSFWSelectorCreatorService,
 } from './components/nsfw-selector/nsfw-selector.service';
-
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
 import { MindsRichEmbed } from './components/rich-embed/rich-embed';
 import { QRCodeComponent } from './components/qr-code/qr-code.component';
-
 import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
 import { InlineAutoGrow } from './directives/inline-autogrow';
@@ -75,17 +70,17 @@ import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
-import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
-import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
+import { DataTabsLayoutComponent } from './components/data-tabs-layout/data-tabs-layout.component';
+import { DataTabsHeaderComponent } from './components/data-tabs-header/data-tabs-header.component';
 import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
 import { ButtonComponent } from './components/button/button.component';
-import { FormToastComponent } from './components/form-toast/form-toast.component';
+import { ToasterComponent } from './components/toaster/toaster.component';
 import { SsoService } from './services/sso.service';
-import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
+import { DataTabsComponent } from './components/data-tabs/data-tabs.component';
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
@@ -172,37 +167,32 @@ import { UserAggregatorComponent } from './components/user-aggregator/user-aggre
 import { ViewedDirective } from './directives/viewed.directive';
 import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
 
-const MINDS_COMMON_COMPONENTS_AND_DIRECTIVES = [
+const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
   AccordionPaneComponent,
   AndroidAppDownloadComponent,
   AnnouncementComponent,
-  AttachmentPasteDirective,
-  AutofocusDirective,
-  AutoGrow,
-  BlurhashDirective,
   ButtonComponent,
   CalendarComponent,
   CarouselComponent,
   ChannelBadgesComponent,
   ChatIconComponent,
   CityFinderComponent,
-  ClientMetaDirective,
   ConfirmV2Component,
   CountryInputComponent,
   DashboardLayoutComponent,
+  DataTabsComponent,
+  DataTabsHeaderComponent,
+  DataTabsLayoutComponent,
   DateDropdownsComponent,
   DateRangeModalComponent,
   DateSelectorComponent,
-  DragAndDropDirective,
   DraggableListComponent,
   DropdownComponent,
   DropdownMenuComponent,
   DropdownMenuItemComponent,
   DropdownSelectorComponent,
   DynamicFormComponent,
-  DynamicHostDirective,
-  Emoji,
   EnvironmentFlagComponent,
   ErrorSplashComponent,
   ExplicitOverlayComponent,
@@ -212,24 +202,15 @@ const MINDS_COMMON_COMPONENTS_AND_DIRECTIVES = [
   FooterComponent,
   FormInputCheckboxComponent,
   FormInputSliderComponent,
-  FormToastComponent,
   FriendlyCaptchaComponent,
-  FriendlyTimePipe,
-  GraphPoints,
-  GraphSVG,
-  HotkeyScrollDirective,
   HovercardComponent,
   IconComponent,
-  IfBrowserDirective,
-  IfFeatureDirective,
   InfiniteScroll,
-  InlineAutoGrow,
   InlineEditorComponent,
   JoinBannerComponent,
   LaunchButtonComponent,
   LoadingEllipsisComponent,
   LoadingSpinnerComponent,
-  MarkedDirective,
   MindsAvatar,
   MindsButton,
   MindsCard,
@@ -239,63 +220,82 @@ const MINDS_COMMON_COMPONENTS_AND_DIRECTIVES = [
   NestedMenuComponent,
   NSFWSelectorComponent,
   OverlayComponent,
-  PageLayoutContainerDirective,
-  PageLayoutPaneDirective,
   PaywallBadgeComponent,
   PhoneInputComponent,
   PhoneInputCountryComponent,
   PhoneInputCountryV2Component,
   PhoneInputV2Component,
   PoweredByComponent,
-  PreventDoubleClickDirective,
   PublisherCardComponent,
   PublisherSearchModalComponent,
   QRCodeComponent,
   QualityScoreComponent,
   ReadMoreButtonComponent,
-  ReadMoreDirective,
   RelativeTimeSpanComponent,
-  ResizedDirective,
   SafeToggleComponent,
   Scheduler,
-  ScrollLock,
   SeeLatestPostsButtonComponent,
-  ShadowboxHeaderComponent,
-  ShadowboxHeaderTabsComponent,
-  ShadowboxLayoutComponent,
   SidebarMoreComponent,
   SidebarMoreTriggerComponent,
   SidebarNavigationComponent,
-  SidebarNavigationSubnavDirective,
   SidebarWidgetComponent,
   SizeableLoadingSpinnerComponent,
   SortSelectorComponent,
-  StickySidebarDirective,
   SubscribeButtonComponent,
   TagSelectorComponent,
-  TagsLinks,
   Textarea,
   ThumbsDownButton,
   ThumbsUpButton,
   TimespanFilterComponent,
+  ToasterComponent,
   ToggleComponent,
-  Tooltip,
   TooltipComponent,
+  TopbarComponent,
   TopbarWalletBalance,
   TreeComponent,
   UserAggregatorComponent,
   UserMenuComponent,
-  TopbarComponent,
+];
+// ------------------------------------
+// ------------------------------------
+const MINDS_DIRECTIVES = [
+  AttachmentPasteDirective,
+  AutofocusDirective,
+  AutoGrow,
+  BlurhashDirective,
+  ClientMetaDirective,
+  DragAndDropDirective,
+  DynamicHostDirective,
+  Emoji,
+  GraphPoints,
+  GraphSVG,
+  HotkeyScrollDirective,
+  IfBrowserDirective,
+  IfFeatureDirective,
+  InlineAutoGrow,
+  MarkedDirective,
+  PageLayoutContainerDirective,
+  PageLayoutPaneDirective,
+  PreventDoubleClickDirective,
+  ReadMoreDirective,
+  ResizedDirective,
+  ScrollLock,
+  SidebarNavigationSubnavDirective,
+  StickySidebarDirective,
+  TagsLinks,
+  Tooltip,
   ViewedDirective,
 ];
-
+// ------------------------------------
+// ------------------------------------
 const routes: Routes = [
   {
     path: 'email-confirmation',
     redirectTo: '/',
   },
 ];
-
+// ------------------------------------
+// ------------------------------------
 @NgModule({
   imports: [
     NgCommonModule,
@@ -310,14 +310,16 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   declarations: [
+    MINDS_COMMON_COMPONENTS,
+    MINDS_DIRECTIVES,
     MINDS_PIPES,
     MDL_DIRECTIVES,
-    MINDS_COMMON_COMPONENTS_AND_DIRECTIVES,
   ],
   exports: [
+    MINDS_COMMON_COMPONENTS,
+    MINDS_DIRECTIVES,
     MINDS_PIPES,
     MDL_DIRECTIVES,
-    MINDS_COMMON_COMPONENTS_AND_DIRECTIVES,
     NgxPopperjsModule,
   ],
   providers: [

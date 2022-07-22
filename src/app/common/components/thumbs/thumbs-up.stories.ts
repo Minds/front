@@ -7,7 +7,7 @@ import { Session } from '../../../services/session';
 import { Client } from '../../api/client.service';
 import { CommonModule } from '../../common.module';
 import { ConfigsService } from '../../services/configs.service';
-import { FormToastService } from '../../services/form-toast.service';
+import { ToasterService } from '../../services/toaster.service';
 import { ThumbsUpButton } from './thumbs-up.component';
 
 export default {
@@ -53,7 +53,7 @@ export default {
             },
           },
         },
-        FormToastService,
+        ToasterService,
       ],
     }),
   ],
