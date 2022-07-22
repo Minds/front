@@ -19,6 +19,7 @@ import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.com
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outlet.component';
 
+// test gpg
 @NgModule({
   imports: [
     NgCommonModule,
