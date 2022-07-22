@@ -102,7 +102,7 @@ export class ActivityV2ContentComponent
   @Input() maxHeightAllowed: number;
 
   @ViewChild('videoEl', { read: ElementRef })
-  videoEl: ElementRef;
+  videoEl?: ElementRef;
 
   @ViewChild('imageEl', { read: ElementRef })
   imageEl: ElementRef;
@@ -223,14 +223,21 @@ export class ActivityV2ContentComponent
   }
 
   ngOnInit(): void {
+    this.calculateVideoDimensions(this.service.entity$.getValue(), false);
+    this.calculateImageDimensions(this.service.entity$.getValue(), false);
+    this.calculateFixedContentHeight(
+      this.service.entity$.getValue(),
+      this.service.height$.getValue()
+    );
+
     this.subscriptions = [
       this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
 
-        this.calculateFixedContentHeight();
+        // this.calculateFixedContentHeight(); // TODO: only do this on later entity's not first one
         setTimeout(() => {
-          this.calculateVideoDimensions();
-          this.calculateImageDimensions();
+          // this.calculateVideoDimensions(); // TODO: only do this on later entity's not first one
+          // this.calculateImageDimensions(); // TODO: only do this on later entity's not first one
         });
 
         this.isPaywalledStatus =
@@ -456,12 +463,15 @@ export class ActivityV2ContentComponent
   }
   ////////////////////////////////////////////////////////////////////////////
 
-  calculateFixedContentHeight(): void {
+  calculateFixedContentHeight(
+    entity = this.entity,
+    activityHeight = this.activityHeight
+  ): void {
     if (!this.isFixedHeight) {
       return;
     }
 
-    let contentHeight = this.activityHeight || ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
+    let contentHeight = activityHeight || ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
     contentHeight = contentHeight - ACTIVITY_CONTENT_PADDING;
     if (this.service.displayOptions.showOwnerBlock) {
       contentHeight = contentHeight - ACTIVITY_OWNERBLOCK_HEIGHT;
@@ -474,7 +484,7 @@ export class ActivityV2ContentComponent
     }
     if (
       this.service.displayOptions.showComments &&
-      this.entity['comments:count'] > 0
+      entity['comments:count'] > 0
     ) {
       contentHeight = contentHeight - ACTIVITY_COMMENTS_MORE_HEIGHT;
     }
@@ -497,26 +507,29 @@ export class ActivityV2ContentComponent
   /**
    * Calculates the video height after the video has loaded in
    */
-  calculateVideoDimensions(): void {
-    if (!this.videoEl) {
-      return;
-    }
+  calculateVideoDimensions(
+    entity: any = this.entity,
+    detectChanges = true
+  ): void {
+    // if (!this.videoEl) {
+    //   return;
+    // }
     let scaledHeight,
       scaledWidth,
       aspectRatio = 16 / 9;
 
-    const videoElWidth = this.videoEl.nativeElement.clientWidth;
+    const videoElWidth = this.videoEl?.nativeElement?.clientWidth || 530; // get this number from parent's width
 
     if (
-      this.entity.custom_data &&
-      this.entity.custom_data.height &&
-      this.entity.custom_data.height !== '0'
+      entity.custom_data &&
+      entity.custom_data.height &&
+      entity.custom_data.height !== '0'
     ) {
       // If we have the original dimensions of the video,
       // load it with a height of 500px and a proportional width
       // so we don't have black bars on the side
-      const originalWidth = parseInt(this.entity.custom_data.width, 10);
-      const originalHeight = parseInt(this.entity.custom_data.height, 10);
+      const originalWidth = parseInt(entity.custom_data.width, 10);
+      const originalHeight = parseInt(entity.custom_data.height, 10);
 
       aspectRatio = originalWidth / originalHeight;
     }
@@ -535,29 +548,30 @@ export class ActivityV2ContentComponent
     this.videoHeight = scaledHeight;
     this.videoWidth = scaledWidth;
 
-    this.detectChanges();
+    if (detectChanges) {
+      this.detectChanges();
+    }
   }
 
   /**
    * Calculates the image height and aspect ratio
    */
-  calculateImageDimensions(): void {
-    if (!this.imageEl) {
-      return;
-    }
-    if (this.isFixedHeight || this.entity.custom_type !== 'batch') {
+  calculateImageDimensions(entity = this.entity, detectChanges = true): void {
+    if (this.isFixedHeight || entity.custom_type !== 'batch') {
       this.imageHeight = null;
     }
 
+    const imageElHeight = this.imageContainerEl?.nativeElement?.clientHeight;
+    const imageElWidth =
+      this.imageContainerEl?.nativeElement?.clientWidth || 532; // TODO: get this number from parent's width
+
     if (
-      this.entity.custom_data &&
-      this.entity.custom_data[0] &&
-      this.entity.custom_data[0].height &&
-      this.entity.custom_data[0].height !== '0'
+      entity.custom_data?.[0]?.height &&
+      entity.custom_data[0].height !== '0'
     ) {
       // Get aspect ratio from original dimensions (if available)
-      const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
-      const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
+      const originalHeight = parseInt(entity.custom_data[0].height || 0);
+      const originalWidth = parseInt(entity.custom_data[0].width || 0);
 
       this.imageOriginalHeight = originalHeight;
       this.imageAspectRatio = originalHeight / originalWidth;
@@ -570,13 +584,13 @@ export class ActivityV2ContentComponent
         // For fixed height, calculate height based on
         // client height
 
-        this.imageHeight = this.imageContainerEl.nativeElement.clientHeight;
+        this.imageHeight = imageElHeight;
         this.imageWidth = this.imageHeight / this.imageAspectRatio;
       } else {
         // For everything else, calculate height from
         // aspect ratio and clientWidth
 
-        this.imageWidth = this.imageContainerEl.nativeElement.clientWidth;
+        this.imageWidth = imageElWidth;
         this.imageHeight = this.imageWidth * this.imageAspectRatio;
 
         // if this ends up being taller than max height,
@@ -596,7 +610,9 @@ export class ActivityV2ContentComponent
       }
     }
 
-    this.detectChanges();
+    if (detectChanges) {
+      this.detectChanges();
+    }
   }
 
   onModalRequested(event: MouseEvent) {

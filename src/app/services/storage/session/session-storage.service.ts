@@ -19,4 +19,25 @@ export class SessionStorageService {
       })
     );
   }
+
+  public getActivityDisplayOptions(guid: string): object | null {
+    try {
+      return JSON.parse(this.db.getItem(`activity:displayOptions:${guid}`))
+        ?.data;
+    } catch (e) {
+      console.log(e);
+    }
+
+    return null;
+  }
+
+  public async setActivityDisplayOptions(guid: string, data: object) {
+    this.db.setItem(
+      `activity:displayOptions:${guid}`,
+      JSON.stringify({
+        data,
+        persistedAt: Date.now(),
+      })
+    );
+  }
 }

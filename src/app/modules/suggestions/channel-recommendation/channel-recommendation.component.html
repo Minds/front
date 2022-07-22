@@ -1,7 +1,8 @@
 <div
-  style="transition: all 0.3s; overflow: hidden; flex: 1;"
-  [style.height.px]="containerHeight$ | async"
-  *ngIf="visible"
+  style="overflow: hidden; flex: 1;"
+  [style.height.px]="
+    (containerHeight$ | async) ? (containerHeight$ | async) : 'auto'
+  "
 >
   <article
     (mResized)="onResized($event)"
@@ -34,11 +35,13 @@
     <ul *ngIf="(recommendations$ | async).length">
       <li
         @listAnimation
+        [@.disabled]="disabledAnimations$ | async"
         *ngFor="
           let channel of recommendations$
             | async
             | slice: 0:(listSize$ | async);
-          let i = index
+          let i = index;
+          trackBy: channelTrackBy
         "
         (mViewed)="trackView(channel, i + 1)"
       >

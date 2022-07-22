@@ -1,7 +1,7 @@
 import { ApiService } from './../common/api/api.service';
 import { ScrollRestorationService } from './scroll-restoration.service';
 import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location, ViewportScroller } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
 import { EmbedServiceV2 } from './embedV2.service';
@@ -59,6 +59,7 @@ import { ModalService } from './ux/modal.service';
 import { ServiceWorkerService } from '../common/services/service-worker.service';
 import { PushNotificationService } from '../common/services/push-notification.service';
 import { DismissalService } from '../common/services/dismissal.service';
+import { ApiResource } from '../common/api/api-resource.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -217,7 +218,16 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: FeedsService,
     useFactory: FeedsService._,
-    deps: [Client, ApiService, Session, EntitiesService, BlockListService],
+    deps: [
+      Client,
+      ApiService,
+      Session,
+      EntitiesService,
+      BlockListService,
+      StorageV2,
+      ActivatedRoute,
+      ApiResource,
+    ],
   },
   {
     provide: InMemoryStorageService,

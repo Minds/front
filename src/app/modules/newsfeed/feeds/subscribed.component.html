@@ -58,23 +58,23 @@
       <!--actual feed-->
       <virtual-scroller
         #scroll
-        [bufferAmount]="20"
+        [bufferAmount]="10"
         [items]="feedService.feed | async"
         [parentScroll]="scroll.window"
         [enableUnequalChildrenSizes]="true"
         [modifyOverflowStyleOfParentScroll]="false"
         [compareItems]="compareItems"
         [ssrChildHeight]="300"
-        (vsEnd)="loadNext($event)"
+        (vsChange)="loadNext($event)"
       >
-        <ng-container
+        <m-newsfeed__activityOutlet
           *ngFor="
             let activity$ of scroll.viewPortItems;
             let i = index;
             trackBy: activityTrackBy
           "
         >
-          <!-- <m-feedNotice__outlet
+          <m-feedNotice__outlet
             *ngIf="i > 0 && i % 6 === 0"
             location="inline"
           ></m-feedNotice__outlet>
@@ -92,7 +92,7 @@
             *ngIf="
               shouldShowTopHighlights(i) && !(isTopHighlightsDismissed$ | async)
             "
-          ></m-topHighlights> -->
+          ></m-topHighlights>
           <m-activity
             *ngIf="activity$ | async as activity"
             [entity]="activity"
@@ -113,7 +113,7 @@
               !(isChannelRecommendationDismissed$ | async)
             "
           ></m-channelRecommendation> -->
-        </ng-container>
+        </m-newsfeed__activityOutlet>
 
         <!-- <infinite-scroll
           (load)="loadNext()"

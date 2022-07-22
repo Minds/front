@@ -46,7 +46,7 @@ export class FeaturedContentComponent implements OnInit {
 
   async load() {
     try {
-      this.entity = await this.featuredContentService.fetch();
+      this.entity = await this.featuredContentService.fetch(this.slot);
     } catch (e) {
       console.error('FeaturedContentComponent.load', e);
     }

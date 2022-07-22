@@ -116,11 +116,11 @@
       </span>
     </m-button>
   </div>
-  <m-loadingSpinner
+  <!-- <m-loadingSpinner // TODO: add this in a way that wouldn't disrupt the height of the component
     [inProgress]="inProgress"
     *ngIf="inProgress && comments?.length === 0"
   >
-  </m-loadingSpinner>
+  </m-loadingSpinner> -->
 
   <!-- --------------------------------  -->
   <span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">

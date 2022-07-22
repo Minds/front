@@ -50,13 +50,19 @@ export enum FeedAlgorithm {
 export class LatestFeedService extends FeedsService {
   feedQuery = this.apiResource.query('api/v2/feeds/subscribed/activities', {
     cacheStorage: ApiResource.CacheStorage.Memory,
-    cachePolicy: ApiResource.CachePolicy.cacheThenFetch,
+    cachePolicy: ApiResource.CachePolicy.fetchOnly,
     skip: true, // TODO: rename to autoFetch: false
   });
 }
 
 @Injectable()
-export class TopFeedService extends FeedsService {}
+export class TopFeedService extends FeedsService {
+  feedQuery = this.apiResource.query('api/v3/newsfeed/feed/unseen-top', {
+    cacheStorage: ApiResource.CacheStorage.Memory,
+    cachePolicy: ApiResource.CachePolicy.fetchOnly,
+    skip: true, // TODO: rename to autoFetch: false
+  });
+}
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -273,15 +279,15 @@ export class NewsfeedSubscribedComponent
     try {
       switch (this.algorithm) {
         case 'top':
-          this.topFeedService.clear(true);
+          // this.topFeedService.clear(true); // TODO: readd
           await this.topFeedService.setLimit(12).fetch(true);
           break;
         case 'latest':
-          // this.latestFeedService.clear(true);
-          this.topFeedService.clear(true);
+          // this.latestFeedService.clear(true); // TODO: readd
+          // this.topFeedService.clear(true); // TODO: readd
           this.prepended = [];
           await Promise.all([
-            // this.topFeedService.setLimit(3).fetch(true),
+            this.topFeedService.setLimit(3).fetch(true),
             this.latestFeedService.fetch(true),
           ]);
           break;
@@ -296,14 +302,15 @@ export class NewsfeedSubscribedComponent
   loadNext(event: IPageInfo) {
     // only load next if we're in the proximity of the last 3 posts
     if (!this.feedService.feedLength) return;
-    if (this.feedService.feedLength - event.endIndex > 3) return;
+    if (this.feedService.feedLength - event?.endIndex > 3) return;
+    if (this.feedService.feedQuery?.loading$.getValue()) return;
 
     if (
       this.feedService.canFetchMore &&
       !this.feedService.inProgress.getValue() &&
       this.feedService.offset.getValue()
     ) {
-      // this.feedService.fetch(); // load the next 150 in the background
+      this.feedService.fetch(); // load the next 150 in the background
     }
 
     this.feedService.loadMore();
@@ -441,12 +448,12 @@ export class NewsfeedSubscribedComponent
   }
 
   compareItems(item1: EntityObservable, item2: EntityObservable) {
-    // @ts-ignore FIX
+    // @ts-ignore
     return item1?.getValue().guid === item2?.getValue().guid;
   }
 
   activityTrackBy(index: number, activity: any) {
-    return activity.getValue().guid;
+    return activity?.guid || activity?.getValue().guid;
   }
 
   /**

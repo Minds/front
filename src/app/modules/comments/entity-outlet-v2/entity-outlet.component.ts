@@ -30,16 +30,7 @@ import { ActivityService } from '../../newsfeed/activity/activity.service';
   selector: 'm-comments__entityOutletV2',
   templateUrl: 'entity-outlet.component.html',
   styleUrls: ['entity-outlet.component.ng.scss'],
-  providers: [
-    AttachmentService,
-    {
-      provide: CommentsService,
-      useFactory: (_route, _client) => {
-        return new CommentsService(_route, _client);
-      },
-      deps: [ActivatedRoute, Client],
-    },
-  ],
+  providers: [AttachmentService, CommentsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsEntityOutletV2Component {
@@ -121,14 +112,20 @@ export class CommentsEntityOutletV2Component {
       this.redirectToSinglePage();
     }
     this.showOnlyToggle = false;
-    this.activityService.displayOptions.showOnlyCommentsInput = false;
+
+    this.activityService.setDisplayOptions({
+      showOnlyCommentsInput: false,
+      showOnlyCommentsToggle: false,
+    });
     this.detectChanges();
   }
 
   closeFullComments(): void {
     this.showOnlyToggle = true;
 
-    this.activityService.displayOptions.showOnlyCommentsToggle = true;
+    this.activityService.setDisplayOptions({
+      showOnlyCommentsToggle: true,
+    });
     this.detectChanges();
   }
 

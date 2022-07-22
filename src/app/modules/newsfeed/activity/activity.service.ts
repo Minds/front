@@ -8,6 +8,8 @@ import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { SessionStorageService } from '../../../services/storage/session/session-storage.service';
+import { StorageV2 } from '../../../services/storage/v2';
 
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
@@ -332,11 +334,13 @@ export class ActivityService {
     private configs: ConfigsService,
     private session: Session,
     private featuresService: FeaturesService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private activityV2Experiment: ActivityV2ExperimentService,
+    private storage: StorageV2
   ) {
     this.siteUrl = configs.get('site_url');
 
     this.activityV2Feature = this.activityV2Experiment.isActive();
+    this.displayOptions.showOnlyCommentsToggle = this.activityV2Feature;
   }
 
   /**
@@ -354,6 +358,13 @@ export class ActivityService {
       entity.activity_type = getActivityContentType(entity);
     }
     this.entity$.next(entity);
+
+    const displayOptions = this.storage.session.getActivityDisplayOptions( // TODO: perhaps use memory
+      this.entity$.getValue().guid
+    );
+    if (displayOptions) {
+      this.setDisplayOptions(displayOptions);
+    }
     return this;
   }
 
@@ -365,10 +376,15 @@ export class ActivityService {
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
+    this.storage.session.setActivityDisplayOptions(
+      this.entity$.getValue().guid,
+      this.displayOptions
+    );
+
     if (this.activityV2Feature) {
       this.displayOptions.isV2 = true;
       this.displayOptions.showOnlyCommentsInput = false;
-      this.displayOptions.showOnlyCommentsToggle = true;
+      // this.displayOptions.showOnlyCommentsToggle = true; // Figure out why this is here
     }
 
     return this;

@@ -40,6 +40,7 @@ import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.s
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
 import { ActivityV2Module } from './activity-v2/activity.module';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { NewsfeedActivityOutletComponent } from './feeds/activity-outlet.component';
 
 const routes: Routes = [
   {
@@ -113,6 +114,7 @@ const routes: Routes = [
     TopHighlightsComponent,
     FeedTypePopoverComponent,
     FeedHeaderComponent,
+    NewsfeedActivityOutletComponent,
   ],
   providers: [
     NewsfeedService,

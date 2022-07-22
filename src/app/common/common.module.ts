@@ -451,11 +451,16 @@ const routes: Routes = [
     {
       provide: FeaturedContentService,
       useFactory: (
-        boostedContentService: FeedsService,
-        experimentsService: ExperimentsService
+        feedsService: FeedsService,
+        experimentsService: ExperimentsService,
+        apiResource: ApiResource
       ): FeaturedContentService =>
-        new FeaturedContentService(boostedContentService, experimentsService),
-      deps: [FeedsService, ExperimentsService],
+        new FeaturedContentService(
+          feedsService,
+          experimentsService,
+          apiResource
+        ),
+      deps: [FeedsService, ExperimentsService, ApiResource],
     },
     MediaProxyService,
     SidebarNavigationService,

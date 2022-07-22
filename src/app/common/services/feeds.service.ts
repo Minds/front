@@ -162,6 +162,15 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Sets the endpoint for this instance.
+   * @param { string } endpoint - the endpoint for this instance. For example `api/v1/entities/owner`.
+   */
+  setFeedQuery(feedQuery: QueryRef<any, any>): FeedsService {
+    this.feedQuery = feedQuery;
+    return this;
+  }
+
+  /**
    * Sets the count endpoint for this instance.
    * @param { string } endpoint - the count endpoint for this instance
    */
@@ -302,6 +311,8 @@ export class FeedsService implements OnDestroy {
       if (!this.offset.getValue()) {
         this.inProgress.next(false);
       }
+
+      this.persist(this.rawFeed.getValue());
     };
 
     let response;
@@ -310,6 +321,10 @@ export class FeedsService implements OnDestroy {
       if (this.feedQuery) {
         // TODO: rehydrate only if you were told to do so
         this.rehydrateOffset();
+
+        if (this.rehydrate()) {
+          return;
+        }
 
         this.feedQuerySubscription?.unsubscribe();
         this.feedQuerySubscription = this.feedQuery
@@ -452,6 +467,60 @@ export class FeedsService implements OnDestroy {
     if (inMemoryFeedOffset) {
       this.offset.next(inMemoryFeedOffset);
     }
+  }
+
+  /**
+   * persists the feed state to memory
+   * @returns { void }
+   */
+  persist(feed: any) {
+    if (!this.feedQuery) return; // don't depend on this
+    if (!feed?.length) return;
+
+    return this.storage.memory.setFeedState(
+      this.feedQuery.options.url,
+      window.location.pathname,
+      {
+        rawFeed: feed,
+        fallbackAt: this.fallbackAt,
+        pagingToken: this.pagingToken,
+        newPostsLastCheckedAt: this.newPostsLastCheckedAt,
+        fallbackAtIndex: this.fallbackAtIndex.getValue(),
+        offset: this.offset.getValue(),
+        limit: this.limit.getValue(),
+        newPostsCount: this.newPostsCount$.getValue(),
+      }
+    );
+  }
+
+  rehydrated = false;
+  /**
+   * rehydrates the feed state from memory
+   * @returns { void }
+   */
+  rehydrate(update = true) {
+    if (!this.feedQuery) return; // don't depend on this
+    if (this.rehydrated) return; // don't depend on this
+
+    const inMemoryFeedState = this.storage.memory.getFeedState(
+      this.feedQuery.options.url,
+      window.location.pathname
+    );
+
+    if (inMemoryFeedState && update) {
+      this.fallbackAt = inMemoryFeedState.fallbackAt;
+      this.fallbackAtIndex.next(inMemoryFeedState.fallbackAtIndex);
+      this.offset.next(inMemoryFeedState.offset);
+      this.pagingToken = inMemoryFeedState.pagingToken;
+      this.newPostsLastCheckedAt = inMemoryFeedState.newPostsLastCheckedAt;
+      this.limit.next(inMemoryFeedState.limit);
+      this.newPostsCount$.next(inMemoryFeedState.newPostsCount);
+      this.rawFeed.next(inMemoryFeedState.rawFeed || []);
+    }
+
+    this.rehydrated = true;
+
+    return inMemoryFeedState;
   }
 
   static _(

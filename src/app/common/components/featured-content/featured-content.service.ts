@@ -3,6 +3,7 @@ import { filter, first, switchMap, mergeMap, skip, take } from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 import { Subscription } from 'rxjs';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { ApiResource } from '../../api/api-resource.service';
 
 @Injectable()
 export class FeaturedContentService {
@@ -11,9 +12,15 @@ export class FeaturedContentService {
   feedLength = 0;
   protected feedSubscription: Subscription;
 
+  featuredContentFeedQuery = this.apiResource.query('api/v2/boost/feed', {
+    cachePolicy: ApiResource.CachePolicy.cacheFirst,
+    cacheStorage: ApiResource.CacheStorage.Memory,
+  });
+
   constructor(
     protected feedsService: FeedsService,
-    private experiments: ExperimentsService
+    private experiments: ExperimentsService,
+    private apiResource: ApiResource
   ) {
     this.onInit();
   }
@@ -30,15 +37,16 @@ export class FeaturedContentService {
       .setLimit(12)
       .setOffset(0)
       .setEndpoint('api/v2/boost/feed')
+      .setFeedQuery(this.featuredContentFeedQuery)
       .fetch();
   }
 
-  async fetch() {
+  async fetch(slot: number) {
     return await this.feedsService.feed
       .pipe(
         filter(entities => entities.length > 0),
         mergeMap(feed => feed), // Convert feed array to stream
-        skip(this.offset++),
+        skip(slot - 1), // TODO: fixme this isn't right
         take(1),
         switchMap(async entity => {
           if (!entity) {
