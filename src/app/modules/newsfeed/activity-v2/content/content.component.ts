@@ -668,6 +668,12 @@ export class ActivityV2ContentComponent
 
   onImageError(e: Event): void {}
 
+  onReadMoreChanged(expandedText: boolean) {
+    this.service.setDisplayOptions({
+      expandedText,
+    });
+  }
+
   detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();

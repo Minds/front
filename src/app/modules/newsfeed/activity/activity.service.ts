@@ -38,6 +38,7 @@ export type ActivityDisplayOptions = {
   showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
+  expandedText: boolean;
 };
 
 export type ActivityEntity = {
@@ -324,6 +325,7 @@ export class ActivityService {
     isSingle: false,
     isV2: false,
     permalinkBelowContent: false,
+    expandedText: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -359,7 +361,8 @@ export class ActivityService {
     }
     this.entity$.next(entity);
 
-    const displayOptions = this.storage.session.getActivityDisplayOptions( // TODO: perhaps use memory
+    const displayOptions = this.storage.session.getActivityDisplayOptions(
+      // TODO: perhaps use memory
       this.entity$.getValue().guid
     );
     if (displayOptions) {
@@ -373,7 +376,9 @@ export class ActivityService {
    * @param options
    * @return ActivityService
    */
-  setDisplayOptions(options: Object = {}): ActivityService {
+  setDisplayOptions(
+    options: Partial<ActivityDisplayOptions> = {}
+  ): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
     this.storage.session.setActivityDisplayOptions(

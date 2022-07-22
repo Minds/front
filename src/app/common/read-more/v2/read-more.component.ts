@@ -2,7 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
+  OnInit,
+  Output,
 } from '@angular/core';
 
 @Component({
@@ -11,7 +14,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./read-more.component.ng.scss'],
 })
-export class ReadMoreComponent {
+export class ReadMoreComponent implements OnInit {
+  // emits changes of the state of the component
+  @Output() changed = new EventEmitter();
+  // whether the readMore should be expanded by default
+  @Input() expandedByDefault: boolean = false;
   /**
    * The raw input text
    */
@@ -35,6 +42,12 @@ export class ReadMoreComponent {
   showAll = false;
 
   constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    if (this.expandedByDefault) {
+      this.toggle();
+    }
+  }
 
   /**
    * The transformed text that the html template will render
@@ -67,6 +80,7 @@ export class ReadMoreComponent {
    */
   toggle(): void {
     this.showAll = !this.showAll;
+    this.changed.emit(this.showAll);
 
     this.cd.markForCheck();
     this.cd.detectChanges();

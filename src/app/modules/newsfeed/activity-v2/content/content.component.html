@@ -242,7 +242,11 @@ post content to trigger upgrade modal -->
             'm-activityContentText--translated': showTranslation
           }"
         >
-          <m-readMore [text]="bodyText"></m-readMore>
+          <m-readMore
+            [expandedByDefault]="service.displayOptions.expandedText"
+            (changed)="onReadMoreChanged($event)"
+            [text]="bodyText"
+          ></m-readMore>
         </p>
         <!-- <m-read-more--button
           *ngIf="
