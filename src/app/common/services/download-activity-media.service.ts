@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../services/api';
 import { ConfigsService } from './configs.service';
-import { FormToastService } from './form-toast.service';
+import { ToasterService } from './toaster.service';
 
 @Injectable()
 export class DownloadActivityMediaService {
@@ -11,7 +11,7 @@ export class DownloadActivityMediaService {
 
   constructor(
     public client: Client,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     configs: ConfigsService
   ) {
     this.siteUrl = configs.get('site_url');

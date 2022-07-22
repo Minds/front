@@ -14,7 +14,7 @@ import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { WireModalService } from '../../wire/wire-modal.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { map } from 'rxjs/operators';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 export type RouterLinkToType =
   | 'home'
@@ -80,7 +80,7 @@ export class ProChannelService implements OnDestroy {
     protected site: SiteService,
     protected analytics: AnalyticsService,
     private metaService: MetaService,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {
     this.listen();
 

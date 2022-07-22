@@ -1,5 +1,5 @@
 import Editor = MediumEditor.MediumEditor;
-import { FormToastService } from '../../../services/form-toast.service';
+import { ToasterService } from '../../../services/toaster.service';
 
 type Options = { buttonText: string };
 
@@ -15,7 +15,7 @@ export class EmbedVideo {
   private updated: boolean = false;
   private readonly urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
-  constructor(options: Options, protected formToastService: FormToastService) {
+  constructor(options: Options, protected toasterService: ToasterService) {
     this.options = { ...options };
     this.button = document.createElement('button');
     this.button.className = 'medium-editor-action';
@@ -219,7 +219,7 @@ export class EmbedVideo {
     let $div;
 
     if (!html) {
-      this.formToastService.error('Incorrect URL format specified');
+      this.toasterService.error('Incorrect URL format specified');
       return false;
     }
     if (html.indexOf('</script>') > -1) {

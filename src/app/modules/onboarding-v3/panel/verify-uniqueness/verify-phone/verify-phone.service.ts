@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { OnboardingV3PanelService } from '../../onboarding-panel.service';
 
 export type PhoneVerificationStep = 'InputNumberStep' | 'ConfirmCodeStep';
@@ -38,7 +38,7 @@ export class OnboardingV3VerifyPhoneService implements OnDestroy {
 
   constructor(
     private panel: OnboardingV3PanelService,
-    private toast: FormToastService,
+    private toast: ToasterService,
     private api: ApiService
   ) {}
 

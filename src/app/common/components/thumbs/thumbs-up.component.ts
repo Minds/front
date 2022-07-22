@@ -15,7 +15,7 @@ import { Client } from '../../../services/api';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catpcha/friendly-captcha.component';
-import { FormToastService } from '../../services/form-toast.service';
+import { ToasterService } from '../../services/toaster.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -60,7 +60,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     private authModal: AuthModalService,
     private cd: ChangeDetectorRef,
     private experiments: ExperimentsService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   set _object(value: any) {

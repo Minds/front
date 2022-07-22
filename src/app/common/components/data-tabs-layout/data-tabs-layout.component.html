@@ -1,0 +1,23 @@
+<m-dataTabsHeader
+  *ngIf="hasHeader"
+  [isScrollable]="scrollableHeader"
+  [ngClass]="{ isScrollable: scrollableHeader }"
+>
+  <ng-content
+    select=".m-dataTabsLayout__header"
+    ngProjectAs=".m-dataTabsLayout__header"
+  ></ng-content>
+</m-dataTabsHeader>
+
+<div *ngIf="!isForm" class="m-dataTabsLayout__bottom">
+  <ng-content select=".m-dataTabsLayout__body"></ng-content>
+  <ng-content select=".m-dataTabsLayout__footer"></ng-content>
+</div>
+
+<ng-container *ngIf="isForm">
+  <ng-content
+    class="m-dataTabsLayout__bottom"
+    select=".m-dataTabsLayout__bottom"
+  >
+  </ng-content>
+</ng-container>

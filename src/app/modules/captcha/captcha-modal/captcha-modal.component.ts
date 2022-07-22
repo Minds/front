@@ -17,7 +17,7 @@
  * @author Ben Hayward
  */
 import { Component } from '@angular/core';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 export interface OptType {
   onComplete: Function;
@@ -51,7 +51,7 @@ export class CaptchaModalComponent {
 
   public captcha: string; // bound to [(ngModel)]
 
-  constructor(private toasterService: FormToastService) {}
+  constructor(private toasterService: ToasterService) {}
 
   /**
    * Handles on captcha submit

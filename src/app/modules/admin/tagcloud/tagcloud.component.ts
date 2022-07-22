@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Client } from '../../../services/api';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +15,7 @@ export class AdminTagcloud implements OnInit {
 
   constructor(
     private client: Client,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

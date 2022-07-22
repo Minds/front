@@ -13,7 +13,7 @@ import {
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Subscription, timer } from 'rxjs';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-youtubeMigration__transferStatus',
@@ -27,7 +27,7 @@ export class YoutubeMigrationTransferStatusComponent
     protected session: Session,
     protected cd: ChangeDetectorRef,
     configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.dailyLimit = configs.get('max_daily_imports') || 10;
   }

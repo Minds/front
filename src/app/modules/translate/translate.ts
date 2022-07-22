@@ -2,7 +2,7 @@ import { Component, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 import { TranslationService } from '../../services/translation';
 import { FeaturesService } from '../../services/features.service';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 
 /**
  * Displays translated text
@@ -53,7 +53,7 @@ export class Translate {
     public translationService: TranslationService,
     public changeDetectorRef: ChangeDetectorRef,
     public featuresService: FeaturesService,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   set _open(value: any) {

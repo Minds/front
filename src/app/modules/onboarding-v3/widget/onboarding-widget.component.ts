@@ -10,7 +10,7 @@ import {
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { catchError, scan, take, takeWhile, tap } from 'rxjs/operators';
 import { EmailResendService } from '../../../common/services/email-resend.service';
 import { OnboardingFeedNoticesExperimentService } from '../../experiments/sub-services/onboarding-feed-notices-experiment.service';
@@ -47,7 +47,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     private panel: OnboardingV3PanelService,
     private composerModal: ComposerModalService,
     private injector: Injector,
-    private toast: FormToastService,
+    private toast: ToasterService,
     private emailResend: EmailResendService,
     private noticeExperiment: OnboardingFeedNoticesExperimentService
   ) {}

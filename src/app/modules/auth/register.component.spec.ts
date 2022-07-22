@@ -40,7 +40,7 @@ describe('RegisterComponent', () => {
       TestBed.configureTestingModule({
         declarations: [
           MockComponent({
-            selector: 'minds-form-register',
+            selector: 'm-registerForm',
             template: '',
             inputs: [
               'referrer',
@@ -150,9 +150,7 @@ describe('RegisterComponent', () => {
     expect(h3).not.toBeNull();
     expect(h3.nativeElement.textContent).toBe('Not on Minds? Start a channel');
 
-    expect(
-      fixture.debugElement.query(By.css('minds-form-register'))
-    ).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('m-registerForm'))).not.toBeNull();
   });
 
   xit('should redirect when registered', () => {

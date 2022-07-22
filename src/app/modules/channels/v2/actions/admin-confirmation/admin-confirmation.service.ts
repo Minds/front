@@ -3,7 +3,7 @@ import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ChannelAdminConfirmationComponent } from './admin-confirmation.component';
 import {
   CompletedPayload,
@@ -26,7 +26,7 @@ export class ChannelAdminConfirmationService extends AbstractSubscriberComponent
   constructor(
     private modalService: ModalService,
     private api: ApiService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {
     super();
   }

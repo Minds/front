@@ -10,7 +10,7 @@ import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Session } from '../../../../services/session';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Element, Node } from '@angular/compiler';
 
 @Component({
@@ -29,7 +29,7 @@ export class YoutubeMigrationConnectComponent {
     protected cd: ChangeDetectorRef,
     fb: FormBuilder,
     session: Session,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.form = fb.group({
       youtubeId: ['', Validators.required],

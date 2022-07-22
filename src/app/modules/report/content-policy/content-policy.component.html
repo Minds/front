@@ -1,0 +1,192 @@
+<m-marketing class="m-aux__marketing" [useFullWidth]="false">
+  <div class="m-marketing__main">
+    <h1>Content Policy</h1>
+
+    <m-button *ngIf="session.isAdmin()" (onAction)="startJuryDuty()">
+      Start Admin Review
+    </m-button>
+    <p>
+      The goal of Minds is to have fair, transparent and ethical moderation
+      practices.
+    </p>
+    <p>
+      To ensure that decisions are made as democratically as possible, we
+      developed a Jury System based on the
+      <a href="https://santaclaraprinciples.org/" target="_blank"
+        >Santa Clara Principles</a
+      >
+      to review appeals. A Jury consists of 12 randomly selected unique active
+      Minds users who are not subscribed to the user under review. Each juror
+      selected is provided with the option to participate, pass or opt-out of
+      the Jury pool entirely. If 75% or more of the Jury members vote to accept
+      the appeal of a strike, the administrative action is overturned.
+    </p>
+    <p>
+      If less than 75% of the Jury members vote accept the appeal, the
+      administrative action is upheld. The decision of the Jury will be final.
+      For more information about the jury system,
+      <a
+        href="https://www.minds.com/minds/blog/power-to-the-people-the-minds-jury-system-975486713993859072"
+        target="_blank"
+        >read our blog</a
+      >.
+    </p>
+
+    <p>The current content moderation system functions as follows:</p>
+    <ol>
+      <li>User reports content or channel</li>
+      <li>Minds staff accepts or rejects report</li>
+      <li>If accepted, user is notified and given chance to appeal</li>
+      <li>If appealed, a jury of Minds users votes on appeal</li>
+    </ol>
+    <!-- <img
+      src="{{ cdnAssetsUrl }}assets/screenshots/flow.png"
+      style="max-width: 90%;"
+    /> -->
+
+    <h2>Strike Offense</h2>
+    <p>
+      Users will receive a strike for certain violations of the Content Policy.
+      Users will be notified about the strike, which term was violated, and
+      which piece of content was in violation. All strikes can be appealed to a
+      Minds Jury. Individual strikes will expire after 90 days.
+    </p>
+
+    <p>The following violations will result in a strike:</p>
+    <p>
+      <b> Untagged NSFW Post</b> (three strikes required for each individual
+      NSFW category)
+    </p>
+    <ul>
+      <li>Strike 1 - Warning</li>
+      <li>Strike 2 - 2nd Warning</li>
+      <li>Strike 3 - Full channel marked with NSFW category</li>
+    </ul>
+
+    <p><b>Harassment and Spam</b></p>
+    <ul>
+      <li>Strike 1 - Warning</li>
+      <li>Strike 2 - 2nd Warning</li>
+      <li>Strike 3 - Ban</li>
+    </ul>
+
+    <p>
+      NSFW (not safe for work) is defined as content containing nudity,
+      pornography, profanity, violence, gore, or sensitive commentary on race,
+      religion, or gender. In general terms, it is defined as content which a
+      reasonable viewer may not want to be seen accessing, in a public setting,
+      such as in a workplace. These tags can be applied to individual content or
+      any group or channel. The full channel will not be marked with a NSFW
+      category until it has received 3 strikes in a single NSFW category.
+    </p>
+
+    <p>
+      Spam on Minds is generally defined as repeated, unwanted, and/or
+      unsolicited actions, automated or manual, that negatively affect Minds
+      users, groups, and/or Minds itself. Spam also includes content that is
+      designed to further unlawful acts (such as phishing) or mislead recipients
+      as to the source of the material (such as spoofing). Spam may result in an
+      immediate ban if determined to be malicious or by use of a bot.
+    </p>
+
+    <p>
+      Spam may result in an immediate ban if determined to be malicious or by
+      use of a bot.
+    </p>
+
+    <h2>Immediate Ban Offense</h2>
+
+    <p>
+      Users will be immediately banned for certain violations of the Content
+      Policy. Users will be notified about the ban and which term was violated,
+      but they will not be able to see the content that was in violation as it
+      will have to be removed from Minds. Appeals on immediate bans will be
+      reviewed by the Minds admins and not a jury due to the nature of the
+      content.
+    </p>
+
+    <ul>
+      <li>
+        Illegal (terrorism, paedophilia, extortion, fraud, revenge porn, sex
+        trafficking)
+      </li>
+      <li>Personal and confidential information (doxxing)</li>
+      <li>Malware</li>
+      <li>Impersonation</li>
+      <li>Incites a true threat of violence</li>
+    </ul>
+
+    <h2>Boost Policy</h2>
+
+    <p>
+      Boost is the advertising network on Minds. Users may exchange Minds Tokens
+      to “Boost” their content and receive views and increased interaction from
+      the network. It is against the content policy to boost content that:
+    </p>
+
+    <ul>
+      <li>Violates Terms of Service</li>
+      <li>Is tagged NSFW</li>
+      <li>Sells Minds Tokens</li>
+      <li>Qualifies as a Help and Support Request</li>
+      <li>Exceeds Boost rate limits</li>
+      <li>Appeals on a moderation decision</li>
+      <li>Contains content from a banned user</li>
+    </ul>
+
+    <p>
+      In addition, boosts will be rejected if the on-chain payment failed or the
+      original post has been removed.
+    </p>
+
+    <p>
+      If you would like to appeal a Boost rejection, you may do so by
+      <a
+        href="https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360001861631"
+        target="_blank"
+        >submitting a support ticket</a
+      >
+      with the post in question and the reasons for why you believe it should be
+      accepted.
+    </p>
+
+    <h2>Spam Policy</h2>
+    <p>
+      Spam is not allowed on Minds. Spam may take many forms, and our rules are
+      intended to cover a range of prohibited behavior, including: Repeated,
+      unwanted, and/or unsolicited actions, automated or manual, that negatively
+      affect Minds users, groups, and/or Minds itself; Content that is designed
+      to further unlawful acts (such as phishing) or mislead recipients as to
+      the source of the material (such as spoofing); Commercially-motivated
+      spam, that typically aims to drive traffic from Minds over to another
+      website, service or initiative through backlinking or other inauthentic
+      methods; Inauthentic engagements, that try to make channels or content
+      appear more popular than they are; Coordinated activity, that attempts to
+      artificially influence opinion through the use of multiple accounts, fake
+      accounts, and/or scripting or automation. In most cases, spam will result
+      in a strike for your channel. In cases where token manipulation by means
+      of inauthentic engagement is identified, withdrawals will be rejected
+      without refund as per the Terms of Service.
+    </p>
+
+    <div class="m-reportsContentPolicy__stats">
+      <h2>Last 30 days</h2>
+      <div class="m-layout__row">
+        <div class="m-layout__cell">
+          <b>{{ stats.actioned | number }}</b>
+          <span>Actions Taken by Minds</span>
+        </div>
+        <div class="m-layout__cell">
+          <b>{{ stats.appealed | number }}</b>
+          <span>Appeals</span>
+        </div>
+        <div class="m-layout__cell">
+          <b>{{ stats.overturned | number }}</b>
+          <span>Actions Overturned</span>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <!-- <m-marketing__footer></m-marketing__footer> -->
+  </div>
+</m-marketing>

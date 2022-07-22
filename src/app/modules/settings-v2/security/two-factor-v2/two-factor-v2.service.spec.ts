@@ -9,7 +9,7 @@ let routerMock = new (function() {
   this.events = new BehaviorSubject<any>(null);
 })();
 
-export let toastServiceMock = new (function() {
+export let toasterServiceMock = new (function() {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
@@ -29,7 +29,7 @@ xdescribe('SettingsTwoFactorV2Service', () => {
     });
 
     service = new SettingsTwoFactorV2Service(
-      toastServiceMock,
+      toasterServiceMock,
       new (() => {})(),
       settingsServiceMock,
       sessionMock,

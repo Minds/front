@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
 import { Storage } from '../../services/storage';
 
@@ -84,7 +84,7 @@ export class AppPromptService implements OnDestroy {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private storage: Storage,
-    private toaster: FormToastService
+    private toaster: ToasterService
   ) {}
 
   ngOnDestroy(): void {

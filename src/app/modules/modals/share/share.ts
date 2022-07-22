@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { Session } from '../../../services/session';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../helpers/is-mobile';
@@ -31,7 +31,7 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   constructor(
     public session: Session,
     configs: ConfigsService,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }

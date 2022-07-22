@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { NotificationsSettingsV2Service } from '../../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 import { of } from 'rxjs';
 
@@ -37,8 +37,8 @@ describe('EnablePushNotificationsNoticeComponent', () => {
             useValue: routerMock,
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           {
             provide: FeedNoticeService,

@@ -16,7 +16,7 @@ import { Session } from '../../../../../services/session';
 import { Web3WalletService } from '../../../web3-wallet.service';
 import { TokenDistributionEventService } from '../../../contracts/token-distribution-event.service';
 import { Router } from '@angular/router';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Web3ModalService } from '@mindsorg/web3modal-angular';
 import { BlockchainMarketingLinksService } from '../../../marketing/v2/blockchain-marketing-links.service';
 
@@ -73,7 +73,7 @@ export class BlockchainPurchaseV2Component implements OnInit {
     public session: Session,
     private route: ActivatedRoute,
     protected router: Router,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     private linksService: BlockchainMarketingLinksService
   ) {}
 

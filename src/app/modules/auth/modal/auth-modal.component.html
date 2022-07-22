@@ -11,7 +11,7 @@
 
   <div class="m-modalV2__body">
     <ng-container *ngIf="formDisplay === 'register'">
-      <minds-form-register
+      <m-registerForm
         [showTitle]="false"
         [showBigButton]="true"
         [showPromotions]="false"
@@ -21,10 +21,10 @@
         (done)="onRegisterDone($event)"
         (showLoginForm)="showLoginForm($event)"
       >
-      </minds-form-register>
+      </m-registerForm>
     </ng-container>
     <ng-container *ngIf="formDisplay === 'login'">
-      <minds-form-login
+      <m-loginForm
         [showBigButton]="true"
         [showInlineErrors]="true"
         [showLabels]="true"
@@ -34,7 +34,7 @@
         (doneRegistered)="onRegisterDone($event)"
         (showRegisterForm)="showRegisterForm($event)"
       >
-      </minds-form-login>
+      </m-loginForm>
     </ng-container>
   </div>
 </div>

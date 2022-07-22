@@ -11,7 +11,7 @@ import { GroupsService } from '../groups.service';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
 import { ModalService } from '../../../services/ux/modal.service';
 
@@ -52,7 +52,7 @@ export class GroupsSettingsButton {
     private injector: Injector,
     public modalService: ModalService,
     public router: Router,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {}

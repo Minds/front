@@ -17,10 +17,10 @@ import { Observable, Subscription } from 'rxjs';
 import { VideoPoster } from '../../services/video-poster.service';
 
 /**
- * Renders a user-friendly preview of the embedded photo/video attachment
+ * Renders a user-friendly preview of the embedded photo/video media attachment
  */
 @Component({
-  selector: 'm-composerAttachmentPreview',
+  selector: 'm-composerPreview--attachment',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'attachment-preview.component.html',
 })

@@ -1,13 +1,13 @@
-<div class="m-composerRichEmbedPreview">
-  <div class="m-composerRichEmbedPreview__thumbnail">
+<div class="m-composerPreview--richEmbed">
+  <div class="m-composerPreview--richEmbed__thumbnail">
     <img alt="" [src]="getProxiedThumbnail()" />
   </div>
 
-  <div *ngIf="richEmbed?.title" class="m-composerRichEmbedPreview__title">
+  <div *ngIf="richEmbed?.title" class="m-composerPreview--richEmbed__title">
     {{ richEmbed.title }}
   </div>
 
-  <div *ngIf="richEmbed?.url" class="m-composerRichEmbedPreview__domain">
+  <div *ngIf="richEmbed?.url" class="m-composerPreview--richEmbed__domain">
     {{ extractDomain() }}
   </div>
 
