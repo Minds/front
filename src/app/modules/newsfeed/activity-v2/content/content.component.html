@@ -46,9 +46,7 @@ post content to trigger upgrade modal -->
       [isModal]="isModal"
       [activityV2Feature]="true"
       [displayAsColumn]="
-        isMinimalMode ||
-        isModal ||
-        service.displayOptions.showBoostRotatorButtons
+        isMinimalMode || isModal || service.displayOptions.boostRotatorMode
       "
     >
     </minds-rich-embed>

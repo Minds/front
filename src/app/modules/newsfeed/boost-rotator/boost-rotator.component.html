@@ -14,6 +14,14 @@
     >
       <i class="material-icons">chevron_left</i>
     </div>
+    <!-- ACTIVITY V2 BOOST ROTATOR TOP ROW  -->
+    <div *ngIf="activityV2Feature" class="m-boostRotator__toolbar">
+      <m-activityV2__flag--boosted></m-activityV2__flag--boosted>
+      <div class="m-boostRotatorToolbar__buttons">
+        <i class="material-icons">chevron_left</i>
+        <i class="material-icons">chevron_right</i>
+      </div>
+    </div>
     <ng-container *ngFor="let entity of boosts; let i = index">
       <!-- NOTE: nextBoost() and previousBoost() are only used by activityV2 -->
       <div
@@ -26,7 +34,7 @@
         <m-activity
           [entity]="entity"
           [displayOptions]="{
-            showBoostRotatorButtons: true,
+            boostRotatorMode: true,
             showOnlyCommentsInput: false,
             showComments: false,
             fixedHeight: true,

@@ -22,6 +22,12 @@
     width: 100%;
   }
 
+  .m-boostRotatorToolbar__buttons {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
   [class*='m-carousel__overflowScrollButton--'] {
     display: block !important;
     opacity: 1;

@@ -30,31 +30,12 @@
       <div
         class="m-activity__flagRow"
         *ngIf="
-          entity.boosted ||
-          (entity.remind_users && entity.remind_users.length) ||
-          service.displayOptions.showBoostRotatorButtons
+          (entity.boosted ||
+            (entity.remind_users && entity.remind_users.length)) &&
+          !service.displayOptions.boostRotatorMode
         "
       >
         <m-activityV2__flag></m-activityV2__flag>
-        <div
-          class="m-activity__boostRotatorButtons"
-          *ngIf="service.displayOptions.showBoostRotatorButtons"
-        >
-          <m-icon
-            iconId="chevron_left"
-            [sizeFactor]="1.5"
-            [rem]="true"
-            (singleClick)="emitPreviousBoost()"
-            mPreventDoubleClick
-          ></m-icon
-          ><m-icon
-            iconId="chevron_right"
-            [sizeFactor]="1.5"
-            [rem]="true"
-            (singleClick)="emitNextBoost()"
-            mPreventDoubleClick
-          ></m-icon>
-        </div>
       </div>
       <m-activityV2__ownerBlock
         *ngIf="service.displayOptions.showOwnerBlock"

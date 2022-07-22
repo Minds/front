@@ -1,0 +1,19 @@
+@import 'defaults.scss';
+
+:host {
+  span {
+    @include body2Medium;
+    text-decoration: none;
+  }
+
+  i {
+    font-size: 18px;
+  }
+
+  span,
+  i {
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+}
