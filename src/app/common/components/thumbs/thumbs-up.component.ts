@@ -2,7 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DoCheck,
+  EventEmitter,
   Input,
+  OnChanges,
+  Output,
   ViewChild,
 } from '@angular/core';
 
@@ -11,7 +15,6 @@ import { Client } from '../../../services/api';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catpcha/friendly-captcha.component';
-import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
 import { ToasterService } from '../../services/toaster.service';
 
 @Component({
@@ -21,7 +24,7 @@ import { ToasterService } from '../../services/toaster.service';
   templateUrl: 'thumbs-up.component.html',
   styleUrls: [`thumbs-up.component.ng.scss`],
 })
-export class ThumbsUpButton {
+export class ThumbsUpButton implements DoCheck, OnChanges {
   changesDetected: boolean = false;
   object = {
     guid: null,
@@ -41,6 +44,13 @@ export class ThumbsUpButton {
 
   @Input() iconOnly = false;
 
+  /**
+   * Call to let parent functions know a thumb up event has happend
+   */
+  @Output('thumbsUpChange') thumbsUpChange$: EventEmitter<
+    void
+  > = new EventEmitter();
+
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;
 
@@ -50,8 +60,7 @@ export class ThumbsUpButton {
     private authModal: AuthModalService,
     private cd: ChangeDetectorRef,
     private experiments: ExperimentsService,
-    private toast: ToasterService,
-    private activityService: ActivityService
+    private toast: ToasterService
   ) {}
 
   set _object(value: any) {
@@ -90,6 +99,7 @@ export class ThumbsUpButton {
    */
   async submit(solution?: string): Promise<void> {
     this.inProgress = true;
+    this.cd.detectChanges();
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
       if (!user) return;
@@ -103,7 +113,10 @@ export class ThumbsUpButton {
     }
 
     try {
-      await this.client.put('api/v1/thumbs/' + this.object.guid + '/up', data);
+      let response = await this.client.put(
+        'api/v1/thumbs/' + this.object.guid + '/up',
+        data
+      );
     } catch (e) {
       this.toast.error(e?.message ?? 'An unknown error has occurred');
     }
@@ -127,14 +140,9 @@ export class ThumbsUpButton {
       this.object['thumbs:up:count']--;
     }
 
-    if (
-      this.object['type'] === 'activity' ||
-      this.object['type'] === 'object'
-    ) {
-      this.activityService.entity$.next(this.object);
-    }
-
     this.cd.detectChanges();
+
+    this.thumbsUpChange$.next();
   }
 
   /**
@@ -153,5 +161,19 @@ export class ThumbsUpButton {
       'minds-3119-captcha-for-engagement',
       true
     );
+  }
+
+  ngOnChanges(changes) {}
+
+  ngDoCheck() {
+    this.changesDetected = false;
+    if (this.object['thumbs:up:count'] != this.object['thumbs:up:count:old']) {
+      this.object['thumbs:up:count:old'] = this.object['thumbs:up:count'];
+      this.changesDetected = true;
+    }
+
+    if (this.changesDetected) {
+      this.cd.detectChanges();
+    }
   }
 }
