@@ -29,7 +29,10 @@
       ></m-userAggregator>
     </div>
 
-    <div class="m-juryDutySessionContent__changeReportReasonContainer">
+    <div
+      *ngIf="!report.is_appeal"
+      class="m-juryDutySessionContent__changeReportReasonContainer"
+    >
       <div
         (click)="toggleChangeReportReason()"
         class="m-juryDutySessionContent__changeReportReasonHeader"

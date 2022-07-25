@@ -76,7 +76,7 @@ export class JuryDutySessionContentComponent {
     }
     let confirmMessage = 'Are you sure?';
     let adminReasonOverride = null;
-    if (this.selectedReason) {
+    if (this.selectedReason && !this.report.is_appeal) {
       adminReasonOverride = `${this.selectedReason.value}`;
       let adminReasonOverrideLabel = this.selectedReason.label;
 
