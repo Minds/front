@@ -10,8 +10,9 @@
       <ng-container *ngIf="entity$ | async as entity">
         <div
           *ngIf="
-            entity.boosted ||
-            (entity.remind_users && entity.remind_users.length)
+            !service.displayOptions.boostRotatorMode &&
+            (entity.boosted ||
+              (entity.remind_users && entity.remind_users.length))
           "
           class="m-activityLeftColumn__spacer"
         ></div>

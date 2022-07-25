@@ -22,9 +22,47 @@
     width: 100%;
   }
 
-  .m-boostRotatorToolbar__buttons {
+  .m-boostRotator__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     @include m-theme() {
-      color: themed($m-textColor--primary);
+      background-color: themed($m-bgColor--secondaryAlt);
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    padding-top: $spacing3;
+    padding-bottom: $spacing3;
+    padding-left: $activityAvatarSpacingLeft--feed;
+    padding-right: $activitySpacingRight--feed;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $activityAvatarSpacingLeft--feed--mobile;
+      padding-right: $activitySpacingRight--feed--mobile;
+    }
+
+    .m-boostRotatorToolbar__buttons {
+      i {
+        cursor: pointer;
+        font-size: 32px;
+        line-height: 20px;
+        height: 20px;
+        width: 26px;
+        padding-left: $spacing4;
+        @include unselectable;
+        transition: opacity 0.2s fade-in-out;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+        &:active {
+          opacity: 0.8;
+        }
+      }
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
     }
   }
 
