@@ -15,6 +15,14 @@ import { AnalyticsService } from './../../../services/analytics';
 @Component({
   selector: 'infinite-scroll',
   template: `
+    <ng-container *ngIf="!inProgress && !moreData">
+      <div
+        (mViewed)="handleOnEnd()"
+        [mViewedOffset]="1000"
+        style="height: 1px; margin-bottom: -1px"
+      ></div>
+    </ng-container>
+
     <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
     <ng-container *ngIf="!iconOnly && !hideManual">
@@ -22,7 +30,6 @@ import { AnalyticsService } from './../../../services/analytics';
         *ngIf="!inProgress"
         [disabled]="!moreData"
         (onAction)="manualLoad()"
-        (mViewed)="!moreData ? handleOnEnd() : undefined"
       >
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
