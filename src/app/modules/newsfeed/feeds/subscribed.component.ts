@@ -87,12 +87,15 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   /**
    * Whether top highlights is dismissed
    */
-  isTopHighlightsDismissed$ = this.dismissal.isDismissed('top-highlights');
+  isTopHighlightsDismissed$ = this.dismissal.dismissed('top-highlights');
   /**
    * Whether channel recommendation is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.isDismissed(
+  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
+  );
+  isDiscoveryFallbackDismissed$ = this.dismissal.dismissed(
+    'feed:discovery-fallback'
   );
 
   @ViewChild('discoveryFallback', { read: ViewContainerRef })
@@ -199,7 +202,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.context.set('activity');
 
-    if (this.isDiscoveryFallbackActive()) {
+    if (
+      this.isDiscoveryFallbackActive() &&
+      !this.dismissal.isDismissed('feed:discovery-fallback')
+    ) {
+      // TODO: load discovery when when the feed was gonna end instead of at the beginning
       this.loadDiscoveryFallback();
     }
   }

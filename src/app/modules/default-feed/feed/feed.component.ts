@@ -25,7 +25,7 @@ export class DefaultFeedComponent implements OnInit {
   /**
    * Whether channel recommendation component is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.isDismissed(
+  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
 
