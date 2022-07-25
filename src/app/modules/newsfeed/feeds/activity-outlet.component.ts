@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 
 // a wrapper component used by virtualized list to hold all components of the feed in one

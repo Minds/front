@@ -17,11 +17,9 @@ let activatedRouteMock = new (function() {
   });
 })();
 
-let apiResourceMock = new (function() {
-})();
+let apiResourceMock = new (function() {})();
 
-let storageV2Mock = new (function() {
-})();
+let storageV2Mock = new (function() {})();
 
 xdescribe('FeedsService', () => {
   let service: FeedsService;
