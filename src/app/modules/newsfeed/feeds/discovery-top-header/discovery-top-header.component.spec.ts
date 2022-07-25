@@ -8,9 +8,8 @@ describe('DiscoveryTopHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DiscoveryTopHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [DiscoveryTopHeaderComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
