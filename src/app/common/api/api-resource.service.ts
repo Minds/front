@@ -1,8 +1,16 @@
-import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  from,
+  Observable,
+  of,
+  throwError,
+  Subscription,
+  interval,
+} from 'rxjs';
 import { ApiRequestMethod, ApiResponse, ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { StorageV2 } from './../../services/storage/v2';
-import { switchMap, take, takeUntil } from 'rxjs/operators';
+import { debounce, switchMap, take, takeUntil } from 'rxjs/operators';
 
 enum CachePolicy {
   /**
@@ -107,8 +115,12 @@ export class ResourceRef<T, P> {
     }
   }
 
-  setOptions(opts: ApiResourceOptions<T, P>) {
-    this._options = opts;
+  setOptions(opts: ApiResourceOptions<T, P>): ResourceRef<T, P> {
+    this._options = {
+      ...this._options,
+      ...opts,
+    };
+    return this;
   }
 
   get options() {
@@ -125,6 +137,7 @@ export class ResourceRef<T, P> {
   setData(func: (oldData: any) => any) {
     const newData = func(this.data$.getValue());
     this.data$.next(newData);
+    this._persist(); // TODO: check
   }
 
   /**
@@ -148,7 +161,8 @@ export class ResourceRef<T, P> {
         options.cachePolicy === CachePolicy.cacheFirst ||
         options.cachePolicy === CachePolicy.cacheThenFetch
       ) {
-        rehydratedResult = await this._rehydrate(params, options);
+        // using options.params because we want to ignore custom params // TODO: explain why
+        rehydratedResult = await this._rehydrate(options.params, options);
       }
 
       if (rehydratedResult) {
@@ -158,7 +172,9 @@ export class ResourceRef<T, P> {
           options.cachePolicy,
           rehydratedResult
         );
-        this.data$.next(rehydratedResult);
+        this.data$.next(
+          this._updateState(rehydratedResult as any, undefined, options)
+        );
       } else {
         console.log(
           "[ApiResource] didn't find any cache for ",
@@ -184,26 +200,48 @@ export class ResourceRef<T, P> {
         `[ApiResource] fetching for ${this.options.url}`,
         options.cachePolicy
       );
-      this._api[options.method](
-        options.url,
-        Object.assign({}, options.params, params)
-      )
+      this._api[options.method](options.url, params)
         .pipe(take(1))
         .toPromise()
         .then(response => {
-          this.data$.next(
-            this._updateState(response as any, this.data$.getValue(), options)
-          );
+          switch (options.cachePolicy) {
+            // override and ignore previous cache
+            case CachePolicy.cacheThenFetch:
+              this.data$.next(
+                this._updateState(response as any, undefined, options)
+              );
+              break;
+            default:
+              this.data$.next(
+                this._updateState(
+                  response as any,
+                  this.data$.getValue(),
+                  options
+                )
+              );
+          }
 
           // only cache get requests
           if (
             options.method === ApiRequestMethod.GET &&
             options.cachePolicy !== CachePolicy.fetchOnly
           ) {
-            this._persist(params, options);
+            // using options.params because we want to ignore custom params // TODO: explain why
+            this._persist(options.params, options);
           }
         })
         .catch(e => {
+          switch (options.cachePolicy) {
+            // return and don't attempt to fetch anymore
+            case CachePolicy.fetchFirst:
+              if (rehydratedResult) {
+                this.data$.next(
+                  this._updateState(rehydratedResult as any, undefined, options)
+                );
+              }
+              break;
+          }
+
           this.error$.next(e);
           throw e;
         })
@@ -240,7 +278,10 @@ export class ResourceRef<T, P> {
    * @param { object } params
    * @returns { Promise }
    */
-  private _persist(params, options: ApiResourceOptions<T, P> = this.options) {
+  private _persist(
+    params = this.options.params,
+    options: ApiResourceOptions<T, P> = this.options
+  ) {
     return this._storage[options.cacheStorage].setApiResource(
       this._cacheKey(params, options),
       this.data$.getValue()
@@ -299,7 +340,10 @@ export class QueryRef<T, P> extends ResourceRef<T, P> {
    * @returns
    */
   fetchMore = (params: P) =>
-    this.fetch(params, { updatePolicy: UpdatePolicy.merge });
+    this.fetch(params, {
+      updatePolicy: UpdatePolicy.merge,
+      cachePolicy: ApiResource.CachePolicy.fetchFirst,
+    });
 }
 
 export class MutationRef<T, P> extends ResourceRef<T, P> {

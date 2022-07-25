@@ -6,7 +6,7 @@
 >
   <article
     (mResized)="onResized($event)"
-    *ngIf="(recommendations$ | async).length"
+    *ngIf="(recommendations$ | async)?.length"
   >
     <header>
       <h3>
@@ -32,7 +32,7 @@
         </m-dropdownMenu>
       </div>
     </header>
-    <ul *ngIf="(recommendations$ | async).length">
+    <ul *ngIf="(recommendations$ | async)?.length">
       <li
         @listAnimation
         [@.disabled]="disabledAnimations$ | async"

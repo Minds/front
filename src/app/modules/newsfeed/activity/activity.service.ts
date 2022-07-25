@@ -39,6 +39,7 @@ export type ActivityDisplayOptions = {
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
   expandedText: boolean;
+  expandedReplies: { [k: string]: boolean };
 };
 
 export type ActivityEntity = {
@@ -326,6 +327,7 @@ export class ActivityService {
     isV2: false,
     permalinkBelowContent: false,
     expandedText: false,
+    expandedReplies: {},
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();

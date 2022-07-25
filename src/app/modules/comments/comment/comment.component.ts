@@ -101,6 +101,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() poster: CommentPosterComponent;
 
   @Output() onReply = new EventEmitter();
+  @Output() onRepliesToggled = new EventEmitter();
 
   @Output() onHeightChange: EventEmitter<{
     oldHeight: number;
@@ -465,6 +466,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       return;
     }
     this.showReplies = !this.showReplies;
+    this.onRepliesToggled.emit(this.showReplies);
   }
 
   onMenuClick(e: MouseEvent): void {

@@ -64,7 +64,11 @@
 
   <ng-container *ngIf="showReplies">
     <ng-container
-      *ngFor="let comment of getComments(); let i = index; let first = first"
+      *ngFor="
+        let comment of comments$ | async;
+        let i = index;
+        let first = first
+      "
     >
       <m-comment
         [comment]="comment"
@@ -73,11 +77,15 @@
         [level]="level"
         [canEdit]="canEdit"
         [canDelete]="canDelete"
-        [showReplies]="comment.show_replies"
+        [showReplies]="
+          comment.show_replies ||
+          activityService.displayOptions.expandedReplies[comment.urn]
+        "
         [compact]="compact"
         (delete)="delete(i)"
         (saved)="edited(i, $event)"
         (onReply)="reply($event.comment)"
+        (onRepliesToggled)="handleReplyExpanded(comment, $event)"
         [poster]="poster"
         (onHeightChange)="onHeightChange.emit($event)"
         [ngClass]="{ 'm-commentsThreadComment--first': first && level === 0 }"

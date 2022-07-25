@@ -294,13 +294,13 @@ export class ActivityV2ContentComponent
 
   ngAfterViewInit() {
     // Run after view initialized (as modal uses the same component this doesnt get called)
-    timer(1)
-      .toPromise()
-      .then(() => {
-        this.calculateQuoteHeight();
-        this.calculateVideoDimensions();
-        this.calculateImageDimensions();
-      });
+    // timer(1)
+    //   .toPromise()
+    //   .then(() => {
+    //     this.calculateQuoteHeight();
+    //     this.calculateVideoDimensions();
+    //     this.calculateImageDimensions();
+    //   });
   }
 
   ngOnDestroy() {
@@ -561,9 +561,14 @@ export class ActivityV2ContentComponent
       this.imageHeight = null;
     }
 
-    const imageElHeight = this.imageContainerEl?.nativeElement?.clientHeight;
+    const imageElHeight =
+      this.imageContainerEl?.nativeElement?.clientHeight ||
+      // TODO: get this number from parent's width and take into account quotes have less width
+      (this.isQuote ? 441 : 532);
     const imageElWidth =
-      this.imageContainerEl?.nativeElement?.clientWidth || 532; // TODO: get this number from parent's width
+      // TODO: get this number from parent's width and take into account quotes have less width
+      this.imageContainerEl?.nativeElement?.clientWidth ||
+      (this.isQuote ? 441 : 532);
 
     if (
       entity.custom_data?.[0]?.height &&

@@ -183,6 +183,7 @@ export class ChannelRecommendationComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    // TODO: change
     this.recommendations$.next(
       this.recommendations$.getValue().filter(u => u.guid !== user.guid)
     );
