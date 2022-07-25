@@ -77,14 +77,14 @@
         </m-dropdownMenu__item>
       </ng-container>
 
-      <m-nsfw-selector
+      <m-nsfwSelector
         (click)="$event.preventDefault(); $event.stopPropagation()"
         service="editing"
         [selected]="service.nsfw$ | async"
         (selectedChange)="setNSFWLock($event)"
         v2="true"
       >
-      </m-nsfw-selector>
+      </m-nsfwSelector>
 
       <m-dropdownMenu__item (click)="reIndex()"
         ><span i18n="@@M__ACTION__REINDEX">Reindex</span>

@@ -1,27 +1,27 @@
 <ng-template #searchBar>
-  <div class="m-v3Topbar__searchBox">
+  <div class="m-topbar__searchBox">
     <ng-content select="[search]"></ng-content>
   </div>
 </ng-template>
 
 <div
-  class="m-v3Topbar__top"
-  [class.m-v3Topbar__top--noBorder]="
+  class="m-topbar__top"
+  [class.m-topbar__top--noBorder]="
     !(pageLayoutService.hasTopbarBorder$ | async)
   "
-  [class.m-v3Topbar__top--noBackground]="
+  [class.m-topbar__top--noBackground]="
     !(pageLayoutService.hasTopbarBackground$ | async)
   "
-  [class.m-v3Topbar--homepageV3]="onHomepage"
-  [class.m-v3Topbar__top--loggedOut]="!getCurrentUser()"
+  [class.m-topbar--homepageV3]="onHomepage"
+  [class.m-topbar__top--loggedOut]="!getCurrentUser()"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
-  <div class="m-v3TopbarTop__inner m-pageLayout__container">
-    <div class="m-v3Topbar__leftColumn m-pageLayout__pane--left">
-      <nav class="m-v3Topbar__nav">
+  <div class="m-topbarTop__inner m-pageLayout__container">
+    <div class="m-topbar__leftColumn m-pageLayout__pane--left">
+      <nav class="m-topbar__nav">
         <h1>
           <a
-            class="m-v3TopbarNav__item m-v3TopbarNav__item--logo"
+            class="m-topbarNav__item m-topbarNav__item--logo"
             [routerLink]="getMainLogoUrl()"
             title="Home"
             i18n-title="@@COMMON__HOME"
@@ -30,7 +30,7 @@
           >
             <img
               [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
-              class="m-v3Topbar__logo--bulb"
+              class="m-topbar__logo--bulb"
               alt="Minds"
             />
             <img
@@ -41,7 +41,7 @@
                   : !(isDarkTheme$ | async)
               "
               [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
-              class="m-v3Topbar__logo--full"
+              class="m-topbar__logo--full"
               alt="minds"
             />
             <img
@@ -52,14 +52,14 @@
                   : (isDarkTheme$ | async)
               "
               [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
-              class="m-v3Topbar__logo--full"
+              class="m-topbar__logo--full"
               alt="minds"
             />
           </a>
         </h1>
         <m-environmentFlag></m-environmentFlag>
         <div
-          class="m-v3TopbarNav__item m-v3TopbarNav__item--hamburger"
+          class="m-topbarNav__item m-topbarNav__item--hamburger"
           (click)="toggleSidebarNav()"
         >
           <i class="material-icons">menu</i>
@@ -71,23 +71,23 @@
       class="m-pageLayout__pane--main"
       style="display:flex; flex-direction: row;"
     >
-      <div class="m-v3Topbar__middleColumn" *ngIf="showSearchBar">
+      <div class="m-topbar__middleColumn" *ngIf="showSearchBar">
         <ng-container *ngTemplateOutlet="searchBar"></ng-container>
       </div>
 
-      <div class="m-v3Topbar__spacer"></div>
+      <div class="m-topbar__spacer"></div>
 
-      <div class="m-v3Topbar__rightColumn">
+      <div class="m-topbar__rightColumn">
         <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
           <div
-            class="m-v3TopbarContainer__loginWrapper m-v3TopbarContainer__loginWrapper--roundButtons"
+            class="m-topbarContainer__loginWrapper m-topbarContainer__loginWrapper--roundButtons"
           >
             <m-button
-              class="m-v3TopbarLoginWrapper__login"
+              class="m-topbarLoginWrapper__login"
               [ngClass]="
                 onHomepage
                   ? {
-                      'm-v3TopbarLoginWrapper__login--white': !(
+                      'm-topbarLoginWrapper__login--white': !(
                         pageLayoutService.hasTopbarBackground$ | async
                       )
                     }
@@ -104,7 +104,7 @@
             </m-button>
 
             <m-button
-              class="m-v3TopbarLoginWrapper__joinMindsNow"
+              class="m-topbarLoginWrapper__joinMindsNow"
               (onAction)="onJoinNowClick()"
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
@@ -123,18 +123,15 @@
           </div>
         </ng-container>
 
-        <div *ngIf="!onHomepage" class="m-v3Topbar__userMenu">
-          <div class="m-v3Topbar__spacer"></div>
+        <div *ngIf="!onHomepage" class="m-topbar__userMenu">
+          <div class="m-topbar__spacer"></div>
           <!-- edit -->
           <ng-content select="[icons]"></ng-content>
-          <m-usermenu__v3
-            [useAvatar]="true"
-            *ngIf="getCurrentUser()"
-          ></m-usermenu__v3>
+          <m-userMenu [useAvatar]="true" *ngIf="getCurrentUser()"></m-userMenu>
         </div>
 
-        <div class="m-v3Topbar__notificationsToasterWrapper">
-          <div class="m-v3Topbar__notificationsToaster">
+        <div class="m-topbar__notificationsToasterWrapper">
+          <div class="m-topbar__notificationsToaster">
             <ng-template dynamic-host></ng-template>
           </div>
         </div>

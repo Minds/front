@@ -21,7 +21,7 @@ import { ConfigsService } from '../../services/configs.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
+import { UserMenuService } from '../topbar/user-menu/user-menu.service';
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';

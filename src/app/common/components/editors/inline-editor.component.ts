@@ -32,7 +32,7 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
  */
 @Component({
   moduleId: module.id,
-  selector: 'm-inline-editor',
+  selector: 'm-inlineEditor',
   template: `
     <div #host></div>
   `,
@@ -111,12 +111,12 @@ export class InlineEditorComponent
           {
             name: 'h2',
             contentDefault:
-              '<b class="m-inline-editor--toolbar-text">H</b><sup>2</sup>',
+              '<b class="m-inlineEditor__toolbarText">H</b><sup>2</sup>',
           },
           {
             name: 'h3',
             contentDefault:
-              '<b class="m-inline-editor--toolbar-text">H</b><sup>3</sup>',
+              '<b class="m-inlineEditor__toolbarText">H</b><sup>3</sup>',
           },
           {
             name: 'removeFormat',

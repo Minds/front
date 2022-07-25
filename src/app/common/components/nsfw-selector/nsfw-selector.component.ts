@@ -8,7 +8,7 @@ import { Storage } from '../../../services/storage';
 import { ifError } from 'assert';
 
 @Component({
-  selector: 'm-nsfw-selector',
+  selector: 'm-nsfwSelector',
   templateUrl: 'nsfw-selector.component.html',
   providers: [NSFWSelectorEditingService],
 })

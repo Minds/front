@@ -1,10 +1,10 @@
-<m-v3topbar>
+<m-topbar>
   <ng-container search>
     <m-search--bar [defaultSizes]="false"></m-search--bar>
   </ng-container>
 
   <ng-container icons *ngIf="session.isLoggedIn()">
-    <m-topbar-walletBalance></m-topbar-walletBalance>
+    <m-topbar__walletBalance></m-topbar__walletBalance>
     <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
   </ng-container>
-</m-v3topbar>
+</m-topbar>
