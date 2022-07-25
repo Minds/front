@@ -25,14 +25,12 @@
         title
         i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
         *ngIf="algorithm === 'top'"
-        class="m-newsfeed__subscribed__feedType__title"
         >Top Posts</span
       >
       <span
         title
         i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
         *ngIf="algorithm === 'latest'"
-        class="m-newsfeed__subscribed__feedType__title"
         >Latest Posts</span
       >
       <m-feedTypePopover [type]="algorithm"></m-feedTypePopover>
@@ -119,6 +117,7 @@
         (load)="loadNext()"
         [moreData]="feedService.hasMore | async"
         [inProgress]="feedService.inProgress | async"
+        (onEnd)="onNewsfeedEndReached()"
         [ignoreEndTracking]="isDiscoveryFallbackActive()"
       >
       </infinite-scroll>
@@ -129,7 +128,6 @@
           !(isDiscoveryFallbackDismissed$ | async)
         "
       >
-        <m-discoveryTopHeader></m-discoveryTopHeader>
         <ng-template #discoveryFallback></ng-template>
       </ng-container>
     </div>

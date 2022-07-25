@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { DismissalService } from '../../../../common/services/dismissal.service';
 
 @Component({
-  selector: 'm-discoveryTopHeader',
-  templateUrl: './discovery-top-header.component.html',
+  selector: 'm-defaultFeedHeader',
+  templateUrl: './default-feed-header.component.html',
 })
-export class DiscoveryTopHeaderComponent {
+export class DefaultFeedHeaderComponent {
   constructor(private dismissal: DismissalService) {}
 
   /**

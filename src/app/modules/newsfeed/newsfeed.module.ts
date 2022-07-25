@@ -35,11 +35,9 @@ import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
 import { TopHighlightsComponent } from './feeds/top-highlights/top-highlights.component';
 import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
-import { FeedHeaderComponent } from './feeds/feed-header/feed-header.component';
 import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
 import { ActivityV2Module } from './activity-v2/activity.module';
-import { DiscoveryTopHeaderComponent } from './feeds/discovery-top-header/discovery-top-header.component';
 
 const routes: Routes = [
   {
@@ -111,8 +109,6 @@ const routes: Routes = [
     NewsfeedActivitySuggestionsComponent,
     TopHighlightsComponent,
     FeedTypePopoverComponent,
-    FeedHeaderComponent,
-    DiscoveryTopHeaderComponent,
   ],
   providers: [
     NewsfeedService,

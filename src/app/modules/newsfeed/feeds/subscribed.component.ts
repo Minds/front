@@ -201,14 +201,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     );
 
     this.context.set('activity');
-
-    if (
-      this.isDiscoveryFallbackActive() &&
-      !this.dismissal.isDismissed('feed:discovery-fallback')
-    ) {
-      // TODO: load discovery when when the feed was gonna end instead of at the beginning
-      this.loadDiscoveryFallback();
-    }
   }
 
   ngOnDestroy() {
@@ -420,6 +412,20 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       '../../default-feed/feed/feed.component'
     );
     this.discoveryFallback.clear();
-    this.discoveryFallback.createComponent(DefaultFeedComponent);
+    const componentRef = this.discoveryFallback.createComponent(
+      DefaultFeedComponent
+    );
+
+    componentRef.instance.visibleHeader = true;
+  }
+
+  onNewsfeedEndReached() {
+    if (
+      this.isDiscoveryFallbackActive() &&
+      !this.dismissal.isDismissed('feed:discovery-fallback')
+    ) {
+      // TODO: load discovery when when the feed was gonna end instead of at the beginning
+      this.loadDiscoveryFallback();
+    }
   }
 }

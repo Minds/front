@@ -166,6 +166,7 @@ import { ReportService } from './services/report.service';
 import { UserAggregatorComponent } from './components/user-aggregator/user-aggregator.component';
 import { ViewedDirective } from './directives/viewed.directive';
 import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
+import { FeedHeaderComponent } from './components/feed-header/feed-header.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -285,6 +286,7 @@ const MINDS_DIRECTIVES = [
   TagsLinks,
   Tooltip,
   ViewedDirective,
+  FeedHeaderComponent,
 ];
 // ------------------------------------
 // ------------------------------------
