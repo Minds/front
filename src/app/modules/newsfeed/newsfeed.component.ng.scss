@@ -47,5 +47,10 @@
         margin-bottom: $spacing5;
       }
     }
+
+    ::ng-deep infinite-scroll {
+      padding-top: 0;
+      padding-bottom: 24px;
+    }
   }
 }

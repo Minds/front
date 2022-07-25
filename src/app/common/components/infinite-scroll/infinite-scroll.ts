@@ -22,7 +22,9 @@ import { AnalyticsService } from './../../../services/analytics';
         *ngIf="!inProgress"
         [disabled]="!moreData"
         (onAction)="manualLoad()"
-        (mViewed)="moreData ? undefined : trackEndReached()"
+        (mViewed)="
+          !moreData && !ignoreEndTracking ? trackEndReached() : undefined
+        "
       >
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
@@ -60,6 +62,8 @@ export class InfiniteScroll {
   @Input() inProgress: boolean = false;
   @Input() moreData: boolean = true;
   @Input() hideManual: boolean = false;
+  // if provided, the component won't track the feed-end event
+  @Input() ignoreEndTracking: boolean = false;
 
   element: any;
 

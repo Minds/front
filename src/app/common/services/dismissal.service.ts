@@ -9,7 +9,8 @@ const DEFAULT_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 export type DismissIdentifier =
   | 'top-highlights'
   | 'channel-recommendation:feed'
-  | 'channel-recommendation:channel';
+  | 'channel-recommendation:channel'
+  | 'feed:discovery-fallback';
 
 type DismissItem = {
   id: DismissIdentifier;

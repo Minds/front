@@ -20,7 +20,23 @@
 
     <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
 
-    <m-feedHeader [algorithm]="algorithm"></m-feedHeader>
+    <m-feedHeader>
+      <span
+        title
+        i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
+        *ngIf="algorithm === 'top'"
+        class="m-newsfeed__subscribed__feedType__title"
+        >Top Posts</span
+      >
+      <span
+        title
+        i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
+        *ngIf="algorithm === 'latest'"
+        class="m-newsfeed__subscribed__feedType__title"
+        >Latest Posts</span
+      >
+      <m-feedTypePopover [type]="algorithm"></m-feedTypePopover>
+    </m-feedHeader>
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
@@ -103,8 +119,14 @@
         (load)="loadNext()"
         [moreData]="feedService.hasMore | async"
         [inProgress]="feedService.inProgress | async"
+        [ignoreEndTracking]="isDiscoveryFallbackActive()"
       >
       </infinite-scroll>
+
+      <ng-container *ngIf="isDiscoveryFallbackActive()">
+        <m-discoveryTopHeader></m-discoveryTopHeader>
+        <ng-template #discoveryFallback></ng-template>
+      </ng-container>
     </div>
   </ng-container>
 </div>

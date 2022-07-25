@@ -14,6 +14,7 @@ import {
   SkipSelf,
   ViewChild,
   ViewChildren,
+  ViewContainerRef,
 } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
@@ -93,6 +94,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   isChannelRecommendationDismissed$ = this.dismissal.isDismissed(
     'channel-recommendation:feed'
   );
+
+  @ViewChild('discoveryFallback', { read: ViewContainerRef })
+  discoveryFallback!: ViewContainerRef;
 
   constructor(
     public client: Client,
@@ -194,6 +198,10 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     );
 
     this.context.set('activity');
+
+    if (this.isDiscoveryFallbackActive()) {
+      this.loadDiscoveryFallback();
+    }
   }
 
   ngOnDestroy() {
@@ -394,5 +402,17 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         this.boostRotator.rotatorEl.nativeElement?.offsetTop +
           this.boostRotator.height || 0,
     });
+  }
+
+  isDiscoveryFallbackActive() {
+    return this.experiments.hasVariation('minds-2991-discovery-fallback', true);
+  }
+
+  async loadDiscoveryFallback() {
+    const { DefaultFeedComponent } = await import(
+      '../../default-feed/feed/feed.component'
+    );
+    this.discoveryFallback.clear();
+    this.discoveryFallback.createComponent(DefaultFeedComponent);
   }
 }
