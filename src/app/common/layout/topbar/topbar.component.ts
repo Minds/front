@@ -33,10 +33,10 @@ import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-se
  * (but not on the homepage)
  */
 @Component({
-  selector: 'm-v3topbar',
-  templateUrl: 'v3-topbar.component.html',
+  selector: 'm-topbar',
+  templateUrl: 'topbar.component.html',
 })
-export class V3TopbarComponent implements OnInit, OnDestroy {
+export class TopbarComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;
   timeout;
   isTouchScreen = false;
@@ -58,7 +58,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   router$;
 
-  @HostBinding('class.m-v3Topbar--isActivityV2')
+  @HostBinding('class.m-topbar--isActivityV2')
   activityV2Feature: boolean = this.activityV2Experiment.isActive();
 
   constructor(

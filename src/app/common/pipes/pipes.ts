@@ -16,6 +16,7 @@ import { DecodeHtmlStringPipe } from './decode-html-string';
 import { TruncatePipe } from './truncate.pipe';
 import { MaxPipe } from './max';
 import { ReplacePipe } from './replace';
+import { FriendlyTimePipe } from './friendlytime.pipe';
 
 export const MINDS_PIPES = [
   AbbrPipe,
@@ -38,4 +39,5 @@ export const MINDS_PIPES = [
   TruncatePipe,
   MaxPipe,
   ReplacePipe,
+  FriendlyTimePipe,
 ];

@@ -10,7 +10,7 @@ import { ConnectWalletModalService } from '../../../../modules/blockchain/connec
 import { SettingsV2WalletService } from '../../../../modules/settings-v2/other/wallet/wallet.service';
 
 @Component({
-  selector: 'm-topbar-walletBalance',
+  selector: 'm-topbar__walletBalance',
   templateUrl: './topbar-wallet-balance.html',
   styleUrls: ['./topbar-wallet-balance.component.ng.scss'],
 })

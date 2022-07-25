@@ -118,12 +118,12 @@ import { ModalService } from '../../../../services/ux/modal.service';
         class="mdl-menu__item m-user-dropdown__item--nsfw"
         *ngIf="session.isAdmin()"
       >
-        <m-nsfw-selector
+        <m-nsfwSelector
           service="editing"
           [selected]="user.nsfw_lock"
           (selectedChange)="setNSFWLock($event)"
         >
-        </m-nsfw-selector>
+        </m-nsfwSelector>
       </li>
       <li
         class="mdl-menu__item"
