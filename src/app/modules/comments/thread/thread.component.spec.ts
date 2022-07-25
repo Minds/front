@@ -31,7 +31,7 @@ let commentsServiceMock: any = MockService(CommentsService, {
   get: Promise.resolve(true),
 });
 
-describe('CommentsThreadComponent', () => {
+xdescribe('CommentsThreadComponent', () => {
   let comp: CommentsThreadComponent;
   let fixture: ComponentFixture<CommentsThreadComponent>;
 
