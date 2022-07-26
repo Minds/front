@@ -243,8 +243,8 @@ post content to trigger upgrade modal -->
           }"
         >
           <m-readMore
-            [expandedByDefault]="service.displayOptions.expandedText"
-            (changed)="onReadMoreChanged($event)"
+            [showAll]="service.displayOptions.expandedText"
+            (showAllChanged)="onReadMoreChanged($event)"
             [text]="bodyText"
           ></m-readMore>
         </p>
