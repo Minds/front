@@ -21,7 +21,7 @@
     <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
 
     <m-feedHeader [algorithm]="algorithm"></m-feedHeader>
-    <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
+    <div class="minds-list">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
           <m-feedNotice__outlet
@@ -40,17 +40,16 @@
       </ng-container>
 
       <!--boost rotator-->
-      <!-- <ng-container *mIfFeature="'boost-rotator'">
+      <ng-container *mIfFeature="'boost-rotator'">
         <ng-container *mIfBrowser>
           <m-newsfeed--boost-rotator
             *ngIf="showBoostRotator"
-            #feedViewChildren
             #boostRotator
           ></m-newsfeed--boost-rotator>
         </ng-container>
       </ng-container>
 
-      <m-channelRecommendation
+      <!-- <m-channelRecommendation
         location="newsfeed"
         *ngIf="shouldShowChannelRecommendation('emptyState')"
       ></m-channelRecommendation> -->
@@ -85,7 +84,6 @@
               showOnlyCommentsInput: true,
               isFeed: true
             }"
-            #feedViewChildren
           ></m-featured-content>
           <m-topHighlights
             (onSeeMore)="onShowMoreTopFeed()"
@@ -105,22 +103,21 @@
             (mResized)="onResized($event, i)"
             #feedViewChildren
           ></m-activity>
-          <!-- <m-channelRecommendation
+          <m-channelRecommendation
             location="newsfeed"
             [dismissible]="true"
             *ngIf="
               shouldShowChannelRecommendation('feed', i) &&
               !(isChannelRecommendationDismissed$ | async)
             "
-          ></m-channelRecommendation> -->
+          ></m-channelRecommendation>
         </m-newsfeed__activityOutlet>
 
-        <!-- <infinite-scroll
-          (load)="loadNext()"
-          [moreData]="feedService.hasMore | async"
-          [inProgress]="feedService.inProgress | async"
-        >
-        </infinite-scroll> -->
+        <!-- TODO: add loading indicator -->
+        <m-loadingSpinner
+          *ngIf="feedService.inProgress"
+          [inProgress]="feedService.inProgress"
+        ></m-loadingSpinner>
       </virtual-scroller>
     </div>
   </ng-container>
