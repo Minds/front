@@ -70,7 +70,6 @@ export class SuggestionsService {
               entity: user,
             };
           });
-          console.log(suggestions);
         } else {
           // Groups
           const response: any = await this.client.get(
