@@ -225,9 +225,6 @@ export class NewsfeedSubscribedComponent
     // TODO: this is not smooth enough. just for demo
     this.feedViewChildren.changes.subscribe(feedChanges => {
       if (feedChanges.length && !this.isScrollRestored) {
-        window.scrollTo({
-          top: this.scrollRestoration.getOffsetForRoute(this.router.url),
-        });
         const scrollOffsetTop = this.scrollRestoration.getOffsetForRoute(
           this.router.url
         );
