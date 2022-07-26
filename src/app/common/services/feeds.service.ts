@@ -206,10 +206,8 @@ export class FeedsService implements OnDestroy {
    */
   setOffset(offset: number): FeedsService {
     this.offset.next(offset);
-    // TODO: don't always do this
-    if (this.feedQuery) {
-      this.persistOffset(offset);
-    }
+    // TODO: condition
+    this.persist();
     return this;
   }
 
@@ -317,15 +315,17 @@ export class FeedsService implements OnDestroy {
 
     let response;
 
+    const rehydratedFeed = this.rehydrate();
+
+    // TODO: figure out the right conditional here
+    if (rehydratedFeed) {
+      this.checkForNewPosts();
+      return;
+    }
+
     try {
       if (this.feedQuery) {
         // TODO: rehydrate only if you were told to do so
-        this.rehydrateOffset();
-
-        if (this.rehydrate()) {
-          return;
-        }
-
         this.feedQuerySubscription?.unsubscribe();
         this.feedQuerySubscription = this.feedQuery
           .fetch({
@@ -443,42 +443,14 @@ export class FeedsService implements OnDestroy {
   async destroy() {}
 
   /**
-   * persists the offset to memory
-   * @returns { void }
-   */
-  persistOffset(offset: number) {
-    this.storage.memory.setFeedOffset(
-      this.feedQuery.options.url,
-      window.location.pathname,
-      offset
-    );
-  }
-
-  /**
-   * rehydrates the offset from memory
-   * @returns { void }
-   */
-  rehydrateOffset() {
-    const inMemoryFeedOffset = this.storage.memory.getFeedOffset(
-      this.feedQuery.options.url,
-      window.location.pathname
-    );
-
-    if (inMemoryFeedOffset) {
-      this.offset.next(inMemoryFeedOffset);
-    }
-  }
-
-  /**
    * persists the feed state to memory
    * @returns { void }
    */
-  persist(feed: any) {
-    if (!this.feedQuery) return; // don't depend on this
+  persist(feed = this.rawFeed.getValue()) {
     if (!feed?.length) return;
 
     return this.storage.memory.setFeedState(
-      this.feedQuery.options.url,
+      this.feedQuery?.options.url || this.endpoint,
       window.location.pathname,
       {
         rawFeed: feed,
@@ -499,11 +471,10 @@ export class FeedsService implements OnDestroy {
    * @returns { void }
    */
   rehydrate(update = true) {
-    if (!this.feedQuery) return; // don't depend on this
     if (this.rehydrated) return; // don't depend on this
 
     const inMemoryFeedState = this.storage.memory.getFeedState(
-      this.feedQuery.options.url,
+      this.feedQuery?.options.url || this.endpoint,
       window.location.pathname
     );
 
@@ -543,6 +514,16 @@ export class FeedsService implements OnDestroy {
       route,
       apiResource
     );
+  }
+
+  private async checkForNewPosts() {
+    if (!this.countEndpoint) return null;
+
+    const count = await this.count(this.newPostsLastCheckedAt).toPromise();
+    if (count) {
+      this.newPostsCount$.next(this.newPostsCount$.getValue() + count);
+    }
+    this.newPostsLastCheckedAt = Date.now();
   }
 
   /**
