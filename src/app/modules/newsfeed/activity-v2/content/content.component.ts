@@ -598,8 +598,10 @@ export class ActivityV2ContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
-    //ojm todo: if this is in boost rotator, go to single page instead
-    // ojm change this function name
+    // boost rotator opens in single page
+    if (this.isFixedHeight) {
+      this.redirectToSinglePage(event);
+    }
 
     // Don't try to open modal if on mobile device or already in a modal
     if (!this.modalService.canOpenInModal() || this.isModal) {
@@ -643,16 +645,13 @@ export class ActivityV2ContentComponent
     this.service.displayOptions.showTranslation === false;
   }
 
-  /**
-   * Gets URL to redirect.
-   * @returns { string } - equals '' if url is not needed.
-   */
-  getRedirectUrl(): string {
-    return this.isFixedHeight ? `/newsfeed/${this.entity.guid}` : '';
-  }
+  redirectToSinglePage($event): void {
+    if (!this.isFixedHeight) {
+      return;
+    }
+    $event.stopPropagation();
 
-  redirectToSinglePage(): void {
-    // ojm todo
+    this.router.navigate([`/newsfeed/${this.entity.guid}`]);
   }
 
   onImageError(e: Event): void {}
