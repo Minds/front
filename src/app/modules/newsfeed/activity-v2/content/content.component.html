@@ -169,7 +169,7 @@ post content to trigger upgrade modal -->
 <!-- FADEOUT (BOOST ROTATOR ONLY)-->
 <!-- ----------------------------------- -->
 <div
-  (click)="redirectToSinglePage()"
+  (click)="redirectToSinglePage($event)"
   *ngIf="isFixedHeight"
   class="m-activityContent__boostRotatorFadeout"
 ></div>
@@ -204,6 +204,7 @@ post content to trigger upgrade modal -->
       class="m-activityContent__textWrapper"
       [maxHeightAllowed]="maxHeightAllowed || maxTextHeight"
       *ngIf="bodyText?.length >= 1 || titleText?.length >= 1"
+      (click)="redirectToSinglePage($event)"
     >
       <div class="m-activityContentText__innerWrapper">
         <p
@@ -226,18 +227,6 @@ post content to trigger upgrade modal -->
         >
           <m-readMore [text]="bodyText" targetLength="180"></m-readMore>
         </p>
-        <!-- <m-read-more--button
-          *ngIf="
-            !(service.shouldShowPaywall$ | async) || isStatus;
-            else teaserFadeout
-          "
-          [v2]="true"
-          [showOnlyFadeout]="sidebarMode"
-          [redirectUrl]="getRedirectUrl()"
-        ></m-read-more--button> -->
-        <ng-template #teaserFadeout>
-          <div class="m-activityContent__teaserFadeout" @fader></div
-        ></ng-template>
       </div>
       <!-- ----------------------------------- -->
       <!-- TRANSLATION  -->
