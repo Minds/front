@@ -31,11 +31,16 @@ export class SessionStorageService {
     return null;
   }
 
-  public async setActivityDisplayOptions(guid: string, data: object) {
+  public async setActivityDisplayOptions(guid: string, data: any) {
     this.db.setItem(
       `activity:displayOptions:${guid}`,
       JSON.stringify({
-        data,
+        data: {
+          showOnlyCommentsInput: data.showOnlyCommentsInput,
+          showOnlyCommentsToggle: data.showOnlyCommentsToggle,
+          expandedText: data.expandedText,
+          expandedReplies: data.expandedReplies,
+        },
         persistedAt: Date.now(),
       })
     );
