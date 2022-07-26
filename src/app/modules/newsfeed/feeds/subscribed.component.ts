@@ -22,8 +22,8 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { IPageInfo, VirtualScrollerComponent } from 'ngx-virtual-scroller';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { ApiResource } from '../../../common/api/api-resource.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
@@ -44,6 +44,20 @@ import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-histor
 export enum FeedAlgorithm {
   top = 'top',
   latest = 'latest',
+}
+
+enum FeedItemType {
+  activity = 'activity',
+  feedNotice = 'feedNotice',
+  featuredContent = 'featuredContent',
+  topHighlights = 'topHighlights',
+  channelRecommendations = 'channelRecommendations',
+}
+
+interface IFeedItem {
+  type: FeedItemType;
+  data?: any;
+  id: string;
 }
 
 @Injectable()
@@ -247,6 +261,62 @@ export class NewsfeedSubscribedComponent
     this.feedsUpdatedSubscription.unsubscribe();
   }
 
+  feed = this.feedService.feed.pipe(
+    map(feed => {
+      const newFeed: (BehaviorSubject<Object> | IFeedItem)[] = [
+        ...feed.map((activity$, index) => {
+          const activity = activity$.getValue();
+
+          return {
+            type: FeedItemType.activity,
+            data: {
+              activity,
+              index: index,
+              slot: index + 1, // TODO: do we want these slots to take into account in-feed components
+            },
+            // @ts-ignore // TODO: add type checking
+            id: activity?.guid, // TODO: may not be performant
+          };
+        }),
+      ];
+
+      for (let i = 0; i < feed.length; i++) {
+        if (i > 0 && i % 6 === 0) {
+          newFeed.splice(i, 0, {
+            type: FeedItemType.feedNotice,
+            id: 'feedNotice-' + String(i), // TODO
+          });
+        }
+      }
+
+      for (let i = 0; i < feed.length; i++) {
+        if ((i > 0 && i % 5 === 0) || i === 3) {
+          newFeed.splice(i, 0, {
+            type: FeedItemType.featuredContent,
+            data: i,
+            id: 'featuredContent-' + i,
+          });
+        }
+      }
+
+      if (this.algorithm !== 'latest') {
+        newFeed.splice(3, 0, {
+          type: FeedItemType.topHighlights,
+          id: 'topHighlights', // TODO
+        });
+      }
+
+      // if the newsfeed length was less than equal to 3,
+      // show the widget after last item, otherwise show after the 3rd post
+      newFeed.splice(feed.length <= 3 ? feed.length - 1 : 2, 0, {
+        type: FeedItemType.channelRecommendations,
+        id: 'channelRecommendations', // TODO
+      });
+
+      return newFeed;
+    })
+  );
+
   /**
    * returns feedService based on algorithm
    **/
@@ -381,47 +451,6 @@ export class NewsfeedSubscribedComponent
   }
 
   /**
-   * determines whether to show top feed highlights or not
-   * @param { number } index the index of the feed
-   */
-  shouldShowTopHighlights(index: number) {
-    // only on latest
-    if (this.algorithm !== 'latest') {
-      return false;
-    }
-
-    // before 4th post
-    return index === 3;
-  }
-
-  /**
-   * whether channel recommendation should be shown
-   * @param { string } location the location where the widget is to be shown
-   * @param { number } index the index of the feed
-   * @returns { boolean }
-   */
-  public shouldShowChannelRecommendation(location: string, index?: number) {
-    if (this.feedService.inProgress && !this.feedService.feedLength) {
-      return false;
-    }
-
-    switch (location) {
-      case 'emptyState':
-        return !this.feedService.feedLength;
-      case 'feed':
-      default:
-        // if the newsfeed length was less than equal to 3,
-        // show the widget after last item
-        if (this.feedService.feedLength <= 3) {
-          return index === this.feedService.feedLength - 1;
-        }
-
-        // show after the 3rd post
-        return index === 2;
-    }
-  }
-
-  /**
    * scrolls to under the boost rotator. Used as an alternative to scrollToTop but
    * keeping scrolling consistency by not avoiding the rotator.
    */
@@ -446,11 +475,11 @@ export class NewsfeedSubscribedComponent
 
   compareItems(item1: EntityObservable, item2: EntityObservable) {
     // @ts-ignore
-    return item1?.getValue().guid === item2?.getValue().guid;
+    return item1?.id === item2?.id;
   }
 
-  activityTrackBy(index: number, activity: any) {
-    return activity?.guid || activity?.getValue().guid;
+  feedItemTrackBy(index: number, feedItem: IFeedItem) {
+    return feedItem.id;
   }
 
   /**
