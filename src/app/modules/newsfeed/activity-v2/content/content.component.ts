@@ -547,9 +547,7 @@ export class ActivityV2ContentComponent
     }
     if (this.isFixedHeight || this.entity.custom_type !== 'batch') {
       this.imageHeight = null;
-    }
-
-    if (
+    } else if (
       this.entity.custom_data &&
       this.entity.custom_data[0] &&
       this.entity.custom_data[0].height &&
@@ -600,6 +598,9 @@ export class ActivityV2ContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
+    //ojm todo: if this is in boost rotator, go to single page instead
+    // ojm change this function name
+
     // Don't try to open modal if on mobile device or already in a modal
     if (!this.modalService.canOpenInModal() || this.isModal) {
       return;
@@ -648,6 +649,10 @@ export class ActivityV2ContentComponent
    */
   getRedirectUrl(): string {
     return this.isFixedHeight ? `/newsfeed/${this.entity.guid}` : '';
+  }
+
+  redirectToSinglePage(): void {
+    // ojm todo
   }
 
   onImageError(e: Event): void {}

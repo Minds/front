@@ -23,6 +23,7 @@ post content to trigger upgrade modal -->
 <!-- ----------------------------------- -->
 <!-- TEXT (WHEN TEXT ON TOP)-->
 <!-- ----------------------------------- -->
+<div *ngIf="isFixedHeight" class="m-activityContent__fixedHeightSpacer"></div>
 <ng-container *ngIf="!isTextBelowMedia">
   <ng-container *ngTemplateOutlet="textTemplate"></ng-container>
 </ng-container>
@@ -35,10 +36,6 @@ post content to trigger upgrade modal -->
       *ngTemplateOutlet="paywallTemplate"
       [ngTemplateOutletContext]="{ hideText: sidebarMode }"
     ></ng-container>
-    <div
-      *ngIf="isFixedHeight"
-      class="m-activityContent__fixedHeightSpacer"
-    ></div>
     <minds-rich-embed
       (mediaModalRequested)="onModalRequested($event)"
       [src]="entity"
@@ -50,10 +47,6 @@ post content to trigger upgrade modal -->
       "
     >
     </minds-rich-embed>
-    <div
-      class="m-activityContent__fixedHeightSpacer"
-      *ngIf="isFixedHeight"
-    ></div>
   </div>
   <!-- ----------------------------------- -->
   <!-- VIDEO -->
@@ -66,10 +59,6 @@ post content to trigger upgrade modal -->
       'm-activityContent__media--video--modal': isModal
     }"
   >
-    <div
-      class="m-activityContent__fixedHeightSpacer"
-      *ngIf="isFixedHeight"
-    ></div>
     <m-videoPlayer--scrollaware
       #videoEl
       [guid]="videoGuid"
@@ -89,10 +78,6 @@ post content to trigger upgrade modal -->
         [ngTemplateOutletContext]="{ hideText: sidebarMode }"
       ></ng-container>
     </m-videoPlayer--scrollaware>
-    <div
-      class="m-activityContent__fixedHeightSpacer"
-      *ngIf="isFixedHeight"
-    ></div>
   </div>
   <!-- ----------------------------------- -->
   <!-- IMAGE -->
@@ -109,10 +94,6 @@ post content to trigger upgrade modal -->
     #imageContainerEl
   >
     <ng-container *ngIf="!isModal; else image">
-      <div
-        *ngIf="isFixedHeight"
-        class="m-activityContent__fixedHeightSpacer"
-      ></div>
       <a
         class="m-activityContentMedia__link"
         [routerLink]="['/newsfeed', imageGuid]"
@@ -129,10 +110,6 @@ post content to trigger upgrade modal -->
         </div>
         <ng-container [ngTemplateOutlet]="image"></ng-container
       ></a>
-      <div
-        *ngIf="isFixedHeight"
-        class="m-activityContent__fixedHeightSpacer"
-      ></div>
     </ng-container>
 
     <ng-template #image>
@@ -158,6 +135,7 @@ post content to trigger upgrade modal -->
     </ng-template>
   </div>
 </ng-container>
+<div *ngIf="isFixedHeight" class="m-activityContent__fixedHeightSpacer"></div>
 <!-- ----------------------------------- -->
 <!-- QUOTE -->
 <!-- ----------------------------------- -->
@@ -186,6 +164,16 @@ post content to trigger upgrade modal -->
 <ng-container *ngIf="isTextBelowMedia">
   <ng-container *ngTemplateOutlet="textTemplate"></ng-container>
 </ng-container>
+
+<!-- ----------------------------------- -->
+<!-- FADEOUT (BOOST ROTATOR ONLY)-->
+<!-- ----------------------------------- -->
+<div
+  (click)="redirectToSinglePage()"
+  *ngIf="isFixedHeight"
+  class="m-activityContent__boostRotatorFadeout"
+></div>
+
 <!-- ----------------------------------- -->
 <!-- REMIND DELETED NOTICE -->
 <!-- ----------------------------------- -->
@@ -212,10 +200,6 @@ post content to trigger upgrade modal -->
 <ng-template #textTemplate
   ><ng-container *ngIf="!hideText">
     <div
-      class="m-activityContent__fixedHeightSpacer"
-      *ngIf="isFixedHeight && isStatus"
-    ></div>
-    <div
       #textEl
       class="m-activityContent__textWrapper"
       [maxHeightAllowed]="maxHeightAllowed || maxTextHeight"
@@ -240,7 +224,7 @@ post content to trigger upgrade modal -->
             'm-activityContentText--translated': showTranslation
           }"
         >
-          <m-readMore [text]="bodyText"></m-readMore>
+          <m-readMore [text]="bodyText" targetLength="180"></m-readMore>
         </p>
         <!-- <m-read-more--button
           *ngIf="
@@ -271,10 +255,6 @@ post content to trigger upgrade modal -->
         ></m-translate>
       </ng-container>
     </div>
-    <div
-      class="m-activityContent__fixedHeightSpacer"
-      *ngIf="isFixedHeight && isStatus"
-    ></div>
   </ng-container>
 </ng-template>
 <!-- ----------------------------------- -->

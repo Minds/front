@@ -25,6 +25,12 @@ m-activity {
     display: contents;
   }
 
+  // Applies to v1 activities in boost rotator
+  &.m-activity--fixedHeightContainer {
+    height: 100% !important;
+    width: 100%;
+  }
+
   @include m-theme() {
     background: themed($m-bgColor--primary);
   }
@@ -45,11 +51,6 @@ m-activity {
       margin: 10px;
     }
   }
-}
-
-.m-activity--fixedHeightContainer {
-  height: 100% !important;
-  width: 100%;
 }
 
 .m-activity--boost {

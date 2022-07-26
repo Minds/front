@@ -59,6 +59,24 @@
         padding-top: $spacing14;
       }
     }
+
+    .m-activityContent__boostRotatorFadeout {
+      cursor: pointer;
+      display: block;
+      position: absolute;
+      bottom: 0;
+      height: 50px;
+      width: 100%;
+
+      @include m-theme() {
+        background: linear-gradient(
+          180deg,
+          rgba(themed($m-bgColor--primary), 0) 0%,
+          rgba(themed($m-bgColor--primary), 0.95) 64.58%,
+          #1f252c 100%
+        );
+      }
+    }
   }
 
   // *********************************
