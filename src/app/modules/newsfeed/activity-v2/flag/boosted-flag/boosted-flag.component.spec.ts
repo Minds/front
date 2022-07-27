@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoostedFlagComponent } from './boosted-flag.component';
+import { ActivityV2BoostedFlagComponent } from './boosted-flag.component';
 
 describe('BoostedFlagComponent', () => {
-  let component: BoostedFlagComponent;
-  let fixture: ComponentFixture<BoostedFlagComponent>;
+  let component: ActivityV2BoostedFlagComponent;
+  let fixture: ComponentFixture<ActivityV2BoostedFlagComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BoostedFlagComponent],
+      declarations: [ActivityV2BoostedFlagComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BoostedFlagComponent);
+    fixture = TestBed.createComponent(ActivityV2BoostedFlagComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
