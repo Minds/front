@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { BlogsEditService } from './blog-edit.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { BlogEditorV2Component } from './editor-base.component';
@@ -76,7 +76,7 @@ describe('BlogEditorV2Component', () => {
         { provide: DialogService, useValue: MockService(DialogService) },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
         { provide: Location, useValue: MockService(Location) },
-        { provide: FormToastService, useValue: MockService(FormToastService) },
+        { provide: ToasterService, useValue: MockService(ToasterService) },
         { provide: BlogsEditService, useValue: blogsEditServiceMock },
         { provide: ComposerService, useValue: composerMockService },
       ],

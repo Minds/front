@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  .m-topbar-wallet-balance {
+  .m-topbar__walletBalance {
     display: flex;
     cursor: pointer;
     transition: all 0.07s ease-in;

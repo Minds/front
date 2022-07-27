@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Subscription, timer } from 'rxjs';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-youtubeMigration__videoItem',
@@ -23,7 +23,7 @@ export class YoutubeMigrationVideoItemComponent {
   constructor(
     protected youtubeService: YoutubeMigrationService,
     protected cd: ChangeDetectorRef,
-    protected toasterSevice: FormToastService
+    protected toasterSevice: ToasterService
   ) {}
 
   playRequested(): void {

@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take, throttleTime } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
 
 /**
@@ -65,7 +65,7 @@ export class SettingsTwoFactorPasswordComponent
   constructor(
     private service: SettingsTwoFactorV2Service,
     private api: ApiService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {
     super();
   }

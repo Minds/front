@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { timer } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { Session } from '../../../services/session';
 import { TwitterSyncService } from './twitter-sync.service';
 
@@ -34,7 +34,7 @@ export class TwitterSyncComponent implements OnInit {
     private session: Session,
     protected twitterSyncService: TwitterSyncService,
     protected configs: ConfigsService,
-    protected toastService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.form = new FormGroup({
       twitterHandle: new FormControl('', {
@@ -80,9 +80,9 @@ export class TwitterSyncComponent implements OnInit {
     const newValue = !this.updateForm.controls.discoverable.value;
     try {
       await this.twitterSyncService.updateSettings({ discoverable: newValue });
-      this.toastService.success('Updated');
+      this.toasterService.success('Updated');
     } catch (err) {
-      this.toastService.error(err.message);
+      this.toasterService.error(err.message);
     } finally {
       this.isSaving = false;
     }
@@ -91,7 +91,7 @@ export class TwitterSyncComponent implements OnInit {
   async verify(e: MouseEvent): Promise<void> {
     this.isSaving = true;
 
-    this.toastService.inform(
+    this.toasterService.inform(
       'Please wait a moment, tweets can take a while to be visible.'
     );
 
@@ -103,7 +103,9 @@ export class TwitterSyncComponent implements OnInit {
       );
       this.isSetup = true;
     } catch (err) {
-      this.toastService.error("Sorry, we couldn't find your verification post");
+      this.toasterService.error(
+        "Sorry, we couldn't find your verification post"
+      );
     } finally {
       this.isSaving = false;
     }

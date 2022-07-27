@@ -11,7 +11,7 @@
           <a (click)="currentSection = 'register'">Start a Minds channel</a>
         </span>
 
-        <minds-form-login (done)="registered()"></minds-form-login>
+        <m-loginForm (done)="registered()"></m-loginForm>
       </ng-container>
 
       <ng-container *ngIf="currentSection === 'register'">
@@ -21,10 +21,10 @@
           </a>
         </span>
 
-        <minds-form-register
+        <m-registerForm
           [referrer]="referrer"
           (done)="registered()"
-        ></minds-form-register>
+        ></m-registerForm>
       </ng-container>
     </div>
   </div>

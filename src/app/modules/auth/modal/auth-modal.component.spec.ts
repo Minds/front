@@ -15,7 +15,7 @@ describe('AuthModalComponent', () => {
         declarations: [
           AuthModalComponent,
           MockComponent({
-            selector: 'minds-form-register',
+            selector: 'm-registerForm',
             inputs: [
               'showTitle',
               'showBigButton',

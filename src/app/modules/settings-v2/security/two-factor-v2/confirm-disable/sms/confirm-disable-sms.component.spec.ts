@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { clientMock } from '../../../../../../../tests/client-mock.spec';
 import { ButtonComponent } from '../../../../../../common/components/button/button.component';
-import { FormToastService } from '../../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../../common/services/toaster.service';
 import { Client } from '../../../../../../services/api';
 import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
@@ -34,8 +34,8 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
             useValue: MockService(SettingsTwoFactorV2Service),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           {
             provide: Client,

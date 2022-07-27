@@ -45,14 +45,14 @@
           *ngFor="let group of groups"
           [publisher]="group"
           [showSubscribeButton]="false"
-          ><minds-groups-join-button
+          ><m-group__membershipButton
             class="m-publisherCard__button"
             *ngIf="
               !group['is:creator'] ||
               (session.isAdmin() && !group['is:invited'])
             "
             [group]="group"
-          ></minds-groups-join-button>
+          ></m-group__membershipButton>
         </m-publisherCard>
         <infinite-scroll
           (load)="load()"

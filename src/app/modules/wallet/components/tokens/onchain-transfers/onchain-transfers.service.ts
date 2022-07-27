@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../../common/api/api.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
 /**
  * Handles the getting of a users withdrawals summary from the server.
  */
 @Injectable({ providedIn: 'root' })
 export class WalletOnchainTransfersSummaryService {
-  constructor(private api: ApiService, private toast: FormToastService) {}
+  constructor(private api: ApiService, private toast: ToasterService) {}
 
   /**
    * Gets withdrawals from server.

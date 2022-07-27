@@ -6,7 +6,7 @@ import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
 import { isSafari } from '../../helpers/is-safari';
 
@@ -26,7 +26,7 @@ export class Web3WalletService {
     @Inject(PLATFORM_ID) private platformId: Object,
     private configs: ConfigsService,
     private web3modalService: Web3ModalService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {
     this.config = this.configs.get('blockchain');
   }
@@ -324,7 +324,7 @@ export class Web3WalletService {
     platformId: Object,
     configs: ConfigsService,
     web3modalService: Web3ModalService,
-    toast: FormToastService
+    toast: ToasterService
   ) {
     return new Web3WalletService(
       transactionOverlay,

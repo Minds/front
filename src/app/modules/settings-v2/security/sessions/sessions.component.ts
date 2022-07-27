@@ -11,7 +11,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { SettingsV2Service } from '../../settings-v2.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Client } from '../../../../services/api';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Settings page for session management
@@ -37,7 +37,7 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
     private session: Session,
     protected settingsService: SettingsV2Service,
     protected client: Client,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {

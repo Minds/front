@@ -7,7 +7,7 @@ import { NsfwComponent } from '../popup/nsfw/nsfw.component';
 import { ComposerMonetizeV2Component } from '../popup/monetize/v2/components/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
 import { BehaviorSubject } from 'rxjs';
 
@@ -89,8 +89,8 @@ describe('Composer Toolbar', () => {
             useValue: popupServiceMock,
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

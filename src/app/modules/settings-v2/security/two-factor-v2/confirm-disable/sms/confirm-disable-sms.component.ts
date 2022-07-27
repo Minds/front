@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormToastService } from '../../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../../common/services/toaster.service';
 import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
 
 /**
@@ -26,7 +26,7 @@ import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
 export class SettingsTwoFactorDisableSMSComponent {
   constructor(
     private service: SettingsTwoFactorV2Service,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   /**

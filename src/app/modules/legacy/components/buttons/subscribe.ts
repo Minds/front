@@ -8,7 +8,7 @@ import {
 
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class SubscribeButton {
     public session: Session,
     public client: Client,
     public authModal: AuthModalService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   @Input('user')

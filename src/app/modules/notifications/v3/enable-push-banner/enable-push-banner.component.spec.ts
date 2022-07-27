@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { PushNotificationService } from '../../../../common/services/push-notification.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { NotificationsEnablePushBannerComponent } from './enable-push-banner.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 
@@ -26,8 +26,8 @@ describe('NotificationsEnablePushBannerComponent', () => {
             useValue: MockService(PushNotificationService),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

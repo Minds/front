@@ -25,7 +25,7 @@ export type Source = 'auth-modal' | 'other' | null;
  */
 @Component({
   moduleId: module.id,
-  selector: 'minds-form-login',
+  selector: 'm-loginForm',
   templateUrl: 'login.html',
   styleUrls: ['./login.ng.scss'],
 })

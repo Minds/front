@@ -26,7 +26,7 @@ import { captureEvent } from '@sentry/core';
 import { isPlatformServer } from '@angular/common';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { filter, map } from 'rxjs/operators';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import {
   SupportTiersService,
   SupportTier,
@@ -202,7 +202,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
     protected pageLayoutService: PageLayoutService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected supportTiers: SupportTiersService,
     private authModal: AuthModalService
   ) {}

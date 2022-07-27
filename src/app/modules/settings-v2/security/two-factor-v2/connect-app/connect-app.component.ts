@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Session } from '../../../../../services/session';
 import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
 import { SettingsTwoFactorCodePopupComponent } from './code-popup/code-popup.component';
@@ -71,7 +71,7 @@ export class SettingsTwoFactorConnectAppComponent
     private service: SettingsTwoFactorV2Service,
     private session: Session,
     private modalService: ModalService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {
     super();
   }

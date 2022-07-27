@@ -17,7 +17,7 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { GroupsService } from '../groups.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
@@ -61,7 +61,7 @@ describe('GroupsSettingsButton', () => {
             outputs: ['closed'],
           }),
           MockComponent({
-            selector: 'm-nsfw-selector',
+            selector: 'm-nsfwSelector',
             inputs: ['selected'],
             outputs: ['selected'],
           }),
@@ -74,8 +74,8 @@ describe('GroupsSettingsButton', () => {
           { provide: Session, useValue: sessionMock },
           { provide: ModalService, useValue: modalServiceMock },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

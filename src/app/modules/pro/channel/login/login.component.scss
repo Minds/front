@@ -48,7 +48,7 @@ m-pro--channel-login {
       }
 
       @media screen and (max-width: 480px) {
-        .m-androidApp__download {
+        .m-androidAppDownloadButton {
           zoom: 0.65;
         }
       }
@@ -162,8 +162,8 @@ m-pro--channel-login {
       }
     }
 
-    minds-form-register,
-    minds-form-login {
+    m-registerForm,
+    m-loginForm {
       .mdl-card.m-login-box {
         background: transparent;
         padding: 0;

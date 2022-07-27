@@ -13,7 +13,7 @@ import {
 import { ComposerService, ComposerSize } from './services/composer.service';
 import { ComposerModalService } from './components/modal/modal.service';
 import { BaseComponent } from './components/base/base.component';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 import { Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -107,14 +107,14 @@ export class ComposerComponent implements OnInit, OnDestroy {
   /**
    * Constructor
    * @param composerModalService
-   * @param formToast
+   * @param toaster
    * @param service
    * @param cd
    * @param injector
    */
   constructor(
     protected composerModalService: ComposerModalService,
-    protected formToast: FormToastService,
+    protected toaster: ToasterService,
     protected service: ComposerService /* NOTE: Used for DI. DO NOT REMOVE OR CHANGE !!! */,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
@@ -128,8 +128,8 @@ export class ComposerComponent implements OnInit, OnDestroy {
         if (value) {
           const message = 'You may include up to 5 hashtags';
 
-          if (!this.formToast.isToastActive(message)) {
-            this.formToast.error(message);
+          if (!this.toaster.isToastActive(message)) {
+            this.toaster.error(message);
           }
         }
       }

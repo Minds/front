@@ -3,7 +3,7 @@ import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import noOp from '../../../helpers/no-op';
 
@@ -42,7 +42,7 @@ export class BanModalComponent implements AfterViewInit {
     private _changeDetectorRef: ChangeDetectorRef,
     private modalService: ModalService,
     private client: Client,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     private reportService: ReportService
   ) {}
 

@@ -10,7 +10,7 @@ let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
 })();
 
-export let toastServiceMock = new (function() {
+export let toasterServiceMock = new (function() {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
@@ -39,7 +39,7 @@ describe('BlogsEditService', () => {
       routerMock,
       clientMock,
       siteServiceMock,
-      toastServiceMock,
+      toasterServiceMock,
       preloadServiceMock,
       composerMockService
     );
