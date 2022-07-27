@@ -94,6 +94,12 @@ export class ActivityV2ContentComponent
   @Input() showPaywallBadge: boolean = false;
 
   /**
+   * Whether this is the post that was quoted
+   * (aka the inset post)
+   * */
+  @Input() wasQuoted: boolean = false;
+
+  /**
    * Used in activity modal
    */
   @Input() hideText: boolean = false;
@@ -119,8 +125,8 @@ export class ActivityV2ContentComponent
 
   maxFixedHeightContent: number = 300 * ACTIVITY_FIXED_HEIGHT_RATIO;
 
-  isRemind: boolean;
-  isQuote: boolean;
+  isRemind: boolean; // Is it a remind?
+  isQuote: boolean; // Is it a quote post (but not the post that was quoted)?
 
   activityHeight: number;
   quoteHeight: number;
