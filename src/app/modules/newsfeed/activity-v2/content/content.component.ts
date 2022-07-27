@@ -604,11 +604,6 @@ export class ActivityV2ContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
-    // boost rotator opens in single page
-    if (this.isFixedHeight) {
-      this.redirectToSinglePage(event);
-    }
-
     // Don't try to open modal if on mobile device or already in a modal
     if (!this.modalService.canOpenInModal() || this.isModal) {
       return;
@@ -621,7 +616,7 @@ export class ActivityV2ContentComponent
 
     // if sidebarMode, navigate to canonicalUrl for all content types
     if (this.sidebarMode) {
-      this.router.navigateByUrl(this.canonicalUrl);
+      this.redirectToSinglePage();
       return;
     }
 
@@ -651,13 +646,29 @@ export class ActivityV2ContentComponent
     this.service.displayOptions.showTranslation === false;
   }
 
-  redirectToSinglePage($event): void {
+  /**
+   * When boost rotator fadeout is clicked,
+   * open modal (if image/video)
+   * OR
+   * redirect to single activity page
+   *
+   * Note: fadeout not used for status posts
+   */
+  onFixedHeightFadeoutClick($event): void {
     if (!this.isFixedHeight) {
       return;
     }
     $event.stopPropagation();
 
-    this.router.navigate([`/newsfeed/${this.entity.guid}`]);
+    if (this.isImage || this.isVideo) {
+      this.onModalRequested($event);
+    } else {
+      this.redirectToSinglePage();
+    }
+  }
+
+  redirectToSinglePage(): void {
+    this.router.navigateByUrl(this.canonicalUrl);
   }
 
   onImageError(e: Event): void {}

@@ -181,8 +181,8 @@ post content to trigger upgrade modal -->
 <!-- FADEOUT (BOOST ROTATOR ONLY)-->
 <!-- ----------------------------------- -->
 <div
-  (click)="redirectToSinglePage($event)"
-  *ngIf="isFixedHeight && !wasQuoted"
+  (click)="onFixedHeightFadeoutClick($event)"
+  *ngIf="isFixedHeight && !wasQuoted && !isStatus"
   class="m-activityContent__boostRotatorFadeout"
 ></div>
 
@@ -216,7 +216,6 @@ post content to trigger upgrade modal -->
       class="m-activityContent__textWrapper"
       [maxHeightAllowed]="maxHeightAllowed || maxTextHeight"
       *ngIf="bodyText?.length >= 1 || titleText?.length >= 1"
-      (click)="redirectToSinglePage($event)"
     >
       <div class="m-activityContentText__innerWrapper">
         <p
