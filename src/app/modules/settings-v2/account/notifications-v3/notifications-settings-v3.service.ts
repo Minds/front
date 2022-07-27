@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, map, take, throttleTime } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import {
   EmailNotificationGetResponse,
   PushNotificationGetResponse,
@@ -14,7 +14,7 @@ import {
  */
 @Injectable({ providedIn: 'root' })
 export class NotificationsSettingsV2Service {
-  constructor(private api: ApiService, private toast: FormToastService) {}
+  constructor(private api: ApiService, private toast: ToasterService) {}
 
   /**
    * Gets push settings from server.

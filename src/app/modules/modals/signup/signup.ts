@@ -15,7 +15,7 @@ import { AnalyticsService } from '../../../services/analytics';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-modal-signup',
@@ -50,7 +50,7 @@ export class SignupModal {
     private analyticsService: AnalyticsService,
     private site: SiteService,
     private configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.listen();
     this.service.isOpen.subscribe({

@@ -93,7 +93,7 @@ m-composer__base {
       border: 0;
     }
 
-    .m-composer__preview {
+    .m-composer__previewWrapper {
       @include m-theme() {
         background-color: rgba(themed($m-bgColor--primary), 0.75);
       }

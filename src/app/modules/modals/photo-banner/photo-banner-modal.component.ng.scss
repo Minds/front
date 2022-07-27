@@ -1,0 +1,22 @@
+@import 'defaults.scss';
+@import '../../../common/layout/layout.scss';
+
+:host {
+  display: contents;
+}
+
+.m-photoBannerModal__banner {
+  padding: 0 40px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-image: url('../../../../assets/photos/stargazing-2x.jpg');
+  background-position: bottom;
+}
+
+.m-photoBannerModalBanner__title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+}

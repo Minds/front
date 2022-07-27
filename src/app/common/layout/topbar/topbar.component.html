@@ -1,0 +1,141 @@
+<ng-template #searchBar>
+  <div class="m-topbar__searchBox">
+    <ng-content select="[search]"></ng-content>
+  </div>
+</ng-template>
+
+<div
+  class="m-topbar__top"
+  [class.m-topbar__top--noBorder]="
+    !(pageLayoutService.hasTopbarBorder$ | async)
+  "
+  [class.m-topbar__top--noBackground]="
+    !(pageLayoutService.hasTopbarBackground$ | async)
+  "
+  [class.m-topbar--homepageV3]="onHomepage"
+  [class.m-topbar__top--loggedOut]="!getCurrentUser()"
+  [style.visibility]="showTopbar ? 'visible' : 'hidden'"
+>
+  <div class="m-topbarTop__inner m-pageLayout__container">
+    <div class="m-topbar__leftColumn m-pageLayout__pane--left">
+      <nav class="m-topbar__nav">
+        <h1>
+          <a
+            class="m-topbarNav__item m-topbarNav__item--logo"
+            [routerLink]="getMainLogoUrl()"
+            title="Home"
+            i18n-title="@@COMMON__HOME"
+            data-ref="topnav-logo"
+            aria-label="Minds"
+          >
+            <img
+              [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+              class="m-topbar__logo--bulb"
+              alt="Minds"
+            />
+            <img
+              *ngIf="
+                onHomepage
+                  ? !(isDarkTheme$ | async) &&
+                    (pageLayoutService.hasTopbarBackground$ | async)
+                  : !(isDarkTheme$ | async)
+              "
+              [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+              class="m-topbar__logo--full"
+              alt="minds"
+            />
+            <img
+              *ngIf="
+                onHomepage
+                  ? (isDarkTheme$ | async) ||
+                    !(pageLayoutService.hasTopbarBackground$ | async)
+                  : (isDarkTheme$ | async)
+              "
+              [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
+              class="m-topbar__logo--full"
+              alt="minds"
+            />
+          </a>
+        </h1>
+        <m-environmentFlag></m-environmentFlag>
+        <div
+          class="m-topbarNav__item m-topbarNav__item--hamburger"
+          (click)="toggleSidebarNav()"
+        >
+          <i class="material-icons">menu</i>
+        </div>
+      </nav>
+    </div>
+
+    <div
+      class="m-pageLayout__pane--main"
+      style="display:flex; flex-direction: row;"
+    >
+      <div class="m-topbar__middleColumn" *ngIf="showSearchBar">
+        <ng-container *ngTemplateOutlet="searchBar"></ng-container>
+      </div>
+
+      <div class="m-topbar__spacer"></div>
+
+      <div class="m-topbar__rightColumn">
+        <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
+          <div
+            class="m-topbarContainer__loginWrapper m-topbarContainer__loginWrapper--roundButtons"
+          >
+            <m-button
+              class="m-topbarLoginWrapper__login"
+              [ngClass]="
+                onHomepage
+                  ? {
+                      'm-topbarLoginWrapper__login--white': !(
+                        pageLayoutService.hasTopbarBackground$ | async
+                      )
+                    }
+                  : undefined
+              "
+              (onAction)="onLoginClick()"
+              title="Login"
+              i18n-title="@@COMMON__LOGIN"
+              data-ref="topnav-login"
+              size="small"
+              [borderless]="onHomepage"
+            >
+              Login
+            </m-button>
+
+            <m-button
+              class="m-topbarLoginWrapper__joinMindsNow"
+              (onAction)="onJoinNowClick()"
+              title="Join Minds Now"
+              i18n-title="@@COMMON__JOIN_MINDS_NOW"
+              data-ref="topnav-join-now"
+              color="blue"
+              size="small"
+              [overlay]="
+                !(pageLayoutService.hasTopbarBackground$ | async) && onHomepage
+              "
+              [solid]="
+                onHomepage && pageLayoutService.hasTopbarBackground$ | async
+              "
+            >
+              Join Now
+            </m-button>
+          </div>
+        </ng-container>
+
+        <div *ngIf="!onHomepage" class="m-topbar__userMenu">
+          <div class="m-topbar__spacer"></div>
+          <!-- edit -->
+          <ng-content select="[icons]"></ng-content>
+          <m-userMenu [useAvatar]="true" *ngIf="getCurrentUser()"></m-userMenu>
+        </div>
+
+        <div class="m-topbar__notificationsToasterWrapper">
+          <div class="m-topbar__notificationsToaster">
+            <ng-template dynamic-host></ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

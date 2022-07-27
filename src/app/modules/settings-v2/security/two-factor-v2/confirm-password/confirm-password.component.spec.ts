@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ButtonComponentMock } from '../../../../../mocks/common/components/button/button.component';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { MultiFactorPanel } from '../../../../auth/multi-factor-auth/services/multi-factor-auth-service';
@@ -39,8 +39,8 @@ describe('SettingsTwoFactorPasswordComponent', () => {
             useValue: apiServiceMock,
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

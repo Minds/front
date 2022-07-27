@@ -17,7 +17,7 @@ import { MediumEditor } from 'medium-editor';
 import { ButtonsPlugin } from './plugins/buttons.plugin';
 import { AttachmentService } from '../../../services/attachment';
 import { ConfigsService } from '../../services/configs.service';
-import { FormToastService } from '../../services/form-toast.service';
+import { ToasterService } from '../../services/toaster.service';
 
 export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -32,7 +32,7 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
  */
 @Component({
   moduleId: module.id,
-  selector: 'm-inline-editor',
+  selector: 'm-inlineEditor',
   template: `
     <div #host></div>
   `,
@@ -72,7 +72,7 @@ export class InlineEditorComponent
     {
       buttonText: `<i class="material-icons">play_arrow</i>`,
     },
-    this.injector.get(FormToastService)
+    this.injector.get(ToasterService)
   );
 
   propagateChange = (_: any) => {};
@@ -111,12 +111,12 @@ export class InlineEditorComponent
           {
             name: 'h2',
             contentDefault:
-              '<b class="m-inline-editor--toolbar-text">H</b><sup>2</sup>',
+              '<b class="m-inlineEditor__toolbarText">H</b><sup>2</sup>',
           },
           {
             name: 'h3',
             contentDefault:
-              '<b class="m-inline-editor--toolbar-text">H</b><sup>3</sup>',
+              '<b class="m-inlineEditor__toolbarText">H</b><sup>3</sup>',
           },
           {
             name: 'removeFormat',

@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockService } from '../../../../../utils/mock';
 import { BlogsEditService } from '../blog-edit.service';
 import { BehaviorSubject } from 'rxjs';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { MonetizationSubjectValue } from '../../../../composer/services/composer.service';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
 import { ModalService } from '../../../../../services/ux/modal.service';
@@ -45,8 +45,8 @@ describe('BlogEditorBottomBarComponent', () => {
         providers: [
           { provide: BlogsEditService, useValue: blogsEditServiceMock },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           { provide: ModalService, useValue: modalServiceMock },
         ],

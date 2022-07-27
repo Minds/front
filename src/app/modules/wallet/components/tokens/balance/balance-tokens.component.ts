@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import * as moment from 'moment';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { PhoneVerificationService } from '../../components/phone-verification/phone-verification.service';
@@ -71,7 +71,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected walletService: WalletV2Service,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected onchainTransferModal: OnchainTransferModalService,
     private injector: Injector,
     protected connectWalletModalService: ConnectWalletModalService,

@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Settings form with a button for deactivating account
@@ -27,7 +27,7 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     public client: Client,
     public router: Router,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

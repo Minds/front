@@ -6,7 +6,7 @@ import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { last } from 'rxjs/operators';
 import { catchError, map, switchMap, take, throttleTime } from 'rxjs/operators';
 import { ApiService } from '../../../../common/api/api.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { MindsUser } from '../../../../interfaces/entities';
 
 /**
@@ -92,7 +92,7 @@ export class MultiFactorAuthService {
   public readonly mfaPayload$: Subject<MFAPayload> = new Subject<MFAPayload>();
 
   constructor(
-    private toast: FormToastService,
+    private toast: ToasterService,
     private api: ApiService,
     private router: Router
   ) {}

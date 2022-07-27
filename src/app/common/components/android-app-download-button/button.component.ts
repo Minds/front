@@ -6,9 +6,9 @@ import { Router } from '@angular/router';
  * So users can download the app
  */
 @Component({
-  selector: 'm-androidApp__download',
+  selector: 'm-androidAppDownloadButton',
   template: `
-    <a routerLink="/mobile" class="m-androidApp__download">
+    <a routerLink="/mobile" class="m-androidAppDownloadButton">
       <i class="material-icons">android</i>
       <h2>
         Android App

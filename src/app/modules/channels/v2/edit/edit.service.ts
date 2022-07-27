@@ -6,7 +6,7 @@ import {
   buildFromV1ChannelProfile,
   buildKeyVal,
 } from '../../social-profiles-meta';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Hold edit component state and interact with the API
@@ -91,7 +91,7 @@ export class ChannelEditService {
    * Constructor
    * @param api
    */
-  constructor(protected api: ApiService, private toast: FormToastService) {}
+  constructor(protected api: ApiService, private toast: ToasterService) {}
 
   /**
    * Sets the state based on a channel

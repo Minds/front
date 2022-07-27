@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -295,7 +295,7 @@ export class BoostModalService implements OnDestroy {
 
   constructor(
     private api: ApiService,
-    private toast: FormToastService,
+    private toast: ToasterService,
     private web3Wallet: Web3WalletService,
     private boostContract: BoostContractService
   ) {}

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormToastService } from '../../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../../common/services/toaster.service';
 import {
   SettingsTwoFactorV2Service,
   TwoFactorSetupPanel,
@@ -74,7 +74,7 @@ export class SettingsTwoFactorDisableTOTPComponent {
 
   constructor(
     private service: SettingsTwoFactorV2Service,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   /**

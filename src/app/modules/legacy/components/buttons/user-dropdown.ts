@@ -6,7 +6,7 @@ import { BanModalComponent } from '../../../ban/modal/modal.component';
 import { ReportCreatorComponent } from '../../../report/creator/creator.component';
 import { Router } from '@angular/router';
 import { BlockListService } from '../../../../common/services/block-list.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
 /**
@@ -118,12 +118,12 @@ import { ModalService } from '../../../../services/ux/modal.service';
         class="mdl-menu__item m-user-dropdown__item--nsfw"
         *ngIf="session.isAdmin()"
       >
-        <m-nsfw-selector
+        <m-nsfwSelector
           service="editing"
           [selected]="user.nsfw_lock"
           (selectedChange)="setNSFWLock($event)"
         >
-        </m-nsfw-selector>
+        </m-nsfwSelector>
       </li>
       <li
         class="mdl-menu__item"
@@ -250,7 +250,7 @@ export class UserDropdownButton {
     public modalService: ModalService,
     public router: Router,
     protected blockListService: BlockListService,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   /**

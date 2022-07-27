@@ -2,11 +2,11 @@ import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 
 import { JurySessionService } from './session.service';
 import { isPlatformBrowser } from '@angular/common';
-import { FormToastService } from '../../../../common/services/form-toast.service';
 import {
   Reason,
   ReportService,
 } from '../../../../common/services/report.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-juryDutySession__content',
@@ -25,7 +25,7 @@ export class JuryDutySessionContentComponent {
 
   constructor(
     private sessionService: JurySessionService,
-    private toast: FormToastService,
+    private toast: ToasterService,
     @Inject(PLATFORM_ID) protected platformId: Object,
     private reportService: ReportService
   ) {}
@@ -95,7 +95,6 @@ export class JuryDutySessionContentComponent {
         await this.sessionService.uphold(this.report, adminReasonOverride);
         this.decided = true;
       } catch (e) {
-        console.error(e);
         this.toast.error(e?.message ?? 'An unknown error has occurred');
       }
     }

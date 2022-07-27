@@ -176,12 +176,12 @@
     <!-- ADMIN EDIT FLAGS -->
     <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && canEdit">
       <li class="m-dropdownList__item m-postMenu__item--nsfw">
-        <m-nsfw-selector
+        <m-nsfwSelector
           service="editing"
           [selected]="entity.nsfw"
           (selectedChange)="onNSFWSelected($event)"
         >
-        </m-nsfw-selector>
+        </m-nsfwSelector>
       </li>
     </ng-container>
 

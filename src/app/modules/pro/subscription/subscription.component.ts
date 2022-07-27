@@ -18,7 +18,7 @@ import {
 } from '../../upgrades/upgrade-options.component';
 import currency from '../../../helpers/currency';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
 import * as moment from 'moment';
 import { ModalService } from '../../../services/ux/modal.service';
@@ -72,7 +72,7 @@ export class ProSubscriptionComponent implements OnInit {
     protected route: ActivatedRoute,
     protected router: Router,
     configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.upgrades = configs.get('upgrades');
   }

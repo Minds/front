@@ -12,7 +12,7 @@ import {
   ACCESS,
 } from '../../../../../services/list-options';
 import { PermawebTermsComponent } from '../../popup/permaweb/permaweb-terms.component';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Session } from '../../../../../services/session';
 import { take } from 'rxjs/operators';
 import { PopupService } from '../../popup/popup.service';
@@ -52,7 +52,7 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
 
   constructor(
     protected service: ComposerService,
-    protected toaster: FormToastService,
+    protected toaster: ToasterService,
     protected session: Session,
     protected popup: PopupService
   ) {}

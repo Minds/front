@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { MockService } from '../../../utils/mock';
 import { OnboardingV3WidgetComponent } from './onboarding-widget.component';
 import { OnboardingV3Service } from '../onboarding-v3.service';
@@ -42,8 +42,8 @@ describe('OnboardingV3WidgetComponent', () => {
           },
           { provide: Injector, useValue: MockService(Injector) },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
           {
             provide: EmailConfirmationService,
