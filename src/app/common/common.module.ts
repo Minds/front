@@ -450,16 +450,8 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: (
-        feedsService: FeedsService,
-        experimentsService: ExperimentsService,
-        apiResource: ApiResource
-      ): FeaturedContentService =>
-        new FeaturedContentService(
-          feedsService,
-          experimentsService,
-          apiResource
-        ),
+      useFactory: (feedsService: FeedsService): FeaturedContentService =>
+        new FeaturedContentService(feedsService),
       deps: [FeedsService, ExperimentsService, ApiResource],
     },
     MediaProxyService,

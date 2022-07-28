@@ -353,7 +353,6 @@ export class NewsfeedSubscribedComponent
     // only load next if we're in the proximity of the last 5 posts
     if (!this.feedService.feedLength) return;
     if (this.feedService.feedLength - event?.endIndex > 5) return;
-    if (this.feedService.feedQuery?.loading$.getValue()) return;
 
     if (
       this.feedService.canFetchMore &&
