@@ -8,7 +8,6 @@
     [ngStyle]="anchorPosition"
     (click)="close()"
     #menuWrapperElement
-    [@dropDown]="!hasSubmenu"
   >
     <ng-container *ngTemplateOutlet="menu"></ng-container>
   </div>

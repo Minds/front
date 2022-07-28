@@ -9,7 +9,7 @@ export class ActivityV2ExperimentService {
   constructor(private experiments: ExperimentsService) {}
 
   /**
-   * Returns true if the activity-v2  experiment is active.
+   * Returns true if the activity-v2 experiment is active.
    * @returns { boolean } whether activity-v2 experiment is active.
    */
   public isActive(): boolean {

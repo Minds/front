@@ -1,27 +1,55 @@
-<li
-  #item
-  class="m-dropdownMenu__item"
-  [ngClass]="{
-    'm-dropdownMenu__item--hasIcon': icon,
-    'm-dropdownMenu__item--selectable': selectable,
-    'm-dropdownMenu__item--selected': selectable && selected,
-    'm-dropdownMenu__item--red': red,
-    'm-dropdownMenu__item--disabled': disabled,
-    'm-dropdownMenu__item--hasSubmenu': hasSubmenu
-  }"
->
-  <i
-    *ngIf="selectable && selected"
-    class="material-icons m-dropdownMenuItem__text--icon--left"
-    >check</i
+<ng-template #itemTemplate>
+  <li
+    #item
+    class="m-dropdownMenu__item"
+    [ngClass]="{
+      'm-dropdownMenu__item--hasIcon': icon,
+      'm-dropdownMenu__item--selectable': selectable,
+      'm-dropdownMenu__item--selected': selectable && selected,
+      'm-dropdownMenu__item--red': red,
+      'm-dropdownMenu__item--disabled': disabled,
+      'm-dropdownMenu__item--hasSubmenu': hasSubmenu
+    }"
   >
-  <i *ngIf="icon" class="material-icons m-dropdownMenuItem__text--icon--left">{{
-    icon
-  }}</i>
-  <span class="m-dropdownMenuItem__text--label"><ng-content></ng-content></span>
-  <ng-container *ngIf="hasSubmenu">
-    <i class="material-icons m-dropdownMenuItem__text--icon--right"
-      >chevron_right</i
+    <i
+      *ngIf="selectable && selected"
+      class="material-icons m-dropdownMenuItem__text--icon--left"
+      >check</i
     >
+
+    <i
+      *ngIf="icon"
+      class="material-icons m-dropdownMenuItem__text--icon--left"
+      >{{ icon }}</i
+    ><span class="m-dropdownMenuItem__text--label"
+      ><ng-content></ng-content
+    ></span>
+
+    <ng-container *ngIf="hasSubmenu">
+      <i class="material-icons m-dropdownMenuItem__text--icon--right"
+        >chevron_right</i
+      >
+    </ng-container>
+  </li>
+</ng-template>
+<!-- --------------------- -->
+<!-- DEFAULT ITEM (NO LINK) -->
+<!-- --------------------- -->
+<ng-container *ngIf="!link && !externalLink; else linkTemplate">
+  <ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
+</ng-container>
+<!-- --------------------- -->
+<!-- LINKED ITEM -->
+<!-- --------------------- -->
+<ng-template #linkTemplate>
+  <ng-container *ngIf="link">
+    <a [routerLink]="link" class="m-dropdownMenuItem__link"
+      ><ng-container *ngTemplateOutlet="itemTemplate"></ng-container
+    ></a>
   </ng-container>
-</li>
+  <ng-container *ngIf="externalLink">
+    <a [href]="externalLink" target="_blank" class="m-dropdownMenuItem__link"
+      ><ng-container *ngTemplateOutlet="itemTemplate"></ng-container
+    ></a>
+  </ng-container>
+</ng-template>

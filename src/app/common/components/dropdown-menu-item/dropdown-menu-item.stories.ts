@@ -83,6 +83,24 @@ export default {
         defaultValue: { summary: 'false' },
       },
     },
+    link: {
+      description:
+        'Router link string, if clicking the button goes to another Minds page',
+      control: 'text',
+      defaultValue: null,
+      table: {
+        defaultValue: { summary: null },
+      },
+    },
+    externalLink: {
+      description:
+        'href, if clicking the button opens a new window on an external site',
+      control: 'text',
+      defaultValue: null,
+      table: {
+        defaultValue: { summary: null },
+      },
+    },
   },
 } as Meta;
 
@@ -98,6 +116,7 @@ const Template: Story<DropdownMenuItemComponent> = (
     [red]="red"
     [icon]="icon"
     [hasSubmenu]="hasSubmenu"
+    [link]="link"
   >
     <span i18n="@@MY_TRANSLATION_ID">Item</span>
   </m-dropdownMenu__item>
@@ -112,6 +131,7 @@ Basic.args = {
   red: false,
   disabled: false,
   hasSubmenu: null,
+  link: null,
 };
 
 export const Disabled = Template.bind({});
@@ -150,4 +170,10 @@ export const HasSubmenu = Template.bind({});
 HasSubmenu.args = {
   ...Basic.args,
   hasSubmenu: true,
+};
+
+export const Link = Template.bind({});
+Link.args = {
+  ...Basic.args,
+  link: '/newsfeed',
 };
