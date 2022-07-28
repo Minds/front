@@ -156,32 +156,7 @@ export class ResourceRef<T, P> {
     (async () => {
       let rehydratedResult;
       // rehydrate cache if policy allows
-      if (
-        options.cachePolicy === CachePolicy.cacheOnly ||
-        options.cachePolicy === CachePolicy.cacheFirst ||
-        options.cachePolicy === CachePolicy.cacheThenFetch
-      ) {
-        // using options.params because we want to ignore custom params // TODO: explain why
-        rehydratedResult = await this._rehydrate(options.params, options);
-      }
-
-      if (rehydratedResult) {
-        console.log(
-          '[ApiResource] rehydrating ',
-          options.url,
-          options.cachePolicy,
-          rehydratedResult
-        );
-        this.data$.next(
-          this._updateState(rehydratedResult as any, undefined, options)
-        );
-      } else {
-        console.log(
-          "[ApiResource] didn't find any cache for ",
-          options.url,
-          options.cachePolicy
-        );
-      }
+      rehydratedResult = await this._rehydrateIfPossible(options);
 
       switch (options.cachePolicy) {
         // return and don't attempt to fetch anymore
@@ -253,6 +228,26 @@ export class ResourceRef<T, P> {
     return this;
   }
 
+  private async _rehydrateIfPossible(
+    options: ApiResourceOptions<T, P>
+  ): Promise<any> {
+    if (
+      options.cachePolicy === CachePolicy.cacheOnly ||
+      options.cachePolicy === CachePolicy.cacheFirst ||
+      options.cachePolicy === CachePolicy.cacheThenFetch
+    ) {
+      // using options.params instead of params because we want to ignore custom params // TODO: explain why
+      const rehydratedResult = await this._rehydrate(options.params, options);
+      if (rehydratedResult) {
+        this.data$.next(
+          this._updateState(rehydratedResult as any, undefined, options)
+        );
+      }
+
+      return rehydratedResult;
+    }
+  }
+
   /**
    * updates the response based on the policy provided
    * TODO
@@ -317,9 +312,6 @@ export class ResourceRef<T, P> {
     const resource = await this._storage[options.cacheStorage].getApiResource(
       key
     );
-    if (resource) {
-      this.data$.next(resource.data);
-    }
 
     return resource?.data;
   }
