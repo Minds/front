@@ -61,7 +61,7 @@
       <!--actual feed-->
       <virtual-scroller
         #scroll
-        [bufferAmount]="10"
+        [bufferAmount]="20"
         [items]="feed | async"
         [parentScroll]="scroll.window"
         [enableUnequalChildrenSizes]="true"
@@ -91,10 +91,10 @@
                 #feedViewChildren
               ></m-activity>
             </ng-container>
-            <div *ngSwitchCase="'feedNotice'" style="height: 1px">
+            <div *ngSwitchCase="'feedNotice'" style="min-height: 1px">
               <m-feedNotice__outlet location="inline"></m-feedNotice__outlet>
             </div>
-            <div *ngSwitchCase="'featuredContent'" style="height: 1px">
+            <div *ngSwitchCase="'featuredContent'" style="min-height: 1px">
               <m-featured-content
                 [slot]="feedItem.data.slot"
                 [displayOptions]="{
@@ -104,14 +104,14 @@
               ></m-featured-content>
             </div>
 
-            <div style="height: 1px" *ngSwitchCase="'topHighlights'">
+            <div style="min-height: 1px" *ngSwitchCase="'topHighlights'">
               <m-topHighlights
                 (onSeeMore)="onShowMoreTopFeed()"
                 *ngIf="!(isTopHighlightsDismissed$ | async)"
               ></m-topHighlights>
             </div>
 
-            <div *ngSwitchCase="'channelRecommendation'" style="height: 1px">
+            <div *ngSwitchCase="'channelRecommendations'" style="min-height: 1px">
               <m-channelRecommendation
                 location="newsfeed"
                 [dismissible]="true"
