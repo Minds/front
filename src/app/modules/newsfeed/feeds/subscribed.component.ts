@@ -471,13 +471,13 @@ export class NewsfeedSubscribedComponent
     });
   }
 
-  compareItems(item1: IFeedItem, item2: IFeedItem) {
+  compareItems = (item1: IFeedItem, item2: IFeedItem) => {
     return this.getIDforFeedItem(item1) === this.getIDforFeedItem(item2);
-  }
+  };
 
-  feedItemTrackBy(index: number, feedItem: IFeedItem) {
+  feedItemTrackBy = (index: number, feedItem: IFeedItem) => {
     return this.getIDforFeedItem(feedItem);
-  }
+  };
 
   private getIDforFeedItem(feedItem: IFeedItem) {
     return feedItem.id || feedItem.data?.activity$?.getValue()?.guid;
