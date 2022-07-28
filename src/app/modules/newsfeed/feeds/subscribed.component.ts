@@ -243,9 +243,7 @@ export class NewsfeedSubscribedComponent
         );
 
         if (scrollOffsetTop) {
-          window.scrollTo({
-            top: scrollOffsetTop,
-          });
+          this.scrollToVirtualizedPosition(scrollOffsetTop);
         }
 
         this.isScrollRestored = true;
@@ -481,5 +479,18 @@ export class NewsfeedSubscribedComponent
 
   private getIDforFeedItem(feedItem: IFeedItem) {
     return feedItem.id || feedItem.data?.activity$?.getValue()?.guid;
+  }
+
+  private scrollToVirtualizedPosition(offset: number) {
+    this.virtualScroller.scrollToPosition(offset, 0, () => {
+      // if we haven't reached the scroll yet, scroll again
+      if (offset - window.scrollY > 1000) {
+        setTimeout(() => {
+          if (document.body.scrollHeight > offset) {
+            this.scrollToVirtualizedPosition(offset);
+          }
+        });
+      }
+    });
   }
 }
