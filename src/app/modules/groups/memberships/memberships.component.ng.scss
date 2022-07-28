@@ -59,14 +59,8 @@
         color: themed($m-textColor--secondary);
       }
     }
-    .m-groupsMembershipsMenu__icon {
-      padding: 0;
-      border: 0;
-      appearance: none;
-      background: transparent;
-      margin: 0;
-    }
   }
+
   ::ng-deep .m-publisherCard {
     margin-bottom: 15px;
 

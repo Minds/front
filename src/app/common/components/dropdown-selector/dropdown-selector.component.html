@@ -24,22 +24,17 @@
   <div class="m-dropdownSelector__header" (click)="expanded = !expanded">
     <span class="m-dropdownSelector__option">
       <label *ngIf="showLabel && inlineLabel">{{ filter.label }}</label>
-      <span>{{ selectedOption.label }}</span>
+      <m-icon *ngIf="selectedOption?.icon">{{ selectedOption?.icon }}</m-icon
+      ><span>{{ selectedOption.label }}</span>
     </span>
     <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
   </div>
   <div class="m-dropdownSelector__optionsContainer">
-    <ng-container *ngFor="let option of filter.options">
-      <div
-        class="m-dropdownSelector__option"
-        (click)="updateFilter(option)"
-        [ngClass]="{
-          unavailable: option?.available === false
-        }"
-      >
-        {{ option.label }}
-      </div>
-    </ng-container>
+    <m-dropdownMenu__item
+      *ngFor="let option of filter.options"
+      (click)="updateFilter(option)"
+      >{{ option.label }}
+    </m-dropdownMenu__item>
   </div>
 </div>
