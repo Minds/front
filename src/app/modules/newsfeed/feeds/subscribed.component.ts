@@ -302,8 +302,8 @@ export class NewsfeedSubscribedComponent
         });
       }
 
-      // // if the newsfeed length was less than equal to 3,
-      // // show the widget after last item, otherwise show after the 3rd post
+      // if the newsfeed length was less than equal to 3,
+      // show the widget after last item, otherwise show after the 3rd post
       newFeed.splice(feed.length <= 3 ? feed.length - 1 : 2, 0, {
         type: FeedItemType.channelRecommendations,
         id: 'channelRecommendations',
