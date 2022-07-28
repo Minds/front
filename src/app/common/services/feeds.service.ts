@@ -54,7 +54,6 @@ export class FeedsService implements OnDestroy {
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasMore: Observable<boolean>;
   blockListSubscription: Subscription;
-  feedQuerySubscription: Subscription;
   /**
    * whether counting is in progress
    */
@@ -75,7 +74,6 @@ export class FeedsService implements OnDestroy {
    * feed length
    */
   feedLength: number;
-  feedQuery: QueryRef<any, any>;
 
   constructor(
     protected client: Client,
@@ -158,15 +156,6 @@ export class FeedsService implements OnDestroy {
    */
   setEndpoint(endpoint: string): FeedsService {
     this.endpoint = endpoint;
-    return this;
-  }
-
-  /**
-   * Sets the endpoint for this instance.
-   * @param { string } endpoint - the endpoint for this instance. For example `api/v1/entities/owner`.
-   */
-  setFeedQuery(feedQuery: QueryRef<any, any>): FeedsService {
-    this.feedQuery = feedQuery;
     return this;
   }
 
@@ -277,7 +266,27 @@ export class FeedsService implements OnDestroy {
       this.newPostsLastCheckedAt = Date.now();
     }
 
-    const postProcessResponse = response => {
+    let response;
+
+    const rehydratedFeed = this.rehydrate();
+
+    // TODO: figure out the right conditional here
+    if (rehydratedFeed) {
+      this.checkForNewPosts();
+      return;
+    }
+
+    try {
+      response = await this.client.get(this.endpoint, {
+        ...this.params,
+        ...{
+          limit: 150, // Over 12 scrolls
+          as_activities: this.castToActivities ? 1 : 0,
+          export_user_counts: this.exportUserCounts ? 1 : 0,
+          from_timestamp: fromTimestamp,
+        },
+      });
+
       if (this.endpoint !== endpoint) {
         // Avoid race conditions if endpoint changes
         return;
@@ -311,50 +320,6 @@ export class FeedsService implements OnDestroy {
       }
 
       this.persist(this.rawFeed.getValue());
-    };
-
-    let response;
-
-    const rehydratedFeed = this.rehydrate();
-
-    // TODO: figure out the right conditional here
-    if (rehydratedFeed) {
-      this.checkForNewPosts();
-      return;
-    }
-
-    try {
-      if (this.feedQuery) {
-        // TODO: rehydrate only if you were told to do so
-        this.feedQuerySubscription?.unsubscribe();
-        this.feedQuerySubscription = this.feedQuery
-          .fetch({
-            ...this.params,
-            limit: 150, // Over 12 scrolls
-            as_activities: this.castToActivities ? 1 : 0,
-            export_user_counts: this.exportUserCounts ? 1 : 0,
-            unseen: this.unseen,
-            from_timestamp: fromTimestamp,
-          })
-          .data$.pipe(
-            tap(response => {
-              if (!response) return;
-              postProcessResponse(response);
-            })
-          )
-          .subscribe();
-      } else {
-        response = await this.client.get(this.endpoint, {
-          ...this.params,
-          ...{
-            limit: 150, // Over 12 scrolls
-            as_activities: this.castToActivities ? 1 : 0,
-            export_user_counts: this.exportUserCounts ? 1 : 0,
-            from_timestamp: fromTimestamp,
-          },
-        });
-        postProcessResponse(response);
-      }
     } catch (e) {
       this.newPostsLastCheckedAt = oldTimestamp;
       this.newPostsCount$.next(oldCount);
@@ -450,7 +415,7 @@ export class FeedsService implements OnDestroy {
     if (!feed?.length) return;
 
     return this.storage.memory.setFeedState(
-      this.feedQuery?.options.url || this.endpoint,
+      this.endpoint,
       window.location.pathname,
       {
         rawFeed: feed,
@@ -474,7 +439,7 @@ export class FeedsService implements OnDestroy {
     if (this.rehydrated) return; // don't depend on this
 
     const inMemoryFeedState = this.storage.memory.getFeedState(
-      this.feedQuery?.options.url || this.endpoint,
+      this.endpoint,
       window.location.pathname
     );
 

@@ -24,7 +24,6 @@ import {
 import { IPageInfo, VirtualScrollerComponent } from 'ngx-virtual-scroller';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { ApiResource } from '../../../common/api/api-resource.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { FeedsService } from '../../../common/services/feeds.service';
@@ -60,22 +59,10 @@ interface IFeedItem {
 }
 
 @Injectable()
-export class LatestFeedService extends FeedsService {
-  feedQuery = this.apiResource.query('api/v2/feeds/subscribed/activities', {
-    cacheStorage: ApiResource.CacheStorage.Memory,
-    cachePolicy: ApiResource.CachePolicy.fetchOnly,
-    skip: true, // TODO: rename to autoFetch: false
-  });
-}
+export class LatestFeedService extends FeedsService {}
 
 @Injectable()
-export class TopFeedService extends FeedsService {
-  feedQuery = this.apiResource.query('api/v3/newsfeed/feed/unseen-top', {
-    cacheStorage: ApiResource.CacheStorage.Memory,
-    cachePolicy: ApiResource.CachePolicy.fetchOnly,
-    skip: true, // TODO: rename to autoFetch: false
-  });
-}
+export class TopFeedService extends FeedsService {}
 
 @Component({
   selector: 'm-newsfeed--subscribed',
