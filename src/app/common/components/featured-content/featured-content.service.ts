@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { filter, first, switchMap, mergeMap, skip, take } from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 import { Subscription } from 'rxjs';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
-import { ApiResource } from '../../api/api-resource.service';
 
 @Injectable()
 export class FeaturedContentService {
@@ -12,16 +10,7 @@ export class FeaturedContentService {
   feedLength = 0;
   protected feedSubscription: Subscription;
 
-  featuredContentFeedQuery = this.apiResource.query('api/v2/boost/feed', {
-    cachePolicy: ApiResource.CachePolicy.cacheFirst,
-    cacheStorage: ApiResource.CacheStorage.Memory,
-  });
-
-  constructor(
-    protected feedsService: FeedsService,
-    private experiments: ExperimentsService,
-    private apiResource: ApiResource
-  ) {
+  constructor(protected feedsService: FeedsService) {
     this.onInit();
   }
 
@@ -37,7 +26,6 @@ export class FeaturedContentService {
       .setLimit(12)
       .setOffset(0)
       .setEndpoint('api/v2/boost/feed')
-      .setFeedQuery(this.featuredContentFeedQuery)
       .fetch();
   }
 
