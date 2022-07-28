@@ -467,15 +467,18 @@ export class NewsfeedSubscribedComponent
     return feedItem.id || feedItem.data?.activity$?.getValue()?.guid;
   }
 
-  private scrollToVirtualizedPosition(offset: number) {
-    this.virtualScroller.scrollToPosition(offset, 0, () => {
-      // if we haven't reached the scroll yet, scroll again
+  private scrollToVirtualizedPosition(offset: number, tries = 0) {
+    if (tries === 10) return;
+
+    window.scrollTo({
+      top: offset,
+    });
+
+    setTimeout(() => {
       if (offset - window.scrollY > 1000) {
-        setTimeout(() => {
-          if (document.body.scrollHeight > offset) {
-            this.scrollToVirtualizedPosition(offset);
-          }
-        });
+        if (document.body.scrollHeight > offset) {
+          this.scrollToVirtualizedPosition(offset, tries + 1);
+        }
       }
     });
   }
