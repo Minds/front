@@ -1,4 +1,3 @@
-import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
 import {
   AfterViewInit,
@@ -9,18 +8,17 @@ import {
   Optional,
   SkipSelf,
 } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { ApiResource } from '../../../common/api/api-resource.service';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
-import { ApiResource } from '../../../common/api/api-resource.service';
-import { filter, map } from 'rxjs/operators';
-import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -87,22 +85,27 @@ export class ChannelRecommendationComponent implements OnInit, AfterViewInit {
    * the height of the container, used to animate the mount and unmount of this component
    */
   containerHeight$: BehaviorSubject<number> = new BehaviorSubject(undefined);
-  /** a list of recommended channels */
-  recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
   /**
    * How many recommendations to show at a time?
    */
   listSize$: BehaviorSubject<number> = new BehaviorSubject(3);
 
   channelRecommendationQuery = this.apiResource.query<
-    ChannelRecommendationResponse,
+    MindsUser[],
     ChannelRecommendationParams
   >('api/v3/recommendations', {
     cacheStorage: ApiResource.CacheStorage.Memory,
     cachePolicy: ApiResource.CachePolicy.cacheFirst,
-    updateState: response =>
-      response?.entities.map(e => e.entity).filter(Boolean) || [],
+    updateState: response => {
+      if (Array.isArray(response)) return response;
+      // @ts-ignore: TODO cleanup
+      return response?.entities.map(e => e.entity).filter(Boolean) || [];
+    },
+    skip: true,
   });
+
+  /** a list of recommended channels */
+  recommendations$ = this.channelRecommendationQuery.data$;
 
   constructor(
     private api: ApiService,
@@ -122,17 +125,19 @@ export class ChannelRecommendationComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if (this.location) {
-      this.recommendations$ = this.channelRecommendationQuery.fetch({
+      this.channelRecommendationQuery.fetch({
         location: this.location,
         mostRecentSubscriptions: this.recentSubscriptions.list(),
         currentChannelUserGuid: this.channelId,
         limit: 12,
-      }).data$ as any;
+      });
     }
   }
 
   ngAfterViewInit(): void {
-    this.disabledAnimations$.next(false);
+    setTimeout(() => {
+      this.disabledAnimations$.next(false);
+    });
   }
 
   /**
@@ -176,6 +181,7 @@ export class ChannelRecommendationComponent implements OnInit, AfterViewInit {
    */
   onSubscribed(user): void {
     if (this.listSize$.getValue() === 3) {
+      // TODO: persist this
       this.listSize$.next(5);
     }
 
@@ -183,7 +189,6 @@ export class ChannelRecommendationComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // TODO: change
     this.recommendations$.next(
       this.recommendations$.getValue().filter(u => u.guid !== user.guid)
     );
