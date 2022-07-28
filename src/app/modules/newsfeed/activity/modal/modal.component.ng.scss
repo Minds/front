@@ -375,14 +375,13 @@ $modal-padding: 20px;
       }
 
       m-postmenu--v2 {
-        .m-dropdown--v2 {
+        m-dropdownMenu {
           z-index: 5;
         }
-      }
-
-      .m-postMenu__button {
-        padding-right: 0;
-        margin-right: -5px;
+        .m-postMenu__button {
+          padding-right: 0;
+          margin-right: -5px;
+        }
       }
 
       .m-activityOwnerBlock__avatar {

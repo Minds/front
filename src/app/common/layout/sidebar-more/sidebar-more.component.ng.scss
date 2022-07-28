@@ -12,6 +12,8 @@
 
     ul.m-sidebarMore__dropdown {
       list-style: none;
+      padding: 0;
+      margin: 0;
 
       @include m-theme() {
         background-color: themed($m-bgColor--primary);
@@ -20,6 +22,14 @@
       }
 
       li.m-sidebarMoreDropdown__item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        list-style: none;
+        opacity: 1;
+        text-overflow: ellipsis;
+        text-align: left;
+        font-weight: 500;
         padding: 0;
         font-size: 16px;
         line-height: 20px;
@@ -47,6 +57,11 @@
         }
 
         > a {
+          text-decoration: none;
+          width: 100%;
+          text-decoration: none;
+          @include body2Medium;
+
           @include m-theme() {
             color: themed($m-textColor--primary) !important;
           }
@@ -54,6 +69,9 @@
           i {
             margin-right: 15px;
             font-size: 22px;
+            vertical-align: middle;
+            font-weight: 400;
+            line-height: 1.125rem;
             @include m-theme() {
               color: themed($m-textColor--primary);
               fill: themed($m-textColor--primary);

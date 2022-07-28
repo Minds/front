@@ -5,8 +5,14 @@
     style="position: relative;"
   >
     <div class="m-groupsMemberships">
+      <!-- ---------------  -->
+      <!-- HEADER -->
+      <!-- ---------------  -->
       <div class="m-groupsMemberships__header">
         <h2>Groups</h2>
+        <!-- ---------------  -->
+        <!-- BUTTONS  -->
+        <!-- ---------------  -->
         <div class="m-groupsMemberships__buttons">
           <m-button size="small"
             ><a routerLink="/groups/create"
@@ -14,32 +20,36 @@
             ></m-button
           >
           <m-button size="small"
-            ><a routerLink="/discovery/suggestions/group"
+            ><a routerLink="'/discovery/suggestions/group"
               ><span>Discover groups</span></a
             ></m-button
           >
         </div>
-        <div class="m-groupsMemberships__menu m-dropdown--v2">
-          <button
-            class="m-groupsMembershipsMenu__icon"
-            (click)="menuOpened$.next(true)"
-          >
-            <i class="material-icons">more_vert</i>
-          </button>
+        <!-- ---------------  -->
+        <!-- DROPDOWN  -->
+        <!-- (MOBILE ONLY) -->
+        <!-- ---------------  -->
+        <m-dropdownMenu [menu]="dropdownMenu" class="m-groupsMemberships__menu">
+          <i class="material-icons">more_vert</i>
+        </m-dropdownMenu>
 
-          <ul class="m-dropdown__list" *ngIf="menuOpened$ | async">
-            <li class="m-dropdownList__item">
-              <a routerLink="/groups/create"><span>Create group</span></a>
-            </li>
-            <li class="m-dropdownList__item">
-              <a routerLink="/discovery/suggestions/group"
-                ><span>Discover groups</span></a
-              >
-            </li>
+        <ng-template #dropdownMenu>
+          <ul>
+            <m-dropdownMenu__item [link]="'/groups/create'">
+              Create group
+            </m-dropdownMenu__item>
+            <m-dropdownMenu__item [link]="'/discovery/suggestions/group'">
+              Discover groups
+            </m-dropdownMenu__item>
           </ul>
-        </div>
+        </ng-template>
+
+        <!-- ---------------  -->
       </div>
 
+      <!-- ---------------  -->
+      <!-- BODY -->
+      <!-- ---------------  -->
       <div *ngIf="groups && groups.length">
         <m-publisherCard
           *ngFor="let group of groups"
@@ -66,12 +76,8 @@
           <a routerLink="/discovery/suggestions/group">Discover groups</a>.
         </p>
       </div>
+      <!-- ---------------  -->
     </div>
-    <div
-      class="m-bgOverlay--v2"
-      (click)="menuOpened$.next(false)"
-      *ngIf="menuOpened$ | async"
-    ></div>
   </div>
   <div class="m-groupsMemberships__sidebar" m-pageLayout__pane="right"></div>
 </div>
