@@ -29,6 +29,38 @@
       ></m-userAggregator>
     </div>
 
+    <div
+      *ngIf="!report.is_appeal"
+      class="m-juryDutySessionContent__changeReportReasonContainer"
+    >
+      <div
+        (click)="toggleChangeReportReason()"
+        class="m-juryDutySessionContent__changeReportReasonHeader"
+      >
+        <span class="m-juryDutySessionContent__changeReportReasonText"
+          >Change Report Reason
+        </span>
+        <i class="material-icons {{ changeReportReason ? 'collapsed' : '' }}"
+          >expand_more</i
+        >
+      </div>
+      <div
+        class="m-juryDutySessionContent__changeReportReasonOptions"
+        *ngIf="changeReportReason"
+      >
+        <m-dropdownSelector
+          [filter]="{ options: reasons }"
+          (selectionMade)="updateReasonSelection($event)"
+        ></m-dropdownSelector>
+        <m-dropdownSelector
+          *ngIf="selectedReason && selectedReason.hasMore"
+          [filter]="{ options: selectedReason.reasons }"
+          [selectedOption]="selectedReason.reasons[0]"
+          (selectionMade)="updateSubReasonSelection($event)"
+        ></m-dropdownSelector>
+      </div>
+    </div>
+
     <ng-container *ngIf="report.entity; else noEntity">
       <m-publisherCard
         *ngIf="
