@@ -91,6 +91,12 @@
         flex-direction: row;
       }
 
+      .m-commentToolbar__buttons {
+        .m-dropdown--v2 {
+          margin-right: 0;
+        }
+      }
+
       .m-comment__ribbonBtn {
         @include m-theme() {
           background-color: rgba(themed($m-bgColor--primary), 0);
@@ -126,6 +132,9 @@
   .m-comment--compact {
     padding: 5px 30px 20px;
 
+    .m-dropdown--v2 {
+      margin-right: 0;
+    }
     .minds-avatar {
       margin: 0 10px 0 0 !important;
     }
@@ -149,6 +158,10 @@
       max-width: 100%;
       margin-left: 10px;
     }
+  }
+
+  .m-dropdown--v2 {
+    margin-right: 10px;
   }
 
   .m-comment--focused {

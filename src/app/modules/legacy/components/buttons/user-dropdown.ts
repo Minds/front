@@ -17,13 +17,229 @@ import { ModalService } from '../../../../services/ux/modal.service';
   selector: 'minds-button-user-dropdown',
   inputs: ['user'],
   outputs: ['userChanged'],
-  templateUrl: './user-dropdown.html',
+  template: `
+    <button
+      class="material-icons"
+      (click)="toggleMenu($event)"
+      data-cy="data-minds-user-dropdown"
+    >
+      more_vert
+    </button>
+
+    <ul class="minds-dropdown-menu" [hidden]="!showMenu">
+      <li
+        class="mdl-menu__item"
+        [hidden]="user.blocked"
+        (click)="block()"
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BLOCK"
+        data-cy="data-minds-user-dropdown-block"
+      >
+        Block @{{ user.username }}
+      </li>
+      <li
+        class="mdl-menu__item"
+        [hidden]="!user.blocked"
+        (click)="unBlock()"
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBLOCK"
+      >
+        Un-Block @{{ user.username }}
+      </li>
+      <li
+        class="mdl-menu__item"
+        [hidden]="user.subscribed"
+        (click)="subscribe()"
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__SUBSCRIBE"
+      >
+        Subscribe
+      </li>
+      <li
+        class="mdl-menu__item"
+        [hidden]="!user.subscribed"
+        (click)="unSubscribe()"
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNSUBSCRIBE"
+      >
+        Unsubscribe
+      </li>
+      <li
+        class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="user.banned !== 'yes'"
+        (click)="unBan()"
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_GLOBALLY"
+      >
+        Un-ban globally
+      </li>
+      <li
+        class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        (click)="viewLedger()"
+        i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER"
+      >
+        View Ledger
+      </li>
+      <li
+        class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        (click)="viewWithdrawals()"
+        i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS"
+      >
+        View Withdrawals
+      </li>
+      <li
+        class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        (click)="viewEmail()"
+        i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
+      >
+        E-mail Address
+      </li>
+      <li class="mdl-menu__item" (click)="report(); showMenu = false">
+        <ng-container i18n="@@M__ACTION__REPORT">Report</ng-container>
+      </li>
+      <li
+        class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="user.is_mature"
+        (click)="setExplicit(true); showMenu = false"
+        i18n="@@M__ACTION__MARK_EXPLICIT"
+      >
+        Set as explicit
+      </li>
+      <li
+        class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="!user.is_mature"
+        (click)="setExplicit(false); showMenu = false"
+        i18n="@@M__ACTION__REMOVE_EXPLICIT"
+      >
+        Remove explicit
+      </li>
+      <li
+        class="mdl-menu__item m-user-dropdown__item--nsfw"
+        *ngIf="session.isAdmin()"
+      >
+        <m-nsfwSelector
+          service="editing"
+          [selected]="user.nsfw_lock"
+          (selectedChange)="setNSFWLock($event)"
+        >
+        </m-nsfwSelector>
+      </li>
+      <li
+        class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        (click)="reindex(); showMenu = false"
+        i18n="@@M__ACTION__REINDEX"
+      >
+        Reindex
+      </li>
+      <ng-container *ngIf="session.isAdmin()">
+        <li
+          class="mdl-menu__item"
+          [hidden]="user.rating === 1"
+          (click)="setRating(1)"
+          i18n="@@M__ACTION__MARK_AS_SAFE"
+        >
+          Mark as Safe
+        </li>
+        <li
+          class="mdl-menu__item"
+          [hidden]="user.rating === 2"
+          (click)="setRating(2)"
+          i18n="@@M__ACTION__MENU__MARK_AS_OPEN"
+        >
+          Mark as Open
+        </li>
+      </ng-container>
+    </ul>
+    <div
+      class="minds-bg-overlay"
+      (click)="toggleMenu($event)"
+      [hidden]="!showMenu"
+    ></div>
+
+    <m-modal-confirm
+      *ngIf="banToggle"
+      [open]="true"
+      [closeAfterAction]="true"
+      (closed)="banToggle = false"
+      (actioned)="ban()"
+      yesButton="Ban user"
+      i18n-yesButton="@@M__ACTION__BAN_USER"
+    >
+      <p confirm-message>
+        <ng-container i18n="@@MINDS__BAN__CONFIRMATION"
+          >Are you sure you want to ban this user?
+        </ng-container>
+        <br /><br />
+        <ng-container i18n
+          >This will close all open sessions and lock them out from Minds.
+        </ng-container>
+      </p>
+      <p
+        confirm-success-message
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_USER_SUCCESS_MESSAGE"
+      >
+        User has been banned.
+      </p>
+    </m-modal-confirm>
+    <m-modal-confirm
+      *ngIf="banMonetizationToggle"
+      [open]="true"
+      [closeAfterAction]="true"
+      (closed)="banMonetizationToggle = false"
+      (actioned)="banMonetization()"
+      yesButton="Ban user"
+      i18n-yesButton="@@M__ACTION__BAN_USER"
+    >
+      <p confirm-message>
+        <ng-container i18n="@@BAN__FROM__MONETIZATION"
+          >Are you sure you want to ban this user from monetization?
+        </ng-container>
+        <br /><br />
+        <ng-container
+          i18n="@@MINDS_BUTTON__USER_DROPDOWN__WILL_CLOSE_SESSIONS_TEXT"
+          >This will close all open sessions and decline pending payments.
+        </ng-container>
+        <br />
+        <ng-container i18n="@@MINDS_BUTTON__USER_DROPDOWN__THERE_IS_NO_UNDO"
+          >There's no UNDO. This will NOT ban the user from Minds.
+        </ng-container>
+      </p>
+      <p
+        confirm-success-message
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_MONETIZATION_SUCCESS_MESSAGE"
+      >
+        User has been banned from monetization.
+      </p>
+    </m-modal-confirm>
+    <m-modal
+      *ngIf="viewEmailToggle"
+      [open]="true"
+      (closed)="viewEmailToggle = false"
+    >
+      <div
+        class="mdl-card__supporting-text"
+        style="padding: 64px; font-size: 20px; text-align: center;"
+      >
+        @{{ user.username }}'s email:
+        <a
+          *ngIf="user.email"
+          [href]="'mailto:' + user.email"
+          style="text-decoration: none;"
+          >{{ user.email }}</a
+        >
+        <ng-container *ngIf="!user.email">...</ng-container>
+      </div>
+    </m-modal>
+  `,
 })
 export class UserDropdownButton {
   user: any = {
     blocked: false,
   };
   userChanged: EventEmitter<any> = new EventEmitter();
+  showMenu: boolean = false;
   banToggle: boolean = false;
   banMonetizationToggle: boolean = false;
   viewEmailToggle: boolean = false;
@@ -56,6 +272,7 @@ export class UserDropdownButton {
     }
 
     this.userChanged.emit(this.user);
+    this.showMenu = false;
   }
 
   async unBlock() {
@@ -69,6 +286,7 @@ export class UserDropdownButton {
     }
 
     this.userChanged.emit(this.user);
+    this.showMenu = false;
   }
 
   async subscribe() {
@@ -85,6 +303,7 @@ export class UserDropdownButton {
     }
 
     this.userChanged.emit(this.user);
+    this.showMenu = false;
   }
 
   async unSubscribe() {
@@ -98,6 +317,7 @@ export class UserDropdownButton {
     }
 
     this.userChanged.emit(this.user);
+    this.showMenu = false;
   }
 
   ban() {
@@ -117,6 +337,7 @@ export class UserDropdownButton {
     }
 
     this.userChanged.emit(this.user);
+    this.showMenu = false;
   }
 
   async banMonetization() {
@@ -148,10 +369,16 @@ export class UserDropdownButton {
     }
 
     this.userChanged.emit(this.user);
+    this.showMenu = false;
   }
 
   toggleMenu(e) {
     e.stopPropagation();
+    if (this.showMenu) {
+      this.showMenu = false;
+      return;
+    }
+    this.showMenu = true;
 
     this.client.get('api/v1/block/' + this.user.guid).then((response: any) => {
       this.user.blocked = response.blocked;

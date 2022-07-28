@@ -1,8 +1,11 @@
 <div class="m-sidebarMore">
-  <ul class="m-sidebarMore__dropdown">
+  <ul class="m-dropdown__list m-sidebarMore__dropdown">
     <!-- ------------------------------------------------------------ -->
     <li
-      class="m-sidebarMoreDropdown__item"
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item
+      "
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
@@ -15,7 +18,10 @@
     </li>
     <!-- ------------------------------------------------------------ -->
     <li
-      class="m-sidebarMoreDropdown__item"
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item
+      "
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
@@ -29,7 +35,10 @@
     </li>
     <!-- ------------------------------------------------------------ -->
     <li
-      class="m-sidebarMoreDropdown__item"
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item
+      "
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
@@ -42,7 +51,7 @@
     </li>
     <!-- ------------------------------------------------------------ -->
     <li
-      class="m-sidebarMoreDropdown__item"
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
@@ -53,7 +62,7 @@
     </li>
     <!-- ------------------------------------------------------------ -->
     <li
-      class="m-sidebarMoreDropdown__item"
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
@@ -64,12 +73,15 @@
     </li>
     <!--./././././././././././././././././././././././././././././././.-->
     <li
-      class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer"
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer
+      "
       *ngIf="getCurrentUser()"
     ></li>
     <!--./././././././././././././././././././././././././././././././.-->
     <li
-      class="m-sidebarMoreDropdown__item"
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
@@ -85,7 +97,10 @@
       </a>
     </li>
     <!-- ------------------------------------------------------------ -->
-    <li class="m-sidebarMoreDropdown__item" (click)="toggleSidebar()">
+    <li
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
+      (click)="toggleSidebar()"
+    >
       <a
         [href]="getHelpdeskRedirectUrl()"
         target="_blank"
@@ -97,12 +112,16 @@
     </li>
     <!--./././././././././././././././././././././././././././././././.-->
     <li
-      class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer
       "
     ></li>
     <!--./././././././././././././././././././././././././././././././.-->
     <li
-      class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__footer
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item m-sidebarMoreDropdown__footer
       "
     >
       <ng-container

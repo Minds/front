@@ -107,6 +107,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     newHeight: number;
   }> = new EventEmitter();
 
+  menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  posterMenuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   // Compact view may be determined by input or window width
   // and is not used by activity V2
   _compact: boolean = false;
@@ -331,6 +334,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
           file.value = null;
         }
       });
+
+    this.posterMenuOpened$.next(false);
   }
 
   removeAttachment(file: HTMLInputElement) {
@@ -462,8 +467,17 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.showReplies = !this.showReplies;
   }
 
+  onMenuClick(e: MouseEvent): void {
+    this.menuOpened$.next(true);
+  }
+
+  onPosterMenuClick(e: MouseEvent): void {
+    this.posterMenuOpened$.next(true);
+  }
+
   toggleExplicit(e: MouseEvent): void {
     this.attachment.toggleMature();
+    this.posterMenuOpened$.next(false);
   }
 
   /**

@@ -4,20 +4,4 @@
   .m-dropdown--v2 {
     @include z-index(tooltip);
   }
-
-  .m-groupsSettingsButton__trigger {
-    font-size: 18px;
-    padding: 14px 8px 14px 4px;
-
-    transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-    &:hover {
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-      }
-    }
-  }
 }

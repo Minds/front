@@ -22,9 +22,10 @@
     }
   }
 
-  ::ng-deep m-dropdownMenu {
+  .m-dropdown--v2 {
     position: relative;
     i {
+      cursor: pointer;
       position: relative;
       font-size: 24px;
       @include m-theme() {

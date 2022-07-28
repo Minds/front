@@ -31,7 +31,6 @@ export interface AnchorPosition {
 @Component({
   selector: 'm-dropdownMenu',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['dropdown-menu.component.ng.scss'],
   templateUrl: 'dropdown-menu.component.html',
 })
 export class DropdownMenuComponent implements OnInit, OnDestroy {
@@ -82,7 +81,6 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.isOpen = false;
     this.windowSizeSubscription.unsubscribe();
   }
 

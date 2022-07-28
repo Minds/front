@@ -1,6 +1,4 @@
-@import 'defaults.scss';
-
-:host {
+m-dropdownMenu {
   position: relative;
   display: flex;
   align-items: center;
@@ -11,7 +9,6 @@
     color: inherit;
   }
 
-  // These classes are applied programmatically using triggerCssClasses()
   .m-dropdownMenu__trigger {
     flex: 1;
 
@@ -20,11 +17,10 @@
     }
   }
 
-  // This class is applied programmatically using menuCssClasses()
   .m-dropdownMenu__menu {
     display: none;
 
-    @include z-index(modal--stackable);
+    @include z-index(modal);
 
     @media screen and (min-width: $max-mobile + 1) {
       display: block;
@@ -42,7 +38,7 @@
       left: 2vw !important; // Override component's dynamic values
     }
 
-    ::ng-deep ul {
+    ul {
       list-style: none;
       width: 100%;
       margin: 0;
@@ -59,7 +55,6 @@
   }
 
   > m-overlay {
-    @include z-index(modal);
     @media screen and (max-width: $max-mobile) {
       @include m-on-theme(light) {
         background: rgba(255, 255, 255, 0.85);

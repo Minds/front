@@ -2,6 +2,9 @@
 
 :host {
   position: relative;
+  .m-dropdown--v2 {
+    z-index: 4;
+  }
 
   .m-activityRemindButton__icon {
     padding: 0;
@@ -22,5 +25,12 @@
     .minds-counter {
       padding-right: 0;
     }
+  }
+
+  ::ng-deep .m-dropdown--v2 .m-dropdown__list {
+    right: unset;
+    left: 0;
+    top: unset;
+    bottom: 10px;
   }
 }

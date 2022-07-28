@@ -15,6 +15,7 @@ export class GroupsMembershipsComponent implements OnInit, OnDestroy {
   offset = 0;
   moreData: boolean = true;
   readonly cdnUrl: string;
+  menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   $updateMarker;
 
   constructor(

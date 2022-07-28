@@ -82,6 +82,7 @@
         service="editing"
         [selected]="service.nsfw$ | async"
         (selectedChange)="setNSFWLock($event)"
+        v2="true"
       >
       </m-nsfwSelector>
 

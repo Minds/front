@@ -40,7 +40,6 @@ type Option =
 @Component({
   selector: 'm-postMenu--v2',
   templateUrl: 'menu.component.html',
-  styleUrls: ['menu.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [PostMenuService],
 })
@@ -55,6 +54,8 @@ export class PostMenuV2Component implements OnInit {
   @Input() isTranslatable: boolean = false;
   @Input() user: any;
   @Input() icon: 'more_vert' | 'more_horiz' = 'more_vert';
+
+  isOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     public session: Session,
@@ -110,6 +111,7 @@ export class PostMenuV2Component implements OnInit {
   }
 
   onButtonClick(e: MouseEvent): void {
+    this.isOpened$.next(true);
     this.service.fetchFollowing();
     this.service.fetchBlock();
   }
@@ -166,6 +168,7 @@ export class PostMenuV2Component implements OnInit {
       this.optionSelected.emit(option);
     }
 
+    this.isOpened$.next(false);
     this.detectChanges();
   }
 

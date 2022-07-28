@@ -27,6 +27,21 @@
     }
   }
 
+  ::ng-deep m-sort-selector {
+    .m-dropdown--list--item,
+    .m-dropdown .m-dropdown--label-container {
+      text-transform: capitalize;
+      font-size: 15px;
+      letter-spacing: 0;
+    }
+
+    m-dropdown--list {
+      @include m-theme() {
+        box-shadow: none;
+      }
+    }
+  }
+
   .m-groupSorted__searchDisplay {
     padding: 5px 0 20px 0;
 

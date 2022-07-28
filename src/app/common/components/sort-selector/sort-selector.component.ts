@@ -10,20 +10,21 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Filter, Option } from '../../../interfaces/dashboard';
-import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
+import { DropdownComponent } from '../dropdown/dropdown.component';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'm-sort-selector',
   templateUrl: './sort-selector.component.html',
-  styleUrls: ['./sort-selector.component.ng.scss'],
 })
-export class SortSelectorComponent implements OnInit {
-  algorithms = [
+export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
+  algorithms: Array<{ id; label; icon?; noPeriod? }> = [
     {
       id: 'hot',
       label: 'Hot',
       icon: 'whatshot',
+      noPeriod: true,
     },
     {
       id: 'top',
@@ -34,10 +35,11 @@ export class SortSelectorComponent implements OnInit {
       id: 'latest',
       label: 'Latest',
       icon: 'timelapse',
+      noPeriod: true,
     },
   ];
 
-  periods = [
+  periods: Array<{ id; label }> = [
     {
       id: '12h',
       label: '12h',
@@ -60,7 +62,7 @@ export class SortSelectorComponent implements OnInit {
     },
   ];
 
-  customTypes = [
+  customTypes: Array<{ id; label; icon? }> = [
     {
       id: 'activities',
       label: 'All',
@@ -105,7 +107,7 @@ export class SortSelectorComponent implements OnInit {
 
   @Input() allowedCustomTypes: string[] | boolean = true;
 
-  @Input() labelClass: string = 'm-sortSelector__label';
+  @Input() labelClass: string = 'm--sort-selector-label';
 
   @Input() showPlusFilter: boolean = false;
 
@@ -117,13 +119,17 @@ export class SortSelectorComponent implements OnInit {
   }> = new EventEmitter<{ algorithm; period; customType; plus }>();
 
   @ViewChild('algorithmDropdown')
-  algorithmDropdown: DropdownMenuComponent;
+  algorithmDropdown: DropdownComponent;
 
   @ViewChild('periodDropdown')
-  periodDropdown: DropdownMenuComponent;
+  periodDropdown: DropdownComponent;
 
   @ViewChild('customTypeDropdown')
-  customTypeDropdown: DropdownMenuComponent;
+  customTypeDropdown: DropdownComponent;
+
+  expandedAlgorithmDropdown: boolean = true;
+
+  expandedCustomTypeDropdown: boolean = true;
 
   plusFilterApplied: boolean = false;
 
@@ -131,19 +137,51 @@ export class SortSelectorComponent implements OnInit {
 
   protected lastWidth: number;
 
+  protected resizeSubscription: Subscription;
+
+  protected resizeSubject: Subject<number> = new Subject<number>();
+
   constructor(protected elementRef: ElementRef) {}
 
+  @HostListener('window:resize') _widthDetection() {
+    this.resizeSubject.next(Date.now());
+  }
+
   ngOnInit() {
+    this.resizeSubscription = this.resizeSubject
+      .pipe(debounceTime(1000 / 30))
+      .subscribe(() => this.onResize());
+
     if (this.period) {
       this.lastUsedPeriod = this.period;
     }
+  }
 
-    if (!this.customType) {
-      this.customType = this.customTypes[0].id;
+  ngAfterViewInit() {
+    this.resizeSubject.next(Date.now());
+  }
+
+  ngOnDestroy() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
     }
   }
 
-  getAlgorithms(): Option[] {
+  onResize() {
+    const width =
+      this.elementRef &&
+      this.elementRef.nativeElement &&
+      this.elementRef.nativeElement.clientWidth;
+
+    if (width && width !== this.lastWidth) {
+      this.lastWidth = width;
+
+      this.expandedAlgorithmDropdown = width >= 500;
+      this.expandedCustomTypeDropdown = width >= 580;
+    }
+  }
+
+  getAlgorithms() {
     if (this.allowedAlgorithms === true) {
       return this.algorithms;
     } else if (!this.allowedAlgorithms) {
@@ -155,11 +193,11 @@ export class SortSelectorComponent implements OnInit {
     );
   }
 
-  shouldShowAlgorithms(): boolean {
+  shouldShowAlgorithms() {
     return this.getAlgorithms().length > 0;
   }
 
-  setAlgorithm(id: string): boolean {
+  setAlgorithm(id: string) {
     const algorithm = this.algorithms.find(algorithm => id === algorithm.id);
 
     if (!algorithm) {
@@ -173,7 +211,7 @@ export class SortSelectorComponent implements OnInit {
 
     this.algorithm = id;
 
-    if (this.lastUsedPeriod && algorithm.id === 'top') {
+    if (this.lastUsedPeriod && !algorithm.noPeriod) {
       this.period = this.lastUsedPeriod;
     }
 
@@ -182,7 +220,7 @@ export class SortSelectorComponent implements OnInit {
     return true;
   }
 
-  getCurrentAlgorithm(): Option {
+  getCurrentAlgorithm() {
     return this.algorithms.find(algorithm => this.algorithm === algorithm.id);
   }
 
@@ -196,7 +234,7 @@ export class SortSelectorComponent implements OnInit {
     return currentAlgorithm[prop];
   }
 
-  getPeriods(): Option[] {
+  getPeriods() {
     if (this.allowedPeriods === true) {
       return this.periods;
     } else if (!this.allowedPeriods) {
@@ -208,11 +246,11 @@ export class SortSelectorComponent implements OnInit {
     );
   }
 
-  shouldShowPeriods(): boolean {
+  shouldShowPeriods() {
     return this.getPeriods().length > 0;
   }
 
-  setPeriod(id: string): boolean {
+  setPeriod(id: string) {
     if (!this.periods.find(period => id === period.id)) {
       console.error('Unknown period');
       return false;
@@ -225,7 +263,7 @@ export class SortSelectorComponent implements OnInit {
     return true;
   }
 
-  getCurrentPeriod(): Option {
+  getCurrentPeriod() {
     return this.periods.find(period => this.period === period.id);
   }
 
@@ -246,10 +284,10 @@ export class SortSelectorComponent implements OnInit {
       return false;
     }
 
-    return currentAlgorithm.id === 'top';
+    return !currentAlgorithm.noPeriod;
   }
 
-  getCustomTypes(): Option[] {
+  getCustomTypes() {
     if (this.allowedCustomTypes === true) {
       return this.customTypes;
     } else if (!this.allowedCustomTypes) {
@@ -294,13 +332,13 @@ export class SortSelectorComponent implements OnInit {
     return currentAlgorithm[prop];
   }
 
-  setPlus(): void {
+  setPlus() {
     this.plusFilterApplied = !this.plusFilterApplied;
     this.closeDropdowns();
     this.emit();
   }
 
-  emit(): void {
+  emit() {
     this.onChange.emit({
       algorithm: this.algorithm,
       period: this.hasCurrentAlgorithmPeriod() ? this.period : null,

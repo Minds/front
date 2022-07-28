@@ -26,4 +26,11 @@
       padding-right: 0;
     }
   }
+
+  ::ng-deep .m-dropdown--v2 .m-dropdown__list {
+    right: unset;
+    left: 0;
+    top: unset;
+    bottom: 10px;
+  }
 }

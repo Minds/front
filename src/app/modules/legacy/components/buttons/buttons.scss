@@ -3,8 +3,7 @@
 .minds-button-edit,
 minds-button-user-dropdown,
 .m-button {
-  > button,
-  .m-userDropdownButton__trigger {
+  > button {
     cursor: pointer;
     background: transparent;
     padding: 8px 16px;
@@ -12,6 +11,7 @@ minds-button-user-dropdown,
     border-radius: 2px;
     text-transform: uppercase;
     @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
       color: themed($m-grey-800);
     }
 

@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  // ChangeDetectionStrategy,
+  EventEmitter,
+} from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Filter, Option } from '../../../interfaces/dashboard';
@@ -11,6 +18,7 @@ import { Filter, Option } from '../../../interfaces/dashboard';
 @Component({
   selector: 'm-dropdownSelector',
   templateUrl: './dropdown-selector.component.html',
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownSelectorComponent implements OnInit {
   @Input() filter: Filter;
@@ -45,9 +53,5 @@ export class DropdownSelectorComponent implements OnInit {
       option: this.selectedOption,
       filterId: this.filter.id,
     });
-  }
-
-  close(): void {
-    this.expanded = false;
   }
 }

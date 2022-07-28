@@ -66,50 +66,55 @@
           (emojiSelect)="onEmoji($event)"
         ></m-emojiPicker>
 
-        <!-- Dropdown trigger -->
-        <m-dropdownMenu
-          [menu]="dropdownMenu"
-          [anchorPosition]="{ top: '20%', right: '0' }"
-          class="m-commentPoster__menuButton"
-        >
-          <i class="material-icons">more_vert</i>
-        </m-dropdownMenu>
+        <!-- Dropdown meatball -->
+        <div class="m-dropdown--v2">
+          <div
+            class="m-commentPoster__menuButton"
+            (click)="onMenuClick($event)"
+          >
+            <i class="material-icons">more_vert</i>
+          </div>
 
-        <!-- Dropdown menu -->
-        <ng-template #dropdownMenu>
-          <ul>
+          <ul class="m-dropdown__list" *ngIf="menuOpened$ | async">
             <!-- --------------------- -->
-            <!-- Attach a file -->
+            <!-- Attach a file-->
             <!-- --------------------- -->
-            <m-dropdownMenu__item
-              icon="insert_photo"
-              class="attachment-button"
-              (click)="fileInput.click()"
-            >
-              <span i18n="@@M__COMMENT_ACTIONS__ATTACH">Attach media</span>
-            </m-dropdownMenu__item>
+            <li class="m-dropdownList__item">
+              <a class="attachment-button">
+                <i class="material-icons">insert_photo</i>
+                <span i18n="@@M__COMMENT_ACTIONS__ATTACH">Attach media</span>
+
+                <input
+                  type="file"
+                  id="file"
+                  #fileInput
+                  name="attachment"
+                  (change)="uploadFile(fileInput, $event)"
+                />
+              </a>
+            </li>
             <!-- --------------------- -->
             <!-- Mark as explicit -->
             <!-- --------------------- -->
-            <m-dropdownMenu__item
-              (click)="attachment.toggleMature()"
-              icon="explicit"
-              [red]="attachment.isMature()"
-            >
-              <span
-                *ngIf="!attachment.isMature()"
-                i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
-                >Mark as explicit</span
-              >
-
-              <span
-                *ngIf="attachment.isMature()"
-                i18n="@@M__COMMENT_ACTIONS__REMOVE_EXPLICIT"
-                >Remove explicit</span
-              >
-            </m-dropdownMenu__item>
+            <li class="m-dropdownList__item">
+              <a (click)="attachment.toggleMature(); menuOpened$.next(false)">
+                <i
+                  class="material-icons"
+                  [ngClass]="{ 'mdl-color-text--red': attachment.isMature() }"
+                  >explicit</i
+                >
+                <span i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
+                  >Mark as explicit</span
+                >
+              </a>
+            </li>
           </ul>
-        </ng-template>
+        </div>
+        <div
+          class="m-bgOverlay--v2"
+          (click)="menuOpened$.next(false)"
+          *ngIf="menuOpened$ | async"
+        ></div>
         <!-- --------------------- -->
         <!-- Post  -->
         <!-- --------------------- -->
@@ -164,17 +169,6 @@
       </div>
     </div>
   </div>
-  <!-- --------------------- -->
-  <!-- Attachment input (hidden) -->
-  <!-- --------------------- -->
-  <input
-    hidden
-    type="file"
-    id="file"
-    #fileInput
-    name="attachment"
-    (change)="uploadFile(fileInput, $event)"
-  />
   <!-- --------------------- -->
   <!-- Attachment preview -->
   <!-- --------------------- -->

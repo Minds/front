@@ -33,6 +33,7 @@ import { TagsLinks } from './directives/tags';
 import { Tooltip } from './directives/tooltip';
 import { MindsAvatar } from './components/avatar/avatar';
 import { Textarea } from './components/editors/textarea.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
@@ -120,6 +121,7 @@ import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { UserMenuService } from './layout/topbar/user-menu/user-menu.service';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 import { MarkedDirective } from './directives/marked.directive';
@@ -186,6 +188,7 @@ const MINDS_COMMON_COMPONENTS = [
   DateRangeModalComponent,
   DateSelectorComponent,
   DraggableListComponent,
+  DropdownComponent,
   DropdownMenuComponent,
   DropdownMenuItemComponent,
   DropdownSelectorComponent,
@@ -357,6 +360,7 @@ const routes: Routes = [
     ApiService,
     AttachmentApiService,
     ClientMetaService,
+    UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
     DateRangeModalService,

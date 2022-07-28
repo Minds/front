@@ -58,26 +58,46 @@
                 session.last_active | friendlydatediff
               }}</span>
               <span *ngIf="session.last_active === 0">Unknown</span>
-              <!-- DROPDOWN  -->
-              <m-dropdownMenu
-                [menu]="dropdownMenu"
-                [anchorPosition]="{ top: '15%', right: '0' }"
-              >
-                <i class="material-icons">more_vert</i>
-              </m-dropdownMenu>
-              <ng-template #dropdownMenu>
-                <ul>
-                  <m-dropdownMenu__item (click)="deleteSession(session)">
-                    <span i18n="@@SETTINGSV2_SESSIONS__REVOKE_ACCESS"
-                      >Revoke access</span
-                    >
-                  </m-dropdownMenu__item>
-                </ul></ng-template
-              >
+              <div class="m-dropdown--v2">
+                <!-- <button > -->
+                <i (click)="onButtonClick(i)" class="material-icons"
+                  >more_vert</i
+                >
+                <!-- </button> -->
+
+                <ul
+                  class="m-dropdown__list"
+                  *ngIf="(menuOpened$ | async) === i"
+                >
+                  <li
+                    class="m-dropdownList__item"
+                    (click)="deleteSession(session)"
+                    i18n="@@SETTINGSV2_SESSIONS__REVOKE_ACCESS"
+                  >
+                    Revoke access
+                  </li>
+                </ul>
+              </div>
             </div>
           </li>
+
+          <li class="m-settingsV2__tableItem"></li>
         </ul>
       </div>
     </ng-container>
   </div>
+  <!-- <div class="m-form__buttonsContainer">
+    <m-button
+      color="red"
+      (onAction)="deleteAllSessions()"
+      i18n="@@SETTINGSV2_SESSIONS__CLOSE_ALL_SESSIONS"
+    >
+      Close all sessions
+    </m-button>
+  </div> -->
 </div>
+<div
+  class="m-bgOverlay--v2"
+  (click)="menuOpened$.next(false)"
+  *ngIf="menuOpened$ | async"
+></div>

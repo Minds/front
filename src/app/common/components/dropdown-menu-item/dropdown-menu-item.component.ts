@@ -14,15 +14,11 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./dropdown-menu-item.component.ng.scss'],
 })
 export class DropdownMenuItemComponent {
-  // See storybook for docs
-
   @Input() label: string;
   @Input() icon?: string;
   @Input() red?: boolean = false;
   @Input() disabled?: boolean = false;
   @Input() hasSubmenu?: boolean = false;
-  @Input() link?: string;
-  @Input() externalLink?: string;
 
   @Input() selectable?: boolean = false;
   @Input() selected?: boolean = false;

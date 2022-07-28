@@ -31,27 +31,21 @@ describe('GroupsSettingsButton', () => {
   let comp: GroupsSettingsButton;
   let fixture: ComponentFixture<GroupsSettingsButton>;
 
-  function getDropdown(): DebugElement {
-    return fixture.debugElement.query(By.css('m-dropdownMenu'));
-  }
-
   function getButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-dropdownMenu__trigger'));
-  }
-
-  function getMenu(): DebugElement {
-    return fixture.debugElement.query(By.css(`.m-dropdownMenu__menu`));
+    return fixture.debugElement.query(By.css('button'));
   }
 
   function getMenuItem(i: number): DebugElement {
     return fixture.debugElement.query(
-      By.css(`.m-dropdownMenu__menu ul:nth-child(${i})`)
+      By.css(`.m-dropdown__list .m-dropdownList__item:nth-child(${i})`)
     );
   }
 
   function getDeleteGroupItem(): DebugElement | null {
     return fixture.debugElement.query(
-      By.css(`.m-groups-settings-dropdown__item--deleteGroup`)
+      By.css(
+        `.m-dropdown__list .m-dropdownList__item.m-groups-settings-dropdown__item--deleteGroup`
+      )
     );
   }
 
@@ -69,17 +63,8 @@ describe('GroupsSettingsButton', () => {
           MockComponent({
             selector: 'm-nsfwSelector',
             inputs: ['selected'],
-            outputs: ['selected', 'selectedChange'],
+            outputs: ['selected'],
           }),
-          MockComponent({
-            selector: 'm-dropdownMenu',
-            inputs: ['menu', 'anchorPosition'],
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu__item',
-            outputs: ['click'],
-          }),
-
           GroupsSettingsButton,
         ],
         imports: [RouterTestingModule, FormsModule],
@@ -109,7 +94,6 @@ describe('GroupsSettingsButton', () => {
       guid: '1234',
       'is:muted': false,
       'is:creator': true,
-      mature: false,
     };
 
     clientMock.response = {};
@@ -121,21 +105,26 @@ describe('GroupsSettingsButton', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have a dropdown component', () => {
-    const dropdown = getDropdown();
-    expect(dropdown).not.toBeNull();
+  it('should have a button and a menu', () => {
+    const button = getButton();
+
+    expect(button).not.toBeNull();
+    expect(button.nativeElement.textContent).toContain('settings');
+
+    expect(
+      fixture.debugElement.query(By.css('.m-dropdown--v2'))
+    ).not.toBeNull();
   });
 
-  xit('should have button that lets you toggle the menu', () => {
-    const button = getButton();
-    expect(button).not.toBeNull();
-    expect(getMenu()).toBeNull();
+  it('should have button that lets you toggle the menu', () => {
+    const menu = fixture.debugElement.query(By.css('.m-dropdown--v2'));
+    expect(menu.nativeElement.hidden).toBeTruthy();
 
-    // Open the menu
-    button.nativeElement.click();
+    getButton().nativeElement.click();
+
     fixture.detectChanges();
 
-    expect(getMenu()).not.toBeNull();
+    expect(menu.nativeElement.hidden).toBeFalsy();
   });
 
   xit('should have an option to mute / unmute the group', fakeAsync(() => {
@@ -205,14 +194,9 @@ describe('GroupsSettingsButton', () => {
     );
   }));
 
-  xit('should have an option to report', () => {
-    // Open the menu
-    const button = getButton();
-    button.nativeElement.click();
-    fixture.detectChanges();
-
+  it('should have an option to report', () => {
     const report = fixture.debugElement.query(
-      By.css(`.m-dropdownMenu__menu .m-groups-settings-dropdown__item--report`)
+      By.css(`.m-dropdown__list .m-groups-settings-dropdown__item--report`)
     );
     expect(report).not.toBeNull();
 
@@ -220,23 +204,16 @@ describe('GroupsSettingsButton', () => {
     expect(modalServiceMock.present).toHaveBeenCalled();
   });
 
-  xit('should have an option to delete the group only if the user is a creator', () => {
+  it('should have an option to delete the group only if the user is a creator', () => {
     const group = {
       guid: '1234',
       'is:muted': false,
       'is:creator': true,
     };
 
-    // Open the menu
-    const button = getButton();
-    button.nativeElement.click();
-    fixture.detectChanges();
-
-    // User is creator
     const deleteGroup = getDeleteGroupItem();
     expect(deleteGroup).not.toBeNull();
 
-    // User is not creator
     group['is:creator'] = false;
     comp._group = group;
     fixture.detectChanges();
@@ -244,12 +221,7 @@ describe('GroupsSettingsButton', () => {
     expect(getDeleteGroupItem()).toBeNull();
   });
 
-  xit('should show confirmation modal from group deletion', () => {
-    // Open the menu
-    const button = getButton();
-    button.nativeElement.click();
-    fixture.detectChanges();
-
+  it('should show confirmation modal from group deletion', () => {
     getDeleteGroupItem().nativeElement.click();
     expect(modalServiceMock.present).toHaveBeenCalled();
   });
@@ -260,13 +232,5 @@ describe('GroupsSettingsButton', () => {
     );
     comp.delete();
     expect((comp as any).service.deleteGroup).toHaveBeenCalled();
-  });
-
-  it('it should call to set the group to be explicit', () => {
-    (comp as any).service.setExplicit.and.returnValue(
-      new Promise((resolve, reject) => true)
-    );
-    comp.setExplicit(true);
-    expect((comp as any).service.setExplicit).toHaveBeenCalled();
   });
 });

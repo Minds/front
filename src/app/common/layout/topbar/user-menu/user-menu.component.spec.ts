@@ -1,10 +1,4 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { UserMenuComponent } from './user-menu.component';
@@ -19,15 +13,12 @@ import { FeaturesService } from '../../../../services/features.service';
 import { featuresServiceMock } from '../../../../../tests/features-service-mock.spec';
 import { themeServiceMock } from '../../../../mocks/common/services/theme.service-mock.spec';
 import { By } from '@angular/platform-browser';
-import { Component, DebugElement, Input } from '@angular/core';
+import { UserMenuService } from './user-menu.service';
+import { userMenuServiceMock } from './user-menu.service-mock.spec';
 
 describe('UserMenuComponent', () => {
   let comp: UserMenuComponent;
   let fixture: ComponentFixture<UserMenuComponent>;
-
-  function getDropdown(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-dropdownMenu'));
-  }
 
   beforeEach(
     waitForAsync(() => {
@@ -36,14 +27,6 @@ describe('UserMenuComponent', () => {
           MockComponent({
             selector: 'minds-avatar',
             inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu',
-            inputs: ['menu', 'anchorPosition'],
-          }),
-          MockComponent({
-            selector: 'm-dropdownMenu__item',
-            inputs: ['link', 'externalLink'],
           }),
           IfFeatureDirective,
           UserMenuComponent,
@@ -56,6 +39,7 @@ describe('UserMenuComponent', () => {
             provide: ThemeService,
             useValue: themeServiceMock,
           },
+          { provide: UserMenuService, useValue: userMenuServiceMock },
         ],
       }).compileComponents(); // compile template and css
     })
@@ -77,31 +61,40 @@ describe('UserMenuComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  xit('Upgrade should be visible for non pro users', fakeAsync(() => {
+  it('Upgrade should be visible for non pro users', () => {
     sessionMock.user.pro = false;
 
-    const dropdown = getDropdown();
-    dropdown.nativeElement.click();
-    tick();
+    comp.toggleMenu();
 
     fixture.detectChanges();
-
     expect(
       fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
     ).not.toBeNull();
-  }));
 
-  xit('Upgrade should not be visible for pro users', fakeAsync(() => {
+    // comp.detectChanges();
+    // jasmine.clock().tick(1000);
+
+    // expect(
+    //   fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
+    // ).toBeNull();
+  });
+
+  it('Upgrade should not be visible for pro users', () => {
     sessionMock.user.pro = true;
 
-    const dropdown = getDropdown();
-    dropdown.nativeElement.click();
-    tick();
-
+    comp.toggleMenu();
     fixture.detectChanges();
 
     expect(
       fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
     ).toBeNull();
-  }));
+
+    // fixture.detectChanges();
+    // comp.detectChanges();
+    // jasmine.clock().tick(1000);
+
+    // expect(
+    //   fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
+    // ).toBeNull();
+  });
 });

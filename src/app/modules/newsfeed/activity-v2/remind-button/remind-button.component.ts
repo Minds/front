@@ -3,7 +3,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { ActivityService } from '../../activity/activity.service';
+import {
+  ActivityService,
+  ActivityEntity,
+} from '../../activity/activity.service';
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { map } from 'rxjs/operators';
@@ -20,7 +23,9 @@ import { AuthModalService } from '../../../auth/modal/auth-modal.service';
   styleUrls: ['./remind-button.component.ng.scss'],
   providers: [ComposerService],
 })
-export class ActivityV2RemindButtonComponent {
+export class ActivityV2RemindButtonComponent implements OnInit, OnDestroy {
+  isOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   count$: Observable<number> = this.service.entity$.pipe(
     map(entity => entity.reminds + entity.quotes)
   );
@@ -49,7 +54,21 @@ export class ActivityV2RemindButtonComponent {
     );
   }
 
+  ngOnInit() {}
+
+  ngOnDestroy() {}
+
+  onButtonClick(e: MouseEvent): void {
+    this.isOpened$.next(true);
+  }
+
+  dismissPopover(): void {
+    this.isOpened$.next(false);
+  }
+
   async onUndoRemind(e: MouseEvent): Promise<void> {
+    this.dismissPopover();
+
     try {
       await this.client.delete(
         `api/v3/newsfeed/${this.service.entity$.getValue().urn}`
@@ -69,6 +88,8 @@ export class ActivityV2RemindButtonComponent {
       this.openAuthModal();
       return;
     }
+
+    this.dismissPopover();
 
     const entity = this.service.entity$.getValue();
     this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
@@ -90,6 +111,8 @@ export class ActivityV2RemindButtonComponent {
       this.openAuthModal();
       return;
     }
+
+    this.dismissPopover();
 
     const entity = this.service.entity$.getValue();
     entity.boosted = false; // Set boosted to false to avoid compsoer showing boost label
