@@ -30,12 +30,13 @@ export class JurySessionService {
     );
   }
 
-  async uphold(report) {
+  async uphold(report, adminReasonOverride: string | null = null) {
     const juryType = report.is_appeal ? 'appeal' : 'initial';
     return await this.client.post(
       `api/v2/moderation/jury/${juryType}/${report.urn}`,
       {
         uphold: true,
+        admin_reason_override: adminReasonOverride,
       }
     );
   }

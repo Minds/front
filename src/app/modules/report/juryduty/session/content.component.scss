@@ -1,3 +1,5 @@
+@import 'defaults';
+
 .m-juryDutySession__content {
   padding: 16px;
   @include m-theme() {
@@ -101,6 +103,54 @@
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
+    }
+  }
+}
+
+.m-juryDutySessionContent__changeReportReasonContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  margin: $spacing4 0;
+
+  .m-juryDutySessionContent__changeReportReasonHeader {
+    display: flex;
+
+    .m-juryDutySessionContent__changeReportReasonText {
+      margin-right: $spacing2;
+
+      @include body1Regular;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .material-icons {
+      transition: all 0.5s ease;
+    }
+
+    .material-icons.collapsed {
+      transform: rotate(-180deg);
+    }
+  }
+
+  .m-juryDutySessionContent__changeReportReasonHeader:hover {
+    cursor: pointer;
+  }
+
+  .m-juryDutySessionContent__changeReportReasonOptions {
+    display: flex;
+    margin-top: $spacing2;
+
+    m-dropdownSelector {
+      margin-bottom: 0;
+
+      .m-dropdownSelector__optionsContainer {
+        @include max-height(350px) {
+          overflow-y: auto;
+        }
+      }
     }
   }
 }

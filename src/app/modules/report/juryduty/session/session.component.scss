@@ -1,3 +1,5 @@
+@import 'defaults';
+
 .m-juryDutySession__hero {
   padding: 42px 0;
   text-align: center;
@@ -16,6 +18,7 @@
 .m-juryDutySession__wrapper {
   max-width: 900px;
   margin: auto;
+  height: 100%;
 
   h4 {
     margin: 0;
