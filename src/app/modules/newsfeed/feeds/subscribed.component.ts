@@ -23,7 +23,7 @@ import {
 } from '@angular/router';
 import { IPageInfo, VirtualScrollerComponent } from 'ngx-virtual-scroller';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { ApiResource } from '../../../common/api/api-resource.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
@@ -38,7 +38,6 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
-import { EntityObservable } from './../../../common/services/entities.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 
 export enum FeedAlgorithm {
@@ -57,7 +56,7 @@ enum FeedItemType {
 interface IFeedItem {
   type: FeedItemType;
   data?: any;
-  id: string;
+  id?: string;
 }
 
 @Injectable()
@@ -262,23 +261,22 @@ export class NewsfeedSubscribedComponent
   }
 
   feed = this.feedService.feed.pipe(
+    distinctUntilChanged(),
     map(feed => {
-      const newFeed: (BehaviorSubject<Object> | IFeedItem)[] = [
-        ...feed.map((activity$, index) => {
-          const activity = activity$.getValue();
+      if (!feed.length) return [];
 
+      const newFeed: (BehaviorSubject<Object> | IFeedItem)[] = feed.map(
+        (activity$, index) => {
           return {
             type: FeedItemType.activity,
             data: {
-              activity,
+              activity$,
               index: index,
               slot: index + 1, // TODO: do we want these slots to take into account in-feed components
             },
-            // @ts-ignore // TODO: add type checking
-            id: activity?.guid, // TODO: may not be performant
           };
-        }),
-      ];
+        }
+      );
 
       for (let i = 0; i < feed.length; i++) {
         if (i > 0 && i % 6 === 0) {
@@ -302,15 +300,15 @@ export class NewsfeedSubscribedComponent
       if (this.algorithm !== 'latest') {
         newFeed.splice(3, 0, {
           type: FeedItemType.topHighlights,
-          id: 'topHighlights', // TODO
+          id: 'topHighlights',
         });
       }
 
-      // if the newsfeed length was less than equal to 3,
-      // show the widget after last item, otherwise show after the 3rd post
+      // // if the newsfeed length was less than equal to 3,
+      // // show the widget after last item, otherwise show after the 3rd post
       newFeed.splice(feed.length <= 3 ? feed.length - 1 : 2, 0, {
         type: FeedItemType.channelRecommendations,
-        id: 'channelRecommendations', // TODO
+        id: 'channelRecommendations',
       });
 
       return newFeed;
@@ -473,27 +471,15 @@ export class NewsfeedSubscribedComponent
     });
   }
 
-  compareItems(item1: EntityObservable, item2: EntityObservable) {
-    // @ts-ignore
-    return item1?.id === item2?.id;
+  compareItems(item1: IFeedItem, item2: IFeedItem) {
+    return this.getIDforFeedItem(item1) === this.getIDforFeedItem(item2);
   }
 
   feedItemTrackBy(index: number, feedItem: IFeedItem) {
-    return feedItem.id;
+    return this.getIDforFeedItem(feedItem);
   }
 
-  /**
-   * called when activity size changed. we want to invalidate the
-   * height measurement cache of the virtual scroller when the activity
-   * height changed.
-   * @param { ResizedEvent } event
-   * @param { object } activity
-   * @param { number } index
-   * @returns { void }
-   */
-  onResized(event: any, index: number) {
-    if (event.isFirst) return null;
-
-    // this.virtualScroller.invalidateCachedMeasurementAtIndex(index);
+  private getIDforFeedItem(feedItem: IFeedItem) {
+    return feedItem.id || feedItem.data?.activity$?.getValue()?.guid;
   }
 }
