@@ -31,6 +31,7 @@ export const NEW_POST_POLL_INTERVAL = 30000;
  */
 @Injectable()
 export class FeedsService implements OnDestroy {
+  id$: BehaviorSubject<string>;
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
   fallbackAt: number | null = null;
@@ -242,7 +243,7 @@ export class FeedsService implements OnDestroy {
   /**
    * Fetches the data.
    */
-  async fetch(replace: boolean = false): Promise<any> {
+  fetch(refresh: boolean = false): Promise<any> {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -256,7 +257,7 @@ export class FeedsService implements OnDestroy {
     const oldCount = this.newPostsCount$.getValue();
     const oldTimestamp = this.newPostsLastCheckedAt;
 
-    if (replace) {
+    if (refresh) {
       fromTimestamp = '';
       this.newPostsLastCheckedAt = Date.now();
       this.newPostsCount$.next(0);
@@ -266,8 +267,6 @@ export class FeedsService implements OnDestroy {
       this.newPostsLastCheckedAt = Date.now();
     }
 
-    let response;
-
     const rehydratedFeed = this.rehydrate();
 
     // TODO: figure out the right conditional here
@@ -276,58 +275,59 @@ export class FeedsService implements OnDestroy {
       return;
     }
 
-    try {
-      response = await this.client.get(this.endpoint, {
+    return this.client
+      .get(this.endpoint, {
         ...this.params,
         ...{
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
+          unseen: this.unseen,
           from_timestamp: fromTimestamp,
         },
-      });
-
-      if (this.endpoint !== endpoint) {
-        // Avoid race conditions if endpoint changes
-        return;
-      }
-
-      if (!response.entities && response.activity) {
-        response.entities = response.activity;
-      } else if (!response.entities && response.users) {
-        response.entities = response.users;
-      }
-
-      if (response.entities?.length) {
-        this.fallbackAt = response['fallback_at'];
-        this.fallbackAtIndex.next(null);
-        if (replace) {
-          this.rawFeed.next(response.entities);
-        } else {
-          this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
+      })
+      .then((response: any) => {
+        if (this.endpoint !== endpoint) {
+          // Avoid race conditions if endpoint changes
+          return;
         }
-        this.pagingToken = response['load-next'];
 
-        if (!this.pagingToken) {
+        if (!response.entities && response.activity) {
+          response.entities = response.activity;
+        } else if (!response.entities && response.users) {
+          response.entities = response.users;
+        }
+
+        if (response.entities?.length) {
+          this.fallbackAt = response['fallback_at'];
+          this.fallbackAtIndex.next(null);
+          if (refresh) {
+            this.rawFeed.next(response.entities);
+          } else {
+            this.rawFeed.next(
+              this.rawFeed.getValue().concat(response.entities)
+            );
+          }
+          this.pagingToken = response['load-next'];
+
+          if (!this.pagingToken) {
+            this.canFetchMore = false;
+          }
+        } else {
           this.canFetchMore = false;
         }
-      } else {
-        this.canFetchMore = false;
-      }
 
-      if (!this.offset.getValue()) {
-        this.inProgress.next(false);
-      }
-
-      this.persist(this.rawFeed.getValue());
-    } catch (e) {
-      this.newPostsLastCheckedAt = oldTimestamp;
-      this.newPostsCount$.next(oldCount);
-
-      if (!this.offset.getValue()) {
-        this.inProgress.next(false);
-      }
-    }
+        this.persist(this.rawFeed.getValue());
+      })
+      .catch(e => {
+        this.newPostsLastCheckedAt = oldTimestamp;
+        this.newPostsCount$.next(oldCount);
+      })
+      .finally(() => {
+        if (!this.offset.getValue()) {
+          this.inProgress.next(false);
+        }
+      });
   }
 
   /**
