@@ -68,8 +68,6 @@ import { SocketsService } from '../services/sockets';
 import { HttpClient } from '@angular/common/http';
 import { AndroidAppDownloadComponent } from './components/android-app-download-button/button.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
-import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { FeedsService } from './services/feeds.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
@@ -448,12 +446,6 @@ const routes: Routes = [
     },
     NSFWSelectorCreatorService,
     NSFWSelectorConsumerService,
-    {
-      provide: FeaturedContentService,
-      useFactory: (feedsService: FeedsService): FeaturedContentService =>
-        new FeaturedContentService(feedsService),
-      deps: [FeedsService, ExperimentsService, ApiResource],
-    },
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,

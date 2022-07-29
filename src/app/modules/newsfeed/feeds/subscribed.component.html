@@ -58,6 +58,7 @@
         "
       ></m-channelRecommendation>
 
+      <m-virtualMinimap [scroll]="scroll"></m-virtualMinimap>
       <!--actual feed-->
       <virtual-scroller
         #scroll
@@ -69,6 +70,9 @@
         [compareItems]="compareItems"
         [ssrChildHeight]="300"
         (vsChange)="loadNext($event)"
+        [executeRefreshOutsideAngularZone]="true"
+        [scrollThrottlingTime]="100"
+        (vsUpdate)="changeDetectorRef.detectChanges()"
       >
         <m-newsfeed__activityOutlet
           *ngFor="
@@ -96,7 +100,7 @@
             </div>
             <div *ngSwitchCase="'featuredContent'" style="min-height: 1px">
               <m-featured-content
-                [slot]="feedItem.data.slot"
+                [slot]="feedItem.data"
                 [displayOptions]="{
                   showOnlyCommentsInput: true,
                   isFeed: true
@@ -111,7 +115,10 @@
               ></m-topHighlights>
             </div>
 
-            <div *ngSwitchCase="'channelRecommendations'" style="min-height: 1px">
+            <div
+              *ngSwitchCase="'channelRecommendations'"
+              style="min-height: 1px"
+            >
               <m-channelRecommendation
                 location="newsfeed"
                 [dismissible]="true"
@@ -127,6 +134,17 @@
           [inProgress]="feedService.inProgress"
         ></m-loadingSpinner>
       </virtual-scroller>
+
+      <div
+        *ngIf="shouldRestoreScroll"
+        class="m-virtualScrollOverlay"
+        [ngStyle]="{
+          height:
+            scroll?.wrapGroupDimensions?.sumOfKnownWrapGroupChildHeights ||
+            '100%',
+          opacity: isScrollRestored ? 0 : 1
+        }"
+      ></div>
     </div>
   </ng-container>
 </div>

@@ -1,8 +1,10 @@
 import { isPlatformServer } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   Inject,
   Injectable,
   Injector,
@@ -22,8 +24,9 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { IPageInfo, VirtualScrollerComponent } from 'ngx-virtual-scroller';
-import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { FeedsService } from '../../../common/services/feeds.service';
@@ -44,7 +47,7 @@ export enum FeedAlgorithm {
   latest = 'latest',
 }
 
-enum FeedItemType {
+export enum FeedItemType {
   activity = 'activity',
   feedNotice = 'feedNotice',
   featuredContent = 'featuredContent',
@@ -52,21 +55,30 @@ enum FeedItemType {
   channelRecommendations = 'channelRecommendations',
 }
 
-interface IFeedItem {
+export interface IFeedItem {
   type: FeedItemType;
   data?: any;
   id?: string;
 }
 
 @Injectable()
-export class LatestFeedService extends FeedsService {}
+export class LatestFeedService extends FeedsService {
+  id$ = new BehaviorSubject('subscribed:latest');
+  endpoint = 'api/v2/feeds/subscribed/activities';
+  countEndpoint = 'api/v3/newsfeed/subscribed/latest/count';
+  limit = new BehaviorSubject(12);
+}
 
 @Injectable()
-export class TopFeedService extends FeedsService {}
+export class TopFeedService extends FeedsService {
+  id$ = new BehaviorSubject('subscribed:top');
+  endpoint = 'api/v3/newsfeed/feed/unseen-top';
+  limit = new BehaviorSubject(12);
+}
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [LatestFeedService, TopFeedService],
+  providers: [LatestFeedService, TopFeedService, FeaturedContentService],
   templateUrl: 'subscribed.component.html',
 })
 export class NewsfeedSubscribedComponent
@@ -98,6 +110,7 @@ export class NewsfeedSubscribedComponent
    * whether we've restored the scroll position
    */
   isScrollRestored: boolean;
+  shouldRestoreScroll: boolean;
 
   @ViewChild('scroll')
   virtualScroller: VirtualScrollerComponent;
@@ -117,6 +130,8 @@ export class NewsfeedSubscribedComponent
     'channel-recommendation:feed'
   );
 
+  feed: Observable<IFeedItem[]>;
+
   constructor(
     public client: Client,
     public upload: Upload,
@@ -135,7 +150,8 @@ export class NewsfeedSubscribedComponent
     private scrollRestoration: ScrollRestorationService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private dismissal: DismissalService
+    private dismissal: DismissalService,
+    public changeDetectorRef: ChangeDetectorRef
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -143,14 +159,64 @@ export class NewsfeedSubscribedComponent
     if (storedfeedAlgorithm) {
       this.algorithm = storedfeedAlgorithm;
     }
+    this.feed = this.feedService.feed.pipe(
+      distinctUntilChanged(),
+      map(feed => {
+        if (!feed.length) return [];
 
-    this.latestFeedService
-      .setEndpoint(`api/v2/feeds/subscribed/activities`)
-      .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
-      .setLimit(12);
-    this.topFeedService
-      .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
-      .setLimit(12);
+        const newFeed: IFeedItem[] = feed.map((activity$, index) => {
+          return {
+            type: FeedItemType.activity,
+            data: {
+              activity$,
+              index: index,
+              slot: index + 1, // TODO: do we want these slots to take into account in-feed components
+            },
+          };
+        });
+
+        for (let i = 0; i < feed.length; i++) {
+          if (i > 0 && i % 6 === 0) {
+            newFeed.splice(i, 0, {
+              type: FeedItemType.feedNotice,
+              id: 'feedNotice-' + String(i), // TODO
+            });
+          }
+        }
+
+        // In-feed boosts
+        let boostsInjected = 0;
+        for (let i = 0; i < feed.length; i++) {
+          if ((i > 0 && i % 5 === 0) || i === 3) {
+            newFeed.splice(i, 0, {
+              type: FeedItemType.featuredContent,
+              data: boostsInjected + 1,
+              id: 'featuredContent-' + i,
+            });
+            boostsInjected++;
+          }
+        }
+
+        // get this algorithm from a pipe
+        if (this.algorithm === 'latest') {
+          newFeed.splice(3, 0, {
+            type: FeedItemType.topHighlights,
+            id: 'topHighlights',
+          });
+        }
+
+        // if the newsfeed length was less than equal to 3,
+        // show the widget after last item, otherwise show after the 3rd post
+        newFeed.splice(feed.length <= 3 ? feed.length - 1 : 2, 0, {
+          type: FeedItemType.channelRecommendations,
+          id: 'channelRecommendations',
+        });
+
+        console.log('FEED', newFeed);
+
+        return newFeed;
+      })
+    );
   }
 
   ngOnInit() {
@@ -218,6 +284,10 @@ export class NewsfeedSubscribedComponent
     );
 
     this.context.set('activity');
+
+    this.shouldRestoreScroll = !!this.scrollRestoration.getOffsetForRoute(
+      this.router.url
+    );
   }
 
   // when an entity is updated in a way that their height is changed, invalidate the cachedMeasurement
@@ -232,8 +302,6 @@ export class NewsfeedSubscribedComponent
         if (scrollOffsetTop) {
           this.scrollToVirtualizedPosition(scrollOffsetTop);
         }
-
-        this.isScrollRestored = true;
       }
     });
   }
@@ -244,61 +312,6 @@ export class NewsfeedSubscribedComponent
     this.routerSubscription.unsubscribe();
     this.feedsUpdatedSubscription.unsubscribe();
   }
-
-  feed = this.feedService.feed.pipe(
-    distinctUntilChanged(),
-    map(feed => {
-      if (!feed.length) return [];
-
-      const newFeed: (BehaviorSubject<Object> | IFeedItem)[] = feed.map(
-        (activity$, index) => {
-          return {
-            type: FeedItemType.activity,
-            data: {
-              activity$,
-              index: index,
-              slot: index + 1, // TODO: do we want these slots to take into account in-feed components
-            },
-          };
-        }
-      );
-
-      for (let i = 0; i < feed.length; i++) {
-        if (i > 0 && i % 6 === 0) {
-          newFeed.splice(i, 0, {
-            type: FeedItemType.feedNotice,
-            id: 'feedNotice-' + String(i), // TODO
-          });
-        }
-      }
-
-      for (let i = 0; i < feed.length; i++) {
-        if ((i > 0 && i % 5 === 0) || i === 3) {
-          newFeed.splice(i, 0, {
-            type: FeedItemType.featuredContent,
-            data: i,
-            id: 'featuredContent-' + i,
-          });
-        }
-      }
-
-      if (this.algorithm !== 'latest') {
-        newFeed.splice(3, 0, {
-          type: FeedItemType.topHighlights,
-          id: 'topHighlights',
-        });
-      }
-
-      // if the newsfeed length was less than equal to 3,
-      // show the widget after last item, otherwise show after the 3rd post
-      newFeed.splice(feed.length <= 3 ? feed.length - 1 : 2, 0, {
-        type: FeedItemType.channelRecommendations,
-        id: 'channelRecommendations',
-      });
-
-      return newFeed;
-    })
-  );
 
   /**
    * returns feedService based on algorithm
@@ -464,22 +477,34 @@ export class NewsfeedSubscribedComponent
   };
 
   private getIDforFeedItem(feedItem: IFeedItem) {
-    return feedItem.id || feedItem.data?.activity$?.getValue()?.guid;
+    const id =
+      feedItem.id ||
+      feedItem.data?.activity$?.getValue()?.guid + String(feedItem.data.index);
+
+    return id;
   }
 
   private scrollToVirtualizedPosition(offset: number, tries = 0) {
     if (tries === 10) return;
 
-    window.scrollTo({
-      top: offset,
-    });
+    const offsetWithTopPadding = offset - 120 - 74;
 
     setTimeout(() => {
+      // this.virtualScroller.scrollToPosition(offsetWithTopPadding, 0);
+      window.scrollTo({
+        top: offset,
+      });
+    }, 10);
+    setTimeout(() => {
+      console.log('DIFFERENCE', offset - window.scrollY);
+
       if (offset - window.scrollY > 1000) {
         if (document.body.scrollHeight > offset) {
-          this.scrollToVirtualizedPosition(offset, tries + 1);
+          this.scrollToVirtualizedPosition(offsetWithTopPadding, tries + 1);
         }
+      } else {
+        this.isScrollRestored = true;
       }
-    });
+    }, 15);
   }
 }

@@ -41,6 +41,7 @@ import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-gua
 import { ActivityV2Module } from './activity-v2/activity.module';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { NewsfeedActivityOutletComponent } from './feeds/activity-outlet.component';
+import { VirtualMinimapComponent } from './feeds/virtual-minimap';
 
 const routes: Routes = [
   {
@@ -115,6 +116,7 @@ const routes: Routes = [
     FeedTypePopoverComponent,
     FeedHeaderComponent,
     NewsfeedActivityOutletComponent,
+    VirtualMinimapComponent,
   ],
   providers: [
     NewsfeedService,

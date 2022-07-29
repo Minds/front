@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { filter, first, switchMap, mergeMap, skip, take } from 'rxjs/operators';
+import {
+  filter,
+  first,
+  switchMap,
+  mergeMap,
+  skip,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 import { Subscription } from 'rxjs';
 
@@ -34,14 +42,15 @@ export class FeaturedContentService {
       .pipe(
         filter(entities => entities.length > 0),
         mergeMap(feed => feed), // Convert feed array to stream
-        skip(slot - 1), // TODO: fixme this isn't right
+        skip(slot - 1),
         take(1),
         switchMap(async entity => {
+          this.offset++;
+
           if (!entity) {
             return false;
           } else {
             const resolvedEntity = await entity.pipe(first()).toPromise();
-            this.resetOffsetAtEndOfStream();
             return resolvedEntity;
           }
         })
@@ -49,6 +58,7 @@ export class FeaturedContentService {
       .toPromise();
   }
 
+  // TODO: first try to load more with the current feed, if we didn't have more, don't clear the feed
   protected resetOffsetAtEndOfStream() {
     if (this.offset >= this.maximumOffset) {
       this.offset = 0;
