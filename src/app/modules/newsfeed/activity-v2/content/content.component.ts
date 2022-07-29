@@ -102,7 +102,7 @@ export class ActivityV2ContentComponent
   @Input() maxHeightAllowed: number;
 
   @ViewChild('videoEl', { read: ElementRef })
-  videoEl?: ElementRef;
+  videoEl: ElementRef;
 
   @ViewChild('imageEl', { read: ElementRef })
   imageEl: ElementRef;
@@ -223,21 +223,14 @@ export class ActivityV2ContentComponent
   }
 
   ngOnInit(): void {
-    this.calculateVideoDimensions(this.service.entity$.getValue(), false);
-    this.calculateImageDimensions(this.service.entity$.getValue(), false);
-    this.calculateFixedContentHeight(
-      this.service.entity$.getValue(),
-      this.service.height$.getValue()
-    );
-
     this.subscriptions = [
       this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
 
-        // this.calculateFixedContentHeight(); // TODO: only do this on later entity's not first one
+        this.calculateFixedContentHeight();
         setTimeout(() => {
-          // this.calculateVideoDimensions(); // TODO: only do this on later entity's not first one
-          // this.calculateImageDimensions(); // TODO: only do this on later entity's not first one
+          this.calculateVideoDimensions();
+          this.calculateImageDimensions();
         });
 
         this.isPaywalledStatus =
@@ -294,13 +287,13 @@ export class ActivityV2ContentComponent
 
   ngAfterViewInit() {
     // Run after view initialized (as modal uses the same component this doesnt get called)
-    // timer(1)
-    //   .toPromise()
-    //   .then(() => {
-    //     this.calculateQuoteHeight();
-    //     this.calculateVideoDimensions();
-    //     this.calculateImageDimensions();
-    //   });
+    timer(1)
+      .toPromise()
+      .then(() => {
+        this.calculateQuoteHeight();
+        this.calculateVideoDimensions();
+        this.calculateImageDimensions();
+      });
   }
 
   ngOnDestroy() {
@@ -463,15 +456,12 @@ export class ActivityV2ContentComponent
   }
   ////////////////////////////////////////////////////////////////////////////
 
-  calculateFixedContentHeight(
-    entity = this.entity,
-    activityHeight = this.activityHeight
-  ): void {
+  calculateFixedContentHeight(): void {
     if (!this.isFixedHeight) {
       return;
     }
 
-    let contentHeight = activityHeight || ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
+    let contentHeight = this.activityHeight || ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
     contentHeight = contentHeight - ACTIVITY_CONTENT_PADDING;
     if (this.service.displayOptions.showOwnerBlock) {
       contentHeight = contentHeight - ACTIVITY_OWNERBLOCK_HEIGHT;
@@ -484,7 +474,7 @@ export class ActivityV2ContentComponent
     }
     if (
       this.service.displayOptions.showComments &&
-      entity['comments:count'] > 0
+      this.entity['comments:count'] > 0
     ) {
       contentHeight = contentHeight - ACTIVITY_COMMENTS_MORE_HEIGHT;
     }
@@ -507,29 +497,26 @@ export class ActivityV2ContentComponent
   /**
    * Calculates the video height after the video has loaded in
    */
-  calculateVideoDimensions(
-    entity: any = this.entity,
-    detectChanges = true
-  ): void {
-    // if (!this.videoEl) {
-    //   return;
-    // }
+  calculateVideoDimensions(): void {
+    if (!this.videoEl) {
+      return;
+    }
     let scaledHeight,
       scaledWidth,
       aspectRatio = 16 / 9;
 
-    const videoElWidth = this.videoEl?.nativeElement?.clientWidth || 530; // get this number from parent's width
+    const videoElWidth = this.videoEl.nativeElement.clientWidth;
 
     if (
-      entity.custom_data &&
-      entity.custom_data.height &&
-      entity.custom_data.height !== '0'
+      this.entity.custom_data &&
+      this.entity.custom_data.height &&
+      this.entity.custom_data.height !== '0'
     ) {
       // If we have the original dimensions of the video,
       // load it with a height of 500px and a proportional width
       // so we don't have black bars on the side
-      const originalWidth = parseInt(entity.custom_data.width, 10);
-      const originalHeight = parseInt(entity.custom_data.height, 10);
+      const originalWidth = parseInt(this.entity.custom_data.width, 10);
+      const originalHeight = parseInt(this.entity.custom_data.height, 10);
 
       aspectRatio = originalWidth / originalHeight;
     }
@@ -548,35 +535,29 @@ export class ActivityV2ContentComponent
     this.videoHeight = scaledHeight;
     this.videoWidth = scaledWidth;
 
-    if (detectChanges) {
-      this.detectChanges();
-    }
+    this.detectChanges();
   }
 
   /**
    * Calculates the image height and aspect ratio
    */
-  calculateImageDimensions(entity = this.entity, detectChanges = true): void {
-    if (this.isFixedHeight || entity.custom_type !== 'batch') {
+  calculateImageDimensions(): void {
+    if (!this.imageEl) {
+      return;
+    }
+    if (this.isFixedHeight || this.entity.custom_type !== 'batch') {
       this.imageHeight = null;
     }
 
-    const imageElHeight =
-      this.imageContainerEl?.nativeElement?.clientHeight ||
-      // TODO: get this number from parent's width and take into account quotes have less width
-      (this.isQuote ? 441 : 532);
-    const imageElWidth =
-      // TODO: get this number from parent's width and take into account quotes have less width
-      this.imageContainerEl?.nativeElement?.clientWidth ||
-      (this.isQuote ? 441 : 532);
-
     if (
-      entity.custom_data?.[0]?.height &&
-      entity.custom_data[0].height !== '0'
+      this.entity.custom_data &&
+      this.entity.custom_data[0] &&
+      this.entity.custom_data[0].height &&
+      this.entity.custom_data[0].height !== '0'
     ) {
       // Get aspect ratio from original dimensions (if available)
-      const originalHeight = parseInt(entity.custom_data[0].height || 0);
-      const originalWidth = parseInt(entity.custom_data[0].width || 0);
+      const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
+      const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
 
       this.imageOriginalHeight = originalHeight;
       this.imageAspectRatio = originalHeight / originalWidth;
@@ -589,13 +570,13 @@ export class ActivityV2ContentComponent
         // For fixed height, calculate height based on
         // client height
 
-        this.imageHeight = imageElHeight;
+        this.imageHeight = this.imageContainerEl.nativeElement.clientHeight;
         this.imageWidth = this.imageHeight / this.imageAspectRatio;
       } else {
         // For everything else, calculate height from
         // aspect ratio and clientWidth
 
-        this.imageWidth = imageElWidth;
+        this.imageWidth = this.imageContainerEl.nativeElement.clientWidth;
         this.imageHeight = this.imageWidth * this.imageAspectRatio;
 
         // if this ends up being taller than max height,
@@ -615,9 +596,7 @@ export class ActivityV2ContentComponent
       }
     }
 
-    if (detectChanges) {
-      this.detectChanges();
-    }
+    this.detectChanges();
   }
 
   onModalRequested(event: MouseEvent) {
@@ -673,14 +652,14 @@ export class ActivityV2ContentComponent
 
   onImageError(e: Event): void {}
 
+  detectChanges(): void {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
   onReadMoreChanged(expandedText: boolean) {
     this.service.setDisplayOptions({
       expandedText,
     });
-  }
-
-  detectChanges(): void {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
   }
 }
