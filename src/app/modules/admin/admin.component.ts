@@ -42,6 +42,7 @@ export class AdminComponent {
 
     this.paramsSubscription = this.route.params.subscribe((params: any) => {
       if (params['filter']) {
+        console.log(params['filter']);
         this.filter = params['filter'];
       }
       this.pageLayoutService.useFullWidth();

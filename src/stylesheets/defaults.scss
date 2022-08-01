@@ -74,6 +74,11 @@ $layout-sidebar-width: 80px;
   }
 }
 
+@mixin max-height($max-height: 350px) {
+  max-height: $max-height;
+  @content;
+}
+
 @mixin hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -84,11 +89,14 @@ $layout-sidebar-width: 80px;
   }
 }
 
-@mixin vertical-scroll {
+@mixin vertical-scroll(
+  $scrollbarColor: '#{$m-borderColor--primary}',
+  $scrollbarContrastColor: '#{$m-bgColor--contrast}'
+) {
   &::-webkit-scrollbar {
     width: 10px !important;
     @include m-theme() {
-      background-color: rgba(themed($m-borderColor--primary), 0.35);
+      background-color: rgba(themed($scrollbarColor), 0.35);
     }
   }
 
@@ -96,7 +104,7 @@ $layout-sidebar-width: 80px;
     border-radius: 8px;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--contrast);
+      background-color: themed($scrollbarContrastColor);
     }
   }
 }
