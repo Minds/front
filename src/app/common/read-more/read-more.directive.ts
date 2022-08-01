@@ -33,7 +33,6 @@ export class ReadMoreDirective {
   }
 
   hideIfNeeded(): void {
-    // setTimeout(() => {
     this.realHeight = this._element.clientHeight;
 
     if (this.button && !this.button.content) {
@@ -51,7 +50,6 @@ export class ReadMoreDirective {
     } else {
       this.expand();
     }
-    // }, 0);
   }
 
   expand() {

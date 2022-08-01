@@ -128,7 +128,6 @@ export class NewsfeedBoostRotatorComponent {
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
-    this.calculateHeight();
   }
 
   ngOnInit() {
@@ -185,7 +184,7 @@ export class NewsfeedBoostRotatorComponent {
           this.currentPosition = 0;
         }
         // Recalculate height because it may have been empty
-        // setTimeout(() => this.calculateHeight());
+        setTimeout(() => this.calculateHeight());
         // distinctuntilchange is now safe
         this.viewsCollector$.next(this.currentPosition);
 
@@ -195,7 +194,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   ngAfterViewInit() {
-    // setTimeout(() => this.calculateHeight()); // will only run for new nav
+    setTimeout(() => this.calculateHeight()); // will only run for new nav
   }
 
   async load(): Promise<boolean> {
@@ -207,14 +206,12 @@ export class NewsfeedBoostRotatorComponent {
 
       params['show_boosts_after_x'] = 604800; // 1 week
 
-      // TODO: condition
-      // this.feedsService.clear(); // Fresh each time
       await this.feedsService
         .setEndpoint('api/v2/boost/feed')
         .setParams(params)
         .setLimit(12)
         .setOffset(0)
-        .fetch();
+        .fetch(true); // Fresh each time
     } catch (e) {
       if (e && e.message) {
         console.warn(e);
@@ -368,14 +365,12 @@ export class NewsfeedBoostRotatorComponent {
    * of boost rotator
    */
   calculateHeight(): void {
-    // if (!this.rotatorEl) return;
+    if (!this.rotatorEl) return;
 
     const ratio = this.activityV2Feature
       ? ACTIVITY_V2_FIXED_HEIGHT_RATIO
       : ACTIVITY_FIXED_HEIGHT_RATIO;
-    // TODO: get this width from parent
-    this.height = 620 / ratio;
-    // this.height = this.rotatorEl.nativeElement.clientWidth / ratio;
+    this.height = this.rotatorEl.nativeElement.clientWidth / ratio;
 
     if (this.height < 500) this.height = 500;
   }
