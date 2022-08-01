@@ -1,128 +1,112 @@
-<m-dropdown
-  *ngIf="shouldShowAlgorithms()"
-  class="m-sort-selector--algorithm-dropdown"
-  [expanded]="expandedAlgorithmDropdown"
+<!-- ----------------------------- -->
+<!-- ALGORITHMS -->
+<!-- ----------------------------- -->
+<m-dropdownMenu
   #algorithmDropdown
+  [menu]="algorithmMenu"
+  *ngIf="shouldShowAlgorithms()"
 >
   <label [ngClass]="[labelClass]">
     <i
       *ngIf="getCurrentAlgorithmProp('icon')"
-      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+      class="material-icons m-sortSelectorLabel__icon"
       >{{ getCurrentAlgorithmProp('icon') }}</i
     >
 
-    <span>{{ getCurrentAlgorithmProp('label') }}</span>
+    <span class="m-sortSelectorLabel__text">{{
+      getCurrentAlgorithmProp('label')
+    }}</span>
 
-    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+    <i class="material-icons m-sortSelectorLabel__caret">keyboard_arrow_down</i>
   </label>
+</m-dropdownMenu>
 
-  <ul class="m-dropdown--list">
-    <li
+<ng-template #algorithmMenu>
+  <ul>
+    <m-dropdownMenu__item
       *ngFor="let item of getAlgorithms()"
-      class="m-dropdown--list--item"
-      [class.m-dropdown--list--item--selected]="item.id === algorithm"
-      [class.m-dropdown--list--item--disabled]="isDisabled(item.id)"
       (click)="setAlgorithm(item.id); closeDropdowns()"
+      [icon]="item.icon"
+      [selectable]="true"
+      [selected]="item.id === algorithm"
+      [disabled]="isDisabled(item.id)"
+      ><span>{{ item.label }}</span></m-dropdownMenu__item
     >
-      <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
-        *ngIf="item.icon"
-        >{{ item.icon }}</i
-      >
-
-      <span [className]="labelClass">{{ item.label }}</span>
-    </li>
   </ul>
-</m-dropdown>
+</ng-template>
 
-<m-dropdown
+<!-- ----------------------------- -->
+<!-- TIME PERIODS -->
+<!-- ----------------------------- -->
+<m-dropdownMenu
   *ngIf="shouldShowPeriods() && hasCurrentAlgorithmPeriod()"
-  class="m-sort-selector--period-dropdown"
   #periodDropdown
+  [menu]="periodMenu"
 >
   <label [ngClass]="[labelClass]">
-    <span>{{ getCurrentPeriodLabel() }}</span>
+    <span class="m-sortSelectorLabel__text">{{ getCurrentPeriodLabel() }}</span>
 
-    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+    <i class="material-icons m-sortSelectorLabel__caret">keyboard_arrow_down</i>
   </label>
+</m-dropdownMenu>
 
-  <ul class="m-dropdown--list">
-    <li
-      class="m-dropdown--list--item"
+<ng-template #periodMenu>
+  <ul>
+    <m-dropdownMenu__item
       *ngFor="let item of getPeriods()"
-      [class.m-dropdown--list--item--selected]="item.id === period"
       (click)="setPeriod(item.id); closeDropdowns()"
+      [selectable]="true"
+      [selected]="item.id === period"
+      ><span>{{ item.label }}</span></m-dropdownMenu__item
     >
-      <span [className]="labelClass">{{ item.label }}</span>
-    </li>
   </ul>
-</m-dropdown>
+</ng-template>
 
-<m-dropdown
-  *ngIf="shouldShowCustomTypes()"
-  class="m-sort-selector--custom-type-dropdown"
-  [expanded]="expandedCustomTypeDropdown"
+<!-- ----------------------------- -->
+<!-- CUSTOM TYPES -->
+<!-- ----------------------------- -->
+<m-dropdownMenu
   #customTypeDropdown
+  [menu]="customTypeMenu"
+  [anchorPosition]="{ top: '100%', right: '0' }"
 >
   <label [ngClass]="[labelClass]">
     <i
       *ngIf="getCurrentCustomTypeProp('icon')"
-      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+      class="material-icons m-sortSelectorLabel__icon"
       >{{ getCurrentCustomTypeProp('icon') }}</i
     >
 
-    <span>{{ getCurrentCustomTypeProp('label') }}</span>
+    <span class="m-sortSelectorLabel__text">{{
+      getCurrentCustomTypeProp('label')
+    }}</span>
 
-    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+    <i class="material-icons m-sortSelectorLabel__caret">keyboard_arrow_down</i>
   </label>
+</m-dropdownMenu>
 
-  <ul class="m-dropdown--list">
-    <li
+<ng-template #customTypeMenu>
+  <ul>
+    <m-dropdownMenu__item
       *ngFor="let item of getCustomTypes()"
-      class="m-dropdown--list--item"
-      [class.m-dropdown--list--item--selected]="item.id === customType"
       (click)="setCustomType(item.id); closeDropdowns()"
+      [icon]="item.icon"
+      [selectable]="true"
+      [selected]="item.id === customType"
+      ><span>{{ item.label }}</span></m-dropdownMenu__item
     >
-      <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
-        [title]="item.label"
-        *ngIf="item.icon"
-        >{{ item.icon }}</i
-      >
-
-      <span
-        [className]="labelClass"
-        *ngIf="!expandedCustomTypeDropdown || item.id === customType"
-        >{{ item.label }}</span
-      >
-    </li>
   </ul>
-</m-dropdown>
-
-<m-dropdown
-  expanded="true"
-  *ngIf="showPlusFilter"
-  class="m-sort-selector--plus-filter-dropdown"
->
-  <label [ngClass]="[labelClass]">
-    <i
-      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
-      >add_to_queue</i
-    >
-    <span>Minds+</span>
-    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+</ng-template>
+<!-- ----------------------------- -->
+<!-- MINDS+ -->
+<!-- ----------------------------- -->
+<ng-container *ngIf="showPlusFilter">
+  <label
+    [ngClass]="[labelClass]"
+    [class.m-sortSelector__label--selected]="plusFilterApplied"
+    (click)="setPlus()"
+  >
+    <i class="material-icons m-sortSelectorLabel__icon">add_to_queue</i>
+    <span class="m-sortSelectorLabel__text">Minds+</span>
   </label>
-  <ul class="m-dropdown--list">
-    <li
-      class="m-dropdown--list--item"
-      [class.m-dropdown--list--item--selected]="plusFilterApplied"
-      (click)="setPlus()"
-    >
-      <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
-        >add_to_queue</i
-      >
-      <span [className]="labelClass">Minds+</span>
-    </li>
-  </ul>
-</m-dropdown>
+</ng-container>

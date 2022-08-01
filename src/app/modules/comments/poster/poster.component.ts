@@ -53,8 +53,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   @ViewChild('message')
   textArea: Textarea;
 
-  menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
   content: string = '';
   triedToPost: boolean = false;
   comments: Array<any> = []; // TODO: remove this
@@ -225,7 +223,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
         this.detectChanges();
       });
 
-    this.menuOpened$.next(false);
     this.detectChanges();
   }
 
@@ -303,11 +300,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
    */
   public shouldShowLoginPrompt(): boolean {
     return this.router.url !== '/';
-  }
-
-  onMenuClick(e: MouseEvent): void {
-    this.menuOpened$.next(true);
-    this.detectChanges();
   }
 
   onEmoji(emoji) {
