@@ -16,7 +16,7 @@ import {
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
-import { Subscription, Observable, of } from 'rxjs';
+import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import {
   ActivatedRoute,
@@ -100,6 +100,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
   @ViewChild('discoveryFallback', { read: ViewContainerRef })
   discoveryFallback!: ViewContainerRef;
+
+  /**
+   * Controls whether the latest feed should be shown at the end of the current feed
+   */
+  latestFallbackActive$ = new BehaviorSubject(false);
 
   constructor(
     public client: Client,
@@ -261,15 +266,15 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.showBoostRotator = true;
   }
 
-  loadNext() {
+  loadNext(feedService: FeedsService = this.feedService) {
     if (
-      this.feedService.canFetchMore &&
-      !this.feedService.inProgress.getValue() &&
-      this.feedService.offset.getValue()
+      feedService.canFetchMore &&
+      !feedService.inProgress.getValue() &&
+      feedService.offset.getValue()
     ) {
-      this.feedService.fetch(); // load the next 150 in the background
+      feedService.fetch(); // load the next 150 in the background
     }
-    this.feedService.loadMore();
+    feedService.loadMore();
   }
 
   prepend(activity: any) {
@@ -403,8 +408,12 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     });
   }
 
-  isDiscoveryFallbackActive() {
+  isDiscoveryFallbackEnabled() {
     return this.experiments.hasVariation('minds-2991-discovery-fallback', true);
+  }
+
+  isLatestFallbackEnabled() {
+    return this.experiments.hasVariation('minds-2978-latest-fallback', true);
   }
 
   async loadDiscoveryFallback() {
@@ -419,13 +428,28 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     componentRef.instance.visibleHeader = true;
   }
 
-  onNewsfeedEndReached() {
-    if (
-      this.isDiscoveryFallbackActive() &&
-      !this.dismissal.isDismissed('feed:discovery-fallback')
-    ) {
-      // TODO: load discovery when when the feed was gonna end instead of at the beginning
-      this.loadDiscoveryFallback();
+  /**
+   * what should happen at the end of the feed?
+   * 1. if it was the top feed, fallback to latest
+   * 2. if it was the latest feed, fallback to discovery
+   * @param { FeedsService } feedService
+   */
+  onNewsfeedEndReached(feedService: FeedsService = this.feedService) {
+    switch (feedService) {
+      case this.latestFeedService:
+        if (
+          this.isDiscoveryFallbackEnabled() &&
+          !this.dismissal.isDismissed('feed:discovery-fallback')
+        ) {
+          this.loadDiscoveryFallback();
+        }
+        break;
+      case this.topFeedService:
+        if (this.isLatestFallbackEnabled()) {
+          this.latestFeedService.fetch(true);
+          this.latestFallbackActive$.next(true);
+        }
+        break;
     }
   }
 }
