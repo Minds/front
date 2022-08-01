@@ -435,19 +435,25 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    * @param { FeedsService } feedService
    */
   onNewsfeedEndReached(feedService: FeedsService = this.feedService) {
+    const loadDiscoveryFallbackIfEnabled = () => {
+      if (
+        this.isDiscoveryFallbackEnabled() &&
+        !this.dismissal.isDismissed('feed:discovery-fallback')
+      ) {
+        this.loadDiscoveryFallback();
+      }
+    };
+
     switch (feedService) {
       case this.latestFeedService:
-        if (
-          this.isDiscoveryFallbackEnabled() &&
-          !this.dismissal.isDismissed('feed:discovery-fallback')
-        ) {
-          this.loadDiscoveryFallback();
-        }
+        loadDiscoveryFallbackIfEnabled();
         break;
       case this.topFeedService:
         if (this.isLatestFallbackEnabled()) {
           this.latestFeedService.fetch(true);
           this.latestFallbackActive$.next(true);
+        } else {
+          loadDiscoveryFallbackIfEnabled();
         }
         break;
     }
