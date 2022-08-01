@@ -8,8 +8,8 @@
     "
     class="m-activityTop__avatarColumn m-activity__avatar"
   >
-    <m-hovercard [publisher]="remindObj.ownerObj" [offset]="[0, 15]">
-      <a [routerLink]="['/', remindObj.ownerObj.username]">
+    <m-hovercard [publisher]="quotedEntity.ownerObj" [offset]="[0, 15]">
+      <a [routerLink]="['/', quotedEntity.ownerObj.username]">
         <img [src]="avatarUrl" />
       </a>
     </m-hovercard>
@@ -20,7 +20,7 @@
     <m-activityV2__content
       *ngIf="service.shouldShowContent$ | async"
       [autoplayVideo]="autoplayVideo"
-      [isReminded]="true"
+      [wasQuoted]="true"
     ></m-activityV2__content>
   </div>
 </ng-container>

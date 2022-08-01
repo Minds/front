@@ -61,14 +61,4 @@
       text-decoration: underline;
     }
   }
-
-  .m-activityFlag--boost {
-    span,
-    a,
-    i {
-      @include m-theme() {
-        color: themed($m-link);
-      }
-    }
-  }
 }

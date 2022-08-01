@@ -11,7 +11,6 @@ import { ThemeService } from '../../../services/theme.service';
 import { Subscription } from 'rxjs';
 import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
-import { UserMenuService } from './user-menu.service';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 
 /**
@@ -22,6 +21,7 @@ import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.ser
 @Component({
   selector: 'm-userMenu',
   templateUrl: 'user-menu.component.html',
+  styleUrls: ['user-menu.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserMenuComponent implements OnInit, OnDestroy {
@@ -30,30 +30,11 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   isDark: boolean = false;
   themeSubscription: Subscription;
 
-  footerLinks: { label: string; routerLink?: string[]; href?: string }[] = [
-    { label: 'Canary Mode', routerLink: ['/canary'] },
-    {
-      label: 'Referrals',
-      routerLink: ['/settings/other/referrals'],
-    },
-    { label: 'Content Policy', routerLink: ['/content-policy'] },
-    { label: 'Mobile App', routerLink: ['/mobile'] },
-    { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
-    { label: 'Careers', href: 'https://jobs.lever.co/minds' },
-    { label: 'Status', href: 'https://status.minds.com/' },
-    { label: 'Terms', routerLink: ['/p/terms'] },
-    { label: 'Privacy', routerLink: ['/p/privacy'] },
-    { label: 'Contact', routerLink: ['/p/contact'] },
-    { label: 'Branding', routerLink: ['/branding'] },
-  ];
-  maxFooterLinks = 5;
-
   constructor(
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     protected featuresService: FeaturesService,
-    public service: UserMenuService,
     private helpdeskRedirectService: HelpdeskRedirectService
   ) {}
 
@@ -81,14 +62,6 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     return this.helpdeskRedirectService.getUrl();
   }
 
-  toggleMenu(): void {
-    this.service.isOpen$.next(!this.service.isOpen$.getValue());
-  }
-
-  closeMenu(): void {
-    this.service.isOpen$.next(false);
-  }
-
   detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
@@ -99,7 +72,6 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.closeMenu();
     this.themeSubscription.unsubscribe();
   }
 }
