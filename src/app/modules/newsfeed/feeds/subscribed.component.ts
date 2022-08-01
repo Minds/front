@@ -424,7 +424,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       this.isDiscoveryFallbackActive() &&
       !this.dismissal.isDismissed('feed:discovery-fallback')
     ) {
-      // TODO: load discovery when when the feed was gonna end instead of at the beginning
       this.loadDiscoveryFallback();
     }
   }
