@@ -139,6 +139,7 @@ export class AdminBoosts {
       return;
     }
 
+    this.inProgress = true;
     boost.rating = open ? 2 : 1;
 
     if (!opts.mature) opts.mature = 0;
@@ -152,8 +153,11 @@ export class AdminBoosts {
           mature: opts.mature,
         }
       );
+
+      this.inProgress = false;
     } catch (e) {
       this.toast.error(e.message ?? 'An unknown error has occurred');
+      this.inProgress = false;
       console.error(e);
       return;
     }
@@ -175,14 +179,18 @@ export class AdminBoosts {
       this.report(this.selectedBoost);
     }
 
+    this.inProgress = true;
+
     try {
       await this.client.post(
         'api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/reject',
         { reason: boost.rejection_reason }
       );
+      this.inProgress = false;
     } catch (e) {
       this.toast.error(e.message ?? 'An unknown error has occurred');
       console.error(e);
+      this.inProgress = false;
       return;
     }
 

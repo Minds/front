@@ -122,6 +122,8 @@
       *ngIf="canRevoke()"
       color="red"
       (onAction)="revoke()"
+      [saving]="inProgress$ | async"
+      [disabled]="inProgress$ | async"
       i18n="@@BOOST__CONSOLE__CARD__REVOKE_ACTION"
       >Revoke</m-button
     >
@@ -131,6 +133,8 @@
       *ngIf="canReject()"
       color="red"
       (onAction)="reject()"
+      [saving]="inProgress$ | async"
+      [disabled]="inProgress$ | async"
       i18n="@@M__ACTION__REJECT"
       >Reject</m-button
     >
@@ -140,6 +144,8 @@
       *ngIf="canAccept()"
       color="blue"
       (onAction)="accept()"
+      [saving]="inProgress$ | async"
+      [disabled]="inProgress$ | async"
       i18n="@@M__ACTION__ACCEPT"
       >Accept</m-button
     >

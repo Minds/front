@@ -132,11 +132,13 @@
       </div>
 
       <div
-        class="mdl-card__supporting-text action-buttons"
+        class="mdl-card__supporting-text action-buttons m-adminBoosts__actionButtonToolbar"
         *ngIf="boost.state == 'created'"
       >
         <m-button
           (onAction)="accept(boost, false)"
+          [saving]="inProgress"
+          [disabled]="inProgress"
           color="blue"
           size="xsmall"
           class="m-admin-boosts--accept-button"
@@ -145,6 +147,8 @@
         </m-button>
         <m-button
           (onAction)="accept(boost, true)"
+          [saving]="inProgress"
+          [disabled]="inProgress"
           size="xsmall"
           class="m-admin-boosts--open-button"
         >
@@ -152,6 +156,8 @@
         </m-button>
         <m-button
           (onAction)="openReasonsModal(boost)"
+          [saving]="inProgress"
+          [disabled]="inProgress"
           color="red"
           size="xsmall"
           class="m-admin-boosts--reject-button"

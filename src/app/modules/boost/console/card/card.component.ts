@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 import { BoostService } from '../../boost.service';
 import { Reason, rejectionReasons } from '../../rejection-reasons';
@@ -12,6 +13,8 @@ import { Reason, rejectionReasons } from '../../rejection-reasons';
 export class BoostConsoleCard {
   boost: any;
   type: string;
+
+  public inProgress$: BehaviorSubject<boolean> = this.service.inProgress$;
 
   reasons: Array<Reason> = rejectionReasons;
 

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ToasterService } from '../../common/services/toaster.service';
 
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
@@ -6,10 +8,15 @@ import { BoostContractService } from '../blockchain/contracts/boost-contract.ser
 
 @Injectable()
 export class BoostService {
+  public inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
   constructor(
     public session: Session,
     private client: Client,
-    private boostContractService: BoostContractService
+    private boostContractService: BoostContractService,
+    private toast: ToasterService
   ) {}
 
   /**
@@ -46,21 +53,29 @@ export class BoostService {
       return false;
     }
 
+    this.inProgress$.next(true);
+
     try {
       if (boost.currency == 'tokens') {
         let tx = await this.boostContractService.accept(boost.guid);
 
         if (!tx) {
+          this.inProgress$.next(false);
           return false;
         }
       }
 
-      boost.state = 'accepted';
-
       await this.client.put(`api/v2/boost/peer/${boost.guid}`);
+
+      boost.state = 'accepted';
+      this.inProgress$.next(false);
+
       return true;
     } catch (e) {
+      console.error(e);
+      this.toast.error(e?.message ?? 'An unknown error has occurred');
       boost.state = 'created';
+      this.inProgress$.next(false);
       return false;
     }
   }
@@ -84,21 +99,29 @@ export class BoostService {
       return false;
     }
 
+    this.inProgress$.next(true);
+
     try {
       if (boost.currency == 'tokens') {
         let tx = await this.boostContractService.reject(boost.guid);
 
         if (!tx) {
+          this.inProgress$.next(false);
           return false;
         }
       }
 
-      boost.state = 'rejected';
-
       await this.client.delete(`api/v2/boost/peer/${boost.guid}`);
+
+      boost.state = 'rejected';
+      this.inProgress$.next(false);
+
       return true;
     } catch (e) {
+      console.error(e);
+      this.toast.error(e?.message ?? 'An unknown error has occurred');
       boost.state = 'created';
+      this.inProgress$.next(false);
       return false;
     }
   }
@@ -118,6 +141,8 @@ export class BoostService {
    * Revokes a boost.
    */
   async revoke(boost): Promise<boolean> {
+    this.inProgress$.next(true);
+
     let revokeEndpoint;
 
     if (this.getBoostType(boost) === 'p2p') {
@@ -133,15 +158,22 @@ export class BoostService {
         let tx = await this.boostContractService.revoke(boost.guid);
 
         if (!tx) {
+          this.inProgress$.next(false);
           return false;
         }
       }
 
-      boost.state = 'revoked';
       await this.client.delete(revokeEndpoint);
+
+      boost.state = 'revoked';
+      this.inProgress$.next(false);
+
       return true;
     } catch (e) {
+      console.error(e);
+      this.toast.error(e?.message ?? 'An unknown error has occurred');
       boost.state = 'created';
+      this.inProgress$.next(false);
       return false;
     }
   }

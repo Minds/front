@@ -6,6 +6,9 @@ import { boostContractServiceMock } from '../../mocks/modules/blockchain/contrac
 
 describe('BoostService', () => {
   let service: BoostService;
+  let toasterMock = new (function() {
+    this.error = jasmine.createSpy('error');
+  })();
 
   beforeEach(() => {
     jasmine.clock().uninstall();
@@ -13,7 +16,8 @@ describe('BoostService', () => {
     service = new BoostService(
       sessionMock,
       clientMock,
-      boostContractServiceMock
+      boostContractServiceMock,
+      toasterMock
     );
     clientMock.response = {};
 
@@ -35,7 +39,8 @@ describe('BoostService', () => {
     service = new BoostService(
       sessionMock,
       clientMock,
-      boostContractServiceMock
+      boostContractServiceMock,
+      toasterMock
     );
 
     clientMock.response['api/v2/boost/newsfeed/'] = {
