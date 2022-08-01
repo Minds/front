@@ -2,6 +2,16 @@
 
 :host {
   // *********************************
+  // ** FIXED HEIGHT **
+  // *********************************
+  m-newsfeed--boost-rotator & {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  // *********************************
   // ** MINIMAL MODE **
   // *********************************
 

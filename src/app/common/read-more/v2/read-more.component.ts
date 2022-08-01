@@ -30,7 +30,7 @@ export class ReadMoreComponent {
   protected readonly absoluteMax: number = 1000;
 
   /**
-   * Controls if the read more should be toggled off. False shows elipses
+   * Controls if the read more should be toggled off. False shows ellipses
    */
   showAll = false;
 
