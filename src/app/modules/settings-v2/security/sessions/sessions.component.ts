@@ -29,8 +29,6 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
   init: boolean = false;
   sessions: Array<any>;
 
-  menuOpened$: BehaviorSubject<number | null> = new BehaviorSubject(null);
-
   constructor(
     protected cd: ChangeDetectorRef,
     protected router: Router,
@@ -60,8 +58,6 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
   }
 
   async deleteSession(session) {
-    this.menuOpened$.next(null);
-
     const response = <any>(
       await this.client.delete(
         `api/v3/sessions/common-sessions/session?id=${session.id}&platform=${session.platform}`
@@ -98,11 +94,6 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
 
     this.toast.error(response.message ?? 'An unknown error has occurred');
     this.init = false;
-  }
-
-  onButtonClick(i): void {
-    this.menuOpened$.next(i);
-    this.detectChanges();
   }
 
   detectChanges() {
