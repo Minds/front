@@ -6,7 +6,7 @@ import { ApiRequestMethod, ApiService } from './api.service';
 const apiResourceMock = {
   query: () =>
     // @ts-ignore
-    new QueryRef(MockService(ApiService), MockService(StorageV2), null, {
+    new QueryRef(MockService(ApiService), new StorageV2(), null, {
       method: ApiRequestMethod.GET,
     }),
 };
