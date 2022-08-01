@@ -390,10 +390,3 @@ export class ApiResource {
     });
   }
 }
-
-export const apiResourceMock = {
-  query: () =>
-    new QueryRef(null, null, null, {
-      method: ApiRequestMethod.GET,
-    }),
-};

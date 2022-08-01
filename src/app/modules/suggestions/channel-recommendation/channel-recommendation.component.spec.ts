@@ -6,10 +6,8 @@ import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
 import { ChannelRecommendationComponent } from './channel-recommendation.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { MockService } from '../../../utils/mock';
-import {
-  ApiResource,
-  apiResourceMock,
-} from '../../../common/api/api-resource.service';
+import { ApiResource } from '../../../common/api/api-resource.service';
+import apiResourceMock from '../../../common/api/api-resource-mock';
 
 describe('ChannelRecommendationComponent', () => {
   let component: ChannelRecommendationComponent;
