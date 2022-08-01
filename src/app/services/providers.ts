@@ -225,8 +225,6 @@ export const MINDS_PROVIDERS: any[] = [
       EntitiesService,
       BlockListService,
       StorageV2,
-      ActivatedRoute,
-      ApiResource,
     ],
   },
   {

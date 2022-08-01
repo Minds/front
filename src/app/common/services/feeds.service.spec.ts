@@ -11,17 +11,9 @@ import { ApiService } from './../api/api.service';
 import { BlockListService } from './block-list.service';
 import { FeedsService, NEW_POST_POLL_INTERVAL } from './feeds.service';
 
-let activatedRouteMock = new (function() {
-  this.queryParams = new BehaviorSubject({
-    referrer: null,
-  });
-})();
-
-let apiResourceMock = new (function() {})();
-
 let storageV2Mock = new (function() {})();
 
-xdescribe('FeedsService', () => {
+describe('FeedsService', () => {
   let service: FeedsService;
 
   let apiMock;
@@ -43,9 +35,7 @@ xdescribe('FeedsService', () => {
         storageMock,
         recentServiceMock
       ),
-      storageV2Mock,
-      activatedRouteMock,
-      apiResourceMock
+      storageV2Mock
     );
   });
 

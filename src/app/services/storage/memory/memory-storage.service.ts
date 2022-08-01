@@ -1,8 +1,7 @@
-import ApiResource from '../user/tables/ApiResource';
-
 export class MemoryStorageService {
-  private apiResources: Map<string, ApiResource> = new Map();
+  private apiResources: Map<string, any> = new Map();
   private feedState: Map<string, any> = new Map();
+  private activityDisplayOptions: Map<string, any> = new Map();
 
   getFeedState(feedUrl: string, routeUrl: string): any {
     return this.feedState.get(feedUrl + routeUrl);
@@ -20,6 +19,23 @@ export class MemoryStorageService {
     this.apiResources.set(url, {
       url,
       data,
+      persistedAt: Date.now(),
+    });
+  }
+
+  public getActivityDisplayOptions(guid: string): object | null {
+    return this.activityDisplayOptions.get(guid)?.data;
+  }
+
+  public async setActivityDisplayOptions(guid: string, data: any) {
+    this.activityDisplayOptions.set(guid, {
+      guid,
+      data: {
+        showOnlyCommentsInput: data.showOnlyCommentsInput,
+        showOnlyCommentsToggle: data.showOnlyCommentsToggle,
+        expandedText: data.expandedText,
+        expandedReplies: data.expandedReplies,
+      },
       persistedAt: Date.now(),
     });
   }

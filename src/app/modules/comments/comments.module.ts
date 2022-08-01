@@ -11,7 +11,7 @@ import { ModalsModule } from '../modals/modals.module';
 import { CommentComponentV2 } from './comment/comment.component';
 import { CommentPosterComponent } from './poster/poster.component';
 import { CommentsTreeComponent } from './tree/tree.component';
-import { CommentsThreadComponent } from './thread/thread-v2.component';
+import { CommentsThreadComponent } from './thread/thread.component';
 import { CommentsService } from './comments.service';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
@@ -19,7 +19,6 @@ import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.com
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outlet.component';
 
-// test gpg
 @NgModule({
   imports: [
     NgCommonModule,

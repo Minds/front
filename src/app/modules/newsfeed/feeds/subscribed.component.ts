@@ -8,6 +8,7 @@ import {
   Inject,
   Injectable,
   Injector,
+  isDevMode,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
@@ -110,6 +111,9 @@ export class NewsfeedSubscribedComponent
    * whether we've restored the scroll position
    */
   isScrollRestored: boolean;
+  /**
+   * whether the feed should restore its position
+   */
   shouldRestoreScroll: boolean;
 
   @ViewChild('scroll')
@@ -131,6 +135,8 @@ export class NewsfeedSubscribedComponent
   );
 
   feed: Observable<IFeedItem[]>;
+
+  isDev = isDevMode();
 
   constructor(
     public client: Client,
@@ -212,8 +218,6 @@ export class NewsfeedSubscribedComponent
           id: 'channelRecommendations',
         });
 
-        console.log('FEED', newFeed);
-
         return newFeed;
       })
     );
@@ -290,9 +294,7 @@ export class NewsfeedSubscribedComponent
     );
   }
 
-  // when an entity is updated in a way that their height is changed, invalidate the cachedMeasurement
   ngAfterViewInit() {
-    // TODO: this is not smooth enough. just for demo
     this.feedViewChildren.changes.subscribe(feedChanges => {
       if (feedChanges.length && !this.isScrollRestored) {
         const scrollOffsetTop = this.scrollRestoration.getOffsetForRoute(
@@ -342,12 +344,12 @@ export class NewsfeedSubscribedComponent
     try {
       switch (this.algorithm) {
         case 'top':
-          // this.topFeedService.clear(true); // TODO: readd
+          // this.topFeedService.clear(true); // TODO: check whether we really need to do this or just refreshing after fetching data is enough
           await this.topFeedService.setLimit(12).fetch(true);
           break;
         case 'latest':
-          // this.latestFeedService.clear(true); // TODO: readd
-          // this.topFeedService.clear(true); // TODO: readd
+          // this.latestFeedService.clear(true); // TODO: check whether we really need to do this or just refreshing after fetching data is enough
+          // this.topFeedService.clear(true); // TODO: check whether we really need to do this or just refreshing after fetching data is enough
           this.prepended = [];
           await Promise.all([
             this.topFeedService.setLimit(3).fetch(true),
@@ -468,18 +470,18 @@ export class NewsfeedSubscribedComponent
     });
   }
 
+  /** used by virtualized list to identify items */
   compareItems = (item1: IFeedItem, item2: IFeedItem) => {
     return this.getIDforFeedItem(item1) === this.getIDforFeedItem(item2);
   };
 
+  /** used by the list to optimize performance */
   feedItemTrackBy = (index: number, feedItem: IFeedItem) => {
     return this.getIDforFeedItem(feedItem);
   };
 
   private getIDforFeedItem(feedItem: IFeedItem) {
-    const id =
-      feedItem.id ||
-      feedItem.data?.activity$?.getValue()?.guid + String(feedItem.data.index);
+    const id = feedItem.id || feedItem.data?.activity$?.getValue()?.guid;
 
     return id;
   }
@@ -496,8 +498,6 @@ export class NewsfeedSubscribedComponent
       });
     }, 10);
     setTimeout(() => {
-      console.log('DIFFERENCE', offset - window.scrollY);
-
       if (offset - window.scrollY > 1000) {
         if (document.body.scrollHeight > offset) {
           this.scrollToVirtualizedPosition(offsetWithTopPadding, tries + 1);

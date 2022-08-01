@@ -1,6 +1,5 @@
-import { ViewportScroller } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Router, Scroll, NavigationEnd } from '@angular/router';
+import { Router, Scroll } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -15,9 +14,7 @@ export class ScrollRestorationService {
    */
   private offsetForRoute: Map<string, number> = new Map();
 
-  constructor(
-    private router: Router // private viewportScroller: ViewportScroller
-  ) {}
+  constructor(private router: Router) {}
 
   listen(): this {
     this._routerListener = this.router.events

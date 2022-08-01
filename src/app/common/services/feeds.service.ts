@@ -31,6 +31,10 @@ export const NEW_POST_POLL_INTERVAL = 30000;
  */
 @Injectable()
 export class FeedsService implements OnDestroy {
+  /**
+   * the unique id of this feed that'll change everytime the feed is refreshed. All in-feed items
+   * depend on this id to manage their feed-specific cache
+   */
   id$: BehaviorSubject<string>;
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -75,6 +79,10 @@ export class FeedsService implements OnDestroy {
    * feed length
    */
   feedLength: number;
+  /**
+   * whether the feed is rehydrated. Used to not rehydrate again
+   */
+  rehydrated = false;
 
   constructor(
     protected client: Client,
@@ -82,9 +90,7 @@ export class FeedsService implements OnDestroy {
     protected session: Session,
     protected entitiesService: EntitiesService,
     protected blockListService: BlockListService,
-    protected storage: StorageV2,
-    protected route: ActivatedRoute,
-    protected apiResource: ApiResource
+    protected storage: StorageV2
   ) {
     this.pageSize = this.offset.pipe(
       map(offset => this.limit.getValue() + offset)
@@ -317,7 +323,7 @@ export class FeedsService implements OnDestroy {
           this.canFetchMore = false;
         }
 
-        this.persist(this.rawFeed.getValue());
+        this.persist();
       })
       .catch(e => {
         this.newPostsLastCheckedAt = oldTimestamp;
@@ -430,7 +436,6 @@ export class FeedsService implements OnDestroy {
     );
   }
 
-  rehydrated = false;
   /**
    * rehydrates the feed state from memory
    * @returns { void }
@@ -465,9 +470,7 @@ export class FeedsService implements OnDestroy {
     session: Session,
     entitiesService: EntitiesService,
     blockListService: BlockListService,
-    storage: StorageV2,
-    route: ActivatedRoute,
-    apiResource: ApiResource
+    storage: StorageV2
   ) {
     return new FeedsService(
       client,
@@ -475,9 +478,7 @@ export class FeedsService implements OnDestroy {
       session,
       entitiesService,
       blockListService,
-      storage,
-      route,
-      apiResource
+      storage
     );
   }
 

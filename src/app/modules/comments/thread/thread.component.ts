@@ -16,7 +16,11 @@ import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
 import { BlockListService } from '../../../common/services/block-list.service';
-import { ActivityService } from '../../../common/services/activity.service';
+import { ApiResource } from '../../../common/api/api-resource.service';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
+import { ActivityService } from '../../newsfeed/activity/activity.service';
 
 @Component({
   selector: 'm-comments__thread',
@@ -53,7 +57,6 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
   autoloadBlocked: boolean = false;
 
-  comments: Array<any> = [];
   inProgress: boolean = false;
   error: string = '';
 
@@ -67,6 +70,7 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
     comment: null,
   };
   direction: 'asc' | 'desc' = 'desc';
+  comments$ = new BehaviorSubject([]);
 
   constructor(
     public session: Session,
@@ -75,7 +79,9 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     protected blockListService: BlockListService,
     private cd: ChangeDetectorRef,
-    public activityService: ActivityService
+    public legacyActivityService: ActivityServiceCommentsLegacySupport,
+    public activityService: ActivityService,
+    private apiResource: ApiResource
   ) {}
 
   ngOnInit() {
@@ -94,14 +100,17 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
     return this.entity.entity_guid ? this.entity.entity_guid : this.entity.guid;
   }
 
+  commentsQuery = this.apiResource.query<any, any>('', {
+    cachePolicy: ApiResource.CachePolicy.cacheFirst,
+    cacheStorage: ApiResource.CacheStorage.Session,
+  });
+
   async load(
     refresh: boolean = false,
     keepScrollPosition = false,
     additionalOpts?: any
   ) {
     if (refresh) {
-      this.comments = [];
-
       // Reset live comments
       if (this.socketRoomName) {
         this.sockets.leave(this.socketRoomName);
@@ -109,62 +118,90 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
       this.socketRoomName = void 0;
     }
 
-    this.inProgress = true;
-    this.detectChanges();
-
     const descending: boolean =
       additionalOpts?.descending || this.direction === 'desc';
     const parent_path = this.parent.child_path || '0:0:0';
 
-    let el = this.scrollView.nativeElement;
+    const url = `api/v2/comments/${this.guid}/0/${parent_path}`;
+    const params = {
+      entity_guid: this.guid,
+      parent_path,
+      // level: this.level,
+      limit: 12,
+      desc: descending,
+      include_offset: false,
+      ...additionalOpts,
+    };
 
-    let response: any = null;
-    try {
-      response = <{ comments; 'load-next'; 'load-previous'; socketRoomName }>(
-        await this.commentsService.get({
-          entity_guid: this.guid,
-          parent_path,
-          level: this.level,
-          limit: 12,
-          descending,
-          ...additionalOpts,
+    this.commentsQuery
+      .setOptions({
+        params,
+        url,
+        updateState: (newState, oldState) => {
+          if (!newState) return; // TODO: be careful
+
+          // TODO: this shouldn't be here, this is just for updateState
+          if (!oldState && newState) {
+            this.loadPreviousToken = newState['load-previous'];
+            this.loadNextToken = newState['load-next'];
+          } else if (newState) {
+            if (descending && this.morePrevious) {
+              this.loadPreviousToken = newState['load-previous']; // if we're loading previous comments, then only update loadPreviousToken
+            } else if (this.moreNext) {
+              this.loadNextToken = newState['load-next']; // if we're loading next comments, then only update loadNextToken
+            }
+          }
+
+          let comments = [];
+
+          let newComments = newState.comments;
+          const oldComments = oldState?.comments || [];
+
+          if (descending) {
+            comments = oldComments.concat(newComments);
+          } else {
+            comments = newComments.concat(oldComments);
+          }
+
+          const state = {
+            ...oldState,
+            ...newState,
+            comments,
+          };
+
+          return state;
+        },
+      })
+      .fetch(params)
+      .data$.pipe(
+        tap(response => {
+          if (!response) return;
+
+          this.moreNext = !!this.loadNextToken;
+          this.morePrevious = !!this.loadPreviousToken;
+
+          if (!this.socketRoomName && response.socketRoomName) {
+            this.socketRoomName = response.socketRoomName;
+            this.joinSocketRoom();
+          }
         })
-      );
-    } catch (e) {}
+      )
+      .pipe(
+        map(response => {
+          if (this.direction === 'desc') {
+            return (response?.comments || []).slice().reverse();
+          }
 
-    if (!response || !response.comments) {
-      return;
-    }
-
-    // if it's the first time we load, update loadPreviousToken and loadNextToken
-    if (this.comments.length === 0) {
-      this.loadPreviousToken = response['load-previous'];
-      this.loadNextToken = response['load-next'];
-    } else if (descending && this.morePrevious) {
-      this.loadPreviousToken = response['load-previous']; // if we're loading previous comments, then only update loadPreviousToken
-    } else if (this.moreNext) {
-      this.loadNextToken = response['load-next']; // if we're loading next comments, then only update loadNextToken
-    }
-
-    this.moreNext = !!this.loadNextToken;
-    this.morePrevious = !!this.loadPreviousToken;
-
-    const comments = response.comments;
-
-    if (descending) {
-      this.comments = comments.concat(this.comments);
-    } else {
-      this.comments = this.comments.concat(comments);
-    }
-
-    if (!this.socketRoomName && response.socketRoomName) {
-      this.socketRoomName = response.socketRoomName;
-      this.joinSocketRoom();
-    }
+          return response?.comments || [];
+        })
+      )
+      .subscribe(this.comments$); // TODO: remove subscription
 
     if (refresh && this.level === 0) {
       this.commentsScrollEmitter.emit('bottom');
     }
+
+    let el = this.scrollView.nativeElement;
 
     if (keepScrollPosition) {
       this.detectChanges();
@@ -174,8 +211,6 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
       });
     }
 
-    this.inProgress = false;
-    this.detectChanges();
     this.threadHeight = el.offsetHeight;
   }
 
@@ -183,11 +218,11 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
    * Loads the next page
    */
   loadNext() {
-    this.load(false, false, {
+    this.commentsQuery.fetchMore({
       // offset
-      loadPrevious:
+      'load-previous':
         this.direction === 'desc' ? this.loadPreviousToken : undefined,
-      loadNext: this.direction === 'desc' ? undefined : this.loadNextToken,
+      'load-next': this.direction === 'desc' ? undefined : this.loadNextToken,
     });
   }
 
@@ -195,23 +230,19 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
    * Loads the previous page
    */
   loadPrevious() {
-    this.load(false, true, {
+    this.commentsQuery.fetchMore({
       descending: this.direction === 'asc' ? 'desc' : 'asc',
       // token
       loadPrevious: this.loadPreviousToken,
     });
   }
 
-  getComments() {
-    if (this.direction === 'asc') {
-      return this.comments;
-    }
-
-    return this.comments.slice().reverse();
+  get comments() {
+    return this.comments$.getValue();
   }
 
   isThreadBlocked() {
-    return this.comments.length > 0 && this.getComments().length === 0;
+    return this.comments.length > 0 && this.comments.length === 0;
   }
 
   autoloadPrevious() {
@@ -263,7 +294,7 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
             this.scrollView.nativeElement.scrollHeight;
 
           if (comment) {
-            this.comments.push(comment);
+            this.pushComment(comment);
           }
 
           this.detectChanges();
@@ -326,6 +357,16 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
     }
   }
 
+  pushComment(comment) {
+    // TODO: make this easier to use
+    this.commentsQuery.setData(oldData => {
+      return {
+        ...oldData,
+        comments: [...oldData.comments, comment],
+      };
+    });
+  }
+
   /**
    * Retries connection to sockets manually.
    */
@@ -338,7 +379,7 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
   }
 
   onOptimisticPost(comment) {
-    this.comments.push(comment);
+    this.pushComment(comment);
     this.detectChanges();
     this.commentsScrollEmitter.emit('bottom');
     this.scrollToBottom.next(true);
@@ -386,5 +427,14 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
     ) {
       this.load(true);
     }
+  }
+
+  handleReplyExpanded(comment, expanded: boolean) {
+    this.activityService.setDisplayOptions({
+      expandedReplies: {
+        ...this.activityService.displayOptions.expandedReplies,
+        [comment.urn]: expanded,
+      },
+    });
   }
 }

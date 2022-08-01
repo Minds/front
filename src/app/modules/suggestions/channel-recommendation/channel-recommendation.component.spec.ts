@@ -6,8 +6,12 @@ import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
 import { ChannelRecommendationComponent } from './channel-recommendation.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { MockService } from '../../../utils/mock';
+import {
+  ApiResource,
+  apiResourceMock,
+} from '../../../common/api/api-resource.service';
 
-xdescribe('ChannelRecommendationComponent', () => {
+describe('ChannelRecommendationComponent', () => {
   let component: ChannelRecommendationComponent;
   let fixture: ComponentFixture<ChannelRecommendationComponent>;
 
@@ -31,6 +35,7 @@ xdescribe('ChannelRecommendationComponent', () => {
           provide: AnalyticsService,
           useValue: MockService(AnalyticsService),
         },
+        { provide: ApiResource, useValue: apiResourceMock },
       ],
     }).compileComponents();
   });

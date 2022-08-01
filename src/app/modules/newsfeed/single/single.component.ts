@@ -132,7 +132,6 @@ export class NewsfeedSingleComponent {
 
     this.singleGuidSubscription = this.entitiesService
       .get(guid)
-      // TODO: fix
       .subscribe(activitySubscription => {
         activitySubscription.subscribe(
           activity => {

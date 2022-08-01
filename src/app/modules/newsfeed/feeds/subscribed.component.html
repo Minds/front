@@ -58,7 +58,7 @@
         "
       ></m-channelRecommendation>
 
-      <m-virtualMinimap [scroll]="scroll"></m-virtualMinimap>
+      <m-virtualMinimap *ngIf="isDev" [scroll]="scroll"></m-virtualMinimap>
       <!--actual feed-->
       <virtual-scroller
         #scroll
@@ -135,6 +135,7 @@
         ></m-loadingSpinner>
       </virtual-scroller>
 
+      <!-- a white overlay that'll go away once the feed is ready to be shown -->
       <div
         *ngIf="shouldRestoreScroll"
         class="m-virtualScrollOverlay"

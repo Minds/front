@@ -38,7 +38,13 @@ export type ActivityDisplayOptions = {
   showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
+  /**
+   * whether the read-more is expanded
+   */
   expandedText: boolean;
+  /**
+   * a key value of comment URNs and whether they're expanded or not
+   */
   expandedReplies: { [k: string]: boolean };
 };
 
@@ -363,8 +369,7 @@ export class ActivityService {
     }
     this.entity$.next(entity);
 
-    const displayOptions = this.storage.session.getActivityDisplayOptions(
-      // TODO: perhaps use memory
+    const displayOptions = this.storage.memory.getActivityDisplayOptions(
       this.entity$.getValue().guid
     );
     if (displayOptions) {
@@ -383,7 +388,8 @@ export class ActivityService {
   ): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
-    this.storage.session.setActivityDisplayOptions(
+    // TODO: make this specific to the feed
+    this.storage.memory.setActivityDisplayOptions(
       this.entity$.getValue().guid,
       this.displayOptions
     );
