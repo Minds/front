@@ -64,6 +64,8 @@ export class InteractionsModalComponent {
         return 'Quote posts';
       case 'subscribers':
         return 'Recent subscribers';
+      case 'mutual-subscribers':
+        return 'Subscribers you know';
     }
   }
 

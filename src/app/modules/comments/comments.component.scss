@@ -86,7 +86,7 @@
       display: flex;
       margin: 3px 10px 0;
     }
-    .m-dropdown--v2 {
+    .m-commentPoster__menuButton {
       margin: 0 $minds-margin;
 
       .m-commentPoster__menuButton {
@@ -97,8 +97,7 @@
     }
 
     .m-commentPoster__postButton i,
-    .m-dropdown--v2 {
-      cursor: pointer;
+    .m-commentPoster__menuButton {
       font-size: 22px;
       line-height: 24px;
       transition: color 0.2s cubic-bezier(0.23, 1, 0.32, 1);
@@ -108,7 +107,7 @@
 
       &:hover {
         @include m-theme() {
-          color: themed($m-textColor--primary);
+          color: themed($m-textColor--tertiary);
         }
       }
     }
@@ -555,6 +554,12 @@ m-comments__entityOutlet,
       }
     }
 
+    m-dropdownMenu__item {
+      &.attachment-button {
+        display: block;
+      }
+    }
+
     .attachment-button:before {
       font-family: 'material icons';
       position: absolute;
@@ -566,14 +571,12 @@ m-comments__entityOutlet,
     }
 
     .attachment-button {
-      display: inline-block;
       vertical-align: middle;
       position: relative;
       overflow: hidden;
       cursor: pointer;
 
       input {
-        position: absolute;
         position: absolute;
         height: 100%;
         width: 100%;

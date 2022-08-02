@@ -36,6 +36,7 @@ import { ActivityV2BadgesComponent } from './badges/badges.component';
 import { ActivityV2PermalinkComponent } from './permalink/permalink.component';
 import { ActivityV2ViewsComponent } from './views/views.component';
 import { ReadMoreModule } from '../../../common/read-more/v2/read-more.module';
+import { ActivityV2BoostedFlagComponent } from './flag/boosted-flag/boosted-flag.component';
 
 @NgModule({
   imports: [
@@ -71,11 +72,16 @@ import { ReadMoreModule } from '../../../common/read-more/v2/read-more.module';
     ActivityV2BoostButtonComponent,
     ActivityV2RelativeTimeSpanComponent,
     ActivityV2FlagComponent,
+    ActivityV2BoostedFlagComponent,
     ActivityV2BadgesComponent,
     ActivityV2PermalinkComponent,
     ActivityV2ViewsComponent,
   ],
   providers: [ActivityV2ModalCreatorService],
-  exports: [ActivityV2Component, ActivityV2RemindButtonComponent],
+  exports: [
+    ActivityV2Component,
+    ActivityV2RemindButtonComponent,
+    ActivityV2BoostedFlagComponent,
+  ],
 })
 export class ActivityV2Module {}

@@ -303,90 +303,70 @@
             </m-text-input--autocomplete-container>
           </form>
           <!-- --------------------- -->
-          <!-- ACTIONS -->
+          <!-- EDIT MODE DROPDOWN ACTIONS -->
           <!-- --------------------- -->
           <div class="mdl-card__actions m-commentPoster__actions">
             <div>
               <!-- Dropdown meatball -->
-              <div class="m-dropdown--v2">
-                <div
-                  class="m-commentPoster__menuButton"
-                  (click)="onPosterMenuClick($event)"
-                >
-                  <i class="material-icons">more_vert</i>
-                </div>
+              <m-dropdownMenu
+                [menu]="editModeDropdownMenu"
+                [anchorPosition]="{ top: '-20%', right: '0' }"
+                class="m-commentPoster__menuButton"
+              >
+                <i class="material-icons">more_vert</i>
+              </m-dropdownMenu>
 
-                <ul class="m-dropdown__list" *ngIf="posterMenuOpened$ | async">
+              <ng-template #editModeDropdownMenu>
+                <ul>
                   <!-- --------------------- -->
                   <!-- Attach a file -->
                   <!-- --------------------- -->
-                  <li class="m-dropdownList__item">
-                    <a class="attachment-button">
-                      <i class="material-icons">insert_photo</i>
-                      <span i18n="@@M__COMMENT_ACTIONS__ATTACH"
-                        >Attach media</span
-                      >
-                      <input
-                        type="file"
-                        id="file"
-                        #fileInput
-                        name="attachment"
-                        (change)="uploadFile(fileInput, $event)"
-                      />
-                    </a>
-                  </li>
+                  <m-dropdownMenu__item
+                    icon="insert_photo"
+                    class="attachment-button"
+                    (click)="fileInput.click()"
+                  >
+                    <span i18n="@@M__COMMENT_ACTIONS__ATTACH"
+                      >Attach media</span
+                    >
+                  </m-dropdownMenu__item>
                   <!-- --------------------- -->
                   <!-- Mark as explicit -->
                   <!-- --------------------- -->
-                  <li class="m-dropdownList__item">
-                    <a (click)="toggleExplicit($event)">
-                      <i
-                        class="material-icons"
-                        [ngClass]="{
-                          'm-redButton': attachment.isMature()
-                        }"
-                        >explicit</i
-                      >
-                      <span
-                        *ngIf="!attachment.isMature()"
-                        i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
-                        >Mark as explicit</span
-                      >
-                      <span
-                        *ngIf="attachment.isMature()"
-                        i18n="@@M__COMMENT_ACTIONS__REMOVE_EXPLICIT"
-                        >Remove explicit</span
-                      >
-                    </a>
-                  </li>
+                  <m-dropdownMenu__item
+                    (click)="toggleExplicit($event)"
+                    icon="explicit"
+                    [red]="attachment.isMature()"
+                  >
+                    <span
+                      *ngIf="!attachment.isMature()"
+                      i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
+                      >Mark as explicit</span
+                    >
+
+                    <span
+                      *ngIf="attachment.isMature()"
+                      i18n="@@M__COMMENT_ACTIONS__REMOVE_EXPLICIT"
+                      >Remove explicit</span
+                    >
+                  </m-dropdownMenu__item>
                   <!-- --------------------- -->
                   <!-- Cancel editing -->
                   <!-- --------------------- -->
-                  <li
-                    class="
-                      m-dropdownList__item m-dropdownList__item--destructive
-                    "
+                  <m-dropdownMenu__item
+                    red="true"
+                    icon="clear"
+                    (click)="cancel(edit, $event)"
                   >
-                    <div
-                      (click)="
-                        cancel(edit, $event); posterMenuOpened$.next(false)
-                      "
+                    <span i18n="@@M__COMMENT_ACTIONS__CANCEL_EDITING"
+                      >Cancel editing</span
                     >
-                      <i class="material-icons">clear</i>
-                      <span i18n="@@M__COMMENT_ACTIONS__CANCEL_EDITING"
-                        >Cancel editing</span
-                      >
-                    </div>
-                  </li>
+                  </m-dropdownMenu__item>
                 </ul>
-              </div>
-              <div
-                class="m-bgOverlay--v2"
-                (click)="posterMenuOpened$.next(false)"
-                *ngIf="posterMenuOpened$ | async"
-              ></div>
+              </ng-template>
+
               <!-- --------------------- -->
-              <!-- Post  -->
+              <!-- Post button -->
               <!-- --------------------- -->
               <a
                 class="m-post-button m-commentPoster__postButton"
@@ -454,6 +434,18 @@
         </div>
 
         <!-- --------------------- -->
+        <!-- Attachment input (hidden) -->
+        <!-- --------------------- -->
+        <input
+          hidden
+          type="file"
+          id="file"
+          #fileInput
+          name="attachment"
+          (change)="uploadFile(fileInput, $event)"
+        />
+
+        <!-- --------------------- -->
         <!-- Attachment preview -->
         <!-- --------------------- -->
         <div
@@ -516,64 +508,61 @@
           >
         </div>
       </div>
-      <div>
-        <!-- --------------------- -->
-        <!-- Meatball menu  -->
-        <!-- --------------------- -->
-        <div class="m-dropdown--v2" [hidden]="editing">
-          <div class="m-comment__menuButton" (click)="onMenuClick($event)">
-            <i class="material-icons">more_vert</i>
-          </div>
+      <!-- --------------------- -->
+      <!-- COMMENT ACTIONS DROPDOWN -->
+      <!--(NOT EDIT MODE) -->
+      <!-- --------------------- -->
+      <m-dropdownMenu
+        *ngIf="!editing"
+        [menu]="dropdownMenu"
+        [anchorPosition]="{ top: '-20%', right: '0' }"
+        class="m-commentPoster__menuButton"
+      >
+        <i class="material-icons">more_vert</i>
+      </m-dropdownMenu>
 
-          <ul class="m-dropdown__list" *ngIf="menuOpened$ | async">
-            <!-- Edit -->
-            <li
-              class="m-dropdownList__item"
-              *ngIf="
-                comment.owner_guid == session.getLoggedInUser()?.guid ||
-                session.isAdmin() ||
-                canEdit
-              "
-              (click)="editing = !editing; menuOpened$.next(false)"
-            >
-              <span i18n="@@M__ACTION__EDIT">Edit</span>
-            </li>
-            <!-- Translate -->
-            <li
-              class="m-dropdownList__item"
-              *ngIf="isTranslatable && !editing"
-              (click)="translateToggle = true; menuOpened$.next(false)"
-            >
-              <span i18n="@@M__ACTION__TRANSLATE">Translate</span>
-            </li>
-            <!-- Delete -->
-            <li
-              class="m-dropdownList__item m-dropdownList__item--destructive"
-              *ngIf="showDelete()"
-              (click)="delete(); menuOpened$.next(false)"
-            >
-              <span i18n="@@M__ACTION__DELETE">Delete</span>
-            </li>
-            <!-- Report -->
-            <li
-              class="m-dropdownList__item m-dropdownList__item--destructive"
-              *ngIf="
-                !editing &&
-                comment.owner_guid != session.getLoggedInUser()?.guid
-              "
-              (click)="showReport(); menuOpened$.next(false)"
-            >
-              <span i18n="verb|@@M__ACTION__REPORT">Report</span>
-            </li>
-          </ul>
-        </div>
-        <div
-          class="m-bgOverlay--v2"
-          (click)="menuOpened$.next(false); posterMenuOpened$.next(false)"
-          *ngIf="(menuOpened$ | async) || (posterMenuOpened$ | async)"
-        ></div>
-      </div>
+      <ng-template #dropdownMenu>
+        <ul>
+          <!-- Edit -->
+          <m-dropdownMenu__item
+            *ngIf="
+              comment.owner_guid == session.getLoggedInUser()?.guid ||
+              session.isAdmin() ||
+              canEdit
+            "
+            (click)="editing = !editing"
+          >
+            <span i18n="@@M__ACTION__EDIT">Edit</span>
+          </m-dropdownMenu__item>
+          <!-- Translate -->
+          <m-dropdownMenu__item
+            *ngIf="isTranslatable && !editing"
+            (click)="translateToggle = true"
+          >
+            <span i18n="@@M__ACTION__TRANSLATE">Translate</span>
+          </m-dropdownMenu__item>
+          <!-- Delete -->
+          <m-dropdownMenu__item
+            *ngIf="showDelete()"
+            (click)="delete()"
+            red="true"
+          >
+            <span i18n="@@M__ACTION__DELETE">Delete</span>
+          </m-dropdownMenu__item>
+          <!-- Report -->
+          <m-dropdownMenu__item
+            *ngIf="
+              !editing && comment.owner_guid != session.getLoggedInUser()?.guid
+            "
+            (click)="showReport()"
+            red="true"
+          >
+            <span i18n="verb|@@M__ACTION__REPORT">Report</span>
+          </m-dropdownMenu__item>
+        </ul>
+      </ng-template>
     </div>
+    <!-- end action toolbar -->
     <div
       class="m-comment__repliesToggle m-legible"
       *ngIf="comment.replies_count > 0"

@@ -8,6 +8,8 @@
       [totalCount]="totalCount$ | async"
       [usernameAmount]="2"
       [avatarAmount]="2"
+      [clickable]="true"
+      (onClick)="onClick()"
     >
       <span
         suffix-text

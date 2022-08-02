@@ -101,9 +101,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() deleted: Subject<boolean> = this.service.onDelete$;
 
-  @Output() previousBoost: EventEmitter<any> = new EventEmitter();
-  @Output() nextBoost: EventEmitter<any> = new EventEmitter();
-
   isBoost = false;
 
   @HostBinding('class.m-activity--guestMode')
@@ -207,14 +204,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         });
       this.elementVisibilityService.checkVisibility();
     }
-  }
-
-  emitNextBoost(): void {
-    this.nextBoost.emit();
-  }
-
-  emitPreviousBoost(): void {
-    this.previousBoost.emit();
   }
 
   @HostListener('window:resize')
