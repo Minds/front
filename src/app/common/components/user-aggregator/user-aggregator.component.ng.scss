@@ -51,5 +51,14 @@
         }
       }
     }
+
+    &.m-userAggregator__userSummary--clickable {
+      cursor: pointer;
+      &:hover {
+        @include m-theme() {
+          color: lighten(themed($m-textColor--secondary), 10%);
+        }
+      }
+    }
   }
 }

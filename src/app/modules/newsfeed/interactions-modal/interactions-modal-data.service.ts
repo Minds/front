@@ -26,7 +26,8 @@ export type InteractionType =
   | 'votes-down'
   | 'reminds'
   | 'quotes'
-  | 'subscribers';
+  | 'subscribers'
+  | 'mutual-subscribers';
 
 @Injectable()
 export class InteractionsModalDataService {
@@ -47,7 +48,7 @@ export class InteractionsModalDataService {
   /**
    * Paging token
    */
-  pagingToken$: BehaviorSubject<string> = new BehaviorSubject('');
+  pagingToken$: BehaviorSubject<string | number> = new BehaviorSubject('');
 
   /**
    * Paging token
@@ -93,14 +94,15 @@ export class InteractionsModalDataService {
   apiRequest(
     entityGuid: string,
     type: InteractionType,
-    pagingToken: string
+    pagingToken: string | number
   ): Observable<ApiResponse> {
+    const limit = 24;
     switch (type) {
       case 'votes-up':
       case 'votes-down':
         return this.api
           .get('api/v3/votes/list/' + entityGuid, {
-            limit: 24,
+            limit,
             'next-page': pagingToken,
             direction: type === 'votes-up' ? 'up' : 'down',
           })
@@ -119,7 +121,7 @@ export class InteractionsModalDataService {
       case 'reminds':
         return this.api
           .get('api/v3/newsfeed', {
-            limit: 24,
+            limit,
             'next-page': pagingToken,
             remind_guid: entityGuid,
           })
@@ -135,7 +137,7 @@ export class InteractionsModalDataService {
           );
       case 'quotes':
         return this.api.get('api/v3/newsfeed', {
-          limit: 24,
+          limit,
           'next-page': pagingToken,
           quote_guid: entityGuid,
         });
@@ -143,10 +145,25 @@ export class InteractionsModalDataService {
         return this.api.get(
           `api/v3/subscriptions/graph/${entityGuid}/subscribers`,
           {
-            limit: 24,
+            limit,
             from_timestamp: pagingToken,
           }
         );
+      case 'mutual-subscribers':
+        const offset = (pagingToken as number) || 0;
+        return this.api
+          .get(`api/v3/subscriptions/relational/also-subscribe-to`, {
+            guid: entityGuid,
+            limit,
+            offset,
+          })
+          .pipe(
+            map(response => ({
+              'load-next': response?.users?.length ? offset + limit : undefined,
+              status: 'success',
+              entities: response?.users || [],
+            }))
+          );
     }
   }
 
