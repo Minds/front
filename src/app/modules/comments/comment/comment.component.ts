@@ -535,7 +535,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       this.session.isAdmin() ||
       this.canDelete ||
       this.comment.owner_guid == loggedInUserGuid ||
-      this.parent.owner_guid == loggedInUserGuid ||
       this.entity.owner_guid == loggedInUserGuid
     );
   }
