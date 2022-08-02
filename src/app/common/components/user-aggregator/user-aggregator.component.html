@@ -17,11 +17,16 @@
 </div>
 <span
   class="m-userAggregator__userSummary"
+  [ngClass]="{
+    'm-userAggregator__userSummary--clickable': clickable
+  }"
+  (click)="onClick.emit($event)"
   *ngIf="users.slice(0, usernameAmount) as slicedUsers"
 >
   <span *ngFor="let user of slicedUsers; let i = index">
     <a
       [routerLink]="'/' + user.username"
+      (click)="$event.stopPropagation()"
       class="m-userAggregator__usernameHref"
       >{{ user.name | truncate: 12 }}</a
     >
