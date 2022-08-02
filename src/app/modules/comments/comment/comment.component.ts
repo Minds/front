@@ -541,6 +541,18 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   openModal() {
     this.activityModalCreator.create(this.comment, this.injector);
   }
+
+  showDelete(): boolean {
+    const loggedInUserGuid = this.session.getLoggedInUser()?.guid;
+
+    return (
+      this.session.isAdmin() ||
+      this.canDelete ||
+      this.comment.owner_guid == loggedInUserGuid ||
+      this.parent.owner_guid == loggedInUserGuid ||
+      this.entity.owner_guid == loggedInUserGuid
+    );
+  }
   // * ATTACHMENT MEDIA MODAL  * ---------------------------------------------------------------------
 
   //

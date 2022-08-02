@@ -549,12 +549,7 @@
             <!-- Delete -->
             <li
               class="m-dropdownList__item m-dropdownList__item--destructive"
-              *ngIf="
-                comment.owner_guid == session.getLoggedInUser()?.guid ||
-                session.isAdmin() ||
-                parent.owner_guid == session.getLoggedInUser()?.guid ||
-                canDelete
-              "
+              *ngIf="showDelete()"
               (click)="delete(); menuOpened$.next(false)"
             >
               <span i18n="@@M__ACTION__DELETE">Delete</span>
