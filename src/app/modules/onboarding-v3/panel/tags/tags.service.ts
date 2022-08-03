@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
+import { DefaultTagsV2ExperimentService } from '../../../experiments/sub-services/default-tags-v2-experiment.service';
 
 /**
  *  Tag object
@@ -24,7 +25,10 @@ export class OnboardingV3TagsService {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    private defaultTagsV2Experiment: DefaultTagsV2ExperimentService
+  ) {}
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
@@ -53,6 +57,8 @@ export class OnboardingV3TagsService {
    * @returns { OnboardingV3TagsService } - chainable.
    */
   public loadTags(): OnboardingV3TagsService {
+    const limit = this.defaultTagsV2Experiment.isActive() ? 24 : 15;
+
     this.subscriptions.push(
       this.api
         .get(
@@ -60,7 +66,7 @@ export class OnboardingV3TagsService {
           {
             trending: 0,
             defaults: 1,
-            limit: 15,
+            limit: limit,
           },
           3
         )
