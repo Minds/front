@@ -207,7 +207,12 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
             formattedTx.rewardType = tx?.reward_type;
           }
 
-          if (formattedTx.superType === 'wire') {
+          // Get information about the other user
+          // tx is a wire or boost offer
+          if (
+            formattedTx.superType === 'wire' ||
+            (formattedTx.superType === 'boost' && tx.receiver)
+          ) {
             formattedTx.otherUser = this.getOtherUser(tx);
           }
 
