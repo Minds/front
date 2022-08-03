@@ -70,9 +70,9 @@
         [compareItems]="compareItems"
         [ssrChildHeight]="300"
         (vsChange)="loadNext($event)"
+        [scrollAnimationTime]="0"
+        [resizeBypassRefreshThreshold]="10"
         [executeRefreshOutsideAngularZone]="true"
-        [scrollThrottlingTime]="100"
-        (vsUpdate)="changeDetectorRef.detectChanges()"
       >
         <m-newsfeed__activityOutlet
           *ngFor="

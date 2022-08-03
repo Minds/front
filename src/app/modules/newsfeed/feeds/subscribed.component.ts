@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostListener,
   Inject,
   Injectable,
   Injector,
@@ -25,7 +24,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { IPageInfo, VirtualScrollerComponent } from 'ngx-virtual-scroller';
-import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
@@ -165,6 +164,7 @@ export class NewsfeedSubscribedComponent
     if (storedfeedAlgorithm) {
       this.algorithm = storedfeedAlgorithm;
     }
+
     this.feed = this.feedService.feed.pipe(
       distinctUntilChanged(),
       map(feed => {
@@ -218,7 +218,7 @@ export class NewsfeedSubscribedComponent
           id: 'channelRecommendations',
         });
 
-        return newFeed;
+        return this.ensureFeedUniqueness(newFeed);
       })
     );
   }
@@ -506,5 +506,19 @@ export class NewsfeedSubscribedComponent
         this.isScrollRestored = true;
       }
     }, 15);
+  }
+
+  private ensureFeedUniqueness(feed: IFeedItem[]) {
+    const ids = [];
+    const uniqueFeed = [];
+
+    feed.map(item => {
+      const id = this.getIDforFeedItem(item);
+      if (!ids.includes(id)) {
+        ids.push(id);
+        uniqueFeed.push(item);
+      }
+    });
+    return uniqueFeed;
   }
 }
