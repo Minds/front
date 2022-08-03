@@ -44,7 +44,8 @@
                     [src]="tx.otherUser.avatar"
                   />
                   <span
-                    >{{ getTypeLabel(tx.type) }} Offer to
+                    >{{ getTypeLabel(tx.type) }} Offer
+                    {{ tx.otherUser.isSender ? 'from' : 'to' }}
                     <a
                       class="m-walletTransactionsTable__otherUserLink"
                       [routerLink]="['/', tx.otherUser.username]"
