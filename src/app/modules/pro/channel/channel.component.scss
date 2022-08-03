@@ -48,7 +48,7 @@ m-pro--channel {
       color: var(--m-pro--text-color);
     }
 
-    minds-button-boost > button {
+    m-boostButton > button {
       color: var(--m-pro--primary-color);
       border-color: var(--m-pro--primary-color);
     }
@@ -64,7 +64,7 @@ m-pro--channel {
     }
   }
 
-  minds-button-boost {
+  m-boostButton {
     display: none !important;
   }
 

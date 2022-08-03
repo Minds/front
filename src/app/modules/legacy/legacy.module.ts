@@ -14,7 +14,6 @@ import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 
 import { UserCard } from './components/cards/user/user';
 
-import { BoostButton } from './components/buttons/boost';
 import { CommentButton } from './components/buttons/comment';
 import { SubscribeButton } from './components/buttons/subscribe';
 import { UserDropdownButton } from './components/buttons/user-dropdown';
@@ -49,7 +48,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
   ],
   declarations: [
     UserCard,
-    BoostButton,
     CommentButton,
     SubscribeButton,
     UserDropdownButton,
@@ -62,7 +60,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
   exports: [
     UserCard,
 
-    BoostButton,
     CommentButton,
     SubscribeButton,
     UserDropdownButton,
