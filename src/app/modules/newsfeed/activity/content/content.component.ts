@@ -153,6 +153,7 @@ export class ActivityContentComponent
   }
 
   ngOnInit() {
+    // this.shouldShowPaywallSubscription = this.service.shouldShowPaywall$
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
@@ -162,8 +163,20 @@ export class ActivityContentComponent
           this.calculateVideoHeight();
           this.calculateImageHeight();
         });
+        // Check for either paywall or paywall badge because
+        // quotes of status posts display the badge inside
+        // the quote/parent's content component
         this.isPaywalledStatusPost =
-          this.showPaywallBadge && entity.content_type === 'status';
+          (this.showPaywallBadge || this.showPaywall) &&
+          entity.content_type === 'status';
+
+        console.log(
+          'ojm content',
+          entity.content_type,
+          this.showPaywallBadge,
+          this.showPaywall
+        );
+
         if (
           this.entity.paywall_unlocked ||
           this.entity.ownerObj.guid === this.session.getLoggedInUser().guid
