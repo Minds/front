@@ -49,3 +49,4 @@ cypress/videos
 !/.husky
 !/.storybook
 cypress-tests
+e2e/test/error-screenshots

@@ -28,7 +28,8 @@
     "docs:json": "compodoc -p ./tsconfig.doc.json -e json -d .",
     "storybook": "npm run docs:json && ng run minds:storybook",
     "build-storybook": "npm run docs:json && ng run minds:build-storybook",
-    "test:e2e": "codeceptjs run --steps"
+    "test:e2e:local": "codeceptjs run --steps -c e2e/test/conf/codecept.local.conf.js",
+    "test:e2e:real": "codeceptjs run-multiple browserStackCombo --steps -c e2e/test/conf/codecept.real.conf.js"
   },
   "private": true,
   "dependencies": {
@@ -123,8 +124,10 @@
     "@babel/core": "^7.17.8",
     "@codeceptjs/configure": "^0.8.0",
     "@codeceptjs/examples": "^1.2.1",
+    "@codeceptjs/helper": "^2.0.1",
     "@codeceptjs/ui": "^0.4.6",
     "@compodoc/compodoc": "^1.1.19",
+    "@playwright/test": "^1.23.3",
     "@storybook/addon-actions": "^6.4.20",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-interactions": "^6.4.20",
@@ -141,6 +144,7 @@
     "browserstack-local": "^1.5.1",
     "codeceptjs": "^3.3.4",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.0.1",
     "gulp": "~4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-json-modify": "^1.0.2",
