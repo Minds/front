@@ -37,11 +37,7 @@ import { AnalyticsService } from './../../../services/analytics';
           >Load more</ng-container
         >
 
-        <ng-container
-          i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE"
-          *ngIf="!moreData"
-          >Nothing more to load</ng-container
-        >
+        <ng-container *ngIf="!moreData">{{ endText }}</ng-container>
       </m-button>
     </ng-container>
 
@@ -69,6 +65,8 @@ export class InfiniteScroll {
   @Input() hideManual: boolean = false;
   // if provided, the component won't track the feed-end event
   @Input() ignoreEndTracking: boolean = false;
+  @Input()
+  endText: string = $localize`:@@COMMON__INFINITE_SCROLL__NOTHING_MORE:Nothing more to load`;
   /**
    * will fire when the feed ends and there's nothing to load
    */

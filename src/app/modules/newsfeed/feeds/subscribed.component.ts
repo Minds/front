@@ -106,6 +106,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    */
   latestFallbackActive$ = new BehaviorSubject(false);
 
+  newsfeedEndText = $localize`:@@COMMON__FEED_END:End of your newsfeed`;
+
   constructor(
     public client: Client,
     public upload: Upload,

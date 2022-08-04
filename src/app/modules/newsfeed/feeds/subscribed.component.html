@@ -121,6 +121,11 @@
           isDiscoveryFallbackEnabled() || isLatestFallbackEnabled()
         "
         (onEnd)="onNewsfeedEndReached()"
+        [endText]="
+          isDiscoveryFallbackEnabled() || isLatestFallbackEnabled()
+            ? newsfeedEndText
+            : undefined
+        "
       >
       </infinite-scroll>
 
