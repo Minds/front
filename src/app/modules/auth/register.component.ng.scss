@@ -16,7 +16,7 @@
         filter: none;
         box-shadow: -1px 0px 8px rgba(50, 50, 0, 0.5);
 
-        minds-form-register {
+        m-registerForm {
           clip-path: none;
         }
       }
@@ -88,7 +88,7 @@
     filter: drop-shadow(-1px 0px 8px rgba(50, 50, 0, 0.5));
   }
 
-  ::ng-deep minds-form-register {
+  ::ng-deep m-registerForm {
     padding: 86px 67px 150px;
     display: block;
 

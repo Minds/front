@@ -25,10 +25,10 @@
     </div>
   </a>
 
-  <minds-groups-join-button
+  <m-group__membershipButton
     *ngIf="!group['is:member']"
     [group]="group"
-  ></minds-groups-join-button>
+  ></m-group__membershipButton>
 
   <div class="m-groups-card-stats" *ngIf="group['is:member']">
     <div class="minds-tabs mdl-tabs__tab-bar">

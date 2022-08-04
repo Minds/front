@@ -87,12 +87,12 @@
               </a>
             </h1>
             <div class="m-groupInfo__actionButtons">
-              <minds-groups-join-button
+              <m-group__membershipButton
                 [group]="group"
                 (membership)="change_membership($event)"
                 *ngIf="(!group['is:creator'] || (session.isAdmin()) && !group['is:invited'])"
               >
-              </minds-groups-join-button>
+              </m-group__membershipButton>
               <m-button
                 style="margin-left: 8"
                 (onAction)="videochat.activate(group)"
@@ -182,10 +182,10 @@
       <h1>{{group.name}}</h1>
     </div>
 
-    <minds-groups-join-button
+    <m-group__membershipButton
       [group]="group"
       (membership)="change_membership($event)"
       *ngIf="!error"
-    ></minds-groups-join-button>
+    ></m-group__membershipButton>
   </div>
 </div>

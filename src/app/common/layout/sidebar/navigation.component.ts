@@ -21,7 +21,6 @@ import { ConfigsService } from '../../services/configs.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
@@ -79,7 +78,6 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private route: ActivatedRoute,
     private router: Router,
-    private userMenu: UserMenuService,
     private buyTokensModalService: BuyTokensModalService,
     private web3WalletService: Web3WalletService,
     private boostModalService: BoostModalLazyService,
@@ -193,11 +191,9 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Closes the user menu if it's open
+   * Don't click through the menu on mobile
    */
   onSidebarNavClick($event): void {
-    this.userMenu.isOpen$.next(false);
-
     if (this.layoutMode === 'phone') {
       $event.stopPropagation();
     }

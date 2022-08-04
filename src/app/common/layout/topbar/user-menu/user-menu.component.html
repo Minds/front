@@ -1,0 +1,61 @@
+<m-dropdownMenu
+  [menu]="dropdownMenu"
+  [anchorPosition]="{ top: '50px', right: '-20px' }"
+>
+  <minds-avatar
+    [object]="getCurrentUser()"
+    [editMode]="false"
+    data-ref="topnav-avatar"
+  ></minds-avatar>
+</m-dropdownMenu>
+
+<ng-template #dropdownMenu>
+  <ul class="m-userMenu__dropdown">
+    <m-dropdownMenu__item
+      class="m-userMenuDropdown__item m-userMenuDropdown__username"
+      [link]="['/', getCurrentUser().username]"
+      data-ref="topnav-usermenu-channel"
+    >
+      @{{ getCurrentUser().username }}
+    </m-dropdownMenu__item>
+
+    <m-dropdownMenu__item
+      *ngIf="!getCurrentUser().pro"
+      class="m-userMenuDropdownItem__upgrade"
+      link="/upgrades"
+      data-ref="topnav-usermenu-upgrade"
+    >
+      <span i18n="@@COMMON__UPGRADE">Upgrade</span>
+    </m-dropdownMenu__item>
+
+    <m-dropdownMenu__item
+      *ngIf="isAdmin()"
+      link="/admin/interactions"
+      data-ref="topnav-usermenu-admin"
+    >
+      <span i18n="@@COMMON__ADMIN">Admin</span>
+    </m-dropdownMenu__item>
+
+    <m-dropdownMenu__item
+      link="/boost/console"
+      data-ref="topnav-usermenu-boostconsole"
+    >
+      <span i18n="@@COMMON__BOOST_CONSOLE">Boost Console</span>
+    </m-dropdownMenu__item>
+
+    <m-dropdownMenu__item link="/settings" data-ref="topnav-usermenu-settings">
+      <span i18n="@@COMMON__SETTINGS">Settings</span>
+    </m-dropdownMenu__item>
+
+    <m-dropdownMenu__item
+      [externalLink]="getHelpdeskRedirectUrl()"
+      data-ref="topnav-usermenu-help-zendesk"
+    >
+      <span i18n="@@COMMON__HELP">Help</span>
+    </m-dropdownMenu__item>
+
+    <m-dropdownMenu__item link="/logout" data-ref="topnav-usermenu-logout">
+      <span i18n="@@COMMON__LOGOUT">Logout</span>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>

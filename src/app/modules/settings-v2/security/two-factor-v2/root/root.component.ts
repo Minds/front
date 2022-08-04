@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
 
 /**
@@ -17,7 +17,7 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
 export class SettingsTwoFactorV2RootComponent extends AbstractSubscriberComponent {
   constructor(
     private service: SettingsTwoFactorV2Service,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {
     super();
   }

@@ -11,7 +11,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { SettingsV2Service } from '../../settings-v2.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Client } from '../../../../services/api';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Settings page for session management
@@ -29,15 +29,13 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
   init: boolean = false;
   sessions: Array<any>;
 
-  menuOpened$: BehaviorSubject<number | null> = new BehaviorSubject(null);
-
   constructor(
     protected cd: ChangeDetectorRef,
     protected router: Router,
     private session: Session,
     protected settingsService: SettingsV2Service,
     protected client: Client,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {
@@ -60,8 +58,6 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
   }
 
   async deleteSession(session) {
-    this.menuOpened$.next(null);
-
     const response = <any>(
       await this.client.delete(
         `api/v3/sessions/common-sessions/session?id=${session.id}&platform=${session.platform}`
@@ -98,11 +94,6 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
 
     this.toast.error(response.message ?? 'An unknown error has occurred');
     this.init = false;
-  }
-
-  onButtonClick(i): void {
-    this.menuOpened$.next(i);
-    this.detectChanges();
   }
 
   detectChanges() {

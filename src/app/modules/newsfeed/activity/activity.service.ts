@@ -32,10 +32,10 @@ export type ActivityDisplayOptions = {
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
+  boostRotatorMode: boolean; // is the activity in the boost rotator?
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
-  showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
   /**
@@ -320,13 +320,13 @@ export class ActivityService {
     showPostMenu: true,
     showPinnedBadge: true,
     showMetrics: true,
-    showBoostRotatorButtons: false,
     fixedHeight: false,
     fixedHeightContainer: false,
     isModal: false,
     minimalMode: false,
     bypassMediaModal: false,
     sidebarMode: false,
+    boostRotatorMode: false,
     isSidebarBoost: false,
     isFeed: false,
     isSingle: false,

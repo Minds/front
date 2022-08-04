@@ -3,7 +3,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { ChannelEditHashtagsComponent } from './hashtags.component';
 import { FormsModule } from '@angular/forms';
 import { ChannelEditService } from './edit.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { BehaviorSubject } from 'rxjs';
 
 describe('ChannelEditHashtagsComponent', () => {
@@ -32,8 +32,8 @@ describe('ChannelEditHashtagsComponent', () => {
             }),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

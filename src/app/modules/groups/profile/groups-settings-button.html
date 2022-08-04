@@ -1,157 +1,158 @@
-<button class="material-icons" (click)="toggleMenu($event)">
-  settings
-  <i *ngIf="group['is:muted']" class="minds-groups-button-badge material-icons"
+<m-dropdownMenu
+  [menu]="settingsMenu"
+  [anchorPosition]="{ top: '100%', right: '0' }"
+  class="m-groupsSettingsButton__triggerContainer"
+>
+  <i class="m-groupsSettingsButton__trigger material-icons">settings</i>
+  <i
+    *ngIf="group['is:muted']"
+    class="m-groupsSettingsButton__trigger minds-groups-button-badge material-icons"
     >notifications_off</i
   >
-</button>
+</m-dropdownMenu>
 
-<div class="m-dropdown--v2" [hidden]="!showMenu">
-  <ul class="m-dropdown__list">
-    <!-- owner functions -->
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner']"
-      (click)="toggleEdit()"
-    >
-      <ng-container *ngIf="!editing">Edit</ng-container>
-      <ng-container *ngIf="editing">Save</ng-container>
-    </li>
+<ng-template #settingsMenu>
+  <ul>
+    <!-- ----------------------------- -->
+    <!-- OWNER FUNCTIONS -->
+    <!-- ----------------------------- -->
+    <ng-container *ngIf="group['is:owner']">
+      <m-dropdownMenu__item (click)="toggleEdit()">
+        <span>
+          <ng-container *ngIf="!editing">Edit</ng-container>
+          <ng-container *ngIf="editing">Save</ng-container></span
+        >
+      </m-dropdownMenu__item>
 
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner'] && group.videoChatDisabled"
-      (click)="toggleVideoChat(true)"
-    >
-      Enable gathering
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner'] && !group.videoChatDisabled"
-      (click)="toggleVideoChat(false)"
-    >
-      Disable gathering
-    </li>
+      <m-dropdownMenu__item
+        *ngIf="group.videoChatDisabled"
+        (click)="toggleVideoChat(true)"
+      >
+        Enable gathering
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item
+        *ngIf="!group.videoChatDisabled"
+        (click)="toggleVideoChat(false)"
+      >
+        Disable gathering
+      </m-dropdownMenu__item>
 
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner'] && group.moderated"
-      (click)="toggleModeration(false)"
-    >
-      Disable moderation
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner'] && !group.moderated"
-      (click)="toggleModeration(true)"
-    >
-      Enable moderation
-    </li>
+      <m-dropdownMenu__item
+        *ngIf="group.moderated"
+        (click)="toggleModeration(false)"
+      >
+        Disable moderation
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item
+        *ngIf="!group.moderated"
+        (click)="toggleModeration(true)"
+      >
+        Enable moderation
+      </m-dropdownMenu__item>
 
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner'] && !group.membership"
-      (click)="togglePublic(true)"
-    >
-      Make public
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner'] && group.membership"
-      (click)="togglePublic(false)"
-    >
-      Make closed
-    </li>
+      <m-dropdownMenu__item
+        *ngIf="!group.membership"
+        (click)="togglePublic(true)"
+      >
+        Make public
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item
+        *ngIf="group.membership"
+        (click)="togglePublic(false)"
+      >
+        Make closed
+      </m-dropdownMenu__item>
+    </ng-container>
 
-    <!-- Member functions -->
+    <!-- ----------------------------- -->
+    <!-- MEMBER FUNCTIONS -->
+    <!-- ----------------------------- -->
     <ng-container *ngIf="group['is:member']">
-      <li
-        class="m-dropdownList__item"
+      <m-dropdownMenu__item
         [hidden]="group['is:muted']"
         (click)="mute()"
         i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
       >
         Disable notifications
-      </li>
-      <li
-        class="m-dropdownList__item"
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item
         [hidden]="!group['is:muted']"
         (click)="unmute()"
         i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
       >
         Enable notifications
-      </li>
+      </m-dropdownMenu__item>
     </ng-container>
 
-    <!-- admin functions -->
-    <li
-      class="m-dropdownList__item"
-      *ngIf="session.isAdmin() && !group.mature"
-      (click)="setExplicit(true)"
-      i18n="@@M__ACTION__SET_EXPLICIT"
-    >
-      Set explicit
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="session.isAdmin() && group.mature"
-      (click)="setExplicit(false)"
-      i18n="@@M__ACTION__REMOVE_EXPLICIT"
-    >
-      Remove explicit
-    </li>
-    <li
-      class="m-dropdownList__item m-groups-settings-dropdown__item--report"
+    <!-- ----------------------------- -->
+    <!-- REPORT (shown to everyone)-->
+    <!-- ----------------------------- -->
+    <m-dropdownMenu__item
+      class="m-groups-settings-dropdown__item--report"
       (click)="report(); showMenu = false"
     >
       <ng-container i18n="@@M__ACTION__REPORT">Report</ng-container>
-    </li>
-    <li
-      class="m-dropdownList__item m-groups-settings-dropdown__item--deleteGroup"
-      *ngIf="group['is:creator']"
-      [hidden]="group.deleted"
+    </m-dropdownMenu__item>
+
+    <!-- ----------------------------- -->
+    <!-- ADMIN FUNCTIONS -->
+    <!-- ----------------------------- -->
+    <ng-container *ngIf="session.isAdmin()">
+      <m-dropdownMenu__item
+        *ngIf="!group.mature"
+        (click)="setExplicit(true)"
+        i18n="@@M__ACTION__SET_EXPLICIT"
+      >
+        Set explicit
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item
+        *ngIf="group.mature"
+        (click)="setExplicit(false)"
+        i18n="@@M__ACTION__REMOVE_EXPLICIT"
+      >
+        Remove explicit
+      </m-dropdownMenu__item>
+
+      <!-- NSFW  -->
+      <m-nsfw-selector
+        service="editing"
+        [selected]="group.nsfw"
+        (selectedChange)="setNSFWSelected($event)"
+      ></m-nsfw-selector>
+    </ng-container>
+    <!-- ----------------------------- -->
+    <!-- CREATOR FUNCTIONS -->
+    <!-- ----------------------------- -->
+
+    <m-dropdownMenu__item
+      *ngIf="group['is:creator'] && !group.deleted"
+      class="m-groups-settings-dropdown__item--deleteGroup"
       (click)="deletePrompt()"
       i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP"
       data-cy="data-minds-group-dropdown-delete"
     >
       Delete group
-    </li>
-
-    <li
-      class="m-dropdownList__item m-groups-settings-dropdown__item--nsfw"
-      *ngIf="session.isAdmin()"
-    >
-      <m-nsfw-selector
-        service="editing"
-        [selected]="group.nsfw"
-        (selectedChange)="onNSFWSelected($event)"
-      >
-      </m-nsfw-selector>
-    </li>
+    </m-dropdownMenu__item>
   </ul>
-  <div
-    class="minds-bg-overlay"
-    (click)="toggleMenu($event)"
-    [hidden]="!showMenu"
-  ></div>
+</ng-template>
+<!-- --------------------- -->
+<m-modal [open]="featureModalOpen" (closed)="onFeatureModalClose($event)">
+  <div class="m-button-feature-modal">
+    <select [(ngModel)]="category">
+      <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY">
+        -- SELECT A CATEGORY --
+      </option>
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.label }}
+      </option>
+    </select>
 
-  <m-modal [open]="featureModalOpen" (closed)="onFeatureModalClose($event)">
-    <div class="m-button-feature-modal">
-      <select [(ngModel)]="category">
-        <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY">
-          -- SELECT A CATEGORY --
-        </option>
-        <option *ngFor="let category of categories" [value]="category.id">
-          {{ category.label }}
-        </option>
-      </select>
-
-      <button
-        class="mdl-button mdl-button--colored"
-        (click)="feature()"
-        i18n="@@M__ACTION__FEATURE"
-      >
-        Feature
-      </button>
-    </div>
-  </m-modal>
-</div>
+    <button
+      class="mdl-button mdl-button--colored"
+      (click)="feature()"
+      i18n="@@M__ACTION__FEATURE"
+    >
+      Feature
+    </button>
+  </div>
+</m-modal>

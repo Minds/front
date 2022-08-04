@@ -94,6 +94,12 @@ export class ActivityV2ContentComponent
   @Input() showPaywallBadge: boolean = false;
 
   /**
+   * Whether this is the post that was quoted
+   * (aka the inset post)
+   * */
+  @Input() wasQuoted: boolean = false;
+
+  /**
    * Used in activity modal
    */
   @Input() hideText: boolean = false;
@@ -119,8 +125,8 @@ export class ActivityV2ContentComponent
 
   maxFixedHeightContent: number = 300 * ACTIVITY_FIXED_HEIGHT_RATIO;
 
-  isRemind: boolean;
-  isQuote: boolean;
+  isRemind: boolean; // Is it a remind?
+  isQuote: boolean; // Is it a quote post (but not the post that was quoted)?
 
   activityHeight: number;
   quoteHeight: number;
@@ -547,9 +553,7 @@ export class ActivityV2ContentComponent
     }
     if (this.isFixedHeight || this.entity.custom_type !== 'batch') {
       this.imageHeight = null;
-    }
-
-    if (
+    } else if (
       this.entity.custom_data &&
       this.entity.custom_data[0] &&
       this.entity.custom_data[0].height &&
@@ -612,7 +616,7 @@ export class ActivityV2ContentComponent
 
     // if sidebarMode, navigate to canonicalUrl for all content types
     if (this.sidebarMode) {
-      this.router.navigateByUrl(this.canonicalUrl);
+      this.redirectToSinglePage();
       return;
     }
 
@@ -643,11 +647,28 @@ export class ActivityV2ContentComponent
   }
 
   /**
-   * Gets URL to redirect.
-   * @returns { string } - equals '' if url is not needed.
+   * When boost rotator fadeout is clicked,
+   * open modal (if image/video)
+   * OR
+   * redirect to single activity page
+   *
+   * Note: fadeout not used for status posts
    */
-  getRedirectUrl(): string {
-    return this.isFixedHeight ? `/newsfeed/${this.entity.guid}` : '';
+  onFixedHeightFadeoutClick($event): void {
+    if (!this.isFixedHeight) {
+      return;
+    }
+    $event.stopPropagation();
+
+    if (this.isImage || this.isVideo) {
+      this.onModalRequested($event);
+    } else {
+      this.redirectToSinglePage();
+    }
+  }
+
+  redirectToSinglePage(): void {
+    this.router.navigateByUrl(this.canonicalUrl);
   }
 
   onImageError(e: Event): void {}

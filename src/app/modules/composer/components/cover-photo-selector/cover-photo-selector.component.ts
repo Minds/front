@@ -7,7 +7,7 @@ import { VideoPoster } from '../../services/video-poster.service';
 
 /**
  * Allows users to upload a custom cover photo for a video post.
- * Used in <m-composer__preview>
+ * Used in <m-composer__previewWrapper>
  */
 @Component({
   selector: 'm-composer__coverPhotoSelector',

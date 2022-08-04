@@ -1,3 +1,5 @@
+@import 'defaults';
+
 $rounded-top: 2px 2px 0 0;
 $rounded-bottom: 0 0 2px 2px;
 
@@ -51,6 +53,10 @@ m-dropdownSelector {
     }
     .m-dropdownSelector__optionsContainer {
       display: block;
+
+      @include vertical-scroll(
+        $scrollbarContrastColor: '#{$m-bgColor--contrast}'
+      );
     }
 
     &:not(.dropUp) {
@@ -121,6 +127,7 @@ m-dropdownSelector {
   padding: $spacing2 0;
   left: 0px;
   transition: all 150ms ease-in-out;
+
   @include m-theme() {
     border: 1px solid themed($m-borderColor--primary);
     background-color: themed($m-bgColor--primary);

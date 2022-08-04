@@ -8,7 +8,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { TokenOnboardingModule } from '../wallet/tokens/onboarding/onboarding.module';
 import { ReportCreatorComponent } from './creator/creator.component';
 import { ReportConsoleComponent } from './console/console.component';
-import { ReportsMarketingComponent } from './marketing/marketing.component';
+import { ReportsContentPolicyComponent } from './content-policy/content-policy.component';
 import { JuryDutySessionComponent } from './juryduty/session/session.component';
 import { CommentsModule } from '../comments/comments.module';
 import { JuryDutySessionListComponent } from './juryduty/session/list.component';
@@ -34,7 +34,7 @@ import { MarketingModule } from '../marketing/marketing.module';
       //{ path: 'moderation',  redirectTo: '/content-policy' },
       {
         path: 'content-policy',
-        component: ReportsMarketingComponent,
+        component: ReportsContentPolicyComponent,
         data: {
           title: 'Content Policy',
           description:
@@ -59,7 +59,7 @@ import { MarketingModule } from '../marketing/marketing.module';
   declarations: [
     ReportCreatorComponent,
     ReportConsoleComponent,
-    ReportsMarketingComponent,
+    ReportsContentPolicyComponent,
     JuryDutySessionComponent,
     JuryDutySessionListComponent,
     JuryDutySessionContentComponent,

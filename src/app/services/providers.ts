@@ -45,7 +45,7 @@ import { GlobalScrollService } from './ux/global-scroll.service';
 import { AuthService } from './auth.service';
 import { SiteService } from '../common/services/site.service';
 import { SessionsStorageService } from './session-storage.service';
-import { FormToastService } from '../common/services/form-toast.service';
+import { ToasterService } from '../common/services/toaster.service';
 import { ConfigsService } from '../common/services/configs.service';
 import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
 import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
@@ -243,7 +243,7 @@ export const MINDS_PROVIDERS: any[] = [
   },
   ThemeService,
   AuthService,
-  FormToastService,
+  ToasterService,
   MessengerService,
   ServiceWorkerService,
   PushNotificationService,

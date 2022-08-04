@@ -371,7 +371,7 @@ minds-button-user-dropdown {
   .m-user-dropdown__item--nsfw {
     overflow: visible;
 
-    m-nsfw-selector {
+    m-nsfwSelector {
       border: 0;
       width: 100%;
       padding: 0;
@@ -380,10 +380,6 @@ minds-button-user-dropdown {
         m-tooltip {
           display: none;
         }
-      }
-
-      .m-dropdown .m-dropdown__list {
-        width: 210px;
       }
     }
   }

@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class YoutubeMigrationSetupModalComponent {
     protected youtubeService: YoutubeMigrationService,
     protected modalService: ModalService,
     protected cd: ChangeDetectorRef,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   async submit(autoImport: boolean) {

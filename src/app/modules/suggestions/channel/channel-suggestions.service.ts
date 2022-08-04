@@ -55,14 +55,32 @@ export class SuggestionsService {
           .toPromise();
         suggestions = response.entities;
       } else {
-        const response: any = await this.client.get(
-          `api/v2/suggestions/${opts.type}`,
-          {
-            limit: opts.limit,
-            offset: this.lastOffset,
-          }
-        );
-        suggestions = response.suggestions;
+        if (opts.type === 'user') {
+          const response = await this.api
+            .get(
+              'api/v3/subscriptions/relational/subscriptions-of-subscriptions',
+              {
+                limit: opts.limit,
+                offset: this.lastOffset,
+              }
+            )
+            .toPromise();
+          suggestions = response.users.map(user => {
+            return {
+              entity: user,
+            };
+          });
+        } else {
+          // Groups
+          const response: any = await this.client.get(
+            `api/v2/suggestions/${opts.type}`,
+            {
+              limit: opts.limit,
+              offset: this.lastOffset,
+            }
+          );
+          suggestions = response.suggestions;
+        }
       }
 
       for (let suggestion of suggestions) {

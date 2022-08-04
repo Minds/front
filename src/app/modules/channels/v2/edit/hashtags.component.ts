@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { combineLatest, EMPTY, Observable } from 'rxjs';
 import { catchError, filter, map, take, tap } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { TypeaheadInputComponent } from '../../../hashtags/typeahead-input/typeahead-input.component';
 import { ChannelEditService } from './edit.service';
 
@@ -30,7 +30,7 @@ export class ChannelEditHashtagsComponent extends AbstractSubscriberComponent {
    */
   constructor(
     public service: ChannelEditService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {
     super();
   }

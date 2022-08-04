@@ -36,6 +36,9 @@ import { ContextService } from '../../../services/context.service';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
 import { ComposerComponent } from '../../composer/composer.component';
+import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 import { NewsfeedService } from '../services/newsfeed.service';
@@ -150,7 +153,7 @@ export class NewsfeedSubscribedComponent
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
-    private toast: FormToastService,
+    private toast: ToasterService,
     private experiments: ExperimentsService,
     private scrollRestoration: ScrollRestorationService,
     @SkipSelf() injector: Injector,

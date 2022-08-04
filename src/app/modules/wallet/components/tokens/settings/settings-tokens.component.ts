@@ -27,7 +27,7 @@ import { getBrowser } from '../../../../../utils/browser';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
 import { Subscription } from 'rxjs';
 import { ethers } from 'ethers';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
 enum Views {
   CreateAddress = 1,
@@ -81,7 +81,7 @@ export class WalletSettingsTokensComponent
     configs: ConfigsService,
     protected el: ElementRef,
     @Inject(PLATFORM_ID) protected platformId: Object,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }

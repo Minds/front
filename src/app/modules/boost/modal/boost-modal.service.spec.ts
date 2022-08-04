@@ -4,7 +4,7 @@ import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-moc
 
 import { BoostModalService } from './boost-modal.service';
 
-export let toastServiceMock = new (function() {
+export let toasterServiceMock = new (function() {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
@@ -30,7 +30,7 @@ xdescribe('BoostModalService', () => {
 
     service = new BoostModalService(
       apiServiceMock,
-      toastServiceMock,
+      toasterServiceMock,
       web3WalletServiceMock,
       boostContractServiceMock
     );

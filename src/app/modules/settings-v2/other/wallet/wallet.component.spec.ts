@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { SettingsV2WalletComponent } from './wallet.component';
@@ -35,8 +35,8 @@ describe('SettingsV2WalletComponent', () => {
             useValue: MockService(SettingsV2WalletService),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

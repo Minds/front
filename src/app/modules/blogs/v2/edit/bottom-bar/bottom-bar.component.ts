@@ -3,7 +3,7 @@ import { BlogsEditService } from '../blog-edit.service';
 import { CaptchaModalComponent } from '../../../../captcha/captcha-modal/captcha-modal.component';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Captcha } from '../../../../captcha/captcha.component';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ModalService } from '../../../../../services/ux/modal.service';
 
 export type BlogsBottomBarContainerType = 'tags' | 'meta' | 'monetize' | '';
@@ -37,7 +37,7 @@ export class BlogEditorBottomBarComponent {
 
   constructor(
     public service: BlogsEditService,
-    private toast: FormToastService,
+    private toast: ToasterService,
     private modalService: ModalService
   ) {}
 

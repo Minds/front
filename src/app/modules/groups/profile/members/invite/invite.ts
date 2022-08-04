@@ -3,7 +3,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { Client } from '../../../../../services/api';
 import { GroupsService } from '../../../groups.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
 /**
  * Panel shown to public group members and closed group owners
@@ -40,7 +40,7 @@ export class GroupsProfileMembersInvite {
     public client: Client,
     public service: GroupsService,
     configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }

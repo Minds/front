@@ -77,48 +77,6 @@
     background-color: themed($m-bgColor--primary);
   }
 
-  minds-groups-settings-button.m-button {
-    > button.material-icons {
-      border: 0;
-      font-size: 18px;
-      padding: 14px 8px 14px 4px;
-
-      transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-      &:hover {
-        @include m-theme() {
-          color: themed($m-textColor--primary);
-        }
-      }
-      i {
-        font-size: 18px;
-      }
-    }
-
-    .m-groups-settings-dropdown__item--nsfw {
-      overflow: visible;
-
-      m-nsfw-selector {
-        border: 0;
-        width: 100%;
-        padding: 0;
-
-        .m-nsfwSelector__label {
-          m-tooltip {
-            display: none;
-          }
-        }
-
-        .m-dropdown .m-dropdown__list {
-          width: 210px;
-        }
-      }
-    }
-  }
-
   minds-avatar {
     width: 100px;
     height: 100px;

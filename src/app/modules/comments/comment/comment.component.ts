@@ -35,7 +35,7 @@ import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
 import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
@@ -108,9 +108,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     newHeight: number;
   }> = new EventEmitter();
 
-  menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  posterMenuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
   // Compact view may be determined by input or window width
   // and is not used by activity V2
   _compact: boolean = false;
@@ -147,7 +144,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     protected featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
     configs: ConfigsService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     private activityModalCreator: ActivityModalCreatorService,
     private injector: Injector,
     public suggestions: AutocompleteSuggestionsService,
@@ -335,8 +332,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
           file.value = null;
         }
       });
-
-    this.posterMenuOpened$.next(false);
   }
 
   removeAttachment(file: HTMLInputElement) {
@@ -469,17 +464,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.onRepliesToggled.emit(this.showReplies);
   }
 
-  onMenuClick(e: MouseEvent): void {
-    this.menuOpened$.next(true);
-  }
-
-  onPosterMenuClick(e: MouseEvent): void {
-    this.posterMenuOpened$.next(true);
-  }
-
   toggleExplicit(e: MouseEvent): void {
     this.attachment.toggleMature();
-    this.posterMenuOpened$.next(false);
   }
 
   /**

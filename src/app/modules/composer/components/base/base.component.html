@@ -14,7 +14,7 @@
       (onCreateBlog)="createBlog()"
     ></m-composer__titleBar>
     <div class="m-composerBase__scrollableArea">
-      <m-composer__preview></m-composer__preview>
+      <m-composer__previewWrapper></m-composer__previewWrapper>
 
       <m-composer__progress
         [inProgress]="inProgress$ | async"
@@ -29,9 +29,9 @@
         #textAreaComponent
       ></m-composer__textArea>
 
-      <m-composerRemindPreview
+      <m-composerPreview--quote
         *ngIf="remind$ | async"
-      ></m-composerRemindPreview>
+      ></m-composerPreview--quote>
     </div>
     <m-composer__toolbar
       (onPost)="onPost($event)"

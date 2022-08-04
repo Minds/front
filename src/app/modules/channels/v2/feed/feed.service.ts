@@ -22,7 +22,7 @@ import {
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
 import { Router } from '@angular/router';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { ChannelsV2Service } from '../channels-v2.service';
 
 // Compare objs
@@ -81,7 +81,7 @@ export class FeedService {
     public service: FeedsService,
     protected api: ApiService,
     protected router: Router,
-    private toast: FormToastService,
+    private toast: ToasterService,
     protected channelsService: ChannelsV2Service
   ) {
     // Fetch when GUID or filter change

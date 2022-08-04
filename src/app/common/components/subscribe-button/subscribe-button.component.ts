@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Session } from '../../../services/session';
-import { FormToastService } from '../../services/form-toast.service';
+import { ToasterService } from '../../services/toaster.service';
 import { SubscriptionService } from '../../services/subscription.service';
 import { MindsUser } from './../../../interfaces/entities';
 
@@ -50,7 +50,7 @@ export class SubscribeButtonComponent implements OnInit {
   constructor(
     public session: Session,
     public authModal: AuthModalService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected cd: ChangeDetectorRef,
     protected subscriptionService: SubscriptionService
   ) {}

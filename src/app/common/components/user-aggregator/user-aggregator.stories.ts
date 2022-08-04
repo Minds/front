@@ -1,5 +1,6 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { Story, Meta, moduleMetadata } from '@storybook/angular';
+import { NgxPopperjsModule } from 'ngx-popperjs';
 import { sampleUsers } from '../../../../tests/samples/sample-users';
 import { Session } from '../../../services/session';
 import { CommonModule } from '../../common.module';
@@ -37,7 +38,7 @@ export default {
   args: {},
   decorators: [
     moduleMetadata({
-      imports: [CommonModule, RouterTestingModule],
+      imports: [RouterTestingModule, NgxPopperjsModule],
       providers: [
         {
           provide: ConfigsService,
