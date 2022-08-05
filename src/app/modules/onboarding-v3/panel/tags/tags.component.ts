@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { DefaultTagsV2ExperimentService } from '../../../experiments/sub-services/default-tags-v2-experiment.service';
 import { OnboardingV3TagsService, Tag } from './tags.service';
 
 /**
@@ -9,12 +10,21 @@ import { OnboardingV3TagsService, Tag } from './tags.service';
   selector: 'm-onboardingV3__tags',
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.ng.scss'],
+  host: {
+    '[class.m-onboardingV3__tags--fullWidth]': 'defaultTagsV2ExperimentActive',
+  },
 })
 export class OnboardingV3TagsComponent implements OnInit {
-  constructor(private service: OnboardingV3TagsService) {}
+  public defaultTagsV2ExperimentActive = false;
+
+  constructor(
+    private service: OnboardingV3TagsService,
+    private defaultTagsV2Experiment: DefaultTagsV2ExperimentService
+  ) {}
 
   ngOnInit() {
     // load tags on init
+    this.defaultTagsV2ExperimentActive = this.defaultTagsV2Experiment.isActive();
     this.service.loadTags();
   }
 

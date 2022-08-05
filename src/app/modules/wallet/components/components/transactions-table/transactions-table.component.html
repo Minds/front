@@ -26,10 +26,35 @@
 
             <!-- BOOSTS -->
             <ng-template ngSwitchCase="boost">
-              <div class="m-walletTransactionsTable__typeWrapper--boost">
-                <i class="material-icons">trending_up</i
-                ><span>{{ getTypeLabel(tx.type) }}ed Content</span>
-              </div>
+              <ng-container *ngIf="!tx.otherUser; else boostOfferTemplate">
+                <div class="m-walletTransactionsTable__typeWrapper--boost">
+                  <i class="material-icons">trending_up</i
+                  ><span>{{ getTypeLabel(tx.type) }}ed Content</span>
+                </div></ng-container
+              >
+
+              <ng-template #boostOfferTemplate>
+                <div
+                  class="m-walletTransactionsTable__typeWrapper--boost"
+                  *ngIf="tx.otherUser"
+                >
+                  <img
+                    class="m-walletTransactionsTable__avatar"
+                    [routerLink]="['/', tx.otherUser.username]"
+                    [src]="tx.otherUser.avatar"
+                  />
+                  <span
+                    >{{ getTypeLabel(tx.type) }} Offer
+                    {{ tx.otherUser.isSender ? 'from' : 'to' }}
+                    <a
+                      class="m-walletTransactionsTable__otherUserLink"
+                      [routerLink]="['/', tx.otherUser.username]"
+                    >
+                      @{{ tx.otherUser.username }}</a
+                    ></span
+                  >
+                </div>
+              </ng-template>
             </ng-template>
 
             <ng-template ngSwitchCase="boost_refund">
