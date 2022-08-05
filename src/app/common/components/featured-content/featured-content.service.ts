@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
-import { filter, first, switchMap, mergeMap, skip, take } from 'rxjs/operators';
+import {
+  filter,
+  first,
+  switchMap,
+  mergeMap,
+  skip,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 import { Subscription } from 'rxjs';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 
 @Injectable()
 export class FeaturedContentService {
@@ -11,10 +18,7 @@ export class FeaturedContentService {
   feedLength = 0;
   protected feedSubscription: Subscription;
 
-  constructor(
-    protected feedsService: FeedsService,
-    private experiments: ExperimentsService
-  ) {
+  constructor(protected feedsService: FeedsService) {
     this.onInit();
   }
 
@@ -33,19 +37,26 @@ export class FeaturedContentService {
       .fetch();
   }
 
-  async fetch() {
+  async fetch(slot?: number) {
+    const slotProvided = typeof slot === 'number';
     return await this.feedsService.feed
       .pipe(
         filter(entities => entities.length > 0),
         mergeMap(feed => feed), // Convert feed array to stream
-        skip(this.offset++),
+        skip(slotProvided ? slot - 1 : this.offset),
         take(1),
         switchMap(async entity => {
+          this.offset++;
+
           if (!entity) {
             return false;
           } else {
             const resolvedEntity = await entity.pipe(first()).toPromise();
-            this.resetOffsetAtEndOfStream();
+            if (!slotProvided) {
+              this.resetOffsetAtEndOfStream();
+            } else {
+              // TODO PERSISTENT FEED: first try to load more with the current feed, if we didn't have more, don't clear the feed
+            }
             return resolvedEntity;
           }
         })

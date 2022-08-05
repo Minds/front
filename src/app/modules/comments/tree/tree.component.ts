@@ -29,16 +29,7 @@ import { CommentsService } from '../comments.service';
 @Component({
   selector: 'm-comments__tree',
   templateUrl: 'tree.component.html',
-  providers: [
-    AttachmentService,
-    {
-      provide: CommentsService,
-      useFactory: (_route, _client) => {
-        return new CommentsService(_route, _client);
-      },
-      deps: [ActivatedRoute, Client],
-    },
-  ],
+  providers: [AttachmentService, CommentsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsTreeComponent {

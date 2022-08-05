@@ -2,7 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
+  OnInit,
+  Output,
 } from '@angular/core';
 
 @Component({
@@ -32,7 +35,14 @@ export class ReadMoreComponent {
   /**
    * Controls if the read more should be toggled off. False shows ellipses
    */
+  @Input()
   showAll = false;
+
+  /**
+   * emits changes to showAll
+   */
+  @Output()
+  showAllChanged = new EventEmitter();
 
   constructor(private cd: ChangeDetectorRef) {}
 
@@ -67,6 +77,7 @@ export class ReadMoreComponent {
    */
   toggle(): void {
     this.showAll = !this.showAll;
+    this.showAllChanged.emit(this.showAll);
 
     this.cd.markForCheck();
     this.cd.detectChanges();

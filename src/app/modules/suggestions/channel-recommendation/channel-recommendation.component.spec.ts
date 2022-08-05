@@ -6,6 +6,8 @@ import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
 import { ChannelRecommendationComponent } from './channel-recommendation.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { MockService } from '../../../utils/mock';
+import { ApiResource } from '../../../common/api/api-resource.service';
+import apiResourceMock from '../../../common/api/api-resource-mock';
 
 describe('ChannelRecommendationComponent', () => {
   let component: ChannelRecommendationComponent;
@@ -31,6 +33,7 @@ describe('ChannelRecommendationComponent', () => {
           provide: AnalyticsService,
           useValue: MockService(AnalyticsService),
         },
+        { provide: ApiResource, useValue: apiResourceMock },
       ],
     }).compileComponents();
   });

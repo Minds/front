@@ -12,6 +12,7 @@ import { CommentComponentV2 } from './comment/comment.component';
 import { CommentPosterComponent } from './poster/poster.component';
 import { CommentsTreeComponent } from './tree/tree.component';
 import { CommentsThreadComponent } from './thread/thread.component';
+import { CommentsThreadV2Component } from './thread/thread-v2.component';
 import { CommentsService } from './comments.service';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
@@ -38,6 +39,7 @@ import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outle
     CommentPosterComponent,
     CommentsTreeComponent,
     CommentsThreadComponent,
+    CommentsThreadV2Component,
     CommentsEntityOutletComponent,
     CommentsEntityOutletV2Component,
   ],
@@ -47,6 +49,7 @@ import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outle
     CommentPosterComponent,
     CommentsTreeComponent,
     CommentsThreadComponent,
+    CommentsThreadV2Component,
     CommentsEntityOutletComponent,
     CommentsEntityOutletV2Component,
   ],

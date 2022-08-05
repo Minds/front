@@ -238,6 +238,8 @@ post content to trigger upgrade modal -->
         >
           <!-- Truncate text for boost rotator posts that contain more than just text -->
           <m-readMore
+            [showAll]="service.displayOptions.expandedText"
+            (showAllChanged)="onReadMoreChanged($event)"
             [text]="bodyText"
             [targetLength]="isFixedHeight && !isStatus ? 180 : 280"
           ></m-readMore>

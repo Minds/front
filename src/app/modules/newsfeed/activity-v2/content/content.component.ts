@@ -677,4 +677,10 @@ export class ActivityV2ContentComponent
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+  onReadMoreChanged(expandedText: boolean) {
+    this.service.setDisplayOptions({
+      expandedText,
+    });
+  }
 }

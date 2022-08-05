@@ -76,7 +76,8 @@
           width: 100%;
           display: block;
           height: auto;
-          max-height: 400px;
+          // TODO PERSISTENT FEED: make sure we have a stable height here
+          // height: 400px;
           object-fit: cover;
 
           border-radius: 0;

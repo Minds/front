@@ -94,6 +94,7 @@
     "ngx-image-cropper": "^4.0.1",
     "ngx-plyr": "^4.0.0",
     "ngx-popperjs": "^12.1.2",
+    "ngx-virtual-scroller": "^4.0.3",
     "node-cache": "^5.1.2",
     "os-browserify": "^0.3.0",
     "plotly.js": "^2.2.1",

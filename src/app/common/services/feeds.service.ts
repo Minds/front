@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Injectable, OnDestroy } from '@angular/core';
 import {
   BehaviorSubject,
@@ -6,14 +7,32 @@ import {
   Observable,
   Subscription,
 } from 'rxjs';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import {
+  filter,
+  first,
+  map,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { ApiService } from '../api/api.service';
 import { BlockListService } from './block-list.service';
 import { EntitiesService } from './entities.service';
+import { StorageV2 } from '../../services/storage/v2';
+import { FeedItemType } from '../../modules/newsfeed/feed/feed.component';
 
 export const NEW_POST_POLL_INTERVAL = 30000;
+
+export type InjectItem = {
+  /**
+   * the indexes in the feed this item should be inserted
+   */
+  indexes: number[] | ((index: number, feedLength: number) => boolean);
+  type: FeedItemType;
+};
 
 /**
  * Enables the grabbing of data through observable feeds.
@@ -63,18 +82,27 @@ export class FeedsService implements OnDestroy {
    * feed length
    */
   feedLength: number;
+  /**
+   * whether the feed is rehydrated. Used to not rehydrate again
+   */
+  rehydrated = false;
+  /**
+   * whether the feed is rehydrated. Used to not rehydrate again
+   */
+  cachingEnabled = false;
+  injectItems: InjectItem[] = [];
 
   constructor(
     protected client: Client,
     protected api: ApiService,
     protected session: Session,
     protected entitiesService: EntitiesService,
-    protected blockListService: BlockListService
+    protected blockListService: BlockListService,
+    protected storage: StorageV2
   ) {
     this.pageSize = this.offset.pipe(
       map(offset => this.limit.getValue() + offset)
     );
-
     this.feed = this.rawFeed.pipe(
       tap(feed => {
         if (feed.length) this.inProgress.next(true);
@@ -182,6 +210,9 @@ export class FeedsService implements OnDestroy {
    */
   setOffset(offset: number): FeedsService {
     this.offset.next(offset);
+    if (this.cachingEnabled) {
+      this._persist();
+    }
     return this;
   }
 
@@ -225,6 +256,15 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Sets whether the feed should use cache or not
+   * @param { boolean } value
+   */
+  setCachingEnabled(value: boolean) {
+    this.cachingEnabled = value;
+    return this;
+  }
+
+  /**
    * Fetches the data.
    */
   fetch(refresh: boolean = false): Promise<any> {
@@ -249,6 +289,16 @@ export class FeedsService implements OnDestroy {
 
     if (!this.newPostsLastCheckedAt) {
       this.newPostsLastCheckedAt = Date.now();
+    }
+
+    if (this.cachingEnabled) {
+      const rehydratedFeed = this._rehydrate();
+
+      // TODO: figure out the right conditional here
+      if (rehydratedFeed) {
+        this.checkForNewPosts();
+        return;
+      }
     }
 
     return this.client
@@ -291,6 +341,10 @@ export class FeedsService implements OnDestroy {
           }
         } else {
           this.canFetchMore = false;
+        }
+
+        if (this.cachingEnabled) {
+          this._persist();
         }
       })
       .catch(e => {
@@ -386,15 +440,27 @@ export class FeedsService implements OnDestroy {
     api: ApiService,
     session: Session,
     entitiesService: EntitiesService,
-    blockListService: BlockListService
+    blockListService: BlockListService,
+    storage: StorageV2
   ) {
     return new FeedsService(
       client,
       api,
       session,
       entitiesService,
-      blockListService
+      blockListService,
+      storage
     );
+  }
+
+  private async checkForNewPosts() {
+    if (!this.countEndpoint) return null;
+
+    const count = await this.count(this.newPostsLastCheckedAt).toPromise();
+    if (count) {
+      this.newPostsCount$.next(this.newPostsCount$.getValue() + count);
+    }
+    this.newPostsLastCheckedAt = Date.now();
   }
 
   /**
@@ -414,5 +480,56 @@ export class FeedsService implements OnDestroy {
         this.newPostsLastCheckedAt = Date.now();
       });
     return () => this.newPostWatcherSubscription?.unsubscribe();
+  }
+
+  /**
+   * persists the feed state to memory
+   * @returns { void }
+   */
+  private _persist(feed = this.rawFeed.getValue()) {
+    if (!feed?.length) return;
+
+    return this.storage.memory.setFeedState(
+      this.endpoint,
+      window.location.pathname,
+      {
+        rawFeed: feed,
+        fallbackAt: this.fallbackAt,
+        pagingToken: this.pagingToken,
+        newPostsLastCheckedAt: this.newPostsLastCheckedAt,
+        fallbackAtIndex: this.fallbackAtIndex.getValue(),
+        offset: this.offset.getValue(),
+        limit: this.limit.getValue(),
+        newPostsCount: this.newPostsCount$.getValue(),
+      }
+    );
+  }
+
+  /**
+   * rehydrates the feed state from memory
+   * @returns { void }
+   */
+  private _rehydrate(update = true) {
+    if (this.rehydrated) return; // don't depend on this
+
+    const inMemoryFeedState = this.storage.memory.getFeedState(
+      this.endpoint,
+      window.location.pathname
+    );
+
+    if (inMemoryFeedState && update) {
+      this.fallbackAt = inMemoryFeedState.fallbackAt;
+      this.fallbackAtIndex.next(inMemoryFeedState.fallbackAtIndex);
+      this.offset.next(inMemoryFeedState.offset);
+      this.pagingToken = inMemoryFeedState.pagingToken;
+      this.newPostsLastCheckedAt = inMemoryFeedState.newPostsLastCheckedAt;
+      this.limit.next(inMemoryFeedState.limit);
+      this.newPostsCount$.next(inMemoryFeedState.newPostsCount);
+      this.rawFeed.next(inMemoryFeedState.rawFeed || []);
+    }
+
+    this.rehydrated = true;
+
+    return inMemoryFeedState;
   }
 }

@@ -8,6 +8,8 @@ import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { StorageV2 } from '../../../services/storage/v2';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
@@ -36,6 +38,14 @@ export type ActivityDisplayOptions = {
   isSingle: boolean; // is this the activity featured on a single post page?
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
+  /**
+   * whether the read-more is expanded
+   */
+  expandedText: boolean;
+  /**
+   * a key value of comment URNs and whether they're expanded or not
+   */
+  expandedReplies: { [k: string]: boolean };
 };
 
 export type ActivityEntity = {
@@ -322,21 +332,25 @@ export class ActivityService {
     isSingle: false,
     isV2: false,
     permalinkBelowContent: false,
+    expandedText: false,
+    expandedReplies: {},
   };
-
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
-
+  cachingEnabled = false;
   activityV2Feature: boolean = false;
 
   constructor(
     private configs: ConfigsService,
     private session: Session,
     private featuresService: FeaturesService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private activityV2Experiment: ActivityV2ExperimentService,
+    private persistentFeedExperiment: PersistentFeedExperimentService,
+    private storage: StorageV2
   ) {
     this.siteUrl = configs.get('site_url');
-
     this.activityV2Feature = this.activityV2Experiment.isActive();
+    this.displayOptions.showOnlyCommentsToggle = this.activityV2Feature;
+    this.cachingEnabled = this.persistentFeedExperiment.isActive();
   }
 
   /**
@@ -354,6 +368,16 @@ export class ActivityService {
       entity.activity_type = getActivityContentType(entity);
     }
     this.entity$.next(entity);
+
+    if (this.cachingEnabled) {
+      const displayOptions = this.storage.memory.getActivityDisplayOptions(
+        this.entity$.getValue().guid
+      );
+      if (displayOptions) {
+        this.setDisplayOptions(displayOptions);
+      }
+    }
+
     return this;
   }
 
@@ -362,8 +386,18 @@ export class ActivityService {
    * @param options
    * @return ActivityService
    */
-  setDisplayOptions(options: Object = {}): ActivityService {
+  setDisplayOptions(
+    options: Partial<ActivityDisplayOptions> = {}
+  ): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
+
+    if (this.cachingEnabled) {
+      // TODO: make this specific to the feed
+      this.storage.memory.setActivityDisplayOptions(
+        this.entity$.getValue().guid,
+        this.displayOptions
+      );
+    }
 
     if (this.activityV2Feature) {
       this.displayOptions.isV2 = true;

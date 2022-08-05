@@ -62,8 +62,6 @@ import { SocketsService } from '../services/sockets';
 import { HttpClient } from '@angular/common/http';
 import { AndroidAppDownloadComponent } from './components/android-app-download-button/button.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
-import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { FeedsService } from './services/feeds.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
@@ -164,6 +162,7 @@ import { ReportService } from './services/report.service';
 import { UserAggregatorComponent } from './components/user-aggregator/user-aggregator.component';
 import { ViewedDirective } from './directives/viewed.directive';
 import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
+import { ApiResource } from './api/api-resource.service';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -340,21 +339,13 @@ const routes: Routes = [
     },
     NSFWSelectorCreatorService,
     NSFWSelectorConsumerService,
-    {
-      provide: FeaturedContentService,
-      useFactory: (
-        boostedContentService: FeedsService,
-        experimentsService: ExperimentsService
-      ): FeaturedContentService =>
-        new FeaturedContentService(boostedContentService, experimentsService),
-      deps: [FeedsService, ExperimentsService],
-    },
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
     RelatedContentService,
     RegexService,
     ApiService,
+    ApiResource,
     AttachmentApiService,
     ClientMetaService,
     DownloadActivityMediaService,

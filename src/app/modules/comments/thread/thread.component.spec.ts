@@ -22,10 +22,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
-import { ActivityService } from '../../../common/services/activity.service';
+import { ActivityService as LegacyActivityService } from '../../../common/services/activity.service';
+import { ActivityService } from '../../newsfeed/activity/activity.service';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { LoadingSpinnerComponent } from '../../../common/components/loading-spinner/loading-spinner.component';
+import { ApiResource } from '../../../common/api/api-resource.service';
 
 let commentsServiceMock: any = MockService(CommentsService, {
   get: Promise.resolve(true),
@@ -82,7 +84,12 @@ describe('CommentsThreadComponent', () => {
           },
           { provide: CommentsService, useValue: commentsServiceMock },
           { provide: SocketsService, useValue: MockService(SocketsService) },
+          {
+            provide: LegacyActivityService,
+            useValue: MockService(LegacyActivityService),
+          },
           { provide: ActivityService, useValue: MockService(ActivityService) },
+          { provide: ApiResource, useValue: MockService(ApiResource) },
         ],
       }).compileComponents();
     })
@@ -114,7 +121,6 @@ describe('CommentsThreadComponent', () => {
     };
     comp.level = 1;
 
-    comp.activityService.allowComment$ = new BehaviorSubject<boolean>(true);
     comp.sockets.error$ = new BehaviorSubject<boolean>(false);
 
     fixture.detectChanges();

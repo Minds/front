@@ -1,6 +1,6 @@
-import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
 import {
+  AfterViewInit,
   Component,
   HostBinding,
   Input,
@@ -9,11 +9,15 @@ import {
   SkipSelf,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ApiResource } from '../../../common/api/api-resource.service';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
+import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
@@ -29,6 +33,23 @@ const listAnimation = trigger('listAnimation', [
   ),
 ]);
 
+interface ChannelRecommendationResponse {
+  algorithm: string;
+  entities: {
+    entity_guid: string;
+    entity_type: string;
+    confidence_score: number;
+    entity: MindsUser;
+  }[];
+}
+
+interface ChannelRecommendationParams {
+  location: string;
+  mostRecentSubscriptions: string[];
+  currentChannelUserGuid: string;
+  limit: number;
+}
+
 /**
  * Displays channel recommendations
  *
@@ -40,7 +61,7 @@ const listAnimation = trigger('listAnimation', [
   styleUrls: ['./channel-recommendation.component.ng.scss'],
   animations: [listAnimation],
 })
-export class ChannelRecommendationComponent implements OnInit {
+export class ChannelRecommendationComponent implements OnInit, AfterViewInit {
   /**
    * the location in which this component appears
    */
@@ -67,16 +88,29 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   @Input()
   dismissible: boolean = false;
+  disabledAnimations$ = new BehaviorSubject(true); // disabled by default, will enable after component mounts
   /**
    * the height of the container, used to animate the mount and unmount of this component
    */
-  containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
-  /** a list of recommended channels */
-  recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
+  containerHeight$: BehaviorSubject<number> = new BehaviorSubject(undefined);
   /**
    * How many recommendations to show at a time?
    */
   listSize$: BehaviorSubject<number> = new BehaviorSubject(3);
+
+  channelRecommendationQuery = this.apiResource.query<
+    ChannelRecommendationResponse,
+    ChannelRecommendationParams
+  >('api/v3/recommendations', {
+    cacheStorage: ApiResource.CacheStorage.Memory,
+    cachePolicy: ApiResource.CachePolicy.cacheFirst,
+    skip: true,
+  });
+
+  /** a list of recommended channels */
+  recommendations$ = this.channelRecommendationQuery.data$.pipe(
+    map(data => data?.entities.map(e => e.entity).filter(Boolean))
+  );
 
   constructor(
     private api: ApiService,
@@ -85,7 +119,9 @@ export class ChannelRecommendationComponent implements OnInit {
     private activityV2Experiment: ActivityV2ExperimentService,
     private dismissal: DismissalService,
     private analyticsService: AnalyticsService,
-    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    private apiResource: ApiResource,
+    private persistentFeedExperiment: PersistentFeedExperimentService
   ) {}
 
   @HostBinding('class.m-channelRecommendation--activityV2')
@@ -95,20 +131,19 @@ export class ChannelRecommendationComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.location) {
-      this.api
-        .get('api/v3/recommendations', {
-          location: this.location,
-          mostRecentSubscriptions: this.recentSubscriptions.list(),
-          currentChannelUserGuid: this.channelId,
-          limit: 12,
-        })
-        .toPromise()
-        .then(result => {
-          if (result) {
-            this.recommendations$.next(result.entities.map(e => e.entity));
-          }
-        });
+      this.channelRecommendationQuery.fetch({
+        location: this.location,
+        mostRecentSubscriptions: this.recentSubscriptions.list(),
+        currentChannelUserGuid: this.channelId,
+        limit: 12,
+      });
     }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.disabledAnimations$.next(false);
+    });
   }
 
   /**
@@ -152,15 +187,24 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   onSubscribed(user): void {
     if (this.listSize$.getValue() === 3) {
-      this.listSize$.next(5);
+      if (!this.persistentFeedExperiment.isActive()) {
+        this.listSize$.next(5);
+      }
     }
 
-    if (this.recommendations$.getValue().length <= 3) {
+    if (
+      this.channelRecommendationQuery.data$.getValue()?.entities.length <= 3
+    ) {
       return;
     }
 
-    this.recommendations$.next(
-      this.recommendations$.getValue().filter(u => u.guid !== user.guid)
-    );
+    this.channelRecommendationQuery.setData(data => ({
+      ...data,
+      entities: data?.entities.filter(u => u.entity?.guid !== user.guid),
+    }));
+  }
+
+  channelTrackBy(index: number, activity: any) {
+    return activity?.guid;
   }
 }

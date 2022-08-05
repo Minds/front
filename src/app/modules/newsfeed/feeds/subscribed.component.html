@@ -55,56 +55,72 @@
         *ngIf="shouldShowChannelRecommendation('emptyState')"
       ></m-channelRecommendation>
 
-      <!--actual feed-->
-      <ng-container
-        *ngFor="let activity$ of feedService.feed | async; let i = index"
-      >
-        <m-feedNotice__outlet
-          *ngIf="i > 0 && i % 6 === 0"
-          location="inline"
-        ></m-feedNotice__outlet>
-        <m-featured-content
-          *ngIf="(i > 0 && i % 5 === 0) || i === 3"
-          [slot]="i + 1"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          #feedViewChildren
-        ></m-featured-content>
-        <m-topHighlights
-          (onSeeMore)="onShowMoreTopFeed()"
-          *ngIf="
-            shouldShowTopHighlights(i) && !(isTopHighlightsDismissed$ | async)
-          "
-        ></m-topHighlights>
-        <m-activity
-          *ngIf="activity$ | async as activity"
-          [entity]="activity"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          [slot]="i + 1"
-          (deleted)="delete(activity)"
-          #feedViewChildren
-        ></m-activity>
-        <m-channelRecommendation
-          location="newsfeed"
-          [dismissible]="true"
-          *ngIf="
-            shouldShowChannelRecommendation('feed', i) &&
-            !(isChannelRecommendationDismissed$ | async)
-          "
-        ></m-channelRecommendation>
-      </ng-container>
+      <ng-container *ngIf="!persistentFeedExperimentActive">
+        <!--actual feed-->
+        <ng-container
+          *ngFor="let activity$ of feedService.feed | async; let i = index"
+        >
+          <m-feedNotice__outlet
+            *ngIf="i > 0 && i % 6 === 0"
+            location="inline"
+          ></m-feedNotice__outlet>
+          <m-featured-content
+            *ngIf="(i > 0 && i % 5 === 0) || i === 3"
+            [slot]="i + 1"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            #feedViewChildren
+          ></m-featured-content>
+          <m-topHighlights
+            (onSeeMore)="onShowMoreTopFeed()"
+            *ngIf="
+              shouldShowTopHighlights(i) && !(isTopHighlightsDismissed$ | async)
+            "
+          ></m-topHighlights>
+          <m-activity
+            *ngIf="activity$ | async as activity"
+            [entity]="activity"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            [slot]="i + 1"
+            (deleted)="delete(activity)"
+            #feedViewChildren
+          ></m-activity>
+          <m-channelRecommendation
+            location="newsfeed"
+            [dismissible]="true"
+            *ngIf="
+              shouldShowChannelRecommendation('feed', i) &&
+              !(isChannelRecommendationDismissed$ | async)
+            "
+          ></m-channelRecommendation>
+        </ng-container>
 
-      <infinite-scroll
-        (load)="loadNext()"
-        [moreData]="feedService.hasMore | async"
-        [inProgress]="feedService.inProgress | async"
-      >
-      </infinite-scroll>
+        <infinite-scroll
+          (load)="loadNext()"
+          [moreData]="feedService.hasMore | async"
+          [inProgress]="feedService.inProgress | async"
+        >
+        </infinite-scroll>
+      </ng-container>
+      <ng-container *ngIf="persistentFeedExperimentActive">
+        <m-feed [feedService]="feedService"></m-feed>
+        <!-- a white overlay that'll go away once the feed is ready to be shown -->
+        <div
+          *ngIf="shouldRestoreScroll"
+          class="m-virtualScrollOverlay"
+          [ngStyle]="{
+            height:
+              scroll?.wrapGroupDimensions?.sumOfKnownWrapGroupChildHeights ||
+              '100%',
+            opacity: isScrollRestored ? 0 : 1
+          }"
+        ></div>
+      </ng-container>
     </div>
   </ng-container>
 </div>
