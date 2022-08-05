@@ -25,8 +25,8 @@ export const rejectionReasons: Array<Reason> = [
   { code: 8, label: 'Appeals on Boost decisions' },
   {
     code: 12,
-    label: 'Onchain payment failed or High Boost backlog',
-    deprecated: true,
+    label: 'Due to high boost backlog, your tokens have been auto-refunded.',
+    deprecated: true, // still used for auto-rejections but is no longer admin-selectable.
   },
   { code: 13, label: 'Original post removed' },
   { code: 14, label: 'High Boost backlog' },
