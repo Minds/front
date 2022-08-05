@@ -6,7 +6,7 @@ import {
   Subscription,
 } from 'rxjs';
 import { MindsGroup, MindsUser } from '../../../interfaces/entities';
-import { map, tap, withLatestFrom } from 'rxjs/operators';
+import { map, skip, tap, withLatestFrom } from 'rxjs/operators';
 import { Injectable, EventEmitter, OnDestroy, Optional } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
@@ -450,6 +450,7 @@ export class ActivityService implements OnDestroy {
 
     this.thumbsUpMetricSubscription = this.entityMetricsSocket.thumbsUpCount$
       .pipe(
+        skip(1),
         withLatestFrom(this.entity$),
         tap(([thumbsUpCount, entity]) => {
           entity['thumbs:up:count'] = thumbsUpCount;
@@ -460,6 +461,7 @@ export class ActivityService implements OnDestroy {
 
     this.thumbsDownMetricSubscription = this.entityMetricsSocket.thumbsDownCount$
       .pipe(
+        skip(1),
         withLatestFrom(this.entity$),
         tap(([thumbsDownCount, entity]) => {
           entity['thumbs:down:count'] = thumbsDownCount;

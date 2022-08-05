@@ -133,6 +133,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
+  private interceptionObserverSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -182,6 +183,9 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
+    if (this.interceptionObserverSubscription) {
+      this.interceptionObserverSubscription.unsubscribe();
+    }
   }
 
   ngAfterViewInit() {
@@ -205,7 +209,11 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
           );
         });
       this.elementVisibilityService.checkVisibility();
-      this.setupInterceptionObserver();
+
+      // Only needed when metrics toolbar is visible.
+      if (this.service.displayOptions.showToolbar) {
+        this.setupInterceptionObserver();
+      }
     }
   }
 
@@ -215,7 +223,11 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
    * @returns { void }
    */
   public setupInterceptionObserver(): void {
-    this.interceptionObserver
+    if (this.interceptionObserverSubscription) {
+      console.error('Already registered InterceptionObserver');
+      return;
+    }
+    this.interceptionObserverSubscription = this.interceptionObserver
       .createAndObserve(this.el)
       .subscribe((isVisible: boolean) => {
         if (isVisible) {

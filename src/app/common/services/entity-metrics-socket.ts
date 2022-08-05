@@ -42,6 +42,9 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
     debounceTime(500)
   );
 
+  /** @type { boolean } isJoined - true if room is joined. */
+  private isJoined = false;
+
   /**
    * Constructor.
    * @param sockets - sockets service.
@@ -59,6 +62,7 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
     this.subscriptions.push(
       this.sockets.onReady$.subscribe(() => {
         this.sockets.join(`entity:metrics:${entityGuid}`);
+        this.isJoined = true;
       }),
       this.sockets.subscribe(
         `entity:metrics:${entityGuid}`,
@@ -81,7 +85,10 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
    * @returns { this }
    */
   public leave(entityGuid: string): this {
-    this.sockets.leave(`entity:metrics:${entityGuid}`);
+    if (this.isJoined) {
+      this.sockets.leave(`entity:metrics:${entityGuid}`);
+      this.isJoined = false;
+    }
     return this;
   }
 
