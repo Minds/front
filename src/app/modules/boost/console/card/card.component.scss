@@ -29,6 +29,12 @@ m-boost-console-card {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    i {
+      margin-right: $spacing1;
+      font-size: 20px;
+    }
+
     @include m-theme() {
       color: themed($m-blue-grey-500);
       background-color: themed($m-blue-grey-50);
