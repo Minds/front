@@ -40,6 +40,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -146,6 +147,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     public featuresService: FeaturesService,
     public session: Session,
     private configs: ConfigsService,
+    private interceptionObserver: IntersectionObserverService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -203,7 +205,25 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
           );
         });
       this.elementVisibilityService.checkVisibility();
+      this.setupInterceptionObserver();
     }
+  }
+
+  /**
+   * Setup an interception observer to report when activity enters the DOM and
+   * update local isIntersecting$ state accordingly.
+   * @returns { void }
+   */
+  public setupInterceptionObserver(): void {
+    this.interceptionObserver
+      .createAndObserve(this.el)
+      .subscribe((isVisible: boolean) => {
+        if (isVisible) {
+          this.service.setupMetricsSocketListener();
+          return;
+        }
+        this.service.teardownMetricsSocketListener();
+      });
   }
 
   @HostListener('window:resize')

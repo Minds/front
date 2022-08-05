@@ -336,8 +336,9 @@ export class ActivityService implements OnDestroy {
 
   activityV2Feature: boolean = false;
 
-  /** @type { Subscription[] } - array of subscriptions */
-  private subscriptions: Subscription[] = [];
+  // subscriptions for metric events.
+  private thumbsUpMetricSubscription: Subscription;
+  private thumbsDownMetricSubscription: Subscription;
 
   constructor(
     private configs: ConfigsService,
@@ -351,9 +352,7 @@ export class ActivityService implements OnDestroy {
   }
 
   ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+    this.teardownMetricsSocketListener();
   }
 
   /**
@@ -371,10 +370,6 @@ export class ActivityService implements OnDestroy {
       entity.activity_type = getActivityContentType(entity);
     }
     this.entity$.next(entity);
-
-    if (this.entityMetricsSocket) {
-      this.setupMetricsSocketListener(entity);
-    }
 
     return this;
   }
@@ -447,32 +442,49 @@ export class ActivityService implements OnDestroy {
    * @param { MetricsSubscribableEntity } subscribableEntity - entity to subscribe to.
    * @returns { this }
    */
-  private setupMetricsSocketListener(
-    subscribableEntity: MetricsSubscribableEntity
-  ): this {
-    this.subscriptions.push(
-      // thumbs up subscription.
-      this.entityMetricsSocket.thumbsUpCount$
-        .pipe(
-          withLatestFrom(this.entity$),
-          tap(([thumbsUpCount, entity]) => {
-            entity['thumbs:up:count'] = thumbsUpCount;
-            this.entity$.next(entity);
-          })
-        )
-        .subscribe(),
-      // thumbs down subscription.
-      this.entityMetricsSocket.thumbsDownCount$
-        .pipe(
-          withLatestFrom(this.entity$),
-          tap(([thumbsDownCount, entity]) => {
-            entity['thumbs:down:count'] = thumbsDownCount;
-            this.entity$.next(entity);
-          })
-        )
-        .subscribe()
-    );
-    this.entityMetricsSocket.listen(subscribableEntity.guid);
+  public setupMetricsSocketListener(): this {
+    if (!this.entityMetricsSocket) {
+      console.error('No EntityMetricsSocketService provider to connect with');
+      return;
+    }
+
+    this.thumbsUpMetricSubscription = this.entityMetricsSocket.thumbsUpCount$
+      .pipe(
+        withLatestFrom(this.entity$),
+        tap(([thumbsUpCount, entity]) => {
+          entity['thumbs:up:count'] = thumbsUpCount;
+          this.entity$.next(entity);
+        })
+      )
+      .subscribe();
+
+    this.thumbsDownMetricSubscription = this.entityMetricsSocket.thumbsDownCount$
+      .pipe(
+        withLatestFrom(this.entity$),
+        tap(([thumbsDownCount, entity]) => {
+          entity['thumbs:down:count'] = thumbsDownCount;
+          this.entity$.next(entity);
+        })
+      )
+      .subscribe();
+
+    this.entityMetricsSocket.listen(this.entity$.getValue().guid);
+    return this;
+  }
+
+  /**
+   * Teardown listener for metrics socket for this activity.
+   * @param { MetricsSubscribableEntity } subscribableEntity - entity to teardown listeners for.
+   * @returns { this }
+   */
+  public teardownMetricsSocketListener(): this {
+    if (this.thumbsUpMetricSubscription) {
+      this.thumbsUpMetricSubscription.unsubscribe();
+    }
+    if (this.thumbsDownMetricSubscription) {
+      this.thumbsDownMetricSubscription.unsubscribe();
+    }
+    this.entityMetricsSocket.leave(this.entity$.getValue().guid);
     return this;
   }
 }

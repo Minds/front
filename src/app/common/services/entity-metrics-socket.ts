@@ -51,7 +51,7 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Setup subscriptions to listen for changes, and upvote instance member subjects accordingly.
+   * Setup subscriptions to listen for changes, and update instance member subjects accordingly.
    * @param { string } entityGuid
    * @returns { this }
    */
@@ -76,13 +76,22 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
   }
 
   /**
+   * Leave room to stop listening for changes.
+   * @param { string } entityGuid - guid to leave room for.
+   * @returns { this }
+   */
+  public leave(entityGuid: string): this {
+    this.sockets.leave(`entity:metrics:${entityGuid}`);
+    return this;
+  }
+
+  /**
    * Update instance subjects with values from sockets.
    * @param { MetricsChangedEvent } metricsEvent - Object containing updated metrics.
    * @returns { this }
    */
   private updateInstanceSubjects(metricsEvent: MetricsChangedEvent): this {
     if (!isNaN(metricsEvent['thumbs:up:count'])) {
-      console.log(metricsEvent['thumbs:up:count']);
       this.thumbsUpCountSubject$.next(metricsEvent['thumbs:up:count']);
     }
     if (!isNaN(metricsEvent['thumbs:down:count'])) {
