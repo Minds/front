@@ -86,6 +86,7 @@ export class ActivityContentComponent
    */
   @Input() autoplayVideo: boolean = false;
 
+  // TODO: make showPaywall and showPaywallBadge come from activity service instead
   @Input() showPaywall: boolean = false;
   @Input() showPaywallBadge: boolean = false;
 
@@ -167,15 +168,7 @@ export class ActivityContentComponent
         // quotes of status posts display the badge inside
         // the quote/parent's content component
         this.isPaywalledStatusPost =
-          (this.showPaywallBadge || this.showPaywall) &&
-          entity.content_type === 'status';
-
-        console.log(
-          'ojm content',
-          entity.content_type,
-          this.showPaywallBadge,
-          this.showPaywall
-        );
+          this.showPaywallBadge && entity.content_type === 'status';
 
         if (
           this.entity.paywall_unlocked ||
