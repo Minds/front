@@ -35,6 +35,7 @@ import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal)
@@ -45,6 +46,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     ActivityService,
+    EntityMetricsSocketService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
