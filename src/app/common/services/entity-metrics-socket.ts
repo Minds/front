@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SocketsService } from '../../services/sockets';
-import { AbstractSubscriberComponent } from '../components/abstract-subscriber/abstract-subscriber.component';
 
 // Parsed metrics changed event.
 type MetricsChangedEvent = {
@@ -15,7 +14,7 @@ type MetricsChangedEvent = {
  * entity guid. To use, be sure to call listen, or you will not get any outputted values.
  */
 @Injectable()
-export class EntityMetricsSocketService extends AbstractSubscriberComponent {
+export class EntityMetricsSocketService implements OnDestroy {
   /** @type { BehaviorSubject<number> } - used within this instance to set new values for thumbs up count */
   private readonly thumbsUpCountSubject$: BehaviorSubject<
     number
@@ -45,12 +44,20 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
   /** @type { boolean } isJoined - true if room is joined. */
   private isJoined = false;
 
+  /** @type { Subscription } subscription to metric event changes */
+  private metricsSubscription: Subscription;
+
+  /** @type { Subscription } on sockets ready subscription */
+  private onReadySubscription: Subscription;
+
   /**
    * Constructor.
    * @param sockets - sockets service.
    */
-  constructor(private sockets: SocketsService) {
-    super();
+  constructor(private sockets: SocketsService) {}
+
+  ngOnDestroy(): void {
+    this.destroySubscriptions();
   }
 
   /**
@@ -59,22 +66,28 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
    * @returns { this }
    */
   public listen(entityGuid: string): this {
-    this.subscriptions.push(
-      this.sockets.onReady$.subscribe(() => {
+    if (this.metricsSubscription) {
+      console.error('Already subscribed to entity metrics sockets');
+      return;
+    }
+
+    if (!this.onReadySubscription) {
+      this.onReadySubscription = this.sockets.onReady$.subscribe(() => {
         this.sockets.join(`entity:metrics:${entityGuid}`);
         this.isJoined = true;
-      }),
-      this.sockets.subscribe(
-        `entity:metrics:${entityGuid}`,
-        (event: string) => {
-          try {
-            this.updateInstanceSubjects(JSON.parse(event));
-          } catch (e) {
-            console.error(e, event);
-            return;
-          }
+      });
+    }
+
+    this.metricsSubscription = this.sockets.subscribe(
+      `entity:metrics:${entityGuid}`,
+      (event: string) => {
+        try {
+          this.updateInstanceSubjects(JSON.parse(event));
+        } catch (e) {
+          console.error(e, event);
+          return;
         }
-      )
+      }
     );
     return this;
   }
@@ -89,6 +102,7 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
       this.sockets.leave(`entity:metrics:${entityGuid}`);
       this.isJoined = false;
     }
+    this.destroySubscriptions();
     return this;
   }
 
@@ -103,6 +117,22 @@ export class EntityMetricsSocketService extends AbstractSubscriberComponent {
     }
     if (!isNaN(metricsEvent['thumbs:down:count'])) {
       this.thumbsDownCountSubject$.next(metricsEvent['thumbs:down:count']);
+    }
+    return this;
+  }
+
+  /**
+   * Destroy class subscriptions.
+   * @returns { this }
+   */
+  private destroySubscriptions(): this {
+    if (this.metricsSubscription) {
+      this.metricsSubscription.unsubscribe();
+      this.metricsSubscription = null;
+    }
+    if (this.onReadySubscription) {
+      this.onReadySubscription.unsubscribe();
+      this.onReadySubscription = null;
     }
     return this;
   }
