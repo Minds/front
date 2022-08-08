@@ -470,7 +470,7 @@ export class ActivityService implements OnDestroy {
       )
       .subscribe();
 
-    this.entityMetricsSocket.listen(this.entity$.getValue().guid);
+    this.entityMetricsSocket.listen(this.getMetricSubscriptionGuid());
     return this;
   }
 
@@ -489,7 +489,19 @@ export class ActivityService implements OnDestroy {
     if (this.thumbsDownMetricSubscription) {
       this.thumbsDownMetricSubscription.unsubscribe();
     }
-    this.entityMetricsSocket.leave(this.entity$.getValue().guid);
+    this.entityMetricsSocket.leave(this.getMetricSubscriptionGuid());
     return this;
+  }
+
+  /**
+   * Get GUID to subscribe to for metrics.
+   * @returns { string } guid to subscribe to for metrics events.
+   */
+  public getMetricSubscriptionGuid(): string {
+    if (this.entity$.getValue().entity_guid) {
+      return this.entity$.getValue().entity_guid;
+    } else {
+      return this.entity$.getValue().guid;
+    }
   }
 }
