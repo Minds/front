@@ -3,9 +3,16 @@ const { I } = inject();
 
 class LoginPage {
   constructor() {
-    this.username = process.env.PLAYWRIGHT_USERNAME;
-    this.password = process.env.PLAYWRIGHT_PASSWORD;
+    this.validUsername = process.env.PLAYWRIGHT_USERNAME;
+    this.validPassword = process.env.PLAYWRIGHT_PASSWORD;
+  }
+  async login(username, password) {
+    I.seeElement('#username');
+    I.fillField('#username', username); 
+    I.seeElement('#password');
+    I.fillField('#password', password);
+    I.click(locate('button').withText('Login'));
   }
 }
 
-export default new LoginPage();
+module.exports = new LoginPage();
