@@ -3,6 +3,10 @@ import { Observable } from 'rxjs';
 
 import { ActivityService, ActivityEntity } from '../activity.service';
 
+/**
+ * Blocks the activity post content from view until the user has permission.
+ * It's just a wrapper around 'm-wire--lock-screen'.
+ */
 @Component({
   selector: 'm-activity__paywall',
   templateUrl: './paywall.component.html',

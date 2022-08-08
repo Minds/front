@@ -6,6 +6,9 @@ import {
   ActivityService,
 } from '../../activity/activity.service';
 
+/**
+ * Displays a stripped-down activity (e.g. without toolbar action buttons or comments) within an activity, with the quoted content on top.
+ */
 @Component({
   selector: 'm-activityV2__quote',
   templateUrl: 'quote.component.html',
@@ -22,18 +25,18 @@ export class ActivityV2QuoteComponent {
     this.service.setEntity(entity.remind_object);
     this.service.isNsfwConsented$.next(true); // Parent entity should have done this
 
-    this.remindObj = entity.remind_object;
+    this.quotedEntity = entity.remind_object;
 
     const currentUser = this.session.getLoggedInUser();
     const iconTime: number =
       currentUser && currentUser.guid === entity.ownerObj.guid
         ? currentUser.icontime
-        : this.remindObj.ownerObj.icontime;
+        : this.quotedEntity.ownerObj.icontime;
 
     this.avatarUrl =
       this.configs.get('cdn_url') +
       'icon/' +
-      this.remindObj.ownerObj.guid +
+      this.quotedEntity.ownerObj.guid +
       '/medium/' +
       iconTime;
   }
@@ -46,7 +49,7 @@ export class ActivityV2QuoteComponent {
   @Input() parentService: ActivityService;
 
   avatarUrl: string;
-  remindObj;
+  quotedEntity;
 
   constructor(
     public service: ActivityService,

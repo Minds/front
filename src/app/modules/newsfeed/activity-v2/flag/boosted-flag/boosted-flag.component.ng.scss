@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  max-height: 20px;
+
+  span {
+    @include body2Medium;
+    text-decoration: none;
+  }
+
+  i {
+    font-size: 22px;
+    line-height: 20px;
+    padding-right: $spacing2;
+  }
+
+  span,
+  i {
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+}

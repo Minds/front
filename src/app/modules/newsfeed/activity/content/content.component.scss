@@ -14,23 +14,23 @@ m-activity__content {
     flex-direction: column;
     height: auto;
     min-height: 0;
-  }
 
-  .m-activityContent__media--video,
-  .m-activityContent__media--image,
-  .m-activityContent__media--richEmbed,
-  .m-activityContent__remind {
-    flex-shrink: 1;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .m-activityContent__media--image img {
-    max-height: 100%;
-    height: 100%;
-  }
-  .m-activityContent__fixedHeightSpacer {
-    flex: 1;
+    .m-activityContent__media--video,
+    .m-activityContent__media--image,
+    .m-activityContent__media--richEmbed,
+    .m-activityContent__remind {
+      flex-shrink: 1;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .m-activityContent__media--image img {
+      max-height: 100%;
+      height: 100%;
+    }
+    .m-activityContent__fixedHeightSpacer {
+      flex: 1;
+    }
   }
 }
 

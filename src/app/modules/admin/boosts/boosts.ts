@@ -9,7 +9,7 @@ import { Reason, rejectionReasons } from '../../boost/rejection-reasons';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ModalService } from '../../../services/ux/modal.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   moduleId: module.id,
@@ -46,7 +46,7 @@ export class AdminBoosts {
     protected activityService: ActivityService,
     private modalService: ModalService,
     private route: ActivatedRoute,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {

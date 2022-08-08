@@ -14,6 +14,12 @@ import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 
 import { BoostButton } from '../../../modules/legacy/components/buttons/boost';
 
+/**
+ * DEPRECATED
+ * A reusable button
+ *
+ * TODO: Replace all instances with 'm-button'
+ */
 @Component({
   selector: 'minds-button',
   template: `

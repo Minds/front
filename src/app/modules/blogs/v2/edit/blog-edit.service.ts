@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { distinctUntilChanged, tap, take } from 'rxjs/operators';
 import { SiteService } from '../../../../common/services/site.service';
 import { Captcha } from '../../../captcha/captcha.component';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import {
   ComposerService,
   MonetizationSubjectValue,
@@ -135,7 +135,7 @@ export class BlogsEditService {
     protected router: Router,
     protected client: Client,
     protected site: SiteService,
-    private toaster: FormToastService,
+    private toaster: ToasterService,
     private preload: BlogPreloadService,
     @Self() @Inject(ComposerService) private composerService: ComposerService
   ) {

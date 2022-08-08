@@ -4,8 +4,11 @@ import { Session } from '../../services/session';
 import { Client } from '../../services/api';
 import { storageMock } from '../../../tests/storage-mock.spec';
 import { Storage } from '../../services/storage';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 
+/**
+ * Page that allows users to toggle Canary mode off/on
+ */
 @Component({
   selector: 'm-canary',
   templateUrl: 'page.component.html',
@@ -24,7 +27,7 @@ export class CanaryPageComponent {
     private client: Client,
     private router: Router,
     private storage: Storage,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   ngOnInit() {

@@ -41,6 +41,11 @@ import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
 
+/**
+ * Base component for activity posts (excluding activities displayed in a modal).
+ *
+ * Includes activities displayed in feeds, on single activity pages, in pro pages, channel grid mode, sidebar boosts (excluding blogs), sidebar suggestions
+ */
 @Component({
   selector: 'm-activityV2',
   templateUrl: 'activity.component.html',
@@ -95,9 +100,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @Input() canRecordAnalytics: boolean = true;
 
   @Output() deleted: Subject<boolean> = this.service.onDelete$;
-
-  @Output() previousBoost: EventEmitter<any> = new EventEmitter();
-  @Output() nextBoost: EventEmitter<any> = new EventEmitter();
 
   isBoost = false;
 
@@ -202,14 +204,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         });
       this.elementVisibilityService.checkVisibility();
     }
-  }
-
-  emitNextBoost(): void {
-    this.nextBoost.emit();
-  }
-
-  emitPreviousBoost(): void {
-    this.previousBoost.emit();
   }
 
   @HostListener('window:resize')

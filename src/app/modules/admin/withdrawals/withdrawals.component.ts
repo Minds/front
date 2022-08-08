@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Client } from '../../../services/api';
 import { ActivatedRoute } from '@angular/router';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   moduleId: module.id,
@@ -21,7 +21,7 @@ export class AdminWithdrawals {
   constructor(
     protected client: Client,
     protected route: ActivatedRoute,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

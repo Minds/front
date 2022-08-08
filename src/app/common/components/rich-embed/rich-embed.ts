@@ -7,7 +7,7 @@ import {
   Input,
   HostBinding,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { RichEmbedService } from '../../../services/rich-embed';
 import { MediaProxyService } from '../../../common/services/media-proxy.service';
@@ -15,6 +15,14 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
 import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
+
+interface InlineEmbed {
+  id: string;
+  className: string;
+  html?: SafeHtml;
+  htmlProvisioner?: () => Promise<SafeHtml>;
+  playable: boolean;
+}
 
 @Component({
   moduleId: module.id,
@@ -29,7 +37,7 @@ export class MindsRichEmbed {
   src: any = {};
   preview: any = {};
   maxheight: number = 320;
-  inlineEmbed: any = null;
+  inlineEmbed: InlineEmbed = null;
   cropImage: boolean = false;
   modalRequestSubscribed: boolean = false;
   @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
@@ -150,20 +158,28 @@ export class MindsRichEmbed {
 
     this.inlineEmbed = inlineEmbed;
 
-    if (
-      this.modalService.canOpenInModal() &&
-      this.modalRequestSubscribed &&
-      this.mediaSource === 'youtube'
-    ) {
-      if (this.inlineEmbed && this.inlineEmbed.htmlProvisioner) {
-        this.inlineEmbed.htmlProvisioner().then(html => {
-          this.inlineEmbed.html = html;
-          this.detectChanges();
-        });
-
-        // @todo: catch any error here and forcefully window.open to destination
+    if (inlineEmbed?.playable) {
+      if (this.modalService.canOpenInModal()) {
+        if (this.modalRequestSubscribed) {
+          this.renderHtml();
+        }
+      } else {
+        this.embeddedInline = true;
+        this.renderHtml();
       }
     }
+  }
+
+  /**
+   * renders the html of the inlineEmbed unto the component
+   * @returns { void }
+   */
+  renderHtml(): void {
+    this.inlineEmbed.htmlProvisioner?.().then(html => {
+      this.inlineEmbed.html = html;
+      this.detectChanges();
+    });
+    // @todo: catch any error here and forcefully window.open to destination
   }
 
   action($event) {
@@ -179,19 +195,11 @@ export class MindsRichEmbed {
       $event.stopPropagation();
 
       this.embeddedInline = true;
-
-      if (this.inlineEmbed.htmlProvisioner) {
-        this.inlineEmbed.htmlProvisioner().then(html => {
-          this.inlineEmbed.html = html;
-          this.detectChanges();
-        });
-
-        // @todo: catch any error here and forcefully window.open to destination
-      }
+      this.renderHtml();
     }
   }
 
-  parseInlineEmbed(current?: any): any {
+  parseInlineEmbed(current?: any): InlineEmbed {
     if (!this.src || !this.src.perma_url) {
       return null;
     }

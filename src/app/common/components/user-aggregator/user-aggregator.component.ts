@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MindsUser } from '../../../interfaces/entities';
 
 /**
@@ -35,4 +35,23 @@ export class UserAggregatorComponent {
    * @type { number }
    */
   @Input() avatarAmount: number = 3;
+
+  /**
+   * click event of the text
+   * @type { EventEmitter }
+   */
+  @Output() onClick = new EventEmitter();
+
+  /**
+   * Whether the text is clickable
+   * @type { number }
+   */
+  @Input() clickable: boolean = false;
+
+  /**
+   * The count of others to show
+   */
+  get othersCount(): number {
+    return (this.totalCount ?? this.users.length) - this.usernameAmount;
+  }
 }

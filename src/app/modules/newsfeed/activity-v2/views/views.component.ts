@@ -6,6 +6,9 @@ import {
 } from '../../activity/activity.service';
 import { Session } from '../../../../services/session';
 
+/**
+ * View count of the activity post. Displayed to owners only.
+ */
 @Component({
   selector: 'm-activityV2__views',
   templateUrl: './views.component.html',

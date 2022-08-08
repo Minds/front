@@ -5,6 +5,11 @@ import {
   ActivityService,
 } from '../../activity/activity.service';
 
+/**
+ * Flags are optionally displayed at the top of an activity post, where applicable.
+ * There can be either a 'reminded by' flag or a 'boosted post' flag, but never both.
+ *
+ */
 @Component({
   selector: 'm-activityV2__flag',
   templateUrl: './flag.component.html',

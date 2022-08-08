@@ -60,7 +60,9 @@ export class GroupsProfileMembers {
     if (this.searchDelayTimer) {
       clearTimeout(this.searchDelayTimer);
     }
-    this.$group.unsubscribe();
+    if (this.$group) {
+      this.$group.unsubscribe();
+    }
   }
 
   load(refresh: boolean = false, query = null) {

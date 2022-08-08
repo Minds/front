@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ActivityEntity, ActivityService } from '../activity.service';
@@ -10,6 +10,11 @@ import { InteractionsModalService } from '../../interactions-modal/interactions-
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
+/**
+ * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners), tip (for non-owners), displayed below activity post content.
+ *
+ * If 'interactions' is enabled, the toolbar also includes a second row that displays how many people reminded the post, upvoted the post, etc.
+ */
 @Component({
   selector: 'm-activity__toolbar',
   templateUrl: 'toolbar.component.html',
@@ -30,7 +35,7 @@ export class ActivityToolbarComponent {
     private boostModal: BoostModalLazyService,
     private features: FeaturesService,
     private interactionsModalService: InteractionsModalService,
-    private injector: Injector
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -76,6 +81,11 @@ export class ActivityToolbarComponent {
         ? this.entity.entity_guid
         : this.entity.guid;
     await this.interactionsModalService.open(type, guid);
+  }
+
+  detectChanges(): void {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   /**

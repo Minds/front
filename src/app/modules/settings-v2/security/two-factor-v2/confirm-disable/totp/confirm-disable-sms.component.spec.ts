@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { ButtonComponent } from '../../../../../../common/components/button/button.component';
-import { FormToastService } from '../../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../../common/services/toaster.service';
 import { MockService } from '../../../../../../utils/mock';
 import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
 import { SettingsTwoFactorDisableTOTPComponent } from './confirm-disable-totp.component';
@@ -22,8 +22,8 @@ describe('SettingsTwoFactorDisableTOTPComponent', () => {
             useValue: MockService(SettingsTwoFactorV2Service),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

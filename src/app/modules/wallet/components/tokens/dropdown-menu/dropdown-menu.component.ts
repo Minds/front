@@ -2,11 +2,16 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Injector, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first, last, map } from 'rxjs/operators';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 
+/**
+ * Menu of token-related actions
+ *
+ * See it in wallet > tokens page, at the end of the wallet address excerpt
+ */
 @Component({
   selector: 'm-walletTokens__dropdownMenu',
   templateUrl: './dropdown-menu.component.html',
@@ -27,7 +32,7 @@ export class WalletTokensDropdownMenu {
     private buyTokensService: BuyTokensModalService,
     private walletService: WalletV2Service,
     @Inject(DOCUMENT) private dom,
-    private toasterService: FormToastService,
+    private toasterService: ToasterService,
     private onchainTransferModal: OnchainTransferModalService,
     private injector: Injector
   ) {}

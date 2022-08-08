@@ -9,8 +9,11 @@ import { BlockListService } from '../../../../common/services/block-list.service
 import { EntitiesService } from '../../../../common/services/entities.service';
 import { Client } from '../../../../services/api/client';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
+/**
+ * Settings page for managing a list of blocked channels
+ */
 @Component({
   selector: 'm-settingsV2__blockedChannels',
   templateUrl: './blocked-channels.component.html',
@@ -32,7 +35,7 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     private configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

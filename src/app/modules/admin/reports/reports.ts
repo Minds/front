@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Client } from '../../../services/api';
 import { REPORT_ACTIONS } from '../../../services/list-options';
 import { ReportService } from './../../../common/services/report.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   moduleId: module.id,
@@ -25,7 +25,7 @@ export class AdminReports {
   constructor(
     public client: Client,
     private route: ActivatedRoute,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     protected reportService: ReportService
   ) {}
 

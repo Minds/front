@@ -5,7 +5,7 @@
   // ** MODAL **
   // *********************************
   m-activityV2__modal & {
-    .m-dropdown--v2 {
+    ::ng-deep m-dropdownMenu {
       z-index: 5;
     }
     .m-postMenu__button {
@@ -24,12 +24,6 @@
 
   position: relative;
 
-  ::ng-deep .m-dropdown__list {
-    top: 0;
-    right: 0;
-  }
-
-  ::ng-deep .m-postMenu__button button,
   ::ng-deep .m-postMenu__button {
     padding-right: 0;
   }

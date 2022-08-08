@@ -3,7 +3,7 @@ import { Web3WalletService } from '../web3-wallet.service';
 import { ethers } from 'ethers';
 import { Session } from '../../../services/session';
 import { ApiService } from '../../../common/api/api.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { BehaviorSubject } from 'rxjs';
 
 /**
@@ -33,7 +33,7 @@ export class ConnectWalletModalComponent {
     protected web3Wallet: Web3WalletService,
     protected session: Session,
     protected api: ApiService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

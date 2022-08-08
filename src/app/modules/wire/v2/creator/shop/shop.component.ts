@@ -9,7 +9,10 @@ import { ShopService } from './shop.service';
 import { SupportTier, SupportTiersService } from '../../support-tiers.service';
 
 /**
- * Shop (Wire Reward Tiers) component
+ * Allows a tipping user to select from a dropdown of memberships (aka support tiers).
+ *
+ * Also contains a link to the recipient's channel shop
+ *
  */
 @Component({
   selector: 'm-wireCreator__shop',

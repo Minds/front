@@ -5,6 +5,12 @@ import {
   InteractionType,
 } from './interactions-modal-data.service';
 
+/**
+ * Displays which users completed a certain interaction (e.g. upvote, remind) on an activity post
+ *
+ * See it on a single page or modal of an activity that has been interacted with. Then click
+ * on the trigger (e.g. "12 upvotes").
+ */
 @Component({
   selector: 'm-interactionsModal',
   templateUrl: './interactions-modal.component.html',
@@ -58,6 +64,8 @@ export class InteractionsModalComponent {
         return 'Quote posts';
       case 'subscribers':
         return 'Recent subscribers';
+      case 'mutual-subscribers':
+        return 'Subscribers you know';
     }
   }
 

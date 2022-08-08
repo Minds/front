@@ -9,6 +9,14 @@ import { Subscription } from 'rxjs';
 import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
 import { ModalService } from '../../../../../services/ux/modal.service';
 
+/**
+ * Copyable, shareable referral links.
+ *
+ * Referrers get credit for using these links and
+ * succesfully referring people to sign up for Minds.
+ *
+ * See it in the settings referrals page.
+ */
 @Component({
   selector: 'm-settingsV2__referralsLinks',
   templateUrl: 'links.component.html',

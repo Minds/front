@@ -1,0 +1,73 @@
+@import 'defaults.scss';
+
+:host {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    font: inherit;
+    color: inherit;
+  }
+
+  // These classes are applied programmatically using triggerCssClasses()
+  .m-dropdownMenu__trigger {
+    flex: 1;
+
+    &.m-dropdownMenuTrigger--clickable {
+      cursor: pointer;
+    }
+  }
+
+  // This class is applied programmatically using menuCssClasses()
+  .m-dropdownMenu__menu {
+    display: none;
+
+    @include z-index(modal--stackable);
+
+    @media screen and (min-width: $max-mobile + 1) {
+      display: block;
+      position: absolute;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 2vh !important; // Override component's dynamic values
+      right: 2vw !important; // Override component's dynamic values
+      bottom: 2vh !important; // Override component's dynamic values
+      left: 2vw !important; // Override component's dynamic values
+    }
+
+    ::ng-deep ul {
+      list-style: none;
+      width: 100%;
+      margin: 0;
+      padding: $spacing2 0;
+      min-width: 222px;
+      border-radius: $m-borderRadius;
+      box-sizing: border-box;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+        background: themed($m-bgColor--primary);
+      }
+    }
+  }
+
+  > m-overlay {
+    @include z-index(modal);
+    @media screen and (max-width: $max-mobile) {
+      @include m-on-theme(light) {
+        background: rgba(255, 255, 255, 0.85);
+      }
+
+      @include m-on-theme(dark) {
+        background: rgba(0, 0, 0, 0.65);
+      }
+    }
+  }
+}

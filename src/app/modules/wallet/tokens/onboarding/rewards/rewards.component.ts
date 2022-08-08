@@ -11,8 +11,11 @@ import { Router } from '@angular/router';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
+/**
+ * DEPRECATED
+ */
 @Component({
   selector: 'm-token--onboarding--rewards',
   templateUrl: 'rewards.component.html',
@@ -37,7 +40,7 @@ export class TokenRewardsOnboardingComponent {
     protected session: Session,
     protected router: Router,
     configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }

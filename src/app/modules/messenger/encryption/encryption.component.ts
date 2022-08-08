@@ -4,8 +4,12 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 
 import { MessengerEncryptionService } from './encryption.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-messenger--encryption',
@@ -25,7 +29,7 @@ export class MessengerEncryption implements OnInit {
     public session: Session,
     public client: Client,
     public encryption: MessengerEncryptionService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

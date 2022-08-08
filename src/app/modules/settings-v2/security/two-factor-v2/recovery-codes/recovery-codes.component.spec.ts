@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Session } from '../../../../../services/session';
 import { MockService } from '../../../../../utils/mock';
 import { SettingsTwoFactorRecoveryCodeComponent } from './recovery-codes.component';
@@ -38,8 +38,8 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
             useValue: modalServiceMock,
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();
@@ -81,7 +81,7 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
     });
   });
 
-  it('should copy code to clipboard and enable progress', () => {
+  it('should download code and enable progress', () => {
     (comp as any).service.recoveryCode$ = new BehaviorSubject<string>('123');
     comp.disabled$.next(true);
 

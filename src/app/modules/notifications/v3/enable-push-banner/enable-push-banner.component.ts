@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { PushNotificationService } from '../../../../common/services/push-notification.service';
 
 /**
@@ -26,7 +26,7 @@ export class NotificationsEnablePushBannerComponent {
 
   constructor(
     private pushNotifications: PushNotificationService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   /**

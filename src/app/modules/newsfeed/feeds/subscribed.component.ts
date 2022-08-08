@@ -32,7 +32,7 @@ import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 
@@ -107,7 +107,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
-    private toast: FormToastService,
+    private toast: ToasterService,
     private experiments: ExperimentsService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,

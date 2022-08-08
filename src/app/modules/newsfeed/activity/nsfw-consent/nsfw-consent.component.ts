@@ -5,6 +5,10 @@ import { ActivityService, ActivityEntity } from '../activity.service';
 import { map } from 'rxjs/operators';
 import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-selector.service';
 
+/**
+ * A panel that obscures the activity post if it has been tagged as NSFW.
+ * Users must click to reveal the post. Used at the 'm-activity' level.
+ */
 @Component({
   selector: 'm-activity__nsfwConsent',
   templateUrl: 'nsfw-consent.component.html',

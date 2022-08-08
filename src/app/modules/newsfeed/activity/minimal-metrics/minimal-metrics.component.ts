@@ -5,6 +5,9 @@ import { ActivityService, ActivityEntity } from '../activity.service';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
+/**
+ * In activity minimal mode, displays view count.
+ */
 @Component({
   selector: 'm-activity__minimalMetrics',
   templateUrl: './minimal-metrics.component.html',

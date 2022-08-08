@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import { SettingsV2WalletService } from './wallet.service';
 
 /**
- * Settings v2 Wallet settings component.
+ * Wallet settings component.
+ *
+ * Controls whether wallet balance appears in topbar
+ * (e.g. for privacy during screenshares and screencasts)
  */
 @Component({
   selector: 'm-settingsV2__wallet',
@@ -24,7 +27,7 @@ export class SettingsV2WalletComponent implements OnInit {
     private session: Session,
     private router: Router,
     private service: SettingsV2WalletService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   ngOnInit(): void {

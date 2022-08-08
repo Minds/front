@@ -6,9 +6,10 @@ import { MediaProxyService } from '../../../../common/services/media-proxy.servi
  * Renders a user-friendly preview of the rich-embed
  */
 @Component({
-  selector: 'm-composerRichEmbedPreview',
+  selector: 'm-composerPreview--richEmbed',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'rich-embed-preview.component.html',
+  styleUrls: ['rich-embed-preview.component.ng.scss'],
 })
 export class RichEmbedPreviewComponent {
   /**

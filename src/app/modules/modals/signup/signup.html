@@ -42,7 +42,9 @@
           src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
         />
       </a>
-      <m-androidApp__download (click)="close()"></m-androidApp__download>
+      <m-androidAppDownloadButton
+        (click)="close()"
+      ></m-androidAppDownloadButton>
     </div>
 
     <div class="mdl-card__supporting-text">
@@ -55,12 +57,12 @@
     </div>
   </div>
   <!-- Login Display -->
-  <minds-form-login
+  <m-loginForm
     (done)="done('login')"
     (doneRegistered)="display = 'fb-complete'"
     (canceled)="close()"
     *ngIf="display == 'login'"
-  ></minds-form-login>
+  ></m-loginForm>
   <!-- Register Display -->
   <span
     style="font-weight: bold;text-align:center;font-size: 13px;margin-bottom: -14px;cursor: pointer;"
@@ -70,12 +72,12 @@
     i18n="@@MODALS__SIGNUP__ALREADY_HAVE_CHANNEL"
     >Already have a channel? Click here.</span
   >
-  <minds-form-register
+  <m-registerForm
     (done)="done('register')"
     (canceled)="close()"
     *ngIf="display == 'register'"
     parentId="/modal"
-  ></minds-form-register>
+  ></m-registerForm>
   <!-- FB Signin final phase -->
   <minds-form-fb-register
     (done)="done('register')"

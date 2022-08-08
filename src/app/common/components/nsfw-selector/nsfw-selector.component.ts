@@ -8,7 +8,7 @@ import { Storage } from '../../../services/storage';
 import { ifError } from 'assert';
 
 @Component({
-  selector: 'm-nsfw-selector',
+  selector: 'm-nsfwSelector',
   templateUrl: 'nsfw-selector.component.html',
   providers: [NSFWSelectorEditingService],
 })
@@ -16,7 +16,6 @@ export class NSFWSelectorComponent {
   @Input('service') serviceRef: string = 'consumer';
   @Input('consumer') consumer: false;
   @Input('expanded') expanded: false;
-  @Input('v2') v2 = false;
   @Output('selectedChange') onSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(

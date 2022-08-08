@@ -9,13 +9,13 @@ import {
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SettingsV2Service } from './settings-v2.service';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
 import { FeaturesService } from '../../services/features.service';
 import { Subscription } from 'rxjs';
 
 /**
- * Determines what form/menu(s)
+ * Container that determines what form/menu(s)
  * should be displayed in the settings-v2 module
  */
 @Component({
@@ -328,7 +328,7 @@ export class SettingsV2Component implements OnInit {
     protected session: Session,
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     public featuresService: FeaturesService
   ) {
     this.hasYoutubeFeature = this.featuresService.has('yt-importer');

@@ -1,0 +1,81 @@
+<ng-container *ngIf="iconsOnly; else normalView">
+  <m-button
+    (onAction)="join($event)"
+    *ngIf="
+          !group['is:banned'] &&
+          !group['is:awaiting'] &&
+          !group['is:invited'] &&
+          !group['is:member']
+        "
+    iconOnly="true"
+  >
+    <i class="material-icons"> add </i>
+  </m-button>
+
+  <m-button (onAction)="leave()" *ngIf="group['is:member']" iconOnly="true">
+    <i class="material-icons"> check </i>
+  </m-button>
+</ng-container>
+
+<ng-template #normalView>
+  <m-button
+    class="m-group__membershipButton--join"
+    *ngIf="
+          !group['is:banned'] &&
+          !group['is:awaiting'] &&
+          !group['is:invited'] &&
+          !group['is:member']
+        "
+    (onAction)="join($event)"
+    i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION_SINGLE_NG_CONTAINER"
+    [saving]="inProgress"
+    size="small"
+  >
+    <ng-container>Join</ng-container>
+  </m-button>
+  <ng-container *ngIf="group['is:invited'] &amp;&amp; !group['is:member']">
+    <m-button
+      class="m-group__membershipButton--verdict"
+      (onAction)="accept()"
+      [saving]="inProgress"
+      i18n="@@M__ACTION__ACCEPT"
+      size="small"
+      >Accept</m-button
+    >
+    <m-button
+      class="m-group__membershipButton--verdict"
+      (onAction)="decline()"
+      [saving]="inProgress"
+      i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
+      size="small"
+      >Decline</m-button
+    >
+  </ng-container>
+  <m-button
+    class="m-group__membershipButton--leave"
+    *ngIf="group['is:member']"
+    (onAction)="leave()"
+    [saving]="inProgress"
+    i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION"
+    size="small"
+    >Leave</m-button
+  >
+  <m-button
+    class="m-group__membershipButton--cancel"
+    *ngIf="group['is:awaiting']"
+    (onAction)="cancelRequest()"
+    [saving]="inProgress"
+    i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
+    size="small"
+    >Cancel request</m-button
+  >
+  <m-modal-signup-on-action
+    [open]="showModal"
+    (closed)="join($event); showModal = false"
+    action="join a group"
+    i18n-action="@@GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE"
+    [overrideOnboarding]="true"
+    *ngIf="!session.isLoggedIn()"
+  >
+  </m-modal-signup-on-action>
+</ng-template>

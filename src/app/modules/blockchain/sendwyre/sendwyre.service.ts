@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SendWyreConfig } from './sendwyre.interface';
 import { SendWyreReservationResponse } from './wallet-order-reservation.interface';
 import { Client } from '../../../services/api';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
  * Service to handle redirection to SendWyre pay.
@@ -13,7 +13,7 @@ export class SendWyreService {
   // Amount to be purchased in USD.
   public amountUsd: string = '40';
 
-  constructor(private client: Client, private toaster: FormToastService) {}
+  constructor(private client: Client, private toaster: ToasterService) {}
 
   /**
    * Requests Wallet order reservation link to redirect to.

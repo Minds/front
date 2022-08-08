@@ -263,7 +263,7 @@ describe('NotificationComponent', () => {
     );
   });
 
-  it('Should load the notification tag', () => {
+  it('Should load the notification tag with parent', () => {
     comp.notification = {
       type: 'notification',
       guid: '843204301747658770',
@@ -289,29 +289,6 @@ describe('NotificationComponent', () => {
     expect(notification.nativeElement.innerHTML).toContain(
       'name tagged you in a comment'
     );
-  });
-
-  it('Should load the notification boost_submitted', () => {
-    comp.notification = {
-      type: 'notification',
-      guid: '843204301747658770',
-      notification_view: 'boost_submitted',
-      entityObj: {
-        type: 'activity',
-        title: 'Title',
-      },
-      fromObj: {
-        name: 'name',
-      },
-      params: {
-        time_created: 2222,
-        bid: 10,
-      },
-    };
-    fixture.detectChanges();
-    expect(comp.notification).not.toBeNull();
-    const notification = fixture.debugElement.query(By.css('span.pseudo-link'));
-    expect(notification.nativeElement.innerHTML).toBe('Title');
   });
 
   it('Should load the notification boost_submitted', () => {

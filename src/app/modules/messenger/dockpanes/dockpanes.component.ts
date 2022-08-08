@@ -6,6 +6,10 @@ import { Storage } from '../../../services/storage';
 
 import { MessengerConversationDockpanesService } from './dockpanes.service';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-messenger--conversation-dockpanes',

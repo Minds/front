@@ -6,6 +6,9 @@ import {
 } from '@angular/core';
 import { Session } from '../../../../services/session';
 
+/**
+ * Base component for wallet pages that relate to tokens
+ */
 @Component({
   selector: 'm-walletV2__tokens',
   templateUrl: './tokens.component.html',

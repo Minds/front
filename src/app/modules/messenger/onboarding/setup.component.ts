@@ -11,8 +11,12 @@ import { Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { MessengerEncryptionService } from '../encryption/encryption.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   selector: 'm-messenger--onboarding--setup',
   templateUrl: 'setup.component.html',
@@ -33,7 +37,7 @@ export class MessengerOnboardingSetupComponent {
     protected session: Session,
     protected router: Router,
     private encryption: MessengerEncryptionService,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   setup() {

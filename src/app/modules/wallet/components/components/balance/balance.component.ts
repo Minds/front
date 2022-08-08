@@ -1,5 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
+/**
+ * Wallet balance 'pill' component.
+ * Can be either 'brief' (balance only) or 'expanded' (shows wallet address as well)
+ */
 @Component({
   selector: 'm-wallet__balance',
   templateUrl: './balance.component.html',

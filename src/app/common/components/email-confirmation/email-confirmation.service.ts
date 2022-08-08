@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
-import { FormToastService } from '../../services/form-toast.service';
+import { ToasterService } from '../../services/toaster.service';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 import { BehaviorSubject } from 'rxjs';
@@ -22,7 +22,7 @@ export class EmailConfirmationService {
 
   constructor(
     protected client: Client,
-    private toasterService: FormToastService,
+    private toasterService: ToasterService,
     private session: Session,
     private feedNotice: FeedNoticeService,
     configs: ConfigsService
@@ -48,6 +48,19 @@ export class EmailConfirmationService {
     )) as any;
 
     return Boolean(response && response.sent);
+  }
+
+  /**
+   * returns true or
+   * @returns { boolean }
+   */
+  public ensureEmailConfirmed(): boolean {
+    if (this.requiresEmailConfirmation()) {
+      this.toasterService.warn('You must confirm your email address');
+      return false;
+    }
+
+    return true;
   }
 
   /**

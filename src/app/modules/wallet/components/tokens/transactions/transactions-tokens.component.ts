@@ -17,6 +17,10 @@ import toFriendlyCryptoVal from '../../../../../helpers/friendly-crypto';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
+/**
+ * Component that contains the token transactions table
+ * and also a filter for transaction type (e.g rewards, on-chain transfers, etc.)
+ */
 @Component({
   selector: 'm-walletTransactions--tokens',
   templateUrl: './transactions-tokens.component.html',
@@ -203,7 +207,12 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
             formattedTx.rewardType = tx?.reward_type;
           }
 
-          if (formattedTx.superType === 'wire') {
+          // Get information about the other user
+          // tx is a wire or boost offer
+          if (
+            formattedTx.superType === 'wire' ||
+            (formattedTx.superType === 'boost' && tx.receiver)
+          ) {
             formattedTx.otherUser = this.getOtherUser(tx);
           }
 

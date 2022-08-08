@@ -2,7 +2,8 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { CookieService } from '../../../common/services/cookie.service';
 
 /**
- * Announcement banner
+ * Announcement banner. Located at the top of the screen.
+ * Dismissable - dismiss history handled by cookies.
  */
 @Component({
   selector: 'm-announcement',

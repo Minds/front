@@ -7,6 +7,15 @@ import {
 import { ReadMoreDirective } from './read-more.directive';
 import { Router } from '@angular/router';
 
+/**
+ * When clicked, this button expands a long chunk of text
+ * that had been truncated by the [m-read-more] directive
+ *
+ * If "showOnlyFadeout" is enabled, the "Read more" text isn't shown,
+ * but the button still has the same effect (e.g. in descriptions on publisher cards)
+ *
+ * See it in a long activity post.
+ */
 @Component({
   selector: 'm-read-more--button',
   template: `

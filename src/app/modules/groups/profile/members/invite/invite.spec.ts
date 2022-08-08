@@ -17,7 +17,7 @@ import { Client } from '../../../../../services/api/client';
 import { MockDirective, MockService } from '../../../../../utils/mock';
 import { GroupsService } from '../../../groups.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
 const user = {
   guid: '1000',
@@ -64,8 +64,8 @@ describe('GroupsProfileMembersInvite', () => {
             }),
           },
           {
-            provide: FormToastService,
-            useValue: MockService(FormToastService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

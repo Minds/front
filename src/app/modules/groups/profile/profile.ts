@@ -31,7 +31,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { SiteService } from '../../../common/services/site.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { GroupsSearchService } from './feed/search.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
@@ -102,7 +102,7 @@ export class GroupsProfile {
     featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private pageLayoutService: PageLayoutService,
-    protected toasterService: FormToastService,
+    protected toasterService: ToasterService,
     private injector: Injector,
     protected publisherSearchModal: PublisherSearchModalService,
     protected groupsSearch: GroupsSearchService,

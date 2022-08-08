@@ -6,8 +6,9 @@ import { GuestModeExperimentService } from '../experiments/sub-services/guest-mo
  * Routes users to a "homepage" depending on active experiments.
  */
 @Component({
-  selector: 'm-homepagecontainer',
+  selector: 'm-homepageContainer',
   templateUrl: 'container.component.html',
+  styleUrls: ['container.component.ng.scss'],
 })
 export class HomepageContainerComponent implements OnInit {
   constructor(

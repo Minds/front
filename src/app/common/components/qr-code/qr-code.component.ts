@@ -1,4 +1,10 @@
 import { Component, Input } from '@angular/core';
+
+/**
+ * Displays a QR code with associated data
+ *
+ * Width is configurable
+ */
 @Component({
   selector: 'm-qr-code',
   template: `

@@ -3,13 +3,17 @@ import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { ActivityService, ActivityEntity } from '../activity.service';
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { map } from 'rxjs/operators';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 
+/**
+ * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating a remind or a quote post.
+ * If the post is already reminded, the dropdown menu provides an option to delete the remind.
+ */
 @Component({
   selector: 'm-activity__remindButton',
   templateUrl: 'remind-button.component.html',
@@ -17,8 +21,6 @@ import { AuthModalService } from '../../../auth/modal/auth-modal.service';
   providers: [ComposerService],
 })
 export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
-  isOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
   count$: Observable<number> = this.service.entity$.pipe(
     map(entity => entity.reminds + entity.quotes)
   );
@@ -28,7 +30,7 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     private injector: Injector,
     private composerService: ComposerService,
     private composerModalService: ComposerModalService,
-    private toasterService: FormToastService,
+    private toasterService: ToasterService,
     private session: Session,
     private authModal: AuthModalService,
     private client: Client
@@ -51,17 +53,7 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  onButtonClick(e: MouseEvent): void {
-    this.isOpened$.next(true);
-  }
-
-  dismissPopover(): void {
-    this.isOpened$.next(false);
-  }
-
   async onUndoRemind(e: MouseEvent): Promise<void> {
-    this.dismissPopover();
-
     try {
       await this.client.delete(
         `api/v3/newsfeed/${this.service.entity$.getValue().urn}`
@@ -82,8 +74,6 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
       this.openAuthModal();
       return;
     }
-
-    this.dismissPopover();
 
     const entity = this.service.entity$.getValue();
     this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
@@ -106,8 +96,6 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
       this.openAuthModal();
       return;
     }
-
-    this.dismissPopover();
 
     const entity = this.service.entity$.getValue();
     entity.boosted = false; // Set boosted to false to avoid compsoer showing boost label

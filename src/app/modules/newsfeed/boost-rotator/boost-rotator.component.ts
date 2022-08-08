@@ -85,6 +85,7 @@ export class NewsfeedBoostRotatorComponent {
   paused: boolean = false; // True if user has disabled boost autorotate
   windowFocused: boolean = true;
   interval: number = 6; // Seconds til next rotation
+  init: boolean = false; // True if the initial load is completed
   channel: MindsUser;
 
   // Determines which boost is visible and which are hidden
@@ -213,6 +214,8 @@ export class NewsfeedBoostRotatorComponent {
         .setLimit(12)
         .setOffset(0)
         .fetch();
+
+      this.init = true;
     } catch (e) {
       if (e && e.message) {
         console.warn(e);

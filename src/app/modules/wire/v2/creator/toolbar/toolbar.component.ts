@@ -10,7 +10,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { map, last, first } from 'rxjs/operators';
 
 /**
- * Bottom toolbar for Wire modal
+ * Bottom action button toolbar for Wire modal
  */
 @Component({
   selector: 'm-wireCreator__toolbar',

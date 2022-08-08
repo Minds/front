@@ -17,18 +17,25 @@
 </div>
 <span
   class="m-userAggregator__userSummary"
+  [ngClass]="{
+    'm-userAggregator__userSummary--clickable': clickable
+  }"
+  (click)="onClick.emit($event)"
   *ngIf="users.slice(0, usernameAmount) as slicedUsers"
 >
   <span *ngFor="let user of slicedUsers; let i = index">
     <a
-      [href]="'/' + user.username"
-      target="_blank"
+      [routerLink]="'/' + user.username"
+      (click)="$event.stopPropagation()"
       class="m-userAggregator__usernameHref"
-      >@{{ user.username | truncate: 15 }}</a
+      >{{ user.name | truncate: 12 }}</a
     >
-    <span *ngIf="i < slicedUsers.length - 1">,&nbsp;</span>
+    <span *ngIf="i < slicedUsers.length - 1 && totalCount > 2">,&nbsp;</span>
+    <span *ngIf="i < slicedUsers.length - 1 && totalCount == 2"> and </span>
   </span>
-  <span *ngIf="users.length > usernameAmount">
-    and {{(totalCount ?? users.length) - usernameAmount}} others</span
-  >
+  <span *ngIf="othersCount > 0; else blankSpace">
+    and {{ othersCount }} { othersCount, plural, =1 {other} other {others} }
+  </span>
+  <ng-template #blankSpace>&nbsp;</ng-template>
+  <ng-content select="[suffix-text]"></ng-content>
 </span>

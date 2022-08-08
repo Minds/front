@@ -25,6 +25,7 @@ export interface Filter {
 export interface Option {
   id: string;
   label: string;
+  icon?: string;
   available?: boolean;
   selected?: boolean;
   description?: string;
@@ -90,7 +91,7 @@ export interface UserState {
   loading: boolean;
 }
 
-export interface ShadowboxHeaderTab {
+export interface DataTab {
   id: string;
   label: string;
   value?: string | number;

@@ -30,17 +30,17 @@ export type ActivityDisplayOptions = {
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
+  boostRotatorMode: boolean; // is the activity in the boost rotator?
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
-  showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
 };
 
 export type ActivityEntity = {
   guid: string;
-  remind_object?: Object;
+  remind_object?: any;
   remind_users?: Array<MindsUser>;
   ownerObj: MindsUser;
   containerObj: MindsGroup | null;
@@ -175,6 +175,8 @@ export class ActivityService {
     map((entity: ActivityEntity) => {
       return (
         !!entity.paywall &&
+        // don't show a paywall if the entity is a quote of another paywalled post
+        !entity.remind_object?.paywall &&
         entity.ownerObj.guid !== this.session.getLoggedInUser().guid
       );
     })
@@ -308,13 +310,13 @@ export class ActivityService {
     showPostMenu: true,
     showPinnedBadge: true,
     showMetrics: true,
-    showBoostRotatorButtons: false,
     fixedHeight: false,
     fixedHeightContainer: false,
     isModal: false,
     minimalMode: false,
     bypassMediaModal: false,
     sidebarMode: false,
+    boostRotatorMode: false,
     isSidebarBoost: false,
     isFeed: false,
     isSingle: false,

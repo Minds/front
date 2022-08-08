@@ -23,7 +23,8 @@ export type TimestampedEntity = {
 };
 
 /**
- * Shows relative time ago in a span element e.g. 30s ago
+ * Shows create date of activity entity in "relative time ago" format,
+ * in a span element e.g. "30s ago".
  * Time will only update when the host is on screen.
  */
 @Component({

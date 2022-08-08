@@ -13,6 +13,10 @@ import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.se
 import { MessengerConversationBuilderService } from '../dockpanes/conversation-builder.service';
 import { MindsUser } from '../../../interfaces/entities';
 
+/**
+ * DEPRECATED
+ * Messenger was replaced with Minds Chat
+ */
 @Component({
   selector: 'm-messenger--channel-button',
   templateUrl: 'channel-button.component.html',

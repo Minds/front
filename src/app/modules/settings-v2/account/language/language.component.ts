@@ -19,6 +19,9 @@ import { SettingsV2Service } from '../../settings-v2.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { LanguageService } from '../../../language/language.service';
 
+/**
+ * Settings form for changing language preferences.
+ */
 @Component({
   selector: 'm-settingsV2__displayLanguage',
   templateUrl: './language.component.html',

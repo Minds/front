@@ -16,9 +16,16 @@ import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { TranslationService } from '../../../../services/translation';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { DownloadActivityMediaService } from '../../../../common/services/download-activity-media.service';
 
+/**
+ * Options for the activity's meatball menu (different options show for owners).
+ * Mostly just a wrapper around 'm-postMenu--v2', but also handles actions for a few of the options,
+ * if selected (e.g. 'delete' is handled here, but 'report' is handled in the post menu.
+ *
+ * TODO: consolidate/centralise where actions are handled
+ */
 @Component({
   selector: 'm-activity__menu',
   templateUrl: 'menu.component.html',
@@ -39,7 +46,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private composerModal: ComposerModalService,
     private injector: Injector,
     public translationService: TranslationService,
-    private toasterService: FormToastService,
+    private toasterService: ToasterService,
     public downloadActivityMediaService: DownloadActivityMediaService
   ) {}
 

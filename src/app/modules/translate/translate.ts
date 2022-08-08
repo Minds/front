@@ -2,8 +2,15 @@ import { Component, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 import { TranslationService } from '../../services/translation';
 import { FeaturesService } from '../../services/features.service';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 
+/**
+ * Displays translated text
+ *
+ * Users can select from a menu of languages
+ *
+ * See it by clicking 'translate' in an activity's dropdown menu
+ */
 @Component({
   moduleId: module.id,
   selector: 'm-translate',
@@ -46,7 +53,7 @@ export class Translate {
     public translationService: TranslationService,
     public changeDetectorRef: ChangeDetectorRef,
     public featuresService: FeaturesService,
-    private toasterService: FormToastService
+    private toasterService: ToasterService
   ) {}
 
   set _open(value: any) {

@@ -12,6 +12,17 @@ import {
 import { AnchorPosition } from '../../../services/ux/anchor-position';
 import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
 
+/**
+ * Generic button to be used wherever we need buttons.
+ *
+ * Use inputs to determine the size, color, state and appearance
+ * of the button.
+ *
+ * When saving is true, a loading animation appears.
+ *
+ * Tells the parent component when it is clicked
+ * via the onAction event emitter.
+ */
 @Component({
   selector: 'm-button',
   templateUrl: './button.component.html',

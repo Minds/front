@@ -1,8 +1,12 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../../common/api/client.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
+/**
+ * Settings page for managing a list of recurring payments
+ * made to other Minds channels
+ */
 @Component({
   selector: 'm-settingsV2__recurringPayments',
   templateUrl: './recurring-payments.component.html',
@@ -15,7 +19,7 @@ export class SettingsV2RecurringPaymentsComponent {
   constructor(
     private client: Client,
     private cd: ChangeDetectorRef,
-    protected toasterService: FormToastService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {

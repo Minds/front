@@ -1,37 +1,31 @@
-<div class="m-dropdown--v2">
+<m-dropdownMenu [menu]="dropdownMenu">
   <button
     class="m-activityRemindButton__icon"
     [class.has-reminded]="hasReminded"
-    (click)="onButtonClick($event)"
   >
     <i class="material-icons">repeat</i>
-
     <span
       class="minds-counter"
       *ngIf="!service.displayOptions.showInteractions && (count$ | async) > 0"
       >{{ count$ | async }}</span
     >
   </button>
+</m-dropdownMenu>
 
-  <ul class="m-dropdown__list" *ngIf="isOpened$ | async">
+<ng-template #dropdownMenu>
+  <ul>
     <ng-container *ngIf="hasReminded; else remindOptions">
-      <li class="m-dropdownList__item" (click)="onUndoRemind($event)">
-        <i class="material-icons">repeat</i><span>Undo Remind</span>
-      </li>
+      <m-dropdownMenu__item (click)="onUndoRemind($event)" icon="repeat">
+        <span>Undo Remind</span>
+      </m-dropdownMenu__item>
     </ng-container>
     <ng-template #remindOptions>
-      <li class="m-dropdownList__item" (click)="onRemindClick($event)">
-        <i class="material-icons">repeat</i><span>Remind</span>
-      </li>
-      <li class="m-dropdownList__item" (click)="onQuotePostClick($event)">
-        <i class="material-icons">create</i><span>Quote post</span>
-      </li>
+      <m-dropdownMenu__item (click)="onRemindClick($event)" icon="repeat">
+        <span>Remind</span>
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item (click)="onQuotePostClick($event)" icon="create">
+        <span>Quote post</span>
+      </m-dropdownMenu__item>
     </ng-template>
   </ul>
-</div>
-
-<div
-  class="m-bgOverlay--v2"
-  (click)="isOpened$.next(false)"
-  *ngIf="isOpened$ | async"
-></div>
+</ng-template>

@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+/**
+ * Displays an animated ellipsis to signal that something is in progress
+ */
 @Component({
   selector: 'm-loadingEllipsis',
   templateUrl: './loading-ellipsis.component.html',

@@ -4,7 +4,7 @@ import { WireContractService } from '../blockchain/contracts/wire-contract.servi
 import { TokenContractService } from '../blockchain/contracts/token-contract.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
 import { BTCService } from '../payments/btc/btc.service';
-import { FormToastService } from '../../common/services/form-toast.service';
+import { ToasterService } from '../../common/services/toaster.service';
 
 export type PayloadType =
   | 'onchain'
@@ -33,7 +33,7 @@ export class WireService {
     private tokenContract: TokenContractService,
     private web3Wallet: Web3WalletService,
     private btcService: BTCService,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   async submitWire(wire: WireStruc) {

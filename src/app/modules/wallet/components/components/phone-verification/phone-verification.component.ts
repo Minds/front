@@ -1,17 +1,21 @@
 import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
   ViewRef,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 
+/**
+ * Form that verifies a user's phone number by sending a secret code
+ * via text that the user must input upon receipt
+ */
 @Component({
   selector: 'm-walletPhoneVerification',
   templateUrl: './phone-verification.component.html',
@@ -60,7 +64,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
     private fb: FormBuilder,
     protected client: Client,
     protected cd: ChangeDetectorRef,
-    private toast: FormToastService
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {}
@@ -82,8 +86,9 @@ export class WalletPhoneVerificationComponent implements OnInit {
       this.confirming = true;
     } catch (e) {
       this.toast.error(e.message || e);
-      this.invalidNumber = true;
-      console.error(e.message);
+      if (e.type === 'InvalidPhoneException') {
+        this.invalidNumber = true;
+      }
     }
     this.inProgress = false;
     this.detectChanges();

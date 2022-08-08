@@ -5,7 +5,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { WireEventType, WireEvent } from '../../../wire/v2/wire-v2.service';
 import { Session } from '../../../../services/session';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Displayed on the topbar of pro sites for users who don't have a membership on the pro channel
@@ -21,7 +21,7 @@ export class JoinButtonComponent {
     public service: ProChannelService,
     private authModal: AuthModalService,
     private wireModal: WireModalService,
-    private toaster: FormToastService
+    private toaster: ToasterService
   ) {}
 
   onClick() {
