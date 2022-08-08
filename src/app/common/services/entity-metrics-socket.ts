@@ -66,17 +66,15 @@ export class EntityMetricsSocketService implements OnDestroy {
    * @returns { this }
    */
   public listen(entityGuid: string): this {
-    if (this.metricsSubscription) {
+    if (this.metricsSubscription || this.onReadySubscription) {
       console.error('Already subscribed to entity metrics sockets');
       return;
     }
 
-    if (!this.onReadySubscription) {
-      this.onReadySubscription = this.sockets.onReady$.subscribe(() => {
-        this.sockets.join(`entity:metrics:${entityGuid}`);
-        this.isJoined = true;
-      });
-    }
+    this.onReadySubscription = this.sockets.onReady$.subscribe(() => {
+      this.sockets.join(`entity:metrics:${entityGuid}`);
+      this.isJoined = true;
+    });
 
     this.metricsSubscription = this.sockets.subscribe(
       `entity:metrics:${entityGuid}`,
