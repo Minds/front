@@ -30,6 +30,8 @@ import {
   BehaviorSubject,
   combineLatest,
   Subject,
+  EMPTY,
+  of,
 } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
@@ -41,6 +43,14 @@ import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
+import {
+  debounceTime,
+  delay,
+  distinctUntilChanged,
+  map,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -227,8 +237,10 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
       console.error('Already registered InterceptionObserver');
       return;
     }
+
     this.interceptionObserverSubscription = this.interceptionObserver
       .createAndObserve(this.el)
+      .pipe(debounceTime(2000))
       .subscribe((isVisible: boolean) => {
         if (isVisible) {
           this.service.setupMetricsSocketListener();
