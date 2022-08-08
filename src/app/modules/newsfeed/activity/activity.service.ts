@@ -480,6 +480,10 @@ export class ActivityService implements OnDestroy {
    * @returns { this }
    */
   public teardownMetricsSocketListener(): this {
+    if (!this.entityMetricsSocket) {
+      return;
+    }
+
     if (this.thumbsUpMetricSubscription) {
       this.thumbsUpMetricSubscription.unsubscribe();
     }
