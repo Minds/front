@@ -1,18 +1,16 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
   Component,
   Input,
   HostBinding,
   ElementRef,
   HostListener,
-  Optional,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   OnInit,
   AfterViewInit,
   OnDestroy,
   Output,
-  EventEmitter,
   ViewChild,
   Inject,
   PLATFORM_ID,
@@ -24,33 +22,17 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ActivityEntity,
 } from './../activity/activity.service';
-import {
-  Subscription,
-  Observable,
-  BehaviorSubject,
-  combineLatest,
-  Subject,
-  EMPTY,
-  of,
-} from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
-import { TranslationService } from '../../../services/translation';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { Session } from '../../../services/session';
-import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
-import {
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  map,
-  switchMap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
+import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -67,6 +49,7 @@ import {
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
+    EntityMetricsSocketService,
   ],
   host: {
     '[class.m-activity--minimalMode]':
@@ -235,6 +218,10 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   public setupInterceptionObserver(): void {
     if (this.interceptionObserverSubscription) {
       console.error('Already registered InterceptionObserver');
+      return;
+    }
+
+    if (isPlatformServer(this.platformId)) {
       return;
     }
 

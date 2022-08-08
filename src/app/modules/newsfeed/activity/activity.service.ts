@@ -497,7 +497,7 @@ export class ActivityService implements OnDestroy {
    * Get GUID to subscribe to for metrics.
    * @returns { string } guid to subscribe to for metrics events.
    */
-  public getMetricSubscriptionGuid(): string {
+  private getMetricSubscriptionGuid(): string {
     if (this.entity$.getValue().entity_guid) {
       return this.entity$.getValue().entity_guid;
     } else {
