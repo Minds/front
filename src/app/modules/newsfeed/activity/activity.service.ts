@@ -483,7 +483,6 @@ export class ActivityService implements OnDestroy {
     if (!this.entityMetricsSocket) {
       return;
     }
-
     if (this.thumbsUpMetricSubscription) {
       this.thumbsUpMetricSubscription.unsubscribe();
     }
