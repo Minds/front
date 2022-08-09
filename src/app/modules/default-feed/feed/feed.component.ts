@@ -55,6 +55,18 @@ export class DefaultFeedComponent implements OnInit {
   }
 
   /**
+   * Whether a boost should be shown in a given feed position.
+   * @param { number } position - index / position in feed.
+   * @returns { boolean } - true if a boost should be shown in given feed position
+   */
+  public shouldShowBoostInPosition(position: number): boolean {
+    return (
+      this.isDiscoveryBoostExperimentActive() &&
+      ((position > 0 && position % 5 === 0) || position === 3)
+    );
+  }
+
+  /**
    * Loads the feed.
    * @returns { void }
    * @param refresh
@@ -109,5 +121,13 @@ export class DefaultFeedComponent implements OnInit {
     }
 
     return this.experiments.hasVariation('minds-2263-clustered-recs', true);
+  }
+
+  /**
+   * Whether experiment to show boosts in discovery is active.
+   * @returns { boolean } - true if experiment is active.
+   */
+  private isDiscoveryBoostExperimentActive(): boolean {
+    return this.experiments.hasVariation('minds-3280-discovery-boosts', true);
   }
 }
