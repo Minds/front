@@ -34,7 +34,6 @@ export class DefaultFeedComponent implements OnInit {
   constructor(
     public feedsService: FeedsService,
     public experiments: ExperimentsService,
-    private activityV2Experiment: ActivityV2ExperimentService,
     private discoveryBoostExperiment: DiscoveryBoostExperimentService,
     private dismissal: DismissalService
   ) {}
@@ -65,7 +64,6 @@ export class DefaultFeedComponent implements OnInit {
    */
   public shouldShowBoostInPosition(position: number): boolean {
     return (
-      this.activityV2Experiment.isActive() &&
       this.discoveryBoostExperiment.isActive() &&
       ((position > 0 && position % 5 === 0) || position === 3)
     );
