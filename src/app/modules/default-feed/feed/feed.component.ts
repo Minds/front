@@ -1,9 +1,7 @@
-import { Observable } from 'rxjs';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
 
 /**
