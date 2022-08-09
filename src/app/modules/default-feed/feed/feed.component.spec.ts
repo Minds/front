@@ -4,11 +4,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { FeedsService } from '../../../common/services/feeds.service';
-import { GlobalScrollService } from '../../../services/ux/global-scroll.service';
 import { By } from '@angular/platform-browser';
-import { Session } from './../../../services/session';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { BehaviorSubject, of } from 'rxjs';
+import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { DismissalService } from '../../../common/services/dismissal.service';
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
@@ -71,18 +72,28 @@ describe('DefaultFeedComponent', () => {
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [
-          { provide: FeedsService, useValue: feedsServiceMock },
-          {
-            provide: GlobalScrollService,
-            useValue: MockService(GlobalScrollService),
-          },
-          { provide: Session, useValue: MockService(Session) },
           {
             provide: ExperimentsService,
             useValue: MockService(ExperimentsService),
           },
+          {
+            provide: ActivityV2ExperimentService,
+            useValue: MockService(ActivityV2ExperimentService),
+          },
+          {
+            provide: DiscoveryBoostExperimentService,
+            useValue: MockService(DiscoveryBoostExperimentService),
+          },
+          {
+            provide: DismissalService,
+            useValue: MockService(DismissalService),
+          },
         ],
-      }).compileComponents();
+      })
+        .overrideProvider(FeedsService, {
+          useValue: feedsServiceMock,
+        })
+        .compileComponents();
     })
   );
 
@@ -156,28 +167,35 @@ describe('DefaultFeedComponent', () => {
     expect(inlineElements.length).toBe(4); // pos 6, 12, 18, 24
   });
 
-  it('should determine whether boost should NOT be shown because experiment is off', () => {
-    (comp as any).experiments.hasVariation.and.returnValue(false);
+  it('should determine whether boost should NOT be shown because activity v2 boost experiment is off', () => {
+    (comp as any).activityV2Experiment.isActive.and.returnValue(false);
+    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(true);
 
     expect(comp.shouldShowBoostInPosition(3)).toBe(false);
-    expect((comp as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'minds-3280-discovery-boosts',
-      true
-    );
+    expect((comp as any).activityV2Experiment.isActive).toHaveBeenCalled();
+  });
+
+  it('should determine whether boost should NOT be shown because discovery boost experiment is off', () => {
+    (comp as any).activityV2Experiment.isActive.and.returnValue(true);
+    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(false);
+
+    expect(comp.shouldShowBoostInPosition(3)).toBe(false);
+    expect((comp as any).activityV2Experiment.isActive).toHaveBeenCalled();
+    expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
   });
 
   it('should determine whether boost should be shown in position 3', () => {
-    (comp as any).experiments.hasVariation.and.returnValue(true);
+    (comp as any).activityV2Experiment.isActive.and.returnValue(true);
+    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(true);
 
     expect(comp.shouldShowBoostInPosition(3)).toBe(true);
-    expect((comp as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'minds-3280-discovery-boosts',
-      true
-    );
+    expect((comp as any).activityV2Experiment.isActive).toHaveBeenCalled();
+    expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
   });
 
   it('should determine whether boost should be shown in a non 0 position divisible by 5', () => {
-    (comp as any).experiments.hasVariation.and.returnValue(true);
+    (comp as any).activityV2Experiment.isActive.and.returnValue(true);
+    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(true);
 
     expect(comp.shouldShowBoostInPosition(5)).toBe(true);
     expect(comp.shouldShowBoostInPosition(10)).toBe(true);
@@ -186,14 +204,13 @@ describe('DefaultFeedComponent', () => {
     expect(comp.shouldShowBoostInPosition(25)).toBe(true);
     expect(comp.shouldShowBoostInPosition(9995)).toBe(true);
 
-    expect((comp as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'minds-3280-discovery-boosts',
-      true
-    );
+    expect((comp as any).activityV2Experiment.isActive).toHaveBeenCalled();
+    expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
   });
 
   it('should determine whether boost should NOT be shown in a non 0 position that is NOT 3 OR divisible by 5', () => {
-    (comp as any).experiments.hasVariation.and.returnValue(true);
+    (comp as any).activityV2Experiment.isActive.and.returnValue(true);
+    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(true);
 
     expect(comp.shouldShowBoostInPosition(1)).toBe(false);
     expect(comp.shouldShowBoostInPosition(2)).toBe(false);
@@ -202,9 +219,7 @@ describe('DefaultFeedComponent', () => {
     expect(comp.shouldShowBoostInPosition(9994)).toBe(false);
     expect(comp.shouldShowBoostInPosition(9996)).toBe(false);
 
-    expect((comp as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'minds-3280-discovery-boosts',
-      true
-    );
+    expect((comp as any).activityV2Experiment.isActive).toHaveBeenCalled();
+    expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
   });
 });

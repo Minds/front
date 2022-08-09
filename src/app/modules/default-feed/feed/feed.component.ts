@@ -3,6 +3,8 @@ import { DismissalService } from './../../../common/services/dismissal.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -32,6 +34,8 @@ export class DefaultFeedComponent implements OnInit {
   constructor(
     public feedsService: FeedsService,
     public experiments: ExperimentsService,
+    private activityV2Experiment: ActivityV2ExperimentService,
+    private discoveryBoostExperiment: DiscoveryBoostExperimentService,
     private dismissal: DismissalService
   ) {}
 
@@ -61,7 +65,8 @@ export class DefaultFeedComponent implements OnInit {
    */
   public shouldShowBoostInPosition(position: number): boolean {
     return (
-      this.isDiscoveryBoostExperimentActive() &&
+      this.activityV2Experiment.isActive() &&
+      this.discoveryBoostExperiment.isActive() &&
       ((position > 0 && position % 5 === 0) || position === 3)
     );
   }
@@ -121,13 +126,5 @@ export class DefaultFeedComponent implements OnInit {
     }
 
     return this.experiments.hasVariation('minds-2263-clustered-recs', true);
-  }
-
-  /**
-   * Whether experiment to show boosts in discovery is active.
-   * @returns { boolean } - true if experiment is active.
-   */
-  private isDiscoveryBoostExperimentActive(): boolean {
-    return this.experiments.hasVariation('minds-3280-discovery-boosts', true);
   }
 }
