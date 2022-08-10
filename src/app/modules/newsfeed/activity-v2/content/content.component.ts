@@ -90,6 +90,7 @@ export class ActivityV2ContentComponent
    */
   @Input() autoplayVideo: boolean = false;
 
+  // TODO: make showPaywall and showPaywallBadge come from activity service instead
   @Input() showPaywall: boolean = false;
   @Input() showPaywallBadge: boolean = false;
 
