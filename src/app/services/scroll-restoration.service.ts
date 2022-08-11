@@ -70,6 +70,6 @@ export class ScrollRestorationService {
       } else {
         cb(true);
       }
-    }, 15);
+    }, 30);
   }
 }

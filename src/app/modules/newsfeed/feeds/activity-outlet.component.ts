@@ -4,5 +4,13 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'm-newsfeed__activityOutlet',
   template: '<ng-content></ng-content>',
+  styles: [
+    `
+      ::ng-deep m-activityv2__content {
+        height: 400px !important;
+        overflow: hidden;
+      }
+    `,
+  ],
 })
 export class NewsfeedActivityOutletComponent {}

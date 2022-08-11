@@ -14,7 +14,6 @@
       (vsChange)="loadNext($event)"
       [scrollAnimationTime]="0"
       [resizeBypassRefreshThreshold]="10"
-      [executeRefreshOutsideAngularZone]="true"
     >
       <m-newsfeed__activityOutlet
         *ngFor="
@@ -25,17 +24,19 @@
       >
         <ng-container [ngSwitch]="feedItem.type">
           <ng-container *ngSwitchCase="'activity'">
-            <m-activity
-              *ngIf="feedItem.data.activity$ | async as activity"
-              [entity]="activity"
-              [displayOptions]="{
-                showOnlyCommentsInput: true,
-                isFeed: true
-              }"
-              [slot]="feedItem.data.slot"
-              (deleted)="delete(activity)"
-              #feedViewChildren
-            ></m-activity>
+            <div *ngSwitchCase="'activity'" style="min-height: 1px">
+              <m-activity
+                *ngIf="feedItem.data.activity$ | async as activity"
+                [entity]="activity"
+                [displayOptions]="{
+                  showOnlyCommentsInput: true,
+                  isFeed: true
+                }"
+                [slot]="feedItem.data.slot"
+                (deleted)="delete(activity)"
+                #feedViewChildren
+              ></m-activity>
+            </div>
           </ng-container>
           <div *ngSwitchCase="'feedNotice'" style="min-height: 1px">
             <m-feedNotice__outlet location="inline"></m-feedNotice__outlet>
