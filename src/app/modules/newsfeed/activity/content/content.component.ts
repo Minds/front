@@ -86,6 +86,7 @@ export class ActivityContentComponent
    */
   @Input() autoplayVideo: boolean = false;
 
+  // TODO: make showPaywall and showPaywallBadge come from activity service instead
   @Input() showPaywall: boolean = false;
   @Input() showPaywallBadge: boolean = false;
 
@@ -153,6 +154,7 @@ export class ActivityContentComponent
   }
 
   ngOnInit() {
+    // this.shouldShowPaywallSubscription = this.service.shouldShowPaywall$
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
@@ -162,8 +164,12 @@ export class ActivityContentComponent
           this.calculateVideoHeight();
           this.calculateImageHeight();
         });
+        // Check for either paywall or paywall badge because
+        // quotes of status posts display the badge inside
+        // the quote/parent's content component
         this.isPaywalledStatusPost =
           this.showPaywallBadge && entity.content_type === 'status';
+
         if (
           this.entity.paywall_unlocked ||
           this.entity.ownerObj.guid === this.session.getLoggedInUser().guid

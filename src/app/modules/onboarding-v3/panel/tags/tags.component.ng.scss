@@ -6,6 +6,10 @@
   flex-flow: column;
   box-sizing: border-box;
 
+  &.m-onboardingV3__tags--fullWidth {
+    padding: $spacing5 $spacing9;
+  }
+
   @media screen and (max-width: 725px) {
     min-width: unset;
     padding: 40px;
