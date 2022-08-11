@@ -2,11 +2,9 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Inject,
   Input,
   isDevMode,
   OnInit,
-  PLATFORM_ID,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -21,7 +19,6 @@ import { FeedsUpdateService } from '../../../common/services/feeds-update.servic
 import { FeedsService } from '../../../common/services/feeds.service';
 import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
-import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
 
 export enum FeedAlgorithm {
   top = 'top',
@@ -69,62 +66,8 @@ export class FeedComponent implements OnInit {
     public route: ActivatedRoute,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
-    private scrollRestoration: ScrollRestorationService,
-    @Inject(PLATFORM_ID) private platformId: Object,
     public changeDetectorRef: ChangeDetectorRef
   ) {}
-
-  /**
-   * injects in-feed items into the feed and returns the new list
-   * @param {IFeedItem[]} feedItems
-   * @returns
-   */
-  injectFeedItems(feedItems: IFeedItem[]) {
-    const newFeedItems = [...feedItems];
-
-    for (let i = 0; i < feedItems.length; i++) {
-      this.feedService.injectItems.map((injectItem, injectItemIndex) => {
-        let shouldInject = false;
-        if (typeof injectItem.indexes === 'function') {
-          shouldInject = injectItem.indexes(i, feedItems.length);
-        } else {
-          shouldInject = injectItem.indexes.includes(i);
-        }
-
-        if (!shouldInject) return;
-
-        switch (injectItem.type) {
-          case FeedItemType.feedNotice:
-            newFeedItems.splice(i, 0, {
-              type: FeedItemType.feedNotice,
-              id: 'feedNotice-' + injectItemIndex, // TODO
-            });
-            break;
-          case FeedItemType.featuredContent:
-            newFeedItems.splice(i, 0, {
-              type: FeedItemType.featuredContent,
-              data: injectItemIndex + 1,
-              id: 'featuredContent-' + injectItemIndex,
-            });
-            break;
-          case FeedItemType.topHighlights:
-            newFeedItems.splice(i, 0, {
-              type: FeedItemType.topHighlights,
-              id: 'topHighlights-' + injectItemIndex,
-            });
-            break;
-          case FeedItemType.channelRecommendations:
-            newFeedItems.splice(i, 0, {
-              type: FeedItemType.channelRecommendations,
-              id: 'channelRecommendations-' + injectItemIndex,
-            });
-            break;
-        }
-      });
-    }
-
-    return newFeedItems;
-  }
 
   ngOnInit() {
     this.feedItems$ = this.feedService.feed.pipe(
@@ -196,5 +139,57 @@ export class FeedComponent implements OnInit {
       }
     });
     return uniqueFeed;
+  }
+
+  /**
+   * injects in-feed items into the feed and returns the new list
+   * @param {IFeedItem[]} feedItems
+   * @returns
+   */
+  private injectFeedItems(feedItems: IFeedItem[]) {
+    const newFeedItems = [...feedItems];
+
+    for (let i = 0; i < feedItems.length; i++) {
+      this.feedService.injectItems.map((injectItem, injectItemIndex) => {
+        let shouldInject = false;
+        if (typeof injectItem.indexes === 'function') {
+          shouldInject = injectItem.indexes(i, feedItems.length);
+        } else {
+          shouldInject = injectItem.indexes.includes(i);
+        }
+
+        if (!shouldInject) return;
+
+        switch (injectItem.type) {
+          case FeedItemType.feedNotice:
+            newFeedItems.splice(i, 0, {
+              type: FeedItemType.feedNotice,
+              id: 'feedNotice-' + injectItemIndex, // TODO
+            });
+            break;
+          case FeedItemType.featuredContent:
+            newFeedItems.splice(i, 0, {
+              type: FeedItemType.featuredContent,
+              data: injectItemIndex + 1,
+              id: 'featuredContent-' + injectItemIndex,
+            });
+            break;
+          case FeedItemType.topHighlights:
+            newFeedItems.splice(i, 0, {
+              type: FeedItemType.topHighlights,
+              id: 'topHighlights-' + injectItemIndex,
+            });
+            break;
+          case FeedItemType.channelRecommendations:
+            newFeedItems.splice(i, 0, {
+              type: FeedItemType.channelRecommendations,
+              id: 'channelRecommendations-' + injectItemIndex,
+            });
+            break;
+        }
+      });
+    }
+
+    return newFeedItems;
   }
 }
