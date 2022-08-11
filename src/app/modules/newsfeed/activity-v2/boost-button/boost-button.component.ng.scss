@@ -42,6 +42,12 @@
     }
   }
 
+  .m-boostButton__label {
+    @include mobile-only() {
+      display: none;
+    }
+  }
+
   span.m-animation__shimmer--text {
     animation-name: shimmer--text;
   }
