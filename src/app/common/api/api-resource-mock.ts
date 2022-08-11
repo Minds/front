@@ -10,9 +10,14 @@ export let experimentsServiceMock = new (function() {
 const apiResourceMock = {
   query: () =>
     // @ts-ignore
-    new QueryRef(MockService(ApiService), new StorageV2(), experimentsServiceMock, {
-      method: ApiRequestMethod.GET,
-    }),
+    new QueryRef(
+      MockService(ApiService),
+      new StorageV2(),
+      experimentsServiceMock,
+      {
+        method: ApiRequestMethod.GET,
+      }
+    ),
 };
 
 export default apiResourceMock;
