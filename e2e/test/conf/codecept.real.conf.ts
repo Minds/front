@@ -1,7 +1,8 @@
+require('ts-node/register');
+require('dotenv').config();
+
 const cp = require('child_process');
 const clientPlaywrightVersion = cp.execSync('npx playwright --version').toString().trim().split(' ')[1];
-
-require('dotenv').config();
 
 const chromiumCaps = {
   'browser': 'playwright-chromium',
@@ -68,8 +69,8 @@ exports.config = {
     },
   },
   include: {
-    I: '../step_definitions/steps_file.js',
-    LoginPage: '../pages/login.page.js'
+    I: '../step_definitions/steps_file.ts',
+    loginPage: '../pages/loginPage.ts'
   },
   mocha: {},
   bootstrap: null,
@@ -77,7 +78,7 @@ exports.config = {
   gherkin: {
     features: "../features/*.feature",
     steps: [
-        "../steps/login-steps.js",
+        "../steps/login-steps.ts",
     ]
   },
   plugins: {

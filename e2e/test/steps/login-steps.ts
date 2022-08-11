@@ -1,11 +1,11 @@
-const { I, LoginPage } = inject();
+const { I , loginPage } = inject();
 
 Given('I am on Login page', () => {
-  I.amOnPage('/login');
+  I.amOnPage(loginPage.loginURI);
 });
 
 When('I pass valid credentials', () => {
-  LoginPage.login(LoginPage.validUsername, LoginPage.validPassword);
+  loginPage.login(loginPage.validUsername, loginPage.validPassword);
 });
 
 When('I pass invalid credentials', (table) => {
@@ -13,16 +13,16 @@ When('I pass invalid credentials', (table) => {
   for (const row of tableByHeader) {
     const username = row.username;
     const password = row.password;
-    LoginPage.login(username, password);
+    loginPage.login(username, password);
   }
 });
 
 When('I pass empty credentials', () => {
-  LoginPage.login('', '');
+  loginPage.login('', '');
 });
 
 When('I pass banned credentials', () => {
-  LoginPage.login('test_banned_user', 'Minds@12345');
+  loginPage.login('test_banned_user', 'Minds@12345');
 });
 
 Then('I am taken to Home page', () => {

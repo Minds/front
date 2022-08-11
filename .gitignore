@@ -50,3 +50,4 @@ cypress/videos
 !/.storybook
 cypress-tests
 e2e/test/error-screenshots
+e2e/test/.env

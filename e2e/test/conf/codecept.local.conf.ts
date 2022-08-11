@@ -1,3 +1,4 @@
+require('ts-node/register');
 require('dotenv').config();
 
 exports.config = {
@@ -14,8 +15,8 @@ exports.config = {
     }
   },
   include: {
-    I: '../step_definitions/steps_file.js',
-    LoginPage: '../pages/login.page.js'
+    I: '../step_definitions/steps_file.ts',
+    loginPage: '../pages/loginPage.ts'
   },
   mocha: {},
   bootstrap: null,
@@ -23,7 +24,7 @@ exports.config = {
   gherkin: {
     features: "../features/*.feature",
     steps: [
-        "../steps/login-steps.js",
+        "../steps/login-steps.ts",
     ]
   },
   plugins: {

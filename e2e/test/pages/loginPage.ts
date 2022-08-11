@@ -1,12 +1,12 @@
 require('dotenv').config();
 const { I } = inject();
 
-class LoginPage {
-  constructor() {
-    this.validUsername = process.env.PLAYWRIGHT_USERNAME;
-    this.validPassword = process.env.PLAYWRIGHT_PASSWORD;
-  }
-  async login(username, password) {
+export = {
+  loginURI: '/login',
+  validUsername: process.env.PLAYWRIGHT_USERNAME,
+  validPassword: process.env.PLAYWRIGHT_PASSWORD,
+
+  async login (username, password) {
     I.seeElement('#username');
     I.fillField('#username', username); 
     I.seeElement('#password');
@@ -14,5 +14,3 @@ class LoginPage {
     I.click(locate('button').withText('Login'));
   }
 }
-
-module.exports = new LoginPage();

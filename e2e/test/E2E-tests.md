@@ -1,8 +1,6 @@
-# E2E testing on Minds Web
-    
-Playwright end-to-end test automation with CodeceptJS (Gherkin) and Browserstack.
+# <u>Running Playwright tests on Browserstack</u>:
 
-## <u>Getting Started</u>
+Playwright end-to-end test automation with CodeceptJS (Gherkin) and Browserstack.
 
 ### <u>Key Integrations</u>:
 
@@ -32,6 +30,7 @@ BROWSERSTACK_USERNAME & BROWSERSTACK_ACCESS_KEY
 ### Run this command within the project to install all package.json dependencies:
 
 ```
+cd e2e/test
 yarn
 ```
 
@@ -49,8 +48,17 @@ yarn run test:e2e:real
 
 *In case of errors, check screenshots saved under e2e/test/error-screenshots folder.
 
-## <u>Helpful Links</u>
+## <u>Creating New Tests<u>:
+To create a new suite of tests:
+- Create a Feature file (to define gherkin features and scenarios).
+- Create a Steps file (to define individual Steps - Given/When/Then).
+- Create a Page file (to define common functions and variables). 
+- Ensure that all the files above are linked via codeceptjs config file.
+
+## <u>Helpful Links</u>:
 *For more on how to write tests in CodeceptJs + Gherkin click [here](https://codecept.io/bdd/)
 *For more on how to user locators with CodeceptJS click [here](https://codecept.io/locators/#locator-builder)
 *For more on using CodeceptJS UI click [here](https://codecept.io/ui/)
 *For more on Playwright click [here](https://playwright.dev/)
+
+Reference Link: https://developers.minds.com/docs/guides/qa/
