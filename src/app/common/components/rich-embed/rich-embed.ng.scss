@@ -63,14 +63,6 @@
       @include border;
       border-radius: $borderRadius--activity;
 
-      &:hover {
-        a.meta {
-          .m-url {
-            text-decoration: underline;
-          }
-        }
-      }
-
       a.thumbnail {
         img {
           width: 100%;

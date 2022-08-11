@@ -38,7 +38,8 @@ export class WireButtonComponent implements OnInit {
     this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
-  async wire() {
+  async wire($event) {
+    $event.stopPropagation();
     if (!this.session.isLoggedIn()) {
       this.modal.open();
 

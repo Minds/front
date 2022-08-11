@@ -1,71 +1,79 @@
 <ng-container m-clientMeta>
-  <div class="m-activity__top">
-    <div
-      *ngIf="
-        !service.displayOptions.minimalMode &&
-        !service.displayOptions.isSidebarBoost
-      "
-      class="m-activityTop__avatarColumn m-activity__avatar"
-    >
-      <ng-container *ngIf="entity$ | async as entity">
-        <div
-          *ngIf="
-            !service.displayOptions.boostRotatorMode &&
-            (entity.boosted ||
-              (entity.remind_users && entity.remind_users.length))
-          "
-          class="m-activityLeftColumn__spacer"
-        ></div>
-      </ng-container>
-      <m-hovercard
-        *ngIf="entity$ | async as entity"
-        [publisher]="entity.ownerObj"
-        [offset]="[0, 15]"
-      >
-        <a [routerLink]="['/', entity.ownerObj.username]">
-          <img [src]="avatarUrl" class="m-border" />
-        </a>
-      </m-hovercard>
-    </div>
-    <div class="m-activityTop__mainColumn" *ngIf="entity$ | async as entity">
+  <div>
+    <div class="m-activity__top" (click)="onClickActivity($event)">
       <div
-        class="m-activity__flagRow"
         *ngIf="
-          (entity.boosted ||
-            (entity.remind_users && entity.remind_users.length)) &&
-          !service.displayOptions.boostRotatorMode
+          !service.displayOptions.minimalMode &&
+          !service.displayOptions.isSidebarBoost
         "
+        class="m-activityTop__avatarColumn m-activity__avatar"
       >
-        <m-activityV2__flag></m-activityV2__flag>
+        <ng-container *ngIf="entity$ | async as entity">
+          <div
+            *ngIf="
+              !service.displayOptions.boostRotatorMode &&
+              (entity.boosted ||
+                (entity.remind_users && entity.remind_users.length))
+            "
+            class="m-activityLeftColumn__spacer"
+          ></div>
+        </ng-container>
+        <m-hovercard
+          *ngIf="entity$ | async as entity"
+          [publisher]="entity.ownerObj"
+          [offset]="[0, 15]"
+        >
+          <a [routerLink]="['/', entity.ownerObj.username]">
+            <img [src]="avatarUrl" class="m-border" />
+          </a>
+        </m-hovercard>
       </div>
-      <m-activityV2__ownerBlock
-        *ngIf="service.displayOptions.showOwnerBlock"
-        (deleted)="delete()"
-      >
-      </m-activityV2__ownerBlock>
-      <m-activityV2__content
-        *ngIf="service.shouldShowContent$ | async"
-        [showPaywall]="service.shouldShowPaywall$ | async"
-        [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
-      ></m-activityV2__content>
-      <m-activityV2__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
-      </m-activityV2__nsfwConsent>
+      <div class="m-activityTop__mainColumn" *ngIf="entity$ | async as entity">
+        <div
+          class="m-activity__flagRow"
+          *ngIf="
+            (entity.boosted ||
+              (entity.remind_users && entity.remind_users.length)) &&
+            !service.displayOptions.boostRotatorMode
+          "
+        >
+          <m-activityV2__flag></m-activityV2__flag>
+        </div>
+        <m-activityV2__ownerBlock
+          *ngIf="service.displayOptions.showOwnerBlock"
+          (deleted)="delete()"
+        >
+        </m-activityV2__ownerBlock>
+        <m-activityV2__content
+          *ngIf="service.shouldShowContent$ | async"
+          [showPaywall]="service.shouldShowPaywall$ | async"
+          [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
+        ></m-activityV2__content>
+        <m-activityV2__nsfwConsent
+          *ngIf="service.shouldShowNsfwConsent$ | async"
+        >
+        </m-activityV2__nsfwConsent>
+      </div>
     </div>
+
+    <m-activityV2__toolbar
+      *ngIf="service.displayOptions.showToolbar"
+      (click)="onClickActivity($event)"
+      (onExpandChange)="onCommentsExpandChange($event)"
+    ></m-activityV2__toolbar>
+
+    <ng-container *mIfBrowser>
+      <m-comments__entityOutletV2
+        (click)="onClickActivity($event, true)"
+        *ngIf="service.displayOptions.showComments"
+        [entity]="service.entity$ | async"
+        [canDelete]="canDelete$ | async"
+        [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
+        [fixedHeight]="service.displayOptions.fixedHeight"
+        (onHeightChange)="onCommentsHeightChange($event)"
+        (onExpandChange)="onCommentsExpandChange($event)"
+      >
+      </m-comments__entityOutletV2>
+    </ng-container>
   </div>
-
-  <m-activityV2__toolbar
-    *ngIf="service.displayOptions.showToolbar"
-  ></m-activityV2__toolbar>
-
-  <ng-container *mIfBrowser>
-    <m-comments__entityOutletV2
-      *ngIf="service.displayOptions.showComments"
-      [entity]="service.entity$ | async"
-      [canDelete]="canDelete$ | async"
-      [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
-      [fixedHeight]="service.displayOptions.fixedHeight"
-      (onHeightChange)="onCommentsHeightChange($event)"
-    >
-    </m-comments__entityOutletV2>
-  </ng-container>
 </ng-container>

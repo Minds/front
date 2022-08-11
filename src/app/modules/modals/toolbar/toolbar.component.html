@@ -1,0 +1,95 @@
+<div
+  class="m-activityToolbar__metrics"
+  *ngIf="service.displayOptions.showInteractions && showMetrics"
+>
+  <div
+    class="m-activityToolbarMetrics__metric"
+    *ngIf="entity['thumbs:up:count'] > 0"
+    (click)="openInteractions('votes-up')"
+  >
+    <span>{{ entity['thumbs:up:count'] }}</span>
+    <span
+      >{ entity['thumbs:up:count'], plural, =1 {Upvote} other {Upvotes}}</span
+    >
+  </div>
+
+  <div
+    class="m-activityToolbarMetrics__metric"
+    *ngIf="entity['thumbs:down:count'] > 0"
+    (click)="openInteractions('votes-down')"
+  >
+    <span>{{ entity['thumbs:down:count'] }}</span>
+    <span
+      >{ entity['thumbs:down:count'], plural, =1 {Downvote} other
+      {Downvotes}}</span
+    >
+  </div>
+
+  <div
+    class="m-activityToolbarMetrics__metric"
+    *ngIf="entity?.reminds > 0"
+    (click)="openInteractions('reminds')"
+  >
+    <span>{{ entity.reminds }}</span>
+    <span>{ entity.reminds, plural, =1 {Remind} other {Reminds}}</span>
+  </div>
+
+  <div
+    class="m-activityToolbarMetrics__metric"
+    *ngIf="entity?.quotes > 0"
+    (click)="openInteractions('quotes')"
+  >
+    <span>{{ entity.quotes }}</span>
+    <span>{ entity.quotes, plural, =1 {Quote} other {Quotes}}</span>
+  </div>
+</div>
+
+<div class="m-activityToolbar__actions">
+  <minds-button-thumbs-up
+    [object]="entity"
+    [iconOnly]="service.displayOptions.showInteractions"
+    (thumbsUpChange)="detectChanges()"
+  ></minds-button-thumbs-up>
+  <minds-button-thumbs-down
+    [object]="entity"
+    [iconOnly]="service.displayOptions.showInteractions"
+  ></minds-button-thumbs-down>
+
+  <m-activity__remindButton *ngIf="allowReminds"> </m-activity__remindButton>
+
+  <minds-button-comment
+    [object]="entity"
+    [iconOnly]="service.displayOptions.showInteractions"
+    (click)="toggleComments()"
+    *ngIf="
+      !service.displayOptions.showComments ||
+      service.displayOptions.showComments
+    "
+  ></minds-button-comment>
+
+  <!-- Show wire if not own post -->
+  <ng-container
+    *ngIf="
+      session.getLoggedInUser() &&
+      session.getLoggedInUser().guid != entity.ownerObj.guid
+    "
+  >
+    <div class="m-layout__spacer"></div>
+
+    <m-wire-button [object]="entity"></m-wire-button>
+  </ng-container>
+
+  <!-- Show boost if own post -->
+  <ng-container
+    *ngIf="
+      session.getLoggedInUser() &&
+      session.getLoggedInUser().guid == entity.ownerObj.guid
+    "
+  >
+    <div class="m-layout__spacer"></div>
+    <m-activity__boostButton
+      [object]="entity"
+      (click)="openBoostModal($event)"
+    ></m-activity__boostButton>
+  </ng-container>
+</div>

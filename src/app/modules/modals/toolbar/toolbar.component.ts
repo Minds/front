@@ -1,17 +1,7 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  HostBinding,
-  Injector,
-  Output,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Injector } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import {
-  ActivityEntity,
-  ActivityService,
-} from '../../activity/activity.service';
+import { ActivityEntity, ActivityService } from '../activity.service';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
@@ -21,25 +11,21 @@ import { InteractionType } from '../../interactions-modal/interactions-modal-dat
 import { ModalService } from '../../../../services/ux/modal.service';
 
 /**
- * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
- * tip (for non-owners), displayed below activity post content.
+ * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners), tip (for non-owners), displayed below activity post content.
  *
  * If 'interactions' is enabled, the toolbar also includes a second row that displays how many people reminded the post, upvoted the post, etc.
  */
 @Component({
-  selector: 'm-activityV2__toolbar',
+  selector: 'm-activity__toolbar',
   templateUrl: 'toolbar.component.html',
   styleUrls: ['./toolbar.component.ng.scss'],
 })
-export class ActivityV2ToolbarComponent {
+export class ActivityToolbarComponent {
   private entitySubscription: Subscription;
   private paywallBadgeSubscription: Subscription;
 
   entity: ActivityEntity;
   allowReminds: boolean = true;
-
-  /** Used only for feeds */
-  @Output() onExpandChange: EventEmitter<Boolean> = new EventEmitter();
 
   constructor(
     public service: ActivityService,
@@ -71,29 +57,19 @@ export class ActivityV2ToolbarComponent {
     this.paywallBadgeSubscription.unsubscribe();
   }
 
-  toggleComments($event): void {
-    $event.stopPropagation();
-
+  toggleComments(): void {
     if (this.service.displayOptions.fixedHeight) {
       this.router.navigate([`/newsfeed/${this.entity.guid}`]);
       return;
     }
 
-    this.service.displayOptions.showOnlyCommentsToggle = !this.service
-      .displayOptions.showOnlyCommentsToggle;
-
-    /** Emit whether the comments are expanded */
-    this.onExpandChange.emit(
-      !this.service.displayOptions.showOnlyCommentsToggle
-    );
+    this.service.displayOptions.showOnlyCommentsInput = !this.service
+      .displayOptions.showOnlyCommentsInput;
   }
 
   async openBoostModal(e: MouseEvent): Promise<void> {
-    e.stopPropagation();
-
     try {
       await this.boostModal.open(this.entity);
-      return;
     } catch (e) {
       // do nothing.
     }

@@ -1,7 +1,7 @@
 <button
   class="m-btn m-btn--action m-btn--slim m-wire-button"
   [ngClass]="{ 'm-tipButton': features.has('pay') }"
-  (click)="wire()"
+  (click)="wire($event)"
 >
   <ng-container *ngIf="!features.has('pay'); else tipButton">
     <i class="ion-icon ion-flash"></i>

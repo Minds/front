@@ -40,6 +40,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { Router } from '@angular/router';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -49,7 +50,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-activityV2',
   templateUrl: 'activity.component.html',
-  styleUrls: ['activity.component.ng.scss'],
+  styleUrls: ['activity.component.ng.scss', 'activity-hover.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     ActivityService,
@@ -124,14 +125,20 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--isSingle')
   isSingle: boolean;
 
-  @HostBinding('style.height')
-  heightPx: string;
-
   @HostBinding('class.m-activity--modal')
   isModal: boolean = false;
 
+  @HostBinding('class.m-activity--commentsExpanded')
+  commentsExpanded: boolean = false;
+
+  @HostBinding('style.height')
+  heightPx: string;
+
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
+  canonicalUrlSubscription: Subscription;
+
+  canonicalUrl: string;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -146,6 +153,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     public featuresService: FeaturesService,
     public session: Session,
     private configs: ConfigsService,
+    public router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -175,11 +183,18 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
+
+    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
+      canonicalUrl => {
+        this.canonicalUrl = canonicalUrl;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
+    this.canonicalUrlSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -237,5 +252,39 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     window.scrollTo({
       top: window.pageYOffset + (newHeight - oldHeight),
     });
+  }
+
+  /**
+   * Keep track of whether comments are expanded (in feeds only)
+   */
+  onCommentsExpandChange(expanded): void {
+    this.commentsExpanded = expanded;
+  }
+
+  /**
+   * Navigate to single activity page,
+   * but only if you haven't clicked another link inside the post
+   * (not used for single activity page or activity modal)
+   *
+   * Ignore if you clicked in comments sections
+   * while comments are expanded
+   * @param $event
+   */
+  onClickActivity($event, clickedComments?: boolean) {
+    if (this.isSingle || this.isModal) {
+      return;
+    }
+
+    if (clickedComments && this.commentsExpanded) {
+      return;
+    }
+
+    // If link, only go to that link
+    if ($event.target instanceof HTMLAnchorElement) {
+      $event.stopPropagation();
+    } else {
+      // if no link, go to single page
+      this.router.navigateByUrl(this.canonicalUrl);
+    }
   }
 }

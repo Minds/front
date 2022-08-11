@@ -17,7 +17,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a
-      (click)="thumb()"
+      (click)="thumb($event)"
       [ngClass]="{ selected: has() }"
       data-cy="data-minds-thumbs-down-button"
     >
@@ -58,7 +58,8 @@ export class ThumbsDownButton implements DoCheck {
       this.object['thumbs:down:user_guids'] = [];
   }
 
-  async thumb(): Promise<void> {
+  async thumb($event): Promise<void> {
+    $event.stopPropagation();
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
       if (!user) return;

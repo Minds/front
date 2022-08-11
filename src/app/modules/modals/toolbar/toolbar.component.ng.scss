@@ -1,0 +1,158 @@
+@import 'defaults.scss';
+
+:host {
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
+
+  .m-activityToolbar__actions,
+  .m-activityToolbar__metrics {
+    display: flex;
+    flex-direction: row;
+    padding: 0 25px 20px;
+    padding-top: $minds-padding * 2;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+    width: 100%;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-activityToolbarMetrics__metric {
+    text-align: left;
+    padding-right: 20px;
+    cursor: pointer;
+
+    span {
+      font-size: 15px;
+    }
+
+    span:nth-of-type(1) {
+      font-weight: 500;
+      padding-right: 5px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    span:nth-of-type(2) {
+      font-weight: 400;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-activityToolbar__actions {
+    ::ng-deep > * {
+      margin-right: 22px;
+
+      > a,
+      ::ng-deep .m-activityRemindButton__icon {
+        line-height: 18px;
+        cursor: pointer;
+
+        i.material-icons {
+          font-size: 18px;
+        }
+
+        i.material-icons,
+        .minds-counter {
+          vertical-align: middle;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        &.selected {
+          i.material-icons,
+          .minds-counter {
+            @include m-theme() {
+              color: themed($m-blue);
+            }
+          }
+        }
+      }
+    }
+
+    ::ng-deep minds-button-comment {
+      cursor: pointer;
+      .selected i.material-icons,
+      .selected .minds-counter {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    :last-child {
+      margin-right: 0;
+    }
+
+    ::ng-deep m-wire-button {
+      .m-wire-button {
+        border: 0 !important;
+        padding: 0;
+        height: auto;
+        > .ion-icon {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+        > * {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+        .m-icon__assetsFile {
+          margin-right: 5px;
+        }
+        span {
+          margin-left: 0;
+          font-weight: 500;
+        }
+      }
+    }
+
+    ::ng-deep .m-boostButton {
+      width: auto;
+      height: auto;
+      min-width: unset;
+      border-radius: 0;
+      text-transform: unset;
+      padding: 0;
+      margin-left: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.7px;
+      cursor: pointer;
+      line-height: normal;
+
+      m-icon {
+        margin-left: 4px;
+        vertical-align: middle;
+
+        i {
+          font-size: 20px !important; // Override for fixed height.
+        }
+      }
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      &,
+      &:hover {
+        @include m-theme() {
+          border: 0;
+        }
+      }
+    }
+  }
+
+  .m-activity--fixedHeight & {
+    z-index: 1;
+  }
+}

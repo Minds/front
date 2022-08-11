@@ -1,4 +1,12 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import {
@@ -15,7 +23,7 @@ import {
   styleUrls: ['quote.component.ng.scss'],
   providers: [ActivityService],
 })
-export class ActivityV2QuoteComponent {
+export class ActivityV2QuoteComponent implements OnInit, OnDestroy {
   @HostBinding('class.m-activity__quote--minimalMode')
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
@@ -51,10 +59,18 @@ export class ActivityV2QuoteComponent {
   avatarUrl: string;
   quotedEntity;
 
+  isModal: boolean = false;
+  isSingle: boolean = false;
+
+  canonicalUrlSubscription: Subscription;
+
+  canonicalUrl: string;
+
   constructor(
     public service: ActivityService,
     public session: Session,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -67,5 +83,33 @@ export class ActivityV2QuoteComponent {
     };
 
     this.service.displayOptions = opts;
+
+    this.isModal = this.service.displayOptions.isModal;
+    this.isSingle = this.service.displayOptions.isSingle;
+
+    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
+      canonicalUrl => {
+        this.canonicalUrl = canonicalUrl;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.canonicalUrlSubscription.unsubscribe();
+  }
+
+  /**
+   * Navigate to single activity page of the quoted post,
+   * but only if you haven't clicked another link inside the post
+   * @param $event
+   */
+  onClickActivity($event) {
+    // If link, only go to that link
+    if ($event.target instanceof HTMLAnchorElement) {
+      $event.stopPropagation();
+    } else {
+      // if no link, go to single page
+      this.router.navigateByUrl(this.canonicalUrl);
+    }
   }
 }
