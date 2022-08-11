@@ -1,0 +1,21 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test:e2e:local": "codeceptjs run --steps -c conf/codecept.local.conf.ts",
+    "test:e2e:real": "codeceptjs run-multiple browserStackCombo --steps -c conf/codecept.real.conf.ts"
+  },
+  "devDependencies": {
+    "@codeceptjs/configure": "^0.8.0",
+    "@codeceptjs/examples": "^1.2.1",
+    "@codeceptjs/helper": "^2.0.1",
+    "@codeceptjs/ui": "^0.4.6",
+    "@playwright/test": "^1.23.3",
+    "codeceptjs": "^3.3.4",
+    "dotenv": "^16.0.1",
+    "playwright": "^1.23.2",
+    "ts-node": "~10.1.0",
+    "typescript": "~4.5.5"
+  }
+}

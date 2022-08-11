@@ -134,7 +134,6 @@
     "@types/jasminewd2": "~2.0.10",
     "@types/node": "~16.4.0",
     "babel-loader": "^8.2.4",
-    "cross-env": "^7.0.3",
     "gulp": "~4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-json-modify": "^1.0.2",

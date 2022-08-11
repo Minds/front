@@ -22,6 +22,8 @@
       *ngIf="service.shouldShowContent$ | async"
       [autoplayVideo]="autoplayVideo"
       [wasQuoted]="true"
+      [showPaywall]="service.shouldShowPaywall$ | async"
+      [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
     ></m-activityV2__content>
   </div>
 </ng-container>
