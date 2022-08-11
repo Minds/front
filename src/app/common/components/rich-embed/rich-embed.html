@@ -87,7 +87,11 @@
     <p class="m-url">
       {{src.perma_url | domain}}
     </p>
-    <div class="m-activityContent__teaserFadeout" *ngIf="isPaywalled"></div>
+    <div class="m-richEmbed__teaserFadeout" *ngIf="isPaywalled">
+      <!-- The --hover one is a workaround for css transitions
+not being able to handle gradients   -->
+      <div class="m-richEmbed__teaserFadeout--hover" *ngIf="isPaywalled"></div>
+    </div>
   </a>
 </div>
 <!-- ----------------------------------- -->
