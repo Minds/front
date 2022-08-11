@@ -20,5 +20,16 @@
         border-top: 1px solid themed($m-borderColor--primary);
       }
     }
+
+    ::ng-deep m-featured-content {
+      m-activityV2 {
+        @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary) !important;
+        }
+      }
+      m-activity:not(.m-activity--v2) {
+        margin-bottom: 20px;
+      }
+    }
   }
 }
