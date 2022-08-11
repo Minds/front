@@ -575,16 +575,31 @@
       >
     </div>
     <!-- --------------------- -->
-    <m-comments__thread
-      [entity]="entity"
-      [parent]="comment"
-      [level]="level + 1"
-      [canEdit]="canEdit"
-      [canDelete]="canDelete"
-      [showReplies]="showReplies"
-      (onHeightChange)="onHeightChange.emit($event)"
-      *ngIf="comment.can_reply && showReplies"
-    >
-    </m-comments__thread>
+    <ng-container *ngIf="!persistentFeedExperimentActive">
+      <m-comments__thread
+        [entity]="entity"
+        [parent]="comment"
+        [level]="level + 1"
+        [canEdit]="canEdit"
+        [canDelete]="canDelete"
+        [showReplies]="showReplies"
+        (onHeightChange)="onHeightChange.emit($event)"
+        *ngIf="comment.can_reply && showReplies"
+      >
+      </m-comments__thread>
+    </ng-container>
+    <ng-container *ngIf="persistentFeedExperimentActive"
+      ><m-comments__threadV2
+        [entity]="entity"
+        [parent]="comment"
+        [level]="level + 1"
+        [canEdit]="canEdit"
+        [canDelete]="canDelete"
+        [showReplies]="showReplies"
+        (onHeightChange)="onHeightChange.emit($event)"
+        *ngIf="comment.can_reply && showReplies"
+      >
+      </m-comments__threadV2
+    ></ng-container>
   </div>
 </div>

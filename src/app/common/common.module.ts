@@ -163,6 +163,8 @@ import { ViewedDirective } from './directives/viewed.directive';
 import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
 import { BoostButton } from './components/boost-button/boost';
 import { ApiResource } from './api/api-resource.service';
+import { FeaturedContentService } from './components/featured-content/featured-content.service';
+import { FeedsService } from './services/feeds.service';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -339,6 +341,7 @@ const routes: Routes = [
     },
     NSFWSelectorCreatorService,
     NSFWSelectorConsumerService,
+    FeaturedContentService,
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,

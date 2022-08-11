@@ -10,6 +10,7 @@ import {
 } from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 import { Subscription } from 'rxjs';
+import { PersistentFeedExperimentService } from 'src/app/modules/experiments/sub-services/persistent-feed-experiment.service';
 
 @Injectable()
 export class FeaturedContentService {
@@ -18,7 +19,10 @@ export class FeaturedContentService {
   feedLength = 0;
   protected feedSubscription: Subscription;
 
-  constructor(protected feedsService: FeedsService) {
+  constructor(
+    protected feedsService: FeedsService,
+    protected persistentFeedExperiment: PersistentFeedExperimentService
+  ) {
     this.onInit();
   }
 
@@ -34,6 +38,7 @@ export class FeaturedContentService {
       .setLimit(12)
       .setOffset(0)
       .setEndpoint('api/v2/boost/feed')
+      .setCachingEnabled(this.persistentFeedExperiment.isActive())
       .fetch();
   }
 

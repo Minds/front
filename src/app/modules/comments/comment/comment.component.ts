@@ -42,6 +42,7 @@ import { AutocompleteSuggestionsService } from '../../suggestions/services/autoc
 import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 @Component({
   selector: 'm-comment',
@@ -128,6 +129,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   }
 
   activityV2Feature: boolean = false;
+  persistentFeedExperimentActive: boolean = false;
 
   constructor(
     public session: Session,
@@ -148,7 +150,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     private activityModalCreator: ActivityModalCreatorService,
     private injector: Injector,
     public suggestions: AutocompleteSuggestionsService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private activityV2Experiment: ActivityV2ExperimentService,
+    private persistentFeedExperiment: PersistentFeedExperimentService
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -164,6 +167,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     }
 
     this.activityV2Feature = this.activityV2Experiment.isActive();
+    this.persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
 
     this.commentAgeOnLoadMs = Date.now() - this.comment.time_created * 1000;
 

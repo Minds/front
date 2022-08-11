@@ -13,6 +13,7 @@
 
 <ng-container *ngIf="!showOnlyPoster">
   <m-comments__thread
+    *ngIf="!isPersistentFeedExperimentActive"
     [entity]="entity"
     [parent]="entity"
     [canEdit]="canEdit"
@@ -26,4 +27,19 @@
     (onHeightChange)="onHeightChange.emit($event)"
   >
   </m-comments__thread>
+  <m-comments__threadV2
+    *ngIf="isPersistentFeedExperimentActive"
+    [entity]="entity"
+    [parent]="entity"
+    [canEdit]="canEdit"
+    [canDelete]="canDelete"
+    [readonly]="readonly"
+    [level]="0"
+    [limit]="limit"
+    [scrollable]="scrollable"
+    [conversation]="conversation"
+    [compact]="compact"
+    (onHeightChange)="onHeightChange.emit($event)"
+  >
+  </m-comments__threadV2>
 </ng-container>

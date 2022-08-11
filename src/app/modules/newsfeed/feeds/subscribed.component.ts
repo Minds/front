@@ -22,11 +22,9 @@ import {
   Router,
   RouterEvent,
 } from '@angular/router';
-import { IPageInfo } from 'ngx-virtual-scroller';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { FeedItemType } from '../feed/feed.component';
-import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import {
@@ -45,6 +43,7 @@ import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.co
 import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
+import { FeaturedContentService } from 'src/app/common/components/featured-content/featured-content.service';
 
 export enum FeedAlgorithm {
   top = 'top',
@@ -90,7 +89,7 @@ export class TopFeedService extends FeedsService {
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [LatestFeedService, TopFeedService],
+  providers: [LatestFeedService, TopFeedService, FeaturedContentService],
   templateUrl: 'subscribed.component.html',
 })
 export class NewsfeedSubscribedComponent

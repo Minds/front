@@ -25,6 +25,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 @Component({
   selector: 'm-comments__tree',
@@ -61,7 +62,7 @@ export class CommentsTreeComponent {
     public sockets: SocketsService,
     private renderer: Renderer2,
     private cd: ChangeDetectorRef,
-    private router: Router
+    private persistentFeedExperiment: PersistentFeedExperimentService
   ) {}
 
   @Input('entity')
@@ -92,4 +93,6 @@ export class CommentsTreeComponent {
   ngOnChanges(changes) {
     //  console.log('[comment:list]: on changes', changes);
   }
+
+  isPersistentFeedExperimentActive = this.persistentFeedExperiment.isActive()
 }

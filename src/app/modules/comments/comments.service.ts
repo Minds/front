@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { ApiResource } from '../../common/api/api-resource.service';
 
 import { Client } from '../../services/api';
 
@@ -13,16 +11,7 @@ export class CommentsService {
   focusedUrn: string;
   comments: Array<any> = [];
 
-  commentsQuery = this.apiResource.query('', {
-    cachePolicy: ApiResource.CachePolicy.cacheFirst,
-    cacheStorage: ApiResource.CacheStorage.Memory,
-  });
-
-  constructor(
-    private route: ActivatedRoute,
-    private client: Client,
-    private apiResource: ApiResource
-  ) {
+  constructor(private route: ActivatedRoute, private client: Client) {
     this.queryParamsSubscription$ = this.route.queryParamMap.subscribe(
       params => {
         this.focusedUrn = params.get('focusedCommentUrn');
@@ -31,12 +20,9 @@ export class CommentsService {
   }
 
   async fetch(opts) {
-    return this.commentsQuery
-      .fetch(opts, {
-        url: `api/v2/comments/${opts.entity_guid}/0/${opts.parent_path}`,
-      })
-      .data$.pipe(take(2))
-      .toPromise();
+    const uri = `api/v2/comments/${opts.entity_guid}/0/${opts.parent_path}`;
+
+    return await this.client.get(uri, opts);
   }
 
   async get(opts: {
