@@ -159,10 +159,10 @@
       <i class="material-icons">share</i>
       <span i18n="@@BLOGS__VIEW__SHARE">SHARE</span>
     </div>
-    <minds-button-boost
+    <m-boostButton
       [object]="blog"
       *ngIf="session.isLoggedIn() && !isScheduled(blog.time_created)"
-    ></minds-button-boost>
+    ></m-boostButton>
   </div>
 </div>
 
