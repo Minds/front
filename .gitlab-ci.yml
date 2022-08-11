@@ -123,7 +123,7 @@ qa:sandbox:
       fi
     - cd e2e/test
     - yarn
-    - yarn test:e2e:real
+    - yarn test:e2e:local
   artifacts:
     when: always
     paths:
