@@ -22,6 +22,7 @@
       padding: 10px 16px;
       margin-bottom: 32px;
       outline: none !important;
+      font-size: 16px;
 
       @include m-theme() {
         background-color: themed($m-bgColor--primary);

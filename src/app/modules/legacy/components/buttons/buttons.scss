@@ -93,28 +93,6 @@ minds-button-remind {
   }
 }
 
-.minds-boost-button {
-  font-size: 12px;
-  font-weight: 400;
-  height: auto;
-  min-height: 0;
-  line-height: 18px;
-  text-transform: uppercase;
-  align-self: center;
-  padding: 3px 0;
-  min-width: 72px;
-  width: auto;
-  margin: -3px 0;
-  display: block;
-  flex: 0 !important;
-
-  span {
-    min-width: 72px;
-    text-align: center;
-    vertical-align: middle;
-  }
-}
-
 .selected {
   @include m-theme() {
     color: themed($m-blue) !important;

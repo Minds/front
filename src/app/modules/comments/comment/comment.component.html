@@ -543,12 +543,7 @@
           </m-dropdownMenu__item>
           <!-- Delete -->
           <m-dropdownMenu__item
-            *ngIf="
-              comment.owner_guid == session.getLoggedInUser()?.guid ||
-              session.isAdmin() ||
-              parent.owner_guid == session.getLoggedInUser()?.guid ||
-              canDelete
-            "
+            *ngIf="showDelete()"
             (click)="delete()"
             red="true"
           >

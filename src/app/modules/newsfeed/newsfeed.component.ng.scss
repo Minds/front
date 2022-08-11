@@ -48,6 +48,10 @@
       }
     }
 
+    .m-newsfeed--feed {
+      width: 100%;
+    }
+
     ::ng-deep infinite-scroll {
       padding-top: 0;
       padding-bottom: 24px;

@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -38,6 +38,7 @@ export class DefaultFeedComponent implements OnInit {
   constructor(
     public feedsService: FeedsService,
     public experiments: ExperimentsService,
+    private discoveryBoostExperiment: DiscoveryBoostExperimentService,
     private dismissal: DismissalService
   ) {}
 
@@ -58,6 +59,18 @@ export class DefaultFeedComponent implements OnInit {
       this.feedsService.fetch();
     }
     this.feedsService.loadMore();
+  }
+
+  /**
+   * Whether a boost should be shown in a given feed position.
+   * @param { number } position - index / position in feed.
+   * @returns { boolean } - true if a boost should be shown in given feed position
+   */
+  public shouldShowBoostInPosition(position: number): boolean {
+    return (
+      this.discoveryBoostExperiment.isActive() &&
+      ((position > 0 && position % 5 === 0) || position === 3)
+    );
   }
 
   /**

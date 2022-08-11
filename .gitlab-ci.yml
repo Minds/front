@@ -109,6 +109,39 @@ qa:sandbox:
       - $CI_NIGHTLY_TESTS == "true"
   <<: *cypress_tests
 
+.playwright_tests: &playwright_tests
+  image: mcr.microsoft.com/playwright:v1.22.0-focal
+  stage: qa
+  script:
+    - >
+      if [ "$CI_BUILD_REF_NAME" == "master" ]; then
+        export E2E_DOMAIN=https://www.minds.com
+        export PRODUCTION=true
+      else
+        export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+        export PRODUCTION=false
+      fi
+    - cd e2e/test
+    - yarn
+    - yarn test:e2e:local
+  artifacts:
+    when: always
+    paths:
+      - e2e/test/error-screenshots
+  cache:
+    paths:
+      - .npm
+      - cache/Cypress
+
+qa:e2e:
+  except:
+    refs:
+      - /^master$/
+      - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
+  <<: *playwright_tests
+
 qa:nightly:
   parallel: 2
   allow_failure: true

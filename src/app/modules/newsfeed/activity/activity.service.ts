@@ -213,7 +213,7 @@ export class ActivityService {
     })
   );
 
-  /** Only allow downloads of images s */
+  /** Only allow downloads of images */
   canDownload$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       let contentType = entity.content_type;
