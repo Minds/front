@@ -179,7 +179,6 @@
       left: 0;
       right: 0;
       height: calc(100% - $spacing10);
-      // height: calc(100% - 60px); ojm
       opacity: 1;
 
       @include m-theme() {
