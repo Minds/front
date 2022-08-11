@@ -121,10 +121,9 @@ qa:sandbox:
         export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
         export PRODUCTION=false
       fi
-    - > 
-      cd e2e/test
-      yarn
-      yarn test:e2e:real
+    - cd e2e/test
+    - yarn
+    - yarn test:e2e:real
   artifacts:
     when: always
     paths:
