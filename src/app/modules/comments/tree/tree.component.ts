@@ -94,5 +94,5 @@ export class CommentsTreeComponent {
     //  console.log('[comment:list]: on changes', changes);
   }
 
-  isPersistentFeedExperimentActive = this.persistentFeedExperiment.isActive()
+  isPersistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
 }
