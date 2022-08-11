@@ -10,7 +10,7 @@ import {
 } from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 import { Subscription } from 'rxjs';
-import { PersistentFeedExperimentService } from 'src/app/modules/experiments/sub-services/persistent-feed-experiment.service';
+import { PersistentFeedExperimentService } from '../../../modules/experiments/sub-services/persistent-feed-experiment.service';
 
 @Injectable()
 export class FeaturedContentService {

@@ -43,7 +43,7 @@ import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.co
 import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
-import { FeaturedContentService } from 'src/app/common/components/featured-content/featured-content.service';
+import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 
 export enum FeedAlgorithm {
   top = 'top',
