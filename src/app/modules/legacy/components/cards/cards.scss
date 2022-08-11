@@ -103,7 +103,7 @@ minds-card-user,
   }
 
   minds-button-subscribe,
-  minds-button-boost {
+  m-boostButton {
     position: absolute;
     margin: -26px 0 0 110px;
   }
@@ -566,9 +566,6 @@ minds-activity-preview {
   > template,
   script {
     display: none;
-  }
-  > a.minds-boost-button {
-    max-width: 40px;
   }
   .selected {
     @include m-theme() {
