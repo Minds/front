@@ -157,8 +157,13 @@
   *ngIf="boost.rejection_reason && boost.rejection_reason != -1"
 >
   <i class="material-icons">warning</i>
-  <ng-container i18n="@@BOOST__CONSOLE__CARD__PREVIOUS_REJECTION"
+  <ng-container
+    *ngIf="boost.rejection_reason == 12; else withPrefixText"
+    i18n="@@BOOST__CONSOLE__CARD__AUTO_REJECTION"
+    >{{ findReason(boost.rejection_reason)?.label }}</ng-container
+  >
+  <ng-template #withPrefixText i18n="@@BOOST__CONSOLE__CARD__PREVIOUS_REJECTION"
     >Your boost was rejected:
-    {{ findReason(boost.rejection_reason)?.label }}</ng-container
+    {{ findReason(boost.rejection_reason)?.label }}</ng-template
   >
 </div>

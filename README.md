@@ -23,6 +23,8 @@ For integration tests you need to run:
 
 `npm run e2e --config baseUrl=http://localhost --env username=minds,password=Pa$$w0rd`
 
+For running Playwright tests on Browserstack: [QA] (https://developers.minds.com/docs/guides/qa).
+
 ## Contributing
 
 If you'd like to contribute to the Minds project, check out the [Contribution](https://www.minds.org/docs/contributing.html) section of Minds.org or head right over to the [Minds Open Source Community](https://www.minds.com/groups/profile/365903183068794880). If you've found or fixed a bug, let us know through our [Help Desk](https://support.minds.com/)!
