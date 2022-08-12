@@ -53,21 +53,21 @@ export class ScrollRestorationService {
     cb: (success: boolean) => void,
     tries = 0
   ) {
-    if (tries === 10) return;
-
+    // if (tries === 10) return;
     setTimeout(() => {
       window.scrollTo({
         top: offset,
       });
-    }, 10);
-    setTimeout(() => {
-      if (offset - window.scrollY > 1000) {
-        if (document.body.scrollHeight > offset) {
-          this.scrollToVirtualizedPosition(offset, cb, tries + 1);
-        }
-      } else {
-        cb(true);
-      }
-    }, 30);
+      cb(true);
+    }, 100);
+    // setTimeout(() => {
+    //   if (offset - window.scrollY > 1000) {
+    //     if (document.body.scrollHeight > offset) {
+    //       this.scrollToVirtualizedPosition(offset, cb, tries + 1);
+    //     }
+    //   } else {
+    //     cb(true);
+    //   }
+    // }, 30);
   }
 }
