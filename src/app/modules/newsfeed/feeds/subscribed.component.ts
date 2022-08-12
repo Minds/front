@@ -144,7 +144,7 @@ export class NewsfeedSubscribedComponent
   /**
    * whether the scroll has been restored on this page
    */
-  public isScrollRestored = false;
+  public isScrollRestored$ = new BehaviorSubject(false);
 
   constructor(
     public client: Client,
@@ -257,7 +257,7 @@ export class NewsfeedSubscribedComponent
   ngAfterViewInit() {
     if (this.shouldRestoreScroll) {
       this.scrollRestoration.restoreScroll(this.router.url).then(() => {
-        this.isScrollRestored = true;
+        this.isScrollRestored$.next(true);
       });
     }
   }

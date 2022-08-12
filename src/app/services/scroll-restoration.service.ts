@@ -55,8 +55,6 @@ export class ScrollRestorationService {
   ) {
     if (tries === 10) return;
 
-    const offsetWithTopPadding = offset - 120 - 74;
-
     setTimeout(() => {
       window.scrollTo({
         top: offset,
@@ -65,7 +63,7 @@ export class ScrollRestorationService {
     setTimeout(() => {
       if (offset - window.scrollY > 1000) {
         if (document.body.scrollHeight > offset) {
-          this.scrollToVirtualizedPosition(offsetWithTopPadding, cb, tries + 1);
+          this.scrollToVirtualizedPosition(offset, cb, tries + 1);
         }
       } else {
         cb(true);

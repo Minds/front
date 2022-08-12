@@ -6,10 +6,10 @@ import { Component } from '@angular/core';
   template: '<ng-content></ng-content>',
   styles: [
     `
-      ::ng-deep m-activityv2__content {
+      /* ::ng-deep m-activityv2__content {
         height: 400px !important;
         overflow: hidden;
-      }
+      } */
     `,
   ],
 })

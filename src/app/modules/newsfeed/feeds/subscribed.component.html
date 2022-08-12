@@ -117,7 +117,7 @@
             height:
               scroll?.wrapGroupDimensions?.sumOfKnownWrapGroupChildHeights ||
               '100%',
-            opacity: isScrollRestored ? 0 : 1
+            opacity: (isScrollRestored$ | async) ? 0 : 1
           }"
         ></div>
       </ng-container>
