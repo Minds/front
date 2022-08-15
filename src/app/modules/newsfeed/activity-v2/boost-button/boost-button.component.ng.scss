@@ -43,7 +43,7 @@
   }
 
   .m-boostButton__label {
-    @include mobile-only() {
+    @include custom-viewport($max-width: '565px') {
       display: none;
     }
   }
