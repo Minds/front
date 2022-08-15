@@ -24,9 +24,15 @@ export class DefaultFeedComponent implements OnInit {
   location: string;
 
   /**
+   * Whether the header of the feed should be visible
+   */
+  @Input()
+  visibleHeader: boolean = false;
+
+  /**
    * Whether channel recommendation component is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.isDismissed(
+  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
 

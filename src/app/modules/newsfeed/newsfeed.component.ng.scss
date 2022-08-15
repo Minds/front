@@ -52,6 +52,11 @@
       width: 100%;
     }
 
+    ::ng-deep infinite-scroll {
+      padding-top: 0;
+      padding-bottom: 24px;
+    }
+
     ::ng-deep .m-virtualScrollOverlay {
       position: fixed;
       left: 0;
