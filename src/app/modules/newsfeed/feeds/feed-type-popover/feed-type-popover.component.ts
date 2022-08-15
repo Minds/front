@@ -1,4 +1,4 @@
-import { FeedAlgorithm } from '../../subscribed.component';
+import { FeedAlgorithm } from '../subscribed.component';
 import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 import {
   Component,
@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Storage } from '../../../../../services/storage';
+import { Storage } from '../../../../services/storage';
 
 const TOP_FEED_PROMPT_STORAGE_KEY = 'top-feed:recommended';
 
