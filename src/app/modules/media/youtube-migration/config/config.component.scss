@@ -30,4 +30,8 @@ m-youtubemigration__config {
       color: themed($m-textColor--secondary);
     }
   }
+
+  .m-youtubeMigrationDesc__link {
+    cursor: pointer;
+  }
 }
