@@ -1,7 +1,6 @@
-import { FeedAlgorithm } from './../subscribed.component';
-import { Component, HostBinding, Input } from '@angular/core';
-import { ExperimentsService } from '../../../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
+import { Component, HostBinding } from '@angular/core';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-feedHeader',
@@ -18,7 +17,4 @@ export class FeedHeaderComponent {
   get activityV2Feature(): boolean {
     return this.activityV2Experiment.isActive();
   }
-
-  @Input()
-  algorithm: FeedAlgorithm = FeedAlgorithm.latest;
 }
