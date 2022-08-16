@@ -10,6 +10,7 @@ import { ActivityService } from '../activity/activity.service';
 import { ActivityV2Component } from './activity.component';
 import { MockService } from '../../../utils/mock';
 import { BehaviorSubject, of } from 'rxjs';
+import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 
 describe('ActivityV2Component', () => {
   let comp: ActivityV2Component;
@@ -32,6 +33,10 @@ describe('ActivityV2Component', () => {
           {
             provide: IntersectionObserverService,
             useValue: MockService(IntersectionObserverService),
+          },
+          {
+            provide: EntityMetricsSocketsExperimentService,
+            useValue: MockService(EntityMetricsSocketsExperimentService),
           },
         ],
       })
@@ -102,6 +107,7 @@ describe('ActivityV2Component', () => {
   });
 
   it('should setup interception observer subscription', () => {
+    (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(true);
     (comp as any).interceptionObserver.createAndObserve.and.returnValue(
       of(true)
     );
@@ -110,7 +116,8 @@ describe('ActivityV2Component', () => {
     expect((comp as any).service.setupMetricsSocketListener).toHaveBeenCalled();
   });
 
-  it('should setup interception observer subscription', () => {
+  it('should teardown interception observer subscription', () => {
+    (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(true);
     (comp as any).interceptionObserver.createAndObserve.and.returnValue(
       of(false)
     );
@@ -119,5 +126,25 @@ describe('ActivityV2Component', () => {
     expect(
       (comp as any).service.teardownMetricsSocketListener
     ).toHaveBeenCalled();
+  });
+
+  it('should NOT setup interception observer subscription if experiment is off', () => {
+    (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(false);
+
+    comp.setupInterceptionObserver();
+
+    expect(
+      (comp as any).service.setupMetricsSocketListener
+    ).not.toHaveBeenCalled();
+  });
+
+  it('should NOT teardown interception observer subscription if experiment is off', () => {
+    (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(false);
+
+    comp.setupInterceptionObserver();
+
+    expect(
+      (comp as any).service.teardownMetricsSocketListener
+    ).not.toHaveBeenCalled();
   });
 });

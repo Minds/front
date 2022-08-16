@@ -33,6 +33,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
 import { debounceTime } from 'rxjs/operators';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
+import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -142,6 +143,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     public session: Session,
     private configs: ConfigsService,
     private interceptionObserver: IntersectionObserverService,
+    private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -176,7 +178,10 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
-    if (this.interceptionObserverSubscription) {
+    if (
+      this.entityMetricSocketsExperiment.isActive() &&
+      this.interceptionObserverSubscription
+    ) {
       this.interceptionObserverSubscription.unsubscribe();
     }
   }
@@ -221,7 +226,10 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    if (isPlatformServer(this.platformId)) {
+    if (
+      !this.entityMetricSocketsExperiment.isActive() ||
+      isPlatformServer(this.platformId)
+    ) {
       return;
     }
 

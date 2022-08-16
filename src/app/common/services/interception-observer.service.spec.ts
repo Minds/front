@@ -2,7 +2,7 @@ import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IntersectionObserverService } from './interception-observer.service';
 
-describe('EntityMetricsSocketService', () => {
+describe('IntersectionObserverService', () => {
   let service: IntersectionObserverService;
 
   beforeEach(() => {
