@@ -17,8 +17,6 @@ import {
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
-import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -27,7 +25,7 @@ import {
 } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { FeedItemType } from '../feed/feed.component';
+import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import {
@@ -43,10 +41,10 @@ import { ComposerComponent } from '../../composer/composer.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
+import { FeedItemType } from '../feed/feed.component';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
-import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 
 export enum FeedAlgorithm {
   top = 'top',
