@@ -1,6 +1,7 @@
 @import 'defaults.scss';
 
 :host {
+  @include unselectable;
   .m-wire-button {
     padding: 3px;
     height: auto;

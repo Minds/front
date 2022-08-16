@@ -17,7 +17,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a
-      (click)="thumb($event)"
+      (pointerup)="thumb($event)"
       [ngClass]="{ selected: has() }"
       data-cy="data-minds-thumbs-down-button"
     >
@@ -30,13 +30,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
       >
     </a>
   `,
-  styles: [
-    `
-      a {
-        cursor: pointer;
-      }
-    `,
-  ],
+  styleUrls: ['thumbs-down.component.ng.scss'],
 })
 export class ThumbsDownButton implements DoCheck {
   changesDetected: boolean = false;

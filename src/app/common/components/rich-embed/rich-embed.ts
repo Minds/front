@@ -183,6 +183,9 @@ export class MindsRichEmbed {
   }
 
   action($event) {
+    if (this.activityV2Feature) {
+      $event.stopPropagation();
+    }
     if (this.modalRequestSubscribed && this.modalService.canOpenInModal()) {
       $event.preventDefault();
       $event.stopPropagation();

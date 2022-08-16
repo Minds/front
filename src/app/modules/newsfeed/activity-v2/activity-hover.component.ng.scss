@@ -15,7 +15,7 @@ $color: $m-bgColor--secondaryAlt;
 :host {
   // Don't change activity background on hover
   // for single pages or modals
-  &:not(.m-activity--isSingle):not(.m-activity--modal) {
+  &:not(.m-activity--isSingle):not(.m-activity--modal):not(.m-activity--isInset) {
     // TRANSITIONS
     // Note: opacity transitions are for fadeouts/gradients
     // (Necessary because css transitions
@@ -132,6 +132,7 @@ $color: $m-bgColor--secondaryAlt;
     ::ng-deep m-activityV2__quote,
     ::ng-deep m-activityV2__content minds-rich-embed .m-rich-embed-src {
       &:hover {
+        cursor: pointer;
         @include m-theme() {
           background: rgba(themed($m-bgColor--btnHover), 0.4);
         }

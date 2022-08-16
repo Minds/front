@@ -35,10 +35,8 @@ import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
-import { TranslationService } from '../../../services/translation';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { Session } from '../../../services/session';
-import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Router } from '@angular/router';
 
@@ -125,6 +123,9 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--isSingle')
   isSingle: boolean;
 
+  @HostBinding('class.m-activity--isInset')
+  isInset: boolean;
+
   @HostBinding('class.m-activity--modal')
   isModal: boolean = false;
 
@@ -143,6 +144,8 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
   avatarUrl: string;
+
+  pointerdownMs: number;
 
   constructor(
     public service: ActivityService,
@@ -165,6 +168,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
     this.isModal = this.service.displayOptions.isModal;
     this.isSingle = this.service.displayOptions.isSingle;
+    this.isInset = this.service.displayOptions.isInset;
 
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
@@ -261,30 +265,71 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.commentsExpanded = expanded;
   }
 
+  // Capture pointerdown time so we can determine if longpress
+  onActivityPointerdown($event) {
+    this.pointerdownMs = Date.now();
+  }
+
   /**
    * Navigate to single activity page,
    * but only if you haven't clicked another link inside the post
+   * or a dropdown menu item
    * (not used for single activity page or activity modal)
    *
    * Ignore if you clicked in comments sections
    * while comments are expanded
    * @param $event
+   *
+   * TODO: remove duplication with quote component
    */
-  onClickActivity($event, clickedComments?: boolean) {
-    if (this.isSingle || this.isModal) {
+  onActivityPointerup($event, clickedComments?: boolean): void {
+    const target = $event.target;
+
+    // Only check for longpress if a pointerdown event occured
+    let longPress = false;
+    if (this.pointerdownMs && Date.now() - this.pointerdownMs > 1000) {
+      longPress = true;
+    }
+    const ignoredContext = this.isSingle || this.isModal || this.isInset;
+    const clickedExpandedComments = !!(
+      clickedComments && this.commentsExpanded
+    );
+
+    if (longPress || ignoredContext || clickedExpandedComments) {
       return;
     }
 
-    if (clickedComments && this.commentsExpanded) {
-      return;
-    }
+    const clickedAnchor = !!target.closest('a');
+    const clickedDropdownTrigger = this.descendsFromClass(
+      target,
+      'm-dropdownMenu__trigger'
+    );
+    const clickedDropdownItem = this.descendsFromClass(
+      target,
+      'm-dropdownMenu__item'
+    );
 
-    // If link, only go to that link
-    if ($event.target instanceof HTMLAnchorElement) {
+    if (clickedAnchor || clickedDropdownTrigger) {
+      // If link or menu trigger, don't redirect
       $event.stopPropagation();
+      return;
+    } else if (clickedDropdownItem) {
+      // if clicked on dropdown item, ignore
+      return;
+    }
+
+    // If middle click, open in new tab instead
+    if ($event.button == 1) {
+      window.open(this.canonicalUrl, '_blank');
     } else {
-      // if no link, go to single page
+      // Everything else go to single page
       this.router.navigateByUrl(this.canonicalUrl);
     }
+  }
+
+  descendsFromClass(node, className) {
+    // Cycle through parents until we find a match
+    while ((node = node.parentElement) && !node.classList.contains(className));
+    return !!node;
   }
 }

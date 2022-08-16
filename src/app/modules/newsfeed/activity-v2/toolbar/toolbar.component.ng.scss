@@ -201,6 +201,7 @@
     }
 
     ::ng-deep minds-button-comment {
+      @include unselectable;
       cursor: pointer;
       &:hover {
         .selected i.material-icons,
