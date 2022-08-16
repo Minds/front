@@ -3,6 +3,7 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
+  Input,
   Output,
 } from '@angular/core';
 import { ActivityEntity } from './../../modules/newsfeed/activity/activity.service';
@@ -20,6 +21,9 @@ export class ViewedDirective implements AfterViewInit {
   @Output()
   public readonly mViewed = new EventEmitter<any>();
 
+  @Input()
+  mViewedOffset = 0;
+
   constructor(
     private elementVisibilityService: ElementVisibilityService,
     private el: ElementRef
@@ -28,6 +32,7 @@ export class ViewedDirective implements AfterViewInit {
   ngAfterViewInit(): void {
     this.elementVisibilityService
       .setElementRef(this.el)
+      .setOffset(this.mViewedOffset)
       .onView((entity: ActivityEntity) => this.mViewed.emit(entity))
       .checkVisibility();
   }

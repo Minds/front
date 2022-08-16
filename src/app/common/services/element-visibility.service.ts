@@ -22,6 +22,8 @@ export class ElementVisibilityService implements OnDestroy {
 
   protected enabled: boolean = true;
 
+  protected offset: number = 0;
+
   constructor(protected scroll: ScrollService) {
     this.init();
   }
@@ -43,6 +45,11 @@ export class ElementVisibilityService implements OnDestroy {
 
   setEnabled(enabled: boolean) {
     this.enabled = enabled;
+    return this;
+  }
+
+  setOffset(offset: number) {
+    this.offset = offset;
     return this;
   }
 
@@ -88,7 +95,8 @@ export class ElementVisibilityService implements OnDestroy {
     const totalH = Math.max(bottom, vpBottom) - Math.min(top, vpTop);
     const vpComp = totalH - this.scroll.view.clientHeight;
     // the part of the component (in pixels) that's ON the screen
-    const vpEl = this.element.offsetHeight - vpComp;
+    const vpEl = this.element.offsetHeight - vpComp + this.offset;
+
     // if vpEl is negative, we set it to 0 (it's not in the screen), otherwise, return the percentage of the component that's visible
     const visible = vpEl <= 0 ? 0 : vpEl / this.element.offsetHeight;
 

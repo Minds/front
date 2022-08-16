@@ -14,8 +14,9 @@ import {
   SkipSelf,
   ViewChild,
   ViewChildren,
+  ViewContainerRef,
 } from '@angular/core';
-import { Subscription, Observable, of } from 'rxjs';
+import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import {
   ActivatedRoute,
@@ -86,13 +87,26 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   /**
    * Whether top highlights is dismissed
    */
-  isTopHighlightsDismissed$ = this.dismissal.isDismissed('top-highlights');
+  isTopHighlightsDismissed$ = this.dismissal.dismissed('top-highlights');
   /**
    * Whether channel recommendation is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.isDismissed(
+  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
+  isDiscoveryFallbackDismissed$ = this.dismissal.dismissed(
+    'feed:discovery-fallback'
+  );
+
+  @ViewChild('discoveryFallback', { read: ViewContainerRef })
+  discoveryFallback!: ViewContainerRef;
+
+  /**
+   * Controls whether the latest feed should be shown at the end of the current feed
+   */
+  latestFallbackActive$ = new BehaviorSubject(false);
+
+  newsfeedEndText = $localize`:@@COMMON__FEED_END:End of your newsfeed`;
 
   constructor(
     public client: Client,
@@ -254,15 +268,15 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.showBoostRotator = true;
   }
 
-  loadNext() {
+  loadNext(feedService: FeedsService = this.feedService) {
     if (
-      this.feedService.canFetchMore &&
-      !this.feedService.inProgress.getValue() &&
-      this.feedService.offset.getValue()
+      feedService.canFetchMore &&
+      !feedService.inProgress.getValue() &&
+      feedService.offset.getValue()
     ) {
-      this.feedService.fetch(); // load the next 150 in the background
+      feedService.fetch(); // load the next 150 in the background
     }
-    this.feedService.loadMore();
+    feedService.loadMore();
   }
 
   prepend(activity: any) {
@@ -394,5 +408,56 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         this.boostRotator.rotatorEl.nativeElement?.offsetTop +
           this.boostRotator.height || 0,
     });
+  }
+
+  isDiscoveryFallbackEnabled() {
+    return this.experiments.hasVariation('minds-2991-discovery-fallback', true);
+  }
+
+  isLatestFallbackEnabled() {
+    return this.experiments.hasVariation('minds-2978-latest-fallback', true);
+  }
+
+  async loadDiscoveryFallback() {
+    const { DefaultFeedComponent } = await import(
+      '../../default-feed/feed/feed.component'
+    );
+    this.discoveryFallback.clear();
+    const componentRef = this.discoveryFallback.createComponent(
+      DefaultFeedComponent
+    );
+
+    componentRef.instance.visibleHeader = true;
+  }
+
+  /**
+   * what should happen at the end of the feed?
+   * 1. if it was the top feed, fallback to latest
+   * 2. if it was the latest feed, fallback to discovery
+   * @param { FeedsService } feedService
+   */
+  onNewsfeedEndReached(feedService: FeedsService = this.feedService) {
+    const loadDiscoveryFallbackIfEnabled = () => {
+      if (
+        this.isDiscoveryFallbackEnabled() &&
+        !this.dismissal.isDismissed('feed:discovery-fallback')
+      ) {
+        this.loadDiscoveryFallback();
+      }
+    };
+
+    switch (feedService) {
+      case this.latestFeedService:
+        loadDiscoveryFallbackIfEnabled();
+        break;
+      case this.topFeedService:
+        if (this.isLatestFallbackEnabled()) {
+          this.latestFeedService.fetch(true);
+          this.latestFallbackActive$.next(true);
+        } else {
+          loadDiscoveryFallbackIfEnabled();
+        }
+        break;
+    }
   }
 }
