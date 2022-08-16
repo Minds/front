@@ -49,6 +49,7 @@ import {
 import { FeaturesService } from '../../../../services/features.service';
 import { ActivityV2ModalCreatorService } from '../modal/modal-creator.service';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -223,7 +224,8 @@ export class ActivityV2ContentComponent
     private features: FeaturesService,
     private injector: Injector,
     private activityModalCreator: ActivityV2ModalCreatorService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private mediaQuotesExperiment: MediaQuotesExperimentService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -621,6 +623,14 @@ export class ActivityV2ContentComponent
       return;
     }
 
+    if (this.mediaQuotesExperiment.isActive()) {
+      // We don't support showing media quotes in modal yet
+      if (this.entity.remind_object) {
+        this.redirectToSinglePage();
+        return;
+      }
+    }
+
     if (
       this.service.displayOptions.bypassMediaModal &&
       this.entity.content_type !== 'image' &&
@@ -669,7 +679,10 @@ export class ActivityV2ContentComponent
   }
 
   redirectToSinglePage(): void {
-    this.router.navigateByUrl(this.canonicalUrl);
+    // don't navigate if we're already there
+    if (this.router.url !== this.canonicalUrl) {
+      this.router.navigateByUrl(this.canonicalUrl);
+    }
   }
 
   onImageError(e: Event): void {}
