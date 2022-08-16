@@ -42,7 +42,6 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { NewsfeedActivityOutletComponent } from './feeds/activity-outlet.component';
 import { VirtualMinimapComponent } from './feed/virtual-minimap';
 import { FeedComponent } from './feed/feed.component';
-import { FeedHeaderComponent } from '../../common/components/feed-header/feed-header.component';
 
 const routes: Routes = [
   {
@@ -115,7 +114,6 @@ const routes: Routes = [
     NewsfeedActivitySuggestionsComponent,
     TopHighlightsComponent,
     FeedTypePopoverComponent,
-    FeedHeaderComponent,
     NewsfeedActivityOutletComponent,
     VirtualMinimapComponent,
     FeedComponent,
