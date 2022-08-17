@@ -11,6 +11,7 @@ import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { NoticesModule } from '../notices/notices.module';
+import { DefaultFeedHeaderComponent } from './feed/default-feed-header/default-feed-header.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,11 @@ import { NoticesModule } from '../notices/notices.module';
     ExperimentsModule,
     NoticesModule,
   ],
-  declarations: [DefaultFeedComponent, DefaultFeedContainerComponent],
+  declarations: [
+    DefaultFeedComponent,
+    DefaultFeedContainerComponent,
+    DefaultFeedHeaderComponent,
+  ],
   exports: [DefaultFeedComponent, DefaultFeedContainerComponent],
 })
 export class DefaultFeedModule {}
