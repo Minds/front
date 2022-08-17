@@ -1,0 +1,57 @@
+<form *ngIf="form" [formGroup]="form">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--radio">
+      <div class="m-form__row--label">
+        <h3>Environment:</h3>
+      </div>
+      <div class="m-form__row--input">
+        <label for="production" class="m-form__customInputWrapper__radio">
+          <span>Production</span>
+          <input
+            type="radio"
+            value="production"
+            id="production"
+            name="environment"
+            formControlName="environment"
+            class="form-control"
+          />
+        </label>
+        <label
+          *ngIf="shouldShowCanaryOption()"
+          for="canary"
+          class="m-form__customInputWrapper__radio"
+        >
+          <span>Canary</span>
+          <input
+            type="radio"
+            value="canary"
+            id="canary"
+            name="environment"
+            formControlName="environment"
+            class="form-control"
+          />
+        </label>
+        <label for="staging" class="m-form__customInputWrapper__radio">
+          <span>Staging</span>
+          <input
+            type="radio"
+            value="staging"
+            id="staging"
+            name="environment"
+            formControlName="environment"
+            class="form-control"
+          />
+        </label>
+      </div>
+    </div>
+  </div>
+  <m-button
+    size="medium"
+    color="blue"
+    [saving]="inProgress"
+    [disabled]="!canSubmit()"
+    (onAction)="switchToEnvironment()"
+  >
+    Switch
+  </m-button>
+</form>
