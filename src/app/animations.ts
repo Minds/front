@@ -114,7 +114,7 @@ export const CounterChangeFadeIn = trigger('counterChange', [
       300,
       keyframes([
         style({ opacity: 0, transform: 'translateY(5px)', offset: 0 }),
-        style({ opacity: 1, transform: 'translateY(0px);', offset: 1 }),
+        style({ opacity: 1, transform: 'translateY(0px)', offset: 1 }),
       ])
     ),
   ]),
@@ -123,7 +123,7 @@ export const CounterChangeFadeIn = trigger('counterChange', [
       300,
       keyframes([
         style({ opacity: 0, transform: 'translateY(-5px)', offset: 0 }),
-        style({ opacity: 1, transform: 'translateY(0px);', offset: 1 }),
+        style({ opacity: 1, transform: 'translateY(0px)', offset: 1 }),
       ])
     ),
   ]),
@@ -131,8 +131,8 @@ export const CounterChangeFadeIn = trigger('counterChange', [
     animate(
       300,
       keyframes([
-        style({ opacity: 0, transform: 'translateY(-5px)', offset: 0 }),
-        style({ opacity: 1, transform: 'translateY(0px);', offset: 1 }),
+        style({ opacity: 0, transform: 'translateY(5px)', offset: 0 }),
+        style({ opacity: 1, transform: 'translateY(0px)', offset: 1 }),
       ])
     ),
   ]),
@@ -141,7 +141,7 @@ export const CounterChangeFadeIn = trigger('counterChange', [
       200,
       keyframes([
         style({ opacity: 1, transform: 'translateY(0px)', offset: 0 }),
-        style({ opacity: 0, transform: 'translateY(-5px);', offset: 1 }),
+        style({ opacity: 0, transform: 'translateY(-5px)', offset: 1 }),
       ])
     ),
   ]),
