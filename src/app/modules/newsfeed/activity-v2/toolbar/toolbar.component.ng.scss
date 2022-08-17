@@ -326,6 +326,7 @@
     cursor: pointer;
 
     span:nth-of-type(1) {
+      display: inline-flex;
       @include body2Bold;
       padding-right: $spacing1;
       @include m-theme() {
