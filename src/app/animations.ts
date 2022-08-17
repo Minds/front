@@ -142,6 +142,7 @@ export const CounterChangeFadeIn = trigger('counterChange', [
       keyframes([
         style({ opacity: 1, transform: 'translateY(0px)', offset: 0 }),
         style({ opacity: 0, transform: 'translateY(-5px)', offset: 1 }),
+      ])
     ),
   ]),
 ]);
