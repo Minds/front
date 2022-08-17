@@ -5,7 +5,7 @@
   position: relative;
   @include z-index(topbar);
 
-  @media screen and (max-width: $max-mobile) {
+  @media screen and (max-width: $min-tablet) {
     m-topbar__walletBalance {
       display: none;
     }

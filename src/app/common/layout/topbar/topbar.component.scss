@@ -93,7 +93,7 @@ h1 {
 }
 
 .m-topbar__middleColumn {
-  @media screen and (max-width: $max-mobile) {
+  @media screen and (max-width: $min-tablet) {
     width: 100%;
   }
 }
