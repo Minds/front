@@ -4,4 +4,10 @@
   display: block;
   position: relative;
   @include z-index(topbar);
+
+  @media screen and (max-width: $max-mobile) {
+    m-topbar__walletBalance {
+      display: none;
+    }
+  }
 }

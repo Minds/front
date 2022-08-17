@@ -90,7 +90,9 @@ h1 {
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+}
 
+.m-topbar__middleColumn {
   @media screen and (max-width: $max-mobile) {
     width: 100%;
   }
@@ -192,9 +194,9 @@ h1 {
           transition: width ease-in-out 0.2s;
           padding: 0;
 
-          &.is-focused {
-            width: 270px;
-          }
+          // &.is-focused {
+          //   width: 270px;
+          // }
         }
 
         .m-searchBar__searchIcon {
