@@ -410,7 +410,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     return isMobile();
   }
 
-  fileUploadVisible$ = this.remind$.pipe(
+  fileUploadVisible$ = this.remind$?.pipe(
     map(remind => {
       if (this.mediaQuotesExperiment.isActive()) {
         return true;

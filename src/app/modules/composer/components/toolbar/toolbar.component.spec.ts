@@ -10,6 +10,11 @@ import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
 import { BehaviorSubject } from 'rxjs';
+import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
+
+export let mediaQuotesExperimentServiceMock = new (function() {
+  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
+})();
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -91,6 +96,10 @@ describe('Composer Toolbar', () => {
           {
             provide: ToasterService,
             useValue: MockService(ToasterService),
+          },
+          {
+            provide: MediaQuotesExperimentService,
+            useValue: mediaQuotesExperimentServiceMock,
           },
         ],
       }).compileComponents();
