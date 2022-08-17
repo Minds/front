@@ -8,7 +8,6 @@ import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
-import { MediaQuotesExperimentService } from '../../experiments/sub-services/media-quotes-experiment.service';
 
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
@@ -333,8 +332,7 @@ export class ActivityService {
     private configs: ConfigsService,
     private session: Session,
     private featuresService: FeaturesService,
-    private activityV2Experiment: ActivityV2ExperimentService,
-    private mediaQuotesExperiment: MediaQuotesExperimentService
+    private activityV2Experiment: ActivityV2ExperimentService
   ) {
     this.siteUrl = configs.get('site_url');
 
@@ -378,11 +376,9 @@ export class ActivityService {
 
   buildCanonicalUrl(entity: ActivityEntity, full: boolean): string {
     let guid = entity.entity_guid || entity.guid;
-    if (this.mediaQuotesExperiment.isActive()) {
-      // use the entity guid for media quotes
-      if (entity.remind_object && entity.entity_guid) {
-        guid = entity.guid;
-      }
+    // use the entity guid for media quotes
+    if (entity.remind_object && entity.entity_guid) {
+      guid = entity.guid;
     }
     const prefix = full ? this.siteUrl : '/';
     return `${prefix}newsfeed/${guid}`;

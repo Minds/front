@@ -49,7 +49,6 @@ import {
 import { FeaturesService } from '../../../../services/features.service';
 import { ActivityV2ModalCreatorService } from '../modal/modal-creator.service';
 import { ModalService } from '../../../../services/ux/modal.service';
-import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -224,8 +223,7 @@ export class ActivityV2ContentComponent
     private features: FeaturesService,
     private injector: Injector,
     private activityModalCreator: ActivityV2ModalCreatorService,
-    private cd: ChangeDetectorRef,
-    private mediaQuotesExperiment: MediaQuotesExperimentService
+    private cd: ChangeDetectorRef
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -623,12 +621,10 @@ export class ActivityV2ContentComponent
       return;
     }
 
-    if (this.mediaQuotesExperiment.isActive()) {
-      // We don't support showing media quotes in modal yet
-      if (this.entity.remind_object) {
-        this.redirectToSinglePage();
-        return;
-      }
+    // We don't support showing media quotes in modal yet
+    if (this.entity.remind_object) {
+      this.redirectToSinglePage();
+      return;
     }
 
     if (
