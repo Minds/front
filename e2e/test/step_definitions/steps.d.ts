@@ -1,13 +1,13 @@
 /// <reference types='codeceptjs' />
 type steps_file = typeof import('./steps_file.ts');
-type LoginPageType = typeof import('../pages/loginPage');
-type DevtoolsPageType = typeof import('../pages/devtoolsPage');
+type loginPage = typeof import('../pages/loginPage');
+type devtoolsPage = typeof import('../pages/devtoolsPage');
 
 declare namespace CodeceptJS {
   interface SupportObject {
     I: I;
-    loginPage: LoginPageType;
-    devtoolsPage: DevtoolsPageType;
+    loginPage: loginPage;
+    devtoolsPage: devtoolsPage;
     current: any;
   }
   interface Methods extends Playwright {}

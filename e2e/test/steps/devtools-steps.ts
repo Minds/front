@@ -1,43 +1,37 @@
-import devtoolsPage from '../pages/devtoolsPage';
-import loginPage from '../pages/loginPage';
-const { I } = inject();
+import DevtoolsPage from '../pages/devtoolsPage';
+import { Environment } from '../types/devtools.types';
 
-Given('I am logged in on the devtools page', (): void => {
-  I.amOnPage(loginPage.loginURI);
-  loginPage.login(loginPage.validUsername, loginPage.validPassword);
-  I.seeCookie('minds_sess');
-  I.amOnPage(devtoolsPage.uri);
-});
+namespace DevToolsSteps {
+  const devtoolsPage = new DevtoolsPage();
 
-When('I switch environments to Staging', (): void => {
-  devtoolsPage.selectRadioButton('staging');
-  devtoolsPage.submitChange();
-  // reload instead of waiting on window.location.reload.
-  I.refreshPage();
-});
+  Given('I am on the devtools page', (): void => {
+    devtoolsPage.navigateTo();
+  });
 
-When('I switch environments to Canary', (): void => {
-  devtoolsPage.selectRadioButton('canary');
-  devtoolsPage.submitChange();
-  // reload instead of waiting on window.location.reload.
-  I.refreshPage();
-});
+  When('I switch environments to {string}', (environment: string): void => {
+    devtoolsPage.selectRadioButton(environment as Environment);
+    devtoolsPage.submitChange();
+  });
 
-Then('I see my environment as Staging', (): void => {
-  I.seeElement(locate('.m-environmentFlag__flag').withText('Staging'));
-});
+  When(
+    'I switch environments to {string} from logged out',
+    (environment: string): void => {
+      devtoolsPage.selectRadioButton(environment as Environment);
+      devtoolsPage.submitChange(false);
+    }
+  );
 
-Then('I see my environment as Canary', (): void => {
-  I.seeElement(locate('.m-environmentFlag__flag').withText('Canary'));
-});
+  Then(
+    'I see my environment as {string}',
+    async (environment: string): Promise<void> => {
+      await devtoolsPage.checkEnvironment(environment as Environment);
+    }
+  );
 
-// When('I switch environments to Production', (): void => {
-//   devtoolsPage.selectRadioButton('production');
-//   devtoolsPage.submitChange();
-//   // reload instead of waiting on window.location.reload.
-//   I.amOnPage(devtoolsPage.uri);
-// });
-
-// Then('I see my environment as Production', (): void => {
-//   I.seeElement(locate('.m-environmentFlag__flag').withText(''));
-// });
+  Then(
+    'I should not see an option for canary',
+    async (): Promise<void> => {
+      devtoolsPage.hasNoCanaryOption();
+    }
+  );
+}

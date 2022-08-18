@@ -6,7 +6,7 @@ exports.config = {
   helpers: {
     Playwright: {
       url: process.env.E2E_DOMAIN || 'https://minds.com',
-      show: false,
+      show: true,
       video: true,
       browser: 'chromium',
       retries: 2,
@@ -24,7 +24,7 @@ exports.config = {
   teardown: null,
   gherkin: {
     features: '../features/*.feature',
-    steps: ['../steps/login-steps.ts', '../steps/devtools-steps.ts'],
+    steps: '../steps/*-steps.ts',
   },
   plugins: {
     pauseOnFail: {},
