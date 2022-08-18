@@ -10,6 +10,7 @@ import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { CounterChangeFadeIn } from '../../../animations';
 
 @Component({
   selector: 'minds-button-thumbs-down',
@@ -25,6 +26,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
       <span
         class="minds-counter"
         *ngIf="object['thumbs:down:count'] > 0 && !iconOnly"
+        [@counterChange]="object['thumbs:down:count']"
         data-cy="data-minds-thumbs-down-counter"
         >{{ object['thumbs:down:count'] | number }}</span
       >
@@ -37,6 +39,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
       }
     `,
   ],
+  animations: [CounterChangeFadeIn],
 })
 export class ThumbsDownButton implements DoCheck {
   changesDetected: boolean = false;

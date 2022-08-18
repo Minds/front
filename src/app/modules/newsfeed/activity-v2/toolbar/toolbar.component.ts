@@ -17,6 +17,7 @@ import { FeaturesService } from '../../../../services/features.service';
 import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { CounterChangeFadeIn } from '../../../../animations';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -28,6 +29,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
   selector: 'm-activityV2__toolbar',
   templateUrl: 'toolbar.component.html',
   styleUrls: ['./toolbar.component.ng.scss'],
+  animations: [CounterChangeFadeIn],
 })
 export class ActivityV2ToolbarComponent {
   private entitySubscription: Subscription;
