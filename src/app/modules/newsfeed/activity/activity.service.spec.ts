@@ -11,6 +11,8 @@ describe('ActivityService', () => {
 
   let sessionsMock = new (function() {
     this.user$ = new BehaviorSubject<number>(userMock);
+    this.isLoggedIn = jasmine.createSpy('isLoggedIn');
+    this.getLoggedInUser = jasmine.createSpy('getLoggedInUser');
   })();
 
   let activityV2ExperimentMock = new (function() {
@@ -31,6 +33,9 @@ describe('ActivityService', () => {
       activityV2ExperimentMock,
       entityMetricsSocketMock
     );
+
+    (service as any).session.isLoggedIn.calls.reset();
+    (service as any).session.getLoggedInUser.calls.reset();
 
     service.entity$.next({
       guid: '123',
@@ -108,5 +113,100 @@ describe('ActivityService', () => {
     expect((service as any).entityMetricsSocket.leave).toHaveBeenCalledWith(
       '123'
     );
+  });
+
+  it('should determine if nsfw consent overlay should be NOT be shown because content is not NSFW', (done: DoneFn) => {
+    service.entity$.next({
+      nsfw: [],
+      ownerObj: {
+        nsfw: [],
+      },
+    });
+
+    service.isNsfwConsented$.next(false);
+
+    (service as any).session.isLoggedIn.and.returnValue(true);
+    (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
+
+    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+      expect(shouldShowNsfwConsent).toBeFalse();
+      done();
+    });
+  });
+
+  it('should determine if nsfw consent overlay should be shown because content is nsfw', (done: DoneFn) => {
+    service.entity$.next({
+      nsfw: [1],
+      ownerObj: {
+        nsfw: [],
+      },
+    });
+
+    service.isNsfwConsented$.next(false);
+
+    (service as any).session.isLoggedIn.and.returnValue(true);
+    (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
+
+    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+      expect(shouldShowNsfwConsent).toBeTrue();
+      done();
+    });
+  });
+
+  it('should determine if nsfw consent overlay should be shown because owner is nsfw', (done: DoneFn) => {
+    service.entity$.next({
+      nsfw: [],
+      ownerObj: {
+        nsfw: [1],
+      },
+    });
+
+    service.isNsfwConsented$.next(false);
+
+    (service as any).session.isLoggedIn.and.returnValue(true);
+    (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
+
+    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+      expect(shouldShowNsfwConsent).toBeTrue();
+      done();
+    });
+  });
+
+  it('should determine if nsfw consent overlay should NOT be shown because user is consented', (done: DoneFn) => {
+    service.entity$.next({
+      nsfw: [1],
+      ownerObj: {
+        nsfw: [1],
+      },
+    });
+
+    service.isNsfwConsented$.next(true);
+
+    (service as any).session.isLoggedIn.and.returnValue(true);
+    (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
+
+    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+      expect(shouldShowNsfwConsent).toBeFalse();
+      done();
+    });
+  });
+
+  it('should determine if nsfw consent overlay should NOT be shown because user has mature flag', (done: DoneFn) => {
+    service.entity$.next({
+      nsfw: [1],
+      ownerObj: {
+        nsfw: [1],
+      },
+    });
+
+    service.isNsfwConsented$.next(false);
+
+    (service as any).session.isLoggedIn.and.returnValue(true);
+    (service as any).session.getLoggedInUser.and.returnValue({ mature: true });
+
+    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+      expect(shouldShowNsfwConsent).toBeFalse();
+      done();
+    });
   });
 });
