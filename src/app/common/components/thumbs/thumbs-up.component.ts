@@ -80,7 +80,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
   onClick(e: MouseEvent): void {
     if (this.isFriendlyCaptchaFeatureEnabled() && !this.has()) {
       this.showFriendlyCaptcha = true;
-      this.inProgress = true;
     } else {
       this.submit();
     }
