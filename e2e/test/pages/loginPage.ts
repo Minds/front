@@ -14,8 +14,4 @@ export = {
 
     I.click(locate('button').withText('Login'));
   },
-
-  waitForLoginResponse(): void {
-    I.waitForResponse(process.env.E2E_DOMAIN + 'api/v1/authenticate', 10);
-  },
 };
