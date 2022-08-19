@@ -11,9 +11,6 @@ class DevtoolsPage {
   /** @type { string }  - uri of the page */
   public uri: string = '/devtools';
 
-  /** @type { string } - baseUrl from env */
-  private baseUrl: string = process.env.E2E_DOMAIN ?? 'https://www.minds.com';
-
   /**
    * Navigate to the devtools page.
    * @returns { void }
@@ -41,15 +38,10 @@ class DevtoolsPage {
 
   /**
    * Submit change of env.
-   * @param { boolean } loggedIn - whether logged in or not.
+   * @returns { void }
    */
-  public submitChange(loggedIn: boolean = true): void {
+  public submitChange(): void {
     I.click(locate('button').withText('Switch'));
-
-    if (loggedIn) {
-      I.waitForResponse(this.baseUrl + 'api/v2/canary', 10);
-      I.refreshPage(); // force refresh to prevent race condition.
-    }
   }
 
   /**

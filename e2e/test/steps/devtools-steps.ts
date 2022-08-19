@@ -13,14 +13,6 @@ namespace DevToolsSteps {
     devtoolsPage.submitChange();
   });
 
-  When(
-    'I switch environments to {string} from logged out',
-    (environment: string): void => {
-      devtoolsPage.selectRadioButton(environment as Environment);
-      devtoolsPage.submitChange(false);
-    }
-  );
-
   Then(
     'I see my environment as {string}',
     async (environment: string): Promise<void> => {
