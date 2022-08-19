@@ -78,6 +78,12 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns void
    */
   onClick(e: MouseEvent): void {
+    if (this.inProgress) {
+      return;
+    }
+
+    this.inProgress = true;
+
     if (this.isFriendlyCaptchaFeatureEnabled() && !this.has()) {
       this.showFriendlyCaptcha = true;
     } else {
@@ -99,11 +105,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns Promise<void>
    */
   async submit(solution?: string): Promise<void> {
-    if (this.inProgress) {
-      return;
-    }
-
-    this.inProgress = true;
     this.cd.detectChanges();
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
