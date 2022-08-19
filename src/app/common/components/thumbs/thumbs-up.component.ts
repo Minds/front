@@ -47,7 +47,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
   @Input() iconOnly = false;
 
   /**
-   * Call to let parent functions know a thumb up event has happend
+   * Call to let parent functions know a thumb up event has happened
    */
   @Output('thumbsUpChange') thumbsUpChange$: EventEmitter<
     void
@@ -100,6 +100,10 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns Promise<void>
    */
   async submit(solution?: string): Promise<void> {
+    if (this.inProgress) {
+      return;
+    }
+
     this.inProgress = true;
     this.cd.detectChanges();
     if (!this.session.isLoggedIn()) {
