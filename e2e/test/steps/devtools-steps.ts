@@ -19,11 +19,4 @@ namespace DevToolsSteps {
       await devtoolsPage.checkEnvironment(environment as Environment);
     }
   );
-
-  Then(
-    'I should not see an option for canary',
-    async (): Promise<void> => {
-      devtoolsPage.hasNoCanaryOption();
-    }
-  );
 }

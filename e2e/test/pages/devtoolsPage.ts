@@ -20,14 +20,6 @@ class DevtoolsPage {
   }
 
   /**
-   * Check page has no canary env option.
-   * @returns { void }
-   */
-  public hasNoCanaryOption(): void {
-    I.dontSeeElement(this.getRadioButtonSelector('canary'));
-  }
-
-  /**
    * Click and select a radio button.
    * @param { Environment } environment - environment to select.
    * @returns { void }

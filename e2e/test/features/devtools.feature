@@ -27,13 +27,15 @@ Feature: devtools
     When I switch environments to "staging"
     Then I see my environment as "staging"
 
+  Scenario: devtools logged out switch to Canary
+    Given I am logged out
+    And I am on the devtools page
+    When I switch environments to "canary"
+    Then I see my environment as "canary"
+
   Scenario: devtools logged out switch to Production
     Given I am logged out
     And I am on the devtools page
     When I switch environments to "production"
     Then I see my environment as "production"
 
-  Scenario: devtools has no Canary option when logged out
-    Given I am logged out
-    And I am on the devtools page
-    Then I should not see an option for canary
