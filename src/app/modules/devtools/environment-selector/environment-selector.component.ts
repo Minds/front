@@ -38,14 +38,6 @@ export class EnvironmentSelectorComponent implements OnInit {
   }
 
   /**
-   * Whether canary option should be shown.
-   * @returns { boolean } true if Canary option should be shown.
-   */
-  public shouldShowCanaryOption(): boolean {
-    return this.service.shouldShowCanaryOption();
-  }
-
-  /**
    * Whether form can be submitted.
    * @returns { boolean } true if form can be submitted.
    */

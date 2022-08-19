@@ -2,7 +2,7 @@
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--radio">
       <div class="m-form__row--label">
-        <h3>Environment:</h3>
+        <h3>Environment</h3>
       </div>
       <div class="m-form__row--input">
         <label for="production" class="m-form__customInputWrapper__radio">
@@ -16,11 +16,7 @@
             class="form-control"
           />
         </label>
-        <label
-          *ngIf="shouldShowCanaryOption()"
-          for="canary"
-          class="m-form__customInputWrapper__radio"
-        >
+        <label for="canary" class="m-form__customInputWrapper__radio">
           <span>Canary</span>
           <input
             type="radio"

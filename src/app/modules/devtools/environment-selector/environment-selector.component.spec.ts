@@ -87,16 +87,6 @@ describe('EnvironmentSelectorComponent', () => {
     expect((comp as any).service.switchToEnvironment).toHaveBeenCalledWith(env);
   }));
 
-  it('should determine whether canary option should be shown', () => {
-    (comp as any).service.shouldShowCanaryOption.and.returnValue(true);
-    expect(comp.shouldShowCanaryOption()).toBe(true);
-  });
-
-  it('should determine whether canary option should NOT be shown', () => {
-    (comp as any).service.shouldShowCanaryOption.and.returnValue(false);
-    expect(comp.shouldShowCanaryOption()).toBe(false);
-  });
-
   it('should determine if a user cannot submit because there is no form value', () => {
     (comp as any).form.controls.environment.setValue('production');
     (comp as any).inProgress = false;

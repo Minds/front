@@ -20,14 +20,6 @@ export class EnvironmentSelectorService {
   ) {}
 
   /**
-   * Whether Canary option should be shown.
-   * @returns { boolean } true if canary option should be shown
-   */
-  public shouldShowCanaryOption(): boolean {
-    return this.session.isLoggedIn();
-  }
-
-  /**
    * Whether current environment is staging.
    * @returns { boolean } - true if current environment is staging
    */
@@ -36,25 +28,35 @@ export class EnvironmentSelectorService {
   }
 
   /**
-   * Whether current environment is Canary or user object is set to be in Canary.
-   * @returns { boolean } - true if current environment is canary or user object is set to be in canary.
+   * Whether current environment is Canary.
+   * @returns { boolean } - true if current environment is canary.
    */
-  public async isCanaryEnabled(): Promise<boolean> {
-    // get from server if user is logged in.
-    if (this.session.isLoggedIn()) {
-      const response = await this.api.get('api/v2/canary').toPromise();
-      return response.enabled;
-    }
-    // else just check env.
+  public isCanaryEnabled(): boolean {
     return this.getCurrentEnvironment() === 'canary';
   }
 
   /**
-   * Get current environment from config.
+   * Get current environment from config. In the event it is a development
+   * environment, returns the environment you would be in, if not a development one.
    * @returns { Environment } - current environment.
    */
   public getCurrentEnvironment(): Environment {
-    return this.configs.get('environment') ?? 'production';
+    const environment = this.configs.get('environment');
+
+    if (this.isDevelopmentEnvironment(environment)) {
+      if (this.cookies.get('staging') === '1') {
+        return 'staging';
+      } else if (
+        this.session.getLoggedInUser()?.canary ||
+        this.cookies.get('canary') === '1'
+      ) {
+        return 'canary';
+      } else {
+        return 'production';
+      }
+    }
+
+    return environment;
   }
 
   /**
@@ -64,7 +66,7 @@ export class EnvironmentSelectorService {
    */
   public async switchToEnvironment(environment: Environment): Promise<void> {
     // reset state.
-    if (await this.isCanaryEnabled()) {
+    if (this.isCanaryEnabled()) {
       await this.disableCanary();
     }
 
@@ -83,7 +85,6 @@ export class EnvironmentSelectorService {
     }
 
     // reload so changes take effect.
-    // window.location.reload();
     this.reloadPage();
   }
 
@@ -94,14 +95,17 @@ export class EnvironmentSelectorService {
   private reloadPage(): void {
     window.location.reload();
   }
+
   /**
    * Enable Canary if user is logged in.
    * @returns { Promise<ApiResponse|void> } - api request, or void if user not logged in.
    */
   private async enableCanary(): Promise<ApiResponse | void> {
     if (this.session.isLoggedIn()) {
-      return this.api.put('api/v2/canary').toPromise();
+      await this.api.put('api/v2/canary').toPromise();
+      return;
     }
+    this.cookies.put('canary', '1', { path: '/' });
   }
 
   /**
@@ -111,6 +115,7 @@ export class EnvironmentSelectorService {
   private async disableCanary(): Promise<void> {
     if (this.session.isLoggedIn()) {
       await this.api.delete('api/v2/canary').toPromise();
+      return;
     }
     this.cookies.put('canary', '0', { path: '/' });
   }
@@ -129,5 +134,14 @@ export class EnvironmentSelectorService {
    */
   private removeStagingCookie(): void {
     this.cookies.remove('staging');
+  }
+
+  /**
+   * Returns whether the env is a development environment.
+   * @param { string } environment - environment to check.
+   * @returns { boolean } true if environment is a development environment.
+   */
+  private isDevelopmentEnvironment(environment: string): boolean {
+    return ['production', 'canary', 'staging'].indexOf(environment) === -1;
   }
 }
