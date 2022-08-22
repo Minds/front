@@ -1,0 +1,33 @@
+@import 'defaults';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+
+  @media screen and (min-width: $min-tablet) {
+    margin-left: $spacing24;
+  }
+
+  @media screen and (max-width: $min-tablet) {
+    justify-content: center;
+  }
+
+  h3 {
+    margin-top: $spacing10;
+    margin-bottom: $spacing5;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+  }
+
+  .m-form__customInputWrapper__radio {
+    margin-right: $spacing5;
+  }
+
+  m-button {
+    margin-top: $spacing5;
+  }
+}
