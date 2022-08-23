@@ -1,18 +1,16 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
   Component,
   Input,
   HostBinding,
   ElementRef,
   HostListener,
-  Optional,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   OnInit,
   AfterViewInit,
   OnDestroy,
   Output,
-  EventEmitter,
   ViewChild,
   Inject,
   PLATFORM_ID,
@@ -24,22 +22,18 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ActivityEntity,
 } from './../activity/activity.service';
-import {
-  Subscription,
-  Observable,
-  BehaviorSubject,
-  combineLatest,
-  Subject,
-} from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
-import { TranslationService } from '../../../services/translation';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { Session } from '../../../services/session';
-import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
+import { debounceTime } from 'rxjs/operators';
+import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
+import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -56,6 +50,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
+    EntityMetricsSocketService,
   ],
   host: {
     '[class.m-activity--minimalMode]':
@@ -132,6 +127,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
+  private interceptionObserverSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -146,6 +142,8 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     public featuresService: FeaturesService,
     public session: Session,
     private configs: ConfigsService,
+    private interceptionObserver: IntersectionObserverService,
+    private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -180,6 +178,12 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
+    if (
+      this.entityMetricSocketsExperiment.isActive() &&
+      this.interceptionObserverSubscription
+    ) {
+      this.interceptionObserverSubscription.unsubscribe();
+    }
   }
 
   ngAfterViewInit() {
@@ -203,7 +207,42 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
           );
         });
       this.elementVisibilityService.checkVisibility();
+
+      // Only needed when metrics toolbar is visible.
+      if (this.service.displayOptions.showToolbar) {
+        this.setupInterceptionObserver();
+      }
     }
+  }
+
+  /**
+   * Setup an interception observer to report when activity enters the DOM and
+   * update local isIntersecting$ state accordingly.
+   * @returns { void }
+   */
+  public setupInterceptionObserver(): void {
+    if (this.interceptionObserverSubscription) {
+      console.error('Already registered InterceptionObserver');
+      return;
+    }
+
+    if (
+      !this.entityMetricSocketsExperiment.isActive() ||
+      isPlatformServer(this.platformId)
+    ) {
+      return;
+    }
+
+    this.interceptionObserverSubscription = this.interceptionObserver
+      .createAndObserve(this.el)
+      .pipe(debounceTime(2000))
+      .subscribe((isVisible: boolean) => {
+        if (isVisible) {
+          this.service.setupMetricsSocketListener();
+          return;
+        }
+        this.service.teardownMetricsSocketListener();
+      });
   }
 
   @HostListener('window:resize')

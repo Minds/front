@@ -60,6 +60,7 @@ import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
 import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
+import { DevToolsModule } from './modules/devtools/devtools.module';
 
 @NgModule({
   bootstrap: [Minds],
@@ -110,6 +111,7 @@ import { CompassModule } from './modules/compass/compass.module';
     CodeHighlightModule,
     SharedModule,
     CompassModule,
+    DevToolsModule,
     //last due to :username route
     AppRoutingModule,
   ],

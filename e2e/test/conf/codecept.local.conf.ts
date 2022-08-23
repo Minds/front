@@ -10,34 +10,33 @@ exports.config = {
       video: true,
       browser: 'chromium',
       retries: 2,
-      restart: "session",
+      restart: 'session',
       reporter: 'html',
-    }
+    },
   },
   include: {
     I: '../step_definitions/steps_file.ts',
-    loginPage: '../pages/loginPage.ts'
+    loginPage: '../pages/loginPage.ts',
+    devtoolsPage: '../pages/devtoolsPage.ts',
   },
   mocha: {},
   bootstrap: null,
   teardown: null,
   gherkin: {
-    features: "../features/*.feature",
-    steps: [
-        "../steps/login-steps.ts",
-    ]
+    features: '../features/*.feature',
+    steps: '../steps/*-steps.ts',
   },
   plugins: {
     pauseOnFail: {},
     retryFailedStep: {
-      enabled: true
+      enabled: true,
     },
     tryTo: {
-      enabled: true
+      enabled: true,
     },
     screenshotOnFail: {
-      enabled: true
-    }
+      enabled: true,
+    },
   },
-  name: 'minds-local-testing-project'
-}
+  name: 'minds-local-testing-project',
+};

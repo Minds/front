@@ -103,3 +103,46 @@ export const DropDownAnimation = trigger('dropDown', [
     animate('100ms ease-out', style({ height: 0, opacity: 0 }))
   ),
 ]);
+
+/**
+ * Fades in along with moving 5px from top or bottom
+ * depending on direction, when counter changes.
+ */
+export const CounterChangeFadeIn = trigger('counterChange', [
+  transition(':increment', [
+    animate(
+      300,
+      keyframes([
+        style({ opacity: 0, transform: 'translateY(5px)', offset: 0 }),
+        style({ opacity: 1, transform: 'translateY(0px)', offset: 1 }),
+      ])
+    ),
+  ]),
+  transition(':decrement', [
+    animate(
+      300,
+      keyframes([
+        style({ opacity: 0, transform: 'translateY(-5px)', offset: 0 }),
+        style({ opacity: 1, transform: 'translateY(0px)', offset: 1 }),
+      ])
+    ),
+  ]),
+  transition(':enter', [
+    animate(
+      300,
+      keyframes([
+        style({ opacity: 0, transform: 'translateY(5px)', offset: 0 }),
+        style({ opacity: 1, transform: 'translateY(0px)', offset: 1 }),
+      ])
+    ),
+  ]),
+  transition(':leave', [
+    animate(
+      200,
+      keyframes([
+        style({ opacity: 1, transform: 'translateY(0px)', offset: 0 }),
+        style({ opacity: 0, transform: 'translateY(-5px)', offset: 1 }),
+      ])
+    ),
+  ]),
+]);
