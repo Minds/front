@@ -38,6 +38,7 @@
 
   .m-activity--fixedHeight & {
     z-index: 1;
+
     .m-activityToolbar__actions {
       padding-top: $spacing5;
       padding-bottom: $spacing7;
@@ -80,6 +81,7 @@
           font-size: 19px !important;
           margin-top: -1px;
         }
+
         span {
           display: none;
         }
@@ -178,6 +180,7 @@
               color: themed($m-textColor--secondary);
             }
           }
+
           &:hover {
             i.material-icons,
             .minds-counter {
@@ -205,6 +208,7 @@
 
     ::ng-deep minds-button-comment {
       cursor: pointer;
+
       &:hover {
         .selected i.material-icons,
         .selected .minds-counter {
@@ -249,19 +253,19 @@
             }
           }
         }
+
         .m-icon__assetsFile {
           margin-right: 5px;
         }
+
         span {
           margin-left: 0;
           font-weight: 500;
         }
       }
+
       .m-tipButton {
         margin-top: 0;
-      }
-      @media screen and (max-width: $max-mobile) {
-        display: none;
       }
     }
 
@@ -307,11 +311,9 @@
           }
         }
       }
-      //@media screen and (max-width: $max-mobile) {
-      //  display: none;
-      //}
     }
   }
+
   // METRICS
 
   .m-activityToolbar__metrics {
@@ -332,6 +334,7 @@
         color: themed($m-textColor--primary);
       }
     }
+
     span:nth-of-type(2) {
       @include body2Regular;
       @include m-theme() {
