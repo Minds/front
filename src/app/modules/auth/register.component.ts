@@ -15,8 +15,8 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
-import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
 import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
+import { ContentSettingsModalService } from '../content-settings/content-settings-modal.service';
 
 /**
  * Standalone register page for new users to sign up
@@ -61,8 +61,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
     private authRedirectService: AuthRedirectService,
-    private onboardingV3: OnboardingV3Service,
-    private emailCodeExperiment: EmailCodeExperimentService
+    private emailCodeExperiment: EmailCodeExperimentService,
+    private contentSettingsModal: ContentSettingsModalService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -155,7 +155,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
     if (!this.emailCodeExperiment.isActive()) {
-      this.onboardingV3.open();
+      this.contentSettingsModal.open({
+        hideCompass: true,
+        onSave: () => {
+          this.contentSettingsModal.dismiss();
+        },
+      });
     }
   }
 

@@ -18,6 +18,9 @@ export class ContentSettingsComponent implements OnInit, OnDestroy {
   activeTab: ContentSettingsTab;
   private subscriptions: Subscription[] = [];
 
+  /** @type { boolean } whether compass tab should be hidden */
+  public hideCompass: boolean = false;
+
   constructor(
     public service: ContentSettingsService,
     protected compassService: CompassService,
@@ -33,10 +36,12 @@ export class ContentSettingsComponent implements OnInit, OnDestroy {
   /**
    * Set modal data
    * @param {{ function }} onSave - function to be called on save.
+   * @param {{ boolean }} showCompass - whether compass options should be shown.
    * @returns { void }
    */
-  setModalData({ onSave }): void {
+  setModalData({ onSave, hideCompass = false }): void {
     this.onSaveIntent = onSave || noOp;
+    this.hideCompass = hideCompass ?? false;
   }
 
   ngOnInit(): void {

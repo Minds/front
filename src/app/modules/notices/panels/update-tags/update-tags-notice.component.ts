@@ -1,7 +1,6 @@
-import { Component, Injector } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { ModalService } from '../../../../services/ux/modal.service';
-import { ContentSettingsComponent } from '../../../content-settings/content-settings/content-settings.component';
+import { ContentSettingsModalService } from '../../../content-settings/content-settings-modal.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
@@ -15,8 +14,7 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 export class UpdateTagsNoticeComponent extends AbstractSubscriberComponent {
   constructor(
     private feedNotice: FeedNoticeService,
-    private modalService: ModalService,
-    private injector: Injector
+    private contentSettingsModal: ContentSettingsModalService
   ) {
     super();
   }
@@ -27,14 +25,11 @@ export class UpdateTagsNoticeComponent extends AbstractSubscriberComponent {
    * @return { void }
    */
   public onPrimaryOptionClick($event: MouseEvent): void {
-    this.modalService.present(ContentSettingsComponent, {
-      data: {
-        onSave: () => {
-          this.modalService.dismissAll();
-          this.dismiss();
-        },
+    this.contentSettingsModal.open({
+      hideCompass: true,
+      onSave: () => {
+        this.contentSettingsModal.dismiss();
       },
-      injector: this.injector,
     });
   }
 

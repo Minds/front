@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { contentSettingsServiceMock } from '../../../mocks/modules/content-settings/content-settings.service.mock';
 import { MockComponent, MockService } from '../../../utils/mock';
@@ -49,10 +50,37 @@ describe('ContentSettingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ContentSettingsComponent);
     component = fixture.componentInstance;
+
+    component.hideCompass = false;
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not hide compass if hideCompass is false', () => {
+    component.hideCompass = false;
+
+    fixture.detectChanges();
+
+    expect(
+      fixture.debugElement.query(
+        By.css(`[data-cy=content-settings-modal-tab-compass]`)
+      )
+    ).toBeTruthy();
+  });
+
+  it('should hide compass if hideCompass is true', () => {
+    component.hideCompass = true;
+
+    fixture.detectChanges();
+
+    expect(
+      fixture.debugElement.query(
+        By.css(`[data-cy=content-settings-modal-tab-compass]`)
+      )
+    ).toBeFalsy();
   });
 });
