@@ -138,6 +138,23 @@ export class FeedsService implements OnDestroy {
         if (feed.length)
           // We should have skipped but..
           this.inProgress.next(false);
+      }),
+      tap(feed => {
+        if (this.cachingEnabled && feed.length) {
+          this._persist(
+            feed.map(entity$ => {
+              // TODO: better type
+              const entity: any = entity$.getValue();
+              return {
+                guid: entity.guid,
+                owner_guid: entity.ownerObj?.guid,
+                timestamp: null,
+                urn: entity.urn,
+                entity,
+              };
+            })
+          );
+        }
       })
     );
 
@@ -341,10 +358,6 @@ export class FeedsService implements OnDestroy {
           }
         } else {
           this.canFetchMore = false;
-        }
-
-        if (this.cachingEnabled) {
-          this._persist();
         }
       })
       .catch(e => {
