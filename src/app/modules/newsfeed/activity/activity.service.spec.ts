@@ -134,11 +134,86 @@ describe('ActivityService', () => {
     });
   });
 
+  it('should determine if nsfw consent overlay should be NOT be shown because content and remind are not NSFW', (done: DoneFn) => {
+    service.entity$.next({
+      nsfw: [],
+      ownerObj: {
+        nsfw: [],
+      },
+      remind_object: {
+        nsfw: [],
+        ownerObj: {
+          nsfw: [],
+        },
+      },
+    });
+
+    service.isNsfwConsented$.next(false);
+
+    (service as any).session.isLoggedIn.and.returnValue(true);
+    (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
+
+    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+      expect(shouldShowNsfwConsent).toBeFalse();
+      done();
+    });
+  });
+
   it('should determine if nsfw consent overlay should be shown because content is nsfw', (done: DoneFn) => {
     service.entity$.next({
       nsfw: [1],
       ownerObj: {
         nsfw: [],
+      },
+    });
+
+    service.isNsfwConsented$.next(false);
+
+    (service as any).session.isLoggedIn.and.returnValue(true);
+    (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
+
+    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+      expect(shouldShowNsfwConsent).toBeTrue();
+      done();
+    });
+  });
+
+  it('should determine if nsfw consent overlay should be shown because its a remind of nsfw content', (done: DoneFn) => {
+    service.entity$.next({
+      nsfw: [],
+      ownerObj: {
+        nsfw: [],
+      },
+      remind_object: {
+        nsfw: [1],
+        ownerObj: {
+          nsfw: [],
+        },
+      },
+    });
+
+    service.isNsfwConsented$.next(false);
+
+    (service as any).session.isLoggedIn.and.returnValue(true);
+    (service as any).session.getLoggedInUser.and.returnValue({ mature: false });
+
+    service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
+      expect(shouldShowNsfwConsent).toBeTrue();
+      done();
+    });
+  });
+
+  it('should determine if nsfw consent overlay should be shown because its a remind of an nsfw owners content', (done: DoneFn) => {
+    service.entity$.next({
+      nsfw: [],
+      ownerObj: {
+        nsfw: [],
+      },
+      remind_object: {
+        nsfw: [],
+        ownerObj: {
+          nsfw: [1],
+        },
       },
     });
 
@@ -177,6 +252,11 @@ describe('ActivityService', () => {
       nsfw: [1],
       ownerObj: {
         nsfw: [1],
+      },
+      remind_object: {
+        ownerObj: {
+          nsfw: [],
+        },
       },
     });
 

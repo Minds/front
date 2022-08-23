@@ -168,7 +168,10 @@ export class ActivityService implements OnDestroy {
   ).pipe(
     map(([entity, isConsented]: [ActivityEntity, boolean]) => {
       return (
-        (entity.nsfw?.length > 0 || entity.ownerObj?.nsfw?.length > 0) &&
+        (entity.nsfw?.length > 0 ||
+          entity.ownerObj?.nsfw?.length > 0 ||
+          entity.remind_object?.nsfw?.length > 0 ||
+          entity.remind_object?.ownerObj?.nsfw?.length > 0) &&
         !isConsented &&
         !(this.session.isLoggedIn() && this.session.getLoggedInUser().mature)
       );
