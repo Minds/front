@@ -394,6 +394,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   scrollToUnderBoostRotator(): void {
     if (isPlatformServer(this.platformId)) return;
 
+    // if boost rotator didn't exist, just scroll to top
     if (!this.boostRotator) {
       window.scrollTo({
         behavior: 'smooth',
@@ -402,11 +403,13 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const bottomOfBoostRotatorOffset =
+      this.boostRotator.rotatorEl?.nativeElement?.offsetTop +
+      this.boostRotator?.height;
+
     window.scrollTo({
       behavior: 'smooth',
-      top:
-        this.boostRotator.rotatorEl.nativeElement?.offsetTop +
-          this.boostRotator.height || 0,
+      top: bottomOfBoostRotatorOffset || 0,
     });
   }
 
