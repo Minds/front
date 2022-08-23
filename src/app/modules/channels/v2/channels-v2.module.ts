@@ -19,7 +19,6 @@ import { ChannelActionsEditComponent } from './actions/edit.component';
 import { ChannelActionsProButtonComponent } from './actions/pro-button.component';
 import { ChannelActionsMessageComponent } from './actions/message.component';
 import { ChannelActionsWireComponent } from './actions/wire.component';
-import { ChannelActionsMenuButtonComponent } from './actions/menu-button.component';
 import { ChannelActionsMenuComponent } from './actions/menu.component';
 import { ChannelEditModalService } from './edit/edit-modal.service';
 import { HashtagsModule } from '../../hashtags/hashtags.module';
@@ -47,7 +46,11 @@ import { MutualSubscriptionsComponent } from './mutual-subscriptions/mutual-subs
 /**
  * Generally available components
  */
-const COMPONENTS = [ChannelComponent, ChannelEditComponent];
+const COMPONENTS = [
+  ChannelComponent,
+  ChannelEditComponent,
+  ChannelActionsMenuComponent, // Used in Pro footer
+];
 
 /**
  * Internal components
@@ -66,8 +69,6 @@ const INTERNAL_COMPONENTS = [
   ChannelActionsMessageComponent,
   ChannelActionsWireComponent,
   ChannelActionsBoostComponent,
-  ChannelActionsMenuButtonComponent,
-  ChannelActionsMenuComponent,
   ChannelAdminConfirmationComponent,
   ChannelEditBioComponent,
   ChannelEditInfoComponent,

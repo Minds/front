@@ -30,6 +30,9 @@ import { MarketingModule } from '../marketing/marketing.module';
 import { JoinButtonComponent } from './channel/join-button/join-button.component';
 import { ProChannelSplashComponent } from './channel/splash/splash.component';
 import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
+import { ProChannelFooterMenuButtonComponent } from './channel/footer-menu-button/footer-menu-button.component';
+import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
+import { ChannelsV2Service } from '../channels/v2/channels-v2.service';
 
 const routes: Routes = [
   {
@@ -145,8 +148,9 @@ export const PRO_DOMAIN_ROUTES = [
     ActivityModule, // delete during ActivityV2 cleanup
     ActivityV2Module,
     MarketingModule,
+    ChannelsV2Module, // Used for footer menu button
   ],
-  providers: [ProService],
+  providers: [ProService, ChannelsV2Service],
   declarations: [
     ProMarketingComponent,
     ProSubscriptionComponent,
@@ -161,6 +165,7 @@ export const PRO_DOMAIN_ROUTES = [
     SearchBoxComponent,
     JoinButtonComponent,
     ProChannelSplashComponent,
+    ProChannelFooterMenuButtonComponent,
   ],
   exports: [ProChannelComponent],
 })
