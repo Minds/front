@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
+import { StorageV2 } from '../../../services/storage/v2';
 import userMock from '../../../mocks/responses/user.mock';
 import { ActivityService } from './activity.service';
 
@@ -17,6 +18,10 @@ describe('ActivityService', () => {
     this.isActive = jasmine.createSpy('get');
   })();
 
+  let persistentFeedExperiment = new (function() {
+    this.isActive = jasmine.createSpy('get');
+  })();
+
   let entityMetricsSocketMock = new (function() {
     this.listen = jasmine.createSpy('listen');
     this.leave = jasmine.createSpy('leave');
@@ -29,7 +34,9 @@ describe('ActivityService', () => {
       configsMock,
       sessionsMock,
       activityV2ExperimentMock,
-      entityMetricsSocketMock
+      entityMetricsSocketMock,
+      persistentFeedExperiment,
+      new StorageV2()
     );
 
     service.entity$.next({
