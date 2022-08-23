@@ -10,6 +10,8 @@ import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
 import { BehaviorSubject } from 'rxjs';
+import { UploaderService } from '../../services/uploader.service';
+import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -91,6 +93,10 @@ describe('Composer Toolbar', () => {
           {
             provide: ToasterService,
             useValue: MockService(ToasterService),
+          },
+          {
+            provide: AttachmentApiService,
+            useValue: MockService(AttachmentApiService),
           },
         ],
       }).compileComponents();

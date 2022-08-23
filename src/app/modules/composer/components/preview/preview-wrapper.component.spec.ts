@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
+import fileMock from '../../../../mocks/dom/file.mock';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ComposerService } from '../../services/composer.service';
 import { PreviewWrapperComponent } from './preview-wrapper.component';
@@ -38,6 +40,10 @@ describe('Composer Preview', () => {
             provide: ComposerService,
             useValue: composerServiceMock,
           },
+          {
+            provide: AttachmentApiService,
+            useValue: MockService(AttachmentApiService),
+          },
         ],
       }).compileComponents();
     })
@@ -62,7 +68,7 @@ describe('Composer Preview', () => {
   it('should remove an attachment', () => {
     spyOn(window, 'confirm').and.returnValue(true);
     fixture.detectChanges();
-    comp.removeAttachment();
+    comp.removeAttachment(fileMock('image'));
     expect(window.confirm).toHaveBeenCalled();
     expect(composerServiceMock.removeAttachment).toHaveBeenCalled();
   });
