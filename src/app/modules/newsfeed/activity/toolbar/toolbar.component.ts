@@ -22,7 +22,6 @@ import { ModalService } from '../../../../services/ux/modal.service';
 })
 export class ActivityToolbarComponent {
   private entitySubscription: Subscription;
-  private paywallBadgeSubscription: Subscription;
 
   entity: ActivityEntity;
   allowReminds: boolean = true;
@@ -44,17 +43,10 @@ export class ActivityToolbarComponent {
         this.entity = entity;
       }
     );
-
-    this.paywallBadgeSubscription = this.service.shouldShowPaywallBadge$.subscribe(
-      (showBadge: boolean) => {
-        // this.allowReminds = !showBadge;
-      }
-    );
   }
 
   ngOnDestroy() {
     this.entitySubscription.unsubscribe();
-    this.paywallBadgeSubscription.unsubscribe();
   }
 
   toggleComments(): void {

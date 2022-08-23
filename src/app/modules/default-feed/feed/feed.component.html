@@ -1,3 +1,5 @@
+<m-defaultFeedHeader *ngIf="visibleHeader"></m-defaultFeedHeader>
+
 <div class="m-defaultFeed__feed">
   <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
   <ng-container
@@ -7,6 +9,14 @@
       *ngIf="i > 0 && i % 6 === 0"
       location="inline"
     ></m-feedNotice__outlet>
+    <m-featured-content
+      *ngIf="shouldShowBoostInPosition(i)"
+      [slot]="i + 1"
+      [displayOptions]="{
+        showOnlyCommentsInput: true,
+        isFeed: true
+      }"
+    ></m-featured-content>
     <m-activity
       [entity]="activity$ | async"
       [displayOptions]="{

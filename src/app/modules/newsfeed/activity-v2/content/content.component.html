@@ -17,7 +17,7 @@ post content to trigger upgrade modal -->
 <ng-container
   [ngTemplateOutlet]="paywallTemplate"
   [ngTemplateOutletContext]="{
-    hideText: !isStatus || sidebarMode
+    hideText: !isStatus || (!isStatus && sidebarMode)
   }"
 ></ng-container>
 <!-- ----------------------------------- -->

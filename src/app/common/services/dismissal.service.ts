@@ -9,7 +9,8 @@ const DEFAULT_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 export type DismissIdentifier =
   | 'top-highlights'
   | 'channel-recommendation:feed'
-  | 'channel-recommendation:channel';
+  | 'channel-recommendation:channel'
+  | 'feed:discovery-fallback';
 
 type DismissItem = {
   id: DismissIdentifier;
@@ -48,10 +49,23 @@ export class DismissalService extends AbstractSubscriberComponent {
    * @param { DismissIdentifier } id
    * @returns { Observable<boolean> }
    */
-  isDismissed(id: DismissIdentifier): Observable<boolean> {
+  dismissed(id: DismissIdentifier): Observable<boolean> {
     return this.dismissedItems$.pipe(
       map(dismissedItems => dismissedItems.includes(id))
     );
+  }
+
+  /**
+   * Whether an item is dismissed. Returns an observable
+   * @param { DismissIdentifier } id
+   * @returns { boolean }
+   */
+  isDismissed(id: DismissIdentifier): boolean {
+    const dismisses = this.dismisses$.getValue();
+    const dismissedItems = dismisses
+      .filter(item => Date.now() <= item.expiry)
+      .map(item => item.id);
+    return dismissedItems.includes(id);
   }
 
   /**

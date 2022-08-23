@@ -36,7 +36,6 @@ import { Textarea } from './components/editors/textarea.component';
 
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
-import { MindsButton } from './components/button-v1/button-v1.component';
 
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
@@ -164,12 +163,15 @@ import { ReportService } from './services/report.service';
 import { UserAggregatorComponent } from './components/user-aggregator/user-aggregator.component';
 import { ViewedDirective } from './directives/viewed.directive';
 import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
+import { BoostButton } from './components/boost-button/boost';
+import { FeedHeaderComponent } from './components/feed-header/feed-header.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
   AccordionPaneComponent,
   AndroidAppDownloadComponent,
   AnnouncementComponent,
+  BoostButton,
   ButtonComponent,
   CalendarComponent,
   CarouselComponent,
@@ -209,7 +211,6 @@ const MINDS_COMMON_COMPONENTS = [
   LoadingEllipsisComponent,
   LoadingSpinnerComponent,
   MindsAvatar,
-  MindsButton,
   MindsCard,
   MindsRichEmbed,
   Modal,
@@ -282,6 +283,7 @@ const MINDS_DIRECTIVES = [
   TagsLinks,
   Tooltip,
   ViewedDirective,
+  FeedHeaderComponent,
 ];
 // ------------------------------------
 // ------------------------------------

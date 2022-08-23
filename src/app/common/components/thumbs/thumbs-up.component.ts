@@ -16,6 +16,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catpcha/friendly-captcha.component';
 import { ToasterService } from '../../services/toaster.service';
+import { CounterChangeFadeIn } from '../../../animations';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -23,6 +24,7 @@ import { ToasterService } from '../../services/toaster.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'thumbs-up.component.html',
   styleUrls: [`thumbs-up.component.ng.scss`],
+  animations: [CounterChangeFadeIn],
 })
 export class ThumbsUpButton implements DoCheck, OnChanges {
   changesDetected: boolean = false;

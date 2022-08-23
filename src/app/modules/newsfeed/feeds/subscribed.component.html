@@ -20,7 +20,21 @@
 
     <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
 
-    <m-feedHeader [algorithm]="algorithm"></m-feedHeader>
+    <m-feedHeader>
+      <span
+        title
+        i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
+        *ngIf="algorithm === 'top'"
+        >Top Posts</span
+      >
+      <span
+        title
+        i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
+        *ngIf="algorithm === 'latest'"
+        >Latest Posts</span
+      >
+      <m-feedTypePopover [type]="algorithm"></m-feedTypePopover>
+    </m-feedHeader>
     <div class="minds-list">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
@@ -103,8 +117,61 @@
         (load)="loadNext()"
         [moreData]="feedService.hasMore | async"
         [inProgress]="feedService.inProgress | async"
+        [ignoreEndTracking]="
+          isDiscoveryFallbackEnabled() || isLatestFallbackEnabled()
+        "
+        (onEnd)="onNewsfeedEndReached()"
+        [endText]="
+          isDiscoveryFallbackEnabled() || isLatestFallbackEnabled()
+            ? newsfeedEndText
+            : undefined
+        "
       >
       </infinite-scroll>
+
+      <ng-container *ngIf="latestFallbackActive$ | async">
+        <m-feedHeader>
+          <span title i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
+            >Latest Posts</span
+          >
+        </m-feedHeader>
+        <ng-container
+          *ngFor="
+            let activity$ of latestFeedService.feed | async;
+            let i = index
+          "
+        >
+          <m-activity
+            *ngIf="activity$ | async as activity"
+            [entity]="activity"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            [slot]="i + 1"
+            (deleted)="delete(activity)"
+            #feedViewChildren
+          ></m-activity>
+        </ng-container>
+
+        <infinite-scroll
+          (load)="loadNext(latestFeedService)"
+          [moreData]="latestFeedService.hasMore | async"
+          [inProgress]="latestFeedService.inProgress | async"
+          (onEnd)="onNewsfeedEndReached(latestFeedService)"
+          [ignoreEndTracking]="isDiscoveryFallbackEnabled()"
+        >
+        </infinite-scroll>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          isDiscoveryFallbackEnabled() &&
+          !(isDiscoveryFallbackDismissed$ | async)
+        "
+      >
+        <ng-template #discoveryFallback></ng-template>
+      </ng-container>
     </div>
   </ng-container>
 </div>

@@ -1,13 +1,13 @@
 @import 'defaults';
 
 :host {
-  .m-newsfeed__subscribed__feedType {
+  .m-feedHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding-bottom: $minds-padding * 3;
 
-    .m-newsfeed__subscribed__feedType__title {
+    .m-feedHeader__title {
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
@@ -23,7 +23,7 @@
   // ******************************************
 
   &.m-feedHeader--activityV2 {
-    .m-newsfeed__subscribed__feedType {
+    .m-feedHeader {
       padding: $spacing6 $spacing4;
 
       @media screen and (max-width: $max-mobile) {
