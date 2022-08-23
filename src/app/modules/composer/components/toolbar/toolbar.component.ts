@@ -38,6 +38,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 import isMobile from '../../../../helpers/is-mobile';
+import { UploaderService } from '../../services/uploader.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -96,6 +97,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
+  uploadActive$: Observable<boolean> = this.uploaderService.files$.pipe(
+    map(files => files?.length > 0)
+  );
+
   canSchedule$ = this.service.canSchedule$;
 
   /**
@@ -110,6 +115,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
     protected toaster: ToasterService,
+    protected uploaderService: UploaderService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -121,38 +127,38 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.push(
       this.windowResize$
         .pipe(debounceTime(250))
-        .subscribe(() => this.calcNarrow()),
-      (this.attachmentSubscription = this.attachment$.subscribe(attachment => {
-        if (!attachment && this.fileUploadComponent) {
-          this.fileUploadComponent.reset();
-        }
-      })),
-      this.service.attachmentError$
-        .pipe(distinctUntilChanged())
-        .subscribe(async error => {
-          if (!error) return;
+        .subscribe(() => this.calcNarrow())
+      // (this.attachmentSubscription = this.attachment$.subscribe(attachment => {
+      //   if (!attachment && this.fileUploadComponent) {
+      //     this.fileUploadComponent.reset();
+      //   }
+      // })),
+      // this.service.attachmentError$
+      //   .pipe(distinctUntilChanged())
+      //   .subscribe(async error => {
+      //     if (!error) return;
 
-          if (this.isModal) {
-            if (error.codes) {
-              const component = AttachmentErrorComponent;
-              component.prototype.error = error;
+      //     if (this.isModal) {
+      //       if (error.codes) {
+      //         const component = AttachmentErrorComponent;
+      //         component.prototype.error = error;
 
-              try {
-                await this.popup
-                  .create(component)
-                  .present()
-                  .toPromise();
-              } catch (e) {
-                console.error(e);
-              }
-              return;
-            }
+      //         try {
+      //           await this.popup
+      //             .create(component)
+      //             .present()
+      //             .toPromise();
+      //         } catch (e) {
+      //           console.error(e);
+      //         }
+      //         return;
+      //       }
 
-            this.toaster.error(
-              error.message ?? 'An unexpected error has occurred'
-            );
-          }
-        })
+      //       this.toaster.error(
+      //         error.message ?? 'An unexpected error has occurred'
+      //       );
+      //     }
+      //   })
     );
 
     /**
@@ -200,7 +206,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @internal
    */
   ngOnDestroy(): void {
-    this.attachmentSubscription.unsubscribe();
+    //this.attachmentSubscription.unsubscribe();
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
@@ -249,13 +255,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   get canEditMetadata(): boolean {
     return this.service.canEditMetadata();
-  }
-
-  /**
-   * Attachment subject from service
-   */
-  get attachment$(): BehaviorSubject<AttachmentSubjectValue> {
-    return this.service.attachment$;
   }
 
   /**
@@ -319,16 +318,20 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   onAttachmentSelect($event: FileUploadSelectEvent): void {
-    if (!($event instanceof File)) {
-      // Unsupported attachment type
-      console.warn('Composer/Toolbar: Unsupported attachment type', $event);
-      return;
-    } else if (!$event) {
-      // Most likely pressed Esc on dialog
-      return;
-    }
+    // if (!($event instanceof File)) {
+    //   // Unsupported attachment type
+    //   console.warn('Composer/Toolbar: Unsupported attachment type', $event);
+    //   return;
+    // } else if (!$event) {
+    //   // Most likely pressed Esc on dialog
+    //   return;
+    // }
 
-    this.service.attachment$.next($event);
+    for (let i in $event) {
+      const file = $event[i];
+      console.log(file);
+      this.uploaderService.file$$.next(file);
+    }
   }
 
   /**

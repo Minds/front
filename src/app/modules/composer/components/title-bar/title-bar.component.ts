@@ -42,7 +42,7 @@ export class TitleBarComponent {
    * Attachment subject value from service
    */
   get attachment$() {
-    return this.service.attachment$;
+    return this.service.attachments$;
   }
 
   /**

@@ -1,0 +1,10 @@
+<div style="padding-bottom: 56.25%;"></div>
+
+<mat-grid-list cols="2" gutterSize="8px" rowHeight="fit">
+  <mat-grid-tile
+    *ngFor="let image of images$ | async; let i = index"
+    [rowspan]="(count$ | async) === 3 && i === 1 ? 2 : 1"
+  >
+    <img class="image" [src]="image.src" [m-blurhash]="image.blurhash" />
+  </mat-grid-tile>
+</mat-grid-list>

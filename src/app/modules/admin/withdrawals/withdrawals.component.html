@@ -34,6 +34,7 @@
     *ngFor="let request of withdrawals; let i = index"
   >
     <ng-container *ngIf="request">
+      {{ request.urn }}
       <div class="m-admin-withdrawalsCard__cell">
         <div class="m-admin-withdrawalsCardCell__label">Last Updated</div>
 

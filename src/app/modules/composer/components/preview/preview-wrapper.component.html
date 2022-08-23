@@ -1,25 +1,42 @@
 <div
-  *ngIf="(attachmentPreview$ | async) || (richEmbedPreview$ | async)"
+  *ngIf="
+    (attachmentPreviews$ | async)?.length > 0 || (richEmbedPreview$ | async)
+  "
   class="m-composer__previewWrapper"
 >
   <!-- MEDIA ATTACHMENT (IMAGE/VIDEO) ------------>
-  <m-composerPreview--attachment
-    *ngIf="attachmentPreview$ | async as attachmentPreview"
-    [attachmentPreviewResource]="attachmentPreview"
-    (onPortraitOrientation)="setPortrait($event)"
+  <div style="padding-bottom: 56.25%;"></div>
+  <mat-grid-list
+    [cols]="(attachmentPreviews$ | async)?.length > 1 ? 2 : 1"
+    gutterSize="8px"
+    rowHeight="fit"
   >
-    <div
-      class="m-composerPreview__close"
-      [hidden]="(isPosting$ | async) || (isEditing$ | async)"
-      (click)="removeAttachment()"
+    <mat-grid-tile
+      *ngFor="
+        let attachmentPreview of attachmentPreviews$ | async;
+        let i = index;
+        let c = count
+      "
+      [rowspan]="c === 3 && i === 1 ? 2 : 1"
     >
-      <m-icon iconId="close"></m-icon>
-    </div>
+      <m-composerPreview--attachment
+        [attachmentPreviewResource]="attachmentPreview"
+        (onPortraitOrientation)="setPortrait($event)"
+      >
+        <div
+          class="m-composerPreview__close"
+          [hidden]="(isPosting$ | async) || (isEditing$ | async)"
+          (click)="removeAttachment(attachmentPreview.file)"
+        >
+          <m-icon iconId="close"></m-icon>
+        </div>
 
-    <m-composer__coverPhotoSelector
-      *ngIf="attachmentPreview.sourceType === 'video'"
-    ></m-composer__coverPhotoSelector>
-  </m-composerPreview--attachment>
+        <m-composer__coverPhotoSelector
+          *ngIf="attachmentPreview.sourceType === 'video'"
+        ></m-composer__coverPhotoSelector>
+      </m-composerPreview--attachment>
+    </mat-grid-tile>
+  </mat-grid-list>
 
   <!-- RICH EMBED -------------------------------->
   <m-composerPreview--richEmbed

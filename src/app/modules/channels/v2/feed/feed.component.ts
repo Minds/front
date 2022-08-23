@@ -26,9 +26,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
-import { ComposerService } from '../../../composer/services/composer.service';
 import { catchError, take } from 'rxjs/operators';
-import { ExperimentsService } from './../../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
@@ -39,7 +37,7 @@ import { ActivityV2ExperimentService } from '../../../experiments/sub-services/a
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
-  providers: [FeedService, FeedsService, ComposerService],
+  providers: [FeedService, FeedsService],
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];

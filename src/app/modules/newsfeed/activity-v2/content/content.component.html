@@ -103,7 +103,7 @@ post content to trigger upgrade modal -->
     <ng-container *ngIf="!isModal; else image">
       <a
         class="m-activityContentMedia__link"
-        [routerLink]="['/newsfeed', imageGuid]"
+        [routerLink]="['/newsfeed', entity?.guid]"
         (click)="onModalRequested($event)"
       >
         <div
@@ -126,6 +126,7 @@ post content to trigger upgrade modal -->
       ></ng-container>
 
       <img
+        *ngFor="let imageUrl of imageUrls"
         #imageEl
         [src]="imageUrl"
         (error)="onImageError($event)"
@@ -141,6 +142,12 @@ post content to trigger upgrade modal -->
       />
     </ng-template>
   </div>
+</ng-container>
+<!-- ----------------------------------- -->
+<!-- MULTI IMAGE-->
+<!-- ----------------------------------- -->
+<ng-container *ngIf="isMultiImage">
+  <m-activityV2Content__multiImage></m-activityV2Content__multiImage>
 </ng-container>
 <!-- ----------------------------------- -->
 <!-- QUOTE -->

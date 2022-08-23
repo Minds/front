@@ -189,10 +189,18 @@ export class ActivityV2ContentComponent
   @HostBinding('class.m-activityContent--image')
   get isImage(): boolean {
     return (
-      this.entity.custom_type == 'batch' ||
-      (this.entity.thumbnail_src &&
-        !this.entity.perma_url &&
-        this.entity.custom_type !== 'video')
+      (this.entity.custom_type == 'batch' ||
+        (this.entity.thumbnail_src &&
+          !this.entity.perma_url &&
+          this.entity.custom_type !== 'video')) &&
+      !this.isMultiImage
+    );
+  }
+
+  @HostBinding('class.m-activityContent--multiImage')
+  get isMultiImage(): boolean {
+    return (
+      this.entity.custom_type == 'batch' && this.entity.custom_data.length > 1
     );
   }
 
@@ -201,6 +209,7 @@ export class ActivityV2ContentComponent
     return !(
       this.isImage ||
       this.isVideo ||
+      this.isMultiImage ||
       this.isRichEmbed ||
       this.entity.remind_object
     );
@@ -356,18 +365,18 @@ export class ActivityV2ContentComponent
     return this.entity.entity_guid;
   }
 
-  get imageUrl(): string {
+  get imageUrls(): string[] {
     if (this.entity.custom_type === 'batch') {
-      let thumbUrl = this.entity.custom_data[0].src;
+      let thumbUrls = this.entity.custom_data.map(attachment => attachment.src);
 
-      return thumbUrl;
+      return thumbUrls;
     }
 
     if (this.entity.thumbnail_src && this.entity.custom_type !== 'video') {
-      return this.entity.thumbnail_src;
+      return [this.entity.thumbnail_src];
     }
 
-    return ''; // TODO: placeholder
+    return ['']; // TODO: placeholder
   }
 
   get mediaHeight(): number | null {

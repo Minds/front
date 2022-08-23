@@ -21,7 +21,7 @@
     <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
 
     <m-feedHeader [algorithm]="algorithm"></m-feedHeader>
-    <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
+    <div class="minds-list">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
           <m-feedNotice__outlet

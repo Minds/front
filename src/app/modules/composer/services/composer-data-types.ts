@@ -1,0 +1,120 @@
+import { ActivityEntity } from '../../newsfeed/activity/activity.service';
+import { Attachment } from './attachment.service';
+import { RichEmbed } from './rich-embed.service';
+import { VideoPoster } from './video-poster.service';
+
+/**
+ * Message value type
+ */
+export type MessageSubjectValue = string;
+
+/**
+ * Title value type
+ */
+export type TitleSubjectValue = string | null;
+
+/**
+ * Remind value type
+ */
+export type RemindSubjectValue = ActivityEntity | null;
+
+/**
+ * Attachment value type
+ */
+export type AttachmentSubjectValue = File[] | Attachment[] | null;
+
+/**
+ * Attachment resolved object value (used for payload)
+ */
+export type AttachmentsMetadataMappedValue = Attachment[] | null;
+
+/**
+ * Rich embed value type
+ */
+export type RichEmbedSubjectValue = RichEmbed | string | null;
+
+/**
+ * Rich embed resolved object value (used for payload)
+ */
+export type RichEmbedMetadataMappedValue = RichEmbed | null;
+
+/**
+ * NSFW value type
+ */
+export type NsfwSubjectValue = Array<number>;
+
+/**
+ * post to permaweb value type
+ */
+export type PostToPermawebSubjectValue = boolean;
+
+/**
+ * Monetization value type
+ */
+export type MonetizationSubjectValue = {
+  type?: 'tokens' | 'money';
+  min?: number;
+  support_tier?: {
+    urn: string;
+    expires?: number;
+    usd?: number;
+    has_tokens?: boolean;
+  };
+} | null;
+
+/**
+ * Pending monetization value type
+ */
+export type PendingMonetizationSubjectValue = {
+  type: 'plus' | 'membership' | 'custom';
+  support_tier: {
+    urn: string;
+    expires?: number;
+    usd?: number;
+    has_tokens?: boolean;
+  };
+} | null;
+
+/**
+ * Tags value type
+ */
+export type TagsSubjectValue = Array<string>;
+
+/**
+ * Schedule value type
+ */
+export type ScheduleSubjectValue = number | null;
+
+/**
+ * Access ID value type
+ */
+export type AccessIdSubjectValue = string;
+
+/**
+ * License value type
+ */
+export type LicenseSubjectValue = string;
+
+/**
+ * The size of the composer modal
+ */
+export type ComposerSize = 'compact' | 'full';
+
+/**
+ * Payload data object. Used to build the DTO
+ */
+export interface Data {
+  message: MessageSubjectValue;
+  title: TitleSubjectValue;
+  nsfw: NsfwSubjectValue;
+  monetization: MonetizationSubjectValue;
+  tags: TagsSubjectValue;
+  schedule: ScheduleSubjectValue;
+  accessId: AccessIdSubjectValue;
+  license: LicenseSubjectValue;
+  attachmentGuids: AttachmentsMetadataMappedValue;
+  richEmbed: RichEmbedMetadataMappedValue;
+  videoPoster: VideoPoster;
+  postToPermaweb: PostToPermawebSubjectValue;
+  remind: RemindSubjectValue;
+}

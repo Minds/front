@@ -375,7 +375,8 @@ export class ActivityService {
   }
 
   buildCanonicalUrl(entity: ActivityEntity, full: boolean): string {
-    const guid = entity.entity_guid || entity.guid;
+    //const guid = entity.entity_guid || entity.guid;
+    const guid = entity.guid;
     const prefix = full ? this.siteUrl : '/';
     return `${prefix}newsfeed/${guid}`;
   }

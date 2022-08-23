@@ -86,7 +86,7 @@ export class TextAreaComponent implements AfterViewInit {
    * Attachment subject from service
    */
   get attachment$() {
-    return this.service.attachment$;
+    return this.service.attachments$;
   }
 
   /**

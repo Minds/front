@@ -9,6 +9,7 @@ export interface AttachmentPreviewResource {
   source: 'local' | 'guid';
   sourceType?: AttachmentType;
   payload?: any;
+  file?: File;
 }
 
 @Injectable()
@@ -18,25 +19,36 @@ export class PreviewService {
    * @param attachment
    */
   build(
-    attachment: File | Attachment | null
-  ): AttachmentPreviewResource | null {
-    if (!attachment) {
+    attachments: File[] | Attachment[] | null
+  ): AttachmentPreviewResource[] | null {
+    if (!attachments) {
       return null;
-    } else if (attachment instanceof File) {
-      return {
-        source: 'local',
-        sourceType: getFileType(attachment),
-        payload: URL.createObjectURL(attachment),
-      };
-    } else if (typeof attachment.guid !== 'undefined') {
-      return {
-        source: 'guid',
-        sourceType: attachment.type,
-        payload: attachment.guid,
-      };
     }
 
-    throw new Error('Invalid preview resource source');
+    console.log(attachments);
+
+    const previews = [];
+
+    for (let i in attachments) {
+      const attachment = attachments[i];
+
+      if (attachment instanceof File) {
+        previews.push({
+          source: 'local',
+          sourceType: getFileType(attachment),
+          payload: URL.createObjectURL(attachment),
+          file: attachment,
+        });
+      } else if (typeof attachment.guid !== 'undefined') {
+        previews.push({
+          source: 'guid',
+          sourceType: attachment.type,
+          payload: attachment.guid,
+        });
+      }
+    }
+
+    return previews;
   }
 
   /**

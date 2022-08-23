@@ -119,8 +119,8 @@ export class BaseComponent implements AfterViewInit {
   /**
    * Attachment preview subject in service
    */
-  get attachmentPreview$() {
-    return this.service.attachmentPreview$;
+  get attachmentPreviews$() {
+    return this.service.attachmentPreviews$;
   }
 
   /**
@@ -196,7 +196,7 @@ export class BaseComponent implements AfterViewInit {
    * @param file
    */
   onAttachmentPaste(file) {
-    this.service.attachment$.next(file);
+    this.service.attachments$.next(file);
   }
 
   /**
@@ -272,7 +272,7 @@ export class BaseComponent implements AfterViewInit {
   canDeactivate(): boolean | Promise<boolean> {
     if (
       this.service.message$.getValue() ||
-      this.service.attachment$.getValue()
+      this.service.attachments$.getValue()
     ) {
       const confirmation = confirm(
         this.service.isMovingContent$.getValue()
