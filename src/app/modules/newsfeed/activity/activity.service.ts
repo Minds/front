@@ -1,13 +1,18 @@
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { MindsGroup, MindsUser } from '../../../interfaces/entities';
-import { map } from 'rxjs/operators';
-import { Injectable, EventEmitter } from '@angular/core';
+import { map, skip, tap, withLatestFrom } from 'rxjs/operators';
+import { Injectable, EventEmitter, OnDestroy, Optional } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
-import { FeaturesService } from '../../../services/features.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
@@ -107,8 +112,11 @@ export const ACTIVITY_V2_MEDIUM_STATUS_MAX_LENGTH = 250;
 
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
+// entity for which metrics events can be subscribed to.
+type MetricsSubscribableEntity = { guid: string };
+
 @Injectable()
-export class ActivityService {
+export class ActivityService implements OnDestroy {
   readonly siteUrl: string;
 
   entity$ = new BehaviorSubject(null);
@@ -328,15 +336,23 @@ export class ActivityService {
 
   activityV2Feature: boolean = false;
 
+  // subscriptions for metric events.
+  private thumbsUpMetricSubscription: Subscription;
+  private thumbsDownMetricSubscription: Subscription;
+
   constructor(
     private configs: ConfigsService,
     private session: Session,
-    private featuresService: FeaturesService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private activityV2Experiment: ActivityV2ExperimentService,
+    @Optional() private entityMetricsSocket: EntityMetricsSocketService
   ) {
     this.siteUrl = configs.get('site_url');
 
     this.activityV2Feature = this.activityV2Experiment.isActive();
+  }
+
+  ngOnDestroy() {
+    this.teardownMetricsSocketListener();
   }
 
   /**
@@ -354,6 +370,7 @@ export class ActivityService {
       entity.activity_type = getActivityContentType(entity);
     }
     this.entity$.next(entity);
+
     return this;
   }
 
@@ -422,5 +439,73 @@ export class ActivityService {
     }
 
     return entity;
+  }
+
+  /**
+   * Setup listener for metrics socket for this activity.
+   * @param { MetricsSubscribableEntity } subscribableEntity - entity to subscribe to.
+   * @returns { this }
+   */
+  public setupMetricsSocketListener(): this {
+    if (!this.entityMetricsSocket) {
+      console.error('No EntityMetricsSocketService provider to connect with');
+      return;
+    }
+
+    this.thumbsUpMetricSubscription = this.entityMetricsSocket.thumbsUpCount$
+      .pipe(
+        skip(1),
+        withLatestFrom(this.entity$),
+        tap(([thumbsUpCount, entity]) => {
+          entity['thumbs:up:count'] = thumbsUpCount;
+          this.entity$.next(entity);
+        })
+      )
+      .subscribe();
+
+    this.thumbsDownMetricSubscription = this.entityMetricsSocket.thumbsDownCount$
+      .pipe(
+        skip(1),
+        withLatestFrom(this.entity$),
+        tap(([thumbsDownCount, entity]) => {
+          entity['thumbs:down:count'] = thumbsDownCount;
+          this.entity$.next(entity);
+        })
+      )
+      .subscribe();
+
+    this.entityMetricsSocket.listen(this.getMetricSubscriptionGuid());
+    return this;
+  }
+
+  /**
+   * Teardown listener for metrics socket for this activity.
+   * @param { MetricsSubscribableEntity } subscribableEntity - entity to teardown listeners for.
+   * @returns { this }
+   */
+  public teardownMetricsSocketListener(): this {
+    if (!this.entityMetricsSocket) {
+      return;
+    }
+    if (this.thumbsUpMetricSubscription) {
+      this.thumbsUpMetricSubscription.unsubscribe();
+    }
+    if (this.thumbsDownMetricSubscription) {
+      this.thumbsDownMetricSubscription.unsubscribe();
+    }
+    this.entityMetricsSocket.leave(this.getMetricSubscriptionGuid());
+    return this;
+  }
+
+  /**
+   * Get GUID to subscribe to for metrics.
+   * @returns { string } guid to subscribe to for metrics events.
+   */
+  private getMetricSubscriptionGuid(): string {
+    if (this.entity$.getValue().entity_guid) {
+      return this.entity$.getValue().entity_guid;
+    } else {
+      return this.entity$.getValue().guid;
+    }
   }
 }

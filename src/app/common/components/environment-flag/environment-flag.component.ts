@@ -39,7 +39,10 @@ export class EnvironmentFlagComponent {
    * @returns { boolean } true if canary mode is active.
    */
   private isCanaryMode(): boolean {
-    return this.session.getLoggedInUser()?.canary;
+    return (
+      this.session.getLoggedInUser()?.canary ||
+      this.cookies.get('canary') === '1'
+    );
   }
 
   /**

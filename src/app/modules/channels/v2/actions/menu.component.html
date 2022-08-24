@@ -1,6 +1,6 @@
 <m-dropdownMenu
-  [menu]="actionsDropdown"
   [anchorPosition]="{ top: '100%', right: '0' }"
+  [menu]="actionsDropdown"
 >
   <ng-content></ng-content>
 </m-dropdownMenu>
@@ -9,8 +9,8 @@
   <ul>
     <ng-container *ngIf="!(service.isDisabled$ | async)">
       <m-dropdownMenu__item
-        *ngIf="service.isSubscribed$ | async; else subscribeOption"
         (click)="unsubscribe()"
+        *ngIf="service.isSubscribed$ | async; else subscribeOption"
         ><span i18n="@@COMMON__UNSUBSCRIBE"
           >Unsubscribe</span
         ></m-dropdownMenu__item
@@ -24,7 +24,7 @@
 
     <!-- ******** admin ******************** -->
     <ng-container *ngIf="service.isAdmin$ | async">
-      <m-dropdownMenu__item *ngIf="service.isBanned$ | async" (click)="unBan()"
+      <m-dropdownMenu__item (click)="unBan()" *ngIf="service.isBanned$ | async"
         ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBAN_GLOBALLY"
           >Un-ban globally</span
         >
@@ -33,6 +33,11 @@
         ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER"
           >View Ledger</span
         >
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item [externalLink]="getUserSupersetUrl()">
+        <span>
+          View Superset Dashboard
+        </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item (click)="viewWithdrawals()"
         ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS"
@@ -79,9 +84,9 @@
 
       <m-nsfwSelector
         (click)="$event.preventDefault(); $event.stopPropagation()"
-        service="editing"
-        [selected]="service.nsfw$ | async"
         (selectedChange)="setNSFWLock($event)"
+        [selected]="service.nsfw$ | async"
+        service="editing"
       >
       </m-nsfwSelector>
 
@@ -93,8 +98,8 @@
     <!-- ******** end admin ******************** -->
 
     <m-dropdownMenu__item
-      *ngIf="service.isBlocked$ | async; else blockOption"
       (click)="unblock()"
+      *ngIf="service.isBlocked$ | async; else blockOption"
       ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBLOCK">Unblock</span>
     </m-dropdownMenu__item>
     <ng-template #blockOption>
@@ -112,9 +117,9 @@
 </ng-template>
 
 <m-modal
+  (closed)="service.email$.next(null)"
   *ngIf="service.email$ | async as email"
   [open]="true"
-  (closed)="service.email$.next(null)"
 >
   <div
     class="mdl-card__supporting-text"
