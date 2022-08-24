@@ -113,6 +113,9 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--noOwnerBlock')
   noOwnerBlock: boolean;
 
+  @HostBinding('class.m-activity--noToolbar')
+  noToolbar: boolean;
+
   @HostBinding('class.m-activity--isFeed')
   isFeed: boolean;
 
@@ -151,6 +154,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
     this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
+    this.noToolbar = !this.service.displayOptions.showToolbar;
     this.isFeed = this.service.displayOptions.isFeed;
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
     this.isModal = this.service.displayOptions.isModal;
