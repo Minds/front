@@ -41,6 +41,8 @@ describe('Composer Toolbar', () => {
 
   const size$ = new BehaviorSubject<ComposerSize>('full');
 
+  const remind$ = new BehaviorSubject(null);
+
   const composerServiceMock: any = MockService(ComposerService, {
     has: [
       'attachment$',
@@ -48,6 +50,7 @@ describe('Composer Toolbar', () => {
       'monetization$',
       'size$',
       'attachmentError$',
+      'remind$',
     ],
     props: {
       attachment$: { get: () => attachment$ },
@@ -55,6 +58,7 @@ describe('Composer Toolbar', () => {
       monetization$: { get: () => monetization$ },
       size$: { get: () => size$ },
       attachmentError$: { get: () => attachmentError$ },
+      remind$: { get: () => remind$ },
     },
   });
 
