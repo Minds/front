@@ -43,9 +43,6 @@ import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
 import { StrikesComponent } from '../report/strikes/strikes.component';
 import { SettingsV2AutoplayVideosComponent } from './account/autoplay-videos/autoplay-videos.component';
 import { YoutubeMigrationConnectComponent } from '../media/youtube-migration/connect/connect.component';
-import { YoutubeMigrationDashboardComponent } from '../media/youtube-migration/dashboard/dashboard.component';
-import { YoutubeMigrationUnmigratedVideosComponent } from '../media/youtube-migration/unmigrated-videos/unmigrated-videos.component';
-import { YoutubeMigrationMigratedVideosComponent } from '../media/youtube-migration/migrated-videos/migrated-videos.component';
 import { YoutubeMigrationConfigComponent } from '../media/youtube-migration/config/config.component';
 import { YoutubeMigrationComponent } from '../media/youtube-migration/youtube-migration.component';
 import { ReferralsV2Module } from './other/referrals/referrals.module';
@@ -422,7 +419,11 @@ const SETTINGS_V2_ROUTES: Routes = [
               standardHeader: false,
             },
             children: [
-              { path: 'connect', component: YoutubeMigrationConnectComponent },
+              // These child routes are reached with a skipLocationChange in the YoutubeMigrationComponent
+              {
+                path: 'connect',
+                component: YoutubeMigrationConnectComponent,
+              },
               {
                 path: 'dashboard',
                 component: YoutubeMigrationConfigComponent,
