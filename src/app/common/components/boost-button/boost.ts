@@ -30,9 +30,7 @@ export class BoostButton {
     private modalService: ModalService,
     private boostLazyModal: BoostModalLazyService,
     private features: FeaturesService
-  ) {
-    console.log('ojm boost button');
-  }
+  ) {}
 
   /**
    * Open boost modal
