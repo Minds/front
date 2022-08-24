@@ -36,7 +36,7 @@ export class NewsfeedFeedItemComponent implements OnInit, OnDestroy {
       .subscribe(event => {
         if (!event) return;
 
-        this.storage.memory.setActivityOutletRatio(
+        this.storage.memory.setFeedItemRatio(
           this.feedItem.id,
           event.newRect.width / event.newRect.height
         );
@@ -44,7 +44,7 @@ export class NewsfeedFeedItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const ratio = this.storage.memory.getActivityOutletRatio(this.feedItem.id);
+    const ratio = this.storage.memory.getFeedItemRatio(this.feedItem.id);
 
     if (typeof ratio === 'number') {
       this.ratio$.next(ratio);

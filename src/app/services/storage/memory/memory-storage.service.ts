@@ -24,7 +24,7 @@ export class MemoryStorageService {
     });
   }
 
-  public getActivityOutletRatio(id: string): object | null {
+  public getFeedItemRatio(id: string): object | null {
     return this.activityOutletRatios.get(id)?.ratio;
   }
 
@@ -32,7 +32,7 @@ export class MemoryStorageService {
    * @param id - the identifier of the feed item
    * @param ratio - the height / width ratio
    */
-  public async setActivityOutletRatio(id: string, ratio: number) {
+  public async setFeedItemRatio(id: string, ratio: number) {
     this.activityOutletRatios.set(id, {
       id,
       ratio,

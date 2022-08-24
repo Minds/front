@@ -1,11 +1,13 @@
 <div
-  style="transition: all 0.3s; overflow: hidden; flex: 1;"
-  [style.height.px]="containerHeight$ | async"
+  style="overflow: hidden; flex: 1;"
   *ngIf="visible"
+  [style.height.px]="
+    (containerHeight$ | async) ? (containerHeight$ | async) : 'auto'
+  "
 >
   <article
     (mResized)="onResized($event)"
-    *ngIf="(recommendations$ | async).length"
+    *ngIf="(recommendations$ | async)?.length"
   >
     <header>
       <h3>
@@ -31,14 +33,16 @@
         </m-dropdownMenu>
       </div>
     </header>
-    <ul *ngIf="(recommendations$ | async).length">
+    <ul *ngIf="(recommendations$ | async)?.length">
       <li
         @listAnimation
+        [@.disabled]="disabledAnimations$ | async"
         *ngFor="
           let channel of recommendations$
             | async
             | slice: 0:(listSize$ | async);
-          let i = index
+          let i = index;
+          trackBy: channelTrackBy
         "
         (mViewed)="trackView(channel, i + 1)"
       >

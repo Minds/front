@@ -19,12 +19,13 @@ import { CardCarouselService } from '../card-carousel/card-carousel.service';
 import { Session } from '../../../services/session';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
+import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 
 @Component({
   selector: 'm-discovery__search',
   templateUrl: './search.component.html',
   styleUrls: ['search.component.ng.scss'],
-  providers: [DiscoveryFeedsService, FeedsService],
+  providers: [DiscoveryFeedsService, FeedsService, FeaturedContentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiscoverySearchComponent {

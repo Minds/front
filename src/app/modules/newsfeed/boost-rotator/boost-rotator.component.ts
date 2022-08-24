@@ -41,6 +41,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -126,9 +127,13 @@ export class NewsfeedBoostRotatorComponent {
     public feedsService: FeedsService,
     private experiments: ExperimentsService,
     private activityV2Experiment: ActivityV2ExperimentService,
+    private persistentFeedExperiment: PersistentFeedExperimentService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
+    if (persistentFeedExperiment.isActive()) {
+      this.feedsService.setCachingEnabled(true);
+    }
   }
 
   ngOnInit() {
@@ -207,13 +212,13 @@ export class NewsfeedBoostRotatorComponent {
 
       params['show_boosts_after_x'] = 604800; // 1 week
 
-      this.feedsService.clear(); // Fresh each time
+      // don't clear the feed, just fetch new data and replace the existing ones
       await this.feedsService
         .setEndpoint('api/v2/boost/feed')
         .setParams(params)
         .setLimit(12)
         .setOffset(0)
-        .fetch();
+        .fetch(true);
 
       this.init = true;
     } catch (e) {

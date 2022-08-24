@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
+import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -10,7 +11,7 @@ import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/
  */
 @Component({
   selector: 'm-defaultFeed',
-  providers: [FeedsService],
+  providers: [FeedsService, FeaturedContentService],
   templateUrl: 'feed.component.html',
   styleUrls: ['./feed.component.ng.scss'],
 })
