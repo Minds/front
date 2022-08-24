@@ -2,7 +2,18 @@
   *ngIf="boost.entity"
   [object]="boost.entity"
   [flags]="{ hideTabs: true }"
-  class="mdl-card mdl-shadow--2dp"
+  [displayOptions]="{
+    isFeed: true,
+    isSidebarBoost: false,
+    showToolbar: false,
+    showComments: false,
+    autoplayVideo: false
+  }"
+  [ngClass]="{
+    'm-border': activityV2Feature,
+    'mdl-card': !activityV2Feature,
+    'mdl-shadow--2dp': !activityV2Feature
+  }"
 ></minds-card>
 
 <div class="m-boost-card--manager">

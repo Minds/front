@@ -3,6 +3,7 @@ import { BoostConsoleFilter } from '../console.component';
 
 import { BoostService } from '../../boost.service';
 import { Router } from '@angular/router';
+import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Boost offers made from one user to another. Used in both the inbox and outbox of the boost console history section
@@ -24,7 +25,13 @@ export class BoostConsoleP2PListComponent {
 
   error: string = '';
 
-  constructor(public service: BoostService, public router: Router) {}
+  activityV2Feature: boolean = false;
+
+  constructor(
+    public service: BoostService,
+    public router: Router,
+    private activityV2Experiment: ActivityV2ExperimentService
+  ) {}
 
   @Input('filter') set _filter(filter: BoostConsoleFilter) {
     if (filter !== 'inbox' && filter !== 'outbox') {
@@ -39,6 +46,7 @@ export class BoostConsoleP2PListComponent {
 
   ngOnInit() {
     this.load(true);
+    this.activityV2Feature = this.activityV2Experiment.isActive();
     this.initialized = true;
   }
 

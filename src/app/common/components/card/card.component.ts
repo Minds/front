@@ -42,6 +42,12 @@ import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-se
 })
 export class MindsCard implements OnInit, AfterViewInit {
   @Input() forceShowSubscribe = false;
+
+  /**
+   * Display options for activity v2 entities
+   */
+  @Input() displayOptions: any;
+
   @ViewChild(DynamicHostDirective, { static: true })
   cardHost: DynamicHostDirective;
 
@@ -178,14 +184,11 @@ export class MindsCard implements OnInit, AfterViewInit {
       this.componentInstance.entity = this.object;
 
       if (this.activityV2Feature) {
-        (<ActivityComponent>this.componentInstance).displayOptions = {
-          sidebarMode: true,
-          isSidebarBoost: true,
-          showToolbar: false,
-          showComments: false,
-          autoplayVideo: false,
-          showPostMenu: false,
-        };
+        if (this.displayOptions) {
+          (<ActivityComponent>(
+            this.componentInstance
+          )).displayOptions = this.displayOptions;
+        }
       } else {
         (<ActivityComponent>this.componentInstance).displayOptions = {
           showToolbar: this.flags.hideTabs === false,

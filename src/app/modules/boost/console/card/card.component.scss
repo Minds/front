@@ -9,6 +9,13 @@ m-boost-console-card {
     }
   }
 
+  .m-boostConsoleCard--activityV2 {
+    .m-boost-card--manager {
+      border-bottom-right-radius: $m-borderRadius;
+      border-bottom-left-radius: $m-borderRadius;
+    }
+  }
+
   .m-boost-card--manager {
     display: flex;
     align-items: center;

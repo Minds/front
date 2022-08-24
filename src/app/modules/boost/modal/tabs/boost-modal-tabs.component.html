@@ -123,7 +123,17 @@
           >Placement: Newsfeed Sidebar</span
         >
         <div class="m-boostModal__channelCardContainer">
-          <minds-card [object]="entity$ | async" class="m-border"></minds-card>
+          <minds-card
+            [object]="entity$ | async"
+            class="m-border"
+            [displayOptions]="{
+              isSidebarBoost: true,
+              showToolbar: false,
+              showComments: false,
+              autoplayVideo: false,
+              showPostMenu: false
+            }"
+          ></minds-card>
         </div>
       </div>
 

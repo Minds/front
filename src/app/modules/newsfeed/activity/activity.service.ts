@@ -29,7 +29,7 @@ export type ActivityDisplayOptions = {
   fixedHeight: boolean;
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator?
   isModal: boolean;
-  minimalMode: boolean; // For grid layouts
+  minimalMode: boolean; // For grid layouts, single page sidebar suggested posts
   bypassMediaModal: boolean; // Go to media page instead
   showPostMenu: boolean; // Can be hidden for things like previews
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
