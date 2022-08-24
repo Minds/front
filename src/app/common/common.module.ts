@@ -61,8 +61,6 @@ import { SocketsService } from '../services/sockets';
 import { HttpClient } from '@angular/common/http';
 import { AndroidAppDownloadComponent } from './components/android-app-download-button/button.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
-import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { FeedsService } from './services/feeds.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
@@ -165,6 +163,8 @@ import { ViewedDirective } from './directives/viewed.directive';
 import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/friendly-captcha.component';
 import { BoostButton } from './components/boost-button/boost';
 import { FeedHeaderComponent } from './components/feed-header/feed-header.component';
+import { ApiResource } from './api/api-resource.service';
+import { FeaturedContentService } from './components/featured-content/featured-content.service';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -253,6 +253,7 @@ const MINDS_COMMON_COMPONENTS = [
   TreeComponent,
   UserAggregatorComponent,
   UserMenuComponent,
+  FeedHeaderComponent,
 ];
 // ------------------------------------
 // ------------------------------------
@@ -283,7 +284,6 @@ const MINDS_DIRECTIVES = [
   TagsLinks,
   Tooltip,
   ViewedDirective,
-  FeedHeaderComponent,
 ];
 // ------------------------------------
 // ------------------------------------
@@ -342,21 +342,14 @@ const routes: Routes = [
     },
     NSFWSelectorCreatorService,
     NSFWSelectorConsumerService,
-    {
-      provide: FeaturedContentService,
-      useFactory: (
-        boostedContentService: FeedsService,
-        experimentsService: ExperimentsService
-      ): FeaturedContentService =>
-        new FeaturedContentService(boostedContentService, experimentsService),
-      deps: [FeedsService, ExperimentsService],
-    },
+    FeaturedContentService,
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
     RelatedContentService,
     RegexService,
     ApiService,
+    ApiResource,
     AttachmentApiService,
     ClientMetaService,
     DownloadActivityMediaService,

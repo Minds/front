@@ -6,20 +6,43 @@ import {
   Observable,
   Subscription,
 } from 'rxjs';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  filter,
+  first,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { ApiService } from '../api/api.service';
 import { BlockListService } from './block-list.service';
 import { EntitiesService } from './entities.service';
+import { StorageV2 } from '../../services/storage/v2';
+import { FeedItemType } from '../../modules/newsfeed/feed/feed.component';
+import { Location } from '@angular/common';
 
 export const NEW_POST_POLL_INTERVAL = 30000;
+
+export type InjectItem = {
+  /**
+   * the indexes in the feed this item should be inserted
+   */
+  indexes: number[] | ((index: number, feedLength: number) => boolean);
+  type: FeedItemType;
+};
 
 /**
  * Enables the grabbing of data through observable feeds.
  */
 @Injectable()
 export class FeedsService implements OnDestroy {
+  /**
+   * a unique identifier for this feed that will change everytime the feed is refreshed.
+   * This is used to help persisting feed items consistently
+   */
+  id$: BehaviorSubject<number> = new BehaviorSubject(undefined);
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
   fallbackAt: number | null = null;
@@ -63,18 +86,35 @@ export class FeedsService implements OnDestroy {
    * feed length
    */
   feedLength: number;
+  /**
+   * whether the feed is rehydrated. Used to not rehydrate again
+   */
+  rehydrated = false;
+  /**
+   * whether the feed is rehydrated. Used to not rehydrate again
+   */
+  cachingEnabled = false;
+  /**
+   * a list of items that are injected in this feed
+   */
+  injectItems: InjectItem[] = [];
+  /**
+   * the subscription for the persist functionality
+   */
+  persistSubscription: Subscription;
 
   constructor(
     protected client: Client,
     protected api: ApiService,
     protected session: Session,
     protected entitiesService: EntitiesService,
-    protected blockListService: BlockListService
+    protected blockListService: BlockListService,
+    protected storage: StorageV2,
+    protected location: Location
   ) {
     this.pageSize = this.offset.pipe(
       map(offset => this.limit.getValue() + offset)
     );
-
     this.feed = this.rawFeed.pipe(
       tap(feed => {
         if (feed.length) this.inProgress.next(true);
@@ -135,6 +175,7 @@ export class FeedsService implements OnDestroy {
   ngOnDestroy(): void {
     this.blockListSubscription?.unsubscribe();
     this.newPostWatcherSubscription?.unsubscribe();
+    this.persistSubscription?.unsubscribe();
   }
 
   /**
@@ -182,6 +223,9 @@ export class FeedsService implements OnDestroy {
    */
   setOffset(offset: number): FeedsService {
     this.offset.next(offset);
+    if (this.cachingEnabled) {
+      this._persist();
+    }
     return this;
   }
 
@@ -225,6 +269,15 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Sets whether the feed should use cache or not
+   * @param { boolean } value
+   */
+  setCachingEnabled(value: boolean) {
+    this.cachingEnabled = value;
+    return this;
+  }
+
+  /**
    * Fetches the data.
    */
   fetch(refresh: boolean = false): Promise<any> {
@@ -249,6 +302,18 @@ export class FeedsService implements OnDestroy {
 
     if (!this.newPostsLastCheckedAt) {
       this.newPostsLastCheckedAt = Date.now();
+    }
+
+    /**
+     * if caching was enabled try to rehydrate and check for new posts
+     */
+    if (this.cachingEnabled) {
+      const rehydratedFeed = this._rehydrateAndPersist();
+
+      if (rehydratedFeed) {
+        this.checkForNewPosts();
+        return;
+      }
     }
 
     return this.client
@@ -279,7 +344,11 @@ export class FeedsService implements OnDestroy {
           this.fallbackAtIndex.next(null);
           if (refresh) {
             this.rawFeed.next(response.entities);
+            this.id$.next(Math.random());
           } else {
+            if (!this.id$.getValue()) {
+              this.id$.next(Math.random());
+            }
             this.rawFeed.next(
               this.rawFeed.getValue().concat(response.entities)
             );
@@ -386,15 +455,33 @@ export class FeedsService implements OnDestroy {
     api: ApiService,
     session: Session,
     entitiesService: EntitiesService,
-    blockListService: BlockListService
+    blockListService: BlockListService,
+    storage: StorageV2,
+    location: Location
   ) {
     return new FeedsService(
       client,
       api,
       session,
       entitiesService,
-      blockListService
+      blockListService,
+      storage,
+      location
     );
+  }
+
+  /**
+   * Checks for new posts and updates the counter
+   * @returns { void }
+   */
+  private async checkForNewPosts() {
+    if (!this.countEndpoint) return null;
+
+    const count = await this.count(this.newPostsLastCheckedAt).toPromise();
+    if (count) {
+      this.newPostsCount$.next(this.newPostsCount$.getValue() + count);
+    }
+    this.newPostsLastCheckedAt = Date.now();
   }
 
   /**
@@ -414,5 +501,80 @@ export class FeedsService implements OnDestroy {
         this.newPostsLastCheckedAt = Date.now();
       });
     return () => this.newPostWatcherSubscription?.unsubscribe();
+  }
+
+  /**
+   * persists the feed state to memory
+   * @returns { void }
+   */
+  private _persist(feed = this.rawFeed.getValue()) {
+    if (!feed?.length) return;
+
+    return this.storage.memory.setFeedState(
+      this.endpoint,
+      this.location.path(),
+      {
+        rawFeed: feed,
+        id: this.id$.getValue(),
+        fallbackAt: this.fallbackAt,
+        pagingToken: this.pagingToken,
+        newPostsLastCheckedAt: this.newPostsLastCheckedAt,
+        fallbackAtIndex: this.fallbackAtIndex.getValue(),
+        offset: this.offset.getValue(),
+        limit: this.limit.getValue(),
+        newPostsCount: this.newPostsCount$.getValue(),
+      }
+    );
+  }
+
+  /**
+   * rehydrates the feed state from memory
+   * @returns { void }
+   */
+  private _rehydrateAndPersist(update = true) {
+    if (this.rehydrated) return; // don't depend on this
+
+    const inMemoryFeedState = this.storage.memory.getFeedState(
+      this.endpoint,
+      this.location.path()
+    );
+
+    if (inMemoryFeedState && update) {
+      this.id$.next(inMemoryFeedState.id);
+      this.fallbackAt = inMemoryFeedState.fallbackAt;
+      this.fallbackAtIndex.next(inMemoryFeedState.fallbackAtIndex);
+      this.offset.next(inMemoryFeedState.offset);
+      this.pagingToken = inMemoryFeedState.pagingToken;
+      this.newPostsLastCheckedAt = inMemoryFeedState.newPostsLastCheckedAt;
+      this.limit.next(inMemoryFeedState.limit);
+      this.newPostsCount$.next(inMemoryFeedState.newPostsCount);
+      this.rawFeed.next(inMemoryFeedState.rawFeed || []);
+    }
+
+    if (!this.persistSubscription) {
+      this.persistSubscription = this.feed
+        .pipe(debounceTime(1000))
+        .subscribe(feed => {
+          if (feed.length) {
+            this._persist(
+              feed.map(entity$ => {
+                // TODO: better type
+                const entity: any = entity$.getValue();
+                return {
+                  guid: entity.guid,
+                  owner_guid: entity.ownerObj?.guid,
+                  timestamp: null,
+                  urn: entity.urn,
+                  entity,
+                };
+              })
+            );
+          }
+        });
+    }
+
+    this.rehydrated = true;
+
+    return inMemoryFeedState;
   }
 }

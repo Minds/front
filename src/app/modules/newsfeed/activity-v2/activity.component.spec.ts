@@ -11,6 +11,7 @@ import { ActivityV2Component } from './activity.component';
 import { MockService } from '../../../utils/mock';
 import { BehaviorSubject, of } from 'rxjs';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 describe('ActivityV2Component', () => {
   let comp: ActivityV2Component;
@@ -37,6 +38,14 @@ describe('ActivityV2Component', () => {
           {
             provide: EntityMetricsSocketsExperimentService,
             useValue: MockService(EntityMetricsSocketsExperimentService),
+          },
+          {
+            provide: EntityMetricsSocketsExperimentService,
+            useValue: MockService(EntityMetricsSocketsExperimentService),
+          },
+          {
+            provide: PersistentFeedExperimentService,
+            useValue: MockService(PersistentFeedExperimentService),
           },
         ],
       })

@@ -34,6 +34,11 @@ export class ReadMoreComponent {
    */
   showAll = false;
 
+  /**
+   * whether the read-more can be expaned
+   */
+  @Input() disabled = false;
+
   constructor(private cd: ChangeDetectorRef) {}
 
   /**
@@ -66,6 +71,8 @@ export class ReadMoreComponent {
    * It will control the outputText
    */
   toggle(): void {
+    if (this.disabled) return;
+
     this.showAll = !this.showAll;
 
     this.cd.markForCheck();

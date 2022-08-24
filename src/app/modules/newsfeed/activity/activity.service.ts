@@ -379,7 +379,9 @@ export class ActivityService implements OnDestroy {
    * @param options
    * @return ActivityService
    */
-  setDisplayOptions(options: Object = {}): ActivityService {
+  setDisplayOptions(
+    options: Partial<ActivityDisplayOptions> = {}
+  ): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
     if (this.activityV2Feature) {

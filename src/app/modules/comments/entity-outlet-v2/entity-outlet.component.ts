@@ -30,16 +30,7 @@ import { ActivityService } from '../../newsfeed/activity/activity.service';
   selector: 'm-comments__entityOutletV2',
   templateUrl: 'entity-outlet.component.html',
   styleUrls: ['entity-outlet.component.ng.scss'],
-  providers: [
-    AttachmentService,
-    {
-      provide: CommentsService,
-      useFactory: (_route, _client) => {
-        return new CommentsService(_route, _client);
-      },
-      deps: [ActivatedRoute, Client],
-    },
-  ],
+  providers: [AttachmentService, CommentsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsEntityOutletV2Component {
