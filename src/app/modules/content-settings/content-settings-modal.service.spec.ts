@@ -10,8 +10,8 @@ const emailConfirmationMock = new (function() {
   this.success$ = new BehaviorSubject<boolean>(false);
 })();
 
-const feedNoticeDismissalServiceMock = new (function() {
-  this.dismissNotice = jasmine.createSpy('dismissNotice');
+const feedNoticeServiceMock = new (function() {
+  this.dismiss = jasmine.createSpy('dismiss');
 })();
 
 const discoveryTagsServiceMock = new (function() {
@@ -30,7 +30,7 @@ describe('ContentSettingsModalService', () => {
   beforeEach(() => {
     service = new ContentSettingsModalService(
       emailConfirmationMock,
-      feedNoticeDismissalServiceMock,
+      feedNoticeServiceMock,
       discoveryTagsServiceMock,
       modalServiceMock,
       injectorMock
@@ -39,7 +39,7 @@ describe('ContentSettingsModalService', () => {
     (service as any).modal = undefined;
     (service as any).emailConfirmationSubscription = undefined;
 
-    (service as any).feedNoticeDismissal.dismissNotice.calls.reset();
+    (service as any).feedNotice.dismiss.calls.reset();
     (service as any).tagsService.hasSetTags.calls.reset();
     (service as any).modalService.present.calls.reset();
   });
@@ -73,9 +73,9 @@ describe('ContentSettingsModalService', () => {
     service.dismiss();
 
     expect((service as any).modal.dismiss).toHaveBeenCalled();
-    expect(
-      (service as any).feedNoticeDismissal.dismissNotice
-    ).toHaveBeenCalledWith('update-tags');
+    expect((service as any).feedNotice.dismiss).toHaveBeenCalledWith(
+      'update-tags'
+    );
   });
 
   it('should setup email confirmation subscription and open modal when success fires if user has selected no tags', fakeAsync(() => {

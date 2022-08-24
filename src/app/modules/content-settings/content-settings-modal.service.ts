@@ -4,7 +4,7 @@ import { filter, take } from 'rxjs/operators';
 import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 import { ModalRef, ModalService } from '../../services/ux/modal.service';
 import { DiscoveryTagsService } from '../discovery/tags/tags.service';
-import { FeedNoticeDismissalService } from '../notices/services/feed-notice-dismissal.service';
+import { FeedNoticeService } from '../notices/services/feed-notice.service';
 import { ContentSettingsComponent } from './content-settings/content-settings.component';
 
 // Options for modal
@@ -26,7 +26,7 @@ export class ContentSettingsModalService implements OnDestroy {
 
   constructor(
     private emailConfirmation: EmailConfirmationService,
-    private feedNoticeDismissal: FeedNoticeDismissalService,
+    private feedNotice: FeedNoticeService,
     private tagsService: DiscoveryTagsService,
     private modalService: ModalService,
     private injector: Injector
@@ -59,7 +59,7 @@ export class ContentSettingsModalService implements OnDestroy {
   public dismiss(): void {
     if (this.modal) {
       this.modal.dismiss();
-      this.feedNoticeDismissal.dismissNotice('update-tags');
+      this.feedNotice.dismiss('update-tags');
     }
   }
 
