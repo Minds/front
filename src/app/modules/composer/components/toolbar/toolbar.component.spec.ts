@@ -9,7 +9,7 @@ import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { UploaderService } from '../../services/uploader.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 
@@ -62,8 +62,19 @@ describe('Composer Toolbar', () => {
     present: { toPromise: () => {} },
   });
 
+  let uploaderServiceMock;
+
   beforeEach(
     waitForAsync(() => {
+      uploaderServiceMock = jasmine.createSpyObj<UploaderService>(
+        'UploaderService',
+        {},
+        {
+          file$$: new Subject(),
+          files$: of([]),
+        }
+      );
+
       TestBed.configureTestingModule({
         declarations: [
           ToolbarComponent,
@@ -97,6 +108,10 @@ describe('Composer Toolbar', () => {
           {
             provide: AttachmentApiService,
             useValue: MockService(AttachmentApiService),
+          },
+          {
+            provide: UploaderService,
+            useValue: uploaderServiceMock,
           },
         ],
       }).compileComponents();
@@ -144,11 +159,14 @@ describe('Composer Toolbar', () => {
   });
 
   it('should emit on attachment select', () => {
+    spyOn(uploaderServiceMock.file$$, 'next');
+
     const file = new File([], '');
     fixture.detectChanges();
 
-    comp.onAttachmentSelect(file);
-    expect(attachment$.next).toHaveBeenCalledWith(file);
+    comp.onAttachmentSelect([file]);
+
+    expect(uploaderServiceMock.file$$.next).toHaveBeenCalledWith(file);
   });
 
   it('should emit on NSFW popup', () => {

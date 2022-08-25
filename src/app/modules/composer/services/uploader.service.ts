@@ -87,52 +87,45 @@ export class UploaderService {
    * Performs the actual upload and records progress
    */
   updateFileProgress$: Observable<FileUpload> = this.fileStartOrRetry$.pipe(
-    tap(() => console.log('MH: updateFileProgress$ start')),
     map(file =>
-      this.attachmentApi
-        .upload(file, {
-          //container_guid: metadata.containerGuid || null
-        })
-        .pipe(
-          filter(uploadEvent => {
-            return (
-              uploadEvent.type === UploadEventType.Progress ||
-              uploadEvent.type === UploadEventType.Success
-            );
+      this.attachmentApi.upload(file, {}).pipe(
+        filter(uploadEvent => {
+          return (
+            uploadEvent.type === UploadEventType.Progress ||
+            uploadEvent.type === UploadEventType.Success
+          );
+        }),
+        map(uploadEvent => {
+          return {
+            type: uploadEvent.payload?.request?.type as AttachmentType,
+            guid: uploadEvent.payload?.response?.guid,
+            progress: uploadEvent.payload.progress,
+          };
+        }),
+        takeUntil(
+          this.stopFile$$.pipe(filter(stopFile => stopFile.name === file.name))
+        ),
+        catchError(() => of({ error: true })),
+        scan(
+          (
+            acc,
+            curr:
+              | { type: AttachmentType; guid: string; progress: number }
+              | { error: true }
+          ) => ({
+            ...acc,
+            ...curr,
           }),
-          map(uploadEvent => {
-            return {
-              type: uploadEvent.payload?.request?.type as AttachmentType,
-              guid: uploadEvent.payload?.response?.guid,
-              progress: uploadEvent.payload.progress,
-            };
-          }),
-          takeUntil(
-            this.stopFile$$.pipe(
-              filter(stopFile => stopFile.name === file.name)
-            )
-          ),
-          catchError(() => of({ error: true })),
-          scan(
-            (
-              acc,
-              curr:
-                | { type: AttachmentType; guid: string; progress: number }
-                | { error: true }
-            ) => ({
-              ...acc,
-              ...curr,
-            }),
-            {
-              file,
-              guid: null,
-              type: null,
-              progress: 0,
-              error: false,
-              toRemove: false,
-            }
-          )
+          {
+            file,
+            guid: null,
+            type: null,
+            progress: 0,
+            error: false,
+            toRemove: false,
+          }
         )
+      )
     ),
     mergeAll(3) // max 3 uploads at a time
   );

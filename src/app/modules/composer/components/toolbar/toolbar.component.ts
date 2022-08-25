@@ -329,7 +329,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     for (let i in $event) {
       const file = $event[i];
-      console.log(file);
       this.uploaderService.file$$.next(file);
     }
   }
