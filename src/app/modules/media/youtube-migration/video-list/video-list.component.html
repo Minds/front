@@ -1,8 +1,0 @@
-<ng-container *ngIf="videos && videos[0].display">
-  <m-youtubeMigration__videoItem
-    *ngFor="let v of videos"
-    [video]="v"
-    (requestPlay)="playRequested($event)"
-  >
-  </m-youtubeMigration__videoItem>
-</ng-container>

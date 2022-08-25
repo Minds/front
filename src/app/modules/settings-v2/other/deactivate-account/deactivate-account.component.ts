@@ -41,6 +41,7 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
   }
 
   submit() {
+    this.inProgress = true;
     this.client
       .delete('api/v1/channel')
       .then((response: any) => {
@@ -48,37 +49,12 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
       })
       .catch((e: any) => {
         this.toasterService.error('Sorry, we could not disable your account');
+      })
+      .finally(() => {
+        this.inProgress = false;
         this.detectChanges();
       });
   }
-
-  // delete() {
-  //   if (
-  //     !confirm(
-  //       'Your account and all data related to it will be deleted permanently. Are you sure you want to proceed?'
-  //     )
-  //   ) {
-  //     return;
-  //   }
-  //   const creator = this.overlayModal.create(
-  //     ConfirmPasswordModalComponent,
-  //     {},
-  //     {
-  //       class: 'm-overlay-modal--small',
-  //       onComplete: ({ password }) => {
-  //         this.client
-  //           .post('api/v2/settings/delete', { password })
-  //           .then((response: any) => {
-  //             this.router.navigate(['/logout']);
-  //           })
-  //           .catch((e: any) => {
-  //             this.toasterService.error('Sorry, we could not delete your account');
-  //           });
-  //       },
-  //     }
-  //   );
-  //   creator.present();
-  // }
 
   canSubmit(): boolean {
     return this.form.valid && !this.inProgress && !this.form.pristine;

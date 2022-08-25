@@ -289,4 +289,10 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
       this.service.setChannel({ ...channel, seed: !seed });
     }
   }
+
+  public getUserSupersetUrl(): string {
+    return `https://analytics.minds.com/superset/dashboard/41/?preselect_filters={"286":{"USER_GUID":"${
+      this.service.channel$.getValue().guid
+    }"}}`;
+  }
 }
