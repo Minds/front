@@ -5,6 +5,7 @@ import { TokenContractService } from '../blockchain/contracts/token-contract.ser
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
 import { BTCService } from '../payments/btc/btc.service';
 import { ToasterService } from '../../common/services/toaster.service';
+import { RestrictedAddressService } from '../wallet/components/restricted-address.service';
 
 export type PayloadType =
   | 'onchain'
@@ -32,6 +33,7 @@ export class WireService {
     private wireContract: WireContractService,
     private tokenContract: TokenContractService,
     private web3Wallet: Web3WalletService,
+    private restrictedAddress: RestrictedAddressService,
     private btcService: BTCService,
     private toast: ToasterService
   ) {}
@@ -71,7 +73,20 @@ export class WireService {
             );
           }
 
-          payload.address = await this.web3Wallet.getCurrentWallet(true);
+          const address = await this.web3Wallet.getCurrentWallet(true);
+
+          if (!address) {
+            return;
+          }
+
+          const isPermitted = await this.restrictedAddress
+            .check(address)
+            .toPromise();
+          if (!isPermitted) {
+            throw new Error('Your address is restricted');
+          }
+
+          payload.address = address;
           payload.txHash = await this.wireContract.create(
             payload.receiver,
             wire.amount
