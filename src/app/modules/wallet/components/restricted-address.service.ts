@@ -15,15 +15,15 @@ export class RestrictedAddressService {
    * @param { string } address - address to check.
    * @returns { Observable<boolean> }
    */
-  public check(address: string): Observable<boolean> {
+  public isRestricted(address: string): Observable<boolean> {
     return this.api.get(`api/v3/rewards/check/${address}`).pipe(
       take(1),
       map((response: ApiResponse) => {
-        return response?.status === 'success';
+        return response?.status !== 'success';
       }),
       catchError(e => {
         console.error(e);
-        return of(false);
+        return of(true);
       })
     );
   }

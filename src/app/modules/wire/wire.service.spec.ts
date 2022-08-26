@@ -4,7 +4,11 @@ import { wireContractServiceMock } from '../../../tests/wire-contract-service-mo
 import { tokenContractServiceMock } from '../../../tests/token-contract-service-mock.spec';
 import { web3WalletServiceMock } from '../../../tests/web3-wallet-service-mock.spec';
 import { fakeAsync, tick } from '@angular/core/testing';
-import { BTCService } from '../payments/btc/btc.service';
+import { of } from 'rxjs';
+
+let restrictedAddressMock = new (function() {
+  this.isRestricted = jasmine.createSpy('isRestricted');
+})();
 
 describe('WireService', () => {
   let service: WireService;
@@ -17,6 +21,7 @@ describe('WireService', () => {
       wireContractServiceMock,
       tokenContractServiceMock,
       web3WalletServiceMock,
+      restrictedAddressMock,
       new (() => {})(),
       new (() => {})()
     );
@@ -30,10 +35,13 @@ describe('WireService', () => {
   });
 
   afterEach(() => {
+    (service as any).restrictedAddress.isRestricted.and.returnValue(of(false));
     jasmine.clock().uninstall();
   });
 
   it('should submit an onchain wire', fakeAsync(() => {
+    (service as any).restrictedAddress.isRestricted.and.returnValue(of(false));
+
     service.submitWire({
       amount: 10,
       guid: null,
@@ -47,6 +55,7 @@ describe('WireService', () => {
 
     expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
     expect(web3WalletServiceMock.getCurrentWallet).toHaveBeenCalled();
+    expect(restrictedAddressMock.check).toHaveBeenCalled();
 
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/wire/null`);
@@ -63,6 +72,33 @@ describe('WireService', () => {
       recurring_interval: 'once',
     });
   }));
+
+  it('should NOT submit an onchain wire if address is restricted', async () => {
+    (service as any).restrictedAddress.check.and.returnValue(of(true));
+    spyOn(console, 'error');
+
+    try {
+      await service.submitWire({
+        amount: 10,
+        guid: null,
+        payload: { receiver: '0x1234', address: '' },
+        payloadType: 'onchain',
+        recurring: false,
+        recurringInterval: 'once',
+      });
+    } catch (e) {
+      expect(console.error).toHaveBeenCalledWith(
+        '[Wire/Token]',
+        new Error('Your address is restricted')
+      );
+    }
+
+    expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
+    expect(web3WalletServiceMock.getCurrentWallet).toHaveBeenCalled();
+    expect(restrictedAddressMock.check).toHaveBeenCalled();
+
+    expect(clientMock.post).not.toHaveBeenCalled();
+  });
 
   it('should submit an offchain wire', fakeAsync(() => {
     service.submitWire({

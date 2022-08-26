@@ -76,13 +76,14 @@ export class WireService {
           const address = await this.web3Wallet.getCurrentWallet(true);
 
           if (!address) {
-            return;
+            throw new Error('Unable to get address');
           }
 
-          const isPermitted = await this.restrictedAddress
-            .check(address)
+          const isRestricted = await this.restrictedAddress
+            .isRestricted(address)
             .toPromise();
-          if (!isPermitted) {
+
+          if (isRestricted) {
             throw new Error('Your address is restricted');
           }
 
