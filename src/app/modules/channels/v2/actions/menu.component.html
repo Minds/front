@@ -1,141 +1,131 @@
-<<<<<<< HEAD
 <m-dropdownMenu [menu]="actionsDropdown" [anchorPosition]="anchorPosition">
-  =======
-  <m-dropdownMenu
-    [anchorPosition]="{ top: '100%', right: '0' }"
-    [menu]="actionsDropdown"
-  >
-    >>>>>>> a5d2f41f4ac67225ad8cb93452bc1f75ca42fe0b
-    <ng-content></ng-content>
-  </m-dropdownMenu>
+  <ng-content></ng-content>
+</m-dropdownMenu>
 
-  <ng-template #actionsDropdown>
-    <ul>
-      <ng-container *ngIf="!(service.isDisabled$ | async)">
-        <m-dropdownMenu__item
-          (click)="unsubscribe()"
-          *ngIf="service.isSubscribed$ | async; else subscribeOption"
-          ><span i18n="@@COMMON__UNSUBSCRIBE"
-            >Unsubscribe</span
-          ></m-dropdownMenu__item
-        >
-        <ng-template #subscribeOption>
-          <m-dropdownMenu__item (click)="subscribe()"
-            ><span i18n="@@COMMON__SUBSCRIBE">Subscribe</span>
-          </m-dropdownMenu__item>
-        </ng-template>
-      </ng-container>
-
-      <!-- ******** admin ******************** -->
-      <ng-container *ngIf="service.isAdmin$ | async">
-        <m-dropdownMenu__item
-          (click)="unBan()"
-          *ngIf="service.isBanned$ | async"
-          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBAN_GLOBALLY"
-            >Un-ban globally</span
-          >
-        </m-dropdownMenu__item>
-        <m-dropdownMenu__item (click)="viewLedger()"
-          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER"
-            >View Ledger</span
-          >
-        </m-dropdownMenu__item>
-        <m-dropdownMenu__item [externalLink]="getUserSupersetUrl()">
-          <span>
-            View Superset Dashboard
-          </span>
-        </m-dropdownMenu__item>
-        <m-dropdownMenu__item (click)="viewWithdrawals()"
-          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS"
-            >View Withdrawals</span
-          >
-        </m-dropdownMenu__item>
-        <m-dropdownMenu__item (click)="viewBoosts('newsfeed')"
-          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_NEWSFEED_BOOSTS"
-            >View Newsfeed Boosts</span
-          >
-        </m-dropdownMenu__item>
-        <m-dropdownMenu__item (click)="viewBoosts('content')"
-          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_SIDEBAR_BOOSTS"
-            >View Sidebar Boosts</span
-          >
-        </m-dropdownMenu__item>
-        <m-dropdownMenu__item (click)="viewEmail()"
-          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
-            >E-mail Address</span
-          >
-        </m-dropdownMenu__item>
-
-        <m-dropdownMenu__item (click)="proAdminToggle()"
-          ><span>{{
-            !(service.channel$ | async)?.pro ? 'Make Pro' : 'Remove Pro'
-          }}</span>
-        </m-dropdownMenu__item>
-
-        <m-dropdownMenu__item
-          (click)="plusAdminToggle()"
-          *ngIf="!(service.channel$ | async)?.pro"
-          ><span>{{
-            !(service.channel$ | async)?.plus ? 'Make Plus' : 'Remove Plus'
-          }}</span>
-        </m-dropdownMenu__item>
-
-        <ng-container *ngIf="service.isExplicit$ | async">
-          <m-dropdownMenu__item (click)="setExplicit(false)"
-            ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__REMOVE_EXPLICIT"
-              >Remove explicit</span
-            >
-          </m-dropdownMenu__item>
-        </ng-container>
-
-        <m-nsfwSelector
-          (click)="$event.preventDefault(); $event.stopPropagation()"
-          (selectedChange)="setNSFWLock($event)"
-          [selected]="service.nsfw$ | async"
-          service="editing"
-        >
-        </m-nsfwSelector>
-
-        <m-dropdownMenu__item (click)="reIndex()"
-          ><span i18n="@@M__ACTION__REINDEX">Reindex</span>
-        </m-dropdownMenu__item>
-      </ng-container>
-
-      <!-- ******** end admin ******************** -->
-
+<ng-template #actionsDropdown>
+  <ul>
+    <ng-container *ngIf="!(service.isDisabled$ | async)">
       <m-dropdownMenu__item
-        (click)="unblock()"
-        *ngIf="service.isBlocked$ | async; else blockOption"
-        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBLOCK">Unblock</span>
-      </m-dropdownMenu__item>
-      <ng-template #blockOption>
-        <m-dropdownMenu__item (click)="block()"
-          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__BLOCK">Block</span>
+        (click)="unsubscribe()"
+        *ngIf="service.isSubscribed$ | async; else subscribeOption"
+        ><span i18n="@@COMMON__UNSUBSCRIBE"
+          >Unsubscribe</span
+        ></m-dropdownMenu__item
+      >
+      <ng-template #subscribeOption>
+        <m-dropdownMenu__item (click)="subscribe()"
+          ><span i18n="@@COMMON__SUBSCRIBE">Subscribe</span>
         </m-dropdownMenu__item>
       </ng-template>
+    </ng-container>
 
-      <ng-container *ngIf="!(service.isDisabled$ | async)">
-        <m-dropdownMenu__item (click)="report()"
-          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__REPORT">Report</span>
+    <!-- ******** admin ******************** -->
+    <ng-container *ngIf="service.isAdmin$ | async">
+      <m-dropdownMenu__item (click)="unBan()" *ngIf="service.isBanned$ | async"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBAN_GLOBALLY"
+          >Un-ban globally</span
+        >
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item (click)="viewLedger()"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER"
+          >View Ledger</span
+        >
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item [externalLink]="getUserSupersetUrl()">
+        <span>
+          View Superset Dashboard
+        </span>
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item (click)="viewWithdrawals()"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS"
+          >View Withdrawals</span
+        >
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item (click)="viewBoosts('newsfeed')"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_NEWSFEED_BOOSTS"
+          >View Newsfeed Boosts</span
+        >
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item (click)="viewBoosts('content')"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_SIDEBAR_BOOSTS"
+          >View Sidebar Boosts</span
+        >
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item (click)="viewEmail()"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
+          >E-mail Address</span
+        >
+      </m-dropdownMenu__item>
+
+      <m-dropdownMenu__item (click)="proAdminToggle()"
+        ><span>{{
+          !(service.channel$ | async)?.pro ? 'Make Pro' : 'Remove Pro'
+        }}</span>
+      </m-dropdownMenu__item>
+
+      <m-dropdownMenu__item
+        (click)="plusAdminToggle()"
+        *ngIf="!(service.channel$ | async)?.pro"
+        ><span>{{
+          !(service.channel$ | async)?.plus ? 'Make Plus' : 'Remove Plus'
+        }}</span>
+      </m-dropdownMenu__item>
+
+      <ng-container *ngIf="service.isExplicit$ | async">
+        <m-dropdownMenu__item (click)="setExplicit(false)"
+          ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__REMOVE_EXPLICIT"
+            >Remove explicit</span
+          >
         </m-dropdownMenu__item>
       </ng-container>
-    </ul>
-  </ng-template>
 
-  <m-modal
-    (closed)="service.email$.next(null)"
-    *ngIf="service.email$ | async as email"
-    [open]="true"
+      <m-nsfwSelector
+        (click)="$event.preventDefault(); $event.stopPropagation()"
+        (selectedChange)="setNSFWLock($event)"
+        [selected]="service.nsfw$ | async"
+        service="editing"
+      >
+      </m-nsfwSelector>
+
+      <m-dropdownMenu__item (click)="reIndex()"
+        ><span i18n="@@M__ACTION__REINDEX">Reindex</span>
+      </m-dropdownMenu__item>
+    </ng-container>
+
+    <!-- ******** end admin ******************** -->
+
+    <m-dropdownMenu__item
+      (click)="unblock()"
+      *ngIf="service.isBlocked$ | async; else blockOption"
+      ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBLOCK">Unblock</span>
+    </m-dropdownMenu__item>
+    <ng-template #blockOption>
+      <m-dropdownMenu__item (click)="block()"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__BLOCK">Block</span>
+      </m-dropdownMenu__item>
+    </ng-template>
+
+    <ng-container *ngIf="!(service.isDisabled$ | async)">
+      <m-dropdownMenu__item (click)="report()"
+        ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__REPORT">Report</span>
+      </m-dropdownMenu__item>
+    </ng-container>
+  </ul>
+</ng-template>
+
+<m-modal
+  (closed)="service.email$.next(null)"
+  *ngIf="service.email$ | async as email"
+  [open]="true"
+>
+  <div
+    class="mdl-card__supporting-text"
+    style="padding: 64px; font-size: 20px; text-align: center"
   >
-    <div
-      class="mdl-card__supporting-text"
-      style="padding: 64px; font-size: 20px; text-align: center"
-    >
-      @{{ service.username$ | async }}'s email:
-      <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none">
-        {{ email }}
-      </a>
-      <ng-container *ngIf="!email">...</ng-container>
-    </div>
-  </m-modal>
-</m-dropdownMenu>
+    @{{ service.username$ | async }}'s email:
+    <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none">
+      {{ email }}
+    </a>
+    <ng-container *ngIf="!email">...</ng-container>
+  </div>
+</m-modal>
