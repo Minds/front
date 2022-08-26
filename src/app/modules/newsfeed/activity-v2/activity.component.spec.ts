@@ -11,6 +11,7 @@ import { ActivityV2Component } from './activity.component';
 import { MockService } from '../../../utils/mock';
 import { BehaviorSubject, of } from 'rxjs';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ActivityV2Component', () => {
   let comp: ActivityV2Component;
@@ -20,6 +21,7 @@ describe('ActivityV2Component', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [ActivityV2Component],
+        imports: [RouterTestingModule],
         providers: [
           { provide: ElementRef, useValue: MockService(ElementRef) },
           {
