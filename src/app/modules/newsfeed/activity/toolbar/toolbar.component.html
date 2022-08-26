@@ -53,6 +53,7 @@
   <minds-button-thumbs-down
     [object]="entity"
     [iconOnly]="service.displayOptions.showInteractions"
+    (thumbsDownChange)="detectChanges()"
   ></minds-button-thumbs-down>
 
   <m-activity__remindButton *ngIf="allowReminds"> </m-activity__remindButton>

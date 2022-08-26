@@ -49,6 +49,12 @@
     }
   }
 
+  .m-boostButton__label {
+    @include custom-viewport($max-width: '565px') {
+      display: none;
+    }
+  }
+
   span.m-animation__shimmer--text {
     animation-name: shimmer--text;
   }

@@ -17,13 +17,14 @@ exports.config = {
   include: {
     I: '../step_definitions/steps_file.ts',
     loginPage: '../pages/loginPage.ts',
+    devtoolsPage: '../pages/devtoolsPage.ts',
   },
   mocha: {},
   bootstrap: null,
   teardown: null,
   gherkin: {
     features: '../features/*.feature',
-    steps: ['../steps/login-steps.ts'],
+    steps: '../steps/*-steps.ts',
   },
   plugins: {
     pauseOnFail: {},

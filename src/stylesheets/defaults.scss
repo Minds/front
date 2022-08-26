@@ -63,6 +63,18 @@ $layout-header-height: 64px;
 $layout-sidebar-width: 80px;
 
 // Media query mixins
+@mixin custom-viewport($min-width: 0, $max-width: null) {
+  @if ($max-width == null) {
+    @media screen and (min-width: $min-width) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: $min-width) and (max-width: $max-width) {
+      @content;
+    }
+  }
+}
+
 @mixin mobile-only {
   @media screen and (max-width: $max-mobile) {
     @content;

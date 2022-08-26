@@ -6,11 +6,12 @@ export = {
   validUsername: process.env.PLAYWRIGHT_USERNAME,
   validPassword: process.env.PLAYWRIGHT_PASSWORD,
 
-  async login(username, password) {
+  login(username, password) {
     I.seeElement('#username');
     I.fillField('#username', username);
     I.seeElement('#password');
     I.fillField('#password', password);
+
     I.click(locate('button').withText('Login'));
   },
 };

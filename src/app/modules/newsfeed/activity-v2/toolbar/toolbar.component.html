@@ -13,6 +13,7 @@
   <minds-button-thumbs-down
     [object]="entity"
     [iconOnly]="service.displayOptions.showInteractions"
+    (thumbsDownChange)="detectChanges()"
   ></minds-button-thumbs-down>
 
   <m-activityV2__remindButton *ngIf="allowReminds">
@@ -60,7 +61,9 @@
     *ngIf="entity['thumbs:up:count'] > 0"
     (click)="openInteractions('votes-up')"
   >
-    <span>{{ entity['thumbs:up:count'] }}</span>
+    <span [@counterChange]="entity['thumbs:up:count']">{{
+      entity['thumbs:up:count']
+    }}</span>
     <span
       >{ entity['thumbs:up:count'], plural, =1 {upvote} other {upvotes}}</span
     >
@@ -71,7 +74,9 @@
     *ngIf="entity['thumbs:down:count'] > 0"
     (click)="openInteractions('votes-down')"
   >
-    <span>{{ entity['thumbs:down:count'] }}</span>
+    <span [@counterChange]="entity['thumbs:down:count']">{{
+      entity['thumbs:down:count']
+    }}</span>
     <span
       >{ entity['thumbs:down:count'], plural, =1 {downvote} other
       {downvotes}}</span
