@@ -55,7 +55,7 @@ describe('WireService', () => {
 
     expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
     expect(web3WalletServiceMock.getCurrentWallet).toHaveBeenCalled();
-    expect(restrictedAddressMock.check).toHaveBeenCalled();
+    expect(restrictedAddressMock.isRestricted).toHaveBeenCalled();
 
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/wire/null`);
@@ -74,7 +74,7 @@ describe('WireService', () => {
   }));
 
   it('should NOT submit an onchain wire if address is restricted', async () => {
-    (service as any).restrictedAddress.check.and.returnValue(of(true));
+    (service as any).restrictedAddress.isRestricted.and.returnValue(of(true));
     spyOn(console, 'error');
 
     try {
@@ -95,7 +95,7 @@ describe('WireService', () => {
 
     expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
     expect(web3WalletServiceMock.getCurrentWallet).toHaveBeenCalled();
-    expect(restrictedAddressMock.check).toHaveBeenCalled();
+    expect(restrictedAddressMock.isRestricted).toHaveBeenCalled();
 
     expect(clientMock.post).not.toHaveBeenCalled();
   });
