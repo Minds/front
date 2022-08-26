@@ -47,7 +47,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
   @Input() iconOnly = false;
 
   /**
-   * Call to let parent functions know a thumb up event has happend
+   * Call to let parent functions know a thumb up event has happened
    */
   @Output('thumbsUpChange') thumbsUpChange$: EventEmitter<
     void
@@ -78,9 +78,14 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns void
    */
   onClick(e: MouseEvent): void {
+    if (this.inProgress) {
+      return;
+    }
+
+    this.inProgress = true;
+
     if (this.isFriendlyCaptchaFeatureEnabled() && !this.has()) {
       this.showFriendlyCaptcha = true;
-      this.inProgress = true;
     } else {
       this.submit();
     }
@@ -100,8 +105,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns Promise<void>
    */
   async submit(solution?: string): Promise<void> {
-    this.inProgress = true;
     this.cd.detectChanges();
+
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
       if (!user) return;

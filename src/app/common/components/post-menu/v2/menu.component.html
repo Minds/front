@@ -1,6 +1,6 @@
 <m-dropdownMenu
-  [menu]="dropdownMenu"
   [anchorPosition]="{ top: '-20%', right: '0' }"
+  [menu]="dropdownMenu"
   class="m-postMenu__button"
   ><i (click)="onButtonClick($event)" class="material-icons">{{
     icon
@@ -10,32 +10,32 @@
 <ng-template #dropdownMenu>
   <ul>
     <m-dropdownMenu__item
-      *ngIf="options.indexOf('view') !== -1"
       (click)="onSelectedOption('view')"
+      *ngIf="options.indexOf('view') !== -1"
     >
       <span i18n="@@M__ACTION__VIEW">
         View
       </span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
-      *ngIf="shouldShowEdit()"
       (click)="onSelectedOption('edit')"
+      *ngIf="shouldShowEdit()"
     >
       <span i18n="@@M__ACTION__EDIT_POST">
         Edit Post
       </span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
-      *ngIf="options.indexOf('share') !== -1"
       (click)="onSelectedOption('share')"
+      *ngIf="options.indexOf('share') !== -1"
     >
       <span i18n="@@M__ACTION__SHARE">
         Share
       </span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
-      *ngIf="shouldShowDownload()"
       (click)="onSelectedOption('download')"
+      *ngIf="shouldShowDownload()"
     >
       <span i18n="@@COMMON__POST_MENU__DOWNLOAD">
         Download
@@ -44,20 +44,20 @@
 
     <ng-container *ngIf="service.canPin$ | async">
       <m-dropdownMenu__item
+        (click)="onSelectedOption('pin')"
         *ngIf="
           options.indexOf('pin') !== -1 && (service.isPinned$ | async) === false
         "
-        (click)="onSelectedOption('pin')"
       >
         <span i18n="@@M__ACTION__PIN">
           Pin
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
+        (click)="onSelectedOption('pin')"
         *ngIf="
           options.indexOf('pin') !== -1 && (service.isPinned$ | async) === true
         "
-        (click)="onSelectedOption('pin')"
       >
         <span i18n="@@M__ACTION__REMOVE_PIN">
           Remove pin
@@ -65,22 +65,22 @@
       </m-dropdownMenu__item>
     </ng-container>
     <m-dropdownMenu__item
-      *ngIf="options.indexOf('translate') !== -1 && isTranslatable"
       (click)="onSelectedOption('translate')"
+      *ngIf="options.indexOf('translate') !== -1 && isTranslatable"
     >
       <span i18n="@@M__ACTION__TRANSLATE">Translate</span>
     </m-dropdownMenu__item>
     <!-- SUBSCRIBE -->
     <ng-container *ngIf="options.indexOf('subscribe') !== -1">
       <m-dropdownMenu__item
-        *ngIf="service.showSubscribe$ | async"
         (click)="onSelectedOption('subscribe')"
+        *ngIf="service.showSubscribe$ | async"
       >
         <span i18n="@@M__ACTION__SUBSCRIBE">Subscribe</span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
-        *ngIf="service.showUnSubscribe$ | async"
         (click)="onSelectedOption('unsubscribe')"
+        *ngIf="service.showUnSubscribe$ | async"
       >
         <span i18n="@@COMMON__POST_MENU__UNSUBSCRIBE">
           Unsubscribe
@@ -99,16 +99,16 @@
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
-        *ngIf="(service.isFollowing$ | async) === true"
         (click)="onSelectedOption('unfollow')"
+        *ngIf="(service.isFollowing$ | async) === true"
       >
         <span i18n="@@COMMON__POST_MENU__UNFOLLOW_NOTIFICATIONS">
           Un-follow post
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
-        *ngIf="(service.isFollowing$ | async) === false"
         (click)="onSelectedOption('follow')"
+        *ngIf="(service.isFollowing$ | async) === false"
       >
         <span i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS">
           Follow post
@@ -132,16 +132,16 @@
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
-        *ngIf="(service.isBlocked$ | async) === false"
         (click)="onSelectedOption('block')"
+        *ngIf="(service.isBlocked$ | async) === false"
       >
         <span i18n="@@COMMON__POST_MENU__BLOCK">
           Block user
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
-        *ngIf="(service.isBlocked$ | async) === true"
         (click)="onSelectedOption('unblock')"
+        *ngIf="(service.isBlocked$ | async) === true"
       >
         <span i18n="@@COMMON__POST_MENU__UNBLOCK">
           Unblock user
@@ -153,10 +153,17 @@
     <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && canEdit">
       <m-dropdownMenu__item class="m-postMenu__item--nsfw">
         <m-nsfw-selector
-          service="editing"
-          [selected]="entity.nsfw"
           (selectedChange)="setNSFWSelected($event)"
+          [selected]="entity.nsfw"
+          service="editing"
         ></m-nsfw-selector>
+      </m-dropdownMenu__item>
+    </ng-container>
+    <ng-container *ngIf="session.isAdmin()">
+      <m-dropdownMenu__item [externalLink]="getUserSupersetUrl()">
+        <span>
+          View Superset Dashboard
+        </span>
       </m-dropdownMenu__item>
     </ng-container>
 
@@ -167,8 +174,8 @@
 
     <!-- UNDO REMIND -->
     <m-dropdownMenu__item
-      *ngIf="shouldShowUndoRemind()"
       (click)="onSelectedOption('undo-remind')"
+      *ngIf="shouldShowUndoRemind()"
     >
       <span i18n="@@M__ACTION__UNDO_REMIND">
         Undo Remind
@@ -176,8 +183,8 @@
     </m-dropdownMenu__item>
     <!-- DELETE -->
     <m-dropdownMenu__item
-      *ngIf="shouldShowDelete()"
       (click)="onSelectedOption('delete')"
+      *ngIf="shouldShowDelete()"
       red="true"
     >
       <span i18n="@@M__ACTION__DELETE_POST">
@@ -186,11 +193,11 @@
     </m-dropdownMenu__item>
     <!-- REPORT -->
     <m-dropdownMenu__item
+      (click)="onSelectedOption('report')"
       *ngIf="
         options.indexOf('report') !== -1 &&
         entity.owner_guid != session.getLoggedInUser().guid
       "
-      (click)="onSelectedOption('report')"
       red="true"
     >
       <span i18n="Report as notify something@@M__ACTION__REPORT_POST">
