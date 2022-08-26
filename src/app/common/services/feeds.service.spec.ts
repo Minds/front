@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
 import { BehaviorSubject, of } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -10,6 +11,8 @@ import { storageMock } from './../../../tests/storage-mock.spec';
 import { ApiService } from './../api/api.service';
 import { BlockListService } from './block-list.service';
 import { FeedsService, NEW_POST_POLL_INTERVAL } from './feeds.service';
+
+let storageV2Mock = new (function() {})();
 
 describe('FeedsService', () => {
   let service: FeedsService;
@@ -32,7 +35,10 @@ describe('FeedsService', () => {
         sessionMock,
         storageMock,
         recentServiceMock
-      )
+      ),
+      storageV2Mock,
+      // @ts-ignore
+      MockService(Location)
     );
   });
 
