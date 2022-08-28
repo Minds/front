@@ -9,7 +9,7 @@ import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { ActivityService } from '../activity/activity.service';
 import { ActivityV2Component } from './activity.component';
 import { MockService } from '../../../utils/mock';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -44,11 +44,18 @@ describe('ActivityV2Component', () => {
       })
         .overrideProvider(ActivityService, {
           useValue: MockService(ActivityService, {
-            has: ['entity$', 'height$', 'isLoggedIn$', 'displayOptions'],
+            has: [
+              'entity$',
+              'height$',
+              'isLoggedIn$',
+              'canonicalUrl$',
+              'displayOptions',
+            ],
             props: {
               entity$: { get: () => new BehaviorSubject<any>(null) },
               height$: { get: () => new BehaviorSubject<any>(null) },
               isLoggedIn$: { get: () => new BehaviorSubject<any>(null) },
+              canonicalUrl$: { get: () => new Observable<any>(null) },
               displayOptions: {
                 autoplayVideo: true,
                 showOwnerBlock: true,
