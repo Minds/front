@@ -35,7 +35,7 @@ import { ToasterService } from '../../services/toaster.service';
       >
     </a>
   `,
-  styleUrls: [`thumbs-up.component.ng.scss`, 'thumbs-down.component.ng.scss'],
+  styleUrls: [`thumbs-up.component.ng.scss`],
   animations: [CounterChangeFadeIn],
 })
 export class ThumbsDownButton implements DoCheck {
@@ -69,7 +69,9 @@ export class ThumbsDownButton implements DoCheck {
       this.object['thumbs:down:user_guids'] = [];
   }
 
-  async thumb(): Promise<void> {
+  async thumb($event): Promise<void> {
+    $event.stopPropagation();
+
     if (this.inProgress) {
       return;
     }

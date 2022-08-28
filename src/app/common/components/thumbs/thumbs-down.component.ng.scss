@@ -1,9 +1,0 @@
-@import 'defaults.scss';
-
-:host {
-  @include unselectable;
-
-  a {
-    cursor: pointer;
-  }
-}
