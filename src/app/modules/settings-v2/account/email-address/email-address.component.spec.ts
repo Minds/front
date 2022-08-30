@@ -9,6 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { BehaviorSubject } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FeedNoticeService } from '../../../notices/services/feed-notice.service';
 
 describe('SettingsV2EmailAddressComponent', () => {
   let component: SettingsV2EmailAddressComponent;
@@ -49,6 +50,10 @@ describe('SettingsV2EmailAddressComponent', () => {
         },
         { provide: DialogService, useValue: MockService(DialogService) },
         { provide: ModalService, useValue: MockService(ModalService) },
+        {
+          provide: FeedNoticeService,
+          useValue: MockService(FeedNoticeService),
+        },
       ],
     }).compileComponents();
   });
@@ -77,6 +82,10 @@ describe('SettingsV2EmailAddressComponent', () => {
       formSubmitted: true,
     });
     expect(component.user.email_confirmed).toBe(false);
+    expect((component as any).feedNotices.undismiss).toHaveBeenCalledWith(
+      'verify-email'
+    );
+    expect((component as any).feedNotices.fetch).toHaveBeenCalled();
   });
 
   it('should emit with error message on submit when there is an error', async () => {
