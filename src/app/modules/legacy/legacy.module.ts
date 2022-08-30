@@ -16,7 +16,6 @@ import { UserCard } from './components/cards/user/user';
 
 import { CommentButton } from './components/buttons/comment';
 import { SubscribeButton } from './components/buttons/subscribe';
-import { UserDropdownButton } from './components/buttons/user-dropdown';
 
 import { MindsBanner } from './components/banner/banner';
 import { MindsFatBanner } from './components/banner/fat';
@@ -50,7 +49,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     UserCard,
     CommentButton,
     SubscribeButton,
-    UserDropdownButton,
 
     MindsBanner,
     MindsFatBanner,
@@ -62,7 +60,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
 
     CommentButton,
     SubscribeButton,
-    UserDropdownButton,
 
     MindsBanner,
     MindsFatBanner,

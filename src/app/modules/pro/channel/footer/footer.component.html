@@ -41,10 +41,7 @@
 
       <ng-container *ngIf="!isOwner">
         <span style="position: relative">
-          <minds-button-user-dropdown
-            [user]="user"
-            (userChanged)="onUserChange()"
-          ></minds-button-user-dropdown>
+          <m-pro__footerMenuButton [channel]="user"></m-pro__footerMenuButton>
         </span>
       </ng-container>
     </ng-container>

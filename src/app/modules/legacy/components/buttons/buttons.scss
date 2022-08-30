@@ -1,10 +1,8 @@
 @import 'defaults';
 
 .minds-button-edit,
-minds-button-user-dropdown,
 .m-button {
-  > button,
-  .m-userDropdownButton__trigger {
+  > button {
     cursor: pointer;
     background: transparent;
     padding: 8px 16px;
