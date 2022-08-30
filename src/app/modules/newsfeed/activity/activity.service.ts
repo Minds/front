@@ -161,7 +161,7 @@ export class ActivityService implements OnDestroy {
   isNsfwConsented$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   /**
-   * Will be true if not consented and is nsfw
+   * Will be true if not consented and is nsfw.
    */
   shouldShowNsfwConsent$: Observable<boolean> = combineLatest(
     this.entity$,
@@ -169,8 +169,10 @@ export class ActivityService implements OnDestroy {
   ).pipe(
     map(([entity, isConsented]: [ActivityEntity, boolean]) => {
       return (
-        entity.nsfw &&
-        entity.nsfw.length > 0 &&
+        (entity.nsfw?.length > 0 ||
+          entity.ownerObj?.nsfw?.length > 0 ||
+          entity.remind_object?.nsfw?.length > 0 ||
+          entity.remind_object?.ownerObj?.nsfw?.length > 0) &&
         !isConsented &&
         !(this.session.isLoggedIn() && this.session.getLoggedInUser().mature)
       );
