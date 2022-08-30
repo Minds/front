@@ -178,13 +178,13 @@
         <ng-template #discoveryFallback></ng-template>
       </ng-container>
     </div>
-    <div *ngIf="persistentFeedExperimentActive" class="minds-list">
+    <ng-container *ngIf="persistentFeedExperimentActive">
       <!-- TODO: prepended items -->
       <!-- TODO: boost rotator -->
       <!-- TODO: emptyState channel recommendation -->
       <m-feed [feedService]="feedService"></m-feed>
       <!-- TODO: latest and discovery fallbacks -->
-    </div>
+    </ng-container>
   </ng-container>
 </div>
 

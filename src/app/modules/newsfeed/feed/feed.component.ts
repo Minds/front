@@ -46,6 +46,7 @@ export interface IFeedItem {
   selector: 'm-feed',
   providers: [FeaturedContentService],
   templateUrl: 'feed.component.html',
+  styleUrls: ['feed.component.ng.scss'],
 })
 export class FeedComponent implements OnInit, AfterViewInit {
   @Input()

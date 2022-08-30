@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep m-activityV2 {
+    @include m-theme() {
+      margin-right: -1px;
+      border-right: 1px solid;
+      border-color: themed($m-borderColor--primary);
+    }
+  }
+}
