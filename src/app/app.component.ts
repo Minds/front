@@ -265,10 +265,6 @@ export class Minds implements OnInit, OnDestroy {
    * @returns { void }
    */
   private checkEmailConfirmation(): void {
-    if (!this.emailCodeExperiment.isActive()) {
-      return; // feature not enabled.
-    }
-
     if (!this.emailConfirmationLoginSubscription) {
       // re-trigger on login events, so that when a user registers it opens.
       this.emailConfirmationLoginSubscription = this.session.loggedinEmitter
@@ -278,7 +274,10 @@ export class Minds implements OnInit, OnDestroy {
         });
     }
 
-    if (this.emailConfirmationService.requiresEmailConfirmation()) {
+    if (
+      this.emailCodeExperiment.isActive() &&
+      this.emailConfirmationService.requiresEmailConfirmation()
+    ) {
       // try to verify - this should cause MFA modal to trigger from interceptor.
       this.emailConfirmationService.confirm();
     }

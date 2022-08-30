@@ -8,15 +8,13 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Observable, Subscription } from 'rxjs';
-import { MindsUser } from '../../../../interfaces/entities';
-
 import { SettingsV2Service } from '../../settings-v2.service';
 import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { FeedNoticeService } from '../../../notices/services/feed-notice.service';
 
 /**
  * Settings form for changing the email address where notifications are sent.
@@ -40,7 +38,8 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
     private session: Session,
     protected settingsService: SettingsV2Service,
     private dialogService: DialogService,
-    protected modalService: ModalService
+    protected modalService: ModalService,
+    private feedNotices: FeedNoticeService
   ) {}
 
   ngOnInit() {
@@ -93,6 +92,10 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
       }
       this.formSubmitted.emit({ formSubmitted: true });
       this.user.email_confirmed = false;
+
+      // reset feed notices so verify email notice shows.
+      this.feedNotices.undismiss('verify-email');
+      this.feedNotices.fetch();
       this.form.reset();
     } catch (e) {
       this.formSubmitted.emit({ formSubmitted: false, error: e });

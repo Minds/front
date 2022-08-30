@@ -47,8 +47,4 @@
   padding: $spacing4;
   border-radius: $borderRadius--activity;
   @include border;
-
-  @include m-theme() {
-    background: themed($m-bgColor--primary);
-  }
 }

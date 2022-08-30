@@ -1,6 +1,7 @@
 @import 'defaults.scss';
 
 :host {
+  display: block;
   // *********************************
   // ** FEED **
   // *********************************
@@ -128,10 +129,6 @@
   // *********************************
   // *********************************
 
-  @include m-theme() {
-    background-color: themed($m-bgColor--primary);
-  }
-
   .m-activityToolbar__metrics,
   .m-activityToolbar__actions {
     display: flex;
@@ -207,6 +204,7 @@
     }
 
     ::ng-deep minds-button-comment {
+      @include unselectable;
       cursor: pointer;
 
       &:hover {

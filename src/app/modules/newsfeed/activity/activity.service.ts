@@ -39,6 +39,7 @@ export type ActivityDisplayOptions = {
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
+  isInset: boolean; // is the activity inside a context where we don't want the hover+highlight functionality? (e.g. boost modal, quote composer)
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
 };
@@ -328,6 +329,7 @@ export class ActivityService implements OnDestroy {
     isSidebarBoost: false,
     isFeed: false,
     isSingle: false,
+    isInset: false,
     isV2: false,
     permalinkBelowContent: false,
   };
@@ -437,6 +439,18 @@ export class ActivityService implements OnDestroy {
     }
 
     return entity;
+  }
+
+  clickedAnchor(node) {
+    return node instanceof HTMLAnchorElement;
+  }
+
+  clickedDropdown(node) {
+    while (
+      (node = node.parentElement) &&
+      !node.classList.contains('m-dropdownMenu__item')
+    );
+    return node;
   }
 
   /**

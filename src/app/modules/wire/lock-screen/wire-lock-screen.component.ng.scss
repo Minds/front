@@ -11,10 +11,18 @@
   &.m-wireLockScreen--activityV2 {
     // Shift button toward center of image posts
     // when accompanied by top message text
-    .m-wire__lockScreen.isMedia {
-      &:not(.isVideo):not(.isTextOnly):not(.m-wire__lockScreen--minimalMode) {
-        .m-wireLockScreen__inner {
-          margin-top: -$spacing12;
+    .m-wire__lockScreen {
+      &.isMedia {
+        &:not(.isVideo):not(.isTextOnly):not(.m-wire__lockScreen--minimalMode) {
+          .m-wireLockScreen__inner {
+            margin-top: -$spacing12;
+          }
+        }
+      }
+
+      &.isTextOnly {
+        @include m-theme() {
+          background-color: transparent;
         }
       }
     }

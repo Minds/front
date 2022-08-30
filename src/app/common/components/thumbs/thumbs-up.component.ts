@@ -78,6 +78,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns void
    */
   onClick(e: MouseEvent): void {
+    e.stopPropagation();
+
     if (this.inProgress) {
       return;
     }

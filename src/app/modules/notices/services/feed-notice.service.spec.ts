@@ -1,5 +1,5 @@
 import { BehaviorSubject, of } from 'rxjs';
-import { FeedNotice } from '../feed-notice.types';
+import { FeedNotice, NoticeKey } from '../feed-notice.types';
 import { FeedNoticeService } from './feed-notice.service';
 
 const defaultNotices = [
@@ -35,6 +35,9 @@ const defaultNotices = [
 
 export let feedNoticeDismissalService = new (function() {
   this.dismissNotice = jasmine.createSpy('dismissNotice').and.returnValue(this);
+  this.undismissNotice = jasmine
+    .createSpy('undismissNotice')
+    .and.returnValue(this);
   this.isNoticeDismissed = jasmine
     .createSpy('isNoticeDismissed')
     .and.returnValue(false);
@@ -154,6 +157,24 @@ describe('FeedNoticeService', () => {
     service.dismiss('build-your-algorithm');
 
     expect((service as any).notices$.getValue()).toEqual(updatedNotices);
+  });
+
+  it('should undismiss', () => {
+    let noticeKey: NoticeKey = 'build-your-algorithm',
+      updatedNotices = defaultNotices;
+
+    for (let notice of updatedNotices) {
+      if (notice.location === noticeKey) {
+        notice.dismissed = false;
+      }
+    }
+
+    service.undismiss(noticeKey);
+
+    expect((service as any).notices$.getValue()).toEqual(updatedNotices);
+    expect(
+      (service as any).dismissalService.undismissNotice
+    ).toHaveBeenCalledWith(noticeKey);
   });
 
   it('should be aware of if experiment is active and notices should be full width', () => {

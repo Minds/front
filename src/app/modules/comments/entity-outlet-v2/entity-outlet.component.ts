@@ -47,7 +47,8 @@ export class CommentsEntityOutletV2Component {
   guid: string = '';
   parent: any;
 
-  @Input() limit: number = 12;
+  @Input()
+  limit: number = 12;
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
   @Input() fixedHeight = false;
@@ -57,6 +58,10 @@ export class CommentsEntityOutletV2Component {
     oldHeight: number;
     newHeight: number;
   }> = new EventEmitter();
+
+  /** Used only for feeds */
+  @Output() onExpandChange: EventEmitter<Boolean> = new EventEmitter();
+
   optimisticList: Array<any> = [];
 
   constructor(
@@ -105,30 +110,44 @@ export class CommentsEntityOutletV2Component {
     this.optimisticList.push(comment);
   }
 
-  toggleComments(): void {
+  toggleComments($event): void {
+    $event.stopPropagation();
+
     if (this.count > 0) {
       if (this.showOnlyToggle) {
-        this.openFullComments();
+        this.openFullComments($event);
       } else {
-        this.closeFullComments();
+        this.closeFullComments($event);
       }
     }
   }
 
-  openFullComments(): void {
+  openFullComments($event?): void {
+    if ($event) {
+      $event.stopPropagation();
+    }
+
     if (this.fixedHeight) {
       // redirect to full view newsfeed post
       this.redirectToSinglePage();
     }
     this.showOnlyToggle = false;
     this.activityService.displayOptions.showOnlyCommentsInput = false;
+
+    this.onExpandChange.emit(true);
+
     this.detectChanges();
   }
 
-  closeFullComments(): void {
+  closeFullComments($event): void {
+    $event.stopPropagation();
+
     this.showOnlyToggle = true;
 
     this.activityService.displayOptions.showOnlyCommentsToggle = true;
+
+    this.onExpandChange.emit(false);
+
     this.detectChanges();
   }
 
