@@ -13,6 +13,8 @@ export class ActivityV2ExperimentService {
    * @returns { boolean } whether activity-v2 experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('front-5229-activities', true);
+    return true;
+    //ojm remove
+    // return this.experiments.hasVariation('front-5229-activities', true);
   }
 }

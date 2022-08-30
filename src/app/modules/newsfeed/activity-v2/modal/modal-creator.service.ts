@@ -6,7 +6,11 @@ import { ActivityModalCreatorService } from '../../activity/modal/modal-creator.
 export class ActivityV2ModalCreatorService {
   constructor(private modalCreator: ActivityModalCreatorService) {}
 
-  create(entity: ActivityEntity, injector: Injector): void {
-    this.modalCreator.create(entity, injector);
+  create(
+    entity: ActivityEntity,
+    injector: Injector,
+    multiImageIndex: number = 0
+  ): void {
+    this.modalCreator.create(entity, injector, multiImageIndex);
   }
 }

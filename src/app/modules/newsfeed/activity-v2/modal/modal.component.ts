@@ -332,6 +332,9 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
 
     this.service.setEntity(params.entity);
 
+    this.service.setMultiImageIndex(params.multiImageIndex);
+    console.log('ojm modalComp setModalData', params.multiImageIndex);
+
     this.activityService.setDisplayOptions({
       showOnlyCommentsInput: false,
       showInteractions: true,

@@ -91,7 +91,7 @@ post content to trigger upgrade modal -->
   <!-- ----------------------------------- -->
   <div
     class="m-activityContent__media--image m-activityContent__media"
-    *ngIf="isImage"
+    *ngIf="isImage || (isMultiImage && isModal)"
     [ngClass]="{
       'm-activityContent__media--extraTallImage':
         extraTallImage && (service.displayOptions.isFeed || isMinimalMode),
@@ -144,10 +144,14 @@ post content to trigger upgrade modal -->
   </div>
 </ng-container>
 <!-- ----------------------------------- -->
-<!-- MULTI IMAGE-->
+<!-- MULTI IMAGE -->
+<!-- excluding modal - modal displays same as single image -->
+<!-- because only one image is shown at a time (see imageUrls for which one) -->
 <!-- ----------------------------------- -->
-<ng-container *ngIf="isMultiImage">
-  <m-activityV2Content__multiImage></m-activityV2Content__multiImage>
+<ng-container *ngIf="isMultiImage && !isModal">
+  <m-activityV2Content__multiImage
+    (indexOfClickedImage)="onModalRequested(null, $event)"
+  ></m-activityV2Content__multiImage>
 </ng-container>
 <!-- ----------------------------------- -->
 <!-- QUOTE -->

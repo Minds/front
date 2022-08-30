@@ -37,6 +37,7 @@ import { RelatedContentService } from '../../../../common/services/related-conte
 
 export type MediaModalParams = {
   entity: any;
+  multiImageIndex?: number;
 };
 // Constants of dimensions calculations
 export const ACTIVITY_MODAL_MIN_STAGE_HEIGHT = 520;

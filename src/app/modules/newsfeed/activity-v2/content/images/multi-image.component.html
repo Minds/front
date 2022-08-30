@@ -1,10 +1,19 @@
 <div style="padding-bottom: 56.25%;"></div>
 
-<mat-grid-list cols="2" gutterSize="8px" rowHeight="fit">
+<mat-grid-list
+  cols="2"
+  gutterSize="8px"
+  rowHeight="fit"
+  (click)="onClickImage($event, 0)"
+>
   <mat-grid-tile
     *ngFor="let image of images$ | async; let i = index"
     [rowspan]="(count$ | async) === 3 && i === 1 ? 2 : 1"
   >
-    <img class="image" [src]="image.src" [m-blurhash]="image.blurhash" />
+    <img
+      [src]="image.src"
+      [m-blurhash]="image.blurhash"
+      (click)="onClickImage($event, i)"
+    />
   </mat-grid-tile>
 </mat-grid-list>

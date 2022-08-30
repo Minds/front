@@ -50,6 +50,7 @@
               [showPaywall]="activityService.shouldShowPaywall$ | async"
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
               [maxHeightAllowed]="modalHeight"
+              [multiImageIndex]="multiImageIndex"
             ></m-activityV2__content>
             <m-activityV2__modalQuote
               *ngIf="isQuote && entity"

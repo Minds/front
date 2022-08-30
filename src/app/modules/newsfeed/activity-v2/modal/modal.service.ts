@@ -77,6 +77,10 @@ export class ActivityV2ModalService {
     this.activityService.setEntity(entity);
   }
 
+  setMultiImageIndex(index: number = 0): void {
+    console.log('ojm setMultiImageIndex in the modal service', index);
+  }
+
   returnToSourceUrl(): void {
     this.location.replaceState(this.sourceUrl);
   }
