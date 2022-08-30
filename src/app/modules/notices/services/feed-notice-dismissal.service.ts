@@ -36,6 +36,16 @@ export class FeedNoticeDismissalService {
   }
 
   /**
+   * Set a notice to a un-dismissed state.
+   * @param { NoticeKey } noticeId - identifier of notice to set to un-dismissed state.
+   * @returns { this }
+   */
+  public undismissNotice(noticeId: NoticeKey): this {
+    this.objectStorage.removeSingle(this.storageKey, noticeId);
+    return this;
+  }
+
+  /**
    * Check whether a notice has been dismissed within last X days, set by class variable expirationDays.
    * @param { NoticeKey } noticeId - identifier of notice to check.
    * @returns { boolean } true if notice is in a dismissed state.

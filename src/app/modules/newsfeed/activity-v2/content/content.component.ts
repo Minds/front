@@ -361,7 +361,7 @@ export class ActivityV2ContentComponent
     // Minimal mode hides media description if there is already a title
     return this.isMinimalMode &&
       (this.isImage || this.isVideo) &&
-      this.titleText.length >= 1
+      this.titleText?.length >= 1
       ? true
       : false;
   }

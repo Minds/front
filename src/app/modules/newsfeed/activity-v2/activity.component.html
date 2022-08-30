@@ -1,5 +1,9 @@
 <ng-container m-clientMeta>
-  <div class="m-activity__top">
+  <div
+    class="m-activity__top"
+    (pointerdown)="onActivityPointerdown($event)"
+    (pointerup)="onActivityPointerup($event)"
+  >
     <div
       *ngIf="
         !service.displayOptions.minimalMode &&
@@ -55,16 +59,22 @@
 
   <m-activityV2__toolbar
     *ngIf="service.displayOptions.showToolbar"
+    (pointerdown)="onActivityPointerdown($event)"
+    (pointerup)="onActivityPointerup($event)"
+    (onExpandChange)="onCommentsExpandChange($event)"
   ></m-activityV2__toolbar>
 
   <ng-container *mIfBrowser>
     <m-comments__entityOutletV2
+      (pointerdown)="onActivityPointerdown($event)"
+      (pointerup)="onActivityPointerup($event, true)"
       *ngIf="service.displayOptions.showComments"
       [entity]="service.entity$ | async"
       [canDelete]="canDelete$ | async"
       [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
       [fixedHeight]="service.displayOptions.fixedHeight"
       (onHeightChange)="onCommentsHeightChange($event)"
+      (onExpandChange)="onCommentsExpandChange($event)"
     >
     </m-comments__entityOutletV2>
   </ng-container>

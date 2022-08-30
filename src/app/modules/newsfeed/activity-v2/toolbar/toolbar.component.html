@@ -22,7 +22,7 @@
   <minds-button-comment
     [object]="entity"
     [iconOnly]="service.displayOptions.showInteractions"
-    (click)="toggleComments()"
+    (pointerup)="toggleComments($event)"
     *ngIf="
       !service.displayOptions.showComments ||
       service.displayOptions.showComments

@@ -123,7 +123,11 @@
           >Placement: Newsfeed Sidebar</span
         >
         <div class="m-boostModal__channelCardContainer">
-          <minds-card [object]="entity$ | async" class="m-border"></minds-card>
+          <minds-card
+            [object]="entity$ | async"
+            class="m-border"
+            [isInset]="true"
+          ></minds-card>
         </div>
       </div>
 
