@@ -64,6 +64,7 @@ export class FeedsService implements OnDestroy {
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  fetchInProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   hasMore: Observable<boolean>;
   blockListSubscription: Subscription;
   /**
@@ -223,9 +224,6 @@ export class FeedsService implements OnDestroy {
    */
   setOffset(offset: number): FeedsService {
     this.offset.next(offset);
-    if (this.cachingEnabled) {
-      this._persist();
-    }
     return this;
   }
 
@@ -281,6 +279,19 @@ export class FeedsService implements OnDestroy {
    * Fetches the data.
    */
   fetch(refresh: boolean = false): Promise<any> {
+    /**
+     * if caching was enabled try to rehydrate and check for new posts
+     */
+    if (this.cachingEnabled && !this.rehydrated) {
+      const rehydratedFeed = this._rehydrateAndPersist();
+
+      if (rehydratedFeed) {
+        this.checkForNewPosts();
+        return;
+      }
+    }
+
+    this.fetchInProgress$.next(true);
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -302,18 +313,6 @@ export class FeedsService implements OnDestroy {
 
     if (!this.newPostsLastCheckedAt) {
       this.newPostsLastCheckedAt = Date.now();
-    }
-
-    /**
-     * if caching was enabled try to rehydrate and check for new posts
-     */
-    if (this.cachingEnabled) {
-      const rehydratedFeed = this._rehydrateAndPersist();
-
-      if (rehydratedFeed) {
-        this.checkForNewPosts();
-        return;
-      }
     }
 
     return this.client
@@ -370,6 +369,7 @@ export class FeedsService implements OnDestroy {
         if (!this.offset.getValue()) {
           this.inProgress.next(false);
         }
+        this.fetchInProgress$.next(false);
       });
   }
 
@@ -532,8 +532,6 @@ export class FeedsService implements OnDestroy {
    * @returns { void }
    */
   private _rehydrateAndPersist(update = true) {
-    if (this.rehydrated) return; // don't depend on this
-
     const inMemoryFeedState = this.storage.memory.getFeedState(
       this.endpoint,
       this.location.path()
@@ -549,6 +547,7 @@ export class FeedsService implements OnDestroy {
       this.limit.next(inMemoryFeedState.limit);
       this.newPostsCount$.next(inMemoryFeedState.newPostsCount);
       this.rawFeed.next(inMemoryFeedState.rawFeed || []);
+      this.rehydrated = true;
     }
 
     if (!this.persistSubscription) {
@@ -572,8 +571,6 @@ export class FeedsService implements OnDestroy {
           }
         });
     }
-
-    this.rehydrated = true;
 
     return inMemoryFeedState;
   }

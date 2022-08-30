@@ -11,67 +11,71 @@
       [modifyOverflowStyleOfParentScroll]="false"
       [compareItems]="compareItems"
       [ssrChildHeight]="530"
-      (vsChange)="loadNext($event)"
+      (vsChange)="loadNextThrottler.next($event)"
       [scrollAnimationTime]="0"
       [resizeBypassRefreshThreshold]="10"
     >
-      <m-feedItem
-        [feedItem]="feedItem"
-        *ngFor="
-          let feedItem of scroll.viewPortItems;
-          let i = index;
-          trackBy: feedItemTrackBy
-        "
+      <div #container>
+        <m-feedItem
+          [feedItem]="feedItem"
+          *ngFor="
+            let feedItem of scroll.viewPortItems;
+            let i = index;
+            trackBy: feedItemTrackBy
+          "
+        >
+          <ng-container [ngSwitch]="feedItem.type">
+            <ng-container *ngSwitchCase="'activity'">
+              <m-activity
+                *ngIf="feedItem.data.activity$ | async as activity"
+                [entity]="activity"
+                [displayOptions]="{
+                  showOnlyCommentsInput: true,
+                  isFeed: true
+                }"
+                [slot]="feedItem.data.slot"
+                (deleted)="delete(activity)"
+                #feedViewChildren
+              ></m-activity>
+            </ng-container>
+            <ng-container *ngSwitchCase="'feedNotice'">
+              <m-feedNotice__outlet location="inline"></m-feedNotice__outlet>
+            </ng-container>
+            <ng-container *ngSwitchCase="'featuredContent'">
+              <m-featured-content
+                [slot]="feedItem.data"
+                [displayOptions]="{
+                  showOnlyCommentsInput: true,
+                  isFeed: true
+                }"
+              ></m-featured-content>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'topHighlights'">
+              <m-topHighlights
+                (onSeeMore)="onShowMoreTopFeed()"
+                *ngIf="!(isTopHighlightsDismissed$ | async)"
+              ></m-topHighlights>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'channelRecommendations'">
+              <m-channelRecommendation
+                location="newsfeed"
+                [dismissible]="true"
+                *ngIf="!(isChannelRecommendationDismissed$ | async)"
+              ></m-channelRecommendation>
+            </ng-container>
+          </ng-container>
+        </m-feedItem>
+      </div>
+
+      <infinite-scroll
+        (load)="loadNext()"
+        [enabled]="false"
+        [moreData]="feedService.hasMore | async"
+        [inProgress]="feedService.inProgress | async"
       >
-        <ng-container [ngSwitch]="feedItem.type">
-          <ng-container *ngSwitchCase="'activity'">
-            <m-activity
-              *ngIf="feedItem.data.activity$ | async as activity"
-              [entity]="activity"
-              [displayOptions]="{
-                showOnlyCommentsInput: true,
-                isFeed: true
-              }"
-              [slot]="feedItem.data.slot"
-              (deleted)="delete(activity)"
-              #feedViewChildren
-            ></m-activity>
-          </ng-container>
-          <ng-container *ngSwitchCase="'feedNotice'">
-            <m-feedNotice__outlet location="inline"></m-feedNotice__outlet>
-          </ng-container>
-          <ng-container *ngSwitchCase="'featuredContent'">
-            <m-featured-content
-              [slot]="feedItem.data"
-              [displayOptions]="{
-                showOnlyCommentsInput: true,
-                isFeed: true
-              }"
-            ></m-featured-content>
-          </ng-container>
-
-          <ng-container *ngSwitchCase="'topHighlights'">
-            <m-topHighlights
-              (onSeeMore)="onShowMoreTopFeed()"
-              *ngIf="!(isTopHighlightsDismissed$ | async)"
-            ></m-topHighlights>
-          </ng-container>
-
-          <ng-container *ngSwitchCase="'channelRecommendations'">
-            <m-channelRecommendation
-              location="newsfeed"
-              [dismissible]="true"
-              *ngIf="!(isChannelRecommendationDismissed$ | async)"
-            ></m-channelRecommendation>
-          </ng-container>
-        </ng-container>
-      </m-feedItem>
-
-      <!-- TODO: add loading indicator -->
-      <m-loadingSpinner
-        *ngIf="feedService.inProgress"
-        [inProgress]="feedService.inProgress"
-      ></m-loadingSpinner>
+      </infinite-scroll>
     </virtual-scroller>
   </div>
 </ng-container>

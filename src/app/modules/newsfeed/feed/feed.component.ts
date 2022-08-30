@@ -5,14 +5,15 @@ import {
   ElementRef,
   Input,
   isDevMode,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChild,
-  ViewChildren,
+  ViewChildren
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, map, skip, throttleTime } from 'rxjs/operators';
 import { FeaturedContentService } from '../../../common/components/featured-content/featured-content.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { DismissalService } from '../../../common/services/dismissal.service';
@@ -48,7 +49,7 @@ export interface IFeedItem {
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
 })
-export class FeedComponent implements OnInit, AfterViewInit {
+export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   feedService: FeedsService;
 
@@ -72,6 +73,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
   isChannelRecommendationDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
+  loadNextThrottler = new BehaviorSubject<IPageInfo>(null);
+  loadNextThrottlerSubscription: Subscription;
 
   constructor(
     public client: Client,
@@ -114,6 +117,10 @@ export class FeedComponent implements OnInit, AfterViewInit {
         return this.ensureFeedUniqueness(feedItems);
       })
     );
+
+    this.loadNextThrottlerSubscription = this.loadNextThrottler
+      .pipe(skip(1), throttleTime(300))
+      .subscribe((event: IPageInfo) => this.loadNext(event));
   }
 
   ngAfterViewInit() {
@@ -122,14 +129,21 @@ export class FeedComponent implements OnInit, AfterViewInit {
     }
   }
 
-  loadNext(event: IPageInfo) {
-    // only load next if we're in the proximity of the last 5 posts
+  ngOnDestroy(): void {
+    this.loadNextThrottlerSubscription?.unsubscribe();
+  }
+
+  loadNext(event?: IPageInfo) {
     if (!this.feedService.feedLength) return;
-    if (this.feedService.feedLength - event?.endIndex > 5) return;
+    if (event) {
+      // only load next if we're in the proximity of the last 8 posts
+      if (this.feedService.feedLength - event?.endIndex > 8) return;
+    }
 
     if (
       this.feedService.canFetchMore &&
       !this.feedService.inProgress.getValue() &&
+      !this.feedService.fetchInProgress$.getValue() &&
       this.feedService.offset.getValue()
     ) {
       this.feedService.fetch(); // load the next 150 in the background
