@@ -8,7 +8,12 @@
       overflow-y: hidden;
 
       .m-newsfeedBoostRotator__item {
-        top: 46px; // leave room for toolbar buttons
+        top: 45px; // leave room for rotator toolbar
+
+        // NOTE: when we retire activities V1, uncomment below
+        // and also the .m-newsfeedBoostRotator__item should not
+        // receive a height in the template. It should be 100%;
+        // height: calc(100% - 45px);
       }
     }
   }
