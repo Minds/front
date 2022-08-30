@@ -4,7 +4,7 @@
     <!--actual feed-->
     <virtual-scroller
       #scroll
-      [bufferAmount]="20"
+      [bufferAmount]="10"
       [items]="feedItems$ | async"
       [parentScroll]="scroll.window"
       [enableUnequalChildrenSizes]="true"

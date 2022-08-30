@@ -91,7 +91,6 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.feedItems$ = this.feedService.feed.pipe(
-      distinctUntilChanged(),
       map(feed => {
         if (!feed.length) return [];
 
