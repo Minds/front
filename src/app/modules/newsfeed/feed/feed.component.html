@@ -1,5 +1,5 @@
 <ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
-  <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
+  <div class="minds-list">
     <m-virtualMinimap *ngIf="isDev" [scroll]="scroll"></m-virtualMinimap>
     <!--actual feed-->
     <virtual-scroller
@@ -86,3 +86,12 @@
     (click)="scrollToUnderBoostRotator()"
   ></m-seeLatestPostsButton>
 </ng-container>
+
+<div
+  class="m-virtualScrollOverlay"
+  *ngIf="shouldRestoreScroll"
+  [style.opacity]="(isScrollRestored$ | async) ? 0 : 1"
+  [style.height.px]="
+    scroll?.wrapGroupDimensions?.sumOfKnownWrapGroupChildHeights
+  "
+></div>

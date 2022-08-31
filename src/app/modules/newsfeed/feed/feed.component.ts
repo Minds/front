@@ -49,7 +49,7 @@ export interface IFeedItem {
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
 })
-export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FeedComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input()
   feedService: FeedsService;
 
@@ -75,6 +75,8 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
   );
   loadNextThrottler = new BehaviorSubject<IPageInfo>(null);
   loadNextThrottlerSubscription: Subscription;
+  shouldRestoreScroll = false;
+  isScrollRestored$ = new BehaviorSubject(false);
 
   constructor(
     public client: Client,
@@ -120,12 +122,21 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadNextThrottlerSubscription = this.loadNextThrottler
       .pipe(skip(1), throttleTime(300))
       .subscribe((event: IPageInfo) => this.loadNext(event));
+
+    this.shouldRestoreScroll = !!this.scrollRestoration.getOffsetForRoute(
+      this.router.url
+    );
   }
 
-  ngAfterViewInit() {
-    if (this.scrollRestoration.getOffsetForRoute(this.router.url)) {
-      this.scrollRestoration.restoreScroll(this.router.url);
-    }
+  ngAfterViewInit(): void {
+    this.feedViewChildren.changes.subscribe(feedViewChildren => {
+      if (feedViewChildren.length > 0 && !this.isScrollRestored$.getValue()) {
+        if (this.shouldRestoreScroll) {
+          this.scrollRestoration.restoreScroll(this.router.url);
+          this.isScrollRestored$.next(true);
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,6 +1,5 @@
 import { isPlatformServer } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -35,7 +34,6 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { Client, Upload } from '../../../services/api';
 import { ContextService } from '../../../services/context.service';
 import { Navigation as NavigationService } from '../../../services/navigation';
-import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
 import { ComposerComponent } from '../../composer/composer.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
@@ -148,15 +146,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   newsfeedEndText = $localize`:@@COMMON__FEED_END:End of your newsfeed`;
 
   public persistentFeedExperimentActive: boolean;
-  /**
-   * whether the scroll should be restored
-   */
-  public shouldRestoreScroll = false;
-
-  /**
-   * whether the scroll has been restored on this page
-   */
-  public isScrollRestored$ = new BehaviorSubject(false);
 
   constructor(
     public client: Client,
@@ -173,7 +162,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public feedsUpdate: FeedsUpdateService,
     private toast: ToasterService,
     private experiments: ExperimentsService,
-    private scrollRestoration: ScrollRestorationService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
     private dismissal: DismissalService,

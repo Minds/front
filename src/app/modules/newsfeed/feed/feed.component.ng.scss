@@ -8,4 +8,17 @@
       border-color: themed($m-borderColor--primary);
     }
   }
+
+  ::ng-deep .m-virtualScrollOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: -100vw;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 19;
+  }
 }
