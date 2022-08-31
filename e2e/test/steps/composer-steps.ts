@@ -20,16 +20,19 @@ namespace ComposerSteps {
     }
   });
 
-  When('I click the post button', () => {});
-
-  Then('I should see two previews of my selected imaged', () => {
-    I.seeElement(
-      locate('m-composer__modal m-composerpreview--attachment').at(1)
-    );
-    I.seeElement(
-      locate('m-composer__modal m-composerpreview--attachment').at(2)
-    );
+  When('I click the post button', () => {
+    I.click('m-composer__modal [data-cy=post-button]');
   });
 
-  Then('I am able to create the post', () => {});
+  Then('I should see {int} previews of my selected imaged', num => {
+    for (let i = 1; i <= num; i++) {
+      I.seeElement(
+        locate('m-composer__modal m-composerpreview--attachment').at(i)
+      );
+    }
+  });
+
+  Then('I am able to create the post', () => {
+    // TODOD
+  });
 }
