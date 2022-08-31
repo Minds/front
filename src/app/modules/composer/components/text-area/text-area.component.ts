@@ -14,6 +14,8 @@ import {
 import { ComposerService } from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 /**
  * Composer message and title components.
@@ -58,6 +60,15 @@ export class TextAreaComponent implements AfterViewInit {
   messageInput: ElementRef<HTMLTextAreaElement>;
 
   /**
+   * Has attachments
+   */
+  hasAttachments$: Observable<boolean> = this.service.data$.pipe(
+    tap(() => console.log('hasAttachment text area pipe')),
+    map(values => values.attachmentGuids?.length > 0),
+    tap(val => console.log(val))
+  );
+
+  /**
    * Constructor
    * @param service
    * @param platformId
@@ -80,13 +91,6 @@ export class TextAreaComponent implements AfterViewInit {
    */
   get title$() {
     return this.service.title$;
-  }
-
-  /**
-   * Attachment subject from service
-   */
-  get attachment$() {
-    return this.service.attachments$;
   }
 
   /**

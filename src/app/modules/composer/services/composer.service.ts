@@ -13,6 +13,7 @@ import {
   map,
   mergeAll,
   pairwise,
+  share,
   startWith,
   tap,
 } from 'rxjs/operators';
@@ -489,7 +490,8 @@ export class ComposerService implements OnDestroy {
         const tooManyTags = tagCount > 5;
 
         this.tooManyTags$.next(tooManyTags);
-      })
+      }),
+      share()
     );
 
     /**

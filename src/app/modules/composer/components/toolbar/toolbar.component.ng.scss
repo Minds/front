@@ -132,19 +132,12 @@
       animation-delay: 0.6s;
     }
   }
-  .m-composerToolbar__item:not(.m-composerToolbar__item--small),
+  .m-composerToolbar__item,
   ::ng-deep m-file-upload {
     margin-right: $spacing6;
 
     @media screen and (max-width: 400px) {
       margin-right: 0;
-    }
-  }
-
-  .m-composerToolbar__item--small,
-  ::ng-deep m-file-upload.m-composerToolbar__item--small {
-    span {
-      display: none;
     }
   }
 
