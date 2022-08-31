@@ -108,12 +108,6 @@ export class ActivityV2ContentComponent
 
   @Input() maxHeightAllowed: number;
 
-  /**
-   * For multi-image posts in the modal,
-   * Display only one image at a time
-   */
-  @Input() multiImageIndex: number;
-
   @ViewChild('videoEl', { read: ElementRef })
   videoEl: ElementRef;
 
@@ -147,6 +141,9 @@ export class ActivityV2ContentComponent
 
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
+
+  activeMultiImageIndex: number;
+  activeMultiImageUrl: string;
 
   readonly siteUrl: string;
   readonly cdnAssetsUrl: string;
@@ -307,6 +304,12 @@ export class ActivityV2ContentComponent
         this.isQuote = is;
       })
     );
+    this.subscriptions.push(
+      this.service.activeMultiImageIndex$.subscribe((i: number) => {
+        this.activeMultiImageIndex = i;
+        this.activeMultiImageUrl = this.entity.custom_data[i].src;
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -374,23 +377,16 @@ export class ActivityV2ContentComponent
     return this.entity.entity_guid;
   }
 
-  get imageUrls(): string[] {
+  get imageUrl(): string {
     if (this.entity.custom_type === 'batch') {
-      let thumbUrls = this.entity.custom_data.map(attachment => attachment.src);
-      console.log('ojm thumburls1', this.multiImageIndex, thumbUrls);
-
-      if (this.isModal && this.isMultiImage) {
-        thumbUrls = [thumbUrls[this.multiImageIndex]];
-        console.log('ojm thumburls target', this.multiImageIndex, thumbUrls);
-      }
-      return thumbUrls;
+      return this.entity.custom_data[0].src;
     }
 
     if (this.entity.thumbnail_src && this.entity.custom_type !== 'video') {
-      return [this.entity.thumbnail_src];
+      return this.entity.thumbnail_src;
     }
 
-    return ['']; // TODO: placeholder
+    return ''; // TODO: placeholder
   }
 
   get mediaHeight(): number | null {
@@ -626,16 +622,26 @@ export class ActivityV2ContentComponent
     this.detectChanges();
   }
 
-  onModalRequested(event?: PointerEvent, multiImageIndex?: number) {
-    console.log('ojm onModalRequesied', event);
-    // Don't try to open modal if on mobile device or already in a modal
-    if (!this.modalService.canOpenInModal() || this.isModal) {
-      return;
-    }
-
+  onModalRequested(event: MouseEvent) {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
+    }
+
+    // Don't try to open modal if already in a modal
+    if (this.isModal) {
+      return;
+    }
+
+    // If on mobile device...
+    if (!this.modalService.canOpenInModal()) {
+      if (this.isMultiImage) {
+        // ...and clicked on multi-image image,
+        // open that image in a new tab instead of modal
+        window.open(this.activeMultiImageUrl, '_blank');
+      }
+      // Ignore all other modal requests from mobile devices
+      return;
     }
 
     // if sidebarMode, navigate to canonicalUrl for all content types
@@ -644,13 +650,10 @@ export class ActivityV2ContentComponent
       return;
     }
 
-    //
-
     if (
       this.service.displayOptions.bypassMediaModal &&
       this.entity.content_type !== 'image' &&
-      this.entity.content_type !== 'video' &&
-      this.entity.content_type !== 'batch'
+      this.entity.content_type !== 'video'
     ) {
       // Open new window to media page instead of media modal
       window.open(this.canonicalUrl, '_blank');
@@ -666,14 +669,15 @@ export class ActivityV2ContentComponent
       return;
     }
 
-    // Open the activity modal.
-    //
-    // If clicked on multi-image image,
-    // open modal to that image
+    console.log(
+      'ojm CONTENT* about to create modal',
+      this.activeMultiImageIndex
+    );
+    // Open the activity modal
     this.activityModalCreator.create(
       this.entity,
       this.injector,
-      multiImageIndex ? multiImageIndex : 0
+      this.activeMultiImageIndex
     );
   }
 
@@ -695,7 +699,7 @@ export class ActivityV2ContentComponent
     }
     $event.stopPropagation();
 
-    if (this.isImage || this.isVideo) {
+    if (this.isImage || this.isVideo || this.isMultiImage) {
       this.onModalRequested($event);
     } else {
       this.redirectToSinglePage();

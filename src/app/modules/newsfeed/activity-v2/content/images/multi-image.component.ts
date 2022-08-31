@@ -8,7 +8,7 @@ import { ActivityService } from '../../../activity/activity.service';
   styleUrls: ['./multi-image.component.ng.scss'],
 })
 export class ActivityV2MultiImageComponent {
-  @Output() indexOfClickedImage: EventEmitter<number> = new EventEmitter();
+  @Output() onClick: EventEmitter<any> = new EventEmitter();
 
   images$ = this.service.entity$.pipe(map(entity => entity.custom_data));
 
@@ -17,11 +17,10 @@ export class ActivityV2MultiImageComponent {
   constructor(public service: ActivityService) {}
 
   onClickImage($event, index: number = 0): void {
-    if ($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-    }
+    $event.preventDefault();
+    $event.stopPropagation();
 
-    this.indexOfClickedImage.emit(index);
+    this.service.activeMultiImageIndex$.next(index);
+    this.onClick.emit($event);
   }
 }

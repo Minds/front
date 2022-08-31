@@ -6,7 +6,10 @@ import {
   Optional,
 } from '@angular/core';
 import { ActivityV2ModalService } from '../modal.service';
-import { ActivityService } from '../../../activity/activity.service';
+import {
+  ActivityEntity,
+  ActivityService,
+} from '../../../activity/activity.service';
 import { RelatedContentService } from '../../../../../common/services/related-content.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { MediumFadeAnimation } from '../../../../../animations';
@@ -23,81 +26,48 @@ import { AutoProgressVideoService } from '../../../../../modules/media/component
   animations: [MediumFadeAnimation],
 })
 export class ActivityV2ModalPagerComponent implements OnInit, OnDestroy {
-  protected modalPagerSubscription: Subscription;
-  protected asyncEntitySubscription: Subscription;
-  protected autoProgressSubscription: Subscription;
+  currentIndex: number = 0;
 
-  modalPager = {
-    hasPrev: false,
-    hasNext: false,
-  };
+  subscriptions: Subscription[];
+
+  entity: ActivityEntity;
+
+  multiImageCount: number;
+
+  hasPrev: boolean = false;
+  hasNext: boolean = false;
 
   constructor(
     public service: ActivityV2ModalService,
-    public activityService: ActivityService,
-    @Optional() private autoProgress: AutoProgressVideoService,
-    private relatedContent: RelatedContentService
+    public activityService: ActivityService
   ) {}
 
   ngOnInit(): void {
-    /**
-     * Whenever user clicks a pager button,
-     * recalculate whether or not to display pager buttons
-     */
-    this.modalPagerSubscription = this.relatedContent
-      .onChange()
-      .subscribe(async change => {
-        this.modalPager = {
-          hasNext: await this.relatedContent.hasNext(),
-          hasPrev: await this.relatedContent.hasPrev(),
-        };
-      });
+    this.subscriptions = [
+      this.activityService.entity$.subscribe(entity => {
+        this.entity = entity;
 
-    if (this.autoProgress) {
-      /** Trigger next video */
-      this.autoProgressSubscription = this.autoProgress.goNext$.subscribe(
-        (val: boolean) => {
-          this.goToNext();
-        }
-      );
+        this.multiImageCount = this.entity.custom_data.length;
+      }),
+    ];
 
-      if (this.relatedContent.getBaseEntity().custom_type === 'video') {
-        this.relatedContent.setFilter('videos');
-      }
-    }
+    this.subscriptions.push(
+      this.activityService.activeMultiImageIndex$.subscribe(i => {
+        this.currentIndex = i;
 
-    this.relatedContent.setContext('container');
+        /**
+         * Whenever the image changes,
+         * recalculate whether or not to display pager buttons
+         */
+        this.hasPrev = i > 0;
+        this.hasNext = i < this.multiImageCount - 1;
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.clearAsyncEntity();
-
-    if (this.modalPagerSubscription) {
-      this.modalPagerSubscription.unsubscribe();
-    }
-    if (this.asyncEntitySubscription) {
-      this.asyncEntitySubscription.unsubscribe();
-    }
-    if (this.autoProgressSubscription) {
-      this.autoProgressSubscription.unsubscribe();
-    }
-  }
-
-  setAsyncEntity(asyncEntity: BehaviorSubject<any>): void {
-    this.clearAsyncEntity();
-
-    this.asyncEntitySubscription = asyncEntity.subscribe(entity => {
-      if (entity) {
-        this.service.setEntity(entity);
-        this.service.loading$.next(false);
-      }
-    });
-  }
-
-  clearAsyncEntity(): void {
-    if (this.asyncEntitySubscription) {
-      this.asyncEntitySubscription.unsubscribe();
-      this.asyncEntitySubscription = void 0;
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -106,27 +76,11 @@ export class ActivityV2ModalPagerComponent implements OnInit, OnDestroy {
    * and reset entity in activity service
    */
   async goToNext(): Promise<void> {
-    if (!this.modalPager.hasNext) {
+    if (!this.hasNext) {
       return;
     }
 
-    if (this.autoProgress) {
-      this.autoProgress.cancel();
-    }
-
-    this.service.loading$.next(true);
-
-    const response = await this.relatedContent.next();
-
-    if (response && response.entity) {
-      this.setAsyncEntity(response.entity);
-    } else {
-      this.service.loading$.next(false);
-    }
-
-    if (this.autoProgress) {
-      this.autoProgress.updateNextEntity();
-    }
+    this.activityService.activeMultiImageIndex$.next(this.currentIndex + 1);
   }
 
   /**
@@ -134,27 +88,11 @@ export class ActivityV2ModalPagerComponent implements OnInit, OnDestroy {
    * and reset entity in activity service
    */
   async goToPrev(): Promise<void> {
-    if (!this.modalPager.hasPrev) {
+    if (!this.hasPrev) {
       return;
     }
 
-    if (this.autoProgress) {
-      this.autoProgress.cancel();
-    }
-
-    this.service.loading$.next(true);
-
-    const response = await this.relatedContent.prev();
-
-    if (response && response.entity) {
-      this.setAsyncEntity(response.entity);
-    } else {
-      this.service.loading$.next(false);
-    }
-
-    if (this.autoProgress) {
-      this.autoProgress.updateNextEntity();
-    }
+    this.activityService.activeMultiImageIndex$.next(this.currentIndex - 1);
   }
 
   /////////////////////////////////////////////////////////////////

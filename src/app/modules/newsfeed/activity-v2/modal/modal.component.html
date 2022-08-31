@@ -50,7 +50,6 @@
               [showPaywall]="activityService.shouldShowPaywall$ | async"
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
               [maxHeightAllowed]="modalHeight"
-              [multiImageIndex]="multiImageIndex"
             ></m-activityV2__content>
             <m-activityV2__modalQuote
               *ngIf="isQuote && entity"
@@ -64,7 +63,9 @@
           <!-- OVERLAY (TITLE & FULLSCREEN CTRLS)-->
           <m-activityV2__modalTitleOverlay></m-activityV2__modalTitleOverlay>
           <!-- PAGER BUTTONS -->
-          <m-activityV2__modalPager></m-activityV2__modalPager>
+          <m-activityV2__modalPager
+            *ngIf="isMultiImage"
+          ></m-activityV2__modalPager>
         </div>
       </div>
 

@@ -156,6 +156,13 @@ export class ActivityService implements OnDestroy {
   );
 
   /**
+   * The index of the image that is "active" in a multi-image post
+   * (where applicable)
+   * e.g. which image is currently displayed in the activity modal
+   */
+  activeMultiImageIndex$: BehaviorSubject<number> = new BehaviorSubject(0);
+
+  /**
    * Allows for components to give nsfw consent
    */
   isNsfwConsented$: BehaviorSubject<boolean> = new BehaviorSubject(false);

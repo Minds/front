@@ -126,9 +126,8 @@ post content to trigger upgrade modal -->
       ></ng-container>
 
       <img
-        *ngFor="let imageUrl of imageUrls"
         #imageEl
-        [src]="imageUrl"
+        [src]="!isMultiImage ? imageUrl : activeMultiImageUrl"
         (error)="onImageError($event)"
         (click)="onModalRequested($event)"
         [m-blurhash]="service.entity$ | async"
@@ -138,6 +137,7 @@ post content to trigger upgrade modal -->
         "
         [style.height.px]="imageHeight"
         [style.width.px]="imageWidth"
+        [ngClass]="{ 'm-border': !isModal }"
         class="m-border"
       />
     </ng-template>
@@ -145,12 +145,12 @@ post content to trigger upgrade modal -->
 </ng-container>
 <!-- ----------------------------------- -->
 <!-- MULTI IMAGE -->
-<!-- excluding modal - modal displays same as single image -->
-<!-- because only one image is shown at a time (see imageUrls for which one) -->
+<!-- Excluding modals - multi-image displays same as single image in modal -->
+<!-- because only one image is shown at a time -->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="isMultiImage && !isModal">
   <m-activityV2Content__multiImage
-    (indexOfClickedImage)="onModalRequested(null, $event)"
+    (onClick)="onModalRequested($event)"
   ></m-activityV2Content__multiImage>
 </ng-container>
 <!-- ----------------------------------- -->

@@ -10,10 +10,12 @@
     *ngFor="let image of images$ | async; let i = index"
     [rowspan]="(count$ | async) === 3 && i === 1 ? 2 : 1"
   >
-    <img
-      [src]="image.src"
-      [m-blurhash]="image.blurhash"
-      (click)="onClickImage($event, i)"
-    />
+    <!-- ojm this is here to override the hoverclick -->
+    <a class="m-activityContentMedia__link">
+      <img
+        [src]="image.src"
+        [m-blurhash]="image.blurhash"
+        (click)="onClickImage($event, i)"
+    /></a>
   </mat-grid-tile>
 </mat-grid-list>

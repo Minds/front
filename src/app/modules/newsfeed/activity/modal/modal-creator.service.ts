@@ -21,7 +21,7 @@ export class ActivityModalCreatorService {
   create(
     entity: ActivityEntity,
     injector: Injector,
-    multiImageIndex: number = 0
+    activeMultiImageIndex?: number
   ): void {
     if (!this.modalService.canOpenInModal()) {
       return;
@@ -40,21 +40,17 @@ export class ActivityModalCreatorService {
       size: 'xl',
       data: {
         entity,
+        activeMultiImageIndex: activeMultiImageIndex
+          ? activeMultiImageIndex
+          : 0,
       },
       injector,
     };
-
-    // If multi-image, open modal to the clicked image
-    // ojm askMark - can we put this logic into getActivityContentType()?
-    if (entity.custom_type == 'batch' && entity.custom_data.length > 1) {
-      opts.data['multiImageIndex'] = multiImageIndex;
-    }
 
     if (this.shouldTrackActionEvent(entity)) {
       this.trackActionEvent(entity as ContextualizableEntity);
     }
 
-    console.log('ojm creator service', opts.data);
     this.modalService.present(modalComp, opts);
   }
 

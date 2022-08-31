@@ -37,7 +37,7 @@ import { RelatedContentService } from '../../../../common/services/related-conte
 
 export type MediaModalParams = {
   entity: any;
-  multiImageIndex?: number;
+  activeMultiImageIndex: number;
 };
 // Constants of dimensions calculations
 export const ACTIVITY_MODAL_MIN_STAGE_HEIGHT = 520;
@@ -308,8 +308,15 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     return this.entity.activity_type === 'quote';
   }
 
+  get isMultiImage(): boolean {
+    // ojm askMark
+    return (
+      this.entity.custom_type == 'batch' && this.entity.custom_data.length > 1
+    );
+  }
+
   /**
-   * when comments height changes we want to move keep scroll position
+   * When comments height changes we want to move keep scroll position
    */
   onCommentsHeightChange({
     newHeight,
@@ -338,6 +345,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       autoplayVideo: true,
     });
 
+    // ojm remove this and other refs to relatedContent
     // Prepare pager
     this.relatedContent.setBaseEntity(params.entity);
   }

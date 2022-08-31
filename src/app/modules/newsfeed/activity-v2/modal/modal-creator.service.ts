@@ -9,8 +9,8 @@ export class ActivityV2ModalCreatorService {
   create(
     entity: ActivityEntity,
     injector: Injector,
-    multiImageIndex: number = 0
+    activeMultiImageIndex: number
   ): void {
-    this.modalCreator.create(entity, injector, multiImageIndex);
+    this.modalCreator.create(entity, injector, activeMultiImageIndex);
   }
 }
