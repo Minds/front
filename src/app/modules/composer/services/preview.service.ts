@@ -12,6 +12,7 @@ export interface AttachmentPreviewResource {
   payload?: any;
   file?: File;
   progress?: number;
+  guid?: string;
 }
 
 @Injectable()
@@ -33,19 +34,22 @@ export class PreviewService {
       const attachment = attachments[i];
 
       if ((<FileUpload>attachment).file !== undefined) {
-        const file = (<FileUpload>attachment).file;
+        const fileUpload = <FileUpload>attachment;
+        const file = fileUpload.file;
         previews.push({
           source: 'local',
           sourceType: getFileType(file),
           payload: URL.createObjectURL(file),
           file,
-          progress: (<FileUpload>attachment).progress,
+          progress: fileUpload.progress,
+          guid: fileUpload.guid,
         });
       } else if (typeof attachment.guid !== 'undefined') {
         previews.push({
           source: 'guid',
           sourceType: (<Attachment>attachment).type,
           payload: attachment.guid,
+          guid: attachment.guid,
         });
       }
     }
