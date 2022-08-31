@@ -2,6 +2,7 @@
 
 :host {
   position: relative;
+  @include unselectable;
   .m-dropdown--v2 {
     z-index: 4;
   }

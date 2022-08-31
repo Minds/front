@@ -154,6 +154,15 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
+   * Un-dismiss a notice, updating local state and storage.
+   * @param { NoticeKey } noticeKey - key of notice to un-dismiss.
+   */
+  public undismiss(noticeKey: NoticeKey): void {
+    this.patchNoticeAttribute(noticeKey, 'dismissed', false);
+    this.dismissalService.undismissNotice(noticeKey);
+  }
+
+  /**
    * Whether full width notices should be shown. (if activity v2 experiment is active).
    * @returns { boolean } - true if full width notices should be shown.
    */
