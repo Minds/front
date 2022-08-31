@@ -127,11 +127,9 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
         this.isContentReady = false;
         this.cd.detectChanges();
 
-        // ojm probs don't need this either
         // Set the new entity
         this.entity = entity;
 
-        // ojm askMark
         this.isMultiImage =
           this.entity.custom_type == 'batch' &&
           this.entity.custom_data.length > 1;

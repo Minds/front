@@ -308,13 +308,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     return this.entity.activity_type === 'quote';
   }
 
-  get isMultiImage(): boolean {
-    // ojm askMark
-    return (
-      this.entity.custom_type == 'batch' && this.entity.custom_data.length > 1
-    );
-  }
-
   /**
    * When comments height changes we want to move keep scroll position
    */
@@ -345,7 +338,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       autoplayVideo: true,
     });
 
-    // ojm remove this and other refs to relatedContent
     // Prepare pager
     this.relatedContent.setBaseEntity(params.entity);
   }

@@ -10,7 +10,7 @@
     *ngFor="let image of images$ | async; let i = index"
     [rowspan]="(count$ | async) === 3 && i === 1 ? 2 : 1"
   >
-    <!-- ojm this is here to override the hoverclick -->
+    <!-- NOTE: the anchor wrapper is here to override the activity hover click -->
     <a class="m-activityContentMedia__link">
       <img
         [src]="image.src"

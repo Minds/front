@@ -192,7 +192,6 @@ export class ActivityV2ContentComponent
 
   @HostBinding('class.m-activityContent--image')
   get isImage(): boolean {
-    // ojm askMark - can we put part of this logic into getActivityContentType()?
     return (
       (this.entity.custom_type == 'batch' ||
         (this.entity.thumbnail_src &&
@@ -203,7 +202,6 @@ export class ActivityV2ContentComponent
   }
 
   @HostBinding('class.m-activityContent--multiImage')
-  // ojm askMark - can we put this logic into getActivityContentType()?
   get isMultiImage(): boolean {
     return (
       this.entity.custom_type == 'batch' && this.entity.custom_data.length > 1
@@ -669,10 +667,6 @@ export class ActivityV2ContentComponent
       return;
     }
 
-    console.log(
-      'ojm CONTENT* about to create modal',
-      this.activeMultiImageIndex
-    );
     // Open the activity modal
     this.activityModalCreator.create(
       this.entity,
