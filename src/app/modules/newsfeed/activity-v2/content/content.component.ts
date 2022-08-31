@@ -304,8 +304,10 @@ export class ActivityV2ContentComponent
     );
     this.subscriptions.push(
       this.service.activeMultiImageIndex$.subscribe((i: number) => {
-        this.activeMultiImageIndex = i;
-        this.activeMultiImageUrl = this.entity.custom_data[i].src;
+        if (this.isMultiImage) {
+          this.activeMultiImageIndex = i;
+          this.activeMultiImageUrl = this.entity?.custom_data[i].src;
+        }
       })
     );
   }
