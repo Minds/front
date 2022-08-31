@@ -1,6 +1,7 @@
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { Attachment } from './attachment.service';
 import { RichEmbed } from './rich-embed.service';
+import { FileUpload } from './uploader.service';
 import { VideoPoster } from './video-poster.service';
 
 /**
@@ -21,7 +22,7 @@ export type RemindSubjectValue = ActivityEntity | null;
 /**
  * Attachment value type
  */
-export type AttachmentSubjectValue = File[] | Attachment[] | null;
+export type AttachmentSubjectValue = FileUpload[] | Attachment[] | null;
 
 /**
  * Attachment resolved object value (used for payload)

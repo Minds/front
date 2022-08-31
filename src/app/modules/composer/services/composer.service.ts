@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
+  merge,
   Observable,
   race,
   Subscription,
@@ -10,6 +11,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   map,
+  mergeAll,
   pairwise,
   startWith,
   tap,
@@ -189,11 +191,6 @@ export class ComposerService implements OnDestroy {
   );
 
   /**
-   * Current progress subject (state)
-   */
-  readonly progress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-
-  /**
    * Is posting flag subject (state)
    */
   readonly isPosting$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -210,9 +207,7 @@ export class ComposerService implements OnDestroy {
   /**
    * Post-ability check subject (state)
    */
-  readonly canPost$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  readonly canPost$: Observable<boolean>;
 
   /**
    * Is this an edit operation? (state)
@@ -380,10 +375,11 @@ export class ComposerService implements OnDestroy {
        */
       combineLatest([
         this.uploaderService.files$.pipe(
+          startWith([]), // will not ever resolve combineLatest unless we do this
           map(fileUpload => {
-            console.log(fileUpload);
+            if (!fileUpload) return [];
 
-            this.setPreview(fileUpload.map(fileUpload => fileUpload.file));
+            this.setPreview(fileUpload);
 
             return fileUpload.map(fileUpload => fileUpload.guid);
           })
@@ -461,6 +457,10 @@ export class ComposerService implements OnDestroy {
         })
       ),
       tap(values => {
+        ////
+        // TODO: move this to its own pipe, it shouldn't be in a tap!
+        ////
+
         // get tags from title and body.
         const bodyTags = this.hashtagsFromString
           .parseHashtagsFromString(values.message)
@@ -489,14 +489,22 @@ export class ComposerService implements OnDestroy {
         const tooManyTags = tagCount > 5;
 
         this.tooManyTags$.next(tooManyTags);
+      })
+    );
 
-        this.canPost$.next(
-          Boolean(
-            !tooManyTags &&
-              (values.message ||
-                values.attachmentGuids?.length > 0 ||
-                values.richEmbed)
-          )
+    /**
+     * Below is the logic which determines the state of the post button
+     */
+    this.canPost$ = combineLatest([
+      this.tooManyTags$,
+      this.data$,
+      this.uploaderService.isUploadingFinished$,
+    ]).pipe(
+      map(([tooManyTags, data, isUploadingFinished]) => {
+        return Boolean(
+          !tooManyTags &&
+            isUploadingFinished &&
+            (data.message || data.richEmbed || data.attachmentGuids?.length)
         );
       })
     );
@@ -634,7 +642,6 @@ export class ComposerService implements OnDestroy {
 
     // Reset state
     this.inProgress$.next(false);
-    this.progress$.next(0);
     this.isPosting$.next(false);
     this.attachmentError$.next(null);
     this.isEditing$.next(false);
@@ -917,7 +924,6 @@ export class ComposerService implements OnDestroy {
    */
   setProgress(inProgress: boolean, progress: number = 1): void {
     this.inProgress$.next(inProgress);
-    this.progress$.next(progress);
   }
 
   /**

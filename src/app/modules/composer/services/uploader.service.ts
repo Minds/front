@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { merge, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
@@ -48,6 +48,7 @@ export class UploaderService {
    * Will retry a failed file
    */
   fileStartOrRetry$: Observable<File> = this.file$$.pipe(
+    filter(file => !!file),
     mergeMap(file =>
       this.retryFile$$.pipe(
         filter(retryFile => retryFile === file),
@@ -141,17 +142,28 @@ export class UploaderService {
     scan<FileUpload, { [key: string]: FileUpload }>((acc, curr) => {
       if (curr.toRemove) {
         const copy = { ...acc };
-        delete copy[curr.file.name];
+        delete copy[curr.file?.name];
         return copy;
       }
 
       return {
         ...acc,
-        [curr.file.name]: curr,
+        [curr.file?.name]: curr,
       };
     }, {}),
-    map(fileEntities => Object.values(fileEntities)),
+    map(fileUploads => Object.values(fileUploads)),
     share()
+  );
+
+  /**
+   * Confirms all the uploads have returned guids from the server
+   */
+  isUploadingFinished$: Observable<boolean> = this.files$.pipe(
+    startWith([]),
+    map(fileUploads => {
+      const guids = fileUploads.map(fileUpload => fileUpload.guid);
+      return guids.length === guids.filter(guid => !!guid).length; // If we have 'undefined' guids, we're not done yet
+    })
   );
 
   constructor(protected attachmentApi: AttachmentApiService) {}

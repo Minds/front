@@ -134,11 +134,7 @@
   }
   .m-composerToolbar__item:not(.m-composerToolbar__item--small),
   ::ng-deep m-file-upload {
-    margin-right: 25px;
-
-    @media screen and (max-width: $max-mobile) {
-      margin-right: 40px;
-    }
+    margin-right: $spacing6;
 
     @media screen and (max-width: 400px) {
       margin-right: 0;
@@ -147,14 +143,24 @@
 
   .m-composerToolbar__item--small,
   ::ng-deep m-file-upload.m-composerToolbar__item--small {
-    margin-right: 20px;
-
     span {
       display: none;
     }
   }
 
+  .m-composerToolbarItem__label {
+    display: none;
+  }
+
   .composerToolbarItem__label--hidden {
     display: none;
+  }
+
+  ::ng-deep m-emojiPicker {
+    margin-right: $spacing6;
+
+    .m-emojiPicker__icon {
+      font-size: 20px;
+    }
   }
 }

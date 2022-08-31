@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "test:e2e:local": "codeceptjs run --steps -c conf/codecept.local.conf.ts",
+    "test:e2e:local:ui": "codecept-ui run --steps -c conf/codecept.local.conf.ts",
     "test:e2e:real": "codeceptjs run-multiple browserStackCombo --steps -c conf/codecept.real.conf.ts"
   },
   "devDependencies": {

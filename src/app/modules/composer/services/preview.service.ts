@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Attachment, AttachmentType } from './attachment.service';
 import getFileType from '../../../helpers/get-file-type';
+import { FileUpload } from './uploader.service';
 
 /**
  * Media resource preview
@@ -10,6 +11,7 @@ export interface AttachmentPreviewResource {
   sourceType?: AttachmentType;
   payload?: any;
   file?: File;
+  progress?: number;
 }
 
 @Injectable()
@@ -19,30 +21,30 @@ export class PreviewService {
    * @param attachment
    */
   build(
-    attachments: File[] | Attachment[] | null
+    attachments: FileUpload[] | Attachment[] | null
   ): AttachmentPreviewResource[] | null {
     if (!attachments) {
       return null;
     }
-
-    console.log(attachments);
 
     const previews = [];
 
     for (let i in attachments) {
       const attachment = attachments[i];
 
-      if (attachment instanceof File) {
+      if ((<FileUpload>attachment).file !== undefined) {
+        const file = (<FileUpload>attachment).file;
         previews.push({
           source: 'local',
-          sourceType: getFileType(attachment),
-          payload: URL.createObjectURL(attachment),
-          file: attachment,
+          sourceType: getFileType(file),
+          payload: URL.createObjectURL(file),
+          file,
+          progress: (<FileUpload>attachment).progress,
         });
       } else if (typeof attachment.guid !== 'undefined') {
         previews.push({
           source: 'guid',
-          sourceType: attachment.type,
+          sourceType: (<Attachment>attachment).type,
           payload: attachment.guid,
         });
       }

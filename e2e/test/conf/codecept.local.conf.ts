@@ -6,7 +6,7 @@ exports.config = {
   helpers: {
     Playwright: {
       url: process.env.E2E_DOMAIN || 'https://minds.com',
-      show: false,
+      show: true,
       video: true,
       browser: 'chromium',
       retries: 2,
@@ -17,6 +17,7 @@ exports.config = {
   include: {
     I: '../step_definitions/steps_file.ts',
     loginPage: '../pages/loginPage.ts',
+    newsfeedPage: '../pages/newsfeedPage.ts',
     devtoolsPage: '../pages/devtoolsPage.ts',
   },
   mocha: {},

@@ -34,6 +34,11 @@
         <m-composer__coverPhotoSelector
           *ngIf="attachmentPreview.sourceType === 'video'"
         ></m-composer__coverPhotoSelector>
+
+        <m-composer__progress
+          [inProgress]="!attachmentPreview.guid"
+          [progress]="attachmentPreview.progress"
+        ></m-composer__progress>
       </m-composerPreview--attachment>
     </mat-grid-tile>
   </mat-grid-list>

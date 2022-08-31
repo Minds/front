@@ -23,12 +23,6 @@
 
       <m-composer__previewWrapper></m-composer__previewWrapper>
 
-      <m-composer__progress
-        [inProgress]="inProgress$ | async"
-        [progress]="progress$ | async"
-        [compactMode]="isCompactMode$ | async"
-      ></m-composer__progress>
-
       <m-composerPreview--quote
         *ngIf="remind$ | async"
       ></m-composerPreview--quote>
