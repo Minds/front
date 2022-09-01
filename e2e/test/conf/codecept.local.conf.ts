@@ -6,7 +6,7 @@ exports.config = {
   helpers: {
     Playwright: {
       url: process.env.E2E_DOMAIN || 'https://minds.com',
-      show: true,
+      show: false,
       video: true,
       browser: 'chromium',
       retries: 2,
