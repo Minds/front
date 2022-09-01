@@ -9,6 +9,7 @@
   <mat-grid-tile
     *ngFor="let image of images$ | async; let i = index"
     [rowspan]="(count$ | async) === 3 && i === 1 ? 2 : 1"
+    class="m-border"
   >
     <!-- NOTE: the anchor wrapper is here to override the activity hover click -->
     <a class="m-activityContentMedia__link">
