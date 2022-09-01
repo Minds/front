@@ -71,7 +71,7 @@ h1 {
   display: flex;
   align-items: center;
 
-  @media screen and (max-width: $m-grid-max-mobile) {
+  @media screen and(max-width: $m-grid-max-mobile) {
     // margin-left: 23px;
   }
 
@@ -167,7 +167,7 @@ h1 {
         @include m-theme() {
           border-right: 1px solid themed($m-borderColor--primary);
         }
-        @media screen and (max-width: $layoutMin3ColWidth) {
+        @media screen and(max-width: $layoutMin3ColWidth) {
           @include m-theme() {
             border-right: 0;
           }
