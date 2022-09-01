@@ -1,7 +1,11 @@
 /**
 * USAGE
-* to apply gradient as background color,
+* 1. To apply gradient as background color,
 * `@include supermindGradient;`
+*
+* 2. To apply as a border, apply gradient
+* to a parent wrapper element and explicitly add
+* the standard background color to child element.
 */
 @mixin supermindGradient {
   background: linear-gradient(
