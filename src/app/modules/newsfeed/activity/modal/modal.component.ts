@@ -37,6 +37,7 @@ import { RelatedContentService } from '../../../../common/services/related-conte
 
 export type MediaModalParams = {
   entity: any;
+  activeMultiImageIndex: number;
 };
 // Constants of dimensions calculations
 export const ACTIVITY_MODAL_MIN_STAGE_HEIGHT = 520;
@@ -308,7 +309,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * when comments height changes we want to move keep scroll position
+   * When comments height changes we want to move keep scroll position
    */
   onCommentsHeightChange({
     newHeight,
