@@ -1,36 +1,13 @@
-//  ojm put stuff here after verified with ng.scss
-// ojm import this file to main.scss
-
-.m-supermind__gradientBackground {
+/**
+* USAGE
+* to apply gradient as background color,
+* `@include supermindGradient;`
+*/
+@mixin supermindGradient {
   background: linear-gradient(
     96deg,
     #0038ff 3.14%,
     #6c37e7 56.68%,
     #ac0091 112.49%
   );
-}
-
-.m-supermind__gradientBorder {
-  $border: 1px;
-  background-clip: padding-box;
-  border: solid $border transparent;
-  border-radius: $m-borderRadius;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    margin: -$border;
-    border-radius: inherit;
-    background: linear-gradient(
-      96deg,
-      #2b52e8 11.69%,
-      #5238ed 42.87%,
-      #9b0fa8 76.07%
-    );
-  }
 }
