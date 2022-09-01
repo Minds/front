@@ -221,7 +221,11 @@ export class ActivityV2ContentComponent
 
   @HostBinding('class.m-activityContent--textlessMedia')
   get textlessMedia(): boolean {
-    return !this.titleText && !this.bodyText && (this.isVideo || this.isImage);
+    return (
+      !this.titleText &&
+      !this.bodyText &&
+      (this.isVideo || this.isImage || this.isMultiImage)
+    );
   }
 
   constructor(
@@ -330,7 +334,9 @@ export class ActivityV2ContentComponent
   }
 
   get titleText(): string {
-    return this.isImage || this.isVideo ? this.entity.title : '';
+    return this.isImage || this.isVideo || this.isMultiImage
+      ? this.entity.title
+      : '';
   }
 
   get bodyText(): string {

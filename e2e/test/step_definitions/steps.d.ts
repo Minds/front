@@ -1,8 +1,10 @@
 /// <reference types='codeceptjs' />
-type steps_file = typeof import('./steps_file.ts');
+//type steps_file = typeof import('./steps_file');
 type loginPage = typeof import('../pages/loginPage');
 type devtoolsPage = typeof import('../pages/devtoolsPage');
 type newsfeedPage = typeof import('../pages/newsfeedPage');
+type commonPage = typeof import('../pages/commonPage');
+type composerModal = typeof import('../pages/composerModal');
 
 declare namespace CodeceptJS {
   interface SupportObject {
@@ -10,10 +12,12 @@ declare namespace CodeceptJS {
     loginPage: loginPage;
     devtoolsPage: devtoolsPage;
     newsfeedPage: newsfeedPage;
+    commonPage: commonPage;
+    composerModal: composerModal;
     current: any;
   }
   interface Methods extends Playwright {}
-  interface I extends ReturnType<steps_file> {}
+  interface I extends WithTranslation<Methods> {}
   namespace Translation {
     interface Actions {}
   }
