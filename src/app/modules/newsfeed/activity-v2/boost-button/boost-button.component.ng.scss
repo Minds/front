@@ -1,11 +1,18 @@
 @import 'defaults.scss';
 
 :host {
-  button span {
-    font-size: 1rem;
-    padding-left: 0.25rem;
-    vertical-align: middle;
-    letter-spacing: normal;
+  @include unselectable;
+
+  button {
+    @include m-theme() {
+      background-color: transparent;
+    }
+    span {
+      font-size: 1rem;
+      padding-left: 0.25rem;
+      vertical-align: middle;
+      letter-spacing: normal;
+    }
   }
 
   .m-boostButton__tooltip .m-tooltip--bubble {
@@ -39,6 +46,12 @@
       animation-delay: 0.6s;
 
       -webkit-background-clip: text;
+    }
+  }
+
+  .m-boostButton__label {
+    @include custom-viewport($max-width: '565px') {
+      display: none;
     }
   }
 

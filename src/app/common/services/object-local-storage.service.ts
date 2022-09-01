@@ -28,6 +28,18 @@ export class ObjectLocalStorageService {
   }
 
   /**
+   * Remove a single key
+   * @param { string } storageKey - key we're storing under.
+   * @param { string } objectKey - sub-object key to remove.
+   * @returns
+   */
+  public removeSingle(storageKey: string, objectKey: string): this {
+    let object = this.getAll(storageKey);
+    delete object[objectKey];
+    return this.setAll(storageKey, object);
+  }
+
+  /**
    * Overwrite the whole object in local storage.
    * @param { string } storageKey - key we're setting.
    * @param { any } object - replacement object.

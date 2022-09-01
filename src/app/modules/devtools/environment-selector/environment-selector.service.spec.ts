@@ -126,6 +126,7 @@ describe('EnvironmentSelectorService', () => {
   });
 
   it('should switch environment to canary', async () => {
+    (service as any).configs.get.and.returnValue('staging');
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).api.get.and.returnValue(of({ enabled: false }));
     (service as any).api.put.and.returnValue(of({ status: 'success' }));

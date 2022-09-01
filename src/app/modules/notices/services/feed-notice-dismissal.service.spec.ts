@@ -3,6 +3,7 @@ import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 
 export let objectLocalStorageServiceMock = new (function() {
   this.setSingle = jasmine.createSpy('setSingle').and.returnValue(this);
+  this.removeSingle = jasmine.createSpy('removeSingle').and.returnValue(this);
   this.getAll = jasmine.createSpy('getAll').and.returnValue(this);
 })();
 
@@ -61,5 +62,14 @@ describe('FeedNoticeDismissalService', () => {
   it('should determine notice is not dismissed if nothing in object storage', () => {
     (service as any).objectStorage.getAll.and.returnValue({});
     expect(service.isNoticeDismissed('enable-push-notifications')).toBeFalsy();
+  });
+
+  it('should call to remove a single notice from object storage', () => {
+    const key = 'enable-push-notifications';
+    service.undismissNotice(key);
+    expect((service as any).objectStorage.removeSingle).toHaveBeenCalledWith(
+      'dismissed-feed-notices',
+      key
+    );
   });
 });
