@@ -155,6 +155,14 @@ export class UploaderService {
   );
 
   /**
+   * The count of active uploads
+   */
+  filesCount$: Observable<number> = this.files$.pipe(
+    startWith([]), // So we have an initial value of 0
+    map(fileUploads => fileUploads?.length || 0)
+  );
+
+  /**
    * Confirms all the uploads have returned guids from the server
    */
   isUploadingFinished$: Observable<boolean> = this.files$.pipe(

@@ -15,7 +15,14 @@ import {
   Input,
 } from '@angular/core';
 import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  first,
+  last,
+  map,
+  take,
+} from 'rxjs/operators';
 import {
   AttachmentSubjectValue,
   ComposerService,
@@ -97,8 +104,17 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
-  uploadActive$: Observable<boolean> = this.uploaderService.files$.pipe(
-    map(files => files?.length > 0)
+  /**
+   * The count of actively selected uploads
+   */
+  uploadCount$ = this.uploaderService.filesCount$;
+  uploadCount: number = 0;
+
+  /**
+   * Boolean of if any uploads are active (selected)
+   */
+  uploadActive$: Observable<boolean> = this.uploadCount$.pipe(
+    map(count => count > 0)
   );
 
   canSchedule$ = this.service.canSchedule$;
@@ -127,7 +143,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.push(
       this.windowResize$
         .pipe(debounceTime(250))
-        .subscribe(() => this.calcNarrow())
+        .subscribe(() => this.calcNarrow()),
+      this.uploadCount$.subscribe(
+        uploadCount => (this.uploadCount = uploadCount)
+      )
     );
 
     /**
@@ -286,7 +305,14 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   onAttachmentSelect($event: FileUploadSelectEvent): void {
+    let uploadCount = this.uploadCount;
+
     for (let i in $event) {
+      if (uploadCount++ >= 4) {
+        this.toaster.error('You may not upload more than 4 images');
+        return;
+      }
+
       const file: File = $event[i];
       this.uploaderService.file$$.next(file);
     }

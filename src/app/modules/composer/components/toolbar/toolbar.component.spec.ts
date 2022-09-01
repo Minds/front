@@ -72,6 +72,7 @@ describe('Composer Toolbar', () => {
         {
           file$$: new Subject(),
           files$: of([]),
+          filesCount$: of(0),
         }
       );
 
