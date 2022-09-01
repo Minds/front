@@ -1,5 +1,5 @@
 <a
-  *ngIf="(service.pagerVisible$ | async) && modalPager.hasPrev"
+  *ngIf="(service.pagerVisible$ | async) && hasPrev"
   class="m-activityModal__pager m-activityModal__pager--previous"
   (click)="goToPrev()"
   @mediumFade
@@ -8,7 +8,7 @@
 </a>
 
 <a
-  *ngIf="(service.pagerVisible$ | async) && modalPager.hasNext"
+  *ngIf="(service.pagerVisible$ | async) && hasNext"
   class="m-activityModal__pager m-activityModal__pager--next"
   (click)="goToNext()"
   @mediumFade
