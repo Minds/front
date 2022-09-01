@@ -48,7 +48,6 @@ export class UploaderService {
    * Will retry a failed file
    */
   fileStartOrRetry$: Observable<File> = this.file$$.pipe(
-    filter(file => !!file),
     mergeMap(file =>
       this.retryFile$$.pipe(
         filter(retryFile => retryFile === file),

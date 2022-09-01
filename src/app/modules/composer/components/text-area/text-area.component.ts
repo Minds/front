@@ -63,9 +63,7 @@ export class TextAreaComponent implements AfterViewInit {
    * Has attachments
    */
   hasAttachments$: Observable<boolean> = this.service.data$.pipe(
-    tap(() => console.log('hasAttachment text area pipe')),
-    map(values => values.attachmentGuids?.length > 0),
-    tap(val => console.log(val))
+    map(values => values.attachmentGuids?.length > 0)
   );
 
   /**

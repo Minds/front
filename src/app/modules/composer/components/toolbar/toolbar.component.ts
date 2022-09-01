@@ -128,37 +128,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.windowResize$
         .pipe(debounceTime(250))
         .subscribe(() => this.calcNarrow())
-      // (this.attachmentSubscription = this.attachment$.subscribe(attachment => {
-      //   if (!attachment && this.fileUploadComponent) {
-      //     this.fileUploadComponent.reset();
-      //   }
-      // })),
-      // this.service.attachmentError$
-      //   .pipe(distinctUntilChanged())
-      //   .subscribe(async error => {
-      //     if (!error) return;
-
-      //     if (this.isModal) {
-      //       if (error.codes) {
-      //         const component = AttachmentErrorComponent;
-      //         component.prototype.error = error;
-
-      //         try {
-      //           await this.popup
-      //             .create(component)
-      //             .present()
-      //             .toPromise();
-      //         } catch (e) {
-      //           console.error(e);
-      //         }
-      //         return;
-      //       }
-
-      //       this.toaster.error(
-      //         error.message ?? 'An unexpected error has occurred'
-      //       );
-      //     }
-      //   })
     );
 
     /**
@@ -206,7 +175,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @internal
    */
   ngOnDestroy(): void {
-    //this.attachmentSubscription.unsubscribe();
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
@@ -318,17 +286,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   onAttachmentSelect($event: FileUploadSelectEvent): void {
-    // if (!($event instanceof File)) {
-    //   // Unsupported attachment type
-    //   console.warn('Composer/Toolbar: Unsupported attachment type', $event);
-    //   return;
-    // } else if (!$event) {
-    //   // Most likely pressed Esc on dialog
-    //   return;
-    // }
-
     for (let i in $event) {
-      const file = $event[i];
+      const file: File = $event[i];
       this.uploaderService.file$$.next(file);
     }
   }
