@@ -658,6 +658,9 @@ export class ComposerService implements OnDestroy {
 
     this.postToPermaweb$.next(false);
 
+    // Reset upload state
+    this.uploaderService.reset();
+
     // Reset original source
     this.entity = null;
   }

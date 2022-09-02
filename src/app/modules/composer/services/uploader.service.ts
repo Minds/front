@@ -1,15 +1,25 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  BehaviorSubject,
+  merge,
+  Observable,
+  of,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
   filter,
+  first,
+  last,
   map,
   mergeAll,
   mergeMap,
   scan,
   share,
   startWith,
+  take,
   takeUntil,
   tap,
 } from 'rxjs/operators';
@@ -28,7 +38,7 @@ export interface FileUpload {
 }
 
 @Injectable({ providedIn: 'root' })
-export class UploaderService {
+export class UploaderService implements OnDestroy {
   /**
    * Emit to here to upload a new file
    */
@@ -173,5 +183,30 @@ export class UploaderService {
     })
   );
 
-  constructor(protected attachmentApi: AttachmentApiService) {}
+  /**
+   * Struggle to get the observables to resolve, so we keep a reference of the values below
+   * used mainly for reset loop
+   */
+  fileUploadRefSubscription: Subscription;
+  fileUploadRefs: FileUpload[] = [];
+
+  constructor(protected attachmentApi: AttachmentApiService) {
+    this.fileUploadRefSubscription = this.files$.subscribe(
+      fileUploads => (this.fileUploadRefs = fileUploads)
+    );
+  }
+
+  ngOnDestroy() {
+    this.fileUploadRefSubscription?.unsubscribe();
+  }
+
+  /**
+   * Will attempt to reset the state of this service
+   */
+  async reset() {
+    for (let i in this.fileUploadRefs) {
+      const file = this.fileUploadRefs[i].file;
+      this.stopFile$$.next(file);
+    }
+  }
 }
