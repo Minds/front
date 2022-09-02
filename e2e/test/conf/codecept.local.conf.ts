@@ -12,6 +12,8 @@ exports.config = {
       retries: 2,
       restart: 'session',
       reporter: 'html',
+      keepCookies: true,
+      keepBrowserState: true,
     },
   },
   include: {

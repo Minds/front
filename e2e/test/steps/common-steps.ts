@@ -14,5 +14,7 @@ namespace CommonSteps {
     }
   );
 
-  Given('I am logged out', (): void => void 0);
+  Given('I am logged out', (): void => {
+    I.clearCookie('minds_sess');
+  });
 }
