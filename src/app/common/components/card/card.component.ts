@@ -41,13 +41,12 @@ import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-se
   providers: [ActivityService],
 })
 export class MindsCard implements OnInit, AfterViewInit {
-  // For activity v2: inset is true if the activity is
-  // displayed inside another component and we don't want the
-  // hover highlight functionality
-  // (e.g.boost modal preview)
-  @Input() isInset = false;
-
   @Input() forceShowSubscribe = false;
+
+  /**
+   * Display options for activity v2 entities
+   */
+  @Input() displayOptions: any;
 
   @ViewChild(DynamicHostDirective, { static: true })
   cardHost: DynamicHostDirective;
@@ -185,15 +184,11 @@ export class MindsCard implements OnInit, AfterViewInit {
       this.componentInstance.entity = this.object;
 
       if (this.activityV2Feature) {
-        (<ActivityComponent>this.componentInstance).displayOptions = {
-          sidebarMode: true,
-          isSidebarBoost: true,
-          showToolbar: false,
-          showComments: false,
-          autoplayVideo: false,
-          showPostMenu: false,
-          isInset: this.isInset,
-        };
+        if (this.displayOptions) {
+          (<ActivityComponent>(
+            this.componentInstance
+          )).displayOptions = this.displayOptions;
+        }
       } else {
         (<ActivityComponent>this.componentInstance).displayOptions = {
           showToolbar: this.flags.hideTabs === false,

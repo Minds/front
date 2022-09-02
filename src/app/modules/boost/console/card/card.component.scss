@@ -9,6 +9,10 @@ m-boost-console-card {
     }
   }
 
+  &.m-boostConsoleCard--activityV2 {
+    border-radius: $m-borderRadius !important;
+  }
+
   .m-boost-card--manager {
     display: flex;
     align-items: center;
