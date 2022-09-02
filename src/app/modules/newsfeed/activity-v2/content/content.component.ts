@@ -346,7 +346,7 @@ export class ActivityV2ContentComponent
     }
 
     // Use media message only if different from title
-    if (this.isImage || this.isVideo) {
+    if (this.isImage || this.isVideo || this.isMultiImage) {
       if (this.entity.message !== this.entity.title) {
         return this.entity.message;
       } else {
