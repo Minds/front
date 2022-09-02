@@ -14,6 +14,12 @@
             [object]="entity | async"
             class="m-border"
             [flags]="{ hideTabs: false }"
+            [displayOptions]="{
+              isFeed: true,
+              isSidebarBoost: false,
+              showComments: false,
+              autoplayVideo: false
+            }"
           ></minds-card>
         </ng-container>
       </div>
@@ -34,7 +40,7 @@
     <h3 i18n="@@BOOST__CONSOLE__BOOSTER__YOUR_CHANNEL_TITLE">Your channel</h3>
     <minds-card
       [object]="session.getLoggedInUser()"
-      class="mdl-shadow--2dp"
+      class="m-border"
     ></minds-card>
 
     <ng-container *ngIf="(feed$ | async)?.length != 0">
@@ -49,9 +55,19 @@
           <ng-container *ngIf="(entity | async)?.thumbnail_src">
             <minds-card
               [object]="entity | async"
-              class="mdl-shadow--2dp"
+              class="m-border"
+              [displayOptions]="{
+                isSidebarBoost: true,
+                minimalMode: false,
+                showToolbar: false,
+                showComments: false,
+                autoplayVideo: false,
+                showPostMenu: false
+              }"
             ></minds-card>
-            <m-boostButton [object]="entity | async"></m-boostButton>
+            <div class="m-boostConsoleBooster__boostButtonWrapper">
+              <m-boostButton [object]="entity | async"></m-boostButton>
+            </div>
           </ng-container>
         </div>
       </div>

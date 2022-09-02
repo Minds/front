@@ -126,7 +126,14 @@
           <minds-card
             [object]="entity$ | async"
             class="m-border"
-            [isInset]="true"
+            [displayOptions]="{
+              isSidebarBoost: true,
+              showToolbar: false,
+              showComments: false,
+              autoplayVideo: false,
+              showPostMenu: false,
+              isInset: true
+            }"
           ></minds-card>
         </div>
       </div>
