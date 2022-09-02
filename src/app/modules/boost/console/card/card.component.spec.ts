@@ -13,6 +13,11 @@ import { BoostService } from '../../boost.service';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
 import { MockComponent } from '../../../../utils/mock';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
+import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
+
+export let activityV2ExperimentServiceMock = new (function() {
+  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
+})();
 
 describe('BoostConsoleCard', () => {
   let comp: BoostConsoleCard;
@@ -44,6 +49,10 @@ describe('BoostConsoleCard', () => {
               {
                 provide: BoostService,
                 useValue: boostServiceMock,
+              },
+              {
+                provide: ActivityV2ExperimentService,
+                useValue: activityV2ExperimentServiceMock,
               },
             ],
           },

@@ -298,7 +298,7 @@
   // ** SIDEBAR BOOST **
   // *********************************
 
-  m-ads-boost & {
+  .m-activity--isSidebarBoost & {
     .m-activityContent__textWrapper {
       padding: 0 $activitySpacing--minimalMode;
     }

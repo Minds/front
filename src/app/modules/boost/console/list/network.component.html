@@ -1,7 +1,11 @@
 <m-boost-console-card
   *ngFor="let boost of boosts; let i = index"
-  class="mdl-card mdl-shadow--4dp"
   [boost]="boost"
+  [ngClass]="{
+    'm-border': activityV2Feature,
+    'mdl-card': !activityV2Feature,
+    'mdl-shadow--4dp': !activityV2Feature
+  }"
 ></m-boost-console-card>
 
 <div

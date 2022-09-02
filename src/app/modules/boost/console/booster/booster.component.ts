@@ -36,7 +36,7 @@ export class BoostConsoleBooster {
   componentRef;
   inProgress = true;
   loaded = false;
-  noContent = true;
+  noContent = false;
 
   constructor(
     public client: Client,
