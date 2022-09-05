@@ -22,7 +22,7 @@
     (onSelect)="onAttachmentSelect($event)"
     accept="image/*,video/*,video/mp4,video/x-m4v"
     data-cy="upload-button"
-    *ngIf="!(remind$ | async)"
+    *ngIf="fileUploadVisible$ | async"
     #fileUploadComponent
   >
     <m-icon

@@ -241,6 +241,10 @@
   // ** QUOTE **
   // *********************************
 
+  .m-activityContent__media + .m-activityContent__quote {
+    margin-top: $spacing4;
+  }
+
   .m-activityContent--quote {
     overflow: hidden;
 
