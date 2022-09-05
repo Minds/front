@@ -65,10 +65,9 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
 })
 export class ActivityV2ModalComponent implements OnInit, OnDestroy {
   entity: any;
-  entitySubscription: Subscription;
-  routerSubscription: Subscription;
-  fullscreenSubscription: Subscription;
-  canonicalUrlSubscription: Subscription;
+  isMultiImage: boolean = false;
+
+  subscriptions: Subscription[];
 
   // Used for backdrop click detection hack
   isOpen: boolean = false;
@@ -83,6 +82,11 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
    */
   isContentReady = false;
   modalHeight: number;
+
+  /**
+   * Multi-image posts
+   */
+  activeMultiImageIndex: number;
 
   @ViewChild('scrollableArea')
   scrollableArea;
@@ -112,8 +116,9 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
     this.modalHeight = window.innerHeight - ACTIVITY_MODAL_PADDING;
-    this.entitySubscription = this.activityService.entity$.subscribe(
-      (entity: ActivityEntity) => {
+
+    this.subscriptions = [
+      this.activityService.entity$.subscribe((entity: ActivityEntity) => {
         if (!entity) {
           return;
         }
@@ -125,14 +130,24 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
         // Set the new entity
         this.entity = entity;
 
+        this.isMultiImage =
+          this.entity.custom_type == 'batch' &&
+          this.entity.custom_data.length > 1;
+
         // Re-display content component
         this.isContentReady = true;
         this.cd.detectChanges();
-      }
+      }),
+    ];
+
+    this.subscriptions.push(
+      this.activityService.activeMultiImageIndex$.subscribe(i => {
+        this.activeMultiImageIndex = i;
+      })
     );
 
-    this.canonicalUrlSubscription = this.activityService.canonicalUrl$.subscribe(
-      canonicalUrl => {
+    this.subscriptions.push(
+      this.activityService.canonicalUrl$.subscribe(canonicalUrl => {
         if (!this.entity) return;
         /**
          * Record pageviews
@@ -155,25 +170,27 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
          * (but don't actually redirect)
          */
         this.location.replaceState(canonicalUrl);
-      }
+      })
     );
 
     // When user clicks a link from inside the modal
-    this.routerSubscription = this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        if (!this.navigatedAway) {
-          this.navigatedAway = true;
+    this.subscriptions.push(
+      this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+          if (!this.navigatedAway) {
+            this.navigatedAway = true;
 
-          // Fix browser history so back button doesn't go to media page
-          this.service.returnToSourceUrl();
+            // Fix browser history so back button doesn't go to media page
+            this.service.returnToSourceUrl();
 
-          // Go to the intended destination
-          this.router.navigate([event.url]);
+            // Go to the intended destination
+            this.router.navigate([event.url]);
 
-          this.service.dismiss();
+            this.service.dismiss();
+          }
         }
-      }
-    });
+      })
+    );
   }
 
   /////////////////////////////////////////////////////////////////
@@ -225,20 +242,8 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.entitySubscription) {
-      this.entitySubscription.unsubscribe();
-    }
-
-    if (this.canonicalUrlSubscription) {
-      this.canonicalUrlSubscription.unsubscribe();
-    }
-
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
-
-    if (this.fullscreenSubscription) {
-      this.fullscreenSubscription.unsubscribe();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
 
     if (this.tabletOverlayTimeout) {
@@ -331,6 +336,10 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
     this.service.setSourceUrl(this.router.url);
 
     this.service.setEntity(params.entity);
+
+    this.activityService.activeMultiImageIndex$.next(
+      params.activeMultiImageIndex
+    );
 
     this.activityService.setDisplayOptions({
       showOnlyCommentsInput: false,

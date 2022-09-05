@@ -41,7 +41,7 @@ export abstract class AbstractMFAFormComponent implements OnDestroy {
   constructor(public service: MultiFactorAuthService) {}
 
   ngOnDestroy(): void {
-    this.inProgress$.next(false);
+    this.inProgress$?.next(false);
   }
 
   /**

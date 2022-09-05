@@ -1,0 +1,103 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding: 0 $spacing8;
+
+  .m-composer__previewWrapper {
+    position: relative;
+    width: 100%;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // justify-content: space-between;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+
+    mat-grid-list {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    ::ng-deep m-composerPreview--attachment {
+      display: block;
+      // padding: $spacing4;
+      box-sizing: border-box;
+      position: relative;
+      width: 100%;
+      height: 100%;
+
+      .m-composerPreview__image,
+      .m-composerPreview__video {
+        width: 100%;
+        //object-fit: contain;
+        object-fit: cover;
+        pointer-events: none;
+        @media screen and (min-width: $max-mobile) {
+          height: 100%;
+        }
+      }
+    }
+
+    .m-composerPreview__close {
+      position: absolute;
+      top: $spacing4;
+      right: $spacing4;
+      z-index: 1;
+      padding: 1px;
+      border: 1px solid;
+      border-radius: 50%;
+      cursor: pointer;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--secondary);
+        border-color: themed($m-borderColor--primary);
+      }
+    }
+
+    m-composer__progress {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 5px;
+      left: 0;
+      z-index: 1;
+    }
+
+    .m-videoPlayer__placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: transparent;
+      i {
+        cursor: not-allowed;
+      }
+    }
+    @media screen and (max-width: $max-mobile) {
+      m-composerPreview--attachment {
+        height: auto;
+        & > img,
+        & > video {
+          height: auto;
+          max-height: 330px;
+        }
+
+        .m-videoPlayer__placeholder {
+          height: 100%;
+          max-height: 330px;
+          i {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+}

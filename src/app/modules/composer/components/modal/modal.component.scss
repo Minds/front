@@ -1,9 +1,11 @@
+@import 'defaults.scss';
+
 m-composer__modal {
   position: relative;
   display: block;
   width: 100%;
   max-width: 585px;
-  padding: 29px 0 34px;
+  padding: $spacing8 0 $spacing4;
   border-radius: 5px;
   box-sizing: border-box;
 

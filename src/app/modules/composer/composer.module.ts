@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule as NgCommonModule } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 import { CommonModule } from '../../common/common.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { ComposerModalService } from './components/modal/modal.service';
@@ -33,6 +35,8 @@ import { ComposerTitleBarDropdownComponent } from './components/title-bar/dropdo
 import { QuotePreviewComponent } from './components/preview/quote-preview.component';
 import { AttachmentErrorComponent } from './components/popup/attachment-error/attachment-error.component';
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
+import { UploaderService } from './services/uploader.service';
+
 /**
  * Exported components
  */
@@ -72,6 +76,7 @@ const PROVIDERS = [
   AttachmentService,
   RichEmbedService,
   PreviewService,
+  UploaderService,
 ];
 
 /**
@@ -87,6 +92,7 @@ const PROVIDERS = [
     TextInputAutocompleteModule,
     RouterModule,
     EmojiPickerModule,
+    MatGridListModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
