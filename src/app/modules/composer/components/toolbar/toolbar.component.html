@@ -12,12 +12,13 @@
   <m-file-upload
     [wrapperClass]="[
       'm-composerToolbar__item',
-      (attachment$ | async) ? 'm-composerToolbar__item--active' : ''
+      (uploadActive$ | async) ? 'm-composerToolbar__item--active' : ''
     ]"
     [hidden]="!canEditMetadata"
     [disabled]="
       !!(attachment$ | async) || (isPosting$ | async) || (isEditing$ | async)
     "
+    [multiple]="true"
     [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (onSelect)="onAttachmentSelect($event)"
     accept="image/*,video/*,video/mp4,video/x-m4v"
@@ -28,7 +29,7 @@
     <m-icon
       class="m-composerToolbarItem__icon"
       from="md"
-      iconId="cloud_upload"
+      iconId="photo"
     ></m-icon>
     <span class="m-composerToolbarItem__label" i18n="@@COMMON__UPLOAD"
       >Upload</span

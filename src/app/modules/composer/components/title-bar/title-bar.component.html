@@ -15,7 +15,7 @@
   <div
     *ngIf="
       !(isEditing$ | async) &&
-      !(attachment$ | async) &&
+      !(hasAttachments$ | async) &&
       !(remind$ | async) &&
       !containerGuid
     "

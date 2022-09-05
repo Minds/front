@@ -7,6 +7,7 @@ import {
   ComposerService,
   DEFAULT_RICH_EMBED_VALUE,
 } from '../../services/composer.service';
+import { UploaderService } from '../../services/uploader.service';
 
 /**
  * Composer preview wrapper. Renders a user-friendly preview of
@@ -21,12 +22,13 @@ import {
   selector: 'm-composer__previewWrapper',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'preview-wrapper.component.html',
+  styleUrls: ['./preview-wrapper.component.ng.scss'],
 })
 export class PreviewWrapperComponent {
   /**
    * The attachment preview metadata subject from the service
    */
-  attachmentPreview$ = this.service.attachmentPreview$;
+  attachmentPreviews$ = this.service.attachmentPreviews$;
 
   /**
    * The rich embed preview metadata subject from the service
@@ -60,6 +62,7 @@ export class PreviewWrapperComponent {
    */
   constructor(
     protected service: ComposerService,
+    protected uploaderSevice: UploaderService,
     protected cd: ChangeDetectorRef
   ) {}
 
@@ -76,10 +79,10 @@ export class PreviewWrapperComponent {
   /**
    * Removes the attachment using the service
    */
-  removeAttachment() {
+  removeAttachment(file: File) {
     // TODO: Implement a nice themed modal confirmation
     if (confirm("Are you sure? There's no UNDO.")) {
-      this.service.removeAttachment();
+      this.uploaderSevice.stopFile$$.next(file);
     }
   }
 

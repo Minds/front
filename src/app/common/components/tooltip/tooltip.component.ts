@@ -1,5 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   ElementRef,
@@ -17,7 +18,7 @@ import { ConfigsService } from '../../services/configs.service';
     '(mouseout)': 'setHidden(true)',
   },
 })
-export class TooltipComponent implements AfterViewInit {
+export class TooltipComponent implements AfterContentInit {
   @Input() icon;
   @Input() anchor: 'top' | 'bottom' | 'right' | 'left';
   @Input() iconClass;
@@ -46,7 +47,7 @@ export class TooltipComponent implements AfterViewInit {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
   }
 
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     if (isPlatformServer(this.platformId)) {
       return;
     }

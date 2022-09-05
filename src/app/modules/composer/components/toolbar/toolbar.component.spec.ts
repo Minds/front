@@ -9,7 +9,9 @@ import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
+import { UploaderService } from '../../services/uploader.service';
+import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
 
 export let mediaQuotesExperimentServiceMock = new (function() {
@@ -69,8 +71,20 @@ describe('Composer Toolbar', () => {
     present: { toPromise: () => {} },
   });
 
+  let uploaderServiceMock;
+
   beforeEach(
     waitForAsync(() => {
+      uploaderServiceMock = jasmine.createSpyObj<UploaderService>(
+        'UploaderService',
+        {},
+        {
+          file$$: new Subject(),
+          files$: of([]),
+          filesCount$: of(0),
+        }
+      );
+
       TestBed.configureTestingModule({
         declarations: [
           ToolbarComponent,
@@ -100,6 +114,14 @@ describe('Composer Toolbar', () => {
           {
             provide: ToasterService,
             useValue: MockService(ToasterService),
+          },
+          {
+            provide: AttachmentApiService,
+            useValue: MockService(AttachmentApiService),
+          },
+          {
+            provide: UploaderService,
+            useValue: uploaderServiceMock,
           },
           {
             provide: MediaQuotesExperimentService,
@@ -151,11 +173,14 @@ describe('Composer Toolbar', () => {
   });
 
   it('should emit on attachment select', () => {
+    spyOn(uploaderServiceMock.file$$, 'next');
+
     const file = new File([], '');
     fixture.detectChanges();
 
-    comp.onAttachmentSelect(file);
-    expect(attachment$.next).toHaveBeenCalledWith(file);
+    comp.onAttachmentSelect([file]);
+
+    expect(uploaderServiceMock.file$$.next).toHaveBeenCalledWith(file);
   });
 
   it('should emit on NSFW popup', () => {
