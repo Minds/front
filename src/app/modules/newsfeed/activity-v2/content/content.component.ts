@@ -656,6 +656,12 @@ export class ActivityV2ContentComponent
       return;
     }
 
+    // We don't support showing media quotes in modal yet
+    if (this.entity.remind_object) {
+      this.redirectToSinglePage();
+      return;
+    }
+
     if (
       this.service.displayOptions.bypassMediaModal &&
       this.entity.content_type !== 'image' &&
@@ -709,7 +715,10 @@ export class ActivityV2ContentComponent
   }
 
   redirectToSinglePage(): void {
-    this.router.navigateByUrl(this.canonicalUrl);
+    // don't navigate if we're already there
+    if (this.router.url !== this.canonicalUrl) {
+      this.router.navigateByUrl(this.canonicalUrl);
+    }
   }
 
   onImageError(e: Event): void {}
