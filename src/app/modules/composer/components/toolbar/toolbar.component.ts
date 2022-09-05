@@ -38,6 +38,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 import isMobile from '../../../../helpers/is-mobile';
+import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -110,7 +111,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
     protected toaster: ToasterService,
-    @Inject(PLATFORM_ID) protected platformId: Object
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    protected mediaQuotesExperiment: MediaQuotesExperimentService
   ) {}
 
   /**
@@ -407,6 +409,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   isMobile() {
     return isMobile();
   }
+
+  fileUploadVisible$ = this.remind$.pipe(
+    map(remind => {
+      if (this.mediaQuotesExperiment.isActive()) {
+        return true;
+      }
+
+      return !remind;
+    })
+  );
 
   /**
    * Triggers change detection

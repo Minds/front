@@ -396,7 +396,11 @@ export class ActivityService implements OnDestroy {
   }
 
   buildCanonicalUrl(entity: ActivityEntity, full: boolean): string {
-    const guid = entity.entity_guid || entity.guid;
+    let guid = entity.entity_guid || entity.guid;
+    // use the entity guid for media quotes
+    if (entity.remind_object && entity.entity_guid) {
+      guid = entity.guid;
+    }
     const prefix = full ? this.siteUrl : '/';
     return `${prefix}newsfeed/${guid}`;
   }

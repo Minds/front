@@ -69,7 +69,7 @@ post content to trigger upgrade modal -->
     <m-videoPlayer--scrollaware
       #videoEl
       [guid]="videoGuid"
-      [shouldPlayInModal]="!isModal"
+      [shouldPlayInModal]="entity.remind_object ? false : !isModal"
       (mediaModalRequested)="onModalRequested($event)"
       [autoplay]="
         service.displayOptions.autoplayVideo &&
