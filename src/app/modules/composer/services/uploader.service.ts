@@ -191,9 +191,9 @@ export class UploaderService implements OnDestroy {
   fileUploadRefs: FileUpload[] = [];
 
   constructor(protected attachmentApi: AttachmentApiService) {
-    this.fileUploadRefSubscription = this.files$.subscribe(
-      fileUploads => (this.fileUploadRefs = fileUploads)
-    );
+    this.fileUploadRefSubscription = this.files$.subscribe(fileUploads => {
+      this.fileUploadRefs.push(...fileUploads);
+    });
   }
 
   ngOnDestroy() {
