@@ -38,6 +38,7 @@
     "@angular/core": "~13.2.1",
     "@angular/forms": "~13.2.1",
     "@angular/localize": "~13.2.1",
+    "@angular/material": "^13.3.9",
     "@angular/platform-browser": "~13.2.1",
     "@angular/platform-browser-dynamic": "~13.2.1",
     "@angular/platform-server": "~13.2.1",

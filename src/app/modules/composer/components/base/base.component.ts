@@ -26,6 +26,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 import { first, map, distinctUntilChanged } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
+import { UploaderService } from '../../services/uploader.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -98,7 +99,8 @@ export class BaseComponent implements AfterViewInit {
     protected toasterService: ToasterService,
     protected featuresService: FeaturesService,
     protected blogPreloadService: BlogPreloadService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected uploaderService: UploaderService
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
@@ -119,8 +121,8 @@ export class BaseComponent implements AfterViewInit {
   /**
    * Attachment preview subject in service
    */
-  get attachmentPreview$() {
-    return this.service.attachmentPreview$;
+  get attachmentPreviews$() {
+    return this.service.attachmentPreviews$;
   }
 
   /**
@@ -135,13 +137,6 @@ export class BaseComponent implements AfterViewInit {
    */
   get inProgress$() {
     return this.service.inProgress$;
-  }
-
-  /**
-   * Progress percentage subject in service
-   */
-  get progress$() {
-    return this.service.progress$;
   }
 
   /**
@@ -196,7 +191,7 @@ export class BaseComponent implements AfterViewInit {
    * @param file
    */
   onAttachmentPaste(file) {
-    this.service.attachment$.next(file);
+    this.uploaderService.file$$.next(file);
   }
 
   /**
@@ -272,7 +267,7 @@ export class BaseComponent implements AfterViewInit {
   canDeactivate(): boolean | Promise<boolean> {
     if (
       this.service.message$.getValue() ||
-      this.service.attachment$.getValue()
+      this.service.attachments$.getValue()
     ) {
       const confirmation = confirm(
         this.service.isMovingContent$.getValue()

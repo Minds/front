@@ -69,7 +69,7 @@ post content to trigger upgrade modal -->
     <m-videoPlayer--scrollaware
       #videoEl
       [guid]="videoGuid"
-      [shouldPlayInModal]="!isModal"
+      [shouldPlayInModal]="entity.remind_object ? false : !isModal"
       (mediaModalRequested)="onModalRequested($event)"
       [autoplay]="
         service.displayOptions.autoplayVideo &&
@@ -91,7 +91,7 @@ post content to trigger upgrade modal -->
   <!-- ----------------------------------- -->
   <div
     class="m-activityContent__media--image m-activityContent__media"
-    *ngIf="isImage"
+    *ngIf="isImage || (isMultiImage && isModal)"
     [ngClass]="{
       'm-activityContent__media--extraTallImage':
         extraTallImage && (service.displayOptions.isFeed || isMinimalMode),
@@ -103,7 +103,7 @@ post content to trigger upgrade modal -->
     <ng-container *ngIf="!isModal; else image">
       <a
         class="m-activityContentMedia__link"
-        [routerLink]="['/newsfeed', imageGuid]"
+        [routerLink]="['/newsfeed', entity?.guid]"
         (click)="onModalRequested($event)"
       >
         <div
@@ -127,7 +127,7 @@ post content to trigger upgrade modal -->
 
       <img
         #imageEl
-        [src]="imageUrl"
+        [src]="!isMultiImage ? imageUrl : activeMultiImageUrl"
         (error)="onImageError($event)"
         (click)="onModalRequested($event)"
         [m-blurhash]="service.entity$ | async"
@@ -137,10 +137,25 @@ post content to trigger upgrade modal -->
         "
         [style.height.px]="imageHeight"
         [style.width.px]="imageWidth"
+        [ngClass]="{ 'm-border': !isModal }"
         class="m-border"
       />
     </ng-template>
   </div>
+</ng-container>
+<!-- ----------------------------------- -->
+<!-- MULTI IMAGE -->
+<!-- Excluding modals - multi-image displays same as single image in modal -->
+<!-- because only one image is shown at a time -->
+<!-- ----------------------------------- -->
+<ng-container *ngIf="isMultiImage && !isModal">
+  <ng-container
+    *ngTemplateOutlet="paywallTemplate"
+    [ngTemplateOutletContext]="{ hideText: sidebarMode }"
+  ></ng-container>
+  <m-activityV2Content__multiImage
+    (onClick)="onModalRequested($event)"
+  ></m-activityV2Content__multiImage>
 </ng-container>
 <!-- ----------------------------------- -->
 <!-- QUOTE -->

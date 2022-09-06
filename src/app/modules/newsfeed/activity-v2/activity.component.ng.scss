@@ -11,6 +11,14 @@
   }
 
   // *********************************
+  // ** BOOST CONSOLE - NEWSFEED **
+  // *********************************
+  m-boost-console-card &,
+  .m-boost-console--booster--posts-list & {
+    border-top: none !important;
+  }
+
+  // *********************************
   // ** FEED **
   // *********************************
 
@@ -111,7 +119,7 @@
   // ** SIDEBAR BOOST **
   // *********************************
 
-  m-ads-boost & {
+  &.m-activity--isSidebarBoost {
     padding: 0;
     .m-activity__top {
       padding-top: 0;

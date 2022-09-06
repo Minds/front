@@ -89,6 +89,12 @@
       }
     }
 
+    ::ng-deep m-activityV2__remindButton {
+      ::ng-deep m-dropdown {
+        align-items: flex-start;
+      }
+    }
+
     @include m-theme() {
       border-top: none;
     }

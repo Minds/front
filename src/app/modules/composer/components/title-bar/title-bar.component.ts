@@ -6,6 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import {
   ComposerService,
@@ -36,14 +37,14 @@ export class TitleBarComponent {
 
   remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
-  constructor(protected service: ComposerService) {}
-
   /**
-   * Attachment subject value from service
+   * Has attachments
    */
-  get attachment$() {
-    return this.service.attachment$;
-  }
+  hasAttachments$: Observable<boolean> = this.service.data$.pipe(
+    map(values => values.attachmentGuids?.length > 0)
+  );
+
+  constructor(protected service: ComposerService) {}
 
   /**
    * Is editing? subject value from service

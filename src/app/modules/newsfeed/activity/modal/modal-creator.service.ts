@@ -18,7 +18,11 @@ export class ActivityModalCreatorService {
     private analytics: AnalyticsService
   ) {}
 
-  create(entity: ActivityEntity, injector: Injector): void {
+  create(
+    entity: ActivityEntity,
+    injector: Injector,
+    activeMultiImageIndex?: number
+  ): void {
     if (!this.modalService.canOpenInModal()) {
       return;
     }
@@ -31,11 +35,14 @@ export class ActivityModalCreatorService {
       ? ActivityV2ModalComponent
       : ActivityModalComponent;
 
-    const opts = {
+    let opts = {
       modalDialogClass: 'modal-fullwidth',
       size: 'xl',
       data: {
         entity,
+        activeMultiImageIndex: activeMultiImageIndex
+          ? activeMultiImageIndex
+          : 0,
       },
       injector,
     };

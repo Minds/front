@@ -1,9 +1,11 @@
+@import 'defaults.scss';
+
 .m-composer__toolbar {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 40px 0;
+  padding: $spacing4 $spacing8 0;
   border-top: 1px solid;
   user-select: none;
   font-size: 15px;
@@ -11,7 +13,7 @@
 
   @media screen and (max-width: $max-mobile) {
     font-size: 16px;
-    padding: 30px 40px 10px;
+    padding: $spacing8 $spacing8;
   }
 
   @include m-theme() {
@@ -77,10 +79,6 @@
     @media screen and (max-width: $max-mobile) {
       display: none;
     }
-  }
-
-  m-emojiPicker {
-    margin-right: $minds-margin * 2;
   }
 
   &.m-composer__toolbar--narrow

@@ -30,7 +30,7 @@ export type ActivityDisplayOptions = {
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator?
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
-  bypassMediaModal: boolean; // Go to media page instead
+  bypassMediaModal: boolean; // Go to media page instead - i.e. by clicking on suggested sidebar post or image in notification preview
   showPostMenu: boolean; // Can be hidden for things like previews
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
@@ -154,6 +154,13 @@ export class ActivityService implements OnDestroy {
         (entity.owner_guid === user.guid || user.is_admin || override)
     )
   );
+
+  /**
+   * The index of the image that is "active" in a multi-image post
+   * (where applicable)
+   * e.g. which image is currently displayed in the activity modal
+   */
+  activeMultiImageIndex$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   /**
    * Allows for components to give nsfw consent
@@ -396,7 +403,11 @@ export class ActivityService implements OnDestroy {
   }
 
   buildCanonicalUrl(entity: ActivityEntity, full: boolean): string {
-    const guid = entity.entity_guid || entity.guid;
+    let guid = entity.entity_guid || entity.guid;
+    // use the entity guid for media quotes
+    if (entity.remind_object && entity.entity_guid) {
+      guid = entity.guid;
+    }
     const prefix = full ? this.siteUrl : '/';
     return `${prefix}newsfeed/${guid}`;
   }
