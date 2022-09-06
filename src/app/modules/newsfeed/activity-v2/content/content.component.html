@@ -150,7 +150,9 @@ post content to trigger upgrade modal -->
     *ngIf="service.isQuote$ | async"
     class="m-activityContent__quote"
     [class.m-activityContent__quote--hasText]="!!text"
+    [class.m-activityContent__quote--supermind]="true"
   >
+    <!-- ojm see supermind class above  -->
     <ng-container
       *ngTemplateOutlet="paywallTemplate"
       [ngTemplateOutletContext]="{ hideText: sidebarMode }"

@@ -23,6 +23,8 @@ export class PaywallBadgeComponent implements OnInit {
   @Input() showTierName: boolean = true;
 
   hasPaywall: boolean = false;
+  isSupermind: boolean = false;
+
   paywallType: PaywallType = 'custom';
   tierName: string;
   init: boolean = false;
@@ -42,8 +44,6 @@ export class PaywallBadgeComponent implements OnInit {
   }
 
   load(): void {
-    // this.init = false;
-
     if (!this._entity) {
       return;
     }
@@ -53,6 +53,9 @@ export class PaywallBadgeComponent implements OnInit {
     }
 
     this.hasPaywall = !!this._entity.paywall || this._entity.paywall_unlocked;
+    // ojm fausto
+    this.isSupermind = true;
+    // this.isSupermind = this.entity.supermind && this.entity.supermind.is_reply;
 
     /**
      * Determine paywall type
