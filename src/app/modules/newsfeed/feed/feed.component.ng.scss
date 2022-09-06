@@ -10,10 +10,10 @@
   }
 
   ::ng-deep .m-virtualScrollOverlay {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    right: -100vw;
+    right: 0;
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }
