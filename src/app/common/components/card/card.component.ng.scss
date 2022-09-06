@@ -2,6 +2,8 @@
 
 :host {
   display: block;
+  border-radius: $m-borderRadius !important;
+
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
   }

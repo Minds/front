@@ -78,6 +78,7 @@ describe('ActivityModalCreatorService', () => {
         size: 'xl',
         data: {
           entity,
+          activeMultiImageIndex: 0,
         },
         injector: null,
       }
@@ -106,6 +107,7 @@ describe('ActivityModalCreatorService', () => {
         size: 'xl',
         data: {
           entity,
+          activeMultiImageIndex: 0,
         },
         injector: null,
       }
@@ -134,6 +136,7 @@ describe('ActivityModalCreatorService', () => {
         size: 'xl',
         data: {
           entity,
+          activeMultiImageIndex: 0,
         },
         injector: null,
       }

@@ -13,6 +13,7 @@
       [multiple]="multiple"
       [accept]="accept"
       (change)="onSelect(file)"
+      (click)="file.value = null"
       #file
     />
   </form>

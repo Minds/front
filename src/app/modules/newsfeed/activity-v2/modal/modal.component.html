@@ -63,7 +63,9 @@
           <!-- OVERLAY (TITLE & FULLSCREEN CTRLS)-->
           <m-activityV2__modalTitleOverlay></m-activityV2__modalTitleOverlay>
           <!-- PAGER BUTTONS -->
-          <m-activityV2__modalPager></m-activityV2__modalPager>
+          <m-activityV2__modalPager
+            *ngIf="isMultiImage"
+          ></m-activityV2__modalPager>
         </div>
       </div>
 

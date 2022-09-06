@@ -30,7 +30,7 @@ export type ActivityDisplayOptions = {
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator?
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
-  bypassMediaModal: boolean; // Go to media page instead
+  bypassMediaModal: boolean; // Go to media page instead - i.e. by clicking on suggested sidebar post or image in notification preview
   showPostMenu: boolean; // Can be hidden for things like previews
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
@@ -156,12 +156,19 @@ export class ActivityService implements OnDestroy {
   );
 
   /**
+   * The index of the image that is "active" in a multi-image post
+   * (where applicable)
+   * e.g. which image is currently displayed in the activity modal
+   */
+  activeMultiImageIndex$: BehaviorSubject<number> = new BehaviorSubject(0);
+
+  /**
    * Allows for components to give nsfw consent
    */
   isNsfwConsented$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   /**
-   * Will be true if not consented and is nsfw
+   * Will be true if not consented and is nsfw.
    */
   shouldShowNsfwConsent$: Observable<boolean> = combineLatest(
     this.entity$,
@@ -169,8 +176,10 @@ export class ActivityService implements OnDestroy {
   ).pipe(
     map(([entity, isConsented]: [ActivityEntity, boolean]) => {
       return (
-        entity.nsfw &&
-        entity.nsfw.length > 0 &&
+        (entity.nsfw?.length > 0 ||
+          entity.ownerObj?.nsfw?.length > 0 ||
+          entity.remind_object?.nsfw?.length > 0 ||
+          entity.remind_object?.ownerObj?.nsfw?.length > 0) &&
         !isConsented &&
         !(this.session.isLoggedIn() && this.session.getLoggedInUser().mature)
       );
@@ -396,7 +405,11 @@ export class ActivityService implements OnDestroy {
   }
 
   buildCanonicalUrl(entity: ActivityEntity, full: boolean): string {
-    const guid = entity.entity_guid || entity.guid;
+    let guid = entity.entity_guid || entity.guid;
+    // use the entity guid for media quotes
+    if (entity.remind_object && entity.entity_guid) {
+      guid = entity.guid;
+    }
     const prefix = full ? this.siteUrl : '/';
     return `${prefix}newsfeed/${guid}`;
   }

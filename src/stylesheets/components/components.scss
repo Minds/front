@@ -360,31 +360,6 @@ m-channel--carousel {
   }
 }
 
-minds-button-user-dropdown {
-  .minds-dropdown-menu {
-    top: 50px;
-    margin-top: 0;
-    position: absolute;
-    text-transform: capitalize;
-  }
-
-  .m-user-dropdown__item--nsfw {
-    overflow: visible;
-
-    m-nsfwSelector {
-      border: 0;
-      width: 100%;
-      padding: 0;
-
-      .m-nsfwSelector__label {
-        m-tooltip {
-          display: none;
-        }
-      }
-    }
-  }
-}
-
 .m-error-splash {
   text-align: center;
   text-transform: uppercase;

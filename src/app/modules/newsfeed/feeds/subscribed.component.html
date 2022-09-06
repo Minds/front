@@ -35,12 +35,7 @@
       >
       <m-feedTypePopover [type]="algorithm"></m-feedTypePopover>
     </m-feedHeader>
-    <div
-      *ngIf="!persistentFeedExperimentActive"
-      class="minds-list"
-      m-hotkeyScroll
-      [anchors]="feedViewChildren"
-    >
+    <div *ngIf="!persistentFeedExperimentActive" class="minds-list">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
           <m-feedNotice__outlet

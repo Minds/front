@@ -2,17 +2,19 @@ import { Injectable, OnDestroy } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
+  merge,
   Observable,
-  of,
+  race,
   Subscription,
 } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   map,
+  mergeAll,
   pairwise,
+  share,
   startWith,
-  switchMap,
   tap,
 } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
@@ -29,191 +31,47 @@ import {
 } from './attachment-validator.service';
 import { BoostRecommendationService } from '../../../common/services/boost-recommendation.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
+import { UploaderService } from './uploader.service';
+import {
+  AccessIdSubjectValue,
+  AttachmentsMetadataMappedValue,
+  AttachmentSubjectValue,
+  ComposerSize,
+  Data,
+  LicenseSubjectValue,
+  MessageSubjectValue,
+  MonetizationSubjectValue,
+  NsfwSubjectValue,
+  PendingMonetizationSubjectValue,
+  PostToPermawebSubjectValue,
+  RemindSubjectValue,
+  RichEmbedMetadataMappedValue,
+  RichEmbedSubjectValue,
+  ScheduleSubjectValue,
+  TagsSubjectValue,
+  TitleSubjectValue,
+} from './composer-data-types';
 
 /**
- * Message value type
- */
-export type MessageSubjectValue = string;
-
-/**
- * Default message value
+ * Default values
  */
 export const DEFAULT_MESSAGE_VALUE: MessageSubjectValue = '';
-
-/**
- * Title value type
- */
-export type TitleSubjectValue = string | null;
-
-/**
- * Default title value
- */
-export const DEFAULT_TITLE_VALUE: MessageSubjectValue = null;
-
-/**
- * Remind value type
- */
-export type RemindSubjectValue = ActivityEntity | null;
-
-/**
- * Default attachment value
- */
+export const DEFAULT_TITLE_VALUE: TitleSubjectValue = null;
 export const DEFAULT_REMIND_VALUE: RemindSubjectValue = null;
-
-/**
- * Attachment value type
- */
-export type AttachmentSubjectValue = File | Attachment | null;
-
-/**
- * Attachment resolved object value (used for payload)
- */
-export type AttachmentMetadataMappedValue = Attachment | null;
-
-/**
- * Default attachment value
- */
 export const DEFAULT_ATTACHMENT_VALUE: AttachmentSubjectValue = null;
-
-/**
- * Default videoposter value
- */
 export const DEFAULT_VIDEOPOSTER_VALUE: VideoPoster = null;
-
-/**
- * Rich embed value type
- */
-export type RichEmbedSubjectValue = RichEmbed | string | null;
-
-/**
- * Rich embed resolved object value (used for payload)
- */
-export type RichEmbedMetadataMappedValue = RichEmbed | null;
-
-/**
- * Default rich embed value
- */
 export const DEFAULT_RICH_EMBED_VALUE: RichEmbedSubjectValue = null;
-
-/**
- * NSFW value type
- */
-export type NsfwSubjectValue = Array<number>;
-
-/**
- * Default NSFW value
- */
 export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
-
-/**
- * post to permaweb value type
- */
-export type PostToPermawebSubjectValue = boolean;
-
-/**
- * Default post to permaweb value
- */
 export const DEFAULT_POST_TO_PERMAWEB_VALUE: PostToPermawebSubjectValue = false;
-
-/**
- * Monetization value type
- */
-export type MonetizationSubjectValue = {
-  type?: 'tokens' | 'money';
-  min?: number;
-  support_tier?: {
-    urn: string;
-    expires?: number;
-    usd?: number;
-    has_tokens?: boolean;
-  };
-} | null;
-
-/**
- * Default monetization value
- */
 export const DEFAULT_MONETIZATION_VALUE: MonetizationSubjectValue = null;
-
-/**
- * Pending monetization value type
- */
-export type PendingMonetizationSubjectValue = {
-  type: 'plus' | 'membership' | 'custom';
-  support_tier: {
-    urn: string;
-    expires?: number;
-    usd?: number;
-    has_tokens?: boolean;
-  };
-} | null;
-
-/**
- * Default pending monetization value
- */
 export const DEFAULT_PENDING_MONETIZATION_VALUE: PendingMonetizationSubjectValue = null;
-
-/**
- * Tags value type
- */
-export type TagsSubjectValue = Array<string>;
-
-/**
- * Default tags value
- */
 export const DEFAULT_TAGS_VALUE: TagsSubjectValue = [];
-
-/**
- * Schedule value type
- */
-export type ScheduleSubjectValue = number | null;
-
-/**
- * Default schedule value
- */
 export const DEFAULT_SCHEDULE_VALUE: ScheduleSubjectValue = null;
-
-/**
- * Access ID value type
- */
-export type AccessIdSubjectValue = string;
-
-/**
- * Default access ID value
- */
 export const DEFAULT_ACCESS_ID_VALUE: AccessIdSubjectValue = '2';
-
-/**
- * License value type
- */
-export type LicenseSubjectValue = string;
-
-/**
- * Default license value
- */
 export const DEFAULT_LICENSE_VALUE: LicenseSubjectValue = 'all-rights-reserved';
-
-export type ComposerSize = 'compact' | 'full';
-
 export const DEFAULT_COMPOSER_SIZE: ComposerSize = 'full';
 
-/**
- * Payload data object. Used to build the DTO
- */
-export interface Data {
-  message: MessageSubjectValue;
-  title: TitleSubjectValue;
-  nsfw: NsfwSubjectValue;
-  monetization: MonetizationSubjectValue;
-  tags: TagsSubjectValue;
-  schedule: ScheduleSubjectValue;
-  accessId: AccessIdSubjectValue;
-  license: LicenseSubjectValue;
-  attachment: AttachmentMetadataMappedValue;
-  richEmbed: RichEmbedMetadataMappedValue;
-  videoPoster: VideoPoster;
-  postToPermaweb: PostToPermawebSubjectValue;
-  remind: RemindSubjectValue;
-}
+export * from './composer-data-types';
 
 /**
  * Store/process class for activities composer. As it's used as a store it should be injected individually
@@ -294,9 +152,9 @@ export class ComposerService implements OnDestroy {
   >(DEFAULT_REMIND_VALUE);
 
   /**
-   * Attachment subject
+   * Attachments subject
    */
-  readonly attachment$: BehaviorSubject<
+  readonly attachments$: BehaviorSubject<
     AttachmentSubjectValue
   > = new BehaviorSubject<AttachmentSubjectValue>(DEFAULT_ATTACHMENT_VALUE);
 
@@ -315,9 +173,9 @@ export class ComposerService implements OnDestroy {
   /**
    * Preview subject (state)
    */
-  readonly attachmentPreview$: BehaviorSubject<AttachmentPreviewResource | null> = new BehaviorSubject<AttachmentPreviewResource | null>(
-    null
-  );
+  readonly attachmentPreviews$: BehaviorSubject<
+    AttachmentPreviewResource[]
+  > = new BehaviorSubject<AttachmentPreviewResource[]>([]);
 
   /**
    * Preview subject (state)
@@ -332,11 +190,6 @@ export class ComposerService implements OnDestroy {
   readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-
-  /**
-   * Current progress subject (state)
-   */
-  readonly progress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   /**
    * Is posting flag subject (state)
@@ -355,9 +208,7 @@ export class ComposerService implements OnDestroy {
   /**
    * Post-ability check subject (state)
    */
-  readonly canPost$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  readonly canPost$: Observable<boolean>;
 
   /**
    * Is this an edit operation? (state)
@@ -478,7 +329,8 @@ export class ComposerService implements OnDestroy {
     private hashtagsFromString: HashtagsFromStringService,
     private attachmentValidator: AttachmentValidatorService,
     private boostRecommendationService: BoostRecommendationService,
-    private onboardingService: OnboardingV3Service
+    private onboardingService: OnboardingV3Service,
+    private uploaderService: UploaderService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -493,7 +345,7 @@ export class ComposerService implements OnDestroy {
         ScheduleSubjectValue,
         AccessIdSubjectValue,
         LicenseSubjectValue,
-        AttachmentMetadataMappedValue,
+        AttachmentsMetadataMappedValue,
         RichEmbedMetadataMappedValue,
         VideoPoster,
         PostToPermawebSubjectValue,
@@ -519,53 +371,38 @@ export class ComposerService implements OnDestroy {
         })
       ),
       this.license$.pipe(distinctUntilChanged()),
-      this.attachment$.pipe(
-        // Only react to attachment changes from previous values (string -> File -> null -> File -> ...)
-        distinctUntilChanged(),
-        // emit bundled attachment validator and observable file.
-        switchMap(file => {
-          return combineLatest(
-            of(file),
-            this.attachmentValidator.validate(file)
-          );
-        }),
-        // if invalid, abort, else return file.
-        map(([file, validator]) => {
-          if (validator && !validator.isValid) {
-            this.removeAttachment();
-            this.attachmentError$.next(validator);
-            return;
-          }
-          return file;
-        }),
-        // On every attachment change:
-        tap(file => {
-          // - Reset attachment error
-          this.attachmentError$.next(null);
+      /**
+       * Builds attachments guids
+       */
+      combineLatest([
+        this.uploaderService.files$.pipe(
+          startWith([]), // will not ever resolve combineLatest unless we do this
+          map(fileUpload => {
+            if (!fileUpload) return [];
 
-          // - Set the preview based the current value (Blob URL or empty)
-          this.setPreview(file);
-        }),
+            this.setPreview(fileUpload);
 
-        // Call the engine endpoints to upload the file
-        this.attachment.resolve(
-          () => ({ containerGuid: this.getContainerGuid() }),
-          // - Update inProgress and progress state subjects
-          (inProgress, progress) => this.setProgress(inProgress, progress),
-
-          // - Handle errors and update attachmentErrors subject
-          e => {
-            this.attachmentError$.next({
-              isValid: false,
-              message: e.message ?? 'An unexpected error has occurred',
-            });
-          }
+            return fileUpload.map(fileUpload => fileUpload.guid);
+          })
         ),
+        this.attachments$.pipe(
+          map(attachments => {
+            if (!attachments) return [];
 
-        tap(() => this.inProgress$.next(null))
+            this.setPreview(attachments);
 
-        // Value will be either an Attachment interface object or null
+            return attachments.map(attachment => attachment.guid);
+          })
+        ),
+      ]).pipe(
+        map(([uploadedGuids, existingGuids]) => [
+          ...uploadedGuids,
+          ...existingGuids,
+        ])
       ),
+      /**
+       * Builds rich embed
+       */
       this.richEmbed$.pipe(
         // Only react to rich-embed URL changes
         distinctUntilChanged(),
@@ -599,7 +436,7 @@ export class ComposerService implements OnDestroy {
           schedule,
           accessId,
           license,
-          attachment,
+          attachmentGuids,
           richEmbed,
           videoPoster,
           postToPermaweb,
@@ -613,7 +450,7 @@ export class ComposerService implements OnDestroy {
           schedule,
           accessId,
           license,
-          attachment,
+          attachmentGuids,
           richEmbed,
           videoPoster,
           postToPermaweb,
@@ -621,6 +458,10 @@ export class ComposerService implements OnDestroy {
         })
       ),
       tap(values => {
+        ////
+        // TODO: move this to its own pipe, it shouldn't be in a tap!
+        ////
+
         // get tags from title and body.
         const bodyTags = this.hashtagsFromString
           .parseHashtagsFromString(values.message)
@@ -649,12 +490,23 @@ export class ComposerService implements OnDestroy {
         const tooManyTags = tagCount > 5;
 
         this.tooManyTags$.next(tooManyTags);
+      }),
+      share()
+    );
 
-        this.canPost$.next(
-          Boolean(
-            !tooManyTags &&
-              (values.message || values.attachment || values.richEmbed)
-          )
+    /**
+     * Below is the logic which determines the state of the post button
+     */
+    this.canPost$ = combineLatest([
+      this.tooManyTags$,
+      this.data$,
+      this.uploaderService.isUploadingFinished$,
+    ]).pipe(
+      map(([tooManyTags, data, isUploadingFinished]) => {
+        return Boolean(
+          !tooManyTags &&
+            isUploadingFinished &&
+            (data.message || data.richEmbed || data.attachmentGuids?.length)
         );
       })
     );
@@ -689,7 +541,7 @@ export class ComposerService implements OnDestroy {
       this.messageUrl$.pipe(distinctUntilChanged()),
       // get last 2 emissions - start with '' for first emission.
       this.richEmbed$.pipe(distinctUntilChanged(), startWith(''), pairwise()),
-      this.attachment$.pipe(distinctUntilChanged()),
+      this.attachments$.pipe(distinctUntilChanged()),
       this.remind$.pipe(distinctUntilChanged()),
     ])
       .pipe(debounceTime(500))
@@ -785,14 +637,13 @@ export class ComposerService implements OnDestroy {
     this.schedule$.next(DEFAULT_SCHEDULE_VALUE);
     this.accessId$.next(DEFAULT_ACCESS_ID_VALUE);
     this.license$.next(DEFAULT_LICENSE_VALUE);
-    this.attachment$.next(DEFAULT_ATTACHMENT_VALUE);
+    this.attachments$.next(DEFAULT_ATTACHMENT_VALUE);
     this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
     this.videoPoster$.next(DEFAULT_VIDEOPOSTER_VALUE);
     this.remind$.next(DEFAULT_REMIND_VALUE);
 
     // Reset state
     this.inProgress$.next(false);
-    this.progress$.next(0);
     this.isPosting$.next(false);
     this.attachmentError$.next(null);
     this.isEditing$.next(false);
@@ -806,6 +657,9 @@ export class ComposerService implements OnDestroy {
     this.richEmbedPreview$.next(null);
 
     this.postToPermaweb$.next(false);
+
+    // Reset upload state
+    this.uploaderService.reset();
 
     // Reset original source
     this.entity = null;
@@ -844,20 +698,24 @@ export class ComposerService implements OnDestroy {
 
     // Build attachment and rich embed data structure
 
-    let attachment: AttachmentSubjectValue = DEFAULT_ATTACHMENT_VALUE;
+    let attachments: AttachmentSubjectValue = DEFAULT_ATTACHMENT_VALUE;
     let richEmbed: RichEmbedSubjectValue = DEFAULT_RICH_EMBED_VALUE;
     let videoPoster: VideoPoster;
 
     if (activity.custom_type === 'batch') {
-      attachment = {
-        type: 'image',
-        guid: activity.entity_guid,
-      } as Attachment;
+      attachments = activity.custom_data.map(item => {
+        return {
+          type: 'image',
+          guid: item.guid,
+        } as Attachment;
+      });
     } else if (activity.custom_type === 'video') {
-      attachment = {
-        type: 'video',
-        guid: activity.entity_guid,
-      } as Attachment;
+      attachments = [
+        {
+          type: 'video',
+          guid: activity.entity_guid,
+        } as Attachment,
+      ];
       videoPoster = { url: activity.custom_data.thumbnail_src };
     } else if (activity.entity_guid || activity.perma_url) {
       // Rich embeds (blogs included)
@@ -873,7 +731,7 @@ export class ComposerService implements OnDestroy {
     // Priority service state elements
 
     this.remind$.next(activity.remind_object || null);
-    this.attachment$.next(attachment);
+    this.attachments$.next(attachments);
     this.richEmbed$.next(richEmbed);
     this.videoPoster$.next(videoPoster);
 
@@ -902,14 +760,14 @@ export class ComposerService implements OnDestroy {
    * Updates the preview. Frees resources, if needed.
    * @param attachment
    */
-  setPreview(attachment: AttachmentSubjectValue) {
-    const currentPreview = this.attachmentPreview$.getValue();
+  setPreview(attachments: AttachmentSubjectValue) {
+    const currentPreviews = this.attachmentPreviews$.getValue();
 
-    if (currentPreview) {
-      this.preview.prune(currentPreview);
+    for (let i in currentPreviews) {
+      this.preview.prune(currentPreviews[i]);
     }
 
-    this.attachmentPreview$.next(this.preview.build(attachment));
+    this.attachmentPreviews$.next(this.preview.build(attachments));
   }
 
   /**
@@ -931,7 +789,7 @@ export class ComposerService implements OnDestroy {
       this.attachment.prune(payload.entity_guid);
     }
 
-    this.attachment$.next(null);
+    this.attachments$.next(null);
     this.videoPoster$.next(null);
     this.title$.next(null);
   }
@@ -976,7 +834,7 @@ export class ComposerService implements OnDestroy {
    * Builds the API payload and sets to a property
    * @param message
    * @param title
-   * @param attachment
+   * @param attachmentGuids
    * @param nsfw
    * @param monetization
    * @param tags
@@ -997,7 +855,7 @@ export class ComposerService implements OnDestroy {
     schedule,
     accessId,
     license,
-    attachment,
+    attachmentGuids,
     richEmbed,
     videoPoster,
     postToPermaweb,
@@ -1029,14 +887,15 @@ export class ComposerService implements OnDestroy {
       this.payload.remind_guid = remind.guid;
     }
 
-    const attachmentGuid = (attachment && attachment.guid) || null;
-
     if (this.canEditMetadata()) {
-      if (attachmentGuid) {
-        this.payload.entity_guid = attachmentGuid;
-        this.payload.title = title;
-        this.payload.is_rich = false;
-        this.payload.entity_guid_update = true;
+      if (attachmentGuids?.length > 0) {
+        this.payload.title = title; // Only media post can have titles
+
+        this.payload.attachment_guids = attachmentGuids;
+
+        this.payload.is_rich = false; // Can never have rich embed with media posts
+
+        //this.payload.entity_guid_update = true;
       } else if (richEmbed && !richEmbed.entityGuid) {
         this.payload.url = richEmbed.url;
         this.payload.title = richEmbed.title;
@@ -1070,7 +929,6 @@ export class ComposerService implements OnDestroy {
    */
   setProgress(inProgress: boolean, progress: number = 1): void {
     this.inProgress$.next(inProgress);
-    this.progress$.next(progress);
   }
 
   /**
@@ -1080,21 +938,21 @@ export class ComposerService implements OnDestroy {
     this.isPosting$.next(true);
     this.setProgress(true);
 
-    // New activity
-    let endpoint = `api/v2/newsfeed`;
-
-    let editing = this.entity && this.entity.guid;
-    if (editing) {
-      endpoint = `api/v2/newsfeed/${this.entity.guid}`;
-    }
+    const editing = this.entity && this.entity.guid;
 
     try {
-      const { activity } = await this.api
-        .post(endpoint, this.payload)
-        .toPromise();
+      let activity;
 
-      // Provide an update to subscribing feeds.
-      if (!editing) {
+      if (editing) {
+        activity = await this.api
+          .post(`api/v3/newsfeed/activity/${this.entity.guid}`, this.payload)
+          .toPromise();
+      } else {
+        // New activity
+        activity = await this.api
+          .put(`api/v3/newsfeed/activity`, this.payload)
+          .toPromise();
+
         this.feedsUpdate.postEmitter.emit(activity);
         this.onboardingService.forceCompletion('CreatePostStep');
       }

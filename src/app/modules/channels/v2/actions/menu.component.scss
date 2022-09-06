@@ -1,13 +1,4 @@
 m-channelActions__menu {
-  .m-dropdownMenu__menu {
-    @media screen and (min-width: $max-mobile + 1) {
-      top: calc(
-        100% + 10px
-      ); // TODO: Remove when smart anchoring is implemented
-      right: 10px; // TODO: Remove when smart anchoring is implemented
-    }
-  }
-
   m-nsfwSelector {
     border: 0;
     width: 100%;

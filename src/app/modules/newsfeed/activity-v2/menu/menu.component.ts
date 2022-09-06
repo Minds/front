@@ -121,8 +121,6 @@ export class ActivityV2MenuComponent implements OnInit, OnDestroy {
   async onOptionSelected(option) {
     switch (option) {
       case 'edit':
-        this.composer.load(this.entity);
-
         this.composerModal
           .setInjector(this.injector)
           .present()
@@ -131,6 +129,10 @@ export class ActivityV2MenuComponent implements OnInit, OnDestroy {
               this.service.setEntity(activity);
             }
           });
+
+        // Set the data on next tick
+        // This avoid the title not being visible
+        setTimeout(() => this.composer.load(this.entity));
 
         break;
       case 'undo-remind':

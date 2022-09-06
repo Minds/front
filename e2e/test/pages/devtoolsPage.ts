@@ -58,7 +58,7 @@ class DevtoolsPage {
     const env = environment as string;
     I.seeCookie(env);
     const cookie = await I.grabCookie(env);
-    assert(cookie.value, '1');
+    assert(cookie, '1');
     I.seeElement(
       locate(this.getEnvironmentFlagSelector()).withText(
         env.replace(env[0], env[0].toUpperCase())

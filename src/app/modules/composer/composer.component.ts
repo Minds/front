@@ -18,13 +18,14 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CookieService } from '../../common/services/cookie.service';
+import { UploaderService } from './services/uploader.service';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer
  * or a placeholder-like non-interactive copy that will open a floating modal
  */
 @Component({
-  providers: [ComposerService],
+  providers: [ComposerService, UploaderService],
   selector: 'm-composer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'composer.component.html',

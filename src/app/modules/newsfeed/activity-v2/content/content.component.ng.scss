@@ -257,6 +257,10 @@
   // ** QUOTE **
   // *********************************
 
+  .m-activityContent__media + .m-activityContent__quote {
+    margin-top: $spacing4;
+  }
+
   .m-activityContent--quote {
     overflow: hidden;
 
@@ -298,7 +302,7 @@
   // ** SIDEBAR BOOST **
   // *********************************
 
-  m-ads-boost & {
+  .m-activity--isSidebarBoost & {
     .m-activityContent__textWrapper {
       padding: 0 $activitySpacing--minimalMode;
     }

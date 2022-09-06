@@ -68,8 +68,7 @@
   // *********************************
   // ** SIDEBAR BOOST **
   // *********************************
-
-  m-ads-boost & {
+  .m-activity--isSidebarBoost & {
     .m-activity__ownerBlock {
       padding: $activitySpacing--minimalMode;
     }

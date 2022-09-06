@@ -15,7 +15,14 @@ import {
   Input,
 } from '@angular/core';
 import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  first,
+  last,
+  map,
+  take,
+} from 'rxjs/operators';
 import {
   AttachmentSubjectValue,
   ComposerService,
@@ -38,6 +45,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 import isMobile from '../../../../helpers/is-mobile';
+import { UploaderService } from '../../services/uploader.service';
+import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -96,6 +105,19 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
+  /**
+   * The count of actively selected uploads
+   */
+  uploadCount$ = this.uploaderService.filesCount$;
+  uploadCount: number = 0;
+
+  /**
+   * Boolean of if any uploads are active (selected)
+   */
+  uploadActive$: Observable<boolean> = this.uploadCount$.pipe(
+    map(count => count > 0)
+  );
+
   canSchedule$ = this.service.canSchedule$;
 
   /**
@@ -110,7 +132,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
     protected toaster: ToasterService,
-    @Inject(PLATFORM_ID) protected platformId: Object
+    protected uploaderService: UploaderService,
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    protected mediaQuotesExperiment: MediaQuotesExperimentService
   ) {}
 
   /**
@@ -122,37 +146,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.windowResize$
         .pipe(debounceTime(250))
         .subscribe(() => this.calcNarrow()),
-      (this.attachmentSubscription = this.attachment$.subscribe(attachment => {
-        if (!attachment && this.fileUploadComponent) {
-          this.fileUploadComponent.reset();
-        }
-      })),
-      this.service.attachmentError$
-        .pipe(distinctUntilChanged())
-        .subscribe(async error => {
-          if (!error) return;
-
-          if (this.isModal) {
-            if (error.codes) {
-              const component = AttachmentErrorComponent;
-              component.prototype.error = error;
-
-              try {
-                await this.popup
-                  .create(component)
-                  .present()
-                  .toPromise();
-              } catch (e) {
-                console.error(e);
-              }
-              return;
-            }
-
-            this.toaster.error(
-              error.message ?? 'An unexpected error has occurred'
-            );
-          }
-        })
+      this.uploadCount$.subscribe(
+        uploadCount => (this.uploadCount = uploadCount)
+      )
     );
 
     /**
@@ -200,7 +196,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @internal
    */
   ngOnDestroy(): void {
-    this.attachmentSubscription.unsubscribe();
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
@@ -249,13 +244,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   get canEditMetadata(): boolean {
     return this.service.canEditMetadata();
-  }
-
-  /**
-   * Attachment subject from service
-   */
-  get attachment$(): BehaviorSubject<AttachmentSubjectValue> {
-    return this.service.attachment$;
   }
 
   /**
@@ -319,16 +307,17 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   onAttachmentSelect($event: FileUploadSelectEvent): void {
-    if (!($event instanceof File)) {
-      // Unsupported attachment type
-      console.warn('Composer/Toolbar: Unsupported attachment type', $event);
-      return;
-    } else if (!$event) {
-      // Most likely pressed Esc on dialog
-      return;
-    }
+    let uploadCount = this.uploadCount;
 
-    this.service.attachment$.next($event);
+    for (let i in $event) {
+      if (uploadCount++ >= 4) {
+        this.toaster.error('You may not upload more than 4 images');
+        return;
+      }
+
+      const file: File = $event[i];
+      this.uploaderService.file$$.next(file);
+    }
   }
 
   /**
@@ -407,6 +396,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   isMobile() {
     return isMobile();
   }
+
+  fileUploadVisible$ = this.remind$.pipe(
+    map(remind => {
+      if (this.mediaQuotesExperiment.isActive()) {
+        return true;
+      }
+
+      return !remind;
+    })
+  );
 
   /**
    * Triggers change detection

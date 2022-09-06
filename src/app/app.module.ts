@@ -34,7 +34,6 @@ import { NotificationModule } from './modules/notifications/notification.module'
 
 import { GroupsModule } from './modules/groups/groups.module';
 import { PostMenuModule } from './common/components/post-menu/post-menu.module';
-import { BanModule } from './modules/ban/ban.module';
 import { SearchModule } from './modules/search/search.module';
 import { MessengerModule } from './modules/messenger/messenger.module';
 import { NewsfeedModule } from './modules/newsfeed/newsfeed.module';
@@ -87,7 +86,6 @@ import { DevToolsModule } from './modules/devtools/devtools.module';
     WireModule,
     ReportModule,
     I18nModule,
-    BanModule,
     LegacyModule,
     TranslateModule,
     ModalsModule,
