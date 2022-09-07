@@ -20,6 +20,7 @@ exports.config = {
     I: '../step_definitions/steps_file.ts',
     loginPage: '../pages/loginPage.ts',
     newsfeedPage: '../pages/newsfeedPage.ts',
+    searchPage: '../pages/searchPage.ts',
     devtoolsPage: '../pages/devtoolsPage.ts',
   },
   mocha: {},

@@ -5,6 +5,7 @@ type devtoolsPage = typeof import('../pages/devtoolsPage');
 type newsfeedPage = typeof import('../pages/newsfeedPage');
 type commonPage = typeof import('../pages/commonPage');
 type composerModal = typeof import('../pages/composerModal');
+type searchPage = typeof import('../pages/searchPage');
 
 declare namespace CodeceptJS {
   interface SupportObject {
@@ -14,6 +15,7 @@ declare namespace CodeceptJS {
     newsfeedPage: newsfeedPage;
     commonPage: commonPage;
     composerModal: composerModal;
+    searchPage: searchPage;
     current: any;
   }
   interface Methods extends Playwright {}
