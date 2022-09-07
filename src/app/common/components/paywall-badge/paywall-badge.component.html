@@ -1,8 +1,8 @@
-<ng-container *ngIf="init && (hasPaywall || isSupermind)">
+<ng-container *ngIf="init && (hasPaywall || isSupermindReply)">
   <div
     class="m-paywallBadge"
     [ngClass]="{
-      isSupermind: isSupermind,
+      isSupermindReply: isSupermindReply,
       isPlus: hasPaywall && paywallType === 'plus',
       iconOnly:
         hasPaywall &&
@@ -11,7 +11,7 @@
       'm-activityV2__badge m-activityV2__badge--paywall m-paywallBadge--activityV2': activityV2Feature
     }"
   >
-    <ng-container *ngIf="hasPaywall">
+    <ng-container *ngIf="hasPaywall && !isSupermindReply">
       <i *ngIf="paywallType !== 'plus'" class="material-icons">lock</i>
 
       <span
@@ -21,8 +21,10 @@
       >
       <span class="m-paywallBadge__tierName" *ngIf="paywallType === 'plus'"
         >MINDS+</span
-      ></ng-container
+      >
+    </ng-container>
+    <span class="m-paywallBadge__tierName" *ngIf="isSupermindReply"
+      >Supermind</span
     >
-    <span class="m-paywallBadge__tierName" *ngIf="isSupermind">Supermind</span>
   </div>
 </ng-container>

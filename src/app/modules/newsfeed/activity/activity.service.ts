@@ -14,6 +14,11 @@ import getActivityContentType from '../../../helpers/activity-content-type';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 
+export interface Supermind {
+  request_guid: string;
+  is_reply: boolean;
+}
+
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
   showOwnerBlock: boolean;
@@ -84,6 +89,7 @@ export type ActivityEntity = {
   reminds?: number; // count of reminds
   quotes?: number; // count of quotes
   blurhash?: string;
+  supermind?: Supermind; // supermind details, if applicable
 };
 
 // Constants of blocks
@@ -284,6 +290,17 @@ export class ActivityService implements OnDestroy {
   isRemind$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return entity && entity.subtype && entity.subtype === 'remind';
+    })
+  );
+
+  /**
+   * Emits true if the post is a supermind reply
+   */
+  isSupermindReply$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return (
+        getActivityContentType(entity, false, false, true) === 'supermind_reply'
+      );
     })
   );
 

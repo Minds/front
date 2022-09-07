@@ -67,14 +67,8 @@
         }
       }
     }
-    &.isSupermind {
-      // ojm replace with @include m-supermindGradient;
-      background: linear-gradient(
-        95.94deg,
-        #2b52e8 11.69%,
-        #5238ed 42.87%,
-        #9b0fa8 76.07%
-      );
+    &.isSupermindReply {
+      @include supermindGradient;
       @include m-theme() {
         background-color: transparent;
         border: none;
@@ -82,7 +76,7 @@
       }
       > .m-paywallBadge__tierName {
         @include m-theme() {
-          color: themed($m-white-always);
+          color: themed($m-white-always) !important;
         }
       }
     }
