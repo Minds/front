@@ -34,10 +34,6 @@
   .m-commentPoster__avatar {
     flex-shrink: 0;
 
-    @include m-theme() {
-      background-color: themed($m-bgColor--primary);
-    }
-
     img {
       height: 30px;
       width: 30px;
@@ -498,9 +494,6 @@ m-comments__entityOutlet,
     width: 100%;
     padding: $minds-padding ($minds-padding + 88px) $minds-padding
       $minds-padding * 2;
-    @include m-theme() {
-      background-color: themed($m-bgColor--primary);
-    }
   }
 
   .m-comments-composer .mdl-card__actions {

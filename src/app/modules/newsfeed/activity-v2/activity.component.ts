@@ -1,18 +1,16 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
   Component,
   Input,
   HostBinding,
   ElementRef,
   HostListener,
-  Optional,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   OnInit,
   AfterViewInit,
   OnDestroy,
   Output,
-  EventEmitter,
   ViewChild,
   Inject,
   PLATFORM_ID,
@@ -24,22 +22,19 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ActivityEntity,
 } from './../activity/activity.service';
-import {
-  Subscription,
-  Observable,
-  BehaviorSubject,
-  combineLatest,
-  Subject,
-} from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
-import { TranslationService } from '../../../services/translation';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { Session } from '../../../services/session';
-import { MindsUser } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
+import { debounceTime } from 'rxjs/operators';
+import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
+import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
+import { Router } from '@angular/router';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -49,13 +44,14 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-activityV2',
   templateUrl: 'activity.component.html',
-  styleUrls: ['activity.component.ng.scss'],
+  styleUrls: ['activity.component.ng.scss', 'activity-hover.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
+    EntityMetricsSocketService,
   ],
   host: {
     '[class.m-activity--minimalMode]':
@@ -118,24 +114,39 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--noOwnerBlock')
   noOwnerBlock: boolean;
 
+  @HostBinding('class.m-activity--noToolbar')
+  noToolbar: boolean;
+
   @HostBinding('class.m-activity--isFeed')
   isFeed: boolean;
 
   @HostBinding('class.m-activity--isSingle')
   isSingle: boolean;
 
-  @HostBinding('style.height')
-  heightPx: string;
+  @HostBinding('class.m-activity--isInset')
+  isInset: boolean;
 
   @HostBinding('class.m-activity--modal')
   isModal: boolean = false;
 
+  @HostBinding('class.m-activity--commentsExpanded')
+  commentsExpanded: boolean = false;
+
+  @HostBinding('style.height')
+  heightPx: string;
+
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
+  private interceptionObserverSubscription: Subscription;
+  canonicalUrlSubscription: Subscription;
+
+  canonicalUrl: string;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
   avatarUrl: string;
+
+  pointerdownMs: number;
 
   constructor(
     public service: ActivityService,
@@ -146,6 +157,9 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     public featuresService: FeaturesService,
     public session: Session,
     private configs: ConfigsService,
+    private interceptionObserver: IntersectionObserverService,
+    private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
+    public router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -153,10 +167,12 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
     this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
+    this.noToolbar = !this.service.displayOptions.showToolbar;
     this.isFeed = this.service.displayOptions.isFeed;
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
     this.isModal = this.service.displayOptions.isModal;
     this.isSingle = this.service.displayOptions.isSingle;
+    this.isInset = this.service.displayOptions.isInset;
 
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
@@ -175,11 +191,24 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
+
+    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
+      canonicalUrl => {
+        this.canonicalUrl = canonicalUrl;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
+    if (
+      this.entityMetricSocketsExperiment.isActive() &&
+      this.interceptionObserverSubscription
+    ) {
+      this.interceptionObserverSubscription.unsubscribe();
+    }
+    this.canonicalUrlSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -203,7 +232,42 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
           );
         });
       this.elementVisibilityService.checkVisibility();
+
+      // Only needed when metrics toolbar is visible.
+      if (this.service.displayOptions.showToolbar) {
+        this.setupInterceptionObserver();
+      }
     }
+  }
+
+  /**
+   * Setup an interception observer to report when activity enters the DOM and
+   * update local isIntersecting$ state accordingly.
+   * @returns { void }
+   */
+  public setupInterceptionObserver(): void {
+    if (this.interceptionObserverSubscription) {
+      console.error('Already registered InterceptionObserver');
+      return;
+    }
+
+    if (
+      !this.entityMetricSocketsExperiment.isActive() ||
+      isPlatformServer(this.platformId)
+    ) {
+      return;
+    }
+
+    this.interceptionObserverSubscription = this.interceptionObserver
+      .createAndObserve(this.el)
+      .pipe(debounceTime(2000))
+      .subscribe((isVisible: boolean) => {
+        if (isVisible) {
+          this.service.setupMetricsSocketListener();
+          return;
+        }
+        this.service.teardownMetricsSocketListener();
+      });
   }
 
   @HostListener('window:resize')
@@ -237,5 +301,80 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     window.scrollTo({
       top: window.pageYOffset + (newHeight - oldHeight),
     });
+  }
+
+  /**
+   * Keep track of whether comments are expanded (in feeds only)
+   */
+  onCommentsExpandChange(expanded): void {
+    this.commentsExpanded = expanded;
+  }
+
+  // Capture pointerdown time so we can determine if longpress
+  onActivityPointerdown($event) {
+    this.pointerdownMs = Date.now();
+  }
+
+  /**
+   * Navigate to single activity page,
+   * but only if you haven't clicked another link inside the post
+   * or a dropdown menu item
+   * (not used for single activity page or activity modal)
+   *
+   * Ignore if you clicked in comments sections
+   * while comments are expanded
+   * @param $event
+   *
+   * TODO: remove duplication with quote component
+   */
+  onActivityPointerup($event, clickedComments?: boolean): void {
+    const target = $event.target;
+
+    // Only check for longpress if a pointerdown event occured
+    let longPress = false;
+    if (this.pointerdownMs && Date.now() - this.pointerdownMs > 1000) {
+      longPress = true;
+    }
+    const ignoredContext = this.isSingle || this.isModal || this.isInset;
+    const clickedExpandedComments = !!(
+      clickedComments && this.commentsExpanded
+    );
+
+    if (longPress || ignoredContext || clickedExpandedComments) {
+      return;
+    }
+
+    const clickedAnchor = !!target.closest('a');
+    const clickedDropdownTrigger = this.descendsFromClass(
+      target,
+      'm-dropdownMenu__trigger'
+    );
+    const clickedDropdownItem = this.descendsFromClass(
+      target,
+      'm-dropdownMenu__item'
+    );
+
+    if (clickedAnchor || clickedDropdownTrigger) {
+      // If link or menu trigger, don't redirect
+      $event.stopPropagation();
+      return;
+    } else if (clickedDropdownItem) {
+      // if clicked on dropdown item, ignore
+      return;
+    }
+
+    // If middle click, open in new tab instead
+    if ($event.button == 1) {
+      window.open(this.canonicalUrl, '_blank');
+    } else {
+      // Everything else go to single page
+      this.router.navigateByUrl(this.canonicalUrl);
+    }
+  }
+
+  descendsFromClass(node, className) {
+    // Cycle through parents until we find a match
+    while ((node = node.parentElement) && !node.classList.contains(className));
+    return !!node;
   }
 }

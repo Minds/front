@@ -2,43 +2,47 @@ require('ts-node/register');
 require('dotenv').config();
 
 const cp = require('child_process');
-const clientPlaywrightVersion = cp.execSync('npx playwright --version').toString().trim().split(' ')[1];
+const clientPlaywrightVersion = cp
+  .execSync('npx playwright --version')
+  .toString()
+  .trim()
+  .split(' ')[1];
 
 const chromiumCaps = {
-  'browser': 'playwright-chromium',
-  'os': 'Windows',
-  'os_version': '11',
-  'resolution': '1440x900',
-  'name': 'Minds Web Automation',
-  'build': 'Minds Web Smoke-Chrome',
+  browser: 'playwright-chromium',
+  os: 'Windows',
+  os_version: '11',
+  resolution: '1440x900',
+  name: 'Minds Web Automation',
+  build: 'Minds Web Smoke-Chrome',
   'browserstack.username': process.env.BROWSERSTACK_USERNAME,
   'browserstack.accessKey': process.env.BROWSERSTACK_ACCESS_KEY,
-  'client.playwrightVersion': clientPlaywrightVersion
-}
+  'client.playwrightVersion': clientPlaywrightVersion,
+};
 
 const firefoxCaps = {
-  'browser': 'playwright-firefox',
-  'os': 'osx',
-  'os_version': 'Catalina',
-  'resolution': '1024x768',
-  'name': 'Minds Web Automation',
-  'build': 'Minds Web Smoke-Firefox',
+  browser: 'playwright-firefox',
+  os: 'osx',
+  os_version: 'Catalina',
+  resolution: '1024x768',
+  name: 'Minds Web Automation',
+  build: 'Minds Web Smoke-Firefox',
   'browserstack.username': process.env.BROWSERSTACK_USERNAME,
   'browserstack.accessKey': process.env.BROWSERSTACK_ACCESS_KEY,
-  'client.playwrightVersion': clientPlaywrightVersion
-}
+  'client.playwrightVersion': clientPlaywrightVersion,
+};
 
 const webkitCaps = {
-  'browser': 'playwright-webkit',
-  'os': 'osx',
-  'os_version': 'Big Sur',
-  'resolution': '1920x1080',
-  'name': 'Minds Web Automation',
-  'build': 'Minds Web Smoke-Safari',
+  browser: 'playwright-webkit',
+  os: 'osx',
+  os_version: 'Big Sur',
+  resolution: '1920x1080',
+  name: 'Minds Web Automation',
+  build: 'Minds Web Smoke-Safari',
   'browserstack.username': process.env.BROWSERSTACK_USERNAME,
   'browserstack.accessKey': process.env.BROWSERSTACK_ACCESS_KEY,
-  'client.playwrightVersion': clientPlaywrightVersion
-}
+  'client.playwrightVersion': clientPlaywrightVersion,
+};
 
 exports.config = {
   output: '../error-screenshots',
@@ -49,49 +53,59 @@ exports.config = {
       video: true,
       browser: [],
       retries: 2,
-      restart: "session",
+      restart: 'session',
       reporter: 'html',
 
       chromium: {
-        browserWSEndpoint: { wsEndpoint: `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(JSON.stringify(chromiumCaps))}` }
-       },
-       firefox: {
-        browserWSEndpoint: { wsEndpoint: `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(JSON.stringify(firefoxCaps))}` }
-       },
-       webkit: {
-        browserWSEndpoint: { wsEndpoint: `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(JSON.stringify(webkitCaps))}` }
-       }
-    }
+        browserWSEndpoint: {
+          wsEndpoint: `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(
+            JSON.stringify(chromiumCaps)
+          )}`,
+        },
+      },
+      firefox: {
+        browserWSEndpoint: {
+          wsEndpoint: `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(
+            JSON.stringify(firefoxCaps)
+          )}`,
+        },
+      },
+      webkit: {
+        browserWSEndpoint: {
+          wsEndpoint: `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(
+            JSON.stringify(webkitCaps)
+          )}`,
+        },
+      },
     },
+  },
   multiple: {
-    browserStackCombo: {    
+    browserStackCombo: {
       browsers: ['firefox', 'chromium', 'webkit'],
     },
   },
   include: {
     I: '../step_definitions/steps_file.ts',
-    loginPage: '../pages/loginPage.ts'
+    loginPage: '../pages/loginPage.ts',
   },
   mocha: {},
   bootstrap: null,
   teardown: null,
   gherkin: {
-    features: "../features/*.feature",
-    steps: [
-        "../steps/login-steps.ts",
-    ]
+    features: '../features/*.feature',
+    steps: ['../steps/login-steps.ts'],
   },
   plugins: {
     pauseOnFail: {},
     retryFailedStep: {
-      enabled: true
+      enabled: true,
     },
     tryTo: {
-      enabled: true
+      enabled: true,
     },
     screenshotOnFail: {
-      enabled: true
-    }
+      enabled: true,
+    },
   },
-  name: 'minds-real-testing-project'
-}
+  name: 'minds-real-testing-project',
+};

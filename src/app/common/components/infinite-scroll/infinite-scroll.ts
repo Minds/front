@@ -15,6 +15,14 @@ import { AnalyticsService } from './../../../services/analytics';
 @Component({
   selector: 'infinite-scroll',
   template: `
+    <ng-container *ngIf="!inProgress && !moreData">
+      <div
+        (mViewed)="handleOnEnd()"
+        [mViewedOffset]="1000"
+        style="height: 1px; margin-bottom: -1px"
+      ></div>
+    </ng-container>
+
     <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
     <ng-container *ngIf="!iconOnly && !hideManual">
@@ -22,7 +30,6 @@ import { AnalyticsService } from './../../../services/analytics';
         *ngIf="!inProgress"
         [disabled]="!moreData"
         (onAction)="manualLoad()"
-        (mViewed)="moreData ? undefined : trackEndReached()"
       >
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
@@ -30,11 +37,7 @@ import { AnalyticsService } from './../../../services/analytics';
           >Load more</ng-container
         >
 
-        <ng-container
-          i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE"
-          *ngIf="!moreData"
-          >Nothing more to load</ng-container
-        >
+        <ng-container *ngIf="!moreData">{{ endText }}</ng-container>
       </m-button>
     </ng-container>
 
@@ -60,6 +63,14 @@ export class InfiniteScroll {
   @Input() inProgress: boolean = false;
   @Input() moreData: boolean = true;
   @Input() hideManual: boolean = false;
+  // if provided, the component won't track the feed-end event
+  @Input() ignoreEndTracking: boolean = false;
+  @Input()
+  endText: string = $localize`:@@COMMON__INFINITE_SCROLL__NOTHING_MORE:Nothing more to load`;
+  /**
+   * will fire when the feed ends and there's nothing to load
+   */
+  @Output() onEnd: EventEmitter<boolean> = new EventEmitter();
 
   element: any;
 
@@ -141,5 +152,13 @@ export class InfiniteScroll {
    */
   trackEndReached(): void {
     this.analytics.trackView('feed-end');
+  }
+
+  handleOnEnd() {
+    if (!this.ignoreEndTracking) {
+      this.trackEndReached();
+    }
+
+    this.onEnd.emit(true);
   }
 }

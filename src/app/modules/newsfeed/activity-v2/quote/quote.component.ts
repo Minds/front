@@ -1,4 +1,12 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import {
@@ -15,11 +23,14 @@ import {
   styleUrls: ['quote.component.ng.scss'],
   providers: [ActivityService],
 })
-export class ActivityV2QuoteComponent {
+export class ActivityV2QuoteComponent implements OnInit, OnDestroy {
   @HostBinding('class.m-activity__quote--minimalMode')
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
   }
+
+  @HostBinding('class.m-activity__quote--supermindReply')
+  isSupermindReply: boolean;
 
   @Input('entity') set entity(entity: ActivityEntity) {
     this.service.setEntity(entity.remind_object);
@@ -51,10 +62,24 @@ export class ActivityV2QuoteComponent {
   avatarUrl: string;
   quotedEntity;
 
+  isModal: boolean = false;
+  isSingle: boolean = false;
+  isInset: boolean = false;
+
+  canonicalUrlSubscription: Subscription;
+
+  canonicalUrl: string;
+
+  // Capture pointerdown time so we can determine if longpress
+  pointerdownMs: number;
+
+  subscriptions: Subscription[];
+
   constructor(
     public service: ActivityService,
     public session: Session,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -67,5 +92,85 @@ export class ActivityV2QuoteComponent {
     };
 
     this.service.displayOptions = opts;
+
+    this.isModal = this.service.displayOptions.isModal;
+    this.isSingle = this.service.displayOptions.isSingle;
+    this.isInset = this.service.displayOptions.isInset;
+
+    this.subscriptions = [
+      this.service.canonicalUrl$.subscribe(canonicalUrl => {
+        this.canonicalUrl = canonicalUrl;
+      }),
+    ];
+
+    this.subscriptions.push(
+      this.service.isSupermindReply$.subscribe(is => {
+        this.isSupermindReply = is;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
+
+  // Capture pointerdown time so we can determine if longpress
+  onActivityPointerdown($event) {
+    this.pointerdownMs = Date.now();
+  }
+
+  /**
+   * Navigate to single activity page of the quoted post,
+   * but only if you haven't clicked another link inside the post
+   * or a dropdown menu item
+   * @param $event
+   */
+  onActivityPointerup($event): void {
+    const target = $event.target;
+
+    // Only check for longpress if a pointerdown event occured
+    let longPress = false;
+    if (this.pointerdownMs && Date.now() - this.pointerdownMs > 1000) {
+      longPress = true;
+    }
+    const ignoredContext = this.isInset;
+
+    if (longPress || ignoredContext) {
+      return;
+    }
+
+    const clickedAnchor = !!target.closest('a');
+    const clickedDropdownTrigger = this.descendsFromClass(
+      target,
+      'm-dropdownMenu__trigger'
+    );
+    const clickedDropdownItem = this.descendsFromClass(
+      target,
+      'm-dropdownMenu__item'
+    );
+
+    if (clickedAnchor || clickedDropdownTrigger) {
+      // If link or menu trigger, don't redirect
+      $event.stopPropagation();
+      return;
+    } else if (clickedDropdownItem) {
+      // if clicked on dropdown item, ignore
+      return;
+    }
+    // If middle click, open in new tab instead
+    if ($event.button == 1) {
+      window.open(this.canonicalUrl, '_blank');
+    } else {
+      // Everything else go to single page
+      this.router.navigateByUrl(this.canonicalUrl);
+    }
+  }
+
+  descendsFromClass(node, className) {
+    // Cycle through parents until we find a match
+    while ((node = node.parentElement) && !node.classList.contains(className));
+    return !!node;
   }
 }

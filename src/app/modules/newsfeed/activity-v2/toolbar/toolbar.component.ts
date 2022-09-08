@@ -1,8 +1,10 @@
 import {
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   HostBinding,
   Injector,
+  Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -17,6 +19,7 @@ import { FeaturesService } from '../../../../services/features.service';
 import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { CounterChangeFadeIn } from '../../../../animations';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -28,6 +31,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
   selector: 'm-activityV2__toolbar',
   templateUrl: 'toolbar.component.html',
   styleUrls: ['./toolbar.component.ng.scss'],
+  animations: [CounterChangeFadeIn],
 })
 export class ActivityV2ToolbarComponent {
   private entitySubscription: Subscription;
@@ -35,6 +39,9 @@ export class ActivityV2ToolbarComponent {
 
   entity: ActivityEntity;
   allowReminds: boolean = true;
+
+  /** Used only for feeds */
+  @Output() onExpandChange: EventEmitter<Boolean> = new EventEmitter();
 
   constructor(
     public service: ActivityService,
@@ -66,7 +73,9 @@ export class ActivityV2ToolbarComponent {
     this.paywallBadgeSubscription.unsubscribe();
   }
 
-  toggleComments(): void {
+  toggleComments($event): void {
+    $event.stopPropagation();
+
     if (this.service.displayOptions.fixedHeight) {
       this.router.navigate([`/newsfeed/${this.entity.guid}`]);
       return;
@@ -74,9 +83,16 @@ export class ActivityV2ToolbarComponent {
 
     this.service.displayOptions.showOnlyCommentsToggle = !this.service
       .displayOptions.showOnlyCommentsToggle;
+
+    /** Emit whether the comments are expanded */
+    this.onExpandChange.emit(
+      !this.service.displayOptions.showOnlyCommentsToggle
+    );
   }
 
   async openBoostModal(e: MouseEvent): Promise<void> {
+    e.stopPropagation();
+
     try {
       await this.boostModal.open(this.entity);
       return;

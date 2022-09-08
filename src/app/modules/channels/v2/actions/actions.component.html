@@ -5,7 +5,15 @@
   </ng-container>
   <m-channelActions__proChannel></m-channelActions__proChannel>
   <ng-template #nonOwner>
-    <m-channelActions__menuButton></m-channelActions__menuButton>
+    <m-channelActions__menu>
+      <m-button
+        class="m-button-v2 m-button-v2--iconOnly"
+        overlay="true"
+        iconOnly="true"
+      >
+        <m-icon iconId="more_horiz" [sizeFactor]="0"></m-icon>
+      </m-button>
+    </m-channelActions__menu>
 
     <ng-container *ngIf="service.canInteract$ | async">
       <m-channelActions__wire></m-channelActions__wire>

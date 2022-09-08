@@ -1,0 +1,156 @@
+@import 'defaults.scss';
+
+// *********************************
+// ** BACKGROUND CHANGE ON HOVER **
+// *
+// * Background transitions/colors for all affected child components
+// *
+// * Note: we don't change the bg of the entire
+// * activity because we don't want to include expanded comments.
+// * Instead we change bg of top level children
+// *********************************
+$transitionProps: 0.3s ease-out;
+$color: $m-bgColor--secondaryAlt;
+
+:host {
+  // Don't change activity background on hover
+  // for single pages or modals
+  &:not(.m-activity--isSingle):not(.m-activity--modal):not(.m-activity--isInset) {
+    // TRANSITIONS
+    // Note: opacity transitions are for fadeouts/gradients
+    // (Necessary because css transitions
+    // can't handle gradients so we use a substitute element)
+    .m-activity__top,
+    ::ng-deep m-activityV2__toolbar,
+    ::ng-deep m-comments__entityOutletV2,
+    ::ng-deep
+      m-activityV2__content.m-activityContent--fixedHeight
+      .m-activityContent__boostRotatorFadeout,
+    ::ng-deep
+      m-activityV2__content.m-activityContent--fixedHeight
+      .m-activityContent__boostRotatorFadeout--hover,
+    ::ng-deep minds-rich-embed .m-richEmbed__teaserFadeout,
+    ::ng-deep minds-rich-embed .m-richEmbed__teaserFadeout--hover {
+      transition: background $transitionProps, box-shadow $transitionProps,
+        opacity $transitionProps;
+    }
+
+    //---------------------------------------
+    // Set gradient transition colors here
+
+    ::ng-deep
+      m-activityV2__content.m-activityContent--fixedHeight
+      .m-activityContent__boostRotatorFadeout--hover {
+      @include m-theme() {
+        background: linear-gradient(
+          to bottom,
+          rgba(themed($color), 0) 0%,
+          rgba(themed($color), 0.8) 64.58%,
+          themed($color) 100%
+        ) !important;
+      }
+    }
+
+    ::ng-deep minds-rich-embed .m-richEmbed__teaserFadeout--hover {
+      @include m-theme() {
+        background: linear-gradient(
+          to bottom,
+          rgba(themed($color), 0) 0%,
+          rgba(themed($color), 0.2) 14%,
+          rgba(themed($color), 0.65) 44%,
+          rgba(themed($color), 1) 80%
+        );
+      }
+    }
+
+    //---------------------------------------
+
+    &:hover {
+      .m-activity__top,
+      ::ng-deep m-activityV2__toolbar,
+      ::ng-deep m-comments__entityOutletV2 {
+        cursor: pointer;
+        @include m-theme() {
+          background: themed($color);
+        }
+      }
+
+      //---------------------------------------
+
+      &.m-activity--commentsExpanded {
+        // Create a bit of visual space at the bottom of the
+        // toolbar when comments are expanded
+        // (a.k.a. hacky workaround for spacing)
+        ::ng-deep m-activityV2__toolbar {
+          @include m-theme() {
+            box-shadow: 0px -4px 0px 0px themed($m-bgColor--primary) inset;
+          }
+        }
+        // Don't highlight background of expanded comments
+        ::ng-deep m-comments__entityOutletV2 {
+          cursor: default;
+          @include m-theme() {
+            background: themed($m-bgColor--primary);
+          }
+        }
+      }
+
+      //---------------------------------------
+      // Gradient transition hack for boost rotator fadeout
+      ::ng-deep m-activityV2__content {
+        &.m-activityContent--fixedHeight
+          .m-activityContent__boostRotatorFadeout {
+          .m-activityContent__boostRotatorFadeout--hover {
+            opacity: 1;
+            cursor: pointer;
+          }
+        }
+      }
+
+      //---------------------------------------
+      // Gradient transition hack for rich embed fadeout
+      ::ng-deep m-activityV2__content minds-rich-embed {
+        &[class*='m-richEmbed--activityV2'] .m-richEmbed__teaserFadeout {
+          .m-richEmbed__teaserFadeout--hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  // ------------------------------------------------------
+  // ------------------------------------------------------
+  // ------------------------------------------------------
+  // DO change the background of quotes and rich embeds,
+  // even if single page/modal
+  ::ng-deep m-activityV2__quote,
+  ::ng-deep m-activityV2__content minds-rich-embed .m-rich-embed-src {
+    transition: background $transitionProps;
+  }
+
+  &:hover {
+    ::ng-deep m-activityV2__quote:not(.m-activity__quote--supermindReply),
+    ::ng-deep m-activityV2__content minds-rich-embed .m-rich-embed-src {
+      &:hover {
+        cursor: pointer;
+        @include m-theme() {
+          background: rgba(themed($m-bgColor--btnHover), 0.4);
+        }
+      }
+    }
+
+    // Need to handle supermind replies differently because
+    // the gradient border requires explicit quote background color
+    ::ng-deep m-activityV2__quote.m-activity__quote--supermindReply {
+      @include m-theme() {
+        background: themed($color);
+      }
+      &:hover {
+        cursor: pointer;
+        @include m-theme() {
+          background: themed($m-bgColor--contrastSubtle);
+        }
+      }
+    }
+  }
+}

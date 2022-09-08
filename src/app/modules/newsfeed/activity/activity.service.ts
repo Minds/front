@@ -1,13 +1,23 @@
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { MindsGroup, MindsUser } from '../../../interfaces/entities';
-import { map } from 'rxjs/operators';
-import { Injectable, EventEmitter } from '@angular/core';
+import { map, skip, tap, withLatestFrom } from 'rxjs/operators';
+import { Injectable, EventEmitter, OnDestroy, Optional } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
-import { FeaturesService } from '../../../services/features.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
+
+export interface Supermind {
+  request_guid: string;
+  is_reply: boolean;
+}
 
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
@@ -25,7 +35,7 @@ export type ActivityDisplayOptions = {
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator?
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
-  bypassMediaModal: boolean; // Go to media page instead
+  bypassMediaModal: boolean; // Go to media page instead - i.e. by clicking on suggested sidebar post or image in notification preview
   showPostMenu: boolean; // Can be hidden for things like previews
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
@@ -34,6 +44,7 @@ export type ActivityDisplayOptions = {
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
+  isInset: boolean; // is the activity inside a context where we don't want the hover+highlight functionality? (e.g. boost modal, quote composer)
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
 };
@@ -78,6 +89,7 @@ export type ActivityEntity = {
   reminds?: number; // count of reminds
   quotes?: number; // count of quotes
   blurhash?: string;
+  supermind?: Supermind; // supermind details, if applicable
 };
 
 // Constants of blocks
@@ -107,8 +119,11 @@ export const ACTIVITY_V2_MEDIUM_STATUS_MAX_LENGTH = 250;
 
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
+// entity for which metrics events can be subscribed to.
+type MetricsSubscribableEntity = { guid: string };
+
 @Injectable()
-export class ActivityService {
+export class ActivityService implements OnDestroy {
   readonly siteUrl: string;
 
   entity$ = new BehaviorSubject(null);
@@ -147,12 +162,19 @@ export class ActivityService {
   );
 
   /**
+   * The index of the image that is "active" in a multi-image post
+   * (where applicable)
+   * e.g. which image is currently displayed in the activity modal
+   */
+  activeMultiImageIndex$: BehaviorSubject<number> = new BehaviorSubject(0);
+
+  /**
    * Allows for components to give nsfw consent
    */
   isNsfwConsented$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   /**
-   * Will be true if not consented and is nsfw
+   * Will be true if not consented and is nsfw.
    */
   shouldShowNsfwConsent$: Observable<boolean> = combineLatest(
     this.entity$,
@@ -160,8 +182,10 @@ export class ActivityService {
   ).pipe(
     map(([entity, isConsented]: [ActivityEntity, boolean]) => {
       return (
-        entity.nsfw &&
-        entity.nsfw.length > 0 &&
+        (entity.nsfw?.length > 0 ||
+          entity.ownerObj?.nsfw?.length > 0 ||
+          entity.remind_object?.nsfw?.length > 0 ||
+          entity.remind_object?.ownerObj?.nsfw?.length > 0) &&
         !isConsented &&
         !(this.session.isLoggedIn() && this.session.getLoggedInUser().mature)
       );
@@ -270,6 +294,17 @@ export class ActivityService {
   );
 
   /**
+   * Emits true if the post is a supermind reply
+   */
+  isSupermindReply$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return (
+        getActivityContentType(entity, false, false, true) === 'supermind_reply'
+      );
+    })
+  );
+
+  /**
    * If the post has been editied this will emit true
    */
   isEdited$: Observable<boolean> = this.entity$.pipe(
@@ -320,6 +355,7 @@ export class ActivityService {
     isSidebarBoost: false,
     isFeed: false,
     isSingle: false,
+    isInset: false,
     isV2: false,
     permalinkBelowContent: false,
   };
@@ -328,15 +364,23 @@ export class ActivityService {
 
   activityV2Feature: boolean = false;
 
+  // subscriptions for metric events.
+  private thumbsUpMetricSubscription: Subscription;
+  private thumbsDownMetricSubscription: Subscription;
+
   constructor(
     private configs: ConfigsService,
     private session: Session,
-    private featuresService: FeaturesService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private activityV2Experiment: ActivityV2ExperimentService,
+    @Optional() private entityMetricsSocket: EntityMetricsSocketService
   ) {
     this.siteUrl = configs.get('site_url');
 
     this.activityV2Feature = this.activityV2Experiment.isActive();
+  }
+
+  ngOnDestroy() {
+    this.teardownMetricsSocketListener();
   }
 
   /**
@@ -354,6 +398,7 @@ export class ActivityService {
       entity.activity_type = getActivityContentType(entity);
     }
     this.entity$.next(entity);
+
     return this;
   }
 
@@ -375,7 +420,11 @@ export class ActivityService {
   }
 
   buildCanonicalUrl(entity: ActivityEntity, full: boolean): string {
-    const guid = entity.entity_guid || entity.guid;
+    let guid = entity.entity_guid || entity.guid;
+    // use the entity guid for media quotes
+    if (entity.remind_object && entity.entity_guid) {
+      guid = entity.guid;
+    }
     const prefix = full ? this.siteUrl : '/';
     return `${prefix}newsfeed/${guid}`;
   }
@@ -418,5 +467,85 @@ export class ActivityService {
     }
 
     return entity;
+  }
+
+  clickedAnchor(node) {
+    return node instanceof HTMLAnchorElement;
+  }
+
+  clickedDropdown(node) {
+    while (
+      (node = node.parentElement) &&
+      !node.classList.contains('m-dropdownMenu__item')
+    );
+    return node;
+  }
+
+  /**
+   * Setup listener for metrics socket for this activity.
+   * @param { MetricsSubscribableEntity } subscribableEntity - entity to subscribe to.
+   * @returns { this }
+   */
+  public setupMetricsSocketListener(): this {
+    if (!this.entityMetricsSocket) {
+      console.error('No EntityMetricsSocketService provider to connect with');
+      return;
+    }
+
+    this.thumbsUpMetricSubscription = this.entityMetricsSocket.thumbsUpCount$
+      .pipe(
+        skip(1),
+        withLatestFrom(this.entity$),
+        tap(([thumbsUpCount, entity]) => {
+          entity['thumbs:up:count'] = thumbsUpCount;
+          this.entity$.next(entity);
+        })
+      )
+      .subscribe();
+
+    this.thumbsDownMetricSubscription = this.entityMetricsSocket.thumbsDownCount$
+      .pipe(
+        skip(1),
+        withLatestFrom(this.entity$),
+        tap(([thumbsDownCount, entity]) => {
+          entity['thumbs:down:count'] = thumbsDownCount;
+          this.entity$.next(entity);
+        })
+      )
+      .subscribe();
+
+    this.entityMetricsSocket.listen(this.getMetricSubscriptionGuid());
+    return this;
+  }
+
+  /**
+   * Teardown listener for metrics socket for this activity.
+   * @param { MetricsSubscribableEntity } subscribableEntity - entity to teardown listeners for.
+   * @returns { this }
+   */
+  public teardownMetricsSocketListener(): this {
+    if (!this.entityMetricsSocket) {
+      return;
+    }
+    if (this.thumbsUpMetricSubscription) {
+      this.thumbsUpMetricSubscription.unsubscribe();
+    }
+    if (this.thumbsDownMetricSubscription) {
+      this.thumbsDownMetricSubscription.unsubscribe();
+    }
+    this.entityMetricsSocket.leave(this.getMetricSubscriptionGuid());
+    return this;
+  }
+
+  /**
+   * Get GUID to subscribe to for metrics.
+   * @returns { string } guid to subscribe to for metrics events.
+   */
+  private getMetricSubscriptionGuid(): string {
+    if (this.entity$.getValue().entity_guid) {
+      return this.entity$.getValue().entity_guid;
+    } else {
+      return this.entity$.getValue().guid;
+    }
   }
 }

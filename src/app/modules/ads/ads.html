@@ -9,6 +9,17 @@
     <m-publisherCard [publisher]="entity"></m-publisherCard
   ></ng-container>
   <ng-template #notUser>
-    <minds-card [object]="entity" class="mdl-card m-border"></minds-card
+    <minds-card
+      [object]="entity"
+      [displayOptions]="{
+        sidebarMode: true,
+        isSidebarBoost: true,
+        showToolbar: false,
+        showComments: false,
+        autoplayVideo: false,
+        showPostMenu: false
+       }"
+      class="mdl-card m-border"
+    ></minds-card
   ></ng-template>
 </div>

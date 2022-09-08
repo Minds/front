@@ -8,6 +8,7 @@ import { TextAreaComponent } from './text-area.component';
 import { ComposerService } from '../../services/composer.service';
 import { FormsModule } from '@angular/forms';
 import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
+import { Subject } from 'rxjs';
 
 describe('Composer Text Area', () => {
   let comp: TextAreaComponent;
@@ -24,11 +25,16 @@ describe('Composer Text Area', () => {
     getValue: '',
   });
 
+  const hasAttachments$ = jasmine.createSpyObj('hasAttachments$', {
+    getValue: '',
+  });
+
   const composerServiceMock: any = MockService(ComposerService, {
-    has: ['message$', 'title$'],
+    has: ['message$', 'title$', 'data$'],
     props: {
       message$: { get: () => message$ },
       title$: { get: () => title$ },
+      data$: { get: () => new Subject() },
     },
   });
 

@@ -142,6 +142,9 @@ export class ActivityV2ContentComponent
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
 
+  activeMultiImageIndex: number;
+  activeMultiImageUrl: string;
+
   readonly siteUrl: string;
   readonly cdnAssetsUrl: string;
 
@@ -157,6 +160,11 @@ export class ActivityV2ContentComponent
   @HostBinding('class.m-activityContent--minimalMode')
   get isMinimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
+  }
+
+  @HostBinding('class.m-activityContent--sidebarMode')
+  get sidebarMode(): boolean {
+    return this.service.displayOptions.sidebarMode;
   }
 
   @HostBinding('class.m-activityContent--modal--left')
@@ -190,18 +198,30 @@ export class ActivityV2ContentComponent
   @HostBinding('class.m-activityContent--image')
   get isImage(): boolean {
     return (
-      this.entity.custom_type == 'batch' ||
-      (this.entity.thumbnail_src &&
-        !this.entity.perma_url &&
-        this.entity.custom_type !== 'video')
+      (this.entity.custom_type == 'batch' ||
+        (this.entity.thumbnail_src &&
+          !this.entity.perma_url &&
+          this.entity.custom_type !== 'video')) &&
+      !this.isMultiImage
     );
   }
+
+  @HostBinding('class.m-activityContent--multiImage')
+  get isMultiImage(): boolean {
+    return (
+      this.entity.custom_type == 'batch' && this.entity.custom_data.length > 1
+    );
+  }
+
+  @HostBinding('class.m-activityContent--supermindReply')
+  isSupermindReply: boolean;
 
   @HostBinding('class.m-activityContent--status')
   get isStatus(): boolean {
     return !(
       this.isImage ||
       this.isVideo ||
+      this.isMultiImage ||
       this.isRichEmbed ||
       this.entity.remind_object
     );
@@ -209,7 +229,11 @@ export class ActivityV2ContentComponent
 
   @HostBinding('class.m-activityContent--textlessMedia')
   get textlessMedia(): boolean {
-    return !this.titleText && !this.bodyText && (this.isVideo || this.isImage);
+    return (
+      !this.titleText &&
+      !this.bodyText &&
+      (this.isVideo || this.isImage || this.isMultiImage)
+    );
   }
 
   constructor(
@@ -290,6 +314,19 @@ export class ActivityV2ContentComponent
         this.isQuote = is;
       })
     );
+    this.subscriptions.push(
+      this.service.isSupermindReply$.subscribe(is => {
+        this.isSupermindReply = is;
+      })
+    );
+    this.subscriptions.push(
+      this.service.activeMultiImageIndex$.subscribe((i: number) => {
+        if (this.isMultiImage) {
+          this.activeMultiImageIndex = i;
+          this.activeMultiImageUrl = this.entity?.custom_data[i].src;
+        }
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -310,7 +347,9 @@ export class ActivityV2ContentComponent
   }
 
   get titleText(): string {
-    return this.isImage || this.isVideo ? this.entity.title : '';
+    return this.isImage || this.isVideo || this.isMultiImage
+      ? this.entity.title
+      : '';
   }
 
   get bodyText(): string {
@@ -320,7 +359,7 @@ export class ActivityV2ContentComponent
     }
 
     // Use media message only if different from title
-    if (this.isImage || this.isVideo) {
+    if (this.isImage || this.isVideo || this.isMultiImage) {
       if (this.entity.message !== this.entity.title) {
         return this.entity.message;
       } else {
@@ -344,7 +383,7 @@ export class ActivityV2ContentComponent
     // Minimal mode hides media description if there is already a title
     return this.isMinimalMode &&
       (this.isImage || this.isVideo) &&
-      this.titleText.length >= 1
+      this.titleText?.length >= 1
       ? true
       : false;
   }
@@ -359,9 +398,7 @@ export class ActivityV2ContentComponent
 
   get imageUrl(): string {
     if (this.entity.custom_type === 'batch') {
-      let thumbUrl = this.entity.custom_data[0].src;
-
-      return thumbUrl;
+      return this.entity.custom_data[0].src;
     }
 
     if (this.entity.thumbnail_src && this.entity.custom_type !== 'video') {
@@ -458,9 +495,6 @@ export class ActivityV2ContentComponent
     return !this.hideText && this.service.displayOptions.permalinkBelowContent;
   }
 
-  get sidebarMode(): boolean {
-    return this.service.displayOptions.sidebarMode;
-  }
   ////////////////////////////////////////////////////////////////////////////
 
   calculateFixedContentHeight(): void {
@@ -605,18 +639,35 @@ export class ActivityV2ContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
-    // Don't try to open modal if on mobile device or already in a modal
-    if (!this.modalService.canOpenInModal() || this.isModal) {
-      return;
-    }
-
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
 
+    // Don't try to open modal if already in a modal
+    if (this.isModal) {
+      return;
+    }
+
+    // If on mobile device...
+    if (!this.modalService.canOpenInModal()) {
+      if (this.isMultiImage) {
+        // ...and clicked on multi-image image,
+        // open that image in a new tab instead of modal
+        window.open(this.activeMultiImageUrl, '_blank');
+      }
+      // Ignore all other modal requests from mobile devices
+      return;
+    }
+
     // if sidebarMode, navigate to canonicalUrl for all content types
     if (this.sidebarMode) {
+      this.redirectToSinglePage();
+      return;
+    }
+
+    // We don't support showing media quotes in modal yet
+    if (this.entity.remind_object) {
       this.redirectToSinglePage();
       return;
     }
@@ -640,7 +691,12 @@ export class ActivityV2ContentComponent
       return;
     }
 
-    this.activityModalCreator.create(this.entity, this.injector);
+    // Open the activity modal
+    this.activityModalCreator.create(
+      this.entity,
+      this.injector,
+      this.activeMultiImageIndex
+    );
   }
 
   onTranslate(e: Event): void {
@@ -661,7 +717,7 @@ export class ActivityV2ContentComponent
     }
     $event.stopPropagation();
 
-    if (this.isImage || this.isVideo) {
+    if (this.isImage || this.isVideo || this.isMultiImage) {
       this.onModalRequested($event);
     } else {
       this.redirectToSinglePage();
@@ -669,7 +725,10 @@ export class ActivityV2ContentComponent
   }
 
   redirectToSinglePage(): void {
-    this.router.navigateByUrl(this.canonicalUrl);
+    // don't navigate if we're already there
+    if (this.router.url !== this.canonicalUrl) {
+      this.router.navigateByUrl(this.canonicalUrl);
+    }
   }
 
   onImageError(e: Event): void {}

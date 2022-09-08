@@ -5,6 +5,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { CommonModule } from '../../../common/common.module';
 import { ActivityV2Component } from './activity.component';
@@ -37,6 +38,7 @@ import { ActivityV2PermalinkComponent } from './permalink/permalink.component';
 import { ActivityV2ViewsComponent } from './views/views.component';
 import { ReadMoreModule } from '../../../common/read-more/v2/read-more.module';
 import { ActivityV2BoostedFlagComponent } from './flag/boosted-flag/boosted-flag.component';
+import { ActivityV2MultiImageComponent } from './content/images/multi-image.component';
 
 @NgModule({
   imports: [
@@ -55,6 +57,7 @@ import { ActivityV2BoostedFlagComponent } from './flag/boosted-flag/boosted-flag
     WireModule,
     CodeHighlightModule,
     ReadMoreModule,
+    MatGridListModule,
   ],
   declarations: [
     ActivityV2Component,
@@ -76,6 +79,7 @@ import { ActivityV2BoostedFlagComponent } from './flag/boosted-flag/boosted-flag
     ActivityV2BadgesComponent,
     ActivityV2PermalinkComponent,
     ActivityV2ViewsComponent,
+    ActivityV2MultiImageComponent,
   ],
   providers: [ActivityV2ModalCreatorService],
   exports: [

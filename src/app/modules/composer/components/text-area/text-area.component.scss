@@ -32,7 +32,7 @@ m-composer__textArea {
     line-height: 21px;
     min-height: 50px;
     transition: all 0.3s ease 0s !important;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
 
     @media screen and (max-width: $max-mobile) {
       height: auto; // Set dynamically on input event

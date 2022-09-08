@@ -16,6 +16,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catpcha/friendly-captcha.component';
 import { ToasterService } from '../../services/toaster.service';
+import { CounterChangeFadeIn } from '../../../animations';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -23,6 +24,7 @@ import { ToasterService } from '../../services/toaster.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'thumbs-up.component.html',
   styleUrls: [`thumbs-up.component.ng.scss`],
+  animations: [CounterChangeFadeIn],
 })
 export class ThumbsUpButton implements DoCheck, OnChanges {
   changesDetected: boolean = false;
@@ -45,7 +47,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
   @Input() iconOnly = false;
 
   /**
-   * Call to let parent functions know a thumb up event has happend
+   * Call to let parent functions know a thumb up event has happened
    */
   @Output('thumbsUpChange') thumbsUpChange$: EventEmitter<
     void
@@ -76,9 +78,16 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns void
    */
   onClick(e: MouseEvent): void {
+    e.stopPropagation();
+
+    if (this.inProgress) {
+      return;
+    }
+
+    this.inProgress = true;
+
     if (this.isFriendlyCaptchaFeatureEnabled() && !this.has()) {
       this.showFriendlyCaptcha = true;
-      this.inProgress = true;
     } else {
       this.submit();
     }
@@ -98,8 +107,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns Promise<void>
    */
   async submit(solution?: string): Promise<void> {
-    this.inProgress = true;
     this.cd.detectChanges();
+
     if (!this.session.isLoggedIn()) {
       const user = await this.authModal.open();
       if (!user) return;

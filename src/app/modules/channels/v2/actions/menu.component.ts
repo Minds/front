@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
 import { PostMenuService } from '../../../../common/components/post-menu/post-menu.service';
 import { ActivityService } from '../../../../common/services/activity.service';
@@ -41,6 +46,8 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
   ) {
     super();
   }
+
+  @Input() anchorPosition = { top: '100%', right: '0' };
 
   ngOnInit() {
     this.subscriptions.push(
@@ -288,5 +295,11 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
       // Reverse action
       this.service.setChannel({ ...channel, seed: !seed });
     }
+  }
+
+  public getUserSupersetUrl(): string {
+    return `https://analytics.minds.com/superset/dashboard/41/?preselect_filters={"286":{"USER_GUID":"${
+      this.service.channel$.getValue().guid
+    }"}}`;
   }
 }
