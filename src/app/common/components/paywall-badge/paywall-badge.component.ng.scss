@@ -11,7 +11,7 @@
     border-radius: 3px;
     padding: 4px 5px;
     font-size: 12px;
-    line-height: 12px;
+    line-height: 14px;
     font-weight: 500;
     &:not(.m-paywallBadge--activityV2) {
       @include m-theme() {
@@ -64,6 +64,19 @@
       > .m-paywallBadge__tierName {
         @include m-theme() {
           color: themed($m-white-always);
+        }
+      }
+    }
+    &.isSupermindReply {
+      @include supermindGradient;
+      @include m-theme() {
+        background-color: transparent;
+        border: none;
+        box-shadow: none !important;
+      }
+      > .m-paywallBadge__tierName {
+        @include m-theme() {
+          color: themed($m-white-always) !important;
         }
       }
     }
