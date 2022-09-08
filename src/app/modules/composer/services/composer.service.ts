@@ -48,9 +48,11 @@ import {
   RichEmbedMetadataMappedValue,
   RichEmbedSubjectValue,
   ScheduleSubjectValue,
+  SupermindRequestSubjectValue,
   TagsSubjectValue,
   TitleSubjectValue,
 } from './composer-data-types';
+import { SupermindComposerPayloadType } from '../components/popup/supermind/superminds-creation.service';
 
 /**
  * Default values
@@ -218,11 +220,44 @@ export class ComposerService implements OnDestroy {
   );
 
   /**
+   * The payload for the supermind request (null if not a supermind)
+   */
+  readonly supermindRequest$: BehaviorSubject<
+    SupermindRequestSubjectValue
+  > = new BehaviorSubject(null);
+
+  /**
+   * True/False helper for if we have a supermind request payload
+   */
+  readonly isSupermindRequest$: Observable<
+    boolean
+  > = this.supermindRequest$.pipe(map(supermindRequest => !!supermindRequest));
+
+  /**
+   * True/False helper to determine if the criteria to make a supermind has been met
+   * Conditions listed below per business rules
+   */
+  readonly canCreateSupermindRequest$: Observable<boolean> = combineLatest([
+    this.isEditing$,
+    this.nsfw$,
+    this.monetization$,
+    this.schedule$,
+  ]).pipe(
+    map(([isEditing, nsfw, monetization$, schedule$]) => {
+      return !isEditing && !nsfw.length && !monetization$ && !schedule$;
+    })
+  );
+
+  /**
    * If we are editing and we have a scheduled value
    */
-  readonly canSchedule$ = combineLatest([this.schedule$, this.isEditing$]).pipe(
-    map(([schedule, isEditing]) => {
-      return !isEditing || schedule * 1000 > Date.now();
+  readonly canSchedule$ = combineLatest([
+    this.schedule$,
+    this.isEditing$,
+    this.supermindRequest$,
+  ]).pipe(
+    map(([schedule, isEditing, supermindRequest]) => {
+      return !supermindRequest && (!isEditing || schedule * 1000 > Date.now());
     })
   );
 
@@ -349,7 +384,8 @@ export class ComposerService implements OnDestroy {
         RichEmbedMetadataMappedValue,
         VideoPoster,
         PostToPermawebSubjectValue,
-        RemindSubjectValue
+        RemindSubjectValue,
+        SupermindRequestSubjectValue
       ]
     >([
       this.message$.pipe(distinctUntilChanged()),
@@ -424,6 +460,7 @@ export class ComposerService implements OnDestroy {
       this.videoPoster$.pipe(distinctUntilChanged()),
       this.postToPermaweb$,
       this.remind$.pipe(distinctUntilChanged()),
+      this.supermindRequest$.pipe(distinctUntilChanged()),
     ]).pipe(
       map(
         // Create an JSON object based on an array of Subject values
@@ -441,6 +478,7 @@ export class ComposerService implements OnDestroy {
           videoPoster,
           postToPermaweb,
           remind,
+          supermindRequest,
         ]) => ({
           message,
           title,
@@ -455,6 +493,7 @@ export class ComposerService implements OnDestroy {
           videoPoster,
           postToPermaweb,
           remind,
+          supermindRequest,
         })
       ),
       tap(values => {
@@ -661,6 +700,9 @@ export class ComposerService implements OnDestroy {
     // Reset upload state
     this.uploaderService.reset();
 
+    // Reset supermind state
+    this.supermindRequest$.next(null);
+
     // Reset original source
     this.entity = null;
   }
@@ -845,6 +887,7 @@ export class ComposerService implements OnDestroy {
    * @param videoPoster
    * @param postToPermaweb
    * @param remind
+   * @param supermindRequest
    */
   buildPayload({
     message,
@@ -860,6 +903,7 @@ export class ComposerService implements OnDestroy {
     videoPoster,
     postToPermaweb,
     remind,
+    supermindRequest,
   }: Data): any {
     if (this.containerGuid) {
       // Override accessId if there's a container set
@@ -885,6 +929,10 @@ export class ComposerService implements OnDestroy {
 
     if (remind) {
       this.payload.remind_guid = remind.guid;
+    }
+
+    if (supermindRequest) {
+      this.payload.supermind_request = supermindRequest;
     }
 
     if (this.canEditMetadata()) {

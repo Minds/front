@@ -46,6 +46,7 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 import isMobile from '../../../../helpers/is-mobile';
 import { UploaderService } from '../../services/uploader.service';
+import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 
 /**
  * Composer toolbar. Displays important actions
@@ -118,6 +119,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   );
 
   canSchedule$ = this.service.canSchedule$;
+
+  /**
+   * True/False if supermind request is inprogress
+   */
+  isSupermindRequest$ = this.service.isSupermindRequest$;
+
+  /**
+   * Flag as to if we show supermind create button
+   */
+  canCreateSupermindRequest$ = this.service.canCreateSupermindRequest$;
 
   /**
    * Constructor
@@ -351,6 +362,17 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   async onTagsClick($event?: MouseEvent): Promise<void> {
     await this.popup
       .create(TagsComponent)
+      .present()
+      .toPromise(/* Promise is needed to boot-up the Observable */);
+  }
+
+  /**
+   * Shows supermind popup
+   * @param $event
+   */
+  async onSupermindClick($event?: MouseEvent): Promise<void> {
+    await this.popup
+      .create(ComposerSupermindComponent)
       .present()
       .toPromise(/* Promise is needed to boot-up the Observable */);
   }

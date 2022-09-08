@@ -12,6 +12,7 @@ import { ButtonComponent } from '../../../../common/components/button/button.com
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { UploaderService } from '../../services/uploader.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
+import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -193,6 +194,14 @@ describe('Composer Toolbar', () => {
   it('should emit on schedule popup', () => {
     comp.onSchedulerClick();
     expect(popupServiceMock.create).toHaveBeenCalledWith(ScheduleComponent);
+    expect(popupServiceMock.present).toHaveBeenCalled();
+  });
+
+  it('should emit on supermind popup', () => {
+    comp.onSupermindClick();
+    expect(popupServiceMock.create).toHaveBeenCalledWith(
+      ComposerSupermindComponent
+    );
     expect(popupServiceMock.present).toHaveBeenCalled();
   });
 });

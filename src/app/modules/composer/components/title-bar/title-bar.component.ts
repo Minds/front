@@ -44,6 +44,13 @@ export class TitleBarComponent {
     map(values => values.attachmentGuids?.length > 0)
   );
 
+  /**
+   * If is a supermind
+   */
+  isSupermind$: Observable<boolean> = this.service.supermindRequest$.pipe(
+    map(supermindRequest => !!supermindRequest)
+  );
+
   constructor(protected service: ComposerService) {}
 
   /**

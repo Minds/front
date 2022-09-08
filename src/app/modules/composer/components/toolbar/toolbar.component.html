@@ -54,7 +54,10 @@
   </a>
   <a
     *ngIf="
-      !legacyPaywallEnabled && !(remind$ | async) && !(isGroupPost$ | async)
+      !legacyPaywallEnabled &&
+      !(remind$ | async) &&
+      !(isGroupPost$ | async) &&
+      !(isSupermindRequest$ | async)
     "
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="monetization$ | async"
@@ -96,6 +99,29 @@
       [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
       i18n="@@COMMON__TAGS"
       >Tags</span
+    >
+  </a>
+
+  <a
+    *ngIf="canCreateSupermindRequest$ | async"
+    class="m-composerToolbar__item"
+    [class.m-composerToolbar__item--active]="isSupermindRequest$ | async"
+    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+    (click)="onSupermindClick($event)"
+    data-cy="supermind-create--button"
+  >
+    <m-icon
+      class="m-composerToolbarItem__icon"
+      from="md"
+      iconId="tips_and_updates"
+      [sizeFactor]="25"
+    ></m-icon>
+    <span
+      class="m-composerToolbarItem__label"
+      [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+      i18n="@@COMMON__SUPERMIND"
+      >Supermind</span
     >
   </a>
 

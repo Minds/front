@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
 import { NSFW_REASONS } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
 
 /**
  * Composer's NSFW popup modal
@@ -37,7 +38,10 @@ export class NsfwComponent {
    */
   state: number[] = [];
 
-  constructor(protected service: ComposerService) {}
+  constructor(
+    protected service: ComposerService,
+    protected toasterService: ToasterService
+  ) {}
 
   /**
    * Component initialization. Sets current state.
@@ -68,6 +72,13 @@ export class NsfwComponent {
    * Emits the internal state to the composer service and attempts to dismiss the modal
    */
   save() {
+    if (!!this.service.supermindRequest$) {
+      this.toasterService.error(
+        'You may not create an NSFW supermind at this time.'
+      );
+      return;
+    }
+
     this.service.nsfw$.next(this.state.sort());
     this.dismissIntent.emit();
   }

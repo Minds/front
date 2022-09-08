@@ -1,0 +1,56 @@
+@import 'defaults.scss';
+
+:host {
+  .m-composerPopup__body .m-composerPopup__content {
+    padding: 0;
+  }
+
+  .m-composerPopup__title {
+    padding-left: $spacing8;
+  }
+
+  .m-tabs__container {
+    padding: 0 $spacing8;
+  }
+
+  /**
+   * Form specific styling
+   */
+
+  .m-formWrapper {
+    padding: $spacing4 $spacing8;
+    margin-bottom: 0;
+
+    .m-form__row--label > label {
+      @include body1Regular;
+    }
+
+    .m-composerSupermind__labelHint {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    ::ng-deep m-forminput__checkbox .m-formInput__checkbox {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    input {
+      &.ng-dirty.ng-invalid {
+        @include m-theme() {
+          border-color: themed($m-alert);
+        }
+      }
+    }
+  }
+
+  /**
+   * Payment method ui hacks
+   */
+  ::ng-deep m-payments__selectCard select {
+    width: 100%;
+  }
+}
