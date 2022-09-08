@@ -317,8 +317,8 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Navigate to single activity page,
-   * but only if you haven't clicked another link inside the post
-   * or a dropdown menu item
+   * but only if you haven't clicked another link
+   * or cta (buttons, dropdown items) inside the post
    * (not used for single activity page or activity modal)
    *
    * Ignore if you clicked in comments sections
@@ -345,21 +345,24 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     const clickedAnchor = !!target.closest('a');
-    const clickedDropdownTrigger = this.descendsFromClass(
+    const clickedStopClick = this.descendsFromClass(
       target,
-      'm-dropdownMenu__trigger'
-    );
-    const clickedDropdownItem = this.descendsFromClass(
-      target,
-      'm-dropdownMenu__item'
+      'm-activity__redirect--stopClick'
     );
 
-    if (clickedAnchor || clickedDropdownTrigger) {
+    const clickedIgnoreClick = this.descendsFromClass(
+      target,
+      'm-activity__redirect--ignoreClick'
+    );
+
+    if (clickedAnchor || clickedStopClick) {
       // If link or menu trigger, don't redirect
       $event.stopPropagation();
       return;
-    } else if (clickedDropdownItem) {
-      // if clicked on dropdown item, ignore
+    } else if (clickedIgnoreClick) {
+      // if clicked on something with its own click function,
+      // ignore the redirect click here
+      // but allow propagation within the item
       return;
     }
 
@@ -372,7 +375,16 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  descendsFromClass(node, className) {
+  /**
+   * @param node that you clicked
+   * @param className you are checking for
+   * @returns true if the node has the class or descends from a parent with the class
+   */
+  descendsFromClass(node, className): boolean {
+    if (node.classList.contains(className)) {
+      return true;
+    }
+
     // Cycle through parents until we find a match
     while ((node = node.parentElement) && !node.classList.contains(className));
     return !!node;

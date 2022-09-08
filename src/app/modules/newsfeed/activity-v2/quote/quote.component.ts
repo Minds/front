@@ -109,10 +109,11 @@ export class ActivityV2QuoteComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigate to single activity page of the quoted post,
-   * but only if you haven't clicked another link inside the post
-   * or a dropdown menu item
+   * Navigate to single activity page,
+   * but only if you haven't clicked another link
+   * or cta (buttons, dropdown items) inside the post
    * @param $event
+   *
    */
   onActivityPointerup($event): void {
     const target = $event.target;
@@ -129,23 +130,27 @@ export class ActivityV2QuoteComponent implements OnInit, OnDestroy {
     }
 
     const clickedAnchor = !!target.closest('a');
-    const clickedDropdownTrigger = this.descendsFromClass(
+    const clickedStopClick = this.descendsFromClass(
       target,
-      'm-dropdownMenu__trigger'
-    );
-    const clickedDropdownItem = this.descendsFromClass(
-      target,
-      'm-dropdownMenu__item'
+      'm-activity__redirect--stopClick'
     );
 
-    if (clickedAnchor || clickedDropdownTrigger) {
+    const clickedIgnoreClick = this.descendsFromClass(
+      target,
+      'm-activity__redirect--ignoreClick'
+    );
+
+    if (clickedAnchor || clickedStopClick) {
       // If link or menu trigger, don't redirect
       $event.stopPropagation();
       return;
-    } else if (clickedDropdownItem) {
-      // if clicked on dropdown item, ignore
+    } else if (clickedIgnoreClick) {
+      // if clicked on something with its own click function,
+      // ignore the redirect click here
+      // but allow propagation within the item
       return;
     }
+
     // If middle click, open in new tab instead
     if ($event.button == 1) {
       window.open(this.canonicalUrl, '_blank');
@@ -155,7 +160,16 @@ export class ActivityV2QuoteComponent implements OnInit, OnDestroy {
     }
   }
 
-  descendsFromClass(node, className) {
+  /**
+   * @param node that you clicked
+   * @param className you are checking for
+   * @returns true if the node has the class or descends from a parent with the class
+   */
+  descendsFromClass(node, className): boolean {
+    if (node.classList.contains(className)) {
+      return true;
+    }
+
     // Cycle through parents until we find a match
     while ((node = node.parentElement) && !node.classList.contains(className));
     return !!node;

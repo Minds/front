@@ -1,4 +1,7 @@
-<m-dropdownMenu [menu]="dropdownMenu">
+<m-dropdownMenu
+  [menu]="dropdownMenu"
+  [anchorPosition]="{ top: '0', left: '0' }"
+>
   <button
     class="m-activityRemindButton__icon"
     [class.has-reminded]="hasReminded"

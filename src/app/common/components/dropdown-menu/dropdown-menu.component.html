@@ -12,5 +12,8 @@
     <ng-container *ngTemplateOutlet="menu"></ng-container>
   </div>
 
-  <m-overlay (onClick)="close($event)"></m-overlay>
+  <m-overlay
+    class="m-activity__redirect--ignoreClick"
+    (onClick)="close($event)"
+  ></m-overlay>
 </ng-container>

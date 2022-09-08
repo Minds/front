@@ -148,6 +148,7 @@
 
   // ACTIONS
   .m-activityToolbar__actions {
+    cursor: default;
     ::ng-deep > * {
       flex-grow: 1;
       display: flex;

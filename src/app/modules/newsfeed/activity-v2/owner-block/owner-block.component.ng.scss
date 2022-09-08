@@ -111,6 +111,9 @@
       align-self: center;
       padding-right: $spacing2;
       position: relative;
+      a {
+        outline: none !important;
+      }
       img {
         border-radius: 50%;
         width: $activityAvatarWidth;

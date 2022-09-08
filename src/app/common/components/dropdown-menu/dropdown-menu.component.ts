@@ -117,6 +117,7 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
     const classList = [
       'm-dropdownMenu__trigger',
       'm-dropdownMenuTrigger--clickable',
+      'm-activity__redirect--stopClick', // don't redirect to single post page when clicked from within an activity
     ];
 
     if (this.triggerClass) {
