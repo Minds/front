@@ -5,14 +5,14 @@ Feature: search
 
   Scenario: valid search with search terms 
     Given I am logged in
-    And I am on the search
+    And I am on the search page
     When I type the search term
       | searchTerm       | 
       | minds            | 
       | c                |
       | #art             |
     Then I see search results
-      | searchPath                                    | 
-      | discovery/search?q=minds&f=top&t=all          | 
-      | discovery/search?q=c&f=top&t=all              |
-      | discovery/search?q=%23art&f=top&t=all         |
+      | searchPath                   | 
+      | q=minds&f=top&t=all          | 
+      | q=c&f=top&t=all              |
+      | q=%23art&f=top&t=all         |

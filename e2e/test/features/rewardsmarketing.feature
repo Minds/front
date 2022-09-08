@@ -5,5 +5,5 @@ Feature: rewards
 
   Scenario: should have a join rewards button
     Given I am logged in
-    When I am on the rewards
+    When I am on the rewards page
     Then I see join rewards button
