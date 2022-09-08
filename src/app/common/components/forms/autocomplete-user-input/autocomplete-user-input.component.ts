@@ -66,6 +66,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
    * Type-ahead matches from server.
    */
   matchedUsersList$: Observable<MindsUser[]> = this.username$$.pipe(
+    filter(username => !!username),
     // debounce request to throttle server requests
     debounceTime(100),
     // if there is no change, do nothing.
