@@ -129,12 +129,26 @@ $color: $m-bgColor--secondaryAlt;
   }
 
   &:hover {
-    ::ng-deep m-activityV2__quote,
+    ::ng-deep m-activityV2__quote:not(.m-activity__quote--supermindReply),
     ::ng-deep m-activityV2__content minds-rich-embed .m-rich-embed-src {
       &:hover {
         cursor: pointer;
         @include m-theme() {
           background: rgba(themed($m-bgColor--btnHover), 0.4);
+        }
+      }
+    }
+
+    // Need to handle supermind replies differently because
+    // the gradient border requires explicit quote background color
+    ::ng-deep m-activityV2__quote.m-activity__quote--supermindReply {
+      @include m-theme() {
+        background: themed($color);
+      }
+      &:hover {
+        cursor: pointer;
+        @include m-theme() {
+          background: themed($m-bgColor--contrastSubtle);
         }
       }
     }
