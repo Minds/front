@@ -69,7 +69,7 @@ post content to trigger upgrade modal -->
     <m-videoPlayer--scrollaware
       #videoEl
       [guid]="videoGuid"
-      [shouldPlayInModal]="!isModal"
+      [shouldPlayInModal]="entity.remind_object ? false : !isModal"
       (mediaModalRequested)="onModalRequested($event)"
       [autoplay]="
         service.displayOptions.autoplayVideo &&
@@ -149,6 +149,10 @@ post content to trigger upgrade modal -->
 <!-- because only one image is shown at a time -->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="isMultiImage && !isModal">
+  <ng-container
+    *ngTemplateOutlet="paywallTemplate"
+    [ngTemplateOutletContext]="{ hideText: sidebarMode }"
+  ></ng-container>
   <m-activityV2Content__multiImage
     (onClick)="onModalRequested($event)"
   ></m-activityV2Content__multiImage>

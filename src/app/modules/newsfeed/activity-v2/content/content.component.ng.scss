@@ -111,16 +111,6 @@
       }
     }
 
-    &.m-activityContent--quote {
-      padding: 0;
-      .m-activityContent__textWrapper {
-        @include borderBottom;
-        .m-activityContentText__innerWrapper {
-          padding: 0;
-        }
-      }
-    }
-
     // MINIMAL MEDIA
     .m-activityContent__media {
       img {
@@ -257,10 +247,8 @@
   // ** QUOTE **
   // *********************************
 
-  .m-activityContent--quote {
-    overflow: hidden;
-
-    padding: 0 !important;
+  .m-activityContent__media + .m-activityContent__quote {
+    margin-top: $spacing4;
   }
 
   // *********************************
@@ -312,6 +300,26 @@
     .m-activityContent__media--video {
       ::ng-deep m-videoPlayer--scrollaware {
         border-radius: 0;
+      }
+    }
+  }
+
+  // *********************************
+  // ** SUPERMIND **
+  // *********************************
+
+  &.m-activityContent--supermindReply {
+    &:not(.m-activityContent--minimalMode):not(.m-activityContent--sidebarMode) {
+      .m-activityContent__quote {
+        @include supermindGradient;
+        border-radius: $m-borderRadius;
+        padding: 2px; // thickness of gradient border
+      }
+      ::ng-deep m-activityV2__quote {
+        border: none !important;
+        @include m-theme() {
+          background: themed($m-bgColor--primary);
+        }
       }
     }
   }
