@@ -29,6 +29,9 @@ export class ActivityV2QuoteComponent implements OnInit, OnDestroy {
     return this.service.displayOptions.minimalMode;
   }
 
+  @HostBinding('class.m-activity__quote--supermindReply')
+  isSupermindReply: boolean;
+
   @Input('entity') set entity(entity: ActivityEntity) {
     this.service.setEntity(entity.remind_object);
     this.service.isNsfwConsented$.next(true); // Parent entity should have done this
@@ -70,6 +73,8 @@ export class ActivityV2QuoteComponent implements OnInit, OnDestroy {
   // Capture pointerdown time so we can determine if longpress
   pointerdownMs: number;
 
+  subscriptions: Subscription[];
+
   constructor(
     public service: ActivityService,
     public session: Session,
@@ -92,15 +97,23 @@ export class ActivityV2QuoteComponent implements OnInit, OnDestroy {
     this.isSingle = this.service.displayOptions.isSingle;
     this.isInset = this.service.displayOptions.isInset;
 
-    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
-      canonicalUrl => {
+    this.subscriptions = [
+      this.service.canonicalUrl$.subscribe(canonicalUrl => {
         this.canonicalUrl = canonicalUrl;
-      }
+      }),
+    ];
+
+    this.subscriptions.push(
+      this.service.isSupermindReply$.subscribe(is => {
+        this.isSupermindReply = is;
+      })
     );
   }
 
   ngOnDestroy(): void {
-    this.canonicalUrlSubscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   // Capture pointerdown time so we can determine if longpress
