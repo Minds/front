@@ -1,5 +1,5 @@
 namespace CommonSteps {
-  const { I, loginPage } = inject();
+  const { I, loginPage, newsfeedPage } = inject();
 
   Given(
     'I am logged in',
@@ -16,5 +16,9 @@ namespace CommonSteps {
 
   Given('I am logged out', (): void => {
     I.clearCookie('minds_sess');
+  });
+
+  Given('I am on the newsfeed', () => {
+    I.amOnPage(newsfeedPage.newsfeedURI);
   });
 }
