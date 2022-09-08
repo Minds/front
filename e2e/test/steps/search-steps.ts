@@ -1,11 +1,7 @@
-//import CommonPage from '../pages/commonPage';
-
 namespace SearchSteps {
   const { I, searchPage } = inject();
 
-  //const commonPage = new CommonPage();
-
-  Given('I am on the search', () => {
+  Given('I am on the search page', () => {
     I.amOnPage(searchPage.searchURI);
   });
 

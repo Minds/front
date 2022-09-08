@@ -14,5 +14,5 @@ Feature: search
     Then I see search results
       | searchPath                                    | 
       | discovery/search?q=minds&f=top&t=all          | 
-      | discovery/search?q=minds&f=top&t=             |
+      | discovery/search?q=c&f=top&t=all              |
       | discovery/search?q=%23art&f=top&t=all         |

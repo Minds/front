@@ -11,7 +11,6 @@ export = {
     I.fillField('#username', username);
     I.seeElement('#password');
     I.fillField('#password', password);
-
     I.click(locate('button').withText('Login'));
   },
 };

@@ -21,6 +21,8 @@ exports.config = {
     loginPage: '../pages/loginPage.ts',
     newsfeedPage: '../pages/newsfeedPage.ts',
     searchPage: '../pages/searchPage.ts',
+    rewardsPage: '../pages/rewardsPage.ts',
+    tokenPage: '../pages/tokenPage.ts',
     devtoolsPage: '../pages/devtoolsPage.ts',
   },
   mocha: {},
