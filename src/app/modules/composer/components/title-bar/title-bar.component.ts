@@ -21,6 +21,7 @@ import {
   selector: 'm-composer__titleBar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'title-bar.component.html',
+  styleUrls: ['./title-bar.component.ng.scss'],
 })
 export class TitleBarComponent {
   /**

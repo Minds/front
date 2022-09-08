@@ -30,4 +30,10 @@
   <m-composerTitleBar__dropdown
     *ngIf="!(isSupermind$ | async)"
   ></m-composerTitleBar__dropdown>
+
+  <m-paywallBadge
+    *ngIf="isSupermind$ | async"
+    [isSupermindReply]="true"
+    [topRightPosition]="false"
+  ></m-paywallBadge>
 </div>
