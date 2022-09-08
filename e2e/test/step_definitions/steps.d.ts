@@ -2,11 +2,12 @@
 //type steps_file = typeof import('./steps_file');
 type loginPage = typeof import('../pages/loginPage');
 type devtoolsPage = typeof import('../pages/devtoolsPage');
-type newsfeedPage = typeof import('../pages/newsfeedPage');
 type commonPage = typeof import('../pages/commonPage');
 type composerModal = typeof import('../pages/composerModal');
-type searchPage = typeof import('../pages/searchPage');
+type newsfeedPage = typeof import('../pages/newsfeedPage');
 type rewardsMarketingPage = typeof import('../pages/rewardsMarketingPage');
+type searchPage = typeof import('../pages/searchPage');
+type settingsPage = typeof import('../pages/settingsPage');
 type tokenMarketingPage = typeof import('../pages/tokenMarketingPage');
 
 declare namespace CodeceptJS {
@@ -14,11 +15,12 @@ declare namespace CodeceptJS {
     I: I;
     loginPage: loginPage;
     devtoolsPage: devtoolsPage;
-    newsfeedPage: newsfeedPage;
     commonPage: commonPage;
     composerModal: composerModal;
-    searchPage: searchPage;
+    newsfeedPage: newsfeedPage;
     rewardsMarketingPage: rewardsMarketingPage;
+    searchPage: searchPage;
+    settingsPage: settingsPage;
     tokenMarketingPage: tokenMarketingPage;
     current: any;
   }

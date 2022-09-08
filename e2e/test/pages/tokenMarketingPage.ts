@@ -1,5 +1,3 @@
-const { I } = inject();
-
 export = {
   tokenURI: '/token',
   buyButton: '[data-cy=data-minds-join-rewards-button] button div',
