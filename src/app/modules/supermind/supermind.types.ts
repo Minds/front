@@ -17,6 +17,7 @@ export type Supermind = {
   twitter_required: boolean;
   reply_type: number;
   entity?: any;
+  receiver_entity?: any;
 };
 
 // Supermind reply type enum.

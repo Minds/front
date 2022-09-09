@@ -10,6 +10,7 @@ import { SupermindConsoleListComponent } from './list.component';
 import { SupermindConsoleService } from '../console.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { SupermindConsoleListType } from '../../supermind.types';
+import { take } from 'rxjs/operators';
 
 describe('SupermindConsoleListComponent', () => {
   let comp: SupermindConsoleListComponent;
@@ -83,6 +84,7 @@ describe('SupermindConsoleListComponent', () => {
     comp = fixture.componentInstance;
 
     comp.list$.next([]);
+    comp.inProgress$.next(false);
     (comp as any).service.getList$.and.returnValue(of([]));
 
     fixture.detectChanges();
@@ -134,4 +136,35 @@ describe('SupermindConsoleListComponent', () => {
     expect(comp.moreData$.getValue()).toBeFalse();
     expect(comp.inProgress$.getValue()).toBeFalse();
   }));
+
+  it("should determine if 'no offers' text should be shown", (done: DoneFn) => {
+    comp.list$.next([]);
+    comp.shouldShowNoOffersText$
+      .pipe(take(1))
+      .subscribe((shouldShowNoOffersText: boolean) => {
+        expect(shouldShowNoOffersText).toBeTrue();
+        done();
+      });
+  });
+
+  it("should determine if 'no offers' text should NOT be shown because list is empty", (done: DoneFn) => {
+    comp.list$.next(mockList);
+    comp.shouldShowNoOffersText$
+      .pipe(take(1))
+      .subscribe((shouldShowNoOffersText: boolean) => {
+        expect(shouldShowNoOffersText).toBeFalse();
+        done();
+      });
+  });
+
+  it("should determine if 'no offers' text should NOT be shown because loading is in progress", (done: DoneFn) => {
+    comp.list$.next([]);
+    comp.inProgress$.next(true);
+    comp.shouldShowNoOffersText$
+      .pipe(take(1))
+      .subscribe((shouldShowNoOffersText: boolean) => {
+        expect(shouldShowNoOffersText).toBeFalse();
+        done();
+      });
+  });
 });

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FriendlyDateDiffPipe } from '../../../../../common/pipes/friendlydatediff';
+import moment = require('moment');
 import { MockComponent } from '../../../../../utils/mock';
 import { Supermind } from '../../../supermind.types';
 import { SupermindConsoleListItemComponent } from './list-item.component';
@@ -31,8 +31,7 @@ describe('SupermindConsoleListItemComponent', () => {
         declarations: [
           SupermindConsoleListItemComponent,
           MockComponent({
-            selector: 'm-blueFadeBadge',
-            inputs: ['text'],
+            selector: 'm-chipBadge',
           }),
           MockComponent({
             selector: 'm-activity',
@@ -49,7 +48,6 @@ describe('SupermindConsoleListItemComponent', () => {
             inputs: ['size'],
           }),
         ],
-        providers: [FriendlyDateDiffPipe],
       }).compileComponents();
     })
   );
@@ -97,19 +95,92 @@ describe('SupermindConsoleListItemComponent', () => {
     expect(comp.amountBadgeText).toBe('');
   });
 
-  it('should get time till expiration based on created_timestamp and expiry_threshold', () => {
-    // arbitrary values to make checking addition easy.
-    comp.supermind.created_timestamp = 1;
-    comp.supermind.expiry_threshold = 2;
+  it('should get time till expiration based on created_timestamp and expiry_threshold when days', () => {
+    comp.supermind.created_timestamp = moment().unix();
+    comp.supermind.expiry_threshold = 604800;
 
-    // (comp as any).dataPipe.transform.and.returnValue('3');
+    expect(comp.timeTillExpiration).toBe('6d');
+  });
 
-    expect(comp.timeTillExpiration).toBe('3');
-    expect((comp as any).dataPipe.transform).toHaveBeenCalledWith(
-      3,
-      null,
-      false,
-      true
-    );
+  it('should get time till expiration based on created_timestamp and expiry_threshold when hours', () => {
+    comp.supermind.created_timestamp = moment()
+      .subtract(6, 'days')
+      .unix();
+    comp.supermind.expiry_threshold = 604800;
+
+    expect(comp.timeTillExpiration).toBe('23h');
+  });
+
+  it('should get time till expiration based on created_timestamp and expiry_threshold when minutes', () => {
+    comp.supermind.created_timestamp = moment()
+      .subtract(6, 'days')
+      .subtract(23, 'hours')
+      .unix();
+    comp.supermind.expiry_threshold = 604800;
+
+    expect(comp.timeTillExpiration).toBe('59m');
+  });
+
+  it('should get time till expiration based on created_timestamp and expiry_threshold when seconds', () => {
+    comp.supermind.created_timestamp = moment()
+      .subtract(6, 'days')
+      .subtract(23, 'hours')
+      .subtract(59, 'minutes')
+      .unix();
+    comp.supermind.expiry_threshold = 604800;
+
+    expect(comp.timeTillExpiration).toBe('59s');
+  });
+
+  it('should get NO time till expiration based on created_timestamp and expiry_threshold when expired', () => {
+    comp.supermind.created_timestamp = moment()
+      .subtract(7, 'days')
+      .subtract(1, 'second')
+      .unix();
+    comp.supermind.expiry_threshold = 604800;
+
+    expect(comp.timeTillExpiration).toBe('');
+  });
+
+  it('should get requirements text when reply type is text', () => {
+    comp.supermind.reply_type = 0;
+    comp.supermind.twitter_required = false;
+
+    expect(comp.requirementsText).toBe('Text Reply');
+  });
+
+  it('should get requirements text when reply type is image', () => {
+    comp.supermind.reply_type = 1;
+    comp.supermind.twitter_required = false;
+
+    expect(comp.requirementsText).toBe('Image Reply');
+  });
+
+  it('should get requirements text when reply type is video', () => {
+    comp.supermind.reply_type = 2;
+    comp.supermind.twitter_required = false;
+
+    expect(comp.requirementsText).toBe('Video Reply');
+  });
+
+  it('should get requirements text when reply type is text when twitter is required', () => {
+    comp.supermind.reply_type = 0;
+    comp.supermind.twitter_required = true;
+
+    expect(comp.requirementsText).toBe('Text Reply · Twitter');
+  });
+
+  it('should get requirements text when reply type is image when twitter is required', () => {
+    comp.supermind.reply_type = 1;
+    comp.supermind.twitter_required = true;
+
+    expect(comp.requirementsText).toBe('Image Reply · Twitter');
+  });
+
+  it('should get requirements text when reply type is video when twitter is required', () => {
+    comp.supermind.reply_type = 2;
+    comp.supermind.twitter_required = true;
+
+    expect(comp.requirementsText).toBe('Video Reply · Twitter');
   });
 });
