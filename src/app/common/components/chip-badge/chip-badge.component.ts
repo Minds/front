@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'm-chipBadge',
   template: '<ng-content></ng-content>',
-  styleUrls: ['./blue-fade-badge.component.ng.scss'],
+  styleUrls: ['./chip-badge.component.ng.scss'],
 })
 export class ChipBadgeComponent {}
