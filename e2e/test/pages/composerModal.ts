@@ -1,5 +1,5 @@
 export class ComposerModal {
-  private modalElementTag = 'm-composer__modal';
+  modalElementTag = 'm-composer__modal';
 
   /**
    * The wrapper element for the title input
@@ -11,16 +11,31 @@ export class ComposerModal {
   /**
    * Toolbar items
    */
-  public getSupermindButton(): CodeceptJS.Locator {
-    return locate(
-      `${this.modalElementTag} [data-ref=supermind-create--button]`
-    );
+  get nsfwButton(): string {
+    return `${this.modalElementTag} m-composer__toolbar [data-cy=nsfw-button]`;
+  }
+  get monetizeButton(): string {
+    return `${this.modalElementTag} m-composer__toolbar [data-cy=monetize-button]`;
+  }
+  get supermindButton(): string {
+    return `${this.modalElementTag} m-composer__toolbar [data-ref=supermind-create--button]`;
+  }
+  get postButton(): string {
+    return `${this.modalElementTag} [data-cy=post-button]`;
   }
 
   /**
-   * Popout screens
+   * Popup screens
    */
-  public getSupermindPopout(): CodeceptJS.Locator {
+  public getNsfwPopup(): CodeceptJS.Locator {
+    return locate(`${this.modalElementTag} m-composer__popup m-composer__nsfw`);
+  }
+  public getMonetizePopup(): CodeceptJS.Locator {
+    return locate(
+      `${this.modalElementTag} m-composer__popup m-composer__monetizev2`
+    );
+  }
+  public getSupermindPopup(): CodeceptJS.Locator {
     return locate(
       `${this.modalElementTag} m-composer__popup m-composer__supermind`
     );

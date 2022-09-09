@@ -7,8 +7,8 @@ namespace SupermindSteps {
   const commonPage = new CommonPage();
   const composerModal = new ComposerModal();
 
-  When('I click the supermind icon', () => {
-    I.click(composerModal.getSupermindButton());
+  When('I click the supermind icon on the composer toolbar', () => {
+    I.click(composerModal.supermindButton);
   });
 
   When('I enter a target username with value {string}', targetUsername => {
@@ -33,7 +33,7 @@ namespace SupermindSteps {
   //
 
   Then('I should see the supermind popout screen', num => {
-    I.seeElement(composerModal.getSupermindPopout());
+    I.seeElement(composerModal.getSupermindPopup());
   });
 
   Then('I see the supermind is in progress', () => {
@@ -46,5 +46,9 @@ namespace SupermindSteps {
     I.dontSeeElement(
       '[data-ref=supermind-create--button].m-composerToolbar__item--active'
     );
+  });
+
+  Then('I should not see the supermind icon on the composer toolbar', () => {
+    I.dontSeeElement(composerModal.supermindButton);
   });
 }
