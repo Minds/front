@@ -22,7 +22,6 @@
         >
       </div>
 
-      <!-- SETTINGS COG -------------------------------->
       <div class="m-layout__spacer"></div>
       <m-tooltip
         class="m-discovery__settingsButton"
@@ -31,10 +30,11 @@
         data-cy="supermind-console-settings-button"
         (click)="onSettingsButtonClick($event)"
       >
-        Settings
+        <ng-container i18n="@@SUPERMIND_CONSOLE__SETTINGS_TOOLTIP">
+          Settings
+        </ng-container>
       </m-tooltip>
     </div>
-    <!-- <m-walletBalance--cash *ngIf="(listType$ | async) === 'inbox'" [showSummary]="false"></m-walletBalance--cash> -->
     <m-addBankPrompt *ngIf="(listType$ | async) === 'inbox'"></m-addBankPrompt>
     <router-outlet></router-outlet>
   </div>

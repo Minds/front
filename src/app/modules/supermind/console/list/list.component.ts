@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, switchMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import {
+  distinctUntilChanged,
+  map,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { ApiResponse } from '../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { Supermind, SupermindConsoleListType } from '../../supermind.types';
@@ -90,6 +96,14 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
           }
           this.inProgress$.next(false);
         })
+    );
+  }
+
+  get shouldShowNoOffersText$(): Observable<boolean> {
+    return combineLatest([this.list$, this.inProgress$]).pipe(
+      map(([list, inProgress]) => {
+        return !inProgress && (!list || !list.length);
+      })
     );
   }
 }

@@ -3,4 +3,17 @@
 :host {
   display: flex;
   flex-flow: column nowrap;
+
+  .m-supermindList__noOffersSpan {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    margin-top: $spacing14;
+
+    @include unselectable;
+    @include heading4Bold;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
 }
