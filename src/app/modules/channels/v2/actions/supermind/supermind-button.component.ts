@@ -1,6 +1,7 @@
 import { Component, Injector } from '@angular/core';
 import { ComposerModalService } from '../../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../../composer/services/composer.service';
+import { SupermindExperimentService } from '../../../../experiments/sub-services/supermind-experiment.service';
 import { ChannelsV2Service } from '../../channels-v2.service';
 
 @Component({
@@ -9,12 +10,22 @@ import { ChannelsV2Service } from '../../channels-v2.service';
   styleUrls: ['./supermind-button.component.ng.scss'],
 })
 export class ChannelActionsSuperminButtonComponent {
+  /**
+   * Determines if you can show the supermind button
+   */
+  canShow: boolean;
+
   constructor(
     private composerModalService: ComposerModalService,
     private composerService: ComposerService,
     public service: ChannelsV2Service,
+    private supermindExperiment: SupermindExperimentService,
     private injector: Injector
   ) {}
+
+  ngOnInit() {
+    this.canShow = this.supermindExperiment.isActive();
+  }
 
   /**
    * Open the composer with prefilled supermind data
