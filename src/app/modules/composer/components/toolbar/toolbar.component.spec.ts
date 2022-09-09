@@ -14,6 +14,7 @@ import { UploaderService } from '../../services/uploader.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
+import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
 
 export let mediaQuotesExperimentServiceMock = new (function() {
   this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
@@ -46,6 +47,8 @@ describe('Composer Toolbar', () => {
 
   const remind$ = new BehaviorSubject(null);
 
+  const canCreateSupermindRequest$ = new BehaviorSubject(true);
+
   const composerServiceMock: any = MockService(ComposerService, {
     has: [
       'attachment$',
@@ -54,6 +57,7 @@ describe('Composer Toolbar', () => {
       'size$',
       'attachmentError$',
       'remind$',
+      'canCreateSupermindRequest$',
     ],
     props: {
       attachment$: { get: () => attachment$ },
@@ -62,6 +66,7 @@ describe('Composer Toolbar', () => {
       size$: { get: () => size$ },
       attachmentError$: { get: () => attachmentError$ },
       remind$: { get: () => remind$ },
+      canCreateSupermindRequest$: { get: () => canCreateSupermindRequest$ },
     },
   });
 
@@ -127,6 +132,10 @@ describe('Composer Toolbar', () => {
           {
             provide: MediaQuotesExperimentService,
             useValue: mediaQuotesExperimentServiceMock,
+          },
+          {
+            provide: SupermindExperimentService,
+            useValue: MockService(SupermindExperimentService),
           },
         ],
       }).compileComponents();

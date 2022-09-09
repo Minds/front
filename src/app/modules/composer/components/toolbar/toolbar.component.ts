@@ -48,6 +48,7 @@ import isMobile from '../../../../helpers/is-mobile';
 import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
+import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -129,7 +130,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Flag as to if we show supermind create button
    */
-  canCreateSupermindRequest$ = this.service.canCreateSupermindRequest$;
+  canCreateSupermindRequest$ = this.service.canCreateSupermindRequest$.pipe(
+    map(canCreateSupermindRequest => {
+      return this.supermindExperiment.isActive() && canCreateSupermindRequest;
+    })
+  );
 
   /**
    * Constructor
@@ -145,7 +150,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected toaster: ToasterService,
     protected uploaderService: UploaderService,
     @Inject(PLATFORM_ID) protected platformId: Object,
-    protected mediaQuotesExperiment: MediaQuotesExperimentService
+    protected mediaQuotesExperiment: MediaQuotesExperimentService,
+    protected supermindExperiment: SupermindExperimentService
   ) {}
 
   /**
