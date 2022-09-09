@@ -1,14 +1,12 @@
 @import 'defaults.scss';
 
 :host {
-  @include unselectable;
   .m-wire-button {
     padding: 3px;
     height: auto;
     cursor: pointer;
     @include m-theme() {
       color: themed($m-blue);
-      background-color: transparent;
     }
 
     &:hover {
