@@ -17,6 +17,7 @@ import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.se
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-sidebarMore',
@@ -59,7 +60,8 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     private earnModalService: EarnModalService,
     private boostModalService: BoostModalLazyService,
     private sidebarNavigationService: SidebarNavigationService,
-    private helpdeskRedirectService: HelpdeskRedirectService
+    private helpdeskRedirectService: HelpdeskRedirectService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -100,6 +102,14 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
 
   async openBoostModal() {
     await this.boostModalService.open(this.session.getLoggedInUser());
+  }
+
+  /**
+   * Open supermind console.
+   * @returns { void }
+   */
+  public openSupermindConsole(): void {
+    this.router.navigate(['/supermind/inbox']);
   }
 
   detectChanges(): void {

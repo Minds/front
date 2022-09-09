@@ -62,6 +62,17 @@
         <span i18n="@@COMMON__EARN">Earn</span>
       </a>
     </li>
+    <!-- ------------------------------------------------------------ -->
+    <li
+      class="m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
+    >
+      <a (click)="openSupermindConsole()" data-ref="sidebarmore-supermind">
+        <i class="material-icons">tips_and_updates</i>
+        <span i18n="@@COMMON__SUPERMIND">Supermind</span>
+      </a>
+    </li>
     <!--./././././././././././././././././././././././././././././././.-->
     <li
       class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer"

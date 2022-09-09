@@ -1,5 +1,6 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
@@ -12,7 +13,6 @@ import { Session } from '../../../services/session';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ThemeService } from '../../services/theme.service';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
-
 import { SidebarMoreComponent } from './sidebar-more.component';
 
 describe('SidebarMoreComponent', () => {
@@ -25,6 +25,10 @@ describe('SidebarMoreComponent', () => {
         SidebarMoreComponent,
         MockComponent({
           selector: 'm-icon',
+        }),
+        MockComponent({
+          selector: 'a',
+          inputs: ['routerLink', 'data-ref'],
         }),
       ],
       providers: [
@@ -52,6 +56,10 @@ describe('SidebarMoreComponent', () => {
           provide: SidebarNavigationService,
           useValue: MockService(SidebarNavigationService),
         },
+        {
+          provide: Router,
+          useValue: jasmine.createSpyObj('Router', ['navigate']),
+        },
       ],
     }).compileComponents();
   });
@@ -64,5 +72,12 @@ describe('SidebarMoreComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should navigate to supermind console', () => {
+    component.openSupermindConsole();
+    expect((component as any).router.navigate).toHaveBeenCalledWith([
+      '/supermind/inbox',
+    ]);
   });
 });
