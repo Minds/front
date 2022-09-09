@@ -104,7 +104,7 @@ describe('SupermindConsoleListComponent', () => {
 
   it('should load', fakeAsync(() => {
     (comp as any).service.getList$.and.returnValue(of(mockList));
-    comp.load();
+    comp.setupListTypeSubscription();
     tick();
 
     expect((comp as any).service.getList$).toHaveBeenCalled();

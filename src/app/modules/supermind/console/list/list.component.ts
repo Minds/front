@@ -46,14 +46,14 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
   }
 
   ngOnInit(): void {
-    this.load();
+    this.setupListTypeSubscription();
   }
 
   /**
-   * Load from service based on list type.
+   * Init sub to fire on list type change that will load / reload feed.
    * @return { void }
    */
-  public load(): void {
+  public setupListTypeSubscription(): void {
     this.subscriptions.push(
       // fires on list type change.
       this.listType$
@@ -99,6 +99,10 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
     );
   }
 
+  /**
+   * Whether no offers text should be shown.
+   * @returns { Observable<boolean> } - true if no offers text should be shown.
+   */
   get shouldShowNoOffersText$(): Observable<boolean> {
     return combineLatest([this.list$, this.inProgress$]).pipe(
       map(([list, inProgress]) => {
