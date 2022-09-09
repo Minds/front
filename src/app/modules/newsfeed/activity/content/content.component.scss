@@ -38,14 +38,11 @@ m-activity__content {
   overflow: hidden;
 }
 
-// Make sure this only applies to activity v1
-m-activity__content {
-  .m-activityContent__media--video,
-  .m-activityContent__media--image,
-  .m-activityContent__media--richEmbed {
-    @include m-theme() {
-      background: themed($m-bgColor--primary);
-    }
+.m-activityContent__media--video,
+.m-activityContent__media--image,
+.m-activityContent__media--richEmbed {
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
   }
 }
 

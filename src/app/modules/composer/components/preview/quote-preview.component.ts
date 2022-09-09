@@ -60,7 +60,6 @@ export class QuotePreviewComponent {
       showPostMenu: false,
       showPinnedBadge: false,
       showMetrics: false,
-      isInset: true,
     };
 
     activity.changeDetectorRef.detectChanges();

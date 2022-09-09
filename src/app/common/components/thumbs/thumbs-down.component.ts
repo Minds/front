@@ -21,7 +21,7 @@ import { ToasterService } from '../../services/toaster.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a
-      (pointerup)="thumb($event)"
+      (click)="thumb()"
       [ngClass]="{ selected: has() }"
       data-cy="data-minds-thumbs-down-button"
     >
@@ -69,9 +69,7 @@ export class ThumbsDownButton implements DoCheck {
       this.object['thumbs:down:user_guids'] = [];
   }
 
-  async thumb($event): Promise<void> {
-    $event.stopPropagation();
-
+  async thumb(): Promise<void> {
     if (this.inProgress) {
       return;
     }
