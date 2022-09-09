@@ -1,3 +1,4 @@
+import ChannelPage from '../pages/channelPage';
 import CommonPage from '../pages/commonPage';
 import { ComposerModal } from '../pages/composerModal';
 
@@ -6,6 +7,7 @@ namespace SupermindSteps {
 
   const commonPage = new CommonPage();
   const composerModal = new ComposerModal();
+  const channelPage = new ChannelPage();
 
   When('I click the supermind icon on the composer toolbar', () => {
     I.click(composerModal.supermindButton);
@@ -30,6 +32,10 @@ namespace SupermindSteps {
     I.click('[data-ref=supermind-clear-button]');
   });
 
+  When('I click on the channel supermind button', () => {
+    I.click(channelPage.supermindButton);
+  });
+
   //
 
   Then('I should see the supermind popout screen', num => {
@@ -51,4 +57,6 @@ namespace SupermindSteps {
   Then('I should not see the supermind icon on the composer toolbar', () => {
     I.dontSeeElement(composerModal.supermindButton);
   });
+
+  Then('I should see prefilled supermind details in the composer', () => {});
 }
