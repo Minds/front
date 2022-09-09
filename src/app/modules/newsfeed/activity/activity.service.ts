@@ -14,6 +14,11 @@ import getActivityContentType from '../../../helpers/activity-content-type';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 
+export interface Supermind {
+  request_guid: string;
+  is_reply: boolean;
+}
+
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
   showOwnerBlock: boolean;
@@ -39,7 +44,6 @@ export type ActivityDisplayOptions = {
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
-  isInset: boolean; // is the activity inside a context where we don't want the hover+highlight functionality? (e.g. boost modal, quote composer)
   isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
 };
@@ -84,6 +88,7 @@ export type ActivityEntity = {
   reminds?: number; // count of reminds
   quotes?: number; // count of quotes
   blurhash?: string;
+  supermind?: Supermind; // supermind details, if applicable
 };
 
 // Constants of blocks
@@ -288,6 +293,17 @@ export class ActivityService implements OnDestroy {
   );
 
   /**
+   * Emits true if the post is a supermind reply
+   */
+  isSupermindReply$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return (
+        getActivityContentType(entity, false, false, true) === 'supermind_reply'
+      );
+    })
+  );
+
+  /**
    * If the post has been editied this will emit true
    */
   isEdited$: Observable<boolean> = this.entity$.pipe(
@@ -338,7 +354,6 @@ export class ActivityService implements OnDestroy {
     isSidebarBoost: false,
     isFeed: false,
     isSingle: false,
-    isInset: false,
     isV2: false,
     permalinkBelowContent: false,
   };
@@ -450,18 +465,6 @@ export class ActivityService implements OnDestroy {
     }
 
     return entity;
-  }
-
-  clickedAnchor(node) {
-    return node instanceof HTMLAnchorElement;
-  }
-
-  clickedDropdown(node) {
-    while (
-      (node = node.parentElement) &&
-      !node.classList.contains('m-dropdownMenu__item')
-    );
-    return node;
   }
 
   /**
