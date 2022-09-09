@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FriendlyDateDiffPipe } from '../../../../../common/pipes/friendlydatediff';
+import * as moment from 'moment';
 import {
   SUPERMIND_REPLY_TYPE_MAP,
   Supermind,
@@ -16,7 +16,6 @@ import {
   selector: 'm-supermind__listItem',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.ng.scss'],
-  providers: [FriendlyDateDiffPipe],
 })
 export class SupermindConsoleListItemComponent {
   /** @var { Supermind } supermind - Supermind object */
@@ -56,12 +55,30 @@ export class SupermindConsoleListItemComponent {
    * @return { string }
    */
   get timeTillExpiration(): string {
-    return this.datePipe.transform(
-      this.supermind.created_timestamp + this.supermind.expiry_threshold,
-      null,
-      false,
-      true
+    const date = moment(
+      (this.supermind.created_timestamp + this.supermind.expiry_threshold) *
+        1000
     );
+    const duration = moment.duration(moment(date).diff(moment()));
+    const daysRemaining = duration.days();
+    const hoursRemaining = duration.hours();
+    const minutesRemaining = duration.minutes();
+    const secondsRemaining = duration.seconds();
+
+    if (daysRemaining > 0) {
+      return `${daysRemaining}d`;
+    }
+    if (hoursRemaining > 0) {
+      return `${hoursRemaining}h`;
+    }
+    if (minutesRemaining > 0) {
+      return `${minutesRemaining}m`;
+    }
+    if (secondsRemaining > 0) {
+      return `${secondsRemaining}s`;
+    }
+
+    return '';
   }
 
   /**
@@ -89,6 +106,4 @@ export class SupermindConsoleListItemComponent {
 
     return requirementsText;
   }
-
-  constructor(public datePipe: FriendlyDateDiffPipe) {}
 }
