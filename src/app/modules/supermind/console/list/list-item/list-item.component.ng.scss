@@ -1,0 +1,99 @@
+@import 'defaults.scss';
+
+:host {
+  padding-top: $spacing4;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-supermind__listItem__topBar {
+    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
+    padding-right: $activityAvatarSpacingRight--feed;
+
+    .m-supermindListItem__expirationTimeLabel {
+      margin-left: $spacing4;
+
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      .m-supermindListItem__expirationTime {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-supermind__listItem__bottomBar {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: $spacing6;
+    margin-top: $spacing6;
+    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
+    padding-right: $activityAvatarSpacingRight--feed;
+
+    .m-supermindListItem__requirementsLabel {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      .m-supermindListItem__requirementsText {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+
+    .m-supermindListItem__actionButtons {
+      display: flex;
+      margin-top: $spacing6;
+
+      @media screen and (min-width: $max-mobile) {
+        flex-flow: row nowrap;
+
+        .m-supermindListItem__buttonSecondary {
+          width: 150px;
+          margin-right: $spacing6;
+
+          ::ng-deep .m-button {
+            width: 150px;
+          }
+        }
+
+        .m-supermindListItem__buttonPrimary,
+        .m-supermindListItem__buttonSecondary--fullWidth {
+          width: 100%;
+          margin-right: $spacing5;
+
+          ::ng-deep .m-button {
+            width: 100%;
+          }
+        }
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        flex-flow: column nowrap;
+        margin-right: $spacing5;
+
+        m-button {
+          width: 100%;
+          margin-top: $spacing2;
+
+          ::ng-deep .m-button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep m-activityV2 {
+    border-top: 0 !important;
+  }
+}

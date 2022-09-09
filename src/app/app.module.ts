@@ -61,6 +61,7 @@ import { SharedModule } from './common/shared.module';
 import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
 import { DevToolsModule } from './modules/devtools/devtools.module';
+import { SupermindModule } from './modules/supermind/supermind.module';
 
 @NgModule({
   bootstrap: [Minds],
@@ -112,6 +113,7 @@ import { DevToolsModule } from './modules/devtools/devtools.module';
     SharedModule,
     CompassModule,
     DevToolsModule,
+    SupermindModule,
     //last due to :username route
     AppRoutingModule,
   ],

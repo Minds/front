@@ -1,0 +1,16 @@
+<ng-container *ngIf="(list$ | async) && (list$ | async).length > 0">
+  <ng-container *ngFor="let supermind of list$ | async">
+    <m-supermind__listItem
+      *ngIf="supermind"
+      [supermind]="supermind"
+      [context]="listType$ | async"
+    ></m-supermind__listItem>
+  </ng-container>
+</ng-container>
+
+<infinite-scroll
+  (load)="loadNext()"
+  [moreData]="moreData$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>

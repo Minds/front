@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  padding: calc($spacing1 / 2) $spacing2;
+  border-radius: 3px;
+  cursor: arrow;
+
+  @include body2Medium;
+  @include supermindGradient;
+  @include unselectable;
+}

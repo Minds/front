@@ -1,0 +1,49 @@
+<ng-container *ngIf="supermind && supermind.entity">
+  <div class="m-supermind__listItem__topBar">
+    <m-chipBadge>{{ amountBadgeText }}</m-chipBadge>
+    <span class="m-supermindListItem__expirationTimeLabel">
+      <ng-container *ngIf="timeTillExpiration; else expiredText">
+        <span>Expires: </span>
+        <span class="m-supermindListItem__expirationTime">{{
+          timeTillExpiration
+        }}</span>
+      </ng-container>
+      <ng-template #expiredText>Expired</ng-template>
+    </span>
+  </div>
+  <m-activity
+    [entity]="supermind.entity"
+    [canDelete]="false"
+    [displayOptions]="displayOptions"
+    [autoplayVideo]="false"
+    [canRecordAnalytics]="false"
+  ></m-activity>
+  <div class="m-supermind__listItem__bottomBar">
+    <span class="m-supermindListItem__requirementsLabel">
+      <span>Requirements: </span>
+      <span class="m-supermindListItem__requirementsText">{{
+        requirementsText
+      }}</span>
+    </span>
+    <div class="m-supermindListItem__actionButtons">
+      <ng-container *ngIf="context === 'inbox'; else outboxButton">
+        <m-button class="m-supermindListItem__buttonSecondary" size="small"
+          >Decline</m-button
+        >
+        <m-button
+          class="m-supermindListItem__buttonPrimary"
+          size="small"
+          color="blue"
+          >Accept Offer</m-button
+        >
+      </ng-container>
+      <ng-template #outboxButton>
+        <m-button
+          class="m-supermindListItem__buttonSecondary--fullWidth"
+          size="small"
+          >Cancel Offer</m-button
+        >
+      </ng-template>
+    </div>
+  </div>
+</ng-container>

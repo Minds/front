@@ -1,0 +1,42 @@
+<div class="m-pageLayout__container">
+  <div class="m-pageLayout__pane--main">
+    <h3>Supermind</h3>
+
+    <div class="m-tabs__container">
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/supermind/inbox']"
+          [class.m-tabs__tab--selected]="(listType$ | async) === 'inbox'"
+          data-cy="supermind-console-tab-inbound"
+          i18n="@@SUPERMIND_CONSOLE__TAB_INBOUND"
+          >Inbound</a
+        >
+      </div>
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/supermind/outbox']"
+          [class.m-tabs__tab--selected]="(listType$ | async) === 'outbox'"
+          data-cy="supermind-console-tab-outbound"
+          i18n="@@SUPERMIND_CONSOLE__TAB_INBOUND"
+          >Outbound</a
+        >
+      </div>
+
+      <!-- SETTINGS COG -------------------------------->
+      <div class="m-layout__spacer"></div>
+      <m-tooltip
+        class="m-discovery__settingsButton"
+        icon="settings"
+        iconClass="m-supermindConsole__settingsButtonIcon"
+        data-cy="supermind-console-settings-button"
+        (click)="onSettingsButtonClick($event)"
+      >
+        Settings
+      </m-tooltip>
+    </div>
+    <!-- <m-walletBalance--cash *ngIf="(listType$ | async) === 'inbox'" [showSummary]="false"></m-walletBalance--cash> -->
+    <m-addBankPrompt *ngIf="(listType$ | async) === 'inbox'"></m-addBankPrompt>
+    <router-outlet></router-outlet>
+  </div>
+  <div class="m-pageLayout__pane--right"><!-- Spacer --></div>
+</div>

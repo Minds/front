@@ -1,0 +1,26 @@
+<m-loadingSpinner
+  *ngIf="showLoadingSpinner"
+  [inProgress]="!(loaded$ | async)"
+></m-loadingSpinner>
+<div *ngIf="shouldShow$ | async" class="m-addBankPrompt__container">
+  <p>
+    <a
+      [routerLink]="['/wallet/cash/settings']"
+      class="m-addBankPrompt__link"
+      i18n="@@ADD_BANK_PROMPT__ADD_YOUR_BANK_INFO"
+      >Add your bank information</a
+    >
+  </p>
+  <p>
+    <ng-container
+      *ngIf="!hasAccount"
+      i18n="@@ADD_BANK_PROMPT__START_RECEIVING_PAYOUTS"
+      >Start receiving cash payouts by adding your bank details.
+    </ng-container>
+    <ng-container
+      *ngIf="hasAccount"
+      i18n="@@ADD_BANK_PROMPT__FINISH_ADDING_DETAILS_INFO"
+      >Finish adding your bank details to start receiving cash payouts.
+    </ng-container>
+  </p>
+</div>
