@@ -3,9 +3,7 @@ import { UpdateTagsNoticeComponent } from './update-tags-notice.component';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ModalService } from '../../../../services/ux/modal.service';
-import { Injector } from '@angular/core';
-import { ContentSettingsComponent } from '../../../content-settings/content-settings/content-settings.component';
+import { ContentSettingsModalService } from '../../../content-settings/content-settings-modal.service';
 
 export let injectorMock = new (function() {
   this.get = jasmine.createSpy('get');
@@ -38,12 +36,8 @@ describe('UpdateTagsNoticeComponent', () => {
             useValue: MockService(FeedNoticeService),
           },
           {
-            provide: ModalService,
-            useValue: MockService(ModalService),
-          },
-          {
-            provide: Injector,
-            useValue: injectorMock,
+            provide: ContentSettingsModalService,
+            useValue: MockService(ContentSettingsModalService),
           },
         ],
       }).compileComponents();
@@ -71,10 +65,11 @@ describe('UpdateTagsNoticeComponent', () => {
 
   it('should call to open modal on primary option click', () => {
     comp.onPrimaryOptionClick(null);
-    expect((comp as any).modalService.present).toHaveBeenCalledWith(
-      ContentSettingsComponent,
-      jasmine.any(Object)
-    );
+
+    expect((comp as any).contentSettingsModal.open).toHaveBeenCalledWith({
+      hideCompass: true,
+      onSave: jasmine.any(Function),
+    });
   });
 
   it('should dismiss notice on dismiss function call', () => {

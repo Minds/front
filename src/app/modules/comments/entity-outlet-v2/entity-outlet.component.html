@@ -4,7 +4,7 @@
 <div
   class="m-commentsEntityOutlet__expand--hide"
   *ngIf="count > 0 && !showOnlyToggle && activityService.displayOptions.isFeed"
-  (pointerup)="closeFullComments($event)"
+  (click)="closeFullComments()"
 >
   Hide comments
 </div>
@@ -17,14 +17,12 @@
   *ngIf="count > 0 && activityService.displayOptions.isModal"
 >
   <div class="m-commentsEntityOutlet__header">
-    <span
-      class="m-commentsEntityOutlet__title"
-      (pointerup)="toggleComments($event)"
+    <span class="m-commentsEntityOutlet__title" (click)="toggleComments()"
       >Comments</span
     >
     <span
       class="m-commentsEntityOutlet__count"
-      (pointerup)="toggleComments($event)"
+      (click)="toggleComments()"
       *ngIf="count > 0"
       >{{ count }}</span
     >
@@ -42,7 +40,7 @@
   <div
     class="m-commentsEntityOutlet__expand"
     *ngIf="count > 0 && activityService.displayOptions.isFeed"
-    (pointerup)="openFullComments($event)"
+    (click)="openFullComments()"
   >
     View {{ count }} comment{{ count > 1 ? 's' : '' }}
   </div>

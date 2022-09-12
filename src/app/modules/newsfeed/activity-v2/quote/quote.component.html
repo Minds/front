@@ -7,8 +7,6 @@
       !service.displayOptions.isSidebarBoost
     "
     class="m-activityTop__avatarColumn m-activity__avatar"
-    (pointerdown)="onActivityPointerdown($event)"
-    (pointerup)="onActivityPointerup($event)"
   >
     <m-hovercard [publisher]="quotedEntity.ownerObj" [offset]="[0, 15]">
       <a [routerLink]="['/', quotedEntity.ownerObj.username]">
@@ -17,11 +15,7 @@
     </m-hovercard>
   </div>
   <!-- MAIN COLUMN -->
-  <div
-    class="m-activityTop__mainColumn"
-    (pointerdown)="onActivityPointerdown($event)"
-    (pointerup)="onActivityPointerup($event)"
-  >
+  <div class="m-activityTop__mainColumn">
     <m-activityV2__ownerBlock [wasQuoted]="true"></m-activityV2__ownerBlock>
     <m-activityV2__content
       *ngIf="service.shouldShowContent$ | async"
