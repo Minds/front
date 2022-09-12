@@ -36,6 +36,8 @@ import { QuotePreviewComponent } from './components/preview/quote-preview.compon
 import { AttachmentErrorComponent } from './components/popup/attachment-error/attachment-error.component';
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 import { UploaderService } from './services/uploader.service';
+import { ComposerSupermindComponent } from './components/popup/supermind/supermind.component';
+import { PaymentsModule } from '../payments/payments.module';
 
 /**
  * Exported components
@@ -69,6 +71,7 @@ const INTERNAL_COMPONENTS = [
   PopupComponent,
   TextAreaComponent,
   ComposerCoverPhotoSelectorComponent,
+  ComposerSupermindComponent,
 ];
 
 const PROVIDERS = [
@@ -93,6 +96,7 @@ const PROVIDERS = [
     RouterModule,
     EmojiPickerModule,
     MatGridListModule,
+    PaymentsModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

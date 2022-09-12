@@ -35,7 +35,7 @@ export class PaymentsSelectCard {
   @Output() selected: EventEmitter<string> = new EventEmitter();
   selectedSubscription: Subscription;
   inProgress = false;
-  paymentMethodId: string = '';
+  @Input('selected') paymentMethodId: string = '';
   paymentMethods = [];
 
   constructor(
@@ -66,7 +66,10 @@ export class PaymentsSelectCard {
       await this.client.get('api/v2/payments/stripe/paymentmethods')
     );
     this.paymentMethods = paymentmethods;
-    if (paymentmethods && paymentmethods.length) {
+
+    if (this.paymentMethodId) {
+      this.selected.next(this.paymentMethodId);
+    } else if (paymentmethods && paymentmethods.length) {
       this.paymentMethodId = paymentmethods[0].id;
       this.selected.next(this.paymentMethodId);
     }

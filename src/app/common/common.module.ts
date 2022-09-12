@@ -167,6 +167,7 @@ import { BoostButton } from './components/boost-button/boost';
 import { FeedHeaderComponent } from './components/feed-header/feed-header.component';
 import { AddBankPromptComponent } from './components/add-bank-information/add-bank-prompt.component';
 import { ChipBadgeComponent } from './components/chip-badge/chip-badge.component';
+import { AutocompleteUserInputComponent } from './components/forms/autocomplete-user-input/autocomplete-user-input.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -257,6 +258,7 @@ const MINDS_COMMON_COMPONENTS = [
   UserMenuComponent,
   AddBankPromptComponent,
   ChipBadgeComponent,
+  AutocompleteUserInputComponent,
 ];
 // ------------------------------------
 // ------------------------------------

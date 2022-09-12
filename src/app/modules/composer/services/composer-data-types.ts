@@ -1,4 +1,5 @@
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
+import { SupermindComposerPayloadType } from '../components/popup/supermind/superminds-creation.service';
 import { Attachment } from './attachment.service';
 import { RichEmbed } from './rich-embed.service';
 import { FileUpload } from './uploader.service';
@@ -97,6 +98,11 @@ export type AccessIdSubjectValue = string;
 export type LicenseSubjectValue = string;
 
 /**
+ * Supermind value type
+ */
+export type SupermindRequestSubjectValue = SupermindComposerPayloadType | null;
+
+/**
  * The size of the composer modal
  */
 export type ComposerSize = 'compact' | 'full';
@@ -118,4 +124,5 @@ export interface Data {
   videoPoster: VideoPoster;
   postToPermaweb: PostToPermawebSubjectValue;
   remind: RemindSubjectValue;
+  supermindRequest: SupermindRequestSubjectValue;
 }
