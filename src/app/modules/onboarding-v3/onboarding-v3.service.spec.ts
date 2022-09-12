@@ -16,21 +16,11 @@ describe('OnboardingV3Service', () => {
     this.present = jasmine.createSpy('present');
   })();
 
-  const tagsServiceMock = new (function() {
-    this.hasSetTags = jasmine.createSpy('hasSetTags');
-  })();
-
-  const emailConfirmationMock = new (function() {
-    this.success$ = new BehaviorSubject<boolean>(false);
-  })();
-
   beforeEach(() => {
     service = new OnboardingV3Service(
       new (() => {})(),
       stackableModalMock,
-      apiMock,
-      emailConfirmationMock,
-      tagsServiceMock
+      apiMock
     );
   });
 

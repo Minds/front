@@ -76,7 +76,6 @@
     [rel]="getRel()"
     class="meta"
     [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src, 'm-rich-embed--title--no-padding': hasInlineContentLoaded(), 'm-richEmbed--paywalled' : isPaywalled && mediaSource === 'minds' }"
-    (pointerup)="$event.stopPropagation()"
   >
     <h2
       class="m-rich-embed--title mdl-card__title-text mdl-typography--font-medium"
@@ -88,11 +87,7 @@
     <p class="m-url">
       {{src.perma_url | domain}}
     </p>
-    <div class="m-richEmbed__teaserFadeout" *ngIf="isPaywalled">
-      <!-- The --hover one is a workaround for css transitions
-not being able to handle gradients   -->
-      <div class="m-richEmbed__teaserFadeout--hover" *ngIf="isPaywalled"></div>
-    </div>
+    <div class="m-activityContent__teaserFadeout" *ngIf="isPaywalled"></div>
   </a>
 </div>
 <!-- ----------------------------------- -->
