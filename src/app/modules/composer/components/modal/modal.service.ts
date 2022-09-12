@@ -20,6 +20,7 @@ export type ComposerData = {
 @Injectable()
 export class ComposerModalService {
   protected injector: Injector;
+  protected onPostFn = _ => {};
 
   constructor(
     protected modalService: ModalService,
@@ -39,13 +40,26 @@ export class ComposerModalService {
   }
 
   /**
+   * Provide a callback function to tap in to the onPost callback
+   * @param fn
+   * @returns
+   */
+  onPost(fn: any): ComposerModalService {
+    this.onPostFn = fn;
+    return this;
+  }
+
+  /**
    * Presents the composer modal with a custom injector tree
    */
   present(): Promise<any> {
     if (!this.emailConfirmation.ensureEmailConfirmed()) return;
     const modal = this.modalService.present(ModalComponent, {
       data: {
-        onPost: response => modal.close(response),
+        onPost: response => {
+          modal.close(response);
+          this.onPostFn(response);
+        },
       },
       modalDialogClass: 'modal-content--without-padding',
       injector: this.injector,

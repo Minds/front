@@ -1,6 +1,14 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { clientMock } from '../../../../../../tests/client-mock.spec';
+import { ApiService } from '../../../../../common/api/api.service';
+import { EmailConfirmationService } from '../../../../../common/components/email-confirmation/email-confirmation.service';
 import { FriendlyDateDiffPipe } from '../../../../../common/pipes/friendlydatediff';
-import { MockComponent } from '../../../../../utils/mock';
+import { ToasterService } from '../../../../../common/services/toaster.service';
+import { Client } from '../../../../../services/api';
+import { MockComponent, MockService } from '../../../../../utils/mock';
+import { ComposerModalService } from '../../../../composer/components/modal/modal.service';
+import { EmailCodeExperimentService } from '../../../../experiments/sub-services/email-code-experiment.service';
 import { Supermind } from '../../../supermind.types';
 import { SupermindConsoleListItemComponent } from './list-item.component';
 
@@ -28,6 +36,7 @@ describe('SupermindConsoleListItemComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
+        imports: [RouterTestingModule],
         declarations: [
           SupermindConsoleListItemComponent,
           MockComponent({
@@ -49,7 +58,19 @@ describe('SupermindConsoleListItemComponent', () => {
             inputs: ['size'],
           }),
         ],
-        providers: [FriendlyDateDiffPipe],
+        providers: [
+          FriendlyDateDiffPipe,
+          ComposerModalService,
+          ToasterService,
+          {
+            provide: EmailConfirmationService,
+            useValue: MockService(EmailConfirmationService),
+          },
+          {
+            provide: ApiService,
+            useValue: MockService(ApiService),
+          },
+        ],
       }).compileComponents();
     })
   );
