@@ -17,4 +17,8 @@ namespace CommonSteps {
   Given('I am logged out', (): void => {
     I.clearCookie('minds_sess');
   });
+
+  Then('I should see {string} in current URL', (path: string) => {
+    I.seeInCurrentUrl(path);
+  });
 }
