@@ -65,7 +65,7 @@
     <!-- ------------------------------------------------------------ -->
     <li
       class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser()"
+      *ngIf="getCurrentUser() && shouldShowSupermindOption()"
       (click)="toggleSidebar()"
     >
       <a (click)="openSupermindConsole()" data-ref="sidebarmore-supermind">

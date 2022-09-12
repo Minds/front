@@ -8,6 +8,7 @@ import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.se
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { SupermindExperimentService } from '../../../modules/experiments/sub-services/supermind-experiment.service';
 import { FeaturesService } from '../../../services/features.service';
 import { Session } from '../../../services/session';
 import { MockComponent, MockService } from '../../../utils/mock';
@@ -57,6 +58,10 @@ describe('SidebarMoreComponent', () => {
           useValue: MockService(SidebarNavigationService),
         },
         {
+          provide: SupermindExperimentService,
+          useValue: MockService(SupermindExperimentService),
+        },
+        {
           provide: Router,
           useValue: jasmine.createSpyObj('Router', ['navigate']),
         },
@@ -67,11 +72,26 @@ describe('SidebarMoreComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SidebarMoreComponent);
     component = fixture.componentInstance;
+
+    (component as any).supermindExperiment.isActive.and.returnValue(true);
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should return that supermind option should be shown when experiment is on', () => {
+    (component as any).supermindExperiment.isActive.and.returnValue(true);
+    expect(component.shouldShowSupermindOption()).toBeTrue();
+    expect((component as any).supermindExperiment.isActive).toHaveBeenCalled();
+  });
+
+  it('should return that supermind option should NOT be shown when experiment is off', () => {
+    (component as any).supermindExperiment.isActive.and.returnValue(false);
+    expect(component.shouldShowSupermindOption()).toBeFalse();
+    expect((component as any).supermindExperiment.isActive).toHaveBeenCalled();
   });
 
   it('should navigate to supermind console', () => {
