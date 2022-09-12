@@ -21,14 +21,28 @@
     [canRecordAnalytics]="false"
   ></m-activity>
   <div class="m-supermind__listItem__bottomBar">
-    <span class="m-supermindListItem__requirementsLabel">
-      <span i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__REQUIREMENTS"
-        >Requirements:
+    <div class="m-supermindListItem__offerInformation">
+      <span
+        *ngIf="context === 'outbox' && supermind.receiver_entity"
+        class="m-supermindListItem__targetInformation"
+      >
+        <span i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__OFFER_TARGET">Target: </span>
+        <a [href]="'/' + supermind.receiver_entity.username" target="_blank"
+          >@{{ supermind.receiver_entity.username }}</a
+        >
+        <span class="m-supermindListItem__targetInformation--seperator"
+          >&ensp;·&ensp;</span
+        >
       </span>
-      <span class="m-supermindListItem__requirementsText">{{
-        requirementsText
-      }}</span>
-    </span>
+      <span class="m-supermindListItem__requirementsLabel">
+        <span i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__REQUIREMENTS"
+          >Requirements:
+        </span>
+        <span class="m-supermindListItem__requirementsText">{{
+          requirementsText
+        }}</span>
+      </span>
+    </div>
     <div
       class="m-supermindListItem__actionButtons"
       *ngIf="supermind.status === 1"

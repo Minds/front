@@ -1,8 +1,7 @@
 import { Component, Injector, Input } from '@angular/core';
 import * as moment from 'moment';
-import { ComposerModalService } from '../../../../composer/components/modal/modal.service';
-import { ComposerService } from '../../../../composer/services/composer.service';
 import { SupermindReplyService } from '../../../supermind-reply.service';
+
 import {
   SUPERMIND_REPLY_TYPE_MAP,
   Supermind,

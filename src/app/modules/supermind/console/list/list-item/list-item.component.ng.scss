@@ -38,14 +38,49 @@
     padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
     padding-right: $activityAvatarSpacingRight--feed;
 
-    .m-supermindListItem__requirementsLabel {
-      @include body2Regular;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
+    .m-supermindListItem__offerInformation {
+      display: flex;
+      flex-flow: row nowrap;
+
+      @media screen and (max-width: $min-tablet) {
+        flex-flow: column nowrap;
       }
-      .m-supermindListItem__requirementsText {
+
+      .m-supermindListItem__targetInformation {
+        a,
+        span {
+          text-decoration: none;
+
+          @include body2Regular;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+        a:hover {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        @media screen and (max-width: $min-tablet) {
+          margin-bottom: $spacing2;
+
+          .m-supermindListItem__targetInformation--seperator {
+            display: none;
+          }
+        }
+      }
+
+      .m-supermindListItem__requirementsLabel {
+        @include body2Regular;
         @include m-theme() {
-          color: themed($m-textColor--primary);
+          color: themed($m-textColor--secondary);
+        }
+
+        .m-supermindListItem__requirementsText {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
         }
       }
     }

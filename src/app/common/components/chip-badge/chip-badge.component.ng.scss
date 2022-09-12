@@ -8,4 +8,7 @@
   @include body2Medium;
   @include supermindGradient;
   @include unselectable;
+  @include m-theme() {
+    color: themed($m-white-always);
+  }
 }
