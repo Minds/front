@@ -1,5 +1,5 @@
 import { ComposerModal } from '../pages/composerModal';
-import SupermindConsolePage from '../pages/supermindPage';
+import SupermindConsolePage from '../pages/supermindConsolePage';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,

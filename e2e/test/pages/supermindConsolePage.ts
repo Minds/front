@@ -8,7 +8,7 @@ require('dotenv').config();
 const { I } = inject();
 const sidebarComponent = new SidebarComponent();
 
-class SupermindPage {
+class SupermindConsolePage {
   /** @type { string }  - root uri of the page */
   private baseUrl: string = '/supermind';
 
@@ -173,4 +173,4 @@ class SupermindPage {
   }
 }
 
-export = SupermindPage;
+export = SupermindConsolePage;
