@@ -1,5 +1,5 @@
 Feature: Supermind Console
-  As a user I want to be able to access the Supermind Console
+  As a user I want to be able to access and interact with the Supermind Console
 
   Scenario: Switching tabs from inbox to outbox
     Given I am logged in
@@ -40,12 +40,6 @@ Feature: Supermind Console
     And I make a supermind reply
     Then the supermind offer should be "accepted"
 
-  Scenario: An attempt is made to create an NSFW supermind offer
-    Given I am logged in as "supermind_sender"
-    And I have clicked on the sidebar composer button
-    When I try to make an NSFW supermind offer
-    Then I see a "error" toaster containing "You may not create an NSFW supermind at this time"
-
   Scenario: An attempt is made to create an NSFW supermind reply
     Given I am logged in as "supermind_sender"
     And I have clicked on the sidebar composer button
@@ -54,4 +48,4 @@ Feature: Supermind Console
     And I navigate via sidebar to the supermind console
     And I click "accept" on latest Supermind
     And I try to make an NSFW supermind reply
-    Then I see a "error" toaster containing "You may not create an NSFW supermind at this time"
+    Then I should see an 'error' toaster saying 'You may not create an NSFW supermind at this time.'

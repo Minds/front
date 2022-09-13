@@ -70,7 +70,7 @@ namespace CommonSteps {
   //
 
   Then(
-    'I sould see an {string} toaster saying {string}',
+    'I should see an {string} toaster saying {string}',
     (toasterType, toasterText) => {
       I.see(toasterText, commonPage.toaster);
       I.seeElement(`${commonPage.toasterTypePrefix}${toasterType}`);
@@ -80,12 +80,4 @@ namespace CommonSteps {
   Then('I should see {string} in current URL', (path: string) => {
     I.seeInCurrentUrl(path);
   });
-
-  Then(
-    'I see a {string} toaster containing {string}',
-    (state: string, text: string) => {
-      I.seeElement(locate(`.m-toaster__iconWrapper--${state}`));
-      I.seeElement(locate(`.m-toaster__wrapper`).withText(text));
-    }
-  );
 }

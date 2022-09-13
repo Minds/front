@@ -18,7 +18,7 @@ Feature: supermind
     Given I am logged in
     And I am on the newsfeed
     And I have clicked on the sidebar composer button
-    When I click the supermind icon
+    When I click the supermind icon on the composer toolbar
     Then I should see the supermind popout screen
     When I enter a target username with value 'minds'
     And I accept the supermind terms
@@ -34,7 +34,7 @@ Feature: supermind
     When I click the nsfw icon on the composer toolbar
     And I select the 'Nudity' nsfw option
     And I click the nsfw composer popup save button
-    Then I sould see the nsfw icon is active on the composer toolbar
+    Then I should see the nsfw icon is active on the composer toolbar
     And I should not see the supermind icon on the composer toolbar
 
   Scenario: can not mark as nsfw after creating a supermind (Supermind-1)
@@ -49,7 +49,7 @@ Feature: supermind
     And I click the nsfw icon on the composer toolbar
     And I select the 'Nudity' nsfw option
     And I click the nsfw composer popup save button
-    Then I sould see an 'error' toaster saying 'You may not create an NSFW supermind at this time.'
+    Then I should see an 'error' toaster saying 'You may not create an NSFW supermind at this time.'
 
   # Scenario: can not make a supermind after scheduling (Supermind-28)
   #   Given I am logged in
@@ -58,7 +58,7 @@ Feature: supermind
   #   When I schedule a post
   #   And I select the 'Nudity' nsfw option
   #   And I click the nsfw composer popup save button
-  #   Then I sould see the nsfw icon is active on the composer toolbar
+  #   Then I should see the nsfw icon is active on the composer toolbar
   #   And I should not see the supermind icon on the composer toolbar
 
   Scenario: can not schedule after creating a supermind (Supermind-28)
@@ -79,7 +79,7 @@ Feature: supermind
   #   When I click the nsfw icon on the composer toolbar
   #   And I select the 'Nudity' nsfw option
   #   And I click the nsfw composer popup save button
-  #   Then I sould see the nsfw icon is active on the composer toolbar
+  #   Then I should see the nsfw icon is active on the composer toolbar
   #   And I should not see the supermind icon on the composer toolbar
 
   Scenario: can not monetize after creating a supermind (Supermind-2)

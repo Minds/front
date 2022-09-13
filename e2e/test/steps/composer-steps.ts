@@ -16,7 +16,7 @@ namespace ComposerSteps {
   });
 
   When('I click the nsfw icon on the composer toolbar', () => {
-    I.click(composerModal.nsfwButton);
+    composerModal.clickNsfwOption();
   });
 
   When('I select the {string} nsfw option', nsfwLabel => {
@@ -24,7 +24,7 @@ namespace ComposerSteps {
   });
 
   When('I click the nsfw composer popup save button', () => {
-    I.click('[data-cy=nsfw-save-button]', composerModal.getNsfwPopup());
+    composerModal.clickNsfwSaveOption();
   });
 
   When('I add files via the upload button', table => {
@@ -39,7 +39,7 @@ namespace ComposerSteps {
   });
 
   When('I click the post button', () => {
-    I.click(composerModal.postButton);
+    composerModal.clickPost();
   });
 
   Then('I should see {int} previews of my selected imaged', num => {
@@ -66,7 +66,7 @@ namespace ComposerSteps {
     I.seeElement(composerModal.getNsfwPopup());
   });
 
-  Then('I sould see the nsfw icon is active on the composer toolbar', () => {
+  Then('I should see the nsfw icon is active on the composer toolbar', () => {
     I.seeElement(`${composerModal.nsfwButton}.m-composerToolbar__item--active`);
   });
 

@@ -2,12 +2,9 @@ const { I } = inject();
 export class ComposerModal {
   private modalElementTag: string = 'm-composer__modal';
   private textAreaTitleSelector: string = `${this.modalElementTag} .m-composerTextarea__title`;
-  private textAreaSelector: string =
-    'm-composer__modal [data-cy=composer-textarea]';
-  private postButtonSelector: string =
-    'm-composer__modal [data-cy=post-button]';
-  private supermindIconSelector: string =
-    'm-composer__modal .m-composerToolbarItem__icon i';
+  private textAreaSelector: string = `${this.modalElementTag} [data-cy=composer-textarea]`;
+  private postButtonSelector: string = `${this.modalElementTag} [data-cy=post-button]`;
+  private supermindIconSelector: string = `${this.modalElementTag} .m-composerToolbarItem__icon i`;
   private tabSelector: string = '.m-tabs__tab';
   private supermindTargetInputSelector: string = '[placeholder="@username"]';
   private supermindAutoCompleteNameSelector: string =
@@ -18,11 +15,9 @@ export class ComposerModal {
   private supermindSaveButtonSelector: string =
     '[data-ref=supermind-save-button]';
   private supermindBadgeSelector: string = '.m-paywallBadge__tierName';
-  private nsfwButtonSelector: string =
-    'm-composer__modal [data-cy=nsfw-button]';
+  private nsfwButtonSelector: string = `${this.modalElementTag} [data-cy=nsfw-button]`;
   private nsfwSaveButtonSelector: string = '[data-cy=nsfw-save-button]';
-  private meatballMenuSelector: string =
-    'm-composer__modal [data-cy=meatball-menu-trigger]';
+  private meatballMenuSelector: string = `${this.modalElementTag} [data-cy=meatball-menu-trigger]`;
   private postButtonDisabledOverlaySelector: string =
     '.m-composerToolbarAction__disabledOverlay';
 
@@ -176,6 +171,7 @@ export class ComposerModal {
   public getNsfwPopup(): CodeceptJS.Locator {
     return locate(`${this.modalElementTag} m-composer__popup m-composer__nsfw`);
   }
+
   public getMonetizePopup(): CodeceptJS.Locator {
     return locate(
       `${this.modalElementTag} m-composer__popup m-composer__monetizev2`
