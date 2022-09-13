@@ -4,7 +4,10 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { ComposerService } from '../../../services/composer.service';
+import {
+  ComposerService,
+  DEFAULT_SCHEDULE_VALUE,
+} from '../../../services/composer.service';
 import { isSafari } from '../../../../../helpers/is-safari';
 
 /**
@@ -52,6 +55,11 @@ export class ScheduleComponent {
    * Validation error
    */
   error: boolean = false;
+
+  /**
+   * The composer service data value for schedule$
+   */
+  schedule$ = this.service.schedule$;
 
   /**
    * Constructor. Initializes state, min and max dates
@@ -188,6 +196,15 @@ export class ScheduleComponent {
     }
 
     this.service.schedule$.next(this.buildTimestamp());
+    this.dismissIntent.emit();
+  }
+
+  /**
+   * Will clear the schedule value
+   * @param e
+   */
+  onClear(e: MouseEvent) {
+    this.service.schedule$.next(DEFAULT_SCHEDULE_VALUE);
     this.dismissIntent.emit();
   }
 

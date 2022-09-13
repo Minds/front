@@ -54,6 +54,18 @@
   <div class="m-composerPopup__action">
     <m-button
       class="m-composerPopup__save"
+      (onAction)="onClear()"
+      data-ref="schedule-clear-button"
+      i18n="@@COMPOSER_POPUP__CLEAR"
+      size="small"
+      color="blue"
+      borderless="true"
+      *ngIf="schedule$ | async"
+    >
+      Clear
+    </m-button>
+    <m-button
+      class="m-composerPopup__save"
       [disabled]="hasError() || !this.state"
       (onAction)="save()"
       data-cy="schedule-save-button"

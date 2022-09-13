@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+  // position: relative;
+
+  input {
+    width: 100%;
+  }
+
+  .m-formInputAutocompleteUserInput__popout {
+    box-sizing: border-box;
+    position: absolute;
+    top: 60px;
+    padding: unset;
+    width: 100%;
+    z-index: 1;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  li {
+    list-style: none;
+  }
+
+  .m-formInputAutocompleteUserInput__userItem {
+    padding: $spacing4;
+    cursor: pointer;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    &:nth-of-type(1) {
+      @include m-theme() {
+        border-top: none;
+      }
+    }
+
+    &:hover {
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+  }
+
+  .m-formInputAutocompleteUserInputUserItem__avatar {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+  }
+}

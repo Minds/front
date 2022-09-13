@@ -1,4 +1,4 @@
-<ng-container *ngIf="init && (hasPaywall || isSupermindReply)">
+<ng-container *ngIf="(init && hasPaywall) || isSupermindReply">
   <div
     class="m-paywallBadge"
     [ngClass]="{

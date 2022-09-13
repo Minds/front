@@ -21,6 +21,7 @@ import {
   selector: 'm-composer__titleBar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'title-bar.component.html',
+  styleUrls: ['./title-bar.component.ng.scss'],
 })
 export class TitleBarComponent {
   /**
@@ -42,6 +43,13 @@ export class TitleBarComponent {
    */
   hasAttachments$: Observable<boolean> = this.service.data$.pipe(
     map(values => values.attachmentGuids?.length > 0)
+  );
+
+  /**
+   * If is a supermind
+   */
+  isSupermind$: Observable<boolean> = this.service.supermindRequest$.pipe(
+    map(supermindRequest => !!supermindRequest)
   );
 
   constructor(protected service: ComposerService) {}

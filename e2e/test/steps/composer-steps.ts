@@ -15,6 +15,18 @@ namespace ComposerSteps {
     commonPage.openSidebarComposer();
   });
 
+  When('I click the nsfw icon on the composer toolbar', () => {
+    I.click(composerModal.nsfwButton);
+  });
+
+  When('I select the {string} nsfw option', nsfwLabel => {
+    I.click(nsfwLabel, '.m-composerNsfw__item');
+  });
+
+  When('I click the nsfw composer popup save button', () => {
+    I.click('[data-cy=nsfw-save-button]', composerModal.getNsfwPopup());
+  });
+
   When('I add files via the upload button', table => {
     const tableByHeader = table.parse().hashes();
     for (const row of tableByHeader) {
@@ -27,7 +39,7 @@ namespace ComposerSteps {
   });
 
   When('I click the post button', () => {
-    I.click('m-composer__modal [data-cy=post-button]');
+    I.click(composerModal.postButton);
   });
 
   Then('I should see {int} previews of my selected imaged', num => {
@@ -38,8 +50,6 @@ namespace ComposerSteps {
     }
   });
 
-  //
-
   Then('I should not see the title input', () => {
     I.dontSeeElement(composerModal.getTextareaTitle());
   });
@@ -48,9 +58,23 @@ namespace ComposerSteps {
     I.seeElement(composerModal.getTextareaTitle());
   });
 
-  //
-
   Then('I am able to create the post', () => {
     // TODOD
+  });
+
+  Then('I should see the nsfw popout screen', () => {
+    I.seeElement(composerModal.getNsfwPopup());
+  });
+
+  Then('I sould see the nsfw icon is active on the composer toolbar', () => {
+    I.seeElement(`${composerModal.nsfwButton}.m-composerToolbar__item--active`);
+  });
+
+  Then('I do not see the monetize icon on the composer toolbar', () => {
+    I.dontSeeElement(composerModal.monetizeButton);
+  });
+
+  Then('I do not have the ability to schedule a post', () => {
+    I.dontSeeElement(`${composerModal.postButton} m-dropdownmenu`);
   });
 }
