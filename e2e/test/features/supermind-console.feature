@@ -1,4 +1,4 @@
-Feature: Supermind
+Feature: Supermind Console
   As a user I want to be able to access the Supermind Console
 
   Scenario: Switching tabs from inbox to outbox
