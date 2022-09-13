@@ -43,7 +43,8 @@
         }}</span>
       </span>
     </div>
-    <div class="m-supermindListItem__actionButtons">
+    <!-- Remove *ngIf when we enabled revocation -->
+    <div class="m-supermindListItem__actionButtons" *ngIf="context === 'inbox'">
       <ng-container *ngIf="context === 'inbox'; else outboxButton">
         <m-button class="m-supermindListItem__buttonSecondary" size="small"
           ><ng-container i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__DECLINE_OPTION"
