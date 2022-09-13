@@ -38,7 +38,7 @@
       .stretchedField {
         .m-form__row--label m-tooltip {
           .m-tooltip--bubble {
-            right: 12px;
+            right: $spacing2;
           }
         }
         .m-form__row--input {
@@ -53,7 +53,7 @@
       @media screen and (max-width: $max-mobile) {
         .m-form__row--label m-tooltip {
           .m-tooltip--bubble {
-            right: 12px;
+            right: $spacing2;
           }
         }
       }
@@ -97,7 +97,7 @@
       }
       .m-form__row--label m-tooltip {
         .m-tooltip--bubble {
-          left: 12px;
+          left: $spacing2;
         }
       }
     }
@@ -159,7 +159,7 @@
     &.stretchedField {
       .m-form__row--label {
         m-tooltip {
-          margin-left: -12px;
+          margin-left: -$spacing2;
         }
       }
       .m-form__row--input {
@@ -205,7 +205,6 @@
         flex: 1 1 100%;
       }
       @media screen and (max-width: 1000px) {
-        label,
         input,
         textarea {
           flex: 1 1 100%;
@@ -257,7 +256,7 @@
         font-size: 10px;
         position: absolute;
         right: 18px;
-        top: 12px;
+        top: $spacing2;
         text-align: center;
         pointer-events: none;
 
@@ -305,14 +304,14 @@
     align-items: center;
     flex-flow: row wrap;
     .m-form__row--label {
-      margin-bottom: 21px;
+      margin-bottom: $spacing2; // Why are radios having different margins??
     }
     .m-form__row--input {
       width: 100%;
     }
   }
   input[type='radio'] {
-    margin: 0 24px 12px 0;
+    margin: 0 $spacing4 $spacing2 0;
     cursor: pointer;
     &:last-child {
       margin-right: 0;
@@ -370,7 +369,7 @@
         line-height: 20px;
         font-weight: 300;
         border-radius: 2px;
-        padding: 4px 12px;
+        padding: 4px $spacing2;
         transition: all 0.3s ease;
         margin-left: auto;
         @include m-theme() {
@@ -467,7 +466,7 @@
   .m-form__row--label {
     font-size: 15px;
     line-height: 20px;
-    margin: 0 0 12px 0;
+    margin: 0 0 $spacing2 0;
     align-items: center;
     flex-flow: row nowrap;
     position: relative;
@@ -583,8 +582,8 @@
     }
 
     &[class*='__radio'] {
-      margin: 0 20px 10px 0;
-      padding-left: 40px;
+      margin: $spacing1 $spacing6 $spacing1 0;
+      padding-left: $spacing8;
     }
     &[class*='disabled'] {
       @include m-theme() {
@@ -636,7 +635,7 @@
           left: 7px;
           top: 2px;
           width: 5px;
-          height: 12px;
+          height: $spacing2;
           @include m-theme() {
             border: 1px solid themed($m-white);
             border-top: none;
@@ -713,7 +712,7 @@
     }
     .m-tooltip--bubble {
       bottom: 18px;
-      margin-left: 12px;
+      margin-left: $spacing2;
       font-weight: 300;
       letter-spacing: 1px;
     }
@@ -785,7 +784,7 @@
 .m-input {
   background: none;
   font-weight: 400;
-  padding: 12px;
+  padding: $spacing2;
   font-size: 14px;
   width: 100%;
   @include m-theme() {
