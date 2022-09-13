@@ -1,0 +1,225 @@
+<div class="m-composerPopup__body">
+  <div class="m-composerPopup__content">
+    <h3 class="m-composerPopup__title" i18n="@@COMMON__SUPERMIND">Supermind</h3>
+
+    <div class="m-tabs__container">
+      <div class="m-tabs__tab">
+        <a
+          [ngClass]="{
+            'm-tabs__tab--selected': paymentMethod === PaymentMethods.CASH
+          }"
+          (click)="setPaymentMethod(PaymentMethods.CASH)"
+          data-cy="monetize-membership-plus-tab"
+          >Cash</a
+        >
+      </div>
+
+      <div class="m-tabs__tab">
+        <a
+          [ngClass]="{
+            'm-tabs__tab--selected': paymentMethod === PaymentMethods.TOKENS
+          }"
+          (click)="setPaymentMethod(PaymentMethods.TOKENS)"
+          data-cy="monetize-membership-membership-tab"
+          >Tokens</a
+        >
+      </div>
+    </div>
+
+    <form class="m-formWrapper" [formGroup]="formGroup">
+      <!------------------------>
+      <!-- Select target      -->
+      <!------------------------>
+
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label ">
+          <label> Target Channel</label>
+        </div>
+        <div class="m-form__row--input">
+          <!-- <input
+            type="text"
+            id="username"
+            formControlName="username"
+            placeholder="@username"
+          /> -->
+          <m-formInput__autocompleteUserInput
+            id="username"
+            formControlName="username"
+            placeholder="@username"
+          ></m-formInput__autocompleteUserInput>
+        </div>
+      </div>
+
+      <!------------------------>
+      <!-- CASH method (USD)  -->
+      <!------------------------>
+
+      <div class="m-layout__row" *ngIf="paymentMethod === PaymentMethods.CASH">
+        <div class="m-layout__cell m-form__field--text stretchedField">
+          <div class="m-form__row--label ">
+            <label>Offer (USD)</label>
+
+            <span class="m-composerSupermind__labelHint"
+              >Min: ${{ CashMin }}</span
+            >
+          </div>
+          <div class="m-form__row--input">
+            <input type="number" id="offer_usd" formControlName="offerUsd" />
+          </div>
+        </div>
+
+        <div style="width: 1rem"></div>
+
+        <div class="m-layout__cell m-form__field--text stretchedField">
+          <div class="m-form__row--label ">
+            <label>Payment Method</label>
+          </div>
+
+          <m-payments__selectCard
+            [selected]="formGroup.controls.cardId.value"
+            (selected)="onCardSelected($event)"
+          ></m-payments__selectCard>
+        </div>
+      </div>
+
+      <!------------------------------>
+      <!-- Token method (offchain)  -->
+      <!------------------------------>
+
+      <div
+        class="m-layout__row"
+        *ngIf="paymentMethod === PaymentMethods.TOKENS"
+      >
+        <div class="m-layout__cell m-form__field--text stretchedField">
+          <div class="m-form__row--label ">
+            <label>Offer (Tokens)</label>
+            <span class="m-composerSupermind__labelHint"
+              >Min: {{ TokensMin }}</span
+            >
+          </div>
+          <div class="m-form__row--input">
+            <input
+              type="number"
+              id="offer_tokens"
+              formControlName="offerTokens"
+            />
+          </div>
+        </div>
+
+        <div class="m-layout__spacer"></div>
+      </div>
+
+      <!------------------------>
+      <!-- Response type      -->
+      <!------------------------>
+
+      <div class="m-form__fieldsContainer">
+        <div class="m-form__field--radio">
+          <div class="m-form__row--label ">
+            <label>Response Type</label>
+          </div>
+          <div class="m-form__row--input">
+            <label
+              for="response_type_text"
+              class="m-form__customInputWrapper__radio"
+            >
+              Text
+              <input
+                name="responseType"
+                type="radio"
+                id="response_type_text"
+                formControlName="responseType"
+                value="0"
+                class="form-control"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+
+            <label
+              for="response_type_image"
+              class="m-form__customInputWrapper__radio"
+            >
+              Image
+              <input
+                name="responseType"
+                type="radio"
+                id="response_type_image"
+                formControlName="responseType"
+                value="1"
+                class="form-control"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+
+            <label
+              for="response_type_video"
+              class="m-form__customInputWrapper__radio"
+            >
+              Video
+              <input
+                name="responseType"
+                type="radio"
+                id="response_type_video"
+                formControlName="responseType"
+                value="2"
+                class="form-control"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+
+            <!-- <label for="response_type_remind" class="m-form__customInputWrapper__radio">
+              Remind
+              <input
+                name="responseType"
+                type="radio"
+                id="response_type_remind"
+                formControlName="responseType"
+                value="3"
+                class="form-control"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label> -->
+          </div>
+        </div>
+      </div>
+
+      <!------------------------>
+      <!-- Terms checkbox     -->
+      <!------------------------>
+
+      <div class="m-composerPopup__checkbox">
+        <m-formInput__checkbox formControlName="termsAccepted">
+          <span i18n="@@COMPOSER__SUPERMIND__TERMS__CHECKBOX"
+            >I agree to the <a routerLink="/p/terms" target="_blank">Terms</a>
+          </span>
+        </m-formInput__checkbox>
+      </div>
+    </form>
+  </div>
+
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      (onAction)="onClear()"
+      data-ref="supermind-clear-button"
+      i18n="@@COMPOSER_POPUP__CLEAR"
+      size="small"
+      color="blue"
+      borderless="true"
+      *ngIf="formGroup.dirty"
+    >
+      Clear
+    </m-button>
+    <m-button
+      class="m-composerPopup__save"
+      (onAction)="onSave()"
+      data-ref="supermind-save-button"
+      i18n="@@COMPOSER_POPUP__SAVE_TAGS"
+      size="small"
+      color="blue"
+      [disabled]="!formGroup.valid"
+    >
+      Save
+    </m-button>
+  </div>
+</div>

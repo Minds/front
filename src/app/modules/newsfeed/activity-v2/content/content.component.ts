@@ -389,7 +389,7 @@ export class ActivityV2ContentComponent
   }
 
   get videoGuid(): string {
-    return this.entity.entity_guid;
+    return this.entity.entity_guid || this.entity.custom_data.guid;
   }
 
   get imageGuid(): string {

@@ -17,7 +17,8 @@
       !(isEditing$ | async) &&
       !(hasAttachments$ | async) &&
       !(remind$ | async) &&
-      !containerGuid
+      !containerGuid &&
+      !(isSupermind$ | async)
     "
     class="m-composerTitleBar__createBlogTrigger"
     [hidden]="isPosting$ | async"
@@ -26,5 +27,13 @@
     <ng-container i18n="@@COMPOSER__CREATE_BLOG">Create Blog</ng-container>
   </div>
 
-  <m-composerTitleBar__dropdown></m-composerTitleBar__dropdown>
+  <m-composerTitleBar__dropdown
+    *ngIf="!(isSupermind$ | async)"
+  ></m-composerTitleBar__dropdown>
+
+  <m-paywallBadge
+    *ngIf="isSupermind$ | async"
+    [isSupermindReply]="true"
+    [topRightPosition]="false"
+  ></m-paywallBadge>
 </div>

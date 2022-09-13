@@ -30,7 +30,7 @@ export class PaywallBadgeComponent implements OnInit {
   @Input() showTierName: boolean = true;
 
   hasPaywall: boolean = false;
-  isSupermindReply: boolean = false;
+  @Input() isSupermindReply: boolean = false;
 
   paywallType: PaywallType = 'custom';
   tierName: string;
@@ -52,9 +52,11 @@ export class PaywallBadgeComponent implements OnInit {
     this.activityV2Feature = this.activityV2Experiment.isActive();
 
     // Determine if we should show the supermind badge
-    this.isSupermindReply =
-      getActivityContentType(this._entity, false, false, true) ===
-      'supermind_reply';
+    if (this._entity) {
+      this.isSupermindReply =
+        getActivityContentType(this._entity, false, false, true) ===
+        'supermind_reply';
+    }
   }
 
   load(): void {
