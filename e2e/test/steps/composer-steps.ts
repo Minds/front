@@ -1,10 +1,10 @@
-import CommonPage from '../pages/commonPage';
+import SidebarComponent from '../components/sidebarComponent';
 import { ComposerModal } from '../pages/composerModal';
 
 namespace ComposerSteps {
   const { I, newsfeedPage } = inject();
 
-  const commonPage = new CommonPage();
+  const sidebarComponent = new SidebarComponent();
   const composerModal = new ComposerModal();
 
   Given('I am on the newsfeed', () => {
@@ -12,7 +12,7 @@ namespace ComposerSteps {
   });
 
   Given('I have clicked on the sidebar composer button', () => {
-    commonPage.openSidebarComposer();
+    sidebarComponent.openSidebarComposer();
   });
 
   When('I add files via the upload button', table => {
@@ -49,6 +49,10 @@ namespace ComposerSteps {
   });
 
   //
+
+  Then('I cannot post', (state: string) => {
+    composerModal.checkPostDisabled();
+  });
 
   Then('I am able to create the post', () => {
     // TODOD
