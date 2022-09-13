@@ -12,7 +12,7 @@
           >Tags</a
         >
       </div>
-      <div class="m-tabs__tab">
+      <div class="m-tabs__tab" *ngIf="!hideCompass">
         <a
           [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'compass' }"
           (click)="service.activeTab$.next('compass')"

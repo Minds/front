@@ -166,6 +166,8 @@ import { FriendlyCaptchaComponent } from '../modules/captcha/friendly-catpcha/fr
 import { BoostButton } from './components/boost-button/boost';
 import { FeedHeaderComponent } from './components/feed-header/feed-header.component';
 import { AutocompleteUserInputComponent } from './components/forms/autocomplete-user-input/autocomplete-user-input.component';
+import { AddBankPromptComponent } from './components/add-bank-information/add-bank-prompt.component';
+import { ChipBadgeComponent } from './components/chip-badge/chip-badge.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -255,6 +257,8 @@ const MINDS_COMMON_COMPONENTS = [
   UserAggregatorComponent,
   UserMenuComponent,
   AutocompleteUserInputComponent,
+  AddBankPromptComponent,
+  ChipBadgeComponent,
 ];
 // ------------------------------------
 // ------------------------------------

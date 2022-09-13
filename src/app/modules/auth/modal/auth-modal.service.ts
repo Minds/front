@@ -1,21 +1,17 @@
-import { Injectable, Compiler, Injector } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { AuthModalComponent } from './auth-modal.component';
-import { Subject, combineLatest, Observable, concat, merge } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
-import { FeaturesService } from '../../../services/features.service';
-import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
 import { EmailCodeExperimentService } from '../../experiments/sub-services/email-code-experiment.service';
+import { ContentSettingsModalService } from '../../content-settings/content-settings-modal.service';
 
 @Injectable()
 export class AuthModalService {
   constructor(
-    private compiler: Compiler,
     private injector: Injector,
     private modalService: ModalService,
-    private features: FeaturesService,
-    private onboardingV3: OnboardingV3Service,
+    private contentSettingsModal: ContentSettingsModalService,
     private session: Session,
     private emailCodeExperiment: EmailCodeExperimentService
   ) {}
@@ -39,7 +35,12 @@ export class AuthModalService {
             opts.formDisplay === 'register' &&
             !this.emailCodeExperiment.isActive()
           ) {
-            await this.onboardingV3.open();
+            this.contentSettingsModal.open({
+              hideCompass: true,
+              onSave: () => {
+                this.contentSettingsModal.dismiss();
+              },
+            });
           }
         },
       },
