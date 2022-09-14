@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
@@ -48,8 +48,14 @@ export class TitleBarComponent {
   /**
    * If is a supermind
    */
-  isSupermind$: Observable<boolean> = this.service.supermindRequest$.pipe(
-    map(supermindRequest => !!supermindRequest)
+  isSupermind$: Observable<boolean> = combineLatest([
+    this.service.isSupermindRequest$,
+    this.service.isSupermindReply$,
+  ]).pipe(
+    map(
+      ([isSupermindRequest, isSupermindReply]) =>
+        isSupermindRequest || isSupermindReply
+    )
   );
 
   constructor(protected service: ComposerService) {}

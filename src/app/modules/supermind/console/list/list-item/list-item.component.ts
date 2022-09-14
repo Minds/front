@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Injector, Input } from '@angular/core';
 import * as moment from 'moment';
+import { SupermindReplyService } from '../../../supermind-reply.service';
+
 import {
   SUPERMIND_REPLY_TYPE_MAP,
   Supermind,
@@ -16,6 +18,7 @@ import {
   selector: 'm-supermind__listItem',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.ng.scss'],
+  providers: [SupermindReplyService],
 })
 export class SupermindConsoleListItemComponent {
   /** @var { Supermind } supermind - Supermind object */
@@ -34,6 +37,13 @@ export class SupermindConsoleListItemComponent {
     isInset: true,
     isV2: true,
   };
+
+  /**
+   * The api state (button loading states)
+   */
+  inProgress$$ = this.supermindReplyService.inProgress$$;
+
+  constructor(private supermindReplyService: SupermindReplyService) {}
 
   /**
    * Get amount badge text.
@@ -105,5 +115,29 @@ export class SupermindConsoleListItemComponent {
     }
 
     return requirementsText;
+  }
+
+  /**
+   * Called upon accept button being clicked
+   * @param e
+   */
+  async onAccept(e: MouseEvent): Promise<void> {
+    this.supermindReplyService.startReply(this.supermind);
+  }
+
+  /**
+   * Called upon decline button being clicked
+   * @param e
+   */
+  onDecline(e: MouseEvent): void {
+    this.supermindReplyService.decline(this.supermind);
+  }
+
+  /**
+   * Called upon cancle button being clicked
+   * @param e
+   */
+  onCancel(e: MouseEvent): void {
+    this.supermindReplyService.cancel(this.supermind);
   }
 }

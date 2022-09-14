@@ -11,13 +11,6 @@ class CommonPage {
   get toasterTypePrefix(): string {
     return `${this.toaster} .m-toaster__iconWrapper--`;
   }
-
-  /**
-   * Opens the composer from the sidebar
-   */
-  public openSidebarComposer(): void {
-    I.click('[data-ref=sidenav-composer]');
-  }
 }
 
 export = CommonPage;

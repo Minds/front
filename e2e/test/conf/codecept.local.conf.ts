@@ -21,7 +21,7 @@ exports.config = {
     loginPage: '../pages/loginPage.ts',
     newsfeedPage: '../pages/newsfeedPage.ts',
     devtoolsPage: '../pages/devtoolsPage.ts',
-    supermindConsolePage: '../pages/supermindConsole.ts',
+    supermindConsolePage: '../pages/supermindConsolePage.ts',
   },
   mocha: {},
   bootstrap: null,
