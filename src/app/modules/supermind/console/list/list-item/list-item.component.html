@@ -43,9 +43,10 @@
         }}</span>
       </span>
     </div>
+    <!-- Remove *ngIf when we enabled revocation -->
     <div
       class="m-supermindListItem__actionButtons"
-      *ngIf="supermind.status === 1"
+      *ngIf="supermind.status === 1 && context === 'inbox'"
     >
       <ng-container *ngIf="context === 'inbox'; else outboxButton">
         <m-button

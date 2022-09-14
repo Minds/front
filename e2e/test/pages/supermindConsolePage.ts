@@ -1,3 +1,4 @@
+import SidebarComponent from '../components/sidebarComponent';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
@@ -5,6 +6,7 @@ import {
 
 require('dotenv').config();
 const { I } = inject();
+const sidebarComponent = new SidebarComponent();
 
 class SupermindConsolePage {
   /** @type { string }  - root uri of the page */
@@ -39,6 +41,12 @@ class SupermindConsolePage {
   private addBankPromptLink: CodeceptJS.Locator = locate(
     '.m-addBankPrompt__link'
   );
+  private supermindListItem: CodeceptJS.Locator = locate(
+    '.m-supermind__listItem'
+  );
+  private supermindActionButtons: CodeceptJS.Locator = locate(
+    '.m-supermindListItem__actionButtons'
+  );
 
   /**
    * Navigate to the supermind page by subpage.
@@ -47,6 +55,15 @@ class SupermindConsolePage {
    */
   public navigateTo(subpage: SupermindConsoleSubPage = 'inbox'): void {
     I.amOnPage(`${this.baseUrl}/${subpage}`);
+  }
+
+  /**
+   * Navigate to console via sidebar.
+   * @returns { void }
+   */
+  public navigateToViaSidebar(): void {
+    sidebarComponent.expandSidebarMore();
+    sidebarComponent.openSupermindConsole();
   }
 
   /**
@@ -115,6 +132,44 @@ class SupermindConsolePage {
    */
   public switchTabs(tab: SupermindConsoleTab): void {
     I.click(locate(this.tab).withText(tab));
+  }
+
+  /**
+   * Click accept.
+   * @param { number } feedPosition - position in feed for accept button click.
+   * @return { void }
+   */
+  public clickAccept(feedPosition: number = 1): void {
+    I.click(this.acceptButton.at(feedPosition));
+  }
+
+  /**
+   * Click Decline.
+   * @param { number } feedPosition - position in feed for decline button click.
+   * @return { void }
+   */
+  public clickDecline(feedPosition: number = 1): void {
+    I.click(this.declineButton.at(feedPosition));
+  }
+
+  /**
+   * Click Cancel offer.
+   * @param { number } feedPosition - position in feed for cancel offer button click.
+   * @return { void }
+   */
+  public clickCancelOffer(feedPosition: number = 1): void {
+    I.click(this.cancelOfferButton.at(feedPosition));
+  }
+
+  /**
+   * Check that supermind is not actionable (has no action buttons).
+   * @param { number } feedPosition - position in feed for list item to check.
+   * @return { void }
+   */
+  public checkSupermindNotActionable(feedPosition: number = 1): void {
+    I.dontSeeElement(
+      this.supermindListItem.at(feedPosition).find(this.supermindActionButtons)
+    );
   }
 }
 
