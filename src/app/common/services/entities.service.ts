@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, of, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { BlockListService } from './block-list.service';
@@ -106,6 +106,49 @@ export class EntitiesService {
       });
 
     return this.entities.get(urn);
+  }
+
+  /**
+   * Returns an observable that gets fired twice, once with
+   * the cached (in-memory) entity, and another with the newly fetched entity
+   * @param urn string
+   * @return { Observable }
+   */
+  singleCacheFirst(urn: string): Observable<EntityObservable> {
+    return new Observable(observer => {
+      if (urn.indexOf('urn:') < 0) {
+        // not a urn, so treat as a guid
+        urn = `urn:activity:${urn}`; // and assume activity
+      }
+
+      const existingEntity = this.entities.get(urn);
+      if (existingEntity) {
+        observer.next(existingEntity);
+      }
+
+      this.fetch([urn]) // Update in the background
+        .then((response: any) => {
+          if (!response.entities[0]) {
+            return;
+          }
+
+          const entity = response.entities[0];
+          entity.require_login = response.require_login
+            ? response.require_login
+            : false;
+
+          if (entity && entity.urn !== urn) {
+            // urns may differn so fix this
+            entity.urn = urn;
+            this.entities.set(urn, new BehaviorSubject(null));
+            this.addEntity(entity);
+          }
+
+          const entit = this.entities.get(urn);
+          observer.next(entit);
+          observer.complete();
+        });
+    });
   }
 
   /**

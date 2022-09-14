@@ -58,14 +58,16 @@
   ></m-activityV2__toolbar>
 
   <ng-container *mIfBrowser>
-    <m-comments__entityOutletV2
-      *ngIf="service.displayOptions.showComments"
-      [entity]="service.entity$ | async"
-      [canDelete]="canDelete$ | async"
-      [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
-      [fixedHeight]="service.displayOptions.fixedHeight"
-      (onHeightChange)="onCommentsHeightChange($event)"
-    >
-    </m-comments__entityOutletV2>
+    <ng-container *ngIf="isFeed ? !persistentFeedExperimentActive : true">
+      <m-comments__entityOutletV2
+        *ngIf="service.displayOptions.showComments"
+        [entity]="service.entity$ | async"
+        [canDelete]="canDelete$ | async"
+        [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
+        [fixedHeight]="service.displayOptions.fixedHeight"
+        (onHeightChange)="onCommentsHeightChange($event)"
+      >
+      </m-comments__entityOutletV2>
+    </ng-container>
   </ng-container>
 </ng-container>
