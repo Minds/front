@@ -18,9 +18,12 @@ exports.config = {
   },
   include: {
     I: '../step_definitions/steps_file.ts',
+    boostMarketingPage: '../pages/boostMarketingPage.ts',
+    boostPage: '../pages/boostPage.ts',
     devtoolsPage: '../pages/devtoolsPage.ts',
     loginPage: '../pages/loginPage.ts',
     newsfeedPage: '../pages/newsfeedPage.ts',
+    permawebPage: '../pages/permawebPage.ts',
     rewardsMarketingPage: '../pages/rewardsMarketingPage.ts',
     searchPage: '../pages/searchPage.ts',
     settingsPage: '../pages/settingsPage.ts',

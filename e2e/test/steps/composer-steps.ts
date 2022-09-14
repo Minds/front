@@ -1,4 +1,4 @@
-import CommonPage from '../pages/commonPage';
+import { CommonPage } from '../pages/commonPage';
 import { ComposerModal } from '../pages/composerModal';
 
 namespace ComposerSteps {

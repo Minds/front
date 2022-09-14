@@ -12,7 +12,3 @@ Feature: search
       | c                |
       | #art             |
     Then I see search results
-      | searchPath                   | 
-      | q=minds&f=top&t=all          | 
-      | q=c&f=top&t=all              |
-      | q=%23art&f=top&t=all         |

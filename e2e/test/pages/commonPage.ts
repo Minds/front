@@ -1,12 +1,10 @@
 const { I } = inject();
 
-class CommonPage {
+export class CommonPage {
   /**
    * Opens the composer from the sidebar
    */
-  public openSidebarComposer(): void {
+  public openSidebarComposer() {
     I.click('[data-ref=sidenav-composer]');
   }
 }
-
-export = CommonPage;

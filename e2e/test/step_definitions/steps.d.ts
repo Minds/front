@@ -1,10 +1,13 @@
 /// <reference types='codeceptjs' />
 //type steps_file = typeof import('./steps_file');
-type loginPage = typeof import('../pages/loginPage');
-type devtoolsPage = typeof import('../pages/devtoolsPage');
+type boostMarketingPage = typeof import('../pages/boostMarketingPage');
+type boostPage = typeof import('../pages/boostPage');
 type commonPage = typeof import('../pages/commonPage');
 type composerModal = typeof import('../pages/composerModal');
+type devtoolsPage = typeof import('../pages/devtoolsPage');
+type loginPage = typeof import('../pages/loginPage');
 type newsfeedPage = typeof import('../pages/newsfeedPage');
+type permawebPage = typeof import('../pages/permawebPage');
 type rewardsMarketingPage = typeof import('../pages/rewardsMarketingPage');
 type searchPage = typeof import('../pages/searchPage');
 type settingsPage = typeof import('../pages/settingsPage');
@@ -14,10 +17,13 @@ declare namespace CodeceptJS {
   interface SupportObject {
     I: I;
     loginPage: loginPage;
+    boostMarketingPage: boostMarketingPage;
+    boostPage: boostPage;
     devtoolsPage: devtoolsPage;
     commonPage: commonPage;
     composerModal: composerModal;
     newsfeedPage: newsfeedPage;
+    permawebPage: permawebPage;
     rewardsMarketingPage: rewardsMarketingPage;
     searchPage: searchPage;
     settingsPage: settingsPage;

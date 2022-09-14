@@ -1,7 +1,6 @@
 import { Environment } from '../types/devtools.types';
 import assert from 'assert';
 
-require('dotenv').config();
 const { I } = inject();
 
 /**

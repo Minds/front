@@ -14,11 +14,11 @@ namespace SearchSteps {
     I.pressKey('Enter');
   });
 
-  Then('I see search results', table => {
-    const tableByHeader = table.parse().hashes();
-    for (const row of tableByHeader) {
-      I.seeInCurrentUrl(row.searchPath);
-    }
-    I.clearField(searchPage.searchField);
+  Then('I see search results', () => {
+    I.seeElement(locate('m-discovery__search').withText('Top'));
+    I.seeElement(locate('m-discovery__search').withText('Latest'));
+    I.seeElement(locate('m-discovery__search').withText('Channels'));
+    I.seeElement(locate('m-discovery__search').withText('Groups'));
+    I.seeElement(searchPage.searchResults);
   });
 }
