@@ -1,9 +1,11 @@
+import ChannelPage from '../pages/channelPage';
 import CommonPage from '../pages/commonPage';
 
 namespace CommonSteps {
   const { I, loginPage, newsfeedPage } = inject();
 
   const commonPage = new CommonPage();
+  const channelPage = new ChannelPage();
 
   Given(
     'I am logged in',
@@ -24,6 +26,10 @@ namespace CommonSteps {
 
   Given('I am on the newsfeed', () => {
     I.amOnPage(newsfeedPage.newsfeedURI);
+  });
+
+  Given('I am on the {string} channel page', username => {
+    I.amOnPage('/' + username);
   });
 
   //
