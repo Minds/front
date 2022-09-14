@@ -42,6 +42,7 @@ import { ChannelAdminConfirmationComponent } from './actions/admin-confirmation/
 import { ExperimentsModule } from '../../experiments/experiments.module';
 import { ContentSettingsModule } from '../../content-settings/content-settings.module';
 import { MutualSubscriptionsComponent } from './mutual-subscriptions/mutual-subscriptions.component';
+import { ChannelActionsSuperminButtonComponent } from './actions/supermind/supermind-button.component';
 
 /**
  * Generally available components
@@ -83,6 +84,7 @@ const INTERNAL_COMPONENTS = [
   ChannelShopLazyComponent,
   //
   MutualSubscriptionsComponent,
+  ChannelActionsSuperminButtonComponent,
 ];
 
 /**
