@@ -437,4 +437,27 @@ describe('AdminBoosts', () => {
 
     expect(clientMock.post).not.toHaveBeenCalled();
   }));
+
+  it('should identify when there is more to load', fakeAsync(() => {
+    comp.load();
+    tick();
+    expect(comp.moreData).toBeTrue();
+  }));
+
+  it('should identify when there is no more to load', fakeAsync(() => {
+    comp.moreData = true;
+
+    clientMock.response[`api/v1/admin/boosts/newsfeed`] = {
+      status: 'success',
+      boosts: [],
+      count: 4,
+      'load-next': null,
+      newsfeed_count: 4,
+      content_count: 2,
+    };
+
+    comp.load();
+    tick();
+    expect(comp.moreData).toBeFalse();
+  }));
 });
