@@ -13,6 +13,10 @@ export class ActivityV2ExperimentService {
    * @returns { boolean } whether activity-v2 experiment is active.
    */
   public isActive(): boolean {
+    if (this.experiments.hasVariation('front-5333-persistent-feed', true)) {
+      return true;
+    }
+
     return this.experiments.hasVariation('front-5229-activities', true);
   }
 }

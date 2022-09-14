@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep m-activityV2 {
+    @include m-theme() {
+      margin-right: -1px;
+      border-right: 1px solid;
+      border-color: themed($m-borderColor--primary);
+    }
+  }
+
+  ::ng-deep .m-virtualScrollOverlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 19;
+  }
+}

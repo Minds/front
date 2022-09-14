@@ -255,6 +255,14 @@ post content to trigger upgrade modal -->
           <m-readMore
             [text]="bodyText"
             [targetLength]="isFixedHeight && !isStatus ? 180 : 280"
+            [disabled]="
+              service.displayOptions.isFeed && persistentFeedExperimentActive
+            "
+            (click)="
+              service.displayOptions.isFeed &&
+                persistentFeedExperimentActive &&
+                redirectToSinglePage()
+            "
           ></m-readMore>
         </p>
       </div>
