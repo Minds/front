@@ -1,4 +1,3 @@
-import { CommonPage } from '../pages/commonPage';
 import { SidebarComponent } from '../components/sidebarComponent';
 import { ComposerModal } from '../pages/composerModal';
 
