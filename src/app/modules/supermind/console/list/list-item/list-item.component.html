@@ -43,9 +43,16 @@
         }}</span>
       </span>
     </div>
-    <div class="m-supermindListItem__actionButtons">
+    <div
+      class="m-supermindListItem__actionButtons"
+      *ngIf="supermind.status === 1"
+    >
       <ng-container *ngIf="context === 'inbox'; else outboxButton">
-        <m-button class="m-supermindListItem__buttonSecondary" size="small"
+        <m-button
+          class="m-supermindListItem__buttonSecondary"
+          size="small"
+          (onAction)="onDecline($event)"
+          [saving]="inProgress$$ | async"
           ><ng-container i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__DECLINE_OPTION"
             >Decline</ng-container
           ></m-button
@@ -54,6 +61,8 @@
           class="m-supermindListItem__buttonPrimary"
           size="small"
           color="blue"
+          (onAction)="onAccept($event)"
+          [saving]="inProgress$$ | async"
           ><ng-container
             i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__ACCEPT_OFFER_OPTION"
             >Accept Offer</ng-container
@@ -64,6 +73,8 @@
         <m-button
           class="m-supermindListItem__buttonSecondary--fullWidth"
           size="small"
+          (onAction)="onCancel($event)"
+          [saving]="inProgress$$ | async"
           ><ng-container
             i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__CANCEL_OFFER_OPTION"
             >Cancel Offer</ng-container
