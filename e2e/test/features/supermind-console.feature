@@ -22,29 +22,29 @@ Feature: Supermind Console
     Then I should see "/wallet/cash/settings" in current URL
 
   Scenario: A supermind is created and declined
-    Given I am logged in as "supermind_sender"
+    Given I log in as "supermind_sender"
     And I have clicked on the sidebar composer button
     When I make a supermind offer
-    And I switch users to "playwright_tests_user"
+    And I log in as "playwright_tests_user"
     And I navigate via sidebar to the supermind console
     And I click "decline" on latest Supermind
     Then the supermind offer should be "declined"
 
   Scenario: A supermind is created and accepted
-    Given I am logged in as "supermind_sender"
+    Given I log in as "supermind_sender"
     And I have clicked on the sidebar composer button
     When I make a supermind offer
-    And I switch users to "playwright_tests_user"
+    And I log in as "playwright_tests_user"
     And I navigate via sidebar to the supermind console
     And I click "accept" on latest Supermind
     And I make a supermind reply
     Then the supermind offer should be "accepted"
 
   Scenario: An attempt is made to create an NSFW supermind reply
-    Given I am logged in as "supermind_sender"
+    Given I log in as "supermind_sender"
     And I have clicked on the sidebar composer button
     When I make a supermind offer
-    And I switch users to "playwright_tests_user"
+    And I log in as "playwright_tests_user"
     And I navigate via sidebar to the supermind console
     And I click "accept" on latest Supermind
     And I try to make an NSFW supermind reply

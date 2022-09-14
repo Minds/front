@@ -7,6 +7,11 @@ namespace CommonSteps {
   const commonPage = new CommonPage();
   const channelPage = new ChannelPage();
 
+  /**
+   * Log in with standard test user - will not re-log in if cookie is present.
+   * Do not to switch users.
+   * @return { Promise<void> }
+   */
   Given(
     'I am logged in',
     async (): Promise<void> => {
@@ -20,29 +25,12 @@ namespace CommonSteps {
     }
   );
 
-  Given(
-    'I am logged in as {string}',
-    async (username: string): Promise<void> => {
-      I.clearCookie();
-
-      let password;
-
-      switch (username) {
-        case process.env.SUPERMIND_SENDER_USERNAME:
-          password = process.env.SUPERMIND_SENDER_PASSWORD;
-          break;
-        default:
-          password = process.env.PLAYWRIGHT_PASSWORD;
-          break;
-      }
-
-      I.amOnPage(loginPage.loginURI);
-      loginPage.login(username, password);
-      I.seeCookie('minds_sess');
-    }
-  );
-
-  When('I switch users to {string}', (username: string) => {
+  /**
+   * Will clear cookies and login as the specified user - useful for user switching.
+   * @param { string } username - username to log in as.
+   * @return { void }
+   */
+  Given('I log in as {string}', (username: string): void => {
     I.clearCookie();
 
     let password;
