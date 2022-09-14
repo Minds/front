@@ -27,6 +27,7 @@ import { first, map, distinctUntilChanged } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
 import { UploaderService } from '../../services/uploader.service';
+import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -116,6 +117,14 @@ export class BaseComponent implements AfterViewInit {
    */
   ngAfterViewInit(): void {
     this.popup.setUp(this.popupComponent, this.injector);
+
+    /**
+     * When we initialize, if we already have a supermind request payload, open the
+     * supermind popup
+     */
+    if (this.service.supermindRequest$.getValue()) {
+      this.displaySupermindRequestPopup();
+    }
   }
 
   /**
@@ -259,6 +268,16 @@ export class BaseComponent implements AfterViewInit {
     }
 
     this.detectChanges();
+  }
+
+  /**
+   * Will launch the supermind request popup
+   */
+  async displaySupermindRequestPopup() {
+    await this.popup
+      .create(ComposerSupermindComponent)
+      .present()
+      .toPromise(/* Promise is needed to boot-up the Observable */);
   }
 
   /**

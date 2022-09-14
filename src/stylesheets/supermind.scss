@@ -1,3 +1,32 @@
+$supermindGradientRotation: 96deg;
+
+$supermindColor1Hex: #0038ff;
+$supermindColor2Hex: #6c37e7;
+$supermindColor3Hex: #ac0091;
+
+$supermindColor1Pct: 3.14%;
+$supermindColor2Pct: 56.68%;
+$supermindColor3Pct: 112.49%;
+
+$supermindLightenPct: 5%;
+
+/**
+ * The reusable value for the supermind gradient
+ */
+$supermindGradient: linear-gradient(
+  $supermindGradientRotation,
+  $supermindColor1Hex $supermindColor1Pct,
+  $supermindColor2Hex $supermindColor2Pct,
+  $supermindColor3Hex $supermindColor3Pct
+);
+
+$supermindLightenedGradient: linear-gradient(
+  $supermindGradientRotation,
+  lighten($supermindColor1Hex, $supermindLightenPct) $supermindColor1Pct,
+  lighten($supermindColor2Hex, $supermindLightenPct) $supermindColor2Pct,
+  lighten($supermindColor3Hex, $supermindLightenPct) $supermindColor3Pct
+);
+
 /**
 * USAGE
 * 1. To apply gradient as background color,
@@ -8,10 +37,5 @@
 * the standard background color to child element.
 */
 @mixin supermindGradient {
-  background: linear-gradient(
-    96deg,
-    #0038ff 3.14%,
-    #6c37e7 56.68%,
-    #ac0091 112.49%
-  );
+  background: $supermindGradient;
 }

@@ -14,6 +14,7 @@ import { UserAvatarService } from '../../../common/services/user-avatar.service'
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { Router } from '@angular/router';
+import { RegexService } from '../../../common/services/regex.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 
 export type Source = 'auth-modal' | 'other' | null;
@@ -51,11 +52,6 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
 
   form: FormGroup;
 
-  // Taken from advice in https://stackoverflow.com/a/1373724
-  private emailRegex: RegExp = new RegExp(
-    "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-  );
-
   constructor(
     public session: Session,
     public client: Client,
@@ -64,7 +60,8 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     private userAvatarService: UserAvatarService,
     private featuresService: FeaturesService,
     private authModal: AuthModalService,
-    private router: Router
+    private router: Router,
+    private regex: RegexService
   ) {
     super();
     this.form = fb.group({
@@ -104,7 +101,7 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
       return;
     }
 
-    if (this.emailRegex.test(username)) {
+    if (this.regex.getRegex('mail').test(username)) {
       if (this.showInlineErrors) {
         this.usernameError = 'LoginException::EmailAddress';
       } else {

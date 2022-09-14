@@ -92,3 +92,9 @@ Feature: supermind
     And I accept the supermind terms
     And I click the supermind creator save button
     Then I do not see the monetize icon on the composer toolbar
+
+  Scenario: creating a supermind from a channel page
+    Given I am logged in
+    And I am on the 'minds' channel page
+    When I click on the channel supermind button
+    Then I should see prefilled supermind details in the composer

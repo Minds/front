@@ -18,6 +18,7 @@ import { InteractionsModalService } from '../../interactions-modal/interactions-
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { CounterChangeFadeIn } from '../../../../animations';
+import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -46,6 +47,7 @@ export class ActivityV2ToolbarComponent {
     private boostModal: BoostModalLazyService,
     private features: FeaturesService,
     private interactionsModalService: InteractionsModalService,
+    private persistentFeedExperiment: PersistentFeedExperimentService,
     private cd: ChangeDetectorRef
   ) {}
 

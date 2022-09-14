@@ -24,6 +24,7 @@ import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/mu
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Router } from '@angular/router';
+import { RegexService } from '../../../common/services/regex.service';
 
 describe('LoginForm', () => {
   let comp: LoginForm;
@@ -121,6 +122,7 @@ describe('LoginForm', () => {
               },
             }),
           },
+          RegexService,
         ],
       }).compileComponents(); // compile template and css
     })
@@ -288,6 +290,7 @@ describe('LoginForm', () => {
   it('should spawn error message when an email is entered as a username', fakeAsync(() => {
     username.nativeElement.value = 'test@minds.com';
     login({ status: 'error' }, 'test@minds.com');
+    expect(comp.errorMessage).toBe('LoginException::EmailAddress');
     expect(errorMessage.nativeElement.hidden).toBeFalsy();
   }));
 
