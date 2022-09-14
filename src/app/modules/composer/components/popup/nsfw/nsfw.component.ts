@@ -72,7 +72,10 @@ export class NsfwComponent {
    * Emits the internal state to the composer service and attempts to dismiss the modal
    */
   save() {
-    if (!!this.service.supermindRequest$.getValue()) {
+    if (
+      !!this.service.supermindRequest$.getValue() ||
+      !!this.service.supermindReply$.getValue()
+    ) {
       this.toasterService.error(
         'You may not create an NSFW supermind at this time.'
       );
