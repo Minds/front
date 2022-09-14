@@ -35,7 +35,7 @@
       >
       <m-feedTypePopover [type]="algorithm"></m-feedTypePopover>
     </m-feedHeader>
-    <div class="minds-list">
+    <div *ngIf="!persistentFeedExperimentActive" class="minds-list">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
           <m-feedNotice__outlet
@@ -173,6 +173,13 @@
         <ng-template #discoveryFallback></ng-template>
       </ng-container>
     </div>
+    <ng-container *ngIf="persistentFeedExperimentActive">
+      <!-- TODO: prepended items -->
+      <!-- TODO: boost rotator -->
+      <!-- TODO: emptyState channel recommendation -->
+      <m-feed [feedService]="feedService"></m-feed>
+      <!-- TODO: latest and discovery fallbacks -->
+    </ng-container>
   </ng-container>
 </div>
 

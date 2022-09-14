@@ -1,6 +1,6 @@
-import { DismissalService } from './../../../common/services/dismissal.service';
-import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
+import { isPlatformServer } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Inject,
@@ -16,37 +16,74 @@ import {
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
-import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
 import {
   ActivatedRoute,
   NavigationEnd,
   Router,
   RouterEvent,
 } from '@angular/router';
-import { Client, Upload } from '../../../services/api';
-import { Navigation as NavigationService } from '../../../services/navigation';
-import { ContextService } from '../../../services/context.service';
-import { FeedsService } from '../../../common/services/feeds.service';
-import { NewsfeedService } from '../services/newsfeed.service';
-import { isPlatformServer } from '@angular/common';
-import { ComposerComponent } from '../../composer/composer.component';
-import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
+import {
+  FeedsService,
+  InjectItem,
+} from '../../../common/services/feeds.service';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { Client, Upload } from '../../../services/api';
+import { ContextService } from '../../../services/context.service';
+import { Navigation as NavigationService } from '../../../services/navigation';
+import { ComposerComponent } from '../../composer/composer.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
+import { FeedItemType } from '../feed/feed.component';
+import { NewsfeedService } from '../services/newsfeed.service';
+import { DismissalService } from './../../../common/services/dismissal.service';
+import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 
 export enum FeedAlgorithm {
   top = 'top',
   latest = 'latest',
 }
 
-@Injectable()
-export class LatestFeedService extends FeedsService {}
+const commonInjectItems: InjectItem[] = [
+  {
+    type: FeedItemType.feedNotice,
+    indexes: i => i > 0 && i % 6 === 0,
+  },
+  {
+    type: FeedItemType.featuredContent,
+    indexes: i => (i > 0 && i % 5 === 0) || i === 3,
+  },
+  {
+    type: FeedItemType.channelRecommendations,
+    indexes: (i, feedLength) =>
+      feedLength <= 3 ? i === feedLength - 1 : i === 2,
+  },
+];
 
 @Injectable()
-export class TopFeedService extends FeedsService {}
+export class LatestFeedService extends FeedsService {
+  endpoint = 'api/v2/feeds/subscribed/activities';
+  countEndpoint = 'api/v3/newsfeed/subscribed/latest/count';
+  limit = new BehaviorSubject(12);
+  injectItems = [
+    ...commonInjectItems,
+    {
+      type: FeedItemType.topHighlights,
+      indexes: [3],
+    },
+  ];
+}
+
+@Injectable()
+export class TopFeedService extends FeedsService {
+  endpoint = 'api/v3/newsfeed/feed/unseen-top';
+  limit = new BehaviorSubject(12);
+  injectItems = commonInjectItems;
+}
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -108,6 +145,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
   newsfeedEndText = $localize`:@@COMMON__FEED_END:End of your newsfeed`;
 
+  public persistentFeedExperimentActive: boolean;
+
   constructor(
     public client: Client,
     public upload: Upload,
@@ -125,7 +164,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private experiments: ExperimentsService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private dismissal: DismissalService
+    private dismissal: DismissalService,
+    public changeDetectorRef: ChangeDetectorRef,
+    persistentFeedExperiment: PersistentFeedExperimentService
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -133,14 +174,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (storedfeedAlgorithm) {
       this.algorithm = storedfeedAlgorithm;
     }
-
-    this.latestFeedService
-      .setEndpoint(`api/v2/feeds/subscribed/activities`)
-      .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
-      .setLimit(12);
-    this.topFeedService
-      .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
-      .setLimit(12);
+    this.persistentFeedExperimentActive = persistentFeedExperiment.isActive();
+    if (this.persistentFeedExperimentActive) {
+      this.topFeedService.setCachingEnabled(true);
+      this.latestFeedService.setCachingEnabled(true);
+    }
   }
 
   ngOnInit() {
@@ -247,12 +285,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     try {
       switch (this.algorithm) {
         case 'top':
-          this.topFeedService.clear(true);
           await this.topFeedService.setLimit(12).fetch(true);
           break;
         case 'latest':
-          this.latestFeedService.clear(true);
-          this.topFeedService.clear(true);
           this.prepended = [];
           await Promise.all([
             this.topFeedService.setLimit(3).fetch(true),
@@ -328,6 +363,15 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   changeFeedAlgorithm(algo: FeedAlgorithm) {
     this.algorithm = algo;
     this.feedAlgorithmHistory.lastAlorithm = algo;
+
+    switch (algo) {
+      case 'top':
+        this.topFeedService.clear(true);
+        break;
+      case 'latest':
+        this.latestFeedService.clear(true);
+        this.topFeedService.clear(true);
+    }
   }
 
   /**

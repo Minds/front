@@ -193,7 +193,7 @@ minds-topbar {
 
 .minds-block {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
 
   .minds-avatar {
     margin-right: $minds-margin;

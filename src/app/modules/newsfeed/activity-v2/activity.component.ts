@@ -34,6 +34,7 @@ import { IntersectionObserverService } from '../../../common/services/intercepti
 import { debounceTime } from 'rxjs/operators';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -147,6 +148,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     private configs: ConfigsService,
     private interceptionObserver: IntersectionObserverService,
     private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
+    private persistentFeedExperiment: PersistentFeedExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -281,4 +283,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
       top: window.pageYOffset + (newHeight - oldHeight),
     });
   }
+
+  persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
 }

@@ -49,6 +49,7 @@ import {
 import { FeaturesService } from '../../../../services/features.service';
 import { ActivityV2ModalCreatorService } from '../modal/modal-creator.service';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -247,6 +248,7 @@ export class ActivityV2ContentComponent
     private features: FeaturesService,
     private injector: Injector,
     private activityModalCreator: ActivityV2ModalCreatorService,
+    private persistentFeedExperiment: PersistentFeedExperimentService,
     private cd: ChangeDetectorRef
   ) {
     this.siteUrl = configs.get('site_url');
@@ -732,6 +734,8 @@ export class ActivityV2ContentComponent
   }
 
   onImageError(e: Event): void {}
+
+  persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
 
   detectChanges(): void {
     this.cd.markForCheck();
