@@ -34,7 +34,6 @@ import { IntersectionObserverService } from '../../../common/services/intercepti
 import { debounceTime } from 'rxjs/operators';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
-import { Router } from '@angular/router';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 /**
@@ -45,7 +44,7 @@ import { PersistentFeedExperimentService } from '../../experiments/sub-services/
 @Component({
   selector: 'm-activityV2',
   templateUrl: 'activity.component.html',
-  styleUrls: ['activity.component.ng.scss', 'activity-hover.component.ng.scss'],
+  styleUrls: ['activity.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     ActivityService,
@@ -124,30 +123,19 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--isSingle')
   isSingle: boolean;
 
-  @HostBinding('class.m-activity--isInset')
-  isInset: boolean;
+  @HostBinding('style.height')
+  heightPx: string;
 
   @HostBinding('class.m-activity--modal')
   isModal: boolean = false;
 
-  @HostBinding('class.m-activity--commentsExpanded')
-  commentsExpanded: boolean = false;
-
-  @HostBinding('style.height')
-  heightPx: string;
-
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
   private interceptionObserverSubscription: Subscription;
-  canonicalUrlSubscription: Subscription;
-
-  canonicalUrl: string;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
   avatarUrl: string;
-
-  pointerdownMs: number;
 
   constructor(
     public service: ActivityService,
@@ -160,7 +148,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     private configs: ConfigsService,
     private interceptionObserver: IntersectionObserverService,
     private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
-    public router: Router,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -174,7 +161,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
     this.isModal = this.service.displayOptions.isModal;
     this.isSingle = this.service.displayOptions.isSingle;
-    this.isInset = this.service.displayOptions.isInset;
 
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
@@ -193,12 +179,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
-
-    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
-      canonicalUrl => {
-        this.canonicalUrl = canonicalUrl;
-      }
-    );
   }
 
   ngOnDestroy() {
@@ -210,7 +190,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     ) {
       this.interceptionObserverSubscription.unsubscribe();
     }
-    this.canonicalUrlSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -303,81 +282,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     window.scrollTo({
       top: window.pageYOffset + (newHeight - oldHeight),
     });
-  }
-
-  /**
-   * Keep track of whether comments are expanded (in feeds only)
-   */
-  onCommentsExpandChange(expanded): void {
-    this.commentsExpanded = expanded;
-  }
-
-  // Capture pointerdown time so we can determine if longpress
-  onActivityPointerdown($event) {
-    this.pointerdownMs = Date.now();
-  }
-
-  /**
-   * Navigate to single activity page,
-   * but only if you haven't clicked another link inside the post
-   * or a dropdown menu item
-   * (not used for single activity page or activity modal)
-   *
-   * Ignore if you clicked in comments sections
-   * while comments are expanded
-   * @param $event
-   *
-   * TODO: remove duplication with quote component
-   */
-  onActivityPointerup($event, clickedComments?: boolean): void {
-    const target = $event.target;
-
-    // Only check for longpress if a pointerdown event occured
-    let longPress = false;
-    if (this.pointerdownMs && Date.now() - this.pointerdownMs > 1000) {
-      longPress = true;
-    }
-    const ignoredContext = this.isSingle || this.isModal || this.isInset;
-    const clickedExpandedComments = !!(
-      clickedComments && this.commentsExpanded
-    );
-
-    if (longPress || ignoredContext || clickedExpandedComments) {
-      return;
-    }
-
-    const clickedAnchor = !!target.closest('a');
-    const clickedDropdownTrigger = this.descendsFromClass(
-      target,
-      'm-dropdownMenu__trigger'
-    );
-    const clickedDropdownItem = this.descendsFromClass(
-      target,
-      'm-dropdownMenu__item'
-    );
-
-    if (clickedAnchor || clickedDropdownTrigger) {
-      // If link or menu trigger, don't redirect
-      $event.stopPropagation();
-      return;
-    } else if (clickedDropdownItem) {
-      // if clicked on dropdown item, ignore
-      return;
-    }
-
-    // If middle click, open in new tab instead
-    if ($event.button == 1) {
-      window.open(this.canonicalUrl, '_blank');
-    } else {
-      // Everything else go to single page
-      this.router.navigateByUrl(this.canonicalUrl);
-    }
-  }
-
-  descendsFromClass(node, className) {
-    // Cycle through parents until we find a match
-    while ((node = node.parentElement) && !node.classList.contains(className));
-    return !!node;
   }
 
   persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();

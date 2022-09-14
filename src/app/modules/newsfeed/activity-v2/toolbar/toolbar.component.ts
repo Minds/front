@@ -1,10 +1,8 @@
 import {
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   HostBinding,
   Injector,
-  Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -41,9 +39,6 @@ export class ActivityV2ToolbarComponent {
   entity: ActivityEntity;
   allowReminds: boolean = true;
 
-  /** Used only for feeds */
-  @Output() onExpandChange: EventEmitter<Boolean> = new EventEmitter();
-
   constructor(
     public service: ActivityService,
     public session: Session,
@@ -75,30 +70,17 @@ export class ActivityV2ToolbarComponent {
     this.paywallBadgeSubscription.unsubscribe();
   }
 
-  toggleComments($event): void {
-    $event.stopPropagation();
-
-    if (
-      this.service.displayOptions.fixedHeight ||
-      (this.service.displayOptions.isFeed &&
-        this.persistentFeedExperiment.isActive())
-    ) {
+  toggleComments(): void {
+    if (this.service.displayOptions.fixedHeight) {
       this.router.navigate([`/newsfeed/${this.entity.guid}`]);
       return;
     }
 
     this.service.displayOptions.showOnlyCommentsToggle = !this.service
       .displayOptions.showOnlyCommentsToggle;
-
-    /** Emit whether the comments are expanded */
-    this.onExpandChange.emit(
-      !this.service.displayOptions.showOnlyCommentsToggle
-    );
   }
 
   async openBoostModal(e: MouseEvent): Promise<void> {
-    e.stopPropagation();
-
     try {
       await this.boostModal.open(this.entity);
       return;

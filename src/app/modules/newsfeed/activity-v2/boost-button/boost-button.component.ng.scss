@@ -1,18 +1,11 @@
 @import 'defaults.scss';
 
 :host {
-  @include unselectable;
-
-  button {
-    @include m-theme() {
-      background-color: transparent;
-    }
-    span {
-      font-size: 1rem;
-      padding-left: 0.25rem;
-      vertical-align: middle;
-      letter-spacing: normal;
-    }
+  button span {
+    font-size: 1rem;
+    padding-left: 0.25rem;
+    vertical-align: middle;
+    letter-spacing: normal;
   }
 
   .m-boostButton__tooltip .m-tooltip--bubble {

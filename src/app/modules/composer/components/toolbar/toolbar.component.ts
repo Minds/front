@@ -46,7 +46,9 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 import isMobile from '../../../../helpers/is-mobile';
 import { UploaderService } from '../../services/uploader.service';
+import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
+import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -121,6 +123,20 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   canSchedule$ = this.service.canSchedule$;
 
   /**
+   * True/False if supermind request is inprogress
+   */
+  isSupermindRequest$ = this.service.isSupermindRequest$;
+
+  /**
+   * Flag as to if we show supermind create button
+   */
+  canCreateSupermindRequest$ = this.service.canCreateSupermindRequest$.pipe(
+    map(canCreateSupermindRequest => {
+      return this.supermindExperiment.isActive() && canCreateSupermindRequest;
+    })
+  );
+
+  /**
    * Constructor
    * @param service
    * @param popup
@@ -134,7 +150,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected toaster: ToasterService,
     protected uploaderService: UploaderService,
     @Inject(PLATFORM_ID) protected platformId: Object,
-    protected mediaQuotesExperiment: MediaQuotesExperimentService
+    protected mediaQuotesExperiment: MediaQuotesExperimentService,
+    protected supermindExperiment: SupermindExperimentService
   ) {}
 
   /**
@@ -353,6 +370,17 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   async onTagsClick($event?: MouseEvent): Promise<void> {
     await this.popup
       .create(TagsComponent)
+      .present()
+      .toPromise(/* Promise is needed to boot-up the Observable */);
+  }
+
+  /**
+   * Shows supermind popup
+   * @param $event
+   */
+  async onSupermindClick($event?: MouseEvent): Promise<void> {
+    await this.popup
+      .create(ComposerSupermindComponent)
       .present()
       .toPromise(/* Promise is needed to boot-up the Observable */);
   }

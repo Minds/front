@@ -1,9 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { truncate } from 'fs';
+import { Subscription } from 'rxjs';
+import getActivityContentType from '../../../helpers/activity-content-type';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 import { PaywallType } from '../../../modules/wire/lock-screen/wire-lock-screen.component';
 import { ConfigsService } from '../../services/configs.service';
 
+/**
+ * Determine whether to display a badge for various paywalls
+ * (includes minds+, custom paywalls and superminds)
+ */
 @Component({
   selector: 'm-paywallBadge',
   templateUrl: './paywall-badge.component.html',
@@ -23,12 +30,16 @@ export class PaywallBadgeComponent implements OnInit {
   @Input() showTierName: boolean = true;
 
   hasPaywall: boolean = false;
+  @Input() isSupermindReply: boolean = false;
+
   paywallType: PaywallType = 'custom';
   tierName: string;
   init: boolean = false;
   activityV2Feature: boolean = false;
 
   readonly plusSupportTierUrn: string;
+
+  subscriptions: Subscription[];
 
   constructor(
     private config: ConfigsService,
@@ -39,15 +50,21 @@ export class PaywallBadgeComponent implements OnInit {
 
   ngOnInit(): void {
     this.activityV2Feature = this.activityV2Experiment.isActive();
+
+    // Determine if we should show the supermind badge
+    if (this._entity) {
+      this.isSupermindReply =
+        getActivityContentType(this._entity, false, false, true) ===
+        'supermind_reply';
+    }
   }
 
   load(): void {
-    // this.init = false;
-
     if (!this._entity) {
       return;
     }
 
+    // Use the paywall status of the quoted post, not the quote wrapper
     if (this._entity.remind_object) {
       this._entity = this._entity.remind_object;
     }

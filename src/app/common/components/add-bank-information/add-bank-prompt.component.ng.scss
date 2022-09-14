@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  .m-addBankPrompt__container {
+    padding: $spacing4;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+    p {
+      margin: 0;
+
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    .m-addBankPrompt__link {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-blue-dark);
+        }
+      }
+    }
+  }
+}

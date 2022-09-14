@@ -163,6 +163,11 @@ export class ActivityV2ContentComponent
     return this.service.displayOptions.minimalMode;
   }
 
+  @HostBinding('class.m-activityContent--sidebarMode')
+  get sidebarMode(): boolean {
+    return this.service.displayOptions.sidebarMode;
+  }
+
   @HostBinding('class.m-activityContent--modal--left')
   get mediaOnly(): boolean {
     return !this.hideMedia && this.hideText;
@@ -208,6 +213,9 @@ export class ActivityV2ContentComponent
       this.entity.custom_type == 'batch' && this.entity.custom_data.length > 1
     );
   }
+
+  @HostBinding('class.m-activityContent--supermindReply')
+  isSupermindReply: boolean;
 
   @HostBinding('class.m-activityContent--status')
   get isStatus(): boolean {
@@ -309,6 +317,11 @@ export class ActivityV2ContentComponent
       })
     );
     this.subscriptions.push(
+      this.service.isSupermindReply$.subscribe(is => {
+        this.isSupermindReply = is;
+      })
+    );
+    this.subscriptions.push(
       this.service.activeMultiImageIndex$.subscribe((i: number) => {
         if (this.isMultiImage) {
           this.activeMultiImageIndex = i;
@@ -378,7 +391,7 @@ export class ActivityV2ContentComponent
   }
 
   get videoGuid(): string {
-    return this.entity.entity_guid;
+    return this.entity.entity_guid || this.entity.custom_data.guid;
   }
 
   get imageGuid(): string {
@@ -484,9 +497,6 @@ export class ActivityV2ContentComponent
     return !this.hideText && this.service.displayOptions.permalinkBelowContent;
   }
 
-  get sidebarMode(): boolean {
-    return this.service.displayOptions.sidebarMode;
-  }
   ////////////////////////////////////////////////////////////////////////////
 
   calculateFixedContentHeight(): void {
