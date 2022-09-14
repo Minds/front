@@ -17,6 +17,8 @@ import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.se
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
+import { Router } from '@angular/router';
+import { SupermindExperimentService } from '../../../modules/experiments/sub-services/supermind-experiment.service';
 
 @Component({
   selector: 'm-sidebarMore',
@@ -59,7 +61,9 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     private earnModalService: EarnModalService,
     private boostModalService: BoostModalLazyService,
     private sidebarNavigationService: SidebarNavigationService,
-    private helpdeskRedirectService: HelpdeskRedirectService
+    private helpdeskRedirectService: HelpdeskRedirectService,
+    private supermindExperiment: SupermindExperimentService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -100,6 +104,22 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
 
   async openBoostModal() {
     await this.boostModalService.open(this.session.getLoggedInUser());
+  }
+
+  /**
+   * Open supermind console.
+   * @returns { void }
+   */
+  public openSupermindConsole(): void {
+    this.router.navigate(['/supermind/inbox']);
+  }
+
+  /**
+   * Whether Supermind option should be shown.
+   * @return { boolean }
+   */
+  public shouldShowSupermindOption(): boolean {
+    return this.supermindExperiment.isActive();
   }
 
   detectChanges(): void {

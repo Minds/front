@@ -41,4 +41,8 @@ namespace CommonSteps {
       I.seeElement(`${commonPage.toasterTypePrefix}${toasterType}`);
     }
   );
+
+  Then('I should see {string} in current URL', (path: string) => {
+    I.seeInCurrentUrl(path);
+  });
 }
