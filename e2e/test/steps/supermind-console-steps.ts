@@ -1,4 +1,5 @@
-import SupermindConsolePage from '../pages/supermindConsole';
+import { ComposerModal } from '../pages/composerModal';
+import SupermindConsolePage from '../pages/supermindConsolePage';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
@@ -6,6 +7,7 @@ import {
 
 namespace SupermindConsoleSteps {
   const supermindConsolePage = new SupermindConsolePage();
+  const composerModalPage = new ComposerModal();
 
   Given(
     'I am on the Supermind Console {string} page',
@@ -36,4 +38,77 @@ namespace SupermindConsoleSteps {
       }
     }
   );
+
+  When('I make a supermind offer', () => {
+    composerModalPage.shouldHaveSupermindBadge(false);
+    composerModalPage.shouldHaveEllipsisMenu(true);
+    composerModalPage.typeInTextArea('hello');
+    composerModalPage.clickSupermindIcon();
+    composerModalPage.clickSupermindPanelTab('Tokens');
+    composerModalPage.addSupermindTarget(process.env.PLAYWRIGHT_USERNAME ?? '');
+    composerModalPage.enterSupermindAmount(10);
+    composerModalPage.acceptSupermindTerms();
+    composerModalPage.clickSupermindSave();
+    composerModalPage.clickPost();
+  });
+
+  When('I try to make an NSFW supermind offer', () => {
+    composerModalPage.shouldHaveSupermindBadge(false);
+    composerModalPage.shouldHaveEllipsisMenu(true);
+    composerModalPage.typeInTextArea('hello');
+    composerModalPage.clickSupermindIcon();
+    composerModalPage.clickSupermindPanelTab('Tokens');
+    composerModalPage.addSupermindTarget(process.env.PLAYWRIGHT_USERNAME ?? '');
+    composerModalPage.enterSupermindAmount(10);
+    composerModalPage.acceptSupermindTerms();
+    composerModalPage.clickSupermindSave();
+
+    composerModalPage.clickNsfwOption();
+    composerModalPage.clickNsfwSaveOption();
+  });
+
+  When('I make a supermind reply', () => {
+    composerModalPage.shouldHaveSupermindBadge(true);
+    composerModalPage.shouldHaveEllipsisMenu(false);
+    composerModalPage.typeInTextArea('hello');
+    composerModalPage.clickPost();
+  });
+
+  When('I try to make an NSFW supermind reply', () => {
+    composerModalPage.shouldHaveSupermindBadge(true);
+    composerModalPage.shouldHaveEllipsisMenu(false);
+    composerModalPage.typeInTextArea('hello');
+
+    composerModalPage.clickNsfwOption();
+    composerModalPage.clickNsfwSaveOption();
+  });
+
+  When('I navigate via sidebar to the supermind console', () => {
+    supermindConsolePage.navigateToViaSidebar();
+    supermindConsolePage.hasTabSelected('Inbound');
+  });
+
+  When('I click {string} on latest Supermind', (buttonType: string) => {
+    switch (buttonType) {
+      case 'decline':
+        supermindConsolePage.clickDecline();
+        break;
+      case 'cancel':
+        supermindConsolePage.clickCancelOffer();
+        break;
+      case 'accept':
+        supermindConsolePage.clickAccept();
+        break;
+    }
+  });
+
+  Then('the supermind offer should be {string}', (state: string) => {
+    /**
+     * TODO: When we build out different states, we need to test states
+     * - 'declined'
+     * - 'cancelled'
+     * - 'accepted'
+     */
+    supermindConsolePage.checkSupermindNotActionable();
+  });
 }
