@@ -23,7 +23,6 @@
   // *********************************
 
   position: relative;
-  @include unselectable;
 
   ::ng-deep .m-postMenu__button {
     padding-right: 0;

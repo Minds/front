@@ -9,9 +9,9 @@ import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { ActivityService } from '../activity/activity.service';
 import { ActivityV2Component } from './activity.component';
 import { MockService } from '../../../utils/mock';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
-import { RouterTestingModule } from '@angular/router/testing';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 describe('ActivityV2Component', () => {
   let comp: ActivityV2Component;
@@ -21,7 +21,6 @@ describe('ActivityV2Component', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [ActivityV2Component],
-        imports: [RouterTestingModule],
         providers: [
           { provide: ElementRef, useValue: MockService(ElementRef) },
           {
@@ -40,22 +39,19 @@ describe('ActivityV2Component', () => {
             provide: EntityMetricsSocketsExperimentService,
             useValue: MockService(EntityMetricsSocketsExperimentService),
           },
+          {
+            provide: PersistentFeedExperimentService,
+            useValue: MockService(PersistentFeedExperimentService),
+          },
         ],
       })
         .overrideProvider(ActivityService, {
           useValue: MockService(ActivityService, {
-            has: [
-              'entity$',
-              'height$',
-              'isLoggedIn$',
-              'canonicalUrl$',
-              'displayOptions',
-            ],
+            has: ['entity$', 'height$', 'isLoggedIn$', 'displayOptions'],
             props: {
               entity$: { get: () => new BehaviorSubject<any>(null) },
               height$: { get: () => new BehaviorSubject<any>(null) },
               isLoggedIn$: { get: () => new BehaviorSubject<any>(null) },
-              canonicalUrl$: { get: () => new Observable<any>(null) },
               displayOptions: {
                 autoplayVideo: true,
                 showOwnerBlock: true,

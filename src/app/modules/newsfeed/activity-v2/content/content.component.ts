@@ -49,6 +49,7 @@ import {
 import { FeaturesService } from '../../../../services/features.service';
 import { ActivityV2ModalCreatorService } from '../modal/modal-creator.service';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -162,6 +163,11 @@ export class ActivityV2ContentComponent
     return this.service.displayOptions.minimalMode;
   }
 
+  @HostBinding('class.m-activityContent--sidebarMode')
+  get sidebarMode(): boolean {
+    return this.service.displayOptions.sidebarMode;
+  }
+
   @HostBinding('class.m-activityContent--modal--left')
   get mediaOnly(): boolean {
     return !this.hideMedia && this.hideText;
@@ -208,6 +214,9 @@ export class ActivityV2ContentComponent
     );
   }
 
+  @HostBinding('class.m-activityContent--supermindReply')
+  isSupermindReply: boolean;
+
   @HostBinding('class.m-activityContent--status')
   get isStatus(): boolean {
     return !(
@@ -239,6 +248,7 @@ export class ActivityV2ContentComponent
     private features: FeaturesService,
     private injector: Injector,
     private activityModalCreator: ActivityV2ModalCreatorService,
+    private persistentFeedExperiment: PersistentFeedExperimentService,
     private cd: ChangeDetectorRef
   ) {
     this.siteUrl = configs.get('site_url');
@@ -304,6 +314,11 @@ export class ActivityV2ContentComponent
     this.subscriptions.push(
       this.service.isQuote$.subscribe(is => {
         this.isQuote = is;
+      })
+    );
+    this.subscriptions.push(
+      this.service.isSupermindReply$.subscribe(is => {
+        this.isSupermindReply = is;
       })
     );
     this.subscriptions.push(
@@ -376,7 +391,7 @@ export class ActivityV2ContentComponent
   }
 
   get videoGuid(): string {
-    return this.entity.entity_guid;
+    return this.entity.entity_guid || this.entity.custom_data.guid;
   }
 
   get imageGuid(): string {
@@ -482,9 +497,6 @@ export class ActivityV2ContentComponent
     return !this.hideText && this.service.displayOptions.permalinkBelowContent;
   }
 
-  get sidebarMode(): boolean {
-    return this.service.displayOptions.sidebarMode;
-  }
   ////////////////////////////////////////////////////////////////////////////
 
   calculateFixedContentHeight(): void {
@@ -722,6 +734,8 @@ export class ActivityV2ContentComponent
   }
 
   onImageError(e: Event): void {}
+
+  persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
 
   detectChanges(): void {
     this.cd.markForCheck();

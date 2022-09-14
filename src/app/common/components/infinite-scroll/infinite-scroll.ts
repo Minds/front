@@ -50,7 +50,7 @@ import { AnalyticsService } from './../../../services/analytics';
   styleUrls: ['./infinite-scroll.ng.scss'],
 })
 export class InfiniteScroll {
-  @Input() on: any;
+  @Input() enabled: boolean = true;
   @Input() scrollSource: any; // if not provided, it defaults to window
   @Input() iconOnly: boolean = false;
 
@@ -90,6 +90,10 @@ export class InfiniteScroll {
   }
 
   init() {
+    if (!this.enabled) {
+      return;
+    }
+
     if (!this.scrollSource) {
       this.scrollSource = document;
     }

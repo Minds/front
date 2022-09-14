@@ -1,12 +1,12 @@
 import { Environment } from '../types/devtools.types';
-import assert from 'assert';
+import assert = require('assert');
 
 const { I } = inject();
 
 /**
  * Devtools page (/devtools) containing environment selector.
  */
-class DevtoolsPage {
+export class DevtoolsPage {
   /** @type { string }  - uri of the page */
   public uri: string = '/devtools';
 
@@ -91,5 +91,3 @@ class DevtoolsPage {
     return '.m-environmentFlag__flag';
   }
 }
-
-export = DevtoolsPage;

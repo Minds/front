@@ -1,0 +1,38 @@
+<input
+  [ngModel]="username$$ | async"
+  (ngModelChange)="setUsername($event)"
+  type="text"
+  (focus)="onInputFocus($event)"
+  (blur)="onInputBlur($event)"
+  [placeholder]="placeholder"
+  #input
+/>
+<ul
+  [hidden]="!(showPopout$ | async)"
+  class="m-formInputAutocompleteUserInput__popout"
+  #matchesPopout
+  @fastFade
+>
+  <li
+    *ngFor="let user of matchedUsersList$ | async"
+    class="m-formInputAutocompleteUserInput__userItem"
+    [hidden]="inProgress$$ | async"
+    @fastFade
+    (click)="onUserSelect(user)"
+  >
+    <img
+      class="m-formInputAutocompleteUserInputUserItem__avatar"
+      src="{{ cdnUrl }}icon/{{ user.guid }}/small/{{ user.icontime }}"
+    />
+    <span class="m-formInputAutocompleteUserInputUserItem__name">{{
+      user.name
+    }}</span>
+    <span class="m-formInputAutocompleteUserInputUserItem__username"
+      >&nbsp;·&nbsp;@{{ user.username }}</span
+    >
+  </li>
+
+  <li *ngIf="inProgress$$ | async">
+    <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+  </li>
+</ul>

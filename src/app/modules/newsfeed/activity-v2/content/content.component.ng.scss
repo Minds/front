@@ -61,23 +61,11 @@
 
       @include m-theme() {
         background: linear-gradient(
-          to bottom,
+          180deg,
           rgba(themed($m-bgColor--primary), 0) 0%,
           rgba(themed($m-bgColor--primary), 0.95) 64.58%,
           themed($m-bgColor--primary) 100%
         );
-      }
-
-      // Note: the opacity changes when hovering over post
-      // see activity-hover stylesheet
-      .m-activityContent__boostRotatorFadeout--hover {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-
-        opacity: 0;
       }
     }
   }
@@ -111,16 +99,6 @@
       }
     }
 
-    &.m-activityContent--quote {
-      padding: 0;
-      .m-activityContent__textWrapper {
-        @include borderBottom;
-        .m-activityContentText__innerWrapper {
-          padding: 0;
-        }
-      }
-    }
-
     // MINIMAL MEDIA
     .m-activityContent__media {
       img {
@@ -135,9 +113,6 @@
     }
 
     .m-activityContent__media--image {
-      img {
-        border: none;
-      }
       &.m-activityContent__media--extraTallImage {
         display: flex;
         justify-content: center;
@@ -170,9 +145,8 @@
       .m-activityContent__media--image,
       .m-activityContent__media--video {
         height: 100%;
-        // Note: this can be removed with activity v1
         @include m-theme() {
-          background: transparent !important;
+          background: rgba(themed($m-black), 0);
         }
       }
 
@@ -261,12 +235,6 @@
     margin-top: $spacing4;
   }
 
-  .m-activityContent--quote {
-    overflow: hidden;
-
-    padding: 0 !important;
-  }
-
   // *********************************
   // ** REMIND **
   // *********************************
@@ -321,6 +289,50 @@
   }
 
   // *********************************
+  // ** SUPERMIND **
+  // *********************************
+
+  &.m-activityContent--supermindReply {
+    &:not(.m-activityContent--minimalMode):not(.m-activityContent--sidebarMode) {
+      .m-activityContent__quote {
+        @include supermindGradient;
+        border-radius: $m-borderRadius;
+        padding: 2px; // thickness of gradient border
+      }
+      ::ng-deep m-activityV2__quote {
+        border: none !important;
+        @include m-theme() {
+          background: themed($m-bgColor--primary);
+        }
+      }
+    }
+  }
+
+  // *********************************
+  // ** TEASER **
+  // *********************************
+
+  .m-activityContent__teaserFadeout {
+    position: absolute;
+    top: $spacing10;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(100% - 60px);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+    @include m-theme() {
+      background: linear-gradient(
+        to bottom,
+        rgba(themed($m-bgColor--primary), 0) 0%,
+        rgba(themed($m-bgColor--primary), 0.3) 14%,
+        rgba(themed($m-bgColor--primary), 0.8) 44%,
+        rgba(themed($m-bgColor--primary), 1) 80%
+      );
+    }
+  }
+
+  // *********************************
   // *********************************
   // *********************************
   // ** DEFAULT **
@@ -340,7 +352,7 @@
   .m-activityContent__media--image,
   .m-activityContent__media--richEmbed {
     @include m-theme() {
-      background: transparent !important;
+      background: themed($m-bgColor--primary);
     }
   }
 

@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
@@ -21,6 +21,7 @@ import {
   selector: 'm-composer__titleBar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'title-bar.component.html',
+  styleUrls: ['./title-bar.component.ng.scss'],
 })
 export class TitleBarComponent {
   /**
@@ -42,6 +43,19 @@ export class TitleBarComponent {
    */
   hasAttachments$: Observable<boolean> = this.service.data$.pipe(
     map(values => values.attachmentGuids?.length > 0)
+  );
+
+  /**
+   * If is a supermind
+   */
+  isSupermind$: Observable<boolean> = combineLatest([
+    this.service.isSupermindRequest$,
+    this.service.isSupermindReply$,
+  ]).pipe(
+    map(
+      ([isSupermindRequest, isSupermindReply]) =>
+        isSupermindRequest || isSupermindReply
+    )
   );
 
   constructor(protected service: ComposerService) {}

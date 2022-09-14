@@ -27,6 +27,7 @@ exports.config = {
     rewardsMarketingPage: '../pages/rewardsMarketingPage.ts',
     searchPage: '../pages/searchPage.ts',
     settingsPage: '../pages/settingsPage.ts',
+    supermindConsolePage: '../pages/supermindConsolePage.ts',
     tokenMarketingPage: '../pages/tokenMarketingPage.ts',
   },
   mocha: {},
