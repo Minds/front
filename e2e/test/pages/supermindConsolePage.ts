@@ -114,7 +114,8 @@ class SupermindConsolePage {
       I.dontSeeElement(this.addBankPrompt);
       I.dontSeeElement(this.declineButton);
       I.dontSeeElement(this.acceptButton);
-      I.seeElement(this.cancelOfferButton);
+      // TODO: Uncomment when we bring back the cancel offer button.
+      // I.seeElement(this.cancelOfferButton);
     }
   }
 
