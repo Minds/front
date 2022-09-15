@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ApiService } from '../../../../../common/api/api.service';
+import { EmailConfirmationService } from '../../../../../common/components/email-confirmation/email-confirmation.service';
+import { FriendlyDateDiffPipe } from '../../../../../common/pipes/friendlydatediff';
+import { ToasterService } from '../../../../../common/services/toaster.service';
+import { MockComponent, MockService } from '../../../../../utils/mock';
+import { ComposerModalService } from '../../../../composer/components/modal/modal.service';
 import moment = require('moment');
-import { MockComponent } from '../../../../../utils/mock';
 import { Supermind } from '../../../supermind.types';
 import { SupermindConsoleListItemComponent } from './list-item.component';
 
@@ -28,6 +34,7 @@ describe('SupermindConsoleListItemComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
+        imports: [RouterTestingModule],
         declarations: [
           SupermindConsoleListItemComponent,
           MockComponent({
@@ -47,6 +54,19 @@ describe('SupermindConsoleListItemComponent', () => {
             selector: 'm-button',
             inputs: ['size'],
           }),
+        ],
+        providers: [
+          FriendlyDateDiffPipe,
+          ComposerModalService,
+          ToasterService,
+          {
+            provide: EmailConfirmationService,
+            useValue: MockService(EmailConfirmationService),
+          },
+          {
+            provide: ApiService,
+            useValue: MockService(ApiService),
+          },
         ],
       }).compileComponents();
     })

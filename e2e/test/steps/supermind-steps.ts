@@ -1,31 +1,25 @@
 import ChannelPage from '../pages/channelPage';
-import CommonPage from '../pages/commonPage';
 import { ComposerModal } from '../pages/composerModal';
 
 namespace SupermindSteps {
-  const { I, newsfeedPage } = inject();
-
-  const commonPage = new CommonPage();
+  const { I } = inject();
   const composerModal = new ComposerModal();
   const channelPage = new ChannelPage();
 
   When('I click the supermind icon on the composer toolbar', () => {
-    I.click(composerModal.supermindButton);
+    composerModal.clickSupermindIcon();
   });
 
   When('I enter a target username with value {string}', targetUsername => {
-    I.fillField(
-      locate('m-composer__supermind m-forminput__autocompleteuserinput input'),
-      targetUsername
-    );
+    composerModal.addSupermindTarget(targetUsername);
   });
 
   When('I accept the supermind terms', () => {
-    I.click('m-composer__supermind m-forminput__checkbox');
+    composerModal.acceptSupermindTerms();
   });
 
   When('I click the supermind creator save button', () => {
-    I.click('[data-ref=supermind-save-button]');
+    composerModal.clickSupermindSave();
   });
 
   When('I click the supermind creator clear button', () => {
@@ -55,7 +49,7 @@ namespace SupermindSteps {
   });
 
   Then('I should not see the supermind icon on the composer toolbar', () => {
-    I.dontSeeElement(composerModal.supermindButton);
+    composerModal.shouldHaveSupermindBadge(false);
   });
 
   Then('I should see prefilled supermind details in the composer', () => {});

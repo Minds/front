@@ -48,6 +48,7 @@ import {
   RichEmbedMetadataMappedValue,
   RichEmbedSubjectValue,
   ScheduleSubjectValue,
+  SupermindReplySubjectValue,
   SupermindRequestSubjectValue,
   TagsSubjectValue,
   TitleSubjectValue,
@@ -234,6 +235,20 @@ export class ComposerService implements OnDestroy {
   > = this.supermindRequest$.pipe(map(supermindRequest => !!supermindRequest));
 
   /**
+   * The supermind entity (used for supermind reply payload building)
+   */
+  readonly supermindReply$: BehaviorSubject<
+    SupermindReplySubjectValue
+  > = new BehaviorSubject(null);
+
+  /**
+   * True/False helper for if we have a supermind reply payload
+   */
+  readonly isSupermindReply$: Observable<boolean> = this.supermindReply$.pipe(
+    map(supermindReply => !!supermindReply)
+  );
+
+  /**
    * True/False helper to determine if the criteria to make a supermind has been met
    * Conditions listed below per business rules
    */
@@ -242,9 +257,16 @@ export class ComposerService implements OnDestroy {
     this.nsfw$,
     this.monetization$,
     this.schedule$,
+    this.isSupermindReply$,
   ]).pipe(
-    map(([isEditing, nsfw, monetization$, schedule$]) => {
-      return !isEditing && !nsfw.length && !monetization$ && !schedule$;
+    map(([isEditing, nsfw, monetization$, schedule, isSupermindReply]) => {
+      return (
+        !isEditing &&
+        !nsfw.length &&
+        !monetization$ &&
+        !schedule &&
+        !isSupermindReply
+      );
     })
   );
 
@@ -254,10 +276,15 @@ export class ComposerService implements OnDestroy {
   readonly canSchedule$ = combineLatest([
     this.schedule$,
     this.isEditing$,
-    this.supermindRequest$,
+    this.isSupermindRequest$,
+    this.isSupermindReply$,
   ]).pipe(
-    map(([schedule, isEditing, supermindRequest]) => {
-      return !supermindRequest && (!isEditing || schedule * 1000 > Date.now());
+    map(([schedule, isEditing, isSupermindRequest, isSupermindReply]) => {
+      return (
+        !isSupermindRequest &&
+        !isSupermindReply &&
+        (!isEditing || schedule * 1000 > Date.now())
+      );
     })
   );
 
@@ -385,7 +412,8 @@ export class ComposerService implements OnDestroy {
         VideoPoster,
         PostToPermawebSubjectValue,
         RemindSubjectValue,
-        SupermindRequestSubjectValue
+        SupermindRequestSubjectValue,
+        SupermindReplySubjectValue
       ]
     >([
       this.message$.pipe(distinctUntilChanged()),
@@ -461,6 +489,7 @@ export class ComposerService implements OnDestroy {
       this.postToPermaweb$,
       this.remind$.pipe(distinctUntilChanged()),
       this.supermindRequest$.pipe(distinctUntilChanged()),
+      this.supermindReply$.pipe(distinctUntilChanged()),
     ]).pipe(
       map(
         // Create an JSON object based on an array of Subject values
@@ -479,6 +508,7 @@ export class ComposerService implements OnDestroy {
           postToPermaweb,
           remind,
           supermindRequest,
+          supermindReply,
         ]) => ({
           message,
           title,
@@ -494,6 +524,7 @@ export class ComposerService implements OnDestroy {
           postToPermaweb,
           remind,
           supermindRequest,
+          supermindReply,
         })
       ),
       tap(values => {
@@ -702,6 +733,7 @@ export class ComposerService implements OnDestroy {
 
     // Reset supermind state
     this.supermindRequest$.next(null);
+    this.supermindReply$.next(null);
 
     // Reset original source
     this.entity = null;
@@ -888,6 +920,7 @@ export class ComposerService implements OnDestroy {
    * @param postToPermaweb
    * @param remind
    * @param supermindRequest
+   * @param supermindReply
    */
   buildPayload({
     message,
@@ -904,6 +937,7 @@ export class ComposerService implements OnDestroy {
     postToPermaweb,
     remind,
     supermindRequest,
+    supermindReply,
   }: Data): any {
     if (this.containerGuid) {
       // Override accessId if there's a container set
@@ -933,6 +967,10 @@ export class ComposerService implements OnDestroy {
 
     if (supermindRequest) {
       this.payload.supermind_request = supermindRequest;
+    }
+
+    if (supermindReply) {
+      this.payload.supermind_reply_guid = supermindReply.guid;
     }
 
     if (this.canEditMetadata()) {
