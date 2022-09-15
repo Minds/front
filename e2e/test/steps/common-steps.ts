@@ -35,7 +35,12 @@ namespace CommonSteps {
   Given(
     'I am logged in',
     async (): Promise<void> => {
+      if (await I.grabCookie('minds_sess')) {
+        return;
+      }
+
       I.clearCookie();
+      I.refreshPage();
       I.amOnPage(loginPage.loginURI);
 
       await Promise.all([
@@ -99,5 +104,10 @@ namespace CommonSteps {
 
   Then('I should see {string} in current URL', (path: string) => {
     I.seeInCurrentUrl(path);
+  });
+
+  Then('I clear my cookies', () => {
+    I.clearCookie();
+    I.refreshPage();
   });
 }
