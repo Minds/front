@@ -258,11 +258,7 @@ post content to trigger upgrade modal -->
             [disabled]="
               service.displayOptions.isFeed && persistentFeedExperimentActive
             "
-            (click)="
-              service.displayOptions.isFeed &&
-                persistentFeedExperimentActive &&
-                redirectToSinglePage()
-            "
+            (click)="onReadMoreClick($event)"
           ></m-readMore>
         </p>
       </div>

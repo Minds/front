@@ -737,6 +737,15 @@ export class ActivityV2ContentComponent
 
   persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
 
+  onReadMoreClick(e: MouseEvent) {
+    if (
+      this.service.displayOptions.isFeed &&
+      this.persistentFeedExperimentActive
+    ) {
+      this.redirectToSinglePage();
+    }
+  }
+
   detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
