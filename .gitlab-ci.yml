@@ -114,16 +114,13 @@ qa:sandbox:
   stage: qa
   script:
     - >
-      if [ "$CI_BUILD_REF_NAME" == "master" ]; then
+      if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
         export E2E_DOMAIN=https://www.minds.com
-        export PRODUCTION=true
       else
         export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
-        export PRODUCTION=false
       fi
-    - cd e2e/test
-    - yarn
-    - yarn test:e2e:local
+    - export BYPASS_SIGNING_KEY=$BYPASS_SIGNING_KEY
+    - sh ./e2e/test/setup_and_run.sh
   artifacts:
     when: always
     paths:
