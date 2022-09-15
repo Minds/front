@@ -19,7 +19,7 @@ class BoostRotatorComponent {
     ).inside(this.boostRotatorSelector);
 
     if (shouldSeeBoostRotator) {
-      I.seeElement(boostRotatorActivity);
+      I.waitForElement(this.boostRotatorSelector, 30);
       return;
     }
     I.dontSeeElement(boostRotatorActivity);
