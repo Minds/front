@@ -18,6 +18,7 @@ namespace CommonSteps {
     const email = 'noreply@minds.com';
     const password = helpers.generateRandomString() + 'A1!';
 
+    I.clearCookie();
     registerPage.navigateToByUrl();
     registerPage.fillForm(username, password, email);
     registerPage.clickJoinNow();
@@ -31,12 +32,24 @@ namespace CommonSteps {
    * Is not not meant to switch users.
    * @return { Promise<void> }
    */
-  Given('I am logged in', (): void => {
-    I.amOnPage(loginPage.loginURI);
-    loginPage.login(loginPage.validUsername, loginPage.validPassword);
-    I.waitForNavigation({ timeout: 30000 });
-    I.seeCookie('minds_sess');
-  });
+  Given(
+    'I am logged in',
+    async (): Promise<void> => {
+      I.clearCookie();
+      I.amOnPage(loginPage.loginURI);
+
+      await Promise.all([
+        loginPage.login(loginPage.validUsername, loginPage.validPassword),
+        I.waitForResponse(
+          resp =>
+            resp.url().includes('/api/v2/mwa/pv') && resp.status() === 200,
+          30
+        ),
+      ]);
+
+      I.seeCookie('minds_sess');
+    }
+  );
 
   /**
    * Will clear cookies and login as the specified user - useful for user switching.
@@ -44,8 +57,6 @@ namespace CommonSteps {
    * @return { void }
    */
   Given('I log in as {string}', (username: string): void => {
-    I.clearCookie();
-
     let password;
 
     switch (username) {
@@ -57,6 +68,7 @@ namespace CommonSteps {
         break;
     }
 
+    I.clearCookie();
     I.amOnPage(loginPage.loginURI);
     loginPage.login(username, password);
     I.waitForNavigation({ timeout: 30000 });
