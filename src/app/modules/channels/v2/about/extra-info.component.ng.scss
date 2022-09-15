@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  .m-channelAbout__field {
+    ::ng-deep m-channel--badges {
+      .m-channel--badges li:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+}

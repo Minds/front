@@ -179,4 +179,10 @@
       width: 100%;
     }
   }
+
+  ::ng-deep m-friendlyCaptcha {
+    .frc-icon {
+      margin-left: 0;
+    }
+  }
 }
