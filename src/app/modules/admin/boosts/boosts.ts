@@ -83,7 +83,7 @@ export class AdminBoosts {
         offset: this.offset,
       })
       .then((response: any) => {
-        if (!response.boosts || !response.boosts.length) {
+        if (!response.boosts) {
           this.inProgress = false;
           this.moreData = false;
           return;
