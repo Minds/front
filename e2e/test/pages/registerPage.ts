@@ -44,6 +44,7 @@ class RegisterPage {
   public fillForm(username: string, password: string, email: string): void {
     helpers.setCaptchaBypassCookie();
     helpers.setRateLimitBypassCookie();
+    I.refreshPage();
 
     this.inputUsername(username);
     this.inputEmail(email);
