@@ -12,6 +12,7 @@ import { MindsUser } from '../../../../interfaces/entities';
   selector: 'm-channelAbout__extraInfo',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'extra-info.component.html',
+  styleUrls: ['extra-info.component.ng.scss'],
 })
 export class ChannelAboutExtraInfoComponent {
   /**
