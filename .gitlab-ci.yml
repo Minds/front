@@ -99,15 +99,15 @@ lint:
       - .npm
       - cache/Cypress
 
-qa:sandbox:
-  parallel: 2
-  except:
-    refs:
-      - /^master$/
-      - feat/1732-block-refactor
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
-  <<: *cypress_tests
+# qa:sandbox:
+#   parallel: 2
+#   except:
+#     refs:
+#       - /^master$/
+#       - feat/1732-block-refactor
+#     variables:
+#       - $CI_NIGHTLY_TESTS == "true"
+#   <<: *cypress_tests
 
 .playwright_tests: &playwright_tests
   image: mcr.microsoft.com/playwright:v1.22.0-focal

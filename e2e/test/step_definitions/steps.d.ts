@@ -7,7 +7,6 @@ type composerModal = typeof import('../pages/composerModal');
 type devtoolsPage = typeof import('../pages/devtoolsPage');
 type loginPage = typeof import('../pages/loginPage');
 type newsfeedPage = typeof import('../pages/newsfeedPage');
-type permawebPage = typeof import('../pages/permawebPage');
 type rewardsMarketingPage = typeof import('../pages/rewardsMarketingPage');
 type searchPage = typeof import('../pages/searchPage');
 type settingsPage = typeof import('../pages/settingsPage');
@@ -23,7 +22,6 @@ declare namespace CodeceptJS {
     commonPage: commonPage;
     composerModal: composerModal;
     newsfeedPage: newsfeedPage;
-    permawebPage: permawebPage;
     rewardsMarketingPage: rewardsMarketingPage;
     searchPage: searchPage;
     settingsPage: settingsPage;

@@ -23,7 +23,6 @@ exports.config = {
     devtoolsPage: '../pages/devtoolsPage.ts',
     loginPage: '../pages/loginPage.ts',
     newsfeedPage: '../pages/newsfeedPage.ts',
-    permawebPage: '../pages/permawebPage.ts',
     rewardsMarketingPage: '../pages/rewardsMarketingPage.ts',
     searchPage: '../pages/searchPage.ts',
     settingsPage: '../pages/settingsPage.ts',
