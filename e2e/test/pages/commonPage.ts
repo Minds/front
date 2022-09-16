@@ -1,16 +1,15 @@
-require('dotenv').config();
 const { I } = inject();
 
-class CommonPage {
+export class CommonPage {
+  toaster: 'm-toaster';
+
+  openSidebarComposer() {
+    I.click('[data-ref=sidenav-composer]');
+  }
   /**
    * Toasters
    */
-  get toaster(): string {
-    return 'm-toaster';
-  }
-  get toasterTypePrefix(): string {
+  toasterTypePrefix() {
     return `${this.toaster} .m-toaster__iconWrapper--`;
   }
 }
-
-export = CommonPage;

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { I } = inject();
 
-class ChannelPage {
+export class ChannelPage {
   /**
    * Supermind
    */
@@ -9,5 +9,3 @@ class ChannelPage {
     return 'm-channelactions__supermind m-button';
   }
 }
-
-export = ChannelPage;
