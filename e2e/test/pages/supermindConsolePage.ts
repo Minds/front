@@ -1,4 +1,4 @@
-import SidebarComponent from '../components/sidebarComponent';
+import { SidebarComponent } from '../components/sidebarComponent';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,

@@ -1,4 +1,4 @@
-import SidebarComponent from '../components/sidebarComponent';
+import { SidebarComponent } from '../components/sidebarComponent';
 import { ComposerModal } from '../pages/composerModal';
 
 namespace ComposerSteps {

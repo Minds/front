@@ -1,5 +1,5 @@
 import { Helpers } from '../helpers/helpers';
-import CommonPage from '../pages/commonPage';
+import { CommonPage } from '../pages/commonPage';
 import RegisterPage from '../pages/registerPage';
 
 namespace CommonSteps {
