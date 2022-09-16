@@ -173,7 +173,6 @@ import { UserCard } from './components/user-card/user';
 import { CommentButton } from './components/comment-button/comment';
 import { SubscribeButton } from './components/subscribe-button-v1/subscribe';
 import { MindsBanner } from './components/banner/banner';
-import { MindsFatBanner } from './components/banner/fat';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -223,7 +222,6 @@ const MINDS_COMMON_COMPONENTS = [
   MindsAvatar,
   MindsBanner,
   MindsCard,
-  MindsFatBanner,
   MindsRichEmbed,
   Modal,
   ModalCloseButtonComponent,
