@@ -1,6 +1,8 @@
 <div
   class="m-activityToolbar__largeActions"
-  *ngIf="service.displayOptions.showInteractions && showMetrics"
+  *ngIf="
+    service.displayOptions.showInteractions && !service.displayOptions.isFeed
+  "
 >
   <m-supermind__button
     [entity]="entity"
