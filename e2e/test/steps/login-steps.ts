@@ -5,8 +5,14 @@ namespace LoginSteps {
     I.amOnPage(loginPage.loginURI);
   });
 
-  When('I pass valid credentials', () => {
-    loginPage.login(loginPage.validUsername, loginPage.validPassword);
+  When('I pass valid credentials', async () => {
+    await Promise.all([
+      loginPage.login(loginPage.validUsername, loginPage.validPassword),
+      I.waitForResponse(
+        resp => resp.url().includes('/api/v2/mwa/pv') && resp.status() === 200,
+        30
+      ),
+    ]);
   });
 
   When('I pass invalid credentials', table => {
