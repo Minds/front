@@ -1,10 +1,9 @@
-require('dotenv').config();
 const { I } = inject();
 
 /**
  * Main nav sidebar component.
  */
-class SidebarComponent {
+export class SidebarComponent {
   /**
    * Opens the composer from the sidebar.
    * @return { void }
@@ -29,5 +28,3 @@ class SidebarComponent {
     I.click('[data-ref=sidebarmore-supermind]');
   }
 }
-
-export = SidebarComponent;

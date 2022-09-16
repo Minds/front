@@ -1,4 +1,4 @@
-import ChannelPage from '../pages/channelPage';
+import { ChannelPage } from '../pages/channelPage';
 import { ComposerModal } from '../pages/composerModal';
 
 namespace SupermindSteps {
