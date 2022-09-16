@@ -1,9 +1,11 @@
 import { CommonPage } from '../pages/commonPage';
+import { NewsfeedPage } from '../pages/newsfeedPage';
 
 namespace CommonSteps {
-  const { I, loginPage, newsfeedPage } = inject();
+  const { I, loginPage } = inject();
 
   const commonPage = new CommonPage();
+  const newsfeedPage = new NewsfeedPage();
 
   /**
    * Log in with standard test user - will not re-log in if cookie is present.

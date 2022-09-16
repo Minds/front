@@ -1,12 +1,12 @@
 const { I } = inject();
 export class ComposerModal {
-  private modalElementTag: string = 'm-composer__modal';
+  public modalElementTag: string = 'm-composer__modal';
   private textAreaTitleSelector: string = `${this.modalElementTag} .m-composerTextarea__title`;
   private textAreaSelector: string = `${this.modalElementTag} [data-cy=composer-textarea]`;
   private postButtonSelector: string = `${this.modalElementTag} [data-cy=post-button]`;
   private supermindIconSelector: string = `${this.modalElementTag} .m-composerToolbarItem__icon i`;
   private tabSelector: string = '.m-tabs__tab';
-  private supermindTargetInputSelector: string = '[placeholder="@username"]';
+  public supermindTargetInputSelector: string = '[placeholder="@username"]';
   private supermindAutoCompleteNameSelector: string =
     '.m-formInputAutocompleteUserInputUserItem__name';
   private supermindAmountSelector: string = '#offer_tokens';
