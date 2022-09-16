@@ -1,4 +1,4 @@
-import DevtoolsPage from '../pages/devtoolsPage';
+import { DevtoolsPage } from '../pages/devtoolsPage';
 import { Environment } from '../types/devtools.types';
 
 namespace DevToolsSteps {
