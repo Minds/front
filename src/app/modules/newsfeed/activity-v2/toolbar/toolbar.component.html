@@ -54,6 +54,7 @@
     [entity]="entity"
     [iconOnly]="true"
     data-ref="activity-icon-supermind-action"
+    *ngIf="supermindExperiment.isActive()"
   ></m-supermind__button>
 
   <!-- Show boost if own post -->
