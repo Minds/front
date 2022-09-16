@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
 import { VideoChatModule } from '../videochat/videochat.module';
 
@@ -74,7 +73,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     CommentsModule,
-    LegacyModule,
     ModalsModule,
     HashtagsModule,
     TextInputAutocompleteModule,

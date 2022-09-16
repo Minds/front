@@ -168,6 +168,12 @@ import { FeedHeaderComponent } from './components/feed-header/feed-header.compon
 import { AutocompleteUserInputComponent } from './components/forms/autocomplete-user-input/autocomplete-user-input.component';
 import { AddBankPromptComponent } from './components/add-bank-information/add-bank-prompt.component';
 import { ChipBadgeComponent } from './components/chip-badge/chip-badge.component';
+import { SocialIcons } from './components/social-icons/social-icons';
+import { UserCard } from './components/user-card/user';
+import { CommentButton } from './components/comment-button/comment';
+import { SubscribeButton } from './components/subscribe-button-v1/subscribe';
+import { MindsBanner } from './components/banner/banner';
+import { MindsFatBanner } from './components/banner/fat';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -181,6 +187,7 @@ const MINDS_COMMON_COMPONENTS = [
   ChannelBadgesComponent,
   ChatIconComponent,
   CityFinderComponent,
+  CommentButton,
   ConfirmV2Component,
   CountryInputComponent,
   DashboardLayoutComponent,
@@ -214,7 +221,9 @@ const MINDS_COMMON_COMPONENTS = [
   LoadingEllipsisComponent,
   LoadingSpinnerComponent,
   MindsAvatar,
+  MindsBanner,
   MindsCard,
+  MindsFatBanner,
   MindsRichEmbed,
   Modal,
   ModalCloseButtonComponent,
@@ -241,7 +250,9 @@ const MINDS_COMMON_COMPONENTS = [
   SidebarNavigationComponent,
   SidebarWidgetComponent,
   SizeableLoadingSpinnerComponent,
+  SocialIcons,
   SortSelectorComponent,
+  SubscribeButton,
   SubscribeButtonComponent,
   TagSelectorComponent,
   Textarea,
@@ -255,6 +266,7 @@ const MINDS_COMMON_COMPONENTS = [
   TopbarWalletBalance,
   TreeComponent,
   UserAggregatorComponent,
+  UserCard,
   UserMenuComponent,
   AutocompleteUserInputComponent,
   AddBankPromptComponent,

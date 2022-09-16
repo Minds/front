@@ -58,14 +58,6 @@ class MindsCardBlogMock {
 }
 
 @Component({
-  selector: 'minds-card-user',
-  template: '',
-})
-class MindsCardUserMock {
-  @Input() object: any;
-}
-
-@Component({
   selector: 'minds-activity',
   template: '',
 })

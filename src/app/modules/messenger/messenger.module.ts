@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
 
 import { Messenger } from './messenger.component';
@@ -28,7 +27,6 @@ import { MessengerEncryptionService } from './encryption/encryption.service';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    //LegacyModule,
     //ModalsModule
   ],
   declarations: [

@@ -1,0 +1,33 @@
+<div class="m-card--user--banner">
+  <div
+    class="m-card--user--banner--img"
+    [ngStyle]="{'background-image': 'url(' + bannerSrc + ')'}"
+  ></div>
+  <div class="minds-banner-overlay"></div>
+</div>
+
+<a
+  [routerLink]="['/', user.username]"
+  class="mdl-card__supporting-text minds-usercard-block"
+>
+  <div class="avatar">
+    <img src="{{cdnUrl}}icon/{{user.guid}}/{{avatarSize}}/{{user.icontime}}" />
+  </div>
+  <div class="body">
+    <h3>{{user.name}}</h3>
+    <span>@{{user.username}}</span>
+  </div>
+</a>
+
+<minds-button-subscribe
+  [user]="user"
+  *ngIf="user.guid != session.getLoggedInUser().guid || forceShowSubscribe"
+  [preventSubscription]="forceShowSubscribe"
+></minds-button-subscribe>
+
+<div
+  class="minds-usercard-buttons"
+  [ngClass]="{ 'has-feature-button': session.isAdmin() }"
+>
+  <ng-content select="[buttons]"></ng-content>
+</div>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { Client } from '../../../../services/api';
+import { Client } from '../../../services/api';
 
 @Component({
   selector: 'minds-banner-fat',
