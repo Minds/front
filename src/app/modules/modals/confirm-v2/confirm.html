@@ -1,0 +1,32 @@
+<div class="m-confirmationModal__textWrapper">
+  <h2
+    class="m-confirmationModal__title"
+    data-ref="data-minds-confirmation-modal-title"
+  >
+    {{ title }}
+  </h2>
+  <span
+    class="m-confirmationModal__text"
+    data-ref="data-minds-confirmation-modal-body"
+    >{{ body }}</span
+  >
+</div>
+<div class="m-confirmationModal__buttonWrapper">
+  <m-button
+    class="m-confirmationModal__cancelButton"
+    (onAction)="onDismiss()"
+    data-ref="data-minds-confirmation-modal-cancel-button"
+  >
+    Cancel
+  </m-button>
+  <m-button
+    class="m-confirmationModal__confirmButton"
+    [color]="confirmButtonColor"
+    (onAction)="onConfirm()"
+    data-ref="data-minds-confirmation-modal-confirm-button"
+  >
+    Confirm
+  </m-button>
+</div>
+
+<m-modalCloseButton></m-modalCloseButton>

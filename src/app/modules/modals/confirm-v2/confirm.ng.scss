@@ -10,34 +10,32 @@
     background-color: themed($m-bgColor--secondary);
   }
 
-  .m-confirmV2Modal__textWrapper {
+  .m-confirmationModal__textWrapper {
     display: flex;
     flex-flow: column nowrap;
 
-    .m-confirmV2Modal__title {
-      font-size: 24px;
-      font-weight: 600;
+    .m-confirmationModal__title {
+      @include heading2Medium;
       margin-top: unset;
     }
 
-    .m-confirmV2Modal__text {
-      font-size: 18px;
-      font-weight: 400;
+    .m-confirmationModal__text {
+      @include body1Regular;
       margin-right: 80px;
     }
   }
-  .m-confirmV2Modal__buttonWrapper {
+  .m-confirmationModal__buttonWrapper {
     margin-top: $minds-margin * 4;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
 
-    .m-confirmV2Modal__cancelButton {
+    .m-confirmationModal__cancelButton {
       margin: 0 10px;
     }
 
-    .m-confirmV2Modal__confirmButton {
+    .m-confirmationModal__confirmButton {
       margin: 0 10px;
     }
   }

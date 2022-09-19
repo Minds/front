@@ -57,7 +57,7 @@
       !legacyPaywallEnabled &&
       !(remind$ | async) &&
       !(isGroupPost$ | async) &&
-      !(isSupermindRequest$ | async)
+      !isSupermindRequest
     "
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="monetization$ | async"
@@ -126,7 +126,6 @@
   </a>
 
   <span class="m-composerToolbar__itemSpacer"></span>
-
   <m-button
     class="m-composerToolbar__action m-composerToolbar__action--post"
     [disabled]="
