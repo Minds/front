@@ -574,7 +574,7 @@ minds-activity-preview {
 
     &:hover {
       @include m-theme() {
-        color: rgba(themed($m-blue-dark), 0.9) !important;
+        color: rgba(themed($m-blue--contrast), 0.9) !important;
       }
     }
   }

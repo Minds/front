@@ -60,10 +60,10 @@ $blue-grey-200: #b0bec5;
 $blue-grey-100: #cfd8dc;
 $blue-grey-50: #eceff1;
 
-$blue-dark: #206ab9;
-$blue: #4690df;
-$blue-bright: #44aaff;
-$blue-light: #71aae7;
+$blue-dark: #0052a3;
+$blue: #1b85d6;
+$blue-light: #4eb8ff;
+
 $green-dark: #388e3c;
 $green: #4caf50;
 $green-light: #8bc34a;
@@ -110,8 +110,6 @@ $themes: (
     m-borderColor--tertiary: #ececec,
     m-overlay: rgba(176, 176, 176, 0.5),
     m-alert: #e03c20,
-    m-link: #1b85d6,
-    m-link--hover: #0052a3,
     m-positive: #95c064,
     // legacy colors
       m-grey-950: $grey-950,
@@ -138,9 +136,8 @@ $themes: (
     m-blue-grey-200: $blue-grey-200,
     m-blue-grey-100: $blue-grey-100,
     m-blue-grey-50: $blue-grey-50,
-    m-blue-dark: $blue-dark,
     m-blue: $blue,
-    m-blue-light: $blue-light,
+    m-blue--contrast: $blue-dark,
     m-aqua: $aqua,
     m-green-dark: $green-dark,
     m-green: $green,
@@ -190,8 +187,6 @@ $themes: (
     m-borderColor--tertiary: #3a3f41,
     m-overlay: rgba(0, 0, 0, 0.5),
     m-alert: #e03c20,
-    m-link: #1b85d6,
-    m-link--hover: #4eb8ff,
     m-positive: #95c064,
     // legacy colors
       m-grey-950: lighten($grey-50, $percent),
@@ -225,9 +220,8 @@ $themes: (
     m-marketing-bg-gradient-start: #202527,
     m-marketing-bg-colored-gradient-start: #4e5965,
     m-marketing-bg-colored-gradient-end: #58565c,
-    m-blue-dark: lighten($blue-bright, 15%),
-    m-blue: $blue-bright,
-    m-blue-light: $blue-dark,
+    m-blue: $blue,
+    m-blue--contrast: $blue-light,
     m-aqua: $aqua,
     m-green-dark: lighten($green-dark, $percent),
     m-green: lighten($green, $percent),
@@ -286,9 +280,8 @@ $m-white-always: 'm-white-always';
 $m-marketing-bg-gradient-start: 'm-marketing-bg-gradient-start';
 $m-marketing-bg-colored-gradient-start: 'm-marketing-bg-colored-gradient-start';
 $m-marketing-bg-colored-gradient-end: 'm-marketing-bg-colored-gradient-end';
-$m-blue-dark: 'm-blue-dark';
+$m-blue--contrast: 'm-blue--contrast'; // Used for hovering over blue links, etc.
 $m-blue: 'm-blue';
-$m-blue-light: 'm-blue-light';
 $m-aqua: 'm-aqua';
 $m-green-dark: 'm-green-dark';
 $m-green: 'm-green';
@@ -308,7 +301,7 @@ $m-facebook: 'm-facebook';
 $m-messenger: 'm-messenger';
 $m-twitter: 'm-twitter';
 $m-whatsapp: 'm-whatsapp';
-$m-linkedin: 'm-linkedin';
+$m-blueedin: 'm-linkedin';
 
 $m-textColor--primary: 'm-textColor--primary';
 $m-textColor--primaryInverted: 'm-textColor--primaryInverted';
@@ -331,8 +324,6 @@ $m-borderColor--secondary: 'm-borderColor--secondary';
 $m-borderColor--tertiary: 'm-borderColor--tertiary';
 $m-overlay: 'm-overlay';
 $m-alert: 'm-alert';
-$m-link: 'm-link';
-$m-link--hover: 'm-link--hover';
 $m-positive: 'm-positive';
 $m-activity--hover: 'm-activity--hover';
 

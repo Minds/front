@@ -53,7 +53,7 @@ minds-button-subscribe {
       &.m-subscribeButton__subscribed {
         & > i {
           @include m-theme() {
-            color: themed($m-link);
+            color: themed($m-blue);
           }
         }
       }

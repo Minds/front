@@ -6,7 +6,7 @@
       outline: 0;
       &:focus {
         @include m-theme() {
-          border: 1px solid themed($m-link);
+          border: 1px solid themed($m-blue);
         }
       }
     }

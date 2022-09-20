@@ -25,7 +25,7 @@ m-jurydutysession__summons .m-modal-container {
     }
     > a {
       @include m-theme() {
-        color: themed($m-link);
+        color: themed($m-blue);
       }
     }
   }

@@ -41,7 +41,7 @@
             font-weight: 700;
             font-size: 11px;
             @include m-theme() {
-              color: themed($m-link);
+              color: themed($m-blue);
             }
           }
         }
@@ -136,7 +136,7 @@
     margin-right: $minds-margin * 0.5;
     vertical-align: middle;
     @include m-theme() {
-      color: themed($m-link);
+      color: themed($m-blue);
     }
   }
 
@@ -173,7 +173,7 @@
     i {
       font-size: 18px;
       @include m-theme() {
-        color: themed($m-link);
+        color: themed($m-blue);
       }
     }
     span,

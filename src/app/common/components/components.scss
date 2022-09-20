@@ -39,7 +39,7 @@ minds-graph-pie svg {
 
   circle {
     @include m-theme() {
-      stroke: themed($m-blue-dark);
+      stroke: themed($m-blue--contrast);
     }
   }
 }
@@ -62,7 +62,7 @@ minds-button-thumbs-down {
   }
   .selected:hover {
     @include m-theme() {
-      color: rgba(themed($m-blue-dark), 0.9) !important;
+      color: rgba(themed($m-blue--contrast), 0.9) !important;
     }
   }
 }

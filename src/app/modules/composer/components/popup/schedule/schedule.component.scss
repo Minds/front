@@ -115,7 +115,7 @@
           border-radius: 50%;
 
           @include m-theme() {
-            background: themed($m-link);
+            background: themed($m-blue);
           }
         }
       }

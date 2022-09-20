@@ -142,7 +142,7 @@
 
       .m-register__loginToMinds {
         @include m-theme() {
-          color: themed($m-link);
+          color: themed($m-blue);
           cursor: pointer;
         }
       }
