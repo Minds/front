@@ -132,7 +132,6 @@ describe('AdminBoosts', () => {
           MindsCardVideoMock,
           MindsCardImageMock,
           MindsCardBlogMock,
-          MindsCardUserMock,
           MindsActivityMock,
           MindsCardGroupMock,
           RejectionReasonModalMock,
