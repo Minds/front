@@ -1,7 +1,7 @@
 const { I } = inject();
 
 export class CommonPage {
-  toaster: 'm-toaster';
+  public toaster: string = 'm-toaster';
 
   openSidebarComposer() {
     I.click('[data-ref=sidenav-composer]');
@@ -9,7 +9,7 @@ export class CommonPage {
   /**
    * Toasters
    */
-  toasterTypePrefix() {
+  get toasterTypePrefix() {
     return `${this.toaster} .m-toaster__iconWrapper--`;
   }
 }

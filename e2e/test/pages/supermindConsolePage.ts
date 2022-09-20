@@ -59,11 +59,18 @@ class SupermindConsolePage {
 
   /**
    * Navigate to console via sidebar.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  public navigateToViaSidebar(): void {
+  public async navigateToViaSidebar(): Promise<void> {
     sidebarComponent.expandSidebarMore();
-    sidebarComponent.openSupermindConsole();
+    await Promise.all([
+      sidebarComponent.openSupermindConsole(),
+      I.waitForResponse(
+        resp =>
+          resp.url().includes('/api/v3/supermind') && resp.status() === 200,
+        30
+      ),
+    ]);
   }
 
   /**
@@ -114,7 +121,8 @@ class SupermindConsolePage {
       I.dontSeeElement(this.addBankPrompt);
       I.dontSeeElement(this.declineButton);
       I.dontSeeElement(this.acceptButton);
-      I.seeElement(this.cancelOfferButton);
+      // TODO: Uncomment when we bring back the cancel offer button.
+      // I.seeElement(this.cancelOfferButton);
     }
   }
 
@@ -128,10 +136,17 @@ class SupermindConsolePage {
 
   /**
    * Click to switch tabs.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  public switchTabs(tab: SupermindConsoleTab): void {
-    I.click(locate(this.tab).withText(tab));
+  public async switchTabs(tab: SupermindConsoleTab): Promise<void> {
+    await Promise.all([
+      I.click(locate(this.tab).withText(tab)),
+      I.waitForResponse(
+        resp =>
+          resp.url().includes('/api/v3/supermind') && resp.status() === 200,
+        30
+      ),
+    ]);
   }
 
   /**
