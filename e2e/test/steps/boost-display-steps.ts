@@ -1,4 +1,4 @@
-import BoostRotatorComponent from '../components/boostRotatorComponent';
+import { BoostRotatorComponent } from '../components/boostRotatorComponent';
 
 namespace BoostDisplaySteps {
   const boostRotatorComponent = new BoostRotatorComponent();

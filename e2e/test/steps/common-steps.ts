@@ -1,6 +1,6 @@
 import { Helpers } from '../helpers/helpers';
 import { CommonPage } from '../pages/commonPage';
-import RegisterPage from '../pages/registerPage';
+import { RegisterPage } from '../pages/registerPage';
 
 namespace CommonSteps {
   const { I, loginPage, newsfeedPage } = inject();

@@ -3,7 +3,7 @@ const { I } = inject();
 /**
  * Component for boost rotator.
  */
-class BoostRotatorComponent {
+export class BoostRotatorComponent {
   // selectors.
   private readonly boostRotatorSelector: string = '.m-newsfeed__boostRotator';
   private readonly activitySelector: string = 'm-activity';
@@ -37,5 +37,3 @@ class BoostRotatorComponent {
     );
   }
 }
-
-export = BoostRotatorComponent;
