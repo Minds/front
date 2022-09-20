@@ -14,6 +14,7 @@ exports.config = {
       reporter: 'html',
       keepCookies: true,
       keepBrowserState: true,
+      waitForNavigation: 'domcontentloaded',
     },
   },
   include: {
