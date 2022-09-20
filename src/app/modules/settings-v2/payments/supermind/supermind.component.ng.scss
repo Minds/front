@@ -14,6 +14,8 @@
       }
     }
     .m-supermindSettings__subDescription {
+      margin-bottom: $spacing13;
+
       @include body2Regular;
       @include m-theme() {
         color: themed($m-textColor--secondary);
@@ -21,14 +23,8 @@
     }
 
     form {
-      margin-top: $spacing10;
-
       .m-form__fieldsContainer {
         margin-bottom: $spacing4;
-
-        .m-form__field--text {
-          margin-top: $spacing8;
-        }
       }
     }
   }
