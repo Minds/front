@@ -2,22 +2,14 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  QueryList,
-  ViewChildren,
   HostBinding,
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  first,
-  throttleTime,
-  distinctUntilChanged,
-  debounceTime,
-} from 'rxjs/operators';
+import { first, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client } from '../../../services/api';
-import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
@@ -36,10 +28,9 @@ import {
   style,
 } from '@angular/animations';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { BehaviorSubject, Subscription, Subject } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 const BOOST_VIEW_THRESHOLD = 1000;
@@ -119,12 +110,10 @@ export class NewsfeedBoostRotatorComponent {
     public scroll: ScrollService,
     public newsfeedService: NewsfeedService,
     public settingsService: SettingsV2Service,
-    private storage: Storage,
     public element: ElementRef,
     private cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
-    private experiments: ExperimentsService,
     private activityV2Experiment: ActivityV2ExperimentService,
     configs: ConfigsService
   ) {
