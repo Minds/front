@@ -13,6 +13,7 @@ import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
 import { FeaturesService } from '../../services/features.service';
 import { Subscription } from 'rxjs';
+import { SupermindExperimentService } from '../experiments/sub-services/supermind-experiment.service';
 
 /**
  * Container that determines what form/menu(s)
@@ -51,8 +52,8 @@ export class SettingsV2Component implements OnInit {
           id: 'security',
         },
         {
-          label: $localize`:@@SETTINGS__BILLING__LABEL:Billing`,
-          id: 'billing',
+          label: $localize`:@@SETTINGS__PAYMENTS__LABEL:Payments`,
+          id: 'payments',
         },
         { label: $localize`:@@SETTINGS__OTHER__LABEL:Other`, id: 'other' },
       ],
@@ -164,19 +165,19 @@ export class SettingsV2Component implements OnInit {
         ],
       },
     ],
-    billing: [
+    payments: [
       {
         header: {
-          label: $localize`:@@SETTINGS__BILLING__HEADER__LABEL:Billing`,
-          id: 'billing',
+          label: $localize`:@@SETTINGS__PAYMENTS__HEADER__LABEL:Payments`,
+          id: 'payments',
         },
         items: [
           {
-            label: $localize`:@@SETTINGS__BILLING__METHOD__LABEL:Payment Methods`,
+            label: $localize`:@@SETTINGS__PAYMENTS__METHOD__LABEL:Payment Methods`,
             id: 'payment-methods',
           },
           {
-            label: $localize`:@@SETTINGS__BILLING__RECURRING__LABEL:Recurring Payments`,
+            label: $localize`:@@SETTINGS__PAYMENTS__RECURRING__LABEL:Recurring Payments`,
             id: 'recurring-payments',
           },
         ],
@@ -329,7 +330,8 @@ export class SettingsV2Component implements OnInit {
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
     protected toasterService: ToasterService,
-    public featuresService: FeaturesService
+    public featuresService: FeaturesService,
+    private supermindExperiment: SupermindExperimentService
   ) {
     this.hasYoutubeFeature = this.featuresService.has('yt-importer');
   }
@@ -370,18 +372,8 @@ export class SettingsV2Component implements OnInit {
         this.setSecondaryPane();
       });
 
-    const contentMigrationMenu = this.secondaryMenus.other.find(
-      x => x.header.id === 'content-migration'
-    );
-
     // Conditionally show feature flagged items
-    if (this.hasYoutubeFeature) {
-      contentMigrationMenu.items.push({
-        label: 'Youtube',
-        id: 'youtube-migration',
-      });
-    }
-
+    this.addSupermindSettings();
     this.setProRoutes();
     this.setSecondaryPane();
     this.loadSettings();
@@ -486,5 +478,14 @@ export class SettingsV2Component implements OnInit {
 
   shouldShowPlusMenuItem(): boolean {
     return !this.session.getLoggedInUser().plus;
+  }
+
+  private addSupermindSettings(): void {
+    if (this.supermindExperiment.isActive()) {
+      this.secondaryMenus.payments[0].items.push({
+        label: 'Supermind',
+        id: 'supermind',
+      });
+    }
   }
 }
