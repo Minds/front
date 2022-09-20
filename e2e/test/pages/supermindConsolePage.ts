@@ -30,7 +30,7 @@ export class SupermindConsolePage {
   private chipBadge: CodeceptJS.Locator = locate('m-chipBadge');
   private expirationTimeLabel: CodeceptJS.Locator = locate(
     '.m-supermindListItem__expirationTimeLabel'
-  ).withText('Expires: ');
+  ).withText('Expire');
   private requirementsLabel: CodeceptJS.Locator = locate(
     '.m-supermindListItem__requirementsLabel'
   );
