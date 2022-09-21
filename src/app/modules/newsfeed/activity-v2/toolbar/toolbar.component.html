@@ -1,4 +1,18 @@
 <div
+  class="m-activityToolbar__largeActions"
+  *ngIf="
+    service.displayOptions.showInteractions && !service.displayOptions.isFeed
+  "
+>
+  <m-supermind__button
+    [entity]="entity"
+    [iconOnly]="false"
+    size="large"
+    data-ref="activity-large-supermind-action"
+  ></m-supermind__button>
+</div>
+
+<div
   class="m-activityToolbar__actions"
   [ngClass]="{
     'm-activityToolbar__actions--noMetrics': !showMetrics,
@@ -29,14 +43,21 @@
     "
   ></minds-button-comment>
   <!-- Show wire if not own post -->
-  <ng-container
+  <!-- <ng-container
     *ngIf="
       session.getLoggedInUser() &&
       session.getLoggedInUser().guid != entity.ownerObj.guid
     "
   >
     <m-wire-button [object]="entity"></m-wire-button>
-  </ng-container>
+  </ng-container> -->
+
+  <m-supermind__button
+    [entity]="entity"
+    [iconOnly]="true"
+    data-ref="activity-icon-supermind-action"
+    *ngIf="supermindExperiment.isActive()"
+  ></m-supermind__button>
 
   <!-- Show boost if own post -->
   <ng-container

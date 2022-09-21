@@ -39,6 +39,7 @@ import { ActivityV2ViewsComponent } from './views/views.component';
 import { ReadMoreModule } from '../../../common/read-more/v2/read-more.module';
 import { ActivityV2BoostedFlagComponent } from './flag/boosted-flag/boosted-flag.component';
 import { ActivityV2MultiImageComponent } from './content/images/multi-image.component';
+import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { ActivityV2MultiImageComponent } from './content/images/multi-image.comp
     CodeHighlightModule,
     ReadMoreModule,
     MatGridListModule,
+    SupermindSharedModule,
   ],
   declarations: [
     ActivityV2Component,
