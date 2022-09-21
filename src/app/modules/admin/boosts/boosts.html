@@ -160,6 +160,11 @@
         </m-button>
       </div>
     </div>
+    <infinite-scroll
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress"
+    ></infinite-scroll>
   </div>
 </div>
 <m--rejection-reason-modal
