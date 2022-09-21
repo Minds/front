@@ -1,0 +1,46 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep m-button .m-button {
+    background: $supermindGradient;
+
+    @include m-theme() {
+      //border-color: themed($m-bgColor--primary) !important;
+      color: themed($m-white-always);
+    }
+
+    &:hover {
+      background: $supermindLightenedGradient;
+    }
+  }
+
+  /**
+   * Not liking these !important statements...
+   */
+  &.iconOnly {
+    ::ng-deep m-button .m-button {
+      border: 0 !important;
+      background: transparent !important;
+      padding: 0 !important;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary) !important;
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
+        }
+      }
+    }
+  }
+
+  /**
+   * Context for when showing large on single activity pages
+   */
+  .m-activityToolbar__largeActions & {
+    ::ng-deep m-button .m-button {
+      width: 100%;
+    }
+  }
+}

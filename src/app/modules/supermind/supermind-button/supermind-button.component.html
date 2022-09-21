@@ -1,0 +1,17 @@
+<m-button
+  [solid]="true"
+  color="blue"
+  [size]="size"
+  (onAction)="onClick($event)"
+  *ngIf="canShow"
+>
+  <ng-container *ngIf="iconOnly; else btnText">
+    <m-icon
+      from="md"
+      iconId="tips_and_updates"
+      [sizeFactor]="1.25"
+      [rem]="true"
+    ></m-icon>
+  </ng-container>
+  <ng-template #btnText>Supermind</ng-template>
+</m-button>
