@@ -30,8 +30,6 @@ namespace SupermindSteps {
     I.click(channelPage.supermindButton);
   });
 
-  //
-
   Then('I should see the supermind popout screen', num => {
     I.seeElement(composerModal.getSupermindPopup());
   });
