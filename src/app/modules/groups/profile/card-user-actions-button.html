@@ -1,0 +1,113 @@
+<m-dropdownMenu
+  [menu]="dropdownMenu"
+  *ngIf="
+        group['is:owner'] ||
+        (group['is:moderator'] && !(user['is:owner'] || user['is:moderator']))
+      "
+  ><m-icon iconId="settings">
+    <i class="material-icons">settings</i>
+  </m-icon>
+</m-dropdownMenu>
+
+<ng-template #dropdownMenu>
+  <ul>
+    <m-dropdownMenu__item
+      *ngIf="
+          (group['is:owner'] || group['is:moderator']) &&
+          !(user['is:owner'] || user['is:moderator']) &&
+          user['is:member']
+        "
+      (click)="removePrompt()"
+    >
+      <span i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_FROM_GROUP"
+        >Remove from Group</span
+      >
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="
+          (group['is:owner'] || group['is:moderator']) &&
+          !user['is:member'] &&
+          !wasReInvited
+        "
+      (click)="reInvite()"
+    >
+      <span i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REINVITE"
+        >Re-invite to Group</span
+      >
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="(group['is:owner'] || group['is:moderator']) && wasReInvited"
+    >
+      <span i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__INVITED">Invited</span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="
+          group['is:owner'] &&
+          !(user['is:owner'] || user['is:moderator']) &&
+          user['is:member']
+        "
+      (click)="grantOwnership()"
+    >
+      <span i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_ADMIN">
+        Make Admin</span
+      >
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="group['is:owner'] && user['is:owner'] && user['is:member']"
+      (click)="revokeOwnership()"
+    >
+      <span i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_ADMIN">
+        Remove as Admin</span
+      >
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="
+          group['is:owner'] &&
+          !(user['is:owner'] || user['is:moderator']) &&
+          user['is:member']
+        "
+      (click)="grantModerator()"
+    >
+      <span i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_MODERATOR">
+        Make Moderator</span
+      >
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="group['is:owner'] && user['is:moderator'] && user['is:member']"
+      (click)="revokeModerator()"
+    >
+      <span i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_MODERATOR">
+        Remove as Moderator</span
+      >
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>
+
+<m-modal [open]="kickPrompt">
+  <div class="mdl-card__supporting-text">
+    <p i18n="@@GROUPS__REMOVE_X_FROM_Y_CONFIRM">
+      Are you sure you want to remove {{ user.username }} from {{ group.name }}?
+    </p>
+    <p>
+      <input type="checkbox" #ban />
+      <ng-container i18n="@@M__COMMON__BAN_PERMANENTLY"
+        >Ban permanently</ng-container
+      >
+    </p>
+  </div>
+  <div class="minds-modal-dialog-actions">
+    <button
+      (click)="kick(ban.checked)"
+      class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+      data-cy="data-minds-modal-confirm"
+    >
+      <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
+    </button>
+    <button
+      (click)="cancelRemove()"
+      class="mdl-button mdl-js-button mdl-button--colored"
+    >
+      <ng-container i18n="@@M__ACTION__CANCEL">Cancel</ng-container>
+    </button>
+  </div>
+</m-modal>

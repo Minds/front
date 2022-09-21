@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
 import { MindsFormsModule } from '../forms/forms.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
@@ -85,7 +84,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     CommentsModule,
-    LegacyModule,
     ModalsModule,
     MindsFormsModule,
     AdsModule,

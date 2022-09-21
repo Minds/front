@@ -28,7 +28,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { SocialIcons } from '../../legacy/components/social-icons/social-icons';
+import { SocialIcons } from '../../../common/components/social-icons/social-icons';
 import { ActivityComponent } from '../activity/activity.component';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';

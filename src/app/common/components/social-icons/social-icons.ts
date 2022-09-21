@@ -1,6 +1,5 @@
 import { Component, EventEmitter } from '@angular/core';
-
-import { EmbedService } from '../../../../services/embed.service';
+import { EmbedService } from '../../../services/embed.service';
 
 /**
  * Social media icons that allow users to easily share links to blogs and single activity pages.

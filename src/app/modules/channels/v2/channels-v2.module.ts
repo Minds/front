@@ -43,6 +43,7 @@ import { ExperimentsModule } from '../../experiments/experiments.module';
 import { ContentSettingsModule } from '../../content-settings/content-settings.module';
 import { MutualSubscriptionsComponent } from './mutual-subscriptions/mutual-subscriptions.component';
 import { ChannelActionsSuperminButtonComponent } from './actions/supermind/supermind-button.component';
+import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
 
 /**
  * Generally available components
@@ -109,6 +110,7 @@ const PROVIDERS = [ChannelEditModalService];
     ComposerModule,
     ExperimentsModule,
     SuggestionsModule,
+    SupermindSharedModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

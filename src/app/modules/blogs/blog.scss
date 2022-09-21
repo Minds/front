@@ -163,22 +163,6 @@ m-blog-view {
     border-right: 1px solid themed($m-borderColor--primary);
   }
 
-  header {
-    //position: relative;
-
-    minds-banner-fat {
-      height: auto;
-      .minds-banner {
-        position: relative;
-        img {
-          height: 400px;
-          object-fit: cover;
-          width: 100%;
-        }
-      }
-    }
-  }
-
   .minds-banner .minds-banner-overlay {
     display: none;
   }

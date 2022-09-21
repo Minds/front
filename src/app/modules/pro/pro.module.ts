@@ -12,7 +12,6 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { ProChannelListComponent } from './channel/list/list.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
-import { LegacyModule } from '../legacy/legacy.module';
 import { WireModule } from '../wire/wire.module';
 import { VideoModule } from '../media/components/video/video.module';
 import { ProCategoriesComponent } from './channel/categories/categories.component';
@@ -140,7 +139,6 @@ export const PRO_DOMAIN_ROUTES = [
     RouterModule.forChild(routes),
     MindsFormsModule,
     NewsfeedModule,
-    LegacyModule,
     WireModule,
     VideoModule,
     AuthModule,
