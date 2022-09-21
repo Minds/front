@@ -325,12 +325,6 @@ export class ActivityV2ContentComponent
         }
       })
     );
-    // ojm check
-    // this.subscriptions.push(
-    //   this.service.shouldShowPaywall$.subscribe((shouldShow: boolean) => {
-    //     this.showPaywall = shouldShow;
-    //   })
-    // );
     this.subscriptions.push(
       this.service.shouldShowPaywallBadge$.subscribe((shouldShow: boolean) => {
         this.showPaywallBadge = shouldShow;
