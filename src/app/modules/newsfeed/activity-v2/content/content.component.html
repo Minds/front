@@ -258,7 +258,7 @@ post content to trigger upgrade modal -->
             [disabled]="
               service.displayOptions.isFeed && persistentFeedExperimentActive
             "
-            (click)="onReadMoreClick($event)"
+            (onToggle)="onReadMoreClick($event)"
           ></m-readMore>
         </p>
       </div>
