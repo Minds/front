@@ -62,10 +62,6 @@
                 entity.activity_type !== 'rich-embed' &&
                 entity.content_type !== 'rich-embed'
               "
-              [showPaywall]="activityService.shouldShowPaywall$ | async"
-              [showPaywallBadge]="
-                activityService.shouldShowPaywallBadge$ | async
-              "
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
               [maxHeightAllowed]="modalHeight"
             ></m-activity__content>
@@ -137,10 +133,6 @@
                   showContentMessageOnRight
                 "
                 [hideMedia]="true"
-                [showPaywall]="activityService.shouldShowPaywall$ | async"
-                [showPaywallBadge]="
-                  activityService.shouldShowPaywallBadge$ | async
-                "
               >
               </m-activity__content>
 

@@ -136,7 +136,6 @@ export class ActivityV2ContentComponent
   imageAspectRatio: number = 0;
   imageOriginalHeight: number;
 
-  showPaywall: boolean = false;
   showPaywallBadge: boolean = false;
 
   paywallUnlocked: boolean = false;
@@ -326,11 +325,12 @@ export class ActivityV2ContentComponent
         }
       })
     );
-    this.subscriptions.push(
-      this.service.shouldShowPaywall$.subscribe((shouldShow: boolean) => {
-        this.showPaywall = shouldShow;
-      })
-    );
+    // ojm check
+    // this.subscriptions.push(
+    //   this.service.shouldShowPaywall$.subscribe((shouldShow: boolean) => {
+    //     this.showPaywall = shouldShow;
+    //   })
+    // );
     this.subscriptions.push(
       this.service.shouldShowPaywallBadge$.subscribe((shouldShow: boolean) => {
         this.showPaywallBadge = shouldShow;
