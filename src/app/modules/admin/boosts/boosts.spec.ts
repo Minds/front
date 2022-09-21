@@ -58,14 +58,6 @@ class MindsCardBlogMock {
 }
 
 @Component({
-  selector: 'minds-card-user',
-  template: '',
-})
-class MindsCardUserMock {
-  @Input() object: any;
-}
-
-@Component({
   selector: 'minds-activity',
   template: '',
 })
@@ -140,7 +132,6 @@ describe('AdminBoosts', () => {
           MindsCardVideoMock,
           MindsCardImageMock,
           MindsCardBlogMock,
-          MindsCardUserMock,
           MindsActivityMock,
           MindsCardGroupMock,
           RejectionReasonModalMock,
@@ -436,5 +427,28 @@ describe('AdminBoosts', () => {
     comp.accept(comp.boosts[0], true);
 
     expect(clientMock.post).not.toHaveBeenCalled();
+  }));
+
+  it('should identify when there is more to load', fakeAsync(() => {
+    comp.load();
+    tick();
+    expect(comp.moreData).toBeTrue();
+  }));
+
+  it('should identify when there is no more to load', fakeAsync(() => {
+    comp.moreData = true;
+
+    clientMock.response[`api/v1/admin/boosts/newsfeed`] = {
+      status: 'success',
+      boosts: [],
+      count: 4,
+      'load-next': null,
+      newsfeed_count: 4,
+      content_count: 2,
+    };
+
+    comp.load();
+    tick();
+    expect(comp.moreData).toBeFalse();
   }));
 });

@@ -1,13 +1,37 @@
+import { Helpers } from '../helpers/helpers';
 import { CommonPage } from '../pages/commonPage';
+import { NewsfeedPage } from '../pages/newsfeedPage';
+import RegisterPage from '../pages/registerPage';
 
 namespace CommonSteps {
-  const { I, loginPage, newsfeedPage } = inject();
+  const { I, loginPage } = inject();
 
   const commonPage = new CommonPage();
+  const newsfeedPage = new NewsfeedPage();
+  const helpers = new Helpers();
+  const registerPage = new RegisterPage();
+
+  /**
+   * Create a new user.
+   * @return { void }
+   */
+  Given('I create a new user', (): void => {
+    const username = helpers.generateRandomString();
+    const email = 'noreply@minds.com';
+    const password = helpers.generateRandomString() + 'A1!';
+
+    I.clearCookie();
+    registerPage.navigateToByUrl();
+    registerPage.fillForm(username, password, email);
+    registerPage.clickJoinNow();
+
+    I.waitForNavigation({ timeout: 30000 });
+    // TODO: Handle email code verification.
+  });
 
   /**
    * Log in with standard test user - will not re-log in if cookie is present.
-   * Do not to switch users.
+   * Is not not meant to switch users.
    * @return { Promise<void> }
    */
   Given(
@@ -17,8 +41,19 @@ namespace CommonSteps {
         return;
       }
 
+      I.clearCookie();
+      I.refreshPage();
       I.amOnPage(loginPage.loginURI);
-      loginPage.login(loginPage.validUsername, loginPage.validPassword);
+
+      await Promise.all([
+        loginPage.login(loginPage.validUsername, loginPage.validPassword),
+        I.waitForResponse(
+          resp =>
+            resp.url().includes('/api/v2/mwa/pv') && resp.status() === 200,
+          30
+        ),
+      ]);
+
       I.seeCookie('minds_sess');
     }
   );
@@ -29,8 +64,6 @@ namespace CommonSteps {
    * @return { void }
    */
   Given('I log in as {string}', (username: string): void => {
-    I.clearCookie();
-
     let password;
 
     switch (username) {
@@ -42,8 +75,10 @@ namespace CommonSteps {
         break;
     }
 
+    I.clearCookie();
     I.amOnPage(loginPage.loginURI);
     loginPage.login(username, password);
+    I.waitForNavigation({ timeout: 30000 });
     I.seeCookie('minds_sess');
   });
 
@@ -71,5 +106,10 @@ namespace CommonSteps {
 
   Then('I should see {string} in current URL', (path: string) => {
     I.seeInCurrentUrl(path);
+  });
+
+  Then('I clear my cookies', () => {
+    I.clearCookie();
+    I.refreshPage();
   });
 }

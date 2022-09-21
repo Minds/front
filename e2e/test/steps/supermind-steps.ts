@@ -23,11 +23,15 @@ namespace SupermindSteps {
   });
 
   When('I click the supermind creator clear button', () => {
-    I.click('[data-ref=supermind-clear-button]');
+    I.click('[data-ref=supermind-clear-button] m-button');
   });
 
   When('I click on the channel supermind button', () => {
     I.click(channelPage.supermindButton);
+  });
+
+  When('I click the activity post supermind icon on the toolbar', () => {
+    I.click('[data-ref=activity-icon-supermind-action] m-button');
   });
 
   //
@@ -52,5 +56,8 @@ namespace SupermindSteps {
     composerModal.shouldHaveSupermindBadge(false);
   });
 
-  Then('I should see prefilled supermind details in the composer', () => {});
+  Then('I should see prefilled supermind details in the composer', () => {
+    I.waitForElement(composerModal.modalElementTag, 5);
+    I.seeElement(composerModal.getSupermindPopup());
+  });
 }

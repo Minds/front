@@ -28,6 +28,7 @@
   }
 
   .m-sidebarNavigation {
+    @include z-index(sidebar);
     min-width: 0;
     display: block;
     width: $layoutSidebarFullWidth;

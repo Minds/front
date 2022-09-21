@@ -21,6 +21,7 @@ import { FeaturesService } from '../../../../services/features.service';
 import { TranslationService } from '../../../../services/translation';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { DownloadActivityMediaService } from '../../../../common/services/download-activity-media.service';
+import { WireModalService } from '../../../wire/wire-modal.service';
 
 /**
  * Options for the activity's meatball menu (different options show for owners).
@@ -51,7 +52,8 @@ export class ActivityV2MenuComponent implements OnInit, OnDestroy {
     private injector: Injector,
     public translationService: TranslationService,
     private toasterService: ToasterService,
-    public downloadActivityMediaService: DownloadActivityMediaService
+    public downloadActivityMediaService: DownloadActivityMediaService,
+    private wireModalService: WireModalService
   ) {}
 
   ngOnInit() {
@@ -83,6 +85,7 @@ export class ActivityV2MenuComponent implements OnInit, OnDestroy {
           'rating',
           'allow-comments',
           'download',
+          'wire',
         ];
       } else {
         return [
@@ -99,6 +102,7 @@ export class ActivityV2MenuComponent implements OnInit, OnDestroy {
           'rating',
           'allow-comments',
           'download',
+          'wire',
         ];
       }
     } else {
@@ -157,6 +161,9 @@ export class ActivityV2MenuComponent implements OnInit, OnDestroy {
         break;
       case 'download':
         this.downloadActivityMediaService.download(this.entity);
+        break;
+      case 'wire':
+        await this.wireModalService.present(this.entity);
         break;
     }
   }

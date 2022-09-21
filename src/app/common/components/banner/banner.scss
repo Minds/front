@@ -161,18 +161,3 @@
     }
   }
 }
-
-minds-banner-fat {
-  display: block;
-  height: 100vh;
-
-  &.minds-banner-editing {
-    img {
-      cursor: pointer;
-    }
-  }
-  .minds-banner {
-    height: auto;
-    max-height: none;
-  }
-}

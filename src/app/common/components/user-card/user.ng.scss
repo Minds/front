@@ -1,0 +1,136 @@
+@import 'defaults.scss';
+
+:host {
+  min-height: 142px !important;
+  .minds-tabs a {
+    overflow: visible;
+  }
+  .m-usercard-bio {
+    display: none;
+  }
+  .avatar img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+  }
+
+  display: block !important;
+  .m-card--user--banner {
+    width: 100%;
+    height: 84px;
+    overflow: hidden;
+    position: relative;
+
+    .m-card--user--banner--img {
+      width: 100%;
+      height: 100%;
+      background: none no-repeat center center transparent;
+      background-size: cover;
+      @include m-theme() {
+        background-color: themed($m-grey-800);
+      }
+    }
+
+    .minds-banner-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      @include m-theme() {
+        background: linear-gradient(transparent, rgba(themed($m-black), 0.4));
+      }
+    }
+  }
+
+  .minds-usercard-block {
+    margin-top: -60px;
+    padding-bottom: 0;
+    position: relative;
+    display: flex;
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-white-always);
+    }
+
+    img {
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .body {
+      flex: 1;
+      margin: 0 20px 20px;
+      max-width: calc(100% - #{100px + ($minds-padding * 3)});
+
+      h3 {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 16px;
+        line-height: 18px;
+        padding: 0 0 0 1px;
+        margin: 0;
+        @include m-theme() {
+          text-shadow: -1px -1px 0 themed($m-black-always),
+            1px -1px 0 themed($m-black-always),
+            -1px 1px 0 themed($m-black-always),
+            1px 1px 0 themed($m-black-always);
+        }
+      }
+      span {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0 0 0 1px;
+        @include m-theme() {
+          text-shadow: -1px -1px 0 themed($m-black-always),
+            1px -1px 0 themed($m-black-always),
+            -1px 1px 0 themed($m-black-always),
+            1px 1px 0 themed($m-black-always);
+        }
+      }
+      button {
+        margin-top: $minds-margin;
+        width: 100%;
+      }
+    }
+  }
+
+  minds-button-subscribe,
+  m-boostButton {
+    position: absolute;
+    margin: -26px 0 0 110px;
+  }
+
+  minds-button-feature {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    button {
+      padding: 0;
+    }
+  }
+
+  .minds-usercard-buttons {
+    position: absolute;
+    top: $minds-padding;
+    right: $minds-padding;
+
+    &.has-feature-button {
+      right: $minds-padding + 30px;
+    }
+
+    [buttons] {
+      display: inline-block;
+    }
+  }
+
+  ::ng-deep minds-groups-card-user-actions-button {
+    > button {
+      border: none;
+    }
+  }
+}

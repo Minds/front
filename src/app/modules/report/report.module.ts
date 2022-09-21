@@ -4,7 +4,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { CommonModule } from '../../common/common.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { TokenOnboardingModule } from '../wallet/tokens/onboarding/onboarding.module';
 import { ReportCreatorComponent } from './creator/creator.component';
 import { ReportConsoleComponent } from './console/console.component';
@@ -27,7 +26,6 @@ import { MarketingModule } from '../marketing/marketing.module';
     NgCommonModule,
     RouterModule,
     CommonModule,
-    LegacyModule,
     CommentsModule,
     MarketingModule,
     RouterModule.forChild([

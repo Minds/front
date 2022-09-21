@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
 import { MindsFormsModule } from '../forms/forms.module';
 
@@ -35,7 +34,6 @@ const routes: Routes = [
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,
-    LegacyModule,
     ModalsModule,
     MindsFormsModule,
     MarketingModule,

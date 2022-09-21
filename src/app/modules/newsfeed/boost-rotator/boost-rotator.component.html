@@ -5,7 +5,7 @@
     class="m-newsfeed__boostRotator"
     [style.min-height]="height"
     [style.max-height]="activityV2Feature ? height : 'none'"
-    [hidden]="!activityV2Feature && !boosts.length"
+    [hidden]="!boosts.length"
   >
     <!-- ACTIVITY V2 BOOST ROTATOR TOP ROW  -->
     <div *ngIf="activityV2Feature && init" class="m-boostRotator__toolbar">
