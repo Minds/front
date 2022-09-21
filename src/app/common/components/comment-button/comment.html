@@ -1,0 +1,18 @@
+<a [ngClass]="{ selected: object['comments:count'] > 0 }">
+  <i
+    class="material-icons"
+    *ngIf="(activityService.allowComment$ | async) === true"
+    >chat_bubble</i
+  >
+  <i
+    class="material-icons"
+    *ngIf="(activityService.allowComment$ | async) === false"
+    title="Comments have been disabled for this post"
+    i18n-title="@@COMMENTS__DISABLED"
+  >
+    speaker_notes_off
+  </i>
+  <span class="minds-counter" *ngIf="object['comments:count'] > 0 && !iconOnly"
+    >{{ object['comments:count'] | number }}</span
+  >
+</a>

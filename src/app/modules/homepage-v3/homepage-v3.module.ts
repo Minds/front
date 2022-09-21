@@ -6,7 +6,6 @@ import {
 } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
 import { MindsFormsModule } from '../forms/forms.module';
 
@@ -22,7 +21,6 @@ import { RouterModule } from '@angular/router';
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,
-    LegacyModule,
     ModalsModule,
     MindsFormsModule,
     MarketingModule,

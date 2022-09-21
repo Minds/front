@@ -17,7 +17,6 @@ import { VideoModule } from '../../media/components/video/video.module';
 import { MediaModule } from '../../media/media.module';
 import { ActivityV2ToolbarComponent } from './toolbar/toolbar.component';
 import { ModalsModule } from '../../modals/modals.module';
-import { LegacyModule } from '../../legacy/legacy.module';
 import { ActivityV2MenuComponent } from './menu/menu.component';
 import { PostMenuModule } from '../../../common/components/post-menu/post-menu.module';
 import { WireModule } from '../../wire/wire.module';
@@ -53,7 +52,6 @@ import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
     MediaModule,
     VideoModule,
     ModalsModule,
-    LegacyModule, // For remind button
     PostMenuModule,
     WireModule,
     CodeHighlightModule,

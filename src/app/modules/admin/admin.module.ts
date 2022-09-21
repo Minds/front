@@ -14,7 +14,6 @@ import { AdminFeaturesComponent } from './features/admin-features.component';
 import { CommonModule } from '../../common/common.module';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { LegacyModule } from '../legacy/legacy.module';
 import { GroupsModule } from '../groups/groups.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentsModule } from '../comments/comments.module';
@@ -42,7 +41,6 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    LegacyModule,
     GroupsModule,
     CommentsModule,
     ReactiveFormsModule,

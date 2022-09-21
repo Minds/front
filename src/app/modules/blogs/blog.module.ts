@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { ModalsModule } from '../modals/modals.module';
 import { AdsModule } from '../ads/ads.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
 import { BlogCard } from './card/card';
@@ -52,7 +51,6 @@ const routes: Routes = [
     ModalsModule,
     AdsModule,
     CommentsModule,
-    LegacyModule,
     PostMenuModule,
     WireModule,
     HashtagsModule,
