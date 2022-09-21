@@ -15,7 +15,6 @@ import {
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 
-import { UserCard } from '../../../modules/legacy/components/cards/user/user';
 import { GroupsCard } from '../../../modules/groups/card/card';
 import { BlogCard } from '../../../modules/blogs/card/card';
 import { CommentComponentV2 } from '../../../modules/comments/comment/comment.component';
@@ -23,6 +22,7 @@ import { ActivityService } from '../../services/activity.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
+import { UserCard } from '../user-card/user';
 
 /**
  * Generic component that receives an entity, figures out the entity type,

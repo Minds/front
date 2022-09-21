@@ -58,14 +58,6 @@ class MindsCardBlogMock {
 }
 
 @Component({
-  selector: 'minds-card-user',
-  template: '',
-})
-class MindsCardUserMock {
-  @Input() object: any;
-}
-
-@Component({
   selector: 'minds-activity',
   template: '',
 })
@@ -140,7 +132,6 @@ describe('AdminBoosts', () => {
           MindsCardVideoMock,
           MindsCardImageMock,
           MindsCardBlogMock,
-          MindsCardUserMock,
           MindsActivityMock,
           MindsCardGroupMock,
           RejectionReasonModalMock,
