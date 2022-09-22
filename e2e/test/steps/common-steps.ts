@@ -74,6 +74,7 @@ namespace CommonSteps {
         break;
       case process.env.SUPERMIND_SETTINGS_USERNAME:
         password = process.env.SUPERMIND_SETTINGS_PASSWORD;
+        break;
       default:
         password = process.env.PLAYWRIGHT_PASSWORD;
         break;
