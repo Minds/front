@@ -101,6 +101,7 @@ Feature: supermind
 
   Scenario: creating a superminds from an activity post
     Given I am logged in
+    And I am on the newsfeed
     And I have created a new post via the newsfeed
     When I click the activity post supermind icon on the toolbar
     Then I should see prefilled supermind details in the composer
