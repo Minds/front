@@ -2,7 +2,7 @@ Feature: Supermind Settings
   As a user I want to be able to change my Supermind Settings
 
   Scenario: Submitting a settings change
-    Given I log in as "supermind_sender"
+    Given I log in as "supermind_settings"
     And I am on the Supermind settings page
     And I fill out random Supermind settings values
     When I submit the Supermind settings form
@@ -10,7 +10,7 @@ Feature: Supermind Settings
     And I should see that on refresh my settings persisted
 
   Scenario: Proposing an invalid settings change
-    Given I log in as "supermind_sender"
+    Given I log in as "supermind_settings"
     And I am on the Supermind settings page
     And I fill out invalid Supermind settings values
     Then I should see a disabled Supermind submit button

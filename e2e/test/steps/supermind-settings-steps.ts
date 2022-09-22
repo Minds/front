@@ -17,6 +17,8 @@ namespace SupermindSettingsSteps {
   const invalidMinOffchainTokenAmount = '1.234';
   const invalidMinCashAmount = '1';
 
+  Before(() => {});
+
   Given('I am on the Supermind settings page', async () => {
     await supermindSettingsPage.navigateToViaSupermindConsole();
   });
@@ -58,4 +60,6 @@ namespace SupermindSettingsSteps {
       supermindSettingsPage.validationErrorText.two_decimal_places
     );
   });
+
+  After(() => {});
 }
