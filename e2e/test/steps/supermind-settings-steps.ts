@@ -1,4 +1,4 @@
-import SupermindSettingsPage from '../pages/supermindSettingsPage';
+import { SupermindSettingsPage } from '../pages/supermindSettingsPage';
 
 namespace SupermindSettingsSteps {
   const { I } = inject();

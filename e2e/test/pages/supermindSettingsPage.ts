@@ -1,11 +1,11 @@
 import { SidebarComponent } from '../components/sidebarComponent';
-import SupermindConsolePage from './supermindConsolePage';
+import { SupermindConsolePage } from './supermindConsolePage';
 
 const { I } = inject();
 const sidebarComponent = new SidebarComponent();
 const supermindConsole = new SupermindConsolePage();
 
-class SupermindSettingsPage {
+export class SupermindSettingsPage {
   // Selectors.
   private readonly minOffchainTokensInputSelector: string =
     '[data-cy=supermind-settings-min-tokens-input]';
@@ -104,5 +104,3 @@ class SupermindSettingsPage {
     I.seeElement(locate(this.validationErrors).withText(text));
   }
 }
-
-export = SupermindSettingsPage;
