@@ -31,7 +31,7 @@ export = {
     );
     I.waitForElement(
       locate('button')
-        .withText('Boost')
+        .withText('trending_up')
         .inside(
           locate('m-activity').withDescendant(
             locate('span').withText(postContent)
@@ -41,7 +41,7 @@ export = {
     );
     I.click(
       locate('button')
-        .withText('Boost')
+        .withText('trending_up')
         .inside(
           locate('m-activity').withDescendant(
             locate('span').withText(postContent)

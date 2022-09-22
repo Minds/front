@@ -64,6 +64,7 @@ namespace SupermindSteps {
     I.seeElement(composerModal.getSupermindPopup());
     I.waitForElement(composerModal.composerCloseButton);
     I.click(composerModal.composerCloseButton);
+    I.pressKey('Escape');
   });
 
   After(() => {});
