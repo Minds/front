@@ -30,7 +30,7 @@ namespace SupermindSteps {
   });
 
   When('I click on the channel supermind button', () => {
-    I.waitForElement(channelPage.supermindButton);
+    I.waitForElement(channelPage.supermindButton, 5);
     I.click(channelPage.supermindButton);
   });
 
