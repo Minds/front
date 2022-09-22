@@ -1,6 +1,8 @@
 namespace BoostSteps {
   const { I, boostPage } = inject();
 
+  Before(() => {});
+
   When('I create a post on newsfeed', () => {
     boostPage.createNewsfeedPost();
   });
@@ -28,4 +30,6 @@ namespace BoostSteps {
   Then('I can revoke a boost', () => {
     boostPage.revokeBoost();
   });
+
+  After(() => {});
 }
