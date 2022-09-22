@@ -6,6 +6,8 @@ namespace SupermindSteps {
   const composerModal = new ComposerModal();
   const channelPage = new ChannelPage();
 
+  Before(() => {});
+
   When('I click the supermind icon on the composer toolbar', () => {
     composerModal.clickSupermindIcon();
   });
@@ -23,18 +25,19 @@ namespace SupermindSteps {
   });
 
   When('I click the supermind creator clear button', () => {
-    I.click('[data-ref=supermind-clear-button] m-button');
+    I.waitForElement(locate('button').withText('Clear'));
+    I.click(locate('button').withText('Clear'));
   });
 
   When('I click on the channel supermind button', () => {
+    I.waitForElement(channelPage.supermindButton, 5);
     I.click(channelPage.supermindButton);
   });
 
   When('I click the activity post supermind icon on the toolbar', () => {
+    I.waitForElement('[data-ref=activity-icon-supermind-action] m-button');
     I.click('[data-ref=activity-icon-supermind-action] m-button');
   });
-
-  //
 
   Then('I should see the supermind popout screen', num => {
     I.seeElement(composerModal.getSupermindPopup());
@@ -59,5 +62,10 @@ namespace SupermindSteps {
   Then('I should see prefilled supermind details in the composer', () => {
     I.waitForElement(composerModal.modalElementTag, 5);
     I.seeElement(composerModal.getSupermindPopup());
+    I.waitForElement(composerModal.composerCloseButton);
+    I.click(composerModal.composerCloseButton);
+    I.pressKey('Escape');
   });
+
+  After(() => {});
 }

@@ -10,6 +10,8 @@ namespace ComposerSteps {
   const composerModal = new ComposerModal();
   const newsfeedPage = new NewsfeedPage();
 
+  Before(() => {});
+
   Given('I have clicked on the sidebar composer button', () => {
     sidebarComponent.openSidebarComposer();
   });
@@ -85,4 +87,6 @@ namespace ComposerSteps {
   Then('I do not have the ability to schedule a post', () => {
     I.dontSeeElement(`${composerModal.postButton} m-dropdownmenu`);
   });
+
+  After(() => {});
 }
