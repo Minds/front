@@ -708,12 +708,6 @@ minds-groups-card-user-actions-button {
   }
 }
 
-.minds-dropdown-menu .minds-menu-info-item {
-  @include m-theme() {
-    color: themed($m-grey-300);
-  }
-}
-
 minds-groups-create {
   .invitees {
     > span {

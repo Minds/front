@@ -16,7 +16,6 @@ import { ProgressbarComponent } from './progressbar/progressbar.component';
 import { ChannelListComponent } from './steps/channels/list/list.component';
 import { GroupListComponent } from './steps/groups/list/list.component';
 import { MindsFormsModule } from '../forms/forms.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { GroupsModule } from '../groups/groups.module';
 import { OnboardingV2Service } from './service/onboarding.service';
 import { Client } from '../../services/api/client';
@@ -75,7 +74,6 @@ const routes: Routes = [
     MessengerModule,
     SuggestionsModule,
     MindsFormsModule,
-    LegacyModule,
     GroupsModule,
     ImageCropperModule,
   ],

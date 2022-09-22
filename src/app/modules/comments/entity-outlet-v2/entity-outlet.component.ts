@@ -25,6 +25,7 @@ import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 import { ActivityService } from '../../newsfeed/activity/activity.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
 @Component({
   selector: 'm-comments__entityOutletV2',
@@ -67,6 +68,7 @@ export class CommentsEntityOutletV2Component {
     private router: Router,
     private cd: ChangeDetectorRef,
     public legacyActivityService: ActivityServiceCommentsLegacySupport,
+    public persistentFeedExperiment: PersistentFeedExperimentService,
     public activityService: ActivityService
   ) {}
 
@@ -116,6 +118,14 @@ export class CommentsEntityOutletV2Component {
   }
 
   openFullComments(): void {
+    if (
+      this.persistentFeedExperiment.isActive() &&
+      this.activityService.displayOptions.isFeed
+    ) {
+      this.redirectToSinglePage();
+      return;
+    }
+
     if (this.fixedHeight) {
       // redirect to full view newsfeed post
       this.redirectToSinglePage();

@@ -42,6 +42,15 @@
       </span>
     </m-dropdownMenu__item>
 
+    <m-dropdownMenu__item
+      (click)="onSelectedOption('wire')"
+      *ngIf="options.indexOf('wire') !== -1"
+    >
+      <span i18n="@@M__ACTION__WIRE">
+        Tip
+      </span>
+    </m-dropdownMenu__item>
+
     <ng-container *ngIf="service.canPin$ | async">
       <m-dropdownMenu__item
         (click)="onSelectedOption('pin')"

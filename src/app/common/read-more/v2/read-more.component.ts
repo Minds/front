@@ -2,7 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
+  Output,
 } from '@angular/core';
 
 @Component({
@@ -39,6 +41,8 @@ export class ReadMoreComponent {
    */
   @Input() disabled = false;
 
+  @Output() onToggle = new EventEmitter();
+
   constructor(private cd: ChangeDetectorRef) {}
 
   /**
@@ -71,6 +75,8 @@ export class ReadMoreComponent {
    * It will control the outputText
    */
   toggle(): void {
+    this.onToggle.emit(!this.showAll);
+
     if (this.disabled) return;
 
     this.showAll = !this.showAll;

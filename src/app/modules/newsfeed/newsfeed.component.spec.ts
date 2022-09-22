@@ -53,11 +53,6 @@ describe('NewsfeedComponent', () => {
             template: '',
           }),
           MockComponent({
-            selector: 'minds-card-user',
-            inputs: ['object'],
-            template: '',
-          }),
-          MockComponent({
             selector: 'm-tagcloud',
             inputs: ['options'],
             template: '',

@@ -9,7 +9,6 @@ import { NotificationModule } from '../notifications/notification.module';
 import { ModalsModule } from '../modals/modals.module';
 import { ReportModule } from '../report/report.module';
 import { BlockchainModule } from '../blockchain/blockchain.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { MessengerModule } from '../messenger/messenger.module';
 import { RouterModule } from '@angular/router';
 import { ComposerModule } from '../composer/composer.module';
@@ -26,7 +25,6 @@ import { AppPromptModule } from '../app-prompt/app-prompt.module';
     OnboardingV2Module,
     ReportModule,
     BlockchainModule,
-    LegacyModule,
     MessengerModule,
     ComposerModule,
     AppPromptModule,
