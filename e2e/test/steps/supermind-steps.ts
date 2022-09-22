@@ -6,6 +6,8 @@ namespace SupermindSteps {
   const composerModal = new ComposerModal();
   const channelPage = new ChannelPage();
 
+  Before(() => {});
+
   When('I click the supermind icon on the composer toolbar', () => {
     composerModal.clickSupermindIcon();
   });
@@ -58,4 +60,6 @@ namespace SupermindSteps {
     I.waitForElement(composerModal.modalElementTag, 5);
     I.seeElement(composerModal.getSupermindPopup());
   });
+
+  After(() => {});
 }

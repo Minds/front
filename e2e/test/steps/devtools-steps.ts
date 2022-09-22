@@ -4,6 +4,8 @@ import { Environment } from '../types/devtools.types';
 namespace DevToolsSteps {
   const devtoolsPage = new DevtoolsPage();
 
+  Before(() => {});
+
   Given('I am on the devtools page', (): void => {
     devtoolsPage.navigateTo();
   });
@@ -19,4 +21,5 @@ namespace DevToolsSteps {
       await devtoolsPage.checkEnvironment(environment as Environment);
     }
   );
+  After(() => {});
 }

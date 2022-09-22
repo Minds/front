@@ -1,6 +1,8 @@
 namespace LoginSteps {
   const { I, loginPage } = inject();
 
+  Before(() => {});
+
   Given('I am on Login page', () => {
     I.amOnPage(loginPage.loginURI);
   });
@@ -50,4 +52,6 @@ namespace LoginSteps {
   Then('I see empty credentials error', () => {
     I.seeElement(locate('div').withText('Username is required.'));
   });
+
+  After(() => {});
 }

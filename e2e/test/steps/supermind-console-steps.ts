@@ -9,6 +9,8 @@ namespace SupermindConsoleSteps {
   const supermindConsolePage = new SupermindConsolePage();
   const composerModalPage = new ComposerModal();
 
+  Before(() => {});
+
   Given(
     'I am on the Supermind Console {string} page',
     (context: string): void => {
@@ -111,4 +113,6 @@ namespace SupermindConsoleSteps {
      */
     supermindConsolePage.checkSupermindNotActionable();
   });
+
+  After(() => {});
 }

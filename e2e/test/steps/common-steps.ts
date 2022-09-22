@@ -11,6 +11,8 @@ namespace CommonSteps {
   const helpers = new Helpers();
   const registerPage = new RegisterPage();
 
+  Before(() => {});
+
   /**
    * Create a new user.
    * @return { void }
@@ -112,4 +114,6 @@ namespace CommonSteps {
     I.clearCookie();
     I.refreshPage();
   });
+
+  After(() => {});
 }
