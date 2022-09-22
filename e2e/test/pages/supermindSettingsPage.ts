@@ -26,10 +26,19 @@ class SupermindSettingsPage {
    * Navigate to console via sidebar.
    * @returns { void }
    */
-  public navigateToViaSupermindConsole(): void {
+  public async navigateToViaSupermindConsole(): Promise<void> {
     sidebarComponent.expandSidebarMore();
     sidebarComponent.openSupermindConsole();
-    supermindConsole.clickSettingsCog();
+
+    await Promise.all([
+      supermindConsole.clickSettingsCog(),
+      I.waitForResponse(
+        resp =>
+          resp.url().includes('/api/v3/supermind/settings') &&
+          resp.status() === 200,
+        30
+      ),
+    ]);
   }
 
   /**
@@ -38,6 +47,7 @@ class SupermindSettingsPage {
    * @returns { void }
    */
   public inputMinOffchainTokens(amount: string): void {
+    I.seeElement(this.minOffchainTokensInputSelector);
     I.clearField(this.minOffchainTokensInputSelector);
     I.fillField(this.minOffchainTokensInputSelector, amount);
   }
@@ -48,6 +58,7 @@ class SupermindSettingsPage {
    * @returns { void }
    */
   public inputMinCash(amount: string): void {
+    I.seeElement(this.minCashInputSelector);
     I.clearField(this.minCashInputSelector);
     I.fillField(this.minCashInputSelector, amount);
   }

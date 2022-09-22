@@ -17,8 +17,8 @@ namespace SupermindSettingsSteps {
   const invalidMinOffchainTokenAmount = '1.234';
   const invalidMinCashAmount = '1';
 
-  Given('I am on the Supermind settings page', () => {
-    supermindSettingsPage.navigateToViaSupermindConsole();
+  Given('I am on the Supermind settings page', async () => {
+    await supermindSettingsPage.navigateToViaSupermindConsole();
   });
 
   Given('I fill out random Supermind settings values', () => {

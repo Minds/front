@@ -20,9 +20,9 @@ namespace SettingsSteps {
     I.click(locate('a').withText('Security'));
   });
 
-  When('I am on the billing settings page', () => {
-    I.seeElement(locate('a').withText('Billing'));
-    I.click(locate('a').withText('Billing'));
+  When('I am on the payments settings page', () => {
+    I.seeElement(locate('a').withText('Payments'));
+    I.click(locate('a').withText('Payments'));
   });
 
   When('I am on the other settings page', () => {
@@ -35,7 +35,7 @@ namespace SettingsSteps {
     I.seeElement(locate('a').withText('Account'));
     I.seeElement(locate('a').withText('Pro'));
     I.seeElement(locate('a').withText('Security'));
-    I.seeElement(locate('a').withText('Billing'));
+    I.seeElement(locate('a').withText('Payments'));
     I.seeElement(locate('a').withText('Other'));
   });
 
@@ -75,7 +75,7 @@ namespace SettingsSteps {
     I.seeElement(locate('a').withText('Sessions'));
   });
 
-  Then('I see billing submenus within settings', () => {
+  Then('I see payments submenus within settings', () => {
     I.seeElement(settingsPage.settingsHeader);
     I.seeElement(locate('a').withText('Payment Methods'));
     I.seeElement(locate('a').withText('Recurring Payments'));
@@ -89,7 +89,7 @@ namespace SettingsSteps {
     I.seeElement(locate('a').withText('Blocked Channels'));
     I.seeElement(locate('a').withText('Subscription Tier Management'));
     I.seeElement(locate('a').withText('Twitter'));
-    I.seeElement(locate('a').withText('Youtube'));
+    // I.seeElement(locate('a').withText('Youtube'));
     I.seeElement(locate('a').withText('Deactivate Account'));
     I.seeElement(locate('a').withText('Delete Account'));
   });
