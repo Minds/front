@@ -1,5 +1,4 @@
 require('dotenv').config();
-const { I } = inject();
 
 export class ChannelPage {
   /**

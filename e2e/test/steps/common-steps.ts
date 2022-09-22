@@ -1,7 +1,7 @@
 import { Helpers } from '../helpers/helpers';
 import { CommonPage } from '../pages/commonPage';
 import { NewsfeedPage } from '../pages/newsfeedPage';
-import RegisterPage from '../pages/registerPage';
+import { RegisterPage } from '../pages/registerPage';
 
 namespace CommonSteps {
   const { I, loginPage } = inject();
@@ -10,6 +10,8 @@ namespace CommonSteps {
   const newsfeedPage = new NewsfeedPage();
   const helpers = new Helpers();
   const registerPage = new RegisterPage();
+
+  Before(() => {});
 
   /**
    * Create a new user.
@@ -112,4 +114,6 @@ namespace CommonSteps {
     I.clearCookie();
     I.refreshPage();
   });
+
+  After(() => {});
 }

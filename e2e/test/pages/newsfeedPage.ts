@@ -8,6 +8,7 @@ export class NewsfeedPage {
   }
 
   openComposer() {
+    I.waitForElement(this.composerBox, 5);
     I.click(this.composerBox);
   }
 }

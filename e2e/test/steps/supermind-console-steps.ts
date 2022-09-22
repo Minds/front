@@ -1,5 +1,5 @@
 import { ComposerModal } from '../pages/composerModal';
-import SupermindConsolePage from '../pages/supermindConsolePage';
+import { SupermindConsolePage } from '../pages/supermindConsolePage';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
@@ -8,6 +8,8 @@ import {
 namespace SupermindConsoleSteps {
   const supermindConsolePage = new SupermindConsolePage();
   const composerModalPage = new ComposerModal();
+
+  Before(() => {});
 
   Given(
     'I am on the Supermind Console {string} page',
@@ -111,4 +113,6 @@ namespace SupermindConsoleSteps {
      */
     supermindConsolePage.checkSupermindNotActionable();
   });
+
+  After(() => {});
 }

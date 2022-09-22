@@ -1,6 +1,8 @@
 namespace SettingsSteps {
   const { I, settingsPage } = inject();
 
+  Before(() => {});
+
   Given('I am on the settings page', () => {
     I.amOnPage(settingsPage.settingsURI);
   });
@@ -93,4 +95,6 @@ namespace SettingsSteps {
     I.seeElement(locate('a').withText('Deactivate Account'));
     I.seeElement(locate('a').withText('Delete Account'));
   });
+
+  After(() => {});
 }
