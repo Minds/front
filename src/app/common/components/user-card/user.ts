@@ -1,18 +1,19 @@
 import { Component, Input } from '@angular/core';
-
-import { Session } from '../../../../../services/session';
-import { Client } from '../../../../../services/api';
-import { ConfigsService } from '../../../../../common/services/configs.service';
+import { Session } from '../../../services/session';
+import { Client } from '../../api/client.service';
+import { ConfigsService } from '../../services/configs.service';
 
 /**
  * User card
  *
- * Used only in group memberships, should be removed
+ * Used only in group memberships, should be removed.
+ * Maybe also used in <minds-card>
  */
 @Component({
   selector: 'minds-card-user',
   inputs: ['object', 'avatarSize'],
   templateUrl: 'user.html',
+  styleUrls: ['user.ng.scss'],
 })
 export class UserCard {
   user: any;

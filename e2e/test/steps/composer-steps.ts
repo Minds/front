@@ -1,18 +1,28 @@
 import { SidebarComponent } from '../components/sidebarComponent';
 import { ComposerModal } from '../pages/composerModal';
+import { NewsfeedPage } from '../pages/newsfeedPage';
+import generateRandomId from '../support/utilities';
 
 namespace ComposerSteps {
-  const { I, newsfeedPage } = inject();
+  const { I } = inject();
 
   const sidebarComponent = new SidebarComponent();
   const composerModal = new ComposerModal();
+  const newsfeedPage = new NewsfeedPage();
 
-  Given('I am on the newsfeed', () => {
-    I.amOnPage(newsfeedPage.newsfeedURI);
-  });
+  Before(() => {});
 
   Given('I have clicked on the sidebar composer button', () => {
     sidebarComponent.openSidebarComposer();
+  });
+
+  Given('I have created a new post via the newsfeed', () => {
+    newsfeedPage.openComposer();
+
+    const message = 'Test post ' + generateRandomId();
+
+    composerModal.typeInTextArea(message);
+    composerModal.clickPost();
   });
 
   When('I click the nsfw icon on the composer toolbar', () => {
@@ -77,4 +87,6 @@ namespace ComposerSteps {
   Then('I do not have the ability to schedule a post', () => {
     I.dontSeeElement(`${composerModal.postButton} m-dropdownmenu`);
   });
+
+  After(() => {});
 }

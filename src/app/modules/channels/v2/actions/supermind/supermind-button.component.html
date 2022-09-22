@@ -1,10 +1,5 @@
-<m-button
-  [solid]="true"
-  color="blue"
-  size="xsmall"
+<m-supermind__button
+  [entity]="service.channel$ | async"
   data-ref="channel-supermind-action"
-  (onAction)="onClick($event)"
-  *ngIf="canShow"
 >
-  Supermind
-</m-button>
+</m-supermind__button>

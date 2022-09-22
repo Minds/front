@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ModalsModule } from '../modals/modals.module';
 import { CommonModule } from '../../common/common.module';
-import { LegacyModule } from '../legacy/legacy.module';
 import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { WireModule } from '../wire/wire.module';
@@ -480,7 +479,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     ReactiveFormsModule,
     CommonModule,
     ModalsModule,
-    LegacyModule,
     RouterModule.forChild(SETTINGS_V2_ROUTES),
     ReportModule,
     PaymentsModule,

@@ -6,10 +6,10 @@ import {
   HostBinding,
 } from '@angular/core';
 
-import { Session } from '../../../../services/session';
-import { Client } from '../../../../services/api';
-import { ToasterService } from '../../../../common/services/toaster.service';
-import { AuthModalService } from '../../../auth/modal/auth-modal.service';
+import { Session } from '../../../services/session';
+import { Client } from '../../../services/api';
+import { ToasterService } from '../../../common/services/toaster.service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 
 @Component({
   selector: 'minds-button-subscribe',

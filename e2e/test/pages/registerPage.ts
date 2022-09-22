@@ -1,13 +1,12 @@
 import { Helpers } from '../helpers/helpers';
 
-require('dotenv').config();
 const { I } = inject();
 const helpers = new Helpers();
 
 /**
  * Register page.
  */
-class RegisterPage {
+export class RegisterPage {
   // Selectors
   private readonly url: string = '/register';
   private readonly usernameSelector: string = '#username';
@@ -97,5 +96,3 @@ class RegisterPage {
     I.click(this.acceptTosSelector);
   }
 }
-
-export = RegisterPage;

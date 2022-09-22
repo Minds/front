@@ -1,6 +1,8 @@
 namespace RewardsMarketingSteps {
   const { I, rewardsMarketingPage } = inject();
 
+  Before(() => {});
+
   When('I am on the rewards marketing page', () => {
     I.amOnPage(rewardsMarketingPage.rewardsURI);
   });
@@ -12,4 +14,6 @@ namespace RewardsMarketingSteps {
     I.click(rewardsMarketingPage.buyButton);
     I.seeElement(rewardsMarketingPage.rewardsModal);
   });
+
+  After(() => {});
 }
