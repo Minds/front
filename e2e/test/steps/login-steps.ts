@@ -35,7 +35,7 @@ namespace LoginSteps {
   });
 
   Then('I am taken to Home page', () => {
-    I.waitForElement('[title="Home"]', 5);
+    I.waitForElement('[title="Home"]', 10);
     I.seeElement('[title="Home"]');
   });
 

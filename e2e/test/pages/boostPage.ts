@@ -37,7 +37,7 @@ export = {
             locate('span').withText(postContent)
           )
         ),
-      5
+      10
     );
     I.click(
       locate('button')

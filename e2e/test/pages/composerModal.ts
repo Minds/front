@@ -20,6 +20,7 @@ export class ComposerModal {
   private meatballMenuSelector: string = `${this.modalElementTag} [data-cy=meatball-menu-trigger]`;
   private postButtonDisabledOverlaySelector: string =
     '.m-composerToolbarAction__disabledOverlay';
+  public composerCloseButton: string = '.m-composerPopup__close';
 
   /**
    * The wrapper element for the title input
