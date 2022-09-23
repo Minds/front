@@ -86,9 +86,10 @@
 
       // Don't leave too much room
       // below the owner block
-      &.m-activityContent--status,
-      &.m-activityContent--wasQuoted {
-        margin-top: -$spacing6;
+      &.m-activityContent--status {
+        &.m-activityContent--wasQuoted {
+          margin-top: -$spacing6;
+        }
       }
     }
 
@@ -246,8 +247,8 @@
 
   &.m-activityContent--hasPaywallBadge {
     &.m-activityContent--status {
+      min-height: 120px;
       &:not(.m-activityContent--minimalMode) {
-        min-height: 120px;
         padding-top: 50px;
       }
     }
