@@ -123,7 +123,7 @@ import { PoweredByComponent } from './components/powered-by/powered-by.component
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
-import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
+import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm.component';
 import { EnvironmentFlagComponent } from '../common/components/environment-flag/environment-flag.component';
 import { ErrorSplashComponent } from './components/error-splash/error-splash.component';
 import { LaunchButtonComponent } from './components/launch-button/launch-button.component';

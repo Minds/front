@@ -51,7 +51,7 @@ import { ComposerSupermindComponent } from '../popup/supermind/supermind.compone
 import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
 import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
 import { ModalService } from '../../../../services/ux/modal.service';
-import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm';
+import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component';
 import {
   SupermindComposerPayloadType,
   SUPERMIND_PAYMENT_METHODS,
@@ -182,6 +182,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       ),
       this.service.isSupermindRequest$.subscribe(is => {
         this.isSupermindRequest = is;
+        this.detectChanges();
       }),
       this.service.supermindRequest$.subscribe(request => {
         this.supermindRequest = request;
@@ -478,10 +479,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         ? `$${paymentOptions.amount}`
         : `${paymentOptions.amount} token`;
 
+    let body = `Are you sure you want to send @${username} a ${amountStr} offer? This transaction is non-refundable once the recipient approves your offer.`;
+
+    if (paymentOptions.payment_type === SUPERMIND_PAYMENT_METHODS.CASH) {
+      body += ` Your card will be authorized now, and charged once @${username} accepts your offer.`;
+    }
+
     const modal = this.modalService.present(ConfirmV2Component, {
       data: {
         title: 'Confirm Offer',
-        body: `Are you sure you want to send @${username} a ${amountStr} offer?`,
+        body,
         confirmButtonColor: 'blue',
         onConfirm: () => {
           this.onPostEmitter.emit($event);

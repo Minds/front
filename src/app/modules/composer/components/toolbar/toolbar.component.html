@@ -105,7 +105,7 @@
   <a
     *ngIf="canCreateSupermindRequest$ | async"
     class="m-composerToolbar__item"
-    [class.m-composerToolbar__item--active]="isSupermindRequest$ | async"
+    [class.m-composerToolbar__item--active]="isSupermindRequest"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
     [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (click)="onSupermindClick($event)"

@@ -1,6 +1,6 @@
 const { I } = inject();
 
-export class ConfirmationModalPage {
+export class ConfirmationModalComponent {
   private modalElementSelector: string = 'm-confirmationModal';
   private titleTextSelector: string =
     '[data-ref=data-minds-confirmation-modal-title]';

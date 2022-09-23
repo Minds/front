@@ -48,6 +48,10 @@ namespace ComposerSteps {
     }
   });
 
+  When('I enter {string} in the composer text area', message => {
+    composerModal.typeInTextArea(message);
+  });
+
   When('I click the post button', () => {
     composerModal.clickPost();
   });
@@ -86,6 +90,10 @@ namespace ComposerSteps {
 
   Then('I do not have the ability to schedule a post', () => {
     I.dontSeeElement(`${composerModal.postButton} m-dropdownmenu`);
+  });
+
+  Then('I should still see the composer modal open', () => {
+    I.seeElement(composerModal.modalElementTag);
   });
 
   After(() => {});

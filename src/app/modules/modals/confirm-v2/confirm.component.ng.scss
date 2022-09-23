@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  padding: 40px;
+  padding: $spacing8;
   border-radius: 5px;
 
   @include z-index(body);
@@ -15,15 +15,17 @@
     flex-flow: column nowrap;
 
     .m-confirmationModal__title {
-      @include heading2Medium;
+      @include heading2Bold;
       margin-top: unset;
     }
 
     .m-confirmationModal__text {
-      @include body1Regular;
-      margin-right: 80px;
+      @include body2Regular;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeSpeed;
     }
   }
+
   .m-confirmationModal__buttonWrapper {
     margin-top: $minds-margin * 4;
     display: flex;
@@ -32,11 +34,11 @@
     align-items: center;
 
     .m-confirmationModal__cancelButton {
-      margin: 0 10px;
+      margin: 0 $spacing4;
     }
 
     .m-confirmationModal__confirmButton {
-      margin: 0 10px;
+      margin: 0 $spacing4;
     }
   }
 }
