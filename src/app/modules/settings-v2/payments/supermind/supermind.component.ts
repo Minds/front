@@ -94,7 +94,9 @@ export class SettingsV2SupermindComponent implements OnInit, OnDestroy {
       .updateSettings$(this.buildPayload())
       .subscribe((response: SupermindSettingsPostApiResponse) => {
         this.savingInProgress$.next(false);
-        this.toaster.success('Settings saved');
+        if (response) {
+          this.toaster.success('Settings saved');
+        }
       });
   }
 
