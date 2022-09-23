@@ -19,6 +19,7 @@ import { InteractionType } from '../../interactions-modal/interactions-modal-dat
 import { ModalService } from '../../../../services/ux/modal.service';
 import { CounterChangeFadeIn } from '../../../../animations';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
+import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -48,6 +49,7 @@ export class ActivityV2ToolbarComponent {
     private features: FeaturesService,
     private interactionsModalService: InteractionsModalService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
+    public supermindExperiment: SupermindExperimentService,
     private cd: ChangeDetectorRef
   ) {}
 

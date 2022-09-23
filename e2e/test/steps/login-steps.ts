@@ -1,12 +1,20 @@
 namespace LoginSteps {
   const { I, loginPage } = inject();
 
+  Before(() => {});
+
   Given('I am on Login page', () => {
     I.amOnPage(loginPage.loginURI);
   });
 
-  When('I pass valid credentials', () => {
-    loginPage.login(loginPage.validUsername, loginPage.validPassword);
+  When('I pass valid credentials', async () => {
+    await Promise.all([
+      loginPage.login(loginPage.validUsername, loginPage.validPassword),
+      I.waitForResponse(
+        resp => resp.url().includes('/api/v2/mwa/pv') && resp.status() === 200,
+        30
+      ),
+    ]);
   });
 
   When('I pass invalid credentials', table => {
@@ -27,7 +35,7 @@ namespace LoginSteps {
   });
 
   Then('I am taken to Home page', () => {
-    I.waitForElement('[title="Home"]', 5);
+    I.waitForElement('[title="Home"]', 10);
     I.seeElement('[title="Home"]');
   });
 
@@ -44,4 +52,6 @@ namespace LoginSteps {
   Then('I see empty credentials error', () => {
     I.seeElement(locate('div').withText('Username is required.'));
   });
+
+  After(() => {});
 }

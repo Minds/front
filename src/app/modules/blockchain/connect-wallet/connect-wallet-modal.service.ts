@@ -1,6 +1,12 @@
 import { Compiler, Injectable, Injector } from '@angular/core';
 import { Observable, of, Subject, Subscription } from 'rxjs';
-import { map, skipWhile, switchMap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  share,
+  skipWhile,
+  switchMap,
+} from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { PhoneVerificationService } from '../../wallet/components/components/phone-verification/phone-verification.service';
@@ -31,6 +37,7 @@ export class ConnectWalletModalService {
     this.isConnected$ = this.walletService.wallet$.pipe(
       skipWhile(wallet => wallet.receiver.address === undefined),
       map(wallet => !!wallet.receiver.address),
+      distinctUntilChanged(),
       switchMap(hasAddress => {
         if (!hasAddress) {
           return of(false);
@@ -38,7 +45,8 @@ export class ConnectWalletModalService {
         return this.api
           .get('api/v3/blockchain/unique-onchain')
           .pipe(map(response => response.unique));
-      })
+      }),
+      share()
     );
   }
 

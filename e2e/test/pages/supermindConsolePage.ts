@@ -8,7 +8,7 @@ require('dotenv').config();
 const { I } = inject();
 const sidebarComponent = new SidebarComponent();
 
-class SupermindConsolePage {
+export class SupermindConsolePage {
   /** @type { string }  - root uri of the page */
   private baseUrl: string = '/supermind';
 
@@ -16,6 +16,9 @@ class SupermindConsolePage {
   private title: CodeceptJS.Locator = locate('h3').withText('Supermind');
   private tab: CodeceptJS.Locator = locate('.m-tabs__tab');
   private selectedTab: CodeceptJS.Locator = locate('.m-tabs__tab--selected');
+  private targetField: CodeceptJS.Locator = locate(
+    '.m-supermindListItem__offerInformation'
+  ).withText('Target:');
   private cancelOfferButton: CodeceptJS.Locator = locate('m-button').withText(
     'Cancel Offer'
   );
@@ -30,7 +33,7 @@ class SupermindConsolePage {
   private chipBadge: CodeceptJS.Locator = locate('m-chipBadge');
   private expirationTimeLabel: CodeceptJS.Locator = locate(
     '.m-supermindListItem__expirationTimeLabel'
-  ).withText('Expires: ');
+  ).withText('Expire');
   private requirementsLabel: CodeceptJS.Locator = locate(
     '.m-supermindListItem__requirementsLabel'
   );
@@ -59,11 +62,18 @@ class SupermindConsolePage {
 
   /**
    * Navigate to console via sidebar.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  public navigateToViaSidebar(): void {
+  public async navigateToViaSidebar(): Promise<void> {
     sidebarComponent.expandSidebarMore();
-    sidebarComponent.openSupermindConsole();
+    await Promise.all([
+      sidebarComponent.openSupermindConsole(),
+      I.waitForResponse(
+        resp =>
+          resp.url().includes('/api/v3/supermind') && resp.status() === 200,
+        30
+      ),
+    ]);
   }
 
   /**
@@ -105,16 +115,19 @@ class SupermindConsolePage {
 
     if (subpage === 'inbox') {
       I.seeElement(this.addBankPrompt);
-      I.seeElement(this.declineButton);
-      I.seeElement(this.acceptButton);
-      I.dontSeeElement(this.cancelOfferButton);
+      I.dontSeeElement(this.targetField);
+      //I.seeElement(this.declineButton); // Buttons not available if offer already accepted/declined.
+      //I.seeElement(this.acceptButton); // Buttons not available if offer already accepted/declined.
+      //I.dontSeeElement(this.cancelOfferButton);
     }
 
     if (subpage === 'outbox') {
       I.dontSeeElement(this.addBankPrompt);
-      I.dontSeeElement(this.declineButton);
-      I.dontSeeElement(this.acceptButton);
-      I.seeElement(this.cancelOfferButton);
+      I.seeElement(this.targetField);
+      //I.dontSeeElement(this.declineButton); // Buttons not available if offer already accepted/declined.
+      //I.dontSeeElement(this.acceptButton); // Buttons not available if offer already accepted/declined.
+      // TODO: Uncomment when we bring back the cancel offer button.
+      // I.seeElement(this.cancelOfferButton);
     }
   }
 
@@ -128,10 +141,17 @@ class SupermindConsolePage {
 
   /**
    * Click to switch tabs.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  public switchTabs(tab: SupermindConsoleTab): void {
-    I.click(locate(this.tab).withText(tab));
+  public async switchTabs(tab: SupermindConsoleTab): Promise<void> {
+    await Promise.all([
+      I.click(locate(this.tab).withText(tab)),
+      I.waitForResponse(
+        resp =>
+          resp.url().includes('/api/v3/supermind') && resp.status() === 200,
+        30
+      ),
+    ]);
   }
 
   /**
@@ -172,5 +192,3 @@ class SupermindConsolePage {
     );
   }
 }
-
-export = SupermindConsolePage;

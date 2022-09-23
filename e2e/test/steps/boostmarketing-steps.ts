@@ -1,6 +1,8 @@
 namespace BoostMarketingSteps {
   const { I, boostMarketingPage } = inject();
 
+  Before(() => {});
+
   When('I am on the boost marketing page', () => {
     I.amOnPage(boostMarketingPage.boostURI);
   });
@@ -12,4 +14,6 @@ namespace BoostMarketingSteps {
     I.click(boostMarketingPage.createBoostButton);
     I.seeInCurrentUrl(boostMarketingPage.boostPathname);
   });
+
+  After(() => {});
 }

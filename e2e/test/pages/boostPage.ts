@@ -31,17 +31,17 @@ export = {
     );
     I.waitForElement(
       locate('button')
-        .withText('Boost')
+        .withText('trending_up')
         .inside(
           locate('m-activity').withDescendant(
             locate('span').withText(postContent)
           )
         ),
-      5
+      10
     );
     I.click(
       locate('button')
-        .withText('Boost')
+        .withText('trending_up')
         .inside(
           locate('m-activity').withDescendant(
             locate('span').withText(postContent)

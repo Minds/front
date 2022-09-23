@@ -11,7 +11,6 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoverySearchComponent } from './search/search.component';
 import { DiscoveryTagsComponent } from './tags/tags.component';
 import { DiscoveryTrendsService } from './trends/trends.service';
-import { LegacyModule } from '../legacy/legacy.module';
 import { DiscoverySharedModule } from './discovery-shared.module';
 import { DiscoveryFeedsComponent } from './feeds/feeds.component';
 import { DiscoverySettingsButtonComponent } from './settings-button/settings-button.component';
@@ -206,7 +205,6 @@ import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
     SuggestionsModule,
     ActivityModule, // delete during ActivityV2 cleanup
     ActivityV2Module,
-    LegacyModule, // For subscribe button
     // GroupsModule,
     DiscoverySharedModule,
     HashtagsModule,

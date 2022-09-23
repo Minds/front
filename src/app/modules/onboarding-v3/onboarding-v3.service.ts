@@ -151,7 +151,7 @@ export class OnboardingV3Service implements OnDestroy {
             return of(e);
           }),
           map((progress: OnboardingResponse) =>
-            progress.steps.map((progressStep: OnboardingStep) => {
+            progress?.steps.map((progressStep: OnboardingStep) => {
               if (step === progressStep.id && !progressStep.is_completed) {
                 progressStep.is_completed = true;
                 progress.completed_pct =

@@ -11,6 +11,8 @@ namespace SupermindConsoleSteps {
   const composerModalPage = new ComposerModal();
   const confirmationModalPage = new ConfirmationModalPage();
 
+  Before(() => {});
+
   Given(
     'I am on the Supermind Console {string} page',
     (context: string): void => {
@@ -22,8 +24,8 @@ namespace SupermindConsoleSteps {
     supermindConsolePage.clickAddBankPrompt();
   });
 
-  When('I click to change tabs to {string}', (tab: string) => {
-    supermindConsolePage.switchTabs(tab as SupermindConsoleTab);
+  When('I click to change tabs to {string}', async (tab: string) => {
+    await supermindConsolePage.switchTabs(tab as SupermindConsoleTab);
   });
 
   Then(
@@ -88,8 +90,8 @@ namespace SupermindConsoleSteps {
     composerModalPage.clickNsfwSaveOption();
   });
 
-  When('I navigate via sidebar to the supermind console', () => {
-    supermindConsolePage.navigateToViaSidebar();
+  When('I navigate via sidebar to the supermind console', async () => {
+    await supermindConsolePage.navigateToViaSidebar();
     supermindConsolePage.hasTabSelected('Inbound');
   });
 
@@ -116,4 +118,6 @@ namespace SupermindConsoleSteps {
      */
     supermindConsolePage.checkSupermindNotActionable();
   });
+
+  After(() => {});
 }

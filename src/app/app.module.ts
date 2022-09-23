@@ -25,7 +25,6 @@ import { BoostModule } from './modules/boost/boost.module';
 import { WireModule } from './modules/wire/wire.module';
 import { ReportModule } from './modules/report/report.module';
 import { MindsFormsModule } from './modules/forms/forms.module';
-import { LegacyModule } from './modules/legacy/legacy.module';
 import { ModalsModule } from './modules/modals/modals.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { TranslateModule } from './modules/translate/translate.module';
@@ -87,7 +86,6 @@ import { SupermindModule } from './modules/supermind/supermind.module';
     WireModule,
     ReportModule,
     I18nModule,
-    LegacyModule,
     TranslateModule,
     ModalsModule,
     PaymentsModule,

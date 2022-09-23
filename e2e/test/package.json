@@ -13,10 +13,14 @@
     "@codeceptjs/helper": "^2.0.1",
     "@codeceptjs/ui": "^0.4.6",
     "@playwright/test": "^1.23.3",
-    "codeceptjs": "^3.3.4",
+    "browserstack-local": "^1.5.1",
+    "codeceptjs": "^3.3.5",
     "dotenv": "^16.0.1",
     "playwright": "^1.23.2",
     "ts-node": "~10.1.0",
     "typescript": "~4.5.5"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
   }
 }

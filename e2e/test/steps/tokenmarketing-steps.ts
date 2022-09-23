@@ -1,6 +1,8 @@
 namespace TokensMarketingSteps {
   const { I, tokenMarketingPage } = inject();
 
+  Before(() => {});
+
   When('I am on the token marketing page', () => {
     I.amOnPage(tokenMarketingPage.tokenURI);
   });
@@ -12,4 +14,6 @@ namespace TokensMarketingSteps {
     I.click(tokenMarketingPage.buyButton);
     I.seeElement(tokenMarketingPage.tokensModal);
   });
+
+  After(() => {});
 }
