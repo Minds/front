@@ -75,6 +75,23 @@
   // *********************************
 
   &.m-activityContent--minimalMode {
+    // Add spacing above status texts and quotes
+    // to make room for badge
+    // (other media posts display badge on top of media)
+    &.m-activityContent--hasPaywallBadge {
+      &.m-activityContent--status,
+      &.m-activityContent--quote {
+        padding-top: $spacing8;
+      }
+
+      // Don't leave too much room
+      // below the owner block
+      &.m-activityContent--status,
+      &.m-activityContent--wasQuoted {
+        margin-top: -$spacing6;
+      }
+    }
+
     // MINIMAL TEXT
     .m-activityContent__textWrapper {
       padding-left: $activitySpacing--minimalMode !important;
@@ -117,6 +134,11 @@
         display: flex;
         justify-content: center;
       }
+    }
+
+    // REMIND DELETED NOTICE
+    .m-activityContent__remindDeletedNotice {
+      margin-bottom: $spacing4;
     }
   }
 
@@ -222,9 +244,13 @@
   // **PAYWALL **
   // *********************************
 
-  &.m-activityContent--paywalledStatus {
-    min-height: 120px;
-    padding-top: 50px;
+  &.m-activityContent--hasPaywallBadge {
+    &.m-activityContent--status {
+      &:not(.m-activityContent--minimalMode) {
+        min-height: 120px;
+        padding-top: 50px;
+      }
+    }
   }
 
   // *********************************

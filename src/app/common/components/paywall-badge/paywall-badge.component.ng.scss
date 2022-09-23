@@ -95,4 +95,21 @@
       margin-left: -2px;
     }
   }
+
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
+  // Need a background color in minimal mode
+  // Because badge may overlay images/vids and become illegible
+  .m-activity--minimalMode & {
+    .m-paywallBadge {
+      &.m-paywallBadge--activityV2 {
+        &.isPlus {
+          @include m-theme() {
+            background-color: themed($m-bgColor--primary) !important;
+          }
+        }
+      }
+    }
+  }
 }
