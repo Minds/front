@@ -86,7 +86,14 @@ export class NotificationsV3NotificationComponent
       case 'token_withdraw_rejected':
       //
       case 'report_actioned':
-        // case 'chat_invite':
+      // case 'chat_invite':
+      //
+      case 'supermind_created':
+      case 'supermind_rejected':
+      case 'supermind_accepted':
+        // case 'supermind_expired':
+
+        //
         return;
       default:
         this.typeError = true;
@@ -205,13 +212,22 @@ export class NotificationsV3NotificationComponent
           ' was ' +
           this.notification.data.action
         );
+      case 'supermind_accepted':
+        return ' has replied to';
+      case 'supermind_created':
+        return ' sent you';
+      case 'supermind_rejected':
+        return ' has declined';
     }
   }
 
   get pronoun(): string {
     switch (this.notification.type) {
+      case 'supermind_created':
       case 'boost_peer_request':
         return 'a';
+      case 'supermind_accepted':
+      case 'supermind_rejected':
       case 'quote':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
@@ -257,6 +273,10 @@ export class NotificationsV3NotificationComponent
         return 'boost offer';
       case 'boost_rejected':
         return 'boost';
+      case 'supermind_accepted':
+      case 'supermind_rejected':
+      case 'supermind_created':
+        return 'Supermind offer';
     }
     switch (this.notification.entity?.type) {
       case 'comment':
@@ -291,6 +311,12 @@ export class NotificationsV3NotificationComponent
       case 'wire_received':
       case 'wire_payout':
         return [`/wallet/${this.notification.data.method}/transactions`];
+      case 'supermind_rejected':
+      case 'supermind_created':
+      case 'supermind_expired':
+        return [`/supermind/${this.notification.entity?.guid}`];
+      case 'supermind_accepted':
+        return ['/newsfeed', this.notification.entity?.reply_activity_guid];
     }
 
     switch (this.notification.entity?.type) {
@@ -406,7 +432,11 @@ export class NotificationsV3NotificationComponent
       this.entity?.type !== 'comment' &&
       this.entity?.type !== 'user' &&
       this.notification.type !== 'wire_received' &&
-      this.notification.type !== 'wire_payout'
+      this.notification.type !== 'wire_payout' &&
+      this.notification.type !== 'supermind_created' &&
+      this.notification.type !== 'supermind_rejected' &&
+      this.notification.type !== 'supermind_accepted' &&
+      this.notification.type !== 'supermind_expired'
     );
   }
 
