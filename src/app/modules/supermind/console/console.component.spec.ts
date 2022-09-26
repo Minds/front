@@ -97,13 +97,13 @@ describe('SupermindConsoleComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('it should set list type on router change', fakeAsync(() => {
+  it('it should set list type on router change to outbox', fakeAsync(() => {
     (comp as any).route.firstChild.url.next([{ path: 'outbox' }]);
     tick();
     expect((comp as any).listType$.getValue()).toBe('outbox');
   }));
 
-  it('it should set list type on router change', fakeAsync(() => {
+  it('it should set list type on router change to inbox', fakeAsync(() => {
     (comp as any).listType$.next('outbox');
     (comp as any).route.firstChild.url.next([{ path: 'inbox' }]);
     tick();
@@ -127,6 +127,13 @@ describe('SupermindConsoleComponent', () => {
     comp.onSettingsButtonClick(null);
     expect((comp as any).router.navigate).toHaveBeenCalledWith([
       '/settings/supermind',
+    ]);
+  });
+
+  it('it should navigate to inbox page on back button click', () => {
+    comp.onBackClick();
+    expect((comp as any).router.navigate).toHaveBeenCalledWith([
+      '/supermind/inbox',
     ]);
   });
 });
