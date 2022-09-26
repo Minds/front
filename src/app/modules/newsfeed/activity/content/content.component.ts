@@ -86,10 +86,6 @@ export class ActivityContentComponent
    */
   @Input() autoplayVideo: boolean = false;
 
-  // TODO: make showPaywall and showPaywallBadge come from activity service instead
-  @Input() showPaywall: boolean = false;
-  @Input() showPaywallBadge: boolean = false;
-
   /**
    * Used in activity modal
    */
@@ -120,13 +116,13 @@ export class ActivityContentComponent
   videoHeight: string;
   imageHeight: string;
 
+  showPaywall: boolean = false;
+  showPaywallBadge: boolean = false;
+
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
 
-  private entitySubscription: Subscription;
-  private activityHeightSubscription: Subscription;
-  private paywallUnlockedSubscription: Subscription;
-  private canonicalUrlSubscription: Subscription;
+  subscriptions: Subscription[];
 
   readonly siteUrl: string;
   readonly cdnAssetsUrl: string;
@@ -154,9 +150,8 @@ export class ActivityContentComponent
   }
 
   ngOnInit() {
-    // this.shouldShowPaywallSubscription = this.service.shouldShowPaywall$
-    this.entitySubscription = this.service.entity$.subscribe(
-      (entity: ActivityEntity) => {
+    this.subscriptions = [
+      this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
 
         this.calculateFixedContentHeight();
@@ -164,11 +159,6 @@ export class ActivityContentComponent
           this.calculateVideoHeight();
           this.calculateImageHeight();
         });
-        // Check for either paywall or paywall badge because
-        // quotes of status posts display the badge inside
-        // the quote/parent's content component
-        this.isPaywalledStatusPost =
-          this.showPaywallBadge && entity.content_type === 'status';
 
         if (
           this.entity.paywall_unlocked ||
@@ -176,22 +166,23 @@ export class ActivityContentComponent
         ) {
           this.paywallUnlocked = true;
         }
-      }
-    );
-    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
-      canonicalUrl => {
+      }),
+    ];
+
+    this.subscriptions.push(
+      this.service.canonicalUrl$.subscribe(canonicalUrl => {
         if (!this.entity) return;
         this.canonicalUrl = canonicalUrl;
-      }
+      })
     );
-    this.activityHeightSubscription = this.service.height$.subscribe(
-      (height: number) => {
+    this.subscriptions.push(
+      this.service.height$.subscribe((height: number) => {
         this.activityHeight = height;
         this.calculateRemindHeight();
-      }
+      })
     );
-    this.paywallUnlockedSubscription = this.service.paywallUnlockedEmitter.subscribe(
-      (unlocked: boolean) => {
+    this.subscriptions.push(
+      this.service.paywallUnlockedEmitter.subscribe((unlocked: boolean) => {
         if (!unlocked) {
           return;
         }
@@ -203,17 +194,23 @@ export class ActivityContentComponent
             this.entity.perma_url + '?unlock=' + Date.now()
           );
         }
-      }
+      })
     );
+    this.subscriptions.push(
+      this.service.shouldShowPaywall$.subscribe((shouldShow: boolean) => {
+        this.showPaywall = shouldShow;
+      })
+    );
+    this.subscriptions.push(
+      this.service.shouldShowPaywallBadge$.subscribe((shouldShow: boolean) => {
+        this.showPaywallBadge = shouldShow;
 
-    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
-      canonicalUrl => {
-        if (!this.entity) return;
-        /**
-         * Record pageviews
-         */
-        this.canonicalUrl = canonicalUrl;
-      }
+        // Check for either paywall or paywall badge because
+        // quotes of status posts display the badge inside
+        // the quote/parent's content component
+        this.isPaywalledStatusPost =
+          shouldShow && this.entity.content_type === 'status';
+      })
     );
   }
 
@@ -229,10 +226,9 @@ export class ActivityContentComponent
   }
 
   ngOnDestroy() {
-    this.entitySubscription.unsubscribe();
-    this.activityHeightSubscription.unsubscribe();
-    this.paywallUnlockedSubscription.unsubscribe();
-    this.canonicalUrlSubscription.unsubscribe();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   get message(): string {
