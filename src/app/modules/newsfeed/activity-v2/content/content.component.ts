@@ -91,10 +91,6 @@ export class ActivityV2ContentComponent
    */
   @Input() autoplayVideo: boolean = false;
 
-  // TODO: make showPaywall and showPaywallBadge come from activity service instead
-  @Input() showPaywall: boolean = false;
-  @Input() showPaywallBadge: boolean = false;
-
   /**
    * Whether this is the post that was quoted
    * (aka the inset post)
@@ -139,6 +135,8 @@ export class ActivityV2ContentComponent
   imageWidth: number;
   imageAspectRatio: number = 0;
   imageOriginalHeight: number;
+
+  showPaywallBadge: boolean = false;
 
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
@@ -266,8 +264,6 @@ export class ActivityV2ContentComponent
           this.calculateImageDimensions();
         });
 
-        this.isPaywalledStatus =
-          this.showPaywallBadge && entity.content_type === 'status';
         if (
           this.entity.paywall_unlocked ||
           this.entity.ownerObj.guid === this.session.getLoggedInUser().guid
@@ -327,6 +323,20 @@ export class ActivityV2ContentComponent
           this.activeMultiImageIndex = i;
           this.activeMultiImageUrl = this.entity?.custom_data[i].src;
         }
+      })
+    );
+    // ojm check
+    // this.subscriptions.push(
+    //   this.service.shouldShowPaywall$.subscribe((shouldShow: boolean) => {
+    //     this.showPaywall = shouldShow;
+    //   })
+    // );
+    this.subscriptions.push(
+      this.service.shouldShowPaywallBadge$.subscribe((shouldShow: boolean) => {
+        this.showPaywallBadge = shouldShow;
+
+        this.isPaywalledStatus =
+          shouldShow && this.entity.content_type === 'status';
       })
     );
   }
