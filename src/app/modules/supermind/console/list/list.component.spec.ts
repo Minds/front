@@ -109,7 +109,7 @@ describe('SupermindConsoleListComponent', () => {
 
     expect((comp as any).service.getList$).toHaveBeenCalled();
     expect(comp.list$.getValue()).toEqual(mockList);
-    expect(comp.moreData$.getValue()).toBeTrue();
+    expect(comp.moreData$.getValue()).toBeFalse();
     expect(comp.inProgress$.getValue()).toBeFalse();
   }));
 
@@ -121,7 +121,7 @@ describe('SupermindConsoleListComponent', () => {
 
     expect((comp as any).service.getList$).toHaveBeenCalled();
     expect(comp.list$.getValue()).toEqual([...mockList, ...mockList]);
-    expect(comp.moreData$.getValue()).toBeTrue();
+    expect(comp.moreData$.getValue()).toBeFalse();
     expect(comp.inProgress$.getValue()).toBeFalse();
   }));
 
