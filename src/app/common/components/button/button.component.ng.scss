@@ -84,7 +84,7 @@
     &.m-button--blue {
       &.m-button--solid {
         @include m-theme() {
-          background-color: themed($m-link);
+          background-color: themed($m-blue);
           color: themed($m-white-always);
         }
 
@@ -92,7 +92,7 @@
           &:not(.m-button--overlay) {
             &:hover {
               @include m-theme() {
-                background-color: themed($m-link--hover);
+                background-color: themed($m-blue--contrast);
               }
             }
           }
@@ -100,12 +100,12 @@
       }
       &:not(m-button--solid) {
         @include m-theme() {
-          border-color: themed($m-link);
+          border-color: themed($m-blue);
         }
       }
       &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
         @include m-theme() {
-          border-color: themed($m-link);
+          border-color: themed($m-blue);
         }
       }
     }

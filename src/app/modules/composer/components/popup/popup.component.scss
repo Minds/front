@@ -81,7 +81,7 @@ m-composer__popup {
     font-weight: inherit;
 
     @include m-theme() {
-      color: themed($m-link);
+      color: themed($m-blue);
     }
   }
 

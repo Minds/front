@@ -164,7 +164,7 @@ const userMock: any = {
     title: 'Minds',
     headline: '',
     text_color: '#000000',
-    primary_color: '#4690df',
+    primary_color: '#1b85d6',
     plain_background_color: '#ffffff',
     tile_ratio: '16:9',
     footer_text: '',
@@ -182,7 +182,7 @@ const userMock: any = {
     one_line_headline: '',
     styles: {
       text_color: '#000000',
-      primary_color: '#4690df',
+      primary_color: '#1b85d6',
       plain_background_color: '#ffffff',
       transparent_background_color: '#ffffffa0',
       more_transparent_background_color: '#ffffff50',

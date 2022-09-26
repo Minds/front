@@ -64,7 +64,7 @@
       cursor: pointer;
       @include m-theme() {
         text-decoration: underline;
-        color: themed($m-link);
+        color: themed($m-blue);
         font-size: 16px;
         font-weight: 400;
       }

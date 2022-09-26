@@ -153,7 +153,7 @@ m-settingsV2 {
         font-weight: inherit;
         text-decoration: none;
         @include m-theme() {
-          color: themed($m-link);
+          color: themed($m-blue);
         }
         &:hover {
           text-decoration: underline;

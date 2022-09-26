@@ -112,7 +112,7 @@ m-walletTransactionsTable {
   .m-walletTransactionsTable__otherUserLink {
     font-weight: 300;
     @include m-theme() {
-      color: themed($m-link);
+      color: themed($m-blue);
     }
   }
 

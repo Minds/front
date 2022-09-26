@@ -163,7 +163,7 @@
 
 .m--blockchain--transaction-overlay--info {
   @include m-theme() {
-    color: themed($m-blue-dark);
+    color: themed($m-blue--contrast);
   }
 }
 
@@ -216,7 +216,7 @@
 
   &.m--blockchain--transaction-overlay--dropping {
     @include m-theme() {
-      box-shadow: inset 0 0 10px themed($m-blue-dark);
+      box-shadow: inset 0 0 10px themed($m-blue--contrast);
     }
   }
 }

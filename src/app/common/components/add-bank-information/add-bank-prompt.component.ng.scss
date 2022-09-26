@@ -23,7 +23,7 @@
 
       &:hover {
         @include m-theme() {
-          color: themed($m-blue-dark);
+          color: themed($m-blue--contrast);
         }
       }
     }

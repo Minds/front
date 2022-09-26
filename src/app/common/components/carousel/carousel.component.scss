@@ -5,7 +5,7 @@ m-carousel {
     font-weight: 400;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-link);
+      color: themed($m-blue);
     }
   }
 }
@@ -97,7 +97,7 @@ m-carousel {
   }
   &:hover {
     @include m-theme() {
-      border: 1px solid themed($m-link);
+      border: 1px solid themed($m-blue);
     }
   }
   &.m-carousel__overflowScrollButton--right {

@@ -93,7 +93,7 @@ m-boost-console {
           font-weight: normal;
           text-transform: uppercase;
           @include m-theme() {
-            color: themed($m-blue-light);
+            color: themed($m-blue--contrast);
           }
           m-tooltip {
             i {

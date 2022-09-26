@@ -36,7 +36,7 @@
 
       &:hover {
         @include m-theme() {
-          background-color: themed($m-link--hover) !important;
+          background-color: themed($m-blue--contrast) !important;
         }
       }
     }

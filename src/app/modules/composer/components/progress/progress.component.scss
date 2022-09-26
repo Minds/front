@@ -16,7 +16,7 @@
       height: 100%;
 
       @include m-theme() {
-        background-color: themed($m-link);
+        background-color: themed($m-blue);
       }
     }
   }
