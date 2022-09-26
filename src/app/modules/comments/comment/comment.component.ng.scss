@@ -269,11 +269,11 @@
       font-weight: 700;
       cursor: pointer;
       @include m-theme() {
-        color: themed($m-link);
+        color: themed($m-blue);
       }
       &:hover {
         @include m-theme() {
-          color: themed($m-link--hover);
+          color: themed($m-blue--contrast);
         }
       }
     }
@@ -347,13 +347,13 @@
 
           &.selected {
             @include m-theme() {
-              color: themed($m-link) !important;
+              color: themed($m-blue) !important;
             }
           }
 
           &.selected:hover {
             @include m-theme() {
-              color: themed($m-link--hover) !important;
+              color: themed($m-blue--contrast) !important;
             }
           }
         }
@@ -377,7 +377,7 @@
       font-weight: 500;
       cursor: pointer;
       @include m-theme() {
-        color: themed($m-link);
+        color: themed($m-blue);
       }
     }
   }

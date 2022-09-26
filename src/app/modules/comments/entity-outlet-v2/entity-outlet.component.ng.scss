@@ -83,7 +83,7 @@
     padding-left: 0 !important;
     padding-right: 0 !important;
     @include m-theme() {
-      color: themed($m-link);
+      color: themed($m-blue);
     }
   }
 
@@ -122,7 +122,7 @@
       }
       &.m-commentsEntityOutlet__addComment {
         @include m-theme() {
-          color: themed($m-link);
+          color: themed($m-blue);
         }
       }
     }

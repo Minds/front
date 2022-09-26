@@ -95,7 +95,7 @@
 
       .m-login__joinTheConversation {
         @include m-theme() {
-          color: themed($m-link);
+          color: themed($m-blue);
           cursor: pointer;
         }
       }

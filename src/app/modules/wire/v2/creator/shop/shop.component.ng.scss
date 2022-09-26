@@ -41,7 +41,7 @@
 
       a {
         @include m-theme() {
-          color: themed($m-link) !important;
+          color: themed($m-blue) !important;
         }
       }
     }

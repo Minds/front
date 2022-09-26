@@ -5,7 +5,7 @@
   border-radius: 50%;
   cursor: pointer;
   @include m-theme() {
-    background: themed($m-link);
+    background: themed($m-blue);
   }
 }
 @mixin slider-track {

@@ -54,13 +54,13 @@
         text-transform: capitalize;
 
         @include m-theme() {
-          color: themed($m-link);
+          color: themed($m-blue);
         }
 
         &:hover {
           text-decoration: none;
           @include m-theme() {
-            color: themed($m-link--hover);
+            color: themed($m-blue--contrast);
           }
         }
       }

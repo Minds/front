@@ -14,9 +14,9 @@
       right top,
       from(themed($m-textColor--secondary)),
       to(themed($m-textColor--secondary)),
-      color-stop(0.3, themed($m-link)),
+      color-stop(0.3, themed($m-blue)),
       color-stop(0.6, #4eb8ff),
-      color-stop(0.8, themed($m-link))
+      color-stop(0.8, themed($m-blue))
     );
 
     background-color: themed($m-textColor--secondary);

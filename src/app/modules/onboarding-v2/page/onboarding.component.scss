@@ -269,7 +269,7 @@ m-onboarding {
                 &.m-groupsJoin__subscribed {
                   & > i {
                     @include m-theme() {
-                      color: themed($m-link);
+                      color: themed($m-blue);
                     }
                   }
                 }

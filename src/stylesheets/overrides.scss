@@ -1390,7 +1390,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 .mdl-color-text--blue-200,
 .mdl-color-text--blue-300 {
   @include m-theme() {
-    color: themed($m-blue-light) !important;
+    color: themed($m-blue) !important;
   }
 }
 .mdl-color-text--blue,
@@ -1405,7 +1405,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 .mdl-color-text--blue-800,
 .mdl-color-text--blue-900 {
   @include m-theme() {
-    color: themed($m-blue-dark) !important;
+    color: themed($m-blue) !important;
   }
 }
 //---------------------------------------
@@ -1414,7 +1414,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 .mdl-color--blue-200,
 .mdl-color--blue-300 {
   @include m-theme() {
-    background-color: themed($m-blue-light) !important;
+    background-color: themed($m-blue) !important;
   }
 }
 .mdl-color--blue,
@@ -1429,7 +1429,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 .mdl-color--blue-800,
 .mdl-color--blue-900 {
   @include m-theme() {
-    background-color: themed($m-blue-dark) !important;
+    background-color: themed($m-blue) !important;
   }
 }
 //////////////////////////////////////////////

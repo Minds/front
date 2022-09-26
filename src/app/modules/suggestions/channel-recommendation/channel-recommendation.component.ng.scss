@@ -91,7 +91,7 @@
           line-height: 2.5rem;
 
           @include m-theme() {
-            color: themed($m-link);
+            color: themed($m-blue);
           }
 
           &:hover {

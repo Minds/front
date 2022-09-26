@@ -67,7 +67,7 @@
       span {
         @include m-theme() {
           cursor: pointer;
-          color: themed($m-link);
+          color: themed($m-blue);
           text-decoration: underline;
         }
       }
