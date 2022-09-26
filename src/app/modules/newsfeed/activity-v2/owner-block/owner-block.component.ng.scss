@@ -38,7 +38,7 @@
           font-weight: 700;
           font-size: 11px;
           @include m-theme() {
-            color: themed($m-link);
+            color: themed($m-blue);
           }
         }
       }
@@ -172,7 +172,7 @@
     font-size: 18px;
     vertical-align: middle;
     @include m-theme() {
-      color: themed($m-link);
+      color: themed($m-blue);
     }
   }
 

@@ -3,7 +3,5 @@
   <m-activity__content
     *ngIf="service.shouldShowContent$ | async"
     [autoplayVideo]="autoplayVideo"
-    [showPaywall]="service.shouldShowPaywall$ | async"
-    [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
   ></m-activity__content>
 </ng-container>

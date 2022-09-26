@@ -45,7 +45,7 @@
       right: 15px;
       padding: 4px;
       @include m-theme() {
-        background-color: themed($m-link);
+        background-color: themed($m-blue);
       }
 
       ::ng-deep m-icon i {
@@ -91,7 +91,7 @@
     margin-left: 10px;
     border-radius: 50%;
     @include m-theme() {
-      background-color: themed($m-link);
+      background-color: themed($m-blue);
     }
   }
 
@@ -124,7 +124,7 @@
     a {
       text-decoration: none;
       @include m-theme() {
-        color: themed($m-link);
+        color: themed($m-blue);
       }
     }
   }

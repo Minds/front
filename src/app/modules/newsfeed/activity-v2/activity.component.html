@@ -45,8 +45,6 @@
       </m-activityV2__ownerBlock>
       <m-activityV2__content
         *ngIf="service.shouldShowContent$ | async"
-        [showPaywall]="service.shouldShowPaywall$ | async"
-        [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
       ></m-activityV2__content>
       <m-activityV2__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
       </m-activityV2__nsfwConsent>

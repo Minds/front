@@ -236,7 +236,10 @@
           <m-captcha formControlName="captcha"></m-captcha>
         </ng-container>
         <ng-template #friendlyCaptcha>
-          <m-friendlyCaptcha formControlName="captcha"></m-friendlyCaptcha>
+          <m-friendlyCaptcha
+            formControlName="captcha"
+            [puzzleOrigin]="'registration'"
+          ></m-friendlyCaptcha>
         </ng-template>
       </div>
     </div>

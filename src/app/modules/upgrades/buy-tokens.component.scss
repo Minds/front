@@ -35,11 +35,14 @@ m-upgrades__buyTokens {
 
   p {
     a {
-      color: #4690df !important;
       text-decoration: underline;
       font-weight: 400;
       line-height: 21px;
       font-size: 16px;
+
+      @include m-theme() {
+        color: themed($m-blue) !important;
+      }
     }
 
     &.m-upgradesBuyTokens__description {

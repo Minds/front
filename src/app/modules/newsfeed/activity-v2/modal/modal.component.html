@@ -47,7 +47,6 @@
                 (activityService.shouldShowContent$ | async) && isContentReady
               "
               [hideText]="true"
-              [showPaywall]="activityService.shouldShowPaywall$ | async"
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
               [maxHeightAllowed]="modalHeight"
             ></m-activityV2__content>
@@ -111,10 +110,6 @@
                   showContentMessageOnRight
                 "
                 [hideMedia]="true"
-                [showPaywall]="activityService.shouldShowPaywall$ | async"
-                [showPaywallBadge]="
-                  activityService.shouldShowPaywallBadge$ | async
-                "
               >
               </m-activityV2__content>
               <!-- TOOLBAR -->
