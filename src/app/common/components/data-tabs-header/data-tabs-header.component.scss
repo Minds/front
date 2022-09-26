@@ -5,7 +5,7 @@ m-dataTabsHeader {
     font-weight: 400;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-link);
+      color: themed($m-blue);
     }
   }
 }
@@ -106,7 +106,7 @@ m-body.has-v3-navbar {
   }
   &:hover {
     @include m-theme() {
-      border: 1px solid themed($m-link);
+      border: 1px solid themed($m-blue);
     }
   }
   &.m-dataTabsHeader__overflowScrollButton--right {

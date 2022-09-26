@@ -4,7 +4,7 @@ m-language__sidebarPrompt {
   .m-sidebarWidget {
     margin-bottom: 20px;
     @include m-theme() {
-      border-color: themed($m-link);
+      border-color: themed($m-blue);
     }
   }
 }

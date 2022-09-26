@@ -185,7 +185,7 @@
             &:not(:read-only) {
               span {
                 @include m-theme() {
-                  border-color: themed($m-link);
+                  border-color: themed($m-blue);
                 }
               }
             }
@@ -511,7 +511,7 @@
     &:focus {
       &:not(:read-only) {
         @include m-theme() {
-          border-color: themed($m-link);
+          border-color: themed($m-blue);
         }
       }
     }

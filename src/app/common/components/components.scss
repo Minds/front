@@ -39,7 +39,7 @@ minds-graph-pie svg {
 
   circle {
     @include m-theme() {
-      stroke: themed($m-blue-dark);
+      stroke: themed($m-blue--contrast);
     }
   }
 }
@@ -62,7 +62,7 @@ minds-button-thumbs-down {
   }
   .selected:hover {
     @include m-theme() {
-      color: rgba(themed($m-blue-dark), 0.9) !important;
+      color: rgba(themed($m-blue--contrast), 0.9) !important;
     }
   }
 }
@@ -160,7 +160,7 @@ minds-button-subscribe {
       &.m-subscribeButton__subscribed {
         & > i {
           @include m-theme() {
-            color: themed($m-link);
+            color: themed($m-blue);
           }
         }
       }
@@ -822,7 +822,7 @@ minds-activity-preview {
 
     &:hover {
       @include m-theme() {
-        color: rgba(themed($m-blue-dark), 0.9) !important;
+        color: rgba(themed($m-blue--contrast), 0.9) !important;
       }
     }
   }

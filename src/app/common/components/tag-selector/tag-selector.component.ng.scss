@@ -29,12 +29,12 @@
       .m-button {
         @include m-theme() {
           color: themed($m-white-always) !important;
-          background-color: themed($m-link);
+          background-color: themed($m-blue);
         }
 
         &:hover {
           @include m-theme() {
-            background-color: themed($m-link) !important;
+            background-color: themed($m-blue) !important;
           }
         }
 

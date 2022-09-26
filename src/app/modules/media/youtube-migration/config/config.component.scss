@@ -8,7 +8,7 @@ m-youtubemigration__config {
       span {
         font-weight: 500;
         @include m-theme() {
-          color: themed($m-link);
+          color: themed($m-blue);
         }
       }
       &:last-child {

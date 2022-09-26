@@ -11,7 +11,7 @@
 
     &:hover {
       @include m-theme() {
-        color: rgba(themed($m-blue-dark), 0.9);
+        color: rgba(themed($m-blue--contrast), 0.9);
       }
     }
 

@@ -539,7 +539,7 @@
       font-weight: inherit;
       line-height: inherit;
       @include m-theme() {
-        color: themed($m-link);
+        color: themed($m-blue);
       }
 
       text-decoration: none;
@@ -587,7 +587,7 @@
       line-height: inherit;
       font-weight: 500;
       @include m-theme() {
-        color: themed($m-link);
+        color: themed($m-blue);
       }
 
       text-decoration: none;
