@@ -326,9 +326,6 @@ container_scanning:
   stage: scan
   variables:
     DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
-  except:
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
 
 dependency_scanning:
   stage: scan
