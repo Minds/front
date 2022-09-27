@@ -148,7 +148,7 @@ qa:nightly:
       - /^master$/
     variables:
       - $CI_NIGHTLY_TESTS == "true"
-  <<: *cypress_tests
+  <<: *playwright_tests
 
 # qa:production:
 #   parallel: 1
