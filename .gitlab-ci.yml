@@ -332,9 +332,6 @@ container_scanning:
 
 dependency_scanning:
   stage: scan
-  except:
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
 
 ################
 # Review Stage #
