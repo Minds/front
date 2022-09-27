@@ -92,12 +92,6 @@ export class ActivityV2ContentComponent
   @Input() autoplayVideo: boolean = false;
 
   /**
-   * Whether this is the post that was quoted
-   * (aka the inset post)
-   * */
-  @Input() wasQuoted: boolean = false;
-
-  /**
    * Used in activity modal
    */
   @Input() hideText: boolean = false;
@@ -123,8 +117,7 @@ export class ActivityV2ContentComponent
 
   maxFixedHeightContent: number = 300 * ACTIVITY_FIXED_HEIGHT_RATIO;
 
-  isRemind: boolean; // Is it a remind?
-  isQuote: boolean; // Is it a quote post (but not the post that was quoted)?
+  isRemind: boolean; // Is it a remind? (and NOT a quote)
 
   activityHeight: number;
   quoteHeight: number;
@@ -151,6 +144,9 @@ export class ActivityV2ContentComponent
 
   entity: ActivityEntity;
 
+  @HostBinding('class.m-activityContent--hasPaywallBadge')
+  showPaywallBadge: boolean = false;
+
   @HostBinding('class.m-activityContent--fixedHeight')
   get isFixedHeight(): boolean {
     return this.service.displayOptions.fixedHeight;
@@ -175,9 +171,6 @@ export class ActivityV2ContentComponent
   get textOnly(): boolean {
     return !this.hideText && this.hideMedia;
   }
-
-  @HostBinding('class.m-activityContent--paywalledStatus')
-  isPaywalledStatus: boolean;
 
   @HostBinding('class.m-activityContent--richEmbed')
   get isRichEmbed(): boolean {
@@ -211,9 +204,20 @@ export class ActivityV2ContentComponent
       this.entity.custom_type == 'batch' && this.entity.custom_data.length > 1
     );
   }
+  /**
+   * Whether this is a quote post
+   * (but not the post that was quoted)
+   * */
+  @HostBinding('class.m-activityContent--quote')
+  isQuote: boolean;
 
-  @HostBinding('class.m-activityContent--supermindReply')
-  isSupermindReply: boolean;
+  /**
+   * Whether this is the post that was quoted
+   * (aka the inset post)
+   * */
+  @HostBinding('class.m-activityContent--wasQuoted')
+  @Input()
+  wasQuoted: boolean = false;
 
   @HostBinding('class.m-activityContent--status')
   get isStatus(): boolean {
@@ -225,6 +229,9 @@ export class ActivityV2ContentComponent
       this.entity.remind_object
     );
   }
+
+  @HostBinding('class.m-activityContent--supermindReply')
+  isSupermindReply: boolean;
 
   @HostBinding('class.m-activityContent--textlessMedia')
   get textlessMedia(): boolean {
@@ -325,18 +332,9 @@ export class ActivityV2ContentComponent
         }
       })
     );
-    // ojm check
-    // this.subscriptions.push(
-    //   this.service.shouldShowPaywall$.subscribe((shouldShow: boolean) => {
-    //     this.showPaywall = shouldShow;
-    //   })
-    // );
     this.subscriptions.push(
       this.service.shouldShowPaywallBadge$.subscribe((shouldShow: boolean) => {
         this.showPaywallBadge = shouldShow;
-
-        this.isPaywalledStatus =
-          shouldShow && this.entity.content_type === 'status';
       })
     );
   }
