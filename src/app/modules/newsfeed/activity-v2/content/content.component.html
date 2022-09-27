@@ -4,7 +4,7 @@
 <!-- Otherwise it is in owner block -->
 <!-- ----------------------------------- -->
 <m-paywallBadge
-  *ngIf="isMinimalMode"
+  *ngIf="(isMinimalMode || wasQuoted) && showPaywallBadge"
   [entity]="entity"
   [showTierName]="false"
 ></m-paywallBadge>

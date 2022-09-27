@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { truncate } from 'fs';
 import { Subscription } from 'rxjs';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
@@ -65,9 +64,9 @@ export class PaywallBadgeComponent implements OnInit {
     }
 
     // Use the paywall status of the quoted post, not the quote wrapper
-    if (this._entity.remind_object) {
-      this._entity = this._entity.remind_object;
-    }
+    // if (this._entity.remind_object) {
+    //   this._entity = this._entity.remind_object;
+    // }
 
     this.hasPaywall = !!this._entity.paywall || this._entity.paywall_unlocked;
 
