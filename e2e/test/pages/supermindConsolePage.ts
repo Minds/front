@@ -160,16 +160,25 @@ export class SupermindConsolePage {
    * @return { void }
    */
   public clickAccept(feedPosition: number = 1): void {
+    // opens composer, does not fire a request.
     I.click(this.acceptButton.at(feedPosition));
   }
 
   /**
    * Click Decline.
    * @param { number } feedPosition - position in feed for decline button click.
-   * @return { void }
+   * @return { Promise<void> }
    */
-  public clickDecline(feedPosition: number = 1): void {
-    I.click(this.declineButton.at(feedPosition));
+  public async clickDecline(feedPosition: number = 1): Promise<void> {
+    await Promise.all([
+      I.click(this.declineButton.at(feedPosition)),
+      I.waitForResponse(
+        resp =>
+          new RegExp(/api\/v3\/supermind\/\d+\/reject/).test(resp.url()) &&
+          resp.status() === 200,
+        30
+      ),
+    ]);
   }
 
   /**

@@ -96,6 +96,10 @@ namespace CommonSteps {
     I.amOnPage('/' + username);
   });
 
+  Given('I wait for {string} seconds', (seconds: number) => {
+    I.wait(seconds);
+  });
+
   //
 
   Then(

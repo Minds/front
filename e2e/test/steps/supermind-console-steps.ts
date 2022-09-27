@@ -54,6 +54,19 @@ namespace SupermindConsoleSteps {
     composerModalPage.clickPost();
   });
 
+  Given('I make a supermind offer to {string}', (targetUsername: string) => {
+    composerModalPage.shouldHaveSupermindBadge(false);
+    composerModalPage.shouldHaveEllipsisMenu(true);
+    composerModalPage.typeInTextArea('hello');
+    composerModalPage.clickSupermindIcon();
+    composerModalPage.clickSupermindPanelTab('Tokens');
+    composerModalPage.addSupermindTarget(targetUsername);
+    composerModalPage.enterSupermindAmount(10);
+    composerModalPage.acceptSupermindTerms();
+    composerModalPage.clickSupermindSave();
+    composerModalPage.clickPost();
+  });
+
   When('I try to make an NSFW supermind offer', () => {
     composerModalPage.shouldHaveSupermindBadge(false);
     composerModalPage.shouldHaveEllipsisMenu(true);
@@ -90,10 +103,10 @@ namespace SupermindConsoleSteps {
     supermindConsolePage.hasTabSelected('Inbound');
   });
 
-  When('I click {string} on latest Supermind', (buttonType: string) => {
+  When('I click {string} on latest Supermind', async (buttonType: string) => {
     switch (buttonType) {
       case 'decline':
-        supermindConsolePage.clickDecline();
+        await supermindConsolePage.clickDecline();
         break;
       case 'cancel':
         supermindConsolePage.clickCancelOffer();
