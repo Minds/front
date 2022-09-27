@@ -141,7 +141,6 @@ qa:e2e:
   <<: *playwright_tests
 
 qa:nightly:
-  parallel: 2
   allow_failure: true
   only:
     refs:
@@ -327,9 +326,15 @@ container_scanning:
   stage: scan
   variables:
     DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 dependency_scanning:
   stage: scan
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 ################
 # Review Stage #
