@@ -129,8 +129,6 @@ export class ActivityV2ContentComponent
   imageAspectRatio: number = 0;
   imageOriginalHeight: number;
 
-  showPaywallBadge: boolean = false;
-
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
 
