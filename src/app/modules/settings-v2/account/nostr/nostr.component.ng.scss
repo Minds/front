@@ -1,0 +1,52 @@
+@import 'defaults.scss';
+
+:host {
+  h3 {
+    @include heading3Bold;
+
+    ::ng-deep m-tooltip {
+      position: relative;
+      vertical-align: middle;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+  h4 {
+    @include heading4Bold;
+  }
+
+  p {
+    margin-bottom: $spacing8;
+  }
+
+  a {
+    cursor: pointer;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+
+    &:hover {
+      @include m-theme() {
+        color: themed($m-blue--contrast);
+      }
+    }
+  }
+
+  .m-settingsV2Nostr__nip26Token {
+    word-break: break-all;
+    padding: $spacing4;
+    overflow: scroll;
+
+    @include m-theme() {
+      border: 1px dashed themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--secondary);
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

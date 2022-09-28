@@ -102,6 +102,10 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger`,
             id: 'messenger',
           },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__NOSTR__LABEL:Nostr`,
+            id: 'nostr',
+          },
         ],
       },
       {
