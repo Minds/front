@@ -102,6 +102,14 @@ export class SupermindConsolePage {
   }
 
   /**
+   * Click settings cog.
+   * @returns { void }
+   */
+  public clickSettingsCog(): void {
+    I.click(this.settingsCog);
+  }
+
+  /**
    * Check if page has appropriate superminds for given subpage.
    * @param { SupermindConsoleSubPage } subpage - subpage to check you have superminds for.
    * @returns { void }
