@@ -14,7 +14,8 @@
             autoplayVideo: false,
             showToolbar: false,
             bypassMediaModal: true,
-            showOwnerBlock: entity.subtype === 'remind',
+            showOwnerBlock:
+              entity.subtype === 'remind' || baseEntityIsGroupPost,
             sidebarMode: true,
             permalinkBelowContent: true
           }"
