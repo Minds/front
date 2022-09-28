@@ -22,8 +22,9 @@ import { SettingsV2NsfwContentComponent } from './account/nsfw-content/nsfw-cont
 import { SettingsV2ShareButtonsComponent } from './account/share-buttons/share-buttons.component';
 import { MindsFormsModule } from '../forms/forms.module';
 import { SettingsV2Service } from './settings-v2.service';
-import { SettingsV2PaymentMethodsComponent } from './billing/payment-methods/payment-methods.component';
-import { SettingsV2RecurringPaymentsComponent } from './billing/recurring-payments/recurring-payments.component';
+import { SettingsV2PaymentMethodsComponent } from './payments/payment-methods/payment-methods.component';
+import { SettingsV2RecurringPaymentsComponent } from './payments/recurring-payments/recurring-payments.component';
+import { SettingsV2SupermindComponent } from './payments/supermind/supermind.component';
 import { SettingsV2ReportedContentComponent } from './other/reported-content/reported-content.component';
 import { SettingsV2BlockedChannelsComponent } from './other/blocked-channels/blocked-channels.component';
 import { SettingsV2SubscriptionTiersComponent } from './other/subscription-tiers/subscription-tiers.component';
@@ -68,6 +69,7 @@ import { SettingsV2PushNotificationsV3Component } from './account/notifications-
 import { SettingsV2EmailNotificationsV3Component } from './account/notifications-v3/email-notifications-v3/email-notifications-v3.component';
 import { SettingsV2ProfileComponent } from './account/profile/profile.component';
 import { SettingsV2WalletComponent } from './other/wallet/wallet.component';
+import { SupermindExperimentGuard } from '../experiments/guards/supermind-experiment.guard';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -312,8 +314,25 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
         ],
       },
+      /**
+       * Changed parent route from billing to payments for front#5712
+       * The 3 redirects below are to ensure that we do not break any
+       * lingering direct navigation attempts.
+       */
+      {
+        path: 'billing/payment-methods',
+        redirectTo: 'payments/payment-methods',
+      },
+      {
+        path: 'billing/recurring-payments',
+        redirectTo: 'payments/recurring-payments',
+      },
       {
         path: 'billing',
+        redirectTo: 'payments',
+      },
+      {
+        path: 'payments',
         component: SettingsV2Component,
         data: {
           isMenu: true,
@@ -340,6 +359,16 @@ const SETTINGS_V2_ROUTES: Routes = [
               description:
                 'Track recurring payments you make to support other channels.',
               id: 'recurring-payments',
+            },
+          },
+          {
+            path: 'supermind',
+            component: SettingsV2SupermindComponent,
+            canActivate: [SupermindExperimentGuard],
+            data: {
+              title: 'Supermind',
+              description: 'Manage Supermind settings',
+              id: 'supermind',
             },
           },
         ],
@@ -505,6 +534,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ShareButtonsComponent,
     SettingsV2PaymentMethodsComponent,
     SettingsV2RecurringPaymentsComponent,
+    SettingsV2SupermindComponent,
     SettingsV2ReportedContentComponent,
     SettingsV2BlockedChannelsComponent,
     SettingsV2SubscriptionTiersComponent,
