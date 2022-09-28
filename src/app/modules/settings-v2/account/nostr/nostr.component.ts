@@ -84,6 +84,21 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
         );
         this.formGroup.markAsDirty();
       }),
+      this.formGroup.controls.privateKey.valueChanges.subscribe(
+        async privateKey => {
+          /**
+           * Generate the signature for the NIP-26 delegation token
+           */
+          const sig = Buffer.from(
+            await secp256k1.schnorr.sign(
+              this.nip26DelegationTokenSha256Hash,
+              privateKey
+            )
+          ).toString('hex');
+
+          this.formGroup.controls.signedDelegationToken.setValue(sig);
+        }
+      ),
       this.nostrService.nip26DelegationTokenSha256Hash$.subscribe(
         nip26DelegationTokenSha256Hash =>
           (this.nip26DelegationTokenSha256Hash = nip26DelegationTokenSha256Hash)
@@ -123,21 +138,10 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
     const publicKey = getPublicKey(<any>privateKey);
 
     /**
-     * Generate the signature for the NIP-26 delegation token
-     */
-    const sig = Buffer.from(
-      await secp256k1.schnorr.sign(
-        this.nip26DelegationTokenSha256Hash,
-        privateKey
-      )
-    ).toString('hex');
-
-    /**
      * Update the form values
      */
     this.formGroup.controls.publicKey.setValue(publicKey);
     this.formGroup.controls.privateKey.setValue(privateKey);
-    this.formGroup.controls.signedDelegationToken.setValue(sig);
 
     this.detectChanges();
   }
