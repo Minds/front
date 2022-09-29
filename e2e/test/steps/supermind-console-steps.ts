@@ -1,4 +1,5 @@
 import { ComposerModal } from '../pages/composerModal';
+import { ConfirmationModalComponent } from '../components/confirmationModalComponent';
 import { SupermindConsolePage } from '../pages/supermindConsolePage';
 import {
   SupermindConsoleSubPage,
@@ -8,6 +9,7 @@ import {
 namespace SupermindConsoleSteps {
   const supermindConsolePage = new SupermindConsolePage();
   const composerModalPage = new ComposerModal();
+  const confirmationModalComponent = new ConfirmationModalComponent();
 
   Before(() => {});
 
@@ -51,7 +53,10 @@ namespace SupermindConsoleSteps {
     composerModalPage.enterSupermindAmount(10);
     composerModalPage.acceptSupermindTerms();
     composerModalPage.clickSupermindSave();
+    confirmationModalComponent.shouldBeVisible(false);
     composerModalPage.clickPost();
+    confirmationModalComponent.shouldBeVisible(true);
+    confirmationModalComponent.clickConfirm();
   });
 
   When('I try to make an NSFW supermind offer', () => {
