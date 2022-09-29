@@ -21,3 +21,4 @@ Feature: Supermind Settings
     And I am on the Supermind settings page
     When I click the prompt to add my bank information
     Then I should see "/wallet/cash/settings" in current URL
+    And I clear my cookies
