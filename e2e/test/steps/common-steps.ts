@@ -77,7 +77,7 @@ namespace CommonSteps {
         password = process.env.SUPERMIND_SENDER_PASSWORD || '';
         break;
       case process.env.SUPERMIND_SETTINGS_USERNAME:
-        password = process.env.SUPERMIND_SETTINGS_PASSWORD;
+        password = process.env.SUPERMIND_SETTINGS_PASSWORD || '';
         break;
       default:
         username = process.env.PLAYWRIGHT_USERNAME || '';
@@ -106,6 +106,10 @@ namespace CommonSteps {
 
   Given('I am on the {string} channel page', username => {
     I.amOnPage('/' + username);
+  });
+
+  Given('I wait for {string} seconds', (seconds: number) => {
+    I.wait(seconds);
   });
 
   When('I click the cancel button on the confirmation modal', () => {
