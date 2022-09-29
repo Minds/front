@@ -116,8 +116,6 @@ export const ACTIVITY_SHORT_STATUS_MAX_LENGTH = 300;
 export const ACTIVITY_V2_SHORT_STATUS_MAX_LENGTH = 100;
 export const ACTIVITY_V2_MEDIUM_STATUS_MAX_LENGTH = 250;
 
-//export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
-
 // entity for which metrics events can be subscribed to.
 type MetricsSubscribableEntity = { guid: string };
 

@@ -12,7 +12,7 @@ import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
+import { ConfirmV2Component } from '../../modals/confirm-v2/confirm.component';
 import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({

@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  padding: 40px;
+  padding: $spacing8;
   border-radius: 5px;
 
   @include z-index(body);
@@ -10,35 +10,35 @@
     background-color: themed($m-bgColor--secondary);
   }
 
-  .m-confirmV2Modal__textWrapper {
+  .m-confirmationModal__textWrapper {
     display: flex;
     flex-flow: column nowrap;
 
-    .m-confirmV2Modal__title {
-      font-size: 24px;
-      font-weight: 600;
+    .m-confirmationModal__title {
+      @include heading2Bold;
       margin-top: unset;
     }
 
-    .m-confirmV2Modal__text {
-      font-size: 18px;
-      font-weight: 400;
-      margin-right: 80px;
+    .m-confirmationModal__text {
+      @include body2Regular;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeSpeed;
     }
   }
-  .m-confirmV2Modal__buttonWrapper {
+
+  .m-confirmationModal__buttonWrapper {
     margin-top: $minds-margin * 4;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
 
-    .m-confirmV2Modal__cancelButton {
-      margin: 0 10px;
+    .m-confirmationModal__cancelButton {
+      margin: 0 $spacing4;
     }
 
-    .m-confirmV2Modal__confirmButton {
-      margin: 0 10px;
+    .m-confirmationModal__confirmButton {
+      margin: 0 $spacing4;
     }
   }
 }

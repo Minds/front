@@ -11,7 +11,7 @@
     "@codeceptjs/configure": "^0.8.0",
     "@codeceptjs/examples": "^1.2.1",
     "@codeceptjs/helper": "^2.0.1",
-    "@codeceptjs/ui": "^0.4.6",
+    "@codeceptjs/ui": "^0.4.7",
     "@playwright/test": "^1.23.3",
     "browserstack-local": "^1.5.1",
     "codeceptjs": "^3.3.5",

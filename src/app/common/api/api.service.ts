@@ -69,13 +69,13 @@ export class ApiService {
     }
   }
 
-  get(
+  get<T = ApiResponse>(
     endpoint: string,
     queryParams: ApiRequestQueryParams = null,
     retryTimes: number = 0,
     options: ApiRequestOptions = {}
-  ): Observable<ApiResponse> {
-    const request = this.request(
+  ): Observable<T> {
+    const request = this.request<T>(
       ApiRequestMethod.GET,
       this._buildQueryString(endpoint, queryParams),
       {},
@@ -89,12 +89,12 @@ export class ApiService {
     return request;
   }
 
-  post(
+  post<T = ApiResponse>(
     endpoint: string,
     data: ApiRequestData = null,
     options: ApiRequestOptions = {}
-  ): Observable<ApiResponse> {
-    return this.request(
+  ): Observable<T> {
+    return this.request<T>(
       ApiRequestMethod.POST,
       this.baseUrl + endpoint,
       data,
@@ -102,12 +102,12 @@ export class ApiService {
     );
   }
 
-  put(
+  put<T = ApiResponse>(
     endpoint: string,
     data: ApiRequestData = null,
     options: ApiRequestOptions = {}
-  ): Observable<ApiResponse> {
-    return this.request(
+  ): Observable<T> {
+    return this.request<T>(
       ApiRequestMethod.PUT,
       this.baseUrl + endpoint,
       data,
@@ -123,13 +123,13 @@ export class ApiService {
    * @param data - payload data.
    * @returns Observable<ApiResponse> - api response
    */
-  delete(
+  delete<T = ApiResponse>(
     endpoint: string,
     queryParams: ApiRequestQueryParams = null,
     options: ApiRequestOptions = {},
     payload: ApiRequestData = {}
-  ): Observable<ApiResponse> {
-    return this.request(
+  ): Observable<T> {
+    return this.request<T>(
       ApiRequestMethod.DELETE,
       this._buildQueryString(endpoint, queryParams),
       payload,
@@ -176,18 +176,18 @@ export class ApiService {
       );
   }
 
-  request(
+  protected request<T = ApiResponse>(
     method: ApiRequestMethod,
     endpoint: string,
     data: ApiRequestData,
     options: ApiRequestOptions
-  ): Observable<ApiResponse> {
+  ): Observable<T> {
     if (options.upload) {
       return throwError(new Error('Use the upload() method for uploads'));
     }
 
     return this.httpClient
-      .request<ApiResponse>(
+      .request<T>(
         method,
         endpoint,
         this._buildOptions(
@@ -201,9 +201,12 @@ export class ApiService {
       )
       .pipe(
         map(response => {
-          if (!response || (response.status && response.status !== 'success')) {
+          if (
+            !response ||
+            ((response as any).status && (response as any).status !== 'success')
+          ) {
             throw new Error(
-              (response && response.message) || 'Internal server error'
+              (response && (response as any).message) || 'Internal server error'
             );
           }
 

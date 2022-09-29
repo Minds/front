@@ -26,11 +26,11 @@ Feature: settings
     When I am on the security settings page
     Then I see security submenus within settings
 
-  Scenario: should display all billing submenus within settings
+  Scenario: should display all payments submenus within settings
     Given I am logged in
     And I am on the settings page
-    When I am on the billing settings page
-    Then I see billing submenus within settings
+    When I am on the payments settings page
+    Then I see payments submenus within settings
 
   Scenario: should display all other submenus within settings
     Given I am logged in

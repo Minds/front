@@ -126,7 +126,7 @@ describe('SupermindConsoleComponent', () => {
   it('it should navigate to settings page on settings button click', () => {
     comp.onSettingsButtonClick(null);
     expect((comp as any).router.navigate).toHaveBeenCalledWith([
-      '/settings/supermind',
+      '/settings/payments/supermind',
     ]);
   });
 
