@@ -18,15 +18,18 @@ export class Helpers {
    */
   public setCaptchaBypassCookie(): this {
     const sharedKey = process.env.BYPASS_SIGNING_KEY;
-    const captcha = 'friendly_captcha_bypass';
-    const token = jwt.sign({ data: captcha }, sharedKey, {
-      expiresIn: '5m',
-    });
 
-    this.setCookie({
-      name: 'captcha_bypass',
-      value: token,
-    });
+    if (sharedKey) {
+      const captcha = 'friendly_captcha_bypass';
+      const token = jwt.sign({ data: captcha }, sharedKey, {
+        expiresIn: '5m',
+      });
+
+      this.setCookie({
+        name: 'captcha_bypass',
+        value: token,
+      });
+    }
 
     return this;
   }
@@ -37,14 +40,17 @@ export class Helpers {
    */
   public setRateLimitBypassCookie(): this {
     const sharedKey = process.env.BYPASS_SIGNING_KEY;
-    const token = jwt.sign({ timestamp_ms: Date.now() }, sharedKey, {
-      expiresIn: '5m',
-    });
 
-    this.setCookie({
-      name: 'rate_limit_bypass',
-      value: token,
-    });
+    if (sharedKey) {
+      const token = jwt.sign({ timestamp_ms: Date.now() }, sharedKey, {
+        expiresIn: '5m',
+      });
+
+      this.setCookie({
+        name: 'rate_limit_bypass',
+        value: token,
+      });
+    }
 
     return this;
   }

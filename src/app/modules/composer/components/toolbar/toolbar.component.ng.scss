@@ -156,4 +156,11 @@
       font-size: 20px;
     }
   }
+
+  ::ng-deep m-button.m-composerToolbar__action--post {
+    .m-button__text--saving {
+      height: 100%;
+      width: 100%;
+    }
+  }
 }

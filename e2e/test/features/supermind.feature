@@ -105,3 +105,17 @@ Feature: supermind
     And I have created a new post via the newsfeed
     When I click the activity post supermind icon on the toolbar
     Then I should see prefilled supermind details in the composer
+
+  Scenario: can not make a supermind if I do not confirm
+    Given I am logged in
+    And I am on the newsfeed
+    And I have clicked on the sidebar composer button
+    When I click the supermind icon on the composer toolbar
+    Then I should see the supermind popout screen
+    When I enter a target username with value 'minds'
+    And I accept the supermind terms
+    And I click the supermind creator save button
+    And I enter 'hello world. this should not allow me to post.' in the composer text area
+    And I click the post button
+    And I click the cancel button on the confirmation modal
+    Then I should still see the composer modal open
