@@ -1,15 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ApiService } from '../../../../../common/api/api.service';
-import { EmailConfirmationService } from '../../../../../common/components/email-confirmation/email-confirmation.service';
-import { FriendlyDateDiffPipe } from '../../../../../common/pipes/friendlydatediff';
-import { ToasterService } from '../../../../../common/services/toaster.service';
-import { MockComponent, MockService } from '../../../../../utils/mock';
-import { ComposerModalService } from '../../../../composer/components/modal/modal.service';
-import moment = require('moment');
+import { MockComponent } from '../../../../../utils/mock';
 import { Supermind } from '../../../supermind.types';
 import { SupermindConsoleListItemComponent } from './list-item.component';
-import { Session } from '../../../../../services/session';
 
 describe('SupermindConsoleListItemComponent', () => {
   let comp: SupermindConsoleListItemComponent;
@@ -55,23 +48,14 @@ describe('SupermindConsoleListItemComponent', () => {
             selector: 'm-button',
             inputs: ['size'],
           }),
-        ],
-        providers: [
-          FriendlyDateDiffPipe,
-          ComposerModalService,
-          ToasterService,
-          {
-            provide: EmailConfirmationService,
-            useValue: MockService(EmailConfirmationService),
-          },
-          {
-            provide: ApiService,
-            useValue: MockService(ApiService),
-          },
-          {
-            provide: Session,
-            useValue: MockService(Session),
-          },
+          MockComponent({
+            selector: 'm-supermind__stateLabel',
+            inputs: ['supermind'],
+          }),
+          MockComponent({
+            selector: 'm-supermind__actionButtons',
+            inputs: ['supermind'],
+          }),
         ],
       }).compileComponents();
     })
@@ -83,8 +67,6 @@ describe('SupermindConsoleListItemComponent', () => {
 
     comp.supermind = mockSupermind;
     comp.context = 'inbox';
-
-    (comp as any).session.getLoggedInUser.calls.reset();
 
     fixture.detectChanges();
 
@@ -120,53 +102,6 @@ describe('SupermindConsoleListItemComponent', () => {
     comp.supermind.payment_amount = 10;
 
     expect(comp.amountBadgeText).toBe('');
-  });
-
-  it('should get time till expiration based on created_timestamp and expiry_threshold when days', () => {
-    comp.supermind.created_timestamp = moment().unix();
-    comp.supermind.expiry_threshold = 604800;
-
-    expect(comp.timeTillExpiration).toBe('6d');
-  });
-
-  it('should get time till expiration based on created_timestamp and expiry_threshold when hours', () => {
-    comp.supermind.created_timestamp = moment()
-      .subtract(6, 'days')
-      .unix();
-    comp.supermind.expiry_threshold = 604800;
-
-    expect(comp.timeTillExpiration).toBe('23h');
-  });
-
-  it('should get time till expiration based on created_timestamp and expiry_threshold when minutes', () => {
-    comp.supermind.created_timestamp = moment()
-      .subtract(6, 'days')
-      .subtract(23, 'hours')
-      .unix();
-    comp.supermind.expiry_threshold = 604800;
-
-    expect(comp.timeTillExpiration).toBe('59m');
-  });
-
-  it('should get time till expiration based on created_timestamp and expiry_threshold when seconds', () => {
-    comp.supermind.created_timestamp = moment()
-      .subtract(6, 'days')
-      .subtract(23, 'hours')
-      .subtract(59, 'minutes')
-      .unix();
-    comp.supermind.expiry_threshold = 604800;
-
-    expect(comp.timeTillExpiration).toBe('59s');
-  });
-
-  it('should get NO time till expiration based on created_timestamp and expiry_threshold when expired', () => {
-    comp.supermind.created_timestamp = moment()
-      .subtract(7, 'days')
-      .subtract(1, 'second')
-      .unix();
-    comp.supermind.expiry_threshold = 604800;
-
-    expect(comp.timeTillExpiration).toBe('');
   });
 
   it('should get requirements text when reply type is text', () => {
@@ -209,26 +144,5 @@ describe('SupermindConsoleListItemComponent', () => {
     comp.supermind.twitter_required = true;
 
     expect(comp.requirementsText).toBe('Video Reply · Twitter');
-  });
-
-  it('should determine if inbox action buttons should be shown because context is inbox', () => {
-    comp.context = 'inbox';
-    expect(comp.shouldShowInboxActionButtons()).toBeTrue();
-  });
-
-  it('should determine if inbox action buttons should be shown because session guid is the same as receiver guid', () => {
-    comp.context = '123';
-    (comp as any).session.getLoggedInUser.and.returnValue({
-      guid: comp.supermind.receiver_guid,
-    });
-    expect(comp.shouldShowInboxActionButtons()).toBeTrue();
-  });
-
-  it('should determine if inbox action buttons should NOT be shown', () => {
-    comp.context = 'outbox';
-    (comp as any).session.getLoggedInUser.and.returnValue({
-      guid: comp.supermind.receiver_guid + '123',
-    });
-    expect(comp.shouldShowInboxActionButtons()).toBeFalse();
   });
 });

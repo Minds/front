@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
-import { ApiResponse, ApiService } from '../../../common/api/api.service';
-import { SupermindConsoleListType } from '../supermind.types';
+import { ApiResponse, ApiService } from '../../../../common/api/api.service';
+import { SupermindConsoleListType } from '../../supermind.types';
 
 /**
  * Supermind console service for loading of inbox / outbox.

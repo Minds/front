@@ -10,7 +10,7 @@ import {
 import { ApiResponse } from '../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { Supermind, SupermindConsoleListType } from '../../supermind.types';
-import { SupermindConsoleService } from '../console.service';
+import { SupermindConsoleService } from '../services/console.service';
 
 /**
  * Supermind list component - contains logic for inbox / outbox list.
