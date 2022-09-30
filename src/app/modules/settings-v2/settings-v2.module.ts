@@ -69,6 +69,7 @@ import { SettingsV2PushNotificationsV3Component } from './account/notifications-
 import { SettingsV2EmailNotificationsV3Component } from './account/notifications-v3/email-notifications-v3/email-notifications-v3.component';
 import { SettingsV2ProfileComponent } from './account/profile/profile.component';
 import { SettingsV2WalletComponent } from './other/wallet/wallet.component';
+import { SettingsV2NostrComponent } from './account/nostr/nostr.component';
 import { SupermindExperimentGuard } from '../experiments/guards/supermind-experiment.guard';
 
 const SETTINGS_V2_ROUTES: Routes = [
@@ -199,6 +200,16 @@ const SETTINGS_V2_ROUTES: Routes = [
               description:
                 'Choose whether you want to see the legacy messenger.',
               id: 'messenger',
+            },
+          },
+          {
+            path: 'nostr',
+            component: SettingsV2NostrComponent,
+            data: {
+              title: 'Nostr',
+              description:
+                'Configure your channel to interface outside of the Minds network.',
+              id: 'nostr',
             },
           },
 
@@ -564,8 +575,10 @@ const SETTINGS_V2_ROUTES: Routes = [
     // These need moving to settings folder
     SettingsTwoFactorComponent,
     SettingsReportedContentComponent,
+    //
     SettingsV2MessengerComponent,
     SettingsV2WalletComponent,
+    SettingsV2NostrComponent,
   ],
   providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],
