@@ -57,7 +57,7 @@ describe('SupermindConsoleService', () => {
     service.listType$.next('inbox');
     (service as any).api.get.and.returnValue(of(response));
 
-    service.getList$(offset).subscribe(list => {
+    service.getList$(12, offset).subscribe(list => {
       expect((service as any).api.get).toHaveBeenCalledWith(
         'api/v3/supermind/inbox',
         {
@@ -105,7 +105,7 @@ describe('SupermindConsoleService', () => {
     service.listType$.next('outbox');
     (service as any).api.get.and.returnValue(of(response));
 
-    service.getList$(offset).subscribe(list => {
+    service.getList$(12, offset).subscribe(list => {
       expect((service as any).api.get).toHaveBeenCalledWith(
         'api/v3/supermind/outbox',
         {
@@ -116,5 +116,38 @@ describe('SupermindConsoleService', () => {
       expect(list).toEqual(response);
       done();
     });
+  });
+
+  it('should get single entity page', (done: DoneFn) => {
+    const response: ApiResponse = {
+      status: 'success',
+      0: [{ guid: 1 }],
+    };
+
+    const listType = '123456789';
+
+    service.listType$.next(listType);
+    (service as any).api.get.and.returnValue(of(response));
+
+    service.getList$().subscribe(list => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        `api/v3/supermind/${listType}`,
+        {}
+      );
+      expect(list).toEqual(response);
+      done();
+    });
+  });
+
+  it('should determine if value is a numeric string', () => {
+    expect(service.isNumericListType('123')).toBeTrue();
+  });
+
+  it('should determine if value is a number', () => {
+    expect(service.isNumericListType(123)).toBeTrue();
+  });
+
+  it('should determine if value is a non-numeric string', () => {
+    expect(service.isNumericListType('inbox')).toBeFalse();
   });
 });
