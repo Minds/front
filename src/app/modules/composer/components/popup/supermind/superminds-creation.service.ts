@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MindsUser } from '../../../../../interfaces/entities';
 
 /**
  * Payment methods supported
@@ -48,6 +49,7 @@ export type SupermindComposerPaymentOptionsType = {
  * The data model type that will be sent with the composer api request
  */
 export type SupermindComposerPayloadType = {
+  receiver_user?: MindsUser;
   receiver_guid: string;
   reply_type: SUPERMIND_RESPONSE_TYPES;
   twitter_required: boolean;

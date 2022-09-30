@@ -7,17 +7,30 @@ import {
   Output,
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-  SupermindComposerPayloadType,
-  SupermindComposerPaymentOptionsType,
-  SUPERMIND_DEFAULT_CASH_MIN,
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import {
   SUPERMIND_DEFAULT_PAYMENT_METHOD,
   SUPERMIND_DEFAULT_RESPONSE_TYPE,
-  SUPERMIND_DEFAULT_TOKENS_MIN,
   SUPERMIND_PAYMENT_METHODS,
+  SupermindComposerPayloadType,
+  SupermindComposerPaymentOptionsType,
 } from './superminds-creation.service';
 import { Subscription } from 'rxjs';
+import {
+  EntityResolverService,
+  EntityResolverServiceOptions,
+} from '../../../../../common/services/entity-resolver.service';
+import { MindsUser } from '../../../../../interfaces/entities';
+import { ConfigsService } from '../../../../../common/services/configs.service';
+import { SupermindSettings } from '../../../../settings-v2/payments/supermind/supermind.types';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -40,10 +53,14 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   supermindRequestDataSubscription: Subscription;
 
+  private targetUsernameSubscription: Subscription;
+
   /**
    * Form group which holds all our data
    */
   formGroup: FormGroup;
+
+  inProgress: boolean = false;
 
   /**
    * The value of the payment method
@@ -60,8 +77,25 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   /**
    * Alias for amount mins (so html template can access)
    */
-  CashMin = SUPERMIND_DEFAULT_CASH_MIN;
-  TokensMin = SUPERMIND_DEFAULT_TOKENS_MIN;
+  private cashMin?: number;
+  get CashMin(): number {
+    return (
+      this.cashMin ??
+      (this.mindsConfig.get<object>('supermind')[
+        'min_thresholds'
+      ] as SupermindSettings).min_cash
+    );
+  }
+
+  private tokensMin?: number;
+  get TokensMin(): number {
+    return (
+      this.tokensMin ??
+      (this.mindsConfig.get<object>('supermind')[
+        'min_thresholds'
+      ] as SupermindSettings).min_offchain_tokens
+    );
+  }
 
   /**
    * The value of the inputted username
@@ -74,27 +108,34 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     return this.formGroup.valid;
   }
 
+  private targetUser?: MindsUser;
+
   /**
    * Constructor
    * @param service
    * @param configs
    */
-  constructor(protected service: ComposerService, private fb: FormBuilder) {}
+  constructor(
+    protected service: ComposerService,
+    private fb: FormBuilder,
+    private mindsConfig: ConfigsService,
+    private entityResolverService: EntityResolverService
+  ) {}
 
   /**
    * @inheritDoc
    */
   ngOnInit() {
     this.formGroup = this.fb.group({
-      username: ['', [Validators.required]],
-      offerUsd: [
-        SUPERMIND_DEFAULT_CASH_MIN,
-        [Validators.min(SUPERMIND_DEFAULT_CASH_MIN)],
+      username: [
+        '',
+        [
+          Validators.required,
+          // this.merchantValidator()
+        ],
       ],
-      offerTokens: [
-        SUPERMIND_DEFAULT_TOKENS_MIN,
-        [Validators.min(SUPERMIND_DEFAULT_TOKENS_MIN)],
-      ],
+      offerUsd: [this.CashMin],
+      offerTokens: [this.TokensMin],
       termsAccepted: [false, [Validators.requiredTrue]],
       responseType: [
         SUPERMIND_DEFAULT_RESPONSE_TYPE.toString(),
@@ -104,9 +145,29 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       cardId: [''], // Card
     });
 
+    this.targetUsernameSubscription = this.formGroup.controls.username.valueChanges
+      .pipe(
+        distinctUntilChanged(),
+        debounceTime(500),
+        switchMap(username => {
+          this.inProgress = true;
+          let options = new EntityResolverServiceOptions();
+          options.refType = 'username';
+          options.ref = username;
+
+          return this.entityResolverService.get$<MindsUser>(options);
+        })
+      )
+      .subscribe(user => {
+        this.targetUser = user;
+        console.log(this.targetUser);
+        this.inProgress = false;
+        this.setMinimumPaymentAmountFromUser(user);
+      });
+
     /**
      * Sets the values from the composer payload
-     * (note, this is only every updated onSave() or by the composer edit functions, updating the form itself will not emit an event)
+     * (note, this is only ever updated onSave() or by the composer edit functions, updating the form itself will not emit an event)
      */
     this.supermindRequestDataSubscription = this.service.supermindRequest$.subscribe(
       supermindRequest => {
@@ -149,6 +210,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           supermindRequest.terms_agreed
         );
 
+        this.setMinimumPaymentAmountFromUser(supermindRequest.receiver_user);
+
         // Will ensure clear button is displayed
         this.formGroup.markAsDirty();
       }
@@ -175,7 +238,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    * - Ideally it would also be a form component :/
    */
   onCardSelected(cardId: string) {
-    console.log(cardId);
     this.formGroup.controls.cardId.setValue(cardId);
   }
 
@@ -196,6 +258,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     }
 
     const supermindRequest: SupermindComposerPayloadType = {
+      receiver_user: this.targetUser,
       receiver_guid: this.formGroup.controls.username.value, // we can pass a username to the guid field
       reply_type: parseInt(this.formGroup.controls.responseType.value),
       twitter_required: false,
@@ -216,4 +279,91 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
 
     this.dismissIntent.emit();
   }
+
+  private setMinimumPaymentAmountFromUser(user: MindsUser | null): void {
+    const cashMin = user?.supermind_settings.min_cash;
+    const tokensMin = user?.supermind_settings.min_offchain_tokens;
+
+    this.refreshCashMinAmountValidator(cashMin);
+    this.refreshTokensMinAmountValidator(tokensMin);
+
+    // this.formGroup.controls.username.updateValueAndValidity({onlySelf: true});
+  }
+
+  private cashMinAmountValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (
+        this.paymentMethod === SUPERMIND_PAYMENT_METHODS.CASH &&
+        control.value < this.CashMin
+      ) {
+        return {
+          cashMinAmountInvalid: true,
+        };
+      }
+    };
+  }
+
+  private tokensMinAmountValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (
+        this.paymentMethod === SUPERMIND_PAYMENT_METHODS.TOKENS &&
+        control.value < this.TokensMin
+      ) {
+        return {
+          tokensMinAmountInvalid: true,
+        };
+      }
+    };
+  }
+
+  private latestCashMinAmountValidator: ValidatorFn = null;
+  private refreshCashMinAmountValidator(cashMin: number): void {
+    if (this.latestCashMinAmountValidator !== null) {
+      this.formGroup.controls.offerUsd?.removeValidators(
+        this.latestCashMinAmountValidator
+      );
+    }
+
+    this.cashMin = cashMin;
+
+    this.latestCashMinAmountValidator = this.cashMinAmountValidator();
+    this.formGroup.controls.offerUsd?.addValidators(
+      this.latestCashMinAmountValidator
+    );
+    this.formGroup.controls.offerUsd?.updateValueAndValidity({
+      onlySelf: true,
+    });
+    this.formGroup.controls.offerUsd?.markAsDirty({ onlySelf: true });
+  }
+
+  private latestTokensMinAmountValidator: ValidatorFn = null;
+  private refreshTokensMinAmountValidator(tokensMin: number): void {
+    if (this.latestTokensMinAmountValidator !== null) {
+      this.formGroup.controls.offerTokens?.removeValidators(
+        this.latestTokensMinAmountValidator
+      );
+    }
+
+    this.tokensMin = tokensMin;
+
+    this.latestTokensMinAmountValidator = this.tokensMinAmountValidator();
+    this.formGroup.controls.offerTokens?.addValidators(
+      this.latestTokensMinAmountValidator
+    );
+    this.formGroup.controls.offerTokens?.updateValueAndValidity({
+      onlySelf: true,
+    });
+    this.formGroup.controls.offerTokens?.markAsDirty({ onlySelf: true });
+  }
+
+  // private merchantValidator(): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     console.log("merchant check", this.targetUser?.merchant);
+  //     return !this.targetUser?.merchant ?
+  //       {
+  //         usernameMerchant: false
+  //       }
+  //       : null;
+  //   }
+  // }
 }
