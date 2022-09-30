@@ -1,0 +1,152 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__ACCOUNT__NOSTR">Nostr</span>
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__ACCOUNT__NOSTR__DESC">
+    Configure your Minds channel to interact with the
+    <a
+      href="https://github.com/nostr-protocol/nostr"
+      target="_blank"
+      data-ref="setting-account-nostr-ext-link"
+      >Nostr protocol</a
+    >
+  </div>
+</m-settingsV2__header>
+
+<div>
+  <h3>
+    <span>Your Nostr alias</span>
+    <m-tooltip icon="help">
+      <ng-container i18n="@@NOSTR_NIP5_TOOLTIP"
+        >Your Nostr alias will route to your Nostr Public Key, following the
+        NIP-05 proposal</ng-container
+      >
+    </m-tooltip>
+  </h3>
+  <p>{{ nip05Alias$ | async }}</p>
+</div>
+
+<div>
+  <h3>
+    <span>Your Nostr Public Key</span>
+    <m-tooltip icon="help">
+      <ng-container i18n="@@NOSTR_MINDSPUBKEY_TOOLTIP"
+        >Minds will sign your posts via this address address</ng-container
+      >
+    </m-tooltip>
+  </h3>
+  <p>{{ publicKey$ | async }}</p>
+</div>
+
+<form [formGroup]="formGroup" class="m-formLayout--buttonRight">
+  <h3>
+    <span>Delegated Signing</span>
+    <m-tooltip icon="help">
+      <ng-container i18n="@@NOSTR_NIP26_TOOLTIP"
+        >Pairing your sovereign key to your Minds key allows Minds to publish
+        posts and events on your behalf</ng-container
+      >
+    </m-tooltip>
+  </h3>
+
+  <ng-container *ngIf="!(isNip26Setup$ | async); else nip26AlreadySetup">
+    <p>
+      If you already have a Nostr keypair, enter your public and private key
+      below to generate a signed delegation token. Alternatively,
+      <a (click)="onGenerateKeypairsClick($event)">click here</a> to generate a
+      new keypair.
+    </p>
+
+    <div class="m-form__fieldsContainer">
+      <h4>Your Public Key</h4>
+
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            id="public_key"
+            name="public_key"
+            formControlName="publicKey"
+            class="form-control"
+            placeholder="Enter your public key you used to sign the delegation token with"
+          />
+        </div>
+      </div>
+
+      <h4>Your Private Key</h4>
+
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            id="private_key"
+            name="private_key"
+            formControlName="privateKey"
+            class="form-control"
+            placeholder="Enter your private key you used to sign the delegation token with"
+          />
+        </div>
+      </div>
+
+      <h4>Delegation Token</h4>
+
+      <div class="m-settingsV2Nostr__nip26Token">
+        {{ nip26DelegationToken$ | async }}
+      </div>
+
+      <h4>Signed Delegation Token</h4>
+
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            id="signedDelegationToken"
+            name="signedDelegationToken"
+            formControlName="signedDelegationToken"
+            class="form-control"
+            placeholder="Enter the signed delegation token"
+          />
+        </div>
+
+        <ng-container *ngIf="formGroup.controls.signedDelegationToken.value">
+          <h4>Delegation Tag</h4>
+
+          <span
+            >Minds will send the below tag alongside all your events to support
+            <a
+              href="https://github.com/nostr-protocol/nips/blob/master/26.md"
+              target="_blank"
+              >NIP-26 delegated event signing</a
+            >.</span
+          >
+
+          <pre class="m-settingsV2Nostr__nip26Token">{{
+            nip26DelegationTag
+          }}</pre>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="m-form__buttonsContainer">
+      <m-button
+        color="blue"
+        [disabled]="!canSubmit()"
+        [saving]="inProgress"
+        (onAction)="submit()"
+        i18n="@@SETTINGS__ACCOUNT__MESSENGER__UPDATE"
+      >
+        Setup
+      </m-button>
+    </div>
+  </ng-container>
+
+  <ng-template #nip26AlreadySetup>
+    <p>You have already setup delegation</p>
+
+    <div class="m-form__buttonsContainer">
+      <m-button color="red" [saving]="inProgress" (onAction)="deleteNip26()">
+        Remove Delegation
+      </m-button>
+    </div>
+  </ng-template>
+</form>
