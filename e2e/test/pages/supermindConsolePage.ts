@@ -31,9 +31,9 @@ export class SupermindConsolePage {
   private listItem: CodeceptJS.Locator = locate('m-supermind__listItem');
   private activity: CodeceptJS.Locator = locate('m-activity');
   private chipBadge: CodeceptJS.Locator = locate('m-chipBadge');
-  private expirationTimeLabel: CodeceptJS.Locator = locate(
-    '.m-supermindListItem__expirationTimeLabel'
-  ).withText('Expire');
+  private stateLabel: CodeceptJS.Locator = locate(
+    'm-supermind__stateLabel span'
+  );
   private requirementsLabel: CodeceptJS.Locator = locate(
     '.m-supermindListItem__requirementsLabel'
   );
@@ -118,7 +118,7 @@ export class SupermindConsolePage {
     I.seeElement(this.listItem);
     I.seeElement(this.activity);
     I.seeElement(this.chipBadge);
-    I.seeElement(this.expirationTimeLabel);
+    I.seeElement(this.stateLabel);
     I.seeElement(this.requirementsLabel);
 
     if (subpage === 'inbox') {
@@ -145,6 +145,7 @@ export class SupermindConsolePage {
    */
   public clickAddBankPrompt(): void {
     I.click(this.addBankPromptLink);
+    I.waitForNavigation({});
   }
 
   /**
@@ -199,6 +200,17 @@ export class SupermindConsolePage {
   }
 
   /**
+   * Click view reply
+   * @param { number } feedPosition - position of element in feed.
+   */
+  public clickViewReply(feedPosition: number = 1): void {
+    within(this.listItem.at(feedPosition), () => {
+      I.click(locate('m-button').withText('View Reply'));
+    });
+    I.seeInCurrentUrl('/newsfeed/');
+  }
+
+  /**
    * Check that supermind is not actionable (has no action buttons).
    * @param { number } feedPosition - position in feed for list item to check.
    * @return { void }
@@ -207,5 +219,20 @@ export class SupermindConsolePage {
     I.dontSeeElement(
       this.supermindListItem.at(feedPosition).find(this.supermindActionButtons)
     );
+  }
+
+  /**
+   * Check that supermind at feed position has a state labeling reading that of the label param.
+   * @param { number } label - text to check for.
+   * @param { number } feedPosition - position in feed for list item to check.
+   * @return { void }
+   */
+  public checkStateLabelContains(
+    label: string,
+    feedPosition: number = 1
+  ): void {
+    within(this.listItem.at(feedPosition), () => {
+      this.stateLabel.withText(label);
+    });
   }
 }
