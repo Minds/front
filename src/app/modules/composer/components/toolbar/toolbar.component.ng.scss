@@ -5,8 +5,14 @@
 
   .m-composerToolbar__action--post {
     margin-top: -4px;
-    ::ng-deep .m-button__text--unsaved > * {
-      font-size: 15px !important;
+
+    ::ng-deep {
+      .m-button {
+        align-items: center;
+      }
+      .m-button__text--unsaved > * {
+        font-size: 15px !important;
+      }
     }
   }
 
