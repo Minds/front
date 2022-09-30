@@ -1,0 +1,159 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__PAYMENTS__SUPERMIND_TITLE">Supermind</span>
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__PAYMENTS__SUPERMIND__GET_PAID_TO_REPLY"
+  >
+    Get paid to reply to your fans
+  </div>
+</m-settingsV2__header>
+
+<m-loadingSpinner [inProgress]="loadingInProgress$ | async"></m-loadingSpinner>
+
+<ng-container *ngIf="!(loadingInProgress$ | async)">
+  <div class="m-supermindSettings__subSection">
+    <h5
+      class="m-supermindSettings__subHeader"
+      i18n="@@SETTINGS__PAYMENTS__SET_YOUR_MIN_AMOUNT"
+    >
+      Set your minimum offer amount
+    </h5>
+    <p
+      class="m-supermindSettings__subDescription"
+      i18n="@@SETTINGS__PAYMENTS__SUPERMIND__FANS_CANT_SEND_OFFERS_LESS_THAN"
+    >
+      Fans can’t send you Supermind offers for less than your minimum offer
+      amount.
+    </p>
+    <!-- Main form -->
+    <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+      <div class="m-form__fieldsContainer">
+        <!-- Minimum token row -->
+        <div class="m-form__field--text stretchedField hasValidationRow">
+          <div class="m-form__row--label">
+            <label
+              for="min_offchain_tokens"
+              i18n="@@SETTINGS__PAYMENTS__SUPERMIND__TOKENS_LABEL"
+              >Tokens</label
+            >
+          </div>
+          <div
+            class="m-form__row--input"
+            [ngClass]="{
+              invalid:
+                (form.touched || form.dirty) &&
+                getFormErrors('min_offchain_tokens')
+            }"
+          >
+            <input
+              type="number"
+              step="0.01"
+              id="min_offchain_tokens"
+              name="min_offchain_tokens"
+              formControlName="min_offchain_tokens"
+              class="form-control"
+              data-cy="supermind-settings-min-tokens-input"
+            />
+          </div>
+          <ng-container
+            [ngTemplateOutlet]="validationErrorDisplay"
+            [ngTemplateOutletContext]="{
+              formControlKey: 'min_offchain_tokens'
+            }"
+          >
+          </ng-container>
+        </div>
+        <!-- Minimum cash row -->
+        <div class="m-form__field--text stretchedField hasValidationRow">
+          <div class="m-form__row--label">
+            <label
+              for="min_cash"
+              i18n="@@SETTINGS__PAYMENTS__SUPERMIND__CASH_USD_LABEL"
+              >Cash (USD)</label
+            >
+          </div>
+          <div
+            class="m-form__row--input"
+            [ngClass]="{
+              invalid: (form.touched || form.dirty) && getFormErrors('min_cash')
+            }"
+          >
+            <input
+              type="number"
+              step="0.01"
+              id="min_cash"
+              name="min_cash"
+              formControlName="min_cash"
+              class="form-control"
+              data-cy="supermind-settings-min-cash-input"
+            />
+          </div>
+          <ng-container
+            [ngTemplateOutlet]="validationErrorDisplay"
+            [ngTemplateOutletContext]="{ formControlKey: 'min_cash' }"
+          >
+          </ng-container>
+        </div>
+      </div>
+      <!-- Add bank prompt -->
+      <m-addBankPrompt></m-addBankPrompt>
+      <!-- Submit button -->
+      <div class="m-form__buttonsContainer">
+        <m-button
+          color="blue"
+          [disabled]="!canSubmit()"
+          [saving]="savingInProgress$ | async"
+          (onAction)="save()"
+          data-cy="supermind-settings-submit-button"
+        >
+          <ng-container
+            i18n="@@SETTINGS__PAYMENTS__SUPERMIND__UPDATE_PREFERENCES"
+          >
+            Update Preferences
+          </ng-container>
+        </m-button>
+      </div>
+    </form>
+  </div>
+</ng-container>
+
+<!-- Reusable validation errors -->
+<ng-template #validationErrorDisplay let-formControlKey="formControlKey">
+  <div class="m-form__row--validation">
+    <p
+      *ngIf="
+        (form.touched || form.dirty) && getFormErrors(formControlKey) as errors
+      "
+      data-cy="supermind-settings-validation-error"
+    >
+      <ng-container
+        *ngIf="errors.min && formControlKey === 'min_offchain_tokens'"
+      >
+        <ng-container i18n="@@SETTINGS__PAYMENTS__SUPERMIND__MUST_BE_MINIMUM_OF"
+          >Must be a minimum of</ng-container
+        >
+        {{ minThresholds.min_offchain_tokens }} tokens.
+      </ng-container>
+      <ng-container *ngIf="errors.min && formControlKey === 'min_cash'">
+        <ng-container i18n="@@SETTINGS__PAYMENTS__SUPERMIND__MUST_BE_MINIMUM_OF"
+          >Must be a minimum of</ng-container
+        >
+        ${{ minThresholds.min_cash }}.
+      </ng-container>
+      <ng-container
+        *ngIf="errors.required"
+        i18n="@@SETTINGS__PAYMENTS__SUPERMIND__MUST_HAVE_VALUE"
+      >
+        Must have a value.
+      </ng-container>
+      <ng-container
+        *ngIf="errors.pattern"
+        i18n="@@SETTINGS__PAYMENTS__SUPERMIND__LESS_THAN_2_DECIMAL_PLACES"
+      >
+        Must have less than 2 decimal places.
+      </ng-container>
+    </p>
+  </div>
+</ng-template>

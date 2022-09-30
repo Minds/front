@@ -13,6 +13,7 @@ import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../common/components/loading-spinner/loading-spinner.component';
+import { SupermindExperimentService } from '../experiments/sub-services/supermind-experiment.service';
 
 describe('SettingsV2Component', () => {
   let component: SettingsV2Component;
@@ -42,6 +43,10 @@ describe('SettingsV2Component', () => {
           {
             provide: ToasterService,
             useValue: MockService(ToasterService),
+          },
+          {
+            provide: SupermindExperimentService,
+            useValue: MockService(SupermindExperimentService),
           },
         ],
         imports: [

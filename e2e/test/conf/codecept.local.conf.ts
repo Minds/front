@@ -28,6 +28,7 @@ exports.config = {
     searchPage: '../pages/searchPage.ts',
     settingsPage: '../pages/settingsPage.ts',
     supermindConsolePage: '../pages/supermindConsolePage.ts',
+    supermindSettingsPage: '../pages/supermindSettingsPage.ts',
     tokenMarketingPage: '../pages/tokenMarketingPage.ts',
   },
   mocha: {},

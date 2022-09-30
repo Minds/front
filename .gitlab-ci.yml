@@ -141,14 +141,13 @@ qa:e2e:
   <<: *playwright_tests
 
 qa:nightly:
-  parallel: 2
   allow_failure: true
   only:
     refs:
       - /^master$/
     variables:
       - $CI_NIGHTLY_TESTS == "true"
-  <<: *cypress_tests
+  <<: *playwright_tests
 
 # qa:production:
 #   parallel: 1

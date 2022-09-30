@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep .m-addBankPrompt__container {
+    border-bottom: unset !important;
+    padding: unset !important;
+  }
+
+  .m-supermindSettings__subSection {
+    .m-supermindSettings__subHeader {
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    .m-supermindSettings__subDescription {
+      margin-bottom: $spacing13;
+
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    form {
+      .m-form__fieldsContainer {
+        margin-bottom: $spacing4;
+      }
+    }
+  }
+}

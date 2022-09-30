@@ -13,6 +13,7 @@ import {
   PLATFORM_ID,
   ViewChild,
   Input,
+  Injector,
 } from '@angular/core';
 import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
 import {
@@ -49,6 +50,12 @@ import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
 import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
+import { ModalService } from '../../../../services/ux/modal.service';
+import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component';
+import {
+  SupermindComposerPayloadType,
+  SUPERMIND_PAYMENT_METHODS,
+} from '../popup/supermind/superminds-creation.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -125,7 +132,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * True/False if supermind request is inprogress
    */
-  isSupermindRequest$ = this.service.isSupermindRequest$;
+  isSupermindRequest: boolean = false;
+
+  /**
+   * Details of supermind request (if applicable)
+   */
+  supermindRequest: SupermindComposerPayloadType;
 
   /**
    * Flag as to if we show supermind create button
@@ -151,7 +163,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected uploaderService: UploaderService,
     @Inject(PLATFORM_ID) protected platformId: Object,
     protected mediaQuotesExperiment: MediaQuotesExperimentService,
-    protected supermindExperiment: SupermindExperimentService
+    protected supermindExperiment: SupermindExperimentService,
+    public modalService: ModalService,
+    private injector: Injector
   ) {}
 
   /**
@@ -165,7 +179,14 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe(() => this.calcNarrow()),
       this.uploadCount$.subscribe(
         uploadCount => (this.uploadCount = uploadCount)
-      )
+      ),
+      this.service.isSupermindRequest$.subscribe(is => {
+        this.isSupermindRequest = is;
+        this.detectChanges();
+      }),
+      this.service.supermindRequest$.subscribe(request => {
+        this.supermindRequest = request;
+      })
     );
 
     /**
@@ -401,6 +422,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   onPost($event: MouseEvent): void {
+    // Get confirmation before posting a supermind offer
+    if (this.isSupermindRequest) {
+      this.openSupermindConfirmationModal($event);
+      return;
+    }
     this.onPostEmitter.emit($event);
   }
 
@@ -434,6 +460,44 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       return !remind;
     })
   );
+
+  /**
+   * Opens modal to confirm supermind offer
+   * @returns { void }
+   */
+  public openSupermindConfirmationModal($event: MouseEvent): void {
+    if (!this.supermindRequest) return;
+
+    // Note: this works b/c Supermind composer uses a username
+    // here instead of a receiver_guid
+    const username = this.supermindRequest.receiver_guid;
+
+    const paymentOptions = this.supermindRequest.payment_options;
+
+    const amountStr =
+      paymentOptions.payment_type === SUPERMIND_PAYMENT_METHODS.CASH
+        ? `$${paymentOptions.amount}`
+        : `${paymentOptions.amount} token`;
+
+    let body = `Are you sure you want to send @${username} a ${amountStr} offer? This transaction is non-refundable once the recipient approves your offer.`;
+
+    if (paymentOptions.payment_type === SUPERMIND_PAYMENT_METHODS.CASH) {
+      body += ` Your card will be authorized now, and charged once @${username} accepts your offer.`;
+    }
+
+    const modal = this.modalService.present(ConfirmV2Component, {
+      data: {
+        title: 'Confirm Offer',
+        body,
+        confirmButtonColor: 'blue',
+        onConfirm: () => {
+          this.onPostEmitter.emit($event);
+          modal.dismiss();
+        },
+      },
+      injector: this.injector,
+    });
+  }
 
   /**
    * Triggers change detection

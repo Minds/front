@@ -30,7 +30,7 @@
   resolved "https://registry.yarnpkg.com/@codeceptjs/helper/-/helper-2.0.1.tgz#e70a8a49140e05bb360cbd9a6d6dfa2a141f2e99"
   integrity sha512-g1rng4RjGW/Vy5KcETpdwlfsAQJA2TN7tdO0MtAttjWe7TiUwI+8AeQp2mYpVr4FuWSCV5slyMtquBYexnGemA==
 
-"@codeceptjs/ui@^0.4.6":
+"@codeceptjs/ui@^0.4.7":
   version "0.4.7"
   resolved "https://registry.yarnpkg.com/@codeceptjs/ui/-/ui-0.4.7.tgz#411c5524c959f835b530385c5780fa775d848e10"
   integrity sha512-QQMlhewczh2fPfQnkUI5pOG1GmLR0Bc6FiW2no3EEjiQKEycr4F1on574WDr2Q+BbRCxS10ZsopU5ju7CfV4bA==

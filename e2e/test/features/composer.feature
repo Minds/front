@@ -3,7 +3,7 @@ Feature: Composer
   I want to create activity posts
   So that I can share content
 
-  Scenario: one attachments by upload button
+  Scenario: one attachment by upload button
     Given I am logged in
     And I am on the newsfeed
     And I have clicked on the sidebar composer button

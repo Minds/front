@@ -57,6 +57,6 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   public onSettingsButtonClick($event: MouseEvent): void {
-    this.router.navigate(['/settings/supermind']);
+    this.router.navigate(['/settings/payments/supermind']);
   }
 }
