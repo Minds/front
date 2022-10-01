@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   OnDestroy,
@@ -30,7 +31,7 @@ import {
 import { MindsUser } from '../../../../../interfaces/entities';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { SupermindSettings } from '../../../../settings-v2/payments/supermind/supermind.types';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -119,7 +120,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     protected service: ComposerService,
     private fb: FormBuilder,
     private mindsConfig: ConfigsService,
-    private entityResolverService: EntityResolverService
+    private entityResolverService: EntityResolverService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   /**
@@ -127,13 +129,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.formGroup = this.fb.group({
-      username: [
-        '',
-        [
-          Validators.required,
-          // this.merchantValidator()
-        ],
-      ],
+      username: ['', [Validators.required]],
       offerUsd: [this.CashMin],
       offerTokens: [this.TokensMin],
       termsAccepted: [false, [Validators.requiredTrue]],
@@ -148,7 +144,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     this.targetUsernameSubscription = this.formGroup.controls.username.valueChanges
       .pipe(
         distinctUntilChanged(),
-        debounceTime(500),
         switchMap(username => {
           this.inProgress = true;
           let options = new EntityResolverServiceOptions();
@@ -160,9 +155,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       )
       .subscribe(user => {
         this.targetUser = user;
-        console.log(this.targetUser);
         this.inProgress = false;
         this.setMinimumPaymentAmountFromUser(user);
+        this.refreshMerchantValidator();
       });
 
     /**
@@ -191,6 +186,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
             this.formGroup.controls.offerUsd.setValue(
               supermindRequest.payment_options.amount
             );
+            this.formGroup.controls.offerUsd.addValidators(
+              this.cashMinAmountValidator()
+            );
             this.formGroup.controls.cardId.setValue(
               supermindRequest.payment_options.payment_method_id
             );
@@ -198,6 +196,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           case SUPERMIND_PAYMENT_METHODS.TOKENS:
             this.formGroup.controls.offerTokens.setValue(
               supermindRequest.payment_options.amount
+            );
+            this.formGroup.controls.offerTokens.addValidators(
+              this.tokensMinAmountValidator()
             );
             break;
         }
@@ -223,6 +224,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
     this.supermindRequestDataSubscription.unsubscribe();
+    this.targetUsernameSubscription.unsubscribe();
   }
 
   /**
@@ -281,11 +283,11 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   }
 
   private setMinimumPaymentAmountFromUser(user: MindsUser | null): void {
-    const cashMin = user?.supermind_settings.min_cash;
-    const tokensMin = user?.supermind_settings.min_offchain_tokens;
+    this.cashMin = user?.supermind_settings.min_cash;
+    this.tokensMin = user?.supermind_settings.min_offchain_tokens;
 
-    this.refreshCashMinAmountValidator(cashMin);
-    this.refreshTokensMinAmountValidator(tokensMin);
+    this.refreshCashMinAmountValidator();
+    this.refreshTokensMinAmountValidator();
 
     // this.formGroup.controls.username.updateValueAndValidity({onlySelf: true});
   }
@@ -316,54 +318,45 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     };
   }
 
-  private latestCashMinAmountValidator: ValidatorFn = null;
-  private refreshCashMinAmountValidator(cashMin: number): void {
-    if (this.latestCashMinAmountValidator !== null) {
-      this.formGroup.controls.offerUsd?.removeValidators(
-        this.latestCashMinAmountValidator
-      );
-    }
-
-    this.cashMin = cashMin;
-
-    this.latestCashMinAmountValidator = this.cashMinAmountValidator();
-    this.formGroup.controls.offerUsd?.addValidators(
-      this.latestCashMinAmountValidator
-    );
+  private refreshCashMinAmountValidator(): void {
     this.formGroup.controls.offerUsd?.updateValueAndValidity({
       onlySelf: true,
     });
     this.formGroup.controls.offerUsd?.markAsDirty({ onlySelf: true });
   }
 
-  private latestTokensMinAmountValidator: ValidatorFn = null;
-  private refreshTokensMinAmountValidator(tokensMin: number): void {
-    if (this.latestTokensMinAmountValidator !== null) {
-      this.formGroup.controls.offerTokens?.removeValidators(
-        this.latestTokensMinAmountValidator
-      );
-    }
-
-    this.tokensMin = tokensMin;
-
-    this.latestTokensMinAmountValidator = this.tokensMinAmountValidator();
-    this.formGroup.controls.offerTokens?.addValidators(
-      this.latestTokensMinAmountValidator
-    );
+  private refreshTokensMinAmountValidator(): void {
     this.formGroup.controls.offerTokens?.updateValueAndValidity({
       onlySelf: true,
     });
     this.formGroup.controls.offerTokens?.markAsDirty({ onlySelf: true });
   }
 
-  // private merchantValidator(): ValidatorFn {
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     console.log("merchant check", this.targetUser?.merchant);
-  //     return !this.targetUser?.merchant ?
-  //       {
-  //         usernameMerchant: false
-  //       }
-  //       : null;
-  //   }
-  // }
+  private merchantValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!this.targetUser?.merchant) {
+        return {
+          merchantInvalid: true,
+        };
+      }
+    };
+  }
+
+  private latestMerchantValidator: ValidatorFn = null;
+  private refreshMerchantValidator(): void {
+    if (this.latestMerchantValidator !== null) {
+      this.formGroup.controls.username?.removeValidators(
+        this.latestMerchantValidator
+      );
+    }
+    this.latestMerchantValidator = this.merchantValidator();
+    this.formGroup.controls.username?.addValidators(
+      this.latestMerchantValidator
+    );
+
+    this.formGroup.controls.username?.updateValueAndValidity({
+      onlySelf: true,
+    });
+    this.formGroup.controls.username?.markAsDirty({ onlySelf: true });
+  }
 }

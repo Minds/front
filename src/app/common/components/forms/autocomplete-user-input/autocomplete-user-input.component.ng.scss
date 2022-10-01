@@ -6,6 +6,12 @@
 
   input {
     width: 100%;
+
+    &.ng-invalid {
+      @include m-theme() {
+        border-color: themed($m-alert) !important;
+      }
+    }
   }
 
   .m-formInputAutocompleteUserInput__popout {
