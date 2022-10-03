@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleService } from './console.service';
@@ -14,12 +14,16 @@ import { SupermindConsoleService } from './console.service';
   styleUrls: ['./console.component.ng.scss'],
 })
 export class SupermindConsoleComponent implements OnInit, OnDestroy {
-  /** @var { Subscription } routeSubscription - subscription to ActivatedRoutes firstChild.url */
+  /** @type { Subscription } routeSubscription - subscription to ActivatedRoutes firstChild.url */
   private routeSubscription: Subscription;
 
-  /** @var { BehaviorSubject<SupermindConsoleListType> } listType$ - list type from service. */
+  /** @type { BehaviorSubject<SupermindConsoleListType> } listType$ - list type from service. */
   public readonly listType$: BehaviorSubject<SupermindConsoleListType> = this
     .service.listType$;
+
+  /** @type { Observable<boolean> } isSingleSupermindPage$ - Whether this is a single Supermind page. */
+  public readonly isSingleSupermindPage$: Observable<boolean> = this.service
+    .isSingleSupermindPage$;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,12 +40,16 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
 
     // on route change, set list type.
     this.routeSubscription = this.route.firstChild.url.subscribe(segments => {
-      const typeParam: string = segments[0].path;
-      if (typeParam === 'inbox' || typeParam === 'outbox') {
-        this.service.listType$.next(typeParam);
+      const param: string = segments[0].path;
+      if (
+        param === 'inbox' ||
+        param === 'outbox' ||
+        this.service.isNumericListType(param)
+      ) {
+        this.listType$.next(param);
         return;
       }
-      this.service.listType$.next('inbox');
+      this.listType$.next('inbox');
     });
   }
 
@@ -58,5 +66,13 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
    */
   public onSettingsButtonClick($event: MouseEvent): void {
     this.router.navigate(['/settings/payments/supermind']);
+  }
+
+  /**
+   * On back button click.
+   * @returns { void }
+   */
+  public onBackClick(): void {
+    this.router.navigate(['/supermind/inbox']);
   }
 }

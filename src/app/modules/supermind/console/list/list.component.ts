@@ -41,6 +41,9 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
     Supermind[]
   >([]);
 
+  /** @var { number } requestLimit - number of Superminds to request from API */
+  private readonly requestLimit: number = 12;
+
   constructor(private service: SupermindConsoleService) {
     super();
   }
@@ -60,14 +63,15 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
         .pipe(
           distinctUntilChanged(),
           switchMap(
-            (val: SupermindConsoleListType): Observable<ApiResponse> => {
+            (listType: SupermindConsoleListType): Observable<ApiResponse> => {
               this.list$.next([]);
-              this.moreData$.next(true);
               this.inProgress$.next(true);
-              return this.service.getList$();
+              this.moreData$.next(!this.service.isNumericListType(listType));
+              return this.service.getList$(this.requestLimit);
             }
           ),
           tap((list: any) => {
+            this.moreData$.next(list.length >= this.requestLimit);
             this.inProgress$.next(false);
             this.list$.next(list);
           })
@@ -85,7 +89,7 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
 
     this.subscriptions.push(
       this.service
-        .getList$(this.list$.getValue().length ?? null)
+        .getList$(this.requestLimit, this.list$.getValue().length ?? null)
         .pipe(take(1))
         .subscribe((list: any) => {
           if (list && list.length) {

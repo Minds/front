@@ -15,6 +15,30 @@
     width: 100%;
   }
 
+  .m-supermindConsole__singleSupermindGoBack {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    cursor: pointer;
+    padding: $spacing4;
+
+    @include body2Regular;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+
+      &:hover {
+        background-color: themed($m-bgColor--primaryAlt);
+      }
+    }
+
+    i {
+      @include _heading4;
+      margin-right: $spacing2;
+    }
+  }
+
   ::ng-deep .m-supermindConsole__settingsButtonIcon {
     @include heading3Regular;
   }
