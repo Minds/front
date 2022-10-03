@@ -127,6 +127,42 @@
               </div>
             </ng-template>
 
+            <!-- Supermind -->
+            <ng-template ngSwitchCase="supermind">
+              <div class="m-walletTransactionsTable__typeWrapper--supermind">
+                <!-- When other user is provided -->
+                <ng-container *ngIf="tx.otherUser; else supermindOfferNoUser">
+                  <img
+                    class="m-walletTransactionsTable__avatar"
+                    [routerLink]="['/', tx.otherUser.username]"
+                    [src]="tx.otherUser.avatar"
+                    alt="other users avatar"
+                  />
+                  <span
+                    >Supermind Offer
+                    {{ tx.otherUser.isSender ? 'from' : 'to' }}
+                    <a
+                      class="m-walletTransactionsTable__otherUserLink"
+                      [routerLink]="['/', tx.otherUser.username]"
+                    >
+                      @{{ tx.otherUser.username }}</a
+                    ></span
+                  >
+                </ng-container>
+                <!-- Fallback if no other user is provided -->
+                <ng-template #supermindOfferNoUser>
+                  <i
+                    class="material-icons m-walletTransactionsTable__icon--arrow"
+                    >tips_and_updates</i
+                  >
+                  <span i18n="@@WALLETV2_TX_TABLE__SUPERMIND_OFFER"
+                    >Supermind Offer</span
+                  >
+                </ng-template>
+              </div>
+            </ng-template>
+
+            <!-- Default -->
             <ng-template ngSwitchDefault
               ><div class="m-walletTransactionsTable__typeWrapper--default">
                 <span i18n="@@WALLETV2_TX_TABLE__TRANSACTION">Transaction</span>
