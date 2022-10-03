@@ -156,7 +156,10 @@ export class WalletTransactionsCashComponent implements OnInit {
         formattedTx.showRewardsPopup = false;
       }
 
-      if (formattedTx.superType === 'wire') {
+      if (
+        formattedTx.superType === 'wire' ||
+        formattedTx.superType === 'supermind'
+      ) {
         formattedTx.otherUser = this.getOtherUser(tx);
       }
 
