@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../../../common/api/api.service';
 import { CommonModule } from '../../../../../common/common.module';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
-import { AutocompleteUserInputComponent } from '../../../../../common/components/forms/autocomplete-user-input/autocomplete-user-input.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { Client } from '../../../../../services/api';
-import { Session } from '../../../../../services/session';
 import { MockComponent, MockService } from '../../../../../utils/mock';
-import { PaymentsModule } from '../../../../payments/payments.module';
-import {
-  ComposerService,
-  ComposerSize,
-} from '../../../services/composer.service';
+import { ComposerService } from '../../../services/composer.service';
 import { PopupService } from '../popup.service';
 import { ComposerSupermindComponent } from '../supermind/supermind.component';
+import { EntityResolverService } from '../../../../../common/services/entity-resolver.service';
+import { of } from 'rxjs';
 
 describe('Composer Supermind Popup', () => {
   let comp: ComposerSupermindComponent;
@@ -84,7 +84,11 @@ describe('Composer Supermind Popup', () => {
           //   {
           //     provide: Session,
           //     useValue: MockService(Session),
-          //   }
+          //   },
+          {
+            provide: EntityResolverService,
+            useValue: MockService(EntityResolverService),
+          },
         ],
       }).compileComponents();
     })
@@ -93,6 +97,22 @@ describe('Composer Supermind Popup', () => {
   beforeEach(done => {
     fixture = TestBed.createComponent(ComposerSupermindComponent);
     comp = fixture.componentInstance;
+
+    (comp as any).mindsConfig.get.and.returnValue({
+      min_thresholds: {
+        min_cash: 10,
+        min_offchain_tokens: 1,
+      },
+    });
+
+    (comp as any).entityResolverService.get$.and.returnValue(
+      of({
+        supermind_settings: {
+          min_cash: 10,
+          min_offchain_tokens: 1,
+        },
+      })
+    );
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -124,23 +144,40 @@ describe('Composer Supermind Popup', () => {
     expect(getSaveBtn().disabled).toBeTrue();
   });
 
-  it('should have enabled save button when conditions form is valid', () => {
+  it('should have enabled save button when conditions form is valid', fakeAsync(() => {
     comp.formGroup.controls.termsAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
     fixture.detectChanges();
 
+    tick(60000);
     expect(getSaveBtn().disabled).toBeFalse();
-  });
+  }));
 
-  it('should update composer supermindRequest$ service on save', () => {
+  it('should update composer supermindRequest$ service on save', fakeAsync(() => {
     comp.formGroup.controls.termsAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
     fixture.detectChanges();
 
     getSaveBtn().onAction.next(new MouseEvent('click'));
 
+    console.log('in progress: ', comp.inProgress);
+    console.log('form invalid? ', comp.formGroup.invalid);
+    // console.log(
+    //   'form errors? ',
+    //   JSON.stringify(comp.formGroup.errors ?? 'No errors')
+    // );
+    console.log('============  BEGIN  =============');
+    Object.keys(comp.formGroup.controls).forEach((controlName: string) => {
+      console.log(
+        controlName + ' value: ',
+        comp.formGroup.controls[controlName].value
+      );
+    });
+    console.log('============  END  =============');
+
+    tick(60000);
     expect(getSaveBtn().disabled).toBeFalse();
 
     expect(superMindsRequestMock$.next).toHaveBeenCalled();
-  });
+  }));
 });

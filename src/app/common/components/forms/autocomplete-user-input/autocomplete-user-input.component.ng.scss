@@ -7,7 +7,7 @@
   input {
     width: 100%;
 
-    &.ng-invalid {
+    &.ng-dirty.ng-invalid {
       @include m-theme() {
         border-color: themed($m-alert) !important;
       }

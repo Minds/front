@@ -44,7 +44,9 @@
         </div>
         <div
           class="m-form__row--validation"
-          *ngIf="!inProgress && formGroup.controls.username.invalid"
+          *ngIf="
+            !inProgress && formGroup.controls.username.errors?.merchantInvalid
+          "
         >
           <p i18n="@@MINDS_SUPERMIND_COMPOSER__MERCHANT_INVALID">
             @{{ formGroup.controls.username.value }} cannot receive cash offers

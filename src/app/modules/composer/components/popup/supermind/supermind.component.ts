@@ -31,7 +31,7 @@ import {
 import { MindsUser } from '../../../../../interfaces/entities';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { SupermindSettings } from '../../../../settings-v2/payments/supermind/supermind.types';
-import { distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -129,7 +129,13 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.formGroup = this.fb.group({
-      username: ['', [Validators.required]],
+      username: [
+        '',
+        {
+          validators: [Validators.required],
+          updateOn: 'blur',
+        },
+      ],
       offerUsd: [this.CashMin],
       offerTokens: [this.TokensMin],
       termsAccepted: [false, [Validators.requiredTrue]],
@@ -143,8 +149,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
 
     this.targetUsernameSubscription = this.formGroup.controls.username.valueChanges
       .pipe(
+        filter((username: string) => username !== ''),
         distinctUntilChanged(),
-        switchMap(username => {
+        switchMap((username: string) => {
           this.inProgress = true;
           let options = new EntityResolverServiceOptions();
           options.refType = 'username';
@@ -288,8 +295,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
 
     this.refreshCashMinAmountValidator();
     this.refreshTokensMinAmountValidator();
-
-    // this.formGroup.controls.username.updateValueAndValidity({onlySelf: true});
   }
 
   private cashMinAmountValidator(): ValidatorFn {
@@ -358,5 +363,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       onlySelf: true,
     });
     this.formGroup.controls.username?.markAsDirty({ onlySelf: true });
+    this.changeDetector.detectChanges();
   }
 }
