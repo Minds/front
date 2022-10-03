@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from '../../../../../utils/mock';
 import { Supermind } from '../../../supermind.types';
 import { SupermindConsoleListItemComponent } from './list-item.component';
+import { Session } from '../../../../../services/session';
 
 describe('SupermindConsoleListItemComponent', () => {
   let comp: SupermindConsoleListItemComponent;
@@ -67,6 +68,8 @@ describe('SupermindConsoleListItemComponent', () => {
 
     comp.supermind = mockSupermind;
     comp.context = 'inbox';
+
+    (comp as any).session.getLoggedInUser.calls.reset();
 
     fixture.detectChanges();
 
