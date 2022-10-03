@@ -133,7 +133,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
         '',
         {
           validators: [Validators.required],
-          updateOn: 'blur',
+          updateOn: 'change',
         },
       ],
       offerUsd: [this.CashMin],

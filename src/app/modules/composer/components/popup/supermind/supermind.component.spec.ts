@@ -1,10 +1,4 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ApiService } from '../../../../../common/api/api.service';
@@ -49,6 +43,10 @@ describe('Composer Supermind Popup', () => {
     present: { toPromise: () => {} },
   });
 
+  const apiMock = new (function() {
+    this.get = jasmine.createSpy('get');
+  })();
+
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
@@ -71,7 +69,7 @@ describe('Composer Supermind Popup', () => {
           },
           {
             provide: ApiService,
-            useValue: MockService(ApiService),
+            useValue: apiMock,
           },
           //   {
           //     provide: Client,
@@ -111,8 +109,13 @@ describe('Composer Supermind Popup', () => {
           min_cash: 10,
           min_offchain_tokens: 1,
         },
+        merchant: {},
       })
     );
+
+    apiMock.get.calls.reset();
+    apiMock.get.and.returnValue([]);
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -144,40 +147,23 @@ describe('Composer Supermind Popup', () => {
     expect(getSaveBtn().disabled).toBeTrue();
   });
 
-  it('should have enabled save button when conditions form is valid', fakeAsync(() => {
+  it('should have enabled save button when conditions form is valid', () => {
     comp.formGroup.controls.termsAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
     fixture.detectChanges();
-
-    tick(60000);
     expect(getSaveBtn().disabled).toBeFalse();
-  }));
+  });
 
-  it('should update composer supermindRequest$ service on save', fakeAsync(() => {
+  it('should update composer supermindRequest$ service on save', () => {
     comp.formGroup.controls.termsAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
+    // comp.formGroup.controls.username.markAsTouched({ onlySelf: true });
     fixture.detectChanges();
 
     getSaveBtn().onAction.next(new MouseEvent('click'));
 
-    console.log('in progress: ', comp.inProgress);
-    console.log('form invalid? ', comp.formGroup.invalid);
-    // console.log(
-    //   'form errors? ',
-    //   JSON.stringify(comp.formGroup.errors ?? 'No errors')
-    // );
-    console.log('============  BEGIN  =============');
-    Object.keys(comp.formGroup.controls).forEach((controlName: string) => {
-      console.log(
-        controlName + ' value: ',
-        comp.formGroup.controls[controlName].value
-      );
-    });
-    console.log('============  END  =============');
-
-    tick(60000);
     expect(getSaveBtn().disabled).toBeFalse();
 
     expect(superMindsRequestMock$.next).toHaveBeenCalled();
-  }));
+  });
 });
