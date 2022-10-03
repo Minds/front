@@ -1,5 +1,6 @@
-import { Component, Injector, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as moment from 'moment';
+import { Session } from '../../../../../services/session';
 import { SupermindReplyService } from '../../../supermind-reply.service';
 
 import {
@@ -43,7 +44,10 @@ export class SupermindConsoleListItemComponent {
    */
   inProgress$$ = this.supermindReplyService.inProgress$$;
 
-  constructor(private supermindReplyService: SupermindReplyService) {}
+  constructor(
+    private supermindReplyService: SupermindReplyService,
+    private session: Session
+  ) {}
 
   /**
    * Get amount badge text.
@@ -139,5 +143,16 @@ export class SupermindConsoleListItemComponent {
    */
   onCancel(e: MouseEvent): void {
     this.supermindReplyService.cancel(this.supermind);
+  }
+
+  /**
+   * Whether inbox action buttons should be shown.
+   * @returns { boolean }
+   */
+  public shouldShowInboxActionButtons(): boolean {
+    return (
+      this.context === 'inbox' ||
+      this.supermind.receiver_guid === this.session.getLoggedInUser().guid
+    );
   }
 }

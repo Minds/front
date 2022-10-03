@@ -9,6 +9,7 @@ import { ComposerModalService } from '../../../../composer/components/modal/moda
 import moment = require('moment');
 import { Supermind } from '../../../supermind.types';
 import { SupermindConsoleListItemComponent } from './list-item.component';
+import { Session } from '../../../../../services/session';
 
 describe('SupermindConsoleListItemComponent', () => {
   let comp: SupermindConsoleListItemComponent;
@@ -67,6 +68,10 @@ describe('SupermindConsoleListItemComponent', () => {
             provide: ApiService,
             useValue: MockService(ApiService),
           },
+          {
+            provide: Session,
+            useValue: MockService(Session),
+          },
         ],
       }).compileComponents();
     })
@@ -78,6 +83,8 @@ describe('SupermindConsoleListItemComponent', () => {
 
     comp.supermind = mockSupermind;
     comp.context = 'inbox';
+
+    (comp as any).session.getLoggedInUser.calls.reset();
 
     fixture.detectChanges();
 
@@ -202,5 +209,26 @@ describe('SupermindConsoleListItemComponent', () => {
     comp.supermind.twitter_required = true;
 
     expect(comp.requirementsText).toBe('Video Reply · Twitter');
+  });
+
+  it('should determine if inbox action buttons should be shown because context is inbox', () => {
+    comp.context = 'inbox';
+    expect(comp.shouldShowInboxActionButtons()).toBeTrue();
+  });
+
+  it('should determine if inbox action buttons should be shown because session guid is the same as receiver guid', () => {
+    comp.context = '123';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: comp.supermind.receiver_guid,
+    });
+    expect(comp.shouldShowInboxActionButtons()).toBeTrue();
+  });
+
+  it('should determine if inbox action buttons should NOT be shown', () => {
+    comp.context = 'outbox';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: comp.supermind.receiver_guid + '123',
+    });
+    expect(comp.shouldShowInboxActionButtons()).toBeFalse();
   });
 });

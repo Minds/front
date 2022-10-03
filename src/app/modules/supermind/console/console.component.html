@@ -1,7 +1,7 @@
 <div class="m-pageLayout__container">
   <div class="m-pageLayout__pane--main">
     <h3 i18n="@@SUPERMIND_CONSOLE__SUPERMIND_TITLE">Supermind</h3>
-    <div class="m-tabs__container">
+    <div class="m-tabs__container" *ngIf="!(isSingleSupermindPage$ | async)">
       <div class="m-tabs__tab">
         <a
           [routerLink]="['/supermind/inbox']"
@@ -33,6 +33,17 @@
           Settings
         </ng-container>
       </m-tooltip>
+    </div>
+    <div
+      class="m-supermindConsole__singleSupermindGoBack"
+      *ngIf="isSingleSupermindPage$ | async"
+      (click)="onBackClick()"
+      data-cy="supermind-console-single-supermind-go-back"
+    >
+      <i class="material-icons">arrow_back</i>
+      <span i18n="@@SUPERMIND_CONSOLE__SETTINGS_BACK_TO_CONSOLE"
+        >Back to console</span
+      >
     </div>
     <m-addBankPrompt *ngIf="(listType$ | async) === 'inbox'"></m-addBankPrompt>
     <router-outlet></router-outlet>

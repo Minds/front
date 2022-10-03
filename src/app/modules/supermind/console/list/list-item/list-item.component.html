@@ -43,12 +43,17 @@
         }}</span>
       </span>
     </div>
-    <!-- Remove *ngIf when we enabled revocation -->
+
+    <!-- 
+      Remove shouldShowInboxActionButtons() on the div below and
+      Add `*ngIf="shouldShowInboxActionButtons(); else outboxButton"` to 
+      the ng-container below, when we enabled revocation.
+    -->
     <div
       class="m-supermindListItem__actionButtons"
-      *ngIf="supermind.status === 1 && context === 'inbox'"
+      *ngIf="supermind.status === 1 && shouldShowInboxActionButtons()"
     >
-      <ng-container *ngIf="context === 'inbox'; else outboxButton">
+      <ng-container>
         <m-button
           class="m-supermindListItem__buttonSecondary"
           size="small"
