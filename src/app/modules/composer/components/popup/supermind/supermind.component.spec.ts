@@ -5,7 +5,7 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ApiService } from '../../../../../common/api/api.service';
 import { CommonModule } from '../../../../../common/common.module';
@@ -17,6 +17,10 @@ import { PopupService } from '../popup.service';
 import { ComposerSupermindComponent } from '../supermind/supermind.component';
 import { EntityResolverService } from '../../../../../common/services/entity-resolver.service';
 import { of } from 'rxjs';
+import {
+  SUPERMIND_DEFAULT_PAYMENT_METHOD,
+  SUPERMIND_DEFAULT_RESPONSE_TYPE,
+} from './superminds-creation.service';
 
 describe('Composer Supermind Popup', () => {
   let comp: ComposerSupermindComponent;
@@ -49,6 +53,10 @@ describe('Composer Supermind Popup', () => {
     present: { toPromise: () => {} },
   });
 
+  let apiMock = new (function() {
+    this.get = jasmine.createSpy('get');
+  })();
+
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
@@ -71,7 +79,7 @@ describe('Composer Supermind Popup', () => {
           },
           {
             provide: ApiService,
-            useValue: MockService(ApiService),
+            useValue: apiMock,
           },
           //   {
           //     provide: Client,
@@ -111,8 +119,13 @@ describe('Composer Supermind Popup', () => {
           min_cash: 10,
           min_offchain_tokens: 1,
         },
+        merchant: true,
       })
     );
+
+    apiMock.get.calls.reset();
+    apiMock.get.and.returnValue(of([]));
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -144,38 +157,50 @@ describe('Composer Supermind Popup', () => {
     expect(getSaveBtn().disabled).toBeTrue();
   });
 
-  it('should have enabled save button when conditions form is valid', fakeAsync(() => {
-    comp.formGroup.controls.termsAccepted.setValue(true);
+  it('should have enabled save button when conditions form is valid', () => {
+    // comp.formGroup.controls.username.updateOn = 'change';
     comp.formGroup.controls.username.setValue('minds');
+    comp.formGroup.controls.offerUsd.setValue('1234567');
+    comp.formGroup.controls.offerTokens.setValue('1234567');
+    comp.formGroup.controls.termsAccepted.setValue(true);
+    comp.formGroup.controls.responseType.setValue(
+      SUPERMIND_DEFAULT_RESPONSE_TYPE
+    );
+    comp.formGroup.controls.paymentMethod.setValue(
+      SUPERMIND_DEFAULT_PAYMENT_METHOD
+    );
+    comp.formGroup.controls.cardId.setValue('123123123');
+    comp.formGroup.updateValueAndValidity();
     fixture.detectChanges();
 
-    tick(60000);
+    console.log('comp.inProgress', comp.inProgress);
+    console.log('comp.formGroup.valid', comp.formGroup.valid);
+
+    // tick();
     expect(getSaveBtn().disabled).toBeFalse();
-  }));
+  });
 
   it('should update composer supermindRequest$ service on save', fakeAsync(() => {
-    comp.formGroup.controls.termsAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
+    comp.formGroup.controls.offerUsd.setValue('1234567');
+    comp.formGroup.controls.offerUsd.setValue('offerTokens');
+    comp.formGroup.controls.termsAccepted.setValue(true);
+    comp.formGroup.controls.responseType.setValue(
+      SUPERMIND_DEFAULT_RESPONSE_TYPE
+    );
+    comp.formGroup.controls.paymentMethod.setValue(
+      SUPERMIND_DEFAULT_PAYMENT_METHOD
+    );
+    comp.formGroup.controls.cardId.setValue('123123123');
+
     fixture.detectChanges();
 
     getSaveBtn().onAction.next(new MouseEvent('click'));
+    tick();
 
-    console.log('in progress: ', comp.inProgress);
-    console.log('form invalid? ', comp.formGroup.invalid);
-    // console.log(
-    //   'form errors? ',
-    //   JSON.stringify(comp.formGroup.errors ?? 'No errors')
-    // );
-    console.log('============  BEGIN  =============');
-    Object.keys(comp.formGroup.controls).forEach((controlName: string) => {
-      console.log(
-        controlName + ' value: ',
-        comp.formGroup.controls[controlName].value
-      );
-    });
-    console.log('============  END  =============');
+    console.log('comp.inProgress', comp.inProgress);
+    console.log('comp.formGroup.valid', comp.formGroup.valid);
 
-    tick(60000);
     expect(getSaveBtn().disabled).toBeFalse();
 
     expect(superMindsRequestMock$.next).toHaveBeenCalled();
