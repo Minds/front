@@ -50,6 +50,7 @@ export class NsfwComponent {
     this.state = (this.service.nsfw$.getValue() || []).filter(
       (value, index, self) => self.indexOf(value) === index
     );
+    this.isSupermindContent();
   }
 
   /**
@@ -69,9 +70,24 @@ export class NsfwComponent {
   }
 
   /**
-   * Emits the internal state to the composer service and attempts to dismiss the modal
+   * Emits the internal state to the composer service and attempts to dismiss the modal.
+   * @returns { void }
    */
-  save() {
+  public save(): void {
+    if (this.hasNsfwTags() && this.isSupermindContent()) {
+      return;
+    }
+
+    this.service.nsfw$.next(this.state.sort());
+    this.dismissIntent.emit();
+  }
+
+  /**
+   * Checks whether this is for a supermind, and throws a toast up if it is.
+   * As NSFW Superminds are not currently supported.
+   * @returns { boolean } - true if is supermind.
+   */
+  private isSupermindContent(): boolean {
     if (
       !!this.service.supermindRequest$.getValue() ||
       !!this.service.supermindReply$.getValue()
@@ -79,10 +95,16 @@ export class NsfwComponent {
       this.toasterService.error(
         'You may not create an NSFW supermind at this time.'
       );
-      return;
+      return true;
     }
+    return false;
+  }
 
-    this.service.nsfw$.next(this.state.sort());
-    this.dismissIntent.emit();
+  /**
+   * Whether component has NSFW tags.
+   * @returns { boolean }
+   */
+  private hasNsfwTags(): boolean {
+    return Boolean(this.state.length);
   }
 }
