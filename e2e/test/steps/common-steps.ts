@@ -1,3 +1,4 @@
+import { ConfirmationModalComponent } from '../components/confirmationModalComponent';
 import { Helpers } from '../helpers/helpers';
 import { CommonPage } from '../pages/commonPage';
 import { NewsfeedPage } from '../pages/newsfeedPage';
@@ -10,6 +11,7 @@ namespace CommonSteps {
   const newsfeedPage = new NewsfeedPage();
   const helpers = new Helpers();
   const registerPage = new RegisterPage();
+  const confirmationModalComponent = new ConfirmationModalComponent();
 
   Before(() => {});
 
@@ -65,19 +67,26 @@ namespace CommonSteps {
    * @param { string } username - username to log in as.
    * @return { void }
    */
-  Given('I log in as {string}', (username: string): void => {
-    let password;
+  Given('I log in as {string}', (_username: string): void => {
+    let username: string = _username,
+      password: string;
 
     switch (username) {
-      case process.env.SUPERMIND_SENDER_USERNAME:
-        password = process.env.SUPERMIND_SENDER_PASSWORD;
+      case 'supermind_sender':
+        username = process.env.SUPERMIND_SENDER_USERNAME || '';
+        password = process.env.SUPERMIND_SENDER_PASSWORD || '';
         break;
       case process.env.SUPERMIND_SETTINGS_USERNAME:
-        password = process.env.SUPERMIND_SETTINGS_PASSWORD;
+        password = process.env.SUPERMIND_SETTINGS_PASSWORD || '';
         break;
       default:
-        password = process.env.PLAYWRIGHT_PASSWORD;
+        username = process.env.PLAYWRIGHT_USERNAME || '';
+        password = process.env.PLAYWRIGHT_PASSWORD || '';
         break;
+    }
+
+    if (!username || !password) {
+      throw 'Invalid credentials provided for ' + _username;
     }
 
     I.clearCookie();
@@ -97,6 +106,14 @@ namespace CommonSteps {
 
   Given('I am on the {string} channel page', username => {
     I.amOnPage('/' + username);
+  });
+
+  Given('I wait for {string} seconds', (seconds: number) => {
+    I.wait(seconds);
+  });
+
+  When('I click the cancel button on the confirmation modal', () => {
+    confirmationModalComponent.clickCancel();
   });
 
   //

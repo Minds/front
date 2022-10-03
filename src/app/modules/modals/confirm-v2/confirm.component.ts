@@ -8,28 +8,9 @@ const DEFAULT_BODY = 'Are you sure?';
  * Generic confirmation modal with changeable title and body
  */
 @Component({
-  selector: 'm-modal-confirmV2',
-  template: `
-    <div class="m-confirmV2Modal__textWrapper">
-      <h2 class="m-confirmV2Modal__title">{{ title }}</h2>
-      <span class="m-confirmV2Modal__text">{{ body }}</span>
-    </div>
-    <div class="m-confirmV2Modal__buttonWrapper">
-      <m-button class="m-confirmV2Modal__cancelButton" (onAction)="onDismiss()">
-        Cancel
-      </m-button>
-      <m-button
-        class="m-confirmV2Modal__confirmButton"
-        [color]="confirmButtonColor"
-        (onAction)="onConfirm()"
-      >
-        Confirm
-      </m-button>
-    </div>
-
-    <m-modalCloseButton></m-modalCloseButton>
-  `,
-  styleUrls: ['./confirm.ng.scss'],
+  selector: 'm-confirmationModal',
+  templateUrl: 'confirm.component.html',
+  styleUrls: ['./confirm.component.ng.scss'],
 })
 export class ConfirmV2Component {
   /**

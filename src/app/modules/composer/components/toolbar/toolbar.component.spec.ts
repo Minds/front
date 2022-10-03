@@ -58,6 +58,8 @@ describe('Composer Toolbar', () => {
       'attachmentError$',
       'remind$',
       'canCreateSupermindRequest$',
+      'isSupermindRequest$',
+      'supermindRequest$',
     ],
     props: {
       attachment$: { get: () => attachment$ },
@@ -67,6 +69,8 @@ describe('Composer Toolbar', () => {
       attachmentError$: { get: () => attachmentError$ },
       remind$: { get: () => remind$ },
       canCreateSupermindRequest$: { get: () => canCreateSupermindRequest$ },
+      isSupermindRequest$: { get: () => canCreateSupermindRequest$ },
+      supermindRequest$: { get: () => canCreateSupermindRequest$ },
     },
   });
 

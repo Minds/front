@@ -8,6 +8,7 @@ Feature: Supermind Settings
     When I submit the Supermind settings form
     Then I should see an "success" toaster saying "Settings saved"
     And I should see that on refresh my settings persisted
+    And I clear my cookies
 
   Scenario: Proposing an invalid settings change
     Given I log in as "supermind_settings"
@@ -15,6 +16,7 @@ Feature: Supermind Settings
     And I fill out invalid Supermind settings values
     Then I should see a disabled Supermind submit button
     And I should see Supermind form validation errors
+    And I clear my cookies
 
   Scenario: Click to add bank
     Given I am logged in

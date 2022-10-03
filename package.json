@@ -97,6 +97,7 @@
     "ngx-plyr": "^4.0.0",
     "ngx-popperjs": "^12.1.2",
     "node-cache": "^5.1.2",
+    "nostr-tools": "^0.24.1",
     "os-browserify": "^0.3.0",
     "plotly.js": "^2.2.1",
     "plyr": "npm:@mindsorg/plyr@^3.8.0",

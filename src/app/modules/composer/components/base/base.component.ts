@@ -264,7 +264,13 @@ export class BaseComponent implements AfterViewInit {
         this.error = e.error.message;
       }
 
-      this.toasterService.error(this.error);
+      if (e?.error?.errors?.length > 0) {
+        for (let i in e.error.errors) {
+          this.toasterService.error(e.error.errors[i].message);
+        }
+      } else {
+        this.toasterService.error(this.error);
+      }
     }
 
     this.detectChanges();
