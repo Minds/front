@@ -69,8 +69,6 @@ describe('SupermindConsoleListItemComponent', () => {
     comp.supermind = mockSupermind;
     comp.context = 'inbox';
 
-    (comp as any).session.getLoggedInUser.calls.reset();
-
     fixture.detectChanges();
 
     if (fixture.isStable()) {
