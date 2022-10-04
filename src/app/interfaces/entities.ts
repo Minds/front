@@ -1,6 +1,7 @@
 /**
  * Activity Object
  */
+import { SupermindSettings } from '../modules/settings-v2/payments/supermind/supermind.types';
 import { WireRewardsStruc } from '../modules/wire/interfaces/wire.interfaces';
 
 export type BitBoolean = 0 | 1;
@@ -136,6 +137,7 @@ export interface MindsUser {
   seed?: boolean;
   require_login?: boolean;
   email_confirmed?: boolean;
+  supermind_settings?: SupermindSettings;
 }
 
 export interface MindsGroup {
