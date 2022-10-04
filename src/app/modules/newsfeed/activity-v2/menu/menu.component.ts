@@ -153,6 +153,7 @@ export class ActivityV2MenuComponent implements OnInit, OnDestroy {
           await this.client.delete(`api/v1/newsfeed/${this.entity.guid}`);
           this.deleted.emit();
         } catch (e) {
+          this.toasterService.error(e.message);
           console.error(e);
         }
         break;
