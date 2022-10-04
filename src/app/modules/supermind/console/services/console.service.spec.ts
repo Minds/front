@@ -1,5 +1,5 @@
 import { of } from 'rxjs';
-import { ApiResponse } from '../../../common/api/api.service';
+import { ApiResponse } from '../../../../common/api/api.service';
 import { SupermindConsoleService } from './console.service';
 
 describe('SupermindConsoleService', () => {

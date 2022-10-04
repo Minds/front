@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 import { BehaviorSubject, of } from 'rxjs';
 import { SupermindConsoleListComponent } from './list.component';
-import { SupermindConsoleService } from '../console.service';
+import { SupermindConsoleService } from '../services/console.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { SupermindConsoleListType } from '../../supermind.types';
 import { take } from 'rxjs/operators';

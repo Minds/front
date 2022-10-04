@@ -11,7 +11,7 @@ import { MockComponent, MockService } from '../../../utils/mock';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleComponent } from './console.component';
-import { SupermindConsoleService } from './console.service';
+import { SupermindConsoleService } from './services/console.service';
 
 describe('SupermindConsoleComponent', () => {
   let comp: SupermindConsoleComponent;
