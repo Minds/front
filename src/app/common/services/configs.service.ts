@@ -1,6 +1,6 @@
 import { Client } from '../api/client.service';
 import { BehaviorSubject } from 'rxjs';
-import { Injectable, Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { RedirectService } from './redirect.service';
 import { Location } from '@angular/common';
 
@@ -28,8 +28,8 @@ export class ConfigsService {
     }
   }
 
-  get(key) {
-    return this.configs[key] || null;
+  get<T = any>(key): T | null {
+    return (this.configs[key] as T) || null;
   }
 
   set(key, value): void {
