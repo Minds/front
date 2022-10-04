@@ -18,6 +18,7 @@ import {
   SUPERMIND_PAYMENT_METHODS,
 } from './superminds-creation.service';
 import { Subscription } from 'rxjs';
+import { SupermindOnboardingModalService } from '../../../../supermind/onboarding-modal/onboarding-modal.service';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -79,7 +80,11 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    * @param service
    * @param configs
    */
-  constructor(protected service: ComposerService, private fb: FormBuilder) {}
+  constructor(
+    protected service: ComposerService,
+    private fb: FormBuilder,
+    private supermindOnboardingModal: SupermindOnboardingModalService
+  ) {}
 
   /**
    * @inheritDoc
@@ -153,6 +158,14 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
         this.formGroup.markAsDirty();
       }
     );
+
+    /**
+     * Launch onboarding modal (if user hasn't seen it yet)
+     */
+    this.supermindOnboardingModal.setContentType('request');
+    if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
+      this.openSupermindOnboardingModal();
+    }
   }
 
   /**
@@ -215,5 +228,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     this.service.supermindRequest$.next(null);
 
     this.dismissIntent.emit();
+  }
+
+  async openSupermindOnboardingModal() {
+    await this.supermindOnboardingModal.open();
   }
 }
