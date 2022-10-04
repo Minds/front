@@ -54,7 +54,7 @@ import {
   TitleSubjectValue,
 } from './composer-data-types';
 import { SupermindComposerPayloadType } from '../components/popup/supermind/superminds-creation.service';
-
+import { ToasterService } from '../../../common/services/toaster.service';
 /**
  * Default values
  */
@@ -392,7 +392,8 @@ export class ComposerService implements OnDestroy {
     private attachmentValidator: AttachmentValidatorService,
     private boostRecommendationService: BoostRecommendationService,
     private onboardingService: OnboardingV3Service,
-    private uploaderService: UploaderService
+    private uploaderService: UploaderService,
+    private toasterService: ToasterService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -1041,6 +1042,12 @@ export class ComposerService implements OnDestroy {
 
         this.feedsUpdate.postEmitter.emit(activity);
         this.onboardingService.forceCompletion('CreatePostStep');
+      }
+
+      if (this.payload.supermind_reply_guid) {
+        this.toasterService.success(
+          'Your Supermind reply was posted, and you’ve collected the offer.'
+        );
       }
 
       this.reset();
