@@ -1,0 +1,61 @@
+<span [ngSwitch]="supermindStateMap[supermind.status]">
+  <ng-container
+    *ngSwitchCase="supermindState.PENDING"
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__PENDING"
+  >
+    Pending
+  </ng-container>
+  <ng-container *ngSwitchCase="supermindState.CREATED">
+    <ng-container *ngIf="timeTillExpiration; else expiredText">
+      <span i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__EXPIRES">Expires: </span>
+      <span class="m-supermindListItem__expirationTime">{{
+        timeTillExpiration
+      }}</span>
+    </ng-container>
+    <ng-template #expiredText i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__EXPIRED"
+      >Expired</ng-template
+    >
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="supermindState.ACCEPTED"
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__ACCEPTED"
+  >
+    Accepted
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="supermindState.REVOKED"
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__REVOKED"
+  >
+    Revoked
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="supermindState.REJECTED"
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__DECLINED"
+  >
+    Declined
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="supermindState.FAILED_PAYMENT"
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__PAYMENT_FAILED"
+  >
+    Payment Failed
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="supermindState.FAILED"
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__UNKNOWN_ERROR"
+  >
+    Unknown Error
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="supermindState.EXPIRED"
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__EXPIRED"
+  >
+    Expired
+  </ng-container>
+  <ng-container
+    *ngSwitchDefault
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__UNKNOWN"
+  >
+    State Unknown
+  </ng-container>
+</span>

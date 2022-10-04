@@ -8,6 +8,8 @@ import { SupermindConsoleListComponent } from './console/list/list.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { SupermindConsoleListItemComponent } from './console/list/list-item/list-item.component';
 import { SupermindConsoleFilterBarComponent } from './console/list/filter-bar/filter-bar.component';
+import { SupermindConsoleStateLabelComponent } from './console/list/list-item/state-label/state-label.component';
+import { SupermindConsoleActionButtonsComponent } from './console/list/list-item/action-bar/action-buttons.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,8 @@ const routes: Routes = [
     SupermindConsoleComponent,
     SupermindConsoleListItemComponent,
     SupermindConsoleFilterBarComponent,
+    SupermindConsoleStateLabelComponent,
+    SupermindConsoleActionButtonsComponent,
   ],
 })
 export class SupermindModule {}

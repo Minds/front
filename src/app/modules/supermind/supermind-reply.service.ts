@@ -64,6 +64,7 @@ export class SupermindReplyService {
         .setInjector(this.injector)
         .onPost(activity => {
           supermindEntity.status = SupermindState.ACCEPTED;
+          supermindEntity.reply_activity_guid = activity.guid;
         })
         .present();
     } catch (err) {

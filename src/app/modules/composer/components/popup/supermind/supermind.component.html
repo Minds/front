@@ -36,17 +36,21 @@
           <label> Target Channel</label>
         </div>
         <div class="m-form__row--input">
-          <!-- <input
-            type="text"
-            id="username"
-            formControlName="username"
-            placeholder="@username"
-          /> -->
           <m-formInput__autocompleteUserInput
             id="username"
             formControlName="username"
             placeholder="@username"
           ></m-formInput__autocompleteUserInput>
+        </div>
+        <div
+          class="m-form__row--validation"
+          *ngIf="
+            !inProgress && formGroup.controls.username.errors?.merchantInvalid
+          "
+        >
+          <p i18n="@@MINDS_SUPERMIND_COMPOSER__MERCHANT_INVALID">
+            @{{ formGroup.controls.username.value }} cannot receive cash offers
+          </p>
         </div>
       </div>
 
@@ -64,7 +68,12 @@
             >
           </div>
           <div class="m-form__row--input">
-            <input type="number" id="offer_usd" formControlName="offerUsd" />
+            <input
+              type="number"
+              [pattern]="'([0-9]+\\.[0-9]{1,2}|[0-9]+)'"
+              id="offer_usd"
+              formControlName="offerUsd"
+            />
           </div>
         </div>
 
@@ -100,6 +109,7 @@
           <div class="m-form__row--input">
             <input
               type="number"
+              [pattern]="'([0-9]+\\.[0-9]{1,2}|[0-9]+)'"
               id="offer_tokens"
               formControlName="offerTokens"
             />
@@ -218,7 +228,7 @@
       i18n="@@COMPOSER_POPUP__SAVE_TAGS"
       size="small"
       color="blue"
-      [disabled]="!formGroup.valid"
+      [disabled]="inProgress || !formGroup.valid"
     >
       Save
     </m-button>

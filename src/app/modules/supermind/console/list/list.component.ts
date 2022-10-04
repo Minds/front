@@ -14,7 +14,7 @@ import {
   SupermindConsoleListType,
   SupermindState,
 } from '../../supermind.types';
-import { SupermindConsoleService } from '../console.service';
+import { SupermindConsoleService } from '../services/console.service';
 
 /**
  * Supermind list component - contains logic for inbox / outbox list.

@@ -5,6 +5,7 @@
   (focus)="onInputFocus($event)"
   (blur)="onInputBlur($event)"
   [placeholder]="placeholder"
+  [class.ng-invalid]="isInvalid"
   #input
 />
 <ul
