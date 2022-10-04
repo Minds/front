@@ -1,3 +1,7 @@
+<m-supermind__filterBar
+  (statusFilterChange)="onStatusFilterChange($event)"
+></m-supermind__filterBar>
+
 <span
   *ngIf="shouldShowNoOffersText$ | async"
   class="m-supermindList__noOffersSpan"

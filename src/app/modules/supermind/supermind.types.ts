@@ -23,6 +23,24 @@ export type Supermind = {
   receiver_entity?: any;
 };
 
+// Get params for inbox and outbox endpoints.
+export type SupermindConsoleGetParams = {
+  limit?: number;
+  offset?: number;
+  status?: SupermindState;
+};
+
+// Filter type values for Supermind console.
+export type SupermindConsoleStatusFilterType =
+  | 'all'
+  | 'pending'
+  | 'accepted'
+  | 'revoked'
+  | 'rejected'
+  | 'failed'
+  | 'failed_payment'
+  | 'expired';
+
 // Supermind reply type enum.
 export enum SupermindReplyType {
   TEXT,

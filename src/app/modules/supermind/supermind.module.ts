@@ -7,6 +7,7 @@ import { SupermindConsoleComponent } from './console/console.component';
 import { SupermindConsoleListComponent } from './console/list/list.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { SupermindConsoleListItemComponent } from './console/list/list-item/list-item.component';
+import { SupermindConsoleFilterBarComponent } from './console/list/filter-bar/filter-bar.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
     SupermindConsoleListComponent,
     SupermindConsoleComponent,
     SupermindConsoleListItemComponent,
+    SupermindConsoleFilterBarComponent,
   ],
 })
 export class SupermindModule {}
