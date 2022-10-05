@@ -67,7 +67,10 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    * The value of the payment method
    */
   get paymentMethod(): SUPERMIND_PAYMENT_METHODS {
-    return this.formGroup.controls.paymentMethod.value;
+    return (
+      this.formGroup?.controls.paymentMethod.value ??
+      SUPERMIND_DEFAULT_PAYMENT_METHOD
+    );
   }
 
   /**
@@ -136,8 +139,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           updateOn: 'change',
         },
       ],
-      offerUsd: [this.CashMin],
-      offerTokens: [this.TokensMin],
+      offerUsd: [this.CashMin, [this.cashMinAmountValidator()]],
+      offerTokens: [this.TokensMin, [this.tokensMinAmountValidator()]],
       termsAccepted: [false, [Validators.requiredTrue]],
       responseType: [
         SUPERMIND_DEFAULT_RESPONSE_TYPE.toString(),
