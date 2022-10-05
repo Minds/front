@@ -13,7 +13,7 @@ Feature: supermind
     And I accept the supermind terms
     And I click the supermind creator save button
     Then I see the supermind is in progress
-  
+
   Scenario: clear a configured supermind
     Given I am logged in
     And I am on the newsfeed

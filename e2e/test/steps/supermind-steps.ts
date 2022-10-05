@@ -1,9 +1,11 @@
+import { SupermindOnboardingModalComponent } from '../components/supermindOnboardingModalComponent';
 import { ChannelPage } from '../pages/channelPage';
 import { ComposerModal } from '../pages/composerModal';
 
 namespace SupermindSteps {
   const { I } = inject();
   const composerModal = new ComposerModal();
+  const supermindOnboardingModal = new SupermindOnboardingModalComponent();
   const channelPage = new ChannelPage();
 
   Before(() => {});
@@ -37,6 +39,14 @@ namespace SupermindSteps {
   When('I click the activity post supermind icon on the toolbar', () => {
     I.waitForElement('[data-ref=activity-icon-supermind-action] m-button');
     I.click('[data-ref=activity-icon-supermind-action] m-button');
+  });
+
+  Then('I should see the supermind request onboarding modal', num => {
+    supermindOnboardingModal.requestModalShouldBeVisible(true);
+  });
+
+  Then('I should see the supermind reply onboarding modal', num => {
+    supermindOnboardingModal.replyModalShouldBeVisible(true);
   });
 
   Then('I should see the supermind popout screen', num => {

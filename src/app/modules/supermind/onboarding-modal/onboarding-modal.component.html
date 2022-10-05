@@ -1,4 +1,7 @@
-<div class="m-supermindOnboarding" data-ref="supermind-onboarding-modal">
+<div
+  class="m-supermindOnboarding"
+  [data-ref]="'supermind-onboarding-modal-' + contentType"
+>
   <div class="m-supermindOnboarding__header">Supermind</div>
   <!-- ---------------------------------------------------------- -->
   <!-- --REQUEST------------------------------------------------- -->
@@ -151,6 +154,7 @@
   </ng-container>
   <div class="m-supermindOnboarding__toolbar">
     <m-button
+      data-ref="supermind-onboarding-modal-continue-button"
       (onAction)="onClickContinue($event)"
       [solid]="true"
       color="blue"
