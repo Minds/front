@@ -240,6 +240,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   setPaymentMethod(paymentMethod: SUPERMIND_PAYMENT_METHODS): void {
     this.formGroup.controls.paymentMethod.setValue(paymentMethod);
+    this.refreshMerchantValidator();
   }
 
   /**
@@ -339,7 +340,10 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
 
   private merchantValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!this.targetUser?.merchant) {
+      if (
+        this.paymentMethod === SUPERMIND_PAYMENT_METHODS.CASH &&
+        !this.targetUser?.merchant
+      ) {
         return {
           merchantInvalid: true,
         };
