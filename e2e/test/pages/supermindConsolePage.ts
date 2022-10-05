@@ -108,7 +108,8 @@ export class SupermindConsolePage {
   }
 
   /**
-   * Click to switch state filter.
+   * Check if filter has state.
+   * @param { string } stateFilterLabel - filter label for states, e.g. 'Pending', 'Accepted'.
    * @returns { void }
    */
   public hasStatusFilterState(stateFilterLabel: string): void {
@@ -179,6 +180,8 @@ export class SupermindConsolePage {
 
   /**
    * Click to switch state filter.
+   * @param { string } stateFilterLabel - filter label for states, e.g. 'Pending', 'Accepted'.
+   * @param { string } stateValue - value behind filter, "1", "2", "3".
    * @returns { Promise<void> }
    */
   public async switchStatusFilter(

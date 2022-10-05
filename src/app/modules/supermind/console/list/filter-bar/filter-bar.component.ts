@@ -53,7 +53,7 @@ export class SupermindConsoleFilterBarComponent {
   /**
    * Get SupermindState from filter value.
    * @param { SupermindConsoleStatusFilterType } statusFilterValue - value changed to.
-   * @returns { void }
+   * @returns { SupermindState } state of Supermind.
    */
   private getSupermindStatusFromFilterValue(
     statusFilterValue: SupermindConsoleStatusFilterType
@@ -62,8 +62,8 @@ export class SupermindConsoleFilterBarComponent {
       case 'all':
         return null;
       case 'pending':
-        // Pending is an interim state in processing - from the filtered feed
-        // perspective, on selecting pending, we want to created.
+        // PENDING is an interim state in processing - from the filtered
+        // feed perspective, on selecting pending, we want to get CREATED.
         return SupermindState.CREATED;
       case 'accepted':
         return SupermindState.ACCEPTED;
