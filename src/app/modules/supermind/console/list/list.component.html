@@ -1,4 +1,5 @@
 <m-supermind__filterBar
+  *ngIf="!(isSingleSupermindPage$ | async)"
   (statusFilterChange)="onStatusFilterChange($event)"
 ></m-supermind__filterBar>
 

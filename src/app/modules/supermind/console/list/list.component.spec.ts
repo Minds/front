@@ -9,7 +9,10 @@ import { BehaviorSubject, of } from 'rxjs';
 import { SupermindConsoleListComponent } from './list.component';
 import { SupermindConsoleService } from '../services/console.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
-import { SupermindConsoleListType } from '../../supermind.types';
+import {
+  SupermindConsoleListType,
+  SupermindState,
+} from '../../supermind.types';
 import { take } from 'rxjs/operators';
 
 describe('SupermindConsoleListComponent', () => {
@@ -60,6 +63,10 @@ describe('SupermindConsoleListComponent', () => {
             selector: 'infinite-scroll',
             inputs: ['moreData', 'inProgress'],
           }),
+          MockComponent({
+            selector: 'm-supermind__filterBar',
+            outputs: ['statusFilterChange'],
+          }),
         ],
         providers: [
           {
@@ -83,6 +90,7 @@ describe('SupermindConsoleListComponent', () => {
     fixture = TestBed.createComponent(SupermindConsoleListComponent);
     comp = fixture.componentInstance;
 
+    (comp as any).service.getList$.calls.reset();
     comp.list$.next([]);
     comp.inProgress$.next(false);
     (comp as any).service.getList$.and.returnValue(of([]));
@@ -104,10 +112,27 @@ describe('SupermindConsoleListComponent', () => {
 
   it('should load', fakeAsync(() => {
     (comp as any).service.getList$.and.returnValue(of(mockList));
-    comp.setupListTypeSubscription();
+    comp.setupSubscription();
     tick();
 
     expect((comp as any).service.getList$).toHaveBeenCalled();
+    expect(comp.list$.getValue()).toEqual(mockList);
+    expect(comp.moreData$.getValue()).toBeFalse();
+    expect(comp.inProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should load with status filter', fakeAsync(() => {
+    const statusFilterValue: SupermindState = 3;
+    (comp as any).service.getList$.and.returnValue(of(mockList));
+    comp.onStatusFilterChange(statusFilterValue);
+    comp.setupSubscription();
+    tick();
+
+    expect((comp as any).service.getList$).toHaveBeenCalledWith(
+      12,
+      0,
+      statusFilterValue
+    );
     expect(comp.list$.getValue()).toEqual(mockList);
     expect(comp.moreData$.getValue()).toBeFalse();
     expect(comp.inProgress$.getValue()).toBeFalse();
@@ -120,6 +145,24 @@ describe('SupermindConsoleListComponent', () => {
     tick();
 
     expect((comp as any).service.getList$).toHaveBeenCalled();
+    expect(comp.list$.getValue()).toEqual([...mockList, ...mockList]);
+    expect(comp.moreData$.getValue()).toBeFalse();
+    expect(comp.inProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should load next when there is more data with status filter', fakeAsync(() => {
+    comp.list$.next(mockList);
+    (comp as any).service.getList$.and.returnValue(of(mockList));
+    const statusFilterValue: SupermindState = 3;
+    comp.onStatusFilterChange(statusFilterValue);
+    comp.loadNext();
+    tick();
+
+    expect((comp as any).service.getList$).toHaveBeenCalledWith(
+      12,
+      2,
+      statusFilterValue
+    );
     expect(comp.list$.getValue()).toEqual([...mockList, ...mockList]);
     expect(comp.moreData$.getValue()).toBeFalse();
     expect(comp.inProgress$.getValue()).toBeFalse();

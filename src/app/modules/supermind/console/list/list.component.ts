@@ -50,6 +50,10 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
     Supermind[]
   >([]);
 
+  /** @var { Observable<boolean> } isSingleSupermindPage$ - true if this is a single supermind page */
+  public readonly isSingleSupermindPage$: Observable<boolean> = this.service
+    .isSingleSupermindPage$;
+
   /** @var { number } requestLimit - number of Superminds to request from API */
   private readonly requestLimit: number = 12;
 

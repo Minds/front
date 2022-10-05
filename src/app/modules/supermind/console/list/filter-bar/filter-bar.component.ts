@@ -55,7 +55,7 @@ export class SupermindConsoleFilterBarComponent {
    * @param { SupermindConsoleStatusFilterType } statusFilterValue - value changed to.
    * @returns { void }
    */
-  public getSupermindStatusFromFilterValue(
+  private getSupermindStatusFromFilterValue(
     statusFilterValue: SupermindConsoleStatusFilterType
   ): SupermindState {
     switch (statusFilterValue) {
