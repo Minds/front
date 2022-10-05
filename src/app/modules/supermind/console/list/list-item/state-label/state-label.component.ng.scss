@@ -1,0 +1,16 @@
+@import 'defaults.scss';
+
+:host {
+  span {
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    .m-supermindListItem__expirationTime {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

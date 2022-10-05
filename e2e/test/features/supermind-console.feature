@@ -7,7 +7,7 @@ Feature: Supermind Console
     When I click to change tabs to "Outbound"
     Then I should see "/supermind/outbox" in current URL
     And I should see my Supermind Console "outbox"
-  
+
   Scenario: Checking outbox and then inbox
     Given I am logged in
     And I am on the Supermind Console "outbox" page
@@ -28,7 +28,7 @@ Feature: Supermind Console
     And I log in as "playwright_tests_user"
     And I navigate via sidebar to the supermind console
     And I click "decline" on latest Supermind
-    Then the supermind offer should be "declined"
+    Then the latest supermind offer should be "declined"
 
   Scenario: A supermind is created and accepted
     Given I log in as "supermind_sender"
@@ -38,7 +38,9 @@ Feature: Supermind Console
     And I navigate via sidebar to the supermind console
     And I click "accept" on latest Supermind
     And I make a supermind reply
-    Then the supermind offer should be "accepted"
+    Then the latest supermind offer should be "accepted"
+    Then I should see an 'success' toaster saying 'Your Supermind reply was posted, and you’ve collected the offer.'
+    And on clicking the view reply button I am sent to the single entity page
 
   Scenario: An attempt is made to create an NSFW supermind reply
     Given I log in as "supermind_sender"

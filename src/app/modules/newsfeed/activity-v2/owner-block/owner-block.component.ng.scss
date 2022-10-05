@@ -43,11 +43,19 @@
         }
       }
     }
+
     .m-activityOwnerBlock__displayName,
     .m-activityOwnerBlock__groupName {
-      margin-left: $spacing2;
       @include m-theme() {
         color: themed($m-textColor--secondary);
+      }
+    }
+
+    &.m-activity__ownerBlock--quoteOrRemind {
+      // Use a bit more room when there is a remind icon overlaying avatar
+      .m-activityOwnerBlock__displayName,
+      .m-activityOwnerBlock__groupName {
+        margin-left: $spacing2;
       }
     }
   }

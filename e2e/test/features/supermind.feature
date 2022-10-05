@@ -13,7 +13,7 @@ Feature: supermind
     And I accept the supermind terms
     And I click the supermind creator save button
     Then I see the supermind is in progress
-  
+
   Scenario: clear a configured supermind
     Given I am logged in
     And I am on the newsfeed
@@ -99,7 +99,7 @@ Feature: supermind
     When I click on the channel supermind button
     Then I should see prefilled supermind details in the composer
 
-  Scenario: creating a superminds from an activity post
+  Scenario: creating a supermind from an activity post
     Given I am logged in
     And I am on the newsfeed
     And I have created a new post via the newsfeed
