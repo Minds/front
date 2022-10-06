@@ -1,0 +1,14 @@
+<div class="m-wireCreator__form m-formWrapper">
+  <div
+    class="m-wireCreatorForm__field m-wireCreatorForm__field--refundPolicyAgreed"
+  >
+    <m-formInput__checkbox
+      [ngModel]="service.refundPolicyAgreed$ | async"
+      (ngModelChange)="service.setRefundPolicyAgreed($event)"
+    >
+      <span i18n="@@WIRE_CREATOR_FORM__REFUND_POLICY"
+        >I understand this transaction is non-refundable
+      </span>
+    </m-formInput__checkbox>
+  </div>
+</div>

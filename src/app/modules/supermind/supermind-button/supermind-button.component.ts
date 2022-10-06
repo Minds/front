@@ -73,6 +73,7 @@ export class SupermindButtonComponent {
       },
       twitter_required: false,
       terms_agreed: false,
+      refund_policy_agreed: false,
     });
 
     this.composerModalService.setInjector(this.injector).present();
