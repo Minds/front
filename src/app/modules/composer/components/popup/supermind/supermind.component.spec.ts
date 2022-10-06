@@ -11,6 +11,7 @@ import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { PaymentsModule } from '../../../../payments/payments.module';
+import { SupermindOnboardingModalService } from '../../../../supermind/onboarding-modal/onboarding-modal.service';
 import {
   ComposerService,
   ComposerSize,
@@ -80,6 +81,10 @@ describe('Composer Supermind Popup', () => {
           {
             provide: ConfigsService,
             useValue: MockService(ConfigsService),
+          },
+          {
+            provide: SupermindOnboardingModalService,
+            useValue: MockService(SupermindOnboardingModalService),
           },
           //   {
           //     provide: Session,

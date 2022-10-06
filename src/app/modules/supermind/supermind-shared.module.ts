@@ -9,6 +9,5 @@ import { SupermindOnboardingModalService } from './onboarding-modal/onboarding-m
   imports: [NgCommonModule, FormsModule, ReactiveFormsModule, CommonModule],
   declarations: [SupermindButtonComponent],
   exports: [SupermindButtonComponent],
-  providers: [SupermindOnboardingModalService],
 })
 export class SupermindSharedModule {}
