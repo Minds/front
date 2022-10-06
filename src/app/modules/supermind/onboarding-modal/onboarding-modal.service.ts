@@ -1,7 +1,4 @@
 import { Injectable, Injector } from '@angular/core';
-import { Subject } from 'rxjs';
-import { string } from 'yargs';
-import { MindsUser } from '../../../interfaces/entities';
 import { AnalyticsService } from '../../../services/analytics';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
