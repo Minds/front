@@ -67,7 +67,10 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    * The value of the payment method
    */
   get paymentMethod(): SUPERMIND_PAYMENT_METHODS {
-    return this.formGroup.controls.paymentMethod.value;
+    return (
+      this.formGroup?.controls.paymentMethod.value ??
+      SUPERMIND_DEFAULT_PAYMENT_METHOD
+    );
   }
 
   /**
@@ -136,8 +139,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           updateOn: 'change',
         },
       ],
-      offerUsd: [this.CashMin],
-      offerTokens: [this.TokensMin],
+      offerUsd: [this.CashMin, [this.cashMinAmountValidator()]],
+      offerTokens: [this.TokensMin, [this.tokensMinAmountValidator()]],
       termsAccepted: [false, [Validators.requiredTrue]],
       refundPolicyAccepted: [false, [Validators.requiredTrue]],
       responseType: [
@@ -245,6 +248,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   setPaymentMethod(paymentMethod: SUPERMIND_PAYMENT_METHODS): void {
     this.formGroup.controls.paymentMethod.setValue(paymentMethod);
+    this.refreshMerchantValidator();
   }
 
   /**
@@ -345,7 +349,10 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
 
   private merchantValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!this.targetUser?.merchant) {
+      if (
+        this.paymentMethod === SUPERMIND_PAYMENT_METHODS.CASH &&
+        !this.targetUser?.merchant
+      ) {
         return {
           merchantInvalid: true,
         };

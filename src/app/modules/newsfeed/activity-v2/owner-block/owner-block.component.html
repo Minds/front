@@ -21,9 +21,9 @@
   </ng-container>
 
   <!-- ---------------------------- -->
-  <!-- MINIMAL MODE: REMINDs/QUOTES ONLY  -->
+  <!-- MINIMAL MODE: ONLY FOR REMINDS/QUOTES OR GROUP SIDEBAR SUGGESTIONS  -->
   <!-- ---------------------------- -->
-  <ng-container *ngIf="isMinimalMode && quoteOrRemind">
+  <ng-container *ngIf="isMinimalMode">
     <ng-container [ngTemplateOutlet]="avatar"></ng-container>
     <ng-container [ngTemplateOutlet]="name"></ng-container>
   </ng-container>
@@ -100,7 +100,7 @@
     </m-hovercard>
 
     <div
-      *ngIf="isMinimalMode"
+      *ngIf="isMinimalMode && quoteOrRemind"
       class="m-activityOwnerBlock__remindIcon--minimalMode"
     >
       <i class="material-icons">repeat</i>
