@@ -7,7 +7,7 @@ Feature: Supermind Console
     When I click to change tabs to "Outbound"
     Then I should see "/supermind/outbox" in current URL
     And I should see my Supermind Console "outbox"
-  
+
   Scenario: Checking outbox and then inbox
     Given I am logged in
     And I am on the Supermind Console "outbox" page
@@ -39,6 +39,15 @@ Feature: Supermind Console
     And I click "accept" on latest Supermind
     And I make a supermind reply
     Then the supermind offer should be "accepted"
+
+
+  Scenario: onboarding when replying to a supermind for the first time
+    Given I create a new user
+    When I navigate via sidebar to the supermind console
+    And I see the supermind reply onboarding modal
+    And I click the action button in the Supermind onboarding modal
+    Then I should see my Supermind Console "inbox"
+    And I clear my cookies
 
   Scenario: An attempt is made to create an NSFW supermind reply
     Given I log in as "supermind_sender"

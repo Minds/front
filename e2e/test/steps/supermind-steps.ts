@@ -41,6 +41,20 @@ namespace SupermindSteps {
     I.click('[data-ref=activity-icon-supermind-action] m-button');
   });
 
+  When('I see the supermind request onboarding modal', () => {
+    supermindOnboardingModal.requestModalShouldBeVisible(true);
+  });
+
+  When('I see the supermind request onboarding modal', () => {
+    supermindOnboardingModal.requestModalShouldBeVisible(true);
+  });
+
+  When('I click the action button in the Supermind onboarding modal', () => {
+    supermindOnboardingModal.clickContinue();
+  });
+
+  //
+
   Then('I should see the supermind request onboarding modal', num => {
     supermindOnboardingModal.requestModalShouldBeVisible(true);
   });

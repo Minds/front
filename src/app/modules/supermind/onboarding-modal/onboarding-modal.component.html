@@ -1,6 +1,10 @@
 <div
   class="m-supermindOnboarding"
-  [data-ref]="'supermind-onboarding-modal-' + contentType"
+  data-ref="supermind-onboarding-modal"
+  [ngClass]="{
+    'supermind-onboarding-modal--request': contentType === 'request',
+    'supermind-onboarding-modal--reply': contentType === 'reply'
+  }"
 >
   <div class="m-supermindOnboarding__header">Supermind</div>
   <!-- ---------------------------------------------------------- -->

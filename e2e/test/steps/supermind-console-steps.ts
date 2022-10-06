@@ -5,11 +5,13 @@ import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
 } from '../types/supermind-console.types';
+import { SupermindOnboardingModalComponent } from '../components/supermindOnboardingModalComponent';
 
 namespace SupermindConsoleSteps {
   const supermindConsolePage = new SupermindConsolePage();
   const composerModalPage = new ComposerModal();
   const confirmationModalComponent = new ConfirmationModalComponent();
+  const supermindOnboardingModal = new SupermindOnboardingModalComponent();
 
   Before(() => {});
 
@@ -121,6 +123,16 @@ namespace SupermindConsoleSteps {
         break;
     }
   });
+
+  When('I see the supermind reply onboarding modal', () => {
+    supermindOnboardingModal.replyModalShouldBeVisible(true);
+  });
+
+  When('I click the action button in the Supermind onboarding modal', () => {
+    supermindOnboardingModal.clickContinue();
+  });
+
+  //
 
   Then('the supermind offer should be {string}', (state: string) => {
     /**

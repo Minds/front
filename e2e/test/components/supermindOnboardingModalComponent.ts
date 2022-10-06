@@ -2,9 +2,9 @@ const { I } = inject();
 
 export class SupermindOnboardingModalComponent {
   private requestModalElementSelector: string =
-    '[data-ref=supermind-onboarding-modal-request]';
+    '.supermind-onboarding-modal--request';
   private replyModalElementSelector: string =
-    '[data-ref=supermind-onboarding-modal-reply]';
+    '.supermind-onboarding-modal--reply';
   private continueButtonSelector: string =
     '[data-ref=supermind-onboarding-modal-continue-button]';
 
