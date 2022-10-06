@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 /**
- * Informational modal to teach users how supermind replies work
+ * Informational modal to teach users how superminds work
+ *
+ * Two panes are available - one for replies and one for requests
  *
  * Once dismissed, it won't be seen again by that user.
  */
