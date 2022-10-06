@@ -4,6 +4,7 @@ import {
   distinctUntilChanged,
   map,
   share,
+  shareReplay,
   skipWhile,
   switchMap,
 } from 'rxjs/operators';
@@ -46,7 +47,7 @@ export class ConnectWalletModalService {
           .get('api/v3/blockchain/unique-onchain')
           .pipe(map(response => response.unique));
       }),
-      share()
+      shareReplay()
     );
   }
 
