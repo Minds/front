@@ -2,7 +2,7 @@
   *ngIf="!(isSingleSupermindPage$ | async)"
   [newCount]="newCount$ | async"
   (poll)="populateCounts()"
-  (click)="onSeeLatestClick()"
+  (clickSeeLatest)="onSeeLatestClick()"
 ></m-seeLatestButton>
 
 <m-supermind__filterBar

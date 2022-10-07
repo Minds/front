@@ -83,9 +83,9 @@ export class SeeLatestButtonComponent implements OnInit, OnDestroy {
   >();
 
   // Called on See Latest click. Should call to refresh the feed or update content.
-  @Output('click') onClickEmitter: EventEmitter<boolean> = new EventEmitter<
+  @Output('clickSeeLatest') onClickEmitter: EventEmitter<
     boolean
-  >();
+  > = new EventEmitter<boolean>();
 
   // Subscription to interval.
   private intervalSubscription: Subscription;
