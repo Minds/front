@@ -82,7 +82,6 @@ namespace ComposerSteps {
 
   Then('I should see the nsfw icon is active on the composer toolbar', () => {
     I.seeElement(`${composerModal.nsfwButton}.m-composerToolbar__item--active`);
-    pause();
   });
 
   Then('I do not see the monetize icon on the composer toolbar', () => {
