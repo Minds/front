@@ -72,6 +72,8 @@ namespace SupermindConsoleSteps {
     composerModalPage.acceptSupermindTerms();
     composerModalPage.clickSupermindSave();
     composerModalPage.clickPost();
+    confirmationModalComponent.shouldBeVisible(true);
+    confirmationModalComponent.clickConfirm();
   });
 
   When('I try to make an NSFW supermind offer', () => {

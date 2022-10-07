@@ -80,7 +80,8 @@ namespace SupermindSteps {
   });
 
   Then('I should not see the supermind icon on the composer toolbar', () => {
-    composerModal.shouldHaveSupermindBadge(false);
+    composerModal.shouldHaveSupermindToolbarIcon(false);
+    pause();
   });
 
   Then('I should see prefilled supermind details in the composer', () => {
