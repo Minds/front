@@ -107,7 +107,6 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
     if (this.inProgress$.getValue()) {
       return;
     }
-
     this.inProgress$.next(true);
 
     this.subscriptions.push(
