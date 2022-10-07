@@ -192,6 +192,109 @@ describe('SupermindConsoleService', () => {
     });
   });
 
+  it('should get a count for inbox with no status', (done: DoneFn) => {
+    const expectedCount: number = 999;
+    const response: ApiResponse = {
+      status: 'success',
+      count: expectedCount,
+    };
+    const listType = 'inbox';
+
+    service.listType$.next(listType);
+    (service as any).api.get.and.returnValue(of(response));
+
+    service.countAll$().subscribe(count => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        `api/v3/supermind/${listType}/count`,
+        {}
+      );
+      expect(count).toEqual(expectedCount);
+      done();
+    });
+  });
+
+  it('should get a count for inbox with status', (done: DoneFn) => {
+    const expectedCount: number = 999;
+    const status: SupermindState = 7;
+    const response: ApiResponse = {
+      status: 'success',
+      count: expectedCount,
+    };
+    const listType = 'inbox';
+
+    service.listType$.next(listType);
+    (service as any).api.get.and.returnValue(of(response));
+
+    service.countAll$(status).subscribe(count => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        `api/v3/supermind/${listType}/count`,
+        {
+          status: status,
+        }
+      );
+      expect(count).toEqual(expectedCount);
+      done();
+    });
+  });
+
+  it('should get a count for outbox with no status', (done: DoneFn) => {
+    const expectedCount: number = 999;
+    const response: ApiResponse = {
+      status: 'success',
+      count: expectedCount,
+    };
+    const listType = 'outbox';
+
+    service.listType$.next(listType);
+    (service as any).api.get.and.returnValue(of(response));
+
+    service.countAll$().subscribe(count => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        `api/v3/supermind/${listType}/count`,
+        {}
+      );
+      expect(count).toEqual(expectedCount);
+      done();
+    });
+  });
+
+  it('should get a count for outbox with status', (done: DoneFn) => {
+    const expectedCount: number = 999;
+    const status: SupermindState = 7;
+    const response: ApiResponse = {
+      status: 'success',
+      count: expectedCount,
+    };
+    const listType = 'outbox';
+
+    service.listType$.next(listType);
+    (service as any).api.get.and.returnValue(of(response));
+
+    service.countAll$(status).subscribe(count => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        `api/v3/supermind/${listType}/count`,
+        {
+          status: status,
+        }
+      );
+      expect(count).toEqual(expectedCount);
+      done();
+    });
+  });
+
+  it('should NOT call endpoint for single entity lists', (done: DoneFn) => {
+    const expectedCount: number = 1;
+    const listType = '123456789';
+
+    service.listType$.next(listType);
+
+    service.countAll$().subscribe(count => {
+      expect((service as any).api.get).not.toHaveBeenCalled();
+      expect(count).toEqual(expectedCount);
+      done();
+    });
+  });
+
   it('should determine if value is a numeric string', () => {
     expect(service.isNumericListType('123')).toBeTrue();
   });

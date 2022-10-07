@@ -173,6 +173,7 @@ import { UserCard } from './components/user-card/user';
 import { CommentButton } from './components/comment-button/comment';
 import { SubscribeButton } from './components/subscribe-button-v1/subscribe';
 import { MindsBanner } from './components/banner/banner';
+import { SeeLatestButtonComponent } from './components/see-latest-button/see-latest-button.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -243,6 +244,7 @@ const MINDS_COMMON_COMPONENTS = [
   SafeToggleComponent,
   Scheduler,
   SeeLatestPostsButtonComponent,
+  SeeLatestButtonComponent,
   SidebarMoreComponent,
   SidebarMoreTriggerComponent,
   SidebarNavigationComponent,
