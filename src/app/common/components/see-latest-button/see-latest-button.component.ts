@@ -75,7 +75,7 @@ export class SeeLatestButtonComponent implements OnInit, OnDestroy {
   @Input() newCount: number;
 
   // Interval for polling.
-  @Input() pollingInterval: number = 30000;
+  @Input() pollingInterval: number = 5000;
 
   // Outputs in intervals based on the pollingInterval. Should call a function that polls the server.
   @Output('poll') onPollEmitter: EventEmitter<boolean> = new EventEmitter<
@@ -97,6 +97,9 @@ export class SeeLatestButtonComponent implements OnInit, OnDestroy {
     // setup interval subscription - will emit to `onPollEmitter` every `pollingInterval`.
     this.intervalSubscription = interval(this.pollingInterval).subscribe(
       interval => {
+        if (!document.hasFocus()) {
+          return;
+        }
         this.onPollEmitter.emit();
       }
     );
