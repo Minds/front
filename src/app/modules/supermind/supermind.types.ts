@@ -19,6 +19,7 @@ export type Supermind = {
   expiry_threshold: number;
   twitter_required: boolean;
   reply_type: number;
+  reply_activity_guid?: string;
   entity?: any;
   receiver_entity?: any;
 };

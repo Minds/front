@@ -95,8 +95,7 @@ export class NewsfeedActivitySuggestionsComponent implements OnInit {
       return;
     }
 
-    // if group
-    if (this._baseEntity.containerObj && this._baseEntity.containerObj.name) {
+    if (this.baseEntityIsGroupPost && this._baseEntity.containerObj.name) {
       return this._baseEntity.containerObj.name;
     }
 
@@ -107,5 +106,12 @@ export class NewsfeedActivitySuggestionsComponent implements OnInit {
     }
 
     return baseOwner.name;
+  }
+
+  get baseEntityIsGroupPost(): boolean {
+    return !!(
+      this._baseEntity.containerObj &&
+      this._baseEntity.containerObj.type === 'group'
+    );
   }
 }

@@ -134,15 +134,24 @@ namespace SupermindConsoleSteps {
 
   //
 
-  Then('the supermind offer should be {string}', (state: string) => {
-    /**
-     * TODO: When we build out different states, we need to test states
-     * - 'declined'
-     * - 'cancelled'
-     * - 'accepted'
-     */
-    supermindConsolePage.checkSupermindNotActionable();
+  Then('the latest supermind offer should be {string}', (state: string) => {
+    switch (state) {
+      case 'declined':
+        supermindConsolePage.checkSupermindNotActionable();
+        supermindConsolePage.checkStateLabelContains('Declined');
+        break;
+      case 'accepted':
+        supermindConsolePage.checkStateLabelContains('Accepted');
+        break;
+    }
   });
+
+  Then(
+    'on clicking the view reply button I am sent to the single entity page',
+    () => {
+      supermindConsolePage.clickViewReply();
+    }
+  );
 
   After(() => {});
 }

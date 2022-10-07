@@ -3,6 +3,7 @@ import {
   ElementRef,
   forwardRef,
   Input,
+  Self,
   ViewChild,
 } from '@angular/core';
 import {
@@ -25,7 +26,7 @@ import {
 import { ApiService } from '../../../api/api.service';
 import { ConfigsService } from '../../../services/configs.service';
 import { MindsUser } from '../../../../interfaces/entities';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { FastFadeAnimation } from '../../../../animations';
 
 /**
@@ -34,7 +35,6 @@ import { FastFadeAnimation } from '../../../../animations';
 export type UserSearchResponse = { status: string; entities: MindsUser[] };
 
 export const FORM_INPUT_AUTOCOMPLETE_USER_INPUT_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => AutocompleteUserInputComponent),
   multi: true,
 };
@@ -48,7 +48,7 @@ export const FORM_INPUT_AUTOCOMPLETE_USER_INPUT_VALUE_ACCESSOR: any = {
   selector: 'm-formInput__autocompleteUserInput',
   templateUrl: './autocomplete-user-input.component.html',
   styleUrls: ['./autocomplete-user-input.component.ng.scss'],
-  providers: [FORM_INPUT_AUTOCOMPLETE_USER_INPUT_VALUE_ACCESSOR],
+  // providers: [FORM_INPUT_AUTOCOMPLETE_USER_INPUT_VALUE_ACCESSOR],
   animations: [FastFadeAnimation],
 })
 export class AutocompleteUserInputComponent implements ControlValueAccessor {
@@ -141,8 +141,13 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
    */
   readonly cdnUrl: string;
 
-  constructor(private api: ApiService, configs: ConfigsService) {
+  constructor(
+    @Self() private control: NgControl,
+    private api: ApiService,
+    configs: ConfigsService
+  ) {
     this.cdnUrl = configs.get('cdn_url');
+    this.control.valueAccessor = this;
   }
 
   ngOnInit() {
@@ -156,6 +161,10 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
 
   ngOnDestroy() {
     this.usernameSubscription.unsubscribe();
+  }
+
+  get isInvalid() {
+    return this.control.invalid;
   }
 
   /**

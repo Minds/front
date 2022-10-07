@@ -68,7 +68,8 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Note: currently ownerBlocks are only visible in minimalMode for reminds/quotes
+  // Note: currently ownerBlocks are only visible in minimalMode for quotes/reminds
+  // and sidebar suggestions stemming from group posts
   @HostBinding('class.m-activity__ownerBlock--minimalMode')
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
@@ -79,6 +80,11 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
     return this.entity.containerObj && this.entity.containerObj.type === 'group'
       ? this.entity.containerObj
       : null;
+  }
+
+  @HostBinding('class.m-activity__ownerBlock--quoteOrRemind')
+  get quoteOrRemind(): boolean {
+    return this.wasQuoted || this.isRemind;
   }
 
   get isFeed(): boolean {
@@ -103,10 +109,6 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
 
   get showPostMenu(): boolean {
     return this.service.displayOptions.showPostMenu;
-  }
-
-  get quoteOrRemind(): boolean {
-    return this.wasQuoted || this.isRemind;
   }
 
   get owner(): MindsUser {

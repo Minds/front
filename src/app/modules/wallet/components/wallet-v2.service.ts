@@ -485,4 +485,18 @@ export class WalletV2Service {
     ));
     return response.unique;
   }
+
+  /**
+   * Returns an unstoppable domain from a wallet address, if one exists
+   * @param walletAddress
+   * @returns
+   */
+  async getUnstoppableDomain(walletAddress: string): Promise<string | null> {
+    const response = await (<any>(
+      this.client.get(
+        'api/v3/blockchain/unstoppable-domains/reverse/' + walletAddress
+      )
+    ));
+    return response?.domains[0] || null;
+  }
 }

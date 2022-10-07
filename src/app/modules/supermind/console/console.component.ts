@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
-import { SupermindConsoleService } from './console.service';
+import { SupermindConsoleService } from './services/console.service';
 
 /**
  * Supermind console component. Contains router outlet to display sub-routes like the inbox and outbox list.

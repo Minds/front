@@ -1,14 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../../../common/api/api.service';
 import { CommonModule } from '../../../../../common/common.module';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
-import { AutocompleteUserInputComponent } from '../../../../../common/components/forms/autocomplete-user-input/autocomplete-user-input.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { Client } from '../../../../../services/api';
-import { Session } from '../../../../../services/session';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { PaymentsModule } from '../../../../payments/payments.module';
 import { SupermindOnboardingModalService } from '../../../../supermind/onboarding-modal/onboarding-modal.service';
@@ -18,6 +14,8 @@ import {
 } from '../../../services/composer.service';
 import { PopupService } from '../popup.service';
 import { ComposerSupermindComponent } from '../supermind/supermind.component';
+import { EntityResolverService } from '../../../../../common/services/entity-resolver.service';
+import { of } from 'rxjs';
 
 describe('Composer Supermind Popup', () => {
   let comp: ComposerSupermindComponent;
@@ -50,6 +48,10 @@ describe('Composer Supermind Popup', () => {
     present: { toPromise: () => {} },
   });
 
+  const apiMock = new (function() {
+    this.get = jasmine.createSpy('get');
+  })();
+
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
@@ -72,7 +74,7 @@ describe('Composer Supermind Popup', () => {
           },
           {
             provide: ApiService,
-            useValue: MockService(ApiService),
+            useValue: apiMock,
           },
           //   {
           //     provide: Client,
@@ -89,7 +91,11 @@ describe('Composer Supermind Popup', () => {
           //   {
           //     provide: Session,
           //     useValue: MockService(Session),
-          //   }
+          //   },
+          {
+            provide: EntityResolverService,
+            useValue: MockService(EntityResolverService),
+          },
         ],
       }).compileComponents();
     })
@@ -98,6 +104,27 @@ describe('Composer Supermind Popup', () => {
   beforeEach(done => {
     fixture = TestBed.createComponent(ComposerSupermindComponent);
     comp = fixture.componentInstance;
+
+    (comp as any).mindsConfig.get.and.returnValue({
+      min_thresholds: {
+        min_cash: 10,
+        min_offchain_tokens: 1,
+      },
+    });
+
+    (comp as any).entityResolverService.get$.and.returnValue(
+      of({
+        supermind_settings: {
+          min_cash: 10,
+          min_offchain_tokens: 1,
+        },
+        merchant: {},
+      })
+    );
+
+    apiMock.get.calls.reset();
+    apiMock.get.and.returnValue([]);
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -133,13 +160,13 @@ describe('Composer Supermind Popup', () => {
     comp.formGroup.controls.termsAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
     fixture.detectChanges();
-
     expect(getSaveBtn().disabled).toBeFalse();
   });
 
   it('should update composer supermindRequest$ service on save', () => {
     comp.formGroup.controls.termsAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
+    // comp.formGroup.controls.username.markAsTouched({ onlySelf: true });
     fixture.detectChanges();
 
     getSaveBtn().onAction.next(new MouseEvent('click'));

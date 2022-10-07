@@ -1,8 +1,4 @@
 import { Component, Input } from '@angular/core';
-import * as moment from 'moment';
-import { Session } from '../../../../../services/session';
-import { SupermindReplyService } from '../../../supermind-reply.service';
-
 import {
   SUPERMIND_REPLY_TYPE_MAP,
   Supermind,
@@ -19,7 +15,6 @@ import {
   selector: 'm-supermind__listItem',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.ng.scss'],
-  providers: [SupermindReplyService],
 })
 export class SupermindConsoleListItemComponent {
   /** @var { Supermind } supermind - Supermind object */
@@ -40,16 +35,6 @@ export class SupermindConsoleListItemComponent {
   };
 
   /**
-   * The api state (button loading states)
-   */
-  inProgress$$ = this.supermindReplyService.inProgress$$;
-
-  constructor(
-    private supermindReplyService: SupermindReplyService,
-    private session: Session
-  ) {}
-
-  /**
    * Get amount badge text.
    * @return { string } amount badge text.
    */
@@ -62,37 +47,6 @@ export class SupermindConsoleListItemComponent {
       default:
         return '';
     }
-  }
-
-  /**
-   * Time till expiration.
-   * @return { string }
-   */
-  get timeTillExpiration(): string {
-    const date = moment(
-      (this.supermind.created_timestamp + this.supermind.expiry_threshold) *
-        1000
-    );
-    const duration = moment.duration(moment(date).diff(moment()));
-    const daysRemaining = duration.days();
-    const hoursRemaining = duration.hours();
-    const minutesRemaining = duration.minutes();
-    const secondsRemaining = duration.seconds();
-
-    if (daysRemaining > 0) {
-      return `${daysRemaining}d`;
-    }
-    if (hoursRemaining > 0) {
-      return `${hoursRemaining}h`;
-    }
-    if (minutesRemaining > 0) {
-      return `${minutesRemaining}m`;
-    }
-    if (secondsRemaining > 0) {
-      return `${secondsRemaining}s`;
-    }
-
-    return '';
   }
 
   /**
@@ -119,40 +73,5 @@ export class SupermindConsoleListItemComponent {
     }
 
     return requirementsText;
-  }
-
-  /**
-   * Called upon accept button being clicked
-   * @param e
-   */
-  async onAccept(e: MouseEvent): Promise<void> {
-    this.supermindReplyService.startReply(this.supermind);
-  }
-
-  /**
-   * Called upon decline button being clicked
-   * @param e
-   */
-  onDecline(e: MouseEvent): void {
-    this.supermindReplyService.decline(this.supermind);
-  }
-
-  /**
-   * Called upon cancle button being clicked
-   * @param e
-   */
-  onCancel(e: MouseEvent): void {
-    this.supermindReplyService.cancel(this.supermind);
-  }
-
-  /**
-   * Whether inbox action buttons should be shown.
-   * @returns { boolean }
-   */
-  public shouldShowInboxActionButtons(): boolean {
-    return (
-      this.context === 'inbox' ||
-      this.supermind.receiver_guid === this.session.getLoggedInUser().guid
-    );
   }
 }
