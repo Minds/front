@@ -11,6 +11,7 @@ Feature: supermind
     Then I should see the supermind popout screen
     When I enter a target username with value 'minds'
     And I accept the supermind terms
+    And I accept the refund policy
     And I click the supermind creator save button
     Then I see the supermind is in progress
 
@@ -22,6 +23,7 @@ Feature: supermind
     Then I should see the supermind popout screen
     When I enter a target username with value 'minds'
     And I accept the supermind terms
+    And I accept the refund policy
     And I click the supermind creator save button
     And I click the supermind icon on the composer toolbar
     And I click the supermind creator clear button
@@ -45,6 +47,7 @@ Feature: supermind
     Then I should see the supermind popout screen
     When I enter a target username with value 'minds'
     And I accept the supermind terms
+    And I accept the refund policy
     And I click the supermind creator save button
     And I click the nsfw icon on the composer toolbar
     And I select the 'Nudity' nsfw option
@@ -69,6 +72,7 @@ Feature: supermind
     Then I should see the supermind popout screen
     When I enter a target username with value 'minds'
     And I accept the supermind terms
+    And I accept the refund policy
     And I click the supermind creator save button
     Then I do not have the ability to schedule a post
 
@@ -90,6 +94,7 @@ Feature: supermind
     Then I should see the supermind popout screen
     When I enter a target username with value 'minds'
     And I accept the supermind terms
+    And I accept the refund policy
     And I click the supermind creator save button
     Then I do not see the monetize icon on the composer toolbar
 
@@ -114,6 +119,7 @@ Feature: supermind
     Then I should see the supermind popout screen
     When I enter a target username with value 'minds'
     And I accept the supermind terms
+    And I accept the refund policy
     And I click the supermind creator save button
     And I enter 'hello world. this should not allow me to post.' in the composer text area
     And I click the post button
