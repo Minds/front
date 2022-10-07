@@ -51,6 +51,11 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   isConnected: boolean;
 
   /**
+   * Unstoppable domain to render
+   */
+  unstoppableDomain: string;
+
+  /**
    * Subscriptions
    */
   subscriptions: Subscription[] = [];
@@ -108,9 +113,12 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(
-      this.connectWalletModalService.isConnected$.subscribe(
-        isConnected => (this.isConnected = isConnected)
-      )
+      this.connectWalletModalService.isConnected$.subscribe(isConnected => {
+        this.isConnected = isConnected;
+        this.detectChanges();
+
+        this.loadUnstoppableDomain();
+      })
     );
 
     this.detectChanges();
@@ -154,6 +162,15 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
   }
 
+  async loadUnstoppableDomain(): Promise<void> {
+    const domain = await this.walletService.getUnstoppableDomain(
+      this.wallet.receiver.address
+    );
+    if (domain) {
+      this.unstoppableDomain = domain;
+    }
+  }
+
   detectChanges() {
     if (!(this.cd as ViewRef).destroyed) {
       this.cd.markForCheck();
@@ -171,6 +188,9 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   }
 
   get truncatedOnchainAddress(): string {
+    if (this.unstoppableDomain) {
+      return this.unstoppableDomain;
+    }
     if (!this.wallet.receiver.address) {
       return '';
     }
