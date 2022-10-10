@@ -91,6 +91,7 @@ export class NotificationsV3NotificationComponent
       case 'supermind_created':
       case 'supermind_rejected':
       case 'supermind_accepted':
+      case 'supermind_expiring_soon':
         // case 'supermind_expired':
 
         //
@@ -134,6 +135,7 @@ export class NotificationsV3NotificationComponent
       case 'report_actioned':
       case 'wire_payout':
       case 'boost_completed':
+      case 'supermind_expiring_soon':
         return false;
       default:
         return true;
@@ -218,6 +220,8 @@ export class NotificationsV3NotificationComponent
         return ' sent you';
       case 'supermind_rejected':
         return ' has declined';
+      case 'supermind_expiring_soon':
+        return "Don't forget to review";
     }
   }
 
@@ -246,6 +250,7 @@ export class NotificationsV3NotificationComponent
       case 'token_withdraw_rejected':
       case 'report_actioned':
       case 'boost_completed':
+      case 'supermind_expiring_soon':
         return '';
     }
 
@@ -277,6 +282,8 @@ export class NotificationsV3NotificationComponent
       case 'supermind_rejected':
       case 'supermind_created':
         return 'Supermind offer';
+      case 'supermind_expiring_soon':
+        return this.notification.from?.name + "'s Supermind offer";
     }
     switch (this.notification.entity?.type) {
       case 'comment':
@@ -314,6 +321,7 @@ export class NotificationsV3NotificationComponent
       case 'supermind_rejected':
       case 'supermind_created':
       case 'supermind_expired':
+      case 'supermind_expiring_soon':
         return [`/supermind/${this.notification.entity?.guid}`];
       case 'supermind_accepted':
         return ['/newsfeed', this.notification.entity?.reply_activity_guid];
@@ -398,6 +406,11 @@ export class NotificationsV3NotificationComponent
       case 'boost_peer_rejected':
       case 'boost_peer_accepted':
         return 'trending_up';
+      case 'supermind_rejected':
+      case 'supermind_created':
+      case 'supermind_expired':
+      case 'supermind_expiring_soon':
+        return 'tips_and_updates';
       default:
         return null;
     }
@@ -436,7 +449,8 @@ export class NotificationsV3NotificationComponent
       this.notification.type !== 'supermind_created' &&
       this.notification.type !== 'supermind_rejected' &&
       this.notification.type !== 'supermind_accepted' &&
-      this.notification.type !== 'supermind_expired'
+      this.notification.type !== 'supermind_expired' &&
+      this.notification.type !== 'supermind_expiring_soon'
     );
   }
 
