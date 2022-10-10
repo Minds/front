@@ -97,7 +97,7 @@ export class SeeLatestButtonComponent implements OnInit, OnDestroy {
     // setup interval subscription - will emit to `onPollEmitter` every `pollingInterval`.
     this.intervalSubscription = interval(this.pollingInterval).subscribe(
       interval => {
-        if (!document.hasFocus()) {
+        if (document.hidden) {
           return;
         }
         this.onPollEmitter.emit();

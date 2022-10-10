@@ -120,6 +120,7 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
         this.moreData$.next(list.length >= this.requestLimit);
         this.inProgress$.next(false);
         this.list$.next(list);
+        this.populateCounts();
       })
     );
   }

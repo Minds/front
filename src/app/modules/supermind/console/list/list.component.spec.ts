@@ -99,10 +99,11 @@ describe('SupermindConsoleListComponent', () => {
     comp.list$.next([]);
     comp.inProgress$.next(false);
     (comp as any).service.getList$.and.returnValue(of([]));
+
     comp.initialCount$.next(0);
     comp.updatedCount$.next(0);
-
     (comp as any).service.countAll$.calls.reset();
+    (comp as any).service.countAll$.and.returnValue(of(1));
 
     fixture.detectChanges();
 
@@ -124,6 +125,7 @@ describe('SupermindConsoleListComponent', () => {
     comp.setupSubscription();
     tick();
 
+    expect((comp as any).service.countAll$).toHaveBeenCalled();
     expect((comp as any).service.getList$).toHaveBeenCalled();
     expect(comp.list$.getValue()).toEqual(mockList);
     expect(comp.moreData$.getValue()).toBeFalse();
@@ -250,13 +252,14 @@ describe('SupermindConsoleListComponent', () => {
   it('should call to count and set initial count if it is not already set with no status', fakeAsync(() => {
     const expectedCount: number = 10;
     (comp as any).service.countAll$.and.returnValue(of(expectedCount));
+    comp.initialCount$.next(null);
 
     comp.populateCounts();
     tick();
 
     expect((comp as any).service.countAll$).toHaveBeenCalled();
-    expect((comp as any).initialCount$.getValue()).toBe(10);
-    expect((comp as any).updatedCount$.getValue()).toBe(10);
+    expect(comp.initialCount$.getValue()).toBe(10);
+    expect(comp.updatedCount$.getValue()).toBe(10);
   }));
 
   it('should call to count and set initial count if it is not already set with no status', fakeAsync(() => {
@@ -269,8 +272,8 @@ describe('SupermindConsoleListComponent', () => {
     tick();
 
     expect((comp as any).service.countAll$).toHaveBeenCalled();
-    expect((comp as any).initialCount$.getValue()).toBe(expectedInitialCount);
-    expect((comp as any).updatedCount$.getValue()).toBe(10);
+    expect(comp.initialCount$.getValue()).toBe(expectedInitialCount);
+    expect(comp.updatedCount$.getValue()).toBe(10);
   }));
 
   it('should call to count and set initial count with status', fakeAsync(() => {
