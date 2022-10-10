@@ -4,10 +4,6 @@
   padding: $minds-padding * 4;
 
   iframe {
-    height: 152px;
-
-    @media screen and (max-width: $max-mobile) {
-      height: 300px;
-    }
+    height: 500px;
   }
 }
