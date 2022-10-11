@@ -55,9 +55,9 @@
         >Boost</a
       >
     </div>
-    <div class="m-tabs__tab">
+    <div class="m-tabs__tab" *ngIf="isSupermindFeedAvailable()">
       <a
-        routerLink="/discovery/superminds"
+        routerLink="/discovery/supermind"
         routerLinkActive="m-tabs__tab--selected"
         data-cy="discovery-tab-link-boosted"
         i18n="@@DISCOVERY_TABS__SUPERMINDS"

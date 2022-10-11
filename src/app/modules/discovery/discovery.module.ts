@@ -21,6 +21,7 @@ import { ContentSettingsModule } from '../content-settings/content-settings.modu
 import { DiscoveryTopComponent } from './top/top.component';
 import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.component';
+import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/supermind-global-feed-experiment.guard.ts/supermind-global-feed-experiment.guard';
 
 @NgModule({
   imports: [
@@ -82,10 +83,11 @@ import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.c
             },
           },
           {
-            path: 'superminds',
+            path: 'supermind',
             component: DiscoverySupermindsFeedComponent,
+            canActivate: [SupermindGlobalFeedExperimentGuard],
             data: {
-              title: 'Discovery / Superminds',
+              title: 'Discovery / Supermind',
             },
           },
           {
