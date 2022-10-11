@@ -50,6 +50,12 @@ export class SupermindConsolePage {
   private supermindActionButtons: CodeceptJS.Locator = locate(
     '.m-supermindListItem__actionButtons'
   );
+  private statusFilterTrigger: CodeceptJS.Locator = locate(
+    '.m-supermindConsole__filterTrigger'
+  );
+  private statusFilterLabel: CodeceptJS.Locator = locate(
+    '.m-supermindConsole__filterLabel'
+  );
 
   /**
    * Navigate to the supermind page by subpage.
@@ -99,6 +105,15 @@ export class SupermindConsolePage {
    */
   public hasSettingsCog(): void {
     I.seeElement(locate(this.settingsCog));
+  }
+
+  /**
+   * Check if filter has state.
+   * @param { string } stateFilterLabel - filter label for states, e.g. 'Pending', 'Accepted'.
+   * @returns { void }
+   */
+  public hasStatusFilterState(stateFilterLabel: string): void {
+    I.seeElement(this.statusFilterLabel.withText(stateFilterLabel));
   }
 
   /**
@@ -158,6 +173,27 @@ export class SupermindConsolePage {
       I.waitForResponse(
         resp =>
           resp.url().includes('/api/v3/supermind') && resp.status() === 200,
+        30
+      ),
+    ]);
+  }
+
+  /**
+   * Click to switch state filter.
+   * @param { string } stateFilterLabel - filter label for states, e.g. 'Pending', 'Accepted'.
+   * @param { string } stateValue - value behind filter, "1", "2", "3".
+   * @returns { Promise<void> }
+   */
+  public async switchStatusFilter(
+    stateFilterLabel: string,
+    stateValue: string
+  ): Promise<void> {
+    I.click(this.statusFilterTrigger);
+    await Promise.all([
+      I.click(this.statusFilterLabel.withText(stateFilterLabel)),
+      I.waitForResponse(
+        resp =>
+          resp.url().includes(`&status=${stateValue}`) && resp.status() === 200,
         30
       ),
     ]);
