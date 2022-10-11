@@ -36,7 +36,7 @@ export class SettingsV2EmailNotificationsV3Component
     minds_tips: 'Tips on how to use Minds',
     boost_completed: 'My boost has been completed',
     unread_notifications: 'I have unread notifications',
-    wire_received: 'I receive a wire',
+    wire_received: 'I receive a wire or Supermind offer',
     channel_improvement_tips: 'Tips on how to improve my channel',
     new_channels: 'New things to subscribe to',
     posts_missed_since_login: 'Things I’ve missed since my last login',
