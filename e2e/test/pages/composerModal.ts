@@ -1,4 +1,9 @@
+import { Storage } from '../helpers/storage';
+import generateRandomId from '../support/utilities';
+
 const { I } = inject();
+const storage: Storage = Storage.getInstance();
+
 export class ComposerModal {
   public modalElementTag: string = 'm-composer__modal';
   private textAreaTitleSelector: string = `${this.modalElementTag} .m-composerTextarea__title`;
@@ -182,5 +187,39 @@ export class ComposerModal {
     return locate(
       `${this.modalElementTag} m-composer__popup m-composer__supermind`
     );
+  }
+
+  /**
+   * Create a new newsfeed post
+   * @param { string } textStorageKey - store text under this key.
+   * @returns { void }
+   */
+  public createNewsfeedPost(textStorageKey: string = ''): void {
+    const postContent = generateRandomId();
+    I.seeElement('m-composer .m-composer__trigger');
+    I.click('m-composer .m-composer__trigger');
+    I.fillField(
+      'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
+      postContent
+    );
+    I.seeElement(
+      'm-composer__modal > m-composer__base [data-cy="post-button"] button'
+    );
+    I.click(
+      'm-composer__modal > m-composer__base [data-cy="post-button"] button'
+    );
+    I.waitForElement(
+      locate('button')
+        .withText('trending_up')
+        .inside(
+          locate('m-activity').withDescendant(
+            locate('span').withText(postContent)
+          )
+        ),
+      10
+    );
+    if (textStorageKey) {
+      storage.add(textStorageKey, postContent);
+    }
   }
 }

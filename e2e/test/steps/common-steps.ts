@@ -8,7 +8,6 @@ namespace CommonSteps {
   const { I, loginPage } = inject();
 
   const commonPage = new CommonPage();
-  const newsfeedPage = new NewsfeedPage();
   const helpers = new Helpers();
   const registerPage = new RegisterPage();
   const confirmationModalComponent = new ConfirmationModalComponent();
@@ -98,10 +97,6 @@ namespace CommonSteps {
 
   Given('I am logged out', (): void => {
     I.clearCookie('minds_sess');
-  });
-
-  Given('I am on the newsfeed', () => {
-    I.amOnPage(newsfeedPage.newsfeedURI);
   });
 
   Given('I am on the {string} channel page', username => {

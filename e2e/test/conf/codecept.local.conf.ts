@@ -6,7 +6,7 @@ exports.config = {
   helpers: {
     Playwright: {
       url: process.env.E2E_DOMAIN || 'https://minds.com',
-      show: false,
+      show: true,
       video: true,
       browser: 'chromium',
       retries: 2,
@@ -30,6 +30,8 @@ exports.config = {
     supermindConsolePage: '../pages/supermindConsolePage.ts',
     supermindSettingsPage: '../pages/supermindSettingsPage.ts',
     tokenMarketingPage: '../pages/tokenMarketingPage.ts',
+    channelPage: '../pages/channelPage.ts',
+    activityFeedPage: '../pages/activityFeedPage.ts',
   },
   mocha: {},
   bootstrap: null,

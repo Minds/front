@@ -11,6 +11,7 @@ type rewardsMarketingPage = typeof import('../pages/rewardsMarketingPage');
 type searchPage = typeof import('../pages/searchPage');
 type settingsPage = typeof import('../pages/settingsPage');
 type tokenMarketingPage = typeof import('../pages/tokenMarketingPage');
+type channelPage = typeof import('../pages/channelPage');
 
 declare namespace CodeceptJS {
   interface SupportObject {
@@ -26,6 +27,7 @@ declare namespace CodeceptJS {
     searchPage: searchPage;
     settingsPage: settingsPage;
     tokenMarketingPage: tokenMarketingPage;
+    channelPage: channelPage;
     current: any;
   }
   interface Methods extends Playwright {}
