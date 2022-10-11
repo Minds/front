@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
-import { SupermindConsoleListType } from '../../supermind.types';
+import {
+  SupermindConsoleGetParams,
+  SupermindConsoleListType,
+  SupermindState,
+} from '../../supermind.types';
 
 /**
  * Supermind console service for loading of inbox / outbox.
@@ -23,22 +27,30 @@ export class SupermindConsoleService {
 
   /**
    * Get appropriate Supermind list from API based on list type.
-   * @param { number } offset - offset to request from API.
    * @param { number } limit - limit to request from API.
+   * @param { number } offset - offset to request from API.
+   * @param { SupermindState } status - status filter.
    * @returns { Observable<ApiResponse> } response from API.
    */
   public getList$(
     limit: number = 12,
-    offset: number = 0
+    offset: number = 0,
+    status: SupermindState = null
   ): Observable<ApiResponse> {
     return this.listType$.pipe(
       take(1),
       switchMap((listType: any) => {
         let endpoint = `api/v3/supermind/${listType}`;
 
-        let params = !this.isNumericListType(listType)
-          ? { limit: limit, offset: offset }
-          : {};
+        let params: SupermindConsoleGetParams = {};
+
+        if (!this.isNumericListType(listType)) {
+          params = { limit: limit, offset: offset };
+
+          if (status) {
+            params.status = status;
+          }
+        }
 
         return this.api.get(endpoint, params);
       }),

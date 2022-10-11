@@ -28,6 +28,13 @@ namespace SupermindConsoleSteps {
     await supermindConsolePage.switchTabs(tab as SupermindConsoleTab);
   });
 
+  When(
+    'I click to change Supermind Console status filter to {string} with value {string}',
+    (filterText: string, filterValue: string) => {
+      supermindConsolePage.switchStatusFilter(filterText, filterValue);
+    }
+  );
+
   Then(
     'I should see my Supermind Console {string}',
     (context: string): void => {
@@ -138,6 +145,13 @@ namespace SupermindConsoleSteps {
     'on clicking the view reply button I am sent to the single entity page',
     () => {
       supermindConsolePage.clickViewReply();
+    }
+  );
+
+  Then(
+    'I should see my Supermind Console status filter says {string}',
+    (filterText: string) => {
+      supermindConsolePage.hasStatusFilterState(filterText);
     }
   );
 
