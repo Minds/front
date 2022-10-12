@@ -1,0 +1,171 @@
+<div
+  class="m-supermindOnboarding"
+  data-ref="supermind-onboarding-modal"
+  [ngClass]="{
+    'supermind-onboarding-modal--request': contentType === 'request',
+    'supermind-onboarding-modal--reply': contentType === 'reply'
+  }"
+>
+  <div class="m-supermindOnboarding__header">Supermind</div>
+  <!-- ---------------------------------------------------------- -->
+  <!-- --REQUEST------------------------------------------------- -->
+  <!-- ---------------------------------------------------------- -->
+  <ng-container *ngIf="contentType === 'request'">
+    <div
+      class="m-supermindOnboarding__subheader"
+      i18n="@@SUPERMIND__ONBOARDING__REQUEST__SUBHEADER"
+    >
+      Get replies from your favorite creators by sending them paid offers.
+    </div>
+    <div class="m-supermindOnboarding__body">
+      <div class="m-supermindOnboarding__item">
+        <i class="m-supermindOnboardingItem__icon material-icons"
+          >attach_money</i
+        >
+        <div class="m-supermindOnboardingItem__textWrapper">
+          <p
+            class="m-supermindOnboardingItemText__header"
+            i18n="@@SUPERMIND__ONBOARDING__REQUEST__SET_AMOUNT"
+          >
+            Set an offer amount
+          </p>
+          <p
+            class="m-supermindOnboardingItemText__body"
+            i18n="@@SUPERMIND__ONBOARDING__REQUEST__OFFER_TYPES"
+          >
+            Send an offer of cash or tokens. The creator earns the offer amount
+            when they reply.
+          </p>
+        </div>
+      </div>
+      <div class="m-supermindOnboarding__item">
+        <i class="m-supermindOnboardingItem__icon material-icons">sms</i>
+        <div class="m-supermindOnboardingItem__textWrapper">
+          <p
+            class="m-supermindOnboardingItemText__header"
+            i18n="@@SUPERMIND__ONBOARDING__REQUEST__ASK"
+          >
+            Ask a question
+          </p>
+          <p
+            class="m-supermindOnboardingItemText__body"
+            i18n="@@SUPERMIND__ONBOARDING__REQUEST__WRITE_SOMETHING"
+          >
+            Write something for the creator to respond to. It’ll be posted to
+            your public timeline.
+          </p>
+        </div>
+      </div>
+      <div class="m-supermindOnboarding__item">
+        <i class="m-supermindOnboardingItem__icon material-icons">date_range</i>
+        <div class="m-supermindOnboardingItem__textWrapper">
+          <p
+            class="m-supermindOnboardingItemText__header"
+            i18n="@@SUPERMIND__ONBOARDING__REQUEST__GET_A_REPLY"
+          >
+            Get a reply
+          </p>
+          <p
+            class="m-supermindOnboardingItemText__body"
+            i18n="@@SUPERMIND__ONBOARDING__REQUEST__TIMELINE"
+          >
+            Creators have 7 days to reply to your post. Declined offers are
+            refunded to you.
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- ---------------------------------------------------------- -->
+  <!-- --REPLY--------------------------------------------------- -->
+  <!-- ---------------------------------------------------------- -->
+  <ng-container *ngIf="contentType === 'reply'">
+    <div
+      class="m-supermindOnboarding__subheader"
+      i18n="@@SUPERMIND__ONBOARDING__REPLY__SUBHEADER"
+    >
+      Get paid to reply to your fans.
+    </div>
+    <div class="m-supermindOnboarding__body">
+      <div class="m-supermindOnboarding__item">
+        <i class="m-supermindOnboardingItem__icon material-icons"
+          >attach_money</i
+        >
+        <div class="m-supermindOnboardingItem__textWrapper">
+          <p
+            class="m-supermindOnboardingItemText__header"
+            i18n="@@SUPERMIND__ONBOARDING__REPLY__HOW_TO_EARN"
+          >
+            How to earn
+          </p>
+          <p class="m-supermindOnboardingItemText__body">
+            <ng-container
+              i18n="@@SUPERMIND__ONBOARDING__REPLY__FANS_SEND_OFFERS"
+              >Fans send offers of cash and tokens, which you earn by simply
+              replying. Minds collects just a 10% platform fee (vs. 30% fees on
+              other platforms), and our payment processor charges a small fee
+              per transaction.
+            </ng-container>
+            <span class="m-supermindOnboardingItem__launchLink"
+              ><a (click)="onClickTermsLink($event)"
+                ><span i18n="@@SUPERMIND__ONBOARDING__REPLY__TERMS"
+                  >See terms & conditions</span
+                ></a
+              >.<i (click)="onClickTermsLink($event)" class="material-icons"
+                >launch</i
+              ></span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="m-supermindOnboarding__item">
+        <i class="m-supermindOnboardingItem__icon material-icons">sms</i>
+        <div class="m-supermindOnboardingItem__textWrapper">
+          <p
+            class="m-supermindOnboardingItemText__header"
+            i18n="@@SUPERMIND__ONBOARDING__REPLY__ENGAGE_YOUR_AUDIENCE"
+          >
+            Engage your audience
+          </p>
+          <p
+            class="m-supermindOnboardingItemText__body"
+            i18n="@@SUPERMIND__ONBOARDING__REPLY__PUBLIC_REPLIES"
+          >
+            Your replies are public for all of your followers, so everyone
+            benefits from the interaction.
+          </p>
+        </div>
+      </div>
+      <div class="m-supermindOnboarding__item">
+        <i class="m-supermindOnboardingItem__icon material-icons">delete</i>
+        <div class="m-supermindOnboardingItem__textWrapper">
+          <p
+            class="m-supermindOnboardingItemText__header"
+            i18n="@@SUPERMIND__ONBOARDING__REPLY__FANS_SEND_LIMITATIONS"
+          >
+            Limitations
+          </p>
+          <p
+            class="m-supermindOnboardingItemText__body"
+            i18n="@@SUPERMIND__ONBOARDING__REPLY__NO_DELETE"
+          >
+            Once you accept an offer, your reply can’t be deleted. And NSFW
+            content is currently not supported with Supermind.
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="m-supermindOnboarding__toolbar">
+    <m-button
+      data-ref="supermind-onboarding-modal-continue-button"
+      (onAction)="onClickContinue($event)"
+      [solid]="true"
+      color="blue"
+      i18n="@@COMMON__CONTINUE"
+      >Continue</m-button
+    >
+  </div>
+</div>
+
+<m-modalCloseButton></m-modalCloseButton>

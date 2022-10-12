@@ -10,6 +10,7 @@ import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../modules/blockchain/earn/earn-modal.service';
 import { ToasterService } from './services/toaster.service';
+import { SupermindOnboardingModalService } from '../modules/supermind/onboarding-modal/onboarding-modal.service';
 
 @NgModule({
   imports: [Web3ModalModule],
@@ -20,6 +21,7 @@ import { ToasterService } from './services/toaster.service';
     UniswapModalService,
     AuthModalService,
     EarnModalService,
+    SupermindOnboardingModalService,
     {
       provide: Web3ModalService,
       useFactory: () => {
