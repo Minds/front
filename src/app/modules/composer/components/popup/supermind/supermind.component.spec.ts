@@ -6,7 +6,12 @@ import { CommonModule } from '../../../../../common/common.module';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { MockComponent, MockService } from '../../../../../utils/mock';
-import { ComposerService } from '../../../services/composer.service';
+import { PaymentsModule } from '../../../../payments/payments.module';
+import { SupermindOnboardingModalService } from '../../../../supermind/onboarding-modal/onboarding-modal.service';
+import {
+  ComposerService,
+  ComposerSize,
+} from '../../../services/composer.service';
 import { PopupService } from '../popup.service';
 import { ComposerSupermindComponent } from '../supermind/supermind.component';
 import { EntityResolverService } from '../../../../../common/services/entity-resolver.service';
@@ -78,6 +83,10 @@ describe('Composer Supermind Popup', () => {
           {
             provide: ConfigsService,
             useValue: MockService(ConfigsService),
+          },
+          {
+            provide: SupermindOnboardingModalService,
+            useValue: MockService(SupermindOnboardingModalService),
           },
           //   {
           //     provide: Session,
