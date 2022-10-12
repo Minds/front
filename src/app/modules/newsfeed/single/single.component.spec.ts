@@ -1,17 +1,10 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
-import { Component, DebugElement, Input } from '@angular/core';
-
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, Input } from '@angular/core';
 import { NewsfeedSingleComponent } from './single.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Client } from '../../../services/api/client';
-import { By, Meta } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
@@ -21,19 +14,16 @@ import { Upload } from '../../../services/api/upload';
 import { ContextService } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
 import { of, BehaviorSubject } from 'rxjs';
-import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { MockService, MockComponent, MockDirective } from '../../../utils/mock';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { SocialIcons } from '../../../common/components/social-icons/social-icons';
-import { ActivityComponent } from '../activity/activity.component';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { LoadingSpinnerComponent } from '../../../common/components/loading-spinner/loading-spinner.component';
-import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
@@ -48,10 +38,6 @@ class MindsActivityMock {
   @Input() editing: boolean;
   @Input() autoplayVideo: boolean;
 }
-
-const routerMock = new (function() {
-  this.navigate = jasmine.createSpy('navigate').and.stub();
-})();
 
 describe('NewsfeedSingleComponent', () => {
   let comp: NewsfeedSingleComponent;
@@ -83,6 +69,10 @@ describe('NewsfeedSingleComponent', () => {
           MockComponent({
             selector: 'm-discovery__sidebarTags',
             inputs: ['entityGuid'],
+          }),
+          MockDirective({
+            selector: 'ng-container',
+            inputs: ['m-clientMeta'],
           }),
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
@@ -223,5 +213,163 @@ describe('NewsfeedSingleComponent', () => {
 
     socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
     expect(socialIcons).toBeNull();
+  });
+
+  it('should update meta for activity', () => {
+    (comp as any).metaService.setTitle.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setDescription.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setOgImage.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setCanonicalUrl.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setRobots.and.returnValue(
+      (comp as any).metaService
+    );
+
+    const title = 'title';
+    const message = 'message';
+    const blurb = 'blurb';
+    const thumbnailSrc = 'thumbnailSrc';
+    const guid = '123';
+    const thumbsUpCount = 1;
+    const ownerUsername = 'ownerUsername';
+    const subtype = 'activity';
+
+    comp.activity = {
+      guid: guid,
+      title: title,
+      message: message,
+      ownerObj: {
+        username: ownerUsername,
+      },
+      nsfw: [],
+      subtype: subtype,
+      custom_type: 'customType',
+      content_type: 'contentType',
+      thumbnail_src: thumbnailSrc,
+      blurb: blurb,
+      'thumbs:up:count': thumbsUpCount,
+    };
+
+    (comp as any).updateMeta();
+
+    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(title);
+    expect((comp as any).metaService.setDescription).toHaveBeenCalledWith(
+      `${blurb}. Subscribe to @${ownerUsername} on Minds`
+    );
+    expect(
+      (comp as any).metaService.setOgImage
+    ).toHaveBeenCalledWith(thumbnailSrc, { width: 2000, height: 1000 });
+    expect((comp as any).metaService.setCanonicalUrl).toHaveBeenCalledWith(
+      `/newsfeed/${guid}`
+    );
+    expect((comp as any).metaService.setRobots).toHaveBeenCalledWith('noindex');
+  });
+
+  it('should update meta for a quote post', () => {
+    (comp as any).metaService.setTitle.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setDescription.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setOgImage.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setCanonicalUrl.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setRobots.and.returnValue(
+      (comp as any).metaService
+    );
+
+    const title = 'title';
+    const message = 'message';
+    const blurb = 'blurb';
+    const thumbnailSrc = 'thumbnailSrc';
+    const guid = '123';
+    const thumbsUpCount = 1;
+    const ownerUsername = 'ownerUsername';
+    const subtype = 'activity';
+
+    const remindTitle = 'remindTitle';
+    const remindMessage = 'remindMessage';
+    const remindBlurb = 'remindBlurb';
+    const remindThumbnailSrc = 'remindThumbnailSrc';
+    const remindGuid = '234';
+    const remindThumbsUpCount = 2;
+    const remindOwnerUsername = 'remindOwnerUsername';
+    const remindSubtype = 'remindActivity';
+
+    comp.activity = {
+      guid: guid,
+      title: title,
+      message: message,
+      ownerObj: {
+        username: ownerUsername,
+      },
+      nsfw: [],
+      subtype: subtype,
+      custom_type: 'customType',
+      content_type: 'contentType',
+      thumbnail_src: thumbnailSrc,
+      blurb: blurb,
+      'thumbs:up:count': thumbsUpCount,
+      remind_object: {
+        guid: remindGuid,
+        title: remindTitle,
+        message: remindMessage,
+        ownerObj: {
+          username: remindOwnerUsername,
+        },
+        nsfw: [],
+        subtype: remindSubtype,
+        custom_type: 'customType',
+        content_type: 'contentType',
+        thumbnail_src: remindThumbnailSrc,
+        blurb: remindBlurb,
+        'thumbs:up:count': remindThumbsUpCount,
+      },
+    };
+
+    (comp as any).updateMeta();
+
+    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(title);
+    expect((comp as any).metaService.setTitle).not.toHaveBeenCalledWith(
+      remindTitle
+    );
+
+    expect((comp as any).metaService.setDescription).toHaveBeenCalledWith(
+      `${blurb}. Subscribe to @${ownerUsername} on Minds`
+    );
+    expect((comp as any).metaService.setDescription).not.toHaveBeenCalledWith(
+      `${remindBlurb}. Subscribe to @${remindOwnerUsername} on Minds`
+    );
+
+    expect(
+      (comp as any).metaService.setOgImage
+    ).toHaveBeenCalledWith(thumbnailSrc, { width: 2000, height: 1000 });
+    expect((comp as any).metaService.setOgImage).not.toHaveBeenCalledWith(
+      remindThumbnailSrc,
+      {
+        width: 2000,
+        height: 1000,
+      }
+    );
+
+    expect((comp as any).metaService.setCanonicalUrl).toHaveBeenCalledWith(
+      `/newsfeed/${guid}`
+    );
+    expect((comp as any).metaService.setCanonicalUrl).not.toHaveBeenCalledWith(
+      `/newsfeed/${remindGuid}`
+    );
+
+    expect((comp as any).metaService.setRobots).toHaveBeenCalledWith('noindex');
   });
 });
