@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
+import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleService } from './services/console.service';
 
@@ -29,7 +30,8 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private service: SupermindConsoleService,
-    private supermindExperiment: SupermindExperimentService
+    private supermindExperiment: SupermindExperimentService,
+    private supermindOnboardingModal: SupermindOnboardingModalService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +43,15 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
     // on route change, set list type.
     this.routeSubscription = this.route.firstChild.url.subscribe(segments => {
       const param: string = segments[0].path;
+
+      if (param === 'inbox') {
+        // Launch onboarding modal (if user hasn't seen it yet)
+        this.supermindOnboardingModal.setContentType('reply');
+        if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
+          this.openSupermindOnboardingModal();
+        }
+      }
+
       if (
         param === 'inbox' ||
         param === 'outbox' ||
@@ -74,5 +85,9 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
    */
   public onBackClick(): void {
     this.router.navigate(['/supermind/inbox']);
+  }
+
+  async openSupermindOnboardingModal() {
+    await this.supermindOnboardingModal.open();
   }
 }

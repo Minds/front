@@ -34,6 +34,31 @@ namespace CommonSteps {
   });
 
   /**
+   * Note: this requires that the modal is using m-modalCloseButton
+   */
+  Given(
+    'I close the {string} modal',
+    async (modalSelector: string): Promise<void> => {
+      const modal = locate(modalSelector);
+      const modalVisible = await I.grabNumberOfVisibleElements(modal);
+
+      // We only want to close the modal if it exists
+      if (modalVisible) {
+        const closeButton = locate('[data-ref=modal-close-button]');
+        const closeButtonVisible = await I.grabNumberOfVisibleElements(
+          closeButton
+        );
+
+        if (closeButtonVisible) {
+          const modalCloseButton = closeButton.inside(modal);
+          I.click(modalCloseButton);
+          return;
+        }
+      }
+    }
+  );
+
+  /**
    * Log in with standard test user - will not re-log in if cookie is present.
    * Is not not meant to switch users.
    * @return { Promise<void> }

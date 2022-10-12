@@ -1,0 +1,75 @@
+<m-dropdownMenu [menu]="typeMenu">
+  <div class="m-supermindConsole__filterTrigger">
+    <span
+      class="m-supermindConsole__filterStatusLabel"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__STATUS_LABEL"
+      >Status:
+    </span>
+    <ng-container
+      [ngTemplateOutlet]="statusTextLabel"
+      [ngTemplateOutletContext]="{ statusLabel: statusFilterValue$ | async }"
+    ></ng-container>
+    <span>▾</span>
+  </div>
+</m-dropdownMenu>
+
+<ng-template #typeMenu>
+  <ul>
+    <m-dropdownMenu__item
+      *ngFor="let typeValue of statusFilterTypes"
+      (click)="onStatusFilterChange(typeValue)"
+      selectable="true"
+      [selected]="(statusFilterValue$ | async) === typeValue"
+    >
+      <ng-container
+        [ngTemplateOutlet]="statusTextLabel"
+        [ngTemplateOutletContext]="{ statusLabel: typeValue }"
+      ></ng-container>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>
+
+<ng-template #statusTextLabel let-statusLabel="statusLabel">
+  <span class="m-supermindConsole__filterLabel" [ngSwitch]="statusLabel">
+    <ng-container
+      *ngSwitchCase="'all'"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__ALL_LABEL"
+      >All</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'pending'"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__PENDING_LABEL"
+      >Pending</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'accepted'"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__ACCEPTED_LABEL"
+      >Accepted</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'revoked'"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__REVOKED_LABEL"
+      >Revoked</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'rejected'"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__DECLINED_LABEL"
+      >Declined</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'failed'"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__FAILED_LABEL"
+      >Failed</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'failed_payment'"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__FAILED_PAYMENT_LABEL"
+      >Failed Payment</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'expired'"
+      i18n="@@SUPERMIND_CONSOLE__FILTER_BAR__EXPIRED_LABEL"
+      >Expired</ng-container
+    >
+  </span>
+</ng-template>
