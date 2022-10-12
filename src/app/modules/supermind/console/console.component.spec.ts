@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
+import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleComponent } from './console.component';
 import { SupermindConsoleService } from './services/console.service';
@@ -69,6 +70,10 @@ describe('SupermindConsoleComponent', () => {
           {
             provide: SupermindExperimentService,
             useValue: MockService(SupermindExperimentService),
+          },
+          {
+            provide: SupermindOnboardingModalService,
+            useValue: MockService(SupermindOnboardingModalService),
           },
         ],
       }).compileComponents();
