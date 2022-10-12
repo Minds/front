@@ -63,6 +63,15 @@ Feature: Supermind Console
     When I click the prompt to add my bank information
     Then I should see "/wallet/cash/settings" in current URL
 
+  # TODO - enable this once new user email verification works
+  # Scenario: onboarding when going to the supermind console inbox for the first time
+  #   Given I create a new user
+  #   When I navigate via sidebar to the supermind console
+  #   And I see the supermind reply onboarding modal
+  #   And I click the action button in the Supermind onboarding modal
+  #   Then I should see my Supermind Console "inbox"
+  #   And I clear my cookies
+
   Scenario: A supermind is created and declined
     Given I log in as "supermind_sender"
     And I have clicked on the sidebar composer button

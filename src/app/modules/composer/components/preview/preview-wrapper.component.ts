@@ -2,7 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   ComposerService,
   DEFAULT_RICH_EMBED_VALUE,
@@ -24,16 +27,26 @@ import { UploaderService } from '../../services/uploader.service';
   templateUrl: 'preview-wrapper.component.html',
   styleUrls: ['./preview-wrapper.component.ng.scss'],
 })
-export class PreviewWrapperComponent {
+export class PreviewWrapperComponent implements OnInit, OnDestroy {
   /**
    * The attachment preview metadata subject from the service
    */
   attachmentPreviews$ = this.service.attachmentPreviews$;
 
   /**
+   * The attachment preview snapshot data
+   */
+  attachmentPreviews = [];
+
+  /**
    * The rich embed preview metadata subject from the service
    */
   richEmbedPreview$ = this.service.richEmbedPreview$;
+
+  /**
+   * The rich embed snapshot data
+   */
+  richEmbedPreview = null;
 
   /**
    * The extracted URL from the message
@@ -56,6 +69,11 @@ export class PreviewWrapperComponent {
   isEditing$ = this.service.isEditing$;
 
   /**
+   * Subscriptions for creating the snapshots
+   */
+  subscriptions: Subscription[];
+
+  /**
    * Constructor.
    * @param service
    * @param cd
@@ -65,6 +83,25 @@ export class PreviewWrapperComponent {
     protected uploaderSevice: UploaderService,
     protected cd: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    this.subscriptions = [
+      this.attachmentPreviews$.subscribe(attachmentPreviews => {
+        this.attachmentPreviews = attachmentPreviews;
+        this.detectChanges();
+      }),
+      this.richEmbedPreview$.subscribe(richEmbedPreview => {
+        this.richEmbedPreview = richEmbedPreview;
+        this.detectChanges();
+      }),
+    ];
+  }
+
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 
   /**
    * Sets the portrait mode

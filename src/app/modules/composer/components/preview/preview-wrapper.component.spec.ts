@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Subject } from 'rxjs';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import fileMock from '../../../../mocks/dom/file.mock';
 import { MockComponent, MockService } from '../../../../utils/mock';
@@ -12,6 +13,12 @@ describe('Composer Preview', () => {
   const composerServiceMock: any = MockService(ComposerService, {
     removeAttachment(file: File) {
       return true;
+    },
+    //
+    has: ['attachmentPreviews$', 'richEmbedPreview$'],
+    props: {
+      attachmentPreviews$: { get: () => new Subject() },
+      richEmbedPreview$: { get: () => new Subject() },
     },
   });
 

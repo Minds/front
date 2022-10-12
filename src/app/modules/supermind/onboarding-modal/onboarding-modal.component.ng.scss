@@ -1,0 +1,127 @@
+@import 'defaults.scss';
+
+:host {
+  $horizontalPadding: $spacing10;
+  $horizontalPadding--mobile: $spacing5;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+
+  .m-supermindOnboarding__header,
+  .m-supermindOnboarding__subheader,
+  .m-supermindOnboarding__body {
+    padding-left: $horizontalPadding;
+    padding-right: $horizontalPadding;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $horizontalPadding--mobile;
+      padding-right: $horizontalPadding--mobile;
+    }
+  }
+
+  .m-supermindOnboarding__header {
+    @include heading1Bold;
+    padding-top: $spacing10;
+    padding-bottom: $spacing10;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-top: $spacing6;
+      padding-bottom: $spacing6;
+    }
+  }
+
+  .m-supermindOnboarding__subheader {
+    @include heading4Bold;
+  }
+
+  .m-supermindOnboarding__body {
+    padding-top: $spacing6;
+    padding-bottom: $spacing10;
+  }
+
+  .m-supermindOnboarding__toolbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: $spacing8 $horizontalPadding;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $horizontalPadding--mobile;
+      padding-right: $horizontalPadding--mobile;
+    }
+  }
+
+  //------------------------------------------
+
+  .m-supermindOnboarding__item {
+    display: flex;
+    flex-direction: row;
+
+    &:not(:last-child) {
+      padding-bottom: $spacing4;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .m-supermindOnboardingItem__icon {
+      font-size: 20px;
+      padding-right: $spacing4;
+      padding-top: 2px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-supermindOnboardingItem__textWrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .m-supermindOnboardingItemText__header {
+      @include body1Bold;
+      padding-bottom: $spacing2;
+    }
+
+    .m-supermindOnboardingItemText__body {
+      @include body2Regular;
+      line-height: 20px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      .m-supermindOnboardingItem__launchLink {
+        display: inline-block;
+        cursor: pointer;
+
+        &:hover {
+          & a {
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+        }
+
+        a {
+          text-decoration: underline;
+          font-weight: 400;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+        i {
+          font-size: 18px;
+          vertical-align: bottom;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+  }
+}

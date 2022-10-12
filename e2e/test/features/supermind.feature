@@ -14,6 +14,19 @@ Feature: supermind
     And I click the supermind creator save button
     Then I see the supermind is in progress
 
+  # TODO - enable this once new user email verification works
+  # Scenario: onboarding when configuring a supermind for the first time
+  #   Given I create a new user
+  #   And I close the "m-multiFactorAuth" modal
+  #   And I close the "m-contentSettings" modal
+  #   And I am on the newsfeed
+  #   And I have clicked on the sidebar composer button
+  #   When I click the supermind icon on the composer toolbar
+  #   And I see the supermind request onboarding modal
+  #   And I click the action button in the Supermind onboarding modal
+  #   Then I should see the supermind popout screen
+  #   And I clear my cookies
+
   Scenario: clear a configured supermind
     Given I am logged in
     And I am on the newsfeed
