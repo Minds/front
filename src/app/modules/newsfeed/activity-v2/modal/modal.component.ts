@@ -183,8 +183,10 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
             // Fix browser history so back button doesn't go to media page
             this.service.returnToSourceUrl();
 
-            // Go to the intended destination
-            this.router.navigate([event.url]);
+            // Go to the intended destination. We use `navigateByUrl` rather than `navigate`
+            // because the router event CAN pass through a URL with a query string, which
+            // `navigate` will escape.
+            this.router.navigateByUrl(event.url);
 
             this.service.dismiss();
           }
