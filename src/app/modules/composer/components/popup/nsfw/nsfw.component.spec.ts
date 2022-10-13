@@ -21,6 +21,7 @@ describe('Composer NSFW Component', () => {
       payment_type: 1,
     },
     terms_agreed: true,
+    refund_policy_agreed: true,
   };
 
   const supermindReplyMock = {

@@ -32,9 +32,17 @@
       }
     }
 
-    ::ng-deep m-forminput__checkbox .m-formInput__checkbox {
-      @include m-theme() {
-        color: themed($m-textColor--primary);
+    .m-composerPopup__checkbox {
+      &:not(:first-child) {
+        padding-top: $spacing3;
+      }
+    }
+
+    ::ng-deep m-forminput__checkbox {
+      .m-formInput__checkbox {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
       }
     }
 

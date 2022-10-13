@@ -55,6 +55,7 @@ export type SupermindComposerPayloadType = {
   twitter_required: boolean;
   payment_options: SupermindComposerPaymentOptionsType;
   terms_agreed: boolean;
+  refund_policy_agreed: boolean;
 };
 
 @Injectable()

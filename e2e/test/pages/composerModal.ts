@@ -10,7 +10,9 @@ export class ComposerModal {
     '.m-formInputAutocompleteUserInputUserItem__name';
   private supermindAmountSelector: string = '#offer_tokens';
   private supermindTosCheckboxSelector: string =
-    '.m-composerPopup__checkbox .m-formInputCheckbox__custom';
+    '[data-ref=supermind-terms-checkbox] .m-formInputCheckbox__custom';
+  private supermindRefundPolicyCheckboxSelector: string =
+    '[data-ref=supermind-refund-policy-checkbox] .m-formInputCheckbox__custom';
   private supermindSaveButtonSelector: string =
     '[data-ref=supermind-save-button]';
   private supermindBadgeSelector: string = '.m-paywallBadge__tierName';
@@ -138,6 +140,14 @@ export class ComposerModal {
    */
   public acceptSupermindTerms(): void {
     I.click(this.supermindTosCheckboxSelector);
+  }
+
+  /**
+   * Click accept refund policy checkbox for supermind.
+   * @return { void }
+   */
+  public acceptSupermindRefundPolicy(): void {
+    I.click(this.supermindRefundPolicyCheckboxSelector);
   }
 
   /**

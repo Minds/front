@@ -147,6 +147,11 @@ const DEFAULT_AMOUNT_VALUE: number = 1;
 const DEFAULT_RECURRING_VALUE: boolean = false;
 
 /**
+ * Default refund policy agreed value
+ */
+const DEFAULT_REFUND_POLICY_ACCEPTED_VALUE: boolean = false;
+
+/**
  * Default empty wire rewards
  */
 const DEFAULT_WIRE_REWARDS_VALUE: WireRewards = {
@@ -171,6 +176,7 @@ interface Data {
   tokenType: WireTokenType;
   amount: number;
   recurring: boolean;
+  refundPolicyAgreed: boolean;
   owner: MindsUser | null;
   usdPaymentMethodId: string;
   wallet: Wallet;
@@ -190,6 +196,7 @@ type DataArray = [
   WireUpgradePricingOptions,
   WireTokenType,
   number,
+  boolean,
   boolean,
   MindsUser,
   string,
@@ -285,6 +292,13 @@ export class WireV2Service implements OnDestroy {
   readonly recurring$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     DEFAULT_RECURRING_VALUE
   );
+
+  /**
+   * Refund policy agreed subject
+   */
+  readonly refundPolicyAgreed$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(DEFAULT_REFUND_POLICY_ACCEPTED_VALUE);
 
   /**
    * USD payload subject (card selector payment ID)
@@ -402,6 +416,7 @@ export class WireV2Service implements OnDestroy {
       this.tokenType$,
       this.amount$,
       this.recurring$,
+      this.refundPolicyAgreed$,
       this.owner$.pipe(
         distinctUntilChanged(),
         tap(owner => {
@@ -429,6 +444,7 @@ export class WireV2Service implements OnDestroy {
           tokenType,
           amount,
           recurring,
+          refundPolicyAgreed,
           owner,
           usdPaymentMethodId,
           wallet,
@@ -443,6 +459,7 @@ export class WireV2Service implements OnDestroy {
           tokenType,
           amount,
           recurring,
+          refundPolicyAgreed,
           owner,
           usdPaymentMethodId,
           wallet,
@@ -727,6 +744,15 @@ export class WireV2Service implements OnDestroy {
   }
 
   /**
+   * Sets the refund policy agreed flag
+   * @param refundPolicyAgreed
+   */
+  setRefundPolicyAgreed(agreed: boolean): WireV2Service {
+    this.refundPolicyAgreed$.next(agreed);
+    return this;
+  }
+
+  /**
    * Sets the "In Progress" flag
    * @param inProgress
    */
@@ -753,6 +779,7 @@ export class WireV2Service implements OnDestroy {
     this.setTokenType(DEFAULT_TOKEN_TYPE_VALUE);
     this.setAmount(DEFAULT_AMOUNT_VALUE);
     this.setRecurring(DEFAULT_RECURRING_VALUE);
+    this.setRefundPolicyAgreed(DEFAULT_REFUND_POLICY_ACCEPTED_VALUE);
 
     // State
     this.setInProgress(false);
@@ -805,6 +832,10 @@ export class WireV2Service implements OnDestroy {
 
     if (data.amount <= 0) {
       return invalid('Amount should be greater than zero', false);
+    }
+
+    if (!this.refundPolicyAgreed$.getValue()) {
+      return invalid('You must agree to the refund policy');
     }
 
     const username = data.owner ? `@${data.owner.username}` : 'This channel';
