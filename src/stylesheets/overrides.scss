@@ -66,11 +66,11 @@ a {
   &:hover {
     text-decoration: underline;
   }
-  &:visited {
-    @include m-theme() {
-      color: lighten(themed($m-blue), 30%);
-    }
-  }
+  // &:visited {
+  //   @include m-theme() {
+  //     color: lighten(themed($m-blue), 30%);
+  //   }
+  // }
 }
 
 input[type='number']::-webkit-inner-spin-button,
