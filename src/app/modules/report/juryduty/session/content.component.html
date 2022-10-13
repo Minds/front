@@ -80,6 +80,11 @@
         <minds-card
           [object]="report.entity"
           [flags]="{ hideToolbar: true }"
+          [displayOptions]="{
+            isFeed: true,
+            showComments: true,
+            autoplayVideo: false
+          }"
           class="mdl-card m-border"
         ></minds-card
       ></ng-template>

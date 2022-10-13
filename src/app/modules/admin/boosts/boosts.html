@@ -58,10 +58,7 @@
       <ng-container>There are no more boosts to approve</ng-container>
     </div>
 
-    <div
-      class="mdl-card mdl-shadow--4dp boost"
-      *ngFor="let boost of boosts; let i = index"
-    >
+    <div class="mdl-card" *ngFor="let boost of boosts; let i = index">
       <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
       <m-publisherCard
         [publisher]="boost.entity"
@@ -70,6 +67,11 @@
       ></m-publisherCard>
       <m-activity
         [entity]="boost.entity"
+        [displayOptions]="{
+          isFeed: true,
+          showComments: true,
+          autoplayVideo: false
+        }"
         *ngIf="boost.entity.type == 'activity'
           || boost.entity.subtype === 'blog'
           || boost.entity.subtype == 'image'
