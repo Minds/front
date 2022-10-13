@@ -158,6 +158,7 @@ describe('Composer Supermind Popup', () => {
 
   it('should have enabled save button when conditions form is valid', () => {
     comp.formGroup.controls.termsAccepted.setValue(true);
+    comp.formGroup.controls.refundPolicyAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
     fixture.detectChanges();
     expect(getSaveBtn().disabled).toBeFalse();
@@ -165,6 +166,7 @@ describe('Composer Supermind Popup', () => {
 
   it('should update composer supermindRequest$ service on save', () => {
     comp.formGroup.controls.termsAccepted.setValue(true);
+    comp.formGroup.controls.refundPolicyAccepted.setValue(true);
     comp.formGroup.controls.username.setValue('minds');
     // comp.formGroup.controls.username.markAsTouched({ onlySelf: true });
     fixture.detectChanges();

@@ -61,6 +61,7 @@ namespace SupermindConsoleSteps {
     composerModalPage.addSupermindTarget(process.env.PLAYWRIGHT_USERNAME ?? '');
     composerModalPage.enterSupermindAmount(10);
     composerModalPage.acceptSupermindTerms();
+    composerModalPage.acceptSupermindRefundPolicy();
     composerModalPage.clickSupermindSave();
     confirmationModalComponent.shouldBeVisible(false);
     composerModalPage.clickPost();
@@ -77,6 +78,7 @@ namespace SupermindConsoleSteps {
     composerModalPage.addSupermindTarget(targetUsername);
     composerModalPage.enterSupermindAmount(10);
     composerModalPage.acceptSupermindTerms();
+    composerModalPage.acceptSupermindRefundPolicy();
     composerModalPage.clickSupermindSave();
     composerModalPage.clickPost();
     confirmationModalComponent.shouldBeVisible(true);
@@ -92,6 +94,7 @@ namespace SupermindConsoleSteps {
     composerModalPage.addSupermindTarget(process.env.PLAYWRIGHT_USERNAME ?? '');
     composerModalPage.enterSupermindAmount(10);
     composerModalPage.acceptSupermindTerms();
+    composerModalPage.acceptSupermindRefundPolicy();
     composerModalPage.clickSupermindSave();
 
     composerModalPage.clickNsfwOption();

@@ -1,0 +1,16 @@
+@import 'defaults.scss';
+
+:host {
+  .m-wireCreator__form {
+    padding: 0 50px;
+    margin: 0 0 20px;
+  }
+  .m-wireCreatorForm__field--refundPolicyAgreed {
+    span {
+      @include body2Regular;
+      @include m-theme {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}
