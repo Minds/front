@@ -23,7 +23,7 @@ namespace SupermindSteps {
   });
 
   When('I accept the refund policy', () => {
-    composerModal.acceptSupermindTerms();
+    composerModal.acceptSupermindRefundPolicy();
   });
 
   When('I click the supermind creator save button', () => {
