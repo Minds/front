@@ -197,11 +197,30 @@
       <!-- Terms checkbox     -->
       <!------------------------>
 
-      <div class="m-composerPopup__checkbox">
+      <div
+        class="m-composerPopup__checkbox"
+        data-ref="supermind-terms-checkbox"
+      >
         <m-formInput__checkbox formControlName="termsAccepted">
           <span i18n="@@COMPOSER__SUPERMIND__TERMS__CHECKBOX"
             >I agree to the
             <a routerLink="/p/monetization-terms" target="_blank">Terms</a>
+          </span>
+        </m-formInput__checkbox>
+      </div>
+
+      <!------------------------>
+      <!-- No refunds checkbox -->
+      <!------------------------>
+
+      <div
+        class="m-composerPopup__checkbox"
+        data-ref="supermind-refund-policy-checkbox"
+      >
+        <m-formInput__checkbox formControlName="refundPolicyAccepted">
+          <span i18n="@@COMPOSER__SUPERMIND__REFUND__CHECKBOX"
+            >I understand this transaction is non-refundable once the recipient
+            approves my offer
           </span>
         </m-formInput__checkbox>
       </div>
