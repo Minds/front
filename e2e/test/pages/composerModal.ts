@@ -9,14 +9,15 @@ export class ComposerModal {
   private textAreaTitleSelector: string = `${this.modalElementTag} .m-composerTextarea__title`;
   private textAreaSelector: string = `${this.modalElementTag} [data-cy=composer-textarea]`;
   private postButtonSelector: string = `${this.modalElementTag} [data-cy=post-button]`;
-  private supermindIconSelector: string = `${this.modalElementTag} .m-composerToolbarItem__icon i`;
   private tabSelector: string = '.m-tabs__tab';
   public supermindTargetInputSelector: string = '[placeholder="@username"]';
   private supermindAutoCompleteNameSelector: string =
     '.m-formInputAutocompleteUserInputUserItem__name';
   private supermindAmountSelector: string = '#offer_tokens';
   private supermindTosCheckboxSelector: string =
-    '.m-composerPopup__checkbox .m-formInputCheckbox__custom';
+    '[data-ref=supermind-terms-checkbox] .m-formInputCheckbox__custom';
+  private supermindRefundPolicyCheckboxSelector: string =
+    '[data-ref=supermind-refund-policy-checkbox] .m-formInputCheckbox__custom';
   private supermindSaveButtonSelector: string =
     '[data-ref=supermind-save-button]';
   private supermindBadgeSelector: string = '.m-paywallBadge__tierName';
@@ -27,6 +28,21 @@ export class ComposerModal {
     '.m-composerToolbarAction__disabledOverlay';
   public composerCloseButton: string = '.m-composerPopup__close';
 
+  /**
+   * Toolbar items
+   */
+  get nsfwButton(): string {
+    return `${this.modalElementTag} m-composer__toolbar [data-cy=nsfw-button]`;
+  }
+  get monetizeButton(): string {
+    return `${this.modalElementTag} m-composer__toolbar [data-cy=monetize-button]`;
+  }
+  get supermindButton(): string {
+    return `${this.modalElementTag} m-composer__toolbar [data-ref=supermind-create--button]`;
+  }
+  get postButton(): string {
+    return `${this.modalElementTag} [data-cy=post-button]`;
+  }
   /**
    * The wrapper element for the title input
    */
@@ -93,7 +109,7 @@ export class ComposerModal {
    * @return { void }
    */
   public clickSupermindIcon(): void {
-    I.click(locate(this.supermindIconSelector).withText('tips_and_updates'));
+    I.click(locate(this.supermindButton));
   }
 
   /**
@@ -132,6 +148,14 @@ export class ComposerModal {
   }
 
   /**
+   * Click accept refund policy checkbox for supermind.
+   * @return { void }
+   */
+  public acceptSupermindRefundPolicy(): void {
+    I.click(this.supermindRefundPolicyCheckboxSelector);
+  }
+
+  /**
    * Click Supermind save option.
    * @return { void }
    */
@@ -156,19 +180,17 @@ export class ComposerModal {
   }
 
   /**
-   * Toolbar items
+   * Check whether composer toolbar has or does not have a Supermind icon.
+   * @param { boolean } shouldHave - whether component should have.
+   * @return { void }
    */
-  get nsfwButton(): string {
-    return `${this.modalElementTag} m-composer__toolbar [data-cy=nsfw-button]`;
-  }
-  get monetizeButton(): string {
-    return `${this.modalElementTag} m-composer__toolbar [data-cy=monetize-button]`;
-  }
-  get supermindButton(): string {
-    return `${this.modalElementTag} m-composer__toolbar [data-ref=supermind-create--button]`;
-  }
-  get postButton(): string {
-    return `${this.modalElementTag} [data-cy=post-button]`;
+  public shouldHaveSupermindToolbarIcon(shouldHave: boolean = false): void {
+    const supermindToolbarIcon = locate(this.supermindButton);
+    if (shouldHave) {
+      I.seeElement(supermindToolbarIcon);
+      return;
+    }
+    I.dontSeeElement(supermindToolbarIcon);
   }
 
   /**

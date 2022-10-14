@@ -283,7 +283,10 @@ export class NotificationsV3NotificationComponent
       case 'supermind_created':
         return 'Supermind offer';
       case 'supermind_expiring_soon':
-        return this.notification.from?.name + "'s Supermind offer";
+        return (
+          this.notification.entity?.entity?.ownerObj?.name +
+          "'s Supermind offer"
+        );
     }
     switch (this.notification.entity?.type) {
       case 'comment':

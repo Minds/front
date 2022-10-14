@@ -24,6 +24,7 @@ import {
   SupermindComposerPaymentOptionsType,
 } from './superminds-creation.service';
 import { Subscription } from 'rxjs';
+import { SupermindOnboardingModalService } from '../../../../supermind/onboarding-modal/onboarding-modal.service';
 import {
   EntityResolverService,
   EntityResolverServiceOptions,
@@ -122,6 +123,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   constructor(
     protected service: ComposerService,
     private fb: FormBuilder,
+    private supermindOnboardingModal: SupermindOnboardingModalService,
     private mindsConfig: ConfigsService,
     private entityResolverService: EntityResolverService,
     private changeDetector: ChangeDetectorRef
@@ -142,6 +144,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       offerUsd: [this.CashMin, [this.cashMinAmountValidator()]],
       offerTokens: [this.TokensMin, [this.tokensMinAmountValidator()]],
       termsAccepted: [false, [Validators.requiredTrue]],
+      refundPolicyAccepted: [false, [Validators.requiredTrue]],
       responseType: [
         SUPERMIND_DEFAULT_RESPONSE_TYPE.toString(),
         [Validators.required],
@@ -221,12 +224,24 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           supermindRequest.terms_agreed
         );
 
+        this.formGroup.controls.refundPolicyAccepted.setValue(
+          supermindRequest.refund_policy_agreed
+        );
+
         this.setMinimumPaymentAmountFromUser(supermindRequest.receiver_user);
 
         // Will ensure clear button is displayed
         this.formGroup.markAsDirty();
       }
     );
+
+    /**
+     * Launch onboarding modal (if user hasn't seen it yet)
+     */
+    this.supermindOnboardingModal.setContentType('request');
+    if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
+      this.openSupermindOnboardingModal();
+    }
   }
 
   /**
@@ -277,6 +292,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       twitter_required: false,
       payment_options: paymentOptions,
       terms_agreed: this.formGroup.controls.termsAccepted.value,
+      refund_policy_agreed: this.formGroup.controls.refundPolicyAccepted.value,
     };
 
     this.service.supermindRequest$.next(supermindRequest);
@@ -293,6 +309,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     this.dismissIntent.emit();
   }
 
+  async openSupermindOnboardingModal() {
+    await this.supermindOnboardingModal.open();
+  }
   private setMinimumPaymentAmountFromUser(user: MindsUser | null): void {
     this.cashMin = user?.supermind_settings.min_cash;
     this.tokensMin = user?.supermind_settings.min_offchain_tokens;

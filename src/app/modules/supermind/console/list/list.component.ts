@@ -9,7 +9,11 @@ import {
 } from 'rxjs/operators';
 import { ApiResponse } from '../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { Supermind, SupermindConsoleListType } from '../../supermind.types';
+import {
+  Supermind,
+  SupermindConsoleListType,
+  SupermindState,
+} from '../../supermind.types';
 import { SupermindConsoleService } from '../services/console.service';
 
 /**
@@ -36,10 +40,19 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
   public readonly listType$: BehaviorSubject<SupermindConsoleListType> = this
     .service.listType$;
 
+  /** @var { BehaviorSubject<SupermindState> } statusFilterValue$ - status filter value subject */
+  public readonly statusFilterValue$: BehaviorSubject<
+    SupermindState
+  > = new BehaviorSubject<SupermindState>(null);
+
   /** @var { BehaviorSubject<any[]> } list$ - list subject */
   public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<
     Supermind[]
   >([]);
+
+  /** @var { Observable<boolean> } isSingleSupermindPage$ - true if this is a single supermind page */
+  public readonly isSingleSupermindPage$: Observable<boolean> = this.service
+    .isSingleSupermindPage$;
 
   /** @var { number } requestLimit - number of Superminds to request from API */
   private readonly requestLimit: number = 12;
@@ -49,25 +62,31 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
   }
 
   ngOnInit(): void {
-    this.setupListTypeSubscription();
+    this.setupSubscription();
   }
 
   /**
-   * Init sub to fire on list type change that will load / reload feed.
-   * @return { void }
+   * Init sub to fire on list type or filter change that will load / reload feed.
+   * @returns { void }
    */
-  public setupListTypeSubscription(): void {
+  public setupSubscription(): void {
     this.subscriptions.push(
-      // fires on list type change.
-      this.listType$
+      combineLatest([this.listType$, this.statusFilterValue$])
         .pipe(
           distinctUntilChanged(),
           switchMap(
-            (listType: SupermindConsoleListType): Observable<ApiResponse> => {
+            ([listType, statusFilterValue]: [
+              SupermindConsoleListType,
+              SupermindState
+            ]): Observable<ApiResponse> => {
               this.list$.next([]);
               this.inProgress$.next(true);
               this.moreData$.next(!this.service.isNumericListType(listType));
-              return this.service.getList$(this.requestLimit);
+              return this.service.getList$(
+                this.requestLimit,
+                0,
+                statusFilterValue
+              );
             }
           ),
           tap((list: any) => {
@@ -92,7 +111,11 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
 
     this.subscriptions.push(
       this.service
-        .getList$(this.requestLimit, this.list$.getValue().length ?? null)
+        .getList$(
+          this.requestLimit,
+          this.list$.getValue().length ?? null,
+          this.statusFilterValue$.getValue()
+        )
         .pipe(take(1))
         .subscribe((list: any) => {
           if (list && list.length) {
@@ -104,6 +127,15 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
           this.inProgress$.next(false);
         })
     );
+  }
+
+  /**
+   * Called on status filter change.
+   * @param { SupermindState } statusFilterValue - state of supermind changed to by filter.
+   * @returns { void }
+   */
+  public onStatusFilterChange(statusFilterValue: SupermindState): void {
+    this.statusFilterValue$.next(statusFilterValue);
   }
 
   /**

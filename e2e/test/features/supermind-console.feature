@@ -15,11 +15,62 @@ Feature: Supermind Console
     Then I should see "/supermind/inbox" in current URL
     And I should see my Supermind Console "inbox"
 
+  Scenario: Switching filter to pending
+    Given I am logged in
+    And I am on the Supermind Console "inbox" page
+    When I click to change Supermind Console status filter to "Pending" with value "1"
+    Then I should see my Supermind Console status filter says "Pending"
+
+  Scenario: Switching filter to accepted
+    Given I am logged in
+    And I am on the Supermind Console "inbox" page
+    When I click to change Supermind Console status filter to "Accepted" with value "2"
+    Then I should see my Supermind Console status filter says "Accepted"
+
+  Scenario: Switching filter to revoked
+    Given I am logged in
+    And I am on the Supermind Console "inbox" page
+    When I click to change Supermind Console status filter to "Revoked" with value "3"
+    Then I should see my Supermind Console status filter says "Revoked"
+
+  Scenario: Switching filter to rejected (declined)
+    Given I am logged in
+    And I am on the Supermind Console "inbox" page
+    When I click to change Supermind Console status filter to "Declined" with value "4"
+    Then I should see my Supermind Console status filter says "Declined"
+
+  Scenario: Switching filter to failed payment
+    Given I am logged in
+    And I am on the Supermind Console "inbox" page
+    When I click to change Supermind Console status filter to "Failed Payment" with value "5"
+    Then I should see my Supermind Console status filter says "Failed Payment"
+
+  Scenario: Switching filter to failed
+    Given I am logged in
+    And I am on the Supermind Console "inbox" page
+    When I click to change Supermind Console status filter to "Failed" with value "6"
+    Then I should see my Supermind Console status filter says "Failed"
+  
+  Scenario: Switching filter to expired
+    Given I am logged in
+    And I am on the Supermind Console "inbox" page
+    When I click to change Supermind Console status filter to "Expired" with value "7"
+    Then I should see my Supermind Console status filter says "Expired"
+
   Scenario: Clicking add bank prompt
     Given I am logged in
     And I am on the Supermind Console "inbox" page
     When I click the prompt to add my bank information
     Then I should see "/wallet/cash/settings" in current URL
+
+  # TODO - enable this once new user email verification works
+  # Scenario: onboarding when going to the supermind console inbox for the first time
+  #   Given I create a new user
+  #   When I navigate via sidebar to the supermind console
+  #   And I see the supermind reply onboarding modal
+  #   And I click the action button in the Supermind onboarding modal
+  #   Then I should see my Supermind Console "inbox"
+  #   And I clear my cookies
 
   Scenario: A supermind is created and declined
     Given I log in as "supermind_sender"

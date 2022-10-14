@@ -1,7 +1,7 @@
 Feature: Notification
   As a customer
   I want to be able to generate and receive notifications
-  
+
   # Scenario: I generate a notification when creating a Supermind
   #   Given I log in as "supermind_sender"
   #   And I have clicked on the sidebar composer button

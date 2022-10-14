@@ -5,11 +5,13 @@ import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
 } from '../types/supermind-console.types';
+import { SupermindOnboardingModalComponent } from '../components/supermindOnboardingModalComponent';
 
 namespace SupermindConsoleSteps {
   const supermindConsolePage = new SupermindConsolePage();
   const composerModalPage = new ComposerModal();
   const confirmationModalComponent = new ConfirmationModalComponent();
+  const supermindOnboardingModal = new SupermindOnboardingModalComponent();
 
   Before(() => {});
 
@@ -27,6 +29,13 @@ namespace SupermindConsoleSteps {
   When('I click to change tabs to {string}', async (tab: string) => {
     await supermindConsolePage.switchTabs(tab as SupermindConsoleTab);
   });
+
+  When(
+    'I click to change Supermind Console status filter to {string} with value {string}',
+    (filterText: string, filterValue: string) => {
+      supermindConsolePage.switchStatusFilter(filterText, filterValue);
+    }
+  );
 
   Then(
     'I should see my Supermind Console {string}',
@@ -52,6 +61,7 @@ namespace SupermindConsoleSteps {
     composerModalPage.addSupermindTarget(process.env.PLAYWRIGHT_USERNAME ?? '');
     composerModalPage.enterSupermindAmount(10);
     composerModalPage.acceptSupermindTerms();
+    composerModalPage.acceptSupermindRefundPolicy();
     composerModalPage.clickSupermindSave();
     confirmationModalComponent.shouldBeVisible(false);
     composerModalPage.clickPost();
@@ -68,8 +78,11 @@ namespace SupermindConsoleSteps {
     composerModalPage.addSupermindTarget(targetUsername);
     composerModalPage.enterSupermindAmount(10);
     composerModalPage.acceptSupermindTerms();
+    composerModalPage.acceptSupermindRefundPolicy();
     composerModalPage.clickSupermindSave();
     composerModalPage.clickPost();
+    confirmationModalComponent.shouldBeVisible(true);
+    confirmationModalComponent.clickConfirm();
   });
 
   When('I try to make an NSFW supermind offer', () => {
@@ -81,6 +94,7 @@ namespace SupermindConsoleSteps {
     composerModalPage.addSupermindTarget(process.env.PLAYWRIGHT_USERNAME ?? '');
     composerModalPage.enterSupermindAmount(10);
     composerModalPage.acceptSupermindTerms();
+    composerModalPage.acceptSupermindRefundPolicy();
     composerModalPage.clickSupermindSave();
 
     composerModalPage.clickNsfwOption();
@@ -122,6 +136,16 @@ namespace SupermindConsoleSteps {
     }
   });
 
+  When('I see the supermind reply onboarding modal', () => {
+    supermindOnboardingModal.replyModalShouldBeVisible(true);
+  });
+
+  When('I click the action button in the Supermind onboarding modal', () => {
+    supermindOnboardingModal.clickContinue();
+  });
+
+  //
+
   Then('the latest supermind offer should be {string}', (state: string) => {
     switch (state) {
       case 'declined':
@@ -138,6 +162,13 @@ namespace SupermindConsoleSteps {
     'on clicking the view reply button I am sent to the single entity page',
     () => {
       supermindConsolePage.clickViewReply();
+    }
+  );
+
+  Then(
+    'I should see my Supermind Console status filter says {string}',
+    (filterText: string) => {
+      supermindConsolePage.hasStatusFilterState(filterText);
     }
   );
 

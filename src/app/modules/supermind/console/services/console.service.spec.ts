@@ -1,5 +1,6 @@
 import { of } from 'rxjs';
 import { ApiResponse } from '../../../../common/api/api.service';
+import { SupermindState } from '../../supermind.types';
 import { SupermindConsoleService } from './console.service';
 
 describe('SupermindConsoleService', () => {
@@ -70,6 +71,32 @@ describe('SupermindConsoleService', () => {
     });
   });
 
+  it('should get inbox list with status', (done: DoneFn) => {
+    const response: ApiResponse = {
+      status: 'success',
+      0: [{ guid: 1 }, { guid: 2 }, { guid: 3 }],
+    };
+
+    const offset = 12;
+    const status = SupermindState.REVOKED;
+
+    service.listType$.next('inbox');
+    (service as any).api.get.and.returnValue(of(response));
+
+    service.getList$(12, offset, status).subscribe(list => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        'api/v3/supermind/inbox',
+        {
+          limit: 12,
+          offset: offset,
+          status: status,
+        }
+      );
+      expect(list).toEqual(response);
+      done();
+    });
+  });
+
   it('should get outbox list without offset', (done: DoneFn) => {
     const response: ApiResponse = {
       status: 'success',
@@ -111,6 +138,32 @@ describe('SupermindConsoleService', () => {
         {
           limit: 12,
           offset: offset,
+        }
+      );
+      expect(list).toEqual(response);
+      done();
+    });
+  });
+
+  it('should get outbox list with status', (done: DoneFn) => {
+    const response: ApiResponse = {
+      status: 'success',
+      0: [{ guid: 1 }, { guid: 2 }, { guid: 3 }],
+    };
+
+    const offset = 12;
+    const status = SupermindState.REVOKED;
+
+    service.listType$.next('outbox');
+    (service as any).api.get.and.returnValue(of(response));
+
+    service.getList$(12, offset, status).subscribe(list => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        'api/v3/supermind/outbox',
+        {
+          limit: 12,
+          offset: offset,
+          status: status,
         }
       );
       expect(list).toEqual(response);

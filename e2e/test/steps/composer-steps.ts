@@ -77,7 +77,7 @@ namespace ComposerSteps {
   });
 
   Then('I am able to create the post', () => {
-    // TODOD
+    // TODO
   });
 
   Then('I should see the nsfw popout screen', () => {
