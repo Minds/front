@@ -5,36 +5,23 @@ import { DiscoveryComponent } from './discovery.component';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { CommonModule } from '../../common/common.module';
 import { DiscoveryTrendsComponent } from './trends/trends.component';
-import { DiscoveryTrendsListItemComponent } from './trends/list-item.component';
 import { DiscoveryTrendComponent } from './trends/trend/trend.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoverySearchComponent } from './search/search.component';
 import { DiscoveryTagsComponent } from './tags/tags.component';
-import { DiscoveryTrendsService } from './trends/trends.service';
 import { DiscoverySharedModule } from './discovery-shared.module';
 import { DiscoveryFeedsComponent } from './feeds/feeds.component';
-import { DiscoverySettingsButtonComponent } from './settings-button/settings-button.component';
-import { DiscoveryDisclaimerComponent } from './disclaimer/disclaimer.component';
 import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
-import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prompt.component';
-import { DiscoveryFeedsListComponent } from './feeds/feeds-list.component';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { LanguageModule } from '../language/language.module';
-import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
-import { DiscoveryPlusUpgradeComponent } from './plus-upgrade/plus-upgrade.component';
-import { WirePaymentHandlersService } from '../wire/wire-payment-handlers.service';
-import { DiscoveryService } from './discovery.service';
 import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
-import { DiscoveryTabsComponent } from './tabs/tabs.component';
-import { DiscoveryFeedsService } from './feeds/feeds.service';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
-import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
-import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
-import { CardCarouselService } from './card-carousel/card-carousel.service';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
 import { DiscoveryTopComponent } from './top/top.component';
 import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
+import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.component';
+import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/supermind-global-feed-experiment.guard.ts/supermind-global-feed-experiment.guard';
 
 @NgModule({
   imports: [
@@ -93,6 +80,14 @@ import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
             component: DiscoveryBoostFeedComponent,
             data: {
               title: 'Discovery / Boosted',
+            },
+          },
+          {
+            path: 'supermind',
+            component: DiscoverySupermindsFeedComponent,
+            canActivate: [SupermindGlobalFeedExperimentGuard],
+            data: {
+              title: 'Discovery / Supermind',
             },
           },
           {
