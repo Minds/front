@@ -67,6 +67,11 @@ describe('SupermindConsoleListComponent', () => {
             selector: 'm-supermind__filterBar',
             outputs: ['statusFilterChange'],
           }),
+          MockComponent({
+            selector: 'm-seeLatestButton',
+            inputs: ['newCount'],
+            outputs: ['click', 'poll'],
+          }),
         ],
         providers: [
           {
@@ -95,6 +100,11 @@ describe('SupermindConsoleListComponent', () => {
     comp.inProgress$.next(false);
     (comp as any).service.getList$.and.returnValue(of([]));
 
+    comp.initialCount$.next(0);
+    comp.updatedCount$.next(0);
+    (comp as any).service.countAll$.calls.reset();
+    (comp as any).service.countAll$.and.returnValue(of(1));
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -115,6 +125,7 @@ describe('SupermindConsoleListComponent', () => {
     comp.setupSubscription();
     tick();
 
+    expect((comp as any).service.countAll$).toHaveBeenCalled();
     expect((comp as any).service.getList$).toHaveBeenCalled();
     expect(comp.list$.getValue()).toEqual(mockList);
     expect(comp.moreData$.getValue()).toBeFalse();
@@ -210,4 +221,88 @@ describe('SupermindConsoleListComponent', () => {
         done();
       });
   });
+
+  it('should calculate new count correctly when initial count is NOT set', (done: DoneFn) => {
+    comp.initialCount$.next(null);
+    comp.updatedCount$.next(10);
+    comp.newCount$.pipe(take(1)).subscribe((newCount: number) => {
+      expect(newCount).toBe(0);
+      done();
+    });
+  });
+
+  it('should calculate new count correctly when initial count is set and there is a difference', (done: DoneFn) => {
+    comp.initialCount$.next(1);
+    comp.updatedCount$.next(10);
+    comp.newCount$.pipe(take(1)).subscribe((newCount: number) => {
+      expect(newCount).toBe(9);
+      done();
+    });
+  });
+
+  it('should calculate new count correctly when initial count is set and there is NOT a difference', (done: DoneFn) => {
+    comp.initialCount$.next(1);
+    comp.updatedCount$.next(1);
+    comp.newCount$.pipe(take(1)).subscribe((newCount: number) => {
+      expect(newCount).toBe(0);
+      done();
+    });
+  });
+
+  it('should call to count and set initial count if it is not already set with no status', fakeAsync(() => {
+    const expectedCount: number = 10;
+    (comp as any).service.countAll$.and.returnValue(of(expectedCount));
+    comp.initialCount$.next(null);
+
+    comp.populateCounts();
+    tick();
+
+    expect((comp as any).service.countAll$).toHaveBeenCalled();
+    expect(comp.initialCount$.getValue()).toBe(10);
+    expect(comp.updatedCount$.getValue()).toBe(10);
+  }));
+
+  it('should call to count and set initial count if it is not already set with no status', fakeAsync(() => {
+    const expectedInitialCount: number = 9;
+    const expectedCount: number = 10;
+    comp.initialCount$.next(expectedInitialCount);
+    (comp as any).service.countAll$.and.returnValue(of(expectedCount));
+
+    comp.populateCounts();
+    tick();
+
+    expect((comp as any).service.countAll$).toHaveBeenCalled();
+    expect(comp.initialCount$.getValue()).toBe(expectedInitialCount);
+    expect(comp.updatedCount$.getValue()).toBe(10);
+  }));
+
+  it('should call to count and set initial count with status', fakeAsync(() => {
+    const expectedCount: number = 10;
+    const expectedStateFilterValue: number = 7;
+    comp.statusFilterValue$.next(expectedStateFilterValue);
+    (comp as any).service.countAll$.and.returnValue(of(expectedCount));
+
+    comp.populateCounts();
+    tick();
+
+    expect((comp as any).service.countAll$).toHaveBeenCalledWith(
+      expectedStateFilterValue
+    );
+  }));
+
+  it('should reset feed and reload on see latest click', fakeAsync(() => {
+    comp.list$.next(mockList);
+    (comp as any).service.getList$.and.returnValue(of(mockList));
+
+    spyOn(window, 'scrollTo').and.returnValue(null);
+
+    comp.onSeeLatestClick();
+    tick();
+
+    expect(window.scrollTo).toHaveBeenCalled();
+    expect((comp as any).service.getList$).toHaveBeenCalled();
+    expect(comp.list$.getValue()).toEqual(mockList); // not appended
+    expect(comp.moreData$.getValue()).toBeFalse();
+    expect(comp.inProgress$.getValue()).toBeFalse();
+  }));
 });

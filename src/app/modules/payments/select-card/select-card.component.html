@@ -6,6 +6,7 @@
     <option value="" *ngIf="paymentMethods.length === 0 && !inProgress"
       >No Cards</option
     >
+    <option value="" *ngIf="inProgress">...</option>
     <option *ngFor="let card of paymentMethods" [value]="card.id">
       {{ card.card_brand | titlecase }} ***{{ card.card_last4 }} -
       {{ card.card_expires }}

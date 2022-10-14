@@ -299,9 +299,6 @@ m-comments__entityOutlet,
           }
         }
       }
-      a {
-        text-decoration: none;
-      }
     }
 
     .minds-comments-voting {
@@ -403,6 +400,10 @@ m-comments__entityOutlet,
           box-sizing: border-box;
           width: 100%;
           text-decoration: none;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
 
           &.m-rich-embed--title--no-padding {
             padding: 8px;

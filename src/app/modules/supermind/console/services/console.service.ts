@@ -4,6 +4,7 @@ import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
 import {
   SupermindConsoleGetParams,
+  SupermindConsoleCountParams,
   SupermindConsoleListType,
   SupermindState,
 } from '../../supermind.types';
@@ -13,15 +14,15 @@ import {
  */
 @Injectable({ providedIn: 'root' })
 export class SupermindConsoleService {
-  /** @type { BehaviorSubject<SupermindConsoleListType> }  listType$ - Subject containing list type for console to display */
+  // Subject containing list type for console to display.
   public readonly listType$: BehaviorSubject<
     SupermindConsoleListType
   > = new BehaviorSubject<SupermindConsoleListType>('inbox');
 
-  /** @type { Observable<boolean> } Whether this is a single Supermind page. */
-  public isSingleSupermindPage$: Observable<boolean> = this.listType$.pipe(
-    map(listType => this.isNumericListType(listType))
-  );
+  // Whether this is a single Supermind page.
+  public readonly isSingleSupermindPage$: Observable<
+    boolean
+  > = this.listType$.pipe(map(listType => this.isNumericListType(listType)));
 
   constructor(private api: ApiService) {}
 
@@ -54,6 +55,43 @@ export class SupermindConsoleService {
 
         return this.api.get(endpoint, params);
       }),
+      catchError(e => {
+        console.error(e);
+        return of(null);
+      })
+    );
+  }
+
+  /**
+   * Get a count of all Supermind requests for a given status type.
+   * @param { SupermindState } status - status to check (null will count ALL statuses).
+   * @returns { Observable<number> } observable count.
+   */
+  public countAll$(status: SupermindState = null): Observable<number> {
+    return this.listType$.pipe(
+      // take once.
+      take(1),
+      // switch stream to be the api request and call it with correct list type and status.
+      switchMap((listType: any) => {
+        let endpoint: string = `api/v3/supermind/${listType}/count`;
+        let params: SupermindConsoleCountParams = {};
+
+        // If it's a single entity page, do not call endpoint, return 1.
+        if (this.isNumericListType(listType)) {
+          return of({ count: 1 });
+        }
+
+        if (status) {
+          params.status = status;
+        }
+
+        return this.api.get(endpoint, params);
+      }),
+      // map to the count from the response.
+      map((response: ApiResponse) => {
+        return response['count'] ?? 0;
+      }),
+      // handle errors. WILL emit.
       catchError(e => {
         console.error(e);
         return of(null);
