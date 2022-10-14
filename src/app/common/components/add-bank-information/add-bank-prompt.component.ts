@@ -20,18 +20,7 @@ import { ButtonComponent } from '../button/button.component';
   styleUrls: ['add-bank-prompt.component.ng.scss'],
 })
 export class AddBankPromptComponent {
-  // cash wallet
-  public cashWallet: WalletCurrency;
-
-  // whether user has an account
-  public hasAccount: boolean = false;
-
-  // whether user had a bank
-  public hasBank: boolean = false;
-
-  // should a loading spinner be shown while loading
-  @Input() showLoadingSpinner: boolean = false;
-
+  /** @inheritDoc */
   isLoading$$ = this.cashService.isLoading$$;
 
   /** @inheritDoc */
