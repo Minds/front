@@ -581,20 +581,6 @@
         @include heading4Medium;
       }
     }
-
-    ::ng-deep a {
-      font-size: inherit;
-      line-height: inherit;
-      font-weight: 500;
-      @include m-theme() {
-        color: themed($m-blue);
-      }
-
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   // STATUS POSTS
