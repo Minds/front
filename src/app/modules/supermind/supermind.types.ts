@@ -31,6 +31,11 @@ export type SupermindConsoleGetParams = {
   status?: SupermindState;
 };
 
+// Get count params for inbox and outbox endpoints.
+export type SupermindConsoleCountParams = {
+  status?: SupermindState;
+};
+
 // Filter type values for Supermind console.
 export type SupermindConsoleStatusFilterType =
   | 'all'
