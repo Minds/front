@@ -1,26 +1,133 @@
 <m-loadingSpinner
-  *ngIf="showLoadingSpinner"
-  [inProgress]="!(loaded$ | async)"
+  *ngIf="isLoading$$ | async"
+  [inProgress]="isLoading$$ | async"
 ></m-loadingSpinner>
-<div *ngIf="shouldShow$ | async" class="m-addBankPrompt__container">
+
+<!------------------------------>
+<!--- No Account, Add Bank  ---->
+<!------------------------------>
+<div
+  *ngIf="(hasAccount$ | async) === false"
+  class="m-addBankPrompt__container m-addBankPrompt__container--noAccount"
+>
   <p>
-    <a
-      [routerLink]="['/wallet/cash/settings']"
-      class="m-addBankPrompt__link"
-      i18n="@@ADD_BANK_PROMPT__ADD_YOUR_BANK_INFO"
-      >Add your bank information</a
+    <b i18n="@@ADD_BANK_PROMPT__ADD_YOUR_BANK_INFO"
+      >Add your bank information</b
     >
   </p>
   <p>
-    <ng-container
-      *ngIf="!hasAccount"
-      i18n="@@ADD_BANK_PROMPT__START_RECEIVING_PAYOUTS"
+    <ng-container i18n="@@ADD_BANK_PROMPT__START_RECEIVING_PAYOUTS"
       >Start receiving cash payouts by adding your bank details.
     </ng-container>
-    <ng-container
-      *ngIf="hasAccount"
-      i18n="@@ADD_BANK_PROMPT__FINISH_ADDING_DETAILS_INFO"
-      >Finish adding your bank details to start receiving cash payouts.
-    </ng-container>
+  </p>
+  <p>
+    <ng-container *ngTemplateOutlet="createButton"></ng-container>
   </p>
 </div>
+
+<ng-container *ngIf="(hasAccount$ | async) && (isRestricted$ | async)">
+  <!-------------------------------->
+  <!--- Not receiving payments  ---->
+  <!-------------------------------->
+  <div
+    class="m-addBankPrompt__container m-addBankPrompt__container--restricted"
+  >
+    <ng-container [ngSwitch]="restrictedReason$ | async">
+      <!--- https://stripe.com/docs/connect/identity-verification-api for disabled_reasons ---->
+
+      <!-------------------------------->
+      <!--- Admins suspended ----------->
+      <!-------------------------------->
+      <ng-template ngSwitchCase="platform_paused">
+        <p>
+          <b>Cash Account Restricted</b>
+        </p>
+        <p>
+          Your account is temporarily restricted by the Admin team. Please
+          contact support for more information.
+        </p>
+        <p>
+          <ng-container *ngTemplateOutlet="onboardingButton"></ng-container>
+        </p>
+      </ng-template>
+
+      <!-------------------------------->
+      <!--- Requirements past due ------>
+      <!-------------------------------->
+      <ng-template ngSwitchCase="requirements.past_due">
+        <p>
+          <b>Your cash account is currently restricted</b>
+        </p>
+        <p>
+          Additional verification information is required to enable payout or
+          charge capabilities on your account.
+        </p>
+        <p>
+          <ng-container *ngTemplateOutlet="onboardingButton"></ng-container>
+        </p>
+      </ng-template>
+
+      <!-------------------------------------------->
+      <!--- Requirements pending verification ------>
+      <!-------------------------------------------->
+      <ng-template ngSwitchCase="requirements.pending_verification">
+        <p>
+          <b>Verifying cash account</b>
+        </p>
+        <p>
+          You're account is currently being verified. Check again later.
+        </p>
+      </ng-template>
+
+      <!-------------------------------------------->
+      <!--- Requirements pending verification ------>
+      <!-------------------------------------------->
+      <ng-template ngSwitchCase="under_review">
+        <p>
+          <b>Under review</b>
+        </p>
+        <p>
+          You're cash account is under review by Stripe, our service provider.
+        </p>
+        <p>
+          <ng-container *ngTemplateOutlet="onboardingButton"></ng-container>
+        </p>
+      </ng-template>
+
+      <!-------------------------------->
+      <!--- Other reason  -------------->
+      <!-------------------------------->
+      <ng-template ngSwitchDefault>
+        <p>
+          <b>Your cash account is currently restricted</b>
+        </p>
+        <p>
+          You are currently not able to accept any cash payments. Contact
+          support for more details.
+        </p>
+        <p>
+          <ng-container *ngTemplateOutlet="onboardingButton"></ng-container>
+        </p>
+      </ng-template>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #createButton>
+  <m-button
+    #createButtonEl
+    size="small"
+    color="blue"
+    (onAction)="createAccount($event, createButtonEl)"
+  >
+    <span>Create cash account</span>
+    <m-icon from="md" iconId="arrow_forward" [sizeFactor]="25"></m-icon>
+  </m-button>
+</ng-template>
+
+<ng-template #onboardingButton>
+  <m-button size="small" color="blue" (onAction)="redirectToOnboarding($event)">
+    <span>Complete step</span>
+    <m-icon from="md" iconId="arrow_forward" [sizeFactor]="25"></m-icon>
+  </m-button>
+</ng-template>

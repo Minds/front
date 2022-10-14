@@ -1,11 +1,14 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SkipSelf } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CashWalletService } from '../../../modules/wallet/components/cash/cash.service';
 import {
   Wallet,
   WalletCurrency,
   WalletV2Service,
 } from '../../../modules/wallet/components/wallet-v2.service';
+import { ToasterService } from '../../services/toaster.service';
+import { ButtonComponent } from '../button/button.component';
 
 /**
  * Prompt / banner intended for display in main content pane, indicating that a user
@@ -15,9 +18,8 @@ import {
   selector: 'm-addBankPrompt',
   templateUrl: './add-bank-prompt.component.html',
   styleUrls: ['add-bank-prompt.component.ng.scss'],
-  providers: [WalletV2Service],
 })
-export class AddBankPromptComponent implements OnInit, OnDestroy {
+export class AddBankPromptComponent {
   // cash wallet
   public cashWallet: WalletCurrency;
 
@@ -27,55 +29,46 @@ export class AddBankPromptComponent implements OnInit, OnDestroy {
   // whether user had a bank
   public hasBank: boolean = false;
 
-  // whether is loaded.
-  public readonly loaded$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
-
-  // cash wallet subscription.
-  private cashWalletSubscription: Subscription;
-
   // should a loading spinner be shown while loading
   @Input() showLoadingSpinner: boolean = false;
 
+  isLoading$$ = this.cashService.isLoading$$;
+
+  /** @inheritDoc */
+  hasAccount$ = this.cashService.hasAccount$;
+
+  /** @inheritDoc */
+  isRestricted$ = this.cashService.isRestricted$;
+
+  /** @inheritDoc */
+  restrictedReason$ = this.cashService.restrictedReason$;
+
+  constructor(
+    protected cashService: CashWalletService,
+    protected toasterService: ToasterService
+  ) {}
+
   /**
-   * Whether prompt should show.
-   * @returns { Observable<boolean> } true if prompt should show.
+   * Will call the api to create an account
    */
-  get shouldShow$(): Observable<boolean> {
-    return this.loaded$.pipe(
-      map((loaded: boolean) => {
-        return loaded && this.cashWallet && (!this.hasAccount || !this.hasBank);
-      })
-    );
-  }
+  async createAccount(e: MouseEvent, btn: ButtonComponent) {
+    try {
+      btn.saving = true;
 
-  constructor(protected walletService: WalletV2Service) {}
+      await this.cashService.createAccount();
 
-  ngOnInit() {
-    this.cashWalletSubscription = this.walletService.wallet$
-      .pipe(map((wallet: Wallet) => wallet.cash))
-      .subscribe((cashWallet: WalletCurrency) => {
-        this.cashWallet = cashWallet;
-        this.load();
-      });
-    this.walletService.loadWallet(); // async
-  }
-
-  ngOnDestroy() {
-    if (this.cashWalletSubscription) {
-      this.cashWalletSubscription.unsubscribe();
+      // Now redirect to onboarding
+      this.redirectToOnboarding(e);
+    } catch (err) {
+      this.toasterService.error(err.error.message);
+      btn.saving = false; // only stop saving state on error, as we want saving state to follow through to redirect
     }
   }
 
   /**
-   * Load to check whether user has a bank and has an account.
-   * @returns { void }
+   * Takes the user to stripe connect onboarding screen
    */
-  private load(): void {
-    if (!this.cashWallet || !this.cashWallet.stripeDetails) return;
-    this.hasAccount = this.cashWallet.stripeDetails.hasAccount;
-    this.hasBank = this.cashWallet.stripeDetails.hasBank;
-    this.loaded$.next(true);
+  redirectToOnboarding(e: MouseEvent) {
+    this.cashService.redirectToOnboarding();
   }
 }
