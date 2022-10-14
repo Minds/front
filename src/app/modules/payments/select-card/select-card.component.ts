@@ -81,6 +81,7 @@ export class PaymentsSelectCard {
     const modal = this.modalService.present(NewCardModalComponent, {
       data: {
         onComplete: () => {
+          this.selected.next('');
           this.loadCards();
           modal.close();
         },
