@@ -5,6 +5,6 @@ Feature: boost
 
   Scenario: should allow the user to make a valid newsfeed boost
     Given I am logged in
-    When I create a post on newsfeed
+    When I create a boosted post
     Then I can create a valid newsfeed boost
     And I can revoke a boost
