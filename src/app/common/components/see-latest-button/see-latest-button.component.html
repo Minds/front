@@ -1,0 +1,10 @@
+<div *ngIf="newCount > 0" [@slideIn]="newCount ? 'shown' : 'hidden'">
+  <m-button
+    class="m-seeLatestButton"
+    size="xsmall"
+    solid="true"
+    color="blue"
+    (onAction)="onClick()"
+    ><i class="material-icons">arrow_upward</i>{{ title }}</m-button
+  >
+</div>
