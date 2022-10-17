@@ -1,16 +1,12 @@
 @import 'defaults.scss';
 
 :host {
-  padding-top: $spacing4;
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
 
-  @include m-theme() {
-    border-bottom: 1px solid themed($m-borderColor--primary);
-  }
-
   .m-supermind__listItem__topBar {
+    padding-top: $spacing4;
     padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
     padding-right: $activityAvatarSpacingRight--feed;
 
@@ -25,6 +21,10 @@
     margin-top: $spacing6;
     padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
     padding-right: $activityAvatarSpacingRight--feed;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
 
     .m-supermindListItem__offerInformation {
       display: flex;
