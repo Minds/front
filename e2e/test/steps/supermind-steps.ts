@@ -41,7 +41,7 @@ namespace SupermindSteps {
   });
 
   When('I click the activity post supermind icon on the toolbar', () => {
-    I.waitForElement('[data-ref=activity-icon-supermind-action] m-button');
+    I.waitForElement('[data-ref=activity-icon-supermind-action] m-button', 10);
     I.click('[data-ref=activity-icon-supermind-action] m-button');
   });
 

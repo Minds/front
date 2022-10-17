@@ -56,6 +56,10 @@ namespace ComposerSteps {
     composerModal.clickPost();
   });
 
+  When('I create a post with text storage key {string}', textStorageKey => {
+    composerModal.createNewsfeedPost(textStorageKey);
+  });
+
   Then('I should see {int} previews of my selected imaged', num => {
     for (let i = 1; i <= num; i++) {
       I.seeElement(

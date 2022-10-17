@@ -30,6 +30,8 @@ exports.config = {
     supermindConsolePage: '../pages/supermindConsolePage.ts',
     supermindSettingsPage: '../pages/supermindSettingsPage.ts',
     tokenMarketingPage: '../pages/tokenMarketingPage.ts',
+    channelPage: '../pages/channelPage.ts',
+    activityFeedPage: '../pages/activityFeedPage.ts',
   },
   mocha: {},
   bootstrap: null,

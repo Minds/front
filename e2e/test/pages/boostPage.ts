@@ -15,7 +15,11 @@ export = {
   offersTab: '[data-cy=data-minds-boost-modal-offers-tab]',
   channelBoostButton: 'm-channelActions__boost m-button',
 
-  createNewsfeedPost() {
+  /**
+   * Create a boosted post and open boost modal.
+   * @returns { void }
+   */
+  createBoostedPost(): void {
     const postContent = 'Test boost, please reject...' + generateRandomId();
     I.seeElement('m-composer .m-composer__trigger');
     I.click('m-composer .m-composer__trigger');
