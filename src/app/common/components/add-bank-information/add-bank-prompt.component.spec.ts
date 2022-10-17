@@ -1,33 +1,33 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
 import { CashWalletService } from '../../../modules/wallet/components/cash/cash.service';
-import {
-  Wallet,
-  WalletV2Service,
-} from '../../../modules/wallet/components/wallet-v2.service';
 import { MockComponent, MockService } from '../../../utils/mock';
-import { ApiService } from '../../api/api.service';
 import { ToasterService } from '../../services/toaster.service';
+import { ButtonComponent } from '../button/button.component';
 import { AddBankPromptComponent } from './add-bank-prompt.component';
 
 describe('AddBankPromptComponent', () => {
   let comp: AddBankPromptComponent;
   let fixture: ComponentFixture<AddBankPromptComponent>;
 
-  let apiServiceMock = new (function() {
-    this.success = jasmine.createSpy('success').and.returnValue(this);
-    this.get = jasmine
-      .createSpy('success')
-      .and.returnValue(new Observable(null));
-  })();
+  function getNoAccountDiv() {
+    return fixture.debugElement.query(
+      By.css('.m-addBankPrompt__container--noAccount')
+    );
+  }
+
+  function getAccountRestrictedDiv() {
+    return fixture.debugElement.query(
+      By.css('.m-addBankPrompt__container--restricted')
+    );
+  }
+
+  function getAccountRestrictedTitle() {
+    return fixture.debugElement.query(
+      By.css('.m-addBankPrompt__container--restricted p b')
+    );
+  }
 
   beforeEach(
     waitForAsync(() => {
@@ -38,17 +38,39 @@ describe('AddBankPromptComponent', () => {
             selector: 'm-loadingSpinner',
             inputs: ['inProgress'],
           }),
+          MockComponent({
+            selector: 'm-icon',
+            inputs: ['sizeFactor'],
+          }),
+          MockComponent({
+            selector: 'm-button',
+          }),
         ],
         providers: [
-          CashWalletService,
-          ToasterService,
           {
-            provide: ApiService,
-            useValue: apiServiceMock,
+            provide: CashWalletService,
+            useValue: MockService(CashWalletService, {
+              has: [
+                'isLoading$$',
+                'hasAccount$',
+                'isRestricted$',
+                'restrictedReason$',
+              ],
+              props: {
+                isLoading$$: { get: () => new BehaviorSubject<boolean>(false) },
+                hasAccount$: { get: () => new BehaviorSubject<boolean>(false) },
+                isRestricted$: {
+                  get: () => new BehaviorSubject<boolean>(false),
+                },
+                restrictedReason$: {
+                  get: () => new BehaviorSubject<string>(''),
+                },
+              },
+            }),
           },
           {
-            provide: ExperimentsService,
-            useValue: MockService(ExperimentsService),
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();
@@ -58,6 +80,11 @@ describe('AddBankPromptComponent', () => {
   beforeEach(done => {
     fixture = TestBed.createComponent(AddBankPromptComponent);
     comp = fixture.componentInstance;
+
+    (comp as any).cashService.isLoading$$.next(false);
+    (comp as any).cashService.hasAccount$.next(false);
+    (comp as any).cashService.isRestricted$.next(false);
+    (comp as any).cashService.restrictedReason$.next('');
 
     fixture.detectChanges();
 
@@ -74,22 +101,107 @@ describe('AddBankPromptComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  // it('should determine if prompt should NOT show', (done: DoneFn) => {
-  //   mockApiGet$.next({
-  //     id: 'acct_fake',
-  //   });
+  it('should create an account', async () => {
+    await comp.createAccount(null, new ButtonComponent());
 
-  // });
+    expect((comp as any).cashService.createAccount).toHaveBeenCalled();
+    expect((comp as any).cashService.redirectToOnboarding).toHaveBeenCalled();
+  });
 
-  // it('should determine if prompt should show because loading is not done', (done: DoneFn) => {
+  it('should show toaster on error and set saving to false when creating an account', async () => {
+    const errorMessage = 'Error!';
+    (comp as any).cashService.createAccount.and.throwError({
+      error: { message: errorMessage },
+    });
 
-  // });
+    await comp.createAccount(null, new ButtonComponent());
 
-  // it('should determine if prompt should show because hasAccount is false', (done: DoneFn) => {
+    expect((comp as any).cashService.createAccount).toHaveBeenCalled();
+    expect((comp as any).toasterService.error).toHaveBeenCalledWith(
+      errorMessage
+    );
+    expect(
+      (comp as any).cashService.redirectToOnboarding
+    ).not.toHaveBeenCalled();
+  });
 
-  // });
+  it('should redirect to cash onboarding', () => {
+    comp.redirectToOnboarding(null);
+    expect((comp as any).cashService.redirectToOnboarding).toHaveBeenCalled();
+  });
 
-  // it('should determine if prompt should show because hasBank is false', (done: DoneFn) => {
+  it('should show no account div if the user has no account', () => {
+    (comp as any).cashService.hasAccount$.next(false);
 
-  // });
+    fixture.detectChanges();
+    expect(getNoAccountDiv()).toBeTruthy();
+    expect(getAccountRestrictedDiv()).toBeNull();
+  });
+
+  it('should show restricted div if the user has a restricted account with reason: platform_paused', () => {
+    (comp as any).cashService.hasAccount$.next(true);
+    (comp as any).cashService.isRestricted$.next(true);
+    (comp as any).cashService.restrictedReason$.next('platform_paused');
+
+    fixture.detectChanges();
+    expect(getAccountRestrictedDiv()).toBeTruthy();
+    expect(getAccountRestrictedTitle()?.nativeElement.textContent).toContain(
+      'Cash Account Restricted'
+    );
+    expect(getNoAccountDiv()).toBeNull();
+  });
+
+  it('should show restricted div if the user has a restricted account with reason: requirements.past_due', () => {
+    (comp as any).cashService.hasAccount$.next(true);
+    (comp as any).cashService.isRestricted$.next(true);
+    (comp as any).cashService.restrictedReason$.next('requirements.past_due');
+
+    fixture.detectChanges();
+    expect(getAccountRestrictedDiv()).toBeTruthy();
+    expect(getAccountRestrictedTitle()?.nativeElement.textContent).toContain(
+      'Your cash account is currently restricted'
+    );
+    expect(getNoAccountDiv()).toBeNull();
+  });
+
+  it('should show restricted div if the user has a restricted account with reason: requirements.pending_verification', () => {
+    (comp as any).cashService.hasAccount$.next(true);
+    (comp as any).cashService.isRestricted$.next(true);
+    (comp as any).cashService.restrictedReason$.next(
+      'requirements.pending_verification'
+    );
+
+    fixture.detectChanges();
+    expect(getAccountRestrictedDiv()).toBeTruthy();
+    expect(getAccountRestrictedTitle()?.nativeElement.textContent).toContain(
+      'Verifying cash account'
+    );
+    expect(getNoAccountDiv()).toBeNull();
+  });
+
+  it('should show restricted div if the user has a restricted account with reason: under_review', () => {
+    (comp as any).cashService.hasAccount$.next(true);
+    (comp as any).cashService.isRestricted$.next(true);
+    (comp as any).cashService.restrictedReason$.next('under_review');
+
+    fixture.detectChanges();
+    expect(getAccountRestrictedDiv()).toBeTruthy();
+    expect(getAccountRestrictedTitle()?.nativeElement.textContent).toContain(
+      'Under review'
+    );
+    expect(getNoAccountDiv()).toBeNull();
+  });
+
+  it('should show restricted div if the user has a restricted account with reason: default', () => {
+    (comp as any).cashService.hasAccount$.next(true);
+    (comp as any).cashService.isRestricted$.next(true);
+    (comp as any).cashService.restrictedReason$.next(null);
+
+    fixture.detectChanges();
+    expect(getAccountRestrictedDiv()).toBeTruthy();
+    expect(getAccountRestrictedTitle()?.nativeElement.textContent).toContain(
+      'Your cash account is currently restricted'
+    );
+    expect(getNoAccountDiv()).toBeNull();
+  });
 });
