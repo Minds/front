@@ -55,22 +55,9 @@
 }
 
 a {
-  font-size: inherit;
-  line-height: inherit;
-  font-weight: inherit;
   @include m-theme() {
-    color: themed($m-blue);
+    color: themed($m-blue-grey-700);
   }
-
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-  // &:visited {
-  //   @include m-theme() {
-  //     color: lighten(themed($m-blue), 30%);
-  //   }
-  // }
 }
 
 input[type='number']::-webkit-inner-spin-button,
