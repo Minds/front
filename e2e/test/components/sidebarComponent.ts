@@ -5,6 +5,14 @@ const { I } = inject();
  */
 export class SidebarComponent {
   /**
+   * Opens the users channel from the sidebar.
+   * @return { void }
+   */
+  public openChannel(): void {
+    I.click('[data-ref=sidenav-channel]');
+  }
+
+  /**
    * Opens the composer from the sidebar.
    * @return { void }
    */

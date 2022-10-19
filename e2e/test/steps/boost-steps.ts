@@ -3,8 +3,8 @@ namespace BoostSteps {
 
   Before(() => {});
 
-  When('I create a post on newsfeed', () => {
-    boostPage.createNewsfeedPost();
+  When('I create a boosted post', () => {
+    boostPage.createBoostedPost();
   });
 
   Then('I can create a valid newsfeed boost', () => {
