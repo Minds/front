@@ -4,9 +4,13 @@
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
+  padding-top: $spacing4;
+
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
 
   .m-supermind__listItem__topBar {
-    padding-top: $spacing4;
     padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
     padding-right: $activityAvatarSpacingRight--feed;
 
@@ -21,10 +25,6 @@
     margin-top: $spacing6;
     padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
     padding-right: $activityAvatarSpacingRight--feed;
-
-    @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--primary);
-    }
 
     .m-supermindListItem__offerInformation {
       display: flex;
@@ -71,6 +71,26 @@
           }
         }
       }
+    }
+  }
+
+  .m-supermind__listItem__postUnavailable {
+    padding-top: $spacing1;
+    padding-bottom: $spacing5;
+
+    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
+    padding-right: $activityAvatarSpacingRight--feed;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    span:first-child {
+      @include body2Bold;
+      padding-bottom: $spacing1;
+    }
+    span {
+      display: block;
+      @include body2Regular;
     }
   }
 
