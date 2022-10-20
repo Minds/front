@@ -12,8 +12,8 @@
       <tr>
         <th i18n="@@PAYMENT_HISTORY__TRANSACTION">Transaction</th>
         <th i18n="@@PAYMENT_HISTORY__DATE">Date</th>
-        <th i18n="@@PAYMENT_HISTORY__STATUS">Status</th>
         <th i18n="@@PAYMENT_HISTORY__RECEIPT">Receipt</th>
+        <th i18n="@@PAYMENT_HISTORY__STATUS">Status</th>
       </tr>
     </thead>
     <tbody>
@@ -64,6 +64,19 @@
           </ng-container>
         </td>
         <td>{{ item.created_timestamp * 1000 | date: 'M/d/yyyy' }}</td>
+        <td>
+          <a
+            *ngIf="item.receipt_url; else noReceipt"
+            class="m-paymentHistory__paddedIcon"
+            [href]="item.receipt_url"
+            target="_blank"
+          >
+            <i class="material-icons">receipt</i>
+          </a>
+          <ng-template #noReceipt>
+            <i class="material-icons m-paymentHistory__paddedIcon">close</i>
+          </ng-template>
+        </td>
         <td [ngSwitch]="item.status">
           <m-tooltip
             *ngSwitchCase="'succeeded'"
@@ -129,19 +142,6 @@
           >
             Unknown Status
           </m-tooltip>
-        </td>
-        <td>
-          <a
-            *ngIf="item.receipt_url; else noReceipt"
-            class="m-paymentHistory__paddedIcon"
-            [href]="item.receipt_url"
-            target="_blank"
-          >
-            <i class="material-icons">receipt</i>
-          </a>
-          <ng-template #noReceipt>
-            <i class="material-icons m-paymentHistory__paddedIcon">close</i>
-          </ng-template>
         </td>
       </tr>
     </tbody>
