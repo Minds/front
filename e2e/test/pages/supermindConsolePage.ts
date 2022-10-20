@@ -43,7 +43,7 @@ export class SupermindConsolePage {
   private addBankPrompt: CodeceptJS.Locator = locate('m-addBankPrompt');
   private addBankPromptCompleteStepButton: CodeceptJS.Locator = locate(
     '.m-addBankPrompt__container m-button button'
-  ).withText('Complete step');
+  ).withText('Complete Step');
 
   private supermindListItem: CodeceptJS.Locator = locate(
     '.m-supermind__listItem'

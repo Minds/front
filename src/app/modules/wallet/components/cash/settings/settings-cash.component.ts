@@ -1,20 +1,18 @@
 import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  Output,
-  EventEmitter,
-  Input,
-  ViewRef,
   AfterViewInit,
+  ChangeDetectorRef,
+  Component,
   ElementRef,
+  Input,
+  OnInit,
+  ViewRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-  WalletV2Service,
   Wallet,
   WalletCurrency,
+  WalletV2Service,
 } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
 import { CashWalletService } from '../cash.service';
@@ -111,9 +109,10 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.el.nativeElement.scrollIntoView({
-      behavior: 'smooth',
-    });
+    // Only sub-tab where this scroll happens. Commenting out for now
+    // this.el.nativeElement.scrollIntoView({
+    //   behavior: 'smooth',
+    // });
   }
 
   async setView() {
