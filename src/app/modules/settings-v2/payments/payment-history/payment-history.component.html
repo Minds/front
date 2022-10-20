@@ -1,0 +1,155 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@PAYMENT_HISTORY__PAYMENT_HISTORY">Payment History</span>
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@PAYMENT_HISTORY__PAYMENT_DESCRIPTION">
+    Track payments you make on Minds.
+  </div>
+</m-settingsV2__header>
+<div class="m-paymentHistory__tableWrapper">
+  <table *ngIf="list$ | async">
+    <thead>
+      <tr>
+        <th i18n="@@PAYMENT_HISTORY__TRANSACTION">Transaction</th>
+        <th i18n="@@PAYMENT_HISTORY__DATE">Date</th>
+        <th i18n="@@PAYMENT_HISTORY__STATUS">Status</th>
+        <th i18n="@@PAYMENT_HISTORY__RECEIPT">Receipt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of list$ | async">
+        <td [ngSwitch]="item.statement_descriptor">
+          <ng-container *ngSwitchCase="'Minds: Pro sub'">
+            Pro
+            <ng-container i18n="@@PAYMENT_HISTORY__SUBSCRIPTION"
+              >Subscription</ng-container
+            >
+          </ng-container>
+          <ng-container *ngSwitchCase="'Minds: Plus sub'">
+            Plus
+            <ng-container i18n="@@PAYMENT_HISTORY__SUBSCRIPTION"
+              >Subscription</ng-container
+            >
+          </ng-container>
+          <ng-container *ngSwitchCase="'Minds: Payment'">
+            <ng-container i18n="@@PAYMENT_HISTORY__PAYMENT"
+              >Payment</ng-container
+            >
+            <span *ngIf="item.recipient && item.recipient.username">
+              to
+              <a
+                class="m-paymentHistory__textLink"
+                target="_blank"
+                [href]="'/' + item.recipient.username"
+                >@{{ item.recipient.username | truncate: 10 }}</a
+              >
+            </span>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Minds: Supermind'">
+            Supermind
+            <span *ngIf="item.recipient && item.recipient.username">
+              to
+              <a
+                class="m-paymentHistory__textLink"
+                target="_blank"
+                [href]="'/' + item.recipient.username"
+                >@{{ item.recipient.username | truncate: 10 }}</a
+              >
+            </span>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <ng-container i18n="@@PAYMENT_HISTORY__PAYMENT"
+              >Payment</ng-container
+            >
+          </ng-container>
+        </td>
+        <td>{{ item.created_timestamp * 1000 | date: 'M/d/yyyy' }}</td>
+        <td [ngSwitch]="item.status">
+          <m-tooltip
+            *ngSwitchCase="'succeeded'"
+            icon="done"
+            anchor="right"
+            i18n="@@PAYMENT_HISTORY__PAYMENT_WAS_SUCCESSFUL"
+          >
+            Your payment was successful
+          </m-tooltip>
+          <m-tooltip
+            *ngSwitchCase="'requires_action'"
+            icon="more_horiz"
+            anchor="right"
+            i18n="@@PAYMENT_HISTORY__PAYMENT_IS_PENDING"
+          >
+            Your payment is in pending
+          </m-tooltip>
+          <m-tooltip
+            *ngSwitchCase="'requires_confirmation'"
+            icon="more_horiz"
+            anchor="right"
+            i18n="@@PAYMENT_HISTORY__PAYMENT_IS_PENDING"
+          >
+            Your payment is in pending
+          </m-tooltip>
+          <m-tooltip
+            *ngSwitchCase="'requires_capture'"
+            icon="more_horiz"
+            anchor="right"
+            i18n="@@PAYMENT_HISTORY__PAYMENT_IS_PENDING"
+          >
+            Your payment is in pending
+          </m-tooltip>
+          <m-tooltip
+            *ngSwitchCase="'processing'"
+            icon="more_horiz"
+            anchor="right"
+            i18n="@@PAYMENT_HISTORY__PAYMENT_IS_PENDING"
+          >
+            Your payment is in pending
+          </m-tooltip>
+          <m-tooltip
+            *ngSwitchCase="'requires_payment_method'"
+            icon="close"
+            anchor="right"
+            i18n="@@PAYMENT_HISTORY__PAYMENT_HAS_FAILED"
+          >
+            Your payment has failed
+          </m-tooltip>
+          <m-tooltip
+            *ngSwitchCase="'canceled'"
+            icon="block"
+            anchor="right"
+            i18n="@@PAYMENT_HISTORY__PAYMENT_WAS_CANCELLED"
+          >
+            Your payment was canceled
+          </m-tooltip>
+          <m-tooltip
+            *ngSwitchCaseDefault
+            icon="help"
+            anchor="right"
+            i18n="@@PAYMENT_HISTORY__PAYMENT_STATUS_UNKNOWN"
+          >
+            Unknown Status
+          </m-tooltip>
+        </td>
+        <td>
+          <a
+            *ngIf="item.receipt_url; else noReceipt"
+            class="m-paymentHistory__paddedIcon"
+            [href]="item.receipt_url"
+            target="_blank"
+          >
+            <i class="material-icons">receipt</i>
+          </a>
+          <ng-template #noReceipt>
+            <i class="material-icons m-paymentHistory__paddedIcon">close</i>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<infinite-scroll
+  (load)="loadNext()"
+  [moreData]="hasMore$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>
