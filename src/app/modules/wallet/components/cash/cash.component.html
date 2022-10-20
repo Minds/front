@@ -21,7 +21,7 @@
       Transactions
     </a>
   </li>
-  <li class="m-tabs__tab">
+  <li class="m-tabs__tab" *ngIf="hasAccount">
     <a
       routerLink="settings"
       routerLinkActive="selected"

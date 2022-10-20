@@ -17,6 +17,7 @@ import {
 } from '../../wallet-v2.service';
 import * as moment from 'moment';
 import { PlusService } from '../../../../plus/plus.service';
+import { CashWalletService } from '../cash.service';
 
 /**
  * Balances of earnings, total transfers and pending transfers in the cash section of the wallet.
@@ -45,13 +46,16 @@ export class WalletBalanceCashComponent implements OnInit {
   childRouteSubscription: Subscription;
   childRoutePath: string;
 
+  cashOnboardV2 = false;
+
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected walletService: WalletV2Service,
     private route: ActivatedRoute,
-    protected plusService: PlusService
+    protected plusService: PlusService,
+    protected cashService: CashWalletService
   ) {}
 
   ngOnInit() {
@@ -70,6 +74,8 @@ export class WalletBalanceCashComponent implements OnInit {
     );
 
     this.getPlus();
+
+    this.cashOnboardV2 = this.cashService.isExperimentActive();
   }
 
   ngOnDestroy() {

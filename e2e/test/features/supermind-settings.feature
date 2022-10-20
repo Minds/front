@@ -22,4 +22,4 @@ Feature: Supermind Settings
     Given I am logged in
     And I am on the Supermind settings page
     When I click the prompt to add my bank information
-    Then I should see "/wallet/cash/settings" in current URL
+    Then I should see "connect.stripe.com" in current URL

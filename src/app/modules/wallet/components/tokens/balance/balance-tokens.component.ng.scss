@@ -1,6 +1,8 @@
 @import 'defaults.scss';
 
 :host {
+  padding: $spacing8;
+
   .m-walletBalance__address--connect {
     display: inline-block;
     cursor: pointer;

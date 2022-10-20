@@ -14,16 +14,8 @@ m-walletDashboard,
     }
     .m-tabs__container {
       overflow-x: auto;
-      padding: 0 50px;
+      padding: 0 $spacing8;
       margin: 0 !important;
-
-      @media screen and (max-width: $min-tablet) {
-        padding: 0 40px;
-      }
-
-      @media screen and (max-width: $max-mobile) {
-        padding: 0 24px;
-      }
 
       @include horizontal-scroll;
 
@@ -263,13 +255,6 @@ m-walletDashboard,
   // BALANCES  ///////////////////////////////
   ////////////////////////////////////////////
   .m-walletDashboardBalance__wrapper {
-    margin: 40px;
-    @media screen and (max-width: $min-tablet) {
-      margin: 40px;
-    }
-    @media screen and (max-width: $max-mobile) {
-      margin: 20px;
-    }
     m-tooltip {
       .m-tooltip {
         margin-left: 5px;
@@ -282,14 +267,7 @@ m-walletDashboard,
   ////////////////////////////////////////////
   .m-walletDashboardViews__viewsContainer {
     min-height: 100px;
-    padding: 40px 50px 60px 50px;
-    @media screen and (max-width: $min-tablet) {
-      padding: 30px 40px 30px 40px;
-    }
-    @media screen and (max-width: $max-mobile) {
-      min-height: 0px;
-      padding: 24px;
-    }
+    padding: $spacing8 $spacing8;
   }
   .m-walletDashboardViews__view {
     display: block;

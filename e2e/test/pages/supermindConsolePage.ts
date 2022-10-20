@@ -41,9 +41,10 @@ export class SupermindConsolePage {
     '.m-supermindConsole__settingsButtonIcon'
   );
   private addBankPrompt: CodeceptJS.Locator = locate('m-addBankPrompt');
-  private addBankPromptLink: CodeceptJS.Locator = locate(
-    '.m-addBankPrompt__link'
-  );
+  private addBankPromptCompleteStepButton: CodeceptJS.Locator = locate(
+    '.m-addBankPrompt__container m-button button'
+  ).withText('Complete Step');
+
   private supermindListItem: CodeceptJS.Locator = locate(
     '.m-supermind__listItem'
   );
@@ -159,8 +160,7 @@ export class SupermindConsolePage {
    * @returns { void }
    */
   public clickAddBankPrompt(): void {
-    I.click(this.addBankPromptLink);
-    I.waitForNavigation({});
+    I.click(this.addBankPromptCompleteStepButton);
   }
 
   /**
