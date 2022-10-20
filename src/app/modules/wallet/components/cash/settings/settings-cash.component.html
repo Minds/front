@@ -1,4 +1,4 @@
-<div class="m-walletSettings">
+<div class="m-walletSettings" *ngIf="!v2">
   <h2 i18n="@@WALLETV2_SETTINGS_CASH__BANK_INFO" *ngIf="!embedded">
     Bank Information
   </h2>
@@ -43,4 +43,11 @@
       >. You may still use Tokens, ETH and BTC for payments.
     </p>
   </ng-container>
+</div>
+
+<div class="m-walletSettings" *ngIf="v2">
+  <m-button size="small" color="blue" (onAction)="redirectToOnboarding($event)">
+    <span>Update Your Details</span>
+    <m-icon from="md" iconId="arrow_forward" [sizeFactor]="25"></m-icon>
+  </m-button>
 </div>
