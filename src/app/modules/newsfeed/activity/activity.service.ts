@@ -296,13 +296,16 @@ export class ActivityService implements OnDestroy {
   isSupermindReply$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return (
-        getActivityContentType(entity, false, false, true) === 'supermind_reply'
+        entity &&
+        entity.remind_object &&
+        entity.supermind &&
+        entity.supermind.is_reply
       );
     })
   );
 
   /**
-   * If the post has been editied this will emit true
+   * If the post has been edited this will emit true
    */
   isEdited$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {

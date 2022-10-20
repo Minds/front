@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import getActivityContentType from '../../../helpers/activity-content-type';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 import { PaywallType } from '../../../modules/wire/lock-screen/wire-lock-screen.component';
 import { ConfigsService } from '../../services/configs.service';
@@ -29,7 +27,7 @@ export class PaywallBadgeComponent implements OnInit {
   @Input() showTierName: boolean = true;
 
   hasPaywall: boolean = false;
-  @Input() isSupermindReply: boolean = false;
+  @Input() isSupermind: boolean = false;
 
   paywallType: PaywallType = 'custom';
   tierName: string;
@@ -52,9 +50,7 @@ export class PaywallBadgeComponent implements OnInit {
 
     // Determine if we should show the supermind badge
     if (this._entity) {
-      this.isSupermindReply =
-        getActivityContentType(this._entity, false, false, true) ===
-        'supermind_reply';
+      this.isSupermind = this._entity.supermind;
     }
   }
 

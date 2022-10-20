@@ -67,7 +67,7 @@
         }
       }
     }
-    &.isSupermindReply {
+    &.isSupermind {
       @include supermindGradient;
       @include m-theme() {
         background-color: transparent;
