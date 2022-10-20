@@ -1,6 +1,6 @@
 m-walletBalance--cash {
   display: block;
-  max-width: 680px;
+
   > * {
     font-weight: 300;
     font-size: 15px;
@@ -13,6 +13,7 @@ m-walletBalance--cash {
     display: flex;
     justify-content: flex-start;
     flex-flow: row wrap;
+    padding: $spacing4 $spacing8 0;
   }
 
   .m-walletBalance--cash__colTitle {
@@ -96,15 +97,17 @@ m-walletBalance--cash {
 
   a {
     display: inline-block;
-    margin-top: 14px;
+    // margin-top: 14px;
     font-size: 14px;
     line-height: 19px;
   }
 
   // ONBOARDING NOTICE ///////////////////////////
+  // REMOVE when v2 flag on
   .m-walletBalance---cash__onboardingNotice {
-    margin-bottom: 30px;
-    padding: 20px 23px;
+    margin: $spacing8;
+    padding: $spacing4;
+
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);
     }

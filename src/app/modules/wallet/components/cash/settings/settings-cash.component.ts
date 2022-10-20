@@ -1,22 +1,21 @@
 import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  Output,
-  EventEmitter,
-  Input,
-  ViewRef,
   AfterViewInit,
+  ChangeDetectorRef,
+  Component,
   ElementRef,
+  Input,
+  OnInit,
+  ViewRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-  WalletV2Service,
   Wallet,
   WalletCurrency,
+  WalletV2Service,
 } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
+import { CashWalletService } from '../cash.service';
 
 /**
  * Container for forms and info related to the
@@ -84,11 +83,14 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
     'US',
   ];
 
+  v2 = true;
+
   constructor(
     protected walletService: WalletV2Service,
     private cd: ChangeDetectorRef,
     protected session: Session,
-    protected el: ElementRef
+    protected el: ElementRef,
+    protected cashService: CashWalletService
   ) {}
 
   ngOnInit() {
@@ -98,6 +100,8 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
         this.cashWallet = cashWallet;
         this.setView();
       });
+
+    this.v2 = this.cashService.isExperimentActive();
   }
 
   ngOnDestroy() {
@@ -105,9 +109,10 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.el.nativeElement.scrollIntoView({
-      behavior: 'smooth',
-    });
+    // Only sub-tab where this scroll happens. Commenting out for now
+    // this.el.nativeElement.scrollIntoView({
+    //   behavior: 'smooth',
+    // });
   }
 
   async setView() {
@@ -159,5 +164,12 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
     if ((this.cd as ViewRef).destroyed) return;
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * Redirects to stripe onboarding
+   */
+  redirectToOnboarding(e: MouseEvent): void {
+    this.cashService.redirectToOnboarding();
   }
 }
