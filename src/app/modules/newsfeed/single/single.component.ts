@@ -2,7 +2,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
@@ -17,7 +17,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
@@ -211,7 +210,7 @@ export class NewsfeedSingleComponent {
   }
 
   private updateMeta(): void {
-    const activity = this.activity.remind_object || this.activity;
+    const activity = this.activity;
 
     const title: string =
       activity.title ||
