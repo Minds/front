@@ -155,12 +155,13 @@ post content to trigger upgrade modal -->
   ></ng-container>
   <m-activityV2Content__multiImage
     (onClick)="onModalRequested($event)"
+    class="m-activityContent__media"
   ></m-activityV2Content__multiImage>
 </ng-container>
 <!-- ----------------------------------- -->
 <!-- QUOTE -->
 <!-- ----------------------------------- -->
-<ng-container *ngIf="!hideMedia">
+<ng-container *ngIf="!hideMedia && !isModal">
   <div
     *ngIf="service.isQuote$ | async"
     class="m-activityContent__quote"

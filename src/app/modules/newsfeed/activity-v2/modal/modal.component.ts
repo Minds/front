@@ -88,6 +88,8 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
    */
   activeMultiImageIndex: number;
 
+  isQuote: boolean = false;
+
   @ViewChild('scrollableArea')
   scrollableArea;
 
@@ -130,10 +132,6 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
         // Set the new entity
         this.entity = entity;
 
-        this.isMultiImage =
-          this.entity.custom_type == 'batch' &&
-          this.entity.custom_data.length > 1;
-
         // Re-display content component
         this.isContentReady = true;
         this.cd.detectChanges();
@@ -143,6 +141,18 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.activityService.activeMultiImageIndex$.subscribe(i => {
         this.activeMultiImageIndex = i;
+      })
+    );
+
+    this.subscriptions.push(
+      this.activityService.isQuote$.subscribe(is => {
+        this.isQuote = is;
+      })
+    );
+
+    this.subscriptions.push(
+      this.activityService.isMultiImage$.subscribe(is => {
+        this.isMultiImage = is;
       })
     );
 
@@ -298,7 +308,8 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
   get showContentMessageOnRight(): boolean {
     return (
       this.entity.content_type === 'image' ||
-      this.entity.content_type === 'video'
+      this.entity.content_type === 'video' ||
+      (this.isMultiImage && this.isQuote)
     );
   }
 
@@ -309,10 +320,6 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
       this.entity.message &&
       this.entity.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
     );
-  }
-
-  get isQuote(): boolean {
-    return this.entity.activity_type === 'quote';
   }
 
   /**
