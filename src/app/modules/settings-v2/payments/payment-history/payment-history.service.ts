@@ -40,9 +40,11 @@ export class SettingsV2PaymentHistoryService {
     // set whether there are more payments and the next paging token.
     tap((response: GetPaymentsRequest) => {
       this.hasMore$.next(response['has_more'] ?? false);
-      this.nextPagingToken$.next(
-        response['data'][response['data'].length - 1]['payment_id'] ?? null
-      );
+      if (response.data.length) {
+        this.nextPagingToken$.next(
+          response['data'][response['data'].length - 1]['payment_id'] ?? null
+        );
+      }
     }),
     // map output to the response data.
     map((response: GetPaymentsRequest) => response.data || []),
