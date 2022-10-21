@@ -1,4 +1,4 @@
-<ng-container *ngIf="supermind && supermind.entity">
+<ng-container *ngIf="supermind && supermind.entity; else postUnavailable">
   <div class="m-supermind__listItem__topBar">
     <m-chipBadge>{{ amountBadgeText }}</m-chipBadge>
     <m-supermind__stateLabel [supermind]="supermind"></m-supermind__stateLabel>
@@ -38,3 +38,12 @@
     ></m-supermind__actionButtons>
   </div>
 </ng-container>
+<ng-template #postUnavailable>
+  <div
+    class="m-supermind__listItem__postUnavailable"
+    data-ref="supermind-list-item-unavailable"
+  >
+    <span>Post unavailable</span>
+    <span>This post is unavailable because it was deleted.</span>
+  </div>
+</ng-template>

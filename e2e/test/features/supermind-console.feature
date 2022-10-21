@@ -61,7 +61,7 @@ Feature: Supermind Console
     Given I am logged in
     And I am on the Supermind Console "inbox" page
     When I click the prompt to add my bank information
-    Then I should see "/wallet/cash/settings" in current URL
+    Then I should see "connect.stripe.com" in current URL
 
   # TODO - enable this once new user email verification works
   # Scenario: onboarding when going to the supermind console inbox for the first time

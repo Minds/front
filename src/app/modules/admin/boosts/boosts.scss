@@ -80,3 +80,11 @@ minds-admin-boosts {
     }
   }
 }
+
+.m-admin-boosts-container {
+  > div {
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+  }
+}

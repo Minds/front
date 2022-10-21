@@ -97,30 +97,30 @@ describe('AdminBoosts', () => {
   }
 
   function getBoost(i: number): DebugElement {
-    return fixture.debugElement.query(By.css(`.boost`));
+    return fixture.debugElement.query(By.css(`.m-adminBoosts__boostList`));
   }
 
   function getAcceptButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.boost .m-admin-boosts--accept-button button')
+      By.css('.m-adminBoosts__boostList .m-admin-boosts--accept-button button')
     );
   }
 
   function getOpenButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.boost .m-admin-boosts--open-button button')
+      By.css('.m-adminBoosts__boostList .m-admin-boosts--open-button button')
     );
   }
 
   function getRejectButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.boost .m-admin-boosts--reject-button button')
+      By.css('.m-adminBoosts__boostList .m-admin-boosts--reject-button button')
     );
   }
 
   function getETagButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.boost .m-admin-boosts--e-tag-button button')
+      By.css('.m-adminBoosts__boostList .m-admin-boosts--e-tag-button button')
     );
   }
 
@@ -141,7 +141,11 @@ describe('AdminBoosts', () => {
           ButtonComponent,
           MockComponent({
             selector: 'm-activity',
-            inputs: ['entity'],
+            inputs: ['entity', 'displayOptions'],
+          }),
+          MockComponent({
+            selector: 'infinite-scroll',
+            inputs: ['moreData', 'inProgress'],
           }),
         ], // declare the test component
         imports: [RouterTestingModule, NgCommonModule, FormsModule],

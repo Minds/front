@@ -4,6 +4,10 @@
   .m-addBankPrompt__container {
     padding: $spacing4;
 
+    .m-walletBalance--cash & {
+      padding: $spacing8;
+    }
+
     @include m-theme() {
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
@@ -26,6 +30,31 @@
           color: themed($m-blue--contrast);
         }
       }
+    }
+  }
+
+  .m-addBankPrompt__container--noAccount {
+    b {
+      @include m-theme() {
+        color: themed($m-green);
+      }
+    }
+  }
+
+  .m-addBankPrompt__container--restricted {
+    b {
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+  }
+
+  ::ng-deep m-button {
+    display: block;
+    margin-top: $spacing4;
+
+    m-icon {
+      margin-left: $spacing3;
     }
   }
 }
