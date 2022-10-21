@@ -197,11 +197,8 @@ export class ActivityV2ContentComponent
   }
 
   @HostBinding('class.m-activityContent--multiImage')
-  get isMultiImage(): boolean {
-    return (
-      this.entity.custom_type == 'batch' && this.entity.custom_data.length > 1
-    );
-  }
+  isMultiImage: boolean;
+
   /**
    * Whether this is a quote post
    * (but not the post that was quoted)
@@ -262,7 +259,6 @@ export class ActivityV2ContentComponent
     this.subscriptions = [
       this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
-
         this.calculateFixedContentHeight();
         setTimeout(() => {
           this.calculateVideoDimensions();
@@ -313,13 +309,18 @@ export class ActivityV2ContentComponent
       })
     );
     this.subscriptions.push(
-      this.service.isQuote$.subscribe(is => {
-        this.isQuote = is;
+      this.service.isQuote$.subscribe(isQuote => {
+        this.isQuote = isQuote;
       })
     );
     this.subscriptions.push(
       this.service.isSupermindReply$.subscribe(is => {
         this.isSupermindReply = is;
+      })
+    );
+    this.subscriptions.push(
+      this.service.isMultiImage$.subscribe(is => {
+        this.isMultiImage = is;
       })
     );
     this.subscriptions.push(
@@ -675,7 +676,8 @@ export class ActivityV2ContentComponent
     }
 
     // We don't support showing media quotes in modal yet
-    if (this.entity.remind_object) {
+    // (Except for multi-image quotes)
+    if (this.entity.remind_object && !this.isMultiImage) {
       this.redirectToSinglePage();
       return;
     }
