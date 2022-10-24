@@ -112,4 +112,13 @@
       }
     }
   }
+
+  // *********************************
+  // ** SUPERMIND CONSOLE **
+  // *********************************
+  m-supermind__console & {
+    .m-paywallBadge {
+      display: none;
+    }
+  }
 }
