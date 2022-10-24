@@ -71,6 +71,7 @@ import { SettingsV2ProfileComponent } from './account/profile/profile.component'
 import { SettingsV2WalletComponent } from './other/wallet/wallet.component';
 import { SettingsV2NostrComponent } from './account/nostr/nostr.component';
 import { SupermindExperimentGuard } from '../experiments/guards/supermind-experiment.guard';
+import { SettingsV2PaymentHistoryComponent } from './payments/payment-history/payment-history.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -363,6 +364,15 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
+            path: 'payment-history',
+            component: SettingsV2PaymentHistoryComponent,
+            data: {
+              title: 'Payment History',
+              description: 'Track payments you make on Minds',
+              id: 'payment-history',
+            },
+          },
+          {
             path: 'recurring-payments',
             component: SettingsV2RecurringPaymentsComponent,
             data: {
@@ -544,6 +554,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2NsfwContentComponent,
     SettingsV2ShareButtonsComponent,
     SettingsV2PaymentMethodsComponent,
+    SettingsV2PaymentHistoryComponent,
     SettingsV2RecurringPaymentsComponent,
     SettingsV2SupermindComponent,
     SettingsV2ReportedContentComponent,
