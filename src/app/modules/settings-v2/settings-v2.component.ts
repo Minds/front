@@ -181,6 +181,10 @@ export class SettingsV2Component implements OnInit {
             id: 'payment-methods',
           },
           {
+            label: $localize`:@@SETTINGS__PAYMENTS__METHOD__LABEL:Payment History`,
+            id: 'payment-history',
+          },
+          {
             label: $localize`:@@SETTINGS__PAYMENTS__RECURRING__LABEL:Recurring Payments`,
             id: 'recurring-payments',
           },
