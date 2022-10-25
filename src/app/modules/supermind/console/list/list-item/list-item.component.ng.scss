@@ -25,7 +25,7 @@
     .m-supermind__listItem__topBarHref {
       display: flex;
       align-items: center;
-      padding-right: $spacing1;
+      padding-right: calc($spacing1 + ($spacing1 / 2));
 
       @include body3Regular;
 
