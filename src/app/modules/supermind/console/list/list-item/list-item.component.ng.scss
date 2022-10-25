@@ -23,7 +23,11 @@
     }
 
     .m-supermind__listItem__topBarHref {
+      display: flex;
+      align-items: center;
       padding-right: $spacing1;
+
+      @include body3Regular;
 
       @include m-theme() {
         color: themed($m-blue);
