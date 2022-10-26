@@ -170,7 +170,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
         this.targetUser = user;
         this.inProgress = false;
         this.setMinimumPaymentAmountFromUser(user);
-        this.refreshMerchantValidator();
       });
 
     /**
@@ -258,7 +257,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   setPaymentMethod(paymentMethod: SUPERMIND_PAYMENT_METHODS): void {
     this.formGroup.controls.paymentMethod.setValue(paymentMethod);
-    this.refreshMerchantValidator();
+    this.refreshCashMinAmountValidator();
+    this.refreshTokensMinAmountValidator();
   }
 
   /**
@@ -350,45 +350,13 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     this.formGroup.controls.offerUsd?.updateValueAndValidity({
       onlySelf: true,
     });
-    this.formGroup.controls.offerUsd?.markAsDirty({ onlySelf: true });
+    this.formGroup.controls.offerUsd?.markAsDirty();
   }
 
   private refreshTokensMinAmountValidator(): void {
     this.formGroup.controls.offerTokens?.updateValueAndValidity({
       onlySelf: true,
     });
-    this.formGroup.controls.offerTokens?.markAsDirty({ onlySelf: true });
-  }
-
-  private merchantValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (
-        this.paymentMethod === SUPERMIND_PAYMENT_METHODS.CASH &&
-        !this.targetUser?.merchant
-      ) {
-        return {
-          merchantInvalid: true,
-        };
-      }
-    };
-  }
-
-  private latestMerchantValidator: ValidatorFn = null;
-  private refreshMerchantValidator(): void {
-    if (this.latestMerchantValidator !== null) {
-      this.formGroup.controls.username?.removeValidators(
-        this.latestMerchantValidator
-      );
-    }
-    this.latestMerchantValidator = this.merchantValidator();
-    this.formGroup.controls.username?.addValidators(
-      this.latestMerchantValidator
-    );
-
-    this.formGroup.controls.username?.updateValueAndValidity({
-      onlySelf: true,
-    });
-    this.formGroup.controls.username?.markAsDirty({ onlySelf: true });
-    this.changeDetector.detectChanges();
+    this.formGroup.controls.offerTokens?.markAsDirty();
   }
 }
