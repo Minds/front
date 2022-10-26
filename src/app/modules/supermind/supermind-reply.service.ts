@@ -155,8 +155,10 @@ export class SupermindReplyService implements OnDestroy {
     if (
       !supermind.twitter_required ||
       !this.connectTwitterExperiment.isActive()
-    )
+    ) {
       return of(false);
+    }
+    // reload config prior to checking value.
     this.twitterConnection.reloadConfig$.next(true);
     return this.twitterConnection.isConnected$.pipe(
       map((isConnected: boolean) => !isConnected)

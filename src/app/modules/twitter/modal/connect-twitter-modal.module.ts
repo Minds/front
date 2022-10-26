@@ -5,7 +5,7 @@ import { ModalsModule } from '../../modals/modals.module';
 import { ConnectTwitterModalComponent } from './connect-twitter-modal.component';
 
 /**
- * Module for lazy loading ConnectTwitterModal.
+ * Module for ConnectTwitterModal.
  * Can be used to lazy-load.
  */
 @NgModule({

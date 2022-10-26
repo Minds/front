@@ -38,18 +38,21 @@ export class TwitterConnectionService {
    */
   public config$: Observable<TwitterConfig> = this.reloadConfig$.pipe(
     tap(_ => this.configRequestInProgress$.next(true)),
+    // switch stream to be that of an api call to get config.
     switchMap(_ =>
       this.api.get<GetTwitterConfigResponse>('api/v3/twitter/config')
     ),
     tap(_ => this.configRequestInProgress$.next(false)),
+    // handle error. will emit null.
     catchError(e => {
       this.authUrlRequestInProgress$.next(false);
-      console.error('Could not get twitter config for user');
+      console.error('Could not get twitter config for user', e);
       this.toast.error(
         'An unexpected error has occurred getting your twitter configuration'
       );
       return of(null);
     }),
+    // share replay with late subscribers.
     shareReplay()
   );
 
@@ -58,6 +61,7 @@ export class TwitterConnectionService {
    */
   public authUrl$: Observable<string> = this.postAuthRedirectPath$.pipe(
     tap(_ => this.authUrlRequestInProgress$.next(true)),
+    // switch stream to be that of an api call to get oauth url.
     switchMap((redirectPath: string) =>
       this.api.get<GetTwitterOauthTokenResponse>(
         'api/v3/twitter/request-oauth-token',
@@ -66,6 +70,7 @@ export class TwitterConnectionService {
         }
       )
     ),
+    // map response to that of the auth url.
     map((response: GetTwitterOauthTokenResponse) => {
       if (!response.authorization_url) {
         throw new Error('Could not find authorization URL');
@@ -73,14 +78,16 @@ export class TwitterConnectionService {
       return response.authorization_url;
     }),
     tap(_ => this.authUrlRequestInProgress$.next(false)),
+    // handle error. will emit null.
     catchError(e => {
       this.authUrlRequestInProgress$.next(false);
-      console.error(e);
+      console.error('Could not get twitter auth url for user', e);
       this.toast.error(
         'An unexpected error has occurred getting your authorization link'
       );
       return of(null);
     }),
+    // share replay with late subscribers.
     shareReplay()
   );
 

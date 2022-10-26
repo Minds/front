@@ -64,6 +64,7 @@ export class ConnectTwitterModalComponent implements OnDestroy {
   /**
    * Call window.location.assign - utility wrapper for unit testing.
    * @param { string } url - url to call.
+   * @returns { void }
    */
   private assignWindowLocation(url: string): void {
     window.location.assign(url);

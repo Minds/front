@@ -13,7 +13,7 @@ export class ConnectTwitterModalService {
   /**
    * Presents the modal.
    * @param { ConnectTwitterModalOpts } opts - connect twitter modal options.
-   * @returns { Promise<ModalRef<any>> }
+   * @returns { Promise<ModalRef<ConnectTwitterModalComponent>> }
    */
   public async open(
     opts: ConnectTwitterModalOpts = null
