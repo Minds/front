@@ -1,7 +1,18 @@
 <ng-container *ngIf="supermind && supermind.entity; else postUnavailable">
   <div class="m-supermind__listItem__topBar">
-    <m-chipBadge>{{ amountBadgeText }}</m-chipBadge>
-    <m-supermind__stateLabel [supermind]="supermind"></m-supermind__stateLabel>
+    <div class="m-supermind__listItem__topBarLeft">
+      <m-chipBadge>{{ amountBadgeText }}</m-chipBadge>
+      <m-supermind__stateLabel
+        [supermind]="supermind"
+      ></m-supermind__stateLabel>
+    </div>
+    <a
+      *ngIf="context === 'outbox' && supermind.payment_txid"
+      class="m-supermind__listItem__topBarHref"
+      [href]="'/api/v3/payments/receipt/' + supermind.payment_txid"
+      target="_blank"
+      >View Receipt</a
+    >
   </div>
   <m-activity
     [entity]="supermind.entity"

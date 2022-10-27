@@ -11,11 +11,33 @@
   }
 
   .m-supermind__listItem__topBar {
+    display: flex;
+    justify-content: space-between;
     padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
     padding-right: $activityAvatarSpacingRight--feed;
 
-    > * + * {
-      padding-left: $spacing2;
+    .m-supermind__listItem__topBarLeft {
+      > * + * {
+        padding-left: $spacing2;
+      }
+    }
+
+    .m-supermind__listItem__topBarHref {
+      display: flex;
+      align-items: center;
+      padding-right: calc($spacing1 + ($spacing1 / 2));
+
+      @include body3Regular;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-blue--contrast);
+        }
+      }
     }
   }
 
