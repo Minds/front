@@ -33,6 +33,7 @@ import { MindsUser } from '../../../../../interfaces/entities';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { SupermindSettings } from '../../../../settings-v2/payments/supermind/supermind.types';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -126,7 +127,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     private supermindOnboardingModal: SupermindOnboardingModalService,
     private mindsConfig: ConfigsService,
     private entityResolverService: EntityResolverService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private supermindNonStripeOfferExperimentService: SupermindNonStripeOffersExperimentService
   ) {}
 
   /**
@@ -170,6 +172,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
         this.targetUser = user;
         this.inProgress = false;
         this.setMinimumPaymentAmountFromUser(user);
+        if (!this.supermindNonStripeOfferExperimentService.isActive()) {
+          this.refreshMerchantValidator();
+        }
       });
 
     /**
@@ -259,6 +264,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     this.formGroup.controls.paymentMethod.setValue(paymentMethod);
     this.refreshCashMinAmountValidator();
     this.refreshTokensMinAmountValidator();
+    if (!this.supermindNonStripeOfferExperimentService.isActive()) {
+      this.refreshMerchantValidator();
+    }
   }
 
   /**
@@ -358,5 +366,37 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       onlySelf: true,
     });
     this.formGroup.controls.offerTokens?.markAsDirty();
+  }
+
+  private merchantValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (
+        this.paymentMethod === SUPERMIND_PAYMENT_METHODS.CASH &&
+        !this.targetUser?.merchant
+      ) {
+        return {
+          merchantInvalid: true,
+        };
+      }
+    };
+  }
+
+  private latestMerchantValidator: ValidatorFn = null;
+  private refreshMerchantValidator(): void {
+    if (this.latestMerchantValidator !== null) {
+      this.formGroup.controls.username?.removeValidators(
+        this.latestMerchantValidator
+      );
+    }
+    this.latestMerchantValidator = this.merchantValidator();
+    this.formGroup.controls.username?.addValidators(
+      this.latestMerchantValidator
+    );
+
+    this.formGroup.controls.username?.updateValueAndValidity({
+      onlySelf: true,
+    });
+    this.formGroup.controls.username?.markAsDirty({ onlySelf: true });
+    this.changeDetector.detectChanges();
   }
 }
