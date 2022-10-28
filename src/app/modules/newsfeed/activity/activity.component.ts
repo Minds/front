@@ -58,7 +58,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   entity$: Observable<ActivityEntity> = this.service.entity$;
 
-  @Input('canDelete') set _canDelete(value: boolean) {
+  @Input() set canDelete(value: boolean) {
     this.service.canDeleteOverride$.next(value);
   }
 

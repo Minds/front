@@ -61,7 +61,7 @@ import { PersistentFeedExperimentService } from '../../experiments/sub-services/
 export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   entity$: Observable<ActivityEntity> = this.service.entity$;
 
-  @Input('canDelete') set _canDelete(value: boolean) {
+  @Input() set canDelete(value: boolean) {
     this.service.canDeleteOverride$.next(value);
   }
 

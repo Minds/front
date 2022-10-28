@@ -190,16 +190,6 @@
         Undo Remind
       </span>
     </m-dropdownMenu__item>
-    <!-- DELETE -->
-    <m-dropdownMenu__item
-      (click)="onSelectedOption('delete')"
-      *ngIf="shouldShowDelete()"
-      red="true"
-    >
-      <span i18n="@@M__ACTION__DELETE_POST">
-        Delete Post
-      </span>
-    </m-dropdownMenu__item>
     <!-- REPORT -->
     <m-dropdownMenu__item
       (click)="onSelectedOption('report')"
@@ -211,6 +201,16 @@
     >
       <span i18n="Report as notify something@@M__ACTION__REPORT_POST">
         Report Post
+      </span>
+    </m-dropdownMenu__item>
+    <!-- DELETE -->
+    <m-dropdownMenu__item
+      (click)="onSelectedOption('delete')"
+      *ngIf="shouldShowDelete()"
+      red="true"
+    >
+      <span i18n="@@M__ACTION__DELETE_POST">
+        Delete Post
       </span>
     </m-dropdownMenu__item>
   </ul>
