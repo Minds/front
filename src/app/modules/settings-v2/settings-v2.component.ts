@@ -310,6 +310,10 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__TWITTER__LABEL:Twitter`,
             id: 'twitter-sync',
           },
+          {
+            label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__YOUTUBE__LABEL:Youtube`,
+            id: 'youtube-migration',
+          },
         ],
       },
       {
