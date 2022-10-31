@@ -1,0 +1,46 @@
+@import 'defaults.scss';
+
+:host {
+  .m-supermind__banner {
+    display: flex;
+    align-items: center;
+    padding: $spacing4 $spacing6;
+    border-radius: $m-borderRadius;
+
+    @include m-theme() {
+      background-color: themed($m-borderColor--primary);
+    }
+
+    .m-supermindBanner__text {
+      height: $spacing5;
+      padding-right: $spacing3;
+      flex-grow: 2;
+
+      // Banner minus padded button
+      max-width: calc(100% - 112px);
+
+      span {
+        @include body2Regular;
+        &.m-supermindBannerText__name {
+          @include body2Bold;
+        }
+      }
+    }
+
+    // ***********************************
+    // ** MOBILE
+    // ***********************************
+
+    @media screen and (max-width: 700px) {
+      flex-direction: column;
+      align-items: initial;
+      .m-supermindBanner__text {
+        height: initial;
+        padding-right: 0;
+        padding-bottom: $spacing4;
+        max-width: none;
+        text-align: center;
+      }
+    }
+  }
+}
