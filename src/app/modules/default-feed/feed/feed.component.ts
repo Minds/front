@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
+import { FeedNoticeService } from '../../notices/services/feed-notice.service';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -38,12 +39,14 @@ export class DefaultFeedComponent implements OnInit {
   constructor(
     public feedsService: FeedsService,
     public experiments: ExperimentsService,
+    private feedNoticeService: FeedNoticeService,
     private discoveryBoostExperiment: DiscoveryBoostExperimentService,
     private dismissal: DismissalService
   ) {}
 
   public ngOnInit(): void {
     this.load(true);
+    this.feedNoticeService.fetch();
   }
 
   /**
