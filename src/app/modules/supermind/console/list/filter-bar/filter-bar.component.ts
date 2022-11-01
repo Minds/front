@@ -1,9 +1,17 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import {
+  SupermindConsoleListType,
   SupermindConsoleStatusFilterType,
   SupermindState,
 } from '../../../supermind.types';
+import { SupermindConsoleService } from '../../services/console.service';
 
 /**
  * Filter bar component for Supermind console.
@@ -13,7 +21,7 @@ import {
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.ng.scss'],
 })
-export class SupermindConsoleFilterBarComponent {
+export class SupermindConsoleFilterBarComponent implements OnInit, OnDestroy {
   // filter type values.
   readonly statusFilterTypes: SupermindConsoleStatusFilterType[] = [
     'all',
@@ -29,12 +37,33 @@ export class SupermindConsoleFilterBarComponent {
   // status filter values.
   public readonly statusFilterValue$: BehaviorSubject<
     SupermindConsoleStatusFilterType
-  > = new BehaviorSubject<SupermindConsoleStatusFilterType>('all');
+  > = new BehaviorSubject<SupermindConsoleStatusFilterType>(null);
+
+  private listTypeSubscription: Subscription;
 
   // fired on filter state change.
   @Output() statusFilterChange: EventEmitter<SupermindState> = new EventEmitter<
     SupermindState
   >();
+
+  constructor(private service: SupermindConsoleService) {}
+
+  ngOnInit(): void {
+    // set default filter values on list type change.
+    this.listTypeSubscription = this.service.listType$.subscribe(
+      (listType: SupermindConsoleListType): void => {
+        if (listType === 'inbox') {
+          this.onStatusFilterChange('pending');
+          return;
+        }
+        this.onStatusFilterChange('all');
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.listTypeSubscription?.unsubscribe();
+  }
 
   /**
    * Called on status filter change.
