@@ -1,4 +1,5 @@
 @import 'defaults.scss';
+@import '../../../../common/layout/layout.scss';
 
 :host {
   .m-supermind__banner {
@@ -12,12 +13,10 @@
     }
 
     .m-supermindBanner__text {
+      margin-bottom: 0;
       height: $spacing5;
       padding-right: $spacing3;
       flex-grow: 2;
-
-      // Banner minus padded button
-      max-width: calc(100% - 112px);
 
       span {
         @include body2Regular;
@@ -31,7 +30,7 @@
     // ** MOBILE
     // ***********************************
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: $layoutMax2ColFixedWidth) {
       flex-direction: column;
       align-items: initial;
       .m-supermindBanner__text {
