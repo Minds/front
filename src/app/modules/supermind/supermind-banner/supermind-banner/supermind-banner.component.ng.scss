@@ -21,7 +21,7 @@
 
       span {
         @include body2Regular;
-        &.m-supermindBannerText__name {
+        &.m-supermindBannerText__bold {
           @include body2Bold;
         }
       }

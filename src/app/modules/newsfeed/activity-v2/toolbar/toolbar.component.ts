@@ -70,7 +70,8 @@ export class ActivityV2ToolbarComponent {
     );
 
     this.supermindButtonExperiment = this.experimentsService.hasVariation(
-      'front-5812-supermind-button'
+      'front-5812-supermind-button',
+      true
     );
   }
 
