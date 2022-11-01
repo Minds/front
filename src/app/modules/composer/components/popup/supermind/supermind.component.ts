@@ -33,6 +33,7 @@ import { MindsUser } from '../../../../../interfaces/entities';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { SupermindSettings } from '../../../../settings-v2/payments/supermind/supermind.types';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -126,7 +127,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     private supermindOnboardingModal: SupermindOnboardingModalService,
     private mindsConfig: ConfigsService,
     private entityResolverService: EntityResolverService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private supermindNonStripeOfferExperimentService: SupermindNonStripeOffersExperimentService
   ) {}
 
   /**
@@ -170,7 +172,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
         this.targetUser = user;
         this.inProgress = false;
         this.setMinimumPaymentAmountFromUser(user);
-        this.refreshMerchantValidator();
+        if (!this.supermindNonStripeOfferExperimentService.isActive()) {
+          this.refreshMerchantValidator();
+        }
       });
 
     /**
@@ -258,7 +262,11 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   setPaymentMethod(paymentMethod: SUPERMIND_PAYMENT_METHODS): void {
     this.formGroup.controls.paymentMethod.setValue(paymentMethod);
-    this.refreshMerchantValidator();
+    this.refreshCashMinAmountValidator();
+    this.refreshTokensMinAmountValidator();
+    if (!this.supermindNonStripeOfferExperimentService.isActive()) {
+      this.refreshMerchantValidator();
+    }
   }
 
   /**
@@ -350,14 +358,14 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     this.formGroup.controls.offerUsd?.updateValueAndValidity({
       onlySelf: true,
     });
-    this.formGroup.controls.offerUsd?.markAsDirty({ onlySelf: true });
+    this.formGroup.controls.offerUsd?.markAsDirty();
   }
 
   private refreshTokensMinAmountValidator(): void {
     this.formGroup.controls.offerTokens?.updateValueAndValidity({
       onlySelf: true,
     });
-    this.formGroup.controls.offerTokens?.markAsDirty({ onlySelf: true });
+    this.formGroup.controls.offerTokens?.markAsDirty();
   }
 
   private merchantValidator(): ValidatorFn {
