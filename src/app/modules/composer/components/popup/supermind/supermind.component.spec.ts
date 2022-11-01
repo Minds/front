@@ -6,16 +6,13 @@ import { CommonModule } from '../../../../../common/common.module';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { MockComponent, MockService } from '../../../../../utils/mock';
-import { PaymentsModule } from '../../../../payments/payments.module';
 import { SupermindOnboardingModalService } from '../../../../supermind/onboarding-modal/onboarding-modal.service';
-import {
-  ComposerService,
-  ComposerSize,
-} from '../../../services/composer.service';
+import { ComposerService } from '../../../services/composer.service';
 import { PopupService } from '../popup.service';
 import { ComposerSupermindComponent } from '../supermind/supermind.component';
 import { EntityResolverService } from '../../../../../common/services/entity-resolver.service';
 import { of } from 'rxjs';
+import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
 
 describe('Composer Supermind Popup', () => {
   let comp: ComposerSupermindComponent;
@@ -95,6 +92,10 @@ describe('Composer Supermind Popup', () => {
           {
             provide: EntityResolverService,
             useValue: MockService(EntityResolverService),
+          },
+          {
+            provide: SupermindNonStripeOffersExperimentService,
+            useValue: MockService(SupermindNonStripeOffersExperimentService),
           },
         ],
       }).compileComponents();

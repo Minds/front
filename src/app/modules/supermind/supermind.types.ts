@@ -71,6 +71,7 @@ export enum SupermindState {
   FAILED_PAYMENT,
   FAILED,
   EXPIRED,
+  TRANSFER_FAILED,
 }
 
 // Supermind state mapping.
@@ -83,6 +84,7 @@ export const SUPERMIND_STATE_MAP: { [key: number]: SupermindState } = {
   5: SupermindState.FAILED_PAYMENT,
   6: SupermindState.FAILED,
   7: SupermindState.EXPIRED,
+  8: SupermindState.TRANSFER_FAILED,
 };
 
 // Supermind payment method enum.
