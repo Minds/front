@@ -86,7 +86,8 @@ export class SupermindConsoleActionButtonsComponent {
    */
   public shouldShowViewReplyButton(): boolean {
     return (
-      this.supermind.status === SupermindState.ACCEPTED &&
+      (this.supermind.status === SupermindState.ACCEPTED ||
+        this.supermind.status === SupermindState.TRANSFER_FAILED) &&
       Boolean(this.supermind.reply_activity_guid)
     );
   }

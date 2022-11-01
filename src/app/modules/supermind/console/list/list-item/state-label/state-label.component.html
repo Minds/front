@@ -23,6 +23,12 @@
     Accepted
   </ng-container>
   <ng-container
+    *ngSwitchCase="supermindState.TRANSFER_FAILED"
+    i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__ACCEPTED"
+  >
+    Accepted
+  </ng-container>
+  <ng-container
     *ngSwitchCase="supermindState.REVOKED"
     i18n="@@SUPERMIND_CONSOLE_STATE_LABEL__REVOKED"
   >
