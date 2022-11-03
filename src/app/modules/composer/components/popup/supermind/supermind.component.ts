@@ -294,7 +294,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       receiver_user: this.targetUser,
       receiver_guid: this.formGroup.controls.username.value, // we can pass a username to the guid field
       reply_type: parseInt(this.formGroup.controls.responseType.value),
-      twitter_required: false,
+      twitter_required: this.formGroup.controls.twitterRequired.value,
       payment_options: paymentOptions,
       terms_agreed: this.formGroup.controls.termsAccepted.value,
       refund_policy_agreed: this.formGroup.controls.refundPolicyAccepted.value,
