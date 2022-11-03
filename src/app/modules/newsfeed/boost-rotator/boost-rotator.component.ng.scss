@@ -4,10 +4,10 @@
 :host {
   &.m-newsfeedBoostRotator--activityV2 {
     .m-newsfeed__boostRotator {
-      margin-bottom: 1px;
+      margin: 0;
 
       .m-newsfeedBoostRotator__item {
-        top: 46px; // leave room for toolbar buttons
+        top: 45px; // leave room for toolbar buttons
       }
     }
   }
