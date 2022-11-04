@@ -14,6 +14,8 @@ import {
   SupermindState,
 } from '../../supermind.types';
 import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 describe('SupermindConsoleListComponent', () => {
   let comp: SupermindConsoleListComponent;
@@ -86,6 +88,14 @@ describe('SupermindConsoleListComponent', () => {
               },
             }),
           },
+          {
+            provide: Router,
+            useValue: MockService(Router),
+          },
+          {
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
+          },
         ],
       }).compileComponents();
     })
@@ -147,6 +157,26 @@ describe('SupermindConsoleListComponent', () => {
     expect(comp.list$.getValue()).toEqual(mockList);
     expect(comp.moreData$.getValue()).toBeFalse();
     expect(comp.inProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should load single offer page and redirect to inbox if forbidden access', fakeAsync(() => {
+    const statusFilterValue: SupermindState = 3;
+    (comp as any).service.getList$.and.returnValue(
+      of({ redirect: true, errorMessage: 'Error' })
+    );
+    comp.onStatusFilterChange(statusFilterValue);
+    comp.setupSubscription();
+    tick();
+
+    expect((comp as any).service.getList$).toHaveBeenCalledWith(
+      12,
+      0,
+      statusFilterValue
+    );
+    expect((comp as any).toaster.error).toHaveBeenCalledWith('Error');
+    expect((comp as any).router.navigate).toHaveBeenCalledWith([
+      'supermind/inbox',
+    ]);
   }));
 
   it('should load next when there is more data', fakeAsync(() => {

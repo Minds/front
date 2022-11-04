@@ -16,6 +16,8 @@ import {
   SupermindState,
 } from '../../supermind.types';
 import { SupermindConsoleService } from '../services/console.service';
+import { Router } from '@angular/router';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Supermind list component - contains logic for inbox / outbox list.
@@ -81,7 +83,11 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
     })
   );
 
-  constructor(private service: SupermindConsoleService) {
+  constructor(
+    private service: SupermindConsoleService,
+    private router: Router,
+    private toaster: ToasterService
+  ) {
     super();
   }
 
@@ -116,10 +122,16 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
           return this.service.getList$(this.requestLimit, 0, statusFilterValue);
         }
       ),
-      tap((list: any) => {
-        this.moreData$.next(list.length >= this.requestLimit);
+      tap((response: any) => {
+        if (response && typeof response.redirect !== 'undefined') {
+          console.log(response);
+          this.toaster.error(response.errorMessage);
+          this.router.navigate(['supermind/inbox']);
+          return;
+        }
+        this.moreData$.next(response?.length >= this.requestLimit);
         this.inProgress$.next(false);
-        this.list$.next(list);
+        this.list$.next(response);
         this.populateCounts();
       })
     );
