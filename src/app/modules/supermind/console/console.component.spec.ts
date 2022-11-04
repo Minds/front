@@ -7,6 +7,10 @@ import {
 } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { loginReferrerServiceMock } from '../../../mocks/services/login-referrer-service-mock.spec';
+import { LoginReferrerService } from '../../../services/login-referrer.service';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../services/session-mock';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
@@ -74,6 +78,14 @@ describe('SupermindConsoleComponent', () => {
           {
             provide: SupermindOnboardingModalService,
             useValue: MockService(SupermindOnboardingModalService),
+          },
+          {
+            provide: Session,
+            useValue: sessionMock,
+          },
+          {
+            provide: LoginReferrerService,
+            useValue: loginReferrerServiceMock,
           },
         ],
       }).compileComponents();
