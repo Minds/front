@@ -10,6 +10,7 @@ export class ActivityComponent {
   private optionSelector: string = '.m-dropdownMenuItem__text--label span';
   private remindButtonSelector: string =
     'm-activityV2__remindButton m-dropdownMenu';
+  private timestampSelector: string = 'm-activityV2__permalink';
 
   /**
    * Delete the activity.
@@ -41,6 +42,14 @@ export class ActivityComponent {
   public clickQuoteButton(): void {
     this.openRemindMenu();
     I.click(locate('.m-dropdownMenu__item').withText('Quote post'));
+  }
+
+  /**
+   * Click the timestamp of a post, linking to the single entity page.
+   * @returns { void }
+   */
+  public clickTimestamp(): void {
+    I.click(this.timestampSelector);
   }
 
   /**
