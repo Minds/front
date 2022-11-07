@@ -1,3 +1,5 @@
+import { ActivityComponent } from './activityComponent';
+
 const { I } = inject();
 
 /**
@@ -7,6 +9,7 @@ export class BoostRotatorComponent {
   // selectors.
   private readonly boostRotatorSelector: string = '.m-newsfeed__boostRotator';
   private readonly activitySelector: string = 'm-activity';
+  private readonly activityComponent: ActivityComponent = new ActivityComponent();
 
   /**
    * Whether boost rotator should be seen
@@ -35,5 +38,33 @@ export class BoostRotatorComponent {
         resp.url().includes('/api/v2/boost/feed') && resp.status() === 200,
       30
     );
+  }
+
+  /**
+   * Wait for boost feed rotator element to appear.
+   * @returns { void }
+   */
+  public waitForBoostFeedRotator(): void {
+    I.waitForElement(this.boostRotatorSelector, 30);
+  }
+
+  /**
+   * Toggle remind button - can remind or remove a remind.
+   * @returns { void }
+   */
+  public toggleRemind(): void {
+    within(this.boostRotatorSelector, () => {
+      this.activityComponent.clickRemindButton();
+    });
+  }
+
+  /**
+   * Open composer by clicking to quote.
+   * @returns { void }
+   */
+  public openComposerForQuote(): void {
+    within(this.boostRotatorSelector, () => {
+      this.activityComponent.clickQuoteButton();
+    });
   }
 }
