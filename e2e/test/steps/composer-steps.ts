@@ -96,6 +96,10 @@ namespace ComposerSteps {
     I.dontSeeElement(`${composerModal.postButton} m-dropdownmenu`);
   });
 
+  Then('I should see the composer', () => {
+    I.seeElement(composerModal.modalElementTag);
+  });
+
   Then('I should still see the composer modal open', () => {
     I.seeElement(composerModal.modalElementTag);
   });
