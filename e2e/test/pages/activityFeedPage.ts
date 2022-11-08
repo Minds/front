@@ -1,12 +1,9 @@
-import { ActivityComponent } from '../components/activityComponent';
-
-const { I } = inject();
-const activityComponent = new ActivityComponent();
+const { I, activityComponent } = inject();
 
 /**
  * Activity feed page - should be extended by for example, newsfeed or channel.
  */
-export class ActivityFeedPage {
+class ActivityFeedPage {
   // selectors.
   public activitySelector: string = 'm-activity';
   public activityMediaLinkSelector: string =
@@ -91,3 +88,5 @@ export class ActivityFeedPage {
     I.dontSeeElement(locate(this.activitySelector).withText(text));
   }
 }
+
+export = ActivityFeedPage;

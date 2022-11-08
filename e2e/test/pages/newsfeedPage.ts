@@ -1,10 +1,10 @@
-import { ActivityFeedPage } from './activityFeedPage';
+import ActivityFeedPage from './activityFeedPage';
 const { I } = inject();
 
 /**
  * Newsfeed page - common functions for newsfeed.
  */
-export class NewsfeedPage extends ActivityFeedPage {
+class NewsfeedPage extends ActivityFeedPage {
   public newsfeedURI: string = '/newsfeed/subscriptions/latest';
 
   /**
@@ -24,3 +24,5 @@ export class NewsfeedPage extends ActivityFeedPage {
     I.click(this.composerBox);
   }
 }
+
+export = new NewsfeedPage();

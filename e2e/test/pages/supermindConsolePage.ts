@@ -1,14 +1,11 @@
-import { SidebarComponent } from '../components/sidebarComponent';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
 } from '../types/supermind-console.types';
 
-require('dotenv').config();
-const { I } = inject();
-const sidebarComponent = new SidebarComponent();
+const { I, sidebarComponent } = inject();
 
-export class SupermindConsolePage {
+class SupermindConsolePage {
   /** @type { string }  - root uri of the page */
   private baseUrl: string = '/supermind';
 
@@ -272,3 +269,5 @@ export class SupermindConsolePage {
     });
   }
 }
+
+export = new SupermindConsolePage();

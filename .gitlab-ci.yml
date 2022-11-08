@@ -110,7 +110,7 @@ lint:
 #   <<: *cypress_tests
 
 .playwright_tests: &playwright_tests
-  image: mcr.microsoft.com/playwright:v1.22.0-focal
+  image: mcr.microsoft.com/playwright:v1.27.0-focal
   stage: qa
   script:
     - >

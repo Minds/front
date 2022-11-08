@@ -1,26 +1,28 @@
 {
-  "name": "e2e",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "test:e2e:local": "codeceptjs run --steps -c conf/codecept.local.conf.ts",
-    "test:e2e:local:ui": "codecept-ui run --steps -c conf/codecept.local.conf.ts",
-    "test:e2e:real": "codeceptjs run-multiple browserStackCombo --steps -c conf/codecept.real.conf.ts"
-  },
-  "devDependencies": {
-    "@codeceptjs/configure": "^0.8.0",
-    "@codeceptjs/examples": "^1.2.1",
-    "@codeceptjs/helper": "^2.0.1",
-    "@codeceptjs/ui": "^0.4.7",
-    "@playwright/test": "^1.23.3",
-    "browserstack-local": "^1.5.1",
-    "codeceptjs": "^3.3.5",
-    "dotenv": "^16.0.1",
-    "playwright": "^1.23.2",
-    "ts-node": "~10.1.0",
-    "typescript": "~4.5.5"
-  },
-  "dependencies": {
-    "jsonwebtoken": "^8.5.1"
-  }
+    "name": "minds-codecept-e2e",
+    "version": "1.0.0",
+    "description": "Minds Codecept E2E tests",
+    "scripts": {
+        "test:e2e:local": "codeceptjs run --steps -c codecept.local.conf.ts",
+        "test:e2e:local:ui": "codecept-ui run --steps -c codecept.local.conf.ts",
+        "test:e2e:sandbox": "codeceptjs run --steps -c codecept.sandbox.conf.ts",
+        "test:e2e:real": "codeceptjs run-multiple browserStackCombo --steps -c codecept.production.conf.ts",
+        "def": "codeceptjs def -c codecept.local.conf.ts ."
+    },
+    "author": "Minds",
+    "license": "AGPL-3.0",
+    "devDependencies": {
+        "@codeceptjs/configure": "^0.10.0",
+        "@codeceptjs/examples": "^1.2.1",
+        "@codeceptjs/ui": "^0.4.7",
+        "@types/node": "^18.11.9",
+        "codeceptjs": "^3.3.6",
+        "playwright": "^1.27.1",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.8.4"
+    },
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "jsonwebtoken": "^8.5.1"
+    }
 }

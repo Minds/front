@@ -1,12 +1,9 @@
-import { Helpers } from '../helpers/helpers';
-
 const { I } = inject();
-const helpers = new Helpers();
 
 /**
  * Register page.
  */
-export class RegisterPage {
+class RegisterPage {
   // Selectors
   private readonly url: string = '/register';
   private readonly usernameSelector: string = '#username';
@@ -41,8 +38,8 @@ export class RegisterPage {
    * @return { void }
    */
   public fillForm(username: string, password: string, email: string): void {
-    helpers.setCaptchaBypassCookie();
-    helpers.setRateLimitBypassCookie();
+    I.setCaptchaBypassCookie();
+    I.setRateLimitBypassCookie();
     I.refreshPage();
 
     this.inputUsername(username);
@@ -96,3 +93,5 @@ export class RegisterPage {
     I.click(this.acceptTosSelector);
   }
 }
+
+export = new RegisterPage();

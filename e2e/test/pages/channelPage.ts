@@ -1,12 +1,11 @@
-import { SidebarComponent } from '../components/sidebarComponent';
-import { ActivityFeedPage } from './activityFeedPage';
-const sidebarComponent = new SidebarComponent();
+import ActivityFeedPage from './activityFeedPage';
 
-require('dotenv').config();
+const { sidebarComponent } = inject();
+
 /**
  * Channel page - contains reusable function relating to the channel page.
  */
-export class ChannelPage extends ActivityFeedPage {
+class ChannelPage extends ActivityFeedPage {
   /**
    * Navigate to the channel page by sidebar.
    * @returns { void }
@@ -22,3 +21,5 @@ export class ChannelPage extends ActivityFeedPage {
     return 'm-channelactions__supermind m-button';
   }
 }
+
+export = new ChannelPage();
