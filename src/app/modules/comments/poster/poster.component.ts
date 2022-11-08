@@ -100,25 +100,19 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
       }),
       this.supermindBannerPopup.visible$.subscribe(visible => {
         if (visible && this.canShowSupermindBannerPopup) {
-          console.log('ojm SVC - visible$rx - setSeen()');
           // Save if banner was seen so we don't show again
           this.supermindBannerPopup.setSeen();
         }
+        this.detectChanges();
       }),
       this.supermindBannerPopup.supermindPosted$.subscribe(posted => {
-        if (posted && this.canShowSupermindBannerPopup) {
+        if (posted) {
           // Reset comment if it has been converted into a supermind
-          // if (this.supermindBannerPopup.hasBeenSeen()) {
-          // ojm put back
-          console.log(
-            'ojm SVC supermindPosted$ from banner, resetting comment'
-          );
           this.commentConvertedToActivity = true;
           this.content = '';
           this.attachment.reset();
 
           this.detectChanges();
-          // }
         }
       })
     );
@@ -132,12 +126,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ********************************************************
-  // ********************************************************
-  // ********************************************************
-  // ********************************************************
-  // ********************************************************
-
   /**
    * Enable popup timer if experiment is enabled,
    * it hasn't been seen already this session
@@ -149,22 +137,12 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
       !this.supermindBannerPopup.experimentEnabled() ||
       this.supermindBannerPopupSeen
     ) {
-      console.log('ojm POSTER exp disabled or seen already');
-
       return false;
     }
 
     const isCommentingOnOwnEntity =
       this.session.getLoggedInUser().guid === this.entity.ownerObj.guid;
 
-    const ojmrules =
-      this.level === 0 &&
-      !this.editing &&
-      !this.attachmentIntent &&
-      !this.postIntent &&
-      !this.commentConvertedToActivity &&
-      !isCommentingOnOwnEntity;
-    console.log('ojm POSTER rules', ojmrules);
     return (
       this.level === 0 &&
       !this.editing &&
@@ -174,13 +152,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
       !isCommentingOnOwnEntity
     );
   }
-
-  // ********************************************************
-  // ********************************************************
-  // ********************************************************
-  // ********************************************************
-  // ********************************************************
-  // ***** ojm remove this block and top one****
 
   keyup(e: KeyboardEvent) {
     this.getPostPreview(this.content);

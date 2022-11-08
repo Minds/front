@@ -23,7 +23,7 @@ export class SupermindBannerComponent implements OnInit {
    */
   @Input() entity: any;
 
-  /**  */
+  /** The content/context of the banner */
   @Input() type: SupermindBannerType = 'repliesFromCreators';
 
   /**
@@ -81,8 +81,7 @@ export class SupermindBannerComponent implements OnInit {
   /**
    * Called when a supermind is posted via the supermind button
    */
-  supermindPosted(): void {
-    console.log('ojm BANNER supermindPosted$ was emitted and caught');
+  onSupermindPosted(): void {
     if (this.type === 'upgradeComment') {
       this.supermindBannerPopup.supermindPosted$.next(true);
     }

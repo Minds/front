@@ -22,7 +22,6 @@
           'supermind-banner-action-button--replies-from-creators'
         )
       "
-      (supermindPosted)="supermindPosted()"
     ></m-supermind__button>
   </ng-container>
   <!-- ------------------------------------------------ -->
@@ -48,12 +47,12 @@
       size="xsmall"
       data-ref="supermind-banner-action-button"
       class="m-supermindBanner__button"
+      (onSupermindPosted)="onSupermindPosted()"
       (click)="
         onClickSupermindButton(
           'supermind-banner-action-button--upgrade-comment'
         )
       "
-      (supermindPosted)="supermindPosted()"
       ><span i18n="@@COMMON__UPGRADE">Upgrade</span></m-supermind__button
     >
   </ng-container>

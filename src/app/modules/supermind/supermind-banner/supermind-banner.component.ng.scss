@@ -68,4 +68,10 @@
       }
     }
   }
+
+  ::ng-deep m-supermind__button m-button .m-button {
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
+  }
 }

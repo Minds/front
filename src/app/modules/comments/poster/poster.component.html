@@ -11,7 +11,7 @@
     class="m-commentPoster__popupWrapper"
   >
     <m-supermind__banner
-      *ngIf="supermindBannerPopup.visible$ | async"
+      [hidden]="!(supermindBannerPopup.visible$ | async)"
       [type]="'upgradeComment'"
       [entity]="entity"
       [message]="content"

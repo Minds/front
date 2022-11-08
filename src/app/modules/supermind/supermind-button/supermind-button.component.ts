@@ -47,9 +47,7 @@ export class SupermindButtonComponent {
   /**
    * Fires when a supermind activity is posted via the supermind button
    */
-  @Output('supermindPosted') supermindPostedEmitter: EventEmitter<
-    boolean
-  > = new EventEmitter(false);
+  @Output() onSupermindPosted: EventEmitter<any> = new EventEmitter();
 
   /**
    *
@@ -105,18 +103,15 @@ export class SupermindButtonComponent {
   }
 
   async presentComposerModal(): Promise<void> {
-    // ojm if anything is in the composer already, clear it out??
-
     try {
       await this.composerModalService
         .setInjector(this.injector)
         .onPost(activity => {
-          this.supermindPostedEmitter.emit(true);
-          console.log('ojm BTN onPost - posted!');
+          this.onSupermindPosted.emit(true);
         })
         .present();
     } catch (err) {
-      console.log('ojm BTN error onPost', err);
+      console.error(err);
     }
   }
 }
