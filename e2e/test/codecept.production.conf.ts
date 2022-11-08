@@ -86,6 +86,9 @@ export const config: CodeceptJS.MainConfig = {
     CookieHelper: {
       require: './helpers/cookie-helper.ts',
     },
+    CommonHelper: {
+      require: './helpers/common-helper.ts',
+    },
   },
   // multiple: {
   //   browserStackCombo: {

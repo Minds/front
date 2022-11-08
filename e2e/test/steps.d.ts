@@ -25,6 +25,7 @@ type sidebarComponent = typeof import('./fragments/sidebarComponent');
 type supermindOnboardingModalComponent = typeof import('./fragments/supermindOnboardingModalComponent');
 type topbarComponent = typeof import('./fragments/topbarComponent');
 type CookieHelper = import('./helpers/cookie-helper');
+type CommonHelper = import('./helpers/common-helper');
 
 declare namespace CodeceptJS {
   interface SupportObject {
@@ -56,7 +57,7 @@ declare namespace CodeceptJS {
     supermindOnboardingModalComponent: supermindOnboardingModalComponent;
     topbarComponent: topbarComponent;
   }
-  interface Methods extends Playwright, CookieHelper {}
+  interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}
   namespace Translation {
     interface Actions {}

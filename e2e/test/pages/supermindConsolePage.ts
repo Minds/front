@@ -187,14 +187,10 @@ class SupermindConsolePage {
   ): Promise<void> {
     I.scrollPageToTop();
     I.click(this.statusFilterTrigger);
-    await Promise.all([
-      I.click(this.statusFilterLabel.withText(stateFilterLabel)),
-      I.waitForResponse(
-        resp =>
-          resp.url().includes(`&status=${stateValue}`) && resp.status() === 200,
-        30
-      ),
-    ]);
+    await I.clickAndWait(
+      this.statusFilterLabel.withText(stateFilterLabel),
+      `status=${stateValue}`
+    );
   }
 
   /**
