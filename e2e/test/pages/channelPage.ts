@@ -1,5 +1,4 @@
 import ActivityFeedPage from './activityFeedPage';
-
 const { sidebarComponent } = inject();
 
 /**
@@ -22,4 +21,6 @@ class ChannelPage extends ActivityFeedPage {
   }
 }
 
+module.exports = new ChannelPage();
+module.exports.ChannelPage = ChannelPage;
 export = new ChannelPage();

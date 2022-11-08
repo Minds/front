@@ -69,7 +69,7 @@ To create a new suite of tests:
 - If necessary, create a Feature file (to define gherkin features and scenarios).
 - If necessary, create a Steps file (to define individual Steps - Given/When/Then).
 - If necessary, create a Page file (to define common functions and variables).
-- Ensure that all the files above are linked via all Codeceptjs config files - Pages and Fragments should be added to the include section, Steps to the gherkin steps section.
+- Ensure that Pages and Fragments are references in ALL Codeceptjs config files in the include section.
 
 ## Helpful Links
 - How to write tests in CodeceptJs + Gherkin click [here](https://codecept.io/bdd/)

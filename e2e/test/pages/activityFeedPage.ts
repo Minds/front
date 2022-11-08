@@ -89,4 +89,6 @@ class ActivityFeedPage {
   }
 }
 
+module.exports = new ActivityFeedPage();
+module.exports.ActivityFeedPage = ActivityFeedPage;
 export = ActivityFeedPage;

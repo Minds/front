@@ -1,3 +1,5 @@
+require('ts-node/register');
+
 import { setHeadlessWhen, setCommonPlugins } from '@codeceptjs/configure';
 // turn on headless mode when running with HEADLESS=true environment variable
 // export HEADLESS=true && npx codeceptjs run
@@ -8,7 +10,14 @@ setCommonPlugins();
 
 require('dotenv').config();
 
-export const config: CodeceptJS.MainConfig = {
+type CustomMainConfig = Omit<CodeceptJS.MainConfig, 'gherkin'> & {
+  gherkin: {
+    features: string | Array<string>;
+    steps: string | Array<string>;
+  };
+};
+
+export const config: CustomMainConfig = {
   tests: './step_definitions/*-steps.ts',
   output: './error-screenshots',
   helpers: {
@@ -65,29 +74,7 @@ export const config: CodeceptJS.MainConfig = {
   name: 'Minds Codecept E2E tests',
   gherkin: {
     features: './features/*.feature',
-    steps: [
-      './step_definitions/activity-feed-steps.ts',
-      './step_definitions/activity-modal-steps.ts',
-      './step_definitions/activity-steps.ts',
-      './step_definitions/boost-display-steps.ts',
-      './step_definitions/boostmarketing-steps.ts',
-      './step_definitions/boost-steps.ts',
-      './step_definitions/channel-steps.ts',
-      './step_definitions/common-steps.ts',
-      './step_definitions/composer-steps.ts',
-      './step_definitions/devtools-steps.ts',
-      './step_definitions/login-steps.ts',
-      './step_definitions/newsfeed-steps.ts',
-      './step_definitions/notification-steps.ts',
-      './step_definitions/payments-steps.ts',
-      './step_definitions/rewardsmarketing-steps.ts',
-      './step_definitions/search-steps.ts',
-      './step_definitions/settings-steps.ts',
-      './step_definitions/supermind-console-steps.ts',
-      './step_definitions/supermind-settings-steps.ts',
-      './step_definitions/supermind-steps.ts',
-      './step_definitions/tokenmarketing-steps.ts',
-    ],
+    steps: './step_definitions/*-steps.ts',
   },
   plugins: {
     pauseOnFail: {},

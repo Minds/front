@@ -25,4 +25,6 @@ class NewsfeedPage extends ActivityFeedPage {
   }
 }
 
+module.exports = new NewsfeedPage();
+module.exports.SingleEntityPage = NewsfeedPage;
 export = new NewsfeedPage();
