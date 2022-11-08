@@ -2,7 +2,7 @@
   <!-- TODO: add m-clientMeta to activityV2 if v2 flag becomes permanent -->
   <m-activityV2
     [entity]="entity$ | async"
-    [canDelete]="canDelete"
+    [canDelete]="service.canDelete$ | async"
     [displayOptions]="service.displayOptions"
     [slot]="slot"
     [canRecordAnalytics]="canRecordAnalytics"

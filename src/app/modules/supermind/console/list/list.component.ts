@@ -117,7 +117,7 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
         }
       ),
       tap((list: any) => {
-        this.moreData$.next(list.length >= this.requestLimit);
+        this.moreData$.next(list?.length >= this.requestLimit);
         this.inProgress$.next(false);
         this.list$.next(list);
         this.populateCounts();

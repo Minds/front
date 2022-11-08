@@ -97,6 +97,14 @@
             }
           }
         }
+        .m-button__text--saving {
+          span {
+            @include m-theme() {
+              // Color of the animated circles
+              background-color: themed($m-white-always);
+            }
+          }
+        }
       }
       &:not(m-button--solid) {
         @include m-theme() {
@@ -379,6 +387,15 @@
 
     &.m-button--borderless {
       border: none !important;
+
+      // Makes borderless buttons same height as bordered buttons
+      [class*='m-button__text'] {
+        padding: 1px 0;
+      }
+
+      &:hover {
+        border: none !important;
+      }
     }
   }
 

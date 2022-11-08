@@ -5,7 +5,6 @@
     background: $supermindGradient;
 
     @include m-theme() {
-      //border-color: themed($m-bgColor--primary) !important;
       color: themed($m-white-always);
     }
 

@@ -101,4 +101,8 @@ namespace ComposerSteps {
   Then('I should still see the composer modal open', () => {
     I.seeElement(composerModalComponent.modalElementTag);
   });
+
+  Then('I should still see the composer modal open', () => {
+    I.seeElement(composerModalComponent.modalElementTag);
+  });
 }

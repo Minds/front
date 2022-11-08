@@ -1,6 +1,11 @@
 Feature: Supermind Console
   As a user I want to be able to access and interact with the Supermind Console
 
+  Scenario: should be redirected to login if not logged in
+    Given I am logged out
+    And I am on the Supermind Console "inbox" page
+    Then I should see "/login" in current URL
+
   Scenario: Switching tabs from inbox to outbox
     Given I am logged in
     And I am on the Supermind Console "inbox" page

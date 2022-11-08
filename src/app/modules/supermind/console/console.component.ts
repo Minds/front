@@ -1,6 +1,9 @@
+import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { LoginReferrerService } from '../../../services/login-referrer.service';
+import { Session } from '../../../services/session';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
@@ -31,13 +34,21 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
     private router: Router,
     private service: SupermindConsoleService,
     private supermindExperiment: SupermindExperimentService,
-    private supermindOnboardingModal: SupermindOnboardingModalService
+    private supermindOnboardingModal: SupermindOnboardingModalService,
+    private session: Session,
+    private loginReferrer: LoginReferrerService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     // if experiment is not active, redirect to root.
     if (!this.supermindExperiment.isActive()) {
       this.router.navigate(['/']);
+    }
+
+    if (!this.session.isLoggedIn()) {
+      this.loginReferrer.register(this.location.path());
+      this.router.navigate(['/login']);
     }
 
     // on route change, set list type.
