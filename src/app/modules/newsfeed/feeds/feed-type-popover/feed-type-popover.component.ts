@@ -13,6 +13,7 @@ import { Storage } from '../../../../services/storage';
 
 const TOP_FEED_PROMPT_STORAGE_KEY = 'top-feed:recommended';
 
+// ojm see popper usage
 @Component({
   selector: 'm-feedTypePopover',
   templateUrl: './feed-type-popover.component.html',

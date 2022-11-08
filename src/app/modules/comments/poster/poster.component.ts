@@ -29,6 +29,7 @@ import { IsCommentingService } from './is-commenting.service';
 import { Router } from '@angular/router';
 import isMobile from '../../../helpers/is-mobile';
 import moveCursorToEnd from '../../../helpers/move-cursor-to-end';
+import { SupermindBannerPopupService } from '../../supermind/supermind-banner/supermind-banner-popup.service';
 
 @Component({
   selector: 'm-comment__poster',
@@ -59,9 +60,17 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   canPost: boolean = true;
   inProgress: boolean = false;
   maxLength: number = 1500;
-  loggedInSubscription: Subscription;
   editing: boolean = false;
   caretOffset: number = 0;
+
+  attachmentIntent: boolean = false; // whether user wants to attach file
+  postIntent: boolean = false; // whether user wants to post the comment
+
+  supermindBannerPopupSeen: boolean = false;
+
+  commentConvertedToActivity: boolean = false;
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     public session: Session,
@@ -77,22 +86,101 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     private configs: ConfigsService,
     private authModal: AuthModalService,
     private isCommentingService: IsCommentingService,
-    public elRef: ElementRef
+    public elRef: ElementRef,
+    public supermindBannerPopup: SupermindBannerPopupService
   ) {}
 
   ngOnInit() {
-    this.loggedInSubscription = this.session.loggedinEmitter.subscribe(
-      emitted => {
+    // Check this before we determine if it should be shown
+    this.supermindBannerPopupSeen = this.supermindBannerPopup.hasBeenSeen();
+
+    this.subscriptions.push(
+      this.session.loggedinEmitter.subscribe(emitted => {
         this.detectChanges();
-      }
+      }),
+      this.supermindBannerPopup.visible$.subscribe(visible => {
+        if (visible && this.canShowSupermindBannerPopup) {
+          console.log('ojm SVC - visible$rx - setSeen()');
+          // Save if banner was seen so we don't show again
+          this.supermindBannerPopup.setSeen();
+        }
+      }),
+      this.supermindBannerPopup.supermindPosted$.subscribe(posted => {
+        if (posted && this.canShowSupermindBannerPopup) {
+          // Reset comment if it has been converted into a supermind
+          // if (this.supermindBannerPopup.hasBeenSeen()) {
+          // ojm put back
+          console.log(
+            'ojm SVC supermindPosted$ from banner, resetting comment'
+          );
+          this.commentConvertedToActivity = true;
+          this.content = '';
+          this.attachment.reset();
+
+          this.detectChanges();
+          // }
+        }
+      })
     );
+
+    this.supermindBannerPopup.entity$.next(this.entity);
   }
 
   ngOnDestroy(): void {
-    if (this.loggedInSubscription) {
-      this.loggedInSubscription.unsubscribe();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
+
+  // ********************************************************
+  // ********************************************************
+  // ********************************************************
+  // ********************************************************
+  // ********************************************************
+
+  /**
+   * Enable popup timer if experiment is enabled,
+   * it hasn't been seen already this session
+   * and this is a new top-level comment w/o attachments
+   *
+   */
+  get canShowSupermindBannerPopup(): boolean {
+    if (
+      !this.supermindBannerPopup.experimentEnabled() ||
+      this.supermindBannerPopupSeen
+    ) {
+      console.log('ojm POSTER exp disabled or seen already');
+
+      return false;
+    }
+
+    const isCommentingOnOwnEntity =
+      this.session.getLoggedInUser().guid === this.entity.ownerObj.guid;
+
+    const ojmrules =
+      this.level === 0 &&
+      !this.editing &&
+      !this.attachmentIntent &&
+      !this.postIntent &&
+      !this.commentConvertedToActivity &&
+      !isCommentingOnOwnEntity;
+    console.log('ojm POSTER rules', ojmrules);
+    return (
+      this.level === 0 &&
+      !this.editing &&
+      !this.attachmentIntent &&
+      !this.postIntent &&
+      !this.commentConvertedToActivity &&
+      !isCommentingOnOwnEntity
+    );
+  }
+
+  // ********************************************************
+  // ********************************************************
+  // ********************************************************
+  // ********************************************************
+  // ********************************************************
+  // ***** ojm remove this block and top one****
 
   keyup(e: KeyboardEvent) {
     this.getPostPreview(this.content);
@@ -106,6 +194,8 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   keydown(e: KeyboardEvent) {
     // set is typing state for other components to hook into.
     this.isCommentingService.isCommenting$.next(this.content.trim().length > 1);
+
+    this.supermindBannerPopup.startTimer();
   }
 
   keypress(e: KeyboardEvent) {
@@ -116,6 +206,9 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
 
   async post(e) {
     e.preventDefault();
+
+    // Don't try to show banner if comment is already posted
+    this.postIntent = true;
 
     this.attachment.resetPreviewRequests();
     if (this.content.length > this.maxLength) {
@@ -181,6 +274,8 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   }
 
   async uploadFile(fileInput: HTMLInputElement, event) {
+    this.attachmentIntent = true;
+
     if (fileInput.value) {
       // this prevents IE from executing this code twice
       this.isCommentingService.isCommenting$.next(true);
@@ -196,11 +291,14 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   }
 
   async uploadAttachment(file: HTMLInputElement | File) {
+    this.attachmentIntent = true;
+
     this.canPost = false;
     this.triedToPost = false;
 
     this.attachment.setHidden(true);
     this.attachment.setContainer(this.entity);
+
     this.detectChanges();
 
     this.attachment
@@ -227,6 +325,8 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   }
 
   removeAttachment(fileInput: HTMLInputElement) {
+    this.attachmentIntent = false;
+
     this.canPost = false;
     this.triedToPost = false;
 

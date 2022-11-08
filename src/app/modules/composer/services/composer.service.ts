@@ -1044,6 +1044,7 @@ export class ComposerService implements OnDestroy {
         this.onboardingService.forceCompletion('CreatePostStep');
       }
 
+      // ojm composer post
       if (this.payload.supermind_reply_guid) {
         this.toasterService.success(
           'Your Supermind reply was posted, and you’ve collected the offer.'

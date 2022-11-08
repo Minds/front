@@ -42,5 +42,14 @@
   // ******************************************
   // ******************************************
 
+  position: relative;
+
   scroll-margin: 10vh;
+
+  .m-commentPoster__popupWrapper {
+    position: absolute;
+    width: 100%;
+    bottom: 130%; // ojm test in mobile, make button 100% width
+    @include z-index(tooltip);
+  }
 }

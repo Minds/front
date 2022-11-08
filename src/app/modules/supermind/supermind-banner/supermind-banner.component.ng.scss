@@ -1,5 +1,5 @@
 @import 'defaults.scss';
-@import '../../../../common/layout/layout.scss';
+@import '../../../common/layout/layout.scss';
 
 :host {
   .m-supermind__banner {
@@ -20,8 +20,14 @@
 
       span {
         @include body2Regular;
-        &.m-supermindBannerText__bold {
+        &.m-supermindBannerText--bold {
           @include body2Bold;
+        }
+
+        &.m-supermindBannerText--secondary {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
         }
       }
     }
@@ -39,6 +45,26 @@
         padding-bottom: $spacing4;
         max-width: none;
         text-align: center;
+      }
+    }
+  }
+  // ***********************************
+  // ** POPUP
+  // ***********************************
+
+  m-comment__poster & {
+    // popup arrow
+    .m-supermind__banner::after {
+      content: ' ';
+      position: absolute;
+      top: 100%; /* At the bottom of the tooltip */
+      left: 50%;
+      margin-left: -8px;
+      border-width: 8px;
+      border-style: solid;
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary) transparent transparent
+          transparent;
       }
     }
   }

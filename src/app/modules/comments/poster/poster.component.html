@@ -1,8 +1,23 @@
+<!-- ----------------------------- -->
+<!-- COMMENT POSTER -->
+<!-- ----------------------------- -->
 <div
   class="m-comment m-commentPoster"
   [ngClass]="{ 'm-commentPoster--nested': parent.child_path }"
   *ngIf="!readonly && isLoggedIn"
 >
+  <div
+    *ngIf="canShowSupermindBannerPopup"
+    class="m-commentPoster__popupWrapper"
+  >
+    <m-supermind__banner
+      *ngIf="supermindBannerPopup.visible$ | async"
+      [type]="'upgradeComment'"
+      [entity]="entity"
+      [message]="content"
+    ></m-supermind__banner>
+  </div>
+
   <div class="m-comments-composer m-commentPoster__wrapper">
     <div class="m-commentPoster__avatar">
       <a [routerLink]="['/', session.getLoggedInUser().username]">
@@ -84,7 +99,7 @@
             <m-dropdownMenu__item
               icon="insert_photo"
               class="attachment-button"
-              (click)="fileInput.click()"
+              (click)="attachmentIntent = true; fileInput.click()"
             >
               <span i18n="@@M__COMMENT_ACTIONS__ATTACH">Attach media</span>
             </m-dropdownMenu__item>
