@@ -185,6 +185,7 @@ class SupermindConsolePage {
     stateFilterLabel: string,
     stateValue: string
   ): Promise<void> {
+    I.scrollPageToTop();
     I.click(this.statusFilterTrigger);
     await Promise.all([
       I.click(this.statusFilterLabel.withText(stateFilterLabel)),

@@ -28,8 +28,8 @@ namespace SupermindConsoleSteps {
 
   When(
     'I click to change Supermind Console status filter to {string} with value {string}',
-    (filterText: string, filterValue: string) => {
-      supermindConsolePage.switchStatusFilter(filterText, filterValue);
+    async (filterText: string, filterValue: string) => {
+      await supermindConsolePage.switchStatusFilter(filterText, filterValue);
     }
   );
 
