@@ -1,9 +1,16 @@
 <div class="m-channel__actions">
+  <!-- ------------------------------------------ -->
+  <!-- CHANNEL OWNER -->
+  <!-- ------------------------------------------ -->
   <ng-container *ngIf="service.isOwner$ | async; else nonOwner">
     <m-channelActions__boost></m-channelActions__boost>
     <m-channelActions__edit></m-channelActions__edit>
+    <m-channelActions__proChannel></m-channelActions__proChannel>
   </ng-container>
-  <m-channelActions__proChannel></m-channelActions__proChannel>
+
+  <!-- ------------------------------------------ -->
+  <!-- CHANNEL VISITOR -->
+  <!-- ------------------------------------------ -->
   <ng-template #nonOwner>
     <m-channelActions__menu>
       <m-button
@@ -28,6 +35,7 @@
         *ngIf="!(service.isSubscribed$ | async)"
       ></m-channelActions__subscribe>
 
+      <m-channelActions__proChannel></m-channelActions__proChannel>
       <!-- TODO add in experiment -->
       <m-channelActions__supermind></m-channelActions__supermind>
     </ng-container>

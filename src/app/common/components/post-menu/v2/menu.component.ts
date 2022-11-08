@@ -10,7 +10,6 @@ import {
 import { Session } from '../../../../services/session';
 import { FeaturesService } from '../../../../services/features.service';
 import { PostMenuService } from '../post-menu.service';
-import { BehaviorSubject } from 'rxjs';
 
 type Option =
   | 'edit'
@@ -87,12 +86,16 @@ export class PostMenuV2Component implements OnInit {
       return false; // Do not show the delete option here as users have become confused
     }
 
-    return (
-      (this.options.indexOf('delete') !== -1 &&
-        this.entity.owner_guid == this.session.getLoggedInUser().guid) ||
-      this.session.isAdmin() ||
-      this.canDelete
-    );
+    if (this.options.indexOf('delete') === -1) {
+      return false;
+    }
+
+    const isPostOwner =
+      this.entity.owner_guid === this.session.getLoggedInUser().guid;
+
+    const isSiteAdmin = this.session.isAdmin();
+
+    return isPostOwner || isSiteAdmin || this.canDelete;
   }
 
   shouldShowUndoRemind(): boolean {
