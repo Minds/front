@@ -8,6 +8,8 @@ export class ActivityComponent {
   // selectors
   private activityMenuSelector: string = 'm-activityV2__menu';
   private optionSelector: string = '.m-dropdownMenuItem__text--label span';
+  private remindButtonSelector: string =
+    'm-activityV2__remindButton m-dropdownMenu';
 
   /**
    * Delete the activity.
@@ -24,10 +26,36 @@ export class ActivityComponent {
   }
 
   /**
+   * Click to remind/un-remind an activity.
+   * @returns { void }
+   */
+  public clickRemindButton(): void {
+    this.openRemindMenu();
+    I.click(locate('.m-dropdownMenu__item').withText('Remind'));
+  }
+
+  /**
+   * Click button to quote post - will open composer modal.
+   * @returns { void }
+   */
+  public clickQuoteButton(): void {
+    this.openRemindMenu();
+    I.click(locate('.m-dropdownMenu__item').withText('Quote post'));
+  }
+
+  /**
    * Open tha activity menu.
    * @returns { void }
    */
   private openActivityMenu(): void {
     I.click(this.activityMenuSelector);
+  }
+
+  /**
+   * Open the remind menu.
+   * @returns { void }
+   */
+  private openRemindMenu(): void {
+    I.click(this.remindButtonSelector);
   }
 }
