@@ -64,6 +64,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input('entity') entity;
   @Input('parent') parent;
   @Input('level') level = 0;
+  // Whether comment should open in modal on `openModal` call.
+  @Input('shouldOpenModal') shouldOpenModal: boolean = true;
 
   canPost: boolean = true;
   triedToPost: boolean = false;
@@ -524,8 +526,15 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.openModal();
   }
 
-  openModal() {
-    this.activityModalCreator.create(this.comment, this.injector);
+  /**
+   * Opens comment in an activity creator modal. The modal can trigger a redirect
+   * in some scenarios.
+   * @returns { void }
+   */
+  openModal(): void {
+    if (this.shouldOpenModal) {
+      this.activityModalCreator.create(this.comment, this.injector);
+    }
   }
 
   showDelete(): boolean {
