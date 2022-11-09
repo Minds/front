@@ -18,7 +18,7 @@ type CustomMainConfig = Omit<CodeceptJS.MainConfig, 'gherkin'> & {
 };
 
 export const config: CustomMainConfig = {
-  tests: './step_definitions/*-steps.ts',
+  tests: './steps/*-steps.ts',
   output: './error-screenshots',
   helpers: {
     Playwright: {
@@ -70,11 +70,12 @@ export const config: CustomMainConfig = {
     supermindOnboardingModalComponent:
       './fragments/supermindOnboardingModalComponent.ts',
     topbarComponent: './fragments/topbarComponent.ts',
+    feedNoticeComponent: './fragments/feedNoticeComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {
     features: './features/*.feature',
-    steps: './step_definitions/*-steps.ts',
+    steps: './steps/*-steps.ts',
   },
   plugins: {
     pauseOnFail: {},

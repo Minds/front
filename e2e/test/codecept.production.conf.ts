@@ -59,7 +59,7 @@ const webkitCaps = {
 };
 
 export const config: CustomMainConfig = {
-  tests: './step_definitions/*-steps.ts',
+  tests: './steps/*-steps.ts',
   output: './error-screenshots',
   helpers: {
     Playwright: {
@@ -135,7 +135,7 @@ export const config: CustomMainConfig = {
   name: 'Minds Codecept E2E tests',
   gherkin: {
     features: './features/*.feature',
-    steps: './step_definitions/*-steps.ts',
+    steps: './steps/*-steps.ts',
   },
   plugins: {
     pauseOnFail: {},
