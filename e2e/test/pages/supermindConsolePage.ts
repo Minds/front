@@ -178,18 +178,18 @@ class SupermindConsolePage {
   /**
    * Click to switch state filter.
    * @param { string } stateFilterLabel - filter label for states, e.g. 'Pending', 'Accepted'.
-   * @param { string } stateValue - value behind filter, "1", "2", "3".
+   * @param { string|null } stateValue - value behind filter, "1", "2", "3".
    * @returns { Promise<void> }
    */
   public async switchStatusFilter(
     stateFilterLabel: string,
-    stateValue: string
+    stateValue: string | null
   ): Promise<void> {
     I.scrollPageToTop();
     I.click(this.statusFilterTrigger);
     await I.clickAndWait(
       this.statusFilterLabel.withText(stateFilterLabel),
-      `status=${stateValue}`
+      stateValue ? `status=${stateValue}` : `/supermind/`
     );
   }
 

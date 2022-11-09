@@ -9,6 +9,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
 import { DismissalService } from '../../../common/services/dismissal.service';
+import { FeedNoticeService } from '../../notices/services/feed-notice.service';
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
@@ -80,6 +81,10 @@ describe('DefaultFeedComponent', () => {
             useValue: MockService(DiscoveryBoostExperimentService),
           },
           {
+            provide: FeedNoticeService,
+            useValue: MockService(FeedNoticeService),
+          },
+          {
             provide: DismissalService,
             useValue: MockService(DismissalService),
           },
@@ -109,6 +114,7 @@ describe('DefaultFeedComponent', () => {
 
   it('should initialize', () => {
     expect(comp).toBeTruthy();
+    expect((comp as any).feedNoticeService.fetch).toHaveBeenCalled();
   });
 
   it('should have loaded an activity', () => {
