@@ -1,3 +1,4 @@
+import { FeedNoticeKey } from '../types/feednotice.types';
 import { Storage } from '../utils/storage';
 
 const { newsfeedPage, channelPage } = inject();
@@ -34,3 +35,11 @@ Then(
     }
   }
 );
+
+Given('I see the feed notice for {string}', (feedNoticeKey: FeedNoticeKey) => {
+  newsfeedPage.hasFeedNotice(feedNoticeKey);
+});
+
+Given('I click the feed notice primary action', () => {
+  newsfeedPage.clickFeedNoticePrimaryAction();
+});
