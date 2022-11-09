@@ -48,6 +48,7 @@ import {
   SupermindComposerPayloadType,
 } from '../popup/supermind/superminds-creation.service';
 import { SupermindReplyConfirmModalComponent } from '../../../modals/supermind-reply-confirm/supermind-reply-confirm-modal.component';
+import { Supermind } from '../../../supermind/supermind.types';
 
 /**
  * Composer toolbar. Displays important actions
@@ -132,6 +133,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   supermindRequest: SupermindComposerPayloadType;
 
   /**
+   * Details of supermind request for the reply
+   * @private
+   */
+  private supermindReply: Supermind;
+
+  /**
    * Flag as to if we show supermind create button
    */
   canCreateSupermindRequest$ = this.service.canCreateSupermindRequest$.pipe(
@@ -180,6 +187,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       this.service.supermindRequest$.subscribe(request => {
         this.supermindRequest = request;
+      }),
+      this.service.supermindReply$.subscribe(details => {
+        this.supermindReply = details;
       })
     );
 
@@ -434,7 +444,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
           {
             data: {
               isTwitterReplyEnabled: true,
-              isTwitterReplyRequired: this.supermindRequest.twitter_required,
+              isTwitterReplyRequired: this.supermindReply.twitter_required,
               onConfirm: () => {
                 this.onPostEmitter.emit($event);
                 modal.dismiss();
@@ -447,7 +457,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         );
       });
-    this.onPostEmitter.emit($event);
+    // this.onPostEmitter.emit($event);
   }
 
   /**

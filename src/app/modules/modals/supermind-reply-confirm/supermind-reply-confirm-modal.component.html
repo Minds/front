@@ -13,7 +13,7 @@
     deleted.
   </p>
   <m-formInput__checkbox
-    [disabled]="true"
+    [disabled]="isTwitterReplyEnabled && isTwitterReplyRequired"
     [formControl]="twitterReplyCheckbox"
     *ngIf="isTwitterReplyEnabled"
   >
