@@ -37,6 +37,7 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { ComposerComponent } from '../../composer/composer.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
+import { FeedNoticeService } from '../../notices/services/feed-notice.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 import { FeedItemType } from '../feed/feed.component';
 import { NewsfeedService } from '../services/newsfeed.service';
@@ -166,6 +167,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private dismissal: DismissalService,
     public changeDetectorRef: ChangeDetectorRef,
+    private feedNoticeService: FeedNoticeService,
     persistentFeedExperiment: PersistentFeedExperimentService
   ) {
     if (isPlatformServer(this.platformId)) return;
@@ -244,6 +246,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         this.prepend(newPost);
       }
     );
+
+    this.feedNoticeService.fetch();
 
     this.context.set('activity');
   }
