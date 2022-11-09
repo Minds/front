@@ -15,11 +15,21 @@ Feature: Supermind Console
     Then I should see "/supermind/inbox" in current URL
     And I should see my Supermind Console "inbox"
 
-  Scenario: Switching filter to pending
+  Scenario: Should see Pending filter as default for inbox
     Given I am logged in
     And I am on the Supermind Console "inbox" page
-    When I click to change Supermind Console status filter to "Pending" with value "1"
     Then I should see my Supermind Console status filter says "Pending"
+
+  Scenario: Should see All filter as default for outbox
+    Given I am logged in
+    And I am on the Supermind Console "outbox" page
+    Then I should see my Supermind Console status filter says "All"
+
+  Scenario: Switching filter to all
+    Given I am logged in
+    And I am on the Supermind Console "inbox" page
+    When I click to change Supermind Console status filter to "All" with value ""
+    Then I should see my Supermind Console status filter says "All"
 
   Scenario: Switching filter to accepted
     Given I am logged in
