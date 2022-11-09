@@ -1,0 +1,26 @@
+<m-feedNotice icon="info" [dismissible]="false">
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__SUPERMIND_PENDING__YOU_HAVE_SUPERMIND_OFFERS"
+    >You have Supermind offers</span
+  >
+  <p
+    class="m-feedNotice__body"
+    i18n="@@FEED_NOTICE__SUPERMIND_PENDING__REPLY_TO_YOUR_FANS"
+  >
+    Reply to your fans to claim cash or tokens before your pending offers
+    expire.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick($event)"
+    data-ref="feed-notice-supermind-pending-primary-click"
+  >
+    <ng-container i18n="continue|@@FEED_NOTICE__SUPERMIND_PENDING__LETS_GO">
+      Let's go
+    </ng-container>
+  </m-button>
+</m-feedNotice>

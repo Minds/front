@@ -30,6 +30,9 @@ import {
         <m-feedNotice--verifyEmail
           *ngSwitchCase="'verify-email'"
         ></m-feedNotice--verifyEmail>
+        <m-feedNotice--supermindPending
+          *ngSwitchCase="'supermind-pending'"
+        ></m-feedNotice--supermindPending>
         <m-feedNotice--setupChannel
           *ngSwitchCase="'setup-channel'"
         ></m-feedNotice--setupChannel>

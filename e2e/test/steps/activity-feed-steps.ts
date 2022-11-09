@@ -1,6 +1,7 @@
 import { Storage } from '../helpers/storage';
 import { ChannelPage } from '../pages/channelPage';
 import { NewsfeedPage } from '../pages/newsfeedPage';
+import { FeedNoticeKey } from '../types/feednotice.types';
 
 namespace ActivityFeedSteps {
   const newsfeedPage = new NewsfeedPage();
@@ -38,4 +39,15 @@ namespace ActivityFeedSteps {
       }
     }
   );
+
+  Given(
+    'I see the feed notice for {string}',
+    (feedNoticeKey: FeedNoticeKey) => {
+      newsfeedPage.hasFeedNotice(feedNoticeKey);
+    }
+  );
+
+  Given('I click the feed notice primary action', () => {
+    newsfeedPage.clickFeedNoticePrimaryAction();
+  });
 }
