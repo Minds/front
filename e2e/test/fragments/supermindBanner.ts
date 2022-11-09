@@ -7,15 +7,15 @@ export class SupermindBannerFragment {
   // selectors
   private readonly supermindBannerSelector: string = 'm-supermind__banner';
   private readonly supermindBannerActionButtonSelector: string =
-    '[data-ref=supermind-banner-action-button--upgrade-comment]';
+    '[data-ref=supermind-banner-action-button]';
 
   /**
    * Wait for the 'upgradeComment' supermind banner to appear
    */
   public waitForUpgradeCommentSupermindBanner(): void {
     const upgradeCommentSupermindBanner = locate(this.supermindBannerSelector)
-      .withDescendant(this.supermindBannerActionButtonSelector)
-      .withText('Upgrade');
+      .inside('m-comment__poster')
+      .withDescendant(this.supermindBannerActionButtonSelector);
 
     I.waitForElement(upgradeCommentSupermindBanner, 10);
   }
