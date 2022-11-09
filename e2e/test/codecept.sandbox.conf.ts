@@ -68,6 +68,7 @@ export const config: CustomMainConfig = {
     supermindOnboardingModalComponent:
       './fragments/supermindOnboardingModalComponent.ts',
     topbarComponent: './fragments/topbarComponent.ts',
+    feedNoticeComponent: './fragments/feedNoticeComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {
