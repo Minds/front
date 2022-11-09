@@ -9,6 +9,17 @@ const activityComponent = new ActivityComponent();
 export class ActivityFeedPage {
   // selectors.
   public activitySelector: string = 'm-activity';
+  public readonly permalinkSelector: string = 'm-activityv2__permalink';
+
+  public async navigateToSinglePageOfActivityInPosition(
+    feedPosition: number = 1
+  ): Promise<void> {
+    const permalink = locate(this.permalinkSelector)
+      .inside(this.activitySelector)
+      .at(feedPosition);
+
+    I.click(permalink);
+  }
 
   /**
    * Delete an activity by its position in a feed.

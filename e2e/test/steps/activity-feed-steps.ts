@@ -8,6 +8,20 @@ namespace ActivityFeedSteps {
   const storage: Storage = Storage.getInstance();
 
   When(
+    'I navigate to the single page of the post in position {number} of the {string} feed',
+    async (feedPosition: number, feedType: string) => {
+      switch (feedType) {
+        case 'newsfeed':
+          newsfeedPage.navigateToSinglePageOfActivityInPosition(feedPosition);
+          break;
+        case 'channel':
+          channelPage.navigateToSinglePageOfActivityInPosition(feedPosition);
+          break;
+      }
+    }
+  );
+
+  When(
     'I delete post on my {string} stored with storage key {string}',
     async (feedType: string, textStorageKey: string) => {
       const text: string = storage.get(textStorageKey);
