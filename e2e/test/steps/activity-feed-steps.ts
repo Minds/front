@@ -8,14 +8,20 @@ namespace ActivityFeedSteps {
   const storage: Storage = Storage.getInstance();
 
   When(
-    'I navigate to the single page of the post in position {number} of the {string} feed',
+    'I navigate to the single entity page of the post in position {string} of the {string} feed',
     async (feedPosition: number, feedType: string) => {
+      const positionNumber = Number(feedPosition);
+
       switch (feedType) {
         case 'newsfeed':
-          newsfeedPage.navigateToSinglePageOfActivityInPosition(feedPosition);
+          newsfeedPage.navigateToSingleEntityPageOfActivityInPosition(
+            positionNumber
+          );
           break;
         case 'channel':
-          channelPage.navigateToSinglePageOfActivityInPosition(feedPosition);
+          channelPage.navigateToSingleEntityPageOfActivityInPosition(
+            positionNumber
+          );
           break;
       }
     }

@@ -11,7 +11,7 @@ export class ActivityFeedPage {
   public activitySelector: string = 'm-activity';
   public readonly permalinkSelector: string = 'm-activityv2__permalink';
 
-  public async navigateToSinglePageOfActivityInPosition(
+  public async navigateToSingleEntityPageOfActivityInPosition(
     feedPosition: number = 1
   ): Promise<void> {
     const permalink = locate(this.permalinkSelector)
