@@ -255,12 +255,12 @@ export class MetaService {
     // Required
 
     this.metaService.updateTag({
-      property: 'twitter:title',
+      name: 'twitter:title',
       content: title,
     });
 
     this.metaService.updateTag({
-      property: 'twitter:card',
+      name: 'twitter:card',
       content: 'summary_large_image',
     });
 
@@ -268,18 +268,18 @@ export class MetaService {
 
     if (description) {
       this.metaService.updateTag({
-        property: 'twitter:description',
+        name: 'twitter:description',
         content: description,
       });
     }
 
     this.metaService.updateTag({
-      property: 'twitter:image',
+      name: 'twitter:image',
       content: imageUrl,
     });
 
     this.metaService.updateTag({
-      property: 'twitter:site',
+      name: 'twitter:site',
       //content: this.site.title,
       content: '@minds', // TODO: don't hard code this
     });
@@ -391,7 +391,7 @@ export class MetaService {
     ];
 
     for (let tagName of tagNames) {
-      this.metaService.removeTag(`property='${tagName}'`);
+      this.metaService.removeTag(`name='${tagName}'`);
     }
     return this;
   }
