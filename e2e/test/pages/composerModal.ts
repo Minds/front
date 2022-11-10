@@ -27,7 +27,8 @@ export class ComposerModal {
   private postButtonDisabledOverlaySelector: string =
     '.m-composerToolbarAction__disabledOverlay';
   public composerCloseButton: string = '.m-composerPopup__close';
-
+  public fileUploadButtonSelector: string =
+    'm-composer__modal [data-cy=upload-button] input[type=file]';
   /**
    * Toolbar items
    */
@@ -65,6 +66,22 @@ export class ComposerModal {
    */
   public clickPost(): void {
     I.click(this.postButtonSelector);
+  }
+
+  /**
+   * Click post button and await.
+   * @return { Promise<void> }
+   */
+  public async clickPostAndAwait(): Promise<void> {
+    await Promise.all([
+      I.click(this.postButtonSelector),
+      I.waitForResponse(resp => {
+        return (
+          resp.url().includes('/api/v3/newsfeed/activity') &&
+          resp.status() === 200
+        );
+      }, 30),
+    ]);
   }
 
   /**
@@ -242,6 +259,25 @@ export class ComposerModal {
     );
     if (textStorageKey) {
       storage.add(textStorageKey, postContent);
+    }
+  }
+
+  /**
+   * Attach files.
+   * @param { string[] } fileNames - file names.
+   * @returns { Promise<void> }
+   */
+  public async attachFiles(fileNames: string[]): Promise<void> {
+    for (const fileName of fileNames) {
+      await Promise.all([
+        I.attachFile(
+          this.fileUploadButtonSelector,
+          '../supporting-files/' + fileName
+        ),
+        I.waitForResponse(resp => {
+          return resp.url().includes('/api/v1/media') && resp.status() === 200;
+        }, 30),
+      ]);
     }
   }
 }
