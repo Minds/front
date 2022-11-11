@@ -1,3 +1,7 @@
-import { ActivityFeedPage } from './activityFeedPage';
+import ActivityFeedPage from './activityFeedPage';
 
-export class SingleEntityPage extends ActivityFeedPage {}
+class SingleEntityPage extends ActivityFeedPage {}
+
+module.exports = new SingleEntityPage();
+module.exports.SingleEntityPage = SingleEntityPage;
+export = new SingleEntityPage();

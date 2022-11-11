@@ -1,31 +1,24 @@
-import { ActivityModalComponent } from '../components/activityModalComponent';
-import { Storage } from '../helpers/storage';
-import { ComposerModal } from '../pages/composerModal';
-import { NewsfeedPage } from '../pages/newsfeedPage';
-import { SingleEntityPage } from '../pages/singleEntityPage';
+import { Storage } from '../utils/storage';
 
 namespace ActivitySteps {
-  const newsfeedPage = new NewsfeedPage();
-  const singleEntityPage = new SingleEntityPage();
-  const composerModal = new ComposerModal();
-  const storage = Storage.getInstance();
+  const { newsfeedPage, singleEntityPage, composerModalComponent } = inject();
 
-  Before(() => {});
+  const storage = Storage.getInstance();
 
   Given(
     'I quote the activity with the storage text {string} and file names',
     async (storageKey: string, table: any) => {
       const storedText: string = storage.get(storageKey);
       await newsfeedPage.clickToQuoteActivityByText(storedText);
-      composerModal.typeInTextArea('Quote post');
+      composerModalComponent.typeInTextArea('Quote post');
       const tableByHeader = table.parse().hashes();
       const fileNames = tableByHeader.map(fileName => fileName.filename);
 
       if (fileNames.length) {
-        await composerModal.attachFiles(fileNames);
+        await composerModalComponent.attachFiles(fileNames);
       }
 
-      await composerModal.clickPostAndAwait();
+      await composerModalComponent.clickPostAndAwait();
     }
   );
 
@@ -60,6 +53,4 @@ namespace ActivitySteps {
       }
     }
   );
-
-  After(() => {});
 }

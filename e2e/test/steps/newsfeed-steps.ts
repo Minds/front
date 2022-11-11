@@ -1,13 +1,7 @@
-import { NewsfeedPage } from '../pages/newsfeedPage';
-
 namespace NewsfeedSteps {
-  const newsfeedPage = new NewsfeedPage();
-
-  Before(() => {});
+  const { newsfeedPage } = inject();
 
   Given('I am on the newsfeed', () => {
     newsfeedPage.navigateToByUrl();
   });
-
-  After(() => {});
 }

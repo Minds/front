@@ -1,5 +1,5 @@
-import generateRandomId from '../support/utilities';
-require('dotenv').config();
+import { generateARandomString } from '../utils/utils';
+
 const { I } = inject();
 
 export = {
@@ -20,7 +20,8 @@ export = {
    * @returns { void }
    */
   createBoostedPost(): void {
-    const postContent = 'Test boost, please reject...' + generateRandomId();
+    const postContent =
+      'Test boost, please reject...' + generateARandomString();
     I.seeElement('m-composer .m-composer__trigger');
     I.click('m-composer .m-composer__trigger');
     I.fillField(

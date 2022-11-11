@@ -5,7 +5,7 @@ Playwright end-to-end test automation with CodeceptJS (Gherkin) and Browserstack
 ### Key Integrations
 
 * Playwright + CodeceptJS + BrowserStack
-* Page Object Model
+* Page Object Models
 * Gherkin
 * Gitlab CI
 * Parallel execution
@@ -13,61 +13,63 @@ Playwright end-to-end test automation with CodeceptJS (Gherkin) and Browserstack
 
 ### Dependencies
 
-#### _Pre-requisites_: Install latest version of Node, web browsers and create environment variables.
-
-#### _Node_: https://nodejs.org/en/download/
+#### _Pre-requisites_: Install latest version of Node (or use NVM), web browsers and create environment variables
 
 #### _Environment variables for Playwright Tests_
 
 | Variable | Description |
 | -------- | ----------- |
 | E2E_DOMAIN | The URL you are testing against. eg: 'http://localhost:8080'. Do not include a trailing slash. |
+| BROWSERSTACK_USERNAME | Optional username for Browserstack integration |
+| BROWSERSTACK_ACCESS_KEY | Optional access key for Browserstack integration |
+| BYPASS_SIGNING_KEY | The key to sign the bypass tokens with |
 | PLAYWRIGHT_USERNAME | The username of the default user you will test against |
 | PLAYWRIGHT_PASSWORD | The password of the default user you will test against |
-| BYPASS_SIGNING_KEY | The key to sign the bypass tokens with (optional?) |
-| SUPERMIND_SENDER_USERNAME | The username of the supermind sender |
-| SUPERMIND_SENDER_PASSWORD | The password of the supermind sender |
-
-
-#### _Environment variables for BrowserStack Connection_
-
-BROWSERSTACK_USERNAME & BROWSERSTACK_ACCESS_KEY
+| SUPERMIND_SENDER_USERNAME | The username of a dedicated user to act as a supermind sender |
+| SUPERMIND_SENDER_PASSWORD | The password of a dedicated user to act as a supermind sender |
+| SUPERMIND_SETTINGS_USERNAME | Username of a dedicated user for testing Supermind Settings |
+| SUPERMIND_SETTINGS_PASSWORD | Password of a dedicated user for testing Supermind Settings |
+| SUPERMIND_FILTER_TEST_USERNAME | Username of a dedicated user for testing Supermind Console filters |
+| SUPERMIND_FILTER_TEST_USERNAME | Password of a dedicated user for testing Supermind Console filters |
 
 ## Run Command
 
 ### Installing
 
-```
+```sh
 cd e2e/test
-yarn
+
+nvm use # if you want to quickly upgrade your node version and use NVM
+
+npm install
 ```
 
 ### Running via CLI
 
-```
-yarn run test:e2e:local
+```sh
+npm run test:e2e:local
 ```
 
 ### Running via CodeceptUI
 
-```
-yarn run test:e2e:local:ui
+```sh
+npm run test:e2e:local:ui
 ```
 
 ### Running via Browserstack on Chrome, Firefox & Webkit browsers in parallel
 
-```
-yarn run test:e2e:real
+```sh
+npm run test:e2e:real
 ```
 
 *In case of errors, check screenshots saved under e2e/test/error-screenshots folder.
 
 ## Creating New Tests
 To create a new suite of tests:
-- Create a Feature file (to define gherkin features and scenarios).
-- Create a Steps file (to define individual Steps - Given/When/Then).
-- Create a Page file (to define common functions and variables). 
-- Ensure that all the files above are linked via codeceptjs config file.
+- If necessary, create a Feature file (to define gherkin features and scenarios).
+- If necessary, create a Steps file (to define individual Steps - Given/When/Then).
+- If necessary, create a Page file (to define common functions and variables).
+- Ensure that Pages and Fragments are references in ALL Codeceptjs config files in the include section.
 
 ## Helpful Links
 - How to write tests in CodeceptJs + Gherkin click [here](https://codecept.io/bdd/)

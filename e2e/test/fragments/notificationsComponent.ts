@@ -1,12 +1,9 @@
-import { TopbarComponent } from './topbarComponent';
-
-const { I } = inject();
-const topbarComponent = new TopbarComponent();
+const { I, topbarComponent } = inject();
 
 /**
  * Notifications component.
  */
-export class NotificationsComponent {
+class NotificationsComponent {
   private notificationBodySelector: string =
     '.m-notificationsNotification__body';
 
@@ -26,3 +23,5 @@ export class NotificationsComponent {
     I.click(this.notificationBodySelector);
   }
 }
+
+export = new NotificationsComponent();

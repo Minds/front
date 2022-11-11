@@ -1,6 +1,6 @@
 const { I } = inject();
 
-export class SupermindOnboardingModalComponent {
+class SupermindOnboardingModalComponent {
   private requestModalElementSelector: string =
     '.supermind-onboarding-modal--request';
   private replyModalElementSelector: string =
@@ -42,3 +42,5 @@ export class SupermindOnboardingModalComponent {
     I.dontSeeElement(this.replyModalElementSelector);
   }
 }
+
+export = new SupermindOnboardingModalComponent();

@@ -5,7 +5,7 @@ const { I } = inject();
 /**
  * Feed Notice component.
  */
-export class FeedNoticeComponent {
+class FeedNoticeComponent {
   // selectors
   public feedNoticeSelector: string = 'm-feedNotice';
   public feedNoticeTitleSelector: string = '.m-feedNotice__title';
@@ -49,3 +49,5 @@ export class FeedNoticeComponent {
     I.click(this.feedNoticePrimaryActionSelector);
   }
 }
+
+export = new FeedNoticeComponent();

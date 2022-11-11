@@ -1,7 +1,5 @@
-import { ChannelPage } from '../pages/channelPage';
-
 namespace ChannelSteps {
-  const channelPage = new ChannelPage();
+  const { channelPage } = inject();
 
   When('I am on my channel page', () => {
     channelPage.navigateTo();

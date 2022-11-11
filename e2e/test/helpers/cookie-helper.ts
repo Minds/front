@@ -1,17 +1,7 @@
+import Helper from '@codeceptjs/helper';
 import jwt from 'jsonwebtoken';
-const { I } = inject();
 
-export class Helpers {
-  /**
-   * Generate a pseudo-random string.
-   * @returns { string } pseudo-random string.
-   */
-  public generateRandomString(): string {
-    return Math.random()
-      .toString(36)
-      .substr(2, 10);
-  }
-
+class CookieHelper extends Helper {
   /**
    * Set CAPTCHA bypass cookie.
    * @returns { this }
@@ -67,11 +57,13 @@ export class Helpers {
     if (!cookie.url) {
       cookie.url = process.env.E2E_DOMAIN;
     }
-
-    I.usePlaywrightTo('set Cookie', async ({ browserContext }) => {
+    const { Playwright } = this.helpers;
+    Playwright.usePlaywrightTo('set Cookie', async ({ browserContext }) => {
       await browserContext.addCookies([cookie]);
     });
 
     return this;
   }
 }
+
+export = CookieHelper;

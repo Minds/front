@@ -1,5 +1,5 @@
 namespace PaymentsSteps {
-  const { I, settingsPage } = inject();
+  const { I } = inject();
 
   Given('I am on the Payment Methods page', () => {
     I.amOnPage('/settings/payments/payment-methods');
@@ -16,5 +16,6 @@ namespace PaymentsSteps {
   Then('I should be redirected to stripe', () => {
     I.switchToNextTab(1);
     I.seeInCurrentUrl('checkout.stripe.com');
+    I.closeCurrentTab();
   });
 }
