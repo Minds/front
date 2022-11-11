@@ -4,7 +4,7 @@ const { I } = inject();
  * Component for an activity - if there is multiple make sure to use these
  * functions within command scoped to a specific activity.
  */
-export class ActivityComponent {
+class ActivityComponent {
   // selectors
   private activityMenuSelector: string = 'm-activityV2__menu';
   private optionSelector: string = '.m-dropdownMenuItem__text--label span';
@@ -68,3 +68,5 @@ export class ActivityComponent {
     I.click(this.remindButtonSelector);
   }
 }
+
+export = new ActivityComponent();

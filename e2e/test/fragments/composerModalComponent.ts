@@ -1,10 +1,10 @@
-import { Storage } from '../helpers/storage';
-import generateRandomId from '../support/utilities';
+import { Storage } from '../utils/storage';
+import { generateARandomString } from '../utils/utils';
 
 const { I } = inject();
 const storage: Storage = Storage.getInstance();
 
-export class ComposerModal {
+class ComposerModalComponent {
   public modalElementTag: string = 'm-composer__modal';
   private textAreaTitleSelector: string = `${this.modalElementTag} .m-composerTextarea__title`;
   private textAreaSelector: string = `${this.modalElementTag} [data-cy=composer-textarea]`;
@@ -234,7 +234,7 @@ export class ComposerModal {
    * @returns { void }
    */
   public createNewsfeedPost(textStorageKey: string = ''): void {
-    const postContent = generateRandomId();
+    const postContent = generateARandomString();
     I.seeElement('m-composer .m-composer__trigger');
     I.click('m-composer .m-composer__trigger');
     I.fillField(
@@ -272,7 +272,7 @@ export class ComposerModal {
       await Promise.all([
         I.attachFile(
           this.fileUploadButtonSelector,
-          '../supporting-files/' + fileName
+          'supporting-files/img/' + fileName
         ),
         I.waitForResponse(resp => {
           return resp.url().includes('/api/v1/media') && resp.status() === 200;
@@ -281,3 +281,5 @@ export class ComposerModal {
     }
   }
 }
+
+export = new ComposerModalComponent();

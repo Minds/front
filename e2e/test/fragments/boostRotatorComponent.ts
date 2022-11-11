@@ -1,15 +1,12 @@
-import { ActivityComponent } from './activityComponent';
-
-const { I } = inject();
+const { I, activityComponent } = inject();
 
 /**
  * Component for boost rotator.
  */
-export class BoostRotatorComponent {
+class BoostRotatorComponent {
   // selectors.
   private readonly boostRotatorSelector: string = '.m-newsfeed__boostRotator';
   private readonly activitySelector: string = 'm-activity';
-  private readonly activityComponent: ActivityComponent = new ActivityComponent();
 
   /**
    * Whether boost rotator should be seen
@@ -44,17 +41,22 @@ export class BoostRotatorComponent {
    * Wait for boost feed rotator element to appear.
    * @returns { void }
    */
-  public waitForBoostFeedRotator(): void {
-    I.waitForElement(this.boostRotatorSelector, 30);
+  public waitForBoostFeedRotator(withActivity: boolean = false): void {
+    I.waitForElement(
+      withActivity
+        ? `${this.boostRotatorSelector} ${this.activitySelector}`
+        : `${this.boostRotatorSelector}`,
+      30
+    );
   }
 
   /**
    * Toggle remind button - can remind or remove a remind.
    * @returns { void }
    */
-  public toggleRemind(): void {
-    within(this.boostRotatorSelector, () => {
-      this.activityComponent.clickRemindButton();
+  public async toggleRemind(): Promise<void> {
+    await within(this.boostRotatorSelector, () => {
+      activityComponent.clickRemindButton();
     });
   }
 
@@ -62,9 +64,11 @@ export class BoostRotatorComponent {
    * Open composer by clicking to quote.
    * @returns { void }
    */
-  public openComposerForQuote(): void {
-    within(this.boostRotatorSelector, () => {
-      this.activityComponent.clickQuoteButton();
+  public async openComposerForQuote(): Promise<void> {
+    await within(this.boostRotatorSelector, () => {
+      activityComponent.clickQuoteButton();
     });
   }
 }
+
+export = new BoostRotatorComponent();

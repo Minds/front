@@ -1,33 +1,29 @@
-import { SupermindOnboardingModalComponent } from '../components/supermindOnboardingModalComponent';
-import { ChannelPage } from '../pages/channelPage';
-import { ComposerModal } from '../pages/composerModal';
-
 namespace SupermindSteps {
-  const { I } = inject();
-  const composerModal = new ComposerModal();
-  const supermindOnboardingModal = new SupermindOnboardingModalComponent();
-  const channelPage = new ChannelPage();
-
-  Before(() => {});
+  const {
+    I,
+    composerModalComponent,
+    supermindOnboardingModalComponent,
+    channelPage,
+  } = inject();
 
   When('I click the supermind icon on the composer toolbar', () => {
-    composerModal.clickSupermindIcon();
+    composerModalComponent.clickSupermindIcon();
   });
 
   When('I enter a target username with value {string}', targetUsername => {
-    composerModal.addSupermindTarget(targetUsername);
+    composerModalComponent.addSupermindTarget(targetUsername);
   });
 
   When('I accept the supermind terms', () => {
-    composerModal.acceptSupermindTerms();
+    composerModalComponent.acceptSupermindTerms();
   });
 
   When('I accept the refund policy', () => {
-    composerModal.acceptSupermindRefundPolicy();
+    composerModalComponent.acceptSupermindRefundPolicy();
   });
 
   When('I click the supermind creator save button', () => {
-    composerModal.clickSupermindSave();
+    composerModalComponent.clickSupermindSave();
   });
 
   When('I click the supermind creator clear button', () => {
@@ -46,29 +42,29 @@ namespace SupermindSteps {
   });
 
   When('I see the supermind request onboarding modal', () => {
-    supermindOnboardingModal.requestModalShouldBeVisible(true);
+    supermindOnboardingModalComponent.requestModalShouldBeVisible(true);
   });
 
   When('I see the supermind request onboarding modal', () => {
-    supermindOnboardingModal.requestModalShouldBeVisible(true);
+    supermindOnboardingModalComponent.requestModalShouldBeVisible(true);
   });
 
   When('I click the action button in the Supermind onboarding modal', () => {
-    supermindOnboardingModal.clickContinue();
+    supermindOnboardingModalComponent.clickContinue();
   });
 
   //
 
   Then('I should see the supermind request onboarding modal', num => {
-    supermindOnboardingModal.requestModalShouldBeVisible(true);
+    supermindOnboardingModalComponent.requestModalShouldBeVisible(true);
   });
 
   Then('I should see the supermind reply onboarding modal', num => {
-    supermindOnboardingModal.replyModalShouldBeVisible(true);
+    supermindOnboardingModalComponent.replyModalShouldBeVisible(true);
   });
 
   Then('I should see the supermind popout screen', num => {
-    I.seeElement(composerModal.getSupermindPopup());
+    I.seeElement(composerModalComponent.getSupermindPopup());
   });
 
   Then('I see the supermind is in progress', () => {
@@ -84,16 +80,14 @@ namespace SupermindSteps {
   });
 
   Then('I should not see the supermind icon on the composer toolbar', () => {
-    composerModal.shouldHaveSupermindToolbarIcon(false);
+    composerModalComponent.shouldHaveSupermindToolbarIcon(false);
   });
 
   Then('I should see prefilled supermind details in the composer', () => {
-    I.waitForElement(composerModal.modalElementTag, 5);
-    I.seeElement(composerModal.getSupermindPopup());
-    I.waitForElement(composerModal.composerCloseButton);
-    I.click(composerModal.composerCloseButton);
+    I.waitForElement(composerModalComponent.modalElementTag, 5);
+    I.seeElement(composerModalComponent.getSupermindPopup());
+    I.waitForElement(composerModalComponent.composerCloseButton);
+    I.click(composerModalComponent.composerCloseButton);
     I.pressKey('Escape');
   });
-
-  After(() => {});
 }

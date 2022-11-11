@@ -3,7 +3,7 @@ const { I } = inject();
 /**
  * Component for Acivity Modal
  */
-export class ActivityModalComponent {
+class ActivityModalComponent {
   private modalElementSelector: string = 'm-activityv2__modal';
 
   /**
@@ -15,3 +15,5 @@ export class ActivityModalComponent {
     I.seeElement(this.modalElementSelector);
   }
 }
+
+export = new ActivityModalComponent();

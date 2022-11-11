@@ -1,24 +1,20 @@
-import { BoostRotatorComponent } from '../components/boostRotatorComponent';
-
 namespace BoostDisplaySteps {
-  const boostRotatorComponent = new BoostRotatorComponent();
+  const { boostRotatorComponent } = inject();
 
-  Before(() => {});
-
-  When('I remind the boost featured in the boost rotator', () => {
-    boostRotatorComponent.waitForBoostFeedRotator();
+  When('I remind the boost featured in the boost rotator', async () => {
+    boostRotatorComponent.waitForBoostFeedRotator(true);
     boostRotatorComponent.shouldSeeBoostRotator(true);
-    boostRotatorComponent.toggleRemind();
+    await boostRotatorComponent.toggleRemind();
   });
 
-  When('I click to quote the boost featured in the boost rotator', () => {
-    boostRotatorComponent.waitForBoostFeedRotator();
+  When('I click to quote the boost featured in the boost rotator', async () => {
+    boostRotatorComponent.waitForBoostFeedRotator(true);
     boostRotatorComponent.shouldSeeBoostRotator(true);
-    boostRotatorComponent.openComposerForQuote();
+    await boostRotatorComponent.openComposerForQuote();
   });
 
   Then('I should see the boost rotator', () => {
-    boostRotatorComponent.waitForBoostFeedRotator();
+    boostRotatorComponent.waitForBoostFeedRotator(true);
     boostRotatorComponent.shouldSeeBoostRotator(true);
   });
 
@@ -26,6 +22,4 @@ namespace BoostDisplaySteps {
     boostRotatorComponent.waitForBoostFeedRotator();
     boostRotatorComponent.shouldSeeBoostRotator(false);
   });
-
-  After(() => {});
 }

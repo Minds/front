@@ -6,7 +6,7 @@ const { I } = inject();
 /**
  * Devtools page (/devtools) containing environment selector.
  */
-export class DevtoolsPage {
+class DevtoolsPage {
   /** @type { string }  - uri of the page */
   public uri: string = '/devtools';
 
@@ -91,3 +91,5 @@ export class DevtoolsPage {
     return '.m-environmentFlag__flag';
   }
 }
+
+export = new DevtoolsPage();

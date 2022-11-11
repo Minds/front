@@ -1,6 +1,6 @@
 const { I } = inject();
 
-export class ConfirmationModalComponent {
+class ConfirmationModalComponent {
   private modalElementSelector: string = 'm-confirmationModal';
   private titleTextSelector: string =
     '[data-ref=data-minds-confirmation-modal-title]';
@@ -54,3 +54,5 @@ export class ConfirmationModalComponent {
     I.dontSeeElement(this.modalElementSelector);
   }
 }
+
+export = new ConfirmationModalComponent();

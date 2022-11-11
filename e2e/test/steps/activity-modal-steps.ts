@@ -1,13 +1,7 @@
-import { ActivityModalComponent } from '../components/activityModalComponent';
-
 namespace ActivityModalSteps {
-  const activityModal = new ActivityModalComponent();
-
-  Before(() => {});
+  const { activityModalComponent } = inject();
 
   Then('I should see the activity modal', () => {
-    activityModal.shouldBeVisible();
+    activityModalComponent.shouldBeVisible();
   });
-
-  After(() => {});
 }

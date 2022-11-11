@@ -3,13 +3,14 @@ const { I } = inject();
 /**
  * Main nav sidebar component.
  */
-export class SidebarComponent {
+class SidebarComponent {
   /**
    * Opens the users channel from the sidebar.
    * @return { void }
    */
   public openChannel(): void {
     I.click('[data-ref=sidenav-channel]');
+    I.waitForElement('m-channel__feed');
   }
 
   /**
@@ -36,3 +37,5 @@ export class SidebarComponent {
     I.click('[data-ref=sidebarmore-supermind]');
   }
 }
+
+export = new SidebarComponent();

@@ -3,7 +3,7 @@ const { I } = inject();
 /**
  * Topbar component.
  */
-export class TopbarComponent {
+class TopbarComponent {
   private notificationButtonSelector: string = 'm-notifications--topbar-toggle';
 
   /**
@@ -22,3 +22,5 @@ export class TopbarComponent {
     ]);
   }
 }
+
+export = new TopbarComponent();
