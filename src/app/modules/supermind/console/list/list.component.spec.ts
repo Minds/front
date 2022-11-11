@@ -133,7 +133,7 @@ describe('SupermindConsoleListComponent', () => {
   it('should load', fakeAsync(() => {
     (comp as any).service.getList$.and.returnValue(of(mockList));
     comp.setupSubscription();
-    tick();
+    tick(100);
 
     expect((comp as any).service.countAll$).toHaveBeenCalled();
     expect((comp as any).service.getList$).toHaveBeenCalled();
@@ -147,7 +147,7 @@ describe('SupermindConsoleListComponent', () => {
     (comp as any).service.getList$.and.returnValue(of(mockList));
     comp.onStatusFilterChange(statusFilterValue);
     comp.setupSubscription();
-    tick();
+    tick(100);
 
     expect((comp as any).service.getList$).toHaveBeenCalledWith(
       12,
@@ -196,8 +196,10 @@ describe('SupermindConsoleListComponent', () => {
     (comp as any).service.getList$.and.returnValue(of(mockList));
     const statusFilterValue: SupermindState = 3;
     comp.onStatusFilterChange(statusFilterValue);
+    tick(100);
+
     comp.loadNext();
-    tick();
+    tick(100);
 
     expect((comp as any).service.getList$).toHaveBeenCalledWith(
       12,
@@ -213,7 +215,7 @@ describe('SupermindConsoleListComponent', () => {
     comp.list$.next(mockList);
     (comp as any).service.getList$.and.returnValue(of([]));
     comp.loadNext();
-    tick();
+    tick(100);
 
     expect((comp as any).service.getList$).toHaveBeenCalled();
     expect(comp.list$.getValue()).toEqual(mockList);
@@ -313,7 +315,7 @@ describe('SupermindConsoleListComponent', () => {
     (comp as any).service.countAll$.and.returnValue(of(expectedCount));
 
     comp.populateCounts();
-    tick();
+    tick(100);
 
     expect((comp as any).service.countAll$).toHaveBeenCalledWith(
       expectedStateFilterValue
@@ -327,7 +329,7 @@ describe('SupermindConsoleListComponent', () => {
     spyOn(window, 'scrollTo').and.returnValue(null);
 
     comp.onSeeLatestClick();
-    tick();
+    tick(100);
 
     expect(window.scrollTo).toHaveBeenCalled();
     expect((comp as any).service.getList$).toHaveBeenCalled();

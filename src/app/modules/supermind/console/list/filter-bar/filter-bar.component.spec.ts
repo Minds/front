@@ -1,9 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MockComponent } from '../../../../../utils/mock';
 import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
+import { BehaviorSubject } from 'rxjs';
+import { MockComponent, MockService } from '../../../../../utils/mock';
+import {
+  SupermindConsoleListType,
   SupermindConsoleStatusFilterType,
   SupermindState,
 } from '../../../supermind.types';
+import { SupermindConsoleService } from '../../services/console.service';
 import { SupermindConsoleFilterBarComponent } from './filter-bar.component';
 
 describe('SupermindConsoleFilterBarComponent', () => {
@@ -24,6 +33,20 @@ describe('SupermindConsoleFilterBarComponent', () => {
             outputs: ['click'],
           }),
         ],
+        providers: [
+          {
+            provide: SupermindConsoleService,
+            useValue: MockService(SupermindConsoleService, {
+              has: ['listType$'],
+              props: {
+                listType$: {
+                  get: () =>
+                    new BehaviorSubject<SupermindConsoleListType>('inbox'),
+                },
+              },
+            }),
+          },
+        ],
       }).compileComponents();
     })
   );
@@ -33,6 +56,7 @@ describe('SupermindConsoleFilterBarComponent', () => {
     comp = fixture.componentInstance;
 
     comp.statusFilterValue$.next(null);
+    (comp as any).service.listType$.next('inbox');
 
     if (fixture.isStable()) {
       done();
@@ -126,4 +150,38 @@ describe('SupermindConsoleFilterBarComponent', () => {
     });
     comp.onStatusFilterChange(status);
   });
+
+  it('should set filter state on list type change to inbox', fakeAsync((
+    done: DoneFn
+  ) => {
+    const listType: SupermindConsoleListType = 'inbox';
+    const status: SupermindConsoleStatusFilterType = 'pending';
+
+    comp.ngOnInit();
+    (comp as any).service.listType$.next(listType);
+    tick();
+
+    comp.statusFilterChange.subscribe((emittedValue: SupermindState) => {
+      expect(comp.statusFilterValue$.getValue()).toBe(status);
+      expect(emittedValue).toBe(SupermindState.CREATED);
+      done();
+    });
+  }));
+
+  it('should set filter state on list type change to outbox', fakeAsync((
+    done: DoneFn
+  ) => {
+    const listType: SupermindConsoleListType = 'outbox';
+    const status: SupermindConsoleStatusFilterType = null;
+
+    comp.ngOnInit();
+    (comp as any).service.listType$.next(listType);
+    tick();
+
+    comp.statusFilterChange.subscribe((emittedValue: SupermindState) => {
+      expect(comp.statusFilterValue$.getValue()).toBe(status);
+      expect(emittedValue).toBe(null);
+      done();
+    });
+  }));
 });

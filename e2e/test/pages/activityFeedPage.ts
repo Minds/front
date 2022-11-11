@@ -1,14 +1,15 @@
-import { ActivityComponent } from '../components/activityComponent';
-
-const { I } = inject();
-const activityComponent = new ActivityComponent();
+const { I, activityComponent } = inject();
 
 /**
  * Activity feed page - should be extended by for example, newsfeed or channel.
  */
-export class ActivityFeedPage {
+class ActivityFeedPage {
   // selectors.
   public activitySelector: string = 'm-activity';
+  public activityMediaLinkSelector: string =
+    '.m-activityContentMedia__link:not(.m-activityContent__quote)';
+  public activityPrimaryMediaLinkSelector: string =
+    '.m-activityContentMedia__link:not(.m-activityContent__quote)';
 
   /**
    * Delete an activity by its position in a feed.
@@ -35,6 +36,41 @@ export class ActivityFeedPage {
   }
 
   /**
+   * Click to quote activity by text - will open composer.
+   * @param { string } text - text content to get activity containing.
+   * @returns { Promise<void> }
+   */
+  public async clickToQuoteActivityByText(text: string): Promise<void> {
+    await within(locate(this.activitySelector).withText(text), async () => {
+      activityComponent.clickQuoteButton();
+    });
+  }
+
+  /**
+   * Click activity timestamp - will navigate to single entity page.
+   * @param { string } text - text content to get activity containing.
+   * @returns { Promise<void> }
+   */
+  public async clickTimestampForActivityWithText(text: string): Promise<void> {
+    await within(locate(this.activitySelector).withText(text), () => {
+      activityComponent.clickTimestamp();
+    });
+  }
+
+  /**
+   * Click parent media for a quote post with matching text, may open activity modal.
+   * @param { string } text - text content to get activity containing.
+   * @returns { Promise<void> }
+   */
+  public async clickOnParentMediaForQuotePostWithText(
+    text: string
+  ): Promise<void> {
+    await within(locate(this.activitySelector).withText(text), () => {
+      I.click(this.activityPrimaryMediaLinkSelector);
+    });
+  }
+
+  /**
    * Determine whether feed has an activity with the given text.
    * @param { string } text - text to check for.
    * @returns { void }
@@ -52,3 +88,7 @@ export class ActivityFeedPage {
     I.dontSeeElement(locate(this.activitySelector).withText(text));
   }
 }
+
+module.exports = new ActivityFeedPage();
+module.exports.ActivityFeedPage = ActivityFeedPage;
+export = ActivityFeedPage;

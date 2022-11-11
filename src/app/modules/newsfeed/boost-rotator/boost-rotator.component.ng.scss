@@ -5,10 +5,9 @@
   &.m-newsfeedBoostRotator--activityV2 {
     .m-newsfeed__boostRotator {
       margin: 0;
-      overflow-y: hidden;
 
       .m-newsfeedBoostRotator__item {
-        top: 46px; // leave room for toolbar buttons
+        top: 45px; // leave room for toolbar buttons
       }
     }
   }

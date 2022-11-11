@@ -4,7 +4,13 @@
     service.displayOptions.showInteractions && !service.displayOptions.isFeed
   "
 >
+  <m-supermind__banner
+    *ngIf="supermindButtonExperiment"
+    [entity]="entity"
+    data-ref="activity-large-supermind-action--alt"
+  ></m-supermind__banner>
   <m-supermind__button
+    *ngIf="!supermindButtonExperiment"
     [entity]="entity"
     [iconOnly]="false"
     size="large"

@@ -1,10 +1,7 @@
-import { DevtoolsPage } from '../pages/devtoolsPage';
 import { Environment } from '../types/devtools.types';
 
 namespace DevToolsSteps {
-  const devtoolsPage = new DevtoolsPage();
-
-  Before(() => {});
+  const { devtoolsPage } = inject();
 
   Given('I am on the devtools page', (): void => {
     devtoolsPage.navigateTo();
@@ -21,5 +18,4 @@ namespace DevToolsSteps {
       await devtoolsPage.checkEnvironment(environment as Environment);
     }
   );
-  After(() => {});
 }
