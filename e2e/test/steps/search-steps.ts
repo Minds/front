@@ -1,8 +1,6 @@
 namespace SearchSteps {
   const { I, searchPage } = inject();
 
-  Before(() => {});
-
   Given('I am on the search page', () => {
     I.amOnPage(searchPage.searchURI);
   });
@@ -31,6 +29,4 @@ namespace SearchSteps {
     I.seeElement(locate('m-discovery__search').withText('Groups'));
     I.seeElement(searchPage.searchResults);
   });
-
-  After(() => {});
 }

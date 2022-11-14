@@ -1,27 +1,22 @@
-import { ConfirmationModalComponent } from '../components/confirmationModalComponent';
-import { Helpers } from '../helpers/helpers';
-import { CommonPage } from '../pages/commonPage';
-import { NewsfeedPage } from '../pages/newsfeedPage';
-import { RegisterPage } from '../pages/registerPage';
+import { generateARandomString } from '../utils/utils';
 
 namespace CommonSteps {
-  const { I, loginPage } = inject();
-
-  const commonPage = new CommonPage();
-  const helpers = new Helpers();
-  const registerPage = new RegisterPage();
-  const confirmationModalComponent = new ConfirmationModalComponent();
-
-  Before(() => {});
+  const {
+    I,
+    loginPage,
+    commonPage,
+    registerPage,
+    confirmationModalComponent,
+  } = inject();
 
   /**
    * Create a new user.
    * @return { void }
    */
   Given('I create a new user', (): void => {
-    const username = helpers.generateRandomString();
+    const username = generateARandomString();
     const email = 'noreply@minds.com';
-    const password = helpers.generateRandomString() + 'A1!';
+    const password = generateARandomString() + 'A1!';
 
     I.clearCookie();
     registerPage.navigateToByUrl();
@@ -68,7 +63,6 @@ namespace CommonSteps {
       if (await I.grabCookie('minds_sess')) {
         return;
       }
-
       I.clearCookie();
       I.refreshPage();
       I.amOnPage(loginPage.loginURI);
@@ -141,8 +135,8 @@ namespace CommonSteps {
   Then(
     'I should see an {string} toaster saying {string}',
     (toasterType, toasterText) => {
+      I.waitForElement(`${commonPage.toasterTypePrefix}${toasterType}`);
       I.see(toasterText, commonPage.toaster);
-      I.seeElement(`${commonPage.toasterTypePrefix}${toasterType}`);
     }
   );
 
@@ -154,6 +148,4 @@ namespace CommonSteps {
     I.clearCookie();
     I.refreshPage();
   });
-
-  After(() => {});
 }
