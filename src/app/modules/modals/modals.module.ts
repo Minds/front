@@ -15,6 +15,7 @@ import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { PhotoBannerModalComponent } from './photo-banner/photo-banner-modal.component';
+import { SupermindReplyConfirmModalComponent } from './supermind-reply-confirm/supermind-reply-confirm-modal.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { PhotoBannerModalComponent } from './photo-banner/photo-banner-modal.com
     SignupModal,
     ConfirmPasswordModalComponent,
     TOSUpdatedModal,
+    SupermindReplyConfirmModalComponent,
   ],
   exports: [
     ConfirmModal,
