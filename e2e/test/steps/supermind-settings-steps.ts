@@ -1,8 +1,5 @@
-import { SupermindSettingsPage } from '../pages/supermindSettingsPage';
-
 namespace SupermindSettingsSteps {
-  const { I } = inject();
-  const supermindSettingsPage = new SupermindSettingsPage();
+  const { I, supermindSettingsPage } = inject();
 
   // randomized amounts for testing to allow checking in subsequent steps.
   const randomisedMinOffchainTokenAmount = Math.floor(
@@ -60,6 +57,4 @@ namespace SupermindSettingsSteps {
       supermindSettingsPage.validationErrorText.two_decimal_places
     );
   });
-
-  After(() => {});
 }

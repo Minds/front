@@ -1,13 +1,11 @@
-import { FeedNoticeComponent } from '../components/feedNoticeComponent';
 import { FeedNoticeKey } from '../types/feednotice.types';
-import { ActivityFeedPage } from './activityFeedPage';
-const { I } = inject();
+import ActivityFeedPage from './activityFeedPage';
+const { I, feedNoticeComponent } = inject();
 
 /**
  * Newsfeed page - common functions for newsfeed.
  */
-export class NewsfeedPage extends ActivityFeedPage {
-  public feedNoticeComponent = new FeedNoticeComponent();
+class NewsfeedPage extends ActivityFeedPage {
   public newsfeedURI: string = '/newsfeed/subscriptions/latest';
 
   /**
@@ -33,7 +31,7 @@ export class NewsfeedPage extends ActivityFeedPage {
    * @returns { void }
    */
   public hasFeedNotice(feedNoticeKey: FeedNoticeKey): void {
-    this.feedNoticeComponent.has(feedNoticeKey);
+    feedNoticeComponent.has(feedNoticeKey);
   }
 
   /**
@@ -41,6 +39,10 @@ export class NewsfeedPage extends ActivityFeedPage {
    * @returns { void }
    */
   public clickFeedNoticePrimaryAction(): void {
-    this.feedNoticeComponent.clickPrimaryAction();
+    feedNoticeComponent.clickPrimaryAction();
   }
 }
+
+module.exports = new NewsfeedPage();
+module.exports.NewsfeedPage = NewsfeedPage;
+export = new NewsfeedPage();

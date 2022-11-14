@@ -675,13 +675,6 @@ export class ActivityV2ContentComponent
       return;
     }
 
-    // We don't support showing media quotes in modal yet
-    // (Except for multi-image quotes)
-    if (this.entity.remind_object && !this.isMultiImage) {
-      this.redirectToSinglePage();
-      return;
-    }
-
     if (
       this.service.displayOptions.bypassMediaModal &&
       this.entity.content_type !== 'image' &&

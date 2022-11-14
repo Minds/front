@@ -1,14 +1,11 @@
-import { SidebarComponent } from '../components/sidebarComponent';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
 } from '../types/supermind-console.types';
 
-require('dotenv').config();
-const { I } = inject();
-const sidebarComponent = new SidebarComponent();
+const { I, sidebarComponent } = inject();
 
-export class SupermindConsolePage {
+class SupermindConsolePage {
   /** @type { string }  - root uri of the page */
   private baseUrl: string = '/supermind';
 
@@ -188,18 +185,12 @@ export class SupermindConsolePage {
     stateFilterLabel: string,
     stateValue: string | null
   ): Promise<void> {
+    I.scrollPageToTop();
     I.click(this.statusFilterTrigger);
-    await Promise.all([
-      I.click(this.statusFilterLabel.withText(stateFilterLabel)),
-      I.waitForResponse(
-        resp =>
-          resp
-            .url()
-            .includes(stateValue ? `&status=${stateValue}` : `/supermind/`) &&
-          resp.status() === 200,
-        30
-      ),
-    ]);
+    await I.clickAndWait(
+      this.statusFilterLabel.withText(stateFilterLabel),
+      stateValue ? `status=${stateValue}` : `/supermind/`
+    );
   }
 
   /**
@@ -275,3 +266,5 @@ export class SupermindConsolePage {
     });
   }
 }
+
+export = new SupermindConsolePage();
