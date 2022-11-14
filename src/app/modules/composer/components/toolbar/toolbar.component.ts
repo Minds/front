@@ -7,25 +7,17 @@ import {
   EventEmitter,
   HostListener,
   Inject,
+  Injector,
+  Input,
   OnDestroy,
   OnInit,
   Output,
   PLATFORM_ID,
   ViewChild,
-  Input,
-  Injector,
 } from '@angular/core';
-import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { debounceTime, map, take } from 'rxjs/operators';
 import {
-  debounceTime,
-  distinctUntilChanged,
-  first,
-  last,
-  map,
-  take,
-} from 'rxjs/operators';
-import {
-  AttachmentSubjectValue,
   ComposerService,
   ComposerSize,
   MonetizationSubjectValue,
@@ -44,7 +36,6 @@ import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { isPlatformBrowser } from '@angular/common';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 import isMobile from '../../../../helpers/is-mobile';
 import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
@@ -53,9 +44,11 @@ import { SupermindExperimentService } from '../../../experiments/sub-services/su
 import { ModalService } from '../../../../services/ux/modal.service';
 import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component';
 import {
-  SupermindComposerPayloadType,
   SUPERMIND_PAYMENT_METHODS,
+  SupermindComposerPayloadType,
 } from '../popup/supermind/superminds-creation.service';
+import { SupermindReplyConfirmModalComponent } from '../../../modals/supermind-reply-confirm/supermind-reply-confirm-modal.component';
+import { Supermind } from '../../../supermind/supermind.types';
 
 /**
  * Composer toolbar. Displays important actions
@@ -140,6 +133,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   supermindRequest: SupermindComposerPayloadType;
 
   /**
+   * Details of supermind request for the reply
+   * @private
+   */
+  private supermindReply: Supermind;
+
+  /**
    * Flag as to if we show supermind create button
    */
   canCreateSupermindRequest$ = this.service.canCreateSupermindRequest$.pipe(
@@ -147,6 +146,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       return this.supermindExperiment.isActive() && canCreateSupermindRequest;
     })
   );
+
+  private supermindReplyOnPostSubscription: Subscription = null;
 
   /**
    * Constructor
@@ -186,6 +187,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       this.service.supermindRequest$.subscribe(request => {
         this.supermindRequest = request;
+      }),
+      this.service.supermindReply$.subscribe(details => {
+        this.supermindReply = details;
       })
     );
 
@@ -237,6 +241,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+    this.supermindReplyOnPostSubscription?.unsubscribe();
   }
 
   /**
@@ -427,7 +432,32 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.openSupermindConfirmationModal($event);
       return;
     }
-    this.onPostEmitter.emit($event);
+
+    this.supermindReplyOnPostSubscription = this.service.isSupermindReply$
+      .pipe(take(1))
+      .subscribe(is => {
+        if (!is) {
+          return;
+        }
+        const modal = this.modalService.present(
+          SupermindReplyConfirmModalComponent,
+          {
+            data: {
+              isTwitterReplyEnabled: true,
+              isTwitterReplyRequired: this.supermindReply.twitter_required,
+              onConfirm: () => {
+                this.onPostEmitter.emit($event);
+                modal.dismiss();
+              },
+              onClose: () => {
+                modal.dismiss();
+              },
+            },
+            injector: this.injector,
+          }
+        );
+      });
+    // this.onPostEmitter.emit($event);
   }
 
   /**

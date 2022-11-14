@@ -2,14 +2,14 @@ import {
   Component,
   ElementRef,
   forwardRef,
-  OnChanges,
-  OnInit,
-  ViewChild,
   Input,
+  ViewChild,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -20,6 +20,7 @@ export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'm-formInput__checkbox',
   templateUrl: 'checkbox.component.html',
+  styleUrls: ['./checkbox.component.ng.scss'],
   providers: [FORM_INPUT_CHECKBOX_VALUE_ACCESSOR],
 })
 export class FormInputCheckboxComponent implements ControlValueAccessor {
