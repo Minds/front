@@ -24,10 +24,11 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { first, map, distinctUntilChanged } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
 import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
+import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -39,7 +40,8 @@ import { ComposerSupermindComponent } from '../popup/supermind/supermind.compone
   templateUrl: 'base.component.html',
   providers: [PopupService],
 })
-export class BaseComponent implements AfterViewInit {
+export class BaseComponent extends AbstractSubscriberComponent
+  implements AfterViewInit {
   /**
    * Post event emitter
    */
@@ -81,6 +83,10 @@ export class BaseComponent implements AfterViewInit {
    */
   remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
+  subscriptions: Subscription[] = [];
+
+  isDirty: boolean = false;
+
   /**
    * Constructor
    * @param service
@@ -103,6 +109,8 @@ export class BaseComponent implements AfterViewInit {
     configs: ConfigsService,
     protected uploaderService: UploaderService
   ) {
+    super();
+
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
     this.attachmentError$.pipe(distinctUntilChanged()).subscribe(error => {
@@ -125,6 +133,13 @@ export class BaseComponent implements AfterViewInit {
     if (this.service.supermindRequest$.getValue()) {
       this.displaySupermindRequestPopup();
     }
+
+    this.subscriptions.push(
+      this.service.isDirty$.subscribe(isDirty => {
+        console.log('ojm BASE isDirtyRX', isDirty);
+        this.isDirty = isDirty;
+      })
+    );
   }
 
   /**

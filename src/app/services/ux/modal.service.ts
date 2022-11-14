@@ -16,6 +16,9 @@ import isMobile from '../../helpers/is-mobile';
 
 export interface Modal<T> {
   setModalData(data: T & ModalDefaultData): void;
+  getModalOptions?: () => {
+    canDismiss?: () => Promise<boolean>;
+  };
 }
 
 export interface ModalRef<T> extends Partial<NgbModalRef> {
@@ -64,7 +67,8 @@ export class ModalService implements OnDestroy {
     component: ModalComponent<T>,
     modalOptions: ModalOptions<T> = {}
   ): ModalRef<any> {
-    const { data, injector, lazyModule, ...rest } = modalOptions;
+    const { data, injector, lazyModule, beforeDismiss, ...rest } = modalOptions;
+
     if (lazyModule) {
       const componentFactory = this.loadLazyModule(lazyModule, injector);
     }
@@ -75,6 +79,15 @@ export class ModalService implements OnDestroy {
       keyboard: true,
       // scrollable: true,
       // modalDialogClass:,
+      beforeDismiss: async () => {
+        const { canDismiss } = ref.componentInstance.getModalOptions?.() || {};
+
+        if (canDismiss) {
+          return await canDismiss();
+        }
+
+        return true;
+      },
       // windowClass: 'm-modalV3__wrapper',
       size: modalOptions.size || 'md',
       // ariaDescribedBy:
@@ -95,6 +108,11 @@ export class ModalService implements OnDestroy {
     };
     ref.componentInstance.setModalData?.(options);
 
+    // ref.result is defained as "the promise that is resolved when
+    // the modal is closed and rejected when the modal is dismissed."
+
+    // The error below fires whenever dismiss() is used instead of close(),
+    // and is not always really an 'error'
     return {
       dismiss: i => ref.dismiss(i),
       close: i => ref.close(i),

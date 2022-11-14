@@ -77,9 +77,10 @@ export const DEFAULT_COMPOSER_SIZE: ComposerSize = 'full';
 export * from './composer-data-types';
 
 /**
- * Store/process class for activities composer. As it's used as a store it should be injected individually
- * on the components that require it using `providers` array.
- */
+ * Store/process class for activity composer.
+ * It should be injected into each component that uses it
+ * (via the `providers` array), as it is used as a store.
+ * */
 @Injectable()
 export class ComposerService implements OnDestroy {
   /**
@@ -214,6 +215,19 @@ export class ComposerService implements OnDestroy {
   readonly canPost$: Observable<boolean>;
 
   /**
+   * ojm
+   */
+  readonly isDirty$: Observable<boolean>;
+
+  /**
+   * True if composer form fields have unsaved changes
+   * ojm remove?
+   */
+  // readonly isDirty$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+  //   false
+  // );
+
+  /**
    * Is this an edit operation? (state)
    */
   readonly isEditing$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -269,6 +283,29 @@ export class ComposerService implements OnDestroy {
       );
     })
   );
+
+  /**
+   * True if composer form fields have unsaved changes
+   * ojm expand on this
+   * ojm testing message and title only first
+   */
+  // readonly isDirty$: Observable<boolean> = combineLatest([
+  //   this.isEditing$,
+  //   this.message$,
+  //   this.title$,
+  // ]).pipe(
+  //   map(([isEditing, message, title]) => {
+  //     if
+
+  //     return (
+  //       !isEditing &&
+  //       !nsfw.length &&
+  //       !monetization$ &&
+  //       !schedule &&
+  //       !isSupermindReply
+  //     );
+  //   })
+  // );
 
   /**
    * If we are editing and we have a scheduled value
@@ -582,6 +619,38 @@ export class ComposerService implements OnDestroy {
       })
     );
 
+    // ojm comment
+    this.isDirty$ = combineLatest([this.isEditing$, this.data$]).pipe(
+      map(([isEditing, data]) => {
+        let dirty; // ojm no need to use this after debugging
+
+        console.log('ojm --------------------------------------');
+        console.log('ojm data$$,', data);
+        //ojm isEditingdoesn't fire for a little while, is it ok?
+
+        if (isEditing && this.payload && this.entity) {
+          console.log('ojm COMPOSERSVC isEditing', this.payload, this.entity);
+          // Note: this.entity is the original loaded state of the post being edited
+          dirty = Boolean(
+            this.payload.message !== this.entity.message ||
+              this.payload.title !== this.entity.title ||
+              this.payload.nsfw !== this.entity.nsfw
+          );
+        } else {
+          dirty = Boolean(
+            data.message !== DEFAULT_MESSAGE_VALUE ||
+              data.title !== DEFAULT_TITLE_VALUE ||
+              data.nsfw !== DEFAULT_NSFW_VALUE ||
+              data.monetization !== DEFAULT_MONETIZATION_VALUE ||
+              data.tags !== DEFAULT_TAGS_VALUE
+          );
+          console.log('ojm COMPOSERSVC notEditing');
+        }
+        console.log('ojm COMPOSERSVC dirty??', dirty);
+        return dirty;
+      })
+    );
+
     // Subscribe to data stream and re-build API payload when it changes
 
     this.dataSubscription = this.data$.subscribe(data => {
@@ -607,7 +676,6 @@ export class ComposerService implements OnDestroy {
     );
 
     // Subscribe to message URL and rich embed in order to know if a URL should be resolved
-
     this.richEmbedExtractorSubscription = combineLatest([
       this.messageUrl$.pipe(distinctUntilChanged()),
       // get last 2 emissions - start with '' for first emission.
@@ -940,6 +1008,8 @@ export class ComposerService implements OnDestroy {
     supermindRequest,
     supermindReply,
   }: Data): any {
+    // OJM
+    console.log('ojm COMPOSERSVC buildPayload() fired');
     if (this.containerGuid) {
       // Override accessId if there's a container set
       accessId = this.containerGuid;
