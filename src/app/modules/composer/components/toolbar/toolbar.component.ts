@@ -128,6 +128,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   isSupermindRequest: boolean = false;
 
   /**
+   * True/False if supermind reply is inprogress
+   */
+  isSupermindReply: boolean = false;
+
+  /**
    * Details of supermind request (if applicable)
    */
   supermindRequest: SupermindComposerPayloadType;
@@ -146,8 +151,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       return this.supermindExperiment.isActive() && canCreateSupermindRequest;
     })
   );
-
-  private supermindReplyOnPostSubscription: Subscription = null;
 
   /**
    * Constructor
@@ -187,6 +190,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       this.service.supermindRequest$.subscribe(request => {
         this.supermindRequest = request;
+      }),
+      this.service.isSupermindReply$.subscribe(is => {
+        this.isSupermindReply = is;
+        this.detectChanges();
       }),
       this.service.supermindReply$.subscribe(details => {
         this.supermindReply = details;
@@ -241,7 +248,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
-    this.supermindReplyOnPostSubscription?.unsubscribe();
   }
 
   /**
@@ -433,31 +439,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.supermindReplyOnPostSubscription = this.service.isSupermindReply$
-      .pipe(take(1))
-      .subscribe(is => {
-        if (!is) {
-          return;
-        }
-        const modal = this.modalService.present(
-          SupermindReplyConfirmModalComponent,
-          {
-            data: {
-              isTwitterReplyEnabled: true,
-              isTwitterReplyRequired: this.supermindReply.twitter_required,
-              onConfirm: () => {
-                this.onPostEmitter.emit($event);
-                modal.dismiss();
-              },
-              onClose: () => {
-                modal.dismiss();
-              },
-            },
-            injector: this.injector,
-          }
-        );
-      });
-    // this.onPostEmitter.emit($event);
+    if (this.isSupermindReply) {
+      this.openSupermindReplyConfirmationModal($event);
+      return;
+    }
+
+    this.onPostEmitter.emit($event);
   }
 
   /**
@@ -527,6 +514,30 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       injector: this.injector,
     });
+  }
+
+  /**
+   * Opens modal to confirm supermind reply
+   * @returns { void }
+   */
+  openSupermindReplyConfirmationModal($event: MouseEvent): void {
+    const modal = this.modalService.present(
+      SupermindReplyConfirmModalComponent,
+      {
+        data: {
+          isTwitterReplyEnabled: true,
+          isTwitterReplyRequired: this.supermindReply.twitter_required,
+          onConfirm: () => {
+            this.onPostEmitter.emit($event);
+            modal.dismiss();
+          },
+          onClose: () => {
+            modal.dismiss();
+          },
+        },
+        injector: this.injector,
+      }
+    );
   }
 
   /**

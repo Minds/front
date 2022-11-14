@@ -106,6 +106,7 @@ namespace SupermindConsoleSteps {
     composerModalComponent.shouldHaveEllipsisMenu(false);
     composerModalComponent.typeInTextArea('hello');
     composerModalComponent.clickPost();
+    composerModalComponent.clickConfirmReplyButton();
   });
 
   When('I try to make an NSFW supermind reply', () => {
