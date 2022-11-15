@@ -7,12 +7,11 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, combineLatest, fromEvent, Subscription } from 'rxjs';
-import { map, skip, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { BoostImpressionRates, BoostTab } from '../../boost-modal.types';
 import {
   BoostModalService,
-  BoostTab,
   MAXIMUM_SINGLE_BOOST_IMPRESSIONS,
-  MINIMUM_BOOST_OFFER_TOKENS,
   MINIMUM_SINGLE_BOOST_IMPRESSIONS,
 } from '../../boost-modal.service';
 
@@ -26,8 +25,8 @@ export class BoostModalAmountInputComponent
   // general subscriptions
   private subscriptions: Subscription[] = [];
 
-  // focus listener subscriptions - treat separately so we can re-init as DOM changes.
-  private focusListenerSubscriptions: Subscription[] = [];
+  // amount input subscriptions.
+  private amountInputSubscriptions: Subscription[] = [];
 
   // max impressions.
   public maxImpressions = MAXIMUM_SINGLE_BOOST_IMPRESSIONS;
@@ -35,13 +34,24 @@ export class BoostModalAmountInputComponent
   // min impressions.
   public minImpressions = MINIMUM_SINGLE_BOOST_IMPRESSIONS;
 
-  // min tokens
-  public minTokens = MINIMUM_BOOST_OFFER_TOKENS;
-
   // true if input is focused.
   public readonly isFocused$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
+
+  // Gets impressions subject from service.
+  public impressions$: BehaviorSubject<number> = this.service.impressions$;
+
+  // Gets impressions subject from service.
+  public currencyAmount$: BehaviorSubject<number> = this.service
+    .currencyAmount$;
+
+  // Gets rate from service.
+  public impressionRates$: BehaviorSubject<BoostImpressionRates> = this.service
+    .impressionRates$;
+
+  // Gets current boost tab from service.
+  public activeTab$: BehaviorSubject<BoostTab> = this.service.activeTab$;
 
   // amount input form
   public form: FormGroup;
@@ -50,152 +60,77 @@ export class BoostModalAmountInputComponent
   @ViewChild('impressionsInput') impressionsInput: ElementRef;
 
   // tokens input ElementRef
-  @ViewChild('tokensInput') tokensInput: ElementRef;
+  @ViewChild('currencyAmountInput') currencyAmountInput: ElementRef;
 
-  // token label ElementRef
-  @ViewChild('tokensLabel') tokensLabel: ElementRef;
+  // currency amount label ElementRef
+  @ViewChild('currencyAmountLabel') currencyAmountLabel: ElementRef;
 
   // impressions label ElementRef
   @ViewChild('impressionsLabel') impressionsLabel: ElementRef;
 
   constructor(private service: BoostModalService) {}
 
-  /**
-   * Gets impressions subject from service.
-   * @returns { BehaviorSubject<number> } - impressions.
-   */
-  get impressions$(): BehaviorSubject<number> {
-    return this.service.impressions$;
-  }
-
-  /**
-   * Gets impressions subject from service.
-   * @returns { BehaviorSubject<number> } - impressions.
-   */
-  get tokens$(): BehaviorSubject<number> {
-    return this.service.tokens$;
-  }
-
-  /**
-   * Gets rate from service.
-   * @returns { BehaviorSubject<number> } - rate.
-   */
-  get rate$(): BehaviorSubject<number> {
-    return this.service.rate$;
-  }
-
-  /**
-   * Gets current boost tab from service.
-   * @returns { BehaviorSubject<BoostTab> } = current boost tab.
-   */
-  get activeTab$(): BehaviorSubject<BoostTab> {
-    return this.service.activeTab$;
-  }
-
   ngOnInit(): void {
-    // subscribe to changes in current rate and active tab
+    // subscribe to changes in current rate and setup form controls accordingly.
     this.subscriptions.push(
-      combineLatest([this.rate$, this.activeTab$])
+      combineLatest([this.impressionRates$, this.activeTab$])
         .pipe(
-          map(([rate, activeTab]) => {
-            // setup form controls.
-            this.setupFormControls(rate, activeTab);
-          })
+          map(
+            ([impressionRates, activeTab]: [
+              BoostImpressionRates,
+              BoostTab
+            ]) => {
+              this.setupFormControls();
+            }
+          )
         )
         .subscribe()
     );
   }
 
   ngAfterViewInit(): void {
-    // setup focus listener subscriptions.
-    this.resetFocusListenerSubscriptions();
-
     this.subscriptions.push(
-      // on tab change, reset focus listeners as visible fields may have changed.
-      this.activeTab$.pipe(skip(1)).subscribe(() => {
-        // push to back of the event queue while DOM updates
-        setTimeout(() => this.resetFocusListenerSubscriptions());
+      this.activeTab$.subscribe(() => {
+        this.resetSubscriptions();
       })
     );
-
-    // Set focus impressions input
-    setTimeout(() => this.impressionsInput.nativeElement.focus(), 0);
   }
 
   ngOnDestroy(): void {
     for (let subscription of [
       ...this.subscriptions,
-      ...this.focusListenerSubscriptions,
+      ...this.amountInputSubscriptions,
     ]) {
       subscription.unsubscribe();
     }
   }
 
   /**
-   * On views value changed, update tokens to match based on rate.
-   * @param { number } $event - views value.
+   * Reset input subscriptions and resubscribe.
    * @returns { void }
    */
-  public viewsValueChanged($event: number): void {
-    this.impressions$.next($event);
-    this.tokens$.next($event / this.rate$.getValue());
-  }
-
-  /**
-   * On tokens value changed, update impressions to match based on rate.
-   * @param { number } $event - tokens value.
-   * @returns { void }
-   */
-  public tokensValueChanged($event: number): void {
-    this.tokens$.next($event);
-    this.impressions$.next($event * this.rate$.getValue());
-  }
-
-  /**
-   * Reset focus listener subscriptions and resubscribe.
-   * @returns { void }
-   */
-  private resetFocusListenerSubscriptions(): void {
+  private resetSubscriptions(): void {
     // unsub from any existing to avoid subscription duplication.
-    for (let subscription of this.focusListenerSubscriptions) {
+    for (let subscription of this.amountInputSubscriptions) {
       subscription.unsubscribe();
     }
 
-    // if impressions input is in DOM
-    if (this.impressionsInput && this.impressionsInput.nativeElement) {
-      // subscribe to focus in and out events.
-      this.setupImpressionsInputListeners();
-    }
-
-    // subscribe to token input focus events
-    this.setupTokenInputListeners();
-  }
-
-  /**
-   * Sets up token input listeners.
-   * @returns { void }
-   */
-  private setupTokenInputListeners(): void {
-    this.focusListenerSubscriptions.push(
-      fromEvent(this.tokensInput.nativeElement, 'focus').subscribe(value => {
-        this.isFocused$.next(true);
-      }),
-
-      fromEvent(this.tokensInput.nativeElement, 'focusout').subscribe(value => {
-        this.isFocused$.next(false);
-      }),
-      fromEvent(this.tokensLabel.nativeElement, 'click').subscribe(value => {
-        this.tokensInput.nativeElement.focus();
-      })
-    );
-  }
-
-  /**
-   * Sets up impressions input listeners.
-   * @returns { void }
-   */
-  private setupImpressionsInputListeners(): void {
-    this.focusListenerSubscriptions.push(
+    this.amountInputSubscriptions.push(
+      fromEvent(this.currencyAmountInput.nativeElement, 'focus').subscribe(
+        value => {
+          this.isFocused$.next(true);
+        }
+      ),
+      fromEvent(this.currencyAmountInput.nativeElement, 'focusout').subscribe(
+        value => {
+          this.isFocused$.next(false);
+        }
+      ),
+      fromEvent(this.currencyAmountLabel.nativeElement, 'click').subscribe(
+        value => {
+          this.currencyAmountInput.nativeElement.focus();
+        }
+      ),
       fromEvent(this.impressionsInput.nativeElement, 'focus').subscribe(
         value => {
           this.isFocused$.next(true);
@@ -210,39 +145,78 @@ export class BoostModalAmountInputComponent
         value => {
           this.impressionsInput.nativeElement.focus();
         }
+      ),
+      this.form.controls.currencyAmount.valueChanges.subscribe(
+        (value: number): void => {
+          this.currencyAmountValueChanged(value);
+        }
+      ),
+      this.form.controls.impressions.valueChanges.subscribe(
+        (value: number): void => {
+          this.viewsValueChanged(value);
+        }
       )
     );
   }
 
   /**
-   * Sets up form controls depending on the active tab.
-   * @param { number } rate - rate.
-   * @param { BoostTab } activeTab - current active tab.
+   * On views value changed, update currency amount to match based on rate.
+   * @param { number } $event - views value.
    * @returns { void }
    */
-  private setupFormControls(rate: number, activeTab: BoostTab): void {
-    const defaultViews = this.maxImpressions / 2;
-    const defaultTokens = defaultViews / rate;
-    const minTokens = this.minImpressions / rate;
+  private viewsValueChanged($event: number): void {
+    this.impressions$.next($event);
+    const currencyAmount: number = parseFloat(
+      ($event / this.getImpressionRate()).toFixed(2)
+    );
+    const currentCurrencyAmount: number = this.form.controls.currencyAmount
+      .value;
 
-    if (activeTab === 'offer') {
-      this.form = new FormGroup({
-        tokens: new FormControl(defaultTokens, {
-          validators: [Validators.required, Validators.min(minTokens)],
-        }),
-      });
-      return;
+    // stop recursive loop if value matches, and don't process events for less than the min impressions.
+    if (
+      currentCurrencyAmount !== currencyAmount &&
+      $event >= MINIMUM_SINGLE_BOOST_IMPRESSIONS
+    ) {
+      this.currencyAmount$.next(currencyAmount);
+      this.form.controls.currencyAmount.setValue(currencyAmount);
     }
+  }
 
-    // else newsfeed.
-    const maxTokens = this.maxImpressions / rate; // no max on offers
+  /**
+   * On currency amount value changed, update impressions to match based on rate.
+   * @param { number } $event - currency amount value.
+   * @returns { void }
+   */
+  private currencyAmountValueChanged($event: number): void {
+    this.currencyAmount$.next($event);
+    const impressions: number = Math.floor($event * this.getImpressionRate());
+    const currentImpressions: number = this.form.controls.impressions.value;
+
+    // stop recursive loop if value matches, and don't process events for less than the min amount.
+    if (currentImpressions !== impressions && $event >= 0.01) {
+      this.impressions$.next(impressions);
+      this.form.controls.impressions.setValue(impressions);
+    }
+  }
+
+  /**
+   * Sets up form controls depending on the active tab.
+   * @param { number } rate - rate.
+   * @returns { void }
+   */
+  private setupFormControls(): void {
+    const rate = this.getImpressionRate();
+    const defaultViews = this.maxImpressions / 2;
+    const defaultCurrencyAmount = parseFloat((defaultViews / rate).toFixed(2));
+    const minCurrencyAmount = this.minImpressions / rate;
+    const maxCurrencyAmount = this.maxImpressions / rate;
 
     this.form = new FormGroup({
-      tokens: new FormControl(defaultTokens, {
+      currencyAmount: new FormControl(defaultCurrencyAmount, {
         validators: [
           Validators.required,
-          Validators.max(maxTokens),
-          Validators.min(minTokens),
+          Validators.max(maxCurrencyAmount),
+          Validators.min(minCurrencyAmount),
         ],
       }),
       impressions: new FormControl(defaultViews, {
@@ -253,5 +227,20 @@ export class BoostModalAmountInputComponent
         ],
       }),
     });
+  }
+
+  /**
+   * Get impression rate for currently active tab.
+   * @returns { number } impression rate for currently active tab.
+   */
+  private getImpressionRate(): number {
+    const activeTab = this.activeTab$.getValue();
+    const impressionRates = this.impressionRates$.getValue();
+
+    if (activeTab === 'cash') {
+      return impressionRates.cash;
+    } else {
+      return impressionRates.tokens;
+    }
   }
 }

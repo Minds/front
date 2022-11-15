@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
-import {
-  BoostModalService,
-  BoostPaymentMethod,
-} from '../../boost-modal.service';
+import { BoostModalService } from '../../boost-modal.service';
+import { BoostTab, BoostTokenPaymentMethod } from '../../boost-modal.types';
 
 /**
  * Payment method selector component (offchain / onchain etc).
@@ -25,16 +23,18 @@ import {
         <span
           class="m-boostModalPayments__buyTokens"
           i18n="@@BOOST_MODAL__BUY_TOKENS"
+          data-ref="boost-modal-buy-tokens-link"
           >Buy tokens</span
         >
       </a>
     </div>
     <select
+      *ngIf="(activeTab$ | async) === 'tokens'"
       class="m-boostModalPayments__optionSelect"
-      [ngModel]="paymentMethod$ | async"
-      (ngModelChange)="paymentMethod$.next($event)"
+      [ngModel]="tokenPaymentMethod$ | async"
+      (ngModelChange)="tokenPaymentMethod$.next($event)"
       [ngStyle]="selectBackground$ | async"
-      data-cy="data-minds-boost-modal-method-select"
+      data-ref="boost-modal-token-payment-select"
     >
       <option value="onchain">
         On-chain ({{ onchainBalance$ | async }} Tokens)
@@ -43,12 +43,54 @@ import {
         Off-chain ({{ offchainBalance$ | async }} Tokens)
       </option>
     </select>
+    <m-payments__selectCard
+      *ngIf="(activeTab$ | async) === 'cash'"
+      [selected]="cashPaymentMethod$ | async"
+      (selected)="cashPaymentMethod$.next($event)"
+      data-ref="boost-modal-cash-payment-custom-selector"
+    ></m-payments__selectCard>
   `,
   styleUrls: ['./payment-method-selector.component.ng.scss'],
 })
-export class BoostModalPaymentMethodSelectorComponent implements OnInit {
+export class BoostModalPaymentMethodSelectorComponent
+  implements OnInit, OnDestroy {
   // cdn url
   private readonly cdnAssetsUrl: string;
+
+  // Currently active tab.
+  public activeTab$: BehaviorSubject<BoostTab> = this.service.activeTab$;
+
+  // Users onchain balance - must be fetched from service before it holds a value.
+  public onchainBalance$: BehaviorSubject<number> = this.service
+    .onchainBalance$;
+
+  // Users offchain balance - must be fetched from service before it holds a value.
+  public offchainBalance$: BehaviorSubject<number> = this.service
+    .offchainBalance$;
+
+  // Token payment method from service.
+  public tokenPaymentMethod$: BehaviorSubject<BoostTokenPaymentMethod> = this
+    .service.tokenPaymentMethod$;
+
+  // Cash payment method from service. Will hold the ID of a card to be used.
+  public cashPaymentMethod$: BehaviorSubject<string> = this.service
+    .cashPaymentMethod$;
+
+  // Background of select dropdown to add a stylable dropdown icon based on theme.
+  public selectBackground$: Observable<{
+    background: string;
+  }> = this.theme.isDark$.pipe(
+    map(isDark => {
+      return {
+        background: `url('${this.cdnAssetsUrl}assets/icons/arrow-drop-down-${
+          isDark ? 'white' : 'black'
+        }.svg') 98% center no-repeat`,
+      };
+    })
+  );
+
+  // subscription to load balance when active tab changes to tokens.
+  private balanceLoadSubscription: Subscription;
 
   constructor(
     private service: BoostModalService,
@@ -58,50 +100,17 @@ export class BoostModalPaymentMethodSelectorComponent implements OnInit {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
-  async ngOnInit(): Promise<void> {
-    // avoid having to pull in subscription OnDestroy hook.
-    await this.service.fetchBalance().toPromise();
+  ngOnInit(): void {
+    // Load token balance on active tab switch to 'tokens'.
+    this.balanceLoadSubscription = this.activeTab$
+      .pipe(
+        filter((activeTab: BoostTab) => activeTab === 'tokens'),
+        switchMap(_ => this.service.fetchTokenBalance())
+      )
+      .subscribe();
   }
 
-  /**
-   * Users onchain balance - must be fetched from service before it holds a value.
-   * @returns { BehaviorSubject<number> } Users onchain balance.
-   */
-  get onchainBalance$(): BehaviorSubject<number> {
-    return this.service.onchainBalance$;
-  }
-
-  /**
-   * Users offchain balance - must be fetched from service before it holds a value.
-   * @returns { BehaviorSubject<number> } Users offchain balance.
-   */
-  get offchainBalance$(): BehaviorSubject<number> {
-    return this.service.offchainBalance$;
-  }
-
-  /**
-   * Payment method from service.
-   * @returns { BehaviorSubject<BoostPaymentMethod> } - payment method.
-   */
-  get paymentMethod$(): BehaviorSubject<BoostPaymentMethod> {
-    return this.service.paymentMethod$;
-  }
-
-  /**
-   * Sets background of select dropdown to add a stylable dropdown icon based on theme.
-   * @returns { Observable<{ background: string }> } Style for select element.
-   */
-  get selectBackground$(): Observable<{ background: string }> {
-    return this.theme.isDark$.pipe(
-      map(isDark => {
-        return isDark
-          ? {
-              background: `url('${this.cdnAssetsUrl}assets/icons/arrow-drop-down-white.svg') 98% center no-repeat`,
-            }
-          : {
-              background: `url('${this.cdnAssetsUrl}assets/icons/arrow-drop-down-black.svg') 98% center no-repeat`,
-            };
-      })
-    );
+  ngOnDestroy(): void {
+    this.balanceLoadSubscription?.unsubscribe();
   }
 }

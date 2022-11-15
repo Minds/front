@@ -84,19 +84,31 @@
         border-radius: 2px 0 0 2px;
       }
 
-      &.m-boostModalAmount__tokensInput {
+      &.m-boostModalAmount__currencyAmountInput {
         border-radius: 0 2px 2px 0;
       }
     }
   }
 
   .m-boostModalAmount--error {
-    margin-top: 10px;
+    margin-top: $spacing4;
     font-weight: 500;
     min-height: 20px;
 
     @include m-theme() {
       color: themed($m-red);
+    }
+  }
+
+  .m-boostModalAmount__rates {
+    margin-top: $spacing4;
+    font-weight: 400;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: end;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
     }
   }
 }
