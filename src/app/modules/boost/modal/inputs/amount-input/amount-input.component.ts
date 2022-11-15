@@ -227,6 +227,8 @@ export class BoostModalAmountInputComponent
         ],
       }),
     });
+
+    this.currencyAmountValueChanged(defaultCurrencyAmount);
   }
 
   /**
