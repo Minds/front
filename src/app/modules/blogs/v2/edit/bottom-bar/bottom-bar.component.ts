@@ -54,7 +54,7 @@ export class BlogEditorBottomBarComponent {
     });
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.tagsSubscription.unsubscribe();
     this.monetizeSubscription.unsubscribe();
   }

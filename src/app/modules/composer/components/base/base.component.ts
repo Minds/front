@@ -8,6 +8,7 @@ import {
   Output,
   ViewChild,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
 import {
@@ -41,7 +42,7 @@ import { AbstractSubscriberComponent } from '../../../../common/components/abstr
   providers: [PopupService],
 })
 export class BaseComponent extends AbstractSubscriberComponent
-  implements AfterViewInit {
+  implements AfterViewInit, OnDestroy {
   /**
    * Post event emitter
    */
@@ -136,10 +137,13 @@ export class BaseComponent extends AbstractSubscriberComponent
 
     this.subscriptions.push(
       this.service.isDirty$.subscribe(isDirty => {
-        console.log('ojm BASE isDirtyRX', isDirty);
         this.isDirty = isDirty;
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    this.service.reset();
   }
 
   /**

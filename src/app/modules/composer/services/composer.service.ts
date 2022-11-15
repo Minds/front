@@ -215,17 +215,9 @@ export class ComposerService implements OnDestroy {
   readonly canPost$: Observable<boolean>;
 
   /**
-   * ojm
+   * Have any form fields changed from default values?
    */
   readonly isDirty$: Observable<boolean>;
-
-  /**
-   * True if composer form fields have unsaved changes
-   * ojm remove?
-   */
-  // readonly isDirty$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-  //   false
-  // );
 
   /**
    * Is this an edit operation? (state)
@@ -283,29 +275,6 @@ export class ComposerService implements OnDestroy {
       );
     })
   );
-
-  /**
-   * True if composer form fields have unsaved changes
-   * ojm expand on this
-   * ojm testing message and title only first
-   */
-  // readonly isDirty$: Observable<boolean> = combineLatest([
-  //   this.isEditing$,
-  //   this.message$,
-  //   this.title$,
-  // ]).pipe(
-  //   map(([isEditing, message, title]) => {
-  //     if
-
-  //     return (
-  //       !isEditing &&
-  //       !nsfw.length &&
-  //       !monetization$ &&
-  //       !schedule &&
-  //       !isSupermindReply
-  //     );
-  //   })
-  // );
 
   /**
    * If we are editing and we have a scheduled value
@@ -460,6 +429,9 @@ export class ComposerService implements OnDestroy {
       this.monetization$, // TODO: Implement custom distinctUntilChanged comparison
       this.tags$, // TODO: Implement custom distinctUntilChanged comparison
       this.schedule$, // TODO: Implement custom distinctUntilChanged comparison
+      // ----------------------
+      // ACCESSID$
+      // ----------------------
       this.accessId$.pipe(
         distinctUntilChanged(),
         tap(accessId => {
@@ -472,10 +444,14 @@ export class ComposerService implements OnDestroy {
           }
         })
       ),
+      // ----------------------
+      // LICENSE$
+      // ----------------------
       this.license$.pipe(distinctUntilChanged()),
-      /**
-       * Builds attachments guids
-       */
+      // ----------------------
+      // ATTACHMENTS$
+      // ----------------------
+      // Builds attachments guids
       combineLatest([
         this.uploaderService.files$.pipe(
           startWith([]), // will not ever resolve combineLatest unless we do this
@@ -502,9 +478,10 @@ export class ComposerService implements OnDestroy {
           ...existingGuids,
         ])
       ),
-      /**
-       * Builds rich embed
-       */
+      // ----------------------
+      // RICHEMBED$
+      // ----------------------
+      // Builds rich-embeds
       this.richEmbed$.pipe(
         // Only react to rich-embed URL changes
         distinctUntilChanged(),
@@ -619,35 +596,45 @@ export class ComposerService implements OnDestroy {
       })
     );
 
-    // ojm comment
-    this.isDirty$ = combineLatest([this.isEditing$, this.data$]).pipe(
-      map(([isEditing, data]) => {
-        let dirty; // ojm no need to use this after debugging
-
-        console.log('ojm --------------------------------------');
-        console.log('ojm data$$,', data);
-        //ojm isEditingdoesn't fire for a little while, is it ok?
-
-        if (isEditing && this.payload && this.entity) {
-          console.log('ojm COMPOSERSVC isEditing', this.payload, this.entity);
-          // Note: this.entity is the original loaded state of the post being edited
-          dirty = Boolean(
-            this.payload.message !== this.entity.message ||
-              this.payload.title !== this.entity.title ||
-              this.payload.nsfw !== this.entity.nsfw
-          );
+    /**
+     * True if any composer field has changed from its default value
+     * (currently always returns true if editing an existing post)
+     */
+    this.isDirty$ = combineLatest([
+      this.data$,
+      this.isEditing$,
+      this.uploaderService.isUploadingFinished$,
+      this.attachments$,
+      this.richEmbed$,
+    ]).pipe(
+      map(([data, isEditing, isUploadingFinished, attachments, richEmbed]) => {
+        // TODO: implement custom rules for when a post is being edited
+        // by comparing mapped fields in this.payload and this.entity
+        if (!isUploadingFinished || isEditing) {
+          return true;
         } else {
-          dirty = Boolean(
-            data.message !== DEFAULT_MESSAGE_VALUE ||
-              data.title !== DEFAULT_TITLE_VALUE ||
-              data.nsfw !== DEFAULT_NSFW_VALUE ||
+          // COMPOSING A NEW POST
+          // We handle attachments and richEmbeds differently bc their
+          // values are transformed when the data obj is built
+          const dirty = Boolean(
+            data.accessId !== DEFAULT_ACCESS_ID_VALUE ||
+              attachments !== DEFAULT_ATTACHMENT_VALUE ||
+              data.license !== DEFAULT_LICENSE_VALUE ||
+              data.message !== DEFAULT_MESSAGE_VALUE ||
               data.monetization !== DEFAULT_MONETIZATION_VALUE ||
-              data.tags !== DEFAULT_TAGS_VALUE
+              data.nsfw !== DEFAULT_NSFW_VALUE ||
+              data.postToPermaweb !== DEFAULT_POST_TO_PERMAWEB_VALUE ||
+              data.remind !== DEFAULT_REMIND_VALUE ||
+              richEmbed !== DEFAULT_RICH_EMBED_VALUE ||
+              data.schedule !== DEFAULT_SCHEDULE_VALUE ||
+              data.supermindReply !== null ||
+              data.supermindRequest !== null ||
+              data.tags !== DEFAULT_TAGS_VALUE ||
+              data.title !== DEFAULT_TITLE_VALUE ||
+              data.videoPoster !== DEFAULT_VIDEOPOSTER_VALUE
           );
-          console.log('ojm COMPOSERSVC notEditing');
+          return dirty;
         }
-        console.log('ojm COMPOSERSVC dirty??', dirty);
-        return dirty;
       })
     );
 
@@ -1008,8 +995,6 @@ export class ComposerService implements OnDestroy {
     supermindRequest,
     supermindReply,
   }: Data): any {
-    // OJM
-    console.log('ojm COMPOSERSVC buildPayload() fired');
     if (this.containerGuid) {
       // Override accessId if there's a container set
       accessId = this.containerGuid;
