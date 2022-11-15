@@ -12,11 +12,11 @@ cd "$CURRENT_DIR/e2e/test"
 # Delete node modules
 rm -rf ./node_modules
 
-# Install packages via yarn
-yarn
+# Install packages via npm
+npm install
 
 # Copy env
 cp "$ENGINE_INTEGRATION_TESTS_CONFIG" .env
 
 # Run tests
-yarn test:e2e:local
+npm run test:e2e:sandbox

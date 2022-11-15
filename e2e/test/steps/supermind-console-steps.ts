@@ -1,19 +1,15 @@
-import { ComposerModal } from '../pages/composerModal';
-import { ConfirmationModalComponent } from '../components/confirmationModalComponent';
-import { SupermindConsolePage } from '../pages/supermindConsolePage';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
 } from '../types/supermind-console.types';
-import { SupermindOnboardingModalComponent } from '../components/supermindOnboardingModalComponent';
 
 namespace SupermindConsoleSteps {
-  const supermindConsolePage = new SupermindConsolePage();
-  const composerModalPage = new ComposerModal();
-  const confirmationModalComponent = new ConfirmationModalComponent();
-  const supermindOnboardingModal = new SupermindOnboardingModalComponent();
-
-  Before(() => {});
+  const {
+    supermindConsolePage,
+    composerModalComponent,
+    confirmationModalComponent,
+    supermindOnboardingModalComponent,
+  } = inject();
 
   Given(
     'I am on the Supermind Console {string} page',
@@ -32,8 +28,8 @@ namespace SupermindConsoleSteps {
 
   When(
     'I click to change Supermind Console status filter to {string} with value {string}',
-    (filterText: string, filterValue: string) => {
-      supermindConsolePage.switchStatusFilter(filterText, filterValue);
+    async (filterText: string, filterValue: string) => {
+      await supermindConsolePage.switchStatusFilter(filterText, filterValue);
     }
   );
 
@@ -53,68 +49,73 @@ namespace SupermindConsoleSteps {
   );
 
   When('I make a supermind offer', () => {
-    composerModalPage.shouldHaveSupermindBadge(false);
-    composerModalPage.shouldHaveEllipsisMenu(true);
-    composerModalPage.typeInTextArea('hello');
-    composerModalPage.clickSupermindIcon();
-    composerModalPage.clickSupermindPanelTab('Tokens');
-    composerModalPage.addSupermindTarget(process.env.PLAYWRIGHT_USERNAME ?? '');
-    composerModalPage.enterSupermindAmount(10);
-    composerModalPage.acceptSupermindTerms();
-    composerModalPage.acceptSupermindRefundPolicy();
-    composerModalPage.clickSupermindSave();
+    composerModalComponent.shouldHaveSupermindBadge(false);
+    composerModalComponent.shouldHaveEllipsisMenu(true);
+    composerModalComponent.typeInTextArea('hello');
+    composerModalComponent.clickSupermindIcon();
+    composerModalComponent.clickSupermindPanelTab('Tokens');
+    composerModalComponent.addSupermindTarget(
+      process.env.PLAYWRIGHT_USERNAME ?? ''
+    );
+    composerModalComponent.enterSupermindAmount(10);
+    composerModalComponent.acceptSupermindTerms();
+    composerModalComponent.acceptSupermindRefundPolicy();
+    composerModalComponent.clickSupermindSave();
     confirmationModalComponent.shouldBeVisible(false);
-    composerModalPage.clickPost();
+    composerModalComponent.clickPost();
     confirmationModalComponent.shouldBeVisible(true);
     confirmationModalComponent.clickConfirm();
   });
 
   Given('I make a supermind offer to {string}', (targetUsername: string) => {
-    composerModalPage.shouldHaveSupermindBadge(false);
-    composerModalPage.shouldHaveEllipsisMenu(true);
-    composerModalPage.typeInTextArea('hello');
-    composerModalPage.clickSupermindIcon();
-    composerModalPage.clickSupermindPanelTab('Tokens');
-    composerModalPage.addSupermindTarget(targetUsername);
-    composerModalPage.enterSupermindAmount(10);
-    composerModalPage.acceptSupermindTerms();
-    composerModalPage.acceptSupermindRefundPolicy();
-    composerModalPage.clickSupermindSave();
-    composerModalPage.clickPost();
+    composerModalComponent.shouldHaveSupermindBadge(false);
+    composerModalComponent.shouldHaveEllipsisMenu(true);
+    composerModalComponent.typeInTextArea('hello');
+    composerModalComponent.clickSupermindIcon();
+    composerModalComponent.clickSupermindPanelTab('Tokens');
+    composerModalComponent.addSupermindTarget(targetUsername);
+    composerModalComponent.enterSupermindAmount(10);
+    composerModalComponent.acceptSupermindTerms();
+    composerModalComponent.acceptSupermindRefundPolicy();
+    composerModalComponent.clickSupermindSave();
+    composerModalComponent.clickPost();
     confirmationModalComponent.shouldBeVisible(true);
     confirmationModalComponent.clickConfirm();
   });
 
   When('I try to make an NSFW supermind offer', () => {
-    composerModalPage.shouldHaveSupermindBadge(false);
-    composerModalPage.shouldHaveEllipsisMenu(true);
-    composerModalPage.typeInTextArea('hello');
-    composerModalPage.clickSupermindIcon();
-    composerModalPage.clickSupermindPanelTab('Tokens');
-    composerModalPage.addSupermindTarget(process.env.PLAYWRIGHT_USERNAME ?? '');
-    composerModalPage.enterSupermindAmount(10);
-    composerModalPage.acceptSupermindTerms();
-    composerModalPage.acceptSupermindRefundPolicy();
-    composerModalPage.clickSupermindSave();
+    composerModalComponent.shouldHaveSupermindBadge(false);
+    composerModalComponent.shouldHaveEllipsisMenu(true);
+    composerModalComponent.typeInTextArea('hello');
+    composerModalComponent.clickSupermindIcon();
+    composerModalComponent.clickSupermindPanelTab('Tokens');
+    composerModalComponent.addSupermindTarget(
+      process.env.PLAYWRIGHT_USERNAME ?? ''
+    );
+    composerModalComponent.enterSupermindAmount(10);
+    composerModalComponent.acceptSupermindTerms();
+    composerModalComponent.acceptSupermindRefundPolicy();
+    composerModalComponent.clickSupermindSave();
 
-    composerModalPage.clickNsfwOption();
-    composerModalPage.clickNsfwSaveOption();
+    composerModalComponent.clickNsfwOption();
+    composerModalComponent.clickNsfwSaveOption();
   });
 
   When('I make a supermind reply', () => {
-    composerModalPage.shouldHaveSupermindBadge(true);
-    composerModalPage.shouldHaveEllipsisMenu(false);
-    composerModalPage.typeInTextArea('hello');
-    composerModalPage.clickPost();
+    composerModalComponent.shouldHaveSupermindBadge(true);
+    composerModalComponent.shouldHaveEllipsisMenu(false);
+    composerModalComponent.typeInTextArea('hello');
+    composerModalComponent.clickPost();
+    composerModalComponent.clickConfirmReplyButton();
   });
 
   When('I try to make an NSFW supermind reply', () => {
-    composerModalPage.shouldHaveSupermindBadge(true);
-    composerModalPage.shouldHaveEllipsisMenu(false);
-    composerModalPage.typeInTextArea('hello');
+    composerModalComponent.shouldHaveSupermindBadge(true);
+    composerModalComponent.shouldHaveEllipsisMenu(false);
+    composerModalComponent.typeInTextArea('hello');
 
-    composerModalPage.clickNsfwOption();
-    composerModalPage.clickNsfwSaveOption();
+    composerModalComponent.clickNsfwOption();
+    composerModalComponent.clickNsfwSaveOption();
   });
 
   When('I navigate via sidebar to the supermind console', async () => {
@@ -137,11 +138,11 @@ namespace SupermindConsoleSteps {
   });
 
   When('I see the supermind reply onboarding modal', () => {
-    supermindOnboardingModal.replyModalShouldBeVisible(true);
+    supermindOnboardingModalComponent.replyModalShouldBeVisible(true);
   });
 
   When('I click the action button in the Supermind onboarding modal', () => {
-    supermindOnboardingModal.clickContinue();
+    supermindOnboardingModalComponent.clickContinue();
   });
 
   //
@@ -171,6 +172,4 @@ namespace SupermindConsoleSteps {
       supermindConsolePage.hasStatusFilterState(filterText);
     }
   );
-
-  After(() => {});
 }

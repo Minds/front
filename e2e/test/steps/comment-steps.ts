@@ -1,8 +1,7 @@
-import { ActivityComponent } from '../components/activityComponent';
 import { SupermindBannerFragment } from '../fragments/supermindBanner';
 
 namespace CommentSteps {
-  const activityComponent = new ActivityComponent();
+  const { activityComponent } = inject();
   const supermindBannerFragment = new SupermindBannerFragment();
 
   When(

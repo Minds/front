@@ -1,16 +1,20 @@
-import { Injectable, Injector } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, Injector, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ComposerModalService } from '../composer/components/modal/modal.service';
 import { ComposerService } from '../composer/services/composer.service';
+import { ConnectTwitterModalExperimentService } from '../experiments/sub-services/connect-twitter-modal-experiment.service';
+import { ConnectTwitterModalService } from '../twitter/modal/connect-twitter-modal.service';
+import { TwitterConnectionService } from '../twitter/services/twitter-connection.service';
 import { Supermind, SupermindState } from './supermind.types';
 
 /**
  * Service relating to actions of the supermind receiver (replies)
  */
 @Injectable()
-export class SupermindReplyService {
+export class SupermindReplyService implements OnDestroy {
   /**
    * We create a new injector so that there is a new ComposerService
    * for each supermind reply
@@ -22,6 +26,9 @@ export class SupermindReplyService {
    */
   public inProgress$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  // subscription for whether connect twitter modal should be shown before accept.
+  public connectTwitterModalSubscription: Subscription;
+
   /**
    *
    * @param composerModal
@@ -31,6 +38,9 @@ export class SupermindReplyService {
    */
   constructor(
     private composerModal: ComposerModalService,
+    private twitterConnection: TwitterConnectionService,
+    private connectTwitterModal: ConnectTwitterModalService,
+    private connectTwitterExperiment: ConnectTwitterModalExperimentService,
     private parentInjector: Injector,
     private apiService: ApiService,
     private toasterService: ToasterService
@@ -41,6 +51,10 @@ export class SupermindReplyService {
     });
   }
 
+  ngOnDestroy(): void {
+    this.connectTwitterModalSubscription?.unsubscribe();
+  }
+
   /**
    * Grab the ComposerService from our new injector
    */
@@ -49,28 +63,46 @@ export class SupermindReplyService {
   }
 
   /**
-   * Start the reply. This will open and pass context to the composer
+   * Start the reply. This will open and pass context to the composer.
+   * If a Twitter reply is required and Twitter is NOT connected, will instead
+   * show ConnectTwitterModal.
+   * @param { Supermind } supermindEntity - supermind.
+   * @returns { Promise<void> }
    */
   async startReply(supermindEntity: Supermind): Promise<void> {
     this.inProgress$$.next(true);
 
-    // Pass the supermind entity to the composer
-    this.composerService.supermindReply$.next(supermindEntity);
-    // All supermind replies are quote posts
-    this.composerService.remind$.next(supermindEntity.entity);
+    this.connectTwitterModalSubscription = this.showConnectTwitterModal$(
+      supermindEntity
+    )
+      .pipe(take(1))
+      .subscribe(async (showConnectTwitterModal: boolean) => {
+        if (showConnectTwitterModal) {
+          await this.connectTwitterModal.open({
+            bodyText: $localize`:@@CONNECT_TWITTER_MODAL__THIS_SUPER_MIND_OFFER_REQUIRES_TWITTER:This Supermind offer requires posting the reply to Twitter. Connect your Minds account with Twitter to proceed.`,
+          });
+          this.inProgress$$.next(false);
+          return;
+        }
 
-    try {
-      await this.composerModal
-        .setInjector(this.injector)
-        .onPost(activity => {
-          supermindEntity.status = SupermindState.ACCEPTED;
-          supermindEntity.reply_activity_guid = activity.guid;
-        })
-        .present();
-    } catch (err) {
-    } finally {
-      this.inProgress$$.next(false);
-    }
+        // Pass the supermind entity to the composer
+        this.composerService.supermindReply$.next(supermindEntity);
+        // All supermind replies are quote posts
+        this.composerService.remind$.next(supermindEntity.entity);
+
+        try {
+          await this.composerModal
+            .setInjector(this.injector)
+            .onPost(activity => {
+              supermindEntity.status = SupermindState.ACCEPTED;
+              supermindEntity.reply_activity_guid = activity.guid;
+            })
+            .present();
+        } catch (err) {
+        } finally {
+          this.inProgress$$.next(false);
+        }
+      });
   }
 
   /**
@@ -111,5 +143,25 @@ export class SupermindReplyService {
     } finally {
       this.inProgress$$.next(false);
     }
+  }
+
+  /**
+   * Whether ConnectTwitterModal should show for a given Supermind.
+   * @param { Supermind } supermind - Supermind to check for.
+   * @returns { Observable<boolean> } true if modal should be shown.
+   */
+  private showConnectTwitterModal$(supermind: Supermind): Observable<boolean> {
+    // if Twitter is not required, no need to call for the config.
+    if (
+      !supermind.twitter_required ||
+      !this.connectTwitterExperiment.isActive()
+    ) {
+      return of(false);
+    }
+    // reload config prior to checking value.
+    this.twitterConnection.reloadConfig$.next(true);
+    return this.twitterConnection.isConnected$.pipe(
+      map((isConnected: boolean) => !isConnected)
+    );
   }
 }

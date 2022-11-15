@@ -1,14 +1,11 @@
-import { SidebarComponent } from '../components/sidebarComponent';
 import {
   SupermindConsoleSubPage,
   SupermindConsoleTab,
 } from '../types/supermind-console.types';
 
-require('dotenv').config();
-const { I } = inject();
-const sidebarComponent = new SidebarComponent();
+const { I, sidebarComponent } = inject();
 
-export class SupermindConsolePage {
+class SupermindConsolePage {
   /** @type { string }  - root uri of the page */
   private baseUrl: string = '/supermind';
 
@@ -181,22 +178,19 @@ export class SupermindConsolePage {
   /**
    * Click to switch state filter.
    * @param { string } stateFilterLabel - filter label for states, e.g. 'Pending', 'Accepted'.
-   * @param { string } stateValue - value behind filter, "1", "2", "3".
+   * @param { string|null } stateValue - value behind filter, "1", "2", "3".
    * @returns { Promise<void> }
    */
   public async switchStatusFilter(
     stateFilterLabel: string,
-    stateValue: string
+    stateValue: string | null
   ): Promise<void> {
+    I.scrollPageToTop();
     I.click(this.statusFilterTrigger);
-    await Promise.all([
-      I.click(this.statusFilterLabel.withText(stateFilterLabel)),
-      I.waitForResponse(
-        resp =>
-          resp.url().includes(`&status=${stateValue}`) && resp.status() === 200,
-        30
-      ),
-    ]);
+    await I.clickAndWait(
+      this.statusFilterLabel.withText(stateFilterLabel),
+      stateValue ? `status=${stateValue}` : `/supermind/`
+    );
   }
 
   /**
@@ -272,3 +266,5 @@ export class SupermindConsolePage {
     });
   }
 }
+
+export = new SupermindConsolePage();

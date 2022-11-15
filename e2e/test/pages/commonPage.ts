@@ -1,6 +1,6 @@
 const { I } = inject();
 
-export class CommonPage {
+class CommonPage {
   public toaster: string = 'm-toaster';
 
   openSidebarComposer() {
@@ -13,3 +13,5 @@ export class CommonPage {
     return `${this.toaster} .m-toaster__iconWrapper--`;
   }
 }
+
+export = new CommonPage();

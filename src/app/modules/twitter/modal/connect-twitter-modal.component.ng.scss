@@ -1,0 +1,32 @@
+@import 'defaults.scss';
+
+:host {
+  .m-modalV2__inner {
+    .m-modalV2__header {
+      .m-connectTwitterModal__header {
+        margin-top: 0;
+
+        @include heading2Bold;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+    .m-modalV2__body {
+      .m-connectTwitterModal__body {
+        margin-right: $spacing24;
+
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    .m-modalV2__footer {
+      display: flex;
+      justify-content: end;
+      margin-bottom: $spacing3;
+    }
+  }
+}

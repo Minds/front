@@ -1,11 +1,6 @@
-import { SidebarComponent } from '../components/sidebarComponent';
-import { SupermindConsolePage } from './supermindConsolePage';
+const { I, sidebarComponent, supermindConsolePage } = inject();
 
-const { I } = inject();
-const sidebarComponent = new SidebarComponent();
-const supermindConsole = new SupermindConsolePage();
-
-export class SupermindSettingsPage {
+class SupermindSettingsPage {
   // Selectors.
   private readonly minOffchainTokensInputSelector: string =
     '[data-cy=supermind-settings-min-tokens-input]';
@@ -31,7 +26,7 @@ export class SupermindSettingsPage {
     sidebarComponent.openSupermindConsole();
 
     await Promise.all([
-      supermindConsole.clickSettingsCog(),
+      supermindConsolePage.clickSettingsCog(),
       I.waitForResponse(
         resp =>
           resp.url().includes('/api/v3/supermind/settings') &&
@@ -104,3 +99,5 @@ export class SupermindSettingsPage {
     I.seeElement(locate(this.validationErrors).withText(text));
   }
 }
+
+export = new SupermindSettingsPage();

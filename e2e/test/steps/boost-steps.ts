@@ -1,8 +1,6 @@
 namespace BoostSteps {
   const { I, boostPage } = inject();
 
-  Before(() => {});
-
   When('I create a boosted post', () => {
     boostPage.createBoostedPost();
   });
@@ -30,6 +28,4 @@ namespace BoostSteps {
   Then('I can revoke a boost', () => {
     boostPage.revokeBoost();
   });
-
-  After(() => {});
 }
