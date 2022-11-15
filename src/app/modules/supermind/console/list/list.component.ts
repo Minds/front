@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import {
+  debounceTime,
   distinctUntilChanged,
   map,
   switchMap,
@@ -104,20 +105,23 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
   public load$(): Observable<ApiResponse> {
     return combineLatest([this.listType$, this.statusFilterValue$]).pipe(
       distinctUntilChanged(),
+      tap(_ => {
+        this.inProgress$.next(true);
+        this.list$.next([]);
+        this.initialCount$.next(0);
+      }),
+      debounceTime(100),
       switchMap(
         ([listType, statusFilterValue]: [
           SupermindConsoleListType,
           SupermindState
         ]): Observable<ApiResponse> => {
-          this.list$.next([]);
-          this.initialCount$.next(0);
-          this.inProgress$.next(true);
           this.moreData$.next(!this.service.isNumericListType(listType));
           return this.service.getList$(this.requestLimit, 0, statusFilterValue);
         }
       ),
       tap((list: any) => {
-        this.moreData$.next(list.length >= this.requestLimit);
+        this.moreData$.next(list?.length >= this.requestLimit);
         this.inProgress$.next(false);
         this.list$.next(list);
         this.populateCounts();

@@ -1,16 +1,12 @@
-import { SidebarComponent } from '../components/sidebarComponent';
-import { ComposerModal } from '../pages/composerModal';
-import { NewsfeedPage } from '../pages/newsfeedPage';
-import generateRandomId from '../support/utilities';
+import { generateARandomString } from '../utils/utils';
 
 namespace ComposerSteps {
-  const { I } = inject();
-
-  const sidebarComponent = new SidebarComponent();
-  const composerModal = new ComposerModal();
-  const newsfeedPage = new NewsfeedPage();
-
-  Before(() => {});
+  const {
+    I,
+    sidebarComponent,
+    composerModalComponent,
+    newsfeedPage,
+  } = inject();
 
   Given('I have clicked on the sidebar composer button', () => {
     sidebarComponent.openSidebarComposer();
@@ -19,14 +15,14 @@ namespace ComposerSteps {
   Given('I have created a new post via the newsfeed', () => {
     newsfeedPage.openComposer();
 
-    const message = 'Test post ' + generateRandomId();
+    const message = 'Test post ' + generateARandomString();
 
-    composerModal.typeInTextArea(message);
-    composerModal.clickPost();
+    composerModalComponent.typeInTextArea(message);
+    composerModalComponent.clickPost();
   });
 
   When('I click the nsfw icon on the composer toolbar', () => {
-    composerModal.clickNsfwOption();
+    composerModalComponent.clickNsfwOption();
   });
 
   When('I select the {string} nsfw option', nsfwLabel => {
@@ -34,7 +30,7 @@ namespace ComposerSteps {
   });
 
   When('I click the nsfw composer popup save button', () => {
-    composerModal.clickNsfwSaveOption();
+    composerModalComponent.clickNsfwSaveOption();
   });
 
   When('I add files via the upload button', table => {
@@ -43,21 +39,21 @@ namespace ComposerSteps {
       // TODO how do we make sure we're using the correct context (ie. modal or inline?)
       I.attachFile(
         'm-composer__modal [data-cy=upload-button] input[type=file]',
-        '../supporting-files/' + row.filename
+        'supporting-files/img/' + row.filename
       );
     }
   });
 
   When('I enter {string} in the composer text area', message => {
-    composerModal.typeInTextArea(message);
+    composerModalComponent.typeInTextArea(message);
   });
 
   When('I click the post button', () => {
-    composerModal.clickPost();
+    composerModalComponent.clickPost();
   });
 
   When('I create a post with text storage key {string}', textStorageKey => {
-    composerModal.createNewsfeedPost(textStorageKey);
+    composerModalComponent.createNewsfeedPost(textStorageKey);
   });
 
   Then('I should see {int} previews of my selected imaged', num => {
@@ -69,11 +65,11 @@ namespace ComposerSteps {
   });
 
   Then('I should not see the title input', () => {
-    I.dontSeeElement(composerModal.getTextareaTitle());
+    I.dontSeeElement(composerModalComponent.getTextareaTitle());
   });
 
   Then('I should see the title input', () => {
-    I.seeElement(composerModal.getTextareaTitle());
+    I.seeElement(composerModalComponent.getTextareaTitle());
   });
 
   Then('I am able to create the post', () => {
@@ -81,24 +77,32 @@ namespace ComposerSteps {
   });
 
   Then('I should see the nsfw popout screen', () => {
-    I.seeElement(composerModal.getNsfwPopup());
+    I.seeElement(composerModalComponent.getNsfwPopup());
   });
 
   Then('I should see the nsfw icon is active on the composer toolbar', () => {
-    I.seeElement(`${composerModal.nsfwButton}.m-composerToolbar__item--active`);
+    I.seeElement(
+      `${composerModalComponent.nsfwButton}.m-composerToolbar__item--active`
+    );
   });
 
   Then('I do not see the monetize icon on the composer toolbar', () => {
-    I.dontSeeElement(composerModal.monetizeButton);
+    I.dontSeeElement(composerModalComponent.monetizeButton);
   });
 
   Then('I do not have the ability to schedule a post', () => {
-    I.dontSeeElement(`${composerModal.postButton} m-dropdownmenu`);
+    I.dontSeeElement(`${composerModalComponent.postButton} m-dropdownmenu`);
+  });
+
+  Then('I should see the composer', () => {
+    I.seeElement(composerModalComponent.modalElementTag);
   });
 
   Then('I should still see the composer modal open', () => {
-    I.seeElement(composerModal.modalElementTag);
+    I.seeElement(composerModalComponent.modalElementTag);
   });
 
-  After(() => {});
+  Then('I should still see the composer modal open', () => {
+    I.seeElement(composerModalComponent.modalElementTag);
+  });
 }

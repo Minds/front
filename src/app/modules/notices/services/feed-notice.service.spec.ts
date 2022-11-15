@@ -88,8 +88,7 @@ describe('FeedNoticeService', () => {
     service = new FeedNoticeService(
       apiServiceMock,
       activityV2ExperimentServiceMock,
-      feedNoticeDismissalService,
-      sessionMock
+      feedNoticeDismissalService
     );
     (service as any).notices$.next(defaultNotices);
   });
@@ -100,11 +99,6 @@ describe('FeedNoticeService', () => {
 
   it('should instantiate', () => {
     expect(service).toBeTruthy();
-    expect((service as any).api.get).toHaveBeenCalledWith(
-      'api/v3/feed-notices'
-    );
-    expect((service as any).initialized$.getValue()).toBeTruthy();
-    expect((service as any).notices$.getValue()).toEqual(defaultNotices);
   });
 
   it('should register an outlet for top location', () => {

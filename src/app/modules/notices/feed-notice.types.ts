@@ -1,6 +1,7 @@
 // Identifier of a notice.
 export type NoticeKey =
   | 'verify-email'
+  | 'supermind-pending'
   | 'setup-channel'
   | 'verify-uniqueness'
   | 'connect-wallet'

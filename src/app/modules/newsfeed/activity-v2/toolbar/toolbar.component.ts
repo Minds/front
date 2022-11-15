@@ -20,6 +20,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
 import { CounterChangeFadeIn } from '../../../../animations';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -39,6 +40,7 @@ export class ActivityV2ToolbarComponent {
 
   entity: ActivityEntity;
   allowReminds: boolean = true;
+  protected supermindButtonExperiment: boolean = false;
 
   constructor(
     public service: ActivityService,
@@ -50,6 +52,7 @@ export class ActivityV2ToolbarComponent {
     private interactionsModalService: InteractionsModalService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     public supermindExperiment: SupermindExperimentService,
+    public experimentsService: ExperimentsService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -64,6 +67,11 @@ export class ActivityV2ToolbarComponent {
       (showBadge: boolean) => {
         // this.allowReminds = !showBadge;
       }
+    );
+
+    this.supermindButtonExperiment = this.experimentsService.hasVariation(
+      'front-5812-supermind-button',
+      true
     );
   }
 

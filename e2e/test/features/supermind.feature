@@ -138,3 +138,12 @@ Feature: supermind
     And I click the post button
     And I click the cancel button on the confirmation modal
     Then I should still see the composer modal open
+
+  Scenario: I have a feed notice indicating when I have pending Supermind offers
+    Given I log in as "supermind_sender"
+    And I have clicked on the sidebar composer button
+    When I make a supermind offer
+    And I log in as "playwright_tests_user"
+    And I see the feed notice for "supermind_pending"
+    And I click the feed notice primary action
+    Then I should see "/supermind/inbox" in current URL

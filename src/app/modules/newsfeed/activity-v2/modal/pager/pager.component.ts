@@ -1,19 +1,11 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  HostListener,
-  Optional,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivityV2ModalService } from '../modal.service';
 import {
   ActivityEntity,
   ActivityService,
 } from '../../../activity/activity.service';
-import { RelatedContentService } from '../../../../../common/services/related-content.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MediumFadeAnimation } from '../../../../../animations';
-import { AutoProgressVideoService } from '../../../../../modules/media/components/video/auto-progress-overlay/auto-progress-video.service';
 
 /**
  * Allows user to page through the other images in a multi-image post.

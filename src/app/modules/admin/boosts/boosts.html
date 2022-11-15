@@ -59,7 +59,7 @@
     </div>
 
     <div
-      class="mdl-card mdl-shadow--4dp boost"
+      class="mdl-card m-adminBoosts__boostList"
       *ngFor="let boost of boosts; let i = index"
     >
       <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
@@ -70,6 +70,11 @@
       ></m-publisherCard>
       <m-activity
         [entity]="boost.entity"
+        [displayOptions]="{
+          isFeed: true,
+          showComments: true,
+          autoplayVideo: false
+        }"
         *ngIf="boost.entity.type == 'activity'
           || boost.entity.subtype === 'blog'
           || boost.entity.subtype == 'image'

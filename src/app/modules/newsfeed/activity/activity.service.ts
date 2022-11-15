@@ -291,6 +291,17 @@ export class ActivityService implements OnDestroy {
   );
 
   /**
+   * If the post has multiple images this will emit true
+   */
+  isMultiImage$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return (
+        entity && entity.custom_type == 'batch' && entity.custom_data.length > 1
+      );
+    })
+  );
+
+  /**
    * Emits true if the post is a supermind reply
    */
   isSupermindReply$: Observable<boolean> = this.entity$.pipe(

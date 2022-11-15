@@ -10,6 +10,7 @@ import { UpdateTagsNoticeComponent } from './panels/update-tags/update-tags-noti
 import { SetupChannelNoticeComponent } from './panels/setup-channel/setup-channel-notice.component';
 import { VerifyUniquenessNoticeComponent } from './panels/verify-uniqueness/verify-uniqueness-notice.component';
 import { ConnectWalletNoticeComponent } from './panels/connect-wallet/connect-wallet-notice.component';
+import { SupermindPendingNoticeComponent } from './panels/supermind-pending/supermind-pending-notice.component';
 
 @NgModule({
   imports: [CommonModule, NgCommonModule],
@@ -23,6 +24,7 @@ import { ConnectWalletNoticeComponent } from './panels/connect-wallet/connect-wa
     BuildYourAlgorithmNoticeComponent,
     EnablePushNotificationsNoticeComponent,
     UpdateTagsNoticeComponent,
+    SupermindPendingNoticeComponent,
   ],
   exports: [FeedNoticeOutletComponent],
 })

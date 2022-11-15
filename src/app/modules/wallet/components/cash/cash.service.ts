@@ -42,7 +42,7 @@ export class CashWalletService {
    * If the stripe account is in a restricted state
    */
   isRestricted$: Observable<boolean> = this.account$.pipe(
-    map(response => !!response.requirements.disabled_reason)
+    map(response => !!response?.requirements.disabled_reason)
   );
 
   /**

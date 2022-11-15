@@ -1,0 +1,46 @@
+@import 'defaults.scss';
+
+:host {
+  width: 100%;
+
+  .m-paymentHistory__tableWrapper {
+    max-width: 100%;
+    max-height: 100%;
+    overflow-x: auto;
+    transform: rotateX(180deg); // rotate so we can get scrollbar at top.
+
+    @include horizontal-scroll;
+
+    table {
+      transform: rotateX(
+        180deg
+      ); // rotate back so content of wrapped isn't flipped.
+      min-width: 480px;
+
+      // Only have border-spacing internally.
+      border-spacing: $spacing4;
+      border-collapse: inherit;
+      width: calc(100% + $spacing4);
+      margin-left: -$spacing4;
+
+      thead th {
+        text-align: left;
+      }
+
+      .m-paymentHistory__paddedIcon {
+        padding-left: $spacing3;
+      }
+
+      i,
+      m-tooltip {
+        @include unselectable;
+      }
+
+      .m-paymentHistory__textLink {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+    }
+  }
+}
