@@ -263,6 +263,18 @@ export class NewsfeedSingleComponent {
     if (activity.subtype === 'video' || activity.subtype === 'image') {
       this.metaService.setOEmbed(activity.guid);
     }
+
+    if (activity.supermind?.is_reply) {
+      this.metaService.setTwitterSummaryCard(
+        activity.ownerObj.name + "'s reply on Minds",
+        this.siteUrl +
+          'api/v3/newsfeed/activity/og-image/' +
+          activity.remind_object.guid,
+        'Get replies from ' +
+          activity.ownerObj.name +
+          ' and elevate the discourse on Minds.'
+      );
+    }
   }
 
   delete(activity) {
