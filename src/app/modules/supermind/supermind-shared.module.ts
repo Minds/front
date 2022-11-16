@@ -3,12 +3,13 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SupermindButtonComponent } from './supermind-button/supermind-button.component';
-import { SupermindOnboardingModalService } from './onboarding-modal/onboarding-modal.service';
-import { SupermindBannerComponent } from './supermind-banner/supermind-banner/supermind-banner.component';
+import { SupermindBannerComponent } from './supermind-banner/supermind-banner.component';
+import { SupermindBannerPopupService } from './supermind-banner/supermind-banner-popup.service';
 
 @NgModule({
   imports: [NgCommonModule, FormsModule, ReactiveFormsModule, CommonModule],
   declarations: [SupermindButtonComponent, SupermindBannerComponent],
   exports: [SupermindButtonComponent, SupermindBannerComponent],
+  providers: [SupermindBannerPopupService],
 })
 export class SupermindSharedModule {}

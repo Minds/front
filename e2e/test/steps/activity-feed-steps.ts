@@ -5,6 +5,43 @@ const { newsfeedPage, channelPage } = inject();
 const storage: Storage = Storage.getInstance();
 
 When(
+  'I navigate to the single entity page of the post in position {string} of the {string} feed',
+  async (feedPosition: number, feedType: string) => {
+    const positionNumber = Number(feedPosition);
+
+    switch (feedType) {
+      case 'newsfeed':
+        newsfeedPage.navigateToSingleEntityPageOfActivityInPosition(
+          positionNumber
+        );
+        break;
+      case 'channel':
+        channelPage.navigateToSingleEntityPageOfActivityInPosition(
+          positionNumber
+        );
+        break;
+    }
+  }
+);
+
+When(
+  'I delete post on my {string} stored with storage key {string}',
+  async (feedType: string, textStorageKey: string) => {
+    const text: string = storage.get(textStorageKey);
+    switch (feedType) {
+      case 'newsfeed':
+        newsfeedPage.hasActivityWithText(text);
+        await newsfeedPage.deleteActivityByText(text);
+        break;
+      case 'channel':
+        channelPage.hasActivityWithText(text);
+        await channelPage.deleteActivityByText(text);
+        break;
+    }
+  }
+);
+
+When(
   'I delete post on my {string} stored with storage key {string}',
   async (feedType: string, textStorageKey: string) => {
     const text: string = storage.get(textStorageKey);

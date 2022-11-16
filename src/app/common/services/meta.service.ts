@@ -247,6 +247,46 @@ export class MetaService {
     return this;
   }
 
+  setTwitterSummaryCard(
+    title: string,
+    imageUrl: string,
+    description?: string
+  ): MetaService {
+    // Required
+
+    this.metaService.updateTag({
+      name: 'twitter:title',
+      content: title,
+    });
+
+    this.metaService.updateTag({
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    });
+
+    // Optional
+
+    if (description) {
+      this.metaService.updateTag({
+        name: 'twitter:description',
+        content: description,
+      });
+    }
+
+    this.metaService.updateTag({
+      name: 'twitter:image',
+      content: imageUrl,
+    });
+
+    this.metaService.updateTag({
+      name: 'twitter:site',
+      //content: this.site.title,
+      content: '@minds', // TODO: don't hard code this
+    });
+
+    return this;
+  }
+
   reset(
     data: {
       title?: string;
@@ -282,6 +322,7 @@ export class MetaService {
       .setRobots(data.robots || 'all')
       .setNsfw(false)
       .setOgSiteName()
+      .resetTwitterCard()
       .resetDynamicFavicon()
       .resetOEmbed();
   }
@@ -332,6 +373,25 @@ export class MetaService {
 
     if (link) {
       this.dom.head.removeChild(link);
+    }
+    return this;
+  }
+
+  /**
+   * Resets twitter values
+   * @returns MetaService
+   */
+  private resetTwitterCard(): MetaService {
+    const tagNames = [
+      'twitter:title',
+      'twitter:card',
+      'twitter:description',
+      'twitter:image',
+      'twitter:site',
+    ];
+
+    for (let tagName of tagNames) {
+      this.metaService.removeTag(`name='${tagName}'`);
     }
     return this;
   }
