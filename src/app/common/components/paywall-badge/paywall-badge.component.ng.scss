@@ -67,7 +67,19 @@
         }
       }
     }
-    &.isSupermind {
+    &.isSupermindRequest {
+      // ojm check in light mode
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
+      }
+
+      > .m-paywallBadge__tierName {
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
+        }
+      }
+    }
+    &.isSupermindReply {
       @include supermindGradient;
       @include m-theme() {
         background-color: transparent;

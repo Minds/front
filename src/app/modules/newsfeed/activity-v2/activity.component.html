@@ -32,7 +32,8 @@
         class="m-activity__flagRow"
         *ngIf="
           (entity.boosted ||
-            (entity.remind_users && entity.remind_users.length)) &&
+            (entity.remind_users && entity.remind_users.length) ||
+            (entity.supermind && !entity.supermind.is_reply)) &&
           !service.displayOptions.boostRotatorMode
         "
       >
@@ -54,6 +55,8 @@
   <m-activityV2__toolbar
     *ngIf="service.displayOptions.showToolbar"
   ></m-activityV2__toolbar>
+
+  <m-activityV2__supermindReplyLink></m-activityV2__supermindReplyLink>
 
   <ng-container *mIfBrowser>
     <m-comments__entityOutletV2

@@ -43,7 +43,8 @@
     }
   }
 
-  .m-activityFlag--remind {
+  .m-activityFlag--remind,
+  .m-activityFlag--supermindRequest {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

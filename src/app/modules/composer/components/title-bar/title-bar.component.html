@@ -31,9 +31,10 @@
     *ngIf="!(isSupermind$ | async)"
   ></m-composerTitleBar__dropdown>
 
+  <!-- ojm todo  -->
   <m-paywallBadge
     *ngIf="isSupermind$ | async"
-    [isSupermind]="true"
+    [alwaysShowSupermindGradient]="true"
     [topRightPosition]="false"
   ></m-paywallBadge>
 </div>

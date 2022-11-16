@@ -2,7 +2,8 @@
   <div
     class="m-paywallBadge"
     [ngClass]="{
-      isSupermind: isSupermind,
+      isSupermindReply: isSupermindReply,
+      isSupermindRequest: !isSupermindReply,
       isPlus: hasPaywall && paywallType === 'plus',
       iconOnly:
         hasPaywall &&
@@ -26,14 +27,26 @@
         >MINDS+</span
       >
     </ng-container>
-    <!-- ------------------------ -->
-    <!-- SUPERMIND BADGE -->
-    <!-- ------------------------ -->
-    <span
-      data-ref="paywall-badge--supermind"
-      class="m-paywallBadge__tierName"
-      *ngIf="isSupermind"
-      >Supermind</span
-    >
+
+    <ng-container *ngIf="isSupermind">
+      <!-- ------------------------ -->
+      <!-- SUPERMIND REQUEST (grey) -->
+      <!-- ------------------------ -->
+      <span
+        *ngIf="!isSupermindReply"
+        data-ref="paywall-badge-supermind-request"
+        class="m-paywallBadge__tierName"
+        >Supermind Offer</span
+      >
+      <!-- ------------------------ -->
+      <!-- SUPERMIND REPLY (gradient) -->
+      <!-- ------------------------ -->
+      <span
+        *ngIf="isSupermindReply"
+        data-ref="paywall-badge-supermind-reply"
+        class="m-paywallBadge__tierName"
+        >Supermind</span
+      >
+    </ng-container>
   </div>
 </ng-container>

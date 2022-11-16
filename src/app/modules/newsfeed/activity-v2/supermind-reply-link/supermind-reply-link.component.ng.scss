@@ -1,0 +1,12 @@
+@import 'defaults.scss';
+
+:host {
+  a {
+    padding-bottom: $spacing4;
+    @include body2Regular;
+
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
+}
