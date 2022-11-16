@@ -4,16 +4,12 @@ const { I } = inject();
  * Component for ngb modals
  */
 class ModalComponent {
-  // selectors
-  private modalSelector: string = 'ngb-modal-window .modal-content';
-  private backdropSelector: string = 'ngb-modal-backdrop';
-
   /**
-   * Click the modal backdrop
+   * Dismiss the modal by pressing escape key
    * @returns { void }
    */
-  public clickModalBackdrop(): void {
-    I.click(locate(this.backdropSelector));
+  public dismissModal(): void {
+    I.pressKey('Escape');
   }
 }
 

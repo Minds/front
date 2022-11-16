@@ -107,7 +107,7 @@ namespace ComposerSteps {
     I.seeElement(composerModalComponent.modalElementTag);
   });
 
-  Then('The composer text area should be empty', () => {
+  Then('the composer text area should be empty', () => {
     I.seeInField(composerModalComponent.textAreaSelector, '');
   });
 }
