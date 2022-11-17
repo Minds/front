@@ -324,8 +324,21 @@ prepare:production:sentry:
 
 container_scanning:
   stage: scan
+  only:
+    refs:
+      - master
+      - production
   variables:
     DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
+
+container_scanning:mrege_req:
+  stage: scan
+  except:
+    refs:
+      - master
+      - production
+  variables:
+    DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
 
 dependency_scanning:
   stage: scan
