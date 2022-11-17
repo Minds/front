@@ -56,7 +56,16 @@
     *ngIf="service.displayOptions.showToolbar"
   ></m-activityV2__toolbar>
 
-  <m-activityV2__supermindReplyLink></m-activityV2__supermindReplyLink>
+  <m-activityV2__supermindReplyLink
+    *ngIf="
+      (service.isSupermindRequestWithReply$ | async) &&
+      service.displayOptions.isFeed &&
+      !service.displayOptions.minimalMode &&
+      !service.displayOptions.sidebarMode &&
+      !service.displayOptions.isModal &&
+      !service.displayOptions.boostRotatorMode
+    "
+  ></m-activityV2__supermindReplyLink>
 
   <ng-container *mIfBrowser>
     <m-comments__entityOutletV2
@@ -64,6 +73,7 @@
       [entity]="service.entity$ | async"
       [canDelete]="canDelete$ | async"
       [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
+      [hideToggle]="service.isSupermindRequestWithReply$ | async"
       [fixedHeight]="service.displayOptions.fixedHeight"
       (onHeightChange)="onCommentsHeightChange($event)"
     >

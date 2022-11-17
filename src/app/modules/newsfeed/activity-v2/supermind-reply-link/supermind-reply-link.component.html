@@ -1,5 +1,3 @@
-<a
-  *ngIf="isSupermindRequest && supermindReplyGuid"
-  [routerLink]="['/newsfeed', supermindReplyGuid]"
-  >See Supermind reply</a
+<a *ngIf="supermindReplyGuid" [routerLink]="['/newsfeed', supermindReplyGuid]"
+  >View Supermind reply</a
 >

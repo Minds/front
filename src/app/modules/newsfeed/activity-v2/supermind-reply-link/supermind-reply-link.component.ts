@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ActivityService } from '../../activity/activity.service';
 
@@ -12,8 +12,8 @@ export class ActivityV2SupermindReplyLinkComponent
   extends AbstractSubscriberComponent
   implements OnInit {
   subscriptions: Subscription[] = [];
+  entity;
 
-  isSupermindRequest: boolean;
   supermindReplyGuid: string;
 
   constructor(public service: ActivityService) {
@@ -23,11 +23,11 @@ export class ActivityV2SupermindReplyLinkComponent
   ngOnInit(): void {
     this.subscriptions.push(
       this.service.entity$.subscribe(entity => {
-        this.isSupermindRequest =
-          entity.supermind && !entity.supermind.is_reply;
-
-        if (this.isSupermindRequest && entity.supermind.reply_guid) {
-          this.supermindReplyGuid = entity.supermind;
+        this.entity = entity;
+      }),
+      this.service.isSupermindRequestWithReply$.subscribe(is => {
+        if (is && this.entity) {
+          this.supermindReplyGuid = this.entity.supermind.reply_guid;
         }
       })
     );

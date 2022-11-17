@@ -68,7 +68,6 @@
       }
     }
     &.isSupermindRequest {
-      // ojm check in light mode
       @include m-theme() {
         background-color: themed($m-borderColor--primary);
       }

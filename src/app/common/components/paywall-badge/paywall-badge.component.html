@@ -2,8 +2,8 @@
   <div
     class="m-paywallBadge"
     [ngClass]="{
-      isSupermindReply: isSupermindReply,
-      isSupermindRequest: !isSupermindReply,
+      isSupermindReply: isSupermind && isSupermindReply,
+      isSupermindRequest: isSupermind && !isSupermindReply,
       isPlus: hasPaywall && paywallType === 'plus',
       iconOnly:
         hasPaywall &&

@@ -27,6 +27,8 @@ export class ActivityV2FlagComponent extends AbstractSubscriberComponent
 
   activeFlag: ActivityFlagType;
 
+  isSupermindRequest: boolean;
+
   constructor(public service: ActivityService) {
     super();
   }
