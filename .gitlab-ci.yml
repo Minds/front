@@ -331,7 +331,7 @@ container_scanning:
   variables:
     DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
 
-container_scanning:mrege_req:
+container_scanning_branch:
   stage: scan
   except:
     refs:
