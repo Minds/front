@@ -28,13 +28,8 @@ export class PaywallBadgeComponent implements OnInit {
 
   hasPaywall: boolean = false;
 
-  // True when we want the badge to be displayed as a reply
-  // (with purple gradient), regardless of whether it's
-  // a request or reply (e.g. in composer)
-  @Input() alwaysShowSupermindGradient: boolean = false;
-
   isSupermind: boolean = false;
-  isSupermindReply: boolean = false;
+  isSupermindRequest: boolean = false;
 
   paywallType: PaywallType = 'custom';
   tierName: string;
@@ -58,8 +53,7 @@ export class PaywallBadgeComponent implements OnInit {
     // Determine if we should show the supermind badge
     if (this._entity && this._entity.supermind) {
       this.isSupermind = true;
-      this.isSupermindReply =
-        this._entity.supermind.is_reply || this.alwaysShowSupermindGradient;
+      this.isSupermindRequest = !this._entity.supermind.is_reply;
     }
   }
 
@@ -67,11 +61,6 @@ export class PaywallBadgeComponent implements OnInit {
     if (!this._entity) {
       return;
     }
-
-    // Use the paywall status of the quoted post, not the quote wrapper
-    // if (this._entity.remind_object) {
-    //   this._entity = this._entity.remind_object;
-    // }
 
     this.hasPaywall = !!this._entity.paywall || this._entity.paywall_unlocked;
 

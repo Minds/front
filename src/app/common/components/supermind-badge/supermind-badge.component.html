@@ -1,0 +1,17 @@
+<div
+  class="m-supermindBadge"
+  [ngClass]="{ 'm-supermindBadge--request': isRequest }"
+>
+  <!-- ------------------------ -->
+  <!-- SUPERMIND REPLY (gradient) -->
+  <!-- ------------------------ -->
+  <span *ngIf="!isRequest" data-ref="paywall-badge-supermind-reply"
+    >Supermind</span
+  >
+  <!-- ------------------------ -->
+  <!-- SUPERMIND REQUEST (grey) -->
+  <!-- ------------------------ -->
+  <span *ngIf="isRequest" data-ref="paywall-badge-supermind-request"
+    >Supermind Offer</span
+  >
+</div>
