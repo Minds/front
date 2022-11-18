@@ -3,7 +3,7 @@
 ###
 FROM node:14-alpine
 
-RUN apk update && apk upgrade
+RUN apk update && apk upgrade --no-cache
 
 ENV PM2_MAX_MEMORY=512M
 ENV PM2_INSTANCES=2
