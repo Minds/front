@@ -1,0 +1,77 @@
+@import 'defaults.scss';
+@import '../../../common/layout/layout.scss';
+
+:host {
+  .m-supermind__banner {
+    display: flex;
+    align-items: center;
+    padding: $spacing4 $spacing6;
+    border-radius: $m-borderRadius;
+
+    @include m-theme() {
+      background-color: themed($m-borderColor--primary);
+    }
+
+    .m-supermindBanner__text {
+      margin-bottom: 0;
+      height: $spacing5;
+      padding-right: $spacing3;
+      flex-grow: 2;
+
+      span {
+        @include body2Regular;
+        &.m-supermindBannerText--bold {
+          @include body2Bold;
+        }
+
+        &.m-supermindBannerText--secondary {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+
+    // ***********************************
+    // ** MOBILE
+    // ***********************************
+
+    @media screen and (max-width: $layoutMax2ColFixedWidth) {
+      flex-direction: column;
+      align-items: initial;
+      .m-supermindBanner__text {
+        height: initial;
+        padding-right: 0;
+        padding-bottom: $spacing4;
+        max-width: none;
+        text-align: center;
+      }
+    }
+  }
+  // ***********************************
+  // ** POPUP
+  // ***********************************
+
+  m-comment__poster & {
+    // popup arrow
+    .m-supermind__banner::after {
+      content: ' ';
+      position: absolute;
+      top: 100%; /* At the bottom of the tooltip */
+      left: 50%;
+      margin-left: -8px;
+      border-width: 8px;
+      border-style: solid;
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary) transparent transparent
+          transparent;
+      }
+    }
+  }
+
+  ::ng-deep m-supermind__button m-button .m-button {
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
+  }
+}
