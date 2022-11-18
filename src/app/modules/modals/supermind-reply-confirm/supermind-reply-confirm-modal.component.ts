@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
@@ -57,7 +58,7 @@ export class SupermindReplyConfirmModalComponent implements OnInit {
     );
     if (isConnected) {
       this.isTwitterReplyEnabled = true;
-      this.twitterReplyCheckbox.setValue(true);
+      this.twitterReplyCheckbox.setValue(this.isTwitterReplyRequired); // if required, default to checked.
     }
   }
 }
