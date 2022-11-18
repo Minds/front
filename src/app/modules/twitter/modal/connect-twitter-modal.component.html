@@ -14,10 +14,7 @@
         size="small"
         color="blue"
         (onAction)="onConnectClick($event)"
-        [disabled]="
-          (isConnected$ | async) || (authUrlRequestInProgress$ | async)
-        "
-        [saving]="authUrlRequestInProgress$ | async"
+        [saving]="false"
         i18n="connect to twitter|@@CONNECT_TWITTER_MODAL__CONNECT"
         >Connect</m-button
       >

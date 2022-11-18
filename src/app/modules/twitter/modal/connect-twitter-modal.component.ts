@@ -1,7 +1,4 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { TwitterConnectionService } from '../services/twitter-connection.service';
 import { ConnectTwitterModalOpts } from './connect-twitter-modal.types';
 
 /**
@@ -13,28 +10,13 @@ import { ConnectTwitterModalOpts } from './connect-twitter-modal.types';
   styleUrls: ['./connect-twitter-modal.component.ng.scss'],
 })
 export class ConnectTwitterModalComponent implements OnDestroy {
-  // whether user is connected to Twitter.
-  public readonly isConnected$: Observable<boolean> = this.twitterConnection
-    .isConnected$;
-
-  // whether request to get Twitter auth url is in progress.
-  public readonly authUrlRequestInProgress$: Observable<boolean> = this
-    .twitterConnection.authUrlRequestInProgress$;
-
-  // auth url for Twitter - will trigger an API request when called for first time.
-  public authUrl$: Observable<string> = this.twitterConnection.authUrl$;
-
-  // subscription to auth url.
-  public authUrlSubscription: Subscription;
-
   // body text - can be overridden via setModalData().
   public bodyText: string = $localize`:@@CONNECT_TWITTER_MODAL__CONNECT_YOUR_ACCOUNT_WITH_TWITTER:Connect your Minds account with Twitter.`;
 
-  constructor(private twitterConnection: TwitterConnectionService) {}
+  // Callback function for when completed
+  onConnect = () => {};
 
-  ngOnDestroy(): void {
-    this.authUrlSubscription?.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   /**
    * Set modal data.
@@ -45,6 +27,7 @@ export class ConnectTwitterModalComponent implements OnDestroy {
     if (opts.bodyText) {
       this.bodyText = opts.bodyText;
     }
+    this.onConnect = opts.onConnect;
   }
 
   /**
@@ -52,13 +35,8 @@ export class ConnectTwitterModalComponent implements OnDestroy {
    * @param { MouseEvent } $event - mouse event.
    * @returns { void }
    */
-  public onConnectClick($event: MouseEvent): void {
-    this.twitterConnection.postAuthRedirectPath$.next('/supermind/inbox');
-    this.authUrlSubscription = this.authUrl$
-      .pipe(take(1))
-      .subscribe((authorizationUrl: string) => {
-        this.assignWindowLocation(authorizationUrl);
-      });
+  public async onConnectClick($event: MouseEvent): Promise<void> {
+    this.openTwitterAuthTab();
   }
 
   /**
@@ -66,7 +44,17 @@ export class ConnectTwitterModalComponent implements OnDestroy {
    * @param { string } url - url to call.
    * @returns { void }
    */
-  private assignWindowLocation(url: string): void {
-    window.location.assign(url);
+  private openTwitterAuthTab(): void {
+    const windowRef = window.open(
+      '/api/v3/twitter/redirect-oauth-token',
+      '_blank'
+    );
+
+    const timer = setInterval(() => {
+      if (windowRef.closed && document.hasFocus()) {
+        clearInterval(timer);
+        this.onConnect();
+      }
+    }, 500);
   }
 }
