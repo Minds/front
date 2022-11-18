@@ -38,7 +38,12 @@
     </span>
   </m-formInput__checkbox>
 </div>
-<div class="m-supermindReplyConfirmationModal__buttonWrapper">
+<div
+  class="m-supermindReplyConfirmationModal__buttonWrapper"
+  [ngClass]="{
+    'm-supermindReplyConfirmationModal__buttonWrapper--noMargin': !isTwitterReplyEnabled
+  }"
+>
   <m-button
     class="m-supermindReplyConfirmationModal__cancelButton"
     (onAction)="onDismiss()"

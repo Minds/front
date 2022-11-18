@@ -57,11 +57,14 @@
   }
 
   .m-supermindReplyConfirmationModal__buttonWrapper {
-    margin-top: $minds-margin * 4;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+
+    &:not(.m-supermindReplyConfirmationModal__buttonWrapper--noMargin) {
+      margin-top: $minds-margin * 4;
+    }
 
     .m-supermindReplyConfirmationModal__cancelButton {
       margin: 0 $spacing4;
