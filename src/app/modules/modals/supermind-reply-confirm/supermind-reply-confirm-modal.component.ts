@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { TwitterConnectionService } from '../../twitter/services/twitter-connection.service';
 
 const noOp = () => {};
 const DEFAULT_TITLE = 'Confirm';
 const DEFAULT_BODY = 'Are you sure?';
 
 type SupermindReplyConfirmModalConfig = {
-  isTwitterReplyEnabled: boolean | undefined;
   isTwitterReplyRequired: boolean | undefined;
   onConfirm: () => any;
   onClose: () => any;
@@ -25,6 +26,12 @@ export class SupermindReplyConfirmModalComponent implements OnInit {
 
   public isTwitterReplyRequired: boolean = false;
 
+  // whether request for config is in progress.
+  public configRequestInProgress$: BehaviorSubject<boolean> = this
+    .twitterConnection.configRequestInProgress$;
+
+  constructor(private twitterConnection: TwitterConnectionService) {}
+
   /**
    * Triggered on confirm click
    */
@@ -38,13 +45,19 @@ export class SupermindReplyConfirmModalComponent implements OnInit {
   public onDismiss: () => any = noOp;
 
   public setModalData(config: SupermindReplyConfirmModalConfig): void {
-    this.isTwitterReplyEnabled = config.isTwitterReplyEnabled || false;
     this.isTwitterReplyRequired = config.isTwitterReplyRequired || false;
     this.onConfirm = config.onConfirm || noOp;
     this.onDismiss = config.onClose || noOp;
   }
 
-  public ngOnInit(): void {
-    this.twitterReplyCheckbox.setValue(true);
+  public async ngOnInit(): Promise<void> {
+    // check if config for twitter is connected to determine whether to show option to post to twitter.
+    const isConnected: boolean = await this.twitterConnection.isConnected(
+      this.isTwitterReplyRequired
+    );
+    if (isConnected) {
+      this.isTwitterReplyEnabled = true;
+      this.twitterReplyCheckbox.setValue(true);
+    }
   }
 }

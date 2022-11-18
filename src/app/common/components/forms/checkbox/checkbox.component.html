@@ -8,8 +8,12 @@
   />
   <div class="m-formInputCheckbox__visibleWrapper">
     <span class="m-formInputCheckbox__custom"></span>
-    <span class="m-formInputCheckbox__customLabel"
-      ><ng-content></ng-content
+    <span
+      class="m-formInputCheckbox__customLabel"
+      [ngClass]="{ 'm-formInputCheckbox__customLabel--disabled': disabled }"
+      [ngClass]="{ 'm-formInputCheckbox__customLabel--enabled': !disabled }"
+    >
+      <ng-content></ng-content
     ></span>
   </div>
 </label>

@@ -15,7 +15,7 @@
   <m-formInput__checkbox
     [disabled]="isTwitterReplyEnabled && isTwitterReplyRequired"
     [formControl]="twitterReplyCheckbox"
-    *ngIf="isTwitterReplyEnabled"
+    *ngIf="isTwitterReplyEnabled && !(configRequestInProgress$ | async)"
   >
     Post to my Twitter
     <br />
