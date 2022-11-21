@@ -41,8 +41,7 @@ import { AbstractSubscriberComponent } from '../../../../common/components/abstr
   templateUrl: 'base.component.html',
   providers: [PopupService],
 })
-export class BaseComponent extends AbstractSubscriberComponent
-  implements AfterViewInit, OnDestroy {
+export class BaseComponent implements AfterViewInit, OnDestroy {
   /**
    * Post event emitter
    */
@@ -110,8 +109,6 @@ export class BaseComponent extends AbstractSubscriberComponent
     configs: ConfigsService,
     protected uploaderService: UploaderService
   ) {
-    super();
-
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
     this.attachmentError$.pipe(distinctUntilChanged()).subscribe(error => {
@@ -144,6 +141,10 @@ export class BaseComponent extends AbstractSubscriberComponent
 
   ngOnDestroy(): void {
     this.service.reset();
+
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
