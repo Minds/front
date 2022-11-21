@@ -31,12 +31,12 @@
       <div
         class="m-activity__flagRow"
         *ngIf="
+          !service.displayOptions.boostRotatorMode &&
           (entity.boosted ||
             (entity.remind_users && entity.remind_users.length) ||
             (entity.supermind &&
               !entity.supermind.is_reply &&
-              entity.receiver_user)) &&
-          !service.displayOptions.boostRotatorMode
+              entity.supermind.receiver_user))
         "
       >
         <m-activityV2__flag></m-activityV2__flag>

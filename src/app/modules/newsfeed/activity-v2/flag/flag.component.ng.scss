@@ -62,4 +62,12 @@
       text-decoration: underline;
     }
   }
+
+  .m-activityFlag--supermindRequest {
+    a {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
 }
