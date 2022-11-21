@@ -10,6 +10,8 @@ class ActivityComponent {
   private optionSelector: string = '.m-dropdownMenuItem__text--label span';
   private remindButtonSelector: string =
     'm-activityV2__remindButton m-dropdownMenu';
+  private commentPosterSelector: string = 'm-comment__poster';
+  private textAreaSelector: string = 'minds-textarea';
   private timestampSelector: string = 'm-activityV2__permalink';
 
   /**
@@ -24,6 +26,15 @@ class ActivityComponent {
         return resp.url().includes('/api/v1/newsfeed') && resp.status() === 200;
       }, 30),
     ]);
+  }
+
+  /**
+   * Enter text in the comment poster input box
+   * @returns { void }
+   */
+  public enterTextInCommentPoster(text: string = 'foo'): void {
+    I.click(locate(this.textAreaSelector).inside(this.commentPosterSelector));
+    I.type(text);
   }
 
   /**

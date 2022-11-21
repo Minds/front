@@ -1,4 +1,11 @@
-import { Component, HostBinding, Injector, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Injector,
+  Input,
+  Output,
+} from '@angular/core';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
@@ -21,6 +28,11 @@ export class SupermindButtonComponent {
   @Input() entity: any;
 
   /**
+   * Auto-populate composer with this body text
+   */
+  @Input() message: string;
+
+  /**
    *
    */
   @HostBinding('class.iconOnly')
@@ -31,6 +43,11 @@ export class SupermindButtonComponent {
    * The size of the button
    */
   @Input() size = 'xsmall';
+
+  /**
+   * Fires when a supermind activity is posted via the supermind button
+   */
+  @Output() onSupermindPosted: EventEmitter<any> = new EventEmitter();
 
   /**
    *
@@ -76,6 +93,25 @@ export class SupermindButtonComponent {
       refund_policy_agreed: false,
     });
 
-    this.composerModalService.setInjector(this.injector).present();
+    // Pre-populate composer with when supermind button
+    // is clicked from the 'upgradeComment' supermind banner popup
+    if (this.message) {
+      this.composerService.message$.next(this.message);
+    }
+
+    this.presentComposerModal();
+  }
+
+  async presentComposerModal(): Promise<void> {
+    try {
+      await this.composerModalService
+        .setInjector(this.injector)
+        .onPost(activity => {
+          this.onSupermindPosted.emit(true);
+        })
+        .present();
+    } catch (err) {
+      console.error(err);
+    }
   }
 }

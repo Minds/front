@@ -14,5 +14,9 @@
       [rem]="true"
     ></m-icon>
   </ng-container>
-  <ng-template #btnText>Supermind</ng-template>
+  <ng-template #btnText>
+    <span #projectedContent><ng-content></ng-content></span>
+    <!-- Default text displays only if projected content is empty -->
+    <span *ngIf="!projectedContent.children.length">Supermind</span>
+  </ng-template>
 </m-button>
