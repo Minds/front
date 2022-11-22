@@ -29,7 +29,8 @@
     }
   }
 
-  .m-boostModalPayments__optionSelect {
+  .m-boostModalPayments__optionSelect,
+  ::ng-deep m-payments__selectCard select {
     width: 100%;
     border-radius: 2px;
     font-size: 16px;

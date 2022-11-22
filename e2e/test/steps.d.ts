@@ -1,7 +1,6 @@
 /// <reference types='codeceptjs' />
 type activityFeedPage = typeof import('./pages/activityFeedPage');
 type boostMarketingPage = typeof import('./pages/boostMarketingPage');
-type boostPage = typeof import('./pages/boostPage');
 type channelPage = typeof import('./pages/channelPage');
 type commonPage = typeof import('./pages/commonPage');
 type devtoolsPage = typeof import('./pages/devtoolsPage');
@@ -25,6 +24,7 @@ type sidebarComponent = typeof import('./fragments/sidebarComponent');
 type supermindOnboardingModalComponent = typeof import('./fragments/supermindOnboardingModalComponent');
 type topbarComponent = typeof import('./fragments/topbarComponent');
 type feedNoticeComponent = typeof import('./fragments/feedNoticeComponent');
+type boostModalComponent = typeof import('./fragments/boostModalComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
 
@@ -34,7 +34,6 @@ declare namespace CodeceptJS {
     current: any;
     activityFeedPage: activityFeedPage;
     boostMarketingPage: boostMarketingPage;
-    boostPage: boostPage;
     channelPage: channelPage;
     commonPage: commonPage;
     devtoolsPage: devtoolsPage;
@@ -58,6 +57,7 @@ declare namespace CodeceptJS {
     supermindOnboardingModalComponent: supermindOnboardingModalComponent;
     topbarComponent: topbarComponent;
     feedNoticeComponent: feedNoticeComponent;
+    boostModalComponent: boostModalComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}

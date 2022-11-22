@@ -365,6 +365,8 @@ describe('AdminBoosts', () => {
     comp.boosts[0].rejection_reason = 2;
     comp.reject(comp.boosts[0]);
 
+    tick();
+    expect((comp as any).toast.success).toHaveBeenCalledWith('Boost Rejected');
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(
       'api/v1/admin/boosts/newsfeed/123/reject'
@@ -384,6 +386,8 @@ describe('AdminBoosts', () => {
 
     comp.accept(comp.boosts[0], false);
 
+    tick();
+    expect((comp as any).toast.success).toHaveBeenCalledWith('Boost Accepted');
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(
       'api/v1/admin/boosts/newsfeed/123/accept'
@@ -407,6 +411,8 @@ describe('AdminBoosts', () => {
 
     comp.accept(comp.boosts[0], true);
 
+    tick();
+    expect((comp as any).toast.success).toHaveBeenCalledWith('Boost Accepted');
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(
       'api/v1/admin/boosts/newsfeed/123/accept'
@@ -430,6 +436,10 @@ describe('AdminBoosts', () => {
 
     comp.accept(comp.boosts[0], true);
 
+    tick();
+    expect((comp as any).toast.success).not.toHaveBeenCalledWith(
+      'Boost Accepted'
+    );
     expect(clientMock.post).not.toHaveBeenCalled();
   }));
 
