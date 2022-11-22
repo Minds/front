@@ -1,0 +1,49 @@
+@import 'defaults.scss';
+
+:host {
+  padding: $spacing8;
+  border-radius: 5px;
+
+  @include z-index(body);
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+    background-color: themed($m-bgColor--secondary);
+  }
+
+  .m-supermindReplyConfirmationModal__textWrapper {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-supermindReplyConfirmationModal__title {
+      @include heading2Bold;
+      margin-top: unset;
+    }
+
+    .m-supermindReplyConfirmationModal__text {
+      @include body2Regular;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeSpeed;
+    }
+
+    .m-supermindReplyConfirmationModal__actionable {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+  }
+
+  .m-supermindReplyConfirmationModal__buttonWrapper {
+    margin-top: $minds-margin * 4;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    .m-supermindReplyConfirmationModal__cancelButton {
+      margin: 0 $spacing4;
+    }
+
+    .m-supermindReplyConfirmationModal__confirmButton {
+      margin: 0 $spacing4;
+    }
+  }
+}

@@ -1,5 +1,4 @@
 @import 'defaults.scss';
-
 :host {
   ::ng-deep m-button .m-button {
     background: $supermindGradient;
@@ -10,6 +9,10 @@
 
     &:hover {
       background: $supermindLightenedGradient;
+    }
+
+    p {
+      margin-bottom: 0;
     }
   }
 

@@ -108,8 +108,8 @@
         <span *ngIf="boost.bid_type == 'points'"
           >Bid: {{ boost.bid | number }} points</span
         >
-        <span *ngIf="boost.bid_type == 'usd'"
-          >Bid: {{ boost.bid / 100 | currency:'USD':true }} USD
+        <span *ngIf="boost.bid_type == 'cash'"
+          >Bid: {{ boost.bid / 100 | currency:'USD':true }}
         </span>
         <span *ngIf="boost.bid_type == 'tokens'"
           >Bid: {{ boost.bid | token: 18 | number:'1.0-4' }} Tokens</span

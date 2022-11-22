@@ -147,6 +147,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       offerTokens: [this.TokensMin, [this.tokensMinAmountValidator()]],
       termsAccepted: [false, [Validators.requiredTrue]],
       refundPolicyAccepted: [false, [Validators.requiredTrue]],
+      twitterRequired: [false],
       responseType: [
         SUPERMIND_DEFAULT_RESPONSE_TYPE.toString(),
         [Validators.required],
@@ -232,6 +233,10 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           supermindRequest.refund_policy_agreed
         );
 
+        this.formGroup.controls.twitterRequired.setValue(
+          supermindRequest.twitter_required
+        );
+
         this.setMinimumPaymentAmountFromUser(supermindRequest.receiver_user);
 
         // Will ensure clear button is displayed
@@ -297,7 +302,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       receiver_user: this.targetUser,
       receiver_guid: this.formGroup.controls.username.value, // we can pass a username to the guid field
       reply_type: parseInt(this.formGroup.controls.responseType.value),
-      twitter_required: false,
+      twitter_required: this.formGroup.controls.twitterRequired.value,
       payment_options: paymentOptions,
       terms_agreed: this.formGroup.controls.termsAccepted.value,
       refund_policy_agreed: this.formGroup.controls.refundPolicyAccepted.value,

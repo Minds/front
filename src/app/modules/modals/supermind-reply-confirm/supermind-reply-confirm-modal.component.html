@@ -1,0 +1,45 @@
+<div class="m-supermindReplyConfirmationModal__textWrapper">
+  <h2
+    class="m-supermindReplyConfirmationModal__title"
+    data-ref="data-minds-supermind-reply-confirmation-modal-title"
+  >
+    Confirm reply
+  </h2>
+  <p
+    class="m-supermindReplyConfirmationModal__text"
+    data-ref="data-minds-supermind-reply-confirmation-modal-body"
+  >
+    Are you sure you want to post this reply? Once posted your reply cannot be
+    deleted.
+  </p>
+  <m-formInput__checkbox
+    [disabled]="isTwitterReplyEnabled && isTwitterReplyRequired"
+    [formControl]="twitterReplyCheckbox"
+    *ngIf="isTwitterReplyRequired"
+  >
+    Post to my Twitter
+    <br />
+    <span>
+      This Supermind offer requires posting the reply to Twitter
+    </span>
+  </m-formInput__checkbox>
+</div>
+<div class="m-supermindReplyConfirmationModal__buttonWrapper">
+  <m-button
+    class="m-supermindReplyConfirmationModal__cancelButton"
+    (onAction)="onDismiss()"
+    data-ref="data-minds-supermind-reply-confirmation-modal-cancel-button"
+  >
+    Cancel
+  </m-button>
+  <m-button
+    class="m-supermindReplyConfirmationModal__confirmButton"
+    color="blue"
+    (onAction)="onConfirm()"
+    data-ref="data-minds-supermind-reply-confirmation-modal-confirm-button"
+  >
+    Confirm
+  </m-button>
+</div>
+
+<m-modalCloseButton></m-modalCloseButton>

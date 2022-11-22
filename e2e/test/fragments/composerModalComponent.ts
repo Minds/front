@@ -29,6 +29,9 @@ class ComposerModalComponent {
   public composerCloseButton: string = '.m-composerPopup__close';
   public fileUploadButtonSelector: string =
     'm-composer__modal [data-cy=upload-button] input[type=file]';
+  public supermindReplyConfirmButton: string =
+    '[data-ref=data-minds-supermind-reply-confirmation-modal-confirm-button]';
+
   /**
    * Toolbar items
    */
@@ -98,6 +101,14 @@ class ComposerModalComponent {
    */
   public clickNsfwSaveOption(): void {
     I.click(this.nsfwSaveButtonSelector);
+  }
+
+  /**
+   * Click to confirm reply.
+   * @returns { void }
+   */
+  public clickConfirmReplyButton(): void {
+    I.click(this.supermindReplyConfirmButton);
   }
 
   /**
