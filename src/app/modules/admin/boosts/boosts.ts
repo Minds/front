@@ -158,6 +158,7 @@ export class AdminBoosts {
       return;
     }
 
+    this.toast.success('Boost Accepted');
     this.pop(boost);
   }
 
@@ -186,6 +187,7 @@ export class AdminBoosts {
       return;
     }
 
+    this.toast.success('Boost Rejected');
     this.pop(boost);
   }
 
