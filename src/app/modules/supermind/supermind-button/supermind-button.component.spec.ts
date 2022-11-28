@@ -115,6 +115,9 @@ describe('SupermindButtonComponent', () => {
     (comp as any).composerModalService.setInjector.and.returnValue(
       (comp as any).composerModalService
     );
+    (comp as any).composerModalService.onPost.and.returnValue(
+      (comp as any).composerModalService
+    );
 
     comp.onClick(null);
     tick();
@@ -158,7 +161,9 @@ describe('SupermindButtonComponent', () => {
     (comp as any).composerModalService.setInjector.and.returnValue(
       (comp as any).composerModalService
     );
-
+    (comp as any).composerModalService.onPost.and.returnValue(
+      (comp as any).composerModalService
+    );
     comp.onClick(null);
     tick();
 
