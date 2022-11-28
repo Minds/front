@@ -525,7 +525,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       SupermindReplyConfirmModalComponent,
       {
         data: {
-          isTwitterReplyEnabled: true,
           isTwitterReplyRequired: this.supermindReply.twitter_required,
           onConfirm: () => {
             this.onPostEmitter.emit($event);

@@ -325,7 +325,7 @@ prepare:production:sentry:
 container_scanning:
   stage: scan
   variables:
-    DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:latest
+    DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
 
 dependency_scanning:
   stage: scan

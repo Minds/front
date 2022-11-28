@@ -6,10 +6,21 @@ const { I, activityComponent } = inject();
 class ActivityFeedPage {
   // selectors.
   public activitySelector: string = 'm-activity';
+  public readonly permalinkSelector: string = 'm-activityv2__permalink';
   public activityMediaLinkSelector: string =
     '.m-activityContentMedia__link:not(.m-activityContent__quote)';
   public activityPrimaryMediaLinkSelector: string =
     '.m-activityContentMedia__link:not(.m-activityContent__quote)';
+
+  public async navigateToSingleEntityPageOfActivityInPosition(
+    feedPosition: number = 1
+  ): Promise<void> {
+    const permalink = locate(this.permalinkSelector)
+      .inside(this.activitySelector)
+      .at(feedPosition);
+
+    I.click(permalink);
+  }
 
   /**
    * Delete an activity by its position in a feed.
@@ -67,6 +78,17 @@ class ActivityFeedPage {
   ): Promise<void> {
     await within(locate(this.activitySelector).withText(text), () => {
       I.click(this.activityPrimaryMediaLinkSelector);
+    });
+  }
+
+  /**
+   * Open boost modal for the activity with text.
+   * @param text Text to open modal for.
+   * @returns { Promise<void> }
+   */
+  public async openBoostModalForActivityWithText(text: string): Promise<void> {
+    await within(locate(this.activitySelector).withText(text), () => {
+      activityComponent.openBoostModal();
     });
   }
 

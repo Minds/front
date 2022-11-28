@@ -3,7 +3,12 @@
 <!-- -------------------- -->
 <div
   class="m-commentsEntityOutlet__expand--hide"
-  *ngIf="count > 0 && !showOnlyToggle && activityService.displayOptions.isFeed"
+  *ngIf="
+    count > 0 &&
+    !showOnlyToggle &&
+    activityService.displayOptions.isFeed &&
+    !hideToggle
+  "
   (click)="closeFullComments()"
 >
   Hide comments
@@ -39,7 +44,7 @@
   <!-- -------------------- -->
   <div
     class="m-commentsEntityOutlet__expand"
-    *ngIf="count > 0 && activityService.displayOptions.isFeed"
+    *ngIf="count > 0 && activityService.displayOptions.isFeed && !hideToggle"
     (click)="openFullComments()"
   >
     View {{ count }} comment{{ count > 1 ? 's' : '' }}

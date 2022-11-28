@@ -2,12 +2,14 @@
   <h2
     class="m-supermindReplyConfirmationModal__title"
     data-ref="data-minds-supermind-reply-confirmation-modal-title"
+    i18n="@@SUPERMIND_REPLY_CONFIRM__CONFIRM_REPLY"
   >
     Confirm reply
   </h2>
   <p
     class="m-supermindReplyConfirmationModal__text"
     data-ref="data-minds-supermind-reply-confirmation-modal-body"
+    i18n="@@SUPERMIND_REPLY_CONFIRM__ARE_YOU_SURE"
   >
     Are you sure you want to post this reply? Once posted your reply cannot be
     deleted.
@@ -15,20 +17,38 @@
   <m-formInput__checkbox
     [disabled]="isTwitterReplyEnabled && isTwitterReplyRequired"
     [formControl]="twitterReplyCheckbox"
-    *ngIf="isTwitterReplyEnabled"
+    *ngIf="isTwitterReplyEnabled && !(configRequestInProgress$ | async)"
   >
     Post to my Twitter
     <br />
-    <span>
-      This Supermind offer requires posting the reply to Twitter
+    <span class="m-supermindReplyConfirmationModal__checkboxSubtitle">
+      <ng-container
+        *ngIf="isTwitterReplyRequired; else twitterNotRequiredText"
+        i18n="@@SUPERMIND_REPLY_CONFIRM__TWITTER_REQUIRED"
+      >
+        This Supermind offer requires posting the reply to Twitter
+      </ng-container>
+      <ng-template
+        #twitterNotRequiredText
+        i18n="@@SUPERMIND_REPLY_CONFIRM__SHARE_TO_TWITTER"
+      >
+        Posting Supermind replies on Twitter helps you get more Supermind offers
+        from your social audiences.
+      </ng-template>
     </span>
   </m-formInput__checkbox>
 </div>
-<div class="m-supermindReplyConfirmationModal__buttonWrapper">
+<div
+  class="m-supermindReplyConfirmationModal__buttonWrapper"
+  [ngClass]="{
+    'm-supermindReplyConfirmationModal__buttonWrapper--noMargin': !isTwitterReplyEnabled
+  }"
+>
   <m-button
     class="m-supermindReplyConfirmationModal__cancelButton"
     (onAction)="onDismiss()"
     data-ref="data-minds-supermind-reply-confirmation-modal-cancel-button"
+    i18n="@@SUPERMIND_REPLY_CONFIRM__CANCEL_BUTTON"
   >
     Cancel
   </m-button>
@@ -37,6 +57,7 @@
     color="blue"
     (onAction)="onConfirm()"
     data-ref="data-minds-supermind-reply-confirmation-modal-confirm-button"
+    i18n="@@SUPERMIND_REPLY_CONFIRM__CONFIRM_BUTTON"
   >
     Confirm
   </m-button>
