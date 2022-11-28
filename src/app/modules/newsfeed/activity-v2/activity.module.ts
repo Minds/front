@@ -39,6 +39,7 @@ import { ReadMoreModule } from '../../../common/read-more/v2/read-more.module';
 import { ActivityV2BoostedFlagComponent } from './flag/boosted-flag/boosted-flag.component';
 import { ActivityV2MultiImageComponent } from './content/images/multi-image.component';
 import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
+import { ActivityV2SupermindReplyLinkComponent } from './supermind-reply-link/supermind-reply-link.component';
 
 @NgModule({
   imports: [
@@ -80,6 +81,7 @@ import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
     ActivityV2PermalinkComponent,
     ActivityV2ViewsComponent,
     ActivityV2MultiImageComponent,
+    ActivityV2SupermindReplyLinkComponent,
   ],
   providers: [ActivityV2ModalCreatorService],
   exports: [

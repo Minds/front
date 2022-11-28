@@ -31,9 +31,12 @@
       <div
         class="m-activity__flagRow"
         *ngIf="
+          !service.displayOptions.boostRotatorMode &&
           (entity.boosted ||
-            (entity.remind_users && entity.remind_users.length)) &&
-          !service.displayOptions.boostRotatorMode
+            (entity.remind_users && entity.remind_users.length) ||
+            (entity.supermind &&
+              !entity.supermind.is_reply &&
+              entity.supermind.receiver_user))
         "
       >
         <m-activityV2__flag></m-activityV2__flag>
@@ -55,12 +58,24 @@
     *ngIf="service.displayOptions.showToolbar"
   ></m-activityV2__toolbar>
 
+  <m-activityV2__supermindReplyLink
+    *ngIf="
+      (service.isSupermindRequestWithReply$ | async) &&
+      service.displayOptions.isFeed &&
+      !service.displayOptions.minimalMode &&
+      !service.displayOptions.sidebarMode &&
+      !service.displayOptions.isModal &&
+      !service.displayOptions.boostRotatorMode
+    "
+  ></m-activityV2__supermindReplyLink>
+
   <ng-container *mIfBrowser>
     <m-comments__entityOutletV2
       *ngIf="service.displayOptions.showComments"
       [entity]="service.entity$ | async"
       [canDelete]="canDelete$ | async"
       [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
+      [hideToggle]="service.isSupermindRequestWithReply$ | async"
       [fixedHeight]="service.displayOptions.fixedHeight"
       (onHeightChange)="onCommentsHeightChange($event)"
     >

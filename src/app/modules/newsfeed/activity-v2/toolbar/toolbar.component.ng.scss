@@ -97,6 +97,17 @@
     @include m-theme() {
       border-top: none;
     }
+
+    .m-activityToolbar__largeActions {
+      padding-top: 1rem;
+      padding-bottom: 0rem;
+      padding-left: $activitySpacing--modal;
+      padding-right: $activitySpacing--modal;
+
+      ::ng-deep .m-supermindBanner__text {
+        height: auto;
+      }
+    }
   }
 
   // *********************************

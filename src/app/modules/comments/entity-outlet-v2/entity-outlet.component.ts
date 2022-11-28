@@ -2,22 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   Output,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  HostBinding,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  Router,
-} from '@angular/router';
-import { Subscription } from 'rxjs';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { AttachmentService } from '../../../services/attachment';
@@ -58,6 +47,11 @@ export class CommentsEntityOutletV2Component {
     oldHeight: number;
     newHeight: number;
   }> = new EventEmitter();
+
+  // Hide the view/hide comments toggle
+  // so we can put supermind reply link is there
+  @Input() hideToggle = false;
+
   optimisticList: Array<any> = [];
 
   constructor(
