@@ -79,6 +79,19 @@
           &:after {
             display: block;
           }
+
+          &.m-formInputCheckbox__custom--disabled {
+            @include m-theme() {
+              background-color: themed($m-borderColor--secondary);
+              border-color: themed($m-borderColor--secondary);
+            }
+
+            &:after {
+              @include m-theme() {
+                color: themed($m-textColor--primary);
+              }
+            }
+          }
         }
       }
     }

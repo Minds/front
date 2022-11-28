@@ -164,6 +164,6 @@ export class SupermindReplyService implements OnDestroy {
       return false;
     }
 
-    return !(await this.twitterConnection.isConnected());
+    return !(await this.twitterConnection.isConnected(false));
   }
 }

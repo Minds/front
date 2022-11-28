@@ -26,7 +26,7 @@ export class TwitterConnectionService {
 
   constructor(private api: ApiService, private toast: ToasterService) {}
 
-  async isConnected(): Promise<boolean> {
+  async isConnected(showErrorToast: boolean = true): Promise<boolean> {
     this.configRequestInProgress$.next(true);
 
     try {
@@ -45,10 +45,12 @@ export class TwitterConnectionService {
     } catch (err) {
       this.configRequestInProgress$.next(false);
 
-      console.error('Could not get twitter config for user');
-      this.toast.error(
-        'An unexpected error has occurred getting your twitter configuration'
-      );
+      if (showErrorToast) {
+        console.error('Could not get twitter config for user');
+        this.toast.error(
+          'An unexpected error has occurred getting your twitter configuration'
+        );
+      }
     }
 
     return false;
