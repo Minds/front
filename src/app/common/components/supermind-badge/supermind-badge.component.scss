@@ -1,0 +1,45 @@
+@import 'defaults.scss';
+
+:host {
+  cursor: default;
+
+  .m-supermindBadge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 3px;
+    padding: 4px 5px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+
+    span {
+      font-weight: 500;
+    }
+    // ----------------------------
+    // REPLY (purple gradient)
+    // ----------------------------
+    &:not(.m-supermindBadge--request) {
+      @include supermindGradient;
+
+      span {
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+      }
+    }
+    // ----------------------------
+    // REQUEST (grey)
+    // ----------------------------
+    &.m-supermindBadge--request {
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
+      }
+
+      span {
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
+        }
+      }
+    }
+  }
+}

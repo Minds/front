@@ -165,6 +165,10 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.isModal = this.service.displayOptions.isModal;
     this.isSingle = this.service.displayOptions.isSingle;
 
+    // if this is a supermind request with a reply AND on the feed, then
+    // we don't want to show the View comments link
+    // and we DO want to show the See supermindReply
+
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
         if (!this.service.displayOptions.fixedHeight) return;

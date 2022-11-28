@@ -17,6 +17,8 @@ import { EntityMetricsSocketService } from '../../../common/services/entity-metr
 export interface Supermind {
   request_guid: string;
   is_reply: boolean;
+  receiver_user?: any;
+  reply_guid?: string;
 }
 
 export type ActivityDisplayOptions = {
@@ -307,13 +309,40 @@ export class ActivityService implements OnDestroy {
   isSupermindReply$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return (
-        getActivityContentType(entity, false, false, true) === 'supermind_reply'
+        entity &&
+        entity.remind_object &&
+        entity.supermind &&
+        entity.supermind.is_reply
       );
     })
   );
 
   /**
-   * If the post has been editied this will emit true
+   * Emits true if the post is a supermind request
+   */
+  isSupermindRequest$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return entity && entity.supermind && entity.supermind.is_reply;
+    })
+  );
+
+  /**
+   * Emits true if the post is a supermind request
+   * that has been replied to
+   */
+  isSupermindRequestWithReply$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return Boolean(
+        entity &&
+          entity.supermind &&
+          !entity.supermind.is_reply &&
+          entity.supermind.reply_guid
+      );
+    })
+  );
+
+  /**
+   * If the post has been edited this will emit true
    */
   isEdited$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
