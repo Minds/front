@@ -21,6 +21,7 @@
 
     .m-supermindReplyConfirmationModal__text {
       @include body2Regular;
+      margin-bottom: $spacing6;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeSpeed;
     }
@@ -29,14 +30,41 @@
       display: flex;
       flex-flow: row nowrap;
     }
+
+    ::ng-deep m-formInput__checkbox {
+      margin-right: $spacing15;
+
+      br {
+        display: block;
+        margin-bottom: $spacing1;
+      }
+
+      .m-supermindReplyConfirmationModal__checkboxSubtitle {
+        @include body2Regular;
+        line-height: $spacing6;
+      }
+
+      .m-formInputCheckbox__customLabel {
+        margin-top: -2px !important;
+        margin-left: $spacing2;
+
+        @include body1Regular;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
   }
 
   .m-supermindReplyConfirmationModal__buttonWrapper {
-    margin-top: $minds-margin * 4;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+
+    &:not(.m-supermindReplyConfirmationModal__buttonWrapper--noMargin) {
+      margin-top: $minds-margin * 4;
+    }
 
     .m-supermindReplyConfirmationModal__cancelButton {
       margin: 0 $spacing4;
