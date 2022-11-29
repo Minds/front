@@ -13,34 +13,7 @@
     font-size: 12px;
     line-height: 14px;
     font-weight: 500;
-    &:not(.m-paywallBadge--activityV2) {
-      @include m-theme() {
-        color: themed($m-white-always);
-        background-color: themed($m-textColor--secondary);
-        box-shadow: 0 1px 3px 0 rgba(themed($m-black-always), 0.3);
-      }
-    }
 
-    &.m-paywallBadge--activityV2 {
-      &.iconOnly {
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
-      }
-      &.isPlus {
-        @include m-theme() {
-          background-color: transparent !important;
-          color: themed($m-textColor--primary);
-        }
-      }
-      &.iconOnly {
-        padding: 0;
-        i {
-          margin: 0;
-          @include body2Regular;
-        }
-      }
-    }
     &.topRightPosition {
       position: absolute;
       top: 12px;
@@ -49,15 +22,19 @@
     }
 
     &.iconOnly {
-      padding: 4px 4px;
+      padding: 0;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
       i {
-        margin: 0 -1 0 0;
+        margin: 0;
+        @include body2Regular;
       }
     }
     &.isPlus {
       @include m-theme() {
-        background-color: themed($m-bgColor--primary) !important;
-        color: themed($m-textColor--primary) !important;
+        background-color: transparent !important;
+        color: themed($m-textColor--primary);
         border: 1px solid (themed($m-blue));
         box-shadow: none !important;
       }
@@ -103,11 +80,9 @@
   // Because badge may overlay images/vids and become illegible
   .m-activity--minimalMode & {
     .m-paywallBadge {
-      &.m-paywallBadge--activityV2 {
-        &.isPlus {
-          @include m-theme() {
-            background-color: themed($m-bgColor--primary) !important;
-          }
+      &.isPlus {
+        @include m-theme() {
+          background-color: themed($m-bgColor--primary) !important;
         }
       }
     }

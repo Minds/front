@@ -6,46 +6,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: $spacing4;
+    padding-left: $spacing4;
+    padding-right: $spacing4;
+    @include borderTop;
   }
-
-  &.m-topHighlights--activityV2 {
-    header {
-      @include borderTop;
-      padding-top: $spacing4;
-      padding-left: $spacing4;
-      padding-right: $spacing4;
-    }
-
-    .m-topHighlights__title {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-
-    ul {
-      li:first-child {
-        ::ng-deep m-activityV2 {
-          @include m-theme() {
-            border-top: none;
-          }
-        }
-      }
-    }
-    .m-topHighlights__showMore__container {
-      .m-topHighlights__showMore__link {
-        padding-right: $spacing6;
-      }
-      margin-top: 0;
-      margin-bottom: $spacing2;
-    }
-
-    ::ng-deep m-icon i {
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-    }
-  }
-
-  //
 
   ul {
     padding: 0;
@@ -53,18 +18,26 @@
 
     li {
       list-style: none;
-    }
+      &:first-child {
+        // ojm change?
+        ::ng-deep m-activityV2 {
+          @include m-theme() {
+            border-top: none;
+          }
+        }
+      }
 
-    li:last-child m-activity {
-      margin-bottom: $minds-margin !important;
+      &:last-child m-activity {
+        margin-bottom: $minds-margin !important;
+      }
     }
   }
 
   .m-topHighlights__title {
     font-size: 20px;
     font-weight: bold;
-    // padding-top: $spacing6;
-    // padding-bottom: $spacing2;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .m-topHighlights__showMore__container {
@@ -72,25 +45,33 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    margin: $minds-padding 0 $minds-padding * 2;
+    margin: 0 0 $spacing2;
 
-    ::ng-deep m-loadingSpinner {
-      width: unset;
-      margin: unset;
+    ::ng-deep {
+      m-loadingSpinner {
+        width: unset;
+        margin: unset;
 
-      .m-loadingSpinner__wrapper {
-        padding: 0;
-        top: -1px;
+        .m-loadingSpinner__wrapper {
+          padding: 0;
+          top: -1px;
 
-        .m-loadingSpinner__container {
-          width: 25px;
-          height: 25px;
+          .m-loadingSpinner__container {
+            width: 25px;
+            height: 25px;
+          }
+        }
+      }
+      m-icon i {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
         }
       }
     }
 
     .m-topHighlights__showMore__link {
       padding: $minds-padding;
+      padding-right: $spacing6;
       text-decoration: none;
       cursor: pointer;
       border-radius: $m-borderRadius;

@@ -13,7 +13,6 @@ import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
@@ -82,16 +81,10 @@ export class ChannelRecommendationComponent implements OnInit {
     private api: ApiService,
     public experiments: ExperimentsService,
     private recentSubscriptions: RecentSubscriptionsService,
-    private activityV2Experiment: ActivityV2ExperimentService,
     private dismissal: DismissalService,
     private analyticsService: AnalyticsService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
   ) {}
-
-  @HostBinding('class.m-channelRecommendation--activityV2')
-  get activityV2Feature(): boolean {
-    return this.activityV2Experiment.isActive();
-  }
 
   ngOnInit(): void {
     if (this.location) {

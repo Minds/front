@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import getActivityContentType from '../../../helpers/activity-content-type';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 import { PaywallType } from '../../../modules/wire/lock-screen/wire-lock-screen.component';
 import { ConfigsService } from '../../services/configs.service';
 
@@ -34,22 +32,16 @@ export class PaywallBadgeComponent implements OnInit {
   paywallType: PaywallType = 'custom';
   tierName: string;
   init: boolean = false;
-  activityV2Feature: boolean = false;
 
   readonly plusSupportTierUrn: string;
 
   subscriptions: Subscription[];
 
-  constructor(
-    private config: ConfigsService,
-    private activityV2Experiment: ActivityV2ExperimentService
-  ) {
+  constructor(private config: ConfigsService) {
     this.plusSupportTierUrn = config.get('plus')?.support_tier_urn;
   }
 
   ngOnInit(): void {
-    this.activityV2Feature = this.activityV2Experiment.isActive();
-
     // Determine if we should show the supermind badge
     if (this._entity) {
       this.isSupermindReply =
@@ -64,10 +56,6 @@ export class PaywallBadgeComponent implements OnInit {
     }
 
     // Use the paywall status of the quoted post, not the quote wrapper
-    // if (this._entity.remind_object) {
-    //   this._entity = this._entity.remind_object;
-    // }
-
     this.hasPaywall = !!this._entity.paywall || this._entity.paywall_unlocked;
 
     /**

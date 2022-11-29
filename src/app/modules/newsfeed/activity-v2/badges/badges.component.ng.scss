@@ -2,7 +2,7 @@
 
 :host {
   // Using ng-deep to accommodate paywall-badge component
-  ::ng-deep .m-activityV2__badge {
+  ::ng-deep .m-activity__badge {
     margin-left: $spacing2;
     display: inline-flex;
     align-items: center;
@@ -13,15 +13,6 @@
     @include m-theme() {
       fill: themed($m-textColor--secondary);
       color: themed($m-textColor--secondary);
-    }
-
-    &:not(.m-activityV2__badge--paywall) {
-      > span,
-      > a > span {
-        @media screen and (max-width: $min-tablet) {
-          display: none;
-        }
-      }
     }
   }
 

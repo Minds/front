@@ -113,6 +113,19 @@
   }
 
   // *********************************
+  // ** PRO **
+  // *********************************
+
+  m-pro--channel & {
+    &.m-activity--isFeed {
+      .m-activity__top {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+  // *********************************
   // ** SIDEBAR BOOST **
   // *********************************
 
@@ -150,18 +163,6 @@
     .m-activityTop__avatarColumn,
     ::ng-deep m-activityV2__quote .m-activityTop__avatarColumn {
       padding-right: $activityAvatarSpacingRight--single;
-    }
-  }
-  // *********************************
-  // ** PRO **
-  // *********************************
-
-  m-pro--channel & {
-    &.m-activity--isFeed {
-      .m-activity__top {
-        padding-left: 0;
-        padding-right: 0;
-      }
     }
   }
 

@@ -4,7 +4,7 @@
   <!------------------------->
   <span
     *ngIf="entity.pinned && service.displayOptions.showPinnedBadge"
-    class="m-activityV2__badge m-activityV2__badge--pinned"
+    class="m-activity__badge"
     data-cy="m-activity__pinnedFlag"
     title="Pinned"
   >
@@ -18,7 +18,7 @@
       service.displayOptions.showVisibilityState &&
       (service.isUnlisted$ | async)
     "
-    class="m-activityV2__badge m-activityV2__badge--unlisted"
+    class="m-activity__badge"
     data-cy="m-activity__unlistedFlag"
     title="Unlisted"
     i18n-title="@@OWNER_BLOCK__UNLISTED"
@@ -30,7 +30,7 @@
   <!------------------------->
   <span
     *ngIf="entity.permaweb_id"
-    class="m-activityV2__badge m-activityV2__badge--permaweb"
+    class="m-activity__badge"
     data-cy="m-activity__permawebFlag"
     title="Permaweb"
   >

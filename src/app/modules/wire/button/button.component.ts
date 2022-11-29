@@ -5,8 +5,6 @@ import { Session } from '../../../services/session';
 import { FeaturesService } from '../../../services/features.service';
 import { WireCreatorComponent } from '../v2/creator/wire-creator.component';
 import { ModalService } from '../../../services/ux/modal.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Button that triggers the wire modal
@@ -20,23 +18,16 @@ import { ActivityV2ExperimentService } from '../../experiments/sub-services/acti
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.ng.scss'],
 })
-export class WireButtonComponent implements OnInit {
+export class WireButtonComponent {
   @Input() object: any;
   @Output('done') doneEmitter: EventEmitter<any> = new EventEmitter();
-
-  activityV2Feature: boolean = false;
 
   constructor(
     public session: Session,
     private modal: SignupModalService,
     public features: FeaturesService,
-    private modalService: ModalService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private modalService: ModalService
   ) {}
-
-  ngOnInit(): void {
-    this.activityV2Feature = this.activityV2Experiment.isActive();
-  }
 
   async wire() {
     if (!this.session.isLoggedIn()) {

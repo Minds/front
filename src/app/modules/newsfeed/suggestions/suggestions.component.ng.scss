@@ -17,6 +17,11 @@
 
     .m-newsfeedActivitySuggestion__item {
       margin-top: 20px;
+
+      @media screen and (max-width: $max-mobile) {
+        margin-top: 0;
+      }
+
       & > a {
         display: block;
         &,
@@ -36,32 +41,6 @@
   &.m-newsfeed__activitySuggestions--activityV2 {
     ::ng-deep m-sidebarWidget {
       .m-newsfeedActivitySuggestion__item {
-        @media screen and (max-width: $max-mobile) {
-          margin-top: 0;
-        }
-      }
-    }
-  }
-
-  // Activity V1 minimal mode
-  &:not(.m-newsfeed__activitySuggestions--activityV2) {
-    ::ng-deep m-sidebarWidget {
-      .m-activity__minimalMetrics {
-        padding-top: 0 !important;
-        & > span,
-        & > a {
-          font-weight: 300;
-        }
-      }
-
-      .m-activityContent__message {
-        &.m-activityContent__message--status {
-          &.m-activityContent__message--shortStatus {
-            line-height: 20px;
-            font-size: 16px;
-            font-weight: 400;
-          }
-        }
       }
     }
   }

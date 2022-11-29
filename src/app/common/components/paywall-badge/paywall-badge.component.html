@@ -1,14 +1,13 @@
 <ng-container *ngIf="(init && hasPaywall) || isSupermindReply">
   <div
-    class="m-paywallBadge"
+    class="m-paywallBadge m-activity__badge"
     [ngClass]="{
       isSupermindReply: isSupermindReply,
       isPlus: hasPaywall && paywallType === 'plus',
       iconOnly:
         hasPaywall &&
         (paywallType === 'custom' || (paywallType === 'tier' && !showTierName)),
-      topRightPosition: topRightPosition,
-      'm-activityV2__badge m-activityV2__badge--paywall m-paywallBadge--activityV2': activityV2Feature
+      topRightPosition: topRightPosition
     }"
   >
     <ng-container *ngIf="hasPaywall && !isSupermindReply">

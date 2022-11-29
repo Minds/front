@@ -11,7 +11,7 @@ import {
  * See it in the activity owner block component.
  */
 @Component({
-  selector: 'm-activityV2__badges',
+  selector: 'm-activity__badges',
   templateUrl: './badges.component.html',
   styleUrls: ['./badges.component.ng.scss'],
 })
