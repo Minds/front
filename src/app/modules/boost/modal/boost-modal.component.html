@@ -14,6 +14,7 @@
       <span
         class="m-boostModal__footerText"
         i18n="@@BOOST_MODAL__BECOME_A_LIQUIDITY_PROVIDER"
+        *ngIf="(activeTab$ | async) === 'tokens'"
         >Become a <a href="/wallet" target="_blank">liquidity provider</a> for
         automated boosting of your channel</span
       >
@@ -34,7 +35,7 @@
         [saving]="inProgress$ | async"
         [size]="'medium'"
         [color]="'blue'"
-        data-cy="data-minds-boost-modal-boost-button"
+        data-ref="boost-modal-boost-button"
       >
         <ng-container *ngTemplateOutlet="boostSubjectText"></ng-container>
       </m-button>
@@ -62,4 +63,7 @@
   </ng-container>
 </ng-template>
 
-<m-modalCloseButton [color]="'white'"></m-modalCloseButton>
+<m-modalCloseButton
+  [color]="'white'"
+  data-ref="boost-modal-close-button"
+></m-modalCloseButton>

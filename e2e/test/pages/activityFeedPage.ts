@@ -82,6 +82,17 @@ class ActivityFeedPage {
   }
 
   /**
+   * Open boost modal for the activity with text.
+   * @param text Text to open modal for.
+   * @returns { Promise<void> }
+   */
+  public async openBoostModalForActivityWithText(text: string): Promise<void> {
+    await within(locate(this.activitySelector).withText(text), () => {
+      activityComponent.openBoostModal();
+    });
+  }
+
+  /**
    * Determine whether feed has an activity with the given text.
    * @param { string } text - text to check for.
    * @returns { void }

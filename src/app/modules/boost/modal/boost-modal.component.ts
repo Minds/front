@@ -3,11 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { Session } from '../../../services/session';
-import {
-  BoostModalService,
-  BoostSubject,
-  BoostTab,
-} from './boost-modal.service';
+import { BoostModalService } from './boost-modal.service';
+import { BoostSubject, BoostTab } from './boost-modal.types';
 
 /**
  * Boost modal component. Designed to be lazy loaded in through modal service.
@@ -22,6 +19,23 @@ export class BoostModalComponent implements OnInit, OnDestroy {
    * Asset url
    */
   public readonly cdnAssetsUrl: string;
+
+  // Is in progress.
+  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  // Entity type from service
+  public entityType$: Observable<BoostSubject> = this.service.entityType$;
+
+  // Progress should be disabled?
+  public disabled$: Observable<boolean> = this.service.disabled$;
+
+  // Active tab from service.
+  public activeTab$: BehaviorSubject<BoostTab> = this.service.activeTab$;
+
+  // Username from session.
+  public username: string = this.session.getLoggedInUser().username ?? null;
 
   constructor(
     private service: BoostModalService,
@@ -51,44 +65,6 @@ export class BoostModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.service.reset();
-  }
-
-  /**
-   * Entity type from service
-   */
-  get entityType$(): Observable<BoostSubject> {
-    return this.service.entityType$;
-  }
-
-  /**
-   * Is in progress
-   */
-  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
-
-  /**
-   * progress should be disabled?
-   * @returns { Observable<boolean> } - true if should be disabled.
-   */
-  get disabled$(): Observable<boolean> {
-    return this.service.disabled$;
-  }
-
-  /**
-   * active tab from service.
-   * @returns { BehaviorSubject<BoostTab> } - get currently active tab from service.
-   */
-  get activeTab$(): BehaviorSubject<BoostTab> {
-    return this.service.activeTab$;
-  }
-
-  /**
-   * Username from session.
-   * @returns { string } logged in user username.
-   */
-  get username(): string {
-    return this.session.getLoggedInUser().username;
   }
 
   /**

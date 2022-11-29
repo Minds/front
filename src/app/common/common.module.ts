@@ -174,6 +174,7 @@ import { CommentButton } from './components/comment-button/comment';
 import { SubscribeButton } from './components/subscribe-button-v1/subscribe';
 import { MindsBanner } from './components/banner/banner';
 import { SeeLatestButtonComponent } from './components/see-latest-button/see-latest-button.component';
+import { SupermindBadgeComponent } from './components/supermind-badge/supermind-badge.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -254,6 +255,7 @@ const MINDS_COMMON_COMPONENTS = [
   SortSelectorComponent,
   SubscribeButton,
   SubscribeButtonComponent,
+  SupermindBadgeComponent,
   TagSelectorComponent,
   Textarea,
   ThumbsDownButton,

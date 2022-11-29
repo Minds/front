@@ -1,10 +1,14 @@
 import ActivityFeedPage from './activityFeedPage';
-const { sidebarComponent } = inject();
+const { I, sidebarComponent } = inject();
 
 /**
  * Channel page - contains reusable function relating to the channel page.
  */
 class ChannelPage extends ActivityFeedPage {
+  // selectors
+  private readonly channelBoostButtonSelector: string =
+    'm-channelActions__boost';
+
   /**
    * Navigate to the channel page by sidebar.
    * @returns { void }
@@ -18,6 +22,14 @@ class ChannelPage extends ActivityFeedPage {
    */
   get supermindButton(): string {
     return 'm-channelactions__supermind m-button';
+  }
+
+  /**
+   * Open channel boost modal.
+   * @returns { void }
+   */
+  public openChannelBoostModal(): void {
+    I.click(this.channelBoostButtonSelector);
   }
 }
 

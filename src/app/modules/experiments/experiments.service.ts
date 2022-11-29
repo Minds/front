@@ -105,12 +105,12 @@ export class ExperimentsService implements OnDestroy {
   /**
    * Return whether an experiment has a given variation state.
    * @param { string } experimentId - experiment key.
-   * @param { string|number|boolean } variation - variation to check, e.g. 'on' or 'off'.
+   * @param { string|number|boolean } variation - variation to check, e.g. 'on' or 'off'. Defaults to true
    * @returns { boolean } - true if params reflect current variation.
    */
   public hasVariation(
     experimentId: string,
-    variation: string | number | boolean = 'on'
+    variation: string | number | boolean = true
   ): boolean {
     try {
       return this.run(experimentId) === variation;

@@ -67,6 +67,17 @@
         }
       }
     }
+    &.isSupermindRequest {
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
+      }
+
+      > .m-paywallBadge__tierName {
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
+        }
+      }
+    }
     &.isSupermindReply {
       @include supermindGradient;
       @include m-theme() {
@@ -110,6 +121,15 @@
           }
         }
       }
+    }
+  }
+
+  // *********************************
+  // ** SUPERMIND CONSOLE **
+  // *********************************
+  m-supermind__console & {
+    .m-paywallBadge {
+      display: none;
     }
   }
 }

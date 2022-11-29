@@ -43,7 +43,6 @@ export const config: CustomMainConfig = {
     // pages
     activityFeedPage: './pages/activityFeedPage.ts',
     boostMarketingPage: './pages/boostMarketingPage.ts',
-    boostPage: './pages/boostPage.ts',
     channelPage: './pages/channelPage.ts',
     commonPage: './pages/commonPage.ts',
     devtoolsPage: './pages/devtoolsPage.ts',
@@ -70,6 +69,7 @@ export const config: CustomMainConfig = {
       './fragments/supermindOnboardingModalComponent.ts',
     topbarComponent: './fragments/topbarComponent.ts',
     feedNoticeComponent: './fragments/feedNoticeComponent.ts',
+    boostModalComponent: './fragments/boostModalComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {
