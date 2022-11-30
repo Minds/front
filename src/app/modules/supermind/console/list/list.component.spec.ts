@@ -166,7 +166,7 @@ describe('SupermindConsoleListComponent', () => {
     );
     comp.onStatusFilterChange(statusFilterValue);
     comp.setupSubscription();
-    tick();
+    tick(100);
 
     expect((comp as any).service.getList$).toHaveBeenCalledWith(
       12,
