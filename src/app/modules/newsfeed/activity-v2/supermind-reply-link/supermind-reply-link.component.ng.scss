@@ -1,0 +1,36 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+
+  padding-left: $activitySpacingLeft--feed;
+  padding-right: $activitySpacingRight--feed;
+  padding-bottom: $spacing4;
+
+  @media screen and (max-width: $max-mobile) {
+    padding-left: $activitySpacingLeft--feed--mobile;
+    padding-right: $activitySpacingRight--feed--mobile;
+    padding-bottom: $spacing4;
+  }
+
+  a {
+    @include body2Regular;
+    font-size: 14px; // overriding typography to match 'view x comments' link
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // *********************************
+  // ** SUPERMIND CONSOLE **
+  // *********************************
+
+  m-supermind__console & {
+    display: none;
+  }
+}
