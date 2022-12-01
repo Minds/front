@@ -8,6 +8,7 @@ import {
   Output,
   ViewChild,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
 import {
@@ -24,10 +25,11 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { first, map, distinctUntilChanged } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
 import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
+import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -39,7 +41,7 @@ import { ComposerSupermindComponent } from '../popup/supermind/supermind.compone
   templateUrl: 'base.component.html',
   providers: [PopupService],
 })
-export class BaseComponent implements AfterViewInit {
+export class BaseComponent implements AfterViewInit, OnDestroy {
   /**
    * Post event emitter
    */
@@ -80,6 +82,10 @@ export class BaseComponent implements AfterViewInit {
    * Remind subject
    */
   remind$: Observable<RemindSubjectValue> = this.service.remind$;
+
+  subscriptions: Subscription[] = [];
+
+  isDirty: boolean = false;
 
   /**
    * Constructor
@@ -124,6 +130,20 @@ export class BaseComponent implements AfterViewInit {
      */
     if (this.service.supermindRequest$.getValue()) {
       this.displaySupermindRequestPopup();
+    }
+
+    this.subscriptions.push(
+      this.service.isDirty$.subscribe(isDirty => {
+        this.isDirty = isDirty;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.service.reset();
+
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 

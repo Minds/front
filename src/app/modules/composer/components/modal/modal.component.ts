@@ -45,6 +45,19 @@ export class ModalComponent implements AfterViewInit {
     this.onDismissIntent = onDismissIntent || noOp;
   }
 
+  getModalOptions() {
+    return {
+      canDismiss: async () => {
+        if (this.baseComponent.isDirty) {
+          // Opens a confirmation dialog
+          // To prevent loss of unsaved changes
+          return window.confirm('Discard changes?');
+        }
+        return true;
+      },
+    };
+  }
+
   ngOnInit(): void {
     if (isPlatformServer(this.platformId)) return;
 

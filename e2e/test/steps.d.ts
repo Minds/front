@@ -24,6 +24,7 @@ type sidebarComponent = typeof import('./fragments/sidebarComponent');
 type supermindOnboardingModalComponent = typeof import('./fragments/supermindOnboardingModalComponent');
 type topbarComponent = typeof import('./fragments/topbarComponent');
 type feedNoticeComponent = typeof import('./fragments/feedNoticeComponent');
+type modalComponent = typeof import('./fragments/modalComponent');
 type boostModalComponent = typeof import('./fragments/boostModalComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
@@ -57,6 +58,7 @@ declare namespace CodeceptJS {
     supermindOnboardingModalComponent: supermindOnboardingModalComponent;
     topbarComponent: topbarComponent;
     feedNoticeComponent: feedNoticeComponent;
+    modalComponent: modalComponent;
     boostModalComponent: boostModalComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
