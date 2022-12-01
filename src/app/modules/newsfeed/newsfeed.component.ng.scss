@@ -2,54 +2,36 @@
 
 :host {
   .m-newsfeed {
-    // ******************************************
-    // ** ACTIVITY V2 **
-    // ******************************************
-    &.m-newsfeed--activityV2 {
-      .m-newsfeed__inner {
-        padding: 0;
-      }
-
-      .m-pageLayout__pane--main {
-        @include borderRight;
-        box-sizing: content-box;
-      }
-
-      .m-pageLayout__pane--right {
-        @include m-theme() {
-          border-left: none !important;
-        }
-      }
-      ::ng-deep m-activity {
-        border: none !important;
-      }
-
-      ::ng-deep {
-        m-composer {
-          margin-bottom: 0px !important;
-          border: none !important;
-          border-radius: 0;
-          @include m-theme() {
-            border-bottom: 4px solid themed($m-borderColor--primary) !important;
-          }
-        }
-      }
-    }
-    // ******************************************
-    // ******************************************
-    // ******************************************
-    // ** DEFAULT **
-    // ******************************************
-    // ******************************************
-    // ******************************************
-    &:not(.m-newsfeed--activityV2) {
-      ::ng-deep m-activity {
-        margin-bottom: $spacing5;
-      }
-    }
-
     .m-newsfeed--feed {
       width: 100%;
+    }
+    .m-newsfeed__inner {
+      padding: 0;
+    }
+
+    .m-pageLayout__pane--main {
+      @include borderRight;
+      box-sizing: content-box;
+    }
+
+    .m-pageLayout__pane--right {
+      @include m-theme() {
+        border-left: none !important;
+      }
+    }
+    ::ng-deep m-activity {
+      border: none !important;
+    }
+
+    ::ng-deep {
+      m-composer {
+        margin-bottom: 0px !important;
+        border: none !important;
+        border-radius: 0;
+        @include m-theme() {
+          border-bottom: 4px solid themed($m-borderColor--primary) !important;
+        }
+      }
     }
 
     ::ng-deep infinite-scroll {

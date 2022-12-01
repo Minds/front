@@ -21,7 +21,6 @@ import { CommentComponentV2 } from '../../../modules/comments/comment/comment.co
 import { ActivityService } from '../../services/activity.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 import { UserCard } from '../user-card/user';
 
 /**
@@ -40,7 +39,7 @@ import { UserCard } from '../user-card/user';
   styleUrls: ['./card.component.ng.scss'],
   providers: [ActivityService],
 })
-export class MindsCard implements OnInit, AfterViewInit {
+export class MindsCard implements AfterViewInit {
   @Input() forceShowSubscribe = false;
 
   /**
@@ -60,14 +59,12 @@ export class MindsCard implements OnInit, AfterViewInit {
 
   cssClasses: string = '';
   flags: any = {};
-  activityV2Feature: boolean = false;
 
   private initialized: boolean = false;
 
   constructor(
     private _componentFactoryResolver: ComponentFactoryResolver,
-    private _injector: Injector,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private _injector: Injector
   ) {}
 
   @Input('object') set _object(value: any) {
@@ -99,10 +96,6 @@ export class MindsCard implements OnInit, AfterViewInit {
     if (this.initialized) {
       this.updateData();
     }
-  }
-
-  ngOnInit(): void {
-    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   ngAfterViewInit() {
@@ -183,18 +176,10 @@ export class MindsCard implements OnInit, AfterViewInit {
     } else {
       this.componentInstance.entity = this.object;
 
-      if (this.activityV2Feature) {
-        if (this.displayOptions) {
-          (<ActivityComponent>(
-            this.componentInstance
-          )).displayOptions = this.displayOptions;
-        }
-      } else {
-        (<ActivityComponent>this.componentInstance).displayOptions = {
-          showToolbar: this.flags.hideTabs === false,
-          showComments: false,
-          autoplayVideo: false,
-        };
+      if (this.displayOptions) {
+        (<ActivityComponent>(
+          this.componentInstance
+        )).displayOptions = this.displayOptions;
       }
     }
 

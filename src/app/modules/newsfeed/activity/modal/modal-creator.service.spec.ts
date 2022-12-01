@@ -2,10 +2,6 @@ import { ActivityV2ModalComponent } from '../../activity-v2/modal/modal.componen
 import { ActivityEntity } from '../activity.service';
 import { ActivityModalCreatorService } from './modal-creator.service';
 
-export let activityV2ExperimentServiceMock = new (function() {
-  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
-})();
-
 export let analyticsServiceMock = new (function() {
   this.getContexts = jasmine
     .createSpy('getContexts')
@@ -42,7 +38,6 @@ describe('ActivityModalCreatorService', () => {
   beforeEach(() => {
     service = new ActivityModalCreatorService(
       modalServiceMock,
-      activityV2ExperimentServiceMock,
       analyticsServiceMock
     );
 

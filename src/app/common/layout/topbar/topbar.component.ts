@@ -25,7 +25,6 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { Observable } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
-import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * The topbar of the site, visible almost everywhere
@@ -58,9 +57,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   router$;
 
-  @HostBinding('class.m-topbar--isActivityV2')
-  activityV2Feature: boolean = this.activityV2Experiment.isActive();
-
   constructor(
     protected sidebarService: SidebarNavigationService,
     protected themeService: ThemeService,
@@ -74,8 +70,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     public pageLayoutService: PageLayoutService,
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
-    private guestModeExperiment: GuestModeExperimentService,
-    protected activityV2Experiment: ActivityV2ExperimentService
+    private guestModeExperiment: GuestModeExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 

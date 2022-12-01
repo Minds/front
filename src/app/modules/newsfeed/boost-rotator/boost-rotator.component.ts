@@ -31,7 +31,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Subscription, Subject } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -98,11 +97,6 @@ export class NewsfeedBoostRotatorComponent {
 
   @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
 
-  @HostBinding('class.m-newsfeedBoostRotator--activityV2')
-  get activityV2Feature(): boolean {
-    return this.activityV2Experiment.isActive();
-  }
-
   constructor(
     public session: Session,
     public router: Router,
@@ -114,7 +108,6 @@ export class NewsfeedBoostRotatorComponent {
     private cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
-    private activityV2Experiment: ActivityV2ExperimentService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
@@ -360,10 +353,8 @@ export class NewsfeedBoostRotatorComponent {
   calculateHeight(): void {
     if (!this.rotatorEl) return;
 
-    const ratio = this.activityV2Feature
-      ? ACTIVITY_V2_FIXED_HEIGHT_RATIO
-      : ACTIVITY_FIXED_HEIGHT_RATIO;
-    this.height = this.rotatorEl.nativeElement.clientWidth / ratio;
+    this.height =
+      this.rotatorEl.nativeElement.clientWidth / ACTIVITY_V2_FIXED_HEIGHT_RATIO;
 
     if (this.height < 500) this.height = 500;
   }

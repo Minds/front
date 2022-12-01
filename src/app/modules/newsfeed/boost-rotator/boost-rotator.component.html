@@ -4,11 +4,11 @@
     #rotatorEl
     class="m-newsfeed__boostRotator"
     [style.min-height]="height"
-    [style.max-height]="activityV2Feature ? height : 'none'"
+    [style.max-height]="height"
     [hidden]="!boosts.length"
   >
     <!-- ACTIVITY V2 BOOST ROTATOR TOP ROW  -->
-    <div *ngIf="activityV2Feature && init" class="m-boostRotator__toolbar">
+    <div *ngIf="init" class="m-boostRotator__toolbar">
       <m-activityV2__flag--boosted></m-activityV2__flag--boosted>
       <div class="m-boostRotatorToolbar__buttons">
         <i class="material-icons" (click)="prev()">chevron_left</i>
@@ -16,17 +16,10 @@
       </div>
     </div>
     <!-- ----------------------------------- -->
-    <div
-      *ngIf="boosts.length > 0 && !activityV2Feature"
-      class="m-carousel__overflowScrollButton--left"
-      (click)="prev()"
-    >
-      <i class="material-icons">chevron_left</i>
-    </div>
 
     <ng-container *ngFor="let entity of boosts; let i = index">
       <div
-        [hidden]="activityV2Feature && !boosts.length"
+        [hidden]="!boosts.length"
         class="m-newsfeedBoostRotator__item"
         *ngIf="shouldRender(i)"
         @fastFade
@@ -52,12 +45,5 @@
         </m-activity>
       </div>
     </ng-container>
-    <div
-      *ngIf="boosts.length > 0 && !activityV2Feature"
-      class="m-carousel__overflowScrollButton--right"
-      (click)="next()"
-    >
-      <i class="material-icons">chevron_right</i>
-    </div>
   </div>
 </ng-container>

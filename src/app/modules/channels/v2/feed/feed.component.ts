@@ -27,7 +27,6 @@ import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { catchError, take } from 'rxjs/operators';
-import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Container for channel feed, including filters and composer (if user is channel owner)
@@ -49,7 +48,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   dateRangeEnabled: boolean = false;
 
-  activityV2Feature: boolean = false;
   /**
    * whether channel recs should be shown. Will get toggled when user
    * subscribed to the channel
@@ -109,7 +107,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ComposerModalService,
     private injector: Injector,
-    private activityV2Experiment: ActivityV2ExperimentService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -163,8 +160,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
         this.shouldShowChannelRecommendation$.next(false)
       )
     );
-
-    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   prepend(activity: any) {
