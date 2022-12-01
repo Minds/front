@@ -19,7 +19,11 @@ import { BoostTab, BoostTokenPaymentMethod } from '../../boost-modal.types';
       >
         Payment Method
       </h2>
-      <a href="/token" target="_blank">
+      <a
+        href="/token"
+        target="_blank"
+        *ngIf="(activeTab$ | async) === 'tokens'"
+      >
         <span
           class="m-boostModalPayments__buyTokens"
           i18n="@@BOOST_MODAL__BUY_TOKENS"
@@ -49,6 +53,18 @@ import { BoostTab, BoostTokenPaymentMethod } from '../../boost-modal.types';
       (selected)="cashPaymentMethod$.next($event)"
       data-ref="boost-modal-cash-payment-custom-selector"
     ></m-payments__selectCard>
+
+    <m-formInput__checkbox
+      *ngIf="(activeTab$ | async) === 'cash'"
+      [ngModel]="cashRefundPolicy$ | async"
+      (ngModelChange)="cashRefundPolicy$.next($event)"
+      data-ref="boost-modal-cash-refund-policy"
+    >
+      <span i18n="@@BOOST__MODAL__REFUND__CHECKBOX"
+        >I understand this cash boost is non-refundable once it has been
+        approved
+      </span>
+    </m-formInput__checkbox>
   `,
   styleUrls: ['./payment-method-selector.component.ng.scss'],
 })
@@ -75,6 +91,9 @@ export class BoostModalPaymentMethodSelectorComponent
   // Cash payment method from service. Will hold the ID of a card to be used.
   public cashPaymentMethod$: BehaviorSubject<string> = this.service
     .cashPaymentMethod$;
+
+  public cashRefundPolicy$: BehaviorSubject<boolean> = this.service
+    .cashRefundPolicy$;
 
   // Background of select dropdown to add a stylable dropdown icon based on theme.
   public selectBackground$: Observable<{

@@ -5,8 +5,9 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
+import { FormInputCheckboxComponent } from '../../../../../common/components/forms/checkbox/checkbox.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
 import { MockComponent, MockService } from '../../../../../utils/mock';
@@ -21,7 +22,7 @@ describe('BoostModalPaymentMethodSelectorComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule],
+        imports: [ReactiveFormsModule, FormsModule],
         declarations: [
           BoostModalPaymentMethodSelectorComponent,
           MockComponent({
@@ -29,6 +30,7 @@ describe('BoostModalPaymentMethodSelectorComponent', () => {
             inputs: ['selected'],
             outputs: ['selected'],
           }),
+          FormInputCheckboxComponent,
         ],
         providers: [
           {

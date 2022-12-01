@@ -55,4 +55,15 @@
       }
     }
   }
+
+  ::ng-deep m-formInput__checkbox {
+    margin-top: $spacing4;
+    display: block;
+
+    .m-formInputCheckbox__customLabel {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
 }

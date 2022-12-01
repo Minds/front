@@ -104,6 +104,11 @@ export class BoostModalService implements OnDestroy {
     );
   }
 
+  // Cash boosts must select checkbox
+  public readonly cashRefundPolicy$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   // Disable the ability to boost
   get disabled$(): Observable<boolean> {
     return combineLatest([

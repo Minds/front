@@ -13,6 +13,8 @@ describe('BoostModalComponent', () => {
   let fixture: ComponentFixture<BoostModalComponent>;
 
   const entity$ = new BehaviorSubject<any>({});
+  const cashRefundPolicy$ = new BehaviorSubject<boolean>(false);
+  const activeTab$ = new BehaviorSubject<string>('cash');
 
   beforeEach(
     waitForAsync(() => {
@@ -36,9 +38,11 @@ describe('BoostModalComponent', () => {
           {
             provide: BoostModalService,
             useValue: MockService(BoostModalService, {
-              has: ['entity$'],
+              has: ['entity$', 'activeTab$', 'cashRefundPolicy$'],
               props: {
                 entity$: { get: () => entity$ },
+                activeTab$: { get: () => activeTab$ },
+                cashRefundPolicy$: { get: () => cashRefundPolicy$ },
               },
             }),
           },
@@ -132,6 +136,8 @@ describe('BoostModalComponent', () => {
     (comp as any).service.submitBoostAsync.and.returnValue({
       status: 'success',
     });
+
+    cashRefundPolicy$.next(true);
 
     await comp.submitBoost();
 
