@@ -8,14 +8,7 @@
       class="m-activityTop__avatarColumn m-activity__avatar"
     >
       <ng-container *ngIf="entity$ | async as entity">
-        <div
-          *ngIf="
-            !service.displayOptions.boostRotatorMode &&
-            (entity.boosted ||
-              (entity.remind_users && entity.remind_users.length))
-          "
-          class="m-activityLeftColumn__spacer"
-        ></div>
+        <div *ngIf="showFlagRow" class="m-activityLeftColumn__spacer"></div>
       </ng-container>
       <m-hovercard
         *ngIf="entity$ | async as entity"
@@ -28,17 +21,7 @@
       </m-hovercard>
     </div>
     <div class="m-activityTop__mainColumn" *ngIf="entity$ | async as entity">
-      <div
-        class="m-activity__flagRow"
-        *ngIf="
-          !service.displayOptions.boostRotatorMode &&
-          (entity.boosted ||
-            (entity.remind_users && entity.remind_users.length) ||
-            (entity.supermind &&
-              !entity.supermind.is_reply &&
-              entity.supermind.receiver_user))
-        "
-      >
+      <div class="m-activity__flagRow" *ngIf="showFlagRow">
         <m-activityV2__flag></m-activityV2__flag>
       </div>
       <m-activityV2__ownerBlock

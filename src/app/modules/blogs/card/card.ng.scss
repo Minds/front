@@ -1,64 +1,61 @@
 @import 'defaults.scss';
 
 :host {
-  &.m-blogCard--activityV2 {
-    .m-blogCard__OwnerBlock {
-      display: flex;
-      padding: $spacing4;
+  .m-blogCard__OwnerBlock {
+    display: flex;
+    padding: $spacing4;
 
-      .m-blogCardOwnerBlock__avatar {
-        ::ng-deep m-hovercard {
-          img {
-            width: $spacing10;
-            height: $spacing10;
-            border-radius: 50%;
-            margin-right: $spacing3;
-          }
-        }
-      }
-      .m-blogCardOwnerBlock__body {
-        display: flex;
-        flex-direction: column;
-
-        .m-blogCardOwnerBlock__displayName {
-          @include body1Regular;
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-        }
-        .m-blogCardOwnerBlock__permalink {
-          @include body2Regular;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
+    .m-blogCardOwnerBlock__avatar {
+      ::ng-deep m-hovercard {
+        img {
+          width: $spacing10;
+          height: $spacing10;
+          border-radius: 50%;
+          margin-right: $spacing3;
         }
       }
     }
+    .m-blogCardOwnerBlock__body {
+      display: flex;
+      flex-direction: column;
 
-    .m-blogCard__title {
-      padding: $spacing4;
-      a {
-        @include body2Medium;
+      .m-blogCardOwnerBlock__displayName {
+        @include body1Regular;
         @include m-theme() {
           color: themed($m-textColor--primary);
         }
       }
-    }
-
-    a {
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
+      .m-blogCardOwnerBlock__permalink {
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
       }
-    }
-
-    .m-blogCard__thumbnail {
-      margin-bottom: 0;
     }
   }
 
-  /////////////////////////////////////////////////
+  .m-blogCard__title {
+    padding: $spacing4;
+    a {
+      @include body2Medium;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .m-blogCard__thumbnail {
+    margin-bottom: 0;
+  }
+
   .minds-blog-thumbnail {
     height: 180px;
     margin-bottom: 80px;

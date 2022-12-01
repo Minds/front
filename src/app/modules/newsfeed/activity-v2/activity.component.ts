@@ -134,11 +134,15 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
+  entitySubscription: Subscription;
   private interceptionObserverSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
   avatarUrl: string;
+
+  // Whether the boost/remind/supermind flag should appear on top of owner block
+  showFlagRow: boolean = false;
 
   constructor(
     public service: ActivityService,
@@ -186,11 +190,22 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
+
+    this.entitySubscription = this.service.entity$.subscribe(entity => {
+      this.showFlagRow =
+        !this.service.displayOptions.boostRotatorMode &&
+        (entity.boosted ||
+          (entity.remind_users && entity.remind_users.length) ||
+          (entity.supermind &&
+            !entity.supermind.is_reply &&
+            entity.supermind.receiver_user));
+    });
   }
 
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
+    this.entitySubscription.unsubscribe();
     if (
       this.entityMetricSocketsExperiment.isActive() &&
       this.interceptionObserverSubscription

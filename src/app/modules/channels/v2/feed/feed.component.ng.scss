@@ -14,6 +14,7 @@
   .m-channel__feed {
     min-height: 100vh;
 
+    // ojm the borders on side of activity v2 and composer should match the newsfeed component
     ::ng-deep m-composer {
       margin-bottom: 0;
       border: none !important;
@@ -42,7 +43,7 @@
       .m-channelFeed__list {
         padding: 0 0 $spacing7;
 
-        @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
+        @media screen and (min-width: $layoutMax2ColFixedWidth) and (max-width: $layoutMin3ColWidth) {
           @include borderRight;
         }
       }

@@ -1,14 +1,4 @@
 .m-discovery__feedItem {
-  padding: 20px 40px;
-
-  @include m-theme() {
-    border-bottom: 1px solid themed($m-borderColor--primary);
-  }
-
-  @media screen and (max-width: $layoutMin3ColWidth) {
-    padding: 20px;
-  }
-
   &.m-discovery__feedItem--user {
     padding-bottom: 0;
     @include m-theme() {
@@ -31,12 +21,9 @@
       text-decoration: none;
     }
     .m-discoveryFeedItem__avatar {
-      width: 40px;
-      height: 40px;
       flex-shrink: 0;
       border-radius: 50%;
       background-size: cover;
-      margin-right: 20px;
       @include m-theme() {
         background-color: themed($m-textColor--secondary);
       }

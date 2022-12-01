@@ -35,7 +35,6 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { GroupsSearchService } from './feed/search.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Base component for a group. Includes access (e.g. nsfw overlay),
@@ -80,9 +79,6 @@ export class GroupsProfile {
 
   private lastWidth: number;
 
-  @HostBinding('class.m-groupsProfile--activityV2')
-  activityV2Feature: boolean = false;
-
   constructor(
     public session: Session,
     public service: GroupsService,
@@ -105,8 +101,7 @@ export class GroupsProfile {
     protected toasterService: ToasterService,
     private injector: Injector,
     protected publisherSearchModal: PublisherSearchModalService,
-    protected groupsSearch: GroupsSearchService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    protected groupsSearch: GroupsSearchService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -115,8 +110,6 @@ export class GroupsProfile {
     this.context.set('activity');
     this.listenForNewMessages();
     this.detectWidth(true);
-
-    this.activityV2Feature = this.activityV2Experiment.isActive();
 
     const params = this.route.snapshot.queryParamMap;
     if (params.has('query')) {

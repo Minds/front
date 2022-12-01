@@ -123,7 +123,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.isV2 = this.service.displayOptions.isV2;
+    this.isV2 = this.service.displayOptions.isV2; // ojm
 
     this.isFixedHeight =
       this.service.displayOptions.fixedHeight &&

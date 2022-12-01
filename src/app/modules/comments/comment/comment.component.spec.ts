@@ -19,7 +19,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { CommentComponentV2 } from './comment.component';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { BehaviorSubject } from 'rxjs';
@@ -160,10 +159,6 @@ describe('CommentComponentV2', () => {
           {
             provide: AutocompleteSuggestionsService,
             useValue: MockService(AutocompleteSuggestionsService),
-          },
-          {
-            provide: ActivityV2ExperimentService,
-            useValue: MockService(ActivityV2ExperimentService),
           },
         ],
       })

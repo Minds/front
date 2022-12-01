@@ -4,18 +4,32 @@
 :host {
   ::ng-deep m-featured-content {
     > div {
-      padding: 20px 40px;
+      padding: 0;
       @include m-theme() {
         border-bottom: 1px solid themed($m-borderColor--primary);
-      }
-
-      @media screen and (max-width: $layoutMin3ColWidth) {
-        padding: 20px;
       }
     }
 
     m-activityV2 {
       padding: 0;
+    }
+  }
+
+  ::ng-deep m-publisherCard {
+    .m-publisherCard {
+      border: none !important;
+
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      padding-left: $activityAvatarSpacingLeft--feed;
+      padding-right: $activitySpacingRight--feed;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $activityAvatarSpacingLeft--feed--mobile;
+        padding-right: $activitySpacingRight--feed--mobile;
+      }
     }
   }
 
@@ -32,34 +46,5 @@
     margin-top: 14px;
     margin-bottom: -6px;
     @include z-index(body);
-  }
-
-  // *********************************
-  // ** ACTIVITY V2 **
-  // *********************************
-
-  &.m-discovery__search--activityV2 {
-    ::ng-deep {
-      m-featured-content {
-        > div {
-          padding: 0;
-        }
-      }
-
-      m-publisherCard {
-        .m-publisherCard {
-          @include borderNone;
-          @include borderBottom;
-
-          padding-left: $activityAvatarSpacingLeft--feed;
-          padding-right: $activitySpacingRight--feed;
-
-          @media screen and (max-width: $max-mobile) {
-            padding-left: $activityAvatarSpacingLeft--feed--mobile;
-            padding-right: $activitySpacingRight--feed--mobile;
-          }
-        }
-      }
-    }
   }
 }
