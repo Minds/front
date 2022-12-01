@@ -428,5 +428,6 @@ export class BoostModalService implements OnDestroy {
     this.activeTab$.next(
       this.cashExperiment.isActive() ? DEFAULT_ACTIVE_TAB : 'tokens'
     );
+    this.cashRefundPolicy$.next(false);
   }
 }
