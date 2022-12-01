@@ -132,6 +132,5 @@ export class BoostModalComponent implements OnInit, OnDestroy {
     this.onDismissIntent = onDismissIntent || (() => {});
     this.onSaveIntent = onSaveIntent || (() => {});
     this.service.entity$.next(entity || (() => {}));
-    this.service.cashRefundPolicy$.next(false); // reset every time
   }
 }
