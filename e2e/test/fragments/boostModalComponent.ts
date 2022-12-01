@@ -65,7 +65,7 @@ class BoostModalComponent {
         )
       );
 
-      I.checkOption(
+      I.click(
         'I understand this cash boost is non-refundable once it has been approved'
       );
     }
