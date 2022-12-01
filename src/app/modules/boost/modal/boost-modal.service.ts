@@ -1,140 +1,39 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
-import { ApiResponse, ApiService } from '../../../common/api/api.service';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
+import { ApiService } from '../../../common/api/api.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
-import { MindsUser } from '../../../interfaces/entities';
-
-import * as BN from 'bn.js';
 import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
+import {
+  BalanceResponse,
+  BoostableEntity,
+  BoostActivityPostResponse,
+  BoostImpressionRates,
+  BoostPayload,
+  BoostSubject,
+  BoostTab,
+  BoostTokenPaymentMethod,
+  PayloadPaymentMethod,
+  PrepareResponse,
+} from './boost-modal.types';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { CashBoostsExperimentService } from '../../experiments/sub-services/cash-boosts-experiment.service';
 
-// TODO: Source from server.
 export const MAXIMUM_SINGLE_BOOST_IMPRESSIONS = 5000;
-
-// TODO: Source from server.
 export const MINIMUM_SINGLE_BOOST_IMPRESSIONS = 500;
-
-export const MINIMUM_BOOST_OFFER_TOKENS = 1;
-
-export const DEFAULT_BOOST_RATE = 1000;
-export const DEFAULT_ACTIVE_TAB = 'newsfeed';
-export const DEFAULT_PAYMENT_METHOD = 'offchain';
+export const MINIMUM_BOOST_CURRENCY_AMOUNT = 1;
+export const DEFAULT_ACTIVE_TAB = 'cash';
+export const DEFAULT_TOKEN_PAYMENT_METHOD = 'offchain';
 export const DEFAULT_IMPRESSIONS = MAXIMUM_SINGLE_BOOST_IMPRESSIONS / 2;
-export const DEFAULT_TOKENS = DEFAULT_IMPRESSIONS / 1000;
+export const DEFAULT_CURRENCY_AMOUNT = DEFAULT_IMPRESSIONS / 1000;
 export const DEFAULT_ENTITY = { guid: '' };
 export const DEFAULT_TARGET_USER = null;
 export const DEFAULT_BALANCE = 0;
-
-/**
- * Subject of the boost, a channel or post.
- */
-export type BoostSubject = 'channel' | 'post' | 'blog' | '';
-
-/**
- * Selected tab, newsfeed or offer.
- */
-export type BoostTab = 'newsfeed' | 'offer';
-
-/**
- * Selected payment method, onchain or offchain.
- */
-export type BoostPaymentMethod = 'onchain' | 'offchain';
-
-/**
- * Target user used for offers.
- */
-export type TargetUser = MindsUser | null;
-
-/**
- * Boost wallet.
- */
-export type BoostWallet = {
-  balance: string;
-  address: string;
-  label: string;
-  ether_balance?: string;
-  available?: string;
-};
-
-/**
- * Entity that is boostable.
- */
-export type BoostableEntity = {
-  guid?: string;
-  type?: string;
-  subtype?: string;
-  owner_guid?: string;
-  time_created?: number | string;
-};
-
-/**
- * Balance endpoint response.
- */
-export type BalanceResponse = {
-  status?: string;
-  addresses?: BoostWallet[];
-  balance?: string;
-  wireCap?: string;
-  boostCap?: string;
-  testnetBalance?: string;
-};
-
-/**
- * Boost prepare endpoint response.
- */
-export type PrepareResponse = {
-  status?: string;
-  guid?: string;
-  checksum?: string;
-};
-
-/**
- * Boost activity post response.
- */
-export type BoostActivityPostResponse = {
-  status?: string;
-};
-
-/**
- * POST Boost payload.
- */
-export type BoostPayload = {
-  bidType?: string;
-  checksum?: string;
-  guid?: string;
-  impressions?: number;
-  paymentMethod?: PayloadPaymentMethod;
-};
-
-/**
- * Payment method for boost payload.
- */
-export type PayloadPaymentMethod = {
-  method?: string;
-  address?: string | false;
-  txHash?: string | false;
-};
-
-/**
- * Peer boost payload (offers).
- */
-export type PeerBoostPayload = {
-  bid: string; // tokens
-  checksum: string;
-  currency: string; // e.g. "tokens"
-  destination: string; // offer target guid
-  guid: string; // entity guid
-  paymentMethod?: PayloadPaymentMethod;
-};
-
-/**
- * Post response for peer boosts (boost offers)
- */
-export type PeerBoostPostResponse = {
-  status: string;
-  boost_guid: string;
+export const DEFAULT_BOOST_IMPRESSION_RATES = {
+  cash: 1000,
+  tokens: 1000,
 };
 
 /**
@@ -142,70 +41,54 @@ export type PeerBoostPostResponse = {
  */
 @Injectable({ providedIn: 'root' })
 export class BoostModalService implements OnDestroy {
-  // TODO: Get rate dynamically from server.
-  public readonly rate$: BehaviorSubject<number> = new BehaviorSubject<number>(
-    DEFAULT_BOOST_RATE
-  );
+  // Impression rate for boosts - holds amount of impressions per major currency unit (usd / token) for all currencies.
+  public readonly impressionRates$: BehaviorSubject<
+    BoostImpressionRates
+  > = new BehaviorSubject<BoostImpressionRates>(null);
 
-  /**
-   * Active boost tab.
-   */
+  // Active boost tab.
   public readonly activeTab$: BehaviorSubject<BoostTab> = new BehaviorSubject<
     BoostTab
   >(DEFAULT_ACTIVE_TAB);
 
-  /**
-   * Payment method, onchain or offchain.
-   */
-  public readonly paymentMethod$: BehaviorSubject<
-    BoostPaymentMethod
-  > = new BehaviorSubject<BoostPaymentMethod>(DEFAULT_PAYMENT_METHOD);
+  // Token payment method, onchain or offchain.
+  public readonly tokenPaymentMethod$: BehaviorSubject<
+    BoostTokenPaymentMethod
+  > = new BehaviorSubject<BoostTokenPaymentMethod>(
+    DEFAULT_TOKEN_PAYMENT_METHOD
+  );
 
-  /**
-   * Target impressions of the boost.
-   */
+  // Cash payment method id - reference to the card that the user wants to use to boost.
+  public readonly cashPaymentMethod$: BehaviorSubject<
+    string
+  > = new BehaviorSubject<string>(null);
+
+  // Target impressions of the boost.
   public readonly impressions$: BehaviorSubject<number> = new BehaviorSubject<
     number
   >(DEFAULT_IMPRESSIONS);
 
-  /**
-   * Value of tokens.
-   */
-  public readonly tokens$: BehaviorSubject<number> = new BehaviorSubject<
+  // Currency value in tokens or USD.
+  public readonly currencyAmount$: BehaviorSubject<
     number
-  >(DEFAULT_TOKENS);
+  > = new BehaviorSubject<number>(DEFAULT_CURRENCY_AMOUNT);
 
-  /**
-   * Entity being boosted.
-   */
+  // Entity being boosted.
   public readonly entity$: BehaviorSubject<
     BoostableEntity
   > = new BehaviorSubject<BoostableEntity>(DEFAULT_ENTITY);
 
-  /**
-   * Target user for boost offers.
-   */
-  public targetUser$: BehaviorSubject<TargetUser> = new BehaviorSubject<
-    TargetUser
-  >(DEFAULT_TARGET_USER);
-
-  /**
-   * Users onchain balance. Populated via fetchBalance.
-   */
+  // Users onchain balance. Populated via fetchBalance.
   public readonly onchainBalance$: BehaviorSubject<
     number
   > = new BehaviorSubject<number>(DEFAULT_BALANCE);
 
-  /**
-   * Users offchain balance. Populated via fetchBalance.
-   */
+  // Users offchain balance. Populated via fetchBalance.
   public readonly offchainBalance$: BehaviorSubject<
     number
   > = new BehaviorSubject<number>(DEFAULT_BALANCE);
 
-  /**
-   * Is the subject a post or a channel
-   */
+  // Is the subject a post or a channel
   get entityType$(): Observable<BoostSubject> {
     return this.entity$.pipe(
       map(entity => {
@@ -221,70 +104,63 @@ export class BoostModalService implements OnDestroy {
     );
   }
 
-  /**
-   * Disable the ability to boost?
-   */
+  // Disable the ability to boost
   get disabled$(): Observable<boolean> {
-    // combine latest values of all relevant observables
     return combineLatest([
-      /**
-       * Workaround for typescript imposed limit
-       * of 8 params in combineLatest.
-       */
-      combineLatest([
-        this.activeTab$,
-        this.paymentMethod$,
-        this.impressions$,
-        this.tokens$,
-        this.targetUser$,
-      ]),
-      combineLatest([
-        this.onchainBalance$,
-        this.offchainBalance$,
-        this.rate$,
-        this.entity$,
-      ]),
+      this.activeTab$,
+      this.tokenPaymentMethod$,
+      this.impressions$,
+      this.onchainBalance$,
+      this.offchainBalance$,
+      this.impressionRates$,
+      this.entity$,
     ]).pipe(
       map(
         ([
-          [activeTab, paymentMethod, impressions, tokens, targetUser],
-          [onchainBalance, offchainBalance, rate, entity],
+          activeTab,
+          tokenPaymentMethod,
+          impressions,
+          onchainBalance,
+          offchainBalance,
+          impressionRates,
+          entity,
+        ]: [
+          BoostTab,
+          BoostTokenPaymentMethod,
+          number,
+          number,
+          number,
+          BoostImpressionRates,
+          BoostableEntity
         ]) => {
           // disabled if scheduled post
           if (this.isScheduled(entity)) {
             return true;
           }
 
-          // set balance depending on payment method.
-          const balance =
-            paymentMethod === 'onchain' ? onchainBalance : offchainBalance;
+          if (!this.hasValidImpressions(impressions)) {
+            return true;
+          }
 
-          // check impressions are within max and min bounds.
-          if (activeTab === 'newsfeed') {
-            if (!this.hasValidImpressions(impressions)) {
-              return true;
-            }
+          if (activeTab === 'tokens') {
+            // set balance depending on payment method.
+            const balance =
+              tokenPaymentMethod === 'onchain'
+                ? onchainBalance
+                : offchainBalance;
 
             // if user has funds.
-            if (!this.hasBoostFunds(impressions, balance, rate)) {
+            if (
+              !this.hasTokenBoostFunds(
+                impressions,
+                balance,
+                impressionRates['tokens']
+              )
+            ) {
               return true;
             }
 
             return false;
-          }
-          // is an offer
-          if (!this.hasValidBid(tokens)) {
-            return true;
-          }
-
-          // if user has funds.
-          if (!this.hasOfferFunds(tokens, balance)) {
-            return true;
-          }
-
-          // if tab is offer, we need to make sure there is a target user.
-          if (!targetUser) {
-            return true;
           }
 
           return false;
@@ -297,8 +173,15 @@ export class BoostModalService implements OnDestroy {
     private api: ApiService,
     private toast: ToasterService,
     private web3Wallet: Web3WalletService,
-    private boostContract: BoostContractService
-  ) {}
+    private boostContract: BoostContractService,
+    private cashExperiment: CashBoostsExperimentService,
+    private configs: ConfigsService
+  ) {
+    if (!this.cashExperiment.isActive()) {
+      this.activeTab$.next('tokens');
+    }
+    this.setImpressionRates();
+  }
 
   ngOnDestroy(): void {
     this.reset();
@@ -309,7 +192,7 @@ export class BoostModalService implements OnDestroy {
    * containing response data from server.
    * @returns { Observable<BalanceResponse> } - response data from server.
    */
-  public fetchBalance(): Observable<BalanceResponse> {
+  public fetchTokenBalance(): Observable<BalanceResponse> {
     return this.api.get('api/v2/blockchain/wallet/balance').pipe(
       take(1),
       map(response => {
@@ -337,14 +220,12 @@ export class BoostModalService implements OnDestroy {
     // await checksum generation from server.
     const prepared = await this.prepareBoostPayload().toPromise();
 
-    // if not on the newsfeed tab, this is a peer boost / boost offer.
-    if (this.activeTab$.getValue() === 'offer') {
-      const payload = await this.assemblePeerBoostPayload(prepared);
-      return this.postPeerBoost(payload).toPromise();
+    if (this.activeTab$.getValue() === 'cash') {
+      const payload = await this.assembleCashBoostPayload(prepared);
+      return this.postBoostActivity(payload).toPromise();
     }
 
-    // else its a direct newsfeed boost.
-    const payload = await this.assembleDirectBoostPayload(prepared);
+    const payload = await this.assembleTokenBoostPayload(prepared);
     return this.postBoostActivity(payload).toPromise();
   }
 
@@ -383,32 +264,14 @@ export class BoostModalService implements OnDestroy {
   }
 
   /**
-   * Makes POST request for a peer boost (boost offer).
-   * @param { BoostPayload } payload - a valid payload.
-   * @returns { ApiResponse } -response from server.
-   */
-  private postPeerBoost(payload: PeerBoostPayload): Observable<ApiResponse> {
-    return this.entity$.pipe(
-      take(1),
-      switchMap(entity => {
-        return this.api.post(
-          `api/v2/boost/peer/${entity.guid}/${entity.owner_guid}`,
-          payload
-        );
-      }),
-      catchError(e => this.handleError(e))
-    );
-  }
-
-  /**
-   * Builds the payload for direct boosts.
+   * Builds the payload for token boosts.
    * @param { PreparedResponse } preparedResponse - prepared response from boost/prepare endpoint.
    * @returns { Promise<BoostPayload> } - Assembled payload to be sent to server.
    */
-  private async assembleDirectBoostPayload(
+  private async assembleTokenBoostPayload(
     preparedResponse: PrepareResponse
   ): Promise<BoostPayload> {
-    const paymentMethod = this.paymentMethod$.getValue();
+    const tokenPaymentMethod = this.tokenPaymentMethod$.getValue();
     const impressions = this.impressions$.getValue();
 
     let response: BoostPayload = {
@@ -418,7 +281,7 @@ export class BoostModalService implements OnDestroy {
       checksum: preparedResponse.checksum,
     };
 
-    if (paymentMethod === 'offchain') {
+    if (tokenPaymentMethod === 'offchain') {
       return {
         ...response,
         paymentMethod: {
@@ -428,7 +291,7 @@ export class BoostModalService implements OnDestroy {
       };
     }
 
-    if (paymentMethod === 'onchain') {
+    if (tokenPaymentMethod === 'onchain') {
       return {
         ...response,
         paymentMethod: {
@@ -442,47 +305,19 @@ export class BoostModalService implements OnDestroy {
     }
   }
 
-  /**
-   * Builds the payload for peer boosts (boost offers).
-   * @param { PreparedResponse } preparedResponse - prepared response from boost/prepare endpoint.
-   * @returns { Promise<PeerBoostPayload> } - Assembled payload to be sent to server.
-   */
-  private async assemblePeerBoostPayload(
-    preparedResponse
-  ): Promise<PeerBoostPayload> {
-    const paymentMethod = this.paymentMethod$.getValue();
-    const tokens = this.tokens$.getValue();
-
-    let response = {
+  private async assembleCashBoostPayload(
+    preparedResponse: PrepareResponse
+  ): Promise<BoostPayload> {
+    return {
       guid: preparedResponse.guid,
-      bid: this.getBid(tokens),
-      currency: 'tokens',
+      bidType: 'cash',
+      impressions: this.impressions$.getValue(),
       checksum: preparedResponse.checksum,
-      destination: this.targetUser$.getValue().guid,
+      paymentMethod: {
+        method: 'cash',
+        payment_method_id: this.cashPaymentMethod$.getValue(),
+      },
     };
-
-    if (paymentMethod === 'offchain') {
-      return {
-        ...response,
-        paymentMethod: {
-          method: 'offchain',
-          address: 'offchain',
-        },
-      };
-    }
-
-    if (paymentMethod === 'onchain') {
-      return {
-        ...response,
-        paymentMethod: {
-          ...(await this.getOnchainPaymentMethod(
-            preparedResponse.guid,
-            tokens,
-            preparedResponse.checksum
-          )),
-        },
-      };
-    }
   }
 
   /**
@@ -495,13 +330,13 @@ export class BoostModalService implements OnDestroy {
    */
   private async getOnchainPaymentMethod(
     guid: string,
-    tokens: number,
+    currencyAmount: number,
     checksum: string
   ): Promise<PayloadPaymentMethod> {
     if (!this.web3Wallet.checkDeviceIsSupported()) {
       throw new Error('Currently not supported on this device.');
     }
-    const rate = this.rate$.getValue();
+
     if (this.web3Wallet.isUnavailable()) {
       throw new Error('No Ethereum wallets available on your browser.');
     }
@@ -512,27 +347,11 @@ export class BoostModalService implements OnDestroy {
       );
     }
 
-    let amount = tokens;
-    if (this.activeTab$.getValue() !== 'offer') {
-      const tokensFixRate = this.rate$.getValue() / 10000;
-      amount = Math.ceil(<number>tokens / tokensFixRate) / 10000;
-    }
-
     return {
       method: 'onchain',
-      txHash: await this.boostContract.create(guid, amount, checksum),
+      txHash: await this.boostContract.create(guid, currencyAmount, checksum),
       address: await this.web3Wallet.getCurrentWallet(true),
     };
-  }
-
-  /**
-   * Convert tokens to bid amount.
-   * @param { number } amount - amount of tokens.
-   * @returns { string } bid amount.
-   */
-  private getBid(amount: number): string {
-    const tokenDec = new BN(10).pow(new BN(18));
-    return new BN(amount || 0).mul(tokenDec).toString();
   }
 
   private handleError(e): Observable<null> {
@@ -542,28 +361,18 @@ export class BoostModalService implements OnDestroy {
   }
 
   /**
-   * True if user has enough funds.
+   * True if user has enough tokens.
    * @param { number } impressions - amount of impressions to boost for.
    * @param { number } balance - balance of users wallet.
    * @param { number } rate - token rate.
-   * @returns { boolean } true if user has funds.
+   * @returns { boolean } true if user has enough tokens.
    */
-  private hasBoostFunds(
+  private hasTokenBoostFunds(
     impressions: number,
     balance: number,
     rate: number
   ): boolean {
     let tokenCost = impressions / rate;
-    return balance >= tokenCost;
-  }
-
-  /**
-   * True if user has enough funds.
-   * @param { number } tokenCost - amount of tokens.
-   * @param { number } balance - balance of users wallet.
-   * @returns { boolean } true if user has funds.
-   */
-  private hasOfferFunds(tokenCost: number, balance: number): boolean {
     return balance >= tokenCost;
   }
 
@@ -580,15 +389,6 @@ export class BoostModalService implements OnDestroy {
   }
 
   /**
-   * True is user is above the min offered tokens thresholds.
-   * @param { number } tokens - amount of tokens
-   * @returns { boolean } true if users impressions are above the minimum and below the maximum amount.
-   */
-  private hasValidBid(tokens: number): boolean {
-    return tokens >= MINIMUM_BOOST_OFFER_TOKENS;
-  }
-
-  /**
    * Returns true if entity is scheduled.
    * @param { BoostableEntity } entity - entity to check
    * @returns { boolean } - true if entity is scheduled.
@@ -598,18 +398,30 @@ export class BoostModalService implements OnDestroy {
   }
 
   /**
+   * Set impression rates from config.
+   * @returns { void }
+   */
+  private setImpressionRates(): void {
+    this.impressionRates$.next(
+      this.configs.get<BoostImpressionRates>('boost_rates') ??
+        DEFAULT_BOOST_IMPRESSION_RATES
+    );
+  }
+
+  /**
    * Resets local state to default values.
    * @returns { void }
    */
   public reset(): void {
-    this.rate$.next(DEFAULT_BOOST_RATE);
-    this.activeTab$.next(DEFAULT_ACTIVE_TAB);
-    this.paymentMethod$.next(DEFAULT_PAYMENT_METHOD);
+    this.tokenPaymentMethod$.next(DEFAULT_TOKEN_PAYMENT_METHOD);
+    this.cashPaymentMethod$.next(null);
     this.impressions$.next(DEFAULT_IMPRESSIONS);
-    this.tokens$.next(DEFAULT_TOKENS);
+    this.currencyAmount$.next(DEFAULT_CURRENCY_AMOUNT);
     this.entity$.next(DEFAULT_ENTITY);
-    this.targetUser$.next(DEFAULT_TARGET_USER);
     this.onchainBalance$.next(DEFAULT_BALANCE);
     this.offchainBalance$.next(DEFAULT_BALANCE);
+    this.activeTab$.next(
+      this.cashExperiment.isActive() ? DEFAULT_ACTIVE_TAB : 'tokens'
+    );
   }
 }

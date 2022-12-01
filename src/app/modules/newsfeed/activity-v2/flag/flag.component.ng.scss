@@ -43,7 +43,8 @@
     }
   }
 
-  .m-activityFlag--remind {
+  .m-activityFlag--remind,
+  .m-activityFlag--supermindRequest {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -59,6 +60,14 @@
 
     a:hover {
       text-decoration: underline;
+    }
+  }
+
+  .m-activityFlag--supermindRequest {
+    a {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }

@@ -78,6 +78,14 @@ class ActivityComponent {
   private openRemindMenu(): void {
     I.click(this.remindButtonSelector);
   }
+
+  /**
+   * Open the boost modal for the activity.
+   * @returns { void }
+   */
+  public openBoostModal(): void {
+    I.click(locate('button').withText('trending_up'));
+  }
 }
 
 export = new ActivityComponent();

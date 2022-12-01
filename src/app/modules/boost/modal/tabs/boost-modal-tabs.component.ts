@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { MindsUser } from '../../../../interfaces/entities';
 import { Session } from '../../../../services/session';
-import {
-  BoostableEntity,
-  BoostModalService,
-  BoostSubject,
-  BoostTab,
-} from '../boost-modal.service';
+import { CashBoostsExperimentService } from '../../../experiments/sub-services/cash-boosts-experiment.service';
+import { BoostModalService } from '../boost-modal.service';
+import { BoostableEntity, BoostSubject, BoostTab } from '../boost-modal.types';
 
 /**
- * Offer and newsfeed tabs for boost modal.
+ * Cash and tokens tabs for boost modal.
  */
 @Component({
   selector: 'm-boostModal__tabs',
@@ -19,38 +15,24 @@ import {
   styleUrls: ['./boost-modal-tabs.component.ng.scss'],
 })
 export class BoostModalTabsComponent {
-  constructor(private service: BoostModalService, private session: Session) {}
+  constructor(
+    private service: BoostModalService,
+    private session: Session,
+    private cashExperiment: CashBoostsExperimentService
+  ) {}
 
-  /**
-   * Should tabs be shown?
-   * @returns { Observable<boolean> } - true if tabs should be shown.
-   */
-  get showTabs$(): Observable<boolean> {
-    return this.service.entityType$.pipe(map(subject => subject === 'post'));
-  }
+  // Active tab from service.
+  public activeTab$: BehaviorSubject<BoostTab> = this.service.activeTab$;
 
-  /**
-   * Gets active tab from service.
-   * @returns { BehaviorSubject<BoostTab> } - the active tab.
-   */
-  get activeTab$(): BehaviorSubject<BoostTab> {
-    return this.service.activeTab$;
-  }
+  // Entity type from service.
+  public entityType$: Observable<BoostSubject> = this.service.entityType$;
 
-  /**
-   * Gets entity type from service.
-   * @returns { Observable<BoostSubject> } - type of entity, channel or post.
-   */
-  get entityType$(): Observable<BoostSubject> {
-    return this.service.entityType$;
-  }
+  // Entity from service.
+  public entity$: BehaviorSubject<BoostableEntity> = this.service.entity$;
 
-  get entity$(): BehaviorSubject<BoostableEntity> {
-    return this.service.entity$;
-  }
   /**
    * On next tab click.
-   * @param { BoostTab } - clicked tab.
+   * @param { BoostTab } tab - clicked tab.
    * @returns { void }
    */
   public nextTab(tab: BoostTab): void {
@@ -63,5 +45,13 @@ export class BoostModalTabsComponent {
    */
   public getLoggedInUser(): MindsUser {
     return this.session.getLoggedInUser();
+  }
+
+  /**
+   * Whether boost experiment is active.
+   * @returns { boolean } true if experiment is active.
+   */
+  public isCashExperimentActive(): boolean {
+    return this.cashExperiment.isActive();
   }
 }

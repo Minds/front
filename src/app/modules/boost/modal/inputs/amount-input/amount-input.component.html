@@ -6,69 +6,81 @@
   <!-- Views -->
   <div
     class="m-boostModalAmount__inputContainer m-boostModalAmount__viewsInput"
-    *ngIf="(activeTab$ | async) !== 'offer'"
   >
-    <label i18n="@@BOOST_MODAL__AMOUNT__VIEWS" #impressionsLabel>Views</label>
+    <label
+      i18n="@@BOOST_MODAL__AMOUNT__VIEWS"
+      for="impressions"
+      #impressionsLabel
+      >Views</label
+    >
     <input
       #impressionsInput
       type="number"
-      [ngModel]="impressions$ | async"
-      (ngModelChange)="viewsValueChanged($event)"
-      name="views"
+      name="impressions"
       formControlName="impressions"
-      min="{{ minImpressions }}"
-      value="1"
-      data-cy="data-minds-boost-modal-views-input"
+      data-ref="boost-modal-views-input"
     />
   </div>
 
-  <!-- Tokens -->
+  <!-- Currency Amount -->
   <div
-    class="m-boostModalAmount__inputContainer m-boostModalAmount__tokensInput"
-    [ngClass]="{ fullWidth: (activeTab$ | async) === 'offer' }"
+    class="m-boostModalAmount__inputContainer m-boostModalAmount__currencyAmountInput"
   >
-    <label i18n="@@BOOST_MODAL__AMOUNT__TOKENS" #tokensLabel>Tokens</label>
+    <label for="currencyAmount" #currencyAmountLabel>
+      <ng-container
+        *ngIf="(activeTab$ | async) === 'cash'"
+        i18n="@@BOOST_MODAL__AMOUNT__USD"
+      >
+        USD
+      </ng-container>
+      <ng-container
+        *ngIf="(activeTab$ | async) === 'tokens'"
+        i18n="@@BOOST_MODAL__AMOUNT__TOKENS"
+      >
+        Tokens
+      </ng-container>
+    </label>
     <input
-      #tokensInput
+      #currencyAmountInput
       type="number"
-      [ngModel]="tokens$ | async"
-      (ngModelChange)="tokensValueChanged($event)"
-      name="tokens"
-      formControlName="tokens"
-      min="1"
-      value="1"
+      name="currencyAmount"
+      formControlName="currencyAmount"
       step="0.01"
-      data-cy="data-minds-boost-modal-tokens-input"
+      data-ref="boost-modal-currency-amount-input"
     />
   </div>
 </div>
-<div
-  class="m-boostModalAmount--error"
-  data-cy="data-minds-boost-modal-amount-error"
->
-  <span
-    *ngIf="form?.controls.impressions?.errors?.max"
-    i18n="@@BOOST_MODAL__MAX_VIEWS_ERROR"
-  >
-    Sorry, you may only boost for a maximum of {{ maxImpressions }} views at
-    once.
-  </span>
 
-  <span
-    *ngIf="form?.controls.impressions?.errors?.min"
-    i18n="@@BOOST_MODAL__MIN_VIEWS_ERROR"
+<span class="m-boostModalAmount__rates" data-ref="boost-modal-boost-rates-text">
+  <ng-container *ngIf="(activeTab$ | async) === 'cash'">
+    1 USD = {{ (impressionRates$ | async).cash }} views
+  </ng-container>
+  <ng-container *ngIf="(activeTab$ | async) === 'tokens'">
+    1 token = {{ (impressionRates$ | async).tokens }} views
+  </ng-container>
+</span>
+
+<div class="m-boostModalAmount--error" data-ref="boost-modal-amount-error">
+  <span *ngIf="form?.controls.impressions?.errors?.max"
+    >Sorry, you may only boost for a maximum of {{ maxImpressions }} views at
+    once.</span
   >
-    Sorry, you may only boost for a minimum of
+  <span *ngIf="form?.controls.impressions?.errors?.min"
+    >Sorry, you may only boost for a minimum of
     {{ minImpressions }} views.</span
   >
-
   <span
     *ngIf="
-      form?.controls.tokens?.errors?.min && (activeTab$ | async) === 'offer'
+      form?.controls.currencyAmount?.errors?.min &&
+      (activeTab$ | async) === 'offer'
     "
-    i18n="@@BOOST_MODAL__MIN_TOKENS_ERROR"
   >
     Sorry, you may only boost for a minimum of
-    {{ minTokens }} token{{ minTokens !== 1 ? 's' : null }}.</span
-  >
+    <ng-container *ngIf="(activeTab$ | async) === 'tokens'">
+      {{ currencyAmount }} token{{ currencyAmount !== 1 ? 's' : null }}.
+    </ng-container>
+    <ng-container *ngIf="(activeTab$ | async) === 'cash'">
+      {{ currencyAmount }} USD
+    </ng-container>
+  </span>
 </div>
