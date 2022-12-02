@@ -16,6 +16,9 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
   styleUrls: ['budget.component.ng.scss'],
 })
 export class BoostModalV2BudgetSelectorComponent {
+  // enums.
+  public BoostPaymentCategory: typeof BoostPaymentCategory = BoostPaymentCategory;
+
   // currently selected payment category.
   public readonly paymentCategory$: BehaviorSubject<BoostPaymentCategory> = this
     .service.paymentCategory$;

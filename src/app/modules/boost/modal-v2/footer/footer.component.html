@@ -4,18 +4,18 @@
   data-ref="boost-modal-v2-footer-description-container"
 >
   <div
-    *ngSwitchCase="'budget'"
+    *ngSwitchCase="BoostModalPanel.BUDGET"
     class="m-boostModalFooter__descriptionTextInnerContainer"
   >
     <span
-      *ngIf="(entityType$ | async) === 'post'"
+      *ngIf="(entityType$ | async) === BoostSubject.POST"
       i18n="@@BOOST_MODAL_V2_FOOTER__ESTIMATED_REACH_NEWSFEED"
       >Estimated reach is approximate and your Boost will appear in newsfeeds
       across the site. Actual reach for this Boost may vary and can’t be
       guaranteed.</span
     >
     <span
-      *ngIf="(entityType$ | async) === 'channel'"
+      *ngIf="(entityType$ | async) === BoostSubject.CHANNEL"
       i18n="@@BOOST_MODAL_V2_FOOTER__ESTIMATED_REACH_SIDEBAR"
       >Estimated reach is approximate and your Boost will appear in the sidebar
       across the site. Actual reach for this Boost may vary and can’t be
@@ -23,18 +23,18 @@
     >
   </div>
   <div
-    *ngSwitchCase="'review'"
+    *ngSwitchCase="BoostModalPanel.REVIEW"
     class="m-boostModalFooter__descriptionTextInnerContainer"
   >
     <span
-      *ngIf="(entityType$ | async) === 'post'"
+      *ngIf="(entityType$ | async) === BoostSubject.POST"
       i18n="@@BOOST_MODAL_V2_FOOTER__ONCE_APPROVED"
       >Once your Boost is approved, your post can not be edited or deleted until
       the Boost duration is completed. Approved boosts cannot be refunded. By
       clicking Boost post, you agree to Mind’s Terms.</span
     >
     <span
-      *ngIf="(entityType$ | async) === 'channel'"
+      *ngIf="(entityType$ | async) === BoostSubject.CHANNEL"
       i18n="@@BOOST_MODAL_V2_FOOTER__ONCE_APPROVED"
       >Once your Boost is approved, your boost can not be edited or deleted
       until the Boost duration is completed. Approved boosts cannot be refunded.
@@ -51,14 +51,14 @@
     data-ref="boost-modal-v2-footer-next-button"
   >
     <ng-container [ngSwitch]="activePanel$ | async">
-      <ng-container *ngSwitchCase="'review'">
+      <ng-container *ngSwitchCase="BoostModalPanel.REVIEW">
         <ng-container
-          *ngIf="(entityType$ | async) === 'post'"
+          *ngIf="(entityType$ | async) === BoostSubject.POST"
           i18n="@@BOOST_MODAL_V2_FOOTER__BOOST_POST_ACTION"
           >Boost post</ng-container
         >
         <ng-container
-          *ngIf="(entityType$ | async) === 'channel'"
+          *ngIf="(entityType$ | async) === BoostSubject.CHANNEL"
           i18n="@@BOOST_MODAL_V2_FOOTER__BOOST_CHANNEL_ACTION"
           >Boost channel</ng-container
         >

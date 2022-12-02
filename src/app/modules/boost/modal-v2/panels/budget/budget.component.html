@@ -1,8 +1,8 @@
 <m-boostModalV2__budgetTabBar></m-boostModalV2__budgetTabBar>
 <div class="m-boostModalBudget__tabs" [ngSwitch]="paymentCategory$ | async">
   <m-boostModalV2__budgetTab
-    *ngSwitchCase="'cash'"
-    [paymentCategory]="'cash'"
+    *ngSwitchCase="BoostPaymentCategory.CASH"
+    [paymentCategory]="BoostPaymentCategory.CASH"
     [minDuration]="config.duration.min"
     [maxDuration]="config.duration.max"
     [initialDuration]="initialCashDuration$ | async"
@@ -12,7 +12,7 @@
   ></m-boostModalV2__budgetTab>
   <m-boostModalV2__budgetTab
     *ngSwitchDefault
-    [paymentCategory]="'tokens'"
+    [paymentCategory]="BoostPaymentCategory.TOKENS"
     [minDuration]="config.duration.min"
     [maxDuration]="config.duration.max"
     [initialDuration]="initialTokenDuration$ | async"

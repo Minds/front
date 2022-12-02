@@ -6,13 +6,23 @@ export type BoostModalData = {
 };
 
 // Subject of the boost, a channel or post.
-export type BoostSubject = 'channel' | 'post' | '';
+export enum BoostSubject {
+  CHANNEL = 1,
+  POST = 2,
+}
 
 // Payment category. Maps to which pool the user wants to be in.
-export type BoostPaymentCategory = 'cash' | 'tokens';
+export enum BoostPaymentCategory {
+  CASH = 1,
+  TOKENS = 2,
+}
 
 // Modal panel.
-export type BoostModalPanel = 'audience' | 'budget' | 'review';
+export enum BoostModalPanel {
+  AUDIENCE = 1,
+  BUDGET = 2,
+  REVIEW = 3,
+}
 
 // Payment method for boost.
 export enum BoostPaymentMethod {

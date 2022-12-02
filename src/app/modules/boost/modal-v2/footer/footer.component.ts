@@ -14,6 +14,10 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
   styleUrls: ['footer.component.ng.scss'],
 })
 export class BoostModalV2FooterComponent implements OnDestroy {
+  // enums.
+  public BoostSubject: typeof BoostSubject = BoostSubject;
+  public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
+
   // currently active modal panel.
   public readonly activePanel$: BehaviorSubject<BoostModalPanel> = this.service
     .activePanel$;

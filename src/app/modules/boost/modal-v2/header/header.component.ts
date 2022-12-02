@@ -12,7 +12,7 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
     <div class="m-modalV2__header">
       <div class="m-boostModalV2__headerLeft">
         <m-icon
-          *ngIf="(activePanel$ | async) !== 'audience'"
+          *ngIf="(activePanel$ | async) !== BoostModalPanel.AUDIENCE"
           iconId="chevron_left"
           (click)="openPreviousPanel()"
         ></m-icon>
@@ -22,12 +22,12 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
           data-ref="boost-modal-v2-header-title"
         >
           <ng-container
-            *ngSwitchCase="'post'"
+            *ngSwitchCase="BoostSubject.POST"
             i18n="@@BOOST_MODAL_V2__TITLE__BOOST_POST"
             >Boost Post</ng-container
           >
           <ng-container
-            *ngSwitchCase="'channel'"
+            *ngSwitchCase="BoostSubject.CHANNEL"
             i18n="@@BOOST_MODAL_V2__TITLE__BOOST_CHANNEL"
             >Boost Channel</ng-container
           >
@@ -46,6 +46,10 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
   styleUrls: ['header.component.ng.scss'],
 })
 export class BoostModalV2HeaderComponent {
+  // enums.
+  public BoostSubject: typeof BoostSubject = BoostSubject;
+  public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
+
   // type of the entity.
   public readonly entityType$: Observable<BoostSubject> = this.service
     .entityType$;

@@ -50,7 +50,7 @@ export class BoostModalV2Service implements OnDestroy {
   // currently active modal panel.
   public readonly activePanel$: BehaviorSubject<
     BoostModalPanel
-  > = new BehaviorSubject<BoostModalPanel>('audience');
+  > = new BehaviorSubject<BoostModalPanel>(BoostModalPanel.AUDIENCE);
 
   // currently selected audience.
   public readonly audience$: BehaviorSubject<
@@ -86,10 +86,10 @@ export class BoostModalV2Service implements OnDestroy {
   public entityType$: Observable<BoostSubject> = this.entity$.pipe(
     map(entity => {
       if (entity.type === 'user') {
-        return 'channel';
+        return BoostSubject.CHANNEL;
       }
 
-      return 'post';
+      return BoostSubject.POST;
     })
   );
 
@@ -109,7 +109,7 @@ export class BoostModalV2Service implements OnDestroy {
     this.paymentCategory$,
   ]).pipe(
     map(([totalPaymentAmount, paymentCategory]) =>
-      paymentCategory === 'cash'
+      paymentCategory === BoostPaymentCategory.CASH
         ? `\$${totalPaymentAmount}.00`
         : `${totalPaymentAmount} tokens`
     )
@@ -163,12 +163,12 @@ export class BoostModalV2Service implements OnDestroy {
     this.paymentCategoryChangeSubscription = this.paymentCategory$.subscribe(
       paymentCategory => {
         this.duration$.next(
-          paymentCategory === 'cash'
+          paymentCategory === BoostPaymentCategory.CASH
             ? DEFAULT_CASH_DURATION
             : DEFAULT_TOKEN_DURATION
         );
         this.dailyBudget$.next(
-          paymentCategory === 'cash'
+          paymentCategory === BoostPaymentCategory.TOKENS
             ? DEFAULT_DAILY_CASH_BUDGET
             : DEFAULT_DAILY_TOKEN_BUDGET
         );
@@ -197,13 +197,13 @@ export class BoostModalV2Service implements OnDestroy {
    */
   public changePanelFrom(fromPanel: BoostModalPanel): void {
     switch (fromPanel) {
-      case 'audience':
+      case BoostModalPanel.AUDIENCE:
         this.switchFromAudiencePanel();
         break;
-      case 'budget':
+      case BoostModalPanel.BUDGET:
         this.switchFromBudgetPanel();
         break;
-      case 'review':
+      case BoostModalPanel.REVIEW:
         this.submitBoost();
         break;
     }
@@ -218,11 +218,11 @@ export class BoostModalV2Service implements OnDestroy {
       .pipe(take(1))
       .subscribe((activePanel: BoostModalPanel) => {
         switch (activePanel) {
-          case 'budget':
-            this.activePanel$.next('audience');
+          case BoostModalPanel.BUDGET:
+            this.activePanel$.next(BoostModalPanel.AUDIENCE);
             break;
-          case 'review':
-            this.activePanel$.next('budget');
+          case BoostModalPanel.REVIEW:
+            this.activePanel$.next(BoostModalPanel.BUDGET);
             break;
         }
       });
@@ -233,7 +233,7 @@ export class BoostModalV2Service implements OnDestroy {
    * @returns { void }
    */
   private switchFromAudiencePanel(): void {
-    this.activePanel$.next('budget');
+    this.activePanel$.next(BoostModalPanel.BUDGET);
   }
 
   /**
@@ -241,7 +241,7 @@ export class BoostModalV2Service implements OnDestroy {
    * @returns { void }
    */
   private switchFromBudgetPanel(): void {
-    this.activePanel$.next('review');
+    this.activePanel$.next(BoostModalPanel.REVIEW);
   }
 
   /**

@@ -18,7 +18,7 @@ import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
   selector: 'm-boostModalV2__paymentMethodSelector',
   template: `
     <select
-      *ngIf="(paymentCategory$ | async) === 'tokens'"
+      *ngIf="(paymentCategory$ | async) === BoostPaymentCategory.TOKENS"
       class="m-boostModalPayments__optionSelect"
       [ngModel]="paymentMethod$ | async"
       (ngModelChange)="paymentMethod$.next($event)"
@@ -37,7 +37,7 @@ import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
       </option> -->
     </select>
     <m-payments__selectCard
-      *ngIf="(paymentCategory$ | async) === 'cash'"
+      *ngIf="(paymentCategory$ | async) === BoostPaymentCategory.CASH"
       [selected]="paymentMethodId$ | async"
       (selected)="onSelectCard($event)"
       data-ref="boost-modal-v2-cash-payment-custom-selector"
@@ -47,7 +47,9 @@ import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
 })
 export class BoostModalV2PaymentMethodSelectorComponent
   implements OnInit, OnDestroy {
+  // enums.
   public BoostPaymentMethod: typeof BoostPaymentMethod = BoostPaymentMethod;
+  public BoostPaymentCategory: typeof BoostPaymentCategory = BoostPaymentCategory;
 
   // cdn url
   private readonly cdnAssetsUrl: string;
@@ -103,7 +105,7 @@ export class BoostModalV2PaymentMethodSelectorComponent
       .pipe(
         filter(
           (paymentCategory: BoostPaymentCategory) =>
-            paymentCategory === 'tokens'
+            paymentCategory === BoostPaymentCategory.TOKENS
         ),
         switchMap(_ => this.tokenBalance.fetch())
       )
@@ -112,7 +114,7 @@ export class BoostModalV2PaymentMethodSelectorComponent
     // if payment category is tokens, init payment method to offchain_tokens so that select box has a default value.
     this.paymentMethodInitSubscription = this.paymentCategory$.subscribe(
       (paymentCategory: BoostPaymentCategory) => {
-        if (paymentCategory === 'tokens') {
+        if (paymentCategory === BoostPaymentCategory.TOKENS) {
           this.paymentMethod$.next(BoostPaymentMethod.OFFCHAIN_TOKENS);
         }
       }

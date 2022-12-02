@@ -16,4 +16,5 @@ export const DEFAULT_CASH_DURATION: number = 3;
 export const DEFAULT_AUDIENCE: BoostAudience = BoostAudience.SAFE;
 
 // default payment category.
-export const DEFAULT_PAYMENT_CATEGORY: BoostPaymentCategory = 'cash';
+export const DEFAULT_PAYMENT_CATEGORY: BoostPaymentCategory =
+  BoostPaymentCategory.CASH;

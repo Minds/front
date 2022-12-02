@@ -11,6 +11,9 @@ import { BoostModalV2Service } from '../../../../services/boost-modal-v2.service
   styleUrls: ['tab-bar.component.ng.scss'],
 })
 export class BoostModalV2BudgetTabBarComponent {
+  // enums.
+  public BoostPaymentCategory: typeof BoostPaymentCategory = BoostPaymentCategory;
+
   // category for payment.
   public readonly paymentCategory$: BehaviorSubject<BoostPaymentCategory> = this
     .service.paymentCategory$;
@@ -31,7 +34,7 @@ export class BoostModalV2BudgetTabBarComponent {
       return;
     }
 
-    if (paymentCategory === 'tokens') {
+    if (paymentCategory === BoostPaymentCategory.TOKENS) {
       const modal = this.modal.present(ConfirmV2Component, {
         data: {
           title: 'Are you sure you want to swap to tokens?',

@@ -1,8 +1,8 @@
 <div
   class="m-boostModalTabs__tabContainer"
-  (click)="onTabClick('cash')"
+  (click)="onTabClick(BoostPaymentCategory.CASH)"
   [class.m-boostModalTabs__tabContainer--active]="
-    (paymentCategory$ | async) === 'cash'
+    (paymentCategory$ | async) === BoostPaymentCategory.CASH
   "
   data-ref="boost-modal-v2-cash-tab"
 >
@@ -12,9 +12,9 @@
 </div>
 <div
   class="m-boostModalTabs__tabContainer"
-  (click)="onTabClick('tokens')"
+  (click)="onTabClick(BoostPaymentCategory.TOKENS)"
   [class.m-boostModalTabs__tabContainer--active]="
-    (paymentCategory$ | async) === 'tokens'
+    (paymentCategory$ | async) === BoostPaymentCategory.TOKENS
   "
   data-ref="boost-modal-v2-tokens-tab"
 >

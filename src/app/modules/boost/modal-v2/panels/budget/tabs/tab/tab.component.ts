@@ -14,8 +14,12 @@ import { BoostModalV2Service } from '../../../../services/boost-modal-v2.service
   styleUrls: ['tab.component.ng.scss'],
 })
 export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
+  // enums.
+  public BoostPaymentCategory: typeof BoostPaymentCategory = BoostPaymentCategory;
+
   // category for payments.
-  @Input() public paymentCategory: BoostPaymentCategory = 'cash';
+  @Input() public paymentCategory: BoostPaymentCategory =
+    BoostPaymentCategory.CASH;
 
   // minimum daily budget selectable via slider.
   @Input() public minDailyBudget: number = 2;
@@ -103,7 +107,9 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
   get amountText(): string {
     const amount =
       this.form.controls.dailyBudget.value * this.form.controls.duration.value;
-    return this.paymentCategory === 'cash' ? `\$${amount}` : `${amount} tokens`;
+    return this.paymentCategory === BoostPaymentCategory.CASH
+      ? `\$${amount}`
+      : `${amount} tokens`;
   }
 
   /**
@@ -111,7 +117,7 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
    * @returns { string } label for minimum daily budget.
    */
   get minDailyBudgetLabel(): string {
-    return this.paymentCategory === 'cash'
+    return this.paymentCategory === BoostPaymentCategory.CASH
       ? `\$${this.minDailyBudget}`
       : `${this.minDailyBudget}`;
   }
@@ -121,7 +127,7 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
    * @returns { string } label for maximum daily budget.
    */
   get maxDailyBudgetLabel(): string {
-    return this.paymentCategory === 'cash'
+    return this.paymentCategory === BoostPaymentCategory.CASH
       ? `\$${this.maxDailyBudget}`
       : `${this.maxDailyBudget}`;
   }

@@ -22,7 +22,9 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
   styleUrls: ['review.component.ng.scss'],
 })
 export class BoostModalV2ReviewComponent {
+  // enums.
   public BoostAudience: typeof BoostAudience = BoostAudience;
+  public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
 
   public form: FormGroup;
 
@@ -53,7 +55,7 @@ export class BoostModalV2ReviewComponent {
     map(([paymentCategory, duration, dailyBudget]): string => {
       const durationText: string =
         duration > 1 ? `${duration} days` : `${duration} day`;
-      return paymentCategory === 'cash'
+      return paymentCategory === BoostPaymentCategory.CASH
         ? `\$${dailyBudget} per day for ${durationText}`
         : `${dailyBudget} tokens per day for ${durationText}`;
     })
