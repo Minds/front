@@ -5,10 +5,33 @@
     display: flex;
     justify-content: space-between;
     padding-top: $spacing6;
+    align-items: center;
 
-    .m-modalV2Header__title {
+    .m-boostModalV2__headerLeft {
       display: flex;
+      flex-flow: row nowrap;
       align-items: center;
+
+      m-icon {
+        font-size: 20px;
+        font-weight: 700;
+        margin-right: $spacing4;
+        margin-left: -$spacing2;
+        cursor: pointer;
+
+        &:hover {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        @include unselectable;
+      }
+
+      .m-modalV2Header__title {
+        display: flex;
+        align-items: center;
+      }
     }
 
     ::ng-deep m-modalCloseButton a i {

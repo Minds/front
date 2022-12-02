@@ -131,6 +131,7 @@ export class BoostModalV2Service implements OnDestroy {
   private switchFromABudgetPanelSubscription: Subscription;
   private submitBoostSubscription: Subscription;
   private paymentCategoryChangeSubscription: Subscription;
+  private openPreviousPanelSubscription: Subscription;
 
   constructor(private toast: ToasterService, private config: ConfigsService) {
     // set default duration and budgets on payment category change.
@@ -155,6 +156,7 @@ export class BoostModalV2Service implements OnDestroy {
     this.switchFromAudiencePanelSubscription?.unsubscribe();
     this.switchFromABudgetPanelSubscription?.unsubscribe();
     this.submitBoostSubscription?.unsubscribe();
+    this.openPreviousPanelSubscription?.unsubscribe();
   }
 
   /**
@@ -182,6 +184,25 @@ export class BoostModalV2Service implements OnDestroy {
         this.submitBoost();
         break;
     }
+  }
+
+  /**
+   * Open previous modal panel. If on the audience panel, does nothing.
+   * @returns { void }
+   */
+  public openPreviousPanel(): void {
+    this.openPreviousPanelSubscription = this.activePanel$
+      .pipe(take(1))
+      .subscribe((activePanel: BoostModalPanel) => {
+        switch (activePanel) {
+          case 'budget':
+            this.activePanel$.next('audience');
+            break;
+          case 'review':
+            this.activePanel$.next('budget');
+            break;
+        }
+      });
   }
 
   /**
