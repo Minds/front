@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-boostModalTabs__tabContainer {
+    @include body1Medium;
+    margin-right: 20px;
+    padding-bottom: 5px;
+    cursor: pointer;
+
+    &.m-boostModalTabs__tabContainer--active {
+      @include m-theme() {
+        border-bottom: 3px solid themed($m-blue);
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

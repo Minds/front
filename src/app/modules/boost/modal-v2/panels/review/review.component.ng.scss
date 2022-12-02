@@ -1,0 +1,73 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: $spacing6 0;
+
+  .m-boostModalReview__header {
+    padding: $spacing3 0;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-boostModalReview__title {
+      margin-top: unset;
+      margin-bottom: $spacing2;
+      @include heading3Bold;
+    }
+
+    .m-boostModalReview__subtitle {
+      margin-bottom: unset;
+      @include body1Regular;
+    }
+  }
+
+  .m-boostModalReview__body {
+    margin-top: $spacing6;
+
+    .m-boostModalReview__section {
+      margin-bottom: $spacing8;
+
+      &:not(.m-boostModalReview__section--fullWidth) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        .m-boostModalReview__sectionTitle:hover {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      .m-boostModalReview__sectionTitle {
+        margin: unset;
+        margin-bottom: $spacing1;
+        @include heading4Medium;
+      }
+
+      .m-boostModalReview__sectionSubtext {
+        margin: unset;
+        @include body3Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      .m-boostModalReview__sectionRight {
+        font-size: 20px;
+        font-weight: 700;
+      }
+    }
+  }
+}

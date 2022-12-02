@@ -1,0 +1,89 @@
+<div
+  class="m-boostAudienceSelector__header"
+  data-ref="boost-modal-v2-audience-selector-header"
+>
+  <h3
+    class="m-boostAudienceSelector__title"
+    i18n="@@BOOST_MODAL_V2_AUDIENCE__CUSTOMIZE_YOUR_AUDIENCE"
+  >
+    Customize your audience
+  </h3>
+  <span
+    class="m-boostAudienceSelector__subtitle"
+    i18n="@@BOOST_MODAL_V2_AUDIENCE__CUSTOMIZE_YOUR_AUDIENCE_DESCRIPTION"
+    >Choose the best audience for this Boost.</span
+  >
+</div>
+<div class="m-boostAudienceSelector__body">
+  <h4
+    class="m-boostAudienceSelector__bodyTitle"
+    i18n="@@BOOST_MODAL_V2_AUDIENCE__AUDIENCE"
+  >
+    Audience
+  </h4>
+  <form [formGroup]="form">
+    <div
+      class="m-boostAudienceSelector__radioButtonRow"
+      [ngClass]="{
+        'm-boostAudienceSelector__radioButtonRow--selected':
+          form.controls.audience.value === 'safe'
+      }"
+      (click)="selectRadioButton('safe')"
+    >
+      <div class="m-boostAudienceSelector__radioButtonLabels">
+        <label
+          class="m-boostAudienceSelector__radioButtonLabel"
+          for="safe"
+          i18n="@@BOOST_MODAL_V2_AUDIENCE__SAFE"
+          >Safe</label
+        >
+        <span
+          class="m-boostAudienceSelector__radioButtonSubtext"
+          id="safe-description"
+          i18n="@@BOOST_MODAL_V2_AUDIENCE__SAFE_DESCRIPTION"
+          >Content that is suitable if your kids or grandma saw it.</span
+        >
+      </div>
+      <input
+        class="m-boostAudienceSelector__radioButton"
+        type="radio"
+        value="safe"
+        aria-describedby="safe-description"
+        formControlName="audience"
+        data-ref="boost-modal-v2-audience-selector-safe-radio-button"
+      />
+    </div>
+    <div
+      class="m-boostAudienceSelector__radioButtonRow"
+      [ngClass]="{
+        'm-boostAudienceSelector__radioButtonRow--selected':
+          form.controls.audience.value === 'controversial'
+      }"
+      (click)="selectRadioButton('controversial')"
+    >
+      <div class="m-boostAudienceSelector__radioButtonLabels">
+        <label
+          class="m-boostAudienceSelector__radioButtonLabel"
+          for="controversial"
+          i18n="@@BOOST_MODAL_V2_AUDIENCE__CONTROVERSIAL"
+          >Controversial</label
+        >
+        <span
+          class="m-boostAudienceSelector__radioButtonSubtext"
+          id="controversial-description"
+          i18n="@@BOOST_MODAL_V2_AUDIENCE__CONTROVERSIAL_DESCRIPTION"
+          >Content that's political in nature or likely to be
+          upsetting/controversial to a family-friendly audience.</span
+        >
+      </div>
+      <input
+        class="m-boostAudienceSelector__radioButton"
+        type="radio"
+        value="controversial"
+        aria-describedby="controversial-description"
+        formControlName="audience"
+        data-ref="boost-modal-v2-audience-selector-controversial-radio-button"
+      />
+    </div>
+  </form>
+</div>

@@ -1,0 +1,98 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: $spacing6 0;
+
+  .m-boostAudienceSelector__header {
+    padding: $spacing3 0;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-boostAudienceSelector__title {
+      margin-top: unset;
+      margin-bottom: $spacing2;
+      @include heading3Bold;
+    }
+    .m-boostAudienceSelector__subtitle {
+      margin-bottom: unset;
+      @include body1Regular;
+    }
+  }
+
+  .m-boostAudienceSelector__body {
+    .m-boostAudienceSelector__bodyTitle {
+      @include heading4Medium;
+    }
+
+    .m-boostAudienceSelector__radioButtonRow {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      margin-bottom: $spacing6;
+      cursor: pointer;
+
+      &.m-boostAudienceSelector__radioButtonRow--selected {
+        .m-boostAudienceSelector__radioButtonLabel {
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+      }
+
+      &:hover {
+        .m-boostAudienceSelector__radioButtonLabel {
+          font-weight: 700;
+
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+      }
+
+      .m-boostAudienceSelector__radioButtonLabels {
+        display: flex;
+        flex-flow: column nowrap;
+        padding-right: $spacing6;
+        @include unselectable;
+
+        .m-boostAudienceSelector__radioButtonLabel {
+          margin-bottom: $spacing2;
+          cursor: pointer;
+
+          @include heading4Regular;
+          @include unselectable;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        .m-boostAudienceSelector__radioButtonSubtext {
+          cursor: pointer;
+
+          @include body3Regular;
+          @include unselectable;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      .m-boostAudienceSelector__radioButton {
+        display: flex;
+        align-self: flex-start;
+        min-width: 20px;
+        min-height: 20px;
+        cursor: pointer;
+
+        @include m-theme() {
+          accent-color: themed($m-blue);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import 'defaults.scss';
+
+:host {
+  .m-modalV2__header {
+    display: flex;
+    justify-content: space-between;
+    padding-top: $spacing6;
+
+    .m-modalV2Header__title {
+      display: flex;
+      align-items: center;
+    }
+
+    ::ng-deep m-modalCloseButton a i {
+      font-size: 20px;
+    }
+  }
+}
