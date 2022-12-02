@@ -23,6 +23,26 @@ describe('SupermindConsoleService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('should get error when single supermind access is forbidden', (done: DoneFn) => {
+    let listType = '123456789';
+    const offset = 0;
+
+    service.listType$.next(listType);
+    (service as any).api.get.and.throwError({
+      status: 403,
+      error: { message: 'Error' },
+    });
+
+    service.getList$().subscribe(list => {
+      expect((service as any).api.get).toHaveBeenCalledWith(
+        `api/v3/supermind/${listType}`,
+        {}
+      );
+      expect(list as any).toEqual({ redirect: true, errorMessage: 'Error' });
+      done();
+    });
+  });
+
   it('should get inbox list without offset', (done: DoneFn) => {
     const response: ApiResponse = {
       status: 'success',

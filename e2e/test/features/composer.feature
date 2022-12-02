@@ -40,3 +40,15 @@ Feature: Composer
       | filename |
       | image1.jpg |
     Then I should see the title input
+
+  Scenario: confirmation prompt when closing composer with unsaved changes
+    Given I am logged in
+    And I am on the newsfeed
+    And I have clicked on the sidebar composer button
+    When I enter 'foo' in the composer text area
+    And I dismiss the modal
+    And I accept the system confirmation dialog
+    When I click on the sidebar composer button
+    Then the composer text area should be empty
+
+
