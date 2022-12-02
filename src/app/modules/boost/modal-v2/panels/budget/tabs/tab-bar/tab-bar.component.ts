@@ -40,6 +40,7 @@ export class BoostModalV2BudgetTabBarComponent {
           confirmButtonSolid: true,
           onConfirm: () => {
             this.paymentCategory$.next(paymentCategory);
+            this.service.paymentMethodId$.next(null);
             modal.dismiss();
           },
         },

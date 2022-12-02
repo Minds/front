@@ -17,7 +17,6 @@ import {
   take,
 } from 'rxjs/operators';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { ToasterService } from '../../../../common/services/toaster.service';
 import {
   DEFAULT_AUDIENCE,
   DEFAULT_CASH_DURATION,
@@ -33,6 +32,7 @@ import {
   BoostModalPanel,
   BoostPaymentCategory,
   BoostPaymentMethod,
+  BoostPaymentMethodId,
   BoostSubject,
   EstimatedReach,
 } from '../boost-modal-v2.types';
@@ -66,6 +66,11 @@ export class BoostModalV2Service implements OnDestroy {
   public readonly paymentMethod$: BehaviorSubject<
     BoostPaymentMethod
   > = new BehaviorSubject<BoostPaymentMethod>(null);
+
+  // currently selected payment method id.
+  public readonly paymentMethodId$: BehaviorSubject<
+    BoostPaymentMethodId
+  > = new BehaviorSubject<BoostPaymentMethodId>(null);
 
   // currently selected daily budget.
   public readonly dailyBudget$: BehaviorSubject<number> = new BehaviorSubject<
@@ -149,13 +154,11 @@ export class BoostModalV2Service implements OnDestroy {
   );
 
   // subscriptions.
-  private switchFromAudiencePanelSubscription: Subscription;
-  private switchFromABudgetPanelSubscription: Subscription;
   private submitBoostSubscription: Subscription;
   private paymentCategoryChangeSubscription: Subscription;
   private openPreviousPanelSubscription: Subscription;
 
-  constructor(private toast: ToasterService, private config: ConfigsService) {
+  constructor(private config: ConfigsService) {
     // set default duration and budgets on payment category change.
     this.paymentCategoryChangeSubscription = this.paymentCategory$.subscribe(
       paymentCategory => {
@@ -175,8 +178,6 @@ export class BoostModalV2Service implements OnDestroy {
 
   ngOnDestroy(): void {
     this.paymentCategoryChangeSubscription?.unsubscribe();
-    this.switchFromAudiencePanelSubscription?.unsubscribe();
-    this.switchFromABudgetPanelSubscription?.unsubscribe();
     this.submitBoostSubscription?.unsubscribe();
     this.openPreviousPanelSubscription?.unsubscribe();
   }
@@ -232,15 +233,7 @@ export class BoostModalV2Service implements OnDestroy {
    * @returns { void }
    */
   private switchFromAudiencePanel(): void {
-    this.switchFromAudiencePanelSubscription = this.audience$
-      .pipe(take(1))
-      .subscribe((audience: BoostAudience) => {
-        if (!audience) {
-          this.toast.error('You must select an audience before proceeding');
-          return;
-        }
-        this.activePanel$.next('budget');
-      });
+    this.activePanel$.next('budget');
   }
 
   /**
@@ -248,25 +241,7 @@ export class BoostModalV2Service implements OnDestroy {
    * @returns { void }
    */
   private switchFromBudgetPanel(): void {
-    this.switchFromABudgetPanelSubscription = combineLatest([
-      this.paymentCategory$,
-      this.duration$,
-      this.dailyBudget$,
-    ])
-      .pipe(take(1))
-      .subscribe(([paymentCategory, duration, dailyBudget]) => {
-        if (
-          !(
-            Boolean(paymentCategory) &&
-            Boolean(duration) &&
-            Boolean(dailyBudget)
-          )
-        ) {
-          this.toast.error('You must set your Boost budget before proceeding');
-          return;
-        }
-        this.activePanel$.next('review');
-      });
+    this.activePanel$.next('review');
   }
 
   /**
@@ -276,27 +251,26 @@ export class BoostModalV2Service implements OnDestroy {
   private submitBoost(): void {
     this.submitBoostSubscription = combineLatest([
       this.paymentMethod$,
+      this.paymentMethodId$,
       this.duration$,
       this.dailyBudget$,
+      this.audience$,
     ])
       .pipe(take(1))
-      .subscribe(([paymentMethod, duration, dailyBudget]) => {
-        if (
-          !(Boolean(paymentMethod) && Boolean(duration) && Boolean(dailyBudget))
-        ) {
-          this.toast.error(
-            'Unable to boost, please make sure all parameters are set.'
-          );
-          return;
+      .subscribe(
+        ([paymentMethod, paymentMethodId, duration, dailyBudget, audience]) => {
+          // {{host}}/api/v3/boosts
+
+          // TODO: Implement boost submission behavior.
+          console.log('paymentMethod', paymentMethod);
+          console.log('paymentMethodId', paymentMethodId);
+          console.log('duration', duration);
+          console.log('dailyBudget', dailyBudget);
+          console.log('audience', audience);
+
+          // alert('submitted');
         }
-
-        // TODO: Implement boost submission behavior.
-        console.log('paymentMethod', paymentMethod);
-        console.log('duration', duration);
-        console.log('dailyBudget', dailyBudget);
-
-        alert('submitted');
-      });
+      );
   }
 
   /**

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
@@ -8,7 +8,6 @@ import {
   BoostAudience,
   BoostModalPanel,
   BoostPaymentCategory,
-  BoostPaymentMethod,
   EstimatedReach,
 } from '../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
@@ -23,6 +22,8 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
   styleUrls: ['review.component.ng.scss'],
 })
 export class BoostModalV2ReviewComponent {
+  public BoostAudience: typeof BoostAudience = BoostAudience;
+
   public form: FormGroup;
 
   // selected payment category - this is separate to payment method because tokens is a payment category
@@ -38,10 +39,6 @@ export class BoostModalV2ReviewComponent {
 
   // selected daily budget.
   public readonly dailyBudget$: Observable<number> = this.service.dailyBudget$;
-
-  // selected payment method.
-  public readonly paymentMethod$: BehaviorSubject<BoostPaymentMethod> = this
-    .service.paymentMethod$;
 
   // total payment amount to be charged.
   public readonly totalPaymentAmountText$: Observable<string> = this.service

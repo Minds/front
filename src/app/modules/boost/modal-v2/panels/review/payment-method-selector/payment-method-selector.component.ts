@@ -7,6 +7,7 @@ import { TokenBalanceService } from '../../../../../wallet/tokens/onboarding/bal
 import {
   BoostPaymentCategory,
   BoostPaymentMethod,
+  BoostPaymentMethodId,
 } from '../../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
 
@@ -25,20 +26,20 @@ import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
       data-ref="boost-modal-v2-token-payment-select"
     >
       <option
-        value="offchain-tokens"
+        [value]="BoostPaymentMethod.OFFCHAIN_TOKENS"
         data-ref="boost-modal-v2-token-payment-select-offchain-option"
       >
         Off-chain ({{ offchainBalance$ | async }} Tokens)
       </option>
       <!-- TODO: Enable onchain boost option and link up to wallet service on submission -->
-      <!-- <option value="onchain-tokens" data-ref="boost-modal-v2-token-payment-select-onchain-option">
+      <!-- <option [value]="BoostPaymentMethod.ONCHAIN_TOKENS" data-ref="boost-modal-v2-token-payment-select-onchain-option">
         On-chain ({{ onchainBalance$ | async }} Tokens)
       </option> -->
     </select>
     <m-payments__selectCard
       *ngIf="(paymentCategory$ | async) === 'cash'"
-      [selected]="paymentMethod$ | async"
-      (selected)="paymentMethod$.next($event)"
+      [selected]="paymentMethodId$ | async"
+      (selected)="onSelectCard($event)"
       data-ref="boost-modal-v2-cash-payment-custom-selector"
     ></m-payments__selectCard>
   `,
@@ -46,6 +47,8 @@ import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
 })
 export class BoostModalV2PaymentMethodSelectorComponent
   implements OnInit, OnDestroy {
+  public BoostPaymentMethod: typeof BoostPaymentMethod = BoostPaymentMethod;
+
   // cdn url
   private readonly cdnAssetsUrl: string;
 
@@ -63,6 +66,10 @@ export class BoostModalV2PaymentMethodSelectorComponent
   // Token payment method from service.
   public readonly paymentMethod$: BehaviorSubject<BoostPaymentMethod> = this
     .service.paymentMethod$;
+
+  // Token payment method id from service.
+  public readonly paymentMethodId$: BehaviorSubject<BoostPaymentMethodId> = this
+    .service.paymentMethodId$;
 
   // Background of select dropdown to add a stylable dropdown icon based on theme.
   public selectBackground$: Observable<{
@@ -105,9 +112,9 @@ export class BoostModalV2PaymentMethodSelectorComponent
     // if payment category is tokens, init payment method to offchain_tokens so that select box has a default value.
     this.paymentMethodInitSubscription = this.paymentCategory$.subscribe(
       (paymentCategory: BoostPaymentCategory) => {
-        this.paymentMethod$.next(
-          paymentCategory === 'tokens' ? 'offchain-tokens' : null
-        );
+        if (paymentCategory === 'tokens') {
+          this.paymentMethod$.next(BoostPaymentMethod.OFFCHAIN_TOKENS);
+        }
       }
     );
   }
@@ -115,5 +122,15 @@ export class BoostModalV2PaymentMethodSelectorComponent
   ngOnDestroy(): void {
     this.paymentMethodInitSubscription?.unsubscribe();
     this.balanceLoadSubscription?.unsubscribe();
+  }
+
+  /**
+   * On card select.
+   * @param { string } value - card id.
+   * @returns { void }
+   */
+  public onSelectCard(value: string): void {
+    this.paymentMethod$.next(BoostPaymentMethod.CASH);
+    this.paymentMethodId$.next(value);
   }
 }

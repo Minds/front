@@ -20,6 +20,7 @@ export class BoostModalV2AudienceSelectorComponent
   public form: FormGroup; // form group
   public audienceChangeSubscription: Subscription; // change audience in service on value change.
   public audienceInitSubscription: Subscription; // init the form using existing audience or default.
+  public BoostAudience = BoostAudience;
 
   constructor(
     private service: BoostModalV2Service,

@@ -28,12 +28,12 @@
         data-ref="boost-modal-v2-audience-text"
       >
         <ng-container
-          *ngSwitchCase="'safe'"
+          *ngSwitchCase="BoostAudience.SAFE"
           i18n="@@BOOST_MODAL_V2_REVIEW__SAFE"
           >Safe</ng-container
         >
         <ng-container
-          *ngSwitchCase="'controversial'"
+          *ngSwitchCase="BoostAudience.CONTROVERSIAL"
           i18n="@@BOOST_MODAL_V2_REVIEW__CONTROVERSIAL"
           >Controversial</ng-container
         >
@@ -93,7 +93,6 @@
       Total
     </h4>
     <p
-      [ngSwitch]="audience$ | async"
       class="m-boostModalReview__sectionSubtext"
       data-ref="boost-modal-v2-total-amount-text"
     >

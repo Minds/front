@@ -11,14 +11,29 @@ export type BoostSubject = 'channel' | 'post' | '';
 // Payment category. Maps to which pool the user wants to be in.
 export type BoostPaymentCategory = 'cash' | 'tokens';
 
-// Payment method for boost.
-export type BoostPaymentMethod = 'offchain-tokens' | 'onchain-tokens' | string;
-
 // Modal panel.
 export type BoostModalPanel = 'audience' | 'budget' | 'review';
 
+// Payment method for boost.
+export enum BoostPaymentMethod {
+  CASH = 1,
+  OFFCHAIN_TOKENS = 2,
+  ONCHAIN_TOKENS = 3,
+}
+
+// Payment method for boost.
+export type BoostPaymentMethodId = string;
+
 // Audience for boost.
-export type BoostAudience = 'safe' | 'controversial';
+export enum BoostAudience {
+  SAFE = 1,
+  CONTROVERSIAL = 2,
+}
+
+export enum BoostLocation {
+  NEWSFEED = 1,
+  SIDEBAR = 2,
+}
 
 // Entity that is boostable.
 export type BoostableEntity = {
@@ -56,4 +71,14 @@ export type BoostConfig = {
 export type EstimatedReach = {
   lower_bound: number;
   upper_bound: number;
+};
+
+export type BoostSubmitResponse = {
+  entity_guid: string;
+  target_suitability: BoostAudience;
+  target_location: BoostLocation;
+  payment_method: BoostPaymentMethod;
+  payment_method_id: string;
+  daily_bid: number;
+  duration_days: number;
 };

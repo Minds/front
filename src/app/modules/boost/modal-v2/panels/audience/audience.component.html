@@ -26,9 +26,9 @@
       class="m-boostAudienceSelector__radioButtonRow"
       [ngClass]="{
         'm-boostAudienceSelector__radioButtonRow--selected':
-          form.controls.audience.value === 'safe'
+          form.controls.audience.value === BoostAudience.SAFE
       }"
-      (click)="selectRadioButton('safe')"
+      (click)="selectRadioButton(BoostAudience.SAFE)"
     >
       <div class="m-boostAudienceSelector__radioButtonLabels">
         <label
@@ -47,7 +47,7 @@
       <input
         class="m-boostAudienceSelector__radioButton"
         type="radio"
-        value="safe"
+        [value]="BoostAudience.SAFE"
         aria-describedby="safe-description"
         formControlName="audience"
         data-ref="boost-modal-v2-audience-selector-safe-radio-button"
@@ -57,9 +57,9 @@
       class="m-boostAudienceSelector__radioButtonRow"
       [ngClass]="{
         'm-boostAudienceSelector__radioButtonRow--selected':
-          form.controls.audience.value === 'controversial'
+          form.controls.audience.value === BoostAudience.CONTROVERSIAL
       }"
-      (click)="selectRadioButton('controversial')"
+      (click)="selectRadioButton(BoostAudience.CONTROVERSIAL)"
     >
       <div class="m-boostAudienceSelector__radioButtonLabels">
         <label
@@ -79,7 +79,7 @@
       <input
         class="m-boostAudienceSelector__radioButton"
         type="radio"
-        value="controversial"
+        [value]="BoostAudience.CONTROVERSIAL"
         aria-describedby="controversial-description"
         formControlName="audience"
         data-ref="boost-modal-v2-audience-selector-controversial-radio-button"

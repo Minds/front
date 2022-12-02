@@ -13,7 +13,7 @@ export const DEFAULT_DAILY_CASH_BUDGET: number = 10;
 export const DEFAULT_CASH_DURATION: number = 3;
 
 // default audience.
-export const DEFAULT_AUDIENCE: BoostAudience = 'safe';
+export const DEFAULT_AUDIENCE: BoostAudience = BoostAudience.SAFE;
 
 // default payment category.
 export const DEFAULT_PAYMENT_CATEGORY: BoostPaymentCategory = 'cash';
