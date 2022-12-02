@@ -88,6 +88,28 @@ export class BoostModalV2Service implements OnDestroy {
     })
   );
 
+  // total payment amount to be charged.
+  public readonly totalPaymentAmount$: Observable<number> = combineLatest([
+    this.duration$,
+    this.dailyBudget$,
+  ]).pipe(
+    map(([duration, dailyBudget]: [number, number]) => {
+      return duration * dailyBudget;
+    })
+  );
+
+  // total payment amount as text, e.g. $10 or 10 tokens.
+  public readonly totalPaymentAmountText$: Observable<string> = combineLatest([
+    this.totalPaymentAmount$,
+    this.paymentCategory$,
+  ]).pipe(
+    map(([totalPaymentAmount, paymentCategory]) =>
+      paymentCategory === 'cash'
+        ? `\$${totalPaymentAmount}.00`
+        : `${totalPaymentAmount} tokens`
+    )
+  );
+
   // Estimated reach, loaded from server. Replay WILL be shared - to reload change one of the combineLatest parameters
   // whilst there is an active subscriber.
   public estimatedReach$: Observable<EstimatedReach> = combineLatest([

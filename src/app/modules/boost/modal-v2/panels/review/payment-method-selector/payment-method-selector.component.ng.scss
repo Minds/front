@@ -38,9 +38,9 @@
     outline: none;
     appearance: none;
     padding: 10px 20px;
-
     // position down arrow. background ngStyle set in controller.
     background-position-x: 98%;
+    @include body3Regular;
 
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);

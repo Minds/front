@@ -43,6 +43,10 @@ export class BoostModalV2ReviewComponent {
   public readonly paymentMethod$: BehaviorSubject<BoostPaymentMethod> = this
     .service.paymentMethod$;
 
+  // total payment amount to be charged.
+  public readonly totalPaymentAmountText$: Observable<string> = this.service
+    .totalPaymentAmountText$;
+
   // text for budget and duration section.
   public readonly budgetAndDurationText$: Observable<string> = combineLatest([
     this.paymentCategory$,

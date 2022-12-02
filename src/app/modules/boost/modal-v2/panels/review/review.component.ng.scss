@@ -3,7 +3,7 @@
 :host {
   display: flex;
   flex-flow: column nowrap;
-  margin: $spacing6 0;
+  margin-top: $spacing6;
 
   .m-boostModalReview__header {
     padding: $spacing3 0;
@@ -29,7 +29,7 @@
     margin-top: $spacing6;
 
     .m-boostModalReview__section {
-      margin-bottom: $spacing8;
+      margin-bottom: $spacing6;
 
       &:not(.m-boostModalReview__section--fullWidth) {
         display: flex;

@@ -27,6 +27,7 @@
   .m-boostAudienceSelector__body {
     .m-boostAudienceSelector__bodyTitle {
       @include heading4Medium;
+      margin-top: $spacing4;
     }
 
     .m-boostAudienceSelector__radioButtonRow {

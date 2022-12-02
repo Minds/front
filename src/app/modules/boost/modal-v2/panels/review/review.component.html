@@ -81,4 +81,23 @@
     </h4>
     <m-boostModalV2__paymentMethodSelector></m-boostModalV2__paymentMethodSelector>
   </div>
+
+  <div
+    class="m-boostModalReview__section m-boostModalReview__section--fullWidth"
+  >
+    <h4
+      class="m-boostModalReview__sectionTitle"
+      i18n="@@BOOST_MODAL_V2_REVIEW__TOTAL_AMOUNT"
+      data-ref="boost-modal-v2-total-amount-heading"
+    >
+      Total
+    </h4>
+    <p
+      [ngSwitch]="audience$ | async"
+      class="m-boostModalReview__sectionSubtext"
+      data-ref="boost-modal-v2-total-amount-text"
+    >
+      {{ totalPaymentAmountText$ | async }}
+    </p>
+  </div>
 </div>
