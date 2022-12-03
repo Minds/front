@@ -1,140 +1,145 @@
 $activity-padding-lr: 21px;
 $activity-padding-lr--minimalMode: 16px;
 
+//ojm delete this file
 m-activity {
-  display: block;
-  position: relative;
-  box-sizing: border-box;
+  // display: block;
+  // position: relative;
+  // box-sizing: border-box;
 
-  &,
-  &.m-border,
-  &:not(.m-activity--v2) {
-    border-radius: $m-borderRadius;
-  }
+  // &,
+  // &.m-border,
+  // &:not(.m-activity--v2) {
+  //   border-radius: $m-borderRadius;
+  // }
 
-  &:not(.m-activity--v2) {
-    &.m-activity--fixedHeight {
-      height: 750px;
-      display: flex;
-      flex-direction: column;
-    }
-  }
-  &.m-activity--v2 {
-    border: none !important;
-    border-radius: $m-borderRadius;
-    display: contents;
-  }
+  // &:not(.m-activity--v2) {
+  //   &.m-activity--fixedHeight {
+  //     height: 750px;
+  //     display: flex;
+  //     flex-direction: column;
+  //   }
+  // }
+  // &.m-activity--v2 {
+  //   border: none !important;
+  //   border-radius: $m-borderRadius;
+  //   display: contents;
+  // }
 
   // Applies to v1 activities in boost rotator
-  &.m-activity--fixedHeightContainer {
-    height: 100% !important;
-    width: 100%;
-  }
+  // &.m-activity--fixedHeightContainer {
+  //   height: 100% !important;
+  //   width: 100%;
+  // }
 
-  @include m-theme() {
-    background: themed($m-bgColor--primary);
-  }
+  // @include m-theme() {
+  //   background: themed($m-bgColor--primary);
+  // }
+  // *********************************
+  // ** MOVED - COMMENTS **
+  // *********************************
 
-  .m-comment .minds-avatar {
-    @include m-theme() {
-      background: themed($m-bgColor--primary);
-    }
-  }
+  // .m-comment .minds-avatar {
+  //   @include m-theme() {
+  //     background: themed($m-bgColor--primary);
+  //   }
+  // }
 
-  &
-    > m-comments__entityOutlet
-    > m-comments__tree
-    > m-comments__thread
-    > .m-comments__thread,
-  & > m-comments__entityOutlet {
-    & > m-comment__poster .m-commentPoster__wrapper {
-      margin: 10px;
-    }
-  }
+  // &
+  //   > m-comments__entityOutlet
+  //   > m-comments__tree
+  //   > m-comments__thread
+  //   > .m-comments__thread,
+  // & > m-comments__entityOutlet {
+  //   & > m-comment__poster .m-commentPoster__wrapper {
+  //     margin: 10px;
+  //   }
+  // }
+  // *********************************
 }
 
-.m-activity--boost {
-  @include m-theme() {
-    border-color: themed($m-blue);
-  }
-}
+// .m-activity--boost {
+//   @include m-theme() {
+//     border-color: themed($m-blue);
+//   }
+// }
 
-.m-activity--minimalRemind {
-  .m-activity__remindUsers {
-    display: none;
-  }
-}
+// .m-activity--minimalRemind {
+//   .m-activity__remindUsers {
+//     display: none;
+//   }
+// }
 
-.m-activity__flag {
-  padding: 4px 8px;
-  border-radius: 26px;
-  margin-left: 10px;
-  display: inline-flex;
-  align-items: center;
-  flex-direction: row;
-  cursor: default;
-  text-decoration: none;
+// .m-activity__flag {
+//   padding: 4px 8px;
+//   border-radius: 26px;
+//   margin-left: 10px;
+//   display: inline-flex;
+//   align-items: center;
+//   flex-direction: row;
+//   cursor: default;
+//   text-decoration: none;
 
-  > i,
-  > span > a > span,
-  > a > i {
-    line-height: 16px;
-  }
+//   > i,
+//   > span > a > span,
+//   > a > i {
+//     line-height: 16px;
+//   }
 
-  a {
-    text-decoration: none;
-    font-weight: 400;
-    display: flex;
+//   a {
+//     text-decoration: none;
+//     font-weight: 400;
+//     display: flex;
 
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-  }
+//     @include m-theme() {
+//       color: themed($m-textColor--secondary);
+//     }
+//   }
 
-  &:has(& > span) i {
-    margin-right: 5px;
-  }
+//   &:has(& > span) i {
+//     margin-right: 5px;
+//   }
 
-  > span,
-  > a > span {
-    @media screen and (max-width: $min-tablet) {
-      display: none;
-    }
-  }
+//   > span,
+//   > a > span {
+//     @media screen and (max-width: $min-tablet) {
+//       display: none;
+//     }
+//   }
 
-  @include m-theme() {
-    border: 1px solid themed($m-borderColor--primary);
-    background-color: unset;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    color: themed($m-textColor--secondary);
-  }
-}
-.m-activity__flag--permaweb,
-.m-activity__flag--pinned,
-.m-activity__flag--boosted {
-  i {
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-  }
+//   @include m-theme() {
+//     border: 1px solid themed($m-borderColor--primary);
+//     background-color: unset;
+//     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+//     color: themed($m-textColor--secondary);
+//   }
+// }
+// .m-activity__flag--permaweb,
+// .m-activity__flag--pinned,
+// .m-activity__flag--boosted {
+//   i {
+//     @include m-theme() {
+//       color: themed($m-textColor--secondary);
+//     }
+//   }
 
-  svg {
-    @include m-theme() {
-      fill: themed(m-textColor--secondary);
-    }
-  }
+//   svg {
+//     @include m-theme() {
+//       fill: themed(m-textColor--secondary);
+//     }
+//   }
 
-  i,
-  svg {
-    font-size: 18px;
-    @media screen and (max-width: $min-tablet) {
-      margin-right: 4px;
-    }
-  }
-}
-@media screen and (max-width: $max-mobile) {
-  m-channel--badges {
-    /* prevent badges from shown behind right container */
-    overflow: visible !important;
-  }
-}
+//   i,
+//   svg {
+//     font-size: 18px;
+//     @media screen and (max-width: $min-tablet) {
+//       margin-right: 4px;
+//     }
+//   }
+// }
+// @media screen and (max-width: $max-mobile) {
+//   m-channel--badges {
+//     /* prevent badges from shown behind right container */
+//     overflow: visible !important;
+//   }
+// }

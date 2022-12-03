@@ -19,9 +19,9 @@ import { GroupsCard } from '../../../modules/groups/card/card';
 import { BlogCard } from '../../../modules/blogs/card/card';
 import { CommentComponentV2 } from '../../../modules/comments/comment/comment.component';
 import { ActivityService } from '../../services/activity.service';
-import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { UserCard } from '../user-card/user';
+import { ActivityV2Component } from '../../../modules/newsfeed/activity-v2/activity.component';
 
 /**
  * Generic component that receives an entity, figures out the entity type,
@@ -116,7 +116,7 @@ export class MindsCard implements AfterViewInit {
       object.subtype === 'video' ||
       object.subtype === 'album'
     ) {
-      return ActivityComponent;
+      return ActivityV2Component;
     } else if (object.type === 'group') {
       return GroupsCard;
     } else if (object.subtype === 'blog') {
@@ -177,7 +177,7 @@ export class MindsCard implements AfterViewInit {
       this.componentInstance.entity = this.object;
 
       if (this.displayOptions) {
-        (<ActivityComponent>(
+        (<ActivityV2Component>(
           this.componentInstance
         )).displayOptions = this.displayOptions;
       }

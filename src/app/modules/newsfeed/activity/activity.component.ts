@@ -36,11 +36,12 @@ import { ElementVisibilityService } from '../../../common/services/element-visib
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
+//ojm delete this file
 /**
  * Base component for activity posts (excluding activities displayed in a modal)
  */
 @Component({
-  selector: 'm-activity',
+  selector: 'm-activityV1', //ojm ,
   templateUrl: 'activity.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -123,15 +124,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.isV2 = this.service.displayOptions.isV2; // ojm
+    this.isV2 = true; // ojm
 
-    this.isFixedHeight =
-      this.service.displayOptions.fixedHeight &&
-      !this.service.displayOptions.isV2;
+    this.isFixedHeight = false;
 
-    this.isFixedHeightContainer =
-      this.service.displayOptions.fixedHeightContainer &&
-      !this.service.displayOptions.isV2;
+    this.isFixedHeightContainer = false;
 
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
 
@@ -161,26 +158,26 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (!this.isV2) {
-      setTimeout(() => this.calculateHeight());
-      if (this.canRecordAnalytics) {
-        this.elementVisibilityService
-          .setEntity(this.service.entity$.value)
-          .setElementRef(this.el)
-          .onView((entity: ActivityEntity) => {
-            if (!entity) return;
-
-            this.newsfeedService.recordView(
-              entity,
-              true,
-              null,
-              this.clientMeta.build({
-                campaign: entity.boosted_guid ? entity.urn : '',
-                position: this.slot,
-              })
-            );
-          });
-        this.elementVisibilityService.checkVisibility();
-      }
+      //   setTimeout(() => this.calculateHeight());
+      //   if (this.canRecordAnalytics) {
+      //     this.elementVisibilityService
+      //       .setEntity(this.service.entity$.value)
+      //       .setElementRef(this.el)
+      //       .onView((entity: ActivityEntity) => {
+      //         if (!entity) return;
+      //         this.newsfeedService.recordView(
+      //           entity,
+      //           true,
+      //           null,
+      //           this.clientMeta.build({
+      //             campaign: entity.boosted_guid ? entity.urn : '',
+      //             position: this.slot,
+      //           })
+      //         );
+      //       });
+      //     this.elementVisibilityService.checkVisibility();
+      //   }
+      // }
     }
   }
 

@@ -37,11 +37,4 @@
       display: none;
     }
   }
-
-  &.m-newsfeed__activitySuggestions--activityV2 {
-    ::ng-deep m-sidebarWidget {
-      .m-newsfeedActivitySuggestion__item {
-      }
-    }
-  }
 }

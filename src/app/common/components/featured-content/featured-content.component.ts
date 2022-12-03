@@ -15,7 +15,7 @@ import { FeaturedContentService } from './featured-content.service';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { isPlatformBrowser } from '@angular/common';
 import { FeaturesService } from '../../../services/features.service';
-import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
+import { ActivityV2Component } from '../../../modules/newsfeed/activity-v2/activity.component';
 
 @Component({
   selector: 'm-featured-content',
@@ -96,7 +96,7 @@ export class FeaturedContentComponent implements OnInit {
 
     if (this.entity.type === 'activity') {
       return {
-        component: ActivityComponent,
+        component: ActivityV2Component,
         injector: (componentRef, entity) => {
           componentRef.instance.entity = entity;
           componentRef.instance.displayOptions = this.displayOptions ?? {};

@@ -14,6 +14,7 @@ import {
   ViewChild,
   Inject,
   PLATFORM_ID,
+  EventEmitter,
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
@@ -42,7 +43,7 @@ import { PersistentFeedExperimentService } from '../../experiments/sub-services/
  * Includes activities displayed in feeds, on single activity pages, in pro pages, channel grid mode, sidebar boosts (excluding blogs), sidebar suggestions
  */
 @Component({
-  selector: 'm-activityV2',
+  selector: 'm-activity',
   templateUrl: 'activity.component.html',
   styleUrls: ['activity.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -143,6 +144,9 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   // Whether the boost/remind/supermind flag should appear on top of owner block
   showFlagRow: boolean = false;
+
+  @Output() previousBoost: EventEmitter<any> = new EventEmitter();
+  @Output() nextBoost: EventEmitter<any> = new EventEmitter();
 
   constructor(
     public service: ActivityService,

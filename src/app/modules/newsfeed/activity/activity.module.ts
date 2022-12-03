@@ -52,7 +52,7 @@ import { ActivityV2Module } from '../activity-v2/activity.module';
     ActivityV2Module,
   ],
   declarations: [
-    ActivityComponent,
+    ActivityComponent, // ojm remove?
     ActivityOwnerBlockComponent,
     ActivityContentComponent,
     ActivityToolbarComponent,

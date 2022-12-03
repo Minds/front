@@ -33,7 +33,7 @@
 <!-- Preview image / link -->
 <a
   [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]"
-  class="mdl-card__title minds-blog-thumbnail m-blogCard__thumbnail"
+  class="mdl-card__title minds-blog-thumbnail"
   [ngStyle]="{background: 'url(' + blog.thumbnail_src + ') center center / cover'}"
   [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(blog) }"
 ></a>

@@ -1,13 +1,22 @@
 @import 'defaults.scss';
 
 :host {
-  display: flex;
-  flex-direction: column;
+  display: block;
   position: relative;
   box-sizing: border-box;
-  border-radius: 0 !important;
+
+  border-radius: $m-borderRadius;
+
   @include m-theme() {
     background: themed($m-bgColor--primary);
+  }
+
+  .m-activity__wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 0 !important;
   }
 
   // *********************************
@@ -50,28 +59,34 @@
   // *********************************
 
   &.m-activity--fixedHeight {
-    justify-content: space-between;
     border-top: none !important;
-    width: 100%;
-    // leave room for top boost rotator buttons
-    height: calc(100% - 45px);
+    display: contents;
 
-    .m-activity__top {
-      padding-top: $spacing4;
-      overflow: hidden;
-      // leave room for bottom toolbar
-      height: calc(100% - 68px);
-    }
+    .m-activity__wrapper {
+      display: flex;
+      width: 100%;
+      // leave room for top boost rotator buttons
+      height: calc(100% - 45px);
 
-    .m-activity__flagRow {
-      padding-bottom: 0;
-    }
+      justify-content: space-between;
 
-    ::ng-deep {
-      m-activityV2__nsfwConsent {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+      .m-activity__top {
+        padding-top: $spacing4;
+        overflow: hidden;
+        // leave room for bottom toolbar
+        height: calc(100% - 68px);
+      }
+
+      .m-activity__flagRow {
+        padding-bottom: 0;
+      }
+
+      ::ng-deep {
+        m-activityV2__nsfwConsent {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
       }
     }
   }
@@ -221,6 +236,26 @@
           }
         }
       }
+    }
+  }
+  // *********************************
+  // ** COMMENTS **
+  // *********************************
+  // TODO: move these to the relevant comments file
+  .m-comment .minds-avatar {
+    @include m-theme() {
+      background: themed($m-bgColor--primary);
+    }
+  }
+
+  &
+    > m-comments__entityOutlet
+    > m-comments__tree
+    > m-comments__thread
+    > .m-comments__thread,
+  & > m-comments__entityOutlet {
+    & > m-comment__poster .m-commentPoster__wrapper {
+      margin: 10px;
     }
   }
 

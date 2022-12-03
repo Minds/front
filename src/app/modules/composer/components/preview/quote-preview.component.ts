@@ -11,7 +11,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { DynamicHostDirective } from '../../../../common/directives/dynamic-host.directive';
-import { ActivityComponent } from '../../../newsfeed/activity/activity.component';
+import { ActivityV2Component } from '../../../newsfeed/activity-v2/activity.component';
 import { ComposerService } from '../../services/composer.service';
 
 /**
@@ -45,7 +45,7 @@ export class QuotePreviewComponent {
 
   loadActivityModule() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      ActivityComponent
+      ActivityV2Component
     );
     // const activity = componentFactory.create(this.injector);
 

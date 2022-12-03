@@ -13,15 +13,4 @@ $layoutMax2ColWidth: '1040px';
       @include borderRight;
     }
   }
-
-  ::ng-deep {
-    m-activity {
-      &:first-child {
-        m-activityV2 {
-          // ojm this wasn't working on top feed
-          border-top: none !important;
-        }
-      }
-    }
-  }
 }
