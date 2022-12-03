@@ -125,6 +125,7 @@ export const config: CustomMainConfig = {
     activityModalComponent: './fragments/activityModalComponent.ts',
     boostRotatorComponent: './fragments/boostRotatorComponent.ts',
     confirmationModalComponent: './fragments/confirmationModalComponent.ts',
+    modalComponent: './fragments/modalComponent.ts',
     notificationsComponent: './fragments/notificationsComponent.ts',
     sidebarComponent: './fragments/sidebarComponent.ts',
     supermindOnboardingModalComponent:

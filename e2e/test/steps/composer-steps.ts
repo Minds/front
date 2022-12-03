@@ -21,6 +21,11 @@ namespace ComposerSteps {
     composerModalComponent.clickPost();
   });
 
+  //
+  When('I click on the sidebar composer button', () => {
+    sidebarComponent.openSidebarComposer();
+  });
+
   When('I click the nsfw icon on the composer toolbar', () => {
     composerModalComponent.clickNsfwOption();
   });
@@ -102,7 +107,7 @@ namespace ComposerSteps {
     I.seeElement(composerModalComponent.modalElementTag);
   });
 
-  Then('I should still see the composer modal open', () => {
-    I.seeElement(composerModalComponent.modalElementTag);
+  Then('the composer text area should be empty', () => {
+    I.seeInField(composerModalComponent.textAreaSelector, '');
   });
 }

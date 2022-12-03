@@ -126,8 +126,18 @@ namespace CommonSteps {
     I.wait(seconds);
   });
 
+  //
+
   When('I click the cancel button on the confirmation modal', () => {
     confirmationModalComponent.clickCancel();
+  });
+
+  When('I accept the system confirmation dialog', () => {
+    I.acceptPopup();
+  });
+
+  When('I cancel the system confirmation dialog', () => {
+    I.cancelPopup();
   });
 
   //

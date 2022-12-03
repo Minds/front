@@ -7,7 +7,7 @@ const storage: Storage = Storage.getInstance();
 class ComposerModalComponent {
   public modalElementTag: string = 'm-composer__modal';
   private textAreaTitleSelector: string = `${this.modalElementTag} .m-composerTextarea__title`;
-  private textAreaSelector: string = `${this.modalElementTag} [data-cy=composer-textarea]`;
+  public textAreaSelector: string = `${this.modalElementTag} [data-cy=composer-textarea]`;
   private postButtonSelector: string = `${this.modalElementTag} [data-cy=post-button]`;
   private tabSelector: string = '.m-tabs__tab';
   public supermindTargetInputSelector: string = '[placeholder="@username"]';
