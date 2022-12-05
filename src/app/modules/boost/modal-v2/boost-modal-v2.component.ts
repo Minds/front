@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { ToasterService } from '../../../common/services/toaster.service';
 import { BoostModalData, BoostModalPanel } from './boost-modal-v2.types';
 import { BoostModalV2Service } from './services/boost-modal-v2.service';
 
@@ -23,7 +24,10 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
   // subscriptions.
   private saveIntentSubscription: Subscription;
 
-  constructor(private service: BoostModalV2Service) {}
+  constructor(
+    private service: BoostModalV2Service,
+    private toast: ToasterService
+  ) {}
 
   ngOnInit(): void {
     this.saveIntentSubscription = this.service.callSaveIntent$.subscribe(
@@ -54,6 +58,14 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
   setModalData({ onDismissIntent, onSaveIntent, entity }: BoostModalData) {
     this.onDismissIntent = onDismissIntent ?? (() => {});
     this.onSaveIntent = onSaveIntent ?? (() => {});
+
+    // if an entity is nsfw, it cannot be boosted - reset and close modal.
+    if (entity['nsfw']?.length > 0 || entity['nsfw_lock']?.length > 0) {
+      this.toast.error('NSFW content cannot be boosted.');
+      this.onDismissIntent();
+      return;
+    }
+
     this.service.entity$.next(entity ?? null);
   }
 }
