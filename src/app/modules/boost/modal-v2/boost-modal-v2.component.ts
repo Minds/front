@@ -55,7 +55,11 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
    * Set modal data.
    * @param { BoostModalData } data - data for boost modal
    */
-  setModalData({ onDismissIntent, onSaveIntent, entity }: BoostModalData) {
+  public setModalData({
+    onDismissIntent,
+    onSaveIntent,
+    entity,
+  }: BoostModalData) {
     this.onDismissIntent = onDismissIntent ?? (() => {});
     this.onSaveIntent = onSaveIntent ?? (() => {});
 

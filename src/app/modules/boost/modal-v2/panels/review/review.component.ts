@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfigsService } from '../../../../../common/services/configs.service';
-import { ThemeService } from '../../../../../common/services/theme.service';
 import {
   BoostAudience,
   BoostModalPanel,
@@ -61,19 +59,6 @@ export class BoostModalV2ReviewComponent {
     })
   );
 
-  // background for select box.
-  public selectBackground$: Observable<{
-    background: string;
-  }> = this.theme.isDark$.pipe(
-    map(isDark => {
-      return {
-        background: `url('${this.cdnAssetsUrl}assets/icons/arrow-drop-down-${
-          isDark ? 'white' : 'black'
-        }.svg') 98% center no-repeat`,
-      };
-    })
-  );
-
   // estimate reach text.
   public readonly estimatedReachText$: Observable<
     string
@@ -85,16 +70,7 @@ export class BoostModalV2ReviewComponent {
     })
   );
 
-  // CDN assets URL.
-  private readonly cdnAssetsUrl: string;
-
-  constructor(
-    private service: BoostModalV2Service,
-    private theme: ThemeService,
-    configs: ConfigsService
-  ) {
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-  }
+  constructor(private service: BoostModalV2Service) {}
 
   /**
    * Change the active panel - allows back click behavior.

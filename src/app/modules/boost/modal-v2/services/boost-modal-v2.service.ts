@@ -153,6 +153,7 @@ export class BoostModalV2Service implements OnDestroy {
          * from API and shape it in the below commented out map statement. Note you MAY need to catchError
          * in a higher order observable as we do for throwError below, else the erroneous state passed to the
          * catchError at the bottom of this streams outer observable will terminate the stream altogether.
+         * Be sure to unit test.
          */
         return throwError('Unable to calculate estimation').pipe(
           catchError(e => this.handleRequestError(e))

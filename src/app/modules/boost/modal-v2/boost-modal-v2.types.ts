@@ -51,6 +51,8 @@ export type BoostableEntity = {
   type: string;
   subtype: string;
   owner_guid: string;
+  nsfw?: number[];
+  nsfw_lock?: number[];
   time_created: number | string;
 };
 

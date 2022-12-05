@@ -17,10 +17,10 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 })
 export class BoostModalV2AudienceSelectorComponent
   implements OnInit, OnDestroy {
+  public BoostAudience: typeof BoostAudience = BoostAudience;
   public form: FormGroup; // form group
   public audienceChangeSubscription: Subscription; // change audience in service on value change.
   public audienceInitSubscription: Subscription; // init the form using existing audience or default.
-  public BoostAudience = BoostAudience;
 
   constructor(
     private service: BoostModalV2Service,
