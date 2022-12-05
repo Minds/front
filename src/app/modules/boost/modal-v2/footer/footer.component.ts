@@ -26,6 +26,10 @@ export class BoostModalV2FooterComponent implements OnDestroy {
   public readonly entityType$: Observable<BoostSubject> = this.service
     .entityType$;
 
+  // whether boost submission is in progress.
+  public readonly boostSubmissionInProgress$: Observable<boolean> = this.service
+    .boostSubmissionInProgress$;
+
   // subscription fired once on button click.
   private buttonClickSubscription: Subscription;
 

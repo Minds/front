@@ -83,12 +83,16 @@ export type EstimatedReach = {
   upper_bound: number;
 };
 
-export type BoostSubmitResponse = {
+// Boost submission request object.
+export type BoostSubmitRequest = {
   entity_guid: string;
   target_suitability: BoostAudience;
   target_location: BoostLocation;
   payment_method: BoostPaymentMethod;
-  payment_method_id: string;
+  payment_method_id?: string;
   daily_bid: number;
   duration_days: number;
 };
+
+// Response on boost submission.
+export type BoostSubmitResponse = {};

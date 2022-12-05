@@ -47,6 +47,8 @@
     size="small"
     color="blue"
     [solid]="true"
+    [saving]="boostSubmissionInProgress$ | async"
+    [disabled]="boostSubmissionInProgress$ | async"
     (onAction)="onButtonClick($event)"
     data-ref="boost-modal-v2-footer-next-button"
   >

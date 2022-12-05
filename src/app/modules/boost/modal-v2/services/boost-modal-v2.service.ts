@@ -4,6 +4,7 @@ import {
   combineLatest,
   Observable,
   of,
+  Subject,
   Subscription,
   throwError,
 } from 'rxjs';
@@ -11,12 +12,16 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
+  finalize,
   map,
   shareReplay,
   switchMap,
   take,
+  tap,
 } from 'rxjs/operators';
+import { ApiService } from '../../../../common/api/api.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import {
   DEFAULT_AUDIENCE,
   DEFAULT_CASH_DURATION,
@@ -29,11 +34,14 @@ import {
   BoostableEntity,
   BoostAudience,
   BoostConfig,
+  BoostLocation,
   BoostModalPanel,
   BoostPaymentCategory,
   BoostPaymentMethod,
   BoostPaymentMethodId,
   BoostSubject,
+  BoostSubmitRequest,
+  BoostSubmitResponse,
   EstimatedReach,
 } from '../boost-modal-v2.types';
 
@@ -81,6 +89,14 @@ export class BoostModalV2Service implements OnDestroy {
   public readonly duration$: BehaviorSubject<number> = new BehaviorSubject<
     number
   >(null);
+
+  // whether boost submission is in progress.
+  public readonly boostSubmissionInProgress$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
+  // Emit to call modal save intent.
+  public readonly callSaveIntent$: Subject<boolean> = new Subject<boolean>();
 
   // derived entity type from entity selected for boosting.
   public entityType$: Observable<BoostSubject> = this.entity$.pipe(
@@ -158,7 +174,11 @@ export class BoostModalV2Service implements OnDestroy {
   private paymentCategoryChangeSubscription: Subscription;
   private openPreviousPanelSubscription: Subscription;
 
-  constructor(private config: ConfigsService) {
+  constructor(
+    private api: ApiService,
+    private toast: ToasterService,
+    private config: ConfigsService
+  ) {
     // set default duration and budgets on payment category change.
     this.paymentCategoryChangeSubscription = this.paymentCategory$.subscribe(
       paymentCategory => {
@@ -250,35 +270,84 @@ export class BoostModalV2Service implements OnDestroy {
    */
   private submitBoost(): void {
     this.submitBoostSubscription = combineLatest([
+      this.entity$,
+      this.entityType$,
       this.paymentMethod$,
       this.paymentMethodId$,
       this.duration$,
       this.dailyBudget$,
       this.audience$,
     ])
-      .pipe(take(1))
-      .subscribe(
-        ([paymentMethod, paymentMethodId, duration, dailyBudget, audience]) => {
-          // {{host}}/api/v3/boosts
-
-          // TODO: Implement boost submission behavior.
-          console.log('paymentMethod', paymentMethod);
-          console.log('paymentMethodId', paymentMethodId);
-          console.log('duration', duration);
-          console.log('dailyBudget', dailyBudget);
-          console.log('audience', audience);
-
-          // alert('submitted');
-        }
-      );
+      .pipe(
+        take(1),
+        tap(_ => this.boostSubmissionInProgress$.next(true)),
+        map(
+          ([
+            entity,
+            entityType,
+            paymentMethod,
+            paymentMethodId,
+            duration,
+            dailyBudget,
+            audience,
+          ]: [
+            BoostableEntity,
+            BoostSubject,
+            BoostPaymentMethod,
+            BoostPaymentMethodId,
+            number,
+            number,
+            BoostAudience
+          ]): BoostSubmitRequest => {
+            return {
+              entity_guid: entity.guid,
+              target_suitability: audience,
+              target_location:
+                entityType === BoostSubject.CHANNEL
+                  ? BoostLocation.SIDEBAR
+                  : BoostLocation.NEWSFEED,
+              payment_method: paymentMethod,
+              payment_method_id: paymentMethodId,
+              daily_bid: dailyBudget,
+              duration_days: duration,
+            };
+          }
+        ),
+        switchMap(
+          (
+            boostSubmitRequest: BoostSubmitRequest
+          ): Observable<BoostSubmitResponse> => {
+            return this.api.post<BoostSubmitResponse>(
+              'api/v3/boosts',
+              boostSubmitRequest
+            );
+          }
+        ),
+        tap(_ => {
+          this.toast.success('Success! Your boost request is being processed.');
+          this.callSaveIntent$.next(true);
+        }),
+        finalize(() => this.boostSubmissionInProgress$.next(false)),
+        catchError((e: any) => this.handleRequestError(e, true))
+      )
+      .subscribe();
   }
 
   /**
    * Handle API errors.
    * @param { any } e - error from API.
+   * @param { boolean } toast - whether to display error toasts.
    * @returns { Observable<null> } - will emit null.
    */
-  private handleRequestError(e: any): Observable<null> {
+  private handleRequestError(e: any, toast: boolean = false): Observable<null> {
+    if (toast) {
+      console.log(e);
+      if (e.error?.errors?.length) {
+        this.toast.error(e.error.errors[0].message);
+      } else {
+        this.toast.error(e.error?.message ?? 'An unknown error has occurred');
+      }
+    }
     console.error(e);
     return of(null);
   }
