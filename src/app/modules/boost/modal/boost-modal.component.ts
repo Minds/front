@@ -92,8 +92,17 @@ export class BoostModalComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> } awaitable.
    */
   public async submitBoost(): Promise<void> {
-    this.inProgress$.next(true);
     let response;
+
+    if (
+      this.service.activeTab$.getValue() === 'cash' &&
+      !this.service.cashRefundPolicy$.getValue()
+    ) {
+      this.toast.error('You must accept the cash boost refund policy first');
+      return;
+    }
+
+    this.inProgress$.next(true);
 
     try {
       response = await this.service.submitBoostAsync();
