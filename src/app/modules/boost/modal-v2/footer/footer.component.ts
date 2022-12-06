@@ -44,7 +44,7 @@ export class BoostModalV2FooterComponent implements OnDestroy {
    * @param { void } $event - mouse event.
    */
   public onButtonClick($event: MouseEvent): void {
-    this.activePanel$
+    this.buttonClickSubscription = this.activePanel$
       .pipe(take(1))
       .subscribe((activePanel: BoostModalPanel) => {
         this.service.changePanelFrom(activePanel);

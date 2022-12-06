@@ -73,7 +73,7 @@ class BoostModalComponent {
    * @returns { void }
    */
   public setDailyBudget(dailyBudget: number): void {
-    I.setRangeValue(this.dailyBudgetSliderSelector, dailyBudget);
+    I.setRangeInputValue(this.dailyBudgetSliderSelector, dailyBudget);
   }
 
   /**
@@ -82,7 +82,7 @@ class BoostModalComponent {
    * @returns { void }
    */
   public setDuration(durationDays: number): void {
-    I.setRangeValue(this.durationSliderSelector, durationDays);
+    I.setRangeInputValue(this.durationSliderSelector, durationDays);
   }
 
   /**
@@ -127,7 +127,7 @@ class BoostModalComponent {
   ): void {
     I.seeInField(
       this.paymentMethodTokensReviewSelector,
-      tokenPaymentMethod === 'offchain-tokens' ? '2' : '1'
+      tokenPaymentMethod === 'offchain-tokens' ? '2' : '3'
     );
   }
 

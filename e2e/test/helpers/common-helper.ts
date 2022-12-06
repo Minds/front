@@ -33,7 +33,10 @@ class CommonHelper extends Helper {
    * @param { number } amount - amount value to set.
    * @returns { Promise<void> }
    */
-  public async setRangeValue(selector: string, amount: number): Promise<void> {
+  public async setRangeInputValue(
+    selector: string,
+    amount: number
+  ): Promise<void> {
     const { page } = this.helpers.Playwright;
 
     await page.$eval(
