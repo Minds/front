@@ -10,6 +10,7 @@
 
   .m-boostModalTabs__tabContainer {
     @include body1Medium;
+    @include unselectable;
     margin-right: 20px;
     padding-bottom: 5px;
     cursor: pointer;

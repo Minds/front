@@ -6,6 +6,7 @@
     justify-content: space-between;
     padding-top: $spacing6;
     align-items: center;
+    @include unselectable;
 
     .m-boostModalV2__headerLeft {
       display: flex;
@@ -24,8 +25,6 @@
             color: themed($m-textColor--secondary);
           }
         }
-
-        @include unselectable;
       }
 
       .m-modalV2Header__title {
