@@ -20,6 +20,7 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import isMobileOrTablet from '../../../app/helpers/is-mobile-or-tablet';
+import { ExperimentsService } from '../experiments/experiments.service';
 
 /**
  * Home page component
@@ -34,10 +35,15 @@ export class HomepageV3Component implements OnInit {
 
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;
-  readonly headline = $localize`:@@ELEVATE_THE_GLOBAL_CONVERSATION:Elevate the global conversation`;
-  readonly description = $localize`:@@HOMEPAGE__V3__SUBHEADER:Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.`;
   readonly NEURAL_BACKGROUND_BLURHASH =
     '|03u=zF}U]rWRjt6W;s:Na=G$*F2s.jtR*xFR*s-znM{o~OrofaeWBoJWqPBoeVssUWBjYW=ogoMRibbt7R*xDR,flj?fPX9jFjYofW=oMR*n$o0bbW=n%WBoJWqj[j[ayWBoJW=fko0ayoKa}bHs.R*o0bIbIsmS2j@fk';
+
+  headline = $localize`:@@ELEVATE_THE_GLOBAL_CONVERSATION:Elevate the global conversation`;
+  description = $localize`:@@HOMEPAGE__V3__SUBHEADER:Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.`;
+
+  descriptionExperiment = $localize`:@@HOMEPAGE__V3__SUBHEADER__EXPERIMENT:The decentralized social network and digital content marketplace. You’re in control.`;
+
+  copyExperiment: boolean = false;
 
   constructor(
     public client: Client,
@@ -51,6 +57,7 @@ export class HomepageV3Component implements OnInit {
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
     private appPromptService: AppPromptService,
+    private experimentsService: ExperimentsService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -62,6 +69,11 @@ export class HomepageV3Component implements OnInit {
       this.router.navigate(['/newsfeed']);
       return;
     }
+
+    this.copyExperiment = this.experimentsService.hasVariation(
+      'front-homepage-copy-3549',
+      true
+    );
 
     this.pageLayoutService.useFullWidth();
     this.pageLayoutService.removeTopbarBackground();
