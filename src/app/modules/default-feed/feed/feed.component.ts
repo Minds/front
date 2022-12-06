@@ -88,7 +88,7 @@ export class DefaultFeedComponent implements OnInit {
 
     try {
       let endpoint = `api/v3/newsfeed/default-feed`;
-      if (this.isDiscoveryTopExperimentActive()) {
+      if (this.location) {
         endpoint = `api/v3/newsfeed/feed/clustered-recommendations`;
       }
       this.feedsService
@@ -119,17 +119,5 @@ export class DefaultFeedComponent implements OnInit {
 
     // show after the 3rd post
     return index === 2;
-  }
-
-  /**
-   * Check if the discovery top experiment is active for the current session
-   * @returns boolean
-   */
-  private isDiscoveryTopExperimentActive(): boolean {
-    if (!this.location) {
-      return false;
-    }
-
-    return this.experiments.hasVariation('minds-2263-clustered-recs', true);
   }
 }

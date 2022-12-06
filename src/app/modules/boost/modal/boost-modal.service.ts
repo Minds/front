@@ -104,6 +104,11 @@ export class BoostModalService implements OnDestroy {
     );
   }
 
+  // Cash boosts must select checkbox
+  public readonly cashRefundPolicy$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   // Disable the ability to boost
   get disabled$(): Observable<boolean> {
     return combineLatest([
@@ -423,5 +428,6 @@ export class BoostModalService implements OnDestroy {
     this.activeTab$.next(
       this.cashExperiment.isActive() ? DEFAULT_ACTIVE_TAB : 'tokens'
     );
+    this.cashRefundPolicy$.next(false);
   }
 }

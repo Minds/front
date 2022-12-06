@@ -39,7 +39,7 @@ Feature: Boost Creation
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
     # And I can revoke a newsfeed boost
 
-  Scenario: should allow the user to make a valid tokens channel boost
+  Scenario: should allow the user to revoke a valid tokens channel boost
     Given I am logged in
     When I am on my channel page
     And I open my channel boost modal

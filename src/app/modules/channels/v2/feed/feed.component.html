@@ -36,15 +36,13 @@
     <!-- ----------------------------------------- -->
     <!-- WIDGET: CHANNEL RECOMMENDATION -->
     <!-- ----------------------------------------- -->
-    <ng-container *mExperiment="'minds-2933-channelrecs'; variation: true">
-      <m-channelRecommendation
-        [title]="channelRecommendationTitle"
-        location="channel"
-        [channelId]="service.guid$ | async"
-        [visible]="channelRecommendationVisible$ | async"
-        *ngIf="!isOwnedChannel"
-      ></m-channelRecommendation>
-    </ng-container>
+    <m-channelRecommendation
+      [title]="channelRecommendationTitle"
+      location="channel"
+      [channelId]="service.guid$ | async"
+      [visible]="channelRecommendationVisible$ | async"
+      *ngIf="!isOwnedChannel"
+    ></m-channelRecommendation>
 
     <!-- ----------------------------------------- -->
     <!-- SEARCH QUERY DISPLAY -->
