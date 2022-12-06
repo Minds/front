@@ -97,6 +97,8 @@ namespace CommonSteps {
       case process.env.SUPERMIND_SETTINGS_USERNAME:
         password = process.env.SUPERMIND_SETTINGS_PASSWORD || '';
         break;
+      case process.env.PLAYWRIGHT_SECONDARY_USERNAME:
+        password = process.env.PLAYWRIGHT_SECONDARY_PASSWORD || '';
       default:
         username = process.env.PLAYWRIGHT_USERNAME || '';
         password = process.env.PLAYWRIGHT_PASSWORD || '';
