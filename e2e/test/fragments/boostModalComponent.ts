@@ -64,6 +64,10 @@ class BoostModalComponent {
           this.defaultStripeSuccessCardSuffix
         )
       );
+
+      I.click(
+        'I understand this cash boost is non-refundable once it has been approved'
+      );
     }
 
     I.click(this.boostPostButtonSelector);

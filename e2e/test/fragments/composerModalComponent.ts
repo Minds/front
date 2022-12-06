@@ -20,7 +20,7 @@ class ComposerModalComponent {
     '[data-ref=supermind-refund-policy-checkbox] .m-formInputCheckbox__custom';
   private supermindSaveButtonSelector: string =
     '[data-ref=supermind-save-button]';
-  private supermindBadgeSelector: string = '.m-paywallBadge__tierName';
+  private supermindBadgeSelector: string = 'm-supermindbadge';
   private nsfwButtonSelector: string = `${this.modalElementTag} [data-cy=nsfw-button]`;
   private nsfwSaveButtonSelector: string = '[data-cy=nsfw-save-button]';
   private meatballMenuSelector: string = `${this.modalElementTag} [data-cy=meatball-menu-trigger]`;
