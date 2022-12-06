@@ -99,6 +99,7 @@ namespace CommonSteps {
         break;
       case process.env.PLAYWRIGHT_SECONDARY_USERNAME:
         password = process.env.PLAYWRIGHT_SECONDARY_PASSWORD || '';
+        break;
       default:
         username = process.env.PLAYWRIGHT_USERNAME || '';
         password = process.env.PLAYWRIGHT_PASSWORD || '';
