@@ -1,4 +1,8 @@
-import { BoostOptions, BoostTab } from '../types/boost-modal.types';
+import {
+  BoostAudience,
+  BoostTab,
+  BoostTokenPaymentMethod,
+} from '../types/boost-modal.types';
 
 const { I } = inject();
 
@@ -6,123 +10,150 @@ const { I } = inject();
  * Boost Modal
  */
 class BoostModalComponent {
-  // selectors.
-  private readonly boostViewsInputSelector: string =
-    '[data-ref=boost-modal-views-input]';
-  private readonly amountInputErrorSelector: string =
-    '[data-ref=boost-modal-amount-error]';
-  private readonly boostPostButtonDisabledSelector: string =
-    '[data-ref=boost-modal-boost-button] button[disabled]';
-  private readonly boostPostButtonSelector: string =
-    '[data-ref=boost-modal-boost-button] button';
-  private readonly tokenTabSelector: string =
-    '[data-ref=boost-modal-tokens-tab]';
-  private readonly cashTabSelector: string = '[data-ref=boost-modal-cash-tab]"';
-  private readonly cashPaymentMethodSelector: string =
-    '[data-ref=boost-modal-cash-payment-custom-selector]';
-  private readonly defaultStripeSuccessCardSuffix: string = '4242';
-  private readonly tabTitleSelector: string =
-    '[data-ref=boost-modal-tab-title]';
-  private readonly tabDescriptionSelector: string =
-    '[data-ref=boost-modal-main-panel-description]';
-  private readonly modalTitleSelector: string = '.m-modalV2Header__title';
+  // audience panel
+  private readonly controversialRadioButtonSelector: string =
+    '[data-ref=boost-modal-v2-audience-selector-controversial-radio-button]';
+  private readonly safeRadioButtonSelector: string =
+    '[data-ref=boost-modal-v2-audience-selector-safe-radio-button]';
+
+  // budget tab
+  private readonly cashTabSelector: string =
+    '[data-ref=boost-modal-v2-cash-tab]';
+  private readonly tokensTabSelector: string =
+    '[data-ref=boost-modal-v2-tokens-tab]';
+  private readonly dailyBudgetSliderSelector: string =
+    '[data-ref=boost-modal-v2-budget-tab-daily-budget-range-input] input';
+  private readonly durationSliderSelector: string =
+    '[data-ref=boost-modal-v2-budget-tab-duration-range-input] input';
+
+  // review panel
+  private readonly audienceReviewSelector: string =
+    '[data-ref=boost-modal-v2-audience-text]';
+  private readonly budgetAndDurationReviewSelector: string =
+    '[data-ref=boost-modal-v2-budget-text]';
+  private readonly paymentMethodCashReviewSelector: string =
+    '[data-ref=boost-modal-v2-cash-payment-custom-selector]';
+  private readonly paymentMethodTokensReviewSelector: string =
+    '[data-ref=boost-modal-v2-token-payment-select]';
+  private readonly totalAmountReviewSelector: string =
+    '[data-ref=boost-modal-v2-total-amount-text]';
+
+  // footer
+  private readonly submitButton: string =
+    '[data-ref=boost-modal-v2-footer-next-button]';
 
   /**
-   * Switch boost modal tab.
-   * @param { BoostTab } tab - tab to switch to.
+   * Select audience from a boost when on audience panel
+   * @param { BoostAudience } audience - audience to select.
    * @returns { void }
    */
-  public switchTab(tab: BoostTab) {
-    I.click(tab === 'cash' ? this.cashTabSelector : this.tokenTabSelector, tab);
-  }
-
-  /**
-   * Clear field and enter new amount of views.
-   * @param { number } amount - amount of views.
-   * @returns { void }
-   */
-  public enterViewInputAmount(amount: number): void {
-    I.clearField(this.boostViewsInputSelector);
-    I.fillField(this.boostViewsInputSelector, amount);
-  }
-
-  /**
-   * Boost - when modal is open.
-   * @param { BoostOptions } opts - options to boost with.
-   * @returns { void }
-   */
-  public boost(opts: BoostOptions): void {
-    if (opts.tab === 'tokens') {
-      I.click(this.tokenTabSelector);
-    }
-
-    this.enterViewInputAmount(opts.impressions);
-
-    if (opts.tab === 'cash') {
-      I.waitForElement(
-        locate(this.cashPaymentMethodSelector).withText(
-          this.defaultStripeSuccessCardSuffix
-        )
-      );
-    }
-
-    I.click(this.boostPostButtonSelector);
-    I.waitForElement(
-      locate('p').withText('Success! Your boost request is being processed.')
+  public selectBoostAudience(audience: BoostAudience): void {
+    I.click(
+      audience === 'safe'
+        ? this.safeRadioButtonSelector
+        : this.controversialRadioButtonSelector
     );
   }
 
   /**
-   * Whether modal has errors with matching text.
-   * @param { string } text - text to match.
-   * @param { boolean } has - check whether component has or has no matching error.
+   * Navigate to a specific sub-tab of the budget tab.
+   * @param { BoostTab } tab - tab to navigate to.
+   * @returns { void }
    */
-  public hasErrorWithText(text: string, has: boolean = true): void {
-    if (has) {
-      I.seeElement(locate(this.amountInputErrorSelector).withText(text));
-    } else {
-      I.dontSeeElement(locate(this.amountInputErrorSelector).withText(text));
+  public navigateToBudgetTab(tab: BoostTab): void {
+    I.click(tab === 'cash' ? this.cashTabSelector : this.tokensTabSelector);
+    if (tab === 'tokens') {
+      I.click(locate('m-button button').withText('Confirm'));
     }
   }
 
   /**
-   * Whether dismiss button is submitted.
-   * @param { boolean } has - check whether component has or has no disabled submit button.
+   * Sets the daily budget slider value.
+   * @param { number } dailyBudget - value to set.
    * @returns { void }
    */
-  public hasDisabledSubmitButton(has: boolean = true): void {
-    if (has) {
-      I.seeElement(this.boostPostButtonDisabledSelector);
-    } else {
-      I.dontSeeElement(this.boostPostButtonDisabledSelector);
-    }
+  public setDailyBudget(dailyBudget: number): void {
+    I.setRangeValue(this.dailyBudgetSliderSelector, dailyBudget);
   }
 
   /**
-   * Check whether modal has title text (at side when fullscreen).
-   * @param { string } text - text to check for.
+   * Sets the duration slider value.
+   * @param { number } durationDays - value to set.
    * @returns { void }
    */
-  public hasModalTitleWithText(text: string): void {
-    I.seeElement(locate(this.modalTitleSelector).withText(text));
+  public setDuration(durationDays: number): void {
+    I.setRangeValue(this.durationSliderSelector, durationDays);
   }
 
   /**
-   * Check whether modal has description with text.
-   * @param { string } text - text to check for.
+   * Verify the selected audience shown in the review panel.
+   * @param { BoostAudience } audience - audience to verify is shown.
    * @returns { void }
    */
-  public hasTabDescriptionWithText(text: string): void {
-    I.seeElement(locate(this.tabDescriptionSelector).withText(text));
+  public seeReviewAudience(audience: BoostAudience): void {
+    I.seeElement(
+      locate(this.audienceReviewSelector).withText(
+        audience === 'safe' ? 'Safe' : 'Controversial'
+      )
+    );
   }
 
   /**
-   * Check whether modal has tab title with text.
+   * Verify budget and duration text shown in the review panel.
    * @param { string } text - text to check for.
    * @returns { void }
    */
-  public hasTabTitleWithText(text: string): void {
-    I.seeElement(locate(this.tabTitleSelector).withText(text));
+  public seeReviewBudgetAndDuration(text: string): void {
+    I.seeElement(locate(this.budgetAndDurationReviewSelector).withText(text));
+  }
+
+  /**
+   * Verify cash payment method selector in review panel has text.
+   * @param { string } text - text to check for.
+   * @returns { void }
+   */
+  public seeReviewCashPaymentMethod(text: string): void {
+    I.seeElement(locate(this.paymentMethodCashReviewSelector).withText(text));
+  }
+
+  /**
+   * Verify that the tokens option dropdown in the review panel has the correct
+   * selected value.
+   * @param { BoostTokenPaymentMethod } tokenPaymentMethod - token payment method to check for.
+   * @returns { void }
+   */
+  public seeReviewTokensPaymentMethod(
+    tokenPaymentMethod: BoostTokenPaymentMethod
+  ): void {
+    I.seeInField(
+      this.paymentMethodTokensReviewSelector,
+      tokenPaymentMethod === 'offchain-tokens' ? '2' : '1'
+    );
+  }
+
+  /**
+   * Verify the total amount shown in the review panel matches the provided text.
+   * @param { string } text - text to verify is shown.
+   * @returns { void }
+   */
+  public seeReviewTotalAmount(text: string): void {
+    I.seeElement(locate(this.totalAmountReviewSelector).withText(text));
+  }
+
+  /**
+   * Click submit button.
+   * @returns { void }
+   */
+  public clickSubmitButton(): void {
+    I.click(locate(this.submitButton).withText('Boost'));
+  }
+
+  /**
+   * Click next button.
+   * @returns { void }
+   */
+  public clickNextButton(): void {
+    I.click(locate(this.submitButton).withText('Next'));
   }
 }
 

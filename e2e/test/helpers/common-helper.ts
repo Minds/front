@@ -26,6 +26,26 @@ class CommonHelper extends Helper {
     ]);
     return response;
   }
+
+  /**
+   * Set the value of a range input.
+   * @param { string } selector - selector to set for.
+   * @param { number } amount - amount value to set.
+   * @returns { Promise<void> }
+   */
+  public async setRangeValue(selector: string, amount: number): Promise<void> {
+    const { page } = this.helpers.Playwright;
+
+    await page.$eval(
+      selector,
+      (e, value) => {
+        e.value = value;
+        e.dispatchEvent(new Event('input', { bubbles: true }));
+        e.dispatchEvent(new Event('change', { bubbles: true }));
+      },
+      amount
+    );
+  }
 }
 
 export = CommonHelper;
