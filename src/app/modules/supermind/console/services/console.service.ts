@@ -3,8 +3,8 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
 import {
-  SupermindConsoleGetParams,
   SupermindConsoleCountParams,
+  SupermindConsoleGetParams,
   SupermindConsoleListType,
   SupermindState,
 } from '../../supermind.types';
@@ -53,10 +53,12 @@ export class SupermindConsoleService {
           }
         }
 
-        return this.api.get(endpoint, params);
+        return this.api.get<ApiResponse>(endpoint, params);
       }),
       catchError(e => {
-        console.error(e);
+        if (e.status === 403) {
+          return of({ redirect: true, errorMessage: e.error.message });
+        }
         return of(null);
       })
     );

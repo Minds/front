@@ -77,9 +77,10 @@ export const DEFAULT_COMPOSER_SIZE: ComposerSize = 'full';
 export * from './composer-data-types';
 
 /**
- * Store/process class for activities composer. As it's used as a store it should be injected individually
- * on the components that require it using `providers` array.
- */
+ * Store/process class for activity composer.
+ * It should be injected into each component that uses it
+ * (via the `providers` array), as it is used as a store.
+ * */
 @Injectable()
 export class ComposerService implements OnDestroy {
   /**
@@ -212,6 +213,11 @@ export class ComposerService implements OnDestroy {
    * Post-ability check subject (state)
    */
   readonly canPost$: Observable<boolean>;
+
+  /**
+   * Have any form fields changed from default values?
+   */
+  readonly isDirty$: Observable<boolean>;
 
   /**
    * Is this an edit operation? (state)
@@ -423,6 +429,9 @@ export class ComposerService implements OnDestroy {
       this.monetization$, // TODO: Implement custom distinctUntilChanged comparison
       this.tags$, // TODO: Implement custom distinctUntilChanged comparison
       this.schedule$, // TODO: Implement custom distinctUntilChanged comparison
+      // ----------------------
+      // ACCESSID$
+      // ----------------------
       this.accessId$.pipe(
         distinctUntilChanged(),
         tap(accessId => {
@@ -435,10 +444,14 @@ export class ComposerService implements OnDestroy {
           }
         })
       ),
+      // ----------------------
+      // LICENSE$
+      // ----------------------
       this.license$.pipe(distinctUntilChanged()),
-      /**
-       * Builds attachments guids
-       */
+      // ----------------------
+      // ATTACHMENTS$
+      // ----------------------
+      // Builds attachments guids
       combineLatest([
         this.uploaderService.files$.pipe(
           startWith([]), // will not ever resolve combineLatest unless we do this
@@ -465,9 +478,10 @@ export class ComposerService implements OnDestroy {
           ...existingGuids,
         ])
       ),
-      /**
-       * Builds rich embed
-       */
+      // ----------------------
+      // RICHEMBED$
+      // ----------------------
+      // Builds rich-embeds
       this.richEmbed$.pipe(
         // Only react to rich-embed URL changes
         distinctUntilChanged(),
@@ -582,6 +596,48 @@ export class ComposerService implements OnDestroy {
       })
     );
 
+    /**
+     * True if any composer field has changed from its default value
+     * (currently always returns true if editing an existing post)
+     */
+    this.isDirty$ = combineLatest([
+      this.data$,
+      this.isEditing$,
+      this.uploaderService.isUploadingFinished$,
+      this.attachments$,
+      this.richEmbed$,
+    ]).pipe(
+      map(([data, isEditing, isUploadingFinished, attachments, richEmbed]) => {
+        // TODO: implement custom rules for when a post is being edited
+        // by comparing mapped fields in this.payload and this.entity
+        if (!isUploadingFinished || isEditing) {
+          return true;
+        } else {
+          // COMPOSING A NEW POST
+          // We handle attachments and richEmbeds differently bc their
+          // values are transformed when the data obj is built
+          const dirty = Boolean(
+            data.accessId !== DEFAULT_ACCESS_ID_VALUE ||
+              attachments !== DEFAULT_ATTACHMENT_VALUE ||
+              data.license !== DEFAULT_LICENSE_VALUE ||
+              data.message !== DEFAULT_MESSAGE_VALUE ||
+              data.monetization !== DEFAULT_MONETIZATION_VALUE ||
+              data.nsfw !== DEFAULT_NSFW_VALUE ||
+              data.postToPermaweb !== DEFAULT_POST_TO_PERMAWEB_VALUE ||
+              data.remind !== DEFAULT_REMIND_VALUE ||
+              richEmbed !== DEFAULT_RICH_EMBED_VALUE ||
+              data.schedule !== DEFAULT_SCHEDULE_VALUE ||
+              data.supermindReply !== null ||
+              data.supermindRequest !== null ||
+              data.tags !== DEFAULT_TAGS_VALUE ||
+              data.title !== DEFAULT_TITLE_VALUE ||
+              data.videoPoster !== DEFAULT_VIDEOPOSTER_VALUE
+          );
+          return dirty;
+        }
+      })
+    );
+
     // Subscribe to data stream and re-build API payload when it changes
 
     this.dataSubscription = this.data$.subscribe(data => {
@@ -607,7 +663,6 @@ export class ComposerService implements OnDestroy {
     );
 
     // Subscribe to message URL and rich embed in order to know if a URL should be resolved
-
     this.richEmbedExtractorSubscription = combineLatest([
       this.messageUrl$.pipe(distinctUntilChanged()),
       // get last 2 emissions - start with '' for first emission.

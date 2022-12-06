@@ -1,8 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { ModalComponent } from './modal.component';
-import isMobile from '../../../../helpers/is-mobile';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
 
