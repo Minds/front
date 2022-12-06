@@ -101,7 +101,7 @@ export class BoostModalV2Service implements OnDestroy {
   // derived entity type from entity selected for boosting.
   public entityType$: Observable<BoostSubject> = this.entity$.pipe(
     map(entity => {
-      return entity.type === 'user' ? BoostSubject.CHANNEL : BoostSubject.POST;
+      return entity?.type === 'user' ? BoostSubject.CHANNEL : BoostSubject.POST;
     })
   );
 
