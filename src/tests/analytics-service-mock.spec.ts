@@ -7,5 +7,7 @@ export let analyticsServiceMock = new (function() {
   this.wasDefaultPrevented = jasmine
     .createSpy('wasDefaultPrevented')
     .and.stub();
+  this.buildEntityContext = jasmine.createSpy('buildEntityContext').and.stub();
+  this.trackClick = jasmine.createSpy('trackClick').and.stub();
   this.getContexts = () => [];
 })();

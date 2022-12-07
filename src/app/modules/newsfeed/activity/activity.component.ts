@@ -68,7 +68,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() set entity(entity) {
     this.service.setEntity(entity);
-    this.isBoost = entity.boosted;
+    this.isBoost = entity?.boosted ?? false;
 
     const currentUser = this.session.getLoggedInUser();
     const iconTime: number =
