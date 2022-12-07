@@ -37,6 +37,11 @@
   [ngStyle]="{background: 'url(' + blog.thumbnail_src + ') center center / cover'}"
   [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(blog) }"
 ></a>
+<span
+  class="m-mature-thumbnail-overlay"
+  *ngIf="attachment.shouldBeBlurred(blog)"
+  ><i class="material-icons">explicit</i></span
+>
 
 <!-- Title -->
 <div class="m-blogCard__title">
