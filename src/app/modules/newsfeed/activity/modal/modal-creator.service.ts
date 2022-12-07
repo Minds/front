@@ -9,7 +9,7 @@ import {
 
 // TODO: this will need to move to activity-v2 when ready
 @Injectable()
-export class ActivityModalCreatorService {
+export class ActivityV1ModalCreatorService {
   constructor(
     private modalService: ModalService,
     private analytics: AnalyticsService

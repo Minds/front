@@ -37,10 +37,10 @@ import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
-import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ActivityModalCreatorService } from '../../newsfeed/activity-v2/modal/modal-creator.service';
 
 @Component({
   selector: 'm-comment',
@@ -115,7 +115,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   commentAgeOnLoadMs: number;
 
   @Input() set compact(value: boolean) {
-    // ojm compact is always false now, can remove?
+    // ojm todo if time - compact is always false now, can remove?
     this._compact = false;
     return;
   }
@@ -194,6 +194,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
+    // ojm remove
     this._compact = false;
     return;
   }

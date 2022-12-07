@@ -27,7 +27,6 @@ import { CodeHighlightModule } from '../../code-highlight/code-highlight.module'
 import { ActivityModalComponent } from './modal/modal.component';
 import { ActivityModalTitleOverlayComponent } from './modal/title-overlay/title-overlay.component';
 import { ActivityModalPagerComponent } from './modal/pager/pager.component';
-import { ActivityModalCreatorService } from './modal/modal-creator.service';
 import { ActivityMinimalMetricsComponent } from './minimal-metrics/minimal-metrics.component';
 import { ActivityRemindButtonComponent } from './remind-button/remind-button.component';
 import { ActivityModalQuoteComponent } from './modal/quote/quote.component';
@@ -69,7 +68,7 @@ import { ActivityV2Module } from '../activity-v2/activity.module';
     ActivityBoostButtonComponent,
     ActivityModalQuoteComponent,
   ],
-  providers: [ActivityModalCreatorService],
+  // providers: [ActivityModalCreatorService],
   exports: [ActivityComponent, ActivityRemindButtonComponent],
 })
 export class ActivityModule {}

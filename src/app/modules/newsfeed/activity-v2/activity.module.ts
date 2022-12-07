@@ -27,7 +27,7 @@ import { CodeHighlightModule } from '../../code-highlight/code-highlight.module'
 import { ActivityV2ModalComponent } from './modal/modal.component';
 import { ActivityV2ModalTitleOverlayComponent } from './modal/title-overlay/title-overlay.component';
 import { ActivityV2ModalPagerComponent } from './modal/pager/pager.component';
-import { ActivityV2ModalCreatorService } from './modal/modal-creator.service';
+import { ActivityModalCreatorService } from './modal/modal-creator.service';
 import { ActivityV2RemindButtonComponent } from './remind-button/remind-button.component';
 import { ActivityV2RelativeTimeSpanComponent } from './owner-block/relative-time-span/relative-time-span.component';
 import { ActivityV2BoostButtonComponent } from './boost-button/boost-button.component';
@@ -83,7 +83,7 @@ import { ActivityV2SupermindReplyLinkComponent } from './supermind-reply-link/su
     ActivityV2MultiImageComponent,
     ActivityV2SupermindReplyLinkComponent,
   ],
-  providers: [ActivityV2ModalCreatorService],
+  providers: [ActivityModalCreatorService],
   exports: [
     ActivityV2Component,
     ActivityV2RemindButtonComponent,

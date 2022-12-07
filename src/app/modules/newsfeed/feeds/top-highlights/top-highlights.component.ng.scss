@@ -19,7 +19,6 @@
     li {
       list-style: none;
       &:first-child {
-        // ojm change?
         ::ng-deep m-activity {
           @include m-theme() {
             border-top: none;

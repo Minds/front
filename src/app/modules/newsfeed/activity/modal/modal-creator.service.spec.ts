@@ -1,6 +1,6 @@
+import { ActivityModalCreatorService } from '../../activity-v2/modal/modal-creator.service';
 import { ActivityV2ModalComponent } from '../../activity-v2/modal/modal.component';
 import { ActivityEntity } from '../activity.service';
-import { ActivityModalCreatorService } from './modal-creator.service';
 
 export let analyticsServiceMock = new (function() {
   this.getContexts = jasmine

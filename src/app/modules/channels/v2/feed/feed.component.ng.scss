@@ -14,7 +14,6 @@
   .m-channel__feed {
     min-height: 100vh;
 
-    // ojm the borders on side of activity v2 and composer should match the newsfeed component
     ::ng-deep m-composer {
       margin-bottom: 0;
       border: none !important;
@@ -198,7 +197,6 @@
 
         &:first-child {
           m-activity {
-            //ojm
             @include m-theme() {
               border-top: none;
             }

@@ -44,8 +44,8 @@ import {
   ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
 } from '../modal/modal.component';
 import { FeaturesService } from '../../../../services/features.service';
-import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { ActivityModalCreatorService } from '../../activity-v2/modal/modal-creator.service';
 
 /**
  * The content of the activity (and the paywall, if applicable).

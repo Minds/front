@@ -47,9 +47,9 @@ import {
   ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
 } from '../modal/modal.component';
 import { FeaturesService } from '../../../../services/features.service';
-import { ActivityV2ModalCreatorService } from '../modal/modal-creator.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
+import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -247,7 +247,7 @@ export class ActivityV2ContentComponent
     configs: ConfigsService,
     private features: FeaturesService,
     private injector: Injector,
-    private activityModalCreator: ActivityV2ModalCreatorService,
+    private activityModalCreator: ActivityModalCreatorService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     private cd: ChangeDetectorRef
   ) {

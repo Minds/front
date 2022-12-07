@@ -17,7 +17,6 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { CommentComponentV2 } from './comment.component';
 import { MockComponent, MockService } from '../../../utils/mock';
@@ -26,6 +25,7 @@ import { CodeHighlightPipe } from '../../code-highlight/code-highlight.pipe';
 import { CodeHighlightService } from '../../code-highlight/code-highlight.service';
 import { TagsPipeMock } from '../../../mocks/pipes/tagsPipe.mock';
 import { TruncatePipe } from '../../../common/pipes/truncate.pipe';
+import { ActivityModalCreatorService } from '../../newsfeed/activity-v2/modal/modal-creator.service';
 
 describe('CommentComponentV2', () => {
   let comp: CommentComponentV2;
