@@ -21,7 +21,7 @@ import { MindsBlogEntity } from '../../../interfaces/entities';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
-import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
+import { ActivityService } from '../../newsfeed/activity/activity.service';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { FeaturesService } from '../../../services/features.service';

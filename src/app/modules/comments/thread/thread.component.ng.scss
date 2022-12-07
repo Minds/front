@@ -6,7 +6,7 @@
   // ******************************************
 
   m-activity &,
-  m-activityV2__modal & {
+  m-activity__modal & {
     .m-comments__thread {
       margin: 0;
     }
@@ -32,7 +32,7 @@
   // ** MODAL **
   // ******************************************
 
-  m-activityV2__modal & {
+  m-activity__modal & {
     .m-comments__viewMore {
       margin-top: 0;
     }

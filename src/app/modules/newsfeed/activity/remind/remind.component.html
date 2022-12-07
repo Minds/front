@@ -1,7 +1,0 @@
-<ng-container *ngIf="service.entity$ | async">
-  <m-activity__ownerBlock> </m-activity__ownerBlock>
-  <m-activity__content
-    *ngIf="service.shouldShowContent$ | async"
-    [autoplayVideo]="autoplayVideo"
-  ></m-activity__content>
-</ng-container>

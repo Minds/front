@@ -1,7 +1,10 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ActivityService, ActivityEntity } from '../activity.service';
+import {
+  ActivityService,
+  ActivityEntity,
+} from '../../activity/activity.service';
 import { map } from 'rxjs/operators';
 import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-selector.service';
 
@@ -12,6 +15,7 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
 @Component({
   selector: 'm-activity__nsfwConsent',
   templateUrl: 'nsfw-consent.component.html',
+  styleUrls: ['nsfw-consent.component.ng.scss'],
 })
 export class ActivityNsfwConsentComponent {
   entity: any;

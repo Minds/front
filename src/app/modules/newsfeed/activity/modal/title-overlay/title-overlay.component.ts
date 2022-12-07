@@ -1,14 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MediumFadeAnimation } from '../../../../../animations';
 
-import { ActivityService, ActivityEntity } from '../../activity.service';
+import {
+  ActivityService,
+  ActivityEntity,
+} from '../../../activity/activity.service';
 import { ActivityModalService } from '../modal.service';
 import { Session } from '../../../../../services/session';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Subscription } from 'rxjs';
 
 /**
- * In the modal's full screen mode, additional information about the activity is displayed as an overlay on mouseover (or tap, on tablet).
+ * In the modal's full screen mode, additional information about the post
+ * is displayed as an overlay on mouseover (or tap, on tablet).
+ *
  * The overlay includes the post owner's avatar/username, a title, and a button to exit fullscreen.
  */
 @Component({

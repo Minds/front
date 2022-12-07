@@ -1,8 +1,0 @@
-<m-wire--lock-screen
-  *ngIf="service.entity$ | async as entity"
-  [entity]="entity"
-  (entityChange)="onEntityUpdated($event)"
-  [mediaHeight]="mediaHeight"
-  [minimalMode]="service.displayOptions.minimalMode"
-  [hideText]="hideText"
-></m-wire--lock-screen>

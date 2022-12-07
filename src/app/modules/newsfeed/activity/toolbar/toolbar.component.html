@@ -1,50 +1,30 @@
 <div
-  class="m-activityToolbar__metrics"
-  *ngIf="service.displayOptions.showInteractions && showMetrics"
+  class="m-activityToolbar__largeActions"
+  *ngIf="
+    service.displayOptions.showInteractions && !service.displayOptions.isFeed
+  "
 >
-  <div
-    class="m-activityToolbarMetrics__metric"
-    *ngIf="entity['thumbs:up:count'] > 0"
-    (click)="openInteractions('votes-up')"
-  >
-    <span>{{ entity['thumbs:up:count'] }}</span>
-    <span
-      >{ entity['thumbs:up:count'], plural, =1 {Upvote} other {Upvotes}}</span
-    >
-  </div>
-
-  <div
-    class="m-activityToolbarMetrics__metric"
-    *ngIf="entity['thumbs:down:count'] > 0"
-    (click)="openInteractions('votes-down')"
-  >
-    <span>{{ entity['thumbs:down:count'] }}</span>
-    <span
-      >{ entity['thumbs:down:count'], plural, =1 {Downvote} other
-      {Downvotes}}</span
-    >
-  </div>
-
-  <div
-    class="m-activityToolbarMetrics__metric"
-    *ngIf="entity?.reminds > 0"
-    (click)="openInteractions('reminds')"
-  >
-    <span>{{ entity.reminds }}</span>
-    <span>{ entity.reminds, plural, =1 {Remind} other {Reminds}}</span>
-  </div>
-
-  <div
-    class="m-activityToolbarMetrics__metric"
-    *ngIf="entity?.quotes > 0"
-    (click)="openInteractions('quotes')"
-  >
-    <span>{{ entity.quotes }}</span>
-    <span>{ entity.quotes, plural, =1 {Quote} other {Quotes}}</span>
-  </div>
+  <m-supermind__banner
+    *ngIf="supermindButtonExperiment"
+    [entity]="entity"
+    data-ref="activity-large-supermind-action--alt"
+  ></m-supermind__banner>
+  <m-supermind__button
+    *ngIf="!supermindButtonExperiment"
+    [entity]="entity"
+    [iconOnly]="false"
+    size="large"
+    data-ref="activity-large-supermind-action"
+  ></m-supermind__button>
 </div>
 
-<div class="m-activityToolbar__actions">
+<div
+  class="m-activityToolbar__actions"
+  [ngClass]="{
+    'm-activityToolbar__actions--noMetrics': !showMetrics,
+    'm-activityToolbar__actions--hasComments': entity['comments:count'] > 0
+  }"
+>
   <minds-button-thumbs-up
     [object]="entity"
     [iconOnly]="service.displayOptions.showInteractions"
@@ -67,18 +47,22 @@
       service.displayOptions.showComments
     "
   ></minds-button-comment>
-
   <!-- Show wire if not own post -->
-  <ng-container
+  <!-- <ng-container
     *ngIf="
       session.getLoggedInUser() &&
       session.getLoggedInUser().guid != entity.ownerObj.guid
     "
   >
-    <div class="m-layout__spacer"></div>
-
     <m-wire-button [object]="entity"></m-wire-button>
-  </ng-container>
+  </ng-container> -->
+
+  <m-supermind__button
+    [entity]="entity"
+    [iconOnly]="true"
+    data-ref="activity-icon-supermind-action"
+    *ngIf="supermindExperiment.isActive()"
+  ></m-supermind__button>
 
   <!-- Show boost if own post -->
   <ng-container
@@ -87,10 +71,59 @@
       session.getLoggedInUser().guid == entity.ownerObj.guid
     "
   >
-    <div class="m-layout__spacer"></div>
     <m-activity__boostButton
       [object]="entity"
       (click)="openBoostModal($event)"
     ></m-activity__boostButton>
   </ng-container>
+</div>
+
+<div
+  class="m-activityToolbar__metrics m-legible"
+  *ngIf="service.displayOptions.showInteractions && showMetrics"
+>
+  <div
+    class="m-activityToolbarMetrics__metric"
+    *ngIf="entity['thumbs:up:count'] > 0"
+    (click)="openInteractions('votes-up')"
+  >
+    <span [@counterChange]="entity['thumbs:up:count']">{{
+      entity['thumbs:up:count']
+    }}</span>
+    <span
+      >{ entity['thumbs:up:count'], plural, =1 {upvote} other {upvotes}}</span
+    >
+  </div>
+
+  <div
+    class="m-activityToolbarMetrics__metric"
+    *ngIf="entity['thumbs:down:count'] > 0"
+    (click)="openInteractions('votes-down')"
+  >
+    <span [@counterChange]="entity['thumbs:down:count']">{{
+      entity['thumbs:down:count']
+    }}</span>
+    <span
+      >{ entity['thumbs:down:count'], plural, =1 {downvote} other
+      {downvotes}}</span
+    >
+  </div>
+
+  <div
+    class="m-activityToolbarMetrics__metric"
+    *ngIf="entity?.reminds > 0"
+    (click)="openInteractions('reminds')"
+  >
+    <span>{{ entity.reminds }}</span>
+    <span>{ entity.reminds, plural, =1 {remind} other {reminds}}</span>
+  </div>
+
+  <div
+    class="m-activityToolbarMetrics__metric"
+    *ngIf="entity?.quotes > 0"
+    (click)="openInteractions('quotes')"
+  >
+    <span>{{ entity.quotes }}</span>
+    <span>{ entity.quotes, plural, =1 {quote} other {quotes}}</span>
+  </div>
 </div>

@@ -6,13 +6,13 @@ const { I } = inject();
  */
 class ActivityComponent {
   // selectors
-  private activityMenuSelector: string = 'm-activityV2__menu';
+  private activityMenuSelector: string = 'm-activity__menu';
   private optionSelector: string = '.m-dropdownMenuItem__text--label span';
   private remindButtonSelector: string =
-    'm-activityV2__remindButton m-dropdownMenu';
+    'm-activity__remindButton m-dropdownMenu';
   private commentPosterSelector: string = 'm-comment__poster';
   private textAreaSelector: string = 'minds-textarea';
-  private timestampSelector: string = 'm-activityV2__permalink';
+  private timestampSelector: string = 'm-activity__permalink';
 
   /**
    * Delete the activity.

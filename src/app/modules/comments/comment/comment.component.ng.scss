@@ -4,9 +4,9 @@
   // ******************************************
   // ** ACTIVITY V2 **
   // ******************************************
-  // ojm todo: combine with default
+  // TODO: move this into the default section below
   m-activity &,
-  m-activityV2__modal & {
+  m-activity__modal & {
     .m-comment {
       padding-right: 0;
     }

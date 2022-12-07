@@ -22,7 +22,6 @@ import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedEntityComponent } from './feeds/entity.component';
 import { SearchModule } from '../search/search.module';
-import { ActivityModule } from './activity/activity.module';
 import { FeedGridComponent } from './feed-grid/feed-grid.component';
 import { ComposerModule } from '../composer/composer.module';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
@@ -36,7 +35,7 @@ import { TopHighlightsComponent } from './feeds/top-highlights/top-highlights.co
 import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
 import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
-import { ActivityV2Module } from './activity-v2/activity.module';
+import { ActivityV2Module } from './activity/activity.module';
 import { NewsfeedFeedItemComponent } from './feeds/feed-item.component';
 import { VirtualMinimapComponent } from './feed/virtual-minimap';
 import { FeedComponent } from './feed/feed.component';
@@ -91,7 +90,6 @@ const routes: Routes = [
     SuggestionsModule,
     NoticesModule,
     SearchModule,
-    ActivityModule, // delete during ActivityV2 cleanup
     ActivityV2Module,
     ComposerModule,
     DiscoverySharedModule,

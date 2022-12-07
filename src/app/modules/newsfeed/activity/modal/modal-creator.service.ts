@@ -1,15 +1,14 @@
 import { Injectable, Injector } from '@angular/core';
-import { ActivityEntity } from '../activity.service';
 import { ModalService } from '../../../../services/ux/modal.service';
-import { ActivityV2ModalComponent } from '../../activity-v2/modal/modal.component';
+import { ActivityModalComponent } from './modal.component';
 import {
   AnalyticsService,
   ContextualizableEntity,
 } from '../../../../services/analytics';
+import { ActivityEntity } from '../../activity/activity.service';
 
-// TODO: this will need to move to activity-v2 when ready
 @Injectable()
-export class ActivityV1ModalCreatorService {
+export class ActivityModalCreatorService {
   constructor(
     private modalService: ModalService,
     private analytics: AnalyticsService
@@ -44,7 +43,7 @@ export class ActivityV1ModalCreatorService {
       this.trackActionEvent(entity as ContextualizableEntity);
     }
 
-    this.modalService.present(ActivityV2ModalComponent, opts);
+    this.modalService.present(ActivityModalComponent, opts);
   }
 
   /**

@@ -1,21 +1,20 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
   Component,
   Input,
   HostBinding,
   ElementRef,
   HostListener,
-  Optional,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   OnInit,
   AfterViewInit,
   OnDestroy,
   Output,
-  EventEmitter,
   ViewChild,
   Inject,
   PLATFORM_ID,
+  EventEmitter,
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
@@ -23,35 +22,39 @@ import {
   ActivityService,
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ActivityEntity,
-} from './activity.service';
-import {
-  Subscription,
-  Observable,
-  BehaviorSubject,
-  combineLatest,
-  Subject,
-} from 'rxjs';
+} from '../activity/activity.service';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
+import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
+import { debounceTime } from 'rxjs/operators';
+import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
+import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
+import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 
-//ojm delete this file
 /**
- * Base component for activity posts (excluding activities displayed in a modal)
+ * Base component for activity posts (excluding activities displayed in a modal).
+ *
+ * Includes activities displayed in feeds, on single activity pages, in pro pages, channel grid mode, sidebar boosts (excluding blogs), sidebar suggestions
  */
 @Component({
-  selector: 'm-activityV1', //ojm ,
+  selector: 'm-activity',
   templateUrl: 'activity.component.html',
+  styleUrls: ['activity.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
+    EntityMetricsSocketService,
   ],
   host: {
-    class: 'm-border',
     '[class.m-activity--minimalMode]':
       'this.service.displayOptions.minimalMode',
   },
@@ -66,6 +69,19 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() set entity(entity) {
     this.service.setEntity(entity);
     this.isBoost = entity.boosted;
+
+    const currentUser = this.session.getLoggedInUser();
+    const iconTime: number =
+      currentUser && currentUser.guid === entity.ownerObj.guid
+        ? currentUser.icontime
+        : entity.ownerObj.icontime;
+
+    this.avatarUrl =
+      this.configs.get('cdn_url') +
+      'icon/' +
+      entity.ownerObj.guid +
+      '/medium/' +
+      iconTime;
   }
 
   @Input() set displayOptions(options) {
@@ -85,8 +101,13 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() deleted: Subject<boolean> = this.service.onDelete$;
 
-  @HostBinding('class.m-activity--boost')
   isBoost = false;
+
+  @HostBinding('class.m-activity--guestMode')
+  isGuestMode: boolean;
+
+  @HostBinding('class.m-activity--isSidebarBoost')
+  isSidebarBoost: boolean;
 
   @HostBinding('class.m-activity--fixedHeight')
   isFixedHeight: boolean;
@@ -97,19 +118,32 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--noOwnerBlock')
   noOwnerBlock: boolean;
 
-  @HostBinding('class.m-activity--v2')
-  isV2: boolean;
+  @HostBinding('class.m-activity--noToolbar')
+  noToolbar: boolean;
+
+  @HostBinding('class.m-activity--isFeed')
+  isFeed: boolean;
+
+  @HostBinding('class.m-activity--isSingle')
+  isSingle: boolean;
 
   @HostBinding('style.height')
   heightPx: string;
 
-  @HostBinding('class.m-activity--minimalRemind')
-  isMinimalRemind: boolean = false;
+  @HostBinding('class.m-activity--modal')
+  isModal: boolean = false;
 
   heightSubscription: Subscription;
-  remindSubscription: Subscription;
+  guestModeSubscription: Subscription;
+  entitySubscription: Subscription;
+  private interceptionObserverSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
+
+  avatarUrl: string;
+
+  // Whether the boost/remind/supermind flag should appear on top of owner block
+  showFlagRow: boolean = false;
 
   @Output() previousBoost: EventEmitter<any> = new EventEmitter();
   @Output() nextBoost: EventEmitter<any> = new EventEmitter();
@@ -120,17 +154,28 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private elementVisibilityService: ElementVisibilityService,
     private newsfeedService: NewsfeedService,
+    public featuresService: FeaturesService,
+    public session: Session,
+    private configs: ConfigsService,
+    private interceptionObserver: IntersectionObserverService,
+    private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
+    private persistentFeedExperiment: PersistentFeedExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
-    this.isV2 = true; // ojm
-
-    this.isFixedHeight = false;
-
-    this.isFixedHeightContainer = false;
-
+    this.isFixedHeight = this.service.displayOptions.fixedHeight;
+    this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
+    this.noToolbar = !this.service.displayOptions.showToolbar;
+    this.isFeed = this.service.displayOptions.isFeed;
+    this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
+    this.isModal = this.service.displayOptions.isModal;
+    this.isSingle = this.service.displayOptions.isSingle;
+
+    // if this is a supermind request with a reply AND on the feed, then
+    // we don't want to show the View comments link
+    // and we DO want to show the See supermindReply
 
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
@@ -142,51 +187,107 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     );
 
-    this.remindSubscription = this.service.isRemind$.subscribe(isRemind => {
-      if (isRemind && this.service.displayOptions.minimalMode) {
-        this.service.displayOptions.showOwnerBlock = true;
-        this.isMinimalRemind = true;
-      } else {
-        this.isMinimalRemind = false;
+    this.guestModeSubscription = this.service.isLoggedIn$.subscribe(
+      (isLoggedIn: boolean) => {
+        this.isGuestMode = !isLoggedIn;
+        this.cd.markForCheck();
+        this.cd.detectChanges();
       }
+    );
+
+    this.entitySubscription = this.service.entity$.subscribe(entity => {
+      this.showFlagRow =
+        !this.service.displayOptions.boostRotatorMode &&
+        (entity.boosted ||
+          (entity.remind_users && entity.remind_users.length) ||
+          (entity.supermind &&
+            !entity.supermind.is_reply &&
+            entity.supermind.receiver_user));
     });
   }
 
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
+    this.guestModeSubscription.unsubscribe();
+    this.entitySubscription.unsubscribe();
+    if (
+      this.entityMetricSocketsExperiment.isActive() &&
+      this.interceptionObserverSubscription
+    ) {
+      this.interceptionObserverSubscription.unsubscribe();
+    }
   }
 
   ngAfterViewInit() {
-    if (!this.isV2) {
-      //   setTimeout(() => this.calculateHeight());
-      //   if (this.canRecordAnalytics) {
-      //     this.elementVisibilityService
-      //       .setEntity(this.service.entity$.value)
-      //       .setElementRef(this.el)
-      //       .onView((entity: ActivityEntity) => {
-      //         if (!entity) return;
-      //         this.newsfeedService.recordView(
-      //           entity,
-      //           true,
-      //           null,
-      //           this.clientMeta.build({
-      //             campaign: entity.boosted_guid ? entity.urn : '',
-      //             position: this.slot,
-      //           })
-      //         );
-      //       });
-      //     this.elementVisibilityService.checkVisibility();
-      //   }
-      // }
+    setTimeout(() => this.calculateFixedHeight());
+
+    if (this.canRecordAnalytics) {
+      this.elementVisibilityService
+        .setEntity(this.service.entity$.value)
+        .setElementRef(this.el)
+        .onView((entity: ActivityEntity) => {
+          if (!entity) return;
+
+          this.newsfeedService.recordView(
+            entity,
+            true,
+            null,
+            this.clientMeta.build({
+              campaign: entity.boosted_guid ? entity.urn : '',
+              position: this.slot,
+            })
+          );
+        });
+      this.elementVisibilityService.checkVisibility();
+
+      // Only needed when metrics toolbar is visible.
+      if (this.service.displayOptions.showToolbar) {
+        this.setupInterceptionObserver();
+      }
     }
+  }
+
+  /**
+   * Setup an interception observer to report when activity enters the DOM and
+   * update local isIntersecting$ state accordingly.
+   * @returns { void }
+   */
+  public setupInterceptionObserver(): void {
+    if (this.interceptionObserverSubscription) {
+      console.error('Already registered InterceptionObserver');
+      return;
+    }
+
+    if (
+      !this.entityMetricSocketsExperiment.isActive() ||
+      isPlatformServer(this.platformId)
+    ) {
+      return;
+    }
+
+    this.interceptionObserverSubscription = this.interceptionObserver
+      .createAndObserve(this.el)
+      .pipe(debounceTime(2000))
+      .subscribe((isVisible: boolean) => {
+        if (isVisible) {
+          this.service.setupMetricsSocketListener();
+          return;
+        }
+        this.service.teardownMetricsSocketListener();
+      });
   }
 
   @HostListener('window:resize')
   onResize(): void {
-    this.calculateHeight();
+    this.calculateFixedHeight();
   }
 
-  calculateHeight(): void {
+  /**
+   *
+   * For fixed height activities, height is
+   * determined by clientWidth / ratio
+   */
+  calculateFixedHeight(): void {
     if (!this.service.displayOptions.fixedHeight) return;
     if (this.service.displayOptions.fixedHeightContainer) return;
     const height =
@@ -208,4 +309,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
       top: window.pageYOffset + (newHeight - oldHeight),
     });
   }
+
+  persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
 }

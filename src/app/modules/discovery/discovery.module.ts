@@ -6,7 +6,6 @@ import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { CommonModule } from '../../common/common.module';
 import { DiscoveryTrendsComponent } from './trends/trends.component';
 import { DiscoveryTrendComponent } from './trends/trend/trend.component';
-import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoverySearchComponent } from './search/search.component';
 import { DiscoveryTagsComponent } from './tags/tags.component';
 import { DiscoverySharedModule } from './discovery-shared.module';
@@ -19,7 +18,7 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
 import { DiscoveryTopComponent } from './top/top.component';
-import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
+import { ActivityV2Module } from '../newsfeed/activity/activity.module';
 import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.component';
 import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/supermind-global-feed-experiment.guard.ts/supermind-global-feed-experiment.guard';
 
@@ -198,9 +197,7 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
     NgCommonModule,
     CommonModule,
     SuggestionsModule,
-    ActivityModule, // delete during ActivityV2 cleanup
     ActivityV2Module,
-    // GroupsModule,
     DiscoverySharedModule,
     HashtagsModule,
     LanguageModule,

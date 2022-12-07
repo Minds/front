@@ -1,11 +1,69 @@
-<!-- <m-activityV2
-  [entity]="entity$ | async"
-  [canDelete]="service.canDelete$ | async"
-  [displayOptions]="service.displayOptions"
-  [slot]="slot"
-  [canRecordAnalytics]="canRecordAnalytics"
-  (nextBoost)="nextBoost.emit()"
-  (previousBoost)="previousBoost.emit()"
-  (deleted)="delete()"
-  m-clientMeta
-></m-activityV2> -->
+<div class="m-activity__wrapper">
+  <ng-container m-clientMeta>
+    <div class="m-activity__top">
+      <div
+        *ngIf="
+          !service.displayOptions.minimalMode &&
+          !service.displayOptions.isSidebarBoost
+        "
+        class="m-activityTop__avatarColumn m-activity__avatar"
+      >
+        <ng-container *ngIf="entity$ | async as entity">
+          <div *ngIf="showFlagRow" class="m-activityLeftColumn__spacer"></div>
+        </ng-container>
+        <m-hovercard
+          *ngIf="entity$ | async as entity"
+          [publisher]="entity.ownerObj"
+          [offset]="[0, 15]"
+        >
+          <a [routerLink]="['/', entity.ownerObj.username]">
+            <img [src]="avatarUrl" class="m-border" />
+          </a>
+        </m-hovercard>
+      </div>
+      <div class="m-activityTop__mainColumn" *ngIf="entity$ | async as entity">
+        <div class="m-activity__flagRow" *ngIf="showFlagRow">
+          <m-activity__flag></m-activity__flag>
+        </div>
+        <m-activity__ownerBlock
+          *ngIf="service.displayOptions.showOwnerBlock"
+          (deleted)="delete()"
+        >
+        </m-activity__ownerBlock>
+        <m-activity__content
+          *ngIf="service.shouldShowContent$ | async"
+        ></m-activity__content>
+        <m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
+        </m-activity__nsfwConsent>
+      </div>
+    </div>
+
+    <m-activity__toolbar
+      *ngIf="service.displayOptions.showToolbar"
+    ></m-activity__toolbar>
+
+    <m-activity__supermindReplyLink
+      *ngIf="
+        (service.isSupermindRequestWithReply$ | async) &&
+        service.displayOptions.isFeed &&
+        !service.displayOptions.minimalMode &&
+        !service.displayOptions.sidebarMode &&
+        !service.displayOptions.isModal &&
+        !service.displayOptions.boostRotatorMode
+      "
+    ></m-activity__supermindReplyLink>
+
+    <ng-container *mIfBrowser>
+      <m-comments__entityOutletV2
+        *ngIf="service.displayOptions.showComments"
+        [entity]="service.entity$ | async"
+        [canDelete]="canDelete$ | async"
+        [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
+        [hideToggle]="service.isSupermindRequestWithReply$ | async"
+        [fixedHeight]="service.displayOptions.fixedHeight"
+        (onHeightChange)="onCommentsHeightChange($event)"
+      >
+      </m-comments__entityOutletV2>
+    </ng-container>
+  </ng-container>
+</div>

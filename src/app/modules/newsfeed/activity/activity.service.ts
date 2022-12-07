@@ -45,7 +45,6 @@ export type ActivityDisplayOptions = {
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
-  isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
 };
 
@@ -391,7 +390,6 @@ export class ActivityService implements OnDestroy {
     isSidebarBoost: false,
     isFeed: false,
     isSingle: false,
-    isV2: false,
     permalinkBelowContent: false,
   };
 
@@ -442,7 +440,6 @@ export class ActivityService implements OnDestroy {
   ): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
-    this.displayOptions.isV2 = true; // ojm remove?
     this.displayOptions.showOnlyCommentsInput = false;
     this.displayOptions.showOnlyCommentsToggle = true;
 

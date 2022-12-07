@@ -1,6 +1,6 @@
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { modalServiceMock } from '../../../../../tests/modal-service-mock.spec';
-import { analyticsServiceMock } from '../../../newsfeed/activity/modal/modal-creator.service.spec';
+import { analyticsServiceMock } from '../../../../../tests/analytics-service-mock.spec';
 import { VideoPlayerService } from './player.service';
 
 describe('VideoPlayerService', () => {

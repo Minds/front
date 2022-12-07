@@ -40,7 +40,7 @@ import { UserAvatarService } from '../../../common/services/user-avatar.service'
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { ActivityModalCreatorService } from '../../newsfeed/activity-v2/modal/modal-creator.service';
+import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 
 @Component({
   selector: 'm-comment',
@@ -115,7 +115,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   commentAgeOnLoadMs: number;
 
   @Input() set compact(value: boolean) {
-    // ojm todo if time - compact is always false now, can remove?
+    // TODO this is always going to be false b/c
+    // compact design was retired with activity v2
+    // so we can remove it from comment, tree, thread, entity outlet
     this._compact = false;
     return;
   }
@@ -194,7 +196,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
-    // ojm remove
     this._compact = false;
     return;
   }

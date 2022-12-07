@@ -20,8 +20,7 @@ import { CaptchaModule } from '../captcha/captcha.module';
 import { BlogEditorV2Component } from './v2/edit/editor-base.component';
 import { BlogV2Module } from './v2/blog-v2.module';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
-import { ActivityModule } from '../newsfeed/activity/activity.module';
-import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
+import { ActivityV2Module } from '../newsfeed/activity/activity.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/discovery/overview', pathMatch: 'full' },
@@ -58,7 +57,6 @@ const routes: Routes = [
     CaptchaModule,
     BlogV2Module,
     CodeHighlightModule,
-    ActivityModule,
     ActivityV2Module,
   ],
   declarations: [BlogView, BlogCard, BlogViewInfinite],
