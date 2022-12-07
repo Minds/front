@@ -157,9 +157,9 @@ class ComposerModalComponent {
     I.click(this.supermindTargetInputSelector);
     I.fillField(this.supermindTargetInputSelector, username);
     I.click(
-      locate(this.supermindAutoCompleteNameSelector)
-        .withText(username)
-        .last()
+      locate({ xpath: `//*[text()="${username}"]` }).inside(
+        this.supermindTargetInputSelector
+      )
     );
   }
 
