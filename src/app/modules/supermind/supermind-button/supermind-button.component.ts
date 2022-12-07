@@ -6,6 +6,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { Session } from '../../../services/session';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
@@ -57,6 +59,8 @@ export class SupermindButtonComponent {
    * @param injector
    */
   constructor(
+    private session: Session,
+    private authModal: AuthModalService,
     private composerModalService: ComposerModalService,
     private composerService: ComposerService,
     private supermindExperiment: SupermindExperimentService,
@@ -69,9 +73,15 @@ export class SupermindButtonComponent {
 
   /**
    * Open the composer with prefilled supermind data
-   * @param e
+   * @param { MouseEvent } e - mouse event.
+   * @returns { Promise<void> }
    */
-  onClick(e: MouseEvent) {
+  async onClick(e: MouseEvent): Promise<void> {
+    if (!this.session.getLoggedInUser()) {
+      await this.authModal.open({ formDisplay: 'register' });
+      return;
+    }
+
     let receiverGuid: string;
 
     if (this.entity.type === 'user') {

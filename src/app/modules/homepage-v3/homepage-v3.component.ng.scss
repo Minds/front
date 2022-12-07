@@ -214,6 +214,23 @@
           @include m-theme() {
             color: themed($m-textColor--secondary);
           }
+
+          &.m-marketing__descriptionHeader {
+            padding: 0;
+            margin-bottom: 0;
+
+            font-weight: 700;
+
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+
+          .m-marketingDescription__emphasis {
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
         }
       }
     }
