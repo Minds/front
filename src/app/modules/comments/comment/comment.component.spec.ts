@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { AttachmentService } from '../../../services/attachment';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
@@ -181,18 +187,31 @@ describe('CommentComponentV2', () => {
     comp.comment = {
       guid: '123',
       time_created: 1,
+      owner_guid: '321',
       ownerObj: {
         guid: '321',
         icontime: '999999',
       },
     };
+    comp.entity = { owner_guid: '345' };
+    comp.parent = { owner_guid: '456' };
+    comp.canDelete = false;
+
+    comp.shouldOpenModal = true;
+    (comp as any).cdnUrl = 'http://locahost';
+
+    spyOn(window, 'confirm').and.callFake(function() {
+      return true;
+    });
 
     (comp as any).session.getLoggedInUser.and.returnValue({
       guid: '123',
     });
 
-    comp.shouldOpenModal = true;
-    (comp as any).cdnUrl = 'http://locahost';
+    (comp as any).client.delete.calls.reset();
+    (comp as any).toasterService.error.calls.reset();
+    (comp as any).session.getLoggedInUser.calls.reset();
+    (comp as any).session.isAdmin.calls.reset();
 
     fixture.detectChanges();
 
@@ -219,5 +238,134 @@ describe('CommentComponentV2', () => {
     comp.shouldOpenModal = false;
     comp.openModal();
     expect((comp as any).activityModalCreator.create).not.toHaveBeenCalled();
+  });
+
+  it('should delete a comment', fakeAsync(() => {
+    comp.comment = {
+      guid: 123,
+    };
+
+    comp.parent = {
+      type: 'comment',
+      replies_count: 2,
+    };
+
+    (comp as any).client.delete.and.returnValue(true);
+
+    comp.delete();
+    tick();
+
+    expect(window.confirm).toHaveBeenCalled();
+    expect((comp as any).client.delete).toHaveBeenCalledWith(
+      'api/v1/comments/' + comp.comment.guid
+    );
+    expect(comp.parent.replies_count).toBe(1);
+  }));
+
+  it('should not update reply count if there is an error deleting', fakeAsync(() => {
+    comp.comment = {
+      guid: 123,
+    };
+
+    comp.parent = {
+      type: 'comment',
+      replies_count: 2,
+    };
+
+    (comp as any).client.delete.and.throwError(new Error('test'));
+
+    comp.delete();
+    tick();
+
+    expect(window.confirm).toHaveBeenCalled();
+    expect((comp as any).toasterService.error).toHaveBeenCalledWith('test');
+    expect((comp as any).client.delete).toHaveBeenCalledWith(
+      'api/v1/comments/' + comp.comment.guid
+    );
+    expect(comp.parent.replies_count).toBe(comp.parent.replies_count); // unchanged
+  }));
+
+  it('should determine whether delete option should be shown because user is admin', () => {
+    const loggedInUserGuid = '123';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: loggedInUserGuid,
+    });
+    (comp as any).session.isAdmin.and.returnValue(true);
+    comp.canDelete = false;
+    comp.comment = { owner_guid: '234' };
+    comp.entity = { owner_guid: '345' };
+    comp.parent = { owner_guid: '456' };
+
+    expect(comp.showDelete()).toBeTrue();
+  });
+
+  it('should determine whether delete option should be shown because canDelete is true', () => {
+    const loggedInUserGuid = '123';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: loggedInUserGuid,
+    });
+    (comp as any).session.isAdmin.and.returnValue(false);
+    comp.canDelete = true;
+    comp.comment = { owner_guid: '234' };
+    comp.entity = { owner_guid: '345' };
+    comp.parent = { owner_guid: '456' };
+
+    expect(comp.showDelete()).toBeTrue();
+  });
+
+  it('should determine whether delete option should be shown because user is comment owner', () => {
+    const loggedInUserGuid = '123';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: loggedInUserGuid,
+    });
+    (comp as any).session.isAdmin.and.returnValue(false);
+    comp.canDelete = false;
+    comp.comment = { owner_guid: loggedInUserGuid };
+    comp.entity = { owner_guid: '345' };
+    comp.parent = { owner_guid: '456' };
+
+    expect(comp.showDelete()).toBeTrue();
+  });
+
+  it('should determine whether delete option should be shown because user is parent entity owner', () => {
+    const loggedInUserGuid = '123';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: loggedInUserGuid,
+    });
+    (comp as any).session.isAdmin.and.returnValue(false);
+    comp.canDelete = false;
+    comp.comment = { owner_guid: '234' };
+    comp.entity = { owner_guid: loggedInUserGuid };
+    comp.parent = { owner_guid: '456' };
+
+    expect(comp.showDelete()).toBeTrue();
+  });
+
+  it('should determine whether delete option should be shown because user is parent comment owner', () => {
+    const loggedInUserGuid = '123';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: loggedInUserGuid,
+    });
+    (comp as any).session.isAdmin.and.returnValue(false);
+    comp.canDelete = false;
+    comp.comment = { owner_guid: '234' };
+    comp.entity = { owner_guid: '345' };
+    comp.parent = { owner_guid: loggedInUserGuid };
+
+    expect(comp.showDelete()).toBeTrue();
+  });
+
+  it('should determine whether delete option should NOT be shown', () => {
+    const loggedInUserGuid = '123';
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: loggedInUserGuid,
+    });
+    (comp as any).session.isAdmin.and.returnValue(false);
+    comp.canDelete = false;
+    comp.comment = { owner_guid: '234' };
+    comp.entity = { owner_guid: '345' };
+    comp.parent = { owner_guid: '456' };
+
+    expect(comp.showDelete()).toBeFalse();
   });
 });
