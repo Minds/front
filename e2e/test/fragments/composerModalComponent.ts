@@ -226,15 +226,13 @@ class ComposerModalComponent {
    * @param { boolean } shouldHave - whether component should have.
    * @return { void }
    */
-  public shouldHaveSupermindTargetInputText(shouldHave: boolean = false): void {
+  public shouldHaveSupermindTargetInputText(text: string): void {
     const supermindTargetInput = locate(
       this.supermindTargetInputSelector
-    ).withText('');
-    if (!shouldHave) {
-      I.seeElement(supermindTargetInput);
-      return;
-    }
-    I.dontSeeElement(supermindTargetInput);
+    ).withText(text);
+
+    I.seeElement(supermindTargetInput);
+    return;
   }
 
   /**

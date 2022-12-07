@@ -86,7 +86,6 @@ namespace SupermindSteps {
   Then('I should see prefilled supermind details in the composer', () => {
     I.waitForElement(composerModalComponent.modalElementTag, 5);
     I.seeElement(composerModalComponent.getSupermindPopup());
-    composerModalComponent.shouldHaveSupermindTargetInputText(true);
     I.waitForElement(composerModalComponent.composerCloseButton);
     I.click(composerModalComponent.composerCloseButton);
     I.pressKey('Escape');
@@ -97,7 +96,7 @@ namespace SupermindSteps {
     () => {
       I.waitForElement(composerModalComponent.modalElementTag, 5);
       I.seeElement(composerModalComponent.getSupermindPopup());
-      composerModalComponent.shouldHaveSupermindTargetInputText(false);
+      composerModalComponent.shouldHaveSupermindTargetInputText('');
       I.waitForElement(composerModalComponent.composerCloseButton);
       I.click(composerModalComponent.composerCloseButton);
       I.pressKey('Escape');
