@@ -4,6 +4,7 @@
     [class.m-newsfeed__single--legacy]="showLegacyActivity"
     [class.m-newsfeed__single--activityV2]="activityV2Feature"
   >
+    <!-- ERROR SPLASH --------------------- -->
     <m-errorSplash
       class="m-pageLayout__pane--main"
       *ngIf="error && !inProgress"
@@ -15,7 +16,7 @@
       *ngIf="!error"
     >
       <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
-
+      <!-- SPAM NOTICE --------------------- -->
       <div class="m--spam-notice" *ngIf="activity?.spam">
         <ng-container i18n="@@MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM"
           >This activity is flagged as spam.</ng-container
@@ -27,7 +28,14 @@
           If you wish to appeal, please contact us at info@minds.com.
         </ng-container>
       </div>
-
+      <!-- BACK BUTTON --------------------- -->
+      <div class="m-goBack" *ngIf="showBackButton && activity">
+        <a (click)="goToPreviousPage()">
+          <i class="material-icons">arrow_back</i
+          ><span i18n="@@DISCOVERY_SEARCH__BACK">Back</span>
+        </a>
+      </div>
+      <!-- THE ACTIVITY ---------------------- -->
       <div class="minds-list" *ngIf="activity && !error">
         <m-activity
           [entity]="activity"
@@ -44,11 +52,12 @@
           (deleted)="delete($event)"
         ></m-activity>
       </div>
+      <!-- SIDEBAR SUGGESTIONS (MOBILE) ---------- -->
       <div class="m-newsfeedSingle__mobileSuggestions">
         <ng-container *ngTemplateOutlet="suggestions"></ng-container>
       </div>
     </div>
-
+    <!-- SIDEBAR SUGGESTIONS (WIDE SCREEN)-------------- -->
     <div
       class="m-newsfeedSingle__sidebar m-discovery__sidebar"
       m-pageLayout__pane="right"
@@ -60,7 +69,7 @@
       </div>
     </div>
   </div>
-
+  <!-- SHARE BUTTONS --------------------------- -->
   <m-social-icons
     [url]="siteUrl + 'newsfeed/' + activity?.guid"
     [title]="activity?.title || ''"
@@ -71,11 +80,11 @@
 </ng-container>
 
 <ng-template #suggestions>
-  <!-- - MORE POSTS FROM OWNER --------------------- -->
+  <!-- MORE POSTS FROM OWNER --------------------- -->
   <m-newsfeed__activitySuggestions
     [baseEntity]="activity"
   ></m-newsfeed__activitySuggestions>
-  <!-- - RELATED TAGS --------------------------- -->
+  <!-- RELATED TAGS --------------------------- -->
   <!-- <pre>{{ activity | json }}</pre> -->
   <m-discovery__sidebarTags
     *ngIf="activity"
