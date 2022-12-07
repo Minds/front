@@ -76,10 +76,9 @@ export class NewsfeedSingleComponent {
 
     this.context.set('activity');
 
+    // If the user arrived at this page by clicking a link
+    // somewhere within the site, they will see a back button
     let previousUrl = this.routerHistory.getPreviousUrl();
-    // if (previousUrl .&& previousUrl.startsWith('/discovery')) {
-    console.log('ojm previousUrl is:', previousUrl);
-
     this.showBackButton = !!previousUrl;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -211,7 +210,6 @@ export class NewsfeedSingleComponent {
   }
 
   goToPreviousPage(): void {
-    // ojm todo
     this.location.back();
   }
 
