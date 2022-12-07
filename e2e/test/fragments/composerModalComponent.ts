@@ -156,7 +156,11 @@ class ComposerModalComponent {
   public addSupermindTarget(username: string): void {
     I.click(this.supermindTargetInputSelector);
     I.fillField(this.supermindTargetInputSelector, username);
-    I.click(locate(this.supermindAutoCompleteNameSelector).withText(username));
+    I.click(
+      locate(this.supermindAutoCompleteNameSelector)
+        .withText(username)
+        .last()
+    );
   }
 
   /**
