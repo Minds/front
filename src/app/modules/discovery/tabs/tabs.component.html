@@ -87,7 +87,7 @@
           >Just for you</a
         >
       </div>
-      <div class="m-tabs__tab">
+      <div class="m-tabs__tab" *ngIf="session.getLoggedInUser()">
         <a
           routerLink="/discovery/plus/tags/your"
           routerLinkActive="m-tabs__tab--selected"
@@ -96,7 +96,7 @@
           >Your tags</a
         >
       </div>
-      <div class="m-tabs__tab">
+      <div class="m-tabs__tab" *ngIf="session.getLoggedInUser()">
         <a
           routerLink="/discovery/plus/tags/trending"
           routerLinkActive="m-tabs__tab--selected"
