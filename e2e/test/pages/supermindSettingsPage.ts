@@ -14,7 +14,7 @@ class SupermindSettingsPage {
   // Object containing text for validation error text.
   public readonly validationErrorText: { [key: string]: string } = {
     two_decimal_places: 'Must have less than 2 decimal places.',
-    min_cash: 'Must be a minimum of $10',
+    min_cash: 'Must be a minimum of $1',
   };
 
   /**
