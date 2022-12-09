@@ -271,12 +271,23 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.content = this.comment.description;
   }
 
-  delete() {
+  /**
+   * Delete the comment.
+   * @returns { Promise<void> }
+   */
+  async delete(): Promise<void> {
     if (!confirm("Do you want to delete this comment?\n\nThere's no UNDO.")) {
       return;
     }
 
-    this.client.delete('api/v1/comments/' + this.comment.guid);
+    try {
+      await this.client.delete('api/v1/comments/' + this.comment.guid);
+    } catch (e) {
+      this.toasterService.error(e.message);
+      console.error(e);
+      return;
+    }
+
     if (this.parent.type === 'comment') {
       this.parent.replies_count -= 1;
     }
@@ -521,6 +532,10 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Whether delete option should be available.
+   * @returns { boolean } true if delete option should be available.
+   */
   showDelete(): boolean {
     const loggedInUserGuid = this.session.getLoggedInUser()?.guid;
 
@@ -528,7 +543,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       this.session.isAdmin() ||
       this.canDelete ||
       this.comment.owner_guid == loggedInUserGuid ||
-      this.entity.owner_guid == loggedInUserGuid
+      this.entity.owner_guid == loggedInUserGuid ||
+      this.parent.owner_guid == loggedInUserGuid
     );
   }
   // * ATTACHMENT MEDIA MODAL  * ---------------------------------------------------------------------

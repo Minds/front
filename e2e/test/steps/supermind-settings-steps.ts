@@ -12,7 +12,7 @@ namespace SupermindSettingsSteps {
 
   // preset invalid amounts to allow checking in subsequent steps.
   const invalidMinOffchainTokenAmount = '1.234';
-  const invalidMinCashAmount = '1';
+  const invalidMinCashAmount = '0.99';
 
   Before(() => {});
 
