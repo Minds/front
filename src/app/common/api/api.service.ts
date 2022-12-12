@@ -150,6 +150,9 @@ export class ApiService {
           {
             ...options,
             upload: true,
+            headers: {
+              'Ngsw-Bypass': '1',
+            },
           },
           data,
           true
