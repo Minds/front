@@ -1,3 +1,4 @@
+import { fakeAsync, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import {
   BoostAudience,
@@ -13,6 +14,7 @@ describe('BoostModalV2Service', () => {
   let service: BoostModalV2Service;
 
   let apiMock = new (function() {
+    this.get = jasmine.createSpy('get').and.returnValue(of({}));
     this.post = jasmine.createSpy('post').and.returnValue(of({}));
   })();
 
@@ -25,8 +27,30 @@ describe('BoostModalV2Service', () => {
     this.get = jasmine.createSpy('get');
   })();
 
+  let web3WalletMock = new (function() {
+    this.checkDeviceIsSupported = jasmine
+      .createSpy('checkDeviceIsSupported')
+      .and.returnValue(true);
+    this.isUnavailable = jasmine
+      .createSpy('isUnavailable')
+      .and.returnValue(false);
+    this.unlock = jasmine
+      .createSpy('unlock')
+      .and.returnValue(Promise.resolve(true));
+  })();
+
+  let boostContractMock = new (function() {
+    this.create = jasmine.createSpy('create');
+  })();
+
   beforeEach(() => {
-    service = new BoostModalV2Service(apiMock, toasterMock, configMock);
+    service = new BoostModalV2Service(
+      apiMock,
+      toasterMock,
+      configMock,
+      web3WalletMock,
+      boostContractMock
+    );
 
     service.entity$.next({
       guid: '123',
@@ -39,9 +63,20 @@ describe('BoostModalV2Service', () => {
 
   afterEach(() => {
     (service as any).api.post.calls.reset();
+    (service as any).api.get.calls.reset();
     (service as any).toast.error.calls.reset();
     (service as any).toast.success.calls.reset();
     (service as any).config.get.calls.reset();
+    (service as any).web3Wallet.checkDeviceIsSupported.calls.reset();
+    (service as any).web3Wallet.isUnavailable.calls.reset();
+    (service as any).web3Wallet.unlock.calls.reset();
+    (service as any).boostContract.create.calls.reset();
+
+    (service as any).api.post.and.returnValue(of({}));
+    (service as any).web3Wallet.checkDeviceIsSupported.and.returnValue(true);
+    (service as any).web3Wallet.isUnavailable.and.returnValue(false);
+    (service as any).web3Wallet.unlock.and.returnValue(Promise.resolve(true));
+    (service as any).boostContract.create.and.returnValue('0x123');
   });
 
   it('should be created', () => {
@@ -276,6 +311,326 @@ describe('BoostModalV2Service', () => {
     });
     expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
   });
+
+  it('should submit an onchain boost', fakeAsync(() => {
+    const preparedGuid = '345678';
+    const preparedChecksum = 'ch4ck5um';
+    (service as any).api.get.and.returnValue(
+      of({
+        status: 'success',
+        guid: preparedGuid,
+        checksum: preparedChecksum,
+      })
+    );
+    (service as any).boostContract.create.and.returnValue('0x123');
+
+    service.paymentMethod$.next(BoostPaymentMethod.ONCHAIN_TOKENS);
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+    tick();
+
+    expect((service as any).api.get).toHaveBeenCalledWith(
+      `api/v2/boost/prepare/123`
+    );
+    expect(
+      (service as any).web3Wallet.checkDeviceIsSupported
+    ).toHaveBeenCalled();
+    expect((service as any).web3Wallet.isUnavailable).toHaveBeenCalled();
+    expect((service as any).web3Wallet.unlock).toHaveBeenCalled();
+    expect((service as any).boostContract.create).toHaveBeenCalledWith(
+      preparedGuid,
+      450,
+      preparedChecksum
+    );
+    expect((service as any).api.post).toHaveBeenCalledWith('api/v3/boosts', {
+      entity_guid: '123',
+      target_suitability: 2,
+      target_location: 2,
+      payment_method: 3,
+      payment_method_id: null,
+      daily_bid: 15,
+      duration_days: 30,
+      guid: preparedGuid,
+      payment_tx_id: '0x123',
+    });
+    expect((service as any).toast.success).toHaveBeenCalledWith(
+      'Success! Your boost request is being processed.'
+    );
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should handle an error calling to prepare endpoint when submitting an onchain boost', fakeAsync(() => {
+    (service as any).api.get.and.throwError(
+      of({
+        error: { message: 'error' },
+      })
+    );
+
+    service.paymentMethod$.next(BoostPaymentMethod.ONCHAIN_TOKENS);
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+    tick();
+
+    expect((service as any).toast.error).toHaveBeenCalled();
+    expect((service as any).api.get).toHaveBeenCalledWith(
+      `api/v2/boost/prepare/123`
+    );
+    expect(
+      (service as any).web3Wallet.checkDeviceIsSupported
+    ).not.toHaveBeenCalled();
+    expect((service as any).web3Wallet.isUnavailable).not.toHaveBeenCalled();
+    expect((service as any).web3Wallet.unlock).not.toHaveBeenCalled();
+    expect((service as any).boostContract.create).not.toHaveBeenCalled();
+    expect((service as any).api.post).not.toHaveBeenCalled();
+    expect((service as any).toast.success).not.toHaveBeenCalled();
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should handle an error calling when device is unsupported when submitting an onchain boost', fakeAsync(() => {
+    const preparedGuid = '345678';
+    const preparedChecksum = 'ch4ck5um';
+    (service as any).api.get.and.returnValue(
+      of({
+        status: 'success',
+        guid: preparedGuid,
+        checksum: preparedChecksum,
+      })
+    );
+    (service as any).web3Wallet.checkDeviceIsSupported.and.returnValue(false);
+
+    service.paymentMethod$.next(BoostPaymentMethod.ONCHAIN_TOKENS);
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+    tick();
+
+    expect((service as any).toast.error).toHaveBeenCalledWith(
+      'Currently not supported on this device.'
+    );
+    expect((service as any).api.get).toHaveBeenCalledWith(
+      `api/v2/boost/prepare/123`
+    );
+    expect(
+      (service as any).web3Wallet.checkDeviceIsSupported
+    ).toHaveBeenCalled();
+    expect((service as any).web3Wallet.isUnavailable).not.toHaveBeenCalled();
+    expect((service as any).web3Wallet.unlock).not.toHaveBeenCalled();
+    expect((service as any).boostContract.create).not.toHaveBeenCalled();
+    expect((service as any).api.post).not.toHaveBeenCalled();
+    expect((service as any).toast.success).not.toHaveBeenCalled();
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should handle an error calling when wallet is unavailable when submitting an onchain boost', fakeAsync(() => {
+    const preparedGuid = '345678';
+    const preparedChecksum = 'ch4ck5um';
+    (service as any).api.get.and.returnValue(
+      of({
+        status: 'success',
+        guid: preparedGuid,
+        checksum: preparedChecksum,
+      })
+    );
+    (service as any).web3Wallet.isUnavailable.and.returnValue(true);
+
+    service.paymentMethod$.next(BoostPaymentMethod.ONCHAIN_TOKENS);
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+    tick();
+
+    expect((service as any).toast.error).toHaveBeenCalledWith(
+      'No Ethereum wallets available on your browser.'
+    );
+    expect((service as any).api.get).toHaveBeenCalledWith(
+      `api/v2/boost/prepare/123`
+    );
+    expect(
+      (service as any).web3Wallet.checkDeviceIsSupported
+    ).toHaveBeenCalled();
+    expect((service as any).web3Wallet.isUnavailable).toHaveBeenCalled();
+    expect((service as any).web3Wallet.unlock).not.toHaveBeenCalled();
+    expect((service as any).boostContract.create).not.toHaveBeenCalled();
+    expect((service as any).api.post).not.toHaveBeenCalled();
+    expect((service as any).toast.success).not.toHaveBeenCalled();
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should handle an error calling when wallet is unavailable when submitting an onchain boost', fakeAsync(() => {
+    const preparedGuid = '345678';
+    const preparedChecksum = 'ch4ck5um';
+    (service as any).api.get.and.returnValue(
+      of({
+        status: 'success',
+        guid: preparedGuid,
+        checksum: preparedChecksum,
+      })
+    );
+    (service as any).web3Wallet.unlock.and.returnValue(Promise.resolve(false));
+
+    service.paymentMethod$.next(BoostPaymentMethod.ONCHAIN_TOKENS);
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+    tick();
+
+    expect((service as any).toast.error).toHaveBeenCalledWith(
+      'Your Ethereum wallet is locked or connected to another network.'
+    );
+    expect((service as any).api.get).toHaveBeenCalledWith(
+      `api/v2/boost/prepare/123`
+    );
+    expect(
+      (service as any).web3Wallet.checkDeviceIsSupported
+    ).toHaveBeenCalled();
+    expect((service as any).web3Wallet.isUnavailable).toHaveBeenCalled();
+    expect((service as any).web3Wallet.unlock).toHaveBeenCalled();
+    expect((service as any).boostContract.create).not.toHaveBeenCalled();
+    expect((service as any).api.post).not.toHaveBeenCalled();
+    expect((service as any).toast.success).not.toHaveBeenCalled();
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should handle an error submitting a transaction when submitting an onchain boost', fakeAsync(() => {
+    const preparedGuid = '345678';
+    const preparedChecksum = 'ch4ck5um';
+    const errorMessage = '~errorMessage~';
+
+    (service as any).api.get.and.returnValue(
+      of({
+        status: 'success',
+        guid: preparedGuid,
+        checksum: preparedChecksum,
+      })
+    );
+    (service as any).boostContract.create.and.throwError(errorMessage);
+
+    service.paymentMethod$.next(BoostPaymentMethod.ONCHAIN_TOKENS);
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+    tick();
+
+    expect((service as any).toast.error).toHaveBeenCalledWith(errorMessage);
+    expect((service as any).api.get).toHaveBeenCalledWith(
+      `api/v2/boost/prepare/123`
+    );
+    expect(
+      (service as any).web3Wallet.checkDeviceIsSupported
+    ).toHaveBeenCalled();
+    expect((service as any).web3Wallet.isUnavailable).toHaveBeenCalled();
+    expect((service as any).web3Wallet.unlock).toHaveBeenCalled();
+    expect((service as any).boostContract.create).toHaveBeenCalled();
+    expect((service as any).api.post).not.toHaveBeenCalled();
+    expect((service as any).toast.success).not.toHaveBeenCalled();
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  }));
+
+  it('should handle an error when submitting an onchain boost to API', fakeAsync(() => {
+    const preparedGuid = '345678';
+    const preparedChecksum = 'ch4ck5um';
+
+    (service as any).api.get.and.returnValue(
+      of({
+        status: 'success',
+        guid: preparedGuid,
+        checksum: preparedChecksum,
+      })
+    );
+    (service as any).api.post.and.throwError('Error!');
+
+    service.paymentMethod$.next(BoostPaymentMethod.ONCHAIN_TOKENS);
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+    tick();
+
+    expect((service as any).toast.error).toHaveBeenCalled();
+    expect((service as any).api.get).toHaveBeenCalledWith(
+      `api/v2/boost/prepare/123`
+    );
+    expect(
+      (service as any).web3Wallet.checkDeviceIsSupported
+    ).toHaveBeenCalled();
+    expect((service as any).web3Wallet.isUnavailable).toHaveBeenCalled();
+    expect((service as any).web3Wallet.unlock).toHaveBeenCalled();
+    expect((service as any).boostContract.create).toHaveBeenCalled();
+    expect((service as any).api.post).toHaveBeenCalled();
+    expect((service as any).toast.success).not.toHaveBeenCalled();
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  }));
 
   it('should navigate to previous panel from budget', (done: DoneFn) => {
     service.activePanel$.next(BoostModalPanel.BUDGET);
