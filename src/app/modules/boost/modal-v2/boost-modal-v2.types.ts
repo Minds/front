@@ -86,7 +86,8 @@ export type EstimatedReach = {
 };
 
 // Boost submission request object.
-export type BoostSubmitRequest = {
+export type BoostSubmissionPayload = {
+  guid?: string;
   entity_guid: string;
   target_suitability: BoostAudience;
   target_location: BoostLocation;
@@ -98,3 +99,10 @@ export type BoostSubmitRequest = {
 
 // Response on boost submission.
 export type BoostSubmitResponse = {};
+
+// Boost prepare endpoint response.
+export type PrepareResponse = {
+  status?: string;
+  guid: string;
+  checksum: string;
+};

@@ -22,6 +22,8 @@ import {
 import { ApiService } from '../../../../common/api/api.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { BoostContractService } from '../../../blockchain/contracts/boost-contract.service';
+import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import {
   DEFAULT_AUDIENCE,
   DEFAULT_CASH_DURATION,
@@ -40,9 +42,10 @@ import {
   BoostPaymentMethod,
   BoostPaymentMethodId,
   BoostSubject,
-  BoostSubmitRequest,
+  BoostSubmissionPayload,
   BoostSubmitResponse,
   EstimatedReach,
+  PrepareResponse,
 } from '../boost-modal-v2.types';
 
 /**
@@ -166,15 +169,68 @@ export class BoostModalV2Service implements OnDestroy {
     shareReplay()
   );
 
+  // payload for boost submission.
+  private readonly boostSubmissionPayload$: Observable<
+    BoostSubmissionPayload
+  > = combineLatest([
+    this.entity$,
+    this.entityType$,
+    this.paymentMethod$,
+    this.paymentMethodId$,
+    this.duration$,
+    this.dailyBudget$,
+    this.audience$,
+  ]).pipe(
+    map(
+      ([
+        entity,
+        entityType,
+        paymentMethod,
+        paymentMethodId,
+        duration,
+        dailyBudget,
+        audience,
+      ]: [
+        BoostableEntity,
+        BoostSubject,
+        BoostPaymentMethod,
+        BoostPaymentMethodId,
+        number,
+        number,
+        BoostAudience
+      ]): BoostSubmissionPayload => {
+        return {
+          entity_guid: entity?.guid,
+          target_suitability: audience,
+          target_location:
+            entityType === BoostSubject.CHANNEL
+              ? BoostLocation.SIDEBAR
+              : BoostLocation.NEWSFEED,
+          payment_method: Number(paymentMethod),
+          payment_method_id: paymentMethodId,
+          daily_bid: dailyBudget,
+          duration_days: duration,
+        };
+      }
+    )
+  );
+
+  // snapshot of boost payload for boost submission.
+  private boostSubmissionPayloadSnapshot: BoostSubmissionPayload;
+
   // subscriptions.
   private submitBoostSubscription: Subscription;
+  private submitBoostOnchainSubscription: Subscription;
   private paymentCategoryChangeSubscription: Subscription;
   private openPreviousPanelSubscription: Subscription;
+  private boostSubmissionPayloadSnapshotSubscription: Subscription;
 
   constructor(
     private api: ApiService,
     private toast: ToasterService,
-    private config: ConfigsService
+    private config: ConfigsService,
+    private web3Wallet: Web3WalletService,
+    private boostContract: BoostContractService
   ) {
     // set default duration and budgets on payment category change.
     this.paymentCategoryChangeSubscription = this.paymentCategory$.subscribe(
@@ -191,12 +247,20 @@ export class BoostModalV2Service implements OnDestroy {
         );
       }
     );
+
+    // store a snapshot of payload for subscriptionless reference.
+    this.boostSubmissionPayloadSnapshotSubscription = this.boostSubmissionPayload$.subscribe(
+      (boostSubmissionPayload: BoostSubmissionPayload) =>
+        (this.boostSubmissionPayloadSnapshot = boostSubmissionPayload)
+    );
   }
 
   ngOnDestroy(): void {
     this.paymentCategoryChangeSubscription?.unsubscribe();
     this.submitBoostSubscription?.unsubscribe();
+    this.submitBoostOnchainSubscription?.unsubscribe();
     this.openPreviousPanelSubscription?.unsubscribe();
+    this.boostSubmissionPayloadSnapshotSubscription?.unsubscribe();
   }
 
   /**
@@ -221,6 +285,13 @@ export class BoostModalV2Service implements OnDestroy {
         this.switchFromBudgetPanel();
         break;
       case BoostModalPanel.REVIEW:
+        if (
+          Number(this.paymentMethod$.getValue()) ===
+          BoostPaymentMethod.ONCHAIN_TOKENS
+        ) {
+          this.submitOnchainBoost();
+          break;
+        }
         this.submitBoost();
         break;
     }
@@ -266,57 +337,17 @@ export class BoostModalV2Service implements OnDestroy {
    * @returns { void }
    */
   private submitBoost(): void {
-    this.submitBoostSubscription = combineLatest([
-      this.entity$,
-      this.entityType$,
-      this.paymentMethod$,
-      this.paymentMethodId$,
-      this.duration$,
-      this.dailyBudget$,
-      this.audience$,
-    ])
+    this.submitBoostSubscription = this.boostSubmissionPayload$
       .pipe(
         take(1),
         tap(_ => this.boostSubmissionInProgress$.next(true)),
-        map(
-          ([
-            entity,
-            entityType,
-            paymentMethod,
-            paymentMethodId,
-            duration,
-            dailyBudget,
-            audience,
-          ]: [
-            BoostableEntity,
-            BoostSubject,
-            BoostPaymentMethod,
-            BoostPaymentMethodId,
-            number,
-            number,
-            BoostAudience
-          ]): BoostSubmitRequest => {
-            return {
-              entity_guid: entity.guid,
-              target_suitability: audience,
-              target_location:
-                entityType === BoostSubject.CHANNEL
-                  ? BoostLocation.SIDEBAR
-                  : BoostLocation.NEWSFEED,
-              payment_method: paymentMethod,
-              payment_method_id: paymentMethodId,
-              daily_bid: dailyBudget,
-              duration_days: duration,
-            };
-          }
-        ),
         switchMap(
           (
-            boostSubmitRequest: BoostSubmitRequest
+            boostSubmissionPayload: BoostSubmissionPayload
           ): Observable<BoostSubmitResponse> => {
             return this.api.post<BoostSubmitResponse>(
               'api/v3/boosts',
-              boostSubmitRequest
+              boostSubmissionPayload
             );
           }
         ),
@@ -331,6 +362,82 @@ export class BoostModalV2Service implements OnDestroy {
   }
 
   /**
+   * Submit an onchain boost. Will prompt for transaction via client wallet (e.g. Metamask).
+   * @returns { Promise<void> }
+   */
+  private async submitOnchainBoost(): Promise<void> {
+    const boostSubmissionPayload: BoostSubmissionPayload = this
+      .boostSubmissionPayloadSnapshot;
+    this.boostSubmissionInProgress$.next(true);
+
+    try {
+      const prepareResponse: PrepareResponse = await this.api
+        .get<PrepareResponse>(
+          `api/v2/boost/prepare/${boostSubmissionPayload.entity_guid}`
+        )
+        .toPromise();
+
+      const txId = await this.createOnchainBoostTransaction(
+        prepareResponse.guid,
+        boostSubmissionPayload.daily_bid * boostSubmissionPayload.duration_days,
+        prepareResponse.checksum
+      );
+
+      await this.api
+        .post<BoostSubmitResponse>('api/v3/boosts', {
+          ...boostSubmissionPayload,
+          guid: prepareResponse.guid,
+          payment_tx_id: txId,
+        })
+        .toPromise();
+
+      this.toast.success('Success! Your boost request is being processed.');
+      this.callSaveIntent$.next(true);
+    } catch (e) {
+      console.error(e);
+      if (e.error?.errors?.length) {
+        this.toast.error(e.error.errors[0].message);
+      } else {
+        this.toast.error(
+          e.error?.message ?? e.message ?? 'An unknown error has occurred'
+        );
+      }
+    } finally {
+      this.boostSubmissionInProgress$.next(false);
+    }
+  }
+
+  /**
+   * Create an onchain boost transaction.
+   * @param { string } boostGuid - guid to use for boost.
+   * @param { string } currencyAmount - amount in tokens.
+   * @param { string } checksum - checksum of post from prepare endpoint.
+   * @throws { Error } on error.
+   * @returns { Promise<string> } - transaction id.
+   */
+  private async createOnchainBoostTransaction(
+    boostGuid: string,
+    currencyAmount: number,
+    checksum: string
+  ): Promise<string> {
+    if (!this.web3Wallet.checkDeviceIsSupported()) {
+      throw new Error('Currently not supported on this device.');
+    }
+
+    if (this.web3Wallet.isUnavailable()) {
+      throw new Error('No Ethereum wallets available on your browser.');
+    }
+
+    if (!(await this.web3Wallet.unlock())) {
+      throw new Error(
+        'Your Ethereum wallet is locked or connected to another network.'
+      );
+    }
+
+    return this.boostContract.create(boostGuid, currencyAmount, checksum);
+  }
+
+  /**
    * Handle API errors.
    * @param { any } e - error from API.
    * @param { boolean } toast - whether to display error toasts.
@@ -338,7 +445,6 @@ export class BoostModalV2Service implements OnDestroy {
    */
   private handleRequestError(e: any, toast: boolean = false): Observable<null> {
     if (toast) {
-      console.error(e);
       if (e.error?.errors?.length) {
         this.toast.error(e.error.errors[0].message);
       } else {

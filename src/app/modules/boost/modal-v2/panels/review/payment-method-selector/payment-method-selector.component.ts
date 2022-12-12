@@ -31,10 +31,12 @@ import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
       >
         Off-chain ({{ offchainBalance$ | async }} Tokens)
       </option>
-      <!-- TODO: Enable onchain boost option and link up to wallet service on submission -->
-      <!-- <option [value]="BoostPaymentMethod.ONCHAIN_TOKENS" data-ref="boost-modal-v2-token-payment-select-onchain-option">
+      <option
+        [value]="BoostPaymentMethod.ONCHAIN_TOKENS"
+        data-ref="boost-modal-v2-token-payment-select-onchain-option"
+      >
         On-chain ({{ onchainBalance$ | async }} Tokens)
-      </option> -->
+      </option>
     </select>
     <m-payments__selectCard
       *ngIf="(paymentCategory$ | async) === BoostPaymentCategory.CASH"
