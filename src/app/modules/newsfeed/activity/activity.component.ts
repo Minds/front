@@ -196,13 +196,20 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.entitySubscription = this.service.entity$.subscribe(entity => {
+      if (!entity) {
+        return;
+      }
+
+      const notInBoostRotator = !this.service.displayOptions.boostRotatorMode;
+      const boosted = entity.boosted;
+      const reminded = entity.remind_users && entity.remind_users.length;
+      const isSupermindOffer =
+        entity.supermind &&
+        !entity.supermind.is_reply &&
+        entity.supermind.receiver_user;
+
       this.showFlagRow =
-        !this.service.displayOptions.boostRotatorMode &&
-        (entity.boosted ||
-          (entity.remind_users && entity.remind_users.length) ||
-          (entity.supermind &&
-            !entity.supermind.is_reply &&
-            entity.supermind.receiver_user));
+        notInBoostRotator && (boosted || reminded || isSupermindOffer);
     });
   }
 

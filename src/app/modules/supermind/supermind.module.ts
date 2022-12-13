@@ -5,6 +5,7 @@ import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SupermindConsoleComponent } from './console/console.component';
 import { SupermindConsoleListComponent } from './console/list/list.component';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { SupermindConsoleListItemComponent } from './console/list/list-item/list-item.component';
 import { SupermindConsoleFilterBarComponent } from './console/list/filter-bar/filter-bar.component';
 import { SupermindConsoleStateLabelComponent } from './console/list/list-item/state-label/state-label.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     CommonModule,
+    ActivityModule,
   ],
   declarations: [
     SupermindConsoleListComponent,

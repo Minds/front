@@ -35,7 +35,7 @@ import { TopHighlightsComponent } from './feeds/top-highlights/top-highlights.co
 import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
 import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
-import { ActivityV2Module } from './activity/activity.module';
+import { ActivityModule } from './activity/activity.module';
 import { NewsfeedFeedItemComponent } from './feeds/feed-item.component';
 import { VirtualMinimapComponent } from './feed/virtual-minimap';
 import { FeedComponent } from './feed/feed.component';
@@ -90,7 +90,7 @@ const routes: Routes = [
     SuggestionsModule,
     NoticesModule,
     SearchModule,
-    ActivityV2Module,
+    ActivityModule,
     ComposerModule,
     DiscoverySharedModule,
     LanguageModule,

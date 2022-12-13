@@ -25,6 +25,8 @@ Playwright end-to-end test automation with CodeceptJS (Gherkin) and Browserstack
 | BYPASS_SIGNING_KEY | The key to sign the bypass tokens with |
 | PLAYWRIGHT_USERNAME | The username of the default user you will test against |
 | PLAYWRIGHT_PASSWORD | The password of the default user you will test against |
+| PLAYWRIGHT_SECONDARY_USERNAME | The username of the default secondary user you will test against |
+| PLAYWRIGHT_SECONDARY_PASSWORD | The password of the default secondary user you will test against |
 | SUPERMIND_SENDER_USERNAME | The username of a dedicated user to act as a supermind sender |
 | SUPERMIND_SENDER_PASSWORD | The password of a dedicated user to act as a supermind sender |
 | SUPERMIND_SETTINGS_USERNAME | Username of a dedicated user for testing Supermind Settings |
