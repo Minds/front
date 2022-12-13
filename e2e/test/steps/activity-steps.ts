@@ -55,6 +55,6 @@ namespace ActivitySteps {
   );
 
   Then('I should see the back button on the single entity page', () => {
-    singleEntityPage.backButtonShouldBeVisible();
+    singleEntityPage.backButtonShouldBeVisible(true);
   });
 }
