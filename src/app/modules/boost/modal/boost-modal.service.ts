@@ -302,7 +302,7 @@ export class BoostModalService implements OnDestroy {
         paymentMethod: {
           ...(await this.getOnchainPaymentMethod(
             preparedResponse.guid,
-            impressions,
+            this.currencyAmount$.getValue(),
             preparedResponse.checksum
           )),
         },
