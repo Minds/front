@@ -90,4 +90,4 @@ import { ActivitySupermindReplyLinkComponent } from './supermind-reply-link/supe
     ActivityBoostedFlagComponent,
   ],
 })
-export class ActivityV2Module {}
+export class ActivityModule {}

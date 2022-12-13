@@ -17,7 +17,7 @@ import { AdminComponent } from './admin.component';
 import { GroupsModule } from '../groups/groups.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentsModule } from '../comments/comments.module';
-import { ActivityV2Module } from '../newsfeed/activity/activity.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { AdminLiquidityProvidersComponent } from './liquidity-providers/liquidity-providers.component';
 import { AdminTransactionExplorersComponent } from './withdrawals/transaction-explorers/transaction-explorers.component';
 import { AdminPushNotificationsFormComponent } from './push-notifications/form/admin-push-notifications-form.component';
@@ -43,7 +43,7 @@ const routes: Routes = [
     GroupsModule,
     CommentsModule,
     ReactiveFormsModule,
-    ActivityV2Module,
+    ActivityModule,
   ],
   declarations: [
     AdminComponent,

@@ -7,7 +7,7 @@ import { DefaultFeedComponent } from './feed/feed.component';
 import { DefaultFeedContainerComponent } from './container.component';
 import { DiscoveryDisclaimerModule } from '../discovery/disclaimer/disclaimer.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
-import { ActivityV2Module } from '../newsfeed/activity/activity.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { NoticesModule } from '../notices/notices.module';
 import { DefaultFeedHeaderComponent } from './feed/default-feed-header/default-feed-header.component';
@@ -17,7 +17,7 @@ import { DefaultFeedHeaderComponent } from './feed/default-feed-header/default-f
     NgCommonModule,
     NgFormsModule,
     CommonModule,
-    ActivityV2Module,
+    ActivityModule,
     DiscoveryDisclaimerModule,
     SuggestionsModule,
     ExperimentsModule,

@@ -18,7 +18,7 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
 import { DiscoveryTopComponent } from './top/top.component';
-import { ActivityV2Module } from '../newsfeed/activity/activity.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.component';
 import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/supermind-global-feed-experiment.guard.ts/supermind-global-feed-experiment.guard';
 
@@ -197,7 +197,7 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
     NgCommonModule,
     CommonModule,
     SuggestionsModule,
-    ActivityV2Module,
+    ActivityModule,
     DiscoverySharedModule,
     HashtagsModule,
     LanguageModule,
