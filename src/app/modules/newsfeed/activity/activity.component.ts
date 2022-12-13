@@ -197,6 +197,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.entitySubscription = this.service.entity$.subscribe(entity => {
       this.showFlagRow =
+        entity &&
         !this.service.displayOptions.boostRotatorMode &&
         (entity.boosted ||
           (entity.remind_users && entity.remind_users.length) ||
