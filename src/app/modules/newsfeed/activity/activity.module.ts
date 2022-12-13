@@ -40,6 +40,7 @@ import { ActivityBoostedFlagComponent } from './flag/boosted-flag/boosted-flag.c
 import { ActivityMultiImageComponent } from './content/images/multi-image.component';
 import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
 import { ActivitySupermindReplyLinkComponent } from './supermind-reply-link/supermind-reply-link.component';
+import { ComposerModule } from '../../composer/composer.module';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { ActivitySupermindReplyLinkComponent } from './supermind-reply-link/supe
     ReadMoreModule,
     MatGridListModule,
     SupermindSharedModule,
+    ComposerModule,
   ],
   declarations: [
     ActivityComponent,

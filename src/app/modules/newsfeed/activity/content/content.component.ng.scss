@@ -323,7 +323,7 @@
     &:not(.m-activityContent--minimalMode):not(.m-activityContent--sidebarMode) {
       .m-activityContent__quote {
         @include supermindGradient;
-        border-radius: $m-borderRadius;
+        border-radius: $borderRadius--activity;
         padding: 2px; // thickness of gradient border
       }
       ::ng-deep m-activity__quote {
@@ -387,7 +387,7 @@
     &:not(.m-activityContent--minimalMode):not(.m-activityContent--fixedHeight) {
       .m-activityContent__media--video,
       .m-activityContent__media--image {
-        padding-top: $spacing1;
+        padding-top: $spacing2;
       }
     }
   }

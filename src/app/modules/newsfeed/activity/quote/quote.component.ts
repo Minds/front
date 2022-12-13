@@ -7,7 +7,9 @@ import {
 } from '../../activity/activity.service';
 
 /**
- * Displays a stripped-down activity (e.g. without toolbar action buttons or comments) within an activity, with the quoted content on top.
+ * Displays a stripped-down, quoted activity (e.g. without toolbar action buttons or comments)
+ *
+ * Not intended for standalone use. See it used inside quote post activities.
  */
 @Component({
   selector: 'm-activity__quote',
