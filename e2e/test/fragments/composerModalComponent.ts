@@ -156,7 +156,6 @@ class ComposerModalComponent {
   public addSupermindTarget(username: string): void {
     I.click(this.supermindTargetInputSelector);
     I.fillField(this.supermindTargetInputSelector, username);
-    I.waitForElement(this.supermindTargetInputSelector);
     const usernamedDropdownOption: CodeceptJS.Locator = locate({
       xpath: `//*[text()="${username}"]`,
     }).inside(this.supermindTargetInputSelector);
