@@ -156,11 +156,11 @@ class ComposerModalComponent {
   public addSupermindTarget(username: string): void {
     I.click(this.supermindTargetInputSelector);
     I.fillField(this.supermindTargetInputSelector, username);
-    I.click(
-      locate({ xpath: `//*[text()="${username}"]` }).inside(
-        this.supermindTargetInputSelector
-      )
-    );
+    const usernamedDropdownOption: CodeceptJS.Locator = locate({
+      xpath: `//*[text()="${username}"]`,
+    }).inside(this.supermindTargetInputSelector);
+    I.waitForElement(usernamedDropdownOption);
+    I.click(usernamedDropdownOption);
   }
 
   /**

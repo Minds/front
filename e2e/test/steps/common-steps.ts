@@ -6,6 +6,7 @@ namespace CommonSteps {
     loginPage,
     commonPage,
     registerPage,
+    channelPage,
     confirmationModalComponent,
   } = inject();
 
@@ -123,6 +124,7 @@ namespace CommonSteps {
 
   Given('I am on the {string} channel page', username => {
     I.amOnPage('/' + username);
+    channelPage.waitForContentComponent();
   });
 
   Given('I wait for {string} seconds', (seconds: number) => {
