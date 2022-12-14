@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
@@ -18,13 +24,14 @@ export type DiscoveryCardCarouselContentType = 'suggestions' | 'search';
 export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
   cards: Array<any>;
 
-  isPlusPageSubscription: Subscription;
-  isPlusPage: boolean = false;
-
   suggestionsSubscription: Subscription;
   searchSubscription: Subscription;
 
   @Input() type: DiscoveryCardCarouselContentType = 'suggestions';
+
+  isPlusPageSubscription: Subscription;
+  @HostBinding('class.m-discovery__cardCarousel--hidden')
+  isPlusPage: boolean = false;
 
   limit = 12;
   displayLimit = 6;

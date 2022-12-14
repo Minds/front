@@ -13,4 +13,15 @@ $layoutMax2ColWidth: '1040px';
       @include borderRight;
     }
   }
+
+  // Hide the border of the first feed item (activity) after the trends
+  ::ng-deep {
+    .m-discovery__trends + m-discovery__feedsList {
+      m-discovery__feedItem:first-child {
+        m-activity {
+          border-top: none;
+        }
+      }
+    }
+  }
 }
