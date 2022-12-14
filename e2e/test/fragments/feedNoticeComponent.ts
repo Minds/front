@@ -22,7 +22,6 @@ class FeedNoticeComponent {
     switch (feedNoticeKey) {
       case 'supermind_pending':
         I.waitForElement(this.feedNoticeSelector);
-        // I.seeElement(this.feedNoticeSelector);
         I.seeElement(
           locate(this.feedNoticeTitleSelector).withText(
             'You have Supermind offers'
