@@ -8,6 +8,7 @@ class ChannelPage extends ActivityFeedPage {
   // selectors
   private readonly channelBoostButtonSelector: string =
     'm-channelActions__boost';
+  private readonly contentComponentSelector: string = 'm-channel__content';
 
   /**
    * Navigate to the channel page by sidebar.
@@ -30,6 +31,14 @@ class ChannelPage extends ActivityFeedPage {
    */
   public openChannelBoostModal(): void {
     I.click(this.channelBoostButtonSelector);
+  }
+
+  /**
+   * Wait for content component to load.
+   * @returns { void }
+   */
+  public waitForContentComponent(): void {
+    I.waitForElement(this.contentComponentSelector);
   }
 }
 
