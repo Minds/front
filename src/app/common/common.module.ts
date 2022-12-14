@@ -142,6 +142,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
+import { FormInputSliderV2Component } from './components/slider/v2/slider.component';
 import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
@@ -212,6 +213,7 @@ const MINDS_COMMON_COMPONENTS = [
   FooterComponent,
   FormInputCheckboxComponent,
   FormInputSliderComponent,
+  FormInputSliderV2Component,
   FriendlyCaptchaComponent,
   HovercardComponent,
   IconComponent,

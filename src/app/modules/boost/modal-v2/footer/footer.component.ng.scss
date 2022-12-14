@@ -1,0 +1,47 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  @media screen and (max-width: $max-mobile) {
+    flex-flow: column nowrap;
+  }
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-boostModalFooter__descriptionTextOuterContainer {
+    .m-boostModalFooter__descriptionTextInnerContainer {
+      @media screen and (max-width: $max-mobile) {
+        margin-bottom: $spacing6;
+      }
+    }
+
+    span {
+      @include body3Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-boostModalFooter__submitButtonContainer {
+    min-width: 165px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    @media screen and (max-width: $max-mobile) {
+      ::ng-deep m-button {
+        width: 100%;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

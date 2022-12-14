@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  input {
+    width: 100%;
+
+    @include m-theme() {
+      accent-color: themed($m-blue);
+    }
+  }
+}
