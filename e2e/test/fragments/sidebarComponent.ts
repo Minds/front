@@ -5,15 +5,20 @@ const { I } = inject();
  */
 class SidebarComponent {
   // selectors.
-  private readonly sidebarComposerItemSelector: string =
+  private readonly composerButtonSelector: string =
     '[data-ref=sidenav-composer]';
+  private readonly channelButtonSelector: string = '[data-ref=sidenav-channel]';
+  private readonly moreButtonSelector: string = '[data-ref=sidenav-more]';
+  private readonly supermindConsoleButtonSelector: string =
+    '[data-ref=sidebarmore-supermind]';
 
   /**
    * Opens the users channel from the sidebar.
    * @return { void }
    */
   public openChannel(): void {
-    I.click('[data-ref=sidenav-channel]');
+    I.waitForElement(this.channelButtonSelector);
+    I.click(this.channelButtonSelector);
     I.waitForElement('m-channel__feed');
   }
 
@@ -22,8 +27,8 @@ class SidebarComponent {
    * @return { void }
    */
   public openSidebarComposer(): void {
-    I.waitForElement(this.sidebarComposerItemSelector);
-    I.click(this.sidebarComposerItemSelector);
+    I.waitForElement(this.composerButtonSelector);
+    I.click(this.composerButtonSelector);
   }
 
   /**
@@ -31,7 +36,8 @@ class SidebarComponent {
    * @return { void }
    */
   public expandSidebarMore(): void {
-    I.click('[data-ref=sidenav-more]');
+    I.waitForElement(this.moreButtonSelector);
+    I.click(this.moreButtonSelector);
   }
 
   /**
@@ -39,7 +45,8 @@ class SidebarComponent {
    * @return { void }
    */
   public openSupermindConsole(): void {
-    I.click('[data-ref=sidebarmore-supermind]');
+    I.waitForElement(this.supermindConsoleButtonSelector);
+    I.click(this.supermindConsoleButtonSelector);
   }
 }
 
