@@ -1,0 +1,15 @@
+<div class="m-boostModalV2__container m-modalV2__inner">
+  <m-boostModalV2__header></m-boostModalV2__header>
+  <div class="m-modalV2__body" [ngSwitch]="activePanel$ | async">
+    <m-boostModalV2__audienceSelector
+      *ngSwitchCase="BoostModalPanel.AUDIENCE"
+    ></m-boostModalV2__audienceSelector>
+    <m-boostModalV2__budgetSelector
+      *ngSwitchCase="BoostModalPanel.BUDGET"
+    ></m-boostModalV2__budgetSelector>
+    <m-boostModalV2__review
+      *ngSwitchCase="BoostModalPanel.REVIEW"
+    ></m-boostModalV2__review>
+  </div>
+  <m-boostModalV2__footer class="m-modalV2__footer"></m-boostModalV2__footer>
+</div>

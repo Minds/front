@@ -1,7 +1,8 @@
 <a
   [ngClass]="{
     grey: color === 'grey',
-    white: color === 'white'
+    white: color === 'white',
+    noAbsolutePosition: !absolutePosition
   }"
   (click)="close()"
   [tabindex]="autoFocus ? 0 : undefined"

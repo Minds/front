@@ -1,0 +1,23 @@
+<m-boostModalV2__budgetTabBar></m-boostModalV2__budgetTabBar>
+<div class="m-boostModalBudget__tabs" [ngSwitch]="paymentCategory$ | async">
+  <m-boostModalV2__budgetTab
+    *ngSwitchCase="BoostPaymentCategory.CASH"
+    [paymentCategory]="BoostPaymentCategory.CASH"
+    [minDuration]="config?.duration.min"
+    [maxDuration]="config?.duration.max"
+    [initialDuration]="initialCashDuration$ | async"
+    [minDailyBudget]="config?.min.cash"
+    [maxDailyBudget]="config?.max.cash"
+    [initialDailyBudget]="initialDailyCashBudget$ | async"
+  ></m-boostModalV2__budgetTab>
+  <m-boostModalV2__budgetTab
+    *ngSwitchDefault
+    [paymentCategory]="BoostPaymentCategory.TOKENS"
+    [minDuration]="config?.duration.min"
+    [maxDuration]="config?.duration.max"
+    [initialDuration]="initialTokenDuration$ | async"
+    [minDailyBudget]="config?.min.offchain_tokens"
+    [maxDailyBudget]="config?.max.offchain_tokens"
+    [initialDailyBudget]="initialDailyTokenBudget$ | async"
+  ></m-boostModalV2__budgetTab>
+</div>

@@ -1,0 +1,56 @@
+import { Component, Injector } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ModalService } from '../../../../../../../services/ux/modal.service';
+import { ConfirmV2Component } from '../../../../../../modals/confirm-v2/confirm.component';
+import { BoostPaymentCategory } from '../../../../boost-modal-v2.types';
+import { BoostModalV2Service } from '../../../../services/boost-modal-v2.service';
+
+@Component({
+  selector: 'm-boostModalV2__budgetTabBar',
+  templateUrl: './tab-bar.component.html',
+  styleUrls: ['tab-bar.component.ng.scss'],
+})
+export class BoostModalV2BudgetTabBarComponent {
+  // enums.
+  public BoostPaymentCategory: typeof BoostPaymentCategory = BoostPaymentCategory;
+
+  // category for payment.
+  public readonly paymentCategory$: BehaviorSubject<BoostPaymentCategory> = this
+    .service.paymentCategory$;
+
+  constructor(
+    private service: BoostModalV2Service,
+    private modal: ModalService,
+    private injector: Injector
+  ) {}
+
+  /**
+   * On tab click, change tabs. If we're changing from cash - show confirmation modal first.
+   * @param { BoostPaymentCategory } paymentCategory - category for tab we're switching to.
+   * @returns { void }
+   */
+  public onTabClick(paymentCategory: BoostPaymentCategory): void {
+    if (paymentCategory === this.paymentCategory$.getValue()) {
+      return;
+    }
+
+    if (paymentCategory === BoostPaymentCategory.TOKENS) {
+      const modal = this.modal.present(ConfirmV2Component, {
+        data: {
+          title: 'Are you sure you want to swap to tokens?',
+          body: 'You will receive more views when using cash.',
+          confirmButtonColor: 'blue',
+          confirmButtonSolid: true,
+          onConfirm: () => {
+            this.paymentCategory$.next(paymentCategory);
+            this.service.paymentMethodId$.next(null);
+            modal.dismiss();
+          },
+        },
+        injector: this.injector,
+      });
+      return;
+    }
+    this.paymentCategory$.next(paymentCategory);
+  }
+}
