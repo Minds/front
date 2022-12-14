@@ -2,9 +2,12 @@
 
 :host {
   a {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    &:not(.noAbsolutePosition) {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
     z-index: 3;
     display: inline-block;
     padding: 10px;

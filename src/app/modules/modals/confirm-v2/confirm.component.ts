@@ -29,6 +29,11 @@ export class ConfirmV2Component {
   public confirmButtonColor: string = 'blue';
 
   /**
+   * Whether confirm button is solid.
+   */
+  public confirmButtonSolid: boolean = false;
+
+  /**
    * Triggered on confirm click
    */
   public onConfirm: () => any = noOp;
@@ -43,13 +48,22 @@ export class ConfirmV2Component {
    * @param { string } title - title of the modal.
    * @param { string } body - text body of the component.
    * @param { string } confirmButtonColor - color of the confirm button.
+   * @param { string } confirmButtonSolid - whether confirm button is solid.
    * @param { function } onConfirm - callback on call for confirmation.
    * @param { function } onDismiss - callback on call to dismiss modal.
    */
-  setModalData({ title, body, confirmButtonColor, onConfirm, onDismiss }) {
+  setModalData({
+    title,
+    body,
+    confirmButtonColor,
+    confirmButtonSolid = false,
+    onConfirm,
+    onDismiss,
+  }) {
     this.title = title || DEFAULT_TITLE;
     this.body = body || DEFAULT_BODY;
     this.confirmButtonColor = confirmButtonColor || 'blue';
+    this.confirmButtonSolid = confirmButtonSolid || false;
     this.onConfirm = onConfirm || noOp;
     this.onDismiss = onDismiss || noOp;
   }

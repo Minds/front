@@ -1,0 +1,24 @@
+<div
+  class="m-boostModalTabs__tabContainer"
+  (click)="onTabClick(BoostPaymentCategory.CASH)"
+  [class.m-boostModalTabs__tabContainer--active]="
+    (paymentCategory$ | async) === BoostPaymentCategory.CASH
+  "
+  data-ref="boost-modal-v2-cash-tab"
+>
+  <span class="m-boostModalTabs__tab" i18n="@@BOOST_MODAL_V2_TABS__CASH">
+    Cash
+  </span>
+</div>
+<div
+  class="m-boostModalTabs__tabContainer"
+  (click)="onTabClick(BoostPaymentCategory.TOKENS)"
+  [class.m-boostModalTabs__tabContainer--active]="
+    (paymentCategory$ | async) === BoostPaymentCategory.TOKENS
+  "
+  data-ref="boost-modal-v2-tokens-tab"
+>
+  <span class="m-boostModalTabs__tab" i18n="@@BOOST_MODAL_V2_TABS__TOKENS">
+    Tokens
+  </span>
+</div>
