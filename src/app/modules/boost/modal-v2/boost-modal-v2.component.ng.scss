@@ -1,0 +1,12 @@
+@import 'defaults.scss';
+
+:host {
+  .m-modalV2__body {
+    max-height: 100%;
+  }
+
+  .m-modalV2__footer {
+    display: flex;
+    padding: $spacing4 $spacing10;
+  }
+}

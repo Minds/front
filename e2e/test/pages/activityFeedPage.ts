@@ -19,6 +19,7 @@ class ActivityFeedPage {
       .inside(this.activitySelector)
       .at(feedPosition);
 
+    I.waitForElement(permalink);
     I.click(permalink);
   }
 

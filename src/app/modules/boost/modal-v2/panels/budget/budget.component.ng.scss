@@ -1,0 +1,10 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .m-boostModalBudget__tabs {
+    margin: $spacing6 0;
+  }
+}
