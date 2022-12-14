@@ -17,9 +17,14 @@ $layoutMax2ColWidth: '1040px';
   // Hide the border of the first feed item (activity) after the trends
   ::ng-deep {
     .m-discovery__trends + m-discovery__feedsList {
-      m-discovery__feedItem:first-child {
+      m-discovery__feedItem {
         m-activity {
-          border-top: none;
+          border-bottom: none;
+        }
+        &:first-child {
+          m-activity {
+            border-top: none;
+          }
         }
       }
     }
