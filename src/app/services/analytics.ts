@@ -14,7 +14,7 @@ import { Session } from './session';
 import * as snowplow from '@snowplow/browser-tracker';
 import { SelfDescribingJson } from '@snowplow/tracker-core';
 import { MindsUser } from './../interfaces/entities';
-import { ActivityEntity } from './../modules/newsfeed/activity/activity.service';
+import { ActivityEntity } from '../modules/newsfeed/activity/activity.service';
 
 export type SnowplowContext = SelfDescribingJson<Record<string, unknown>>;
 

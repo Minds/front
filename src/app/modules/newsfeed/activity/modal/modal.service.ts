@@ -1,6 +1,8 @@
 import { Injectable, OnDestroy, Optional, SkipSelf } from '@angular/core';
-import { RelatedContentService } from '../../../../common/services/related-content.service';
-import { ActivityEntity, ActivityService } from '../activity.service';
+import {
+  ActivityEntity,
+  ActivityService,
+} from '../../activity/activity.service';
 import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { toggleFullscreen } from '../../../../helpers/fullscreen';
 import { SiteService } from '../../../../common/services/site.service';

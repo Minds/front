@@ -49,4 +49,17 @@
       }
     }
   }
+
+  ::ng-deep m-composer {
+    margin-bottom: 0;
+    margin-top: $spacing4;
+    border: none !important;
+    border-radius: 0;
+    .m-composer__trigger {
+      @include m-theme() {
+        border-bottom: 4px solid themed($m-borderColor--primary);
+        border-top: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
 }

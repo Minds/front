@@ -1,20 +1,29 @@
 import {
   Component,
+  EventEmitter,
   HostBinding,
   Input,
   OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ActivityService, ActivityEntity } from '../activity.service';
+import {
+  ActivityService,
+  ActivityEntity,
+} from '../../activity/activity.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
-import * as moment from 'moment';
 
 /**
- * A row displaying post owner info, permalink and meatball menu
+ * A row dedicated to information about the owner of the post, among other things.
+ *
+ * Depending on context, it may show username, badges, user handle (not in mobile),
+ * avatar (only in modal and minimal/sidebar modes),
+ * permalink (not in single activity page or modal), view count (only for owners),
+ * the post dropdown menu, etc...
  */
 @Component({
   selector: 'm-activity__ownerBlock',
@@ -22,41 +31,84 @@ import * as moment from 'moment';
   styleUrls: ['./owner-block.component.ng.scss'],
 })
 export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
-  private entitySubscription: Subscription;
+  private subscriptions: Subscription[];
 
   entity: ActivityEntity;
 
+  /** Is this activity the container of a reminded post? */
+  isRemind: boolean = false;
+
+  /** Is this activity the quoted/reminded post? */
+  @Input() wasQuoted: boolean = false;
+
+  @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(
     public service: ActivityService,
-    private configs: ConfigsService,
-    private session: Session
+    public session: Session,
+    private configs: ConfigsService
   ) {}
 
   ngOnInit() {
-    this.entitySubscription = this.service.entity$.subscribe(
-      (entity: ActivityEntity) => {
+    this.subscriptions = [
+      this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
-      }
+      }),
+    ];
+    this.subscriptions.push(
+      this.service.isRemind$.subscribe((is: boolean) => {
+        this.isRemind = is;
+      })
     );
   }
 
   ngOnDestroy() {
-    this.entitySubscription.unsubscribe();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
-  @HostBinding('class.m-activity__ownerBlock--remind')
-  get isRemindClassBinding(): boolean {
-    return this.entity && !!this.entity.remind_object;
-  }
-
-  // Note: currenly ownerBlocks are only visible in minimalMode for reminds/quotes
+  // Note: currently ownerBlocks are only visible in minimalMode for quotes/reminds
+  // and sidebar suggestions stemming from group posts
+  @HostBinding('class.m-activity__ownerBlock--minimalMode')
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
   }
 
-  // Show absolute dates for items outside the feed
+  @HostBinding('class.m-activity__ownerBlock--groupPost')
+  get group(): MindsGroup | null {
+    return this.entity.containerObj && this.entity.containerObj.type === 'group'
+      ? this.entity.containerObj
+      : null;
+  }
+
+  @HostBinding('class.m-activity__ownerBlock--quoteOrRemind')
+  get quoteOrRemind(): boolean {
+    return this.wasQuoted || this.isRemind;
+  }
+
   get isFeed(): boolean {
     return this.service.displayOptions.isFeed;
+  }
+
+  get isMinimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
+  get isModal(): boolean {
+    return this.service.displayOptions.isModal;
+  }
+
+  get isSidebarBoost(): boolean {
+    return this.service.displayOptions.isSidebarBoost;
+  }
+
+  get isSingle(): boolean {
+    return this.service.displayOptions.isSingle;
+  }
+
+  get showPostMenu(): boolean {
+    return this.service.displayOptions.showPostMenu;
   }
 
   get owner(): MindsUser {
@@ -93,31 +145,5 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
       '/medium/' +
       iconTime
     );
-  }
-
-  get group(): MindsGroup | null {
-    return this.entity.containerObj && this.entity.containerObj.type === 'group'
-      ? this.entity.containerObj
-      : null;
-  }
-
-  /**
-   * determines whether the post is scheduled.
-   * @returns true if post is scheduled.
-   */
-  isScheduled(): boolean {
-    return (
-      this.entity.time_created && this.entity.time_created * 1000 > Date.now()
-    );
-  }
-
-  /**
-   * Converts a date to a human readable datetime, e.g. Jul 16 2021 · 2:48pm
-   * @returns - human readable datetime.
-   */
-  toReadableDate(seconds: string): string {
-    const date = moment(parseInt(seconds) * 1000).format('MMM D YYYY ');
-    const time = moment(parseInt(seconds) * 1000).format('LT');
-    return `${date} · ${time}`;
   }
 }

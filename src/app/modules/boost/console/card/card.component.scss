@@ -1,5 +1,6 @@
 m-boost-console-card {
   display: block;
+  border-radius: $m-borderRadius !important;
 
   minds-card {
     margin: ($minds-padding * 2);
@@ -7,10 +8,6 @@ m-boost-console-card {
     > minds-activity {
       margin-bottom: 0 !important;
     }
-  }
-
-  &.m-boostConsoleCard--activityV2 {
-    border-radius: $m-borderRadius !important;
   }
 
   .m-boost-card--manager {

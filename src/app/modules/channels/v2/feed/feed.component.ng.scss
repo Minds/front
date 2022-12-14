@@ -14,38 +14,13 @@
   .m-channel__feed {
     min-height: 100vh;
 
-    &.m-channel__feed--activityV2 {
-      [class*='m-pageLayout__pane'] {
-        .m-channelFeed__list {
-          padding: 0 0 $spacing7;
-
-          @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
-            @include borderRight;
-          }
-        }
-      }
-
-      ::ng-deep {
-        m-composer {
-          margin-bottom: 0;
-          border: none !important;
-          border-radius: 0;
-          .m-composer__trigger {
-            @include m-theme() {
-              border-bottom: 4px solid themed($m-borderColor--primary);
-            }
-          }
-        }
-        m-newsfeed__entity {
-          margin-bottom: 0;
-
-          &:first-child {
-            m-activityV2 {
-              @include m-theme() {
-                border-top: none;
-              }
-            }
-          }
+    ::ng-deep m-composer {
+      margin-bottom: 0;
+      border: none !important;
+      border-radius: 0;
+      .m-composer__trigger {
+        @include m-theme() {
+          border-bottom: 4px solid themed($m-borderColor--primary);
         }
       }
     }
@@ -61,6 +36,14 @@
         @media screen and (max-width: $layoutMin3ColWidth) {
           padding-left: $spacing4;
           padding-right: $spacing4;
+        }
+      }
+
+      .m-channelFeed__list {
+        padding: 0 0 $spacing7;
+
+        @media screen and (min-width: $layoutMax2ColFixedWidth) and (max-width: $layoutMin3ColWidth) {
+          @include borderRight;
         }
       }
     }
@@ -210,7 +193,15 @@
     ::ng-deep {
       m-newsfeed__entity {
         display: block;
-        margin: 0 0 20px;
+        margin: 0;
+
+        &:first-child {
+          m-activity {
+            @include m-theme() {
+              border-top: none;
+            }
+          }
+        }
       }
 
       m-feedFilter {

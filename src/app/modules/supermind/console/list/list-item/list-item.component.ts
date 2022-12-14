@@ -31,7 +31,6 @@ export class SupermindConsoleListItemComponent {
     showInteractions: false,
     isFeed: true,
     isInset: true,
-    isV2: true,
   };
 
   /**

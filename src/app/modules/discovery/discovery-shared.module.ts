@@ -8,7 +8,6 @@ import { DiscoveryTagSettingsComponent } from './tags/settings.component';
 import { DiscoveryFeedsSettingsComponent } from './feeds/settings.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
-import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoveryService } from './discovery.service';
 import { DiscoveryTagButtonComponent } from './tags/tag-button/tag-button.component';
 import { DiscoveryTagWidgetComponent } from './tags/tag-widget/tag-widget.component';
@@ -43,7 +42,7 @@ import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.modu
 import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 import { LanguageModule } from '../language/language.module';
 import { AdsModule } from '../ads/ads.module';
-import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.component';
 
 @NgModule({
@@ -53,8 +52,7 @@ import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.c
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    ActivityModule, // delete during ActivityV2 cleanup
-    ActivityV2Module,
+    ActivityModule,
     ExperimentsModule,
     DiscoveryDisclaimerModule,
     DefaultFeedModule,

@@ -14,7 +14,6 @@ import { Observable, of } from 'rxjs';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
-import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 
 export type PublisherCardSize = 'small' | 'medium' | 'large';
 
@@ -59,15 +58,9 @@ export class PublisherCardComponent implements AfterViewInit {
   // use channel api to double check that the subscription status is correct
   recheckSubscribed: boolean = false;
 
-  @HostBinding('class.m-publisherCard--activityV2')
-  get activityV2Feature(): boolean {
-    return this.activityV2Experiment.isActive();
-  }
-
   constructor(
     protected userAvatar: UserAvatarService,
     protected session: Session,
-    private activityV2Experiment: ActivityV2ExperimentService,
     configs: ConfigsService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {

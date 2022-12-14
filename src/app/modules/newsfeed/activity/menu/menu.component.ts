@@ -10,7 +10,10 @@ import {
 import { Subscription } from 'rxjs';
 
 import { Router } from '@angular/router';
-import { ActivityService, ActivityEntity } from '../activity.service';
+import {
+  ActivityService,
+  ActivityEntity,
+} from '../../activity/activity.service';
 import { Client } from '../../../../services/api/client';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
@@ -18,17 +21,19 @@ import { FeaturesService } from '../../../../services/features.service';
 import { TranslationService } from '../../../../services/translation';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { DownloadActivityMediaService } from '../../../../common/services/download-activity-media.service';
+import { WireModalService } from '../../../wire/wire-modal.service';
 
 /**
  * Options for the activity's meatball menu (different options show for owners).
  * Mostly just a wrapper around 'm-postMenu--v2', but also handles actions for a few of the options,
- * if selected (e.g. 'delete' is handled here, but 'report' is handled in the post menu.
+ * if selected (e.g. 'delete' is handled here, but 'report' is handled in the post menu.)
  *
- * TODO: consolidate/centralise where actions are handled
+ * TODO: consolidate/centralise where actions are handled?
  */
 @Component({
   selector: 'm-activity__menu',
   templateUrl: 'menu.component.html',
+  styleUrls: ['menu.component.ng.scss'],
 })
 export class ActivityMenuComponent implements OnInit, OnDestroy {
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
@@ -47,7 +52,8 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private injector: Injector,
     public translationService: TranslationService,
     private toasterService: ToasterService,
-    public downloadActivityMediaService: DownloadActivityMediaService
+    public downloadActivityMediaService: DownloadActivityMediaService,
+    private wireModalService: WireModalService
   ) {}
 
   ngOnInit() {
@@ -79,6 +85,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
           'rating',
           'allow-comments',
           'download',
+          'wire',
         ];
       } else {
         return [
@@ -95,6 +102,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
           'rating',
           'allow-comments',
           'download',
+          'wire',
         ];
       }
     } else {
@@ -117,8 +125,6 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
   async onOptionSelected(option) {
     switch (option) {
       case 'edit':
-        this.composer.load(this.entity);
-
         this.composerModal
           .setInjector(this.injector)
           .present()
@@ -127,6 +133,10 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
               this.service.setEntity(activity);
             }
           });
+
+        // Set the data on next tick
+        // This avoid the title not being visible
+        setTimeout(() => this.composer.load(this.entity));
 
         break;
       case 'undo-remind':
@@ -152,6 +162,9 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         break;
       case 'download':
         this.downloadActivityMediaService.download(this.entity);
+        break;
+      case 'wire':
+        await this.wireModalService.present(this.entity);
         break;
     }
   }

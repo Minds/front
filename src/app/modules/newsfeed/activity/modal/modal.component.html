@@ -3,7 +3,7 @@
   data-cy="data-minds-activity-modal"
   *ngIf="entity && entity.content_type"
 >
-  <div class="m-activityModal__theater">
+  <div class="m-activityModal__theater" (click)="clickedModal($event)">
     <div class="m-activityModal m-activityModal__clearFix">
       <!-- -------------------------------------------------- -->
       <!-- --LEFT SIDE--------------------------------------- -->
@@ -38,30 +38,15 @@
             [ngClass]="{
               'm-activityModal__mediaWrapper--image':
                 entity.content_type === 'image',
-              'm-activityModal__mediaWrapper--status':
-                entity.content_type === 'status',
-              'm-activityModal__mediaWrapper--statusShort': shortStatus,
-              'm-activityModal__mediaWrapper--statusLong':
-                entity.content_type === 'status' && !shortStatus,
               'm-activityModal__mediaWrapper--video':
-                entity.content_type === 'video',
-              'm-activityModal__mediaWrapper--richEmbed':
-                entity.content_type === 'rich-embed',
-              isBlog: entity.content_type === 'blog',
-              'm-activityModal__mediaWrapper--quote': isQuote
+                entity.content_type === 'video'
             }"
           >
             <m-activity__content
               *ngIf="
-                !isQuote &&
-                (activityService.shouldShowContent$ | async) &&
-                isContentReady
+                (activityService.shouldShowContent$ | async) && isContentReady
               "
-              [hideText]="
-                entity.content_type !== 'status' &&
-                entity.activity_type !== 'rich-embed' &&
-                entity.content_type !== 'rich-embed'
-              "
+              [hideText]="true"
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
               [maxHeightAllowed]="modalHeight"
             ></m-activity__content>
@@ -77,7 +62,7 @@
           <!-- OVERLAY (TITLE & FULLSCREEN CTRLS)-->
           <m-activity__modalTitleOverlay></m-activity__modalTitleOverlay>
           <!-- PAGER BUTTONS -->
-          <m-activity__modalPager></m-activity__modalPager>
+          <m-activity__modalPager *ngIf="isMultiImage"></m-activity__modalPager>
         </div>
       </div>
 
@@ -88,44 +73,34 @@
       <!-- -------------------------------------------------- -->
       <div class="m-activityModal__contentContainer">
         <div class="m-activityModal__contentBody">
-          <!-- OWNER BLOCK -->
-          <m-activity__ownerBlock>
-            <ng-container class="m-activityOwnerBlock__right">
-              <m-activity__metrics></m-activity__metrics>
-
-              <ng-container *ngIf="entity">
-                <span
-                  *ngIf="entity.pinned"
-                  class="m-activity__flag m-activity__flag--pinned"
-                  data-cy="m-activity__pinnedFlag"
-                >
-                  <span>Pinned</span>
-                </span>
-              </ng-container>
-
-              <m-activity__menu
-                (deleted)="delete()"
-                *ngIf="activityService.isLoggedIn$ | async"
-              ></m-activity__menu>
-            </ng-container>
-          </m-activity__ownerBlock>
-
-          <!-- TOOLBAR -->
-          <div class="m-activityModal__toolbarWrapper">
-            <m-activity__toolbar
-              *ngIf="activityService.displayOptions.showToolbar"
-            ></m-activity__toolbar>
-          </div>
           <!-- --------------- -->
           <!-- SCROLLABLE AREA -->
           <!-- --------------- -->
           <div
-            class="m-activityModal__scrollableAreaContainer m-activityModal__contentAfter"
+            class="m-activityModal__scrollableAreaContainer m-activityModal__contentAfter m-disableScrollbars"
           >
             <div
               class="m-activityModal__scrollableAreaBody m-disableScrollbars"
-              #commentsScroll
+              #scrollableArea
             >
+              <!-- FLAG -->
+              <m-activity__flag
+                class="m-activity__flagRow"
+                *ngIf="
+                  entity.boosted ||
+                  (entity.remind_users && entity.remind_users.length)
+                "
+              ></m-activity__flag>
+              <!-- OWNER BLOCK -->
+              <m-activity__ownerBlock>
+                <ng-container class="m-activityOwnerBlock__right">
+                  <m-activity__views></m-activity__views>
+                  <m-activity__menu
+                    (deleted)="delete()"
+                    *ngIf="activityService.isLoggedIn$ | async"
+                  ></m-activity__menu>
+                </ng-container>
+              </m-activity__ownerBlock>
               <!-- MESSAGE -->
               <m-activity__content
                 *ngIf="
@@ -135,20 +110,25 @@
                 [hideMedia]="true"
               >
               </m-activity__content>
-
+              <!-- TOOLBAR -->
+              <div class="m-activityModal__toolbarWrapper">
+                <m-activity__toolbar
+                  *ngIf="activityService.displayOptions.showToolbar"
+                ></m-activity__toolbar>
+              </div>
               <!-- COMMENTS TREE -->
               <div class="m-activityModal__comments" *ngIf="entity.guid">
                 <ng-container *mIfBrowser>
-                  <m-comments__entityOutlet
+                  <m-comments__entityOutletV2
                     *ngIf="activityService.displayOptions.showComments"
                     [entity]="activityService.entity$ | async"
                     [canDelete]="activityService.canDelete$ | async"
                     [fixedHeight]="false"
                     [showOnlyPoster]="false"
-                    [compact]="true"
+                    [isModal]="true"
                     (onHeightChange)="onCommentsHeightChange($event)"
                   >
-                  </m-comments__entityOutlet>
+                  </m-comments__entityOutletV2>
                 </ng-container>
               </div>
             </div>

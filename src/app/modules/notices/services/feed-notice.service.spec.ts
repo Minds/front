@@ -43,10 +43,6 @@ export let feedNoticeDismissalService = new (function() {
     .and.returnValue(false);
 })();
 
-export let activityV2ExperimentServiceMock = new (function() {
-  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
-})();
-
 export let sessionMock = new (function() {
   this.loggedinEmitter = new BehaviorSubject<boolean>(false);
 })();
@@ -85,11 +81,7 @@ describe('FeedNoticeService', () => {
   let service: FeedNoticeService;
 
   beforeEach(() => {
-    service = new FeedNoticeService(
-      apiServiceMock,
-      activityV2ExperimentServiceMock,
-      feedNoticeDismissalService
-    );
+    service = new FeedNoticeService(apiServiceMock, feedNoticeDismissalService);
     (service as any).notices$.next(defaultNotices);
   });
 
@@ -171,26 +163,11 @@ describe('FeedNoticeService', () => {
     ).toHaveBeenCalledWith(noticeKey);
   });
 
-  it('should be aware of if experiment is active and notices should be full width', () => {
-    (service as any).activityV2Experiment.isActive.and.returnValue(true);
-    expect(service.shouldBeFullWidth()).toBeTruthy();
-
-    (service as any).activityV2Experiment.isActive.and.returnValue(false);
-    expect(service.shouldBeFullWidth()).toBeFalsy();
-  });
-
   it('should determine whether notice should be sticky top', () => {
-    (service as any).activityV2Experiment.isActive.and.returnValue(true);
     expect(
       service.shouldBeStickyTop({ key: 'verify-email' } as FeedNotice)
     ).toBeTruthy();
 
-    (service as any).activityV2Experiment.isActive.and.returnValue(false);
-    expect(
-      service.shouldBeStickyTop({ key: 'verify-email' } as FeedNotice)
-    ).toBeFalsy();
-
-    (service as any).activityV2Experiment.isActive.and.returnValue(true);
     expect(
       service.shouldBeStickyTop({ key: 'build-your-algorithm' } as FeedNotice)
     ).toBeFalsy();

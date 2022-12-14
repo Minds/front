@@ -1,131 +1,132 @@
 <!-- ----------------------------------- -->
-<!-- PAYWALL -->
+<!-- PAYWALL BADGE -->
+<!-- Minimal Mode only -->
+<!-- Otherwise it is in owner block -->
 <!-- ----------------------------------- -->
 <m-paywallBadge
+  *ngIf="(isMinimalMode || wasQuoted) && showPaywallBadge"
   [entity]="entity"
-  [showTierName]="!minimalMode"
+  [showTierName]="false"
 ></m-paywallBadge>
-<ng-container *ngIf="!hideMedia">
-  <m-activity__paywall
-    *ngIf="service.shouldShowPaywall$ | async"
-    [mediaHeight]="mediaHeight"
-  ></m-activity__paywall
+<!-- ----------------------------------- -->
+<!-- PAYWALL -->
+<!-- ----------------------------------- -->
+<!-- Acts as a background overlay so user
+can click anywhere on
+post content to trigger upgrade modal -->
+<ng-container
+  [ngTemplateOutlet]="paywallTemplate"
+  [ngTemplateOutletContext]="{
+    hideText: !isStatus || (!isStatus && sidebarMode)
+  }"
 ></ng-container>
 <!-- ----------------------------------- -->
-<!-- MESSAGE -->
+<!-- FIXED HEIGHT SPACER (BOOST ROTATOR ONLY)-->
 <!-- ----------------------------------- -->
-<ng-template #messageTemplate
-  ><ng-container *ngIf="!hideText">
-    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
-    <div
-      #messageEl
-      m-read-more
-      class="m-activityContent__message"
-      [class.m-activityContent__message--quote]="entity.remind_object"
-      [class.m-activityContent__message--richEmbed]="isRichEmbed"
-      [class.m-activityContent__message--isTextOnly]="isTextOnly"
-      [class.m-activityContent__message--short]="shortStatus"
-      [class.m-activityContent__message--minimalMode]="minimalMode"
-      [maxHeightAllowed]="maxHeightAllowed || maxMessageHeight"
-      *ngIf="message?.length >= 1"
-      (click)="onMessageClick($event)"
-    >
-      <div class="m-activityContent__messageWrapper">
-        <span [innerHtml]="message | tags | codeHighlight"></span>
-        <m-read-more--button
-          *ngIf="
-            !(service.shouldShowPaywall$ | async) || isTextOnly;
-            else teaserFadeout
-          "
-          [v2]="true"
-          [showOnlyFadeout]="minimalMode"
-          [redirectUrl]="getRedirectUrl()"
-        ></m-read-more--button>
-      </div>
-      <!-- ----------------------------------- -->
-      <!-- TRANSLATION (MESSAGE) -->
-      <!-- ----------------------------------- -->
-      <ng-container *ngTemplateOutlet="translation"></ng-container>
-    </div>
-    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
-  </ng-container>
-</ng-template>
-<!-- Message usually goes above rich-embed preview -->
-<ng-container *ngIf="isMessageAbovePreview">
-  <ng-container *ngTemplateOutlet="messageTemplate"></ng-container
-></ng-container>
+<div
+  *ngIf="isFixedHeight && !wasQuoted"
+  class="m-activityContent__fixedHeightSpacer"
+></div>
+<!-- ----------------------------------- -->
+<!-- TEXT (WHEN TEXT ON TOP)-->
+<!-- ----------------------------------- -->
+
+<ng-container *ngIf="!isTextBelowMedia">
+  <ng-container *ngTemplateOutlet="textTemplate"></ng-container>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- RICH EMBED / BLOG -->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="!hideMedia">
-  <div
-    class="m-activityContent__media--richEmbed"
-    *ngIf="isRichEmbed"
-    [class.m-activityContent__mediaRichEmbed--minimalMode]="minimalMode"
-  >
-    <div class="m-activityContent__fixedHeightSpacer"></div>
+  <div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">
+    <ng-container
+      *ngTemplateOutlet="paywallTemplate"
+      [ngTemplateOutletContext]="{ hideText: sidebarMode }"
+    ></ng-container>
     <minds-rich-embed
       (mediaModalRequested)="onModalRequested($event)"
       [src]="entity"
       [maxheight]="isModal ? null : 320"
       [isModal]="isModal"
+      [displayAsColumn]="
+        isMinimalMode || isModal || service.displayOptions.boostRotatorMode
+      "
     >
     </minds-rich-embed>
-    <div
-      class="m-activityContent__fixedHeightSpacer"
-      *ngIf="!mediaDescription"
-    ></div>
   </div>
-  <!-- ----------------------------------- -->
-  <!-- Message goes below rich-embed preview in minimal mode and modal-->
-  <ng-container *ngIf="!isMessageAbovePreview">
-    <ng-container *ngTemplateOutlet="messageTemplate"></ng-container
-  ></ng-container>
   <!-- ----------------------------------- -->
   <!-- VIDEO -->
   <!-- ----------------------------------- -->
   <div
-    class="m-activityContent__media--video"
-    #mediaEl
+    class="m-activityContent__media--video m-activityContent__media"
     *ngIf="isVideo"
     [ngClass]="{
       isPaywall: service.shouldShowPaywall$ | async,
       'm-activityContent__media--video--modal': isModal
     }"
   >
-    <div class="m-activityContent__fixedHeightSpacer"></div>
-
     <m-videoPlayer--scrollaware
+      #videoEl
       [guid]="videoGuid"
-      [shouldPlayInModal]="!isModal"
+      [shouldPlayInModal]="entity.remind_object ? false : !isModal"
       (mediaModalRequested)="onModalRequested($event)"
       [autoplay]="
         service.displayOptions.autoplayVideo &&
         !(service.shouldShowPaywall$ | async)
       "
-      [style.height]="isModal ? null : videoHeight"
+      [style.height.px]="isModal ? null : videoHeight"
+      [style.width.px]="isModal ? null : videoWidth"
       [isModal]="isModal"
       [style.overflow]="videoHeight && !isModal ? 'hidden' : null"
-    ></m-videoPlayer--scrollaware>
-
-    <div class="m-activityContent__fixedHeightSpacer"></div>
+    >
+      <ng-container
+        *ngTemplateOutlet="paywallTemplate"
+        [ngTemplateOutletContext]="{ hideText: sidebarMode }"
+      ></ng-container>
+    </m-videoPlayer--scrollaware>
   </div>
   <!-- ----------------------------------- -->
   <!-- IMAGE -->
   <!-- ----------------------------------- -->
-  <div class="m-activityContent__media--image" #imageEl *ngIf="isImage">
+  <div
+    class="m-activityContent__media--image m-activityContent__media"
+    *ngIf="isImage || (isMultiImage && isModal)"
+    [ngClass]="{
+      'm-activityContent__media--extraTallImage':
+        extraTallImage && (service.displayOptions.isFeed || isMinimalMode),
+      'm-activityContent__media--extraWideImage':
+        extraWideImage && service.displayOptions.isFeed
+    }"
+    #imageContainerEl
+  >
     <ng-container *ngIf="!isModal; else image">
       <a
         class="m-activityContentMedia__link"
-        [routerLink]="['/newsfeed', imageGuid]"
+        [routerLink]="['/newsfeed', entity?.guid]"
         (click)="onModalRequested($event)"
-        ><ng-container [ngTemplateOutlet]="image"></ng-container
+      >
+        <div
+          *ngIf="
+            (extraTallImage || extraWideImage) && service.displayOptions.isFeed
+          "
+          class="m-activityContentMedia__expandIcon"
+          (click)="onModalRequested($event)"
+        >
+          <m-icon iconId="crop_free" sizeFactor="25"></m-icon>
+        </div>
+        <ng-container [ngTemplateOutlet]="image"></ng-container
       ></a>
     </ng-container>
-    <ng-template #image
-      ><img
-        [src]="imageUrl"
-        [style.height]="imageHeight"
+
+    <ng-template #image>
+      <ng-container
+        *ngTemplateOutlet="paywallTemplate"
+        [ngTemplateOutletContext]="{ hideText: sidebarMode }"
+      ></ng-container>
+
+      <img
+        #imageEl
+        [src]="!isMultiImage ? imageUrl : activeMultiImageUrl"
         (error)="onImageError($event)"
         (click)="onModalRequested($event)"
         [m-blurhash]="service.entity$ | async"
@@ -133,54 +134,78 @@
         [style.object-fit]="
           (service.shouldShowPaywall$ | async) ? 'cover' : undefined
         "
-    /></ng-template>
+        [style.height.px]="imageHeight"
+        [style.width.px]="imageWidth"
+        [ngClass]="{ 'm-border': !isModal }"
+        class="m-border"
+      />
+    </ng-template>
   </div>
 </ng-container>
 <!-- ----------------------------------- -->
-<!-- TITLE / DESCRIPTION -->
+<!-- MULTI IMAGE -->
+<!-- Excluding modals - multi-image displays same as single image in modal -->
+<!-- because only one image is shown at a time -->
 <!-- ----------------------------------- -->
-<ng-container *ngIf="!hideText">
+<ng-container *ngIf="isMultiImage && !isModal">
+  <ng-container
+    *ngTemplateOutlet="paywallTemplate"
+    [ngTemplateOutletContext]="{ hideText: sidebarMode }"
+  ></ng-container>
+  <m-activityContent__multiImage
+    (onClick)="onModalRequested($event)"
+    class="m-activityContent__media"
+  ></m-activityContent__multiImage>
+</ng-container>
+<!-- ----------------------------------- -->
+<!-- QUOTE -->
+<!-- ----------------------------------- -->
+<ng-container *ngIf="!hideMedia && !isModal">
   <div
-    #mediaDescriptionEl
-    class="m-activityContent__mediaDescription"
-    m-read-more
-    *ngIf="mediaDescription || mediaTitle"
-    [maxHeightAllowed]="maxDescHeight"
-    (click)="onMessageClick($event)"
+    *ngIf="service.isQuote$ | async"
+    class="m-activityContent__quote"
+    [class.m-activityContent__quote--hasText]="!!text"
   >
-    <div
-      class="m-activityContent__descriptionWrapper"
-      [class.m-activityContent__descriptionWrapper--minimalMode]="minimalMode"
+    <ng-container
+      *ngTemplateOutlet="paywallTemplate"
+      [ngTemplateOutletContext]="{ hideText: sidebarMode }"
+    ></ng-container>
+    <m-activity__quote
+      [parentService]="service"
+      [entity]="service.entity$ | async"
+      [style.height]="isFixedHeight ? 'auto' : quoteHeight"
+      [style.max-height]="isFixedHeight ? 'auto' : quoteHeight"
     >
-      <p
-        [innerHtml]="mediaTitle | tags"
-        class="m-activityContent__mediaTitle"
-        [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
-        *ngIf="mediaTitle"
-      ></p>
-      <p
-        *ngIf="mediaDescription && !hideMediaDescription"
-        class="m-activityContent__mediaDescriptionText"
-        [innerHtml]="mediaDescription | tags"
-      ></p>
-      <m-read-more--button
-        *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
-        [v2]="true"
-        [showOnlyFadeout]="minimalMode"
-        [redirectUrl]="getRedirectUrl()"
-      ></m-read-more--button>
-    </div>
-    <!-- ----------------------------------- -->
-    <!-- TRANSLATION (MEDIA POSTS) -->
-    <!-- ----------------------------------- -->
-    <ng-container *ngTemplateOutlet="translation"></ng-container>
+    </m-activity__quote>
   </div>
 </ng-container>
 <!-- ----------------------------------- -->
-<!-- REMIND -->
+<!-- TEXT (WHEN TEXT ON BOTTOM)-->
+<!-- ----------------------------------- -->
+<ng-container *ngIf="isTextBelowMedia">
+  <ng-container *ngTemplateOutlet="textTemplate"></ng-container>
+</ng-container>
+<!-- ----------------------------------- -->
+<!-- FIXED HEIGHT SPACER (BOOST ROTATOR ONLY)-->
 <!-- ----------------------------------- -->
 <div
-  class="m-activity__remindDeletedNotice"
+  *ngIf="isFixedHeight && !wasQuoted"
+  class="m-activityContent__fixedHeightSpacer"
+></div>
+<!-- ----------------------------------- -->
+<!-- FADEOUT (BOOST ROTATOR ONLY)-->
+<!-- ----------------------------------- -->
+<div
+  (click)="onFixedHeightFadeoutClick($event)"
+  *ngIf="isFixedHeight && !wasQuoted && !isStatus"
+  class="m-activityContent__boostRotatorFadeout"
+></div>
+
+<!-- ----------------------------------- -->
+<!-- REMIND DELETED NOTICE -->
+<!-- ----------------------------------- -->
+<div
+  class="m-activityContent__remindDeletedNotice"
   *ngIf="(service.entity$ | async).remind_deleted"
 >
   <i class="material-icons">info</i>
@@ -189,47 +214,80 @@
     not have permission to view it.</span
   >
 </div>
-
-<ng-container *ngIf="!hideMedia">
-  <div
-    *ngIf="service.isQuote$ | async"
-    class="m-activityContent__remind"
-    [class.m-activityContent__remind--hasMessage]="!!message"
-    [class.m-activityContent__remind--minimalMode]="minimalMode"
-    #remindContainerEl
-  >
-    <m-activity__remind
-      [parentService]="service"
-      [entity]="service.entity$ | async"
-      [style.width]="remindWidth"
-      [style.height]="remindHeight"
-      [style.max-height]="remindHeight"
+<!-- ----------------------------------- -->
+<!-- PERMALINK -->
+<!-- ----------------------------------- -->
+<m-activity__permalink
+  *ngIf="showPermalink"
+  class="m-activityContent__permalink"
+></m-activity__permalink>
+<!-- ----------------------------------- -->
+<!-- TEMPLATE: TEXT-->
+<!-- ----------------------------------- -->
+<ng-template #textTemplate
+  ><ng-container *ngIf="!hideText">
+    <div
+      #textEl
+      class="m-activityContent__textWrapper"
+      [maxHeightAllowed]="maxHeightAllowed || maxTextHeight"
+      *ngIf="bodyText?.length >= 1 || titleText?.length >= 1"
     >
-    </m-activity__remind>
-  </div>
-</ng-container>
-<!-- ----------------------------------- -->
-<!-- TEMPLATE: TRANSLATION -->
-<!-- ----------------------------------- -->
-<ng-template #translation>
-  <!-- (onTranslateInit)="propagateTranslation($event)" -->
-  <ng-container *mIfBrowser>
-    <m-translate
-      *ngIf="service.displayOptions.showTranslation"
-      [open]="service.displayOptions.showTranslation"
-      [entity]="entity"
-      [translateEvent]="translateEvent"
-      (onTranslate)="onTranslate($event)"
-      (onTranslateError)="onTranslate($event)"
-      [class.m-translate--minimalMode]="minimalMode"
-      #translate
-    ></m-translate>
+      <div class="m-activityContentText__innerWrapper">
+        <p
+          *ngIf="titleText"
+          [innerHtml]="titleText | tags"
+          class="m-activityContentText__title"
+          [class.m-activityContentText__title--hasDescription]="bodyText"
+          [ngClass]="{
+            'm-activityContentText--translated': showTranslation
+          }"
+        ></p>
+        <p
+          *ngIf="bodyText && !hideBodyText"
+          class="m-activityContentText__body"
+          [class.m-activityContentText__body--shortStatus]="shortStatus"
+          [class.m-activityContentText__body--mediumStatus]="mediumStatus"
+          [ngClass]="{
+            'm-activityContentText--translated': showTranslation
+          }"
+        >
+          <!-- Truncate text for boost rotator posts that contain more than just text -->
+          <m-readMore
+            [text]="bodyText"
+            [targetLength]="isFixedHeight && !isStatus ? 180 : 280"
+            [disabled]="
+              service.displayOptions.isFeed && persistentFeedExperimentActive
+            "
+            (onToggle)="onReadMoreClick($event)"
+          ></m-readMore>
+        </p>
+      </div>
+      <!-- ----------------------------------- -->
+      <!-- TRANSLATION  -->
+      <!-- ----------------------------------- -->
+      <ng-container *mIfBrowser>
+        <m-translate
+          *ngIf="showTranslation"
+          [open]="showTranslation"
+          [entity]="entity"
+          [translateEvent]="translateEvent"
+          (onTranslate)="onTranslate($event)"
+          (onTranslateError)="onTranslate($event)"
+          [class.m-translate--minimalMode]="isMinimalMode"
+          #translate
+        ></m-translate>
+      </ng-container>
+    </div>
   </ng-container>
 </ng-template>
-
 <!-- ----------------------------------- -->
-<!-- TEMPLATE: TEASER FADEOUT -->
+<!-- TEMPLATE: PAYWALL -->
 <!-- ----------------------------------- -->
-<ng-template #teaserFadeout>
-  <div class="m-activityContent__teaserFadeout" @fader></div
+<!-- Hide text only for the paywall that covers the entire size of the content component.  -->
+<ng-template #paywallTemplate let-hide="hideText"
+  ><ng-container *ngIf="!hideMedia">
+    <m-activity__paywall
+      *ngIf="service.shouldShowPaywall$ | async"
+      [hideText]="hide"
+    ></m-activity__paywall></ng-container
 ></ng-template>

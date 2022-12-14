@@ -17,7 +17,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { Location } from '@angular/common';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 
@@ -47,7 +46,6 @@ export class NewsfeedSingleComponent {
 
   private shouldReuseRouteFn; // For comment focusedUrn reloading
 
-  activityV2Feature: boolean = false;
   showBackButton: boolean = false;
 
   constructor(
@@ -63,7 +61,6 @@ export class NewsfeedSingleComponent {
     private headersService: HeadersService,
     private authModal: AuthModalService,
     protected jsonLdService: JsonLdService,
-    private activityV2Experiment: ActivityV2ExperimentService,
     private location: Location,
     private routerHistory: RouterHistoryService
   ) {
@@ -72,8 +69,6 @@ export class NewsfeedSingleComponent {
   }
 
   ngOnInit() {
-    this.activityV2Feature = this.activityV2Experiment.isActive();
-
     this.context.set('activity');
 
     // If the user arrived at this page by clicking a link

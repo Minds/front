@@ -1,8 +1,8 @@
 <ng-container [m-clientMeta]="{ source: 'single', medium: 'single' }">
   <div
+    class="m-newsfeed__single"
     [class.m-pageLayout__container]="!showLegacyActivity"
     [class.m-newsfeed__single--legacy]="showLegacyActivity"
-    [class.m-newsfeed__single--activityV2]="activityV2Feature"
   >
     <!-- ERROR SPLASH --------------------- -->
     <m-errorSplash
