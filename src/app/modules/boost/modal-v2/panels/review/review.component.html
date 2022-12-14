@@ -1,0 +1,102 @@
+<div class="m-boostModalReview__header" data-ref="boost-modal-v2-review-header">
+  <h3
+    class="m-boostModalReview__title"
+    i18n="@@BOOST_MODAL_V2_REVIEW__REVIEW_YOUR_BOOST"
+  >
+    Review your boost
+  </h3>
+  <span class="m-boostModalReview__subtitle"
+    >Your estimated reach is {{ (estimatedReachText$ | async) ?? '...' }}.</span
+  >
+</div>
+<div class="m-boostModalReview__body">
+  <div
+    class="m-boostModalReview__section"
+    (click)="changePanel(BoostModalPanel.AUDIENCE)"
+    data-ref="boost-modal-v2-audience-section"
+  >
+    <div class="m-boostModalReview__sectionLeft">
+      <h4
+        class="m-boostModalReview__sectionTitle"
+        i18n="@@BOOST_MODAL_V2_REVIEW__REVIEW_YOUR_AUDIENCE"
+      >
+        Audience
+      </h4>
+      <p
+        [ngSwitch]="audience$ | async"
+        class="m-boostModalReview__sectionSubtext"
+        data-ref="boost-modal-v2-audience-text"
+      >
+        <ng-container
+          *ngSwitchCase="BoostAudience.SAFE"
+          i18n="@@BOOST_MODAL_V2_REVIEW__SAFE"
+          >Safe</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="BoostAudience.CONTROVERSIAL"
+          i18n="@@BOOST_MODAL_V2_REVIEW__CONTROVERSIAL"
+          >Controversial</ng-container
+        >
+      </p>
+    </div>
+    <div
+      class="m-boostModalReview__sectionRight"
+      data-ref="boost-modal-v2-audience-back-icon-container"
+    >
+      <m-icon iconId="chevron_right"></m-icon>
+    </div>
+  </div>
+  <div
+    class="m-boostModalReview__section"
+    (click)="changePanel(BoostModalPanel.BUDGET)"
+    data-ref="boost-modal-v2-budget-section"
+  >
+    <div class="m-boostModalReview__sectionLeft">
+      <h4
+        class="m-boostModalReview__sectionTitle"
+        i18n="@@BOOST_MODAL_V2_REVIEW__BUDGET_AND_DURATION"
+      >
+        Budget & duration
+      </h4>
+      <p
+        class="m-boostModalReview__sectionSubtext"
+        data-ref="boost-modal-v2-budget-text"
+      >
+        {{ budgetAndDurationText$ | async }}
+      </p>
+    </div>
+    <div class="m-boostModalReview__sectionRight">
+      <m-icon iconId="chevron_right"></m-icon>
+    </div>
+  </div>
+  <div
+    class="m-boostModalReview__section m-boostModalReview__section--fullWidth"
+    data-ref="boost-modal-v2-payment-method-section"
+  >
+    <h4
+      class="m-boostModalReview__sectionTitle"
+      i18n="@@BOOST_MODAL_V2_REVIEW__PAYMENT_METHOD"
+    >
+      Payment method
+    </h4>
+    <m-boostModalV2__paymentMethodSelector></m-boostModalV2__paymentMethodSelector>
+  </div>
+
+  <div
+    class="m-boostModalReview__section m-boostModalReview__section--fullWidth"
+  >
+    <h4
+      class="m-boostModalReview__sectionTitle"
+      i18n="@@BOOST_MODAL_V2_REVIEW__TOTAL_AMOUNT"
+      data-ref="boost-modal-v2-total-amount-heading"
+    >
+      Total
+    </h4>
+    <p
+      class="m-boostModalReview__sectionSubtext"
+      data-ref="boost-modal-v2-total-amount-text"
+    >
+      {{ totalPaymentAmountText$ | async }}
+    </p>
+  </div>
+</div>

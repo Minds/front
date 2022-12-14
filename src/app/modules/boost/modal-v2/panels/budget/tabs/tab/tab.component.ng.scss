@@ -1,0 +1,61 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .m-boostBudgetSelector__header {
+    margin-bottom: $spacing2;
+
+    .m-boostBudgetSelector__headerSection {
+      margin-bottom: $spacing4;
+
+      .m-boostBudgetSelector__headerSectionValue {
+        @include heading3Bold;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+      }
+
+      .m-boostBudgetSelector__headerSectionDescription {
+        @include body1Regular;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+      }
+    }
+  }
+
+  .m-boostBudgetSelector__body {
+    .m-boostBudgetSelector__inputContainer {
+      & + * {
+        margin-top: $spacing10;
+      }
+
+      .m-boostBudgetSelector__inputLabel {
+        display: inline-block;
+        margin-bottom: $spacing6;
+        @include heading3Bold;
+      }
+
+      .m-boostBudgetSelector__inputSliderRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-flow: row nowrap;
+        width: 100%;
+
+        m-formInput__sliderV2 {
+          width: 100%;
+          margin-right: $spacing10;
+        }
+
+        .m-boostBudgetSelector__scaleLabel {
+          display: block;
+          width: $spacing22;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
