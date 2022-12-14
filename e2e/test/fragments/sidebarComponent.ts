@@ -4,6 +4,10 @@ const { I } = inject();
  * Main nav sidebar component.
  */
 class SidebarComponent {
+  // selectors.
+  private readonly sidebarComposerItemSelector: string =
+    '[data-ref=sidenav-composer]';
+
   /**
    * Opens the users channel from the sidebar.
    * @return { void }
@@ -18,7 +22,8 @@ class SidebarComponent {
    * @return { void }
    */
   public openSidebarComposer(): void {
-    I.click('[data-ref=sidenav-composer]');
+    I.waitForElement(this.sidebarComposerItemSelector);
+    I.click(this.sidebarComposerItemSelector);
   }
 
   /**
