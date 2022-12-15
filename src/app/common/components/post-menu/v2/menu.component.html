@@ -26,6 +26,14 @@
       </span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
+      (click)="onSelectedOption('boost')"
+      *ngIf="shouldShowBoost()"
+    >
+      <span>
+        Boost
+      </span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
       (click)="onSelectedOption('share')"
       *ngIf="options.indexOf('share') !== -1"
     >
