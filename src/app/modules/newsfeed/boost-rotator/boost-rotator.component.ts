@@ -32,6 +32,7 @@ import { Subscription, Subject } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -115,6 +116,7 @@ export class NewsfeedBoostRotatorComponent {
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     private activityV2Experiment: ActivityV2ExperimentService,
+    private dynamicBoostExperiment: DynamicBoostExperimentService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
@@ -189,16 +191,26 @@ export class NewsfeedBoostRotatorComponent {
 
   async load(): Promise<boolean> {
     try {
-      let params = {
-        rating: this.rating,
-        rotator: 1,
-      };
+      const dynamicBoostExperimentActive: boolean = this.dynamicBoostExperiment.isActive();
+
+      let params = dynamicBoostExperimentActive
+        ? {
+            location: 1,
+          }
+        : {
+            rating: this.rating,
+            rotator: 1,
+          };
 
       params['show_boosts_after_x'] = 604800; // 1 week
 
       this.feedsService.clear(); // Fresh each time
+      const endpoint: string = dynamicBoostExperimentActive
+        ? 'api/v3/boosts/feed'
+        : 'api/v2/boost/feed';
+
       await this.feedsService
-        .setEndpoint('api/v2/boost/feed')
+        .setEndpoint(endpoint)
         .setParams(params)
         .setLimit(12)
         .setOffset(0)
