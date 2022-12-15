@@ -41,6 +41,7 @@
   // *********************************
 
   &.m-activity--isFeed {
+    border-radius: 0;
     @include borderTop;
 
     .m-activity__top {
