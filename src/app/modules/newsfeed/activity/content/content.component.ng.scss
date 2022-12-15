@@ -1,6 +1,20 @@
 @import 'defaults.scss';
 
 :host {
+  // ******************************************
+  // ** FEED **
+  // ******************************************
+
+  .m-activity--isFeed & {
+    &.m-activityContent--textlessMedia {
+      &:not(.m-activityContent--minimalMode):not(.m-activityContent--fixedHeight) {
+        .m-activityContent__media--video,
+        .m-activityContent__media--image {
+          padding-top: $spacing2;
+        }
+      }
+    }
+  }
   // *********************************
   // ** FIXED HEIGHT **
   // *********************************
@@ -162,6 +176,9 @@
         img {
           max-height: unset !important;
           height: 100% !important;
+          width: 100%;
+          object-fit: contain;
+          border-radius: 0;
         }
       }
 
@@ -196,7 +213,10 @@
       // Remove extra padding when there's no text,
       // so there's not too much above the permalink
       &.m-activityContent--textlessMedia {
-        padding-top: 0;
+        .m-activityContent__media--video,
+        .m-activityContent__media--image {
+          padding-top: 0;
+        }
       }
 
       .m-read-more--button {
@@ -383,23 +403,23 @@
     }
   }
 
-  &.m-activityContent--textlessMedia {
-    &:not(.m-activityContent--minimalMode):not(.m-activityContent--fixedHeight) {
-      .m-activityContent__media--video,
-      .m-activityContent__media--image {
-        padding-top: $spacing2;
-      }
-    }
-  }
-
   // *********************************
   // ** MEDIA - IMAGE **
   // *********************************
 
   .m-activityContent__media--image {
+    a {
+      height: auto;
+      width: auto;
+      display: inline-block;
+      position: relative;
+    }
+
     img {
       max-width: 100%;
       box-sizing: border-box;
+      max-height: 500px;
+      border-radius: $borderRadius--activity;
     }
 
     &.m-activityContent__media--extraTallImage,
@@ -423,17 +443,6 @@
         height: 166px;
         max-width: 500px;
       }
-    }
-
-    a {
-      height: auto;
-      width: auto;
-      display: inline-block;
-      position: relative;
-    }
-    img {
-      max-height: 500px;
-      border-radius: $borderRadius--activity;
     }
 
     .m-activityContentMedia__expandIcon {
