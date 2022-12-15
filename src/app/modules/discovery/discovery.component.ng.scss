@@ -13,4 +13,14 @@ $layoutMax2ColWidth: '1040px';
       @include borderRight;
     }
   }
+
+  // The border is applied to the feed item,
+  // so we can remove it from the activity
+  ::ng-deep {
+    m-discovery__feedItem {
+      m-activity {
+        border-top: none !important;
+      }
+    }
+  }
 }

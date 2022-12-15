@@ -5,6 +5,10 @@
   display: block;
   padding: 0;
 
+  &.m-discovery__cardCarousel--hidden {
+    display: none;
+  }
+
   .m-discoveryCardCarousel__wrapper {
     padding: 30px 0 20px;
     @include m-theme() {
