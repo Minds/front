@@ -169,7 +169,7 @@ export class BoostModalV2Service implements OnDestroy {
     shareReplay()
   );
 
-  // payload for boost submission.
+  // payload for boost submission. Has available snapshot.
   private readonly boostSubmissionPayload$: Observable<
     BoostSubmissionPayload
   > = combineLatest([
