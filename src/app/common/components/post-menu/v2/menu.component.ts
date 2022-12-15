@@ -66,23 +66,11 @@ export class PostMenuV2Component implements OnInit {
   ngOnInit() {
     this.service.setEntity(this.entity);
     this.service.setEntityOwner(this.user);
-
-    if (this.options) {
-      console.log('ojm options:', this.options);
-    }
   }
 
   // Only show boost in post menu for non-owners
   // b/c owners already see it as an icon in the toolbar
   shouldShowBoost(): boolean {
-    console.log(
-      'ojm shouldShowBoost? inOptionsList: ',
-      this.options.indexOf('boost') !== -1
-    );
-    console.log(
-      'ojm shouldShowBoost? notOwner: ',
-      this.entity.owner_guid !== this.session.getLoggedInUser().guid
-    );
     return (
       this.options.indexOf('boost') !== -1 &&
       this.entity.owner_guid !== this.session.getLoggedInUser().guid
