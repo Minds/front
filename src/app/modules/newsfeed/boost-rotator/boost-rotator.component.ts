@@ -33,6 +33,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
+import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -195,7 +196,7 @@ export class NewsfeedBoostRotatorComponent {
 
       let params = dynamicBoostExperimentActive
         ? {
-            location: 1,
+            location: BoostLocation.NEWSFEED,
           }
         : {
             rating: this.rating,
