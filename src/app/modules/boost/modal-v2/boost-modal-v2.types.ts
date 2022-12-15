@@ -81,8 +81,14 @@ export type BoostConfig = {
 
 // Object holding estimated reach for a boost.
 export type EstimatedReach = {
-  lower_bound: number;
-  upper_bound: number;
+  views: {
+    low: number;
+    high: number;
+  };
+  cpm: {
+    low: number;
+    high: number;
+  };
 };
 
 // Boost submission request object.
