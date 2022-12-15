@@ -1,0 +1,73 @@
+@import 'defaults';
+
+:host {
+  // *********************************
+  // ** MODAL **
+  // *********************************
+
+  m-activity__modal & {
+    padding-top: $spacing4;
+    padding-left: $activitySpacing--modal;
+    padding-right: $activitySpacing--modal;
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+
+  max-width: 100%;
+
+  [class*='m-activityFlag--'] {
+    padding-right: $spacing4;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    span,
+    a {
+      @include body2Medium;
+      text-decoration: none;
+    }
+
+    span {
+      margin-left: $spacing2;
+    }
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+  .m-activityFlag--remind,
+  .m-activityFlag--supermindRequest {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &,
+    span,
+    a,
+    i {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .m-activityFlag--supermindRequest {
+    a {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}

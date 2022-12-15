@@ -87,10 +87,10 @@ describe('BlogCard', () => {
       time_created: 1525865293,
       thumbnail_src: 'link/to/thumbnail',
       excerpt: 'this is an excerpt',
-      published: false,
       ownerObj: {
         guid: '2',
         username: 'testowner',
+        name: 'Test owner',
         icontime: 1525865293,
       },
     };
@@ -113,11 +113,26 @@ describe('BlogCard', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should link to the blog', () => {
-    const a = fixture.debugElement.query(By.css('a'));
+  it('should have a permalink that links to the blog', () => {
+    const a = fixture.debugElement.query(
+      By.css('a.m-blogCardOwnerBlock__permalink')
+    );
     expect(a).not.toBeNull();
+
     expect(
       a.nativeElement.getAttributeNode('ng-reflect-router-link').textContent
+    ).toBe('/blog/view,1');
+
+    expect(a.nativeElement.textContent).toBe('May 9, 2018');
+  });
+
+  it('should have a title that links to the blog', () => {
+    const title = fixture.debugElement.query(By.css('div.m-blogCard__title a'));
+    expect(title).not.toBeNull();
+    expect(title.nativeElement.textContent).toContain('title');
+
+    expect(
+      title.nativeElement.getAttributeNode('ng-reflect-router-link').textContent
     ).toBe('/blog/view,1');
   });
 
@@ -126,100 +141,39 @@ describe('BlogCard', () => {
 
     fixture.detectChanges();
 
-    const a = fixture.debugElement.query(By.css('a'));
+    const a = fixture.debugElement.query(By.css('a.minds-blog-thumbnail'));
     expect(a.nativeElement.classList).toContain('m-mature-thumbnail');
 
     const matureOverlay = fixture.debugElement.query(
-      By.css('span.m-mature-thumbnail-overlay')
+      By.css('.m-mature-thumbnail-overlay')
     );
     expect(matureOverlay).not.toBeNull();
   });
 
   it('should have an owner block', () => {
-    const block = fixture.debugElement.query(By.css('div.m-title-block'));
+    const block = fixture.debugElement.query(
+      By.css('div.m-blogCard__OwnerBlock')
+    );
     expect(block).not.toBeNull();
+  });
 
-    const a = fixture.debugElement.query(By.css('div.m-title-block a'));
-    expect(a).not.toBeNull();
+  it('should have the owners display name that links to their channel', () => {
+    const displayName = fixture.debugElement.query(
+      By.css('a.m-blogCardOwnerBlock__displayName')
+    );
+    expect(displayName).not.toBeNull();
+    expect(displayName.nativeElement.textContent).toContain('Test owner');
     expect(
-      a.nativeElement.getAttributeNode('ng-reflect-router-link').textContent
-    ).toBe('/blog/view,1');
-
-    const title = fixture.debugElement.query(
-      By.css('div.m-title-block a strong')
-    );
-    expect(title).not.toBeNull();
-    expect(title.nativeElement.textContent).toContain('title');
-
-    const ownerBlock = fixture.debugElement.query(
-      By.css('.m-inline-owner-block')
-    );
-    expect(ownerBlock).not.toBeNull();
-
-    const username = fixture.debugElement.query(
-      By.css('.m-inline-owner-block a')
-    );
-    expect(username).not.toBeNull();
-    expect(username.nativeElement.textContent).toContain('testowner');
-    expect(
-      username.nativeElement.getAttributeNode('ng-reflect-router-link')
+      displayName.nativeElement.getAttributeNode('ng-reflect-router-link')
         .textContent
     ).toBe('/,testowner');
+  });
 
+  it('should have an avatar', () => {
     const avatar = fixture.debugElement.query(
-      By.css('.m-inline-owner-block > a > img')
+      By.css('.m-blogCardOwnerBlock__avatar > m-hovercard > a > img')
     );
     expect(avatar).not.toBeNull();
     expect(avatar.nativeElement.src).toContain('/icon/2/small/1525865293');
-
-    const time = fixture.debugElement.query(
-      By.css('.m-inline-owner-block > span')
-    );
-    expect(time).not.toBeNull();
-    expect(time.nativeElement.textContent).toBe('May 9, 2018');
-  });
-
-  it('should have a draft indicator if the blog was not published and the logged in user is the blog owner', () => {
-    comp._blog = {};
-
-    fixture.detectChanges();
-
-    comp._blog = {
-      guid: '1',
-      title: 'title',
-      time_created: 1525865293,
-      thumbnail_src: 'link/to/thumbnail',
-      excerpt: 'this is an excerpt',
-      published: false,
-      owner_guid: '1000',
-      ownerObj: {
-        guid: '1000',
-        username: 'test',
-        icontime: 1525865293,
-      },
-    };
-
-    fixture.detectChanges();
-
-    const draft = fixture.debugElement.query(
-      By.css('.m-inline-owner-block > span:last-child')
-    );
-    expect(draft).not.toBeNull();
-    expect(draft.nativeElement.textContent).toBe('Draft');
-  });
-
-  it('should have an action bar with buttons', () => {
-    expect(fixture.debugElement.query(By.css('.m-action-tabs'))).not.toBeNull();
-
-    expect(
-      fixture.debugElement.query(
-        By.css('.m-action-tabs minds-button-thumbs-up')
-      )
-    ).not.toBeNull();
-    expect(
-      fixture.debugElement.query(
-        By.css('.m-action-tabs minds-button-thumbs-down')
-      )
-    ).not.toBeNull();
   });
 });

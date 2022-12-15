@@ -13,7 +13,6 @@ import { MetaService } from '../../../common/services/meta.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { Session } from '../../../services/session';
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { DiscoverySearchComponent } from './search.component';
@@ -122,9 +121,6 @@ describe('DiscoverySearchComponent', () => {
         })
         .overrideProvider(Session, {
           useValue: MockService(Session),
-        })
-        .overrideProvider(ActivityV2ExperimentService, {
-          useValue: MockService(ActivityV2ExperimentService),
         })
         .compileComponents();
     })

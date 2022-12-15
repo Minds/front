@@ -70,15 +70,6 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
   // array of subscriptions to be unsubscribed from on destroy.
   private subscriptions: Subscription[] = [];
 
-  /**
-   * If experiment is active, full width class.
-   * @returns { boolean } - true if should be shown as full width.
-   */
-  @HostBinding('class.m-feedNoticeOutlet__container--fullWidth')
-  get isFullWidth(): boolean {
-    return this.service.shouldBeFullWidth();
-  }
-
   // Makes notice to stick to the top of the feed.
   @HostBinding('class.m-feedNoticeOutlet__container--sticky')
   @Input()

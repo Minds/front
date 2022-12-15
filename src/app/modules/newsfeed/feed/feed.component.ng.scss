@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  ::ng-deep m-activityV2 {
+  ::ng-deep m-activity {
     @include m-theme() {
       margin-right: -1px;
       border-right: 1px solid;

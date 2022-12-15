@@ -33,15 +33,6 @@ export class FeedNoticeComponent {
   // to analytics which notice has been dismissed.
   @Input() dataRefId: string = 'unknown';
 
-  /**
-   * If experiment is active, full width class.
-   * @returns { boolean } - true if notice should be full width.
-   */
-  @HostBinding('class.m-feedNotice__container--fullWidth')
-  get isFullWidth(): boolean {
-    return this.service.shouldBeFullWidth();
-  }
-
   // Fired on dismiss click.
   @Output() dismissClick: EventEmitter<boolean> = new EventEmitter<boolean>(
     false

@@ -15,10 +15,6 @@ describe('ActivityService', () => {
     this.getLoggedInUser = jasmine.createSpy('getLoggedInUser');
   })();
 
-  let activityV2ExperimentMock = new (function() {
-    this.isActive = jasmine.createSpy('get');
-  })();
-
   let entityMetricsSocketMock = new (function() {
     this.listen = jasmine.createSpy('listen');
     this.leave = jasmine.createSpy('leave');
@@ -30,7 +26,6 @@ describe('ActivityService', () => {
     service = new ActivityService(
       configsMock,
       sessionsMock,
-      activityV2ExperimentMock,
       entityMetricsSocketMock
     );
 

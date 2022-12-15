@@ -5,8 +5,8 @@
   // ** ACTIVITY V2 DEFAULT **
   // ******************************************
 
-  m-activityV2 &,
-  m-activityV2__modal & {
+  m-activity &,
+  m-activity__modal & {
     .m-comments__thread {
       margin: 0;
     }
@@ -32,7 +32,7 @@
   // ** MODAL **
   // ******************************************
 
-  m-activityV2__modal & {
+  m-activity__modal & {
     .m-comments__viewMore {
       margin-top: 0;
     }

@@ -17,7 +17,6 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
 import { Session } from '../../../services/session';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 
 @Component({
@@ -51,11 +50,6 @@ export class DiscoverySearchComponent {
     })
   );
 
-  @HostBinding('class.m-discovery__search--activityV2')
-  get activityV2Feature(): boolean {
-    return this.activityV2Experiment.isActive();
-  }
-
   constructor(
     private route: ActivatedRoute,
     public service: DiscoveryFeedsService,
@@ -65,7 +59,6 @@ export class DiscoverySearchComponent {
     private cd: ChangeDetectorRef,
     private session: Session,
     public cardCarouselService: CardCarouselService,
-    private activityV2Experiment: ActivityV2ExperimentService,
     private routerHistory: RouterHistoryService
   ) {
     this.cdnUrl = configs.get('cdn_url');

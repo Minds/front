@@ -20,22 +20,6 @@
     background-color: themed($m-bgColor--primary);
   }
 
-  &:not(.m-feedNotice__container--fullWidth) {
-    @include m-theme() {
-      padding-left: $spacing6;
-    }
-
-    @media screen and (max-width: $layoutMainFullWidth) {
-      .m-feedNotice__left i {
-        padding-left: 0 !important;
-      }
-    }
-
-    .m-feedNotice__right {
-      min-width: calc($activitySpacingRight--feed / 3);
-    }
-  }
-
   .m-feedNotice__left {
     width: $spacing16;
 

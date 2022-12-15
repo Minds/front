@@ -1,0 +1,53 @@
+<div
+  class="m-activity__permalink"
+  [ngClass]="{
+    'm-activity__permalink--addTopSpacing':
+      addTopSpacing || (service.shouldShowPaywall$ | async),
+    'm-activity__permalink--statusBehindPaywall': isStatusBehindPaywall
+  }"
+>
+  <a
+    [routerLink]="service.canonicalUrl$ | async"
+    class="m-activityPermalink__wrapper m-activityPermalink__wrapper--link m-legible"
+  >
+    <!-- ------------------------------------------ -->
+    <!-- PERMALINK - RELATIVE DATE (UNSCHEDULED) -->
+    <!-- ------------------------------------------ -->
+    <m-activity__relativeTimeSpan
+      class="m-activityPermalink__text"
+      *ngIf="!isScheduled() && showRelativeDate; else absoluteDate"
+      [entity]="entity"
+    ></m-activity__relativeTimeSpan>
+    <!-- ------------------------------------------ -->
+    <!-- PERMALINK ABSOLUTE DATE (INCL. SCHEDULED) -->
+    <!-- ------------------------------------------ -->
+    <ng-template #absoluteDate>
+      <div class="m-activityPermalink__text">
+        <i *ngIf="isScheduled()" class="material-icons">schedule</i
+        ><span>{{ toReadableDate(entity.time_created) }}</span>
+      </div>
+    </ng-template>
+  </a>
+  <!-- ------------------------------------------ -->
+  <!-- EDITED  -->
+  <!-- ------------------------------------------ -->
+  <div
+    class="m-activityPermalink__wrapper m-legible"
+    *ngIf="
+      !service.displayOptions.minimalMode &&
+      !service.displayOptions.isSidebarBoost &&
+      (service.isEdited$ | async)
+    "
+  >
+    <span class="m-activityPermalink__text m-activityPermalink__text--edited"
+      >(<ng-container i18n="@@M__COMMON__EDITED">edited</ng-container>)</span
+    >
+  </div>
+  <!-- ------------------------------------------ -->
+  <!-- VIEW COUNT  -->
+  <!-- ------------------------------------------ -->
+  <m-activity__views
+    *ngIf="entity.time_created && !service.displayOptions.isFeed"
+    class="m-activityPermalink__wrapper"
+  ></m-activity__views>
+</div>

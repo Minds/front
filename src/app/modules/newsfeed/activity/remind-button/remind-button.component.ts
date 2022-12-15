@@ -1,10 +1,9 @@
-import { MindsUser } from './../../../../interfaces/entities';
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { ActivityService, ActivityEntity } from '../activity.service';
+import { ActivityService } from '../../activity/activity.service';
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { map } from 'rxjs/operators';
@@ -12,6 +11,7 @@ import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 
 /**
  * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating a remind or a quote post.
+ *
  * If the post is already reminded, the dropdown menu provides an option to delete the remind.
  */
 @Component({
@@ -20,7 +20,7 @@ import { AuthModalService } from '../../../auth/modal/auth-modal.service';
   styleUrls: ['./remind-button.component.ng.scss'],
   providers: [ComposerService],
 })
-export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
+export class ActivityRemindButtonComponent {
   count$: Observable<number> = this.service.entity$.pipe(
     map(entity => entity.reminds + entity.quotes)
   );
@@ -49,10 +49,6 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit() {}
-
-  ngOnDestroy() {}
-
   async onUndoRemind(e: MouseEvent): Promise<void> {
     try {
       await this.client.delete(
@@ -70,7 +66,6 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
   async onRemindClick(e: MouseEvent): Promise<void> {
     if (!this.session.isLoggedIn()) {
-      // FIXME: after user logged in we will not continue the action here
       this.openAuthModal();
       return;
     }
@@ -92,7 +87,6 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
   onQuotePostClick(e: MouseEvent): void {
     if (!this.session.isLoggedIn()) {
-      // FIXME: after user logged in we will not continue the action here
       this.openAuthModal();
       return;
     }
@@ -127,9 +121,16 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
   /**
    * Open auth modal to prompt for login or register.
-   * @returns { Promise<MindsUser?> }
+   * @returns { Promise<void> }
    */
-  private async openAuthModal(): Promise<MindsUser | undefined> {
-    return this.authModal.open({ formDisplay: 'login' });
+  private async openAuthModal(): Promise<void> {
+    try {
+      await this.authModal.open({ formDisplay: 'login' });
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
   }
 }

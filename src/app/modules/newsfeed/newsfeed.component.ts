@@ -17,7 +17,6 @@ import { ContextService } from '../../services/context.service';
 import { NewsfeedService } from './services/newsfeed.service';
 import { PagesService } from '../../common/services/pages.service';
 import { ExperimentsService } from '../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -58,8 +57,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
 
   all: boolean;
 
-  activityV2Feature: boolean = false;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -70,8 +67,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     public pagesService: PagesService,
     protected storage: Storage,
     protected context: ContextService,
-    protected newsfeedService: NewsfeedService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    protected newsfeedService: NewsfeedService
   ) {
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
@@ -101,8 +97,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']); //force login
     }
-
-    this.activityV2Feature = this.activityV2Experiment.isActive();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['message']) {

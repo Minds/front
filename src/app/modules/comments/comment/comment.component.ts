@@ -37,11 +37,10 @@ import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
-import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 
 @Component({
   selector: 'm-comment',
@@ -116,19 +115,12 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   commentAgeOnLoadMs: number;
 
   @Input() set compact(value: boolean) {
-    if (this.activityV2Feature) {
-      this._compact = false;
-      return;
-    } else {
-      this._compact = value;
-    }
-
-    if (!value) {
-      this.onResize();
-    }
+    // TODO this is always going to be false b/c
+    // compact design was retired with activity v2
+    // so we can remove it from comment, tree, thread, entity outlet
+    this._compact = false;
+    return;
   }
-
-  activityV2Feature: boolean = false;
 
   constructor(
     public session: Session,
@@ -148,8 +140,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     protected toasterService: ToasterService,
     private activityModalCreator: ActivityModalCreatorService,
     private injector: Injector,
-    public suggestions: AutocompleteSuggestionsService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    public suggestions: AutocompleteSuggestionsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -163,8 +154,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
         })
       );
     }
-
-    this.activityV2Feature = this.activityV2Experiment.isActive();
 
     this.commentAgeOnLoadMs = Date.now() - this.comment.time_created * 1000;
 
@@ -207,13 +196,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
-    if (this.activityV2Experiment.isActive()) {
-      this._compact = false;
-      return;
-    }
-    if (window.innerWidth <= 480) {
-      this._compact = true;
-    }
+    this._compact = false;
+    return;
   }
 
   canSave() {

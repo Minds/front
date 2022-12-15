@@ -6,7 +6,6 @@ import {
   Input,
   Output,
   OnInit,
-  HostBinding,
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
@@ -17,8 +16,6 @@ import getActivityContentType from '../../../helpers/activity-content-type';
 import { WireEventType } from '../v2/wire-v2.service';
 import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Blocks access to paywalled activities for users who haven't paid
@@ -52,11 +49,6 @@ export class WireLockScreenComponent implements OnInit {
 
   readonly plusSupportTierUrn: string;
 
-  @HostBinding('class.m-wireLockScreen--activityV2')
-  get isActivityV2Feature() {
-    return this.activityV2Experiment.isActive();
-  }
-
   constructor(
     public session: Session,
     private client: Client,
@@ -65,8 +57,7 @@ export class WireLockScreenComponent implements OnInit {
     private signupModal: SignupModalService,
     private configs: ConfigsService,
     private wirePaymentHandlers: WirePaymentHandlersService,
-    private authModal: AuthModalService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private authModal: AuthModalService
   ) {
     this.plusSupportTierUrn = configs.get('plus')['support_tier_urn'];
   }

@@ -1,11 +1,8 @@
 @import 'defaults.scss';
 
 :host {
-  // ******************************************
-  // ** ACTIVITY V2 **
-  // ******************************************
-  m-activityV2 &,
-  m-activityV2__modal & {
+  m-activity &,
+  m-activity__modal & {
     padding: 0;
     margin: 0;
     .m-channel--badges i {

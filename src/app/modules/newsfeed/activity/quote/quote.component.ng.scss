@@ -1,0 +1,54 @@
+@import 'defaults.scss';
+
+:host {
+  // *********************************
+  // ** FIXED HEIGHT **
+  // *********************************
+  m-newsfeed--boost-rotator & {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
+
+  &.m-activity__quote--minimalMode {
+    padding: 0;
+    border-radius: 0;
+    @include borderNone;
+    @include borderTop;
+
+    .m-activityTop__mainColumn {
+      padding-top: $spacing4;
+    }
+
+    ::ng-deep {
+      m-activity__ownerBlock {
+        .m-activity__ownerBlock {
+          padding-bottom: $spacing4;
+        }
+      }
+    }
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+
+  display: flex;
+  margin: auto;
+  padding: $spacing4;
+  border-radius: $borderRadius--activity;
+  @include border;
+
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+  }
+}
