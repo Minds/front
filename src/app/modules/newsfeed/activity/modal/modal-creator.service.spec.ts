@@ -1,10 +1,6 @@
-import { ActivityV2ModalComponent } from '../../activity-v2/modal/modal.component';
+import { ActivityModalComponent } from '../../activity/modal/modal.component';
 import { ActivityEntity } from '../activity.service';
 import { ActivityModalCreatorService } from './modal-creator.service';
-
-export let activityV2ExperimentServiceMock = new (function() {
-  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
-})();
 
 export let analyticsServiceMock = new (function() {
   this.getContexts = jasmine
@@ -25,7 +21,6 @@ export let modalServiceMock = new (function() {
 
 describe('ActivityModalCreatorService', () => {
   let service: ActivityModalCreatorService;
-
   const mockContext = {
     schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
     data: {
@@ -42,10 +37,8 @@ describe('ActivityModalCreatorService', () => {
   beforeEach(() => {
     service = new ActivityModalCreatorService(
       modalServiceMock,
-      activityV2ExperimentServiceMock,
       analyticsServiceMock
     );
-
     (service as any).analytics.buildEntityContext.calls.reset();
     (service as any).analytics.trackClick.calls.reset();
     (service as any).analytics.buildEntityContext.and.returnValue(mockContext);
@@ -64,15 +57,13 @@ describe('ActivityModalCreatorService', () => {
       type: 'activity',
       subtype: '',
     };
-
     service.create(entity as ActivityEntity, null);
-
     expect(
       (service as any).analytics.buildEntityContext
     ).not.toHaveBeenCalled();
     expect((service as any).analytics.trackClick).not.toHaveBeenCalled();
     expect((service as any).modalService.present).toHaveBeenCalledWith(
-      ActivityV2ModalComponent,
+      ActivityModalComponent,
       {
         modalDialogClass: 'modal-fullwidth',
         size: 'xl',
@@ -90,9 +81,7 @@ describe('ActivityModalCreatorService', () => {
       type: 'object',
       subtype: 'image',
     };
-
     service.create(entity as ActivityEntity, null);
-
     expect((service as any).analytics.buildEntityContext).toHaveBeenCalledWith(
       entity
     );
@@ -101,7 +90,7 @@ describe('ActivityModalCreatorService', () => {
       [mockContext]
     );
     expect((service as any).modalService.present).toHaveBeenCalledWith(
-      ActivityV2ModalComponent,
+      ActivityModalComponent,
       {
         modalDialogClass: 'modal-fullwidth',
         size: 'xl',
@@ -119,9 +108,7 @@ describe('ActivityModalCreatorService', () => {
       type: 'object',
       subtype: 'video',
     };
-
     service.create(entity as ActivityEntity, null);
-
     expect((service as any).analytics.buildEntityContext).toHaveBeenCalledWith(
       entity
     );
@@ -130,7 +117,7 @@ describe('ActivityModalCreatorService', () => {
       [mockContext]
     );
     expect((service as any).modalService.present).toHaveBeenCalledWith(
-      ActivityV2ModalComponent,
+      ActivityModalComponent,
       {
         modalDialogClass: 'modal-fullwidth',
         size: 'xl',

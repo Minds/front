@@ -5,7 +5,6 @@ import { DiscoveryService } from './discovery.service';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { ExperimentsService } from '../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-discovery',
@@ -17,17 +16,11 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
   isPlusPageSubscription: Subscription;
   isPlusPage: boolean = false;
 
-  @HostBinding('class.m-discovery--activityV2')
-  get activityV2Feature(): boolean {
-    return this.activityV2Experiment.isActive();
-  }
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private service: DiscoveryService,
-    public session: Session,
-    private activityV2Experiment: ActivityV2ExperimentService
+    public session: Session
   ) {
     /**
      * Determine if on Minds+ page

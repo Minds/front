@@ -6,20 +6,22 @@ import {
 } from '../../../common/services/related-content.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { Session } from '../../../services/session';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { ActivityEntity } from '../activity/activity.service';
 
+/**
+ * Sidebar widget with suggested activities inside
+ *
+ * See it on the sidebar of a single entity page
+ */
 @Component({
   selector: 'm-newsfeed__activitySuggestions',
   templateUrl: './suggestions.component.html',
   styleUrls: ['./suggestions.component.ng.scss'],
   providers: [RelatedContentService],
 })
-export class NewsfeedActivitySuggestionsComponent implements OnInit {
+export class NewsfeedActivitySuggestionsComponent {
   protected _baseEntity: ActivityEntity;
 
-  @HostBinding('class.m-newsfeed__activitySuggestions--activityV2')
-  activityV2Feature: boolean = false;
   /**
    * The 'base' entity is the activity that will be
    * used to determine which posts to suggest
@@ -39,13 +41,8 @@ export class NewsfeedActivitySuggestionsComponent implements OnInit {
 
   constructor(
     public session: Session,
-    protected relatedContent: RelatedContentService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    protected relatedContent: RelatedContentService
   ) {}
-
-  ngOnInit(): void {
-    this.activityV2Feature = this.activityV2Experiment.isActive();
-  }
 
   async onBaseEntityChange(e: ActivityEntity): Promise<void> {
     this.inProgress = true;

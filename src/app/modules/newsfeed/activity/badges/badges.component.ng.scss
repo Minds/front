@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  // Using ng-deep to accommodate paywall-badge component
+  ::ng-deep .m-activity__badge {
+    margin-left: $spacing2;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: row;
+    cursor: default;
+    text-decoration: none;
+
+    @include m-theme() {
+      fill: themed($m-textColor--secondary);
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  i,
+  ::ng-deep m-icon i {
+    font-size: 1.25rem;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+  ::ng-deep m-icon span svg {
+    @include m-theme() {
+      fill: themed($m-textColor--secondary);
+    }
+  }
+}

@@ -41,11 +41,4 @@ describe('FeedNoticeComponent', () => {
   it('should instantiate', () => {
     expect(comp).toBeTruthy();
   });
-
-  it('should check if is full width from service', () => {
-    (comp as any).service.shouldBeFullWidth.and.returnValue(true);
-    expect(comp.isFullWidth).toBeTruthy();
-    (comp as any).service.shouldBeFullWidth.and.returnValue(false);
-    expect(comp.isFullWidth).toBeFalsy();
-  });
 });

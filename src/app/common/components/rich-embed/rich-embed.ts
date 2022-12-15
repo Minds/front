@@ -47,8 +47,6 @@ export class MindsRichEmbed {
 
   @Input() embeddedInline: boolean = false;
 
-  @Input() activityV2Feature: boolean = false;
-
   @Input() displayAsColumn: boolean = false;
 
   @Input() set isModal(value: boolean) {
@@ -62,18 +60,14 @@ export class MindsRichEmbed {
     }
   }
 
-  @HostBinding('class.m-richEmbed--activityV2--row')
-  get isActivityV2Row(): boolean {
-    return (
-      this.activityV2Feature && !this.isFeaturedSource && !this.displayAsColumn
-    );
+  @HostBinding('class.m-richEmbed__display--rows')
+  get displayAsRows(): boolean {
+    return !this.isFeaturedSource && !this.displayAsColumn;
   }
 
-  @HostBinding('class.m-richEmbed--activityV2--column')
-  get isActivityV2Column(): boolean {
-    return (
-      this.activityV2Feature && (this.isFeaturedSource || this.displayAsColumn)
-    );
+  @HostBinding('class.m-richEmbed__display--columns')
+  get displayAsColumns(): boolean {
+    return this.isFeaturedSource || this.displayAsColumn;
   }
 
   constructor(

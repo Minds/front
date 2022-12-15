@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ActivityEntity } from './../../modules/newsfeed/activity/activity.service';
+import { ActivityEntity } from '../../modules/newsfeed/activity/activity.service';
 import { ElementVisibilityService } from './../services/element-visibility.service';
 
 /**

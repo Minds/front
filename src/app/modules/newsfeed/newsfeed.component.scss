@@ -142,29 +142,13 @@ m-newsfeed {
 
 .m-newsfeed__inner {
   m-channelRecommendation {
-    margin: $minds-margin * 2 $minds-margin * -5;
-
-    @media screen and (max-width: $layoutMin3ColWidth) {
-      margin: $minds-margin * 2 $minds-margin * -2.5;
-    }
-
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
-      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
 }
 
 .m-theme__2020 .m-newsfeed {
-  &:not(.m-newsfeed--activityV2) {
-    .m-newsfeed__inner {
-      padding: 20px 40px;
-      @media screen and (max-width: $layoutMin3ColWidth) {
-        padding: 20px;
-      }
-    }
-  }
-
   .m-pageLayout__pane--right {
     padding-right: 0;
   }

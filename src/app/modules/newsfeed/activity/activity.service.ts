@@ -11,7 +11,6 @@ import { Injectable, EventEmitter, OnDestroy, Optional } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 
 export interface Supermind {
@@ -46,7 +45,6 @@ export type ActivityDisplayOptions = {
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
-  isV2: boolean; // isV2 design
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
 };
 
@@ -392,13 +390,10 @@ export class ActivityService implements OnDestroy {
     isSidebarBoost: false,
     isFeed: false,
     isSingle: false,
-    isV2: false,
     permalinkBelowContent: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
-
-  activityV2Feature: boolean = false;
 
   // subscriptions for metric events.
   private thumbsUpMetricSubscription: Subscription;
@@ -407,12 +402,9 @@ export class ActivityService implements OnDestroy {
   constructor(
     private configs: ConfigsService,
     private session: Session,
-    private activityV2Experiment: ActivityV2ExperimentService,
     @Optional() private entityMetricsSocket: EntityMetricsSocketService
   ) {
     this.siteUrl = configs.get('site_url');
-
-    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   ngOnDestroy() {
@@ -448,11 +440,8 @@ export class ActivityService implements OnDestroy {
   ): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
-    if (this.activityV2Feature) {
-      this.displayOptions.isV2 = true;
-      this.displayOptions.showOnlyCommentsInput = false;
-      this.displayOptions.showOnlyCommentsToggle = true;
-    }
+    this.displayOptions.showOnlyCommentsInput = false;
+    this.displayOptions.showOnlyCommentsToggle = true;
 
     return this;
   }
