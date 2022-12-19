@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { formatNumber } from '@angular/common';
+import {
+  Component,
+  Inject,
+  Input,
+  LOCALE_ID,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -34,10 +42,10 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
   @Input() public maxDuration: number = 30;
 
   // initial value for daily budget slider.
-  @Input() public initialDailyBudget: number = 30;
+  @Input() public initialDailyBudget: number = 5;
 
   // initial value for duration slider.
-  @Input() public initialDuration: number = 3;
+  @Input() public initialDuration: number = 1;
 
   // form group.
   public form: FormGroup;
@@ -48,7 +56,9 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
   > = this.service.estimatedReach$.pipe(
     map((estimatedReach: EstimatedReach): string => {
       return estimatedReach
-        ? `${estimatedReach.lower_bound} - ${estimatedReach.upper_bound}`
+        ? formatNumber(estimatedReach.views.low, this.locale) +
+            ` - ` +
+            formatNumber(estimatedReach.views.high, this.locale)
         : 'Unknown';
     })
   );
@@ -59,7 +69,8 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: BoostModalV2Service,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    @Inject(LOCALE_ID) private locale: string
   ) {}
 
   ngOnInit(): void {

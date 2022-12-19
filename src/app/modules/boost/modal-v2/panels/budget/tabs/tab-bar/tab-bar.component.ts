@@ -37,7 +37,7 @@ export class BoostModalV2BudgetTabBarComponent {
     if (paymentCategory === BoostPaymentCategory.TOKENS) {
       const modal = this.modal.present(ConfirmV2Component, {
         data: {
-          title: 'Are you sure you want to swap to tokens?',
+          title: 'Are you sure you want to use tokens?',
           body: 'You will receive more views when using cash.',
           confirmButtonColor: 'blue',
           confirmButtonSolid: true,
