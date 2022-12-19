@@ -69,8 +69,14 @@ describe('BoostModalV2BudgetTabComponent', () => {
                 estimatedReach$: {
                   get: () =>
                     new BehaviorSubject<EstimatedReach>({
-                      lower_bound: 100,
-                      upper_bound: 1000,
+                      views: {
+                        low: 100,
+                        high: 1000,
+                      },
+                      cpm: {
+                        low: 3,
+                        high: 15,
+                      },
                     }),
                 },
               },
@@ -93,8 +99,14 @@ describe('BoostModalV2BudgetTabComponent', () => {
     (comp as any).service.dailyBudget$.next(10);
     (comp as any).service.duration$.next(3);
     (comp as any).service.estimatedReach$.next({
-      lower_bound: 100,
-      upper_bound: 1000,
+      views: {
+        low: 100,
+        high: 1000,
+      },
+      cpm: {
+        low: 3,
+        high: 15,
+      },
     });
 
     fixture.detectChanges();
