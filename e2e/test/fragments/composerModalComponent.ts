@@ -222,6 +222,20 @@ class ComposerModalComponent {
   }
 
   /**
+   * Check whether supermind target user has or does not have input text
+   * @param { boolean } shouldHave - whether component should have.
+   * @return { void }
+   */
+  public shouldHaveSupermindTargetInputText(text: string): void {
+    const supermindTargetInput = locate(
+      this.supermindTargetInputSelector
+    ).withText(text);
+
+    I.seeElement(supermindTargetInput);
+    return;
+  }
+
+  /**
    * Popup screens
    */
   public getNsfwPopup(): CodeceptJS.Locator {
