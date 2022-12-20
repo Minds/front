@@ -340,7 +340,7 @@ describe('BoostModalV2Service', () => {
     service.changePanelFrom(BoostModalPanel.REVIEW);
     tick();
 
-    expect((service as any).api.get).toHaveBeenCalledWith(
+    expect((service as any).api.post).toHaveBeenCalledWith(
       `api/v3/boosts/prepare-onchain/123`
     );
     expect(
@@ -394,7 +394,7 @@ describe('BoostModalV2Service', () => {
     tick();
 
     expect((service as any).toast.error).toHaveBeenCalled();
-    expect((service as any).api.get).toHaveBeenCalledWith(
+    expect((service as any).api.post).toHaveBeenCalledWith(
       `api/v3/boosts/prepare-onchain/123`
     );
     expect(
@@ -439,7 +439,7 @@ describe('BoostModalV2Service', () => {
     expect((service as any).toast.error).toHaveBeenCalledWith(
       'Currently not supported on this device.'
     );
-    expect((service as any).api.get).toHaveBeenCalledWith(
+    expect((service as any).api.post).toHaveBeenCalledWith(
       `api/v3/boosts/prepare-onchain/123`
     );
     expect(
@@ -484,7 +484,7 @@ describe('BoostModalV2Service', () => {
     expect((service as any).toast.error).toHaveBeenCalledWith(
       'No Ethereum wallets available on your browser.'
     );
-    expect((service as any).api.get).toHaveBeenCalledWith(
+    expect((service as any).api.post).toHaveBeenCalledWith(
       `api/v3/boosts/prepare-onchain/123`
     );
     expect(
@@ -529,7 +529,7 @@ describe('BoostModalV2Service', () => {
     expect((service as any).toast.error).toHaveBeenCalledWith(
       'Your Ethereum wallet is locked or connected to another network.'
     );
-    expect((service as any).api.get).toHaveBeenCalledWith(
+    expect((service as any).api.post).toHaveBeenCalledWith(
       `api/v3/boosts/prepare-onchain/123`
     );
     expect(
@@ -574,7 +574,7 @@ describe('BoostModalV2Service', () => {
     tick();
 
     expect((service as any).toast.error).toHaveBeenCalledWith(errorMessage);
-    expect((service as any).api.get).toHaveBeenCalledWith(
+    expect((service as any).api.post).toHaveBeenCalledWith(
       `api/v3/boosts/prepare-onchain/123`
     );
     expect(
@@ -618,7 +618,7 @@ describe('BoostModalV2Service', () => {
     tick();
 
     expect((service as any).toast.error).toHaveBeenCalled();
-    expect((service as any).api.get).toHaveBeenCalledWith(
+    expect((service as any).api.post).toHaveBeenCalledWith(
       `api/v3/boosts/prepare-onchain/123`
     );
     expect(
