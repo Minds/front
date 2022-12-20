@@ -373,7 +373,7 @@ export class BoostModalV2Service implements OnDestroy {
     try {
       const prepareResponse: PrepareResponse = await this.api
         .get<PrepareResponse>(
-          `api/v3/boost/prepare-onchain/${boostSubmissionPayload.entity_guid}`
+          `api/v3/boosts/prepare-onchain/${boostSubmissionPayload.entity_guid}`
         )
         .toPromise();
 

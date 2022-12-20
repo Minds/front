@@ -341,7 +341,7 @@ describe('BoostModalV2Service', () => {
     tick();
 
     expect((service as any).api.get).toHaveBeenCalledWith(
-      `api/v3/boost/prepare-onchain/123`
+      `api/v3/boosts/prepare-onchain/123`
     );
     expect(
       (service as any).web3Wallet.checkDeviceIsSupported
@@ -395,7 +395,7 @@ describe('BoostModalV2Service', () => {
 
     expect((service as any).toast.error).toHaveBeenCalled();
     expect((service as any).api.get).toHaveBeenCalledWith(
-      `api/v3/boost/prepare-onchain/123`
+      `api/v3/boosts/prepare-onchain/123`
     );
     expect(
       (service as any).web3Wallet.checkDeviceIsSupported
@@ -440,7 +440,7 @@ describe('BoostModalV2Service', () => {
       'Currently not supported on this device.'
     );
     expect((service as any).api.get).toHaveBeenCalledWith(
-      `api/v3/boost/prepare-onchain/123`
+      `api/v3/boosts/prepare-onchain/123`
     );
     expect(
       (service as any).web3Wallet.checkDeviceIsSupported
@@ -485,7 +485,7 @@ describe('BoostModalV2Service', () => {
       'No Ethereum wallets available on your browser.'
     );
     expect((service as any).api.get).toHaveBeenCalledWith(
-      `api/v3/boost/prepare-onchain/123`
+      `api/v3/boosts/prepare-onchain/123`
     );
     expect(
       (service as any).web3Wallet.checkDeviceIsSupported
@@ -530,7 +530,7 @@ describe('BoostModalV2Service', () => {
       'Your Ethereum wallet is locked or connected to another network.'
     );
     expect((service as any).api.get).toHaveBeenCalledWith(
-      `api/v3/boost/prepare-onchain/123`
+      `api/v3/boosts/prepare-onchain/123`
     );
     expect(
       (service as any).web3Wallet.checkDeviceIsSupported
@@ -575,7 +575,7 @@ describe('BoostModalV2Service', () => {
 
     expect((service as any).toast.error).toHaveBeenCalledWith(errorMessage);
     expect((service as any).api.get).toHaveBeenCalledWith(
-      `api/v3/boost/prepare-onchain/123`
+      `api/v3/boosts/prepare-onchain/123`
     );
     expect(
       (service as any).web3Wallet.checkDeviceIsSupported
@@ -619,7 +619,7 @@ describe('BoostModalV2Service', () => {
 
     expect((service as any).toast.error).toHaveBeenCalled();
     expect((service as any).api.get).toHaveBeenCalledWith(
-      `api/v3/boost/prepare-onchain/123`
+      `api/v3/boosts/prepare-onchain/123`
     );
     expect(
       (service as any).web3Wallet.checkDeviceIsSupported
