@@ -1,6 +1,6 @@
 Feature: Activity Feature
   As a user
-  I should be able to interact with various activity types 
+  I should be able to interact with various activity types
 
   Scenario: Single image in a quote posts opens in a modal from newsfeed
     Given I am logged in
@@ -45,3 +45,10 @@ Feature: Activity Feature
     When I click the timestamp for the activity with the storage key "quote-media-modal-multi-img-single-entity-page" on "single-entity-page"
     And I click the parent media for the quote post in the "single-entity-page" with storage text "quote-media-modal-multi-img-single-entity-page"
     Then I should see the activity modal
+
+  Scenario: Navigating to single entity page from the newsfeed
+    Given I am logged in
+    And I am on the newsfeed
+    When I create a post with text storage key "navigate_to_sep"
+    And I click the timestamp for the activity with the storage key "navigate_to_sep" on "newsfeed"
+    Then I should see the back button on the single entity page

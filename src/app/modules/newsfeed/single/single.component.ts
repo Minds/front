@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -17,6 +17,8 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
+import { Location } from '@angular/common';
+import { RouterHistoryService } from '../../../common/services/router-history.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -44,6 +46,8 @@ export class NewsfeedSingleComponent {
 
   private shouldReuseRouteFn; // For comment focusedUrn reloading
 
+  showBackButton: boolean = false;
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -56,7 +60,9 @@ export class NewsfeedSingleComponent {
     configs: ConfigsService,
     private headersService: HeadersService,
     private authModal: AuthModalService,
-    protected jsonLdService: JsonLdService
+    protected jsonLdService: JsonLdService,
+    private location: Location,
+    private routerHistory: RouterHistoryService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -64,6 +70,11 @@ export class NewsfeedSingleComponent {
 
   ngOnInit() {
     this.context.set('activity');
+
+    // If the user arrived at this page by clicking a link
+    // somewhere within the site, they will see a back button
+    let previousUrl = this.routerHistory.getPreviousUrl();
+    this.showBackButton = !!previousUrl;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
@@ -191,6 +202,10 @@ export class NewsfeedSingleComponent {
       });
 
     return fakeEmitter;
+  }
+
+  goToPreviousPage(): void {
+    this.location.back();
   }
 
   async openLoginModal(): Promise<void> {
