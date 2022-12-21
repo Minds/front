@@ -36,7 +36,7 @@
           name="text_color"
           formControlName="text_color"
           #textColor
-          data-minds="textColor"
+          data-ref="m-settingsV2ProTheme__textColor"
           [pattern]="hexPattern"
           class="form-control"
           required
@@ -52,7 +52,7 @@
             class="form-control"
             type="color"
             id="text_color_picker"
-            data-minds="textColorPicker"
+            data-ref="m-settingsV2ProTheme__textColorPicker"
             formControlName="text_color_picker"
             #textColorPicker
             (ngModelChange)="
@@ -98,7 +98,7 @@
           id="primary_color"
           name="primary_color"
           #primaryColor
-          data-minds="primaryColor"
+          data-ref="m-settingsV2ProTheme__primaryColor"
           formControlName="primary_color"
           [pattern]="hexPattern"
           class="form-control"
@@ -120,7 +120,7 @@
             name="primary_color_picker"
             formControlName="primary_color_picker"
             #primaryColorPicker
-            data-minds="primaryColorPicker"
+            data-ref="m-settingsV2ProTheme__primaryColorPicker"
             (ngModelChange)="
               updateColorText('primary_color', primaryColorPicker.value)
             "
@@ -167,7 +167,7 @@
           id="plain_background_color"
           name="plain_background_color"
           #plainBgColor
-          data-minds="plainBgColor"
+          data-ref="m-settingsV2ProTheme__plainBgColor"
           formControlName="plain_background_color"
           [pattern]="hexPattern"
           class="form-control"
@@ -190,7 +190,7 @@
             name="plain_background_color_picker"
             formControlName="plain_background_color_picker"
             #plainBgColorPicker
-            data-minds="plainBgColorPicker"
+            data-ref="m-settingsV2ProTheme__plainBgColorPicker"
             (ngModelChange)="
               updateColorText(
                 'plain_background_color',
@@ -223,7 +223,7 @@
         <label
           for="scheme_light"
           class="m-form__customInputWrapper__radio"
-          data-minds="schemeLight"
+          data-ref="m-settingsV2ProTheme__schemeLight"
         >
           <ng-container i18n="@@COMMON__LIGHT">Light</ng-container>
           <input
@@ -239,7 +239,7 @@
         <label
           for="scheme_dark"
           class="m-form__customInputWrapper__radio"
-          data-minds="schemeDark"
+          data-ref="m-settingsV2ProTheme__schemeDark"
         >
           <ng-container i18n="@@COMMON__DARK">Dark</ng-container>
           <input
@@ -282,7 +282,7 @@
               [value]="ratio"
               formControlName="tile_ratio"
               class="form-control"
-              data-minds="'tileRatio_' + ratio"
+              data-ref="m-settingsV2ProTheme__tileRatio"
             />
             <span class="m-form__customInput__radio"></span>
           </label>

@@ -71,7 +71,7 @@
               type="file"
               accept="image/*"
               (change)="uploadBanner(bannerUpload)"
-              data-cy="data-minds-blog-banner-upload"
+              data-ref="data-minds-blog-banner-upload"
               #bannerUpload
             />
           </span>
@@ -103,7 +103,7 @@
           (ngModelChange)="onTitleChange($event)"
           maxlength="512"
           rows="1"
-          data-cy="data-minds-blog-title-input"
+          data-ref="data-minds-blog-title-input"
           autofocus
         ></textarea>
       </div>

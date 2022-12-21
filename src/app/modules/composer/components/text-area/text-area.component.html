@@ -9,7 +9,7 @@
       [hidden]="(title$ | async) === null"
       [disabled]="isPosting$ | async"
       (ngModelChange)="onTitleChange($event)"
-      data-cy="composer-activity-title"
+      data-ref="composer-activity-title"
       #titleInput
       [autoGrow]
     ></textarea>
@@ -18,7 +18,7 @@
       class="m-composerTextareaTitle__toggle"
       (click)="toggleTitle()"
       [hidden]="isPosting$ | async"
-      data-cy="composer-activity-title"
+      data-ref="composer-activity-title"
     >
       <m-icon
         [iconId]="
@@ -45,7 +45,7 @@
       (keyup)="setSelection(messageInput)"
       m-attachment-paste
       tabindex="0"
-      data-cy="composer-textarea"
+      data-ref="composer-textarea"
       mTextInputAutocomplete
       [triggerCharacters]="['#', '@']"
       [findChoices]="suggestions.findSuggestions"

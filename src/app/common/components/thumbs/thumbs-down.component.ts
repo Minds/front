@@ -23,14 +23,14 @@ import { ToasterService } from '../../services/toaster.service';
     <a
       (click)="thumb()"
       [ngClass]="{ selected: has() }"
-      data-cy="data-minds-thumbs-down-button"
+      data-ref="data-minds-thumbs-down-button"
     >
       <i class="material-icons" [class.inProgress]="inProgress">thumb_down</i>
       <span
         class="minds-counter"
         *ngIf="object['thumbs:down:count'] > 0 && !iconOnly"
         [@counterChange]="object['thumbs:down:count']"
-        data-cy="data-minds-thumbs-down-counter"
+        data-ref="data-minds-thumbs-down-counter"
         >{{ object['thumbs:down:count'] | number }}</span
       >
     </a>

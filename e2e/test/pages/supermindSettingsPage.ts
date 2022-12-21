@@ -3,13 +3,13 @@ const { I, sidebarComponent, supermindConsolePage } = inject();
 class SupermindSettingsPage {
   // Selectors.
   private readonly minOffchainTokensInputSelector: string =
-    '[data-cy=supermind-settings-min-tokens-input]';
+    '[data-ref=supermind-settings-min-tokens-input]';
   private readonly minCashInputSelector: string =
-    '[data-cy=supermind-settings-min-cash-input]';
+    '[data-ref=supermind-settings-min-cash-input]';
   private readonly submitButtonSelector: string =
-    '[data-cy=supermind-settings-submit-button]';
+    '[data-ref=supermind-settings-submit-button]';
   private readonly validationErrors: string =
-    '[data-cy=supermind-settings-validation-error]';
+    '[data-ref=supermind-settings-validation-error]';
 
   // Object containing text for validation error text.
   public readonly validationErrorText: { [key: string]: string } = {
