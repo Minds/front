@@ -91,6 +91,14 @@ export class SupermindButtonComponent {
       this.composerService.remind$.next(this.entity);
     }
 
+    // Don't pre-populate composer with own username
+    // if button was clicked from user's own post
+    const loggedInUsername = this.session.getLoggedInUser().username;
+
+    if (receiverGuid === loggedInUsername) {
+      receiverGuid = '';
+    }
+
     this.composerService.supermindRequest$.next({
       receiver_guid: receiverGuid,
       reply_type: 0,
@@ -103,7 +111,7 @@ export class SupermindButtonComponent {
       refund_policy_agreed: false,
     });
 
-    // Pre-populate composer with when supermind button
+    // Pre-populate composer with comment text when supermind button
     // is clicked from the 'upgradeComment' supermind banner popup
     if (this.message) {
       this.composerService.message$.next(this.message);

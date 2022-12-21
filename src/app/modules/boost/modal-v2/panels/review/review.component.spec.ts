@@ -59,8 +59,14 @@ describe('BoostModalV2ReviewComponent', () => {
                 estimatedReach$: {
                   get: () =>
                     new BehaviorSubject<EstimatedReach>({
-                      lower_bound: 10,
-                      upper_bound: 1000,
+                      views: {
+                        low: 100,
+                        high: 1000,
+                      },
+                      cpm: {
+                        low: 3,
+                        high: 15,
+                      },
                     }),
                 },
                 activePanel$: {
@@ -87,8 +93,14 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.dailyBudget$.next(3);
     (comp as any).service.totalPaymentAmountText$.next('$3');
     (comp as any).service.estimatedReach$.next({
-      lower_bound: 10,
-      upper_bound: 1000,
+      views: {
+        low: 100,
+        high: 1000,
+      },
+      cpm: {
+        low: 3,
+        high: 15,
+      },
     });
     (comp as any).service.activePanel$.next(BoostModalPanel.REVIEW);
 
@@ -154,12 +166,18 @@ describe('BoostModalV2ReviewComponent', () => {
 
   it('should get estimated reach text from service', (done: DoneFn) => {
     (comp as any).service.estimatedReach$.next({
-      lower_bound: 10,
-      upper_bound: 1000,
+      views: {
+        low: 100,
+        high: 1000,
+      },
+      cpm: {
+        low: 3,
+        high: 15,
+      },
     });
 
     comp.estimatedReachText$.subscribe(val => {
-      expect(val).toBe('10 - 1000 people');
+      expect(val).toBe('100 - 1000 views');
       done();
     });
   });

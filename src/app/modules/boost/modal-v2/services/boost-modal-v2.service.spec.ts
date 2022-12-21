@@ -100,15 +100,15 @@ describe('BoostModalV2Service', () => {
     service.paymentCategory$.next(BoostPaymentCategory.TOKENS);
 
     service.totalPaymentAmountText$.subscribe(val => {
-      expect(val).toBe('30 tokens');
+      expect(val).toBe('5 tokens');
       done();
     });
   });
 
   it('should get total payment amount text for cash', (done: DoneFn) => {
+    service.paymentCategory$.next(BoostPaymentCategory.CASH);
     service.duration$.next(30);
     service.dailyBudget$.next(10);
-    service.paymentCategory$.next(BoostPaymentCategory.CASH);
 
     service.totalPaymentAmountText$.subscribe(val => {
       expect(val).toBe('$300.00');
