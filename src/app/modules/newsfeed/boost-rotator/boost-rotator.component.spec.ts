@@ -20,6 +20,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { By } from '@angular/platform-browser';
 import { componentWrapperDecorator } from '@storybook/angular';
+import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 
 describe('NewsfeedBoostRotatorComponent', () => {
   let comp: NewsfeedBoostRotatorComponent;
@@ -66,6 +67,10 @@ describe('NewsfeedBoostRotatorComponent', () => {
           {
             provide: FeedsService,
             useValue: MockService(FeedsService),
+          },
+          {
+            provide: DynamicBoostExperimentService,
+            useValue: MockService(DynamicBoostExperimentService),
           },
           {
             provide: ConfigsService,
