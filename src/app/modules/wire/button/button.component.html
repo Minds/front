@@ -5,10 +5,8 @@
 >
   <ng-container *ngIf="!features.has('pay'); else tipButton">
     <i class="ion-icon ion-flash"></i>
-    <span *ngIf="!activityV2Feature">Wire</span>
   </ng-container>
   <ng-template #tipButton>
-    <span *ngIf="!activityV2Feature" i18n="@@COMMON__TIP">Tip</span>
     <i class="material-icons">attach_money</i>
   </ng-template>
 </button>

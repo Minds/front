@@ -31,8 +31,8 @@
 
     &.white {
       @include m-theme() {
-        background-color: rgba(themed($m-white-always), 0.025);
-        color: themed($m-white-always);
+        background-color: rgba(themed($m-white), 0.025);
+        color: themed($m-white);
       }
 
       &:hover,

@@ -23,12 +23,11 @@ import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password
 import { NewsfeedSingleComponent } from '../newsfeed/single/single.component';
 import { BlogViewInfinite } from '../blogs/view/infinite';
 import { ModalsModule } from '../modals/modals.module';
-import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ProRedirectComponent } from './redirect.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { JoinButtonComponent } from './channel/join-button/join-button.component';
 import { ProChannelSplashComponent } from './channel/splash/splash.component';
-import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ProChannelFooterMenuButtonComponent } from './channel/footer-menu-button/footer-menu-button.component';
 import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
 import { ChannelsV2Service } from '../channels/v2/channels-v2.service';
@@ -143,8 +142,7 @@ export const PRO_DOMAIN_ROUTES = [
     VideoModule,
     AuthModule,
     ModalsModule,
-    ActivityModule, // delete during ActivityV2 cleanup
-    ActivityV2Module,
+    ActivityModule,
     MarketingModule,
     ChannelsV2Module, // Used for footer menu button
   ],

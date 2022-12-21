@@ -5,7 +5,7 @@
   // ** FIXED HEIGHT **
   // ******************************************
   .m-activityContent--fixedHeight & {
-    &[class*='m-richEmbed--activityV2'] {
+    &[class*='m-richEmbed__display'] {
       .m-rich-embed-src {
         a.thumbnail {
           img {
@@ -21,7 +21,7 @@
   // ******************************************
 
   .m-activityContent--minimalMode & {
-    &[class*='m-richEmbed--activityV2'] {
+    &[class*='m-richEmbed__display'] {
       .m-rich-embed-src {
         border: none !important;
 
@@ -58,7 +58,7 @@
   // ******************************************
   // ******************************************
 
-  &[class*='m-richEmbed--activityV2'] {
+  &[class*='m-richEmbed__display'] {
     .m-rich-embed-src {
       @include border;
       border-radius: $borderRadius--activity;
@@ -142,7 +142,7 @@
 
     ////////////////////////////////////////////////
 
-    &.m-richEmbed--activityV2--row {
+    &.m-richEmbed__display--rows {
       .m-rich-embed-src {
         @media screen and (min-width: $max-mobile + 1) {
           display: flex;
@@ -168,7 +168,7 @@
     }
     ////////////////////////////////////////////////
 
-    &.m-richEmbed--activityV2--column {
+    &.m-richEmbed__display--columns {
       .m-rich-embed-src {
         a.meta {
           padding: $spacing3 $spacing4;

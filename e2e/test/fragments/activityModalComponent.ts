@@ -4,8 +4,8 @@ const { I } = inject();
  * Component for Acivity Modal
  */
 class ActivityModalComponent {
-  private readonly modalElementSelector: string = 'm-activityv2__modal';
-  private readonly modalActivityContentSelector: string = `${this.modalElementSelector} m-activityv2__content`;
+  private readonly modalElementSelector: string = 'm-activity__modal';
+  private readonly modalActivityContentSelector: string = `${this.modalElementSelector} m-activity__content`;
 
   /**
    * Whether modal is visible.

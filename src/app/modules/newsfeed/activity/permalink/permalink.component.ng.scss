@@ -1,0 +1,113 @@
+@import 'defaults.scss';
+
+:host {
+  display: inline-block;
+
+  // *********************************
+  // ** FEED **
+  // *********************************
+  .m-activity--isFeed & {
+    .m-activityPermalink__text--edited {
+      @media screen and (max-width: $max-mobile) {
+        display: none !important;
+      }
+    }
+  }
+
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
+
+  &.m-activity__permalink--minimalMode {
+    padding: 0 $activitySpacing--minimalMode $activitySpacing--minimalMode;
+
+    &.m-activity__permalink--isStatusBehindPaywall {
+      position: absolute;
+      bottom: 0;
+    }
+
+    .m-activity__permalink--addTopSpacing {
+      padding-top: $activitySpacing--minimalMode !important;
+    }
+
+    .m-activityPermalink__text {
+      padding-top: 0;
+    }
+  }
+
+  // *********************************
+  // ** MODAL **
+  // *********************************
+
+  m-activity__modal & {
+    .m-activityPermalink__text {
+      padding-top: $spacing2;
+    }
+  }
+
+  // *********************************
+  // ** SINGLE **
+  // *********************************
+
+  m-newsfeed--single & {
+    .m-activityPermalink__text {
+      padding-top: $spacing4;
+      cursor: text;
+
+      &:hover {
+        text-decoration: none !important;
+      }
+    }
+  }
+  // *********************************
+  // ** QUOTE **
+  // *********************************
+
+  m-activity__quote & {
+    .m-activityPermalink__text {
+      padding-top: 0;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+  .m-activityPermalink__wrapper {
+    text-decoration: none;
+    display: inline-block;
+
+    &.m-activityPermalink__wrapper--link {
+      .m-activityPermalink__text {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .m-activityPermalink__text {
+      display: inline-block;
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      .material-icons {
+        font-size: initial;
+        vertical-align: text-top;
+      }
+    }
+
+    .m-activityPermalink__text--edited {
+      padding-left: $spacing1;
+    }
+  }
+}

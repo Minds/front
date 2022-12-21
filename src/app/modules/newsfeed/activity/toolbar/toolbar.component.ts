@@ -1,7 +1,15 @@
-import { ChangeDetectorRef, Component, Injector } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Injector,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ActivityEntity, ActivityService } from '../activity.service';
+import {
+  ActivityEntity,
+  ActivityService,
+} from '../../activity/activity.service';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
@@ -9,9 +17,14 @@ import { FeaturesService } from '../../../../services/features.service';
 import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 import { ModalService } from '../../../../services/ux/modal.service';
+import { CounterChangeFadeIn } from '../../../../animations';
+import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
+import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /**
- * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners), tip (for non-owners), displayed below activity post content.
+ * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
+ * tip (for non-owners), displayed below activity post content.
  *
  * If 'interactions' is enabled, the toolbar also includes a second row that displays how many people reminded the post, upvoted the post, etc.
  */
@@ -19,12 +32,15 @@ import { ModalService } from '../../../../services/ux/modal.service';
   selector: 'm-activity__toolbar',
   templateUrl: 'toolbar.component.html',
   styleUrls: ['./toolbar.component.ng.scss'],
+  animations: [CounterChangeFadeIn],
 })
 export class ActivityToolbarComponent {
   private entitySubscription: Subscription;
+  private paywallBadgeSubscription: Subscription;
 
   entity: ActivityEntity;
   allowReminds: boolean = true;
+  protected supermindButtonExperiment: boolean = false;
 
   constructor(
     public service: ActivityService,
@@ -34,6 +50,9 @@ export class ActivityToolbarComponent {
     private boostModal: BoostModalLazyService,
     private features: FeaturesService,
     private interactionsModalService: InteractionsModalService,
+    private persistentFeedExperiment: PersistentFeedExperimentService,
+    public supermindExperiment: SupermindExperimentService,
+    public experimentsService: ExperimentsService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -43,25 +62,42 @@ export class ActivityToolbarComponent {
         this.entity = entity;
       }
     );
+
+    this.paywallBadgeSubscription = this.service.shouldShowPaywallBadge$.subscribe(
+      (showBadge: boolean) => {
+        // this.allowReminds = !showBadge;
+      }
+    );
+
+    this.supermindButtonExperiment = this.experimentsService.hasVariation(
+      'front-5812-supermind-button',
+      true
+    );
   }
 
   ngOnDestroy() {
     this.entitySubscription.unsubscribe();
+    this.paywallBadgeSubscription.unsubscribe();
   }
 
   toggleComments(): void {
-    if (this.service.displayOptions.fixedHeight) {
+    if (
+      this.service.displayOptions.fixedHeight ||
+      (this.service.displayOptions.isFeed &&
+        this.persistentFeedExperiment.isActive())
+    ) {
       this.router.navigate([`/newsfeed/${this.entity.guid}`]);
       return;
     }
 
-    this.service.displayOptions.showOnlyCommentsInput = !this.service
-      .displayOptions.showOnlyCommentsInput;
+    this.service.displayOptions.showOnlyCommentsToggle = !this.service
+      .displayOptions.showOnlyCommentsToggle;
   }
 
   async openBoostModal(e: MouseEvent): Promise<void> {
     try {
       await this.boostModal.open(this.entity);
+      return;
     } catch (e) {
       // do nothing.
     }

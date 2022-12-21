@@ -1,12 +1,12 @@
 @import 'defaults.scss';
 
 :host {
-  // *********************************
-  // ** ACTIVITY V2 **
-  // *********************************
-
-  .m-discovery__feedItem--activityV2 {
+  .m-discovery__feedItem {
     padding: 0;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
 
     &.m-discovery__feedItem--group {
       padding-top: $spacing4;
@@ -22,9 +22,9 @@
       .m-discoveryFeedItem__avatar {
         width: $activityAvatarWidth;
         height: $activityAvatarWidth;
-        padding-right: $activityAvatarSpacingRight--feed;
+        margin-right: $activityAvatarSpacingRight--feed;
         @media screen and (max-width: $max-mobile) {
-          padding-right: $activityAvatarSpacingRight--feed--mobile;
+          margin-right: $activityAvatarSpacingRight--feed--mobile;
         }
       }
     }

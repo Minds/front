@@ -178,12 +178,8 @@ h1 {
         display: inline-flex;
         flex-direction: row;
         align-items: center;
-        padding: 0 40px;
+        padding: 0 $spacing4;
         height: 100%;
-
-        .m-topbar--isActivityV2 & {
-          padding: 0 $spacing4;
-        }
 
         @media screen and (max-width: $layoutMin3ColWidth) {
           padding: 0 $spacing4;

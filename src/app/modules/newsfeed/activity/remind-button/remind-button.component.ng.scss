@@ -2,6 +2,9 @@
 
 :host {
   position: relative;
+  .m-dropdown--v2 {
+    z-index: 4;
+  }
 
   .m-activityRemindButton__icon {
     padding: 0;

@@ -1,87 +1,69 @@
-<ng-container m-clientMeta *ngIf="isV2; else v1">
-  <!-- TODO: add m-clientMeta to activityV2 if v2 flag becomes permanent -->
-  <m-activityV2
-    [entity]="entity$ | async"
-    [canDelete]="service.canDelete$ | async"
-    [displayOptions]="service.displayOptions"
-    [slot]="slot"
-    [canRecordAnalytics]="canRecordAnalytics"
-    (nextBoost)="nextBoost.emit()"
-    (previousBoost)="previousBoost.emit()"
-    (deleted)="delete()"
-  ></m-activityV2>
-</ng-container>
-
-<ng-template #v1>
+<div class="m-activity__wrapper">
   <ng-container m-clientMeta>
-    <m-activity__ownerBlock *ngIf="service.displayOptions.showOwnerBlock">
-      <ng-container class="m-activityOwnerBlock__right">
-        <m-activity__metrics
-          *ngIf="service.displayOptions.showMetrics"
-        ></m-activity__metrics>
-
+    <div class="m-activity__top">
+      <div
+        *ngIf="
+          !service.displayOptions.minimalMode &&
+          !service.displayOptions.isSidebarBoost
+        "
+        class="m-activityTop__avatarColumn m-activity__avatar"
+      >
         <ng-container *ngIf="entity$ | async as entity">
-          <span
-            *ngIf="entity.pinned && service.displayOptions.showPinnedBadge"
-            class="m-activity__flag m-activity__flag--pinned"
-            data-cy="m-activity__pinnedFlag"
-          >
-            <m-icon from="custom" iconId="push_pin" m-tooltip--icon></m-icon>
-            <span>Pinned</span>
-          </span>
-          <span
-            *ngIf="entity.permaweb_id"
-            class="m-activity__flag m-activity__flag--permaweb"
-            data-cy="m-activity__permawebFlag"
-          >
-            <a
-              [href]="
-                'https://viewblock.io/arweave/tx/' +
-                entity.permaweb_id +
-                '?showData'
-              "
-              target="_blank"
-            >
-              <i class="material-icons">vpn_lock</i>
-              <span>Permaweb</span>
-            </a>
-          </span>
+          <div *ngIf="showFlagRow" class="m-activityLeftColumn__spacer"></div>
         </ng-container>
-
-        <m-activity__menu
+        <m-hovercard
+          *ngIf="entity$ | async as entity"
+          [publisher]="entity.ownerObj"
+          [offset]="[0, 15]"
+        >
+          <a [routerLink]="['/', entity.ownerObj.username]">
+            <img [src]="avatarUrl" class="m-border" />
+          </a>
+        </m-hovercard>
+      </div>
+      <div class="m-activityTop__mainColumn" *ngIf="entity$ | async as entity">
+        <div class="m-activity__flagRow" *ngIf="showFlagRow">
+          <m-activity__flag></m-activity__flag>
+        </div>
+        <m-activity__ownerBlock
+          *ngIf="service.displayOptions.showOwnerBlock"
           (deleted)="delete()"
-          *ngIf="
-            service.displayOptions.showPostMenu && (service.isLoggedIn$ | async)
-          "
-        ></m-activity__menu>
-      </ng-container>
-    </m-activity__ownerBlock>
-    <m-activity__content
-      *ngIf="service.shouldShowContent$ | async"
-    ></m-activity__content>
-    <m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
-    </m-activity__nsfwConsent>
+        >
+        </m-activity__ownerBlock>
+        <m-activity__content
+          *ngIf="service.shouldShowContent$ | async"
+        ></m-activity__content>
+        <m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
+        </m-activity__nsfwConsent>
+      </div>
+    </div>
 
     <m-activity__toolbar
       *ngIf="service.displayOptions.showToolbar"
     ></m-activity__toolbar>
 
-    <m-activity__minimalMetrics
+    <m-activity__supermindReplyLink
       *ngIf="
-        service.displayOptions.minimalMode && service.displayOptions.showMetrics
+        (service.isSupermindRequestWithReply$ | async) &&
+        service.displayOptions.isFeed &&
+        !service.displayOptions.minimalMode &&
+        !service.displayOptions.sidebarMode &&
+        !service.displayOptions.isModal &&
+        !service.displayOptions.boostRotatorMode
       "
-    ></m-activity__minimalMetrics>
+    ></m-activity__supermindReplyLink>
 
     <ng-container *mIfBrowser>
-      <m-comments__entityOutlet
+      <m-comments__entityOutletV2
         *ngIf="service.displayOptions.showComments"
         [entity]="service.entity$ | async"
         [canDelete]="canDelete$ | async"
-        [showOnlyPoster]="service.displayOptions.showOnlyCommentsInput"
+        [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
+        [hideToggle]="service.isSupermindRequestWithReply$ | async"
         [fixedHeight]="service.displayOptions.fixedHeight"
         (onHeightChange)="onCommentsHeightChange($event)"
       >
-      </m-comments__entityOutlet>
+      </m-comments__entityOutletV2>
     </ng-container>
   </ng-container>
-</ng-template>
+</div>

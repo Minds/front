@@ -1,20 +1,16 @@
 import { Injectable, Injector } from '@angular/core';
-import { ActivityEntity } from '../activity.service';
-import { ActivityModalComponent } from './modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
-import { ActivityV2ModalComponent } from '../../activity-v2/modal/modal.component';
-import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
+import { ActivityModalComponent } from './modal.component';
 import {
   AnalyticsService,
   ContextualizableEntity,
 } from '../../../../services/analytics';
+import { ActivityEntity } from '../../activity/activity.service';
 
-// TODO: this will need to move to activity-v2 when ready
 @Injectable()
 export class ActivityModalCreatorService {
   constructor(
     private modalService: ModalService,
-    private activityV2Experiment: ActivityV2ExperimentService,
     private analytics: AnalyticsService
   ) {}
 
@@ -30,10 +26,6 @@ export class ActivityModalCreatorService {
     if (entity.type === 'comment') {
       entity.entity_guid = (entity as any).attachment_guid;
     }
-
-    const modalComp = this.activityV2Experiment.isActive()
-      ? ActivityV2ModalComponent
-      : ActivityModalComponent;
 
     let opts = {
       modalDialogClass: 'modal-fullwidth',
@@ -51,7 +43,7 @@ export class ActivityModalCreatorService {
       this.trackActionEvent(entity as ContextualizableEntity);
     }
 
-    this.modalService.present(modalComp, opts);
+    this.modalService.present(ActivityModalComponent, opts);
   }
 
   /**

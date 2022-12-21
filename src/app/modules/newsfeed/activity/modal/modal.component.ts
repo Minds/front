@@ -18,7 +18,7 @@ import {
   ActivityService,
   ActivityEntity,
   ACTIVITY_SHORT_STATUS_MAX_LENGTH,
-} from '../activity.service';
+} from '../../activity/activity.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -39,6 +39,7 @@ export type MediaModalParams = {
   entity: any;
   activeMultiImageIndex: number;
 };
+
 // Constants of dimensions calculations
 export const ACTIVITY_MODAL_MIN_STAGE_HEIGHT = 520;
 export const ACTIVITY_MODAL_MIN_STAGE_WIDTH = 660;
@@ -68,10 +69,9 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
 })
 export class ActivityModalComponent implements OnInit, OnDestroy {
   entity: any;
-  entitySubscription: Subscription;
-  routerSubscription: Subscription;
-  fullscreenSubscription: Subscription;
-  canonicalUrlSubscription: Subscription;
+  isMultiImage: boolean = false;
+
+  subscriptions: Subscription[];
 
   // Used for backdrop click detection hack
   isOpen: boolean = false;
@@ -87,8 +87,15 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   isContentReady = false;
   modalHeight: number;
 
-  @ViewChild('commentsScroll')
-  commentsScroll;
+  /**
+   * Multi-image posts
+   */
+  activeMultiImageIndex: number;
+
+  isQuote: boolean = false;
+
+  @ViewChild('scrollableArea')
+  scrollableArea;
 
   constructor(
     @Self() public activityService: ActivityService,
@@ -115,8 +122,9 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
     this.modalHeight = window.innerHeight - ACTIVITY_MODAL_PADDING;
-    this.entitySubscription = this.activityService.entity$.subscribe(
-      (entity: ActivityEntity) => {
+
+    this.subscriptions = [
+      this.activityService.entity$.subscribe((entity: ActivityEntity) => {
         if (!entity) {
           return;
         }
@@ -131,11 +139,29 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         // Re-display content component
         this.isContentReady = true;
         this.cd.detectChanges();
-      }
+      }),
+    ];
+
+    this.subscriptions.push(
+      this.activityService.activeMultiImageIndex$.subscribe(i => {
+        this.activeMultiImageIndex = i;
+      })
     );
 
-    this.canonicalUrlSubscription = this.activityService.canonicalUrl$.subscribe(
-      canonicalUrl => {
+    this.subscriptions.push(
+      this.activityService.isQuote$.subscribe(is => {
+        this.isQuote = is;
+      })
+    );
+
+    this.subscriptions.push(
+      this.activityService.isMultiImage$.subscribe(is => {
+        this.isMultiImage = is;
+      })
+    );
+
+    this.subscriptions.push(
+      this.activityService.canonicalUrl$.subscribe(canonicalUrl => {
         if (!this.entity) return;
         /**
          * Record pageviews
@@ -158,25 +184,29 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
          * (but don't actually redirect)
          */
         this.location.replaceState(canonicalUrl);
-      }
+      })
     );
 
     // When user clicks a link from inside the modal
-    this.routerSubscription = this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        if (!this.navigatedAway) {
-          this.navigatedAway = true;
+    this.subscriptions.push(
+      this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+          if (!this.navigatedAway) {
+            this.navigatedAway = true;
 
-          // Fix browser history so back button doesn't go to media page
-          this.service.returnToSourceUrl();
+            // Fix browser history so back button doesn't go to media page
+            this.service.returnToSourceUrl();
 
-          // Go to the intended destination
-          this.router.navigate([event.url]);
+            // Go to the intended destination. We use `navigateByUrl` rather than `navigate`
+            // because the router event CAN pass through a URL with a query string, which
+            // `navigate` will escape.
+            this.router.navigateByUrl(event.url);
 
-          this.service.dismiss();
+            this.service.dismiss();
+          }
         }
-      }
-    });
+      })
+    );
   }
 
   /////////////////////////////////////////////////////////////////
@@ -220,21 +250,16 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     this.service.isFullscreen$.next(isFullscreen());
   }
 
+  /////////////////////////////////////////////////////////////////
+  // MODAL DISMISSAL
+  /////////////////////////////////////////////////////////////////
+  clickedModal($event) {
+    $event.stopPropagation();
+  }
+
   ngOnDestroy() {
-    if (this.entitySubscription) {
-      this.entitySubscription.unsubscribe();
-    }
-
-    if (this.canonicalUrlSubscription) {
-      this.canonicalUrlSubscription.unsubscribe();
-    }
-
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
-
-    if (this.fullscreenSubscription) {
-      this.fullscreenSubscription.unsubscribe();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
 
     if (this.tabletOverlayTimeout) {
@@ -288,10 +313,9 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   get showContentMessageOnRight(): boolean {
     return (
-      (this.entity.content_type === 'image' ||
-        this.entity.content_type === 'video' ||
-        this.entity.content_type === 'quote') &&
-      (this.entity.title || this.entity.message)
+      this.entity.content_type === 'image' ||
+      this.entity.content_type === 'video' ||
+      (this.isMultiImage && this.isQuote)
     );
   }
 
@@ -304,12 +328,8 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     );
   }
 
-  get isQuote(): boolean {
-    return this.entity.activity_type === 'quote';
-  }
-
   /**
-   * When comments height changes we want to move keep scroll position
+   * when comments height changes we want to move keep scroll position
    */
   onCommentsHeightChange({
     newHeight,
@@ -318,8 +338,8 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     newHeight: number;
     oldHeight: number;
   }) {
-    if (this.commentsScroll?.nativeElement) {
-      this.commentsScroll.nativeElement.scrollTop += newHeight - oldHeight;
+    if (this.scrollableArea?.nativeElement) {
+      this.scrollableArea.nativeElement.scrollTop += newHeight - oldHeight;
     }
   }
 
@@ -330,15 +350,21 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
     this.service.setEntity(params.entity);
 
+    this.activityService.activeMultiImageIndex$.next(
+      params.activeMultiImageIndex
+    );
+
     this.activityService.setDisplayOptions({
       showOnlyCommentsInput: false,
       showInteractions: true,
       isModal: true,
       fixedHeight: false,
       autoplayVideo: true,
+      permalinkBelowContent: true,
     });
 
     // Prepare pager
     this.relatedContent.setBaseEntity(params.entity);
+    this.relatedContent.setParent('activityModal');
   }
 }
