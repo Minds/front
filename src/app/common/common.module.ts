@@ -176,6 +176,7 @@ import { SubscribeButton } from './components/subscribe-button-v1/subscribe';
 import { MindsBanner } from './components/banner/banner';
 import { SeeLatestButtonComponent } from './components/see-latest-button/see-latest-button.component';
 import { SupermindBadgeComponent } from './components/supermind-badge/supermind-badge.component';
+import { DynamicBoostExperimentService } from '../modules/experiments/sub-services/dynamic-boost-experiment.service';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -368,10 +369,13 @@ const routes: Routes = [
       provide: FeaturedContentService,
       useFactory: (
         boostedContentService: FeedsService,
-        experimentsService: ExperimentsService
+        dynamicBoostExperiment: DynamicBoostExperimentService
       ): FeaturedContentService =>
-        new FeaturedContentService(boostedContentService, experimentsService),
-      deps: [FeedsService, ExperimentsService],
+        new FeaturedContentService(
+          boostedContentService,
+          dynamicBoostExperiment
+        ),
+      deps: [FeedsService, DynamicBoostExperimentService],
     },
     MediaProxyService,
     SidebarNavigationService,

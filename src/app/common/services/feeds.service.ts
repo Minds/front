@@ -336,6 +336,8 @@ export class FeedsService implements OnDestroy {
           response.entities = response.activity;
         } else if (!response.entities && response.users) {
           response.entities = response.users;
+        } else if (!response.entities && response.boosts) {
+          response.entities = response.boosts;
         }
 
         if (response.entities?.length) {
