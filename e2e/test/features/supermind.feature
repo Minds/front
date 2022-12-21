@@ -111,18 +111,18 @@ Feature: supermind
     And I click the supermind creator save button
     Then I do not see the monetize icon on the composer toolbar
 
-  Scenario: creating a supermind from a channel page
+  Scenario: creating a supermind from someone elses channel page
     Given I am logged in
     And I am on the 'minds' channel page
     When I click on the channel supermind button
     Then I should see prefilled supermind details in the composer
 
-  Scenario: creating a supermind from an activity post
+  Scenario: creating a supermind from my activity post
     Given I am logged in
     And I am on the newsfeed
     And I have created a new post via the newsfeed
     When I click the activity post supermind icon on the toolbar
-    Then I should see prefilled supermind details in the composer
+    Then I should see prefilled supermind details excluding my username as target user in the composer
 
   Scenario: can not make a supermind if I do not confirm
     Given I am logged in
