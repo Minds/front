@@ -35,7 +35,7 @@ export interface OptType {
           <m-button
             class="m-captcha__submitButton"
             (onAction)="onCaptchaSubmit()"
-            data-cy="data-minds-captcha-modal-submit"
+            data-ref="data-minds-captcha-modal-submit"
           >
             Submit
           </m-button>

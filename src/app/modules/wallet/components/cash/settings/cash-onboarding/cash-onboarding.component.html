@@ -45,7 +45,7 @@
                 id="country"
                 name="country"
                 class="form-control"
-                data-minds="country"
+                data-ref="m-walletCashOnboarding__input--country"
                 [allowed]="allowedCountries"
                 [country]="country.value"
                 (countryChange)="countryChange($event)"
@@ -72,7 +72,7 @@
                   name="firstName"
                   formControlName="firstName"
                   class="form-control fieldPairInput"
-                  data-minds="firstName"
+                  data-ref="m-walletCashOnboarding__input--firstName"
                 />
               </div>
             </div>
@@ -92,7 +92,7 @@
                   name="lastName"
                   formControlName="lastName"
                   class="form-control fieldPairInput"
-                  data-minds="lastName"
+                  data-ref="m-walletCashOnboarding__input--lastName"
                 />
               </div>
             </div>
@@ -130,7 +130,7 @@
                 name="phoneNumber"
                 formControlName="phoneNumber"
                 class="form-control"
-                data-minds="phoneNumber"
+                data-ref="m-walletCashOnboarding__input--phoneNumber"
                 initCountryCode="US"
                 [allowedCountries]="allowedCountries"
               >

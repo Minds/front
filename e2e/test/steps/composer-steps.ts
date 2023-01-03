@@ -43,7 +43,7 @@ namespace ComposerSteps {
     for (const row of tableByHeader) {
       // TODO how do we make sure we're using the correct context (ie. modal or inline?)
       I.attachFile(
-        'm-composer__modal [data-cy=upload-button] input[type=file]',
+        'm-composer__modal [data-ref=upload-button] input[type=file]',
         'supporting-files/img/' + row.filename
       );
     }

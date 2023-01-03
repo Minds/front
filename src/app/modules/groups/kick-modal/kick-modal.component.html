@@ -21,7 +21,7 @@
       <m-button
         (onAction)="kick(ban.checked)"
         color="blue"
-        data-cy="data-minds-kick-modal-confirm"
+        data-ref="data-minds-kick-modal-confirm"
       >
         <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
       </m-button>
@@ -42,7 +42,7 @@
       </p>
     </div>
     <div class="minds-modal-dialog-actions">
-      <m-button (onAction)="emitClose()" data-cy="data-minds-kick-modal-okay">
+      <m-button (onAction)="emitClose()" data-ref="data-minds-kick-modal-okay">
         <ng-container i18n="@@GROUPS__PROFILE__FEED__OK_ACTION"
           >Okay</ng-container
         >

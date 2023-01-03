@@ -2,17 +2,17 @@
 
 :host {
   .m-modalV2__header {
-    padding: 40px 40px 20px;
+    padding: $spacing8 $spacing4 $spacing4;
 
     @media screen and (max-width: $max-mobile) {
-      padding: 20px;
+      padding: $spacing4;
     }
   }
 
   .m-modalV2__body {
     min-height: 300px;
 
-    padding: 20px 0;
+    padding: $spacing4 0;
 
     @media screen and (min-width: $max-mobile + 1) {
       min-width: 460px;
@@ -27,10 +27,7 @@
     margin-top: 0;
 
     li {
-      margin-bottom: 20px;
-
       &:not(:nth-of-type(1)) {
-        padding-top: 20px;
         @include m-theme() {
           border-top: 1px solid themed($m-borderColor--primary);
         }
@@ -38,10 +35,10 @@
 
       ::ng-deep m-publisherCard {
         .m-publisherCard {
-          padding: 0 40px;
+          padding: $spacing4;
 
           @media screen and (max-width: $max-mobile) {
-            padding: 0 20px;
+            padding: 0 $spacing4;
           }
 
           @include m-theme() {
@@ -51,7 +48,6 @@
       }
 
       ::ng-deep m-newsfeed__entity m-activity {
-        margin: 0 40px;
         .m-activityContent__quote {
           display: none;
         }

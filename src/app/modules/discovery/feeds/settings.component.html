@@ -9,7 +9,7 @@
     <form class="m-formWrapper" [formGroup]="form">
       <!-- <section
         class="m-discoveryTagSettings__section"
-        data-cy="discovery-settings-section--selected"
+        data-ref="discovery-settings-section--selected"
         *ngIf="(filter$ | async) === 'trending'"
       >
         <h3>Trending Timespan</h3>
@@ -33,7 +33,7 @@
       </section> -->
       <section
         class="m-discoveryTagSettings__section"
-        data-cy="discovery-settings-section--selected"
+        data-ref="discovery-settings-section--selected"
       >
         <h3 i18n="@@DISCOVERY_FEEDS__CONTENT_TYPES">Content Types</h3>
         <div class="m-form__fieldsContainer">
@@ -56,7 +56,7 @@
       </section>
       <section
         class="m-discoveryTagSettings__section"
-        data-cy="discovery-settings-section--selected"
+        data-ref="discovery-settings-section--selected"
       >
         <h3 i18n="@@COMMON__NSFW">NSFW</h3>
         <div class="m-form__fieldsContainer">
@@ -105,7 +105,7 @@
     <m-button
       [saving]="saving$ | async"
       (onAction)="onSave($event)"
-      data-cy="discovery-feeds-settings-save-button"
+      data-ref="discovery-feeds-settings-save-button"
     >
       <ng-container i18n="@@COMMON__SAVE">Save</ng-container>
     </m-button>

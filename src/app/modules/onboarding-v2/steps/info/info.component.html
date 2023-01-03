@@ -1,19 +1,12 @@
 <div class="m-onboarding__controls">
-  <!-- <div class="m-onboarding__control">
-    <m-onboarding__phoneVerification
-      [tooltipAnchor]="tooltipAnchor"
-      [disabled]="phoneInputDisabled"
-      #phoneVerification
-    >
-    </m-onboarding__phoneVerification>
-  </div> -->
-
   <div
     class="m-onboarding__control m-onboardingControl__location"
     style="padding-top: 0;"
   >
     <div class="m-onboardingControl__label">
-      <label data-minds="location" i18n="@@ONBOARDING_INFO__LOCATION"
+      <label
+        data-ref="m-onboarding__input--location"
+        i18n="@@ONBOARDING_INFO__LOCATION"
         >Location</label
       >
 
@@ -31,7 +24,7 @@
     <div class="m-onboarding__input m-onboarding__location">
       <input
         type="text"
-        data-minds="locationInput"
+        data-ref="m-onboarding__input--location"
         [ngModel]="location"
         (ngModelChange)="locationChange($event)"
         (keyup)="findCity(location)"
@@ -58,7 +51,7 @@
 
   <div class="m-onboarding__control m-onboardingControl__dateOfBirth">
     <div class="m-onboardingControl__label">
-      <label data-minds="dateOfBirth" i18n="@@COMMON__DATE_OF_BIRTH"
+      <label data-ref="dateOfBirth" i18n="@@COMMON__DATE_OF_BIRTH"
         >Date of Birth</label
       >
       <span i18n="@@COMMON__OPTIONAL">Optional</span>

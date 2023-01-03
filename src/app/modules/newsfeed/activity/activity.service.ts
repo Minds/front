@@ -28,7 +28,6 @@ export type ActivityDisplayOptions = {
   showOnlyCommentsToggle: boolean;
   showToolbar: boolean;
   showInteractions: boolean;
-  showBoostMenuOptions: boolean;
   showEditedTag: boolean;
   showVisibilityState: boolean;
   showTranslation: boolean;
@@ -373,7 +372,6 @@ export class ActivityService implements OnDestroy {
     showOnlyCommentsToggle: false,
     showToolbar: true,
     showInteractions: false,
-    showBoostMenuOptions: false,
     showEditedTag: false,
     showVisibilityState: false,
     showTranslation: false,
