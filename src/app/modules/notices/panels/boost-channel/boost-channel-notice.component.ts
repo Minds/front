@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
  * Feed notice directing users to boost their channel.
@@ -11,6 +12,7 @@ import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.ser
 })
 export class BoostChannelNoticeComponent {
   constructor(
+    private feedNotice: FeedNoticeService,
     private boostModal: BoostModalLazyService,
     private session: Session
   ) {}
@@ -31,5 +33,14 @@ export class BoostChannelNoticeComponent {
    */
   public onSecondaryOptionClick($event: MouseEvent): void {
     window.open('/boost', '_blank');
+  }
+
+  /**
+   * Dismiss notice.
+   * @param { MouseEvent } $event - click event.
+   * @return { void }
+   */
+  public onDismissClick($event: MouseEvent): void {
+    this.feedNotice.dismiss('build-your-algorithm');
   }
 }

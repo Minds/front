@@ -1,4 +1,8 @@
-<m-feedNotice icon="trending_up" [dismissible]="false">
+<m-feedNotice
+  icon="trending_up"
+  dataRefId="boost-channel"
+  (dismissClick)="onDismissClick($event)"
+>
   <span
     class="m-feedNotice__title"
     i18n="@@FEED_NOTICE__BOOST_CHANNEL__EXPAND_YOUR_REACH"
