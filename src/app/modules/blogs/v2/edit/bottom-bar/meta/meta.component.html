@@ -4,7 +4,7 @@
       <label i18n="@@BLOGS__EDIT__URL_SLUG" class="m-blogMeta__label"
         >URL Slug</label
       >
-      <span data-cy="data-minds-meta-example">
+      <span data-ref="data-minds-meta-example">
         <em
           >{{ site.baseUrl
           }}{{ session.getLoggedInUser().username }}/blog/<strong>{{
@@ -20,7 +20,7 @@
       [ngModel]="editService.urlSlug$ | async"
       (ngModelChange)="editService.urlSlug$.next($event)"
       maxlength="64"
-      data-cy="data-minds-meta-slug-input"
+      data-ref="data-minds-meta-slug-input"
     />
   </div>
 
@@ -36,7 +36,7 @@
       [ngModel]="editService.metaTitle$ | async"
       (ngModelChange)="editService.metaTitle$.next($event)"
       maxlength="64"
-      data-cy="data-minds-meta-title-input"
+      data-ref="data-minds-meta-title-input"
     />
   </div>
 
@@ -52,7 +52,7 @@
       [ngModel]="editService.author$ | async"
       (ngModelChange)="editService.author$.next($event)"
       maxlength="64"
-      data-cy="data-minds-meta-author-input"
+      data-ref="data-minds-meta-author-input"
     />
   </div>
 
@@ -67,7 +67,7 @@
       [ngModel]="editService.metaDescription$ | async"
       (ngModelChange)="editService.metaDescription$.next($event)"
       maxlength="256"
-      data-cy="data-minds-meta-description-textarea"
+      data-ref="data-minds-meta-description-textarea"
     ></textarea>
   </div>
 </div>

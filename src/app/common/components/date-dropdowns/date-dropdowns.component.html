@@ -1,7 +1,7 @@
 <div class="m-dateDropdowns__selectWrapper">
   <select
     class="m-dateDropdowns__select"
-    data-minds="yearDropdown"
+    data-ref="m-dateDropdowns__select--year"
     [ngModel]="selectedYear"
     (ngModelChange)="selectYear($event)"
     [disabled]="disabled"
@@ -13,7 +13,7 @@
 <div class="m-dateDropdowns__selectWrapper">
   <select
     class="m-dateDropdowns__select"
-    data-minds="monthDropdown"
+    data-ref="m-dateDropdowns__select--month"
     [ngModel]="selectedMonth"
     (ngModelChange)="selectMonth($event)"
     [disabled]="disabled"
@@ -25,7 +25,7 @@
 <div class="m-dateDropdowns__selectWrapper">
   <select
     class="m-dateDropdowns__select"
-    data-minds="dayDropdown"
+    data-ref="m-dateDropdowns__select--day"
     [ngModel]="selectedDay"
     (ngModelChange)="selectDay($event)"
     [disabled]="disabled"

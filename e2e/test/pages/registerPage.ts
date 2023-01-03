@@ -11,7 +11,7 @@ class RegisterPage {
   private readonly passwordSelector: string = '#password';
   private readonly password2Selector: string = '#password2';
   private readonly acceptTosSelector: string =
-    '[data-cy=minds-accept-tos-input] .m-formInputCheckbox__custom';
+    '[data-ref=minds-accept-tos-input] .m-formInputCheckbox__custom';
   private readonly selectButtonSelector: string = '[type="submit"]';
 
   /**

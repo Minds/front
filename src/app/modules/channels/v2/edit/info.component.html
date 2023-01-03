@@ -11,7 +11,7 @@
       [maxlength]="maxNameLength"
       [ngModel]="service.displayName$ | async"
       (ngModelChange)="service.displayName$.next($event)"
-      data-cy="data-minds-channel-display-name"
+      data-ref="data-minds-channel-display-name"
     />
   </div>
 </div>
@@ -25,7 +25,7 @@
     <m-channel__locationTypeahead
       [location]="service.location$ | async"
       (locationChange)="onLocation($event)"
-      data-cy="data-minds-channel-location"
+      data-ref="data-minds-channel-location"
     ></m-channel__locationTypeahead>
   </div>
 </div>
@@ -53,7 +53,7 @@
           name="publicDob"
           [ngModel]="service.publicDob$ | async"
           (ngModelChange)="service.publicDob$.next($event)"
-          data-cy="data-minds-channel-public-dob-checkbox"
+          data-ref="data-minds-channel-public-dob-checkbox"
         />
 
         <span class="m-form__customInput__checkbox"></span>

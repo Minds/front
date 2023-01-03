@@ -22,7 +22,7 @@
     [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (onSelect)="onAttachmentSelect($event)"
     accept="image/*,video/*,video/mp4,video/x-m4v"
-    data-cy="upload-button"
+    data-ref="upload-button"
     *ngIf="fileUploadVisible$ | async"
     #fileUploadComponent
   >
@@ -42,7 +42,7 @@
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
     [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (click)="onNsfwClick($event)"
-    data-cy="nsfw-button"
+    data-ref="nsfw-button"
   >
     <m-icon class="m-composerToolbarItem__icon" iconId="explicit"></m-icon>
     <span
@@ -64,7 +64,7 @@
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
     [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (click)="onMonetizeClick($event)"
-    data-cy="monetize-button"
+    data-ref="monetize-button"
   >
     <i
       class="m-composerToolbarItem__icon m-composerToolbarItem__icon--monetize material-icons"
@@ -86,7 +86,7 @@
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
     [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (click)="onTagsClick($event)"
-    data-cy="tags-button"
+    data-ref="tags-button"
   >
     <m-icon
       class="m-composerToolbarItem__icon"
@@ -138,7 +138,7 @@
     (onAction)="onPost($event)"
     [size]="(isCompactMode$ | async) ? 'xsmall' : 'small'"
     [color]="(isCompactMode$ | async) ? 'grey' : 'blue'"
-    data-cy="post-button"
+    data-ref="post-button"
   >
     <span
       *ngIf="!(isEditing$ | async); else isEditingButtonText"
