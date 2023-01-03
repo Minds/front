@@ -30,10 +30,6 @@ export default {
       description: 'The min value of the input',
       control: 'number',
     },
-    min: {
-      description: 'The default value',
-      control: 'number',
-    },
   },
   args: {
     max: null,
