@@ -1,7 +1,7 @@
 <m-feedNotice
   icon="trending_up"
   dataRefId="boost-channel"
-  (dismissClick)="onDismissClick($event)"
+  (dismissClick)="onDismissClick()"
 >
   <span
     class="m-feedNotice__title"
@@ -20,7 +20,7 @@
     color="blue"
     solid="true"
     size="small"
-    (onAction)="onPrimaryOptionClick($event)"
+    (onAction)="onPrimaryOptionClick()"
     data-ref="feed-notice-boost-channel-primary-click"
   >
     <ng-container i18n="@@FEED_NOTICE__BOOST_CHANNEL__BOOST_NOW">
@@ -30,7 +30,7 @@
   <m-button
     class="m-feedNotice__buttonSecondary"
     size="small"
-    (onAction)="onSecondaryOptionClick($event)"
+    (onAction)="onSecondaryOptionClick()"
     data-ref="feed-notice-boost-channel-secondary-click"
   >
     <ng-container i18n="@@FEED_NOTICE__BOOST_CHANNEL__LEARN_MORE">

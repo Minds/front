@@ -19,28 +19,25 @@ export class BoostChannelNoticeComponent {
 
   /**
    * Called on primary option click. Opens boost modal.
-   * @param { MouseEvent } $event - click event.
    * @return { void }
    */
-  public onPrimaryOptionClick($event: MouseEvent): void {
+  public onPrimaryOptionClick(): void {
     this.boostModal.open(this.session.getLoggedInUser());
   }
 
   /**
    * Called on secondary option click. Opens boost marketing page in a new tab.
-   * @param { MouseEvent } $event - click event.
    * @return { void }
    */
-  public onSecondaryOptionClick($event: MouseEvent): void {
+  public onSecondaryOptionClick(): void {
     window.open('/boost', '_blank');
   }
 
   /**
    * Dismiss notice.
-   * @param { MouseEvent } $event - click event.
    * @return { void }
    */
-  public onDismissClick($event: MouseEvent): void {
-    this.feedNotice.dismiss('build-your-algorithm');
+  public onDismissClick(): void {
+    this.feedNotice.dismiss('boost-channel');
   }
 }
