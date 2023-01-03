@@ -210,6 +210,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.showFlagRow =
         notInBoostRotator && (boosted || reminded || isSupermindOffer);
+
+      this.cd.markForCheck();
+      this.cd.detectChanges();
     });
   }
 
