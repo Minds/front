@@ -13,6 +13,7 @@ import { ToasterService } from '../../services/toaster.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { SubscriptionService } from '../../services/subscription.service';
+import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 
 @Injectable()
 export class PostMenuService {
@@ -41,7 +42,8 @@ export class PostMenuService {
     private dialogService: DialogService,
     protected toasterService: ToasterService,
     public embedService: EmbedServiceV2,
-    public subscriptionService: SubscriptionService
+    public subscriptionService: SubscriptionService,
+    private boostModal: BoostModalLazyService
   ) {}
 
   setEntity(entity): PostMenuService {
@@ -341,6 +343,15 @@ export class PostMenuService {
         entity: this.entity,
       },
     }).result;
+  }
+
+  async openBoostModal(): Promise<void> {
+    try {
+      await this.boostModal.open(this.entity);
+      return;
+    } catch (e) {
+      // do nothing.
+    }
   }
 
   /**
