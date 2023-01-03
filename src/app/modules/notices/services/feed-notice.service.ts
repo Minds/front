@@ -3,7 +3,6 @@ import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { FeedNotice, NoticeKey, NoticeLocation } from '../feed-notice.types';
 import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 
@@ -42,7 +41,6 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
 
   constructor(
     private api: ApiService,
-    private activityV2Experiment: ActivityV2ExperimentService,
     private dismissalService: FeedNoticeDismissalService
   ) {
     super();
@@ -153,20 +151,12 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Whether full width notices should be shown. (if activity v2 experiment is active).
-   * @returns { boolean } - true if full width notices should be shown.
-   */
-  public shouldBeFullWidth(): boolean {
-    return this.activityV2Experiment.isActive();
-  }
-
-  /**
    * Whether the outlet should be shown with styling to stick to top of feed.
    * @param { FeedNotice } - notice to check.
    * @returns { boolean } true if sticky top styling should be applied.
    */
   public shouldBeStickyTop(notice: FeedNotice): boolean {
-    return this.shouldBeFullWidth() && notice.key === 'verify-email';
+    return notice.key === 'verify-email';
   }
 
   /**

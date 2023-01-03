@@ -1,14 +1,14 @@
 <a
   (click)="onClick($event)"
   [ngClass]="{ selected: has() }"
-  data-cy="data-minds-thumbs-up-button"
+  data-ref="data-minds-thumbs-up-button"
 >
   <i class="material-icons" [class.inProgress]="inProgress">thumb_up</i>
   <span
     class="minds-counter"
     *ngIf="object['thumbs:up:count'] > 0 && !iconOnly"
     [@counterChange]="object['thumbs:up:count']"
-    data-cy="data-minds-thumbs-up-counter"
+    data-ref="data-minds-thumbs-up-counter"
     >{{ object['thumbs:up:count'] | number }}</span
   >
 </a>

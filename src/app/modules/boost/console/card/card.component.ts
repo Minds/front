@@ -1,6 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
-
+import { Component, HostBinding, Input } from '@angular/core';
 import { BoostService } from '../../boost.service';
 import { Reason, rejectionReasons } from '../../rejection-reasons';
 
@@ -10,28 +8,18 @@ import { Reason, rejectionReasons } from '../../rejection-reasons';
   selector: 'm-boost-console-card',
   templateUrl: 'card.component.html',
 })
-export class BoostConsoleCard implements OnInit {
+export class BoostConsoleCard {
   boost: any;
   type: string;
 
   reasons: Array<Reason> = rejectionReasons;
 
-  @HostBinding('class.m-boostConsoleCard--activityV2')
-  activityV2Feature: boolean;
-
-  constructor(
-    public service: BoostService,
-    private activityV2Experiment: ActivityV2ExperimentService
-  ) {}
+  constructor(public service: BoostService) {}
 
   @Input('boost')
   set _boost(boost: any) {
     this.boost = boost;
     this.type = this.service.getBoostType(this.boost) || '';
-  }
-
-  ngOnInit(): void {
-    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   accept() {

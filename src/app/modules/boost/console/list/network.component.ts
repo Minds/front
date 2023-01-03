@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BoostConsoleType } from '../console.component';
 
 import { BoostService } from '../../boost.service';
-import { ActivityV2ExperimentService } from '../../../experiments/sub-services/activity-v2-experiment.service';
 
 /**
  * Boosts made on the Minds network (aka NOT p2p boost offers). Used in the history section of the boost console.
@@ -27,13 +26,10 @@ export class BoostConsoleNetworkListComponent {
 
   private remote: string = '';
 
-  activityV2Feature: boolean = false;
-
   constructor(
     public service: BoostService,
     private router: Router,
-    private route: ActivatedRoute,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private route: ActivatedRoute
   ) {
     this.route.params.subscribe(params => {
       this.remote = params['remote'] || '';
@@ -50,7 +46,6 @@ export class BoostConsoleNetworkListComponent {
 
   ngOnInit() {
     this.load(true);
-    this.activityV2Feature = this.activityV2Experiment.isActive();
     this.initialized = true;
   }
 

@@ -67,7 +67,7 @@ describe('ContentSettingsComponent', () => {
 
     expect(
       fixture.debugElement.query(
-        By.css(`[data-cy=content-settings-modal-tab-compass]`)
+        By.css(`[data-ref=content-settings-modal-tab-compass]`)
       )
     ).toBeTruthy();
   });
@@ -79,7 +79,7 @@ describe('ContentSettingsComponent', () => {
 
     expect(
       fixture.debugElement.query(
-        By.css(`[data-cy=content-settings-modal-tab-compass]`)
+        By.css(`[data-ref=content-settings-modal-tab-compass]`)
       )
     ).toBeFalsy();
   });

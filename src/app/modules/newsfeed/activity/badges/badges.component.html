@@ -1,0 +1,54 @@
+<ng-container *ngIf="entity$ | async as entity">
+  <!------------------------->
+  <!-- PINNED  -------------->
+  <!------------------------->
+  <span
+    *ngIf="entity.pinned && service.displayOptions.showPinnedBadge"
+    class="m-activity__badge"
+    data-ref="m-activity__pinnedFlag"
+    title="Pinned"
+  >
+    <m-icon iconId="push_pin" [sizeFactor]="1" rem="true"></m-icon>
+  </span>
+  <!------------------------->
+  <!-- UNLISTED  ------------>
+  <!------------------------->
+  <span
+    *ngIf="
+      service.displayOptions.showVisibilityState &&
+      (service.isUnlisted$ | async)
+    "
+    class="m-activity__badge"
+    data-ref="m-activity__unlistedFlag"
+    title="Unlisted"
+    i18n-title="@@OWNER_BLOCK__UNLISTED"
+  >
+    <m-icon iconId="visibility_off" [sizeFactor]="1" rem="true"></m-icon>
+  </span>
+  <!------------------------->
+  <!-- PERMAWEB  ------------>
+  <!------------------------->
+  <span
+    *ngIf="entity.permaweb_id"
+    class="m-activity__badge"
+    data-ref="m-activity__permawebFlag"
+    title="Permaweb"
+  >
+    <a
+      [href]="
+        'https://viewblock.io/arweave/tx/' + entity.permaweb_id + '?showData'
+      "
+      target="_blank"
+    >
+      <m-icon iconId="vpn_lock" [sizeFactor]="1" rem="true"></m-icon>
+    </a>
+  </span>
+  <!------------------------->
+  <!-- PAYWALL / MINDS+ ----->
+  <!------------------------->
+  <m-paywallBadge
+    [entity]="entity"
+    [topRightPosition]="false"
+    [showTierName]="false"
+  ></m-paywallBadge>
+</ng-container>

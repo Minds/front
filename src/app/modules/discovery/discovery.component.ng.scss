@@ -3,25 +3,24 @@
 $layoutMax2ColWidth: '1040px';
 
 :host {
-  &.m-discovery--activityV2 {
-    .m-pageLayout__container {
-      @media screen and (max-width: $layoutMax2ColWidth) {
-        padding: 0 !important;
-      }
+  .m-pageLayout__container {
+    @media screen and (max-width: $layoutMax2ColWidth) {
+      padding: 0 !important;
     }
-    .m-pageLayout__pane--main {
-      @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
-        @include borderRight;
-      }
+  }
+  .m-pageLayout__pane--main {
+    @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
+      @include borderRight;
     }
+  }
 
-    ::ng-deep {
+  // The border is applied to the feed item,
+  // so we can remove it from the activity
+  ::ng-deep {
+    m-discovery__feedItem {
       m-activity {
-        &:first-child {
-          m-activityV2 {
-            border-top: none !important;
-          }
-        }
+        border-top: none !important;
+        border-radius: 0;
       }
     }
   }

@@ -1,87 +1,112 @@
 @import 'defaults.scss';
-@import '../activity.component.scss';
 
 :host {
-  .m-activity__ownerBlock {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: $activity-padding-lr;
-    padding-right: $activity-padding-lr * 0.5;
-    box-sizing: border-box;
+  display: block;
 
-    &.m-activity__ownerBlock--minimalMode {
-      padding-left: $activity-padding-lr--minimalMode;
-      padding-right: $activity-padding-lr--minimalMode * 0.5;
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
 
-      .m-activityOwnerBlock__avatar {
+  &.m-activity__ownerBlock--minimalMode {
+    padding-left: $spacing4;
+    padding-right: $spacing2;
+    padding-top: $spacing2;
+    padding-bottom: $spacing2;
+
+    .m-activityOwnerBlock__avatar {
+      ::ng-deep m-hovercard {
         img {
           height: 35px;
           width: 35px;
-          @include m-theme() {
-            border: none;
-          }
+          @include border;
         }
-        .m-activityOwnerBlock__remindIcon--minimalMode {
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          border-radius: 50%;
-          height: 17px;
-          width: 17px;
+      }
+      .m-activityOwnerBlock__remindIcon--minimalMode {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        border-radius: 50%;
+        height: 17px;
+        width: 17px;
+        @include m-theme() {
+          background-color: themed($m-bgColor--contrast);
+        }
+        i {
+          font-weight: 700;
+          font-size: 11px;
           @include m-theme() {
-            background-color: themed($m-bgColor--contrast);
-          }
-          i {
-            font-weight: 700;
-            font-size: 11px;
-            @include m-theme() {
-              color: themed($m-blue);
-            }
+            color: themed($m-blue);
           }
         }
       }
+    }
+
+    .m-activityOwnerBlock__displayName,
+    .m-activityOwnerBlock__groupName {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    &.m-activity__ownerBlock--quoteOrRemind {
+      // Use a bit more room when there is a remind icon overlaying avatar
       .m-activityOwnerBlock__displayName,
       .m-activityOwnerBlock__groupName {
-        margin-left: 6px;
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
-      }
-      strong {
-        font-size: 16px;
-        font-weight: 400;
-      }
-      .m-activityOwnerBlock__permalink,
-      .m-activityOwnerBlock__right {
-        display: none;
+        margin-left: $spacing2;
       }
     }
   }
 
-  .m-activityOwnerBlock__avatar {
-    align-self: center;
-    padding-right: $minds-padding;
-    position: relative;
-    img {
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
+  // *********************************
+  // ** MODAL **
+  // *********************************
+  m-activity__modal & {
+    .m-activity__ownerBlock {
+      padding: 20px $activitySpacing--modal 0;
+    }
+
+    a.m-activityOwnerBlock__username,
+    a.m-activityOwnerBlock__groupName {
+      margin-left: 0;
+    }
+  }
+  // *********************************
+  // ** SIDEBAR BOOST **
+  // *********************************
+  .m-activity--isSidebarBoost & {
+    .m-activity__ownerBlock {
+      padding: $activitySpacing--minimalMode;
+    }
+    .m-activityOwnerBlockPermalink__text {
+      padding: 0;
+    }
+
+    .m-activityOwnerBlock__dot {
+      display: none;
     }
   }
 
-  .m-activityOwnerBlock__body {
-    flex: 1;
-    align-self: center;
-    overflow: hidden;
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
 
-    > a {
+  .m-activity__ownerBlock {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    width: 100%;
+    padding-bottom: $spacing1;
+    box-sizing: border-box;
+
+    a {
       text-decoration: none;
       &:hover {
         text-decoration: underline;
@@ -89,31 +114,27 @@
     }
   }
 
-  .m-activityOwnerBlock__right {
-    display: inline-flex;
-    align-items: center;
-    flex-direction: row;
+  ::ng-deep {
+    .m-activityOwnerBlock__avatar {
+      align-self: center;
+      padding-right: $spacing2;
+      position: relative;
+      img {
+        border-radius: 50%;
+        width: $activityAvatarWidth;
+        height: $activityAvatarWidth;
+        object-fit: cover;
+      }
+    }
   }
 
   a.m-activityOwnerBlock__displayName {
-    display: flex;
-    font-size: 16px;
-
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
 
-    strong {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    > * {
-      display: inline-block;
-      vertical-align: middle;
-      max-width: 100%;
-      text-overflow: ellipsis;
+    span {
+      @include body1Bold;
     }
 
     &:hover {
@@ -123,74 +144,83 @@
     }
   }
 
-  .m-activityOwnerBlock__groupName {
-    display: block;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
+  a.m-activityOwnerBlock__username,
+  a.m-activityOwnerBlock__groupName {
+    margin-left: $spacing1;
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+    span {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-activityOwnerBlock__dot {
+    padding: 0 $spacing1;
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  a.m-activityOwnerBlock__groupName {
+    text-decoration: none;
+    &:hover {
+      text-decoration: none !important;
+      span > span {
+        text-decoration: underline;
+      }
+    }
   }
 
   .m-activityOwnerBlock__remindIcon {
     font-size: 18px;
-    margin-right: $minds-margin * 0.5;
     vertical-align: middle;
     @include m-theme() {
       color: themed($m-blue);
     }
   }
 
-  .m-activityOwnerBlock__permalink {
-    .m-activityOwnerBlockPermalink__text {
-      font-size: 14px;
-      line-height: 17px;
-      font-weight: normal;
-
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-
-      .material-icons {
-        //padding-right: 4px;
-        //font-size: 20px;
-        font-size: initial;
-        vertical-align: text-top;
-      }
+  ::ng-deep m-activity__views {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
     }
   }
 
-  .m-activity__remindUsers {
-    padding: 10px $activity-padding-lr;
+  // *********************************
+  // ** FLEX STRUCTURAL CLASSES **
+  // *********************************
+  .m-activityOwnerBlock__spacer {
+    flex: 1;
+  }
 
-    @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--primary);
-    }
+  .m-activityOwnerBlock__column {
+    display: flex;
+    flex-direction: column;
 
-    > * {
-      vertical-align: middle;
+    .m-activityOwnerBlockColumn__displayNameWrapper {
+      display: flex;
+      align-items: center;
     }
+  }
 
-    i {
-      font-size: 18px;
-      @include m-theme() {
-        color: themed($m-blue);
-      }
+  ::ng-deep .m-activityOwnerBlock__truncate {
+    &,
+    & > * {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    span,
-    a {
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 400;
-    }
+  }
 
-    span {
-      margin-left: 10px;
-    }
-    a:hover {
-      text-decoration: underline;
+  ::ng-deep .m-activityOwnerBlock__fixedWidth {
+    white-space: nowrap;
+
+    > div {
+      display: inline-block;
     }
   }
 }

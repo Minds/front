@@ -7,8 +7,8 @@ const storage: Storage = Storage.getInstance();
 class ComposerModalComponent {
   public modalElementTag: string = 'm-composer__modal';
   private textAreaTitleSelector: string = `${this.modalElementTag} .m-composerTextarea__title`;
-  public textAreaSelector: string = `${this.modalElementTag} [data-cy=composer-textarea]`;
-  private postButtonSelector: string = `${this.modalElementTag} [data-cy=post-button]`;
+  public textAreaSelector: string = `${this.modalElementTag} [data-ref=composer-textarea]`;
+  private postButtonSelector: string = `${this.modalElementTag} [data-ref=post-button]`;
   private tabSelector: string = '.m-tabs__tab';
   public supermindTargetInputSelector: string = '[placeholder="@username"]';
   private supermindAutoCompleteNameSelector: string =
@@ -21,14 +21,14 @@ class ComposerModalComponent {
   private supermindSaveButtonSelector: string =
     '[data-ref=supermind-save-button]';
   private supermindBadgeSelector: string = 'm-supermindbadge';
-  private nsfwButtonSelector: string = `${this.modalElementTag} [data-cy=nsfw-button]`;
-  private nsfwSaveButtonSelector: string = '[data-cy=nsfw-save-button]';
-  private meatballMenuSelector: string = `${this.modalElementTag} [data-cy=meatball-menu-trigger]`;
+  private nsfwButtonSelector: string = `${this.modalElementTag} [data-ref=nsfw-button]`;
+  private nsfwSaveButtonSelector: string = '[data-ref=nsfw-save-button]';
+  private meatballMenuSelector: string = `${this.modalElementTag} [data-ref=meatball-menu-trigger]`;
   private postButtonDisabledOverlaySelector: string =
     '.m-composerToolbarAction__disabledOverlay';
   public composerCloseButton: string = '.m-composerPopup__close';
   public fileUploadButtonSelector: string =
-    'm-composer__modal [data-cy=upload-button] input[type=file]';
+    'm-composer__modal [data-ref=upload-button] input[type=file]';
   public supermindReplyConfirmButton: string =
     '[data-ref=data-minds-supermind-reply-confirmation-modal-confirm-button]';
 
@@ -36,16 +36,16 @@ class ComposerModalComponent {
    * Toolbar items
    */
   get nsfwButton(): string {
-    return `${this.modalElementTag} m-composer__toolbar [data-cy=nsfw-button]`;
+    return `${this.modalElementTag} m-composer__toolbar [data-ref=nsfw-button]`;
   }
   get monetizeButton(): string {
-    return `${this.modalElementTag} m-composer__toolbar [data-cy=monetize-button]`;
+    return `${this.modalElementTag} m-composer__toolbar [data-ref=monetize-button]`;
   }
   get supermindButton(): string {
     return `${this.modalElementTag} m-composer__toolbar [data-ref=supermind-create--button]`;
   }
   get postButton(): string {
-    return `${this.modalElementTag} [data-cy=post-button]`;
+    return `${this.modalElementTag} [data-ref=post-button]`;
   }
   /**
    * The wrapper element for the title input
@@ -226,6 +226,20 @@ class ComposerModalComponent {
   }
 
   /**
+   * Check whether supermind target user has or does not have input text
+   * @param { boolean } shouldHave - whether component should have.
+   * @return { void }
+   */
+  public shouldHaveSupermindTargetInputText(text: string): void {
+    const supermindTargetInput = locate(
+      this.supermindTargetInputSelector
+    ).withText(text);
+
+    I.seeElement(supermindTargetInput);
+    return;
+  }
+
+  /**
    * Popup screens
    */
   public getNsfwPopup(): CodeceptJS.Locator {
@@ -253,14 +267,14 @@ class ComposerModalComponent {
     I.seeElement('m-composer .m-composer__trigger');
     I.click('m-composer .m-composer__trigger');
     I.fillField(
-      'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
+      'm-composer__modal > m-composer__base [data-ref="composer-textarea"]',
       postContent
     );
     I.seeElement(
-      'm-composer__modal > m-composer__base [data-cy="post-button"] button'
+      'm-composer__modal > m-composer__base [data-ref="post-button"] button'
     );
     I.click(
-      'm-composer__modal > m-composer__base [data-cy="post-button"] button'
+      'm-composer__modal > m-composer__base [data-ref="post-button"] button'
     );
     I.waitForElement(
       locate('button')

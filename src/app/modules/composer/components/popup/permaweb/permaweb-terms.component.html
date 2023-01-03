@@ -22,7 +22,7 @@
       <input
         type="checkbox"
         [(ngModel)]="checked"
-        data-cy="permaweb-terms-checkbox"
+        data-ref="permaweb-terms-checkbox"
       />
       <label [for]="checked" i18n="@@PERMAWEB_TERMS__I_CONFIRM_MY_UNDERSTANDING"
         >I confirm my understanding</label
@@ -33,7 +33,7 @@
     <m-button
       class="m-composerPopup__save"
       (onAction)="save()"
-      data-cy="permaweb-terms-save-button"
+      data-ref="permaweb-terms-save-button"
       i18n="@@COMPOSER_POPUP__SAVE"
     >
       Save

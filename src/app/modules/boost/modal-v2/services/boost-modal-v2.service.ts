@@ -136,35 +136,27 @@ export class BoostModalV2Service implements OnDestroy {
     this.dailyBudget$,
     this.duration$,
     this.paymentCategory$,
+    this.audience$,
   ]).pipe(
     distinctUntilChanged(),
     // TODO: Play with debounceTime when adding API endpoint to make sure it feels responsive but
     // does not over-emit when sliding budget sliders.
     debounceTime(200),
     switchMap(
-      ([dailyBudget, duration, paymentCategory]: [
+      ([dailyBudget, duration, paymentCategory, audience]: [
         number,
         number,
-        BoostPaymentCategory
+        BoostPaymentCategory,
+        BoostAudience
       ]): Observable<any> => {
-        /**
-         * TODO: This is emulating a failing API response - we need to get the actual response
-         * from API and shape it in the below commented out map statement. Note you MAY need to catchError
-         * in a higher order observable as we do for throwError below, else the erroneous state passed to the
-         * catchError at the bottom of this streams outer observable will terminate the stream altogether.
-         * Be sure to unit test.
-         */
-        return throwError('Unable to calculate estimation').pipe(
-          catchError(e => this.handleRequestError(e))
-        );
+        return this.api.get('api/v3/boosts/insights/estimate', {
+          daily_bid: dailyBudget,
+          duration: duration,
+          payment_method: paymentCategory,
+          audience: audience,
+        });
       }
     ),
-    // map((response: unknown): Observable<EstimatedReach> => {
-    //   return response ? of({
-    //     lower_bound: 10,
-    //     upper_bound: 50
-    //   }) : null;
-    // }),
     catchError(e => this.handleRequestError(e)),
     shareReplay()
   );
@@ -242,8 +234,8 @@ export class BoostModalV2Service implements OnDestroy {
         );
         this.dailyBudget$.next(
           paymentCategory === BoostPaymentCategory.TOKENS
-            ? DEFAULT_DAILY_CASH_BUDGET
-            : DEFAULT_DAILY_TOKEN_BUDGET
+            ? DEFAULT_DAILY_TOKEN_BUDGET
+            : DEFAULT_DAILY_CASH_BUDGET
         );
       }
     );

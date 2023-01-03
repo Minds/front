@@ -8,18 +8,6 @@
   height: 100%;
   z-index: 2;
 
-  &.m-wireLockScreen--activityV2 {
-    // Shift button toward center of image posts
-    // when accompanied by top message text
-    .m-wire__lockScreen.isMedia {
-      &:not(.isVideo):not(.isTextOnly):not(.m-wire__lockScreen--minimalMode) {
-        .m-wireLockScreen__inner {
-          margin-top: -$spacing12;
-        }
-      }
-    }
-  }
-
   .m-wire__lockScreen {
     display: flex;
     justify-content: center;
@@ -29,6 +17,7 @@
     width: 100%;
     position: relative;
     z-index: 0;
+    max-height: none;
     cursor: pointer;
     @include m-theme() {
       color: themed($m-white-always);
@@ -36,6 +25,16 @@
 
     > * {
       z-index: 1;
+    }
+
+    // Shift button toward center of image posts
+    // when accompanied by top message text
+    &.isMedia {
+      &:not(.isVideo):not(.isTextOnly):not(.m-wire__lockScreen--minimalMode) {
+        .m-wireLockScreen__inner {
+          margin-top: -$spacing12;
+        }
+      }
     }
 
     &.m-wire__lockScreen--minimalMode {

@@ -26,12 +26,11 @@ import { GroupsProfileReviewComponent } from './profile/review/review.component'
 import { GroupsKickModalComponent } from './kick-modal/kick-modal.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { ComposerModule } from '../composer/composer.module';
-import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { GroupsProfile } from './profile/profile';
 import { GroupsCreator } from './create/create';
 import { GroupsMembershipsComponent } from './memberships/memberships.component';
 import { GroupsSearchService } from './profile/feed/search.service';
-import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 
 const routes: Routes = [
   {
@@ -79,8 +78,7 @@ const routes: Routes = [
     VideoChatModule,
     NewsfeedModule,
     ComposerModule,
-    ActivityModule, // delete during ActivityV2 cleanup
-    ActivityV2Module,
+    ActivityModule,
   ],
   declarations: [
     GroupsProfile,

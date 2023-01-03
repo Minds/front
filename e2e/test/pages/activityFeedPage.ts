@@ -6,7 +6,7 @@ const { I, activityComponent } = inject();
 class ActivityFeedPage {
   // selectors.
   public activitySelector: string = 'm-activity';
-  public readonly permalinkSelector: string = 'm-activityv2__permalink';
+  public readonly permalinkSelector: string = 'm-activity__permalink';
   public activityMediaLinkSelector: string =
     '.m-activityContentMedia__link:not(.m-activityContent__quote)';
   public activityPrimaryMediaLinkSelector: string =

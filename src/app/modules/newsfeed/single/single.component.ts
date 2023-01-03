@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -17,7 +17,8 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
+import { Location } from '@angular/common';
+import { RouterHistoryService } from '../../../common/services/router-history.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -45,7 +46,7 @@ export class NewsfeedSingleComponent {
 
   private shouldReuseRouteFn; // For comment focusedUrn reloading
 
-  activityV2Feature: boolean = false;
+  showBackButton: boolean = false;
 
   constructor(
     public router: Router,
@@ -60,16 +61,20 @@ export class NewsfeedSingleComponent {
     private headersService: HeadersService,
     private authModal: AuthModalService,
     protected jsonLdService: JsonLdService,
-    private activityV2Experiment: ActivityV2ExperimentService
+    private location: Location,
+    private routerHistory: RouterHistoryService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
-    this.activityV2Feature = this.activityV2Experiment.isActive();
-
     this.context.set('activity');
+
+    // If the user arrived at this page by clicking a link
+    // somewhere within the site, they will see a back button
+    let previousUrl = this.routerHistory.getPreviousUrl();
+    this.showBackButton = !!previousUrl;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
@@ -197,6 +202,10 @@ export class NewsfeedSingleComponent {
       });
 
     return fakeEmitter;
+  }
+
+  goToPreviousPage(): void {
+    this.location.back();
   }
 
   async openLoginModal(): Promise<void> {

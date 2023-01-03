@@ -7,7 +7,6 @@ import { PublisherCardComponent } from './publisher-card.component';
 import { ConfigsService } from '../../services/configs.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
-import { ActivityV2ExperimentService } from '../../../modules/experiments/sub-services/activity-v2-experiment.service';
 import { CommonModule } from '../../common.module';
 import { Client } from '../../api/client.service';
 import { ThemeService } from '../../services/theme.service';
@@ -78,14 +77,6 @@ export default {
         {
           provide: ApiService,
           useValue: null,
-        },
-        {
-          provide: ActivityV2ExperimentService,
-          useValue: {
-            isActive: () => {
-              return false;
-            },
-          },
         },
       ],
     }),

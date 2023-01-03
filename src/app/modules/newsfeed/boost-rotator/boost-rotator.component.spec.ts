@@ -15,12 +15,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Client } from '../../../services/api';
 import { ScrollService } from '../../../services/ux/scroll';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { By } from '@angular/platform-browser';
 import { componentWrapperDecorator } from '@storybook/angular';
+import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 
 describe('NewsfeedBoostRotatorComponent', () => {
   let comp: NewsfeedBoostRotatorComponent;
@@ -69,8 +69,8 @@ describe('NewsfeedBoostRotatorComponent', () => {
             useValue: MockService(FeedsService),
           },
           {
-            provide: ActivityV2ExperimentService,
-            useValue: MockService(ActivityV2ExperimentService),
+            provide: DynamicBoostExperimentService,
+            useValue: MockService(DynamicBoostExperimentService),
           },
           {
             provide: ConfigsService,

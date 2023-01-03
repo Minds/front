@@ -65,7 +65,7 @@ export class BoostModalV2ReviewComponent {
   > = this.service.estimatedReach$.pipe(
     map((estimatedReach: EstimatedReach) => {
       return estimatedReach
-        ? `${estimatedReach.lower_bound} - ${estimatedReach.upper_bound} people`
+        ? `${estimatedReach.views.low} - ${estimatedReach.views.high} views`
         : 'unknown';
     })
   );

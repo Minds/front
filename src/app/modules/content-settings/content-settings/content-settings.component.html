@@ -8,7 +8,7 @@
         <a
           [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'tags' }"
           (click)="service.activeTab$.next('tags')"
-          data-cy="content-settings-modal-tab-tags"
+          data-ref="content-settings-modal-tab-tags"
           >Tags</a
         >
       </div>
@@ -16,7 +16,7 @@
         <a
           [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'compass' }"
           (click)="service.activeTab$.next('compass')"
-          data-cy="content-settings-modal-tab-compass"
+          data-ref="content-settings-modal-tab-compass"
           >Compass</a
         >
       </div>
@@ -24,7 +24,7 @@
         <a
           [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'nsfw' }"
           (click)="service.activeTab$.next('nsfw')"
-          data-cy="content-settings-modal-tab-nsfw"
+          data-ref="content-settings-modal-tab-nsfw"
           >NSFW</a
         >
       </div> -->

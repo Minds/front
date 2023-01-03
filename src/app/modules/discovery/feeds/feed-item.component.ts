@@ -1,37 +1,20 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  HostBinding,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { ActivityV2ExperimentService } from '../../experiments/sub-services/activity-v2-experiment.service';
 
 @Component({
   selector: 'm-discovery__feedItem',
   templateUrl: './feed-item.component.html',
   styleUrls: ['./feed-item.component.ng.scss'],
 })
-export class DiscoveryFeedItemComponent implements OnInit {
+export class DiscoveryFeedItemComponent {
   @Input() entity; // TODO add type
 
   @Input() openComments: boolean = false;
   readonly cdnUrl: string;
 
-  activityV2Feature: boolean = false;
-
-  constructor(
-    private configs: ConfigsService,
-    private cd: ChangeDetectorRef,
-    private activityV2Experiment: ActivityV2ExperimentService
-  ) {
+  constructor(private configs: ConfigsService, private cd: ChangeDetectorRef) {
     this.cdnUrl = configs.get('cdn_url');
-  }
-
-  ngOnInit(): void {
-    this.activityV2Feature = this.activityV2Experiment.isActive();
   }
 
   onDelete(activity): void {

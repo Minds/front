@@ -37,7 +37,6 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
         </h2>
       </div>
       <m-modalCloseButton
-        [color]="'white'"
         [absolutePosition]="false"
         data-ref="boost-modal-v2-header-close-button"
       ></m-modalCloseButton>

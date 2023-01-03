@@ -39,7 +39,7 @@
             accept="image/*"
             (change)="onAssetFileSelect('logo', logoField.files)"
             #logoField
-            data-minds="logo"
+            data-ref="m-settingsProAssets__logo"
           />
 
           <img
@@ -77,7 +77,7 @@
             accept="image/*"
             (change)="onAssetFileSelect('background', backgroundField.files)"
             #backgroundField
-            data-minds="background"
+            data-ref="m-settingsProAssets__background"
           />
           <img
             *ngIf="getPreviewAssetSrc('background')"

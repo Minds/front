@@ -14,7 +14,7 @@
     class="m-onboardingChannel__input"
     formControlName="name"
     placeholder="e.g. John Smith"
-    data-cy="data-minds-onboarding-channel-name"
+    data-ref="data-minds-onboarding-channel-name"
   />
 
   <label
@@ -25,7 +25,7 @@
   <textarea
     class="m-onboardingChannel__textarea"
     formControlName="bio"
-    data-cy="data-minds-onboarding-channel-bio"
+    data-ref="data-minds-onboarding-channel-bio"
   ></textarea>
 
   <label class="m-onboardingChannel__label" i18n="@@ONBOARDING_CHANNEL__AVATAR"
@@ -46,7 +46,7 @@
         accept="image/*"
         (change)="uploadAvatar(avatarFile)"
         #avatarFile
-        data-cy="data-minds-onboarding-channel-avatar"
+        data-ref="data-minds-onboarding-channel-avatar"
       />
     </label>
   </div>

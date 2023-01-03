@@ -3,14 +3,14 @@
     <div
       class="m-channelHeaderBanner__background"
       [ngStyle]="bannerBackgroundImageCss(channel)"
-      data-cy="data-minds-channel-banner"
+      data-ref="data-minds-channel-banner"
     ></div>
 
     <minds-avatar
       class="m-channelHeaderBanner__avatar"
       [object]="channel"
       [editMode]="false"
-      data-cy="data-minds-channel-avatar"
+      data-ref="data-minds-channel-avatar"
     ></minds-avatar>
 
     <ng-content></ng-content>

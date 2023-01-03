@@ -6,9 +6,6 @@
     isVideo: contentType === 'video',
     'm-wire__lockScreen--minimalMode': minimalMode
   }"
-  [style.maxHeight.px]="
-    mediaHeight && !activityV2Feature ? mediaHeight : 'none'
-  "
   (click)="$event.stopPropagation(); unlock()"
   *ngIf="entity.wire_threshold && init"
 >
@@ -110,7 +107,7 @@
       <m-button
         (onAction)="unlock()"
         [saving]="inProgress"
-        data-cy="wire-lock-screen-unlock-button"
+        data-ref="wire-lock-screen-unlock-button"
         class="m-unlock-button"
         color="blue"
         [overlay]="contentType !== 'status'"

@@ -6,7 +6,7 @@
         <a
           [routerLink]="['/supermind/inbox']"
           [class.m-tabs__tab--selected]="(listType$ | async) === 'inbox'"
-          data-cy="supermind-console-tab-inbound"
+          data-ref="supermind-console-tab-inbound"
           i18n="@@SUPERMIND_CONSOLE__TAB_INBOUND"
           >Inbound</a
         >
@@ -15,7 +15,7 @@
         <a
           [routerLink]="['/supermind/outbox']"
           [class.m-tabs__tab--selected]="(listType$ | async) === 'outbox'"
-          data-cy="supermind-console-tab-outbound"
+          data-ref="supermind-console-tab-outbound"
           i18n="@@SUPERMIND_CONSOLE__TAB_INBOUND"
           >Outbound</a
         >
@@ -26,7 +26,7 @@
         class="m-discovery__settingsButton"
         icon="settings"
         iconClass="m-supermindConsole__settingsButtonIcon"
-        data-cy="supermind-console-settings-button"
+        data-ref="supermind-console-settings-button"
         (click)="onSettingsButtonClick($event)"
       >
         <ng-container i18n="@@SUPERMIND_CONSOLE__SETTINGS_TOOLTIP">
@@ -38,7 +38,7 @@
       class="m-supermindConsole__singleSupermindGoBack"
       *ngIf="isSingleSupermindPage$ | async"
       (click)="onBackClick()"
-      data-cy="supermind-console-single-supermind-go-back"
+      data-ref="supermind-console-single-supermind-go-back"
     >
       <i class="material-icons">arrow_back</i>
       <span i18n="@@SUPERMIND_CONSOLE__SETTINGS_BACK_TO_CONSOLE"
