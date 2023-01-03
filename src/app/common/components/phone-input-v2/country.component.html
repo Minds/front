@@ -26,7 +26,7 @@
       <div class="m-phoneInput__flag" [ngClass]="country.flagClass"></div>
     </div>
     <span class="m-phoneInput__countryName">{{ country.name }}</span>
-    <span class="m-phoneInput__dialCode" [attr.data-minds]="country.dialCode">
+    <span class="m-phoneInput__dialCode" [attr.data-ref]="country.dialCode">
       +{{ country.dialCode }}
     </span>
   </li>

@@ -83,7 +83,7 @@
   <a
     *ngIf="showTitle"
     [routerLink]="['/forgot-password']"
-    data-cy="data-minds-forgot-password-button"
+    data-ref="data-minds-forgot-password-button"
   >
     Forgot your Password?
   </a>
@@ -129,7 +129,7 @@
           i18n-placeholder="@@M__COMMON__USERNAME"
           autocomplete="username"
           (keydown.enter)="login(); $event.preventDefault();"
-          data-cy="data-minds-login-username-input"
+          data-ref="data-minds-login-username-input"
         />
       </div>
     </div>
@@ -149,7 +149,7 @@
           i18n-placeholder="@@M__COMMON__PASSWORD"
           autocomplete="current-password"
           (keydown.enter)="login(); $event.preventDefault();"
-          data-cy="data-minds-login-password-input"
+          data-ref="data-minds-login-password-input"
         />
       </div>
     </div>
@@ -171,7 +171,7 @@
         [routerLink]="['/forgot-password']"
         (click)="onForgotPasswordClick()"
         *ngIf="!showTitle"
-        data-cy="data-minds-forgot-password-button"
+        data-ref="data-minds-forgot-password-button"
       >
         <ng-container i18n="@@FORMS__LOGIN__FORGOT_PASSWORD_LINK">
           Forgot Password?
@@ -194,7 +194,7 @@
         (onAction)="login()"
         [saving]="inProgress"
         *ngIf="!showBigButton"
-        data-cy="data-minds-login-button"
+        data-ref="data-minds-login-button"
       >
         <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
       </m-button>
@@ -205,7 +205,7 @@
         [saving]="inProgress"
         (onAction)="login()"
         color="blue"
-        data-cy="data-minds-login-button"
+        data-ref="data-minds-login-button"
       >
         <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
       </m-button>
@@ -236,7 +236,7 @@
       (onAction)="login()"
       color="blue"
       [solid]="true"
-      data-cy="data-minds-login-button"
+      data-ref="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
     </m-button>

@@ -45,7 +45,7 @@
       (click)="toggleActiveTab('tags')"
       class="m-blogEditor__tabToggle"
       [class.is-active]="(service.tags$ | async).length"
-      data-cy="data-minds-blog-editor-tags-toggle"
+      data-ref="data-minds-blog-editor-tags-toggle"
     >
       <span>#</span>
       <span> Tags </span>
@@ -53,7 +53,7 @@
     <div
       (click)="toggleActiveTab('meta')"
       class="m-blogEditor__tabToggle"
-      data-cy="data-minds-blog-editor-meta-toggle"
+      data-ref="data-minds-blog-editor-meta-toggle"
     >
       <i class="material-icons">description</i>
       <span> Meta </span>
@@ -62,7 +62,7 @@
       (click)="toggleActiveTab('monetize')"
       class="m-blogEditor__tabToggle"
       [class.is-active]="service.monetize$ | async"
-      data-cy="data-minds-blog-editor-monetize-toggle"
+      data-ref="data-minds-blog-editor-monetize-toggle"
     >
       <i class="material-icons">attach_money</i>
       <span> Monetize </span>
@@ -76,7 +76,7 @@
       [saving]="service.inProgress$ | async"
       (onAction)="save(true)"
       i18n="@@BLOGS_EDITOR__SAVE_DRAFT"
-      data-cy="data-minds-blog-editor-save-draft"
+      data-ref="data-minds-blog-editor-save-draft"
       *ngIf="!(service.published$ | async)"
       size="small"
     >
@@ -88,7 +88,7 @@
       [saving]="service.inProgress$ | async"
       (onAction)="save()"
       i18n="@@BLOGS_EDITOR__PUBLISH_BLOG"
-      data-cy="data-minds-blog-editor-publish"
+      data-ref="data-minds-blog-editor-publish"
       size="small"
       color="blue"
     >

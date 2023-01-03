@@ -5,7 +5,7 @@
   [menu]="mainMenu"
   [hidden]="isPosting$ | async"
   hasSubmenu="true"
-  data-cy="meatball-menu-trigger"
+  data-ref="meatball-menu-trigger"
 >
   <!-- ------------------------------------ -->
   <!-- MAIN MENU TRIGGER -->
@@ -20,12 +20,12 @@
 <!-- MAIN MENU ITEMS -->
 <!-- ------------------------------------ -->
 <ng-template #mainMenu>
-  <ul data-cy="meatball-menu">
+  <ul data-ref="meatball-menu">
     <!-- VISIBILITY SUBMENU TRIGGER -->
     <m-dropdownMenu
       [menu]="visibilitySubmenu"
       [anchorPosition]="submenuAnchorPosition"
-      data-cy="meatball-menu-visibility"
+      data-ref="meatball-menu-visibility"
     >
       <m-dropdownMenu__item *ngIf="canChangeVisibility" hasSubmenu="true"
         ><span>Visibility</span>
@@ -36,7 +36,7 @@
     <m-dropdownMenu
       [menu]="licenseSubmenu"
       [anchorPosition]="submenuAnchorPosition"
-      data-cy="meatball-menu-license"
+      data-ref="meatball-menu-license"
     >
       <m-dropdownMenu__item hasSubmenu="true"
         ><span>License</span>
@@ -48,7 +48,7 @@
       *ngIf="shouldShowPermawebOption()"
       [menu]="permawebSubmenu"
       [anchorPosition]="submenuAnchorPosition"
-      data-cy="meatball-menu-permaweb"
+      data-ref="meatball-menu-permaweb"
     >
       <m-dropdownMenu__item hasSubmenu="true"
         ><span>Permaweb</span>
@@ -65,7 +65,7 @@
 
 <!-- VISIBILITY SUBMENU ITEMS -->
 <ng-template #visibilitySubmenu>
-  <ul data-cy="meatball-menu-visibility-menu">
+  <ul data-ref="meatball-menu-visibility-menu">
     <m-dropdownMenu__item
       *ngFor="let visibilityItem of visibilityItems"
       (click)="onVisibilityClick(visibilityItem.value)"
@@ -78,7 +78,7 @@
 
 <!-- LICENSE SUBMENU ITEMS -->
 <ng-template #licenseSubmenu>
-  <ul data-cy="meatball-menu-license-menu">
+  <ul data-ref="meatball-menu-license-menu">
     <m-dropdownMenu__item
       *ngFor="let licenseItem of licenseItems"
       (click)="onLicenseClick(licenseItem.value)"
@@ -91,7 +91,7 @@
 
 <!-- PERMAWEB SUBMENU ITEMS -->
 <ng-template #permawebSubmenu>
-  <ul data-cy="meatball-menu-license-menu">
+  <ul data-ref="meatball-menu-license-menu">
     <m-dropdownMenu__item
       (click)="onPostToPermawebClick()"
       selectable="true"

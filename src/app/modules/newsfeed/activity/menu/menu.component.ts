@@ -73,44 +73,27 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
 
   get menuOptions(): Array<string> {
     if (!this.entity || !this.entity.ephemeral) {
-      if (this.service.displayOptions.showBoostMenuOptions) {
-        return [
-          'edit',
-          'translate',
-          'share',
-          'follow',
-          'feature',
-          'delete',
-          'report',
-          'set-explicit',
-          'block',
-          'rating',
-          'allow-comments',
-          'download',
-          'wire',
-          'hide-post',
-        ];
-      } else {
-        return [
-          'edit',
-          'pin',
-          'translate',
-          'share',
-          'follow',
-          'feature',
-          'delete',
-          'report',
-          'set-explicit',
-          'block',
-          'rating',
-          'allow-comments',
-          'download',
-          'wire',
-          'hide-post',
-        ];
-      }
+      return [
+        'boost',
+        'edit',
+        'pin',
+        'translate',
+        'share',
+        'follow',
+        'feature',
+        'delete',
+        'report',
+        'set-explicit',
+        'block',
+        'rating',
+        'allow-comments',
+        'download',
+        'wire',
+        'hide-post',
+      ];
     } else {
       return [
+        'boost',
         'view',
         'translate',
         'share',

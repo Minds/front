@@ -5,7 +5,7 @@
 >
   <div
     class="m-onboardingWidget__container"
-    data-cy="data-minds-onboarding-widget"
+    data-ref="data-minds-onboarding-widget"
   >
     <!-- Header -->
     <div class="m-onboardingWidget__header">
@@ -32,7 +32,7 @@
         triggerClass="m-button__dropdownArrow"
         menuClass="m-button__dropdownMenu"
         #dropdownMenuComponent
-        data-cy="data-minds-onboarding-widget-dropdown"
+        data-ref="data-minds-onboarding-widget-dropdown"
       >
         <i class="material-icons m-onboardingWidget__ellipsisMenu">more_vert</i>
       </m-dropdownMenu>
@@ -41,14 +41,14 @@
     <div
       class="m-onboardingWidget__body"
       *ngIf="!collapsed"
-      data-cy="data-minds-onboarding-widget-body"
+      data-ref="data-minds-onboarding-widget-body"
     >
       <!-- Progress bar -->
       <div class="m-onboardingWidget__progressBarContainer">
         <div
           class="m-onboardingWidget__progressBar"
           [ngStyle]="{ width: (progress$ | async)?.completed_pct * 100 + '%' }"
-          data-cy="data-minds-onboarding-widget-progress-bar"
+          data-ref="data-minds-onboarding-widget-progress-bar"
         ></div>
       </div>
       <!-- Tasks -->
@@ -63,35 +63,35 @@
             <span
               *ngSwitchCase="'VerifyEmailStep'"
               i18n="@@ONBOARDING_WIDGET__VERIFY_EMAIL_ADDRESS"
-              data-cy="data-minds-onboarding-widget-verify-email"
+              data-ref="data-minds-onboarding-widget-verify-email"
             >
               Verify email address
             </span>
             <span
               *ngSwitchCase="'SuggestedHashtagsStep'"
               i18n="@@ONBOARDING_WIDGET__SELECT_TAGS"
-              data-cy="data-minds-onboarding-widget-select-tags"
+              data-ref="data-minds-onboarding-widget-select-tags"
             >
               Select tags
             </span>
             <span
               *ngSwitchCase="'SetupChannelStep'"
               i18n="@@ONBOARDING_WIDGET__SETUP_CHANNEL"
-              data-cy="data-minds-onboarding-widget-setup-channel"
+              data-ref="data-minds-onboarding-widget-setup-channel"
             >
               Setup channel
             </span>
             <span
               *ngSwitchCase="'VerifyUniquenessStep'"
               i18n="@@ONBOARDING_WIDGET__VERIFY_UNIQUENESS"
-              data-cy="data-minds-onboarding-widget-verify-uniqueness"
+              data-ref="data-minds-onboarding-widget-verify-uniqueness"
             >
               Verify uniqueness
             </span>
             <span
               *ngSwitchCase="'CreatePostStep'"
               i18n="@@ONBOARDING_WIDGET__CREATE_A_POST"
-              data-cy="data-minds-onboarding-widget-create-post"
+              data-ref="data-minds-onboarding-widget-create-post"
             >
               Create a post
             </span>

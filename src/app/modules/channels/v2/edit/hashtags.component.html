@@ -15,7 +15,7 @@
       [disabled]="isHashtagLimitReached$ | async"
       (click)="hashtagsTypeaheadInput.triggerAction()"
       i18n="@@COMMON__ADD"
-      data-cy="data-minds-hashtag-add-button"
+      data-ref="data-minds-hashtag-add-button"
     >
       Add
     </button>
@@ -33,7 +33,7 @@
       iconId="close"
       [sizeFactor]="-20"
       (click)="service.removeHashtag(tag)"
-      data-cy="data-minds-hashtag-remove-button"
+      data-ref="data-minds-hashtag-remove-button"
     ></m-icon>
   </li>
 </ul>

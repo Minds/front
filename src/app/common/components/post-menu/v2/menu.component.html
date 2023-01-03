@@ -36,6 +36,14 @@
     </m-dropdownMenu__item>
 
     <m-dropdownMenu__item
+      (click)="onSelectedOption('boost')"
+      *ngIf="shouldShowBoost()"
+    >
+      <span i18n="@@M__ACTION__BOOST_POST">
+        Boost Post
+      </span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
       (click)="onSelectedOption('share')"
       *ngIf="options.indexOf('share') !== -1"
     >
@@ -79,7 +87,7 @@
         "
       >
         <span i18n="@@M__ACTION__REMOVE_PIN">
-          Remove pin
+          Remove Pin
         </span>
       </m-dropdownMenu__item>
     </ng-container>
@@ -114,7 +122,7 @@
         disabled
       >
         <span i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS">
-          Follow post
+          Follow Post
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
@@ -122,7 +130,7 @@
         *ngIf="(service.isFollowing$ | async) === true"
       >
         <span i18n="@@COMMON__POST_MENU__UNFOLLOW_NOTIFICATIONS">
-          Un-follow post
+          Un-follow Post
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
@@ -130,7 +138,7 @@
         *ngIf="(service.isFollowing$ | async) === false"
       >
         <span i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS">
-          Follow post
+          Follow Post
         </span>
       </m-dropdownMenu__item>
     </ng-container>
@@ -155,7 +163,7 @@
         *ngIf="(service.isBlocked$ | async) === false"
       >
         <span i18n="@@COMMON__POST_MENU__BLOCK">
-          Block user
+          Block User
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
@@ -163,7 +171,7 @@
         *ngIf="(service.isBlocked$ | async) === true"
       >
         <span i18n="@@COMMON__POST_MENU__UNBLOCK">
-          Unblock user
+          Unblock User
         </span>
       </m-dropdownMenu__item>
     </ng-container>
