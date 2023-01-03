@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BoostChannelNoticeComponent } from './boost-channel-notice.component';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { Session } from '../../../../services/session';
+import { FeedNoticeService } from '../../services/feed-notice.service';
 
 describe('BoostChannelNoticeComponent', () => {
   let comp: BoostChannelNoticeComponent;
@@ -32,6 +33,10 @@ describe('BoostChannelNoticeComponent', () => {
         ],
         providers: [
           {
+            provide: FeedNoticeService,
+            useValue: MockService(FeedNoticeService),
+          },
+          {
             provide: BoostModalLazyService,
             useValue: MockService(BoostModalLazyService),
           },
@@ -49,6 +54,7 @@ describe('BoostChannelNoticeComponent', () => {
     comp = fixture.componentInstance;
     fixture.detectChanges();
 
+    (comp as any).feedNotice.dismiss.calls.reset();
     (comp as any).session.getLoggedInUser.calls.reset();
     (comp as any).session.getLoggedInUser.and.returnValue(mockUser);
 
@@ -68,14 +74,21 @@ describe('BoostChannelNoticeComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should navigate on primary option click', () => {
-    comp.onPrimaryOptionClick(null);
+  it('should open boost modal on primary option click', () => {
+    comp.onPrimaryOptionClick();
     expect((comp as any).session.getLoggedInUser).toHaveBeenCalledTimes(1);
     expect((comp as any).boostModal.open).toHaveBeenCalledOnceWith(mockUser);
   });
 
   it('should open boost marketing page in a modal on secondary option click', () => {
-    comp.onSecondaryOptionClick(null);
+    comp.onSecondaryOptionClick();
     expect(window.open).toHaveBeenCalledWith('/boost', '_blank');
+  });
+
+  it('should call to dismiss on dismiss click', () => {
+    comp.onDismissClick();
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledOnceWith(
+      'boost-channel'
+    );
   });
 });
