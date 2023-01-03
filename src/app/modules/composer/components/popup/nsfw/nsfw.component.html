@@ -8,7 +8,7 @@
       terms of use.
     </p>
 
-    <ul class="m-composerNsfw__list" data-cy="nsfw-list">
+    <ul class="m-composerNsfw__list" data-ref="nsfw-list">
       <li
         *ngFor="let reason of nsfwReasons"
         class="m-composerNsfw__item"
@@ -32,7 +32,7 @@
     <m-button
       class="m-composerPopup__save"
       (onAction)="save()"
-      data-cy="nsfw-save-button"
+      data-ref="nsfw-save-button"
       i18n="@@COMMON__SAVE"
       >Save</m-button
     >

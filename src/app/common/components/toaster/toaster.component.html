@@ -1,7 +1,7 @@
 <div
   class="m-toaster__toastsContainer"
   *ngIf="visibleToasts"
-  data-cy="data-minds-toaster-container"
+  data-ref="data-minds-toaster-container"
 >
   <ng-container *ngFor="let toast of toasts; let i = index">
     <div
@@ -9,7 +9,7 @@
       [@fader]="toast.dismissed ? 'dismissed' : 'active'"
       (mouseover)="pauseTimeout(i)"
       (mouseleave)="resumeTimeout(i)"
-      data-cy="data-minds-toaster-wrapper"
+      data-ref="data-minds-toaster-wrapper"
     >
       <div [ngClass]="['m-toaster__iconWrapper--' + toast.type]">
         <i class="material-icons">

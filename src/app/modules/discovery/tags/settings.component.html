@@ -16,13 +16,13 @@
           #value
           placeholder="Enter a tag here..."
           (keypress)="onKeypress(value, $event)"
-          data-cy="discovery-settings-input"
+          data-ref="discovery-settings-input"
         />
       </section>
 
       <section
         class="m-discoveryTagSettings__section"
-        data-cy="discovery-settings-section--selected"
+        data-ref="discovery-settings-section--selected"
       >
         <h3 i18n="@@DISCOVERY__TAGS__YOUR_TAGS">Your Tags</h3>
         <ul class="m-discoveryTagSettings__list">
@@ -36,7 +36,7 @@
             <i
               class="material-icons"
               (click)="removeTag(tag)"
-              data-cy="discovery-settings-remove-button"
+              data-ref="discovery-settings-remove-button"
               >remove_circle_outline</i
             >
           </li>
@@ -45,7 +45,7 @@
 
       <section
         class="m-discoveryTagSettings__section"
-        data-cy="discovery-settings-section--other"
+        data-ref="discovery-settings-section--other"
       >
         <h3 i18n="@@DISCOVERY__TAGS__OTHER_TAGS">Other Tags</h3>
         <ul class="m-discoveryTagSettings__list">
@@ -59,7 +59,7 @@
             <i
               class="material-icons"
               (click)="addTag(tag)"
-              data-cy="discovery-settings-add-button"
+              data-ref="discovery-settings-add-button"
               >add_circle_outline</i
             >
           </li>
@@ -74,7 +74,7 @@
       color="blue"
       [saving]="saving$ | async"
       (onAction)="onSave($event)"
-      data-cy="discovery-settings-save-button"
+      data-ref="discovery-settings-save-button"
     >
       <ng-container i18n="@@DISCOVERY_SETTINGS__SAVE_TAGS"
         >Save Tags</ng-container

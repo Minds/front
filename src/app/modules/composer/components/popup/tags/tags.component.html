@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <ul class="m-composerTags__list" data-cy="nsfw-list">
+    <ul class="m-composerTags__list" data-ref="nsfw-list">
       <li *ngFor="let tag of state" class="m-composerTags__item">
         <span>#{{ tag }}</span>
         <m-icon
@@ -57,7 +57,7 @@
     <m-button
       class="m-composerPopup__save"
       (onAction)="save()"
-      data-cy="tags-save-button"
+      data-ref="tags-save-button"
       i18n="@@COMPOSER_POPUP__SAVE_TAGS"
       size="small"
       color="blue"

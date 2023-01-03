@@ -7,7 +7,7 @@
           <a
             [ngClass]="{ 'm-tabs__tab--selected': type === 'plus' }"
             (click)="type = 'plus'"
-            data-cy="monetize-membership-plus-tab"
+            data-ref="monetize-membership-plus-tab"
             >Minds+</a
           >
         </div>
@@ -16,7 +16,7 @@
         <a
           [ngClass]="{ 'm-tabs__tab--selected': type === 'membership' }"
           (click)="type = 'membership'"
-          data-cy="monetize-membership-membership-tab"
+          data-ref="monetize-membership-membership-tab"
           >Memberships</a
         >
       </div>

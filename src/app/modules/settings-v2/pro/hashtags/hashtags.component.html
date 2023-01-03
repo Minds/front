@@ -24,7 +24,7 @@
         ><button
           type="button"
           (click)="addBlankTag()"
-          data-minds="addHashtag"
+          data-ref="m-settingsProHashtags__button--add"
           i18n="@@COMMON__ADD"
         >
           Add
@@ -48,7 +48,7 @@
                 [name]="'tag[' + i + '][label]'"
                 formControlName="label"
                 autofocus
-                [attr.data-minds]="'tag__label--' + i"
+                [attr.data-ref]="'m-settingsProHashtagsTagInput__label--' + i"
                 (focusin)="hashtagDraggable.onFocusIn($event)"
                 (focusout)="hashtagDraggable.onFocusOut($event)"
                 (mouseover)="hashtagDraggable.onFocusIn($event)"
@@ -60,7 +60,7 @@
                 [id]="'tag-tag-' + i"
                 [name]="'tag[' + i + '][tag]'"
                 formControlName="tag"
-                [attr.data-minds]="'tag__tag--' + i"
+                [attr.data-ref]="'m-settingsProHashtagsTagInput__tag--' + i"
                 (focusin)="hashtagDraggable.onFocusIn($event)"
                 (focusout)="hashtagDraggable.onFocusOut($event)"
                 (mouseover)="hashtagDraggable.onFocusIn($event)"
