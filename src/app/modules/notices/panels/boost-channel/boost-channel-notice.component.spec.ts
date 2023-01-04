@@ -1,10 +1,17 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BoostChannelNoticeComponent } from './boost-channel-notice.component';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { Session } from '../../../../services/session';
 import { FeedNoticeService } from '../../services/feed-notice.service';
+import { Subject } from 'rxjs';
 
 describe('BoostChannelNoticeComponent', () => {
   let comp: BoostChannelNoticeComponent;
@@ -38,7 +45,12 @@ describe('BoostChannelNoticeComponent', () => {
           },
           {
             provide: BoostModalLazyService,
-            useValue: MockService(BoostModalLazyService),
+            useValue: MockService(BoostModalLazyService, {
+              has: ['onComplete$'],
+              props: {
+                onComplete$: { get: () => new Subject<boolean>() },
+              },
+            }),
           },
           {
             provide: Session,
@@ -91,4 +103,12 @@ describe('BoostChannelNoticeComponent', () => {
       'boost-channel'
     );
   });
+
+  it('should dismiss on boost completion', fakeAsync(() => {
+    (comp as any).boostModal.onComplete$.next(true);
+    tick();
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledOnceWith(
+      'boost-channel'
+    );
+  }));
 });
