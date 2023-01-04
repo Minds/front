@@ -1,11 +1,90 @@
 @import 'defaults.scss';
+@mixin slider-thumb {
+  height: $spacing5;
+  width: $spacing5;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid;
+  @include m-theme() {
+    background: themed($m-blue);
+    border-color: themed($m-borderColor--primary);
+  }
+}
+@mixin slider-track {
+  width: 100%;
+  height: $spacing1;
+  border-radius: $spacing1;
+  cursor: pointer;
+  color: #13bba4;
+}
 
 :host {
-  input {
+  position: relative;
+
+  span {
+    position: absolute;
+    top: -25px;
+    font-size: 12px;
+    width: 50px;
+    text-align: center;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  input[type='range'] {
+    margin: 0 $spacing2;
     width: 100%;
+
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    background: transparent; /* Otherwise white in Chrome */
+
+    border-radius: $spacing1;
+
+    --track-height: 4px;
 
     @include m-theme() {
       accent-color: themed($m-blue);
+      background: themed($m-borderColor--primary);
     }
+  }
+
+  input[type='range']:focus {
+    outline: none;
+  }
+
+  // TRACK -----------------------------------
+
+  input[type='range']::-webkit-slider-runnable-track {
+    @include slider-track();
+  }
+
+  input[type='range']::-moz-range-track {
+    @include slider-track();
+  }
+
+  input[type='range']::-ms-track {
+    @include slider-track();
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  // THUMB -----------------------------------
+  input[type='range']::-webkit-slider-thumb {
+    @include slider-thumb();
+    -webkit-appearance: none;
+    margin-top: $spacing2 * -1;
+  }
+
+  input[type='range']::-moz-range-thumb {
+    @include slider-thumb();
+    border-width: 0px;
+  }
+
+  input[type='range']::-ms-thumb {
+    @include slider-thumb();
+    border-width: 0px;
   }
 }

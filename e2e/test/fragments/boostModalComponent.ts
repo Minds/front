@@ -73,7 +73,7 @@ class BoostModalComponent {
    * @returns { void }
    */
   public setDailyBudget(dailyBudget: number): void {
-    I.setRangeInputValue(this.dailyBudgetSliderSelector, dailyBudget);
+    I.setRangeInputValue(this.dailyBudgetSliderSelector, dailyBudget - 1); // -1 because we use custom values and there is no 0
   }
 
   /**
