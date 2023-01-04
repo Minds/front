@@ -68,7 +68,6 @@ describe('PlusUpgradeNoticeComponent', () => {
     (comp as any).feedNotice.dismiss.calls.reset();
     (comp as any).modalService.present.calls.reset();
     (comp as any).wirePaymentHandlers.get.calls.reset();
-    (comp as any).toaster.success.calls.reset();
 
     (comp as any).plusUpgradeNoticeExperiment.getActiveVariation.and.returnValue(
       true
