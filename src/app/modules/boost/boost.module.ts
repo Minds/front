@@ -16,10 +16,32 @@ import { BoostConsoleBooster } from './console/booster/booster.component';
 import { BoostMarketingComponent } from './marketing.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { BoostConsoleV2Component } from './console-v2/console-v2.component';
+import { BoostConsoleFilterBarComponent } from './console-v2/list/filter-bar/filter-bar.component';
+import { BoostConsoleListComponent } from './console-v2/list/list.component';
+import { BoostConsoleListItemComponent } from './console-v2/list/list-item/list-item.component';
+import { BoostConsoleStateLabelComponent } from './console-v2/list/list-item/state-label/state-label.component';
+import { BoostConsoleActionButtonsComponent } from './console-v2/list/list-item/action-bar/action-buttons.component';
 
 const boostRoutes: Routes = [
   {
     path: 'boost/console',
+    component: BoostConsoleComponent,
+    children: [
+      { path: '', redirectTo: 'newsfeed/history', pathMatch: 'full' },
+      {
+        path: ':type',
+        component: BoostConsoleTypesComponent,
+        children: [
+          { path: '', redirectTo: 'history', pathMatch: 'full' },
+          { path: 'create', component: BoostConsoleBooster },
+          { path: 'history', component: BoostConsoleHistoryComponent },
+          { path: 'history/:filter', component: BoostConsoleHistoryComponent },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'boost/console-v2',
     component: BoostConsoleComponent,
     children: [
       { path: '', redirectTo: 'newsfeed/history', pathMatch: 'full' },
@@ -67,12 +89,18 @@ const boostRoutes: Routes = [
     BoostConsoleHistoryComponent,
     BoostMarketingComponent,
     BoostConsoleV2Component,
+    BoostConsoleFilterBarComponent,
+    BoostConsoleListComponent,
+    BoostConsoleListItemComponent,
+    BoostConsoleStateLabelComponent,
+    BoostConsoleActionButtonsComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
     BoostConsoleCard,
     BoostConsoleBooster,
+    BoostConsoleV2Component,
   ],
 })
 export class BoostModule {}

@@ -7,7 +7,7 @@ import { Session } from '../../../services/session';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostService } from '../boost.service';
 import {
-  BoostConsoleAudienceFilterType,
+  BoostConsoleSuitabilityFilterType,
   BoostConsoleStateFilterType,
 } from '../boost.types';
 
@@ -20,19 +20,21 @@ export class BoostConsoleV2Component implements OnInit {
   /** @type { Subscription } routeSubscription - subscription to ActivatedRoutes query params*/
   private routeSubscription: Subscription;
 
-  /** @type { BehaviorSubject<Boolean> } are we viewing the boost console in the context of the admin console? */
-  public readonly adminContext$: BehaviorSubject<Boolean> = this.service
-    .adminContext$;
+  // /** @type { BehaviorSubject<boolean> } are we viewing the boost console in the context of the admin console? */
+  // public readonly adminContext$: BehaviorSubject<boolean> = this.service
+  //   .adminContext$;
 
   /** @type { BehaviorSubject<BoostConsoleStateFilterType> } state filter from service. */
   public readonly stateFilter$: BehaviorSubject<
     BoostConsoleStateFilterType
   > = this.service.stateFilter$;
 
-  /** @type { BehaviorSubject<BoostConsoleAudienceFilterType> } audience filter from service. */
-  public readonly audienceFilter$: BehaviorSubject<
-    BoostConsoleAudienceFilterType
-  > = this.service.stateFilter$;
+  /** @type { BehaviorSubject<BoostConsoleSuitabilityFilterType> } suitability filter from service. */
+  public readonly suitabilityFilter$: BehaviorSubject<
+    BoostConsoleSuitabilityFilterType
+  > = this.service.suitabilityFilter$;
+
+  adminContext: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,14 +57,18 @@ export class BoostConsoleV2Component implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    // on route change, set list type.
-    //ojm todo subscribe to queryparams
+    // this.service.adminContext$.subscribe(adminContext => {
+    //   this.adminContext = adminContext;
+    // });
+
+    // on route change, set location type.
+    //ojm todo subscribe to queryparam
     this.routeSubscription = this.route.queryParams.subscribe(params => {
-      const stateFilter: string = params.status || '';
-      const audienceFilter: string = params.audience || '';
+      const stateFilter: string = params.state || '';
+      // const suitabilityFilter: string = params.suitability || '';
 
       // ojm make this nicer
-      if (!this.adminContext$) {
+      if (!this.adminContext) {
         // User view
         if (
           stateFilter === 'all' ||
@@ -76,11 +82,11 @@ export class BoostConsoleV2Component implements OnInit {
         }
         this.stateFilter$.next('all');
       } else {
-        // Admin view
-        if (audienceFilter === 'safe' || audienceFilter === 'controversial') {
-          this.audienceFilter$.next(audienceFilter);
-          return;
-        }
+        // // Admin view
+        // if (audienceFilter === 'safe' || audienceFilter === 'controversial') {
+        //   this.audienceFilter$.next(audienceFilter);
+        //   return;
+        // }
       }
     });
   }

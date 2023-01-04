@@ -1,0 +1,64 @@
+<span [ngSwitch]="boostStateMap[boost.status]">
+  <ng-container
+    *ngSwitchCase="boostState.PENDING"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__PENDING"
+  >
+    Pending
+  </ng-container>
+  <ng-container *ngSwitchCase="boostState.CREATED">
+    <ng-container *ngIf="timeTillExpiration; else expiredText">
+      <span i18n="@@BOOST_CONSOLE_STATE_LABEL__EXPIRES">Expires: </span>
+      <span class="m-boostConsoleListItem__expirationTime">{{
+        timeTilExpiration
+      }}</span>
+    </ng-container>
+    <ng-template #expiredText i18n="@@BOOST_CONSOLE_STATE_LABEL__EXPIRED"
+      >Expired</ng-template
+    >
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.ACCEPTED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__ACCEPTED"
+  >
+    Accepted
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.TRANSFER_FAILED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__ACCEPTED"
+  >
+    Accepted
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.REVOKED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__REVOKED"
+  >
+    Revoked
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.REJECTED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__DECLINED"
+  >
+    Declined
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.FAILED_PAYMENT"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__PAYMENT_FAILED"
+  >
+    Payment Failed
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.FAILED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__UNKNOWN_ERROR"
+  >
+    Unknown Error
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.EXPIRED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__EXPIRED"
+  >
+    Expired
+  </ng-container>
+  <ng-container *ngSwitchDefault i18n="@@BOOST_CONSOLE_STATE_LABEL__UNKNOWN">
+    State Unknown
+  </ng-container>
+</span>

@@ -1,0 +1,60 @@
+<m-dropdownMenu [menu]="typeMenu">
+  <div class="m-boostConsole__filterTrigger">
+    <span
+      class="m-boostConsole__filterTitleLabel"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL"
+      >Status
+    </span>
+    <ng-container
+      [ngTemplateOutlet]="stateTextLabel"
+      [ngTemplateOutletContext]="{ stateLabel: stateFilterValue$ | async }"
+    ></ng-container>
+    <span>▾</span>
+  </div>
+</m-dropdownMenu>
+
+<ng-template #typeMenu>
+  <ul>
+    <m-dropdownMenu__item
+      *ngFor="let typeValue of stateFilterTypes"
+      (click)="onStateFilterChange(typeValue)"
+      selectable="true"
+      [selected]="(stateFilterValue$ | async) === typeValue"
+    >
+      <ng-container
+        [ngTemplateOutlet]="stateTextLabel"
+        [ngTemplateOutletContext]="{ stateLabel: typeValue }"
+      ></ng-container>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>
+
+<ng-template #stateTextLabel let-stateLabel="stateLabel">
+  <span class="m-boostConsole__filterLabel" [ngSwitch]="stateLabel">
+    <ng-container
+      *ngSwitchCase="'all'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__ALL_LABEL"
+      >All</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'pending'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__PENDING_LABEL"
+      >Pending</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'approved'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__APPROVED_LABEL"
+      >Approved</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'completed'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__COMPLETED_LABEL"
+      >Completed</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'rejected'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__REJECTED_LABEL"
+      >Rejected</ng-container
+    >
+  </span>
+</ng-template>

@@ -1,0 +1,42 @@
+<m-boostConsole__filterBar
+  (locationFilterChange)
+  (stateFilterChange)="onStateFilterChange($event)"
+></m-boostConsole__filterBar>
+
+<span
+  *ngIf="shouldShowNoOffersText$ | async"
+  class="m-supermindList__noOffersSpan"
+>
+  <ng-container [ngSwitch]="listType$ | async">
+    <ng-container
+      *ngSwitchCase="'inbox'"
+      i18n="@@SUPERMIND_CONSOLE_LIST__NO_INBOUND_OFFERS"
+    >
+      No inbound offers
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'outbox'"
+      i18n="@@SUPERMIND_CONSOLE_LIST__NO_OUTBOUND_OFFERS"
+    >
+      No outbound offers
+    </ng-container>
+  </ng-container>
+</span>
+
+<ng-container *ngIf="(list$ | async) && (list$ | async).length > 0">
+  <ng-container *ngFor="let supermind of list$ | async">
+    <m-supermind__listItem
+      *ngIf="supermind"
+      [supermind]="supermind"
+      [context]="listType$ | async"
+    ></m-supermind__listItem>
+  </ng-container>
+</ng-container>
+
+<infinite-scroll
+  *ngIf="!(shouldShowNoOffersText$ | async)"
+  (load)="loadNext()"
+  [moreData]="moreData$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>

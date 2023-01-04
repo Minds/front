@@ -1,44 +1,26 @@
 // Boost GUID type.
 export type BoostGuid = string;
 
-// ojm todo - replace from below
+// ojm todo - add optional flag, add any remaining fields (e.g. payment submethod)
 // Boost object from API.
 export type Boost = {
   guid: string;
-  activity_guid: string;
-  sender_guid: string;
-  receiver_guid: string;
-  status: number;
+  urn: string;
+  owner_guid: string;
+  entity_guid: string;
+  entity: any;
+  target_location: number;
+  target_suitability: number;
+  payment_method_id: number;
+  payment_method?: number;
   payment_amount: number;
-  payment_method: number;
-  payment_txid?: string;
+  daily_bid: number;
+  duration_days: number;
+  boost_status: number;
   created_timestamp: number;
   updated_timestamp: number;
-  expiry_threshold: number;
-  twitter_required: boolean;
-  reply_type: number;
-  reply_activity_guid?: string;
-  entity?: any;
-  receiver_entity?: any;
+  approved_timestamp: number;
 };
-
-// {
-// "guid": "1454633718378401812",
-// "urn": "urn:boost:1454633718378401812",
-// "owner_guid": "1215744293826727938",
-// "entity_guid": "1454618190507151375",
-// "entity": {},
-// "target_location": 1,
-// "target_suitability": 1,
-// "payment_method": 2,
-// "payment_amount": 5,
-// "daily_bid": 5,
-// "duration_days": 1,
-// "boost_status": 1,
-// "created_timestamp": 1672187704,
-// "updated_timestamp": null,
-// "approved_timestamp": null
-// },
 ///////////////////////////////////////////////////////
 // STATE
 
@@ -91,24 +73,24 @@ export const BOOST_PAYMENT_METHOD_MAP: {
 };
 
 ///////////////////////////////////////////////////////
-// AUDIENCE
+// SUITABILITY
 
-// Boost audience enum.
-export enum BoostAudience {
+// Boost suitability enum.
+export enum BoostSuitability {
   SAFE,
   CONTROVERSIAL,
 }
 
-// Boost audience mapping.
-export const BOOST_AUDIENCE_MAP: {
-  [key: number]: BoostAudience;
+// Boost suitability mapping.
+export const BOOST_SUITABILITY_MAP: {
+  [key: number]: BoostSuitability;
 } = {
-  1: BoostAudience.SAFE,
-  2: BoostAudience.CONTROVERSIAL,
+  1: BoostSuitability.SAFE,
+  2: BoostSuitability.CONTROVERSIAL,
 };
 
-// Audience filter values for Boost console.
-export type BoostConsoleAudienceFilterType = 'safe' | 'controversial';
+// Suitability filter values for Boost console.
+export type BoostConsoleSuitabilityFilterType = 'safe' | 'controversial';
 ///////////////////////////////////////////////////////
 // LOCATION
 
@@ -126,8 +108,29 @@ export const BOOST_LOCATION_MAP: {
   2: BoostLocation.SIDEBAR,
 };
 
+// Location filter values for Boost console.
+export type BoostConsoleLocationFilterType = 'newsfeed' | 'sidebar';
 ///////////////////////////////////////////////////////
+// LOCATION
 
+// Boost location enum.
+export enum BoostEntityType {
+  ACTIVITY,
+  CHANNEL,
+}
+
+// Boost entity type mapping.
+export const BOOST_ENTITY_TYPE_MAP: {
+  [key: number]: BoostEntityType;
+} = {
+  1: BoostEntityType.ACTIVITY,
+  2: BoostEntityType.CHANNEL,
+};
+
+// Entity type filter values for Boost console.
+export type BoostConsoleEntityTypeFilterType = 'activity' | 'channel';
+///////////////////////////////////////////////////////
+// ojm
 // // Get count params for inbox and outbox endpoints.
 // export type BoostConsoleCountParams = {
 //   status?: BoostState;

@@ -1,0 +1,122 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  padding-top: $spacing4;
+
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-supermind__listItem__topBar {
+    display: flex;
+    justify-content: space-between;
+    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
+    padding-right: $activityAvatarSpacingRight--feed;
+
+    .m-supermind__listItem__topBarLeft {
+      > * + * {
+        padding-left: $spacing2;
+      }
+    }
+
+    .m-supermind__listItem__topBarHref {
+      display: flex;
+      align-items: center;
+      padding-right: calc($spacing1 + ($spacing1 / 2));
+
+      @include body3Regular;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-blue--contrast);
+        }
+      }
+    }
+  }
+
+  .m-supermind__listItem__bottomBar {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: $spacing6;
+    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
+    padding-right: $activityAvatarSpacingRight--feed;
+
+    .m-supermindListItem__offerInformation {
+      display: flex;
+      flex-flow: row nowrap;
+
+      @media screen and (max-width: $min-tablet) {
+        flex-flow: column nowrap;
+      }
+
+      .m-supermindListItem__targetInformation {
+        a,
+        span {
+          text-decoration: none;
+
+          @include body2Regular;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+        a:hover {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        @media screen and (max-width: $min-tablet) {
+          margin-bottom: $spacing2;
+
+          .m-supermindListItem__targetInformation--separator {
+            display: none;
+          }
+        }
+      }
+
+      .m-supermindListItem__requirementsLabel {
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        .m-supermindListItem__requirementsText {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+  }
+
+  .m-supermind__listItem__postUnavailable {
+    padding-top: $spacing1;
+    padding-bottom: $spacing5;
+
+    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
+    padding-right: $activityAvatarSpacingRight--feed;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    span:first-child {
+      @include body2Bold;
+      padding-bottom: $spacing1;
+    }
+    span {
+      display: block;
+      @include body2Regular;
+    }
+  }
+
+  ::ng-deep m-activity {
+    border-top: 0 !important;
+  }
+}

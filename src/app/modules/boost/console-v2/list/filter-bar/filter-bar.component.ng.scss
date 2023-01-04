@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  padding: $spacing4;
+  display: flex;
+  flex-flow: row nowrap;
+  max-width: 100%;
+
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-boostConsole__filterTitleLabel {
+    margin-right: $spacing2;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-boostConsole__filterLabel {
+    margin-right: $spacing2;
+  }
+}

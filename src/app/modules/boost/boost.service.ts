@@ -5,7 +5,7 @@ import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { BoostContractService } from '../blockchain/contracts/boost-contract.service';
 import {
-  BoostConsoleAudienceFilterType,
+  BoostConsoleSuitabilityFilterType,
   BoostConsoleStateFilterType,
 } from './boost.types';
 
@@ -13,23 +13,22 @@ import {
 export class BoostService {
   // Subject containing whether or not we are viewing
   // the boost console in the context of the admin console
-  //
-  // (as opposed to user view)
-  public readonly adminContext$: BehaviorSubject<
-    BoostConsoleStateFilterType
-  > = new BehaviorSubject<BoostConsoleStateFilterType>('all');
+  // (as opposed to user context)
+  public readonly adminContext$: BehaviorSubject<Boolean> = new BehaviorSubject<
+    Boolean
+  >(false);
 
   // Subject containing status filter for console to display.
-  // (Used in user boost console only)
+  // (Used in user boost context only)
   public readonly stateFilter$: BehaviorSubject<
     BoostConsoleStateFilterType
   > = new BehaviorSubject<BoostConsoleStateFilterType>('all');
 
-  // Subject containing audience/suitability filter for console to display.
-  // (Used in admin console only)
-  public readonly audienceFilter$: BehaviorSubject<
-    BoostConsoleAudienceFilterType
-  > = new BehaviorSubject<BoostConsoleAudienceFilterType>('safe');
+  // Subject containing suitability filter for console to display.
+  // (Used in admin context only)
+  public readonly suitabilityFilter$: BehaviorSubject<
+    BoostConsoleSuitabilityFilterType
+  > = new BehaviorSubject<BoostConsoleSuitabilityFilterType>('safe');
 
   constructor(
     public session: Session,
@@ -208,11 +207,13 @@ export class BoostService {
   isOnChain = (boost: any) => boost.transactionId.startsWith('0x');
 
   /**
+   * ----------------------------------------------------
    * DYNAMIC BOOSTS -------------------------------------
+   * ----------------------------------------------------
    */
 
   /**
-   * Returns a promise with a collection of dynamic boosts.
+   * Returns a promise with a collection of boosts.
    */
   loadBoosts(
     statusFilter: string,
@@ -225,6 +226,7 @@ export class BoostService {
 
     if (statusFilter) {
       // ojm get number
+      // ojm use query param array instead of manually adding prefixes
       status = '?status=1';
     }
 
