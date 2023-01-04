@@ -34,7 +34,8 @@ type Option =
   | 'unblock'
   | 'allow-comments'
   | 'disable-comments'
-  | 'download';
+  | 'download'
+  | 'boost';
 
 @Component({
   selector: 'm-postMenu--v2',
@@ -65,6 +66,15 @@ export class PostMenuV2Component implements OnInit {
   ngOnInit() {
     this.service.setEntity(this.entity);
     this.service.setEntityOwner(this.user);
+  }
+
+  // Only show boost in post menu for non-owners
+  // b/c owners already see it as an icon in the toolbar
+  shouldShowBoost(): boolean {
+    return (
+      this.options.indexOf('boost') !== -1 &&
+      this.entity.owner_guid !== this.session.getLoggedInUser().guid
+    );
   }
 
   shouldShowEdit(): boolean {
@@ -154,6 +164,9 @@ export class PostMenuV2Component implements OnInit {
         break;
       case 'unblock':
         this.service.unBlock();
+        break;
+      case 'boost':
+        this.service.openBoostModal();
         break;
 
       // Destructive options

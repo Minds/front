@@ -60,7 +60,6 @@ describe('ActivityComponent', () => {
                 showOnlyCommentsToggle: false,
                 showToolbar: true,
                 showInteractions: false,
-                showBoostMenuOptions: false,
                 showEditedTag: false,
                 showVisibilityState: false,
                 showTranslation: false,

@@ -4,7 +4,7 @@
       <a
         routerLink="/discovery/top"
         [class.m-tabs__tab--selected]="isLinkActive('/discovery/top')"
-        data-cy="discovery-tab-link-top"
+        data-ref="discovery-tab-link-top"
         i18n="@@DISCOVERY_TAGS__TOP"
         >Top</a
       >
@@ -14,7 +14,7 @@
         routerLink="/discovery/overview"
         [class.m-tabs__tab--selected]="isLinkActive('/discovery/overview')"
         [queryParams]="{ reload: false }"
-        data-cy="discovery-tab-link-overview"
+        data-ref="discovery-tab-link-overview"
         i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
         >Just for you</a
       >
@@ -23,7 +23,7 @@
       <a
         routerLink="/discovery/tags/your"
         routerLinkActive="m-tabs__tab--selected"
-        data-cy="discovery-tab-link-tags"
+        data-ref="discovery-tab-link-tags"
         i18n="@@DISCOVERY_TAGS__YOUR_TAGS"
         >Your tags</a
       >
@@ -32,7 +32,7 @@
       <a
         routerLink="/discovery/tags/trending"
         routerLinkActive="m-tabs__tab--selected"
-        data-cy="discovery-tab-link-trending"
+        data-ref="discovery-tab-link-trending"
         i18n="@@DISCOVERY_TAGS__TRENDING"
         >Trending</a
       >
@@ -41,7 +41,7 @@
       <a
         routerLink="/discovery/memberships/feed"
         routerLinkActive="m-tabs__tab--selected"
-        data-cy="discovery-tab-link-memberships"
+        data-ref="discovery-tab-link-memberships"
         i18n="@@DISCOVERY_TAGS__MEMBERSHIPS"
         >Memberships</a
       >
@@ -50,7 +50,7 @@
       <a
         routerLink="/discovery/boost/feed"
         routerLinkActive="m-tabs__tab--selected"
-        data-cy="discovery-tab-link-boosted"
+        data-ref="discovery-tab-link-boosted"
         i18n="@@DISCOVERY_TAGS__BOOSTED"
         >Boost</a
       >
@@ -59,7 +59,7 @@
       <a
         routerLink="/discovery/supermind"
         routerLinkActive="m-tabs__tab--selected"
-        data-cy="discovery-tab-link-boosted"
+        data-ref="discovery-tab-link-boosted"
         i18n="@@DISCOVERY_TABS__SUPERMINDS"
         >Supermind</a
       >
@@ -72,7 +72,7 @@
         *mIfFeature="'!plus-discovery-filter'"
         routerLink="/discovery/plus/overview"
         routerLinkActive="m-tabs__tab--selected"
-        data-cy="discovery-tab-link-plus-overview"
+        data-ref="discovery-tab-link-plus-overview"
         i18n="@@DISCOVERY_TAGS__OVERVIEW"
         >Overview</a
       >
@@ -82,7 +82,7 @@
         <a
           routerLink="/discovery/plus/overview"
           routerLinkActive="m-tabs__tab--selected"
-          data-cy="discovery-tab-link-plus-overview"
+          data-ref="discovery-tab-link-plus-overview"
           i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
           >Just for you</a
         >
@@ -91,7 +91,7 @@
         <a
           routerLink="/discovery/plus/tags/your"
           routerLinkActive="m-tabs__tab--selected"
-          data-cy="discovery-tab-link-tags"
+          data-ref="discovery-tab-link-tags"
           i18n="@@DISCOVERY_TAGS__YOUR_TAGS"
           >Your tags</a
         >
@@ -100,7 +100,7 @@
         <a
           routerLink="/discovery/plus/tags/trending"
           routerLinkActive="m-tabs__tab--selected"
-          data-cy="discovery-tab-link-trending"
+          data-ref="discovery-tab-link-trending"
           i18n="@@DISCOVERY_TAGS__TRENDING"
           >Trending</a
         >
@@ -111,7 +111,7 @@
       <a
         routerLink="/discovery/plus/latest/feed"
         routerLinkActive="m-tabs__tab--selected"
-        data-cy="discovery-tab-link-plus-latest"
+        data-ref="discovery-tab-link-plus-latest"
         i18n="@@DISCOVERY_TABS__LATEST"
         >Latest</a
       >
