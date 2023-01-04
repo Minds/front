@@ -24,7 +24,7 @@
               class="form-control"
               name="name"
               formControlName="name"
-              data-cy="minds-groups-create-name-input"
+              data-ref="minds-groups-create-name-input"
             />
           </div>
         </div>
@@ -47,7 +47,7 @@
             >
               <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
               <input
-                data-cy="minds-groups-create-banner"
+                data-ref="minds-groups-create-banner"
                 id="channel-v2-edit-banner"
                 type="file"
                 accept="image/*"
@@ -66,7 +66,7 @@
               >
                 <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
                 <input
-                  data-cy="minds-groups-create-avatar"
+                  data-ref="minds-groups-create-avatar"
                   id="channel-v2-edit-avatar"
                   type="file"
                   accept="image/*"
@@ -90,7 +90,7 @@
               class="form-control"
               name="description"
               formControlName="description"
-              data-cy="minds-groups-create-description-input"
+              data-ref="minds-groups-create-description-input"
             ></textarea>
           </div>
         </div>
@@ -137,7 +137,7 @@
           [saving]="inProgress"
           [disabled]="!form.valid"
           (onAction)="onSubmit($event)"
-          data-cy="minds-groups-create-submit"
+          data-ref="minds-groups-create-submit"
         >
           Create Group
         </m-button>

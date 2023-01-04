@@ -23,7 +23,7 @@
         ><button
           type="button"
           (click)="addBlankFooterLink()"
-          data-minds="addFooterLink"
+          data-ref="m-settingsProFooter__button--addLink"
           i18n="@@FOOTER__ADD"
         >
           Add
@@ -47,7 +47,7 @@
                 [name]="'footer_link[' + i + '][title]'"
                 formControlName="title"
                 autofocus
-                [attr.data-minds]="'footerLink__title--' + i"
+                [attr.data-ref]="'m-settingsProFooterLinkInput__title--' + i"
                 (focusin)="footerDraggable.onFocusIn($event)"
                 (focusout)="footerDraggable.onFocusOut($event)"
                 (mouseover)="footerDraggable.onFocusIn($event)"
@@ -60,7 +60,7 @@
                 [id]="'footer_link-href-' + i"
                 [name]="'footer_link[' + i + '][href]'"
                 formControlName="href"
-                [attr.data-minds]="'footerLink__href--' + i"
+                [attr.data-ref]="'m-settingsProFooterLinkInput__href--' + i"
                 (focusin)="footerDraggable.onFocusIn($event)"
                 (focusout)="footerDraggable.onFocusOut($event)"
                 (mouseover)="footerDraggable.onFocusIn($event)"

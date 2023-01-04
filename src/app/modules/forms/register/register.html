@@ -91,7 +91,7 @@
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           [pattern]="alphanumericPattern"
-          data-cy="data-minds-register-username-input"
+          data-ref="data-minds-register-username-input"
         />
       </div>
     </div>
@@ -126,7 +126,7 @@
           [placeholder]="showLabels ? '' : 'Email'"
           i18n-placeholder="email placeholder|@@FORMS__REGISTER__EMAIL_PLACEHOLDER"
           [class.m-input--hide-placeholder]="showLabels"
-          data-cy="data-minds-register-email-input"
+          data-ref="data-minds-register-email-input"
         />
       </div>
     </div>
@@ -176,7 +176,7 @@
             (focus)="onPasswordFocus()"
             (blur)="onPasswordBlur()"
             [class.m-input--hide-placeholder]="showLabels"
-            data-cy="data-minds-register-password-input-1"
+            data-ref="data-minds-register-password-input-1"
           />
         </div>
       </m-popover>
@@ -221,7 +221,7 @@
           readonly
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
-          data-cy="data-minds-register-password-input-2"
+          data-ref="data-minds-register-password-input-2"
           [class.ng-invalid]="this.form.errors?.passwordsMatch"
         />
       </div>
@@ -266,7 +266,7 @@
 
       <m-formInput__checkbox
         formControlName="tos"
-        data-cy="minds-accept-tos-input"
+        data-ref="minds-accept-tos-input"
       >
         I accept the
         <a routerLink="/p/terms" target="_blank"> Terms & Conditions </a>

@@ -54,7 +54,7 @@
               name="min_offchain_tokens"
               formControlName="min_offchain_tokens"
               class="form-control"
-              data-cy="supermind-settings-min-tokens-input"
+              data-ref="supermind-settings-min-tokens-input"
             />
           </div>
           <ng-container
@@ -87,7 +87,7 @@
               name="min_cash"
               formControlName="min_cash"
               class="form-control"
-              data-cy="supermind-settings-min-cash-input"
+              data-ref="supermind-settings-min-cash-input"
             />
           </div>
           <ng-container
@@ -106,7 +106,7 @@
           [disabled]="!canSubmit()"
           [saving]="savingInProgress$ | async"
           (onAction)="save()"
-          data-cy="supermind-settings-submit-button"
+          data-ref="supermind-settings-submit-button"
         >
           <ng-container
             i18n="@@SETTINGS__PAYMENTS__SUPERMIND__UPDATE_PREFERENCES"
@@ -126,7 +126,7 @@
       *ngIf="
         (form.touched || form.dirty) && getFormErrors(formControlKey) as errors
       "
-      data-cy="supermind-settings-validation-error"
+      data-ref="supermind-settings-validation-error"
     >
       <ng-container
         *ngIf="errors.min && formControlKey === 'min_offchain_tokens'"

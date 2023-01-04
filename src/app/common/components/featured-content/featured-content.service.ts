@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { filter, first, switchMap, mergeMap, skip, take } from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 import { Subscription } from 'rxjs';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { DynamicBoostExperimentService } from '../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
+import { BoostLocation } from '../../../modules/boost/modal-v2/boost-modal-v2.types';
 
 @Injectable()
 export class FeaturedContentService {
@@ -13,7 +14,7 @@ export class FeaturedContentService {
 
   constructor(
     protected feedsService: FeedsService,
-    private experiments: ExperimentsService
+    private dynamicBoostExperiment: DynamicBoostExperimentService
   ) {
     this.onInit();
   }
@@ -24,12 +25,25 @@ export class FeaturedContentService {
       this.maximumOffset = this.feedLength - 1;
     });
 
-    this.feedsService.setParams({ show_boosts_after_x: 604800 }); // 1 week
+    const dynamicBoostExperimentActive: boolean = this.dynamicBoostExperiment.isActive();
+    let params = dynamicBoostExperimentActive
+      ? {
+          location: BoostLocation.NEWSFEED,
+          show_boosts_after_x: 604800,
+        }
+      : {
+          show_boosts_after_x: 604800, // 1 week
+        };
+
+    const endpoint: string = dynamicBoostExperimentActive
+      ? 'api/v3/boosts/feed'
+      : 'api/v2/boost/feed';
 
     this.feedsService
       .setLimit(12)
       .setOffset(0)
-      .setEndpoint('api/v2/boost/feed')
+      .setParams(params)
+      .setEndpoint(endpoint)
       .fetch();
   }
 
