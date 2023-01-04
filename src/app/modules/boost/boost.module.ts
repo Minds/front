@@ -15,6 +15,7 @@ import { BoostConsoleCard } from './console/card/card.component';
 import { BoostConsoleBooster } from './console/booster/booster.component';
 import { BoostMarketingComponent } from './marketing.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { BoostConsoleV2Component } from './console-v2/console-v2.component';
 
 const boostRoutes: Routes = [
   {
@@ -65,6 +66,7 @@ const boostRoutes: Routes = [
     BoostConsoleTypesComponent,
     BoostConsoleHistoryComponent,
     BoostMarketingComponent,
+    BoostConsoleV2Component,
   ],
   exports: [
     BoostConsoleNetworkListComponent,

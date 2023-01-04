@@ -2,6 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MetaService } from '../../../common/services/meta.service';
+import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 
 export type BoostConsoleType = 'newsfeed' | 'content' | 'offers' | 'publisher';
 export type BoostConsoleFilter =
@@ -15,6 +16,9 @@ export type BoostConsoleFilter =
 
 /**
  * Base component for the boost console
+ *
+ * NOTE: When the dynamicBoostExperiment is complete, we can remove this component and
+ * point the boost module routes to go to BoostConsoleV2Component instead
  */
 @Component({
   selector: 'm-boost-console',
@@ -27,7 +31,8 @@ export class BoostConsoleComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private metaService: MetaService
+    private metaService: MetaService,
+    public dynamicBoostExperiment: DynamicBoostExperimentService
   ) {}
 
   ngOnInit() {

@@ -1,11 +1,36 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { BoostContractService } from '../blockchain/contracts/boost-contract.service';
+import {
+  BoostConsoleAudienceFilterType,
+  BoostConsoleStateFilterType,
+} from './boost.types';
 
 @Injectable()
 export class BoostService {
+  // Subject containing whether or not we are viewing
+  // the boost console in the context of the admin console
+  //
+  // (as opposed to user view)
+  public readonly adminContext$: BehaviorSubject<
+    BoostConsoleStateFilterType
+  > = new BehaviorSubject<BoostConsoleStateFilterType>('all');
+
+  // Subject containing status filter for console to display.
+  // (Used in user boost console only)
+  public readonly stateFilter$: BehaviorSubject<
+    BoostConsoleStateFilterType
+  > = new BehaviorSubject<BoostConsoleStateFilterType>('all');
+
+  // Subject containing audience/suitability filter for console to display.
+  // (Used in admin console only)
+  public readonly audienceFilter$: BehaviorSubject<
+    BoostConsoleAudienceFilterType
+  > = new BehaviorSubject<BoostConsoleAudienceFilterType>('safe');
+
   constructor(
     public session: Session,
     private client: Client,
@@ -181,4 +206,44 @@ export class BoostService {
    * Returns true if the transactionid indicates that the transaction is onChain;
    */
   isOnChain = (boost: any) => boost.transactionId.startsWith('0x');
+
+  /**
+   * DYNAMIC BOOSTS -------------------------------------
+   */
+
+  /**
+   * Returns a promise with a collection of dynamic boosts.
+   */
+  loadBoosts(
+    statusFilter: string,
+    suitabilityFilter: string,
+    { limit, offset }: { limit?: number; offset?: string } = {}
+  ): Promise<{ boosts; loadNext }> {
+    let endpoint = 'api/v3/boosts';
+    let status = '';
+    let suitability = '';
+
+    if (statusFilter) {
+      // ojm get number
+      status = '?status=1';
+    }
+
+    if (suitabilityFilter) {
+      // ojm get number
+      const prefix = statusFilter ? '&' : '?';
+      suitability = `${prefix}audience=1`;
+    }
+
+    return this.client
+      .get(`${endpoint}${status}${suitability}`, {
+        limit: limit || 12,
+        offset: offset || '',
+      })
+      .then(({ boosts, 'load-next': loadNext }) => {
+        return {
+          boosts: boosts && boosts.length ? boosts : [],
+          loadNext: loadNext || '',
+        };
+      });
+  }
 }

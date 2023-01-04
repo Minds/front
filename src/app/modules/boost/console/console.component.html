@@ -1,100 +1,108 @@
-<div class="m-toolbar">
-  <div class="m-topbar--row">
-    <div class="m-topbar--navigation m-topbar--navigation--text-only">
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/boost/console/newsfeed"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span i18n="@@COMMON__NEWSFEED">Newsfeed</span>
-        <m-tooltip
-          icon="help"
-          i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__NEWSFEED_TOOLTIP"
-        >
-          Boosts shown on user's feeds
-        </m-tooltip>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/boost/console/content"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span i18n="@@M__FEATURE__SIDEBAR">Sidebar</span>
-        <m-tooltip
-          icon="help"
-          i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__SIDEBAR_TOOLTIP"
-        >
-          Boosts shown on sidebars
-        </m-tooltip>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/boost/console/offers"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span i18n="@@M__FEATURE__OFFER__PLURAL">Offers</span>
-        <m-tooltip
-          icon="help"
-          i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__OFFERS_TOOLTIP"
-        >
-          Boosts you've offered to other users or that've been offered to you
-        </m-tooltip>
-      </a>
+<!-- V2 ---------------------------------->
+<m-boostConsole *ngIf="dynamicBoostExperiment.isActive()"></m-boostConsole>
 
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/boost/console/publisher"
-        routerLinkActive="m-topbar--navigation--item-active"
-        *ngIf="false"
-      >
-        <span i18n="@@M__FEATURE__PUBLISHER">Publisher</span>
-        <m-tooltip
-          icon="help"
-          i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__PUBLISHER_TOOLTIP"
+<!-- V1 ---------------------------------->
+<ng-container *ngIf="!dynamicBoostExperiment.isActive()">
+  <div class="m-toolbar">
+    <div class="m-topbar--row">
+      <div class="m-topbar--navigation m-topbar--navigation--text-only">
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/boost/console/newsfeed"
+          routerLinkActive="m-topbar--navigation--item-active"
         >
-          Boost Publisher program
-        </m-tooltip>
-      </a>
+          <span i18n="@@COMMON__NEWSFEED">Newsfeed</span>
+          <m-tooltip
+            icon="help"
+            i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__NEWSFEED_TOOLTIP"
+          >
+            Boosts shown on user's feeds
+          </m-tooltip>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/boost/console/content"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@M__FEATURE__SIDEBAR">Sidebar</span>
+          <m-tooltip
+            icon="help"
+            i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__SIDEBAR_TOOLTIP"
+          >
+            Boosts shown on sidebars
+          </m-tooltip>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/boost/console/offers"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@M__FEATURE__OFFER__PLURAL">Offers</span>
+          <m-tooltip
+            icon="help"
+            i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__OFFERS_TOOLTIP"
+          >
+            Boosts you've offered to other users or that've been offered to you
+          </m-tooltip>
+        </a>
 
-      <ng-container *ngIf="!splitToolbar && type === 'offers'">
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/boost/console/publisher"
+          routerLinkActive="m-topbar--navigation--item-active"
+          *ngIf="false"
+        >
+          <span i18n="@@M__FEATURE__PUBLISHER">Publisher</span>
+          <m-tooltip
+            icon="help"
+            i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__PUBLISHER_TOOLTIP"
+          >
+            Boost Publisher program
+          </m-tooltip>
+        </a>
+
+        <ng-container *ngIf="!splitToolbar && type === 'offers'">
+          <ng-container *ngTemplateOutlet="offers"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="m-topbar--row" *ngIf="splitToolbar && type === 'offers'">
+      <div class="m-topbar--navigation m-topbar--navigation--text-only">
         <ng-container *ngTemplateOutlet="offers"></ng-container>
-      </ng-container>
+      </div>
     </div>
   </div>
 
-  <div class="m-topbar--row" *ngIf="splitToolbar && type === 'offers'">
-    <div class="m-topbar--navigation m-topbar--navigation--text-only">
-      <ng-container *ngTemplateOutlet="offers"></ng-container>
-    </div>
-  </div>
-</div>
-
-<ng-template #offers>
-  <a
-    class="m-topbar--navigation--item"
-    routerLink="/boost/console/offers/history/inbox"
-    routerLinkActive="m-topbar--navigation--item-active"
-  >
-    <span i18n="@@BOOST__CONSOLE__INBOX_TAB">Inbox</span>
-    <m-tooltip icon="help" i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__INBOX_TOOLTIP">
-      Boosts that have been offered to you
-    </m-tooltip>
-  </a>
-  <a
-    class="m-topbar--navigation--item"
-    routerLink="/boost/console/offers/history/outbox"
-    routerLinkActive="m-topbar--navigation--item-active"
-  >
-    <span i18n="@@BOOST__CONSOLE__OUTBOX_TAB">Outbox</span>
-    <m-tooltip
-      icon="help"
-      i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__OUTBOX_TOOLTIP"
+  <ng-template #offers>
+    <a
+      class="m-topbar--navigation--item"
+      routerLink="/boost/console/offers/history/inbox"
+      routerLinkActive="m-topbar--navigation--item-active"
     >
-      Boosts you've offered other users
-    </m-tooltip>
-  </a>
-</ng-template>
+      <span i18n="@@BOOST__CONSOLE__INBOX_TAB">Inbox</span>
+      <m-tooltip
+        icon="help"
+        i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__INBOX_TOOLTIP"
+      >
+        Boosts that have been offered to you
+      </m-tooltip>
+    </a>
+    <a
+      class="m-topbar--navigation--item"
+      routerLink="/boost/console/offers/history/outbox"
+      routerLinkActive="m-topbar--navigation--item-active"
+    >
+      <span i18n="@@BOOST__CONSOLE__OUTBOX_TAB">Outbox</span>
+      <m-tooltip
+        icon="help"
+        i18n="@@MINDS__BOOST_CONSOLE__TOPBAR__OUTBOX_TOOLTIP"
+      >
+        Boosts you've offered other users
+      </m-tooltip>
+    </a>
+  </ng-template>
 
-<div class="m-boost-console--wrapper">
-  <router-outlet></router-outlet>
-</div>
+  <div class="m-boost-console--wrapper">
+    <router-outlet></router-outlet></div
+></ng-container>

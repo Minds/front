@@ -1,0 +1,42 @@
+<div class="m-pageLayout__container">
+  <div class="m-pageLayout__pane--main">
+    <h3>Boost</h3>
+    <div class="m-tabs__container" *ngIf="!(adminContext$ | async)">
+      <!-- <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/supermind/inbox']"
+          [class.m-tabs__tab--selected]="(listType$ | async) === 'inbox'"
+          data-cy="supermind-console-tab-inbound"
+          i18n="@@SUPERMIND_CONSOLE__TAB_INBOUND"
+          >Inbound</a
+        >
+      </div>
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/supermind/outbox']"
+          [class.m-tabs__tab--selected]="(listType$ | async) === 'outbox'"
+          data-cy="supermind-console-tab-outbound"
+          i18n="@@SUPERMIND_CONSOLE__TAB_INBOUND"
+          >Outbound</a
+        >
+      </div>
+
+      <div class="m-layout__spacer"></div>
+      <m-tooltip
+        class="m-discovery__settingsButton"
+        icon="settings"
+        iconClass="m-supermindConsole__settingsButtonIcon"
+        data-cy="supermind-console-settings-button"
+        (click)="onSettingsButtonClick($event)"
+      >
+        <ng-container i18n="@@SUPERMIND_CONSOLE__SETTINGS_TOOLTIP">
+          Settings
+        </ng-container>
+      </m-tooltip>
+    </div>
+    <router-outlet></router-outlet>
+  </div> -->
+      <div class="m-pageLayout__pane--right"><!-- Spacer --></div>
+    </div>
+  </div>
+</div>
