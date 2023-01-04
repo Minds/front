@@ -12,7 +12,6 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { WirePaymentHandlersService } from '../../../wire/wire-payment-handlers.service';
 import { PlusUpgradeNoticeExperimentService } from '../../../experiments/sub-services/plus-upgrade-notice-experiment.service';
-import { ToasterService } from '../../../../common/services/toaster.service';
 import { WireCreatorComponent } from '../../../wire/v2/creator/wire-creator.component';
 
 describe('PlusUpgradeNoticeComponent', () => {
@@ -54,10 +53,6 @@ describe('PlusUpgradeNoticeComponent', () => {
           {
             provide: PlusUpgradeNoticeExperimentService,
             useValue: MockService(PlusUpgradeNoticeExperimentService),
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
           },
         ],
       }).compileComponents();

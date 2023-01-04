@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ToasterService } from '../../../../common/services/toaster.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { PlusUpgradeNoticeExperimentService } from '../../../experiments/sub-services/plus-upgrade-notice-experiment.service';
 import { WireCreatorComponent } from '../../../wire/v2/creator/wire-creator.component';
@@ -21,8 +20,7 @@ export class PlusUpgradeNoticeComponent implements OnInit {
     private feedNotice: FeedNoticeService,
     private modalService: ModalService,
     private wirePaymentHandlers: WirePaymentHandlersService,
-    private plusUpgradeNoticeExperiment: PlusUpgradeNoticeExperimentService,
-    private toaster: ToasterService
+    private plusUpgradeNoticeExperiment: PlusUpgradeNoticeExperimentService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +42,6 @@ export class PlusUpgradeNoticeComponent implements OnInit {
           upgradeInterval: 'monthly',
         },
         onComplete: () => {
-          this.toaster.success('Welcome to Minds+');
           this.onDismissClick();
           modal.close();
         },
