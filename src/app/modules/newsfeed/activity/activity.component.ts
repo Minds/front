@@ -148,6 +148,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() previousBoost: EventEmitter<any> = new EventEmitter();
   @Output() nextBoost: EventEmitter<any> = new EventEmitter();
 
+  /**
+   * If false, the template will be empty (used for deleted)
+   */
+  canShow = true;
+
   constructor(
     public service: ActivityService,
     private el: ElementRef,
@@ -210,6 +215,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.showFlagRow =
         notInBoostRotator && (boosted || reminded || isSupermindOffer);
+
+      this.cd.markForCheck();
+      this.cd.detectChanges();
     });
   }
 
@@ -303,6 +311,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   delete() {
+    this.canShow = false;
     this.deleted.next(this.service.entity$.value);
   }
 

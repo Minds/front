@@ -103,6 +103,16 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * The daily budget steps to use
+   * @returns { number[] }
+   */
+  get dailyBudgetSteps(): number[] {
+    return this.paymentCategory === BoostPaymentCategory.CASH
+      ? this.service.getConfig().bid_increments.cash
+      : this.service.getConfig().bid_increments.offchain_tokens;
+  }
+
+  /**
    * Duration text, pluralized.
    * @returns { string } duration text.
    */
@@ -142,4 +152,20 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
       ? `\$${this.maxDailyBudget}`
       : `${this.maxDailyBudget}`;
   }
+
+  /**
+   * A callback function that will renderthe label of the slider
+   */
+  currentDailyBudgetFormat = (val: number) => {
+    return this.paymentCategory === BoostPaymentCategory.CASH
+      ? `\$${val}`
+      : `${val}`;
+  };
+
+  /**
+   * A callback function that will renderthe label of the slider
+   */
+  currentDurationFormat = (val: number) => {
+    return `${val} day` + (val > 1 ? 's' : '');
+  };
 }

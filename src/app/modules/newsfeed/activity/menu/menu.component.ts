@@ -22,6 +22,7 @@ import { TranslationService } from '../../../../services/translation';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { DownloadActivityMediaService } from '../../../../common/services/download-activity-media.service';
 import { WireModalService } from '../../../wire/wire-modal.service';
+import { ApiService } from '../../../../common/api/api.service';
 
 /**
  * Options for the activity's meatball menu (different options show for owners).
@@ -45,6 +46,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityService,
     public client: Client,
+    private apiService: ApiService,
     private router: Router,
     private features: FeaturesService,
     private composer: ComposerService,
@@ -87,6 +89,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         'allow-comments',
         'download',
         'wire',
+        'hide-post',
       ];
     } else {
       return [
@@ -146,6 +149,16 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         break;
       case 'download':
         this.downloadActivityMediaService.download(this.entity);
+        break;
+      case 'hide-post':
+        try {
+          await this.apiService
+            .put(`api/v3/newsfeed/hide-entities/` + this.entity.guid)
+            .toPromise();
+          this.deleted.emit(); // Will remove from feeds
+        } catch (e) {
+          this.toasterService.error(e.message);
+        }
         break;
       case 'wire':
         await this.wireModalService.present(this.entity);
