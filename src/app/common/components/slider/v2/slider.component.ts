@@ -8,13 +8,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   selector: 'm-formInput__sliderV2',
   styleUrls: ['./slider.component.ng.scss'],
   template: `
+    <span [style.left]="valueLabelLeftOffset">{{ displayFormat(value) }}</span>
     <input
       type="range"
-      [min]="min"
-      [max]="max"
+      [min]="minVal"
+      [max]="maxVal"
       [step]="step"
-      [ngModel]="value"
-      (ngModelChange)="updateValue($event)"
+      [ngModel]="sliderValue"
+      (ngModelChange)="onSliderValueChange($event)"
     />
   `,
   providers: [
@@ -35,17 +36,29 @@ export class FormInputSliderV2Component implements ControlValueAccessor {
   // gap between steps on slider.
   @Input() public step: number = 1;
 
+  // Custom steps
+  @Input() public steps = [];
+
+  @Input() public displayFormat: (val: number) => string = val => String(val);
+
   // value held by slider.
-  public value: number = 0;
+  public sliderValue: number = 0;
+
+  /**
+   * Default format label value
+   */
+  formatLabel = val => {
+    return val;
+  };
 
   /**
    * Update slider value and propagate the change.
    * @param { number } value.
    * @returns { void }
    */
-  public updateValue(value: number): void {
-    this.value = value;
-    this.propagateChange(this.value);
+  public onSliderValueChange(value: number): void {
+    this.sliderValue = value;
+    this.propagateChange(this.hasCustomSteps ? this.steps[value] : value);
   }
 
   /**
@@ -68,7 +81,7 @@ export class FormInputSliderV2Component implements ControlValueAccessor {
    * @returns { void }
    */
   public writeValue(value: any): void {
-    this.value = value;
+    this.sliderValue = this.hasCustomSteps ? this.steps.indexOf(value) : value;
   }
 
   /**
@@ -78,5 +91,46 @@ export class FormInputSliderV2Component implements ControlValueAccessor {
    */
   public registerOnChange(fn: any): void {
     this.propagateChange = fn;
+  }
+
+  /**
+   * True/False if using custom steps
+   */
+  get hasCustomSteps(): boolean {
+    return this.steps?.length > 0;
+  }
+
+  /**
+   * The actual value we will return the calling component
+   */
+  get value(): number {
+    return this.hasCustomSteps
+      ? this.steps[this.sliderValue]
+      : this.sliderValue;
+  }
+
+  /**
+   * The max value to use in the slider.
+   * If we use custom steps, we use the size of the array
+   */
+  get maxVal(): number {
+    return this.hasCustomSteps ? this.steps.length - 1 : this.max;
+  }
+
+  /**
+   * The min value to use in the slider.
+   * If we use custom steps, we set this to be always 0
+   */
+  get minVal() {
+    return this.hasCustomSteps ? 0 : this.min;
+  }
+
+  /**
+   * Calculates the left position of the floating label
+   */
+  get valueLabelLeftOffset(): string {
+    const pct =
+      ((this.sliderValue - this.minVal) * 100) / (this.maxVal - this.minVal);
+    return `calc(${pct}% - (${8 + pct * 0.2}px))`;
   }
 }
