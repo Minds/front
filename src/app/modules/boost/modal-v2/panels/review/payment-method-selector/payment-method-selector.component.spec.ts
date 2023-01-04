@@ -17,6 +17,7 @@ import { ConfigsService } from '../../../../../../common/services/configs.servic
 import { BoostModalV2PaymentMethodSelectorComponent } from './payment-method-selector.component';
 import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
+import { OnchainBoostsExperimentService } from '../../../../../experiments/sub-services/onchain-boosts-experiment.service';
 
 describe('BoostModalV2PaymentMethodSelectorComponent', () => {
   let comp: BoostModalV2PaymentMethodSelectorComponent;
@@ -78,6 +79,10 @@ describe('BoostModalV2PaymentMethodSelectorComponent', () => {
             }),
           },
           {
+            provide: OnchainBoostsExperimentService,
+            useValue: MockService(OnchainBoostsExperimentService),
+          },
+          {
             provide: ConfigsService,
             useValue: MockService(ConfigsService),
           },
@@ -92,13 +97,14 @@ describe('BoostModalV2PaymentMethodSelectorComponent', () => {
     );
     comp = fixture.componentInstance;
 
-    (comp as any).service.paymentCategory$.next(BoostPaymentCategory.CASH);
+    (comp as any).onchainBoostExperiment.isActive.calls.reset();
+    o(comp as any).service.paymentCategory$.next(BoostPaymentCategory.CASH);
     (comp as any).tokenBalance.onchain$.next(10);
     (comp as any).tokenBalance.offchain$.next(100);
     (comp as any).service.paymentMethod$.next(BoostPaymentMethod.CASH);
     (comp as any).service.paymentMethodId$.next('pay_123');
     (comp as any).theme.isDark$.next(true);
-
+    (comp as any).onchainBoostExperiment.isActive.and.returnValue(true);
     fixture.detectChanges();
 
     if (fixture.isStable()) {
