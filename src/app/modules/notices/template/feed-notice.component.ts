@@ -27,12 +27,12 @@ import { AnalyticsService } from '../../../services/analytics';
 })
 export class FeedNoticeComponent implements OnInit, OnDestroy {
   // emits on feed notice entering and leaving the viewport.
-  private interceptionObserverSubscription: Subscription;
+  private intersectionObserverSubscription: Subscription;
 
   constructor(
     private el: ElementRef,
-    private interceptionObserver: IntersectionObserverService,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private intersectionObserver: IntersectionObserverService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class FeedNoticeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.interceptionObserverSubscription?.unsubscribe();
+    this.intersectionObserverSubscription?.unsubscribe();
   }
 
   // Whether component is dismissible or not (shows close button).
@@ -65,12 +65,12 @@ export class FeedNoticeComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private setupInterceptionObserver(): void {
-    if (this.interceptionObserverSubscription) {
+    if (this.intersectionObserverSubscription) {
       console.warn('Attempted to re-register FeedNotice InterceptionObserver');
       return;
     }
 
-    this.interceptionObserverSubscription = this.interceptionObserver
+    this.intersectionObserverSubscription = this.intersectionObserver
       .createAndObserve(this.el)
       .pipe(debounceTime(1000), filter(Boolean))
       .subscribe((isVisible: boolean) => {
