@@ -98,7 +98,7 @@ describe('BoostModalV2PaymentMethodSelectorComponent', () => {
     comp = fixture.componentInstance;
 
     (comp as any).onchainBoostExperiment.isActive.calls.reset();
-    o(comp as any).service.paymentCategory$.next(BoostPaymentCategory.CASH);
+    (comp as any).service.paymentCategory$.next(BoostPaymentCategory.CASH);
     (comp as any).tokenBalance.onchain$.next(10);
     (comp as any).tokenBalance.offchain$.next(100);
     (comp as any).service.paymentMethod$.next(BoostPaymentMethod.CASH);
