@@ -18,6 +18,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 import { Session } from '../../../services/session';
+import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { InteractionsModalService } from '../../newsfeed/interactions-modal/interactions-modal.service';
 import { NotificationsV3Service } from './notifications-v3.service';
 
@@ -47,6 +48,7 @@ export class NotificationsV3NotificationComponent
     private service: NotificationsV3Service,
     private cd: ChangeDetectorRef,
     private interactionsModalService: InteractionsModalService,
+    private dynamicBoostExperiment: DynamicBoostExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -78,6 +80,7 @@ export class NotificationsV3NotificationComponent
       case 'boost_peer_request':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
+      case 'boost_accepted':
       case 'boost_rejected':
       case 'boost_completed':
       //
@@ -134,7 +137,9 @@ export class NotificationsV3NotificationComponent
       case 'token_withdraw_rejected':
       case 'report_actioned':
       case 'wire_payout':
+      case 'boost_accepted':
       case 'boost_completed':
+      case 'boost_rejected':
       case 'supermind_expiring_soon':
         return false;
       default:
@@ -183,10 +188,12 @@ export class NotificationsV3NotificationComponent
         return 'accepted';
       case 'boost_peer_rejected':
         return 'declined'; // Friendlier than REJECTED
+      case 'boost_accepted':
+        return 'Your Boost is now running';
       case 'boost_rejected':
-        return 'is unable to approve';
+        return 'Your Boost was rejected';
       case 'boost_completed':
-        return 'Your boost is complete';
+        return 'Your Boost is complete';
       case 'token_rewards_summary':
         return (
           'You earned ' +
@@ -235,7 +242,6 @@ export class NotificationsV3NotificationComponent
       case 'quote':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
-      case 'boost_rejected':
         return 'your';
       case 'group_queue_reject':
         return 'your post at';
@@ -250,6 +256,8 @@ export class NotificationsV3NotificationComponent
       case 'token_withdraw_rejected':
       case 'report_actioned':
       case 'boost_completed':
+      case 'boost_accepted':
+      case 'boost_rejected':
       case 'supermind_expiring_soon':
         return '';
     }
@@ -271,13 +279,13 @@ export class NotificationsV3NotificationComponent
       case 'report_actioned':
       case 'subscribe':
       case 'boost_completed':
+      case 'boost_accepted':
+      case 'boost_rejected':
         return '';
       case 'boost_peer_request':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
         return 'boost offer';
-      case 'boost_rejected':
-        return 'boost';
       case 'supermind_accepted':
       case 'supermind_rejected':
       case 'supermind_created':
@@ -309,8 +317,22 @@ export class NotificationsV3NotificationComponent
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
         return ['/boost/console/offers/history/outbox'];
+      case 'boost_accepted':
+      case 'boost_completed':
+        // TODO: Add more precise navigation for offers, and sidebar.
+        return [
+          this.dynamicBoostExperiment.isActive()
+            ? '/boost/console-v2'
+            : '/boost/console/newsfeed/history',
+        ];
       case 'boost_rejected':
-        return ['/boost/console/newsfeed/history'];
+        return [
+          this.notification.entity.type === 'user'
+            ? `/${this.notification.entity.username}`
+            : `/newsfeed/${this.notification.entity.guid}`,
+        ];
+      // case 'boost_rejected':
+      //   return ['/boost/console/newsfeed/history'];
       case 'token_rewards_summary':
         return ['/wallet/tokens/rewards'];
       case 'subscribe':
@@ -405,6 +427,7 @@ export class NotificationsV3NotificationComponent
         return 'warning';
       case 'boost_rejected':
       case 'boost_completed':
+      case 'boost_accepted':
       case 'boost_peer_request':
       case 'boost_peer_rejected':
       case 'boost_peer_accepted':
@@ -432,8 +455,6 @@ export class NotificationsV3NotificationComponent
       case 'boost_peer_request':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
-      case 'boost_rejected':
-      case 'boost_completed':
         return this.notification.entity.entity;
     }
     return this.notification.entity;
@@ -453,7 +474,10 @@ export class NotificationsV3NotificationComponent
       this.notification.type !== 'supermind_rejected' &&
       this.notification.type !== 'supermind_accepted' &&
       this.notification.type !== 'supermind_expired' &&
-      this.notification.type !== 'supermind_expiring_soon'
+      this.notification.type !== 'supermind_expiring_soon' &&
+      this.notification.type !== 'boost_accepted' &&
+      this.notification.type !== 'boost_rejected' &&
+      this.notification.type !== 'boost_completed'
     );
   }
 
