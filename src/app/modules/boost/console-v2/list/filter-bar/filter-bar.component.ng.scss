@@ -10,6 +10,14 @@
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
+  .m-tabs__container {
+    padding: 0 $spacing4;
+  }
+
+  ::ng-deep .m-boostConsole__settingsButtonIcon {
+    @include heading3Regular;
+  }
+
   .m-boostConsole__filterTitleLabel {
     margin-right: $spacing2;
 

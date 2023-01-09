@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 import {
   Boost,
-  BoostConsoleLocationFilterType,
+  BoostConsoleLocationFilter,
   BoostPaymentMethod,
-  BOOST_PAYMENT_METHOD_MAP,
 } from '../../../boost.types';
 
 /**
@@ -15,12 +15,14 @@ import {
   styleUrls: ['./list-item.component.ng.scss'],
 })
 export class BoostConsoleListItemComponent {
+  readonly siteUrl: string;
+
   /** @var { Boost } boost - Boost object */
   @Input() boost: Boost = null;
 
   // ojm rename from context
-  /** @var { BoostConsoleLocationFilterType } context - context of parent list */
-  @Input() context: BoostConsoleLocationFilterType = 'newsfeed';
+  /** @var { BoostConsoleLocationFilter } context - context of parent list */
+  @Input() context: BoostConsoleLocationFilter = 'newsfeed';
 
   /** @var { Object } displayOptions - options for activity display */
   public displayOptions: Object = {
@@ -31,6 +33,24 @@ export class BoostConsoleListItemComponent {
     isFeed: true,
     isInset: true,
   };
+
+  constructor(configs: ConfigsService) {
+    this.siteUrl = configs.get('site_url');
+  }
+  /**
+   * Get receipt url
+   * @return { string } receipt url
+   */
+  get receiptUrl(): string {
+    if (!this.boost.payment_tx_id) {
+      return '';
+    }
+    if (this.boost.payment_method === BoostPaymentMethod.ONCHAIN_TOKENS) {
+      return `www.etherscan.io/tx/${this.boost.payment_tx_id}`;
+    } else {
+      return `${this.siteUrl}api/v3/payments/receipt/${this.boost.payment_tx_id}`;
+    }
+  }
 
   /**
    * Get amount badge text.
@@ -43,7 +63,7 @@ export class BoostConsoleListItemComponent {
       duration = 'day';
     }
 
-    switch (BOOST_PAYMENT_METHOD_MAP[this.boost.payment_method]) {
+    switch (this.boost.payment_method) {
       case BoostPaymentMethod.CASH:
         return `\$${this.boost.payment_amount} over ${this.boost.duration_days} ${duration}`;
       case BoostPaymentMethod.OFFCHAIN_TOKENS:

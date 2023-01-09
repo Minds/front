@@ -1,10 +1,6 @@
 @import 'defaults.scss';
 
 :host {
-  .m-tabs__container {
-    padding: 0 $spacing4;
-  }
-
   h3 {
     @include heading1Bold;
     margin-top: $spacing9;
@@ -13,9 +9,5 @@
 
   .m-pageLayout__pane--main {
     width: 100%;
-  }
-
-  ::ng-deep .m-boostConsole__settingsButtonIcon {
-    @include heading3Regular;
   }
 }

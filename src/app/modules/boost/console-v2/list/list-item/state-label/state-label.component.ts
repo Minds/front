@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Boost, BoostState, BOOST_STATE_MAP } from '../../../../boost.types';
+import { Boost, BoostState } from '../../../../boost.types';
 import { BoostConsoleService } from '../../../services/console.service';
 
 /**
@@ -16,7 +16,6 @@ export class BoostConsoleStateLabelComponent {
   @Input() boost: Boost = null;
 
   // allow us to use states in template.
-  public boostStateMap: typeof BOOST_STATE_MAP = BOOST_STATE_MAP;
   public boostState: typeof BoostState = BoostState;
 
   constructor(public service: BoostConsoleService) {}
@@ -25,7 +24,7 @@ export class BoostConsoleStateLabelComponent {
    * Time til expiration.
    * @return { string }
    */
-  get timeTilExpiration(): string {
-    return this.service.getTimeTilExpiration(this.boost);
+  get timeTillExpiration(): string {
+    return this.service.getTimeTillExpiration(this.boost);
   }
 }

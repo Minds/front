@@ -5,11 +5,12 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { Session } from '../../../services/session';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
-import { BoostService } from '../boost.service';
 import {
   BoostConsoleSuitabilityFilterType,
-  BoostConsoleStateFilterType,
+  BoostConsoleStateFilter,
+  BoostState,
 } from '../boost.types';
+import { BoostConsoleService } from './services/console.service';
 
 @Component({
   selector: 'm-boostConsole',
@@ -20,26 +21,24 @@ export class BoostConsoleV2Component implements OnInit {
   /** @type { Subscription } routeSubscription - subscription to ActivatedRoutes query params*/
   private routeSubscription: Subscription;
 
-  // /** @type { BehaviorSubject<boolean> } are we viewing the boost console in the context of the admin console? */
-  // public readonly adminContext$: BehaviorSubject<boolean> = this.service
-  //   .adminContext$;
+  /** @type { BehaviorSubject<boolean> } are we viewing the boost console in the context of the admin console? */
+  public readonly adminContext$: BehaviorSubject<boolean> = this.service
+    .adminContext$;
 
-  /** @type { BehaviorSubject<BoostConsoleStateFilterType> } state filter from service. */
-  public readonly stateFilter$: BehaviorSubject<
-    BoostConsoleStateFilterType
-  > = this.service.stateFilter$;
+  /** @type { BehaviorSubject<BoostConsoleStateFilter> } state filter from service. */
+  public readonly stateFilterValue$: BehaviorSubject<
+    BoostConsoleStateFilter
+  > = this.service.stateFilterValue$;
 
   /** @type { BehaviorSubject<BoostConsoleSuitabilityFilterType> } suitability filter from service. */
-  public readonly suitabilityFilter$: BehaviorSubject<
+  public readonly suitabilityFilterValue$: BehaviorSubject<
     BoostConsoleSuitabilityFilterType
-  > = this.service.suitabilityFilter$;
-
-  adminContext: boolean = false;
+  > = this.service.suitabilityFilterValue$;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: BoostService,
+    private service: BoostConsoleService,
     private dynamicBoostExperiment: DynamicBoostExperimentService,
     private session: Session,
     private loginReferrer: LoginReferrerService,
@@ -49,7 +48,7 @@ export class BoostConsoleV2Component implements OnInit {
   ngOnInit(): void {
     // if experiment is not active, redirect to root.
     if (!this.dynamicBoostExperiment.isActive()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/boost/console']);
     }
 
     if (!this.session.isLoggedIn()) {
@@ -57,50 +56,43 @@ export class BoostConsoleV2Component implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    // this.service.adminContext$.subscribe(adminContext => {
-    //   this.adminContext = adminContext;
-    // });
+    /**
+     * On route change, set filters
+     *
+     * This is where the filter value subjects are actually changed.
+     * (The filters/tabs just change the queryParams, which are processed here)
+     */
 
-    // on route change, set location type.
-    //ojm todo subscribe to queryparam
     this.routeSubscription = this.route.queryParams.subscribe(params => {
-      const stateFilter: string = params.state || '';
+      const adminContext = this.adminContext$.getValue();
+
+      const stateFilter: BoostState = params.state || null;
       // const suitabilityFilter: string = params.suitability || '';
 
       // ojm make this nicer
-      if (!this.adminContext) {
-        // User view
-        if (
-          stateFilter === 'all' ||
-          stateFilter === 'pending' ||
-          stateFilter === 'approved' ||
-          stateFilter === 'completed' ||
-          stateFilter === 'rejected'
-        ) {
-          this.stateFilter$.next(stateFilter);
-          return;
-        }
-        this.stateFilter$.next('all');
-      } else {
-        // // Admin view
-        // if (audienceFilter === 'safe' || audienceFilter === 'controversial') {
-        //   this.audienceFilter$.next(audienceFilter);
-        //   return;
-        // }
-      }
+      // if (!this.adminContext) {
+      //   // User view
+      //   if (
+      //     stateFilter === 'all' ||
+      //     stateFilter === 'pending' ||
+      //     stateFilter === 'approved' ||
+      //     stateFilter === 'completed' ||
+      //     stateFilter === 'rejected'
+      //   ) {
+      //     this.stateFilterValue$.next(stateFilter);
+      //     return;
+      //   }
+      //   this.stateFilterValue$.next('all');
+      // } else {
+      //   // // Admin view
+      //   // if (audienceFilter === 'safe' || audienceFilter === 'controversial') {
+      //   //   this.audienceFilter$.next(audienceFilter);
+      //   //   return;
+      //   // }
+      // }
     });
   }
   ngOnDestroy(): void {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
-  }
-  /**
-   * Called on settings button click - navigates to settings page.
-   * @param { MouseEvent } $event - click event.
-   * @returns { void }
-   */
-  public onSettingsButtonClick($event: MouseEvent): void {
-    this.router.navigate(['/settings/boost']);
+    this.routeSubscription?.unsubscribe();
   }
 }

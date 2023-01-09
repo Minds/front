@@ -1,25 +1,153 @@
-<m-dropdownMenu [menu]="typeMenu">
-  <div class="m-boostConsole__filterTrigger">
-    <span
-      class="m-boostConsole__filterTitleLabel"
-      i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL"
-      >Status
-    </span>
-    <ng-container
-      [ngTemplateOutlet]="stateTextLabel"
-      [ngTemplateOutletContext]="{ stateLabel: stateFilterValue$ | async }"
-    ></ng-container>
-    <span>▾</span>
-  </div>
-</m-dropdownMenu>
-
-<ng-template #typeMenu>
+<!-- ------------------------ -->
+<!-- TAB FILTERS-->
+<!-- ------------------------ -->
+<div class="m-tabs__container">
+  <!-- ---------------------------------------- -->
+  <!-- TABS: USER CONTEXT --------------------- -->
+  <!-- ---------------------------------------- -->
+  <ng-container *ngIf="!service.adminContext$ | async">
+    <div class="m-tabs__tab">
+      <a
+        [routerLink]="['/boost/console-v2?location=newsfeed']"
+        [class.m-tabs__tab--selected]="
+          (locationFilterValue$ | async) === 'newsfeed'
+        "
+        data-ref="boost-console-tab-newsfeed"
+        i18n="@@BOOST_CONSOLE__TAB_NEWSFEED"
+        >Newsfeed</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        [routerLink]="['/boost/console-v2?location=sidebar']"
+        [class.m-tabs__tab--selected]="
+          (locationFilterValue$ | async) === 'sidebar'
+        "
+        data-ref="boost-console-tab-sidebar"
+        i18n="@@BOOST_CONSOLE__TAB_SIDEBAR"
+        >Sidebar</a
+      >
+    </div>
+  </ng-container>
+  <!-- ---------------------------------------- -->
+  <!-- TABS: ADMIN CONTEXT -------------------- -->
+  <!-- ---------------------------------------- -->
+  <ng-container *ngIf="service.adminContext$ | async">
+    <div class="m-tabs__tab">
+      <a
+        [routerLink]="['/adminojm/boost/console-v2?suitability=safe']"
+        [class.m-tabs__tab--selected]="
+          (suitabilityFilterValue$ | async) === 'safe'
+        "
+        data-ref="boost-console-tab-newsfeed"
+        i18n="@@BOOST_CONSOLE__TAB_NEWSFEED"
+        >Safe</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        [routerLink]="['/adminojm/boost/console-v2?suitability=controversial']"
+        [class.m-tabs__tab--selected]="
+          (suitabilityFilterValue$ | async) === 'controversial'
+        "
+        data-ref="boost-console-tab-sidebar"
+        i18n="@@BOOST_CONSOLE__TAB_SIDEBAR"
+        >Sidebar</a
+      >
+    </div>
+  </ng-container>
+  <!-- ---------------------------------------- -->
+  <div class="m-layout__spacer"></div>
+  <!-- ---------------------------------------- -->
+  <m-tooltip
+    *ngIf="!service.adminContext$ | async"
+    class="m-discovery__settingsButton"
+    icon="settings"
+    iconClass="m-boostConsole__settingsButtonIcon"
+    data-ref="boost-console-settings-button"
+    (click)="onSettingsButtonClick($event)"
+  >
+    <ng-container i18n="@@BOOST_CONSOLE__SETTINGS_TOOLTIP">
+      Settings
+    </ng-container>
+  </m-tooltip>
+</div>
+<!-- ------------------------ -->
+<!-- DROPDOWN MENU FILTERS-->
+<!-- ------------------------ -->
+<div class="m-bostConsole__filtersWrapper">
+  <!-- ------------------------ -->
+  <!-- STATE FILTER DROPDOWN -->
+  <!-- ------------------------ -->
+  <m-dropdownMenu [menu]="stateMenu" *ngIf="!service.adminContext$ | async">
+    <div class="m-boostConsole__filterTrigger">
+      <span
+        class="m-boostConsole__filterTitleLabel"
+        i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__STATUS"
+        >Status
+      </span>
+      <ng-container
+        [ngTemplateOutlet]="stateTextLabel"
+        [ngTemplateOutletContext]="{ stateLabel: stateFilterValue$ | async }"
+      ></ng-container>
+      <span>▾</span>
+    </div>
+  </m-dropdownMenu>
+  <!-- ------------------------ -->
+  <!-- LOCATION FILTER DROPDOWN -->
+  <!-- ------------------------ -->
+  <m-dropdownMenu [menu]="locationMenu" *ngIf="service.adminContext$ | async">
+    <div class="m-boostConsole__filterTrigger">
+      <span
+        class="m-boostConsole__filterTitleLabel"
+        i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__LOCATION"
+        >Location
+      </span>
+      <ng-container
+        [ngTemplateOutlet]="locationTextLabel"
+        [ngTemplateOutletContext]="{
+          locationLabel: locationFilterValue$ | async
+        }"
+      ></ng-container>
+      <span>▾</span>
+    </div>
+  </m-dropdownMenu>
+  <!-- ------------------------ -->
+  <!-- PAYMENT METHOD DROPDOWN MENU -->
+  <!-- ------------------------ -->
+  <m-dropdownMenu
+    [menu]="paymentMethodMenu"
+    *ngIf="service.adminContext$ | async"
+  >
+    <div class="m-boostConsole__filterTrigger">
+      <span
+        class="m-boostConsole__filterTitleLabel"
+        i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__PAYMENT_METHOD"
+        >Payment method
+      </span>
+      <ng-container
+        [ngTemplateOutlet]="paymentMethodTextLabel"
+        [ngTemplateOutletContext]="{
+          paymentMethodLabel: paymentMethodFilterValue$ | async
+        }"
+      ></ng-container>
+      <span>▾</span>
+    </div>
+  </m-dropdownMenu>
+</div>
+<!-- -------------------------------------------- -->
+<!-- -------------------------------------------- -->
+<!-- -------------------------------------------- -->
+<!-- ------------------------ -->
+<!-- STATE FILTER MENU ITEMS -->
+<!-- ------------------------ -->
+<ng-template #stateMenu>
   <ul>
     <m-dropdownMenu__item
       *ngFor="let typeValue of stateFilterTypes"
       (click)="onStateFilterChange(typeValue)"
       selectable="true"
-      [selected]="(stateFilterValue$ | async) === typeValue"
+      [selected]="(service.stateFilterValue$ | async) === typeValue"
     >
       <ng-container
         [ngTemplateOutlet]="stateTextLabel"
@@ -55,6 +183,91 @@
       *ngSwitchCase="'rejected'"
       i18n="@@BOOST_CONSOLE__FILTER_BAR__REJECTED_LABEL"
       >Rejected</ng-container
+    >
+  </span>
+</ng-template>
+<!-- ------------------------ -->
+<!-- LOCATION FILTER MENU ITEMS -->
+<!-- ------------------------ -->
+<ng-template #locationMenu>
+  <ul>
+    <m-dropdownMenu__item
+      *ngFor="let typeValue of locationFilterTypes"
+      (click)="onLocationFilterChange(typeValue)"
+      selectable="true"
+      [selected]="(service.locationFilterValue$ | async) === typeValue"
+    >
+      <ng-container
+        [ngTemplateOutlet]="locationTextLabel"
+        [ngTemplateOutletContext]="{ locationLabel: typeValue }"
+      ></ng-container>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>
+
+<ng-template #locationTextLabel let-locationLabel="locationLabel">
+  <span class="m-boostConsole__filterLabel" [ngSwitch]="locationLabel">
+    <ng-container
+      *ngSwitchCase="'all'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__ALL_LABEL"
+      >All</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'newsfeed'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__NEWSFEED_LABEL"
+      >Newsfeed</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'sidebar'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__SIDEBAR_LABEL"
+      >SIDEBAR</ng-container
+    >
+  </span>
+</ng-template>
+
+<!-- ------------------------ -->
+<!-- PAYMENT METHOD FILTER MENU ITEMS -->
+<!-- ------------------------ -->
+<ng-template #paymentMethodMenu>
+  <ul>
+    <m-dropdownMenu__item
+      *ngFor="let typeValue of paymentMethodFilterTypes"
+      (click)="onPaymentMethodFilterChange(typeValue)"
+      selectable="true"
+      [selected]="(service.paymentMethodFilterValue$ | async) === typeValue"
+    >
+      <ng-container
+        [ngTemplateOutlet]="paymentMethodTextLabel"
+        [ngTemplateOutletContext]="{ paymentMethodLabel: typeValue }"
+      ></ng-container>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>
+
+<ng-template
+  #paymentMethodTextLabel
+  let-paymentMethodLabel="paymentMethodLabel"
+>
+  <span class="m-boostConsole__filterLabel" [ngSwitch]="paymentMethodLabel">
+    <ng-container
+      *ngSwitchCase="'all'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__ALL_LABEL"
+      >All</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'cash'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__CASH_LABEL"
+      >Cash</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'offchain_tokens'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__OFFCHAIN_TOKENS_LABEL"
+      >Off-chain tokens</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="'onchain_tokens'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__ONCHAIN_TOKENS_LABEL"
+      >On-chain tokens</ng-container
     >
   </span>
 </ng-template>

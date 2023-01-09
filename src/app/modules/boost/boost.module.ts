@@ -20,7 +20,9 @@ import { BoostConsoleFilterBarComponent } from './console-v2/list/filter-bar/fil
 import { BoostConsoleListComponent } from './console-v2/list/list.component';
 import { BoostConsoleListItemComponent } from './console-v2/list/list-item/list-item.component';
 import { BoostConsoleStateLabelComponent } from './console-v2/list/list-item/state-label/state-label.component';
-import { BoostConsoleActionButtonsComponent } from './console-v2/list/list-item/action-bar/action-buttons.component';
+import { BoostConsoleActionButtonsComponent } from './console-v2/list/list-item/action-buttons/action-buttons.component';
+import { BoostConsoleService } from './console-v2/services/console.service';
+import { BoostConsoleStatsBarComponent } from './console-v2/list/list-item/stats-bar/stats-bar.component';
 
 const boostRoutes: Routes = [
   {
@@ -42,20 +44,8 @@ const boostRoutes: Routes = [
   },
   {
     path: 'boost/console-v2',
-    component: BoostConsoleComponent,
-    children: [
-      { path: '', redirectTo: 'newsfeed/history', pathMatch: 'full' },
-      {
-        path: ':type',
-        component: BoostConsoleTypesComponent,
-        children: [
-          { path: '', redirectTo: 'history', pathMatch: 'full' },
-          { path: 'create', component: BoostConsoleBooster },
-          { path: 'history', component: BoostConsoleHistoryComponent },
-          { path: 'history/:filter', component: BoostConsoleHistoryComponent },
-        ],
-      },
-    ],
+    component: BoostConsoleV2Component,
+    // ojm also add admin console to admin module
   },
   {
     path: 'boost',
@@ -94,6 +84,7 @@ const boostRoutes: Routes = [
     BoostConsoleListItemComponent,
     BoostConsoleStateLabelComponent,
     BoostConsoleActionButtonsComponent,
+    BoostConsoleStatsBarComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,
@@ -102,5 +93,6 @@ const boostRoutes: Routes = [
     BoostConsoleBooster,
     BoostConsoleV2Component,
   ],
+  providers: [BoostConsoleService],
 })
 export class BoostModule {}

@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Client } from '../../../../services/api';
+import * as moment from 'moment';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, switchMap, take } from 'rxjs/operators';
+import { ApiResponse, ApiService } from '../../../../common/api/api.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import {
   Boost,
-  BoostConsoleLocationFilterType,
-  BoostConsoleStateFilterType,
+  BoostConsoleGetParams,
+  BoostConsoleLocationFilter,
+  BoostConsoleStateFilter,
   BoostConsoleSuitabilityFilterType,
+  BoostLocation,
+  BoostState,
+  BoostSuitability,
+  BoostConsolePaymentMethodFilter,
+  BoostPaymentMethod,
 } from '../../boost.types';
 
 /**
@@ -14,6 +23,8 @@ import {
  */
 @Injectable()
 export class BoostConsoleService {
+  endpoint: string = 'api/v3/boosts';
+
   // Subject containing whether or not we are viewing
   // the boost console in the context of the admin console
   // (as opposed to user context)
@@ -24,14 +35,14 @@ export class BoostConsoleService {
   // Subject containing location filter for console to display.
   // (e.g. newsfeed or sidebar)
   public readonly locationFilterValue$: BehaviorSubject<
-    BoostConsoleLocationFilterType
-  > = new BehaviorSubject<BoostConsoleLocationFilterType>('newsfeed');
+    BoostConsoleLocationFilter
+  > = new BehaviorSubject<BoostConsoleLocationFilter>('newsfeed');
 
   // Subject containing status filter for console to display.
   // (Used in user boost context only)
   public readonly stateFilterValue$: BehaviorSubject<
-    BoostConsoleStateFilterType
-  > = new BehaviorSubject<BoostConsoleStateFilterType>('all');
+    BoostConsoleStateFilter
+  > = new BehaviorSubject<BoostConsoleStateFilter>('all');
 
   // Subject containing suitability filter for console to display.
   // (Used in admin context only)
@@ -39,82 +50,244 @@ export class BoostConsoleService {
     BoostConsoleSuitabilityFilterType
   > = new BehaviorSubject<BoostConsoleSuitabilityFilterType>('safe');
 
-  constructor(public session: Session, private client: Client) {}
+  // Subject containing payment method filter for console to display.
+  // (Used in admin context only)
+  public readonly paymentMethodFilterValue$: BehaviorSubject<
+    BoostConsolePaymentMethodFilter
+  > = new BehaviorSubject<BoostConsolePaymentMethodFilter>('all');
+
+  // The state of the api - whether it's in progress
+  public readonly inProgress$$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  constructor(
+    public session: Session,
+    private api: ApiService,
+    private toasterService: ToasterService
+  ) {}
+
   /**
-   * Returns a promise with a collection of boosts.
+   * Get list of boosts from API based on various filter values.
+   * @param { number } limit - limit to request from API.
+   * @param { number } offset - offset to request from API.
+   * @returns { Observable<ApiResponse> } response from API.
    */
-  loadBoosts(
-    stateFilter: string,
-    suitabilityFilter: string,
-    locationFilter: string,
-    { limit, offset }: { limit?: number; offset?: string } = {}
-  ): Promise<{ boosts; loadNext }> {
-    let endpoint = 'api/v3/boosts';
-    let state = '';
-    let suitability = '';
+  public getList$(
+    limit: number = 12,
+    offset: number = 0
+  ): Observable<ApiResponse> {
+    return this.adminContext$.pipe(
+      take(1),
+      switchMap((adminContext: boolean) => {
+        console.log('ojm SVC getList$ fired, adminContext', adminContext);
+        let context = adminContext ? '/admin' : '';
+        let endpoint = `${this.endpoint}${context}`;
 
-    if (stateFilter) {
-      // ojm get number
-      // ojm use query param array instead of manually adding prefixes
-      state = '?status=1';
-    }
-
-    if (suitabilityFilter) {
-      // ojm get number
-      const prefix = stateFilter ? '&' : '?';
-      suitability = `${prefix}audience=1`;
-    }
-
-    if (locationFilter) {
-      // ojm get number
-      const prefix = locationFilter ? '&' : '?';
-      suitability = `${prefix}audience=1`;
-    }
-
-    return this.client
-      .get(`${endpoint}${status}${suitability}`, {
-        limit: limit || 12,
-        offset: offset || '',
-      })
-      .then(({ boosts, 'load-next': loadNext }) => {
-        return {
-          boosts: boosts && boosts.length ? boosts : [],
-          loadNext: loadNext || '',
+        let params: BoostConsoleGetParams = {
+          limit: limit,
+          offset: offset,
+          location: null,
+          status: null,
+          audience: null,
+          payment_method: null,
         };
-      });
-  }
+        // -------------------------------------------
+        // FILTERS FOR BOTH USERS + ADMINS
+        const location = this.locationFilterValue$.getValue();
 
-  getTimeTilExpiration(boost: Boost) {
-    return 'ojm temp 2 days';
+        if (location) {
+          params.location = this.getBoostLocationFromFilterValue(location);
+        }
+        // -------------------------------------------
+        // FILTERS FOR USERS ONLY
+        if (!this.adminContext$.getValue()) {
+          const state = this.stateFilterValue$.getValue();
+
+          if (state) {
+            params.status = this.getBoostStateFromFilterValue(state);
+          }
+        }
+        // -------------------------------------------
+        // FILTERS FOR ADMINS ONLY
+        if (this.adminContext$.getValue() && this.session.isAdmin()) {
+          params.status = BoostState.PENDING;
+
+          const suitability = this.suitabilityFilterValue$.getValue();
+          const paymentMethod = this.paymentMethodFilterValue$.getValue();
+
+          if (suitability) {
+            params.audience = this.getBoostSuitabilityFromFilterValue(
+              suitability
+            );
+          }
+
+          if (paymentMethod) {
+            params.payment_method = this.getBoostPaymentMethodFromFilterValue(
+              paymentMethod
+            );
+          }
+        }
+        // -------------------------------------------
+        console.log('ojm params', params);
+        return this.api.get<ApiResponse>(endpoint, params);
+      }),
+      catchError(e => {
+        if (e.status === 403) {
+          return of({ redirect: true, errorMessage: e.error.message });
+        }
+        return of(null);
+      })
+    );
   }
 
   /**
    * Approves a boost (action taken by admin)
    * @param boost
-   * @returns boolean
    */
-  approve(boost: Boost) {
-    // ojm todo
-    return true;
+  async approve(boost: Boost): Promise<void> {
+    if (!this.session.isAdmin()) {
+      console.log('Only admins can approve boosts');
+      return;
+    }
+
+    this.inProgress$$.next(true);
+    try {
+      await this.api.post(`${this.endpoint}/${boost.guid}/approve`).toPromise();
+      boost.boost_status = BoostState.APPROVED;
+    } catch (err) {
+      console.log(err);
+      this.toasterService.error(err?.error.message);
+    } finally {
+      this.inProgress$$.next(false);
+    }
   }
 
   /**
    * Rejects a boost (action taken by admin)
    * @param boost
-   * @returns boolean
    */
-  reject(boost: Boost) {
-    // ojm todo
-    return true;
+  async reject(boost: Boost): Promise<void> {
+    if (!this.session.isAdmin()) {
+      console.log('Only admins can reject boosts');
+      return;
+    }
+
+    this.inProgress$$.next(true);
+    try {
+      await this.api.post(`${this.endpoint}/${boost.guid}/reject`).toPromise();
+      boost.boost_status = BoostState.REJECTED;
+    } catch (err) {
+      console.log(err);
+      this.toasterService.error(err?.error.message);
+    } finally {
+      this.inProgress$$.next(false);
+    }
   }
 
   /**
    * Cancels a boost (that hasn't yet been approved)
    * @param boost
-   * @returns boolean
    */
-  cancel(boost: Boost) {
-    // ojm todo
-    return true;
+  async cancel(boost: Boost): Promise<void> {
+    this.inProgress$$.next(true);
+    try {
+      await this.api.post(`${this.endpoint}/${boost.guid}/cancel`).toPromise();
+      boost.boost_status = BoostState.CANCELLED;
+      this.toasterService.success('Boost cancelled');
+    } catch (err) {
+      console.log(err);
+      this.toasterService.error(err?.error.message);
+    } finally {
+      this.inProgress$$.next(false);
+    }
+  }
+
+  // -----------------------------------------------
+  // UTILITY
+  // -----------------------------------------------
+  getBoostStateFromFilterValue(val: BoostConsoleStateFilter): BoostState {
+    switch (val) {
+      case 'pending':
+        return BoostState.PENDING;
+      case 'approved':
+        return BoostState.APPROVED;
+      case 'rejected':
+        return BoostState.REJECTED;
+      case 'completed':
+        return BoostState.COMPLETED;
+      case 'all':
+      default:
+        return null;
+    }
+  }
+
+  getBoostLocationFromFilterValue(
+    val: BoostConsoleLocationFilter
+  ): BoostLocation {
+    switch (val) {
+      case 'newsfeed':
+        return BoostLocation.NEWSFEED;
+      case 'sidebar':
+        return BoostLocation.SIDEBAR;
+      default:
+        return null;
+    }
+  }
+
+  getBoostSuitabilityFromFilterValue(
+    val: BoostConsoleSuitabilityFilterType
+  ): BoostSuitability {
+    switch (val) {
+      case 'safe':
+        return BoostSuitability.SAFE;
+      case 'controversial':
+        return BoostSuitability.CONTROVERSIAL;
+      default:
+        return null;
+    }
+  }
+
+  getBoostPaymentMethodFromFilterValue(
+    val: BoostConsolePaymentMethodFilter
+  ): BoostPaymentMethod {
+    switch (val) {
+      case 'cash':
+        return BoostPaymentMethod.CASH;
+      case 'offchain_tokens':
+        return BoostPaymentMethod.OFFCHAIN_TOKENS;
+      case 'onchain_tokens':
+        return BoostPaymentMethod.ONCHAIN_TOKENS;
+      case 'all':
+      default:
+        return null;
+    }
+  }
+
+  getTimeTillExpiration(boost: Boost): string {
+    const date = moment(
+      (boost.approved_timestamp + boost.duration_days) * 1000
+    );
+    const duration = moment.duration(moment(date).diff(moment()));
+    const daysRemaining = duration.days();
+    const hoursRemaining = duration.hours();
+    const minutesRemaining = duration.minutes();
+    const secondsRemaining = duration.seconds();
+
+    if (daysRemaining > 0) {
+      return `${daysRemaining}d`;
+    }
+    if (hoursRemaining > 0) {
+      return `${hoursRemaining}h`;
+    }
+    // ojm check on this
+    // if (minutesRemaining > 0) {
+    //   return `${minutesRemaining}m`;
+    // }
+    // if (secondsRemaining > 0) {
+    //   return `${secondsRemaining}s`;
+    // }
+
+    return '';
   }
 }

@@ -1,62 +1,69 @@
-<span [ngSwitch]="boostStateMap[boost.status]">
+<span [ngSwitch]="boost.boost_status">
   <ng-container
     *ngSwitchCase="boostState.PENDING"
     i18n="@@BOOST_CONSOLE_STATE_LABEL__PENDING"
   >
     Pending
   </ng-container>
-  <ng-container *ngSwitchCase="boostState.CREATED">
-    <ng-container *ngIf="timeTillExpiration; else expiredText">
-      <span i18n="@@BOOST_CONSOLE_STATE_LABEL__EXPIRES">Expires: </span>
+  <ng-container *ngSwitchCase="boostState.APPROVED">
+    <ng-container *ngIf="timeTillExpiration; else approvedText">
+      <span i18n="@@BOOST_CONSOLE_STATE_LABEL__EXPIRES">Ends in: </span>
       <span class="m-boostConsoleListItem__expirationTime">{{
-        timeTilExpiration
+        timeTillExpiration
       }}</span>
     </ng-container>
-    <ng-template #expiredText i18n="@@BOOST_CONSOLE_STATE_LABEL__EXPIRED"
-      >Expired</ng-template
+    <!-- ojm check if this is safe to remove -->
+    <ng-template #approvedText i18n="@@BOOST_CONSOLE_STATE_LABEL__APPROVED"
+      >Approved</ng-template
     >
   </ng-container>
   <ng-container
-    *ngSwitchCase="boostState.ACCEPTED"
-    i18n="@@BOOST_CONSOLE_STATE_LABEL__ACCEPTED"
-  >
-    Accepted
-  </ng-container>
-  <ng-container
-    *ngSwitchCase="boostState.TRANSFER_FAILED"
-    i18n="@@BOOST_CONSOLE_STATE_LABEL__ACCEPTED"
-  >
-    Accepted
-  </ng-container>
-  <ng-container
-    *ngSwitchCase="boostState.REVOKED"
-    i18n="@@BOOST_CONSOLE_STATE_LABEL__REVOKED"
-  >
-    Revoked
-  </ng-container>
-  <ng-container
     *ngSwitchCase="boostState.REJECTED"
-    i18n="@@BOOST_CONSOLE_STATE_LABEL__DECLINED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__REJECTED"
   >
-    Declined
+    Rejected
   </ng-container>
   <ng-container
-    *ngSwitchCase="boostState.FAILED_PAYMENT"
-    i18n="@@BOOST_CONSOLE_STATE_LABEL__PAYMENT_FAILED"
+    *ngSwitchCase="boostState.REFUND_IN_PROGRESS"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__REFUND_IN_PROGRESS"
   >
-    Payment Failed
+    Refund in progress
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.REFUND_PROCESSED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__REFUNDED"
+  >
+    Refunded
   </ng-container>
   <ng-container
     *ngSwitchCase="boostState.FAILED"
-    i18n="@@BOOST_CONSOLE_STATE_LABEL__UNKNOWN_ERROR"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__FAILED"
   >
-    Unknown Error
+    Failed
   </ng-container>
   <ng-container
-    *ngSwitchCase="boostState.EXPIRED"
-    i18n="@@BOOST_CONSOLE_STATE_LABEL__EXPIRED"
+    *ngSwitchCase="boostState.REPORTED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__REPORTED"
   >
-    Expired
+    Reported
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.PENDING_ONCHAIN_CONFIRMATION"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__PENDING_ONCHAIN_CONFIRMATION"
+  >
+    Pending on-chain confirmation
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.COMPLETED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__COMPLETED"
+  >
+    Completed
+  </ng-container>
+  <ng-container
+    *ngSwitchCase="boostState.CANCELLED"
+    i18n="@@BOOST_CONSOLE_STATE_LABEL__CANCELLED"
+  >
+    Cancelled
   </ng-container>
   <ng-container *ngSwitchDefault i18n="@@BOOST_CONSOLE_STATE_LABEL__UNKNOWN">
     State Unknown

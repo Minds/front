@@ -1,8 +1,7 @@
-// Boost GUID type.
-export type BoostGuid = string;
+// ojm todo - cross ref this file with ben's modal types
+// ojm todo - add optional flags, add any remaining fields
 
-// ojm todo - add optional flag, add any remaining fields (e.g. payment submethod)
-// Boost object from API.
+// BOOST OBJECT FROM API
 export type Boost = {
   guid: string;
   urn: string;
@@ -12,7 +11,7 @@ export type Boost = {
   target_location: number;
   target_suitability: number;
   payment_method_id: number;
-  payment_method?: number;
+  payment_method: number;
   payment_amount: number;
   daily_bid: number;
   duration_days: number;
@@ -20,126 +19,81 @@ export type Boost = {
   created_timestamp: number;
   updated_timestamp: number;
   approved_timestamp: number;
+  payment_tx_id: string;
 };
-///////////////////////////////////////////////////////
-// STATE
 
-// Boost state enum.
+// BOOST GUID
+export type BoostGuid = string;
+
+///////////////////////////////////////////////////////
+
+// BOOST STATE
 export enum BoostState {
-  PENDING,
-  APPROVED,
-  REJECTED,
-  REFUND_IN_PROGRESS,
-  REFUND_PROCESSED,
-  FAILED,
-  REPORTED,
+  PENDING = 1,
+  APPROVED = 2,
+  REJECTED = 3,
+  REFUND_IN_PROGRESS = 4,
+  REFUND_PROCESSED = 5,
+  FAILED = 6,
+  REPORTED = 7,
+  PENDING_ONCHAIN_CONFIRMATION = 8,
+  COMPLETED = 9,
+  CANCELLED = 10,
 }
 
-// Boost state mapping.
-export const BOOST_STATE_MAP: { [key: number]: BoostState } = {
-  1: BoostState.PENDING,
-  2: BoostState.APPROVED,
-  3: BoostState.REJECTED,
-  4: BoostState.REFUND_IN_PROGRESS,
-  5: BoostState.REFUND_PROCESSED,
-  6: BoostState.FAILED,
-  7: BoostState.REPORTED,
-};
-
-// State filter values for Boost console.
-export type BoostConsoleStateFilterType =
+// BOOST CONSOLE STATE FILTER
+export type BoostConsoleStateFilter =
   | 'all'
   | 'pending'
   | 'approved'
   | 'completed'
   | 'rejected';
 ///////////////////////////////////////////////////////
-// PAYMENT METHOD
 
-// Boost payment method enum.
+// BOOST PAYMENT METHOD
 export enum BoostPaymentMethod {
-  CASH,
-  OFFCHAIN_TOKENS,
-  ONCHAIN_TOKENS,
+  CASH = 1,
+  OFFCHAIN_TOKENS = 2,
+  ONCHAIN_TOKENS = 3,
 }
 
-// Boost payment method mapping.
-export const BOOST_PAYMENT_METHOD_MAP: {
-  [key: number]: BoostPaymentMethod;
-} = {
-  1: BoostPaymentMethod.CASH,
-  2: BoostPaymentMethod.OFFCHAIN_TOKENS,
-  3: BoostPaymentMethod.ONCHAIN_TOKENS,
-};
+// BOOST CONSOLE PAYMENT METHOD FILTER
+export type BoostConsolePaymentMethodFilter =
+  | 'all'
+  | 'cash'
+  | 'offchain_tokens'
+  | 'onchain_tokens';
 
 ///////////////////////////////////////////////////////
-// SUITABILITY
-
-// Boost suitability enum.
+// BOOST SUITABILITY
 export enum BoostSuitability {
-  SAFE,
-  CONTROVERSIAL,
+  SAFE = 1,
+  CONTROVERSIAL = 2,
 }
 
-// Boost suitability mapping.
-export const BOOST_SUITABILITY_MAP: {
-  [key: number]: BoostSuitability;
-} = {
-  1: BoostSuitability.SAFE,
-  2: BoostSuitability.CONTROVERSIAL,
-};
-
-// Suitability filter values for Boost console.
+// BOOST CONSOLE SUITABILITY FILTER
 export type BoostConsoleSuitabilityFilterType = 'safe' | 'controversial';
-///////////////////////////////////////////////////////
-// LOCATION
 
-// Boost location enum.
+///////////////////////////////////////////////////////
+
+// BOOST LOCATION
 export enum BoostLocation {
-  NEWSFEED,
-  SIDEBAR,
+  NEWSFEED = 1,
+  SIDEBAR = 2,
 }
 
-// Boost location mapping.
-export const BOOST_LOCATION_MAP: {
-  [key: number]: BoostLocation;
-} = {
-  1: BoostLocation.NEWSFEED,
-  2: BoostLocation.SIDEBAR,
-};
+// BOOST CONSOLE LOCATION FILTER
+// note: 'all' is only used in admin context
+export type BoostConsoleLocationFilter = 'all' | 'newsfeed' | 'sidebar';
 
-// Location filter values for Boost console.
-export type BoostConsoleLocationFilterType = 'newsfeed' | 'sidebar';
-///////////////////////////////////////////////////////
-// LOCATION
-
-// Boost location enum.
-export enum BoostEntityType {
-  ACTIVITY,
-  CHANNEL,
-}
-
-// Boost entity type mapping.
-export const BOOST_ENTITY_TYPE_MAP: {
-  [key: number]: BoostEntityType;
-} = {
-  1: BoostEntityType.ACTIVITY,
-  2: BoostEntityType.CHANNEL,
-};
-
-// Entity type filter values for Boost console.
-export type BoostConsoleEntityTypeFilterType = 'activity' | 'channel';
-///////////////////////////////////////////////////////
-// ojm
-// // Get count params for inbox and outbox endpoints.
-// export type BoostConsoleCountParams = {
-//   status?: BoostState;
-// };
 ///////////////////////////////////////////////////////
 
-// Get params for user console endpoints.
+// BOOST CONSOLE GET PARAMS
 export type BoostConsoleGetParams = {
   limit?: number;
   offset?: number;
+  location?: BoostLocation;
   status?: BoostState;
+  audience?: BoostSuitability;
+  payment_method?: BoostPaymentMethod;
 };

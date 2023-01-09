@@ -1,78 +1,7 @@
 <div class="m-pageLayout__container">
   <div class="m-pageLayout__pane--main">
     <h3>Boost</h3>
-    <div class="m-tabs__container">
-      <!-- ---------------------------------------- -->
-      <!-- TABS: USER CONTEXT --------------------- -->
-      <!-- ---------------------------------------- -->
-      <ng-container *ngIf="!adminContext">
-        <div class="m-tabs__tab">
-          <a
-            [routerLink]="['/boost/console-v2/newsfeed']"
-            [class.m-tabs__tab--selected]="
-              (locationFilterValue$ | async) === 'newsfeed'
-            "
-            data-ref="boost-console-tab-newsfeed"
-            i18n="@@BOOST_CONSOLE__TAB_NEWSFEED"
-            >Newsfeed</a
-          >
-        </div>
-        <div class="m-tabs__tab">
-          <a
-            [routerLink]="['/boost/console-v2/sidebar']"
-            [class.m-tabs__tab--selected]="
-              (locationFilterValue$ | async) === 'sidebar'
-            "
-            data-ref="boost-console-tab-sidebar"
-            i18n="@@BOOST_CONSOLE__TAB_SIDEBAR"
-            >Sidebar</a
-          >
-        </div>
-      </ng-container>
-      <!-- ---------------------------------------- -->
-      <!-- TABS: ADMIN CONTEXT -------------------- -->
-      <!-- ---------------------------------------- -->
-      <!-- ojm todo add counts  -->
-      <ng-container *ngIf="adminContext">
-        <div class="m-tabs__tab">
-          <a
-            [routerLink]="['/boost/console-v2/safe']"
-            [class.m-tabs__tab--selected]="
-              (suitabilityFilterValue$ | async) === 'safe'
-            "
-            data-ref="boost-console-tab-newsfeed"
-            i18n="@@BOOST_CONSOLE__TAB_NEWSFEED"
-            >Safe</a
-          >
-        </div>
-        <div class="m-tabs__tab">
-          <a
-            [routerLink]="['/boost/console-v2/controversial']"
-            [class.m-tabs__tab--selected]="
-              (suitabilityFilterValue$ | async) === 'controversial'
-            "
-            data-ref="boost-console-tab-sidebar"
-            i18n="@@BOOST_CONSOLE__TAB_SIDEBAR"
-            >Sidebar</a
-          >
-        </div>
-      </ng-container>
-      <!-- ---------------------------------------- -->
-      <div class="m-layout__spacer"></div>
-      <!-- ---------------------------------------- -->
-      <m-tooltip
-        class="m-discovery__settingsButton"
-        icon="settings"
-        iconClass="m-boostConsole__settingsButtonIcon"
-        data-ref="boost-console-settings-button"
-        (click)="onSettingsButtonClick($event)"
-      >
-        <ng-container i18n="@@BOOST_CONSOLE__SETTINGS_TOOLTIP">
-          Settings
-        </ng-container>
-      </m-tooltip>
-    </div>
-    <!-- ojm <router-outlet></router-outlet> -->
+    <m-boostConsole__list></m-boostConsole__list>
   </div>
   <div class="m-pageLayout__pane--right"><!-- Spacer --></div>
 </div>

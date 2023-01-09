@@ -1,0 +1,39 @@
+<div class="m-supermindListItem__actionButtons">
+  <ng-container *ngIf="service.adminContext$ | async">
+    <ng-container *ngIf="shouldShowAcceptAndDeclineButtons()">
+      <m-button
+        class="m-supermindListItem__buttonSecondary"
+        size="small"
+        (onAction)="onDecline($event)"
+        [saving]="inProgress$$ | async"
+        ><ng-container
+          i18n="@@SUPERMIND_CONSOLE__ACTION_BUTTONS__DECLINE_OPTION"
+          >Decline</ng-container
+        ></m-button
+      >
+      <m-button
+        class="m-supermindListItem__buttonPrimary"
+        size="small"
+        color="blue"
+        (onAction)="onAccept($event)"
+        [saving]="inProgress$$ | async"
+        ><ng-container
+          i18n="@@SUPERMIND_CONSOLE__ACTION_BUTTONS__ACCEPT_OFFER_OPTION"
+          >Accept Offer</ng-container
+        ></m-button
+      >
+    </ng-container>
+  </ng-container>
+  <!-- <ng-container *ngIf="shouldShowCancelOfferButton()">
+    <m-button
+      class="m-supermindListItem__buttonSecondary--fullWidth"
+      size="small"
+      (onAction)="onCancel($event)"
+      [saving]="inProgress$$ | async"
+      ><ng-container
+        i18n="@@SUPERMIND_CONSOLE__ACTION_BUTTONS__CANCEL_OFFER_OPTION"
+        >Cancel Offer</ng-container
+      ></m-button
+    >
+  </ng-container> -->
+</div>

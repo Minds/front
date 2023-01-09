@@ -1,35 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { BoostContractService } from '../blockchain/contracts/boost-contract.service';
-import {
-  BoostConsoleSuitabilityFilterType,
-  BoostConsoleStateFilterType,
-} from './boost.types';
 
 @Injectable()
 export class BoostService {
-  // Subject containing whether or not we are viewing
-  // the boost console in the context of the admin console
-  // (as opposed to user context)
-  public readonly adminContext$: BehaviorSubject<Boolean> = new BehaviorSubject<
-    Boolean
-  >(false);
-
-  // Subject containing status filter for console to display.
-  // (Used in user boost context only)
-  public readonly stateFilter$: BehaviorSubject<
-    BoostConsoleStateFilterType
-  > = new BehaviorSubject<BoostConsoleStateFilterType>('all');
-
-  // Subject containing suitability filter for console to display.
-  // (Used in admin context only)
-  public readonly suitabilityFilter$: BehaviorSubject<
-    BoostConsoleSuitabilityFilterType
-  > = new BehaviorSubject<BoostConsoleSuitabilityFilterType>('safe');
-
   constructor(
     public session: Session,
     private client: Client,
@@ -211,41 +187,4 @@ export class BoostService {
    * DYNAMIC BOOSTS -------------------------------------
    * ----------------------------------------------------
    */
-
-  /**
-   * Returns a promise with a collection of boosts.
-   */
-  loadBoosts(
-    statusFilter: string,
-    suitabilityFilter: string,
-    { limit, offset }: { limit?: number; offset?: string } = {}
-  ): Promise<{ boosts; loadNext }> {
-    let endpoint = 'api/v3/boosts';
-    let status = '';
-    let suitability = '';
-
-    if (statusFilter) {
-      // ojm get number
-      // ojm use query param array instead of manually adding prefixes
-      status = '?status=1';
-    }
-
-    if (suitabilityFilter) {
-      // ojm get number
-      const prefix = statusFilter ? '&' : '?';
-      suitability = `${prefix}audience=1`;
-    }
-
-    return this.client
-      .get(`${endpoint}${status}${suitability}`, {
-        limit: limit || 12,
-        offset: offset || '',
-      })
-      .then(({ boosts, 'load-next': loadNext }) => {
-        return {
-          boosts: boosts && boosts.length ? boosts : [],
-          loadNext: loadNext || '',
-        };
-      });
-  }
 }

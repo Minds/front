@@ -10,19 +10,19 @@
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
-  .m-supermind__listItem__topBar {
+  .m-boostConsole__listItem__topBar {
     display: flex;
     justify-content: space-between;
     padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
     padding-right: $activityAvatarSpacingRight--feed;
 
-    .m-supermind__listItem__topBarLeft {
+    .m-boostConsole__listItem__topBarLeft {
       > * + * {
         padding-left: $spacing2;
       }
     }
 
-    .m-supermind__listItem__topBarHref {
+    .m-boostConsole__listItem__topBarHref {
       display: flex;
       align-items: center;
       padding-right: calc($spacing1 + ($spacing1 / 2));
@@ -41,7 +41,7 @@
     }
   }
 
-  .m-supermind__listItem__bottomBar {
+  .m-boostConsole__listItem__bottomBar {
     display: flex;
     flex-flow: column nowrap;
     margin-top: $spacing6;
@@ -96,7 +96,7 @@
     }
   }
 
-  .m-supermind__listItem__postUnavailable {
+  .m-boostConsole__listItem__postUnavailable {
     padding-top: $spacing1;
     padding-bottom: $spacing5;
 

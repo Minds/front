@@ -1,60 +1,57 @@
-<ng-container *ngIf="supermind && supermind.entity; else postUnavailable">
-  <div class="m-supermind__listItem__topBar">
-    <div class="m-supermind__listItem__topBarLeft">
+<ng-container *ngIf="boost && boost.entity; else postUnavailable">
+  <div class="m-boost__listItem__topBar">
+    <div class="m-boostConsole__listItem__topBarLeft">
       <m-chipBadge>{{ amountBadgeText }}</m-chipBadge>
-      <m-supermind__stateLabel
-        [supermind]="supermind"
-      ></m-supermind__stateLabel>
+      <m-boostConsole__stateLabel [boost]="boost"></m-boostConsole__stateLabel>
     </div>
     <a
-      *ngIf="context === 'outbox' && supermind.payment_txid"
-      class="m-supermind__listItem__topBarHref"
-      [href]="'/api/v3/payments/receipt/' + supermind.payment_txid"
+      *ngIf="boost.payment_txid"
+      class="m-boostConsole__listItem__topBarHref"
+      [href]="receiptUrl"
       target="_blank"
       >View Receipt</a
     >
   </div>
   <m-activity
-    [entity]="supermind.entity"
+    [entity]="boost.entity"
     [canDelete]="false"
     [displayOptions]="displayOptions"
     [autoplayVideo]="false"
     [canRecordAnalytics]="false"
   ></m-activity>
-  <div class="m-supermind__listItem__bottomBar">
-    <div class="m-supermindListItem__offerInformation">
+  <div class="m-boostConsole__listItem__bottomBar">
+    <div class="m-boostListItem__offerInformation">
       <span
-        *ngIf="context === 'outbox' && supermind.receiver_entity"
-        class="m-supermindListItem__targetInformation"
+        *ngIf="context === 'outbox' && boost.receiver_entity"
+        class="m-boostListItem__targetInformation"
       >
-        <span i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__OFFER_TARGET">Target: </span>
-        <a [href]="'/' + supermind.receiver_entity.username" target="_blank"
-          >@{{ supermind.receiver_entity.username }}</a
+        <span i18n="@@BOOST_CONSOLE_LIST_ITEM__OFFER_TARGET">Target: </span>
+        <a [href]="'/' + boost.receiver_entity.username" target="_blank"
+          >@{{ boost.receiver_entity.username }}</a
         >
-        <span class="m-supermindListItem__targetInformation--separator"
+        <span class="m-boostListItem__targetInformation--separator"
           >&ensp;·&ensp;</span
         >
       </span>
-      <span class="m-supermindListItem__requirementsLabel">
-        <span i18n="@@SUPERMIND_CONSOLE_LIST_ITEM__REQUIREMENTS"
+      <span class="m-boostListItem__requirementsLabel">
+        <span i18n="@@BOOST_CONSOLE_LIST_ITEM__REQUIREMENTS"
           >Requirements:
         </span>
-        <span class="m-supermindListItem__requirementsText">{{
+        <span class="m-boostListItem__requirementsText">{{
           requirementsText
         }}</span>
       </span>
     </div>
-    <m-supermind__actionButtons
-      [supermind]="supermind"
-    ></m-supermind__actionButtons>
+    <m-boostConsole__actionButtons
+      [boost]="boost"
+    ></m-boostConsole__actionButtons>
   </div>
 </ng-container>
 <ng-template #postUnavailable>
   <div
-    class="m-supermind__listItem__postUnavailable"
-    data-ref="supermind-list-item-unavailable"
+    class="m-boostConsole__listItem__postUnavailable"
+    data-ref="boost-list-item-unavailable"
   >
-    <span>Post unavailable</span>
-    <span>This post is unavailable because it was deleted.</span>
+    <span>Boosted post unavailable</span>
   </div>
 </ng-template>

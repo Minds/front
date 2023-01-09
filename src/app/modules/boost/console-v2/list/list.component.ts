@@ -7,7 +7,6 @@ import {
   switchMap,
   take,
   tap,
-  withLatestFrom,
 } from 'rxjs/operators';
 import { ApiResponse } from '../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
@@ -15,8 +14,9 @@ import { Router } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import {
   Boost,
-  BoostConsoleLocationFilterType,
-  BoostState,
+  BoostConsoleLocationFilter,
+  BoostConsoleStateFilter,
+  BoostConsoleSuitabilityFilterType,
 } from '../../boost.types';
 import { BoostConsoleService } from '../services/console.service';
 
@@ -40,15 +40,24 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
     boolean
   >(true);
 
-  // Location type e.g. newsfeed or sidebar.
-  public readonly locationFilterValue$: BehaviorSubject<
-    BoostConsoleLocationFilterType
-  > = this.service.locationFilterValue$;
+  // Boost console context subject.
+  public readonly adminContext$: BehaviorSubject<boolean> = this.service
+    .adminContext$;
 
   // State filter value subject.
   public readonly stateFilterValue$: BehaviorSubject<
-    BoostState
-  > = new BehaviorSubject<BoostState>(null); // ojm why not 'all'?
+    BoostConsoleStateFilter
+  > = this.service.stateFilterValue$;
+
+  // Location type e.g. newsfeed or sidebar.
+  public readonly locationFilterValue$: BehaviorSubject<
+    BoostConsoleLocationFilter
+  > = this.service.locationFilterValue$;
+
+  // Suitability filter value subject.
+  public readonly suitabilityFilterValue$: BehaviorSubject<
+    BoostConsoleSuitabilityFilterType
+  > = this.service.suitabilityFilterValue$;
 
   // List subject.
   public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<Boost[]>(
@@ -57,16 +66,6 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
 
   // Number of boosts to request from API.
   private readonly requestLimit: number = 12;
-
-  // // First count of all entries.
-  // public readonly initialCount$: BehaviorSubject<number> = new BehaviorSubject<
-  //   number
-  // >(0);
-
-  // // Latest updated count of all entries.
-  // public readonly updatedCount$: BehaviorSubject<number> = new BehaviorSubject<
-  //   number
-  // >(0);
 
   constructor(
     private service: BoostConsoleService,
@@ -96,34 +95,37 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
     return combineLatest([
       this.locationFilterValue$,
       this.stateFilterValue$,
+      this.suitabilityFilterValue$,
     ]).pipe(
       distinctUntilChanged(),
       tap(_ => {
         this.inProgress$.next(true);
         this.list$.next([]);
-        // this.initialCount$.next(0);
+        // ojm this.initialCount$.next(0);
       }),
       debounceTime(100),
       switchMap(
-        ([locationFilterValue, stateFilterValue]: [
-          BoostConsoleLocationFilterType,
-          BoostState
+        ([locationFilterValue, stateFilterValue, suitabilityFilterValue]: [
+          BoostConsoleLocationFilter,
+          BoostConsoleStateFilter,
+          BoostConsoleSuitabilityFilterType
         ]): Observable<ApiResponse> => {
-          this.moreData$.next(!this.service.isNumericListType(listType));
-          return this.service.getList$(this.requestLimit, 0, stateFilterValue);
+          // ojm what is happening here and when is it numbericListType
+          // this.moreData$.next(!this.service.isNumericListType(listType));
+          return this.service.getList$(this.requestLimit, 0);
         }
       ),
       tap((response: any) => {
+        // ojm what's response.redirect?
         if (response && typeof response.redirect !== 'undefined') {
           console.log(response);
           this.toaster.error(response.errorMessage);
-          this.router.navigate(['boost/inbox']);
+          this.router.navigate(['boost/console-v2']);
           return;
         }
         this.moreData$.next(response?.length >= this.requestLimit);
         this.inProgress$.next(false);
         this.list$.next(response);
-        this.populateCounts();
       })
     );
   }
@@ -140,11 +142,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
 
     this.subscriptions.push(
       this.service
-        .getList$(
-          this.requestLimit,
-          this.list$.getValue().length ?? null,
-          this.stateFilterValue$.getValue()
-        )
+        .getList$(this.requestLimit, this.list$.getValue().length ?? null)
         .pipe(take(1))
         .subscribe((list: any) => {
           if (list && list.length) {
@@ -159,40 +157,24 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
   }
 
   /**
-   * Get a count of all entries a user could have from the server
-   * and populate instance variables with values.
+   * Called on state filter change.
+   * @param { BoostConsoleStateFilter } stateFilterValue - state of boost changed to by filter.
    * @returns { void }
+   * ojm do I need this?
    */
-  // public populateCounts(): void {
-  //   this.subscriptions.push(
-  //     this.stateFilterValue$
-  //       .pipe(
-  //         // only call once.
-  //         take(1),
-  //         // switch the stream to be the actual count request and call it with the state parameter.
-  //         switchMap(state => this.service.countAll$(state)),
-  //         // include initial count so we can check if it is set.
-  //         withLatestFrom(this.initialCount$)
-  //       )
-  //       .subscribe(([newCount, initialCount]: [number, number]) => {
-  //         // if there is no initial count - set it.
-  //         if (!initialCount) {
-  //           this.initialCount$.next(newCount);
-  //         }
-  //         // else just set the updated count.
-  //         this.updatedCount$.next(newCount);
-  //       })
-  //   );
-  // }
+  public onStateFilterChange(stateFilterValue: BoostConsoleStateFilter): void {
+    console.log('ojm list stateFilterChanged: ', stateFilterValue);
+    // ojm this.stateFilterValue$.next(stateFilterValue);
+  }
 
   /**
-   * Called on state filter change.
-   * @param { BoostState } stateFilterValue - state of boost changed to by filter.
+   * Called on location filter change.
+   * @param { BoostConsoleLocationFilter } locationFilterValue - state of boost changed to by filter.
    * @returns { void }
    */
-  public onStateFilterChange(stateFilterValue: BoostState): void {
-    this.stateFilterValue$.next(stateFilterValue);
-  }
+  // public onLocationFilterChange(locationFilterValue: BoostLocation): void {
+  //   this.locationFilterValue$.next(locationFilterValue);
+  // }
 
   /**
    * Whether no boosts text should be shown.
