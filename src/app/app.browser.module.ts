@@ -33,7 +33,7 @@ export class SentryErrorHandler implements ErrorHandler {
   imports: [
     MindsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {
-      enabled: environment.production,
+      enabled: true,
       // Register the ServiceWorker as soon as the app is stable
       // or after 2.5 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:2500',

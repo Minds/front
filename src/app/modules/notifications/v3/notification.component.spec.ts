@@ -263,4 +263,56 @@ describe('NotificationsV3NotificationComponent', () => {
     };
     expect(comp.nounLink).toEqual(['/newsfeed/' + guid]);
   });
+
+  // nounLinkParams
+
+  it('should get correct nounLinkParams for boost_accepted when experiment is off', () => {
+    comp.notification = {
+      type: 'boost_accepted',
+      data: {
+        boost_location: 1,
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
+    expect(comp.nounLinkParams).toEqual(null);
+  });
+
+  it('should get correct nounLinkParams for boost_completed when experiment is off', () => {
+    comp.notification = {
+      type: 'boost_completed',
+      data: {
+        boost_location: 1,
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
+    expect(comp.nounLinkParams).toEqual(null);
+  });
+
+  it('should get correct nounLinkParams for boost_accepted when experiment is on', () => {
+    comp.notification = {
+      type: 'boost_accepted',
+      data: {
+        boost_location: 2,
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.nounLinkParams).toEqual({
+      state: 'approved',
+      location: 'sidebar',
+    });
+  });
+
+  it('should get correct nounLinkParams for boost_completed when experiment is on', () => {
+    comp.notification = {
+      type: 'boost_completed',
+      data: {
+        boost_location: 1,
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.nounLinkParams).toEqual({
+      state: 'completed',
+      location: 'newsfeed',
+    });
+  });
 });

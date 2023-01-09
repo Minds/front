@@ -319,14 +319,11 @@ export class NotificationsV3NotificationComponent
         return ['/boost/console/offers/history/outbox'];
       case 'boost_accepted':
       case 'boost_completed':
-        // TODO: Add more precise navigation for offers, and sidebar.
-        // use boost_location in notification data and derive status
-        // from notification type.
-        return [
-          this.dynamicBoostExperiment.isActive()
-            ? '/boost/console-v2'
-            : '/boost/console/newsfeed/history',
-        ];
+        if (this.isDynamicBoostExperimentActive()) {
+          return ['/boost/console-v2'];
+        } else {
+          return ['/boost/console/newsfeed/history'];
+        }
       case 'boost_rejected':
         return [
           this.notification.entity.type === 'user'
@@ -372,6 +369,19 @@ export class NotificationsV3NotificationComponent
     if (this.notification.entity?.type === 'comment') {
       return {
         focusedCommentUrn: this.notification.entity.urn,
+      };
+    }
+
+    if (
+      (this.notification.type === 'boost_accepted' ||
+        this.notification.type === 'boost_completed') &&
+      this.isDynamicBoostExperimentActive()
+    ) {
+      return {
+        state: this.deriveBoostStateParamValue(this.notification.type),
+        location: this.deriveBoostLocationParamValue(
+          this.notification.data?.boost_location
+        ),
       };
     }
 
@@ -535,5 +545,45 @@ export class NotificationsV3NotificationComponent
     const method = readableTokens === '1' ? ' token' : ' tokens';
 
     return readableTokens + method;
+  }
+
+  /**
+   * Derive boost state query parameter value from notification type.
+   * @param { string } location - boost type to derive value from.
+   * @returns  { string } query param value for matching boost state.
+   */
+  private deriveBoostStateParamValue(type: string): string {
+    switch (type) {
+      case 'boost_completed':
+        return 'completed';
+      case 'boost_accepted':
+        return 'approved';
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * Derive boost location query parameter value from a given boost location.
+   * @param { string } location - location to derive value from.
+   * @returns  { string } query param value for matching location.
+   */
+  private deriveBoostLocationParamValue(location: number): string {
+    switch (location) {
+      case 1:
+        return 'newsfeed';
+      case 2:
+        return 'sidebar';
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * Whether dynamic boost experiment is active.
+   * @returns { boolean } true if dynamic boost experiment is active.
+   */
+  private isDynamicBoostExperimentActive(): boolean {
+    return this.dynamicBoostExperiment.isActive();
   }
 }
