@@ -320,6 +320,8 @@ export class NotificationsV3NotificationComponent
       case 'boost_accepted':
       case 'boost_completed':
         // TODO: Add more precise navigation for offers, and sidebar.
+        // use boost_location in notification data and derive status
+        // from notification type.
         return [
           this.dynamicBoostExperiment.isActive()
             ? '/boost/console-v2'
