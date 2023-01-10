@@ -25,7 +25,11 @@ import { ToasterService } from '../../services/toaster.service';
       [ngClass]="{ selected: has() }"
       data-ref="data-minds-thumbs-down-button"
     >
-      <i class="material-icons" [class.inProgress]="inProgress">thumb_down</i>
+      <i
+        class="material-icons"
+        [class.inProgress]="session.getLoggedInUser() && inProgress"
+        >thumb_down</i
+      >
       <span
         class="minds-counter"
         *ngIf="object['thumbs:down:count'] > 0 && !iconOnly"

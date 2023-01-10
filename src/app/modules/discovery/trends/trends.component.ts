@@ -25,6 +25,7 @@ import { FastFadeAnimation } from '../../../animations';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-discovery__trends',
@@ -52,7 +53,8 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private discoveryService: DiscoveryTrendsService,
     private discoveryFeedsService: DiscoveryFeedsService,
-    protected suggestionsService: SuggestionsService
+    protected suggestionsService: SuggestionsService,
+    public session: Session
   ) {}
 
   ngOnInit() {
