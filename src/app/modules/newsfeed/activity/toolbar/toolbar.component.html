@@ -81,6 +81,9 @@
 <div
   class="m-activityToolbar__metrics m-legible"
   *ngIf="service.displayOptions.showInteractions && showMetrics"
+  [ngClass]="{
+    'm-activityToolbar__metrics--guestMode': !session.getLoggedInUser()
+  }"
 >
   <div
     class="m-activityToolbarMetrics__metric"

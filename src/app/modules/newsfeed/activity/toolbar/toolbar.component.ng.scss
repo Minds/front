@@ -337,6 +337,13 @@
     @include borderTop;
     @include borderBottom;
     justify-content: flex-start;
+
+    // Access to metrics details modal is denied for logged out users
+    &.m-activityToolbar__metrics--guestMode {
+      .m-activityToolbarMetrics__metric {
+        cursor: default;
+      }
+    }
   }
 
   .m-activityToolbarMetrics__metric {

@@ -1,0 +1,9 @@
+:host {
+  ::ng-deep m-discovery__feeditem {
+    &:first-child {
+      ::ng-deep m-activity {
+        border-top: none !important;
+      }
+    }
+  }
+}

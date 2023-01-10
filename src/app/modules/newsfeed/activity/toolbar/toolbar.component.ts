@@ -104,6 +104,12 @@ export class ActivityToolbarComponent {
   }
 
   async openInteractions(type: InteractionType) {
+    // Access to metrics details modal is denied for logged out users
+    // So don't try to open it
+    if (!this.session.getLoggedInUser()) {
+      return;
+    }
+
     const guid =
       this.entity.entity_guid && type !== 'quotes' && type !== 'reminds'
         ? this.entity.entity_guid
