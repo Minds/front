@@ -53,16 +53,6 @@
                 "defaultValue": "{\n  onClick: action('toggle'),\n}"
             },
             {
-                "name": "actionsData",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/common/components/slider/v2/slider.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\n  onClickButton: action('onAction'),\n}"
-            },
-            {
                 "name": "ActionSolid",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -138,7 +128,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -148,7 +138,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
+                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -218,7 +208,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modules/forms/stories/checkbox.stories.ts",
+                "file": "src/app/modules/forms/stories/radio.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -228,7 +218,7 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modules/forms/stories/radio.stories.ts",
+                "file": "src/app/modules/forms/stories/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -275,26 +265,6 @@
                 "defaultValue": "Template.bind({})",
                 "rawdescription": "Borderless",
                 "description": "<p>Borderless</p>\n"
-            },
-            {
-                "name": "CustomSteps",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/common/components/slider/v2/slider.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/common/components/slider/v2/slider.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Disabled",
@@ -586,21 +556,21 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<LoadingSpinnerComponent>",
-                "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<LoadingEllipsisComponent>",
                 "defaultValue": "(\n  args: LoadingEllipsisComponent\n) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<LoadingSpinnerComponent>",
+                "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -676,16 +646,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/modules/forms/stories/checkbox.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <div class=\"m-formWrapper\">\n  <div class=\"m-form__row--input\">\n      <label for=\"story\" class=\"m-form__customInputWrapper__checkbox\">\n        <ng-container\n          >Check me</ng-container\n        >\n        <input\n          type=\"checkbox\"\n          id=\"story\"\n          name=\"story\"\n          formControlName=\"story\"\n          class=\"form-control\"\n        />\n        <span class=\"m-form__customInput__checkbox\"></span>\n      </label>\n    </div>\n    </div>\n  `,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/modules/forms/stories/radio.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -696,11 +656,11 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/common/components/slider/v2/slider.stories.ts",
+                "file": "src/app/modules/forms/stories/checkbox.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<FormInputSliderV2Component>",
-                "defaultValue": "(\n  args: FormInputSliderV2Component\n) => ({\n  props: {\n    ...args,\n  },\n  template: `\n    <m-formInput__sliderV2\n        [(ngModel)]=\"value\"\n        [steps]=\"steps\"\n    >\n    </m-formInput__sliderV2>\n  `,\n})"
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <div class=\"m-formWrapper\">\n  <div class=\"m-form__row--input\">\n      <label for=\"story\" class=\"m-form__customInputWrapper__checkbox\">\n        <ng-container\n          >Check me</ng-container\n        >\n        <input\n          type=\"checkbox\"\n          id=\"story\"\n          name=\"story\"\n          formControlName=\"story\"\n          class=\"form-control\"\n        />\n        <span class=\"m-form__customInput__checkbox\"></span>\n      </label>\n    </div>\n    </div>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -1017,48 +977,6 @@
                     "defaultValue": "(args: ToggleComponent) => ({\n  props: {\n    ...args,\n    toggle: actionsData.onClick,\n  },\n  template: `\n        <span>{{leftValue}}</span>\n        <span>\n          <m-toggle\n            [leftValue]=\"leftValue\"\n            [rightValue]=\"RightValue\"\n            [mModel]=\"mModel\"\n            (mModelChange)=\"mModel = $event\"\n          ></m-toggle>\n        </span>\n        <span>{{rightValue}}</span>\n      <hr>\n      <div>TODO: enable toggle action</div>\n    `,\n})"
                 }
             ],
-            "src/app/common/components/slider/v2/slider.stories.ts": [
-                {
-                    "name": "actionsData",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/slider/v2/slider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{\n  onClickButton: action('onAction'),\n}"
-                },
-                {
-                    "name": "CustomSteps",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/slider/v2/slider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/slider/v2/slider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/slider/v2/slider.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<FormInputSliderV2Component>",
-                    "defaultValue": "(\n  args: FormInputSliderV2Component\n) => ({\n  props: {\n    ...args,\n  },\n  template: `\n    <m-formInput__sliderV2\n        [(ngModel)]=\"value\"\n        [steps]=\"steps\"\n    >\n    </m-formInput__sliderV2>\n  `,\n})"
-                }
-            ],
             "src/app/common/components/thumbs/thumbs-up.stories.ts": [
                 {
                     "name": "ActiveState",
@@ -1257,28 +1175,6 @@
                     "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu__item\n    [selectable]=\"selectable\"\n    [selected]=\"selected\"\n    [disabled]=\"disabled\"\n    [red]=\"red\"\n    [icon]=\"icon\"\n    [hasSubmenu]=\"hasSubmenu\"\n    [link]=\"link\"\n  >\n    <span i18n=\"@@MY_TRANSLATION_ID\">Item</span>\n  </m-dropdownMenu__item>\n  `,\n})"
                 }
             ],
-            "src/app/common/components/loading-spinner/loading-spinner.stories.ts": [
-                {
-                    "name": "Basic",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<LoadingSpinnerComponent>",
-                    "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
-                }
-            ],
             "src/app/common/components/loading-ellipsis/loading-ellipsis.stories.ts": [
                 {
                     "name": "Basic",
@@ -1299,6 +1195,28 @@
                     "deprecationMessage": "",
                     "type": "Story<LoadingEllipsisComponent>",
                     "defaultValue": "(\n  args: LoadingEllipsisComponent\n) => ({\n  props: args,\n})"
+                }
+            ],
+            "src/app/common/components/loading-spinner/loading-spinner.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/loading-spinner/loading-spinner.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<LoadingSpinnerComponent>",
+                    "defaultValue": "(\n  args: LoadingSpinnerComponent\n) => ({\n  props: args,\n})"
                 }
             ],
             "src/app/common/components/publisher-card/publisher-card.stories.ts": [
@@ -1399,28 +1317,6 @@
                     "defaultValue": "(\n  args: UserAggregatorComponent\n) => ({\n  props: args,\n})"
                 }
             ],
-            "src/app/modules/forms/stories/checkbox.stories.ts": [
-                {
-                    "name": "Basic",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/modules/forms/stories/checkbox.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/modules/forms/stories/checkbox.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<any>",
-                    "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <div class=\"m-formWrapper\">\n  <div class=\"m-form__row--input\">\n      <label for=\"story\" class=\"m-form__customInputWrapper__checkbox\">\n        <ng-container\n          >Check me</ng-container\n        >\n        <input\n          type=\"checkbox\"\n          id=\"story\"\n          name=\"story\"\n          formControlName=\"story\"\n          class=\"form-control\"\n        />\n        <span class=\"m-form__customInput__checkbox\"></span>\n      </label>\n    </div>\n    </div>\n  `,\n})"
-                }
-            ],
             "src/app/modules/forms/stories/radio.stories.ts": [
                 {
                     "name": "Basic",
@@ -1441,6 +1337,28 @@
                     "deprecationMessage": "",
                     "type": "Story<any>",
                     "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n    <div class=\"m-formWrapper\">\n      <div class=\"m-form__field--radio\">\n        <div class=\"m-form__row--label\">\n          <label>\n            Choose one\n           </label>\n        </div>\n        <div class=\"m-form__row--input\">\n          <ng-container *ngFor=\"let opt of opts\">\n            <label\n              [for]=\"opt\"\n              class=\"m-form__customInputWrapper__radio\"\n              >{{ opt }}\n              <input\n                type=\"radio\"\n                [id]=\"opt\"\n                name=\"opt\"\n                [value]=\"opt\"\n                formControlName=\"opts\"\n                class=\"form-control\"\n              />\n              <span class=\"m-form__customInput__radio\"></span>\n            </label>\n          </ng-container>\n        </div>\n      </div>\n    </div>\n  `,\n})"
+                }
+            ],
+            "src/app/modules/forms/stories/checkbox.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/forms/stories/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/modules/forms/stories/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\n  props: args,\n  template: `\n  <div class=\"m-formWrapper\">\n  <div class=\"m-form__row--input\">\n      <label for=\"story\" class=\"m-form__customInputWrapper__checkbox\">\n        <ng-container\n          >Check me</ng-container\n        >\n        <input\n          type=\"checkbox\"\n          id=\"story\"\n          name=\"story\"\n          formControlName=\"story\"\n          class=\"form-control\"\n        />\n        <span class=\"m-form__customInput__checkbox\"></span>\n      </label>\n    </div>\n    </div>\n  `,\n})"
                 }
             ],
             "src/app/modules/channels/v2/mutual-subscriptions/mutual-subscriptions.stories.ts": [
@@ -1670,7 +1588,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 8,
+        "count": 9,
         "status": "low",
         "files": [
             {
@@ -2085,46 +2003,6 @@
             },
             {
                 "filePath": "src/app/common/components/publisher-card/publisher-card.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/common/components/slider/v2/slider.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "actionsData",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/common/components/slider/v2/slider.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CustomSteps",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/common/components/slider/v2/slider.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/common/components/slider/v2/slider.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",

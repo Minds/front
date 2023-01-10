@@ -20,19 +20,14 @@
       "installMode": "lazy",
       "updateMode": "lazy",
       "resources": {
-        "files": [
-          "/assets/**"
-        ]
+        "files": ["/assets/**"]
       }
     }
   ],
   "dataGroups": [
     {
       "name": "api",
-      "urls": [
-        "https://**/api/v**",
-        "http://localhost:8080/api/**"
-      ],
+      "urls": ["https://**/api/v**", "http://localhost:8080/api/**"],
       "cacheConfig": {
         "maxSize": 50,
         "maxAge": "1h",
@@ -49,8 +44,5 @@
     "!/embed/**",
     "!/storybook",
     "!/storybook/**"
-  ],
-  "appData": {
-    "commit": "undefined-undefined"
-  }
+  ]
 }
