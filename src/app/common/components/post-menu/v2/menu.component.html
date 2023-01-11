@@ -25,6 +25,16 @@
         Edit Post
       </span>
     </m-dropdownMenu__item>
+
+    <m-dropdownMenu__item
+      (click)="onSelectedOption('hide-post')"
+      *ngIf="options.indexOf('hide-post') !== -1 && entity?.boosted"
+    >
+      <span i18n="@@M__ACTION__HIDE_POST">
+        Hide post
+      </span>
+    </m-dropdownMenu__item>
+
     <m-dropdownMenu__item
       (click)="onSelectedOption('boost')"
       *ngIf="shouldShowBoost()"

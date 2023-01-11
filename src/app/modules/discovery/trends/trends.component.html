@@ -29,7 +29,7 @@
   </li>
   <!-- ---------------------- -->
   <m-discovery__cardCarousel
-    *ngIf="showChannels"
+    *ngIf="showChannels && session.getLoggedInUser()"
     type="suggestions"
     class="m-discoveryTrends__trend"
   ></m-discovery__cardCarousel>
