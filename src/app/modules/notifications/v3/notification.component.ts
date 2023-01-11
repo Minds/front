@@ -18,6 +18,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 import { Session } from '../../../services/session';
+import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { InteractionsModalService } from '../../newsfeed/interactions-modal/interactions-modal.service';
 import { NotificationsV3Service } from './notifications-v3.service';
@@ -326,9 +327,9 @@ export class NotificationsV3NotificationComponent
         }
       case 'boost_rejected':
         return [
-          this.notification.entity.type === 'user'
-            ? `/${this.notification.entity.username}`
-            : `/newsfeed/${this.notification.entity.guid}`,
+          this.notification.entity?.entity?.type === 'user'
+            ? `/${this.notification.entity?.entity?.username}`
+            : `/newsfeed/${this.notification.entity?.entity?.guid}`,
         ];
       // case 'boost_rejected':
       //   return ['/boost/console/newsfeed/history'];
@@ -380,7 +381,7 @@ export class NotificationsV3NotificationComponent
       return {
         state: this.deriveBoostStateParamValue(this.notification.type),
         location: this.deriveBoostLocationParamValue(
-          this.notification.data?.boost_location
+          this.notification.entity?.target_location
         ),
       };
     }
@@ -570,9 +571,9 @@ export class NotificationsV3NotificationComponent
    */
   private deriveBoostLocationParamValue(location: number): string {
     switch (location) {
-      case 1:
+      case BoostLocation.NEWSFEED:
         return 'newsfeed';
-      case 2:
+      case BoostLocation.SIDEBAR:
         return 'sidebar';
       default:
         return '';

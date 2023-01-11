@@ -9,6 +9,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { InteractionsModalService } from '../../newsfeed/interactions-modal/interactions-modal.service';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
+import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 
 describe('NotificationsV3NotificationComponent', () => {
   let comp: NotificationsV3NotificationComponent;
@@ -245,8 +246,10 @@ describe('NotificationsV3NotificationComponent', () => {
     comp.notification = {
       type: 'boost_rejected',
       entity: {
-        type: 'user',
-        username: username,
+        entity: {
+          type: 'user',
+          username: username,
+        },
       },
     };
     expect(comp.nounLink).toEqual(['/' + username]);
@@ -257,8 +260,10 @@ describe('NotificationsV3NotificationComponent', () => {
     comp.notification = {
       type: 'boost_rejected',
       entity: {
-        type: 'activity',
-        guid: guid,
+        entity: {
+          type: 'activity',
+          guid: guid,
+        },
       },
     };
     expect(comp.nounLink).toEqual(['/newsfeed/' + guid]);
@@ -269,8 +274,8 @@ describe('NotificationsV3NotificationComponent', () => {
   it('should get correct nounLinkParams for boost_accepted when experiment is off', () => {
     comp.notification = {
       type: 'boost_accepted',
-      data: {
-        boost_location: 1,
+      entity: {
+        target_location: BoostLocation.NEWSFEED,
       },
     };
     (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
@@ -280,8 +285,8 @@ describe('NotificationsV3NotificationComponent', () => {
   it('should get correct nounLinkParams for boost_completed when experiment is off', () => {
     comp.notification = {
       type: 'boost_completed',
-      data: {
-        boost_location: 1,
+      entity: {
+        target_location: BoostLocation.NEWSFEED,
       },
     };
     (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
@@ -291,8 +296,8 @@ describe('NotificationsV3NotificationComponent', () => {
   it('should get correct nounLinkParams for boost_accepted when experiment is on', () => {
     comp.notification = {
       type: 'boost_accepted',
-      data: {
-        boost_location: 2,
+      entity: {
+        target_location: BoostLocation.SIDEBAR,
       },
     };
     (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
@@ -305,8 +310,8 @@ describe('NotificationsV3NotificationComponent', () => {
   it('should get correct nounLinkParams for boost_completed when experiment is on', () => {
     comp.notification = {
       type: 'boost_completed',
-      data: {
-        boost_location: 1,
+      entity: {
+        target_location: BoostLocation.NEWSFEED,
       },
     };
     (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
