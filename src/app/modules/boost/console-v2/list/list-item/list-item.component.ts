@@ -20,10 +20,6 @@ export class BoostConsoleListItemComponent {
   /** @var { Boost } boost - Boost object */
   @Input() boost: Boost = null;
 
-  // ojm rename from context
-  /** @var { BoostConsoleLocationFilter } context - context of parent list */
-  @Input() context: BoostConsoleLocationFilter = 'newsfeed';
-
   /** @var { Object } displayOptions - options for activity display */
   public displayOptions: Object = {
     showOwnerBlock: true,
@@ -52,6 +48,7 @@ export class BoostConsoleListItemComponent {
     }
   }
 
+  // ojm fix inProgress$$ all buttons
   /**
    * Get amount badge text.
    * @return { string } amount badge text.

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, switchMap, take } from 'rxjs/operators';
@@ -10,7 +11,7 @@ import {
   BoostConsoleGetParams,
   BoostConsoleLocationFilter,
   BoostConsoleStateFilter,
-  BoostConsoleSuitabilityFilterType,
+  BoostConsoleSuitabilityFilter,
   BoostLocation,
   BoostState,
   BoostSuitability,
@@ -47,8 +48,8 @@ export class BoostConsoleService {
   // Subject containing suitability filter for console to display.
   // (Used in admin context only)
   public readonly suitabilityFilterValue$: BehaviorSubject<
-    BoostConsoleSuitabilityFilterType
-  > = new BehaviorSubject<BoostConsoleSuitabilityFilterType>('safe');
+    BoostConsoleSuitabilityFilter
+  > = new BehaviorSubject<BoostConsoleSuitabilityFilter>('safe');
 
   // Subject containing payment method filter for console to display.
   // (Used in admin context only)
@@ -64,9 +65,21 @@ export class BoostConsoleService {
   constructor(
     public session: Session,
     private api: ApiService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
+  /**
+   * Update query params to reflect the user's selection
+   */
+  public updateQueryParams(paramObj: any) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: paramObj,
+      queryParamsHandling: 'merge',
+    });
+  }
   /**
    * Get list of boosts from API based on various filter values.
    * @param { number } limit - limit to request from API.
@@ -80,7 +93,6 @@ export class BoostConsoleService {
     return this.adminContext$.pipe(
       take(1),
       switchMap((adminContext: boolean) => {
-        console.log('ojm SVC getList$ fired, adminContext', adminContext);
         let context = adminContext ? '/admin' : '';
         let endpoint = `${this.endpoint}${context}`;
 
@@ -129,7 +141,6 @@ export class BoostConsoleService {
           }
         }
         // -------------------------------------------
-        console.log('ojm params', params);
         return this.api.get<ApiResponse>(endpoint, params);
       }),
       catchError(e => {
@@ -236,7 +247,7 @@ export class BoostConsoleService {
   }
 
   getBoostSuitabilityFromFilterValue(
-    val: BoostConsoleSuitabilityFilterType
+    val: BoostConsoleSuitabilityFilter
   ): BoostSuitability {
     switch (val) {
       case 'safe':
@@ -266,7 +277,7 @@ export class BoostConsoleService {
 
   getTimeTillExpiration(boost: Boost): string {
     const date = moment(
-      (boost.approved_timestamp + boost.duration_days) * 1000
+      (boost.approved_timestamp + boost.duration_days * 86400) * 1000
     );
     const duration = moment.duration(moment(date).diff(moment()));
     const daysRemaining = duration.days();
@@ -280,13 +291,14 @@ export class BoostConsoleService {
     if (hoursRemaining > 0) {
       return `${hoursRemaining}h`;
     }
-    // ojm check on this
-    // if (minutesRemaining > 0) {
-    //   return `${minutesRemaining}m`;
-    // }
-    // if (secondsRemaining > 0) {
-    //   return `${secondsRemaining}s`;
-    // }
+
+    if (minutesRemaining > 0) {
+      return `${minutesRemaining}m`;
+    }
+
+    if (secondsRemaining > 0) {
+      return `${secondsRemaining}s`;
+    }
 
     return '';
   }

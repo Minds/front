@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { ActivityService } from '../../common/services/activity.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { DynamicBoostExperimentService } from '../experiments/sub-services/dynamic-boost-experiment.service';
 
 export type Filter =
   | ''
@@ -32,7 +33,7 @@ export class AdminComponent {
     public session: Session,
     private route: ActivatedRoute,
     public router: Router,
-    private pageLayoutService: PageLayoutService
+    public dynamicBoostExperiment: DynamicBoostExperimentService
   ) {}
 
   ngOnInit() {
@@ -45,10 +46,7 @@ export class AdminComponent {
         console.log(params['filter']);
         this.filter = params['filter'];
       }
-      this.pageLayoutService.useFullWidth();
     });
-
-    this.pageLayoutService.useFullWidth();
   }
 
   ngOnDestroy() {

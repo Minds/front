@@ -5,20 +5,38 @@
   flex-flow: column nowrap;
   height: 100%;
   padding-top: $spacing4;
+  padding-bottom: $spacing4;
 
   @include m-theme() {
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
+  .m-boostConsole__listItem__topBar,
+  .m-boostConsole__listItem__bottomBar,
+  .m-boostConsole__listItem__boostUnavailable,
+  ::ng-deep m-publisherCard {
+    padding-left: $activitySpacingLeft--feed;
+    padding-right: $activitySpacingRight--feed;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $spacing4;
+      padding-right: $spacing4;
+    }
+  }
+
   .m-boostConsole__listItem__topBar {
     display: flex;
     justify-content: space-between;
-    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
-    padding-right: $activityAvatarSpacingRight--feed;
 
     .m-boostConsole__listItem__topBarLeft {
       > * + * {
         padding-left: $spacing2;
+      }
+
+      ::ng-deep m-chipBadge {
+        @include m-theme() {
+          background: themed($m-blue);
+        }
       }
     }
 
@@ -44,64 +62,11 @@
   .m-boostConsole__listItem__bottomBar {
     display: flex;
     flex-flow: column nowrap;
-    margin-top: $spacing6;
-    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
-    padding-right: $activityAvatarSpacingRight--feed;
-
-    .m-supermindListItem__offerInformation {
-      display: flex;
-      flex-flow: row nowrap;
-
-      @media screen and (max-width: $min-tablet) {
-        flex-flow: column nowrap;
-      }
-
-      .m-supermindListItem__targetInformation {
-        a,
-        span {
-          text-decoration: none;
-
-          @include body2Regular;
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-        }
-        a:hover {
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
-        }
-
-        @media screen and (max-width: $min-tablet) {
-          margin-bottom: $spacing2;
-
-          .m-supermindListItem__targetInformation--separator {
-            display: none;
-          }
-        }
-      }
-
-      .m-supermindListItem__requirementsLabel {
-        @include body2Regular;
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
-
-        .m-supermindListItem__requirementsText {
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-        }
-      }
-    }
   }
 
-  .m-boostConsole__listItem__postUnavailable {
+  .m-boostConsole__listItem__boostUnavailable {
     padding-top: $spacing1;
     padding-bottom: $spacing5;
-
-    padding-left: $activityAvatarSpacingLeft--feed + $spacing14;
-    padding-right: $activityAvatarSpacingRight--feed;
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
@@ -118,5 +83,20 @@
 
   ::ng-deep m-activity {
     border-top: 0 !important;
+    padding-bottom: $spacing4;
+  }
+  ::ng-deep m-publisherCard {
+    padding-bottom: $spacing4;
+    .m-publisherCard {
+      border: none !important;
+      padding: $spacing4 0 0 !important;
+
+      .m-publisherCard__ownerRow
+        .m-publisherCardOwnerRow__owner
+        .m-publisherCardOwnerRowItem__name {
+        @include body1Bold;
+        font-weight: 700 !important;
+      }
+    }
   }
 }

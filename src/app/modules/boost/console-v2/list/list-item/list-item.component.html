@@ -1,57 +1,56 @@
-<ng-container *ngIf="boost && boost.entity; else postUnavailable">
-  <div class="m-boost__listItem__topBar">
+<ng-container *ngIf="boost && boost.entity; else boostUnavailable">
+  <!-- ------------------------ -->
+  <!-- TOP BAR -->
+  <!-- ------------------------ -->
+  <div class="m-boostConsole__listItem__topBar">
     <div class="m-boostConsole__listItem__topBarLeft">
       <m-chipBadge>{{ amountBadgeText }}</m-chipBadge>
       <m-boostConsole__stateLabel [boost]="boost"></m-boostConsole__stateLabel>
     </div>
     <a
-      *ngIf="boost.payment_txid"
+      *ngIf="boost.payment_tx_id"
       class="m-boostConsole__listItem__topBarHref"
       [href]="receiptUrl"
       target="_blank"
       >View Receipt</a
     >
   </div>
-  <m-activity
-    [entity]="boost.entity"
-    [canDelete]="false"
-    [displayOptions]="displayOptions"
-    [autoplayVideo]="false"
-    [canRecordAnalytics]="false"
-  ></m-activity>
+  <!-- ---------------------------- -->
+  <!-- MIDDLE BAR (BOOSTED ENTITY)-->
+  <!-- ---------------------------- -->
+  <ng-container *ngIf="boost.entity.type && boost.entity.type === 'activity'">
+    <m-activity
+      [entity]="boost.entity"
+      [canDelete]="false"
+      [displayOptions]="displayOptions"
+      [autoplayVideo]="false"
+      [canRecordAnalytics]="false"
+    ></m-activity>
+  </ng-container>
+  <ng-container *ngIf="boost.entity.type && boost.entity.type === 'user'">
+    <m-publisherCard
+      [publisher]="boost.entity"
+      [showSubscribeButton]="false"
+    ></m-publisherCard
+  ></ng-container>
+  <!-- ------------------------ -->
+  <!-- BOTTOM BAR -->
+  <!-- ------------------------ -->
   <div class="m-boostConsole__listItem__bottomBar">
-    <div class="m-boostListItem__offerInformation">
-      <span
-        *ngIf="context === 'outbox' && boost.receiver_entity"
-        class="m-boostListItem__targetInformation"
-      >
-        <span i18n="@@BOOST_CONSOLE_LIST_ITEM__OFFER_TARGET">Target: </span>
-        <a [href]="'/' + boost.receiver_entity.username" target="_blank"
-          >@{{ boost.receiver_entity.username }}</a
-        >
-        <span class="m-boostListItem__targetInformation--separator"
-          >&ensp;·&ensp;</span
-        >
-      </span>
-      <span class="m-boostListItem__requirementsLabel">
-        <span i18n="@@BOOST_CONSOLE_LIST_ITEM__REQUIREMENTS"
-          >Requirements:
-        </span>
-        <span class="m-boostListItem__requirementsText">{{
-          requirementsText
-        }}</span>
-      </span>
-    </div>
+    <m-boostConsole__statsBar [boost]="boost"></m-boostConsole__statsBar>
     <m-boostConsole__actionButtons
       [boost]="boost"
     ></m-boostConsole__actionButtons>
   </div>
 </ng-container>
-<ng-template #postUnavailable>
+<!-- ------------------------ -->
+<!-- BOOST UNAVAILABLE-->
+<!-- ------------------------ -->
+<ng-template #boostUnavailable>
   <div
-    class="m-boostConsole__listItem__postUnavailable"
+    class="m-boostConsole__listItem__boostUnavailable"
     data-ref="boost-list-item-unavailable"
   >
-    <span>Boosted post unavailable</span>
+    <span>Boost unavailable</span>
   </div>
 </ng-template>

@@ -1,16 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import {
   BoostConsoleLocationFilter,
   BoostConsolePaymentMethodFilter,
   BoostConsoleStateFilter,
-  BoostState,
+  BoostConsoleSuitabilityFilter,
 } from '../../../boost.types';
 import { BoostConsoleService } from '../../services/console.service';
 
@@ -25,7 +18,7 @@ import { BoostConsoleService } from '../../services/console.service';
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.ng.scss'],
 })
-export class BoostConsoleFilterBarComponent implements OnInit {
+export class BoostConsoleFilterBarComponent {
   // state filter type values.
   readonly stateFilterTypes: BoostConsoleStateFilter[] = [
     'all',
@@ -50,16 +43,23 @@ export class BoostConsoleFilterBarComponent implements OnInit {
     'onchain_tokens',
   ];
 
-  constructor(public service: BoostConsoleService, private router: Router) {}
+  constructor(public service: BoostConsoleService) {}
 
-  ngOnInit(): void {}
+  public onStateFilterChange(val: BoostConsoleStateFilter): void {
+    this.service.updateQueryParams({ state: val });
+  }
 
-  /**
-   * Called on settings button click - navigates to settings page.
-   * @param { MouseEvent } $event - click event.
-   * @returns { void }
-   */
-  public onSettingsButtonClick($event: MouseEvent): void {
-    this.router.navigate(['/settings/account/boosted-content']);
+  public onLocationFilterChange(val: BoostConsoleLocationFilter): void {
+    this.service.updateQueryParams({ location: val });
+  }
+
+  public onPaymentMethodFilterChange(
+    val: BoostConsolePaymentMethodFilter
+  ): void {
+    this.service.updateQueryParams({ payment_method: val });
+  }
+
+  public onSuitabilityFilterChange(val: BoostConsoleSuitabilityFilter): void {
+    this.service.updateQueryParams({ suitability: val });
   }
 }

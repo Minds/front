@@ -1,6 +1,3 @@
-// ojm todo - cross ref this file with ben's modal types
-// ojm todo - add optional flags, add any remaining fields
-
 // BOOST OBJECT FROM API
 export type Boost = {
   guid: string;
@@ -10,7 +7,7 @@ export type Boost = {
   entity: any;
   target_location: number;
   target_suitability: number;
-  payment_method_id: number;
+  payment_method_id?: number;
   payment_method: number;
   payment_amount: number;
   daily_bid: number;
@@ -19,7 +16,7 @@ export type Boost = {
   created_timestamp: number;
   updated_timestamp: number;
   approved_timestamp: number;
-  payment_tx_id: string;
+  payment_tx_id?: string;
 };
 
 // BOOST GUID
@@ -72,7 +69,7 @@ export enum BoostSuitability {
 }
 
 // BOOST CONSOLE SUITABILITY FILTER
-export type BoostConsoleSuitabilityFilterType = 'safe' | 'controversial';
+export type BoostConsoleSuitabilityFilter = 'safe' | 'controversial';
 
 ///////////////////////////////////////////////////////
 
@@ -85,7 +82,6 @@ export enum BoostLocation {
 // BOOST CONSOLE LOCATION FILTER
 // note: 'all' is only used in admin context
 export type BoostConsoleLocationFilter = 'all' | 'newsfeed' | 'sidebar';
-
 ///////////////////////////////////////////////////////
 
 // BOOST CONSOLE GET PARAMS

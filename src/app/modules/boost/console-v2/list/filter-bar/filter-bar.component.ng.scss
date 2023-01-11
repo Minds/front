@@ -1,10 +1,8 @@
 @import 'defaults.scss';
 
 :host {
-  padding: $spacing4;
   display: flex;
-  flex-flow: row nowrap;
-  max-width: 100%;
+  flex-flow: column nowrap;
 
   @include m-theme() {
     border-bottom: 1px solid themed($m-borderColor--primary);
@@ -14,19 +12,26 @@
     padding: 0 $spacing4;
   }
 
-  ::ng-deep .m-boostConsole__settingsButtonIcon {
-    @include heading3Regular;
-  }
+  .m-boostConsole__filtersWrapper {
+    padding: $spacing4;
+    display: flex;
+    flex-flow: row nowrap;
+    max-width: 100%;
 
-  .m-boostConsole__filterTitleLabel {
-    margin-right: $spacing2;
-
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
+    ::ng-deep m-dropdownMenu {
+      margin-right: $spacing5;
     }
-  }
 
-  .m-boostConsole__filterLabel {
-    margin-right: $spacing2;
+    .m-boostConsole__filterTitleLabel {
+      margin-right: $spacing2;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-boostConsole__filterLabel {
+      margin-right: $spacing2;
+    }
   }
 }

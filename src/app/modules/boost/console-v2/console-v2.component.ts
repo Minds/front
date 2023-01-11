@@ -6,9 +6,10 @@ import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { Session } from '../../../services/session';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import {
-  BoostConsoleSuitabilityFilterType,
+  BoostConsoleSuitabilityFilter,
   BoostConsoleStateFilter,
-  BoostState,
+  BoostConsoleLocationFilter,
+  BoostConsolePaymentMethodFilter,
 } from '../boost.types';
 import { BoostConsoleService } from './services/console.service';
 
@@ -30,10 +31,22 @@ export class BoostConsoleV2Component implements OnInit {
     BoostConsoleStateFilter
   > = this.service.stateFilterValue$;
 
-  /** @type { BehaviorSubject<BoostConsoleSuitabilityFilterType> } suitability filter from service. */
+  /** @type { BehaviorSubject<BoostConsoleSuitabilityFilter> } suitability filter from service. */
   public readonly suitabilityFilterValue$: BehaviorSubject<
-    BoostConsoleSuitabilityFilterType
+    BoostConsoleSuitabilityFilter
   > = this.service.suitabilityFilterValue$;
+
+  @Input() set adminContext(value: boolean) {
+    if (!this.session.isAdmin()) {
+      return;
+    }
+    this.service.adminContext$.next(value);
+
+    // Remove default location filter for admins
+    if (value) {
+      this.service.locationFilterValue$.next('all');
+    }
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -64,31 +77,34 @@ export class BoostConsoleV2Component implements OnInit {
      */
 
     this.routeSubscription = this.route.queryParams.subscribe(params => {
-      const adminContext = this.adminContext$.getValue();
+      const stateFilter: BoostConsoleStateFilter = params.state || null;
+      const locationFilter: BoostConsoleLocationFilter =
+        params.location || null;
+      const suitabilityFilter: BoostConsoleSuitabilityFilter =
+        params.suitability || null;
+      const paymentMethodFilter: BoostConsolePaymentMethodFilter =
+        params.payment_method || null;
 
-      const stateFilter: BoostState = params.state || null;
-      // const suitabilityFilter: string = params.suitability || '';
+      if (stateFilter) {
+        this.service.stateFilterValue$.next(stateFilter);
+      }
 
-      // ojm make this nicer
-      // if (!this.adminContext) {
-      //   // User view
-      //   if (
-      //     stateFilter === 'all' ||
-      //     stateFilter === 'pending' ||
-      //     stateFilter === 'approved' ||
-      //     stateFilter === 'completed' ||
-      //     stateFilter === 'rejected'
-      //   ) {
-      //     this.stateFilterValue$.next(stateFilter);
-      //     return;
-      //   }
-      //   this.stateFilterValue$.next('all');
-      // } else {
-      //   // // Admin view
-      //   // if (audienceFilter === 'safe' || audienceFilter === 'controversial') {
-      //   //   this.audienceFilter$.next(audienceFilter);
-      //   //   return;
-      //   // }
+      if (locationFilter) {
+        this.service.locationFilterValue$.next(locationFilter);
+      }
+
+      if (suitabilityFilter) {
+        this.service.suitabilityFilterValue$.next(suitabilityFilter);
+      }
+
+      if (paymentMethodFilter) {
+        this.service.paymentMethodFilterValue$.next(paymentMethodFilter);
+      }
+
+      // Set up default values as query params
+      // if there aren't any already
+      // if (!this.adminContext && !locationFilter) {
+
       // }
     });
   }

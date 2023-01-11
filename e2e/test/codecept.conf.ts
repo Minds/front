@@ -55,6 +55,7 @@ export const config: CustomMainConfig = {
     searchPage: './pages/searchPage.ts',
     settingsPage: './pages/settingsPage.ts',
     singleEntityPage: './pages/singleEntityPage.ts',
+    boostConsolePage: './pages/boostConsolePage.ts',
     supermindConsolePage: './pages/supermindConsolePage.ts',
     supermindSettingsPage: './pages/supermindSettingsPage.ts',
     tokenMarketingPage: './pages/tokenMarketingPage.ts',

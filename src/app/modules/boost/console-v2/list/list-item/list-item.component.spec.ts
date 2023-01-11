@@ -1,29 +1,30 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from '../../../../../utils/mock';
-import { Supermind } from '../../../supermind.types';
-import { SupermindConsoleListItemComponent } from './list-item.component';
-import { Session } from '../../../../../services/session';
+import { BoostConsoleListItemComponent } from './list-item.component';
+import { Boost } from '../../../boost.types';
 
-describe('SupermindConsoleListItemComponent', () => {
-  let comp: SupermindConsoleListItemComponent;
-  let fixture: ComponentFixture<SupermindConsoleListItemComponent>;
+describe('BoostConsoleListItemComponent', () => {
+  let comp: BoostConsoleListItemComponent;
+  let fixture: ComponentFixture<BoostConsoleListItemComponent>;
 
-  const mockSupermind: Supermind = {
+  const mockBoost: Boost = {
     guid: '123',
-    activity_guid: '234',
-    sender_guid: '345',
-    receiver_guid: '456',
-    status: 1,
-    payment_amount: 1,
+    urn: 'boost:123',
+    owner_guid: '345',
+    entity_guid: '456',
+    entity: { guid: '456' },
+    boost_status: 1,
     payment_method: 1,
-    payment_txid: '567',
+    payment_tx_id: '567',
+    target_location: 1,
+    target_suitability: 1,
+    payment_amount: 1,
+    daily_bid: 1,
+    duration_days: 1,
     created_timestamp: 1662715004,
     updated_timestamp: 1662715004,
-    expiry_threshold: 604800,
-    twitter_required: true,
-    reply_type: 1,
-    entity: { guid: '123' },
+    approved_timestamp: null,
   };
 
   beforeEach(
@@ -31,7 +32,7 @@ describe('SupermindConsoleListItemComponent', () => {
       TestBed.configureTestingModule({
         imports: [RouterTestingModule],
         declarations: [
-          SupermindConsoleListItemComponent,
+          BoostConsoleListItemComponent,
           MockComponent({
             selector: 'm-chipBadge',
           }),
@@ -46,16 +47,20 @@ describe('SupermindConsoleListItemComponent', () => {
             ],
           }),
           MockComponent({
+            selector: 'm-publisherCard',
+            inputs: ['publisher', 'showSubscribeButton'],
+          }),
+          MockComponent({
             selector: 'm-button',
             inputs: ['size'],
           }),
           MockComponent({
-            selector: 'm-supermind__stateLabel',
-            inputs: ['supermind'],
+            selector: 'm-boostConsole__stateLabel',
+            inputs: ['boost'],
           }),
           MockComponent({
-            selector: 'm-supermind__actionButtons',
-            inputs: ['supermind'],
+            selector: 'm-boostConsole__actionButtons',
+            inputs: ['boost'],
           }),
         ],
       }).compileComponents();
@@ -63,11 +68,10 @@ describe('SupermindConsoleListItemComponent', () => {
   );
 
   beforeEach(done => {
-    fixture = TestBed.createComponent(SupermindConsoleListItemComponent);
+    fixture = TestBed.createComponent(BoostConsoleListItemComponent);
     comp = fixture.componentInstance;
 
-    comp.supermind = mockSupermind;
-    comp.context = 'inbox';
+    comp.boost = mockBoost;
 
     fixture.detectChanges();
 
@@ -85,65 +89,26 @@ describe('SupermindConsoleListItemComponent', () => {
   });
 
   it('should get badge text when payment type is cash', () => {
-    comp.supermind.payment_method = 0;
-    comp.supermind.payment_amount = 10;
+    comp.boost.payment_method = 1;
+    comp.boost.payment_amount = 10;
+    comp.boost.duration_days = 3;
 
-    expect(comp.amountBadgeText).toBe(`\$10 Offer`);
+    expect(comp.amountBadgeText).toBe(`\$10 over 3 days`);
   });
 
-  it('should get badge text when payment type is token', () => {
-    comp.supermind.payment_method = 1;
-    comp.supermind.payment_amount = 10;
+  it('should get badge text when payment type is offchain tokens', () => {
+    comp.boost.payment_method = 2;
+    comp.boost.payment_amount = 10;
+    comp.boost.duration_days = 3;
 
-    expect(comp.amountBadgeText).toBe(`10 Token Offer`);
+    expect(comp.amountBadgeText).toBe(`10 tokens over 3 days`);
   });
 
-  it('should get badge text as empty when payment type is unsupported', () => {
-    comp.supermind.payment_method = 3;
-    comp.supermind.payment_amount = 10;
+  it('should get badge text when payment type is offchain tokens', () => {
+    comp.boost.payment_method = 3;
+    comp.boost.payment_amount = 10;
+    comp.boost.duration_days = 3;
 
-    expect(comp.amountBadgeText).toBe('');
-  });
-
-  it('should get requirements text when reply type is text', () => {
-    comp.supermind.reply_type = 0;
-    comp.supermind.twitter_required = false;
-
-    expect(comp.requirementsText).toBe('Text Reply');
-  });
-
-  it('should get requirements text when reply type is image', () => {
-    comp.supermind.reply_type = 1;
-    comp.supermind.twitter_required = false;
-
-    expect(comp.requirementsText).toBe('Image Reply');
-  });
-
-  it('should get requirements text when reply type is video', () => {
-    comp.supermind.reply_type = 2;
-    comp.supermind.twitter_required = false;
-
-    expect(comp.requirementsText).toBe('Video Reply');
-  });
-
-  it('should get requirements text when reply type is text when twitter is required', () => {
-    comp.supermind.reply_type = 0;
-    comp.supermind.twitter_required = true;
-
-    expect(comp.requirementsText).toBe('Text Reply · Twitter');
-  });
-
-  it('should get requirements text when reply type is image when twitter is required', () => {
-    comp.supermind.reply_type = 1;
-    comp.supermind.twitter_required = true;
-
-    expect(comp.requirementsText).toBe('Image Reply · Twitter');
-  });
-
-  it('should get requirements text when reply type is video when twitter is required', () => {
-    comp.supermind.reply_type = 2;
-    comp.supermind.twitter_required = true;
-
-    expect(comp.requirementsText).toBe('Video Reply · Twitter');
+    expect(comp.amountBadgeText).toBe(`10 tokens over 3 days`);
   });
 });

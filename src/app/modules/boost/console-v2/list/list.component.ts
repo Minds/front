@@ -15,8 +15,9 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import {
   Boost,
   BoostConsoleLocationFilter,
+  BoostConsolePaymentMethodFilter,
   BoostConsoleStateFilter,
-  BoostConsoleSuitabilityFilterType,
+  BoostConsoleSuitabilityFilter,
 } from '../../boost.types';
 import { BoostConsoleService } from '../services/console.service';
 
@@ -56,8 +57,13 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
 
   // Suitability filter value subject.
   public readonly suitabilityFilterValue$: BehaviorSubject<
-    BoostConsoleSuitabilityFilterType
+    BoostConsoleSuitabilityFilter
   > = this.service.suitabilityFilterValue$;
+
+  // Payment method filter value subject.
+  public readonly paymentMethodFilterValue$: BehaviorSubject<
+    BoostConsolePaymentMethodFilter
+  > = this.service.paymentMethodFilterValue$;
 
   // List subject.
   public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<Boost[]>(
@@ -96,27 +102,31 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
       this.locationFilterValue$,
       this.stateFilterValue$,
       this.suitabilityFilterValue$,
+      this.paymentMethodFilterValue$,
     ]).pipe(
       distinctUntilChanged(),
       tap(_ => {
         this.inProgress$.next(true);
         this.list$.next([]);
-        // ojm this.initialCount$.next(0);
+        // this.initialCount$.next(0);
       }),
       debounceTime(100),
       switchMap(
-        ([locationFilterValue, stateFilterValue, suitabilityFilterValue]: [
+        ([
+          locationFilterValue,
+          stateFilterValue,
+          suitabilityFilterValue,
+          paymentMethodFilterValue,
+        ]: [
           BoostConsoleLocationFilter,
           BoostConsoleStateFilter,
-          BoostConsoleSuitabilityFilterType
+          BoostConsoleSuitabilityFilter,
+          BoostConsolePaymentMethodFilter
         ]): Observable<ApiResponse> => {
-          // ojm what is happening here and when is it numbericListType
-          // this.moreData$.next(!this.service.isNumericListType(listType));
           return this.service.getList$(this.requestLimit, 0);
         }
       ),
       tap((response: any) => {
-        // ojm what's response.redirect?
         if (response && typeof response.redirect !== 'undefined') {
           console.log(response);
           this.toaster.error(response.errorMessage);
@@ -125,7 +135,8 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
         }
         this.moreData$.next(response?.length >= this.requestLimit);
         this.inProgress$.next(false);
-        this.list$.next(response);
+        console.log('ojm response', response);
+        this.list$.next(response.boosts);
       })
     );
   }
@@ -155,26 +166,6 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
         })
     );
   }
-
-  /**
-   * Called on state filter change.
-   * @param { BoostConsoleStateFilter } stateFilterValue - state of boost changed to by filter.
-   * @returns { void }
-   * ojm do I need this?
-   */
-  public onStateFilterChange(stateFilterValue: BoostConsoleStateFilter): void {
-    console.log('ojm list stateFilterChanged: ', stateFilterValue);
-    // ojm this.stateFilterValue$.next(stateFilterValue);
-  }
-
-  /**
-   * Called on location filter change.
-   * @param { BoostConsoleLocationFilter } locationFilterValue - state of boost changed to by filter.
-   * @returns { void }
-   */
-  // public onLocationFilterChange(locationFilterValue: BoostLocation): void {
-  //   this.locationFilterValue$.next(locationFilterValue);
-  // }
 
   /**
    * Whether no boosts text should be shown.

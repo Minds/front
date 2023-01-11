@@ -7,6 +7,7 @@ import { BoostConsoleService } from '../../../services/console.service';
 
 /**
  * Boost console list item action buttons
+ * Actions can only be taken on pending boosts
  */
 @Component({
   selector: 'm-boostConsole__actionButtons',
@@ -23,17 +24,7 @@ export class BoostConsoleActionButtonsComponent {
   public readonly inProgress$$: BehaviorSubject<boolean> = this.service
     .inProgress$$;
 
-  /**
-   * Whether we should show buttons for admins
-   */
-  public readonly adminContext$: BehaviorSubject<boolean> = this.service
-    .adminContext$;
-
-  constructor(
-    private session: Session,
-    private router: Router,
-    public service: BoostConsoleService
-  ) {}
+  constructor(private session: Session, public service: BoostConsoleService) {}
 
   /**
    * Called upon approve button being clicked by admin.
@@ -41,6 +32,9 @@ export class BoostConsoleActionButtonsComponent {
    * @returns { Promise<void> }
    */
   async onApprove(e: MouseEvent): Promise<void> {
+    if (!this.session.isAdmin()) {
+      return;
+    }
     this.service.approve(this.boost);
   }
 
@@ -50,6 +44,9 @@ export class BoostConsoleActionButtonsComponent {
    * @returns { void }
    */
   public onReject(e: MouseEvent): void {
+    if (!this.session.isAdmin()) {
+      return;
+    }
     this.service.reject(this.boost);
   }
 
@@ -63,8 +60,8 @@ export class BoostConsoleActionButtonsComponent {
   }
 
   /**
-   * Whether approve and reject buttons should be shown.
-   * @returns { boolean } true if approve and reject buttons should be shown.
+   * Whether boost is in pending state.
+   * @returns { boolean } true if boost is pending.
    */
   public boostIsPending(): boolean {
     return this.boost.boost_status === BoostState.PENDING;

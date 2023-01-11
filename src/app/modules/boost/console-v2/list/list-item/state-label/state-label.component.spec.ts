@@ -3,44 +3,45 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockService } from '../../../../../../utils/mock';
-import { Supermind, SupermindState } from '../../../../supermind.types';
-import { SupermindConsoleExpirationService } from '../../../services/supermind-expiration.service';
-import { SupermindConsoleStateLabelComponent } from './state-label.component';
-
-describe('SupermindConsoleStateLabelComponent', () => {
-  let comp: SupermindConsoleStateLabelComponent;
-  let fixture: ComponentFixture<SupermindConsoleStateLabelComponent>;
+import { Boost, BoostState } from '../../../../boost.types';
+import { BoostConsoleService } from '../../../services/console.service';
+import { BoostConsoleStateLabelComponent } from './state-label.component';
+describe('BoostConsoleStateLabelComponent', () => {
+  let comp: BoostConsoleStateLabelComponent;
+  let fixture: ComponentFixture<BoostConsoleStateLabelComponent>;
 
   function getText(i: number = 0): DebugElement {
     return fixture.debugElement.query(By.css(`span`));
   }
 
-  const mockSupermind: Supermind = {
+  const mockBoost: Boost = {
     guid: '123',
-    activity_guid: '234',
-    sender_guid: '345',
-    receiver_guid: '456',
-    status: 1,
-    payment_amount: 1,
+    urn: 'boost:123',
+    owner_guid: '345',
+    entity_guid: '456',
+    entity: { guid: '456' },
+    boost_status: 1,
     payment_method: 1,
-    payment_txid: '567',
+    payment_tx_id: '567',
+    target_location: 1,
+    target_suitability: 1,
+    payment_amount: 1,
+    daily_bid: 1,
+    duration_days: 1,
     created_timestamp: 1662715004,
     updated_timestamp: 1662715004,
-    expiry_threshold: 604800,
-    twitter_required: true,
-    reply_type: 1,
-    entity: { guid: '123' },
+    approved_timestamp: null,
   };
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [RouterTestingModule],
-        declarations: [SupermindConsoleStateLabelComponent],
+        declarations: [BoostConsoleStateLabelComponent],
         providers: [
           {
-            provide: SupermindConsoleExpirationService,
-            useValue: MockService(SupermindConsoleExpirationService),
+            provide: BoostConsoleService,
+            useValue: MockService(BoostConsoleService),
           },
         ],
       }).compileComponents();
@@ -48,11 +49,11 @@ describe('SupermindConsoleStateLabelComponent', () => {
   );
 
   beforeEach(done => {
-    fixture = TestBed.createComponent(SupermindConsoleStateLabelComponent);
+    fixture = TestBed.createComponent(BoostConsoleStateLabelComponent);
     comp = fixture.componentInstance;
-    comp.supermind = mockSupermind;
+    comp.boost = mockBoost;
 
-    (comp as any).expirationService.getTimeTillExpiration.calls.reset();
+    (comp as any).service.getTimeTillExpiration.calls.reset();
 
     fixture.detectChanges();
 
@@ -69,86 +70,21 @@ describe('SupermindConsoleStateLabelComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should get time till expiration from service', () => {
-    const timeString: string = '4h';
-    (comp as any).expirationService.getTimeTillExpiration.and.returnValue(
-      timeString
-    );
-    expect(comp.timeTillExpiration).toBe(timeString);
-    expect(
-      (comp as any).expirationService.getTimeTillExpiration
-    ).toHaveBeenCalled();
-  });
-
-  it('should show pending if a supermind is in a pending state', () => {
-    comp.supermind.status = SupermindState.PENDING;
+  it('should show pending if a boost is in a pending state', () => {
+    comp.boost.boost_status = BoostState.PENDING;
     fixture.detectChanges();
     expect(getText().nativeElement.textContent.trim()).toBe('Pending');
   });
 
-  it('should show expiration time if a supermind is in a created state and time is not elapsed', () => {
-    comp.supermind.status = SupermindState.CREATED;
-    const timeString: string = '4h';
-    (comp as any).expirationService.getTimeTillExpiration.and.returnValue(
-      timeString
-    );
-
-    fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe(
-      `Expires: ${timeString}`
-    );
-  });
-
-  it('should show expired if a supermind is in a created state and time is elapsed', () => {
-    comp.supermind.status = SupermindState.CREATED;
-    const timeString: string = null;
-    (comp as any).expirationService.getTimeTillExpiration.and.returnValue(
-      timeString
-    );
-
-    fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe('Expired');
-  });
-
-  it('should show accepted if a supermind is in a accepted state', () => {
-    comp.supermind.status = SupermindState.ACCEPTED;
-    fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe('Accepted');
-  });
-
-  it('should show revoked if a supermind is in a revoked state', () => {
-    comp.supermind.status = SupermindState.REVOKED;
-    fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe('Revoked');
-  });
-
-  it('should show declined if a supermind is in a rejected state', () => {
-    comp.supermind.status = SupermindState.REJECTED;
+  it('should show declined if a boost is in a rejected state', () => {
+    comp.boost.boost_status = BoostState.REJECTED;
     fixture.detectChanges();
     expect(getText().nativeElement.textContent.trim()).toBe('Declined');
   });
 
-  it('should show payment failed if a supermind is in a failed payment state', () => {
-    comp.supermind.status = SupermindState.FAILED_PAYMENT;
+  it('should show completed if a boost is in a completed state', () => {
+    comp.boost.boost_status = BoostState.COMPLETED;
     fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe('Payment Failed');
-  });
-
-  it('should show unknown error if a supermind is in a failed state', () => {
-    comp.supermind.status = SupermindState.FAILED;
-    fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe('Unknown Error');
-  });
-
-  it('should show expired if a supermind is in an expired state', () => {
-    comp.supermind.status = SupermindState.EXPIRED;
-    fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe('Expired');
-  });
-
-  it('should show expired if a supermind is in an expired state', () => {
-    comp.supermind.status = 999;
-    fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe('State Unknown');
+    expect(getText().nativeElement.textContent.trim()).toBe('Completed');
   });
 });

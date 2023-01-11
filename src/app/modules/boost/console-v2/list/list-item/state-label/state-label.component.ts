@@ -21,7 +21,7 @@ export class BoostConsoleStateLabelComponent {
   constructor(public service: BoostConsoleService) {}
 
   /**
-   * Time til expiration.
+   * Time till expiration.
    * @return { string }
    */
   get timeTillExpiration(): string {

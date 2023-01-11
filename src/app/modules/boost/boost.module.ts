@@ -23,6 +23,7 @@ import { BoostConsoleStateLabelComponent } from './console-v2/list/list-item/sta
 import { BoostConsoleActionButtonsComponent } from './console-v2/list/list-item/action-buttons/action-buttons.component';
 import { BoostConsoleService } from './console-v2/services/console.service';
 import { BoostConsoleStatsBarComponent } from './console-v2/list/list-item/stats-bar/stats-bar.component';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 
 const boostRoutes: Routes = [
   {
@@ -45,7 +46,11 @@ const boostRoutes: Routes = [
   {
     path: 'boost/console-v2',
     component: BoostConsoleV2Component,
-    // ojm also add admin console to admin module
+    data: {
+      title: 'Boost Console',
+      description: 'Manage and monitor your boosts',
+      ogImage: '/assets/product-pages/boost/boost-1.jpg',
+    },
   },
   {
     path: 'boost',
@@ -68,6 +73,7 @@ const boostRoutes: Routes = [
     CommonModule,
     AdsModule,
     MarketingModule,
+    ActivityModule,
   ],
   declarations: [
     BoostConsoleComponent,

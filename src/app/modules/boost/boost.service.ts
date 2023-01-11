@@ -181,10 +181,4 @@ export class BoostService {
    * Returns true if the transactionid indicates that the transaction is onChain;
    */
   isOnChain = (boost: any) => boost.transactionId.startsWith('0x');
-
-  /**
-   * ----------------------------------------------------
-   * DYNAMIC BOOSTS -------------------------------------
-   * ----------------------------------------------------
-   */
 }
