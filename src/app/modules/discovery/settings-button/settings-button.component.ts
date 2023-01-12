@@ -15,6 +15,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { ContentSettingsComponent } from '../../content-settings/content-settings/content-settings.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { ComponentType } from '@angular/cdk/overlay';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-discovery__settingsButton',
@@ -30,6 +31,7 @@ export class DiscoverySettingsButtonComponent implements OnInit {
     private modalService: ModalService,
     private injector: Injector,
     private featuresService: FeaturesService,
+    public session: Session,
     @Optional() @SkipSelf() private feeds: DiscoveryFeedsService,
     @Optional() @SkipSelf() private trends: DiscoveryTrendsService
   ) {}

@@ -20,7 +20,7 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
     private plusService: PlusService,
     private wireModal: WireModalService,
     private wirePaymentHandlers: WirePaymentHandlersService,
-    private session: Session,
+    public session: Session,
     private configs: ConfigsService,
     private composerService: ComposerService,
     private composerModal: ComposerModalService,
