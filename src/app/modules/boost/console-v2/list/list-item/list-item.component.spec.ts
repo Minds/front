@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockComponent } from '../../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostConsoleListItemComponent } from './list-item.component';
 import { Boost } from '../../../boost.types';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 describe('BoostConsoleListItemComponent', () => {
   let comp: BoostConsoleListItemComponent;
@@ -62,6 +63,12 @@ describe('BoostConsoleListItemComponent', () => {
             selector: 'm-boostConsole__actionButtons',
             inputs: ['boost'],
           }),
+        ],
+        providers: [
+          {
+            provide: ConfigsService,
+            useValue: MockService(ConfigsService),
+          },
         ],
       }).compileComponents();
     })

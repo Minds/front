@@ -76,10 +76,10 @@ describe('BoostConsoleStateLabelComponent', () => {
     expect(getText().nativeElement.textContent.trim()).toBe('Pending');
   });
 
-  it('should show declined if a boost is in a rejected state', () => {
+  it('should show rejected if a boost is in a rejected state', () => {
     comp.boost.boost_status = BoostState.REJECTED;
     fixture.detectChanges();
-    expect(getText().nativeElement.textContent.trim()).toBe('Declined');
+    expect(getText().nativeElement.textContent.trim()).toBe('Rejected');
   });
 
   it('should show completed if a boost is in a completed state', () => {

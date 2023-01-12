@@ -20,7 +20,7 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const status = this.boost.boost_status;
+    const status = this.boost?.boost_status;
 
     this.boostIsRejected = status === BoostState.REJECTED;
     this.boostIsApproved = status === BoostState.APPROVED;

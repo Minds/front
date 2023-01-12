@@ -100,12 +100,6 @@ export class BoostConsoleV2Component implements OnInit {
       if (paymentMethodFilter) {
         this.service.paymentMethodFilterValue$.next(paymentMethodFilter);
       }
-
-      // Set up default values as query params
-      // if there aren't any already
-      // if (!this.adminContext && !locationFilter) {
-
-      // }
     });
   }
   ngOnDestroy(): void {
