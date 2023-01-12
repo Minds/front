@@ -1,23 +1,67 @@
-<m-feedNotice (dismissClick)="dismiss()" icon="info">
-  <span
-    class="m-feedNotice__title"
-    i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__JOIN_REWARDS"
-    >You're invited! Join rewards</span
+<ng-container
+  *ngIf="!isInAppVerificationExperimentActive(); else in_app_verify_uniqueness"
+>
+  <m-feedNotice
+    (dismissClick)="dismiss()"
+    icon="info"
+    dataRefId="legacy-verify-uniqueness"
   >
-  <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__BODY">
-    Verify your uniqueness to get started earning token rewards for engagement
-    on your content.
-  </p>
-  <m-button
-    class="m-feedNotice__buttonPrimary"
-    color="blue"
-    solid="true"
-    size="small"
-    (onAction)="onPrimaryOptionClick($event)"
-    data-ref="feed-notice-verify-uniqueness-primary-click"
+    <span
+      class="m-feedNotice__title"
+      i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__JOIN_REWARDS"
+      >You're invited! Join rewards</span
+    >
+    <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__BODY">
+      Verify your uniqueness to get started earning token rewards for engagement
+      on your content.
+    </p>
+    <m-button
+      class="m-feedNotice__buttonPrimary"
+      color="blue"
+      solid="true"
+      size="small"
+      (onAction)="onPrimaryOptionClick($event)"
+      data-ref="feed-notice-verify-uniqueness-primary-click"
+    >
+      <ng-container i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__VERIFY_UNIQUENESS">
+        Verify uniqueness
+      </ng-container>
+    </m-button>
+  </m-feedNotice>
+</ng-container>
+
+<ng-template #in_app_verify_uniqueness>
+  <m-feedNotice
+    (dismissClick)="dismiss()"
+    icon="info"
+    dataRefId="in-app-verify-uniqueness"
   >
-    <ng-container i18n="@@FEED_NOTICE__VERIFY_UNIQUENESS__VERIFY_UNIQUENESS">
-      Verify uniqueness
-    </ng-container>
-  </m-button>
-</m-feedNotice>
+    <span
+      class="m-feedNotice__title"
+      i18n="@@FEED_NOTICE__IN_APP_VERIFY_UNIQUENESS__TITLE"
+    >
+      Verify You Are Human
+    </span>
+    <p
+      class="m-feedNotice__body"
+      i18n="@@FEED_NOTICE__IN_APP_VERIFY_UNIQUENESS__BODY"
+    >
+      Please verify you're not a bot with our privacy-preserving human detector
+      in order to be eligible for rewards.
+    </p>
+    <m-button
+      class="m-feedNotice__buttonPrimary"
+      color="blue"
+      solid="true"
+      size="small"
+      (onAction)="onPrimaryOptionClick($event)"
+      data-ref="feed-notice-in-app-verify-uniqueness-primary-click"
+    >
+      <ng-container
+        i18n="@@FEED_NOTICE__IN_APP_VERIFY_UNIQUENESS__PRIMARY_ACTION"
+      >
+        Verify
+      </ng-container>
+    </m-button>
+  </m-feedNotice>
+</ng-template>

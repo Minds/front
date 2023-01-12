@@ -14,6 +14,8 @@ import { Session } from '../../../../../services/session';
 import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
 import { MindsUser } from '../../../../../interfaces/entities';
 import { ToasterService } from '../../../../../common/services/toaster.service';
+import { VerifyUniquenessModalLazyService } from '../../../../verify-uniqueness/modal/services/verify-uniqueness-modal.service';
+import { InAppVerificationExperimentService } from '../../../../experiments/sub-services/in-app-verification-experiment.service';
 
 /**
  * Dashboard view of token rewards.
@@ -122,6 +124,8 @@ export class WalletTokenRewardsComponent implements OnInit {
     protected onchainTransferModal: OnchainTransferModalService,
     private walletService: WalletV2Service,
     private session: Session,
+    private verifyUniquenessModal: VerifyUniquenessModalLazyService,
+    private inAppVerificationExperimentService: InAppVerificationExperimentService,
     protected connectWalletModalService: ConnectWalletModalService,
     private toast: ToasterService
   ) {}
@@ -262,6 +266,11 @@ export class WalletTokenRewardsComponent implements OnInit {
   }
 
   async joinRewards(e: MouseEvent) {
+    if (this.inAppVerificationExperimentService.isActive()) {
+      await this.verifyUniquenessModal.open();
+      return;
+    }
+
     const onComplete = () => (this.isConnected = undefined);
     await this.connectWalletModalService.joinRewards(onComplete);
   }

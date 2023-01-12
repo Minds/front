@@ -1,0 +1,127 @@
+@import 'defaults.scss';
+
+:host {
+  $horizontalPadding: $spacing10;
+  $horizontalPadding--mobile: $spacing5;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+
+  .m-verify_uniqueness__header,
+  .m-verify_uniqueness__subheader,
+  .m-verify_uniqueness__body {
+    padding-left: $horizontalPadding;
+    padding-right: $horizontalPadding;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $horizontalPadding--mobile;
+      padding-right: $horizontalPadding--mobile;
+    }
+  }
+
+  .m-verify_uniqueness__header {
+    @include heading1Bold;
+    padding-top: $spacing10;
+    padding-bottom: $spacing10;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-top: $spacing6;
+      padding-bottom: $spacing6;
+    }
+  }
+
+  .m-verify_uniqueness__subheader {
+    @include heading4Bold;
+  }
+
+  .m-verify_uniqueness__body {
+    padding-top: $spacing6;
+    padding-bottom: $spacing10;
+  }
+
+  .m-verify_uniqueness__toolbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: $spacing8 $horizontalPadding;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $horizontalPadding--mobile;
+      padding-right: $horizontalPadding--mobile;
+    }
+  }
+
+  //------------------------------------------
+
+  .m-verify_uniqueness__item {
+    display: flex;
+    flex-direction: row;
+
+    &:not(:last-child) {
+      padding-bottom: $spacing4;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .m-verify_uniqueness_item__counter {
+      font-size: 20px;
+      padding-right: $spacing4;
+      padding-top: 2px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-verify_uniqueness_item__textWrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .m-verify_uniqueness_item_text__header {
+      @include body1Bold;
+      padding-bottom: $spacing2;
+    }
+
+    .m-verify_uniqueness_item_text__body {
+      @include body2Regular;
+      line-height: 20px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      .m-verify_uniqueness_item__launchLink {
+        display: inline-block;
+        cursor: pointer;
+
+        &:hover {
+          & a {
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+        }
+
+        a {
+          text-decoration: underline;
+          font-weight: 400;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+        i {
+          font-size: 18px;
+          vertical-align: bottom;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+  }
+}
