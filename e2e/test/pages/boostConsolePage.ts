@@ -47,9 +47,14 @@ class BoostConsolePage {
   private stateFilterTrigger: CodeceptJS.Locator = locate(
     '[data-ref=m-boostConsole__filterTrigger--state]'
   );
+
+  //ojm
   private stateFilterLabel: CodeceptJS.Locator = locate(
-    '[data-ref=m-boostConsole__filterLabel--state]'
+    '.m-boostConsole__filterLabel--state'
   );
+  // private stateFilterLabel: CodeceptJS.Locator = locate(
+  //   '[data-ref=m-boostConsole__filterLabel--state]'
+  // );
 
   /**
    * Navigate to the boost console page by queryParams.
@@ -156,7 +161,7 @@ class BoostConsolePage {
     await Promise.all([
       I.click(locate(this.tab).withText(tab)),
       I.waitForResponse(
-        resp => resp.url().includes('/api/v3/boost') && resp.status() === 200,
+        resp => resp.url().includes('/api/v3/boosts') && resp.status() === 200,
         30
       ),
     ]);
@@ -195,7 +200,7 @@ class BoostConsolePage {
       I.click(this.rejectButton.at(feedPosition)),
       I.waitForResponse(
         resp =>
-          new RegExp(/api\/v3\/boost\/admin\/\d+\/reject/).test(resp.url()) &&
+          new RegExp(/api\/v3\/boosts\/admin\/\d+\/reject/).test(resp.url()) &&
           resp.status() === 200,
         30
       ),
