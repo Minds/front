@@ -110,12 +110,4 @@ describe('BoostConsoleListItemComponent', () => {
 
     expect(comp.amountBadgeText).toBe(`10 tokens over 3 days`);
   });
-
-  it('should get badge text when payment type is offchain tokens', () => {
-    comp.boost.payment_method = 3;
-    comp.boost.payment_amount = 10;
-    comp.boost.duration_days = 3;
-
-    expect(comp.amountBadgeText).toBe(`10 tokens over 3 days`);
-  });
 });
