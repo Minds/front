@@ -8,7 +8,7 @@ const { I } = inject();
 
 class BoostConsolePage {
   /** @type { string }  - root uri of the page */
-  private baseUrl: string = '/boost-console';
+  private baseUrl: string = '/boost/console-v2';
 
   // Page elements
   private title: CodeceptJS.Locator = locate('h3').withText('Boost');

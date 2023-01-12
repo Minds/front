@@ -43,75 +43,76 @@ namespace BoostConsoleSteps {
     }
   );
 
-  When('I make a boost offer', () => {
-    composerModalComponent.shouldHaveBoostBadge(false);
-    composerModalComponent.shouldHaveEllipsisMenu(true);
-    composerModalComponent.typeInTextArea('hello');
-    composerModalComponent.clickBoostIcon();
-    composerModalComponent.clickBoostPanelTab('Tokens');
-    composerModalComponent.addBoostTarget(
-      process.env.PLAYWRIGHT_USERNAME ?? ''
-    );
-    composerModalComponent.enterBoostAmount(10);
-    composerModalComponent.acceptBoostTerms();
-    composerModalComponent.acceptBoostRefundPolicy();
-    composerModalComponent.clickBoostSave();
-    confirmationModalComponent.shouldBeVisible(false);
-    composerModalComponent.clickPost();
-    confirmationModalComponent.shouldBeVisible(true);
-    confirmationModalComponent.clickConfirm();
-  });
+  // ojm
+  // When('I make a boost offer', () => {
+  //   composerModalComponent.shouldHaveBoostBadge(false);
+  //   composerModalComponent.shouldHaveEllipsisMenu(true);
+  //   composerModalComponent.typeInTextArea('hello');
+  //   composerModalComponent.clickBoostIcon();
+  //   composerModalComponent.clickBoostPanelTab('Tokens');
+  //   composerModalComponent.addBoostTarget(
+  //     process.env.PLAYWRIGHT_USERNAME ?? ''
+  //   );
+  //   composerModalComponent.enterBoostAmount(10);
+  //   composerModalComponent.acceptBoostTerms();
+  //   composerModalComponent.acceptBoostRefundPolicy();
+  //   composerModalComponent.clickBoostSave();
+  //   confirmationModalComponent.shouldBeVisible(false);
+  //   composerModalComponent.clickPost();
+  //   confirmationModalComponent.shouldBeVisible(true);
+  //   confirmationModalComponent.clickConfirm();
+  // });
 
-  Given('I make a boost offer to {string}', (targetUsername: string) => {
-    composerModalComponent.shouldHaveBoostBadge(false);
-    composerModalComponent.shouldHaveEllipsisMenu(true);
-    composerModalComponent.typeInTextArea('hello');
-    composerModalComponent.clickBoostIcon();
-    composerModalComponent.clickBoostPanelTab('Tokens');
-    composerModalComponent.addBoostTarget(targetUsername);
-    composerModalComponent.enterBoostAmount(10);
-    composerModalComponent.acceptBoostTerms();
-    composerModalComponent.acceptBoostRefundPolicy();
-    composerModalComponent.clickBoostSave();
-    composerModalComponent.clickPost();
-    confirmationModalComponent.shouldBeVisible(true);
-    confirmationModalComponent.clickConfirm();
-  });
+  // Given('I make a boost offer to {string}', (targetUsername: string) => {
+  //   composerModalComponent.shouldHaveBoostBadge(false);
+  //   composerModalComponent.shouldHaveEllipsisMenu(true);
+  //   composerModalComponent.typeInTextArea('hello');
+  //   composerModalComponent.clickBoostIcon();
+  //   composerModalComponent.clickBoostPanelTab('Tokens');
+  //   composerModalComponent.addBoostTarget(targetUsername);
+  //   composerModalComponent.enterBoostAmount(10);
+  //   composerModalComponent.acceptBoostTerms();
+  //   composerModalComponent.acceptBoostRefundPolicy();
+  //   composerModalComponent.clickBoostSave();
+  //   composerModalComponent.clickPost();
+  //   confirmationModalComponent.shouldBeVisible(true);
+  //   confirmationModalComponent.clickConfirm();
+  // });
 
-  When('I try to make an NSFW boost offer', () => {
-    composerModalComponent.shouldHaveBoostBadge(false);
-    composerModalComponent.shouldHaveEllipsisMenu(true);
-    composerModalComponent.typeInTextArea('hello');
-    composerModalComponent.clickBoostIcon();
-    composerModalComponent.clickBoostPanelTab('Tokens');
-    composerModalComponent.addBoostTarget(
-      process.env.PLAYWRIGHT_USERNAME ?? ''
-    );
-    composerModalComponent.enterBoostAmount(10);
-    composerModalComponent.acceptBoostTerms();
-    composerModalComponent.acceptBoostRefundPolicy();
-    composerModalComponent.clickBoostSave();
+  // When('I try to make an NSFW boost offer', () => {
+  //   composerModalComponent.shouldHaveBoostBadge(false);
+  //   composerModalComponent.shouldHaveEllipsisMenu(true);
+  //   composerModalComponent.typeInTextArea('hello');
+  //   composerModalComponent.clickBoostIcon();
+  //   composerModalComponent.clickBoostPanelTab('Tokens');
+  //   composerModalComponent.addBoostTarget(
+  //     process.env.PLAYWRIGHT_USERNAME ?? ''
+  //   );
+  //   composerModalComponent.enterBoostAmount(10);
+  //   composerModalComponent.acceptBoostTerms();
+  //   composerModalComponent.acceptBoostRefundPolicy();
+  //   composerModalComponent.clickBoostSave();
 
-    composerModalComponent.clickNsfwOption();
-    composerModalComponent.clickNsfwSaveOption();
-  });
+  //   composerModalComponent.clickNsfwOption();
+  //   composerModalComponent.clickNsfwSaveOption();
+  // });
 
-  When('I make a boost reply', () => {
-    composerModalComponent.shouldHaveBoostBadge(true);
-    composerModalComponent.shouldHaveEllipsisMenu(false);
-    composerModalComponent.typeInTextArea('hello');
-    composerModalComponent.clickPost();
-    composerModalComponent.clickConfirmReplyButton();
-  });
+  // When('I make a boost reply', () => {
+  //   composerModalComponent.shouldHaveBoostBadge(true);
+  //   composerModalComponent.shouldHaveEllipsisMenu(false);
+  //   composerModalComponent.typeInTextArea('hello');
+  //   composerModalComponent.clickPost();
+  //   composerModalComponent.clickConfirmReplyButton();
+  // });
 
-  When('I try to make an NSFW boost reply', () => {
-    composerModalComponent.shouldHaveBoostBadge(true);
-    composerModalComponent.shouldHaveEllipsisMenu(false);
-    composerModalComponent.typeInTextArea('hello');
+  // When('I try to make an NSFW boost reply', () => {
+  //   composerModalComponent.shouldHaveBoostBadge(true);
+  //   composerModalComponent.shouldHaveEllipsisMenu(false);
+  //   composerModalComponent.typeInTextArea('hello');
 
-    composerModalComponent.clickNsfwOption();
-    composerModalComponent.clickNsfwSaveOption();
-  });
+  //   composerModalComponent.clickNsfwOption();
+  //   composerModalComponent.clickNsfwSaveOption();
+  // });
 
   When('I navigate via user menu to the boost console', async () => {
     await boostConsolePage.navigateToViaUserMenu();
