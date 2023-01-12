@@ -321,7 +321,7 @@ export class NotificationsV3NotificationComponent
       case 'boost_accepted':
       case 'boost_completed':
         if (this.isDynamicBoostExperimentActive()) {
-          return ['/boost/console-v2'];
+          return ['/boost/boost-console'];
         } else {
           return ['/boost/console/newsfeed/history'];
         }

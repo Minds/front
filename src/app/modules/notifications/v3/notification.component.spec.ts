@@ -214,7 +214,7 @@ describe('NotificationsV3NotificationComponent', () => {
       type: 'boost_accepted',
     };
     (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
-    expect(comp.nounLink).toEqual(['/boost/console-v2']);
+    expect(comp.nounLink).toEqual(['/boost/boost-console']);
   });
 
   it('should get correct nounLink for boost_accepted when experiment is off', () => {
@@ -230,7 +230,7 @@ describe('NotificationsV3NotificationComponent', () => {
       type: 'boost_completed',
     };
     (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
-    expect(comp.nounLink).toEqual(['/boost/console-v2']);
+    expect(comp.nounLink).toEqual(['/boost/boost-console']);
   });
 
   it('should get correct nounLink for boost_completed when experiment is off', () => {
