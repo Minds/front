@@ -32,7 +32,6 @@ export class ActivityViewsComponent implements OnInit {
   ngOnInit(): void {
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
-        // ojm don't show view count in boost console
         this.entity = entity;
 
         this.showViews =

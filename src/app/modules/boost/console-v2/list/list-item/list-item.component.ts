@@ -48,7 +48,6 @@ export class BoostConsoleListItemComponent {
     }
   }
 
-  // ojm fix inProgress$$ all buttons
   /**
    * Get amount badge text.
    * @return { string } amount badge text.

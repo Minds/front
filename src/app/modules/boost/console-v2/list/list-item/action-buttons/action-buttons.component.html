@@ -9,7 +9,7 @@
         size="small"
         color="red"
         (onAction)="onReject($event)"
-        [saving]="inProgress$$ | async"
+        [saving]="rejecting"
         ><ng-container i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__REJECT_OPTION"
           >Reject</ng-container
         ></m-button
@@ -19,7 +19,7 @@
         size="small"
         color="blue"
         (onAction)="onApprove($event)"
-        [saving]="inProgress$$ | async"
+        [saving]="approving"
         ><ng-container
           i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__APPROVE_BOOST_OPTION"
           >Approve boost</ng-container
@@ -34,7 +34,7 @@
         class="m-boostConsoleListItem__buttonSecondary--fullWidth"
         size="small"
         (onAction)="onCancel($event)"
-        [saving]="inProgress$$ | async"
+        [saving]="cancelling"
         ><ng-container
           i18n="@@BOOST_CONSOLE__ACTION_BUTTONS__CANCEL_BOOST_OPTION"
           >Cancel boost</ng-container

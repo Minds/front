@@ -141,6 +141,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
     );
   }
 
+  // OJM IMPORTANT THIS ISN"T WORKING
   /**
    * Load more from service based on list type and list length for offset.
    * @return { void }

@@ -19,10 +19,11 @@ export class BoostConsoleActionButtonsComponent {
   @Input() boost: Boost = null;
 
   /**
-   * The api state (button loading states)
+   * Button loading states
    */
-  public readonly inProgress$$: BehaviorSubject<boolean> = this.service
-    .inProgress$$;
+  approving: boolean = false;
+  rejecting: boolean = false;
+  cancelling: boolean = false;
 
   constructor(private session: Session, public service: BoostConsoleService) {}
 
@@ -35,7 +36,13 @@ export class BoostConsoleActionButtonsComponent {
     if (!this.session.isAdmin()) {
       return;
     }
-    this.service.approve(this.boost);
+
+    this.approving = true;
+    const promise = this.service.approve(this.boost);
+
+    promise.then(() => {
+      this.approving = false;
+    });
   }
 
   /**
@@ -47,7 +54,13 @@ export class BoostConsoleActionButtonsComponent {
     if (!this.session.isAdmin()) {
       return;
     }
-    this.service.reject(this.boost);
+
+    this.rejecting = true;
+    const promise = this.service.reject(this.boost);
+
+    promise.then(() => {
+      this.rejecting = false;
+    });
   }
 
   /**
@@ -56,7 +69,12 @@ export class BoostConsoleActionButtonsComponent {
    * @returns { void }
    */
   public onCancel(e: MouseEvent): void {
-    this.service.cancel(this.boost);
+    this.cancelling = true;
+    const promise = this.service.cancel(this.boost);
+
+    promise.then(() => {
+      this.cancelling = false;
+    });
   }
 
   /**
