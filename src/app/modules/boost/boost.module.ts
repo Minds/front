@@ -44,7 +44,7 @@ const boostRoutes: Routes = [
     ],
   },
   {
-    path: 'boost/console-v2',
+    path: 'boost/boost-console',
     component: BoostConsoleV2Component,
     data: {
       title: 'Boost Console',

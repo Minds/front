@@ -130,7 +130,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
         if (response && typeof response.redirect !== 'undefined') {
           console.log(response);
           this.toaster.error(response.errorMessage);
-          this.router.navigate(['boost/console-v2']);
+          this.router.navigate(['boost/boost-console']);
           return;
         }
         this.moreData$.next(response?.length >= this.requestLimit);

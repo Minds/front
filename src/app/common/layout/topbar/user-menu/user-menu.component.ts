@@ -49,7 +49,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     );
 
     if (this.dynamicBoostExperiment.isActive()) {
-      this.boostConsoleLink = '/boost/console-v2';
+      this.boostConsoleLink = '/boost/boost-console';
     }
   }
 
