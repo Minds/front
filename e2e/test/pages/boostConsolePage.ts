@@ -9,6 +9,8 @@ const { I } = inject();
 class BoostConsolePage {
   /** @type { string }  - root uri of the page */
   private baseUrl: string = '/boost/boost-console';
+  private baseEndpoint: string =
+    'when i click to change boost console tabs to ';
 
   // Page elements
   private title: CodeceptJS.Locator = locate('h3').withText('Boost');
@@ -70,7 +72,7 @@ class BoostConsolePage {
     await Promise.all([
       userMenuComponent.openBoostConsole(),
       I.waitForResponse(
-        resp => resp.url().includes('/api/v3/boosts') && resp.status() === 200,
+        resp => resp.url().includes(this.baseEndpoint) && resp.status() === 200,
         30
       ),
     ]);
@@ -157,7 +159,7 @@ class BoostConsolePage {
     await Promise.all([
       I.click(locate(this.tab).withText(tab)),
       I.waitForResponse(
-        resp => resp.url().includes('/api/v3/boosts') && resp.status() === 200,
+        resp => resp.url().includes(this.baseEndpoint) && resp.status() === 200,
         30
       ),
     ]);
@@ -175,6 +177,7 @@ class BoostConsolePage {
       this.stateFilterLabel.withText(stateFilterValue),
       `state=${stateFilterValue}`
     );
+    pause(); //ojm
   }
 
   /**
