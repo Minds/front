@@ -9,14 +9,14 @@ Feature: BoostConsole
   Scenario: Switching tabs from newsfeed to sidebar
     Given I am logged in
     And I am on the Boost Console "Newsfeed" location tab
-    When I click to change tabs to "Sidebar"
+    When I click to change Boost Console tabs to "Sidebar"
     Then I should see "location=sidebar" in current URL
     And I should see my Boost Console "Sidebar" location tab
 
   Scenario: Switching tabs from sidebar to newsfeed
     Given I am logged in
     And I am on the Boost Console "Sidebar" location tab
-    When I click to change tabs to "Newsfeed"
+    When I click to change Boost Console tabs to "Newsfeed"
     Then I should see "location=newsfeed" in current URL
     And I should see my Boost Console "Newsfeed" location tab
 

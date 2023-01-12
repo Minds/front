@@ -20,9 +20,12 @@ namespace BoostConsoleSteps {
     }
   );
 
-  When('I click to change tabs to {string}', async (tab: string) => {
-    await boostConsolePage.switchTabs(tab as BoostConsoleLocationTab);
-  });
+  When(
+    'I click to change Boost Console tabs to {string}',
+    async (tab: string) => {
+      await boostConsolePage.switchTabs(tab as BoostConsoleLocationTab);
+    }
+  );
 
   When(
     'I click to change Boost Console state filter to {string}',

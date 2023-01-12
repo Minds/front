@@ -48,13 +48,9 @@ class BoostConsolePage {
     '[data-ref=m-boostConsole__filterTrigger--state]'
   );
 
-  //ojm
   private stateFilterLabel: CodeceptJS.Locator = locate(
-    '.m-boostConsole__filterLabel--state'
+    '[data-ref=m-boostConsole__filterLabel--state]'
   );
-  // private stateFilterLabel: CodeceptJS.Locator = locate(
-  //   '[data-ref=m-boostConsole__filterLabel--state]'
-  // );
 
   /**
    * Navigate to the boost console page by queryParams.
@@ -74,7 +70,7 @@ class BoostConsolePage {
     await Promise.all([
       userMenuComponent.openBoostConsole(),
       I.waitForResponse(
-        resp => resp.url().includes('/api/v3/boost') && resp.status() === 200,
+        resp => resp.url().includes('/api/v3/boosts') && resp.status() === 200,
         30
       ),
     ]);

@@ -64,7 +64,7 @@
 <!-- ------------------------ -->
 <div class="m-boostConsole__filtersWrapper">
   <!-- ------------------------ -->
-  <!-- STATE FILTER DROPDOWN -->
+  <!-- STATE FILTER DROPDOWN TRIGGER -->
   <!-- ------------------------ -->
   <m-dropdownMenu [menu]="stateMenu" *ngIf="!(service.adminContext$ | async)">
     <div
@@ -86,7 +86,7 @@
     </div>
   </m-dropdownMenu>
   <!-- ------------------------ -->
-  <!-- LOCATION FILTER DROPDOWN -->
+  <!-- LOCATION FILTER DROPDOWN TRIGGER -->
   <!-- ------------------------ -->
   <m-dropdownMenu [menu]="locationMenu" *ngIf="service.adminContext$ | async">
     <div
@@ -108,7 +108,7 @@
     </div>
   </m-dropdownMenu>
   <!-- ------------------------ -->
-  <!-- PAYMENT METHOD DROPDOWN MENU -->
+  <!-- PAYMENT METHOD DROPDOWN TRIGGER -->
   <!-- ------------------------ -->
   <m-dropdownMenu
     [menu]="paymentMethodMenu"
