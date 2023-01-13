@@ -8,6 +8,7 @@ export type DiscoveryTrend = any;
 
 @Injectable()
 export class DiscoveryTrendsService {
+  isPlusPage$ = this.discoveryService.isPlusPage$;
   trends$: BehaviorSubject<DiscoveryTrend[]> = new BehaviorSubject([]);
   hero$: BehaviorSubject<DiscoveryTrend> = new BehaviorSubject(null);
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
