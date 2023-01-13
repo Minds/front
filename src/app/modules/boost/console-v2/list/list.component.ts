@@ -71,7 +71,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
   );
 
   // Number of boosts to request from API.
-  private readonly requestLimit: number = 3; //ojm
+  private readonly requestLimit: number = 12;
 
   constructor(private service: BoostConsoleService) {
     super();
@@ -125,7 +125,6 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
       tap((response: any) => {
         this.moreData$.next(response.has_more);
         this.inProgress$.next(false);
-        console.log('ojm response', response);
         this.list$.next(response.boosts);
       })
     );
@@ -141,11 +140,6 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
     }
     this.inProgress$.next(true);
 
-    console.log(
-      'ojm loadNext: limit, offset',
-      this.requestLimit,
-      this.list$.getValue().length
-    );
     this.subscriptions.push(
       this.service
         .getList$(this.requestLimit, this.list$.getValue().length ?? null)

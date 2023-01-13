@@ -141,11 +141,6 @@ export class BoostConsoleService {
           }
         }
         // -------------------------------------------
-        console.log(
-          'ojm SVC getList$ called, endpoint+params ',
-          endpoint,
-          params
-        );
         return this.api.get<ApiResponse>(endpoint, params);
       }),
       catchError(e => {
