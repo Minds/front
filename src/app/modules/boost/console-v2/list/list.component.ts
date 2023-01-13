@@ -71,7 +71,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
   );
 
   // Number of boosts to request from API.
-  private readonly requestLimit: number = 12;
+  private readonly requestLimit: number = 3; //ojm
 
   constructor(
     private service: BoostConsoleService,
@@ -146,6 +146,11 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
     }
     this.inProgress$.next(true);
 
+    console.log(
+      'ojm loadNext: limit, offset',
+      this.requestLimit,
+      this.list$.getValue().length
+    );
     this.subscriptions.push(
       this.service
         .getList$(this.requestLimit, this.list$.getValue().length ?? null)
