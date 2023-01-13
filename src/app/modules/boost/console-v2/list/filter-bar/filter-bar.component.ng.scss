@@ -19,6 +19,12 @@
     @media screen and (max-width: $max-mobile) {
       border-bottom: none !important;
     }
+
+    .m-tabs__tab > a {
+      @media screen and (max-width: $max-mobile) {
+        margin-right: $spacing4;
+      }
+    }
   }
 
   .m-boostConsole__filtersWrapper {
