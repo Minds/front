@@ -53,6 +53,10 @@ export class BoostConsoleListItemComponent {
    * @return { string } amount badge text.
    */
   get amountBadgeText(): string {
+    if (!this.boost.payment_amount || !this.boost.duration_days) {
+      return '';
+    }
+
     let duration = 'days';
 
     if (this.boost.duration_days === 1) {

@@ -48,7 +48,7 @@ namespace BoostConsoleSteps {
 
   When('I navigate via user menu to the boost console', async () => {
     await boostConsolePage.navigateToViaUserMenu();
-    boostConsolePage.hasTabSelected('Newsfeed');
+    boostConsolePage.hasTabSelected('Feed');
   });
 
   When('I click {string} on latest Boost', async (buttonType: string) => {

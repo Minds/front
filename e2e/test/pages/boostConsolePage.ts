@@ -113,7 +113,7 @@ class BoostConsolePage {
     I.seeElement(this.chipBadge);
     I.seeElement(this.stateLabel);
 
-    if (tab === 'Newsfeed') {
+    if (tab === 'Feed') {
       I.seeElement(this.activity);
       I.dontSeeElement(this.publisherCard);
     }

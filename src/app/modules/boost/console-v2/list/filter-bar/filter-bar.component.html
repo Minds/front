@@ -6,14 +6,14 @@
   <!-- TABS: USER CONTEXT --------------------- -->
   <!-- ---------------------------------------- -->
   <ng-container *ngIf="!(service.adminContext$ | async)">
-    <div class="m-tabs__tab" (click)="onLocationFilterChange('newsfeed')">
+    <div class="m-tabs__tab" (click)="onLocationFilterChange('feed')">
       <a
         [class.m-tabs__tab--selected]="
-          (service.locationFilterValue$ | async) === 'newsfeed'
+          (service.locationFilterValue$ | async) === 'feed'
         "
-        data-ref="boost-console-tab-location-newsfeed"
-        i18n="@@BOOST_CONSOLE__TAB_NEWSFEED"
-        >Newsfeed</a
+        data-ref="boost-console-tab-location-feed"
+        i18n="@@BOOST_CONSOLE__TAB_FEED"
+        >Feed</a
       >
     </div>
     <div class="m-tabs__tab" (click)="onLocationFilterChange('sidebar')">
@@ -71,6 +71,7 @@
       class="m-boostConsole__filterTrigger"
       data-ref="m-boostConsole__filterTrigger--state"
     >
+      <span class="m-boostConsole__filterIcon material-icons">filter_list</span>
       <span
         class="m-boostConsole__filterTitleLabel"
         i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__STATUS"
@@ -83,7 +84,7 @@
           isTriggerLabel: true
         }"
       ></ng-container>
-      <span>▾</span>
+      <span class="m-boostConsole__filterCaret">▾</span>
     </div>
   </m-dropdownMenu>
   <!-- ------------------------ -->
@@ -94,6 +95,7 @@
       class="m-boostConsole__filterTrigger"
       data-ref="m-boostConsole__filterTrigger--location"
     >
+      <span class="m-boostConsole__filterIcon material-icons">filter_list</span>
       <span
         class="m-boostConsole__filterTitleLabel"
         i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__LOCATION"
@@ -105,7 +107,7 @@
           locationLabel: service.locationFilterValue$ | async
         }"
       ></ng-container>
-      <span>▾</span>
+      <span class="m-boostConsole__filterCaret">▾</span>
     </div>
   </m-dropdownMenu>
   <!-- ------------------------ -->
@@ -119,6 +121,7 @@
       class="m-boostConsole__filterTrigger"
       data-ref="m-boostConsole__filterTrigger--paymentMethod"
     >
+      <span class="m-boostConsole__filterIcon material-icons">filter_list</span>
       <span
         class="m-boostConsole__filterTitleLabel"
         i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__PAYMENT_METHOD"
@@ -130,7 +133,7 @@
           paymentMethodLabel: service.paymentMethodFilterValue$ | async
         }"
       ></ng-container>
-      <span>▾</span>
+      <span class="m-boostConsole__filterCaret">▾</span>
     </div>
   </m-dropdownMenu>
 </div>
@@ -231,9 +234,9 @@
       >All</ng-container
     >
     <ng-container
-      *ngSwitchCase="'newsfeed'"
-      i18n="@@BOOST_CONSOLE__FILTER_BAR__NEWSFEED_LABEL"
-      >Newsfeed</ng-container
+      *ngSwitchCase="'feed'"
+      i18n="@@BOOST_CONSOLE__FILTER_BAR__FEED_LABEL"
+      >Feed</ng-container
     >
     <ng-container
       *ngSwitchCase="'sidebar'"

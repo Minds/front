@@ -34,10 +34,10 @@ export class BoostConsoleService {
   >(false);
 
   // Subject containing location filter for console to display.
-  // (e.g. newsfeed or sidebar)
+  // (e.g. feed or sidebar)
   public readonly locationFilterValue$: BehaviorSubject<
     BoostConsoleLocationFilter
-  > = new BehaviorSubject<BoostConsoleLocationFilter>('newsfeed');
+  > = new BehaviorSubject<BoostConsoleLocationFilter>('feed');
 
   // Subject containing status filter for console to display.
   // (Used in user boost context only)
@@ -242,7 +242,7 @@ export class BoostConsoleService {
     val: BoostConsoleLocationFilter
   ): BoostLocation {
     switch (val) {
-      case 'newsfeed':
+      case 'feed':
         return BoostLocation.NEWSFEED;
       case 'sidebar':
         return BoostLocation.SIDEBAR;

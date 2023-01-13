@@ -4,7 +4,7 @@
   <!-- ------------------------ -->
   <div class="m-boostConsole__listItem__topBar">
     <div class="m-boostConsole__listItem__topBarLeft">
-      <m-chipBadge>{{ amountBadgeText }}</m-chipBadge>
+      <m-chipBadge *ngIf="amountBadgeText">{{ amountBadgeText }}</m-chipBadge>
       <m-boostConsole__stateLabel [boost]="boost"></m-boostConsole__stateLabel>
     </div>
     <a

@@ -2,7 +2,12 @@
 
 :host {
   display: flex;
-  flex-flow: column nowrap;
+  flex-direction: column;
+
+  @media screen and (max-width: $max-mobile) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
   @include m-theme() {
     border-bottom: 1px solid themed($m-borderColor--primary);
@@ -10,6 +15,10 @@
 
   .m-tabs__container {
     padding: 0 $spacing4;
+
+    @media screen and (max-width: $max-mobile) {
+      border-bottom: none !important;
+    }
   }
 
   .m-boostConsole__filtersWrapper {
@@ -18,8 +27,21 @@
     flex-flow: row nowrap;
     max-width: 100%;
 
+    @media screen and (max-width: $max-mobile) {
+      padding-top: 0px;
+      padding-bottom: $spacing1;
+    }
     ::ng-deep m-dropdownMenu {
       margin-right: $spacing5;
+      @media screen and (max-width: $max-mobile) {
+        margin-right: 0;
+      }
+    }
+
+    .m-boostConsole__filterTrigger {
+      @media screen and (max-width: $max-mobile) {
+        display: flex;
+      }
     }
 
     .m-boostConsole__filterTitleLabel {
@@ -28,10 +50,35 @@
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
+
+      @media screen and (max-width: $max-mobile) {
+        display: none;
+      }
     }
 
     .m-boostConsole__filterLabel {
       margin-right: $spacing2;
+      @media screen and (max-width: $max-mobile) {
+        margin-right: 0;
+      }
+    }
+
+    .m-boostConsole__filterCaret {
+      @media screen and (max-width: $max-mobile) {
+        display: none;
+      }
+    }
+
+    .m-boostConsole__filterIcon {
+      margin-right: $spacing2;
+      font-size: 20px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      @media screen and (min-width: $max-mobile + 1) {
+        display: none;
+      }
     }
   }
 }

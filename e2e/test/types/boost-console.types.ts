@@ -1,5 +1,5 @@
 // console tab type.
-export type BoostConsoleLocationTab = 'Newsfeed' | 'Sidebar';
+export type BoostConsoleLocationTab = 'Feed' | 'Sidebar';
 
 export type BoostConsoleStateFilterValue =
   | 'All'

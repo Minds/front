@@ -50,7 +50,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
     BoostConsoleStateFilter
   > = this.service.stateFilterValue$;
 
-  // Location type e.g. newsfeed or sidebar.
+  // Location type e.g. feed or sidebar.
   public readonly locationFilterValue$: BehaviorSubject<
     BoostConsoleLocationFilter
   > = this.service.locationFilterValue$;
@@ -73,11 +73,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
   // Number of boosts to request from API.
   private readonly requestLimit: number = 3; //ojm
 
-  constructor(
-    private service: BoostConsoleService,
-    private router: Router,
-    private toaster: ToasterService
-  ) {
+  constructor(private service: BoostConsoleService) {
     super();
   }
 
@@ -135,7 +131,6 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
     );
   }
 
-  // OJM IMPORTANT THIS ISN"T WORKING
   /**
    * Load more from service based on list type and list length for offset.
    * @return { void }

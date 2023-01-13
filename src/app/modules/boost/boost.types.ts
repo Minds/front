@@ -81,7 +81,7 @@ export enum BoostLocation {
 
 // BOOST CONSOLE LOCATION FILTER
 // note: 'all' is only used in admin context
-export type BoostConsoleLocationFilter = 'all' | 'newsfeed' | 'sidebar';
+export type BoostConsoleLocationFilter = 'all' | 'feed' | 'sidebar';
 ///////////////////////////////////////////////////////
 
 // BOOST CONSOLE GET PARAMS

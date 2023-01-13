@@ -31,7 +31,7 @@ export class BoostConsoleFilterBarComponent {
   // location filter type values.
   readonly locationFilterTypes: BoostConsoleLocationFilter[] = [
     'all',
-    'newsfeed',
+    'feed',
     'sidebar',
   ];
 
