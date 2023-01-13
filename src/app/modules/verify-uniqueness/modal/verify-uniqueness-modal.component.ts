@@ -4,7 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
  * Verify uniqueness modal root level component.
  */
 @Component({
-  selector: 'm-verify_uniqueness',
+  selector: 'm-verify_uniqueness_modal',
   templateUrl: './verify-uniqueness-modal.component.html',
   styleUrls: ['verify-uniqueness-modal.component.ng.scss'],
 })

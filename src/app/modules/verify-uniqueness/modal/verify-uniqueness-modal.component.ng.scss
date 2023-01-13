@@ -8,9 +8,9 @@
     color: themed($m-textColor--primary);
   }
 
-  .m-verify_uniqueness__header,
-  .m-verify_uniqueness__subheader,
-  .m-verify_uniqueness__body {
+  .m-verify_uniqueness_modal__header,
+  .m-verify_uniqueness_modal__subheader,
+  .m-verify_uniqueness_modal__body {
     padding-left: $horizontalPadding;
     padding-right: $horizontalPadding;
 
@@ -20,7 +20,7 @@
     }
   }
 
-  .m-verify_uniqueness__header {
+  .m-verify_uniqueness_modal__header {
     @include heading1Bold;
     padding-top: $spacing10;
     padding-bottom: $spacing10;
@@ -31,16 +31,16 @@
     }
   }
 
-  .m-verify_uniqueness__subheader {
+  .m-verify_uniqueness_modal__subheader {
     @include heading4Bold;
   }
 
-  .m-verify_uniqueness__body {
+  .m-verify_uniqueness_modal__body {
     padding-top: $spacing6;
     padding-bottom: $spacing10;
   }
 
-  .m-verify_uniqueness__toolbar {
+  .m-verify_uniqueness_modal__toolbar {
     display: flex;
     justify-content: flex-end;
     padding: $spacing8 $horizontalPadding;
@@ -56,7 +56,7 @@
 
   //------------------------------------------
 
-  .m-verify_uniqueness__item {
+  .m-verify_uniqueness_modal__item {
     display: flex;
     flex-direction: row;
 
