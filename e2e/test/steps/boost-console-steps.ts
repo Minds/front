@@ -16,7 +16,7 @@ namespace BoostConsoleSteps {
   Given(
     'I am on the Boost Console {string} location tab',
     (tab: BoostConsoleLocationTab): void => {
-      const queryParams = boostConsolePage.navigateToViaUrl(`location=${tab}`);
+      boostConsolePage.navigateToViaUrl(`location=${tab}`);
     }
   );
 
@@ -53,14 +53,8 @@ namespace BoostConsoleSteps {
 
   When('I click {string} on latest Boost', async (buttonType: string) => {
     switch (buttonType) {
-      case 'reject':
-        await boostConsolePage.clickReject();
-        break;
       case 'cancel':
         boostConsolePage.clickCancel();
-        break;
-      case 'approve':
-        boostConsolePage.clickApprove();
         break;
     }
   });
@@ -85,7 +79,7 @@ namespace BoostConsoleSteps {
   Then(
     'I should see my Boost Console state filter says {string}',
     (filterText: BoostConsoleStateFilterValue) => {
-      boostConsolePage.hasStateFilterLabel(filterText);
+      boostConsolePage.hasStateFilterTriggerLabel(filterText);
     }
   );
 }

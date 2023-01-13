@@ -39,19 +39,18 @@ class BoostConsolePage {
   private cancelButton: CodeceptJS.Locator = locate('m-button').withText(
     'Cancel boost'
   );
-  private rejectButton: CodeceptJS.Locator = locate('m-button').withText(
-    'Reject'
-  );
-  private approveButton: CodeceptJS.Locator = locate('m-button').withText(
-    'Approve boost'
-  );
-
+  //
   private stateFilterTrigger: CodeceptJS.Locator = locate(
     '[data-ref=m-boostConsole__filterTrigger--state]'
   );
-
   private stateFilterLabel: CodeceptJS.Locator = locate(
     '[data-ref=m-boostConsole__filterLabel--state]'
+  );
+  private stateFilterTriggerLabel: CodeceptJS.Locator = locate(
+    '.m-boostConsole__filterLabel--triggerLabel'
+  );
+  private stateFilterMenuLabel: CodeceptJS.Locator = locate(
+    '.m-boostConsole__filterLabel--menuLabel'
   );
 
   /**
@@ -100,8 +99,8 @@ class BoostConsolePage {
    * @param { string } stateFilterLabel - filter label for states, e.g. 'Pending', 'Approved'.
    * @returns { void }
    */
-  public hasStateFilterLabel(stateFilterLabel: string): void {
-    I.seeElement(this.stateFilterLabel.withText(stateFilterLabel));
+  public hasStateFilterTriggerLabel(stateFilterLabel: string): void {
+    I.seeElement(this.stateFilterTriggerLabel.withText(stateFilterLabel));
   }
 
   /**
@@ -156,13 +155,8 @@ class BoostConsolePage {
    * @returns { Promise<void> }
    */
   public async switchTabs(tab: BoostConsoleLocationTab): Promise<void> {
-    await Promise.all([
-      I.click(locate(this.tab).withText(tab)),
-      I.waitForResponse(
-        resp => resp.url().includes(this.baseEndpoint) && resp.status() === 200,
-        30
-      ),
-    ]);
+    I.click(locate(this.tab).withText(tab));
+    I.waitForElement(locate(this.selectedTab).withText(tab));
   }
 
   /**
@@ -173,37 +167,9 @@ class BoostConsolePage {
   public async switchStateFilter(stateFilterValue: string): Promise<void> {
     I.scrollPageToTop();
     I.click(this.stateFilterTrigger);
-    await I.clickAndWait(
-      this.stateFilterLabel.withText(stateFilterValue),
-      `state=${stateFilterValue}`
-    );
-    pause(); //ojm
-  }
-
-  /**
-   * Click approve.
-   * @param { number } feedPosition - position in feed for approve button click.
-   * @return { void }
-   */
-  public clickApprove(feedPosition: number = 1): void {
-    I.click(this.approveButton.at(feedPosition));
-  }
-
-  /**
-   * Click Reject.
-   * @param { number } feedPosition - position in feed for reject button click.
-   * @return { Promise<void> }
-   */
-  public async clickReject(feedPosition: number = 1): Promise<void> {
-    await Promise.all([
-      I.click(this.rejectButton.at(feedPosition)),
-      I.waitForResponse(
-        resp =>
-          new RegExp(/api\/v3\/boosts\/admin\/\d+\/reject/).test(resp.url()) &&
-          resp.status() === 200,
-        30
-      ),
-    ]);
+    I.waitForElement(this.stateFilterMenuLabel.withText(stateFilterValue));
+    I.click(this.stateFilterMenuLabel.withText(stateFilterValue));
+    I.seeElement(this.stateFilterTriggerLabel.withText(stateFilterValue));
   }
 
   /**

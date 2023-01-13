@@ -79,7 +79,8 @@
       <ng-container
         [ngTemplateOutlet]="stateTextLabel"
         [ngTemplateOutletContext]="{
-          stateLabel: service.stateFilterValue$ | async
+          stateLabel: service.stateFilterValue$ | async,
+          isTriggerLabel: true
         }"
       ></ng-container>
       <span>▾</span>
@@ -149,15 +150,26 @@
     >
       <ng-container
         [ngTemplateOutlet]="stateTextLabel"
-        [ngTemplateOutletContext]="{ stateLabel: typeValue }"
+        [ngTemplateOutletContext]="{
+          stateLabel: typeValue,
+          isTriggerLabel: false
+        }"
       ></ng-container>
     </m-dropdownMenu__item>
   </ul>
 </ng-template>
 
-<ng-template #stateTextLabel let-stateLabel="stateLabel">
+<ng-template
+  #stateTextLabel
+  let-stateLabel="stateLabel"
+  let-isTriggerLabel="isTriggerLabel"
+>
   <span
     class="m-boostConsole__filterLabel"
+    [ngClass]="{
+      'm-boostConsole__filterLabel--triggerLabel': isTriggerLabel,
+      'm-boostConsole__filterLabel--menuLabel': !isTriggerLabel
+    }"
     data-ref="m-boostConsole__filterLabel--state"
     [ngSwitch]="stateLabel"
   >

@@ -127,13 +127,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
         }
       ),
       tap((response: any) => {
-        if (response && typeof response.redirect !== 'undefined') {
-          console.log(response);
-          this.toaster.error(response.errorMessage);
-          this.router.navigate(['boost/boost-console']);
-          return;
-        }
-        this.moreData$.next(response?.length >= this.requestLimit);
+        this.moreData$.next(response.has_more);
         this.inProgress$.next(false);
         console.log('ojm response', response);
         this.list$.next(response.boosts);

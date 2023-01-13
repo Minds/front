@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Boost, BoostState } from '../../../../boost.types';
+import * as moment from 'moment';
 
 /**
  * Row presented in boost console list items (where applicable)
@@ -17,6 +18,8 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   boostIsRejected: boolean = false;
   boostIsApproved: boolean = false;
 
+  formattedStartDate: string = '';
+
   constructor() {}
 
   ngOnInit(): void {
@@ -24,5 +27,17 @@ export class BoostConsoleStatsBarComponent implements OnInit {
 
     this.boostIsRejected = status === BoostState.REJECTED;
     this.boostIsApproved = status === BoostState.APPROVED;
+
+    if (this.boostIsApproved) {
+      this.formattedStartDate = this.formatDate(this.boost.approved_timestamp);
+    }
+  }
+
+  /**
+   * Returns a formatted human-readable date string
+   * @param timestampInSeconds
+   */
+  private formatDate(timestampInSeconds): string {
+    return moment(timestampInSeconds * 1000).format('D/M/YY h:mm a');
   }
 }
