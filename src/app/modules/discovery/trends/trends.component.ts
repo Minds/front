@@ -25,6 +25,7 @@ import { FastFadeAnimation } from '../../../animations';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-discovery__trends',
@@ -33,6 +34,7 @@ import { SuggestionsService } from '../../suggestions/channel/channel-suggestion
   providers: [DiscoveryFeedsService, FeedsService],
 })
 export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
+  isPlusPage$ = this.discoveryService.isPlusPage$;
   trends$ = this.discoveryService.trends$;
   hero$ = this.discoveryService.hero$;
   inProgress$ = this.discoveryService.inProgress$;
@@ -52,7 +54,8 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private discoveryService: DiscoveryTrendsService,
     private discoveryFeedsService: DiscoveryFeedsService,
-    protected suggestionsService: SuggestionsService
+    protected suggestionsService: SuggestionsService,
+    public session: Session
   ) {}
 
   ngOnInit() {
@@ -73,6 +76,10 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
           this.discoveryService.loadTrends();
         }
       });
+    if (this.isPlusPage$.getValue()) {
+      this.discoveryFeedsService.setFilter('preferred');
+      this.showPreferredFeed = true;
+    }
   }
 
   loadMore() {

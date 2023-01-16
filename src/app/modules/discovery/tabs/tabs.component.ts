@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DiscoveryService } from '../discovery.service';
 import { Observable } from 'rxjs';
 import { SupermindGlobalFeedExperimentService } from '../../experiments/sub-services/supermind-global-feed-experiment.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-discovery__tabs',
@@ -22,7 +23,8 @@ export class DiscoveryTabsComponent {
     public route: ActivatedRoute,
     private router: Router,
     private service: DiscoveryService,
-    private supermindGlobalFeedExperimentService: SupermindGlobalFeedExperimentService
+    private supermindGlobalFeedExperimentService: SupermindGlobalFeedExperimentService,
+    public session: Session
   ) {}
 
   /**

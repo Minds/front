@@ -1,30 +1,32 @@
-<m-tooltip
-  class="m-discovery__settingsButton"
-  icon="settings"
-  [attr.data-ref]="
-    modalType === 'tags'
-      ? 'discover-by-tags-settings-button'
-      : modalType === 'feed'
-      ? 'discovery-feeds-settings-button'
-      : modalType === 'content-settings'
-      ? 'content-settings-button'
-      : null
-  "
-  (click)="openSettingsModal($event)"
->
-  <ng-container [ngSwitch]="modalType">
-    <ng-template
-      ngSwitchCase="feed"
-      i18n="@@DISCOVERY_SETTINGS_BUTTON__MANAGE_RESULTS"
-      >Manage Results</ng-template
-    >
-    <ng-template
-      ngSwitchCase="tags"
-      i18n="@@DISCOVERY_SETTINGS_BUTTON__MANAGE_TAGS"
-      >Manage tags</ng-template
-    >
-    <ng-template ngSwitchCase="content-settings" i18n="@@COMMON__SETTINGS"
-      >Settings</ng-template
-    >
-  </ng-container>
-</m-tooltip>
+<ng-container *ngIf="session.getLoggedInUser()">
+  <m-tooltip
+    class="m-discovery__settingsButton"
+    icon="settings"
+    [attr.data-ref]="
+      modalType === 'tags'
+        ? 'discover-by-tags-settings-button'
+        : modalType === 'feed'
+        ? 'discovery-feeds-settings-button'
+        : modalType === 'content-settings'
+        ? 'content-settings-button'
+        : null
+    "
+    (click)="openSettingsModal($event)"
+  >
+    <ng-container [ngSwitch]="modalType">
+      <ng-template
+        ngSwitchCase="feed"
+        i18n="@@DISCOVERY_SETTINGS_BUTTON__MANAGE_RESULTS"
+        >Manage Results</ng-template
+      >
+      <ng-template
+        ngSwitchCase="tags"
+        i18n="@@DISCOVERY_SETTINGS_BUTTON__MANAGE_TAGS"
+        >Manage tags</ng-template
+      >
+      <ng-template ngSwitchCase="content-settings" i18n="@@COMMON__SETTINGS"
+        >Settings</ng-template
+      >
+    </ng-container>
+  </m-tooltip>
+</ng-container>

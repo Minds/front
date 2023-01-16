@@ -1,16 +1,18 @@
-<div *ngIf="!isPlus; else postToPlus">
-  <span
-    >Access Minds+ content -
-    <a (click)="showUpgradeModal()">Upgrade today</a></span
-  >
-</div>
-<!-- The below shows to users who do have plus-->
-<ng-template #postToPlus>
-  <div>
-    <span>
-      Submit a post to Minds+ members only and earn a share of our revenue based
-      on how it performs -
-      <a (click)="openComposerWithPlus()">Create post</a>
-    </span>
+<ng-container *ngIf="session.getLoggedInUser()">
+  <div *ngIf="!isPlus; else postToPlus">
+    <span
+      >Access Minds+ content -
+      <a (click)="showUpgradeModal()">Upgrade today</a></span
+    >
   </div>
-</ng-template>
+  <!-- The below shows to users who do have plus-->
+  <ng-template #postToPlus>
+    <div>
+      <span>
+        Submit a post to Minds+ members only and earn a share of our revenue
+        based on how it performs -
+        <a (click)="openComposerWithPlus()">Create post</a>
+      </span>
+    </div>
+  </ng-template>
+</ng-container>

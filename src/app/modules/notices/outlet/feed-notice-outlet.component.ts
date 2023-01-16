@@ -54,6 +54,9 @@ import {
         <m-feedNotice--plusUpgrade
           *ngSwitchCase="'plus-upgrade'"
         ></m-feedNotice--plusUpgrade>
+        <m-feedNotice--boostChannel
+          *ngSwitchCase="'boost-channel'"
+        ></m-feedNotice--boostChannel>
       </ng-container>
     </ng-container>
   `,

@@ -22,6 +22,7 @@ import { RouterHistoryService } from '../../../../common/services/router-history
 @Component({
   selector: 'm-discovery__trend',
   templateUrl: './trend.component.html',
+  styleUrls: ['./trend.component.ng.scss'],
   animations: [FastFadeAnimation],
   providers: [PaywallService],
 })
