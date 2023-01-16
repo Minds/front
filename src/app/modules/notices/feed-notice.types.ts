@@ -7,7 +7,8 @@ export type NoticeKey =
   | 'connect-wallet'
   | 'build-your-algorithm'
   | 'enable-push-notifications'
-  | 'update-tags';
+  | 'update-tags'
+  | 'boost-channel';
 
 // Location of component - where should it show 'top' or feed, or 'inline' in the feed.
 export type NoticeLocation = 'top' | 'inline';
