@@ -24,6 +24,6 @@ export class VerifyUniquenessModalComponent implements OnInit, OnDestroy {
   }
 
   get qrLink() {
-    return 'https://www.minds.com/mobile';
+    return 'https://www.minds.com/in-app-verification';
   }
 }
