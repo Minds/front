@@ -33,7 +33,11 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
   isDark: boolean = false;
   themeSubscription: Subscription;
 
-  footerLinks: { label: string; routerLink?: string[]; href?: string }[] = [
+  footerLinks: {
+    label: string;
+    routerLink?: string[];
+    href?: string;
+  }[] = [
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Privacy', routerLink: ['/p/privacy'] },
     {
@@ -72,6 +76,13 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
+
+    // For logged out users, remove referrals link
+    if (!this.getCurrentUser()) {
+      this.footerLinks = this.footerLinks.filter(link => {
+        return link.label !== 'Referrals';
+      });
+    }
   }
 
   getCurrentUser(): MindsUser {
