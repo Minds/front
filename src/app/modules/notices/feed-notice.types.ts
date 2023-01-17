@@ -8,6 +8,7 @@ export type NoticeKey =
   | 'build-your-algorithm'
   | 'enable-push-notifications'
   | 'update-tags'
+  | 'plus-upgrade'
   | 'boost-channel';
 
 // Location of component - where should it show 'top' or feed, or 'inline' in the feed.
