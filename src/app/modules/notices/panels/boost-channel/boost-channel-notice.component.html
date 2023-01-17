@@ -1,0 +1,40 @@
+<m-feedNotice
+  icon="trending_up"
+  dataRefId="boost-channel"
+  (dismissClick)="onDismissClick()"
+>
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__BOOST_CHANNEL__EXPAND_YOUR_REACH"
+    >Expand Your Reach</span
+  >
+  <p
+    class="m-feedNotice__body"
+    i18n="@@FEED_NOTICE__BOOST_CHANNEL__USE_BOOST_REACH_NEW_AUDIENCES"
+  >
+    Use Boost to reach new audiences on Minds. Boosted channels get more
+    engagement and subscribers.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick()"
+    data-ref="feed-notice-boost-channel-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__BOOST_CHANNEL__BOOST_NOW">
+      Boost Now
+    </ng-container>
+  </m-button>
+  <m-button
+    class="m-feedNotice__buttonSecondary"
+    size="small"
+    (onAction)="onSecondaryOptionClick()"
+    data-ref="feed-notice-boost-channel-secondary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__BOOST_CHANNEL__LEARN_MORE">
+      Learn More
+    </ng-container>
+  </m-button>
+</m-feedNotice>
