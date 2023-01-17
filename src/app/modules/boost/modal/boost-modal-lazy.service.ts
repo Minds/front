@@ -1,4 +1,5 @@
 import { createNgModuleRef, Injectable, Injector } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ModalRef, ModalService } from '../../../services/ux/modal.service';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostModalV2LazyModule } from '../modal-v2/boost-modal-v2-lazy.module';
@@ -16,6 +17,9 @@ type PresentableBoostModalComponent =
  */
 @Injectable({ providedIn: 'root' })
 export class BoostModalLazyService {
+  // emitted to on boost completion.
+  public onComplete$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     private modalService: ModalService,
     private injector: Injector,
@@ -34,7 +38,10 @@ export class BoostModalLazyService {
     const modal = this.modalService.present(componentRef, {
       data: {
         entity: entity,
-        onSaveIntent: () => modal.close(),
+        onSaveIntent: () => {
+          this.onComplete$.next(true);
+          modal.close();
+        },
       },
       size: this.getModalSize(),
     });
