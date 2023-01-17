@@ -11,6 +11,8 @@ import { SetupChannelNoticeComponent } from './panels/setup-channel/setup-channe
 import { VerifyUniquenessNoticeComponent } from './panels/verify-uniqueness/verify-uniqueness-notice.component';
 import { ConnectWalletNoticeComponent } from './panels/connect-wallet/connect-wallet-notice.component';
 import { SupermindPendingNoticeComponent } from './panels/supermind-pending/supermind-pending-notice.component';
+import { PlusUpgradeNoticeComponent } from './panels/plus-upgrade/plus-upgrade-notice.component';
+import { BoostChannelNoticeComponent } from './panels/boost-channel/boost-channel-notice.component';
 
 @NgModule({
   imports: [CommonModule, NgCommonModule],
@@ -25,6 +27,8 @@ import { SupermindPendingNoticeComponent } from './panels/supermind-pending/supe
     EnablePushNotificationsNoticeComponent,
     UpdateTagsNoticeComponent,
     SupermindPendingNoticeComponent,
+    PlusUpgradeNoticeComponent,
+    BoostChannelNoticeComponent,
   ],
   exports: [FeedNoticeOutletComponent],
 })
