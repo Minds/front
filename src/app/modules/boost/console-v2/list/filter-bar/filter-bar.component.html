@@ -38,7 +38,7 @@
         "
         data-ref="boost-console-tab-suitability-safe"
         i18n="@@BOOST_CONSOLE__TAB_SAFE"
-        >Safe</a
+        >Safe ({{ adminPendingSafeCount$ | async }})</a
       >
     </div>
     <div
@@ -51,7 +51,7 @@
         "
         data-ref="boost-console-tab-suitability-controversial"
         i18n="@@BOOST_CONSOLE__TAB_CONTROVERSIAL"
-        >Controversial</a
+        >Controversial ({{ adminPendingControversialCount$ | async }})</a
       >
     </div>
   </ng-container>
