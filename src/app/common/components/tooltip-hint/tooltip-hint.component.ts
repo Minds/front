@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { Storage } from '../../../services/storage';
 import { NgStyleValue } from '../../types/angular.types';
 
@@ -37,6 +38,13 @@ export class TooltipHintComponent implements OnInit {
   // style for tooltip icon.
   @Input() public iconStyle: NgStyleValue;
 
+  /**
+   * id for an experiment - when experiment is active,
+   * hint will work as normal, when off, it will behave
+   * a normal tooltip, not prompting users on first viewing.
+   */
+  @Input() public experimentId: string;
+
   // style for tooltip bubble.
   @Input() public set tooltipBubbleStyle(style: NgStyleValue) {
     this._tooltipBubbleStyle = {
@@ -63,13 +71,24 @@ export class TooltipHintComponent implements OnInit {
     boolean
   > = new BehaviorSubject<boolean>(false);
 
-  constructor(private storage: Storage) {}
+  constructor(
+    private storage: Storage,
+    private experiments: ExperimentsService
+  ) {}
 
   ngOnInit(): void {
+    // if experiment is inactive, fallback to default tooltip behaviour.
+    if (this.hasInactiveExperiment()) {
+      this.tooltipHoverEnabled$.next(true);
+      return;
+    }
+
     const hasShownTooltip = this.storage.get(this.getStorageKey());
 
     if (!hasShownTooltip) {
       this.showTooltip();
+    } else {
+      this.tooltipHoverEnabled$.next(true);
     }
   }
 
@@ -97,5 +116,16 @@ export class TooltipHintComponent implements OnInit {
    */
   private getStorageKey(): string {
     return `${this.storageKeyPrefix}:shown`;
+  }
+
+  /**
+   * Whether experiment ID is set and given experiment is inactive.
+   * @returns { boolean } true if experiment id is set and experiment is inactive.
+   */
+  private hasInactiveExperiment(): boolean {
+    return (
+      this.experimentId &&
+      !this.experiments.hasVariation(this.experimentId, true)
+    );
   }
 }

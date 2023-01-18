@@ -33,6 +33,7 @@ describe('NewsfeedBoostRotatorComponent', () => {
               'tooltipBubbleStyle',
               'showArrow',
               'arrowOffset',
+              'experimentId',
             ],
             outputs: ['click'],
           }),
