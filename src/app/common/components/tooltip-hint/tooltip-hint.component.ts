@@ -17,9 +17,6 @@ type AnchorPosition = 'top' | 'bottom' | 'right' | 'left';
   templateUrl: './tooltip-hint.component.html',
 })
 export class TooltipHintComponent implements OnInit {
-  // instance variable to store tooltip bubble style.
-  private _tooltipBubbleStyle: NgStyleValue;
-
   // prefix for storage key. identifier for a hint.
   @Input() public storageKeyPrefix: string = 'undefined';
 
@@ -38,28 +35,15 @@ export class TooltipHintComponent implements OnInit {
   // style for tooltip icon.
   @Input() public iconStyle: NgStyleValue;
 
+  // style for tooltip bubble.
+  @Input() public tooltipBubbleStyle: NgStyleValue;
+
   /**
    * id for an experiment - when experiment is active,
    * hint will work as normal, when off, it will behave
    * a normal tooltip, not prompting users on first viewing.
    */
   @Input() public experimentId: string;
-
-  // style for tooltip bubble.
-  @Input() public set tooltipBubbleStyle(style: NgStyleValue) {
-    this._tooltipBubbleStyle = {
-      right: '-5px',
-      ...style,
-    };
-  }
-
-  /**
-   * Getter for tooltip bubble style.
-   * @returns { NgStyleValue }
-   */
-  get tooltipBubbleStyle(): NgStyleValue {
-    return this._tooltipBubbleStyle;
-  }
 
   // whether tooltip should be forced to show.
   public readonly shouldShow$: BehaviorSubject<boolean> = new BehaviorSubject<

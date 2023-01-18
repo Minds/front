@@ -389,7 +389,7 @@ export class NewsfeedBoostRotatorComponent {
     return {
       'max-width': 'unset',
       width: 'max-content',
-      right: '-5px',
+      right: 0,
     };
   }
 

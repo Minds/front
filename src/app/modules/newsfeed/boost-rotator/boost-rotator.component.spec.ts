@@ -170,6 +170,7 @@ describe('NewsfeedBoostRotatorComponent', () => {
     expect(comp.tooltipBubbleStyle).toEqual({
       'max-width': 'unset',
       width: 'max-content',
+      right: 0,
     });
   });
 

@@ -67,16 +67,6 @@ describe('TooltipHintComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should get and set tooltip style', () => {
-    comp.tooltipBubbleStyle = {
-      display: 'none',
-    };
-    expect(comp.tooltipBubbleStyle).toEqual({
-      right: '-5px',
-      display: 'none',
-    });
-  });
-
   it('should show tooltip on init if no local storage entry found and no experiment id is set', () => {
     expect(comp.shouldShow$.getValue()).toBe(false);
 
