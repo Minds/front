@@ -33,6 +33,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
+import { NgStyleValue } from '../../../common/types/angular.types';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -370,5 +371,34 @@ export class NewsfeedBoostRotatorComponent {
       this.rotatorEl.nativeElement.clientWidth / ACTIVITY_V2_FIXED_HEIGHT_RATIO;
 
     if (this.height < 500) this.height = 500;
+  }
+
+  /**
+   * On settings button click.
+   * @returns { void }
+   */
+  public onSettingsClick(): void {
+    this.router.navigate(['/settings/account/boosted-content']);
+  }
+
+  /**
+   * Get style for settings tooltip bubble.
+   * @returns { NgStyleValue } - ngStyle value.
+   */
+  get tooltipBubbleStyle(): NgStyleValue {
+    return {
+      'max-width': 'unset',
+      width: 'max-content',
+    };
+  }
+
+  /**
+   * Get style for settings tooltip icon.
+   * @returns { NgStyleValue } - ngStyle value.
+   */
+  get tooltipIconStyle(): NgStyleValue {
+    return {
+      'font-size': 20,
+    };
   }
 }
