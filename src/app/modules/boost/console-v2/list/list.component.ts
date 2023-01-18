@@ -34,7 +34,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
     boolean
   >(false);
 
-  // Whether there is more data.
+  // Whether there is more data that could be added to the list.
   public readonly moreData$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(true);
