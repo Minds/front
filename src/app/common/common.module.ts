@@ -177,7 +177,6 @@ import { MindsBanner } from './components/banner/banner';
 import { SeeLatestButtonComponent } from './components/see-latest-button/see-latest-button.component';
 import { SupermindBadgeComponent } from './components/supermind-badge/supermind-badge.component';
 import { DynamicBoostExperimentService } from '../modules/experiments/sub-services/dynamic-boost-experiment.service';
-import { TooltipHintComponent } from './components/tooltip-hint/tooltip-hint.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -277,7 +276,6 @@ const MINDS_COMMON_COMPONENTS = [
   AutocompleteUserInputComponent,
   AddBankPromptComponent,
   ChipBadgeComponent,
-  TooltipHintComponent,
 ];
 // ------------------------------------
 // ------------------------------------
