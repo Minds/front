@@ -10,8 +10,6 @@ import {
 } from 'rxjs/operators';
 import { ApiResponse } from '../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { Router } from '@angular/router';
-import { ToasterService } from '../../../../common/services/toaster.service';
 import {
   Boost,
   BoostConsoleLocationFilter,
@@ -144,10 +142,11 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
       this.service
         .getList$(this.requestLimit, this.list$.getValue().length ?? null)
         .pipe(take(1))
-        .subscribe((list: any) => {
-          if (list && list.length) {
+        .subscribe((response: any) => {
+          if (response && response.boosts && response.boosts.length) {
             let currentList = this.list$.getValue();
-            this.list$.next([...currentList, ...list]);
+            this.list$.next([...currentList, ...response.boosts]);
+            this.moreData$.next(response.has_more);
           } else {
             this.moreData$.next(false);
           }

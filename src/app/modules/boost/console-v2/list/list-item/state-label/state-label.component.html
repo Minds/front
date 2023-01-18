@@ -12,9 +12,21 @@
         timeTillExpiration
       }}</span>
     </ng-container>
-    <ng-template #approvedText i18n="@@BOOST_CONSOLE_STATE_LABEL__APPROVED"
-      >Approved</ng-template
-    >
+    <ng-template #approvedText>
+      <!-- Item has just been approved and we are optimistically marking it as such -->
+      <ng-container
+        *ngIf="!boost.approved_timestamp"
+        i18n="@@BOOST_CONSOLE_STATE_LABEL__APPROVED"
+        >Approved</ng-container
+      >
+      <!-- Item has been approved at least a day ago and the boost has been
+      completed already but not yet marked as complete in backend -->
+      <ng-container
+        *ngIf="boost.approved_timestamp"
+        i18n="@@BOOST_CONSOLE_STATE_LABEL__COMPLETED"
+        >Completed</ng-container
+      >
+    </ng-template>
   </ng-container>
   <ng-container
     *ngSwitchCase="boostState.REJECTED"
