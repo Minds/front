@@ -34,23 +34,27 @@ export class BoostModalV2BudgetTabBarComponent {
       return;
     }
 
-    if (paymentCategory === BoostPaymentCategory.TOKENS) {
-      const modal = this.modal.present(ConfirmV2Component, {
-        data: {
-          title: 'Are you sure you want to use tokens?',
-          body: 'You will receive more views when using cash.',
-          confirmButtonColor: 'blue',
-          confirmButtonSolid: true,
-          onConfirm: () => {
-            this.paymentCategory$.next(paymentCategory);
-            this.service.paymentMethodId$.next(null);
-            modal.dismiss();
-          },
-        },
-        injector: this.injector,
-      });
-      return;
-    }
+    // NOTE: keeping this in case we want to bring it back.
+    // If we do bring it back, also change this comp's spec test and
+    // navigateToBudgetTab() in e2e/fragments/boostModalComponent.ts
+    //
+    // if (paymentCategory === BoostPaymentCategory.TOKENS) {
+    //   const modal = this.modal.present(ConfirmV2Component, {
+    //     data: {
+    //       title: 'Are you sure you want to use tokens?',
+    //       body: 'You will receive more views when using cash.',
+    //       confirmButtonColor: 'blue',
+    //       confirmButtonSolid: true,
+    //       onConfirm: () => {
+    //         this.paymentCategory$.next(paymentCategory);
+    //         this.service.paymentMethodId$.next(null);
+    //         modal.dismiss();
+    //       },
+    //     },
+    //     injector: this.injector,
+    //   });
+    //   return;
+    // }
     this.paymentCategory$.next(paymentCategory);
   }
 }
