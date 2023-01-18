@@ -8,6 +8,10 @@ $topbarHeight: 75px;
 :host {
   margin-bottom: 0;
 
+  > * {
+    width: 100%;
+  }
+
   &:not(.m-feedNoticeOutlet__container--topPosition) {
     border-bottom: unset !important;
   }
