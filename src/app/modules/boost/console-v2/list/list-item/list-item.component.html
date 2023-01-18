@@ -25,12 +25,14 @@
       [displayOptions]="displayOptions"
       [autoplayVideo]="false"
       [canRecordAnalytics]="false"
+      class="m-boostConsole__listItem__middleBar"
     ></m-activity>
   </ng-container>
   <ng-container *ngIf="boost.entity.type && boost.entity.type === 'user'">
     <m-publisherCard
       [publisher]="boost.entity"
       [showSubscribeButton]="false"
+      class="m-boostConsole__listItem__middleBar"
     ></m-publisherCard
   ></ng-container>
   <!-- ------------------------ -->
