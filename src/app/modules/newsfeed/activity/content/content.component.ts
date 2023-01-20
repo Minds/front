@@ -737,6 +737,11 @@ export class ActivityContentComponent
     }
   }
 
+  // Used as router link binding for image href
+  get sepLink(): string {
+    return `newsfeed/${this.entity?.guid}`;
+  }
+
   onImageError(e: Event): void {}
 
   persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
