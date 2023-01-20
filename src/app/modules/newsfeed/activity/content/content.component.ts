@@ -664,9 +664,6 @@ export class ActivityContentComponent
         // ...and clicked on multi-image image,
         // open that image in a new tab instead of modal
         window.open(this.activeMultiImageUrl, '_blank');
-      } else if (this.isImage) {
-        // ...and clicked on single image
-        this.redirectToSinglePage();
       }
       // Ignore all other modal requests from mobile devices
       return;
@@ -738,8 +735,8 @@ export class ActivityContentComponent
   }
 
   // Used as router link binding for image href
-  get sepLink(): string {
-    return `newsfeed/${this.entity?.guid}`;
+  get sepLink(): string[] {
+    return ['/newsfeed', this.entity?.guid];
   }
 
   onImageError(e: Event): void {}
