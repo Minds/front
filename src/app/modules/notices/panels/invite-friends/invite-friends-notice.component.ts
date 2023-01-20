@@ -10,10 +10,10 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
  * and gives them an easy way to copy their referral link or learn more.
  */
 @Component({
-  selector: 'm-feedNotice--inviteYourFriends',
-  templateUrl: 'invite-your-friends-notice.component.html',
+  selector: 'm-feedNotice--inviteFriends',
+  templateUrl: 'invite-friends-notice.component.html',
 })
-export class InviteYourFriendsComponent extends AbstractSubscriberComponent {
+export class InviteFriendsNoticeComponent extends AbstractSubscriberComponent {
   constructor(
     private feedNotice: FeedNoticeService,
     private referralUrl: ReferralUrlService,
@@ -57,6 +57,6 @@ export class InviteYourFriendsComponent extends AbstractSubscriberComponent {
    * @return { void }
    */
   public dismiss(): void {
-    this.feedNotice.dismiss('invite-your-friends');
+    this.feedNotice.dismiss('invite-friends');
   }
 }

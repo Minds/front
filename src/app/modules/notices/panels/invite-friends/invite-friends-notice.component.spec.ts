@@ -5,7 +5,7 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import { InviteYourFriendsComponent } from './invite-your-friends-notice.component';
+import { InviteFriendsNoticeComponent } from './invite-friends-notice.component';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ReferralUrlService } from '../../../../common/services/referral-url.service';
@@ -13,15 +13,15 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import { Router } from '@angular/router';
 
 describe('InviteYourFriendsComponent', () => {
-  let comp: InviteYourFriendsComponent;
-  let fixture: ComponentFixture<InviteYourFriendsComponent>;
+  let comp: InviteFriendsNoticeComponent;
+  let fixture: ComponentFixture<InviteFriendsNoticeComponent>;
   let referralUrl: string = 'https://www.minds.com/register?referrer=mindsUser';
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [
-          InviteYourFriendsComponent,
+          InviteFriendsNoticeComponent,
           MockComponent({
             selector: 'm-feedNotice',
             inputs: ['icon'],
@@ -56,7 +56,7 @@ describe('InviteYourFriendsComponent', () => {
   );
 
   beforeEach(done => {
-    fixture = TestBed.createComponent(InviteYourFriendsComponent);
+    fixture = TestBed.createComponent(InviteFriendsNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
 
@@ -114,7 +114,7 @@ describe('InviteYourFriendsComponent', () => {
   it('should dismiss notice on dismiss function call', () => {
     comp.dismiss();
     expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
-      'invite-your-friends'
+      'invite-friends'
     );
   });
 });

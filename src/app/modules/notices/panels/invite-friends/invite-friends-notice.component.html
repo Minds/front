@@ -1,8 +1,4 @@
-<m-feedNotice
-  icon="info"
-  (dismissClick)="dismiss()"
-  dataRefId="invite-your-friends"
->
+<m-feedNotice icon="info" (dismissClick)="dismiss()" dataRefId="invite-friends">
   <span
     class="m-feedNotice__title"
     i18n="@@FEED_NOTICE__INVITE_YOUR_FRIENDS__TITLE"
@@ -21,7 +17,7 @@
     solid="true"
     size="small"
     (onAction)="onPrimaryOptionClick()"
-    data-ref="feed-notice-invite-your-friends-primary-click"
+    data-ref="feed-notice-invite-friends-primary-click"
   >
     <ng-container i18n="@@FEED_NOTICE__INVITE_YOUR_FRIENDS__SHARE_INVITE">
       Share invite
@@ -31,7 +27,7 @@
     class="m-feedNotice__buttonSecondary"
     size="small"
     (onAction)="onSecondaryOptionClick()"
-    data-ref="feed-notice-invite-your-friends-secondary-click"
+    data-ref="feed-notice-invite-friends-secondary-click"
   >
     <ng-container i18n="@@FEED_NOTICE__INVITE_YOUR_FRIENDS__LEARN_MORE">
       Learn More
