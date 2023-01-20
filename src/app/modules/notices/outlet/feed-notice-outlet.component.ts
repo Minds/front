@@ -57,6 +57,9 @@ import {
         <m-feedNotice--boostChannel
           *ngSwitchCase="'boost-channel'"
         ></m-feedNotice--boostChannel>
+        <m-feedNotice--inviteYourFriends
+          *ngSwitchCase="'invite-your-friends'"
+        ></m-feedNotice--inviteYourFriends>
       </ng-container>
     </ng-container>
   `,

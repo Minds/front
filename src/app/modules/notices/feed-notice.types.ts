@@ -9,7 +9,8 @@ export type NoticeKey =
   | 'enable-push-notifications'
   | 'update-tags'
   | 'plus-upgrade'
-  | 'boost-channel';
+  | 'boost-channel'
+  | 'invite-your-friends';
 
 // Location of component - where should it show 'top' or feed, or 'inline' in the feed.
 export type NoticeLocation = 'top' | 'inline';
