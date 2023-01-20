@@ -90,6 +90,7 @@ post content to trigger upgrade modal -->
   <!-- ----------------------------------- -->
   <div
     class="m-activityContent__media--image m-activityContent__media"
+    [style.width.px]="imageWidth"
     *ngIf="isImage || (isMultiImage && isModal)"
     [ngClass]="{
       'm-activityContent__media--extraTallImage':
@@ -99,30 +100,26 @@ post content to trigger upgrade modal -->
     }"
     #imageContainerEl
   >
-    <ng-container *ngIf="!isModal; else image">
-      <ng-container
-        *ngTemplateOutlet="paywallTemplate"
-        [ngTemplateOutletContext]="{ hideText: sidebarMode }"
-      ></ng-container>
-      <a
-        [routerLink]="['/newsfeed', entity?.guid]"
-        class="m-activityContentMedia__link"
+    <ng-container
+      *ngTemplateOutlet="paywallTemplate"
+      [ngTemplateOutletContext]="{ hideText: sidebarMode }"
+    ></ng-container>
+    <a
+      [routerLink]="['/newsfeed', entity?.guid]"
+      class="m-activityContentMedia__link"
+      (click)="onModalRequested($event)"
+    >
+      <div
+        *ngIf="
+          (extraTallImage || extraWideImage) &&
+          service.displayOptions.isFeed &&
+          !isModal
+        "
+        class="m-activityContentMedia__expandIcon"
         (click)="onModalRequested($event)"
       >
-        <div
-          *ngIf="
-            (extraTallImage || extraWideImage) && service.displayOptions.isFeed
-          "
-          class="m-activityContentMedia__expandIcon"
-          (click)="onModalRequested($event)"
-        >
-          <m-icon iconId="crop_free" sizeFactor="25"></m-icon>
-        </div>
-        <ng-container [ngTemplateOutlet]="image"></ng-container
-      ></a>
-    </ng-container>
-
-    <ng-template #image>
+        <m-icon iconId="crop_free" sizeFactor="25"></m-icon>
+      </div>
       <img
         #imageEl
         [src]="!isMultiImage ? imageUrl : activeMultiImageUrl"
@@ -137,7 +134,7 @@ post content to trigger upgrade modal -->
         [style.width.px]="imageWidth"
         [ngClass]="{ 'm-border': !isModal }"
       />
-    </ng-template>
+    </a>
   </div>
 </ng-container>
 <!-- ----------------------------------- -->
