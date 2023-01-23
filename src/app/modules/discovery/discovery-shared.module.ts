@@ -32,7 +32,6 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
 import { WireModalService } from '../wire/wire-modal.service';
 import { WirePaymentHandlersService } from '../wire/wire-payment-handlers.service';
 import { DiscoveryTrendsService } from './trends/trends.service';
-import { DiscoveryTrendComponent } from './trends/trend/trend.component';
 import { DiscoveryBuildYourAlgorithmComponent } from './build-your-algorithm/build-your-algorithm.component';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { DiscoveryTopComponent } from './top/top.component';
@@ -73,7 +72,6 @@ import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.c
     DiscoveryComponent,
     DiscoveryTrendsComponent,
     DiscoveryTrendsListItemComponent,
-    DiscoveryTrendComponent,
     DiscoverySearchComponent,
     DiscoveryTagsComponent,
     DiscoveryFeedsComponent,
