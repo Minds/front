@@ -15,6 +15,15 @@ import { BoostConsoleCard } from './console/card/card.component';
 import { BoostConsoleBooster } from './console/booster/booster.component';
 import { BoostMarketingComponent } from './marketing.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { BoostConsoleV2Component } from './console-v2/console-v2.component';
+import { BoostConsoleFilterBarComponent } from './console-v2/list/filter-bar/filter-bar.component';
+import { BoostConsoleListComponent } from './console-v2/list/list.component';
+import { BoostConsoleListItemComponent } from './console-v2/list/list-item/list-item.component';
+import { BoostConsoleStateLabelComponent } from './console-v2/list/list-item/state-label/state-label.component';
+import { BoostConsoleActionButtonsComponent } from './console-v2/list/list-item/action-buttons/action-buttons.component';
+import { BoostConsoleService } from './console-v2/services/console.service';
+import { BoostConsoleStatsBarComponent } from './console-v2/list/list-item/stats-bar/stats-bar.component';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 
 const boostRoutes: Routes = [
   {
@@ -33,6 +42,15 @@ const boostRoutes: Routes = [
         ],
       },
     ],
+  },
+  {
+    path: 'boost/boost-console',
+    component: BoostConsoleV2Component,
+    data: {
+      title: 'Boost Console',
+      description: 'Manage and monitor your boosts',
+      ogImage: '/assets/product-pages/boost/boost-1.jpg',
+    },
   },
   {
     path: 'boost',
@@ -55,6 +73,7 @@ const boostRoutes: Routes = [
     CommonModule,
     AdsModule,
     MarketingModule,
+    ActivityModule,
   ],
   declarations: [
     BoostConsoleComponent,
@@ -65,12 +84,21 @@ const boostRoutes: Routes = [
     BoostConsoleTypesComponent,
     BoostConsoleHistoryComponent,
     BoostMarketingComponent,
+    BoostConsoleV2Component,
+    BoostConsoleFilterBarComponent,
+    BoostConsoleListComponent,
+    BoostConsoleListItemComponent,
+    BoostConsoleStateLabelComponent,
+    BoostConsoleActionButtonsComponent,
+    BoostConsoleStatsBarComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
     BoostConsoleCard,
     BoostConsoleBooster,
+    BoostConsoleV2Component,
   ],
+  providers: [BoostConsoleService],
 })
 export class BoostModule {}

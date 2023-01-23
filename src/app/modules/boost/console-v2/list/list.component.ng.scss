@@ -1,0 +1,20 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .m-boostConsoleList__noBoostsSpan {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    margin: $spacing14 0;
+    height: 100vh;
+
+    @include unselectable;
+    @include heading4Bold;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

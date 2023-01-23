@@ -1,0 +1,13 @@
+@import 'defaults.scss';
+
+:host {
+  h3 {
+    @include heading1Bold;
+    margin-top: $spacing9;
+    padding-left: $spacing4;
+  }
+
+  .m-pageLayout__pane--main {
+    width: 100%;
+  }
+}

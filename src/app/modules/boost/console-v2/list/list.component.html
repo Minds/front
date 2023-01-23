@@ -1,0 +1,24 @@
+<m-boostConsole__filterBar></m-boostConsole__filterBar>
+<span
+  *ngIf="shouldShowNoBoostsText$ | async"
+  class="m-boostConsoleList__noBoostsSpan"
+  i18n="@@BOOST_CONSOLE_LIST__NO_BOOSTS"
+  >No boosts
+</span>
+
+<ng-container *ngIf="(list$ | async) && (list$ | async).length > 0">
+  <ng-container *ngFor="let boost of list$ | async">
+    <m-boostConsole__listItem
+      *ngIf="boost && boost.entity"
+      [boost]="boost"
+    ></m-boostConsole__listItem>
+  </ng-container>
+</ng-container>
+
+<infinite-scroll
+  *ngIf="!(shouldShowNoBoostsText$ | async)"
+  (load)="loadNext()"
+  [moreData]="moreData$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>

@@ -70,7 +70,6 @@
   </div>
 </div>
 <m-admin--interactions *ngIf="filter == 'interactions'"></m-admin--interactions>
-<minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>
 <minds-admin-firehose *ngIf="filter == 'firehose'"></minds-admin-firehose>
 <minds-admin-reports
   *ngIf="filter == 'reports' || filter == 'appeals'"
@@ -85,3 +84,12 @@
 <m-admin__liquidityProviders
   *ngIf="filter === 'liquidity-providers'"
 ></m-admin__liquidityProviders>
+<ng-container *ngIf="filter == 'boosts'">
+  <minds-admin-boosts
+    *ngIf="!dynamicBoostExperiment.isActive()"
+  ></minds-admin-boosts>
+  <m-boostConsole
+    *ngIf="dynamicBoostExperiment.isActive()"
+    adminContext="true"
+  ></m-boostConsole>
+</ng-container>
