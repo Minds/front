@@ -1,0 +1,44 @@
+@import 'defaults.scss';
+
+:host {
+  .m-boostConsoleListItem__actionButtons {
+    display: flex;
+    padding-top: $spacing4;
+
+    m-button {
+      margin-bottom: $spacing2;
+    }
+
+    // @media screen and (min-width: $max-mobile) {
+    flex-flow: row nowrap;
+
+    .m-boostConsoleListItem__buttonPrimary {
+      width: 65%;
+      margin-left: $spacing6;
+
+      ::ng-deep .m-button {
+        width: 100%;
+      }
+      @media screen and (max-width: $max-mobile) {
+        margin-left: $spacing1;
+      }
+    }
+
+    .m-boostConsoleListItem__buttonSecondary {
+      width: 35%;
+
+      ::ng-deep .m-button {
+        width: 100%;
+      }
+    }
+
+    .m-boostConsoleListItem__buttonSecondary--fullWidth {
+      width: 100%;
+      margin-right: $spacing5;
+
+      ::ng-deep .m-button {
+        width: 100%;
+      }
+    }
+  }
+}

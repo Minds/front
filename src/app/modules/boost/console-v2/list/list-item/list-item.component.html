@@ -1,0 +1,58 @@
+<ng-container *ngIf="boost && boost.entity; else boostUnavailable">
+  <!-- ------------------------ -->
+  <!-- TOP BAR -->
+  <!-- ------------------------ -->
+  <div class="m-boostConsole__listItem__topBar">
+    <div class="m-boostConsole__listItem__topBarLeft">
+      <m-chipBadge *ngIf="amountBadgeText">{{ amountBadgeText }}</m-chipBadge>
+      <m-boostConsole__stateLabel [boost]="boost"></m-boostConsole__stateLabel>
+    </div>
+    <a
+      *ngIf="boost.payment_tx_id"
+      class="m-boostConsole__listItem__topBarHref"
+      [href]="receiptUrl"
+      target="_blank"
+      >View Receipt</a
+    >
+  </div>
+  <!-- ---------------------------- -->
+  <!-- MIDDLE BAR (BOOSTED ENTITY)-->
+  <!-- ---------------------------- -->
+  <ng-container *ngIf="boost.entity.type && boost.entity.type === 'activity'">
+    <m-activity
+      [entity]="boost.entity"
+      [canDelete]="false"
+      [displayOptions]="displayOptions"
+      [autoplayVideo]="false"
+      [canRecordAnalytics]="false"
+      class="m-boostConsole__listItem__middleBar"
+    ></m-activity>
+  </ng-container>
+  <ng-container *ngIf="boost.entity.type && boost.entity.type === 'user'">
+    <m-publisherCard
+      [publisher]="boost.entity"
+      [showSubscribeButton]="false"
+      class="m-boostConsole__listItem__middleBar"
+    ></m-publisherCard
+  ></ng-container>
+  <!-- ------------------------ -->
+  <!-- BOTTOM BAR -->
+  <!-- ------------------------ -->
+  <div class="m-boostConsole__listItem__bottomBar">
+    <m-boostConsole__statsBar [boost]="boost"></m-boostConsole__statsBar>
+    <m-boostConsole__actionButtons
+      [boost]="boost"
+    ></m-boostConsole__actionButtons>
+  </div>
+</ng-container>
+<!-- ------------------------ -->
+<!-- BOOST UNAVAILABLE-->
+<!-- ------------------------ -->
+<ng-template #boostUnavailable>
+  <div
+    class="m-boostConsole__listItem__boostUnavailable"
+    data-ref="boost-list-item-unavailable"
+  >
+    <span>Boost unavailable</span>
+  </div>
+</ng-template>

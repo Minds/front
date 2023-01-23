@@ -8,7 +8,7 @@ class CommonHelper extends Helper {
   /**
    * Click an element and wait for a response.
    * @param { CodeceptJS.Locator } locator - locator to click.
-   * @param { string } urlSnippet - snippet of URL to listen for.
+   * @param { string } urlSnippet - snippet of response URL to listen for.
    * @param { number } status - expected response status.
    * @returns { any } response.
    */

@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
+import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
 
 /**
  * Menu that contains important links we want to be extra accessible to users
@@ -27,6 +28,7 @@ import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.ser
 export class UserMenuComponent implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;
 
+  boostConsoleLink: string = '/boost/console';
   isDark: boolean = false;
   themeSubscription: Subscription;
 
@@ -35,7 +37,8 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     protected featuresService: FeaturesService,
-    private helpdeskRedirectService: HelpdeskRedirectService
+    private helpdeskRedirectService: HelpdeskRedirectService,
+    public dynamicBoostExperiment: DynamicBoostExperimentService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +47,10 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
+
+    if (this.dynamicBoostExperiment.isActive()) {
+      this.boostConsoleLink = '/boost/boost-console';
+    }
   }
 
   getCurrentUser(): MindsUser {

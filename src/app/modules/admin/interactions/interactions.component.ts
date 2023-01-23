@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { Client } from '../../../services/api';
 
 @Component({
@@ -6,7 +7,7 @@ import { Client } from '../../../services/api';
   templateUrl: 'interactions.component.html',
   styleUrls: ['interactions.component.ng.scss'],
 })
-export class AdminInteractions {
+export class AdminInteractions implements OnInit {
   metrics = [
     {
       title: 'Votes Up',
@@ -43,7 +44,10 @@ export class AdminInteractions {
 
   type: 'actors' | 'beneficiaries' = 'actors';
 
-  constructor(public client: Client) {
+  constructor(
+    public client: Client,
+    public pageLayoutService: PageLayoutService
+  ) {
     const d = new Date();
 
     d.setHours(23, 59, 59);
@@ -52,6 +56,10 @@ export class AdminInteractions {
     d.setDate(d.getDate() - 1);
     d.setHours(0, 0, 0);
     this.startDate = d.toISOString();
+  }
+
+  ngOnInit(): void {
+    this.pageLayoutService.useFullWidth();
   }
 
   onStartDateChange(newDate) {
