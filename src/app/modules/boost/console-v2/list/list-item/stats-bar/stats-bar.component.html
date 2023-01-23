@@ -1,0 +1,35 @@
+<!-- ------------------------------------------ -->
+<!-- REJECTED  -->
+<!-- ------------------------------------------ -->
+<div
+  class="m-boostConsole__statsBar--rows"
+  data-ref="m-boostConsole__statsBar--rejectionReason"
+  *ngIf="boostIsRejected"
+>
+  <span
+    i18n="@@BOOST_CONSOLE__STATS_BAR__REJECTION_REASON"
+    class="m-boostConsoleStatsBar__title"
+    >Reason for rejection</span
+  >
+  <span
+    i18n="@@BOOST_CONSOLE__STATS_BAR__FAILED_CRITERIA"
+    class="m-boostConsoleStatsBar__desc"
+    >Did not meet the accepted criteria for the selected audience.</span
+  >
+</div>
+<!-- ------------------------------------------ -->
+<!-- APPROVED  -->
+<!-- ------------------------------------------ -->
+<div class="m-boostConsole__statsBar--columns" *ngIf="boostIsApproved">
+  <div
+    class="m-boostConsoleStatsBar__column"
+    data-ref="m-boostConsole__statsBar--startDate"
+  >
+    <span
+      i18n="@@BOOST_CONSOLE__STATS_BAR__START_DATE"
+      class="m-boostConsoleStatsBar__title"
+      >Start date</span
+    >
+    <span class="m-boostConsoleStatsBar__desc">{{ formattedStartDate }}</span>
+  </div>
+</div>
