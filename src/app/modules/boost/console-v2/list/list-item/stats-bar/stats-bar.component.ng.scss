@@ -1,0 +1,30 @@
+@import 'defaults.scss';
+
+:host {
+  [class*='m-boostConsole__statsBar'] {
+    padding-top: $spacing4;
+    padding-bottom: $spacing4;
+  }
+
+  .m-boostConsole__statsBar--rows {
+    display: flex;
+    flex-direction: column;
+  }
+  .m-boostConsole__statsBar--columns {
+    display: flex;
+    flex-direction: row;
+
+    .m-boostConsoleStatsBar__column {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .m-boostConsoleStatsBar__title {
+    @include body2Bold;
+    margin-bottom: $spacing2;
+  }
+  .m-boostConsoleStatsBar__desc {
+    @include body2Regular;
+  }
+}
