@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Boost, BoostState } from '../../../../boost.types';
+import { Boost, BoostState, RejectionReason } from '../../../../boost.types';
 import * as moment from 'moment';
+import { ConfigsService } from '../../../../../../common/services/configs.service';
 
 /**
  * Row presented in boost console list items (where applicable)
@@ -19,8 +20,9 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   boostIsApproved: boolean = false;
 
   formattedStartDate: string = '';
+  public rejectionReasons: RejectionReason[] = [];
 
-  constructor() {}
+  constructor(private mindsConfig: ConfigsService) {}
 
   ngOnInit(): void {
     const status = this.boost?.boost_status;
@@ -31,6 +33,12 @@ export class BoostConsoleStatsBarComponent implements OnInit {
     if (this.boostIsApproved) {
       this.formattedStartDate = this.formatDate(this.boost.approved_timestamp);
     }
+
+    this.rejectionReasons = this.mindsConfig.get('boost')[
+      'rejection_reasons'
+    ] as RejectionReason[];
+
+    console.log(this.rejectionReasons);
   }
 
   /**
@@ -39,5 +47,11 @@ export class BoostConsoleStatsBarComponent implements OnInit {
    */
   private formatDate(timestampInSeconds): string {
     return moment(timestampInSeconds * 1000).format('M/D/YY h:mm a');
+  }
+
+  public getRejectionReasonLabel(): string | null {
+    return this.rejectionReasons.filter(reason => {
+      return reason.code === this.boost.rejection_reason;
+    })[0]?.label;
   }
 }

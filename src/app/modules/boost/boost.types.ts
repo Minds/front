@@ -13,10 +13,19 @@ export type Boost = {
   daily_bid: number;
   duration_days: number;
   boost_status: number;
+  rejection_reason?: number;
   created_timestamp: number;
   updated_timestamp: number;
   approved_timestamp: number;
   payment_tx_id?: string;
+};
+
+/**
+ * Rejection reason
+ */
+export type RejectionReason = {
+  code: number; // numerical code for the reason
+  label: string; // text label for the reason
 };
 
 // BOOST GUID

@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { Session } from '../../../../../../services/session';
 import { Boost, BoostState } from '../../../../boost.types';
 import { BoostConsoleService } from '../../../services/console.service';
+import { BoostRejectionModalService } from '../../../modal/rejection-modal/services/boost-rejection-modal.service';
 
 /**
  * Boost console list item action buttons
@@ -25,7 +24,11 @@ export class BoostConsoleActionButtonsComponent {
   rejecting: boolean = false;
   cancelling: boolean = false;
 
-  constructor(private session: Session, public service: BoostConsoleService) {}
+  constructor(
+    private session: Session,
+    public service: BoostConsoleService,
+    private boostRejectionModal: BoostRejectionModalService
+  ) {}
 
   /**
    * Called upon approve button being clicked by admin.
@@ -55,13 +58,10 @@ export class BoostConsoleActionButtonsComponent {
       return;
     }
 
-    this.rejecting = true;
-    const promise = this.service.reject(this.boost);
-
-    promise.then(() => {
-      this.rejecting = false;
-    });
+    this.boostRejectionModal.open(this.boost);
   }
+
+  private openRejectionModal(): void {}
 
   /**
    * Called upon cancel button being clicked.

@@ -10,13 +10,13 @@ import {
   Boost,
   BoostConsoleGetParams,
   BoostConsoleLocationFilter,
+  BoostConsolePaymentMethodFilter,
   BoostConsoleStateFilter,
   BoostConsoleSuitabilityFilter,
   BoostLocation,
+  BoostPaymentMethod,
   BoostState,
   BoostSuitability,
-  BoostConsolePaymentMethodFilter,
-  BoostPaymentMethod,
 } from '../../boost.types';
 
 /**
@@ -177,23 +177,18 @@ export class BoostConsoleService {
   /**
    * Rejects a boost (action taken by admin)
    * @param boost
+   * @return Observable<ApiResponse>
    */
-  async reject(boost: Boost): Promise<void> {
+  public reject(boost: Boost): Observable<ApiResponse> {
     if (!this.session.isAdmin()) {
       console.log('Only admins can reject boosts');
       return;
     }
 
     this.inProgress$$.next(true);
-    try {
-      await this.api.post(`${this.endpoint}/${boost.guid}/reject`).toPromise();
-      boost.boost_status = BoostState.REJECTED;
-    } catch (err) {
-      console.log(err);
-      this.toasterService.error(err?.error.message);
-    } finally {
-      this.inProgress$$.next(false);
-    }
+    return this.api.post<ApiResponse>(`${this.endpoint}/${boost.guid}/reject`, {
+      reason: boost.rejection_reason,
+    });
   }
 
   /**
