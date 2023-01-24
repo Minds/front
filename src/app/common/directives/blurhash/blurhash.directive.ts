@@ -175,8 +175,10 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
       if (this.fullscreen) {
         dimensionsStyle += `width: 100%; height: 100%`;
       } else {
-        const scaleX = width / this.RESOLUTION;
-        const scaleY = height / this.RESOLUTION;
+        // "+ 2" accounts for borders around original entity.
+        // Without it, the canvas is a bit smaller than it should be
+        const scaleX = (width + 2) / this.RESOLUTION;
+        const scaleY = (height + 2) / this.RESOLUTION;
         dimensionsStyle += `transform: scaleX(${scaleX}) scaleY(${scaleY})`;
       }
 
