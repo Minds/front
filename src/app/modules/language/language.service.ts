@@ -47,7 +47,7 @@ export class LanguageService {
    * List of all languages, weighted by current, browser and site default (English)
    */
   readonly languages$: Observable<Array<LanguageListEntry>> = combineLatest([
-    of(this.configs.get('languages')).pipe(
+    of(this.configs.get<Object>('languages')).pipe(
       map(languages => {
         const arr = [];
         for (const code in languages) {

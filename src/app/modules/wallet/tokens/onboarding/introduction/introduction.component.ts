@@ -24,7 +24,7 @@ export class TokenIntroductionOnboardingComponent {
   inProgress: boolean = false;
   error: string;
 
-  @Output() next: EventEmitter<any> = new EventEmitter();
+  @Output() next: EventEmitter<void> = new EventEmitter();
 
   constructor(
     protected client: Client,

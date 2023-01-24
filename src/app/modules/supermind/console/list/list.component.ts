@@ -121,7 +121,9 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
         ([listType, statusFilterValue]: [
           SupermindConsoleListType,
           SupermindState
-        ]): Observable<ApiResponse> => {
+        ]): Observable<
+          ApiResponse | { redirect: boolean; errorMessage: any }
+        > => {
           this.moreData$.next(!this.service.isNumericListType(listType));
           return this.service.getList$(this.requestLimit, 0, statusFilterValue);
         }

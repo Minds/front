@@ -23,7 +23,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
 })
 export class TokenRewardsOnboardingComponent {
   @Input() skippable: boolean = true;
-  @Output() next: EventEmitter<any> = new EventEmitter();
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
 
   confirming: boolean = false;
   number: number;

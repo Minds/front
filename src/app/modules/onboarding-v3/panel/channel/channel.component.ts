@@ -177,7 +177,9 @@ export class OnboardingV3ChannelComponent
    */
   async sync(): Promise<MindsChannelResponse> {
     return this.api
-      .get(`api/v1/channel/${this.session.getLoggedInUser().username}`)
+      .get<MindsChannelResponse>(
+        `api/v1/channel/${this.session.getLoggedInUser().username}`
+      )
       .pipe(
         take(1),
         catchError((e: any) => {

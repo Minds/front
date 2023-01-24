@@ -17,5 +17,5 @@ export class LaunchButtonComponent {
   /**
    * Outputs click events.
    */
-  @Output() click: EventEmitter<any> = new EventEmitter();
+  @Output() click: EventEmitter<void> = new EventEmitter<void>();
 }
