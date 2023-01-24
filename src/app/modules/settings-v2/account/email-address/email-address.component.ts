@@ -7,7 +7,11 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Observable, Subscription } from 'rxjs';
@@ -44,8 +48,8 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
-    this.form = new FormGroup({
-      email: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      email: new UntypedFormControl('', {
         validators: [Validators.required, Validators.email],
         // updateOn: 'blur',
       }),

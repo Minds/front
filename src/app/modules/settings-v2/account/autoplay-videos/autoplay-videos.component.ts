@@ -7,7 +7,7 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
@@ -40,8 +40,8 @@ export class SettingsV2AutoplayVideosComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
-    this.form = new FormGroup({
-      autoplay_videos: new FormControl(''),
+    this.form = new UntypedFormGroup({
+      autoplay_videos: new UntypedFormControl(''),
     });
 
     this.isPlus = this.session.getLoggedInUser().plus;

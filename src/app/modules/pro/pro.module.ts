@@ -79,7 +79,7 @@ const routes: Routes = [
   },
 ];
 
-export const PRO_DOMAIN_ROUTES = [
+export const PRO_DOMAIN_ROUTES: Routes = [
   {
     path: '',
     component: ProChannelComponent,

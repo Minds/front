@@ -5,7 +5,11 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
 
 import { Client } from '../../../common/api/client.service';
 
@@ -20,14 +24,14 @@ import { Client } from '../../../common/api/client.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlusVerifyComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   onDismiss: () => void;
   inProgress: boolean = false;
 
   constructor(
     private client: Client,
     private cd: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit() {

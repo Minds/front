@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -24,7 +24,7 @@ export class BoostModalV2ReviewComponent {
   public BoostAudience: typeof BoostAudience = BoostAudience;
   public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
 
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   // selected payment category - this is separate to payment method because tokens is a payment category
   // but does not distinguish between offchain and onchain.

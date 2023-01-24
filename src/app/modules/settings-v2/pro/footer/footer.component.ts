@@ -7,7 +7,12 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  UntypedFormArray,
+  UntypedFormBuilder,
+} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -45,13 +50,13 @@ export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     protected router: Router,
     protected route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      footer_text: new FormControl(['']),
-      footer_links: new FormArray([]),
+    this.form = new UntypedFormGroup({
+      footer_text: new UntypedFormControl(['']),
+      footer_links: new UntypedFormArray([]),
     });
 
     /**
@@ -128,7 +133,7 @@ export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
   }
 
   addFooterLink(title, href) {
-    const links = <FormArray>this.footer_links;
+    const links = <UntypedFormArray>this.footer_links;
     links.push(
       this.fb.group({
         title: [title],
@@ -138,7 +143,7 @@ export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
   }
 
   setFooterLinks(links: Array<{ title: string; href: string }>) {
-    (<FormArray>this.footer_links).clear();
+    (<UntypedFormArray>this.footer_links).clear();
     this.detectChanges();
     for (const link of links) {
       this.addFooterLink(link.title, link.href);

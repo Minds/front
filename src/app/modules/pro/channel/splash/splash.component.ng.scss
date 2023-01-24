@@ -67,7 +67,7 @@
         color: themed($m-textColor--primary);
       }
     }
-    @media screen and(max-width: $max-mobile) {
+    @media screen and (max-width: $max-mobile) {
       font-size: 20px;
       line-height: 27px;
     }
@@ -84,7 +84,7 @@
           div {
             font-size: 22px;
             font-weight: 400;
-            @media screen and(max-width: $max-mobile) {
+            @media screen and (max-width: $max-mobile) {
               font-size: 20px;
             }
           }
@@ -103,7 +103,7 @@
       text-decoration: underline;
       cursor: pointer;
     }
-    @media screen and(max-width: $max-mobile) {
+    @media screen and (max-width: $max-mobile) {
       font-size: 16px;
     }
   }

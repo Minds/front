@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {
   ControlValueAccessor,
-  FormBuilder,
+  UntypedFormBuilder,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 
@@ -38,7 +38,7 @@ export class FormInputCheckboxComponent implements ControlValueAccessor {
 
   propagateChange = (_: any) => {};
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     this.id =
       `checkbox` +
       Math.random()

@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   NG_ASYNC_VALIDATORS,
   ValidationErrors,
   Validators,
@@ -67,8 +67,8 @@ export class RegisterForm implements OnInit {
 
   showFbForm: boolean = false;
 
-  form: FormGroup;
-  fbForm: FormGroup;
+  form: UntypedFormGroup;
+  fbForm: UntypedFormGroup;
 
   @ViewChild('popover') popover: PopoverComponent;
   @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
@@ -78,7 +78,7 @@ export class RegisterForm implements OnInit {
   constructor(
     public session: Session,
     public client: Client,
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     public zone: NgZone,
     private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService,

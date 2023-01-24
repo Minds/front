@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
@@ -18,7 +18,7 @@ import { SettingsV2WalletService } from './wallet.service';
 })
 export class SettingsV2WalletComponent implements OnInit {
   // user form.
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   // true when load in progress.
   public inProgress: boolean = true;
@@ -35,8 +35,8 @@ export class SettingsV2WalletComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    this.form = new FormGroup({
-      displayWalletBalance: new FormControl(
+    this.form = new UntypedFormGroup({
+      displayWalletBalance: new UntypedFormControl(
         !this.service.shouldHideWalletBalance()
       ),
     });

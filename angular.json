@@ -362,7 +362,6 @@
       }
     }
   },
-  "defaultProject": "minds",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "m",

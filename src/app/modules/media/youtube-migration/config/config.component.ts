@@ -6,7 +6,7 @@ import {
   OnDestroy,
   ViewRef,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Router } from '@angular/router';
 import { ToasterService } from '../../../../common/services/toaster.service';
@@ -22,7 +22,7 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
   init: boolean = false;
   inProgress: boolean = false;
   user;
-  form: FormGroup;
+  form: UntypedFormGroup;
   autoImportSubscription: Subscription;
 
   constructor(
@@ -34,8 +34,8 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      autoImport: new FormControl(false),
+    this.form = new UntypedFormGroup({
+      autoImport: new UntypedFormControl(false),
     });
 
     this.autoImportSubscription = this.youtubeService.autoImport$.subscribe(

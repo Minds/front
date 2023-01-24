@@ -8,9 +8,9 @@ import {
   OnDestroy,
 } from '@angular/core';
 import {
-  FormGroup,
+  UntypedFormGroup,
   FormControl,
-  FormBuilder,
+  UntypedFormBuilder,
   Validators,
 } from '@angular/forms';
 
@@ -44,7 +44,7 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
 
   inProgress: boolean = false;
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   nip05Alias$ = this.nostrService.nip05Alias$;
   publicKey$ = this.nostrService.publicKey$;
@@ -64,7 +64,7 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
     protected nostrService: NostrService,
     protected configs: ConfigsService,
     protected toasterService: ToasterService,
-    protected fb: FormBuilder
+    protected fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {

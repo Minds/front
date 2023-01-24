@@ -8,8 +8,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
   AbstractControl,
   ValidationErrors,
@@ -63,15 +63,15 @@ export class SettingsV2PasswordComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
-    this.form = new FormGroup({
-      password: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      password: new UntypedFormControl('', {
         validators: [Validators.required],
       }),
-      newPassword: new FormControl('', {
+      newPassword: new UntypedFormControl('', {
         validators: [Validators.required, PASSWORD_VALIDATOR],
         asyncValidators: [this.passwordRiskValidator.riskValidator()],
       }),
-      confirmNewPassword: new FormControl('', {
+      confirmNewPassword: new UntypedFormControl('', {
         validators: [Validators.required],
       }),
     });
@@ -139,7 +139,7 @@ export class SettingsV2PasswordComponent implements OnInit {
   }
 
   validatePasswordMatch(): ValidatorFn {
-    return (f: FormGroup): ValidationErrors => {
+    return (f: UntypedFormGroup): ValidationErrors => {
       const newPassword = f.controls['newPassword'];
       const confirmNewPassword = f.controls['confirmNewPassword'];
       if (newPassword.value !== confirmNewPassword.value) {

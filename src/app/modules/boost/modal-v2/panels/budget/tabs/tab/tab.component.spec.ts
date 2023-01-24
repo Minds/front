@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   ControlValueAccessor,
-  FormBuilder,
+  UntypedFormBuilder,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -91,7 +91,7 @@ describe('BoostModalV2BudgetTabComponent', () => {
               },
             }),
           },
-          FormBuilder,
+          UntypedFormBuilder,
         ],
       }).compileComponents();
     })

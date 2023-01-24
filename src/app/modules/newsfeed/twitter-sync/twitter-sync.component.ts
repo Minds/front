@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { timer } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -13,10 +17,10 @@ import { TwitterSyncService } from './twitter-sync.service';
 })
 export class TwitterSyncComponent implements OnInit {
   // The setup form
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   // The edit form (for once setup)
-  updateForm: FormGroup;
+  updateForm: UntypedFormGroup;
 
   // If the twitter connect is setup
   isSetup = false;
@@ -36,13 +40,13 @@ export class TwitterSyncComponent implements OnInit {
     protected configs: ConfigsService,
     protected toasterService: ToasterService
   ) {
-    this.form = new FormGroup({
-      twitterHandle: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      twitterHandle: new UntypedFormControl('', {
         validators: [Validators.required],
       }),
     });
-    this.updateForm = new FormGroup({
-      discoverable: new FormControl(true, {
+    this.updateForm = new UntypedFormGroup({
+      discoverable: new UntypedFormControl(true, {
         validators: [],
       }),
     });

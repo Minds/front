@@ -7,7 +7,7 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
 import { Storage } from '../../../../services/storage';
@@ -46,8 +46,8 @@ export class SettingsV2MessengerComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.form = new FormGroup({
-      legacy_messenger: new FormControl(initShow),
+    this.form = new UntypedFormGroup({
+      legacy_messenger: new UntypedFormControl(initShow),
     });
 
     this.init = true;

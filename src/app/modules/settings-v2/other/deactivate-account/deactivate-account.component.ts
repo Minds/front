@@ -4,7 +4,11 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 
 import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
@@ -31,8 +35,8 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      understood: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      understood: new UntypedFormControl('', {
         validators: [Validators.requiredTrue],
       }),
     });

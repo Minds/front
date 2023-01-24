@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import {
   FormBuilder,
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
 } from '@angular/forms';
 
@@ -21,7 +21,7 @@ import {
 export class DynamicFormComponent
   implements OnInit, AfterViewChecked, OnChanges {
   @Input() fields;
-  form: FormGroup;
+  form: UntypedFormGroup;
   fieldDefinitions;
 
   constructor() {}
@@ -37,13 +37,13 @@ export class DynamicFormComponent
 
     const formGroup = {};
     for (const prop of Object.keys(this.fields)) {
-      formGroup[prop] = new FormControl(
+      formGroup[prop] = new UntypedFormControl(
         this.fields[prop].value || '',
         this.mapValidators(this.fields[prop].validation)
       );
     }
 
-    this.form = new FormGroup(formGroup);
+    this.form = new UntypedFormGroup(formGroup);
   }
 
   ngOnChanges(changes: any) {

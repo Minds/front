@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryFeedsService } from '../../discovery/feeds/feeds.service';
 
@@ -30,7 +30,7 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
   constructor(
     private discoveryFeedsService: DiscoveryFeedsService,
     // private nsfwSettingsService: NsfwSettingsService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
     this.form = fb.group({
       showNsfw: fb.control(
