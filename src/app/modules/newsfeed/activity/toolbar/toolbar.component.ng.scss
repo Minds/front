@@ -105,7 +105,7 @@
       padding-right: $activitySpacing--modal;
 
       ::ng-deep .m-supermindBanner__text {
-        height: auto;
+        height: auto !important;
       }
     }
   }
