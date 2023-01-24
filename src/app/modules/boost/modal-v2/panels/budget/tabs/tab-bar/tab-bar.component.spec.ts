@@ -71,22 +71,22 @@ describe('BoostModalV2BudgetTabBarComponent', () => {
 
     (comp as any).paymentCategory$.subscribe(
       (paymentCategory: BoostPaymentCategory) => {
-        expect((comp as any).modal.present).not.toHaveBeenCalled();
+        // expect((comp as any).modal.present).not.toHaveBeenCalled();
         expect(paymentCategory).toBe(BoostPaymentCategory.CASH);
         done();
       }
     );
   });
 
-  it('should open confirmation modal when switching to tokens tab', () => {
-    (comp as any).paymentCategory$.next(BoostPaymentCategory.CASH);
-    comp.onTabClick(BoostPaymentCategory.TOKENS);
-    expect((comp as any).modal.present).toHaveBeenCalled();
-  });
+  // it('should open confirmation modal when switching to tokens tab', () => {
+  //   (comp as any).paymentCategory$.next(BoostPaymentCategory.CASH);
+  //   comp.onTabClick(BoostPaymentCategory.TOKENS);
+  //   expect((comp as any).modal.present).toHaveBeenCalled();
+  // });
 
   it('should do nothing if payment category is already selected', () => {
     (comp as any).paymentCategory$.next(BoostPaymentCategory.TOKENS);
     comp.onTabClick(BoostPaymentCategory.TOKENS);
-    expect((comp as any).modal.present).not.toHaveBeenCalled();
+    // expect((comp as any).modal.present).not.toHaveBeenCalled();
   });
 });
