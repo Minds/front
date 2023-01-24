@@ -37,8 +37,6 @@ export class BoostConsoleStatsBarComponent implements OnInit {
     this.rejectionReasons = this.mindsConfig.get('boost')[
       'rejection_reasons'
     ] as RejectionReason[];
-
-    console.log(this.rejectionReasons);
   }
 
   /**
@@ -46,7 +44,7 @@ export class BoostConsoleStatsBarComponent implements OnInit {
    * @param timestampInSeconds
    */
   private formatDate(timestampInSeconds): string {
-    return moment(timestampInSeconds * 1000).format('M/D/YY h:mm a');
+    return moment(timestampInSeconds * 1000).format('M/D/YY h:mma');
   }
 
   public getRejectionReasonLabel(): string | null {

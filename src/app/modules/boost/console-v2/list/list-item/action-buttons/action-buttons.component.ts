@@ -61,8 +61,6 @@ export class BoostConsoleActionButtonsComponent {
     this.boostRejectionModal.open(this.boost);
   }
 
-  private openRejectionModal(): void {}
-
   /**
    * Called upon cancel button being clicked.
    * @param { MouseEvent } e - mouse event.
