@@ -10,6 +10,7 @@ import { AuxTermsComponent } from './pages/terms/terms.component';
 import { AuxRightsComponent } from './pages/rights/rights.component';
 import { AuxContactComponent } from './pages/contact/contact.component';
 import { AuxMonetizationTermsComponent } from './pages/monetization-terms/monetization-terms.component';
+import { PathMatch } from '../../common/types/angular.types';
 
 const AUX_ROUTES: Routes = [
   {
@@ -19,6 +20,7 @@ const AUX_ROUTES: Routes = [
       {
         path: '',
         redirectTo: 'privacy',
+        pathMatch: 'full' as PathMatch,
       },
       {
         path: 'privacy',
@@ -94,7 +96,7 @@ const AUX_ROUTES: Routes = [
       },
       {
         path: '**',
-        redirectTo: '',
+        redirectTo: 'privacy',
       },
     ],
   },

@@ -21,17 +21,15 @@ import { YoutubeMigrationMarketingComponent } from './youtube-migration/marketin
 import { TranslateModule } from '../translate/translate.module';
 
 const routes: Routes = [
-  { path: 'media/videos/:filter', redirectTo: '/newsfeed/global/top' },
+  { path: 'media/videos/:filter', redirectTo: 'newsfeed/global/top' },
   {
     path: 'media/videos',
-    redirectTo: '/newsfeed/global/top',
-    pathMatch: 'full',
+    redirectTo: 'newsfeed/global/top',
   },
-  { path: 'media/images/:filter', redirectTo: '/newsfeed/global/top' },
+  { path: 'media/images/:filter', redirectTo: 'newsfeed/global/top' },
   {
     path: 'media/images',
-    redirectTo: '/newsfeed/global/top',
-    pathMatch: 'full',
+    redirectTo: 'newsfeed/global/top',
   },
 
   { path: 'media/:container/:guid', redirectTo: 'newsfeed/:guid' },

@@ -21,9 +21,14 @@ import { BlogEditorV2Component } from './v2/edit/editor-base.component';
 import { BlogV2Module } from './v2/blog-v2.module';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/discovery/overview', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: '/discovery/overview',
+    pathMatch: 'full' as PathMatch,
+  },
   { path: 'view/:guid/:title', component: BlogViewInfinite },
   { path: 'view/:guid', component: BlogViewInfinite },
   {

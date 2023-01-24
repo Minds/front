@@ -8,9 +8,10 @@ import { UpgradesComponent } from './upgrades.component';
 import { UpgradeOptionsComponent } from './upgrade-options.component';
 import { BuyTokensComponent } from './buy-tokens.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { PathMatch } from '../../common/types/angular.types';
 
 export const routes: Routes = [
-  { path: 'upgrade', pathMatch: 'full', redirectTo: 'upgrades' },
+  { path: 'upgrade', pathMatch: 'full' as PathMatch, redirectTo: 'upgrades' },
   {
     path: 'upgrades',
     component: UpgradesComponent,

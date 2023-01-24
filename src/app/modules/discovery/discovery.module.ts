@@ -21,6 +21,7 @@ import { DiscoveryTopComponent } from './top/top.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.component';
 import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/supermind-global-feed-experiment.guard.ts/supermind-global-feed-experiment.guard';
+import { PathMatch } from '../../common/types/angular.types';
 
 @NgModule({
   imports: [
@@ -28,11 +29,13 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
       {
         path: '',
         component: DiscoveryComponent,
+        pathMatch: 'prefix' as PathMatch,
         children: [
-          { path: '', redirectTo: 'top' },
+          { path: '', redirectTo: 'top', pathMatch: 'full' as PathMatch },
           {
             path: 'top',
             component: DiscoveryTopComponent,
+            pathMatch: 'full' as PathMatch,
             data: {
               title: 'Discovery / Top',
               ogImage: '/assets/og-images/discovery-v3.png',
@@ -64,6 +67,7 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
               {
                 path: '',
                 redirectTo: 'your',
+                pathMatch: 'full' as PathMatch,
               },
               {
                 path: ':type',
@@ -100,7 +104,11 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
           {
             path: 'feeds',
             children: [
-              { path: '', redirectTo: 'preferred' },
+              {
+                path: '',
+                redirectTo: 'preferred',
+                pathMatch: 'full' as PathMatch,
+              },
               {
                 path: 'preferred',
                 component: DiscoveryFeedsComponent,
@@ -114,7 +122,7 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
           {
             path: 'suggestions',
             children: [
-              { path: '', redirectTo: 'user' },
+              { path: '', redirectTo: 'user', pathMatch: 'full' as PathMatch },
               {
                 path: 'user',
                 component: DiscoverySuggestionsComponent,
@@ -129,7 +137,11 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
             path: 'plus',
             data: { plus: true },
             children: [
-              { path: '', redirectTo: 'overview' },
+              {
+                path: '',
+                redirectTo: 'overview',
+                pathMatch: 'full' as PathMatch,
+              },
               {
                 path: 'overview',
                 component: DiscoveryTrendsComponent,
@@ -162,6 +174,7 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
                   {
                     path: '',
                     redirectTo: 'your',
+                    pathMatch: 'full' as PathMatch,
                   },
                   {
                     path: ':type',
@@ -176,7 +189,11 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
               {
                 path: 'feeds',
                 children: [
-                  { path: '', redirectTo: 'preferred' },
+                  {
+                    path: '',
+                    redirectTo: 'preferred',
+                    pathMatch: 'full' as PathMatch,
+                  },
                   {
                     path: 'preferred',
                     component: DiscoveryFeedsComponent,

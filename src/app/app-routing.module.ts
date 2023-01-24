@@ -18,6 +18,7 @@ import {
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,
 } from './modules/blogs/blog.lazy';
+import { PathMatch } from './common/types/angular.types';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -32,7 +33,11 @@ const routes: Routes = [
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,
   // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
-  { path: ':username', redirectTo: ':username/', pathMatch: 'full' },
+  {
+    path: ':username',
+    redirectTo: ':username/',
+    pathMatch: 'full' as PathMatch,
+  },
   {
     path: ':username/:filter',
     loadChildren: () =>
@@ -48,7 +53,6 @@ const routes: Routes = [
       //initialNavigation: 'enabledBlocking',
       initialNavigation: 'disabled',
       onSameUrlNavigation: 'reload',
-      relativeLinkResolution: 'legacy',
     }),
   ],
   exports: [RouterModule],
