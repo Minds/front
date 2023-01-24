@@ -38,6 +38,6 @@ export class BoostConsoleStatsBarComponent implements OnInit {
    * @param timestampInSeconds
    */
   private formatDate(timestampInSeconds): string {
-    return moment(timestampInSeconds * 1000).format('M/D/YY h:mm a');
+    return moment(timestampInSeconds * 1000).format('M/D/YY h:mma');
   }
 }
