@@ -2,7 +2,7 @@ Feature: Boost Creation
   As a customer
   I want to be able to interact boosts
 
-  Scenario: should allow the user to make a valid cash newsfeed boost
+  Scenario: boosting a post with cash
     Given I am logged in
     And I am on the newsfeed
     And I create a post with text storage key "cash_newsfeed_boost"
@@ -20,7 +20,7 @@ Feature: Boost Creation
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
     # And I can revoke a newsfeed boost
 
-  Scenario: should allow the user to make a valid controversial tokens newsfeed boost
+  Scenario: boosting a controversial post with tokens
     Given I am logged in
     And I am on the newsfeed
     And I create a post with text storage key "token_newsfeed_boost"
@@ -39,7 +39,7 @@ Feature: Boost Creation
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
     # And I can revoke a newsfeed boost
 
-  Scenario: should allow the user to revoke a valid tokens channel boost
+  Scenario: revoking a cash channel boost
     Given I am logged in
     When I am on my channel page
     And I open my channel boost modal
@@ -55,7 +55,7 @@ Feature: Boost Creation
     And I click to submit boost
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
 
-  Scenario: should allow the user to make a valid tokens channel boost
+  Scenario: boosting a channel with tokens
     Given I am logged in
     When I am on my channel page
     And I open my channel boost modal
