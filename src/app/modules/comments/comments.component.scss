@@ -1,3 +1,5 @@
+@import 'defaults.scss';
+
 .m-commentPoster {
   width: 100%;
 }
@@ -148,7 +150,7 @@
 
 .m-commentPoster {
   .m-attachmentPreviewWrapper--richEmbed {
-    margin: 10px;
+    margin-left: $spacing13;
   }
 }
 .m-attachmentPreviewWrapper {
@@ -341,9 +343,12 @@ m-comments__entityOutlet,
     background: transparent;
 
     .m-rich-embed {
+      width: 100%;
       text-align: left;
       margin: 0 0 $minds-padding;
       border-radius: $m-borderRadius;
+      box-sizing: border-box;
+
       @include m-theme() {
         background-color: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);
@@ -351,7 +356,17 @@ m-comments__entityOutlet,
 
       minds-rich-embed .m-rich-embed-src,
       minds-rich-embed .m-rich-embed-preview {
+        display: flex;
+        flex-flow: row nowrap;
         position: relative;
+        height: $spacing24;
+        width: 100%;
+        box-sizing: border-box;
+
+        &.m-has-inline-embed {
+          flex-flow: column nowrap;
+          height: unset;
+        }
 
         &.m-richEmbedPreview--noThumbnail,
         &.m-richEmbedSrc--noThumbnail {
@@ -361,11 +376,7 @@ m-comments__entityOutlet,
         }
 
         .thumbnail {
-          display: block;
-          float: left;
           width: 25%;
-          height: 100%;
-          position: absolute;
 
           .m-rich-embed-thumbnail-wrapper {
             padding-bottom: 0; // 1:1
@@ -397,9 +408,10 @@ m-comments__entityOutlet,
         }
 
         a.meta {
-          display: block;
-          padding: 10px 40px 10px calc(25% + 10px);
-
+          display: flex !important;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 $spacing4 !important;
           box-sizing: border-box;
           width: 100%;
           text-decoration: none;
@@ -413,6 +425,8 @@ m-comments__entityOutlet,
             font-size: 15px;
             font-weight: 700;
             line-height: 20px;
+            align-self: unset;
+
             @include m-theme() {
               color: themed($m-textColor--primary);
             }
