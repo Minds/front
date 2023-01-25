@@ -24,6 +24,7 @@ import { AdminPushNotificationsFormComponent } from './push-notifications/form/a
 import { AdminPushNotificationsHistoryComponent } from './push-notifications/history/admin-push-notifications-history.component';
 import { NotificationHistoryCardComponent } from './push-notifications/history/card/notification-history-card.component';
 import { AdminPushNotificationsComponent } from './push-notifications/admin-push-notifications.component';
+import { BoostModule } from '../boost/boost.module';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
     CommentsModule,
     ReactiveFormsModule,
     ActivityModule,
+    BoostModule,
   ],
   declarations: [
     AdminComponent,

@@ -15,6 +15,9 @@ export type BoostConsoleFilter =
 
 /**
  * Base component for the boost console
+ *
+ * NOTE: When the dynamicBoostExperiment is complete, we can remove this component and
+ * point the boost module routes to go to BoostConsoleV2Component instead
  */
 @Component({
   selector: 'm-boost-console',

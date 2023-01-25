@@ -34,6 +34,7 @@ import { Session } from '../../../services/session';
   providers: [DiscoveryFeedsService, FeedsService],
 })
 export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
+  isPlusPage$ = this.discoveryService.isPlusPage$;
   trends$ = this.discoveryService.trends$;
   hero$ = this.discoveryService.hero$;
   inProgress$ = this.discoveryService.inProgress$;
@@ -75,6 +76,10 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
           this.discoveryService.loadTrends();
         }
       });
+    if (this.isPlusPage$.getValue()) {
+      this.discoveryFeedsService.setFilter('preferred');
+      this.showPreferredFeed = true;
+    }
   }
 
   loadMore() {

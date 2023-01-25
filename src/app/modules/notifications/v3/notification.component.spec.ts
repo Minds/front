@@ -8,6 +8,8 @@ import { MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { InteractionsModalService } from '../../newsfeed/interactions-modal/interactions-modal.service';
+import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
+import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 
 describe('NotificationsV3NotificationComponent', () => {
   let comp: NotificationsV3NotificationComponent;
@@ -43,6 +45,10 @@ describe('NotificationsV3NotificationComponent', () => {
             provide: InteractionsModalService,
             useValue: MockService(InteractionsModalService),
           },
+          {
+            provide: DynamicBoostExperimentService,
+            useValue: MockService(DynamicBoostExperimentService),
+          },
         ],
       })
         .overrideProvider(NotificationsV3Service, {
@@ -58,6 +64,8 @@ describe('NotificationsV3NotificationComponent', () => {
   beforeEach(done => {
     fixture = TestBed.createComponent(NotificationsV3NotificationComponent);
     comp = fixture.componentInstance;
+
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
 
     fixture.detectChanges();
 
@@ -91,6 +99,20 @@ describe('NotificationsV3NotificationComponent', () => {
     expect(comp.verb).toBe(' has declined');
   });
 
+  it('should get correct verb for boost_accepted', () => {
+    comp.notification = { type: 'boost_accepted' };
+    expect(comp.verb).toBe('Your Boost is now running');
+  });
+
+  it('should get correct verb for boost_rejected', () => {
+    comp.notification = { type: 'boost_rejected' };
+    expect(comp.verb).toBe('Your Boost was rejected');
+  });
+
+  it('should get correct verb for boost_completed', () => {
+    comp.notification = { type: 'boost_completed' };
+    expect(comp.verb).toBe('Your Boost is complete');
+  });
   // pronoun
 
   it('should get correct pronoun for supermind_accepted', () => {
@@ -108,6 +130,21 @@ describe('NotificationsV3NotificationComponent', () => {
     expect(comp.pronoun).toBe('your');
   });
 
+  it('should get correct pronoun for boost_accepted', () => {
+    comp.notification = { type: 'boost_accepted' };
+    expect(comp.pronoun).toBe('');
+  });
+
+  it('should get correct pronoun for boost_rejected', () => {
+    comp.notification = { type: 'boost_rejected' };
+    expect(comp.pronoun).toBe('');
+  });
+
+  it('should get correct pronoun for boost_completed', () => {
+    comp.notification = { type: 'boost_completed' };
+    expect(comp.pronoun).toBe('');
+  });
+
   // noun
 
   it('should get correct noun for supermind_accepted', () => {
@@ -123,6 +160,21 @@ describe('NotificationsV3NotificationComponent', () => {
   it('should get correct noun for supermind_rejected', () => {
     comp.notification = { type: 'supermind_rejected' };
     expect(comp.noun).toBe('Supermind offer');
+  });
+
+  it('should get correct noun for boost_accepted', () => {
+    comp.notification = { type: 'boost_accepted' };
+    expect(comp.noun).toBe('');
+  });
+
+  it('should get correct noun for boost_rejected', () => {
+    comp.notification = { type: 'boost_rejected' };
+    expect(comp.noun).toBe('');
+  });
+
+  it('should get correct noun for boost_completed', () => {
+    comp.notification = { type: 'boost_completed' };
+    expect(comp.noun).toBe('');
   });
 
   // nounLink
@@ -155,5 +207,117 @@ describe('NotificationsV3NotificationComponent', () => {
       },
     };
     expect(comp.nounLink).toEqual(['/supermind/123']);
+  });
+
+  it('should get correct nounLink for boost_accepted when experiment is on', () => {
+    comp.notification = {
+      type: 'boost_accepted',
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.nounLink).toEqual(['/boost/boost-console']);
+  });
+
+  it('should get correct nounLink for boost_accepted when experiment is off', () => {
+    comp.notification = {
+      type: 'boost_accepted',
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
+    expect(comp.nounLink).toEqual(['/boost/console/newsfeed/history']);
+  });
+
+  it('should get correct nounLink for boost_completed when experiment is on', () => {
+    comp.notification = {
+      type: 'boost_completed',
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.nounLink).toEqual(['/boost/boost-console']);
+  });
+
+  it('should get correct nounLink for boost_completed when experiment is off', () => {
+    comp.notification = {
+      type: 'boost_completed',
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
+    expect(comp.nounLink).toEqual(['/boost/console/newsfeed/history']);
+  });
+
+  it('should get correct nounLink for boost_rejected for channels', () => {
+    const username: string = 'testuser';
+    comp.notification = {
+      type: 'boost_rejected',
+      entity: {
+        entity: {
+          type: 'user',
+          username: username,
+        },
+      },
+    };
+    expect(comp.nounLink).toEqual(['/' + username]);
+  });
+
+  it('should get correct nounLink for boost_rejected for activities', () => {
+    const guid: string = '12345';
+    comp.notification = {
+      type: 'boost_rejected',
+      entity: {
+        entity: {
+          type: 'activity',
+          guid: guid,
+        },
+      },
+    };
+    expect(comp.nounLink).toEqual(['/newsfeed/' + guid]);
+  });
+
+  // nounLinkParams
+
+  it('should get correct nounLinkParams for boost_accepted when experiment is off', () => {
+    comp.notification = {
+      type: 'boost_accepted',
+      entity: {
+        target_location: BoostLocation.NEWSFEED,
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
+    expect(comp.nounLinkParams).toEqual(null);
+  });
+
+  it('should get correct nounLinkParams for boost_completed when experiment is off', () => {
+    comp.notification = {
+      type: 'boost_completed',
+      entity: {
+        target_location: BoostLocation.NEWSFEED,
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
+    expect(comp.nounLinkParams).toEqual(null);
+  });
+
+  it('should get correct nounLinkParams for boost_accepted when experiment is on', () => {
+    comp.notification = {
+      type: 'boost_accepted',
+      entity: {
+        target_location: BoostLocation.SIDEBAR,
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.nounLinkParams).toEqual({
+      state: 'approved',
+      location: 'sidebar',
+    });
+  });
+
+  it('should get correct nounLinkParams for boost_completed when experiment is on', () => {
+    comp.notification = {
+      type: 'boost_completed',
+      entity: {
+        target_location: BoostLocation.NEWSFEED,
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.nounLinkParams).toEqual({
+      state: 'completed',
+      location: 'newsfeed',
+    });
   });
 });

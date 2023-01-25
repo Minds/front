@@ -11,6 +11,7 @@ type rewardsMarketingPage = typeof import('./pages/rewardsMarketingPage');
 type searchPage = typeof import('./pages/searchPage');
 type settingsPage = typeof import('./pages/settingsPage');
 type singleEntityPage = typeof import('./pages/singleEntityPage');
+type boostConsolePage = typeof import('./pages/boostConsolePage');
 type supermindConsolePage = typeof import('./pages/supermindConsolePage');
 type supermindSettingsPage = typeof import('./pages/supermindSettingsPage');
 type walletPage = typeof import('./pages/walletPage');
@@ -46,6 +47,7 @@ declare namespace CodeceptJS {
     searchPage: searchPage;
     settingsPage: settingsPage;
     singleEntityPage: singleEntityPage;
+    boostConsolePage: boostConsolePage;
     supermindConsolePage: supermindConsolePage;
     supermindSettingsPage: supermindSettingsPage;
     walletPage: walletPage;

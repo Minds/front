@@ -108,7 +108,7 @@ export class ModalService implements OnDestroy {
     };
     ref.componentInstance.setModalData?.(options);
 
-    // ref.result is defained as "the promise that is resolved when
+    // ref.result is defined as "the promise that is resolved when
     // the modal is closed and rejected when the modal is dismissed."
 
     // The error below fires whenever dismiss() is used instead of close(),
