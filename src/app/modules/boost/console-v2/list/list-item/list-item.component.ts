@@ -42,9 +42,9 @@ export class BoostConsoleListItemComponent {
       return '';
     }
     if (this.boost.payment_method === BoostPaymentMethod.ONCHAIN_TOKENS) {
-      return `www.etherscan.io/tx/${this.boost.payment_tx_id}`;
+      return `https://www.etherscan.io/tx/${this.boost.payment_tx_id}`;
     } else {
-      return `${this.siteUrl}api/v3/payments/receipt/${this.boost.payment_tx_id}`;
+      return `/api/v3/payments/receipt/${this.boost.payment_tx_id}`;
     }
   }
 
