@@ -1,3 +1,4 @@
+import modalComponent from '../fragments/modalComponent';
 import { generateARandomString } from '../utils/utils';
 
 namespace CommonSteps {
@@ -162,5 +163,9 @@ namespace CommonSteps {
   Then('I clear my cookies', () => {
     I.clearCookie();
     I.refreshPage();
+  });
+
+  Then('I see the {string} modal', (selector: string) => {
+    modalComponent.isVisible(locate(selector));
   });
 }

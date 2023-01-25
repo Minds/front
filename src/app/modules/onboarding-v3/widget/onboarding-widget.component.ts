@@ -1,19 +1,21 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subscription, timer } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import {
   OnboardingResponse,
-  OnboardingV3Service,
-  OnboardingStepName,
   OnboardingStep,
+  OnboardingStepName,
+  OnboardingV3Service,
   RELEASED_GROUPS,
 } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { catchError, scan, take, takeWhile, tap } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 import { EmailResendService } from '../../../common/services/email-resend.service';
 import { OnboardingFeedNoticesExperimentService } from '../../experiments/sub-services/onboarding-feed-notices-experiment.service';
+import { VerifyUniquenessModalLazyService } from '../../verify-uniqueness/modal/services/verify-uniqueness-modal.service';
+import { InAppVerificationExperimentService } from '../../experiments/sub-services/in-app-verification-experiment.service';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -49,7 +51,9 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     private injector: Injector,
     private toast: ToasterService,
     private emailResend: EmailResendService,
-    private noticeExperiment: OnboardingFeedNoticesExperimentService
+    private verifyUniquenessModal: VerifyUniquenessModalLazyService,
+    private noticeExperiment: OnboardingFeedNoticesExperimentService,
+    private inAppVerificationExperimentService: InAppVerificationExperimentService
   ) {}
 
   ngOnInit(): void {
@@ -134,6 +138,11 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
               case 'VerifyUniquenessStep':
                 if (this.isStepComplete(step, progress)) {
                   this.toast.inform('You have already completed this step');
+                  break;
+                }
+
+                if (this.inAppVerificationExperimentService.isActive()) {
+                  await this.verifyUniquenessModal.open();
                   break;
                 }
               // else, default

@@ -1,0 +1,86 @@
+<div
+  class="m-verify_uniqueness_modal"
+  data-ref="in-app-verify-uniqueness-modal"
+>
+  <div class="m-verify_uniqueness_modal__header">Verify You Are Human</div>
+  <div
+    class="m-verify_uniqueness_modal__subheader"
+    i18n="@@IN_APP_VERIFY_UNIQUENESS__SUBHEADER"
+  >
+    You can finish verifying in as little as 5 minutes
+  </div>
+  <div class="m-verify_uniqueness_modal__body">
+    <div class="m-verify_uniqueness_modal__item">
+      <span class="m-verify_uniqueness_item__counter">1.</span>
+      <div class="m-verify_uniqueness_item__textWrapper">
+        <p
+          class="m-verify_uniqueness_item_text__header"
+          i18n="@@IN_APP_VERIFY_UNIQUENESS__STEP_1_HEADER"
+        >
+          Scan the QR code to continue in the Minds app or click this
+          <a href="https://www.minds.com/mobile">link</a>
+        </p>
+        <p
+          class="m-verify_uniqueness_item_text__body"
+          i18n="@@IN_APP_VERIFY_UNIQUENESS__STEP_1_BODY"
+        >
+          We’ll open the app if you have it downloaded or take you to the app
+          store to get it.
+        </p>
+        <br />
+        <m-qr-code [data]="qrLink"></m-qr-code>
+      </div>
+    </div>
+    <div class="m-verify_uniqueness_modal__item">
+      <span class="m-verify_uniqueness_item__counter">2.</span>
+      <div class="m-verify_uniqueness_item__textWrapper">
+        <p
+          class="m-verify_uniqueness_item_text__header"
+          i18n="@@IN_APP_VERIFY_UNIQUENESS__STEP_2_HEADER"
+        >
+          Log in to your account
+        </p>
+        <p
+          class="m-verify_uniqueness_item_text__body"
+          i18n="@@IN_APP_VERIFY_UNIQUENESS__STEP_2_BODY"
+        >
+          Tap on ‘Login’ and use the same username and password you use on web.
+        </p>
+      </div>
+    </div>
+    <div class="m-verify_uniqueness_modal__item">
+      <span class="m-verify_uniqueness_item__counter">3.</span>
+      <div class="m-verify_uniqueness_item__textWrapper">
+        <p
+          class="m-verify_uniqueness_item_text__header"
+          i18n="@@IN_APP_VERIFY_UNIQUENESS__STEP_3_HEADER"
+        >
+          Continue your verification process
+        </p>
+        <p
+          class="m-verify_uniqueness_item_text__body"
+          i18n="@@IN_APP_VERIFY_UNIQUENESS__STEP_3_BODY"
+        >
+          Tap on ‘Verify’ at the top of your screen and follow the steps to
+          finish verification.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="m-verify_uniqueness_modal__toolbar">
+    <m-button
+      class="m-verify_uniqueness_modal__doneButton"
+      [size]="'medium'"
+      [color]="'blue'"
+      [solid]="true"
+      (onAction)="onDismissIntent()"
+      data-ref="verify-uniqueness-done-button"
+    >
+      Done
+    </m-button>
+  </div>
+</div>
+
+<m-modalCloseButton
+  data-ref="in-app-verify-uniqueness-modal-close-button"
+></m-modalCloseButton>
