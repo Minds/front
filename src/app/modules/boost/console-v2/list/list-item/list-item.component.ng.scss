@@ -14,7 +14,7 @@
   .m-boostConsole__listItem__topBar,
   .m-boostConsole__listItem__bottomBar,
   .m-boostConsole__listItem__boostUnavailable,
-  ::ng-deep m-publisherCard {
+  ::ng-deep m-publisherCard.m-boostConsole__listItem__middleBar {
     padding-left: $activitySpacingLeft--feed;
     padding-right: $activitySpacingRight--feed;
 
@@ -82,20 +82,24 @@
   }
 
   ::ng-deep m-activity {
-    border-top: 0 !important;
-    padding-bottom: $spacing4;
+    &.m-boostConsole__listItem__middleBar {
+      border-top: 0 !important;
+      padding-bottom: $spacing4;
+    }
   }
   ::ng-deep m-publisherCard {
-    padding-bottom: $spacing4;
-    .m-publisherCard {
-      border: none !important;
-      padding: $spacing4 0 0 !important;
+    &.m-boostConsole__listItem__middleBar {
+      padding-bottom: $spacing4;
+      .m-publisherCard {
+        border: none !important;
+        padding: $spacing4 0 0 !important;
 
-      .m-publisherCard__ownerRow
-        .m-publisherCardOwnerRow__owner
-        .m-publisherCardOwnerRowItem__name {
-        @include body1Bold;
-        font-weight: 700 !important;
+        .m-publisherCard__ownerRow
+          .m-publisherCardOwnerRow__owner
+          .m-publisherCardOwnerRowItem__name {
+          @include body1Bold;
+          font-weight: 700 !important;
+        }
       }
     }
   }

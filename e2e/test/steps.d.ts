@@ -14,6 +14,7 @@ type singleEntityPage = typeof import('./pages/singleEntityPage');
 type boostConsolePage = typeof import('./pages/boostConsolePage');
 type supermindConsolePage = typeof import('./pages/supermindConsolePage');
 type supermindSettingsPage = typeof import('./pages/supermindSettingsPage');
+type walletPage = typeof import('./pages/walletPage');
 type tokenMarketingPage = typeof import('./pages/tokenMarketingPage');
 type composerModalComponent = typeof import('./fragments/composerModalComponent');
 type activityComponent = typeof import('./fragments/activityComponent');
@@ -49,6 +50,7 @@ declare namespace CodeceptJS {
     boostConsolePage: boostConsolePage;
     supermindConsolePage: supermindConsolePage;
     supermindSettingsPage: supermindSettingsPage;
+    walletPage: walletPage;
     tokenMarketingPage: tokenMarketingPage;
     composerModalComponent: composerModalComponent;
     activityComponent: activityComponent;

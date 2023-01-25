@@ -78,7 +78,7 @@ export class DiscoveryBoostFeedComponent implements OnInit {
       this.feedsService
         .setEndpoint(endpoint)
         .setParams(params)
-        .setLimit(6)
+        .setLimit(12)
         .setOffset(0)
         .fetch();
 

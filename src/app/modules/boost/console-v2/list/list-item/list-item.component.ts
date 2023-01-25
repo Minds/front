@@ -1,10 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import {
-  Boost,
-  BoostConsoleLocationFilter,
-  BoostPaymentMethod,
-} from '../../../boost.types';
+import { Boost, BoostPaymentMethod } from '../../../boost.types';
 
 /**
  * Boost console list item - a single boost entity
