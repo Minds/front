@@ -17,6 +17,8 @@
     .m-boostConsoleStatsBar__column {
       display: flex;
       flex-direction: column;
+      margin-right: $spacing4;
+      flex: 1;
     }
   }
 

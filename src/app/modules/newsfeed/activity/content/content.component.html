@@ -101,8 +101,8 @@ post content to trigger upgrade modal -->
   >
     <ng-container *ngIf="!isModal; else image">
       <a
+        [routerLink]="showPaywallBadge ? null : sepLink"
         class="m-activityContentMedia__link"
-        [routerLink]="['/newsfeed', entity?.guid]"
         (click)="onModalRequested($event)"
       >
         <div
@@ -123,7 +123,6 @@ post content to trigger upgrade modal -->
         *ngTemplateOutlet="paywallTemplate"
         [ngTemplateOutletContext]="{ hideText: sidebarMode }"
       ></ng-container>
-
       <img
         #imageEl
         [src]="!isMultiImage ? imageUrl : activeMultiImageUrl"
@@ -137,7 +136,6 @@ post content to trigger upgrade modal -->
         [style.height.px]="imageHeight"
         [style.width.px]="imageWidth"
         [ngClass]="{ 'm-border': !isModal }"
-        class="m-border"
       />
     </ng-template>
   </div>
