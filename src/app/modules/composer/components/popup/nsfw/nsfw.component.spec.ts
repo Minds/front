@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
-import { ComplexOuterSubscriber } from 'rxjs/internal/innerSubscribe';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { Supermind } from '../../../../supermind/supermind.types';
@@ -58,31 +57,29 @@ describe('Composer NSFW Component', () => {
     },
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          NsfwComponent,
-          MockComponent({
-            selector: 'm-button',
-            outputs: ['onAction'],
-          }),
-        ],
-        providers: [
-          {
-            provide: ComposerService,
-            useValue: composerServiceMock,
-          },
-          {
-            provide: ToasterService,
-            useValue: MockService(ToasterService),
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        NsfwComponent,
+        MockComponent({
+          selector: 'm-button',
+          outputs: ['onAction'],
+        }),
+      ],
+      providers: [
+        {
+          provide: ComposerService,
+          useValue: composerServiceMock,
+        },
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+      ],
+    }).compileComponents();
+  }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(NsfwComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();

@@ -36,11 +36,11 @@ describe('SettingsV2PaymentHistoryService', () => {
     has_more: true,
   };
 
-  let apiMock = new (function() {
+  let apiMock = new (function () {
     this.get = jasmine.createSpy('get');
   })();
 
-  let toastMock = new (function() {
+  let toastMock = new (function () {
     this.error = jasmine.createSpy('error');
   })();
 
@@ -68,7 +68,7 @@ describe('SettingsV2PaymentHistoryService', () => {
       (service as any).nextPagingToken$,
     ])
       .pipe(take(1))
-      .subscribe(([rawList, hasMore, pagingToken, nextPagingToken]) => {
+      .subscribe(([rawList, hasMore, pagingToken, nextPagingToken]: any[]) => {
         expect((service as any).api.get).toHaveBeenCalled();
         expect(rawList).toEqual(mockPayments);
         expect(hasMore).toBeTrue();
@@ -84,7 +84,7 @@ describe('SettingsV2PaymentHistoryService', () => {
 
     service.loadNext();
 
-    (service as any).pagingToken$.pipe(take(1)).subscribe(val => {
+    (service as any).pagingToken$.pipe(take(1)).subscribe((val) => {
       expect(val).toBe(nextPagingToken);
       done();
     });

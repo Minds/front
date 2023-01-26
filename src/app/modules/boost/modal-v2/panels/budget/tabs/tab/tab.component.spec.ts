@@ -50,54 +50,52 @@ describe('BoostModalV2BudgetTabComponent', () => {
   let comp: BoostModalV2BudgetTabComponent;
   let fixture: ComponentFixture<BoostModalV2BudgetTabComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule],
-        declarations: [
-          BoostModalV2BudgetTabComponent,
-          FormInputSliderV2MockComponent,
-        ],
-        providers: [
-          {
-            provide: BoostModalV2Service,
-            useValue: MockService(BoostModalV2Service, {
-              getConfig() {
-                return {
-                  bid_increments: {
-                    cash: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100, 200, 300],
-                    tokens: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100, 200, 300],
-                  },
-                };
-              },
-
-              has: ['dailyBudget$', 'duration$', 'estimatedReach$'],
-              props: {
-                dailyBudget$: { get: () => new BehaviorSubject<number>(10) },
-                duration$: { get: () => new BehaviorSubject<number>(3) },
-                estimatedReach$: {
-                  get: () =>
-                    new BehaviorSubject<EstimatedReach>({
-                      views: {
-                        low: 100,
-                        high: 1000,
-                      },
-                      cpm: {
-                        low: 3,
-                        high: 15,
-                      },
-                    }),
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
+      declarations: [
+        BoostModalV2BudgetTabComponent,
+        FormInputSliderV2MockComponent,
+      ],
+      providers: [
+        {
+          provide: BoostModalV2Service,
+          useValue: MockService(BoostModalV2Service, {
+            getConfig() {
+              return {
+                bid_increments: {
+                  cash: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100, 200, 300],
+                  tokens: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100, 200, 300],
                 },
-              },
-            }),
-          },
-          UntypedFormBuilder,
-        ],
-      }).compileComponents();
-    })
-  );
+              };
+            },
 
-  beforeEach(done => {
+            has: ['dailyBudget$', 'duration$', 'estimatedReach$'],
+            props: {
+              dailyBudget$: { get: () => new BehaviorSubject<number>(10) },
+              duration$: { get: () => new BehaviorSubject<number>(3) },
+              estimatedReach$: {
+                get: () =>
+                  new BehaviorSubject<EstimatedReach>({
+                    views: {
+                      low: 100,
+                      high: 1000,
+                    },
+                    cpm: {
+                      low: 3,
+                      high: 15,
+                    },
+                  }),
+              },
+            },
+          }),
+        },
+        UntypedFormBuilder,
+      ],
+    }).compileComponents();
+  }));
+
+  beforeEach((done) => {
     fixture = TestBed.createComponent(BoostModalV2BudgetTabComponent);
     comp = fixture.componentInstance;
 
@@ -143,7 +141,7 @@ describe('BoostModalV2BudgetTabComponent', () => {
     combineLatest([
       (comp as any).service.dailyBudget$,
       (comp as any).service.duration$,
-    ]).subscribe(([dailyBudget, duration]) => {
+    ]).subscribe(([dailyBudget, duration]: any[]) => {
       expect(dailyBudget).toBe(10000);
       expect(duration).toBe(30);
       done();
@@ -152,7 +150,7 @@ describe('BoostModalV2BudgetTabComponent', () => {
 
   it('should update service on budget value change', (done: DoneFn) => {
     comp.form.controls.dailyBudget.setValue(123);
-    (comp as any).service.dailyBudget$.subscribe(val => {
+    (comp as any).service.dailyBudget$.subscribe((val) => {
       expect(val).toBe(123);
       done();
     });
@@ -160,7 +158,7 @@ describe('BoostModalV2BudgetTabComponent', () => {
 
   it('should update service on duration value change', (done: DoneFn) => {
     comp.form.controls.duration.setValue(15);
-    (comp as any).service.duration$.subscribe(val => {
+    (comp as any).service.duration$.subscribe((val) => {
       expect(val).toBe(15);
       done();
     });

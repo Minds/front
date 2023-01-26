@@ -5,6 +5,7 @@ describe('CashWalletService', () => {
   let service: CashWalletService;
 
   const mockGetResponse = {
+    status: 'success',
     requirements: {
       disabled_reason: 'reason',
     },
@@ -16,12 +17,12 @@ describe('CashWalletService', () => {
     status: 'success',
   };
 
-  let apiMock = new (function() {
+  let apiMock = new (function () {
     this.get = jasmine.createSpy('get').and.returnValue(of(mockGetResponse));
     this.post = jasmine.createSpy('post').and.returnValue(of(mockPostResponse));
   })();
 
-  let experimentsService = new (function() {
+  let experimentsService = new (function () {
     this.hasVariation = jasmine.createSpy('hasVariation').and.returnValue(true);
   })();
 
@@ -44,7 +45,7 @@ describe('CashWalletService', () => {
   });
 
   it('should get account status from api', (done: DoneFn) => {
-    service.account$.subscribe(account => {
+    service.account$.subscribe((account) => {
       expect((service as any).api.get).toHaveBeenCalledWith(
         'api/v3/payments/stripe/connect/account'
       );
@@ -54,14 +55,14 @@ describe('CashWalletService', () => {
   });
 
   it('should get whether user has an account', (done: DoneFn) => {
-    service.hasAccount$.subscribe(account => {
+    service.hasAccount$.subscribe((account) => {
       expect(account).toBeTrue();
       done();
     });
   });
 
   it('should restrictedReason for account', (done: DoneFn) => {
-    service.restrictedReason$.subscribe(restrictedReasonValue => {
+    service.restrictedReason$.subscribe((restrictedReasonValue) => {
       expect(restrictedReasonValue).toBe(
         mockGetResponse.requirements.disabled_reason
       );
@@ -70,14 +71,14 @@ describe('CashWalletService', () => {
   });
 
   it('should paymentsEnabled for account', (done: DoneFn) => {
-    service.paymentsEnabled$.subscribe(paymentsEnabledValue => {
+    service.paymentsEnabled$.subscribe((paymentsEnabledValue) => {
       expect(paymentsEnabledValue).toBe(mockGetResponse.charges_enabled);
       done();
     });
   });
 
   it('should payoutsEnabled for account', (done: DoneFn) => {
-    service.payoutsEnabled$.subscribe(payoutsEnabledValue => {
+    service.payoutsEnabled$.subscribe((payoutsEnabledValue) => {
       expect(payoutsEnabledValue).toBe(mockGetResponse.payouts_enabled);
       done();
     });
