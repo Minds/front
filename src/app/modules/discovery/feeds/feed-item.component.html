@@ -1,5 +1,6 @@
 <div
   class="m-discovery__feedItem"
+  *ngIf="entity && entity.type"
   [class.m-discovery__feedItem--user]="entity.type === 'user'"
   [class.m-discovery__feedItem--group]="entity.type === 'group'"
 >
