@@ -19,7 +19,7 @@ npm run build minds -- --stats-json --output-path=$BROWSER_PATH
 if [ "$?" != "0" ]; then exit 1; fi
 
 # Build embed
-npm run build:embed -- --stats-json --outputPath=$EMBED_PATH
+npm run build:embed -- --stats-json --output-path=$EMBED_PATH
 if [ "$?" != "0" ]; then exit 1; fi
 
 # Build SSR
