@@ -1,0 +1,15 @@
+<m-tooltip
+  class="m-tooltipHint__tooltip"
+  [anchor]="anchorPosition"
+  [hidden]="!(shouldShow$ | async)"
+  [enabled]="tooltipHoverEnabled$ | async"
+  [showArrow]="showArrow"
+  [arrowOffset]="arrowOffset"
+  [icon]="icon"
+  [iconStyle]="iconStyle"
+  [tooltipBubbleStyle]="tooltipBubbleStyle"
+  (click)="onClick()"
+  (tooltipMouseDown)="onClick()"
+>
+  <ng-content></ng-content>
+</m-tooltip>
