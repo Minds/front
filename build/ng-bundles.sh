@@ -23,7 +23,7 @@ npm run build:embed -- --stats-json --output-path=$EMBED_PATH
 if [ "$?" != "0" ]; then exit 1; fi
 
 # Build SSR
-npm run build:ssr -- --outputPath=$SERVER_PATH
+npm run build:ssr -- --output-path=$SERVER_PATH
 if [ "$?" != "0" ]; then exit 1; fi
 
 # Build Storybook
