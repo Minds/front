@@ -60,7 +60,7 @@ export class BoostConsoleV2Component implements OnInit {
 
   ngOnInit(): void {
     // if experiment is not active, redirect to root.
-    if (!this.dynamicBoostExperiment.isActive()) {
+    if (!this.dynamicBoostExperiment.isActive() && !this.session.isAdmin()) {
       this.router.navigate(['/boost/console']);
     }
 
