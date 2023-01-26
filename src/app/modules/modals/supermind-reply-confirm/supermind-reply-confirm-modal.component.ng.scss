@@ -1,8 +1,8 @@
 @import 'defaults.scss';
 
 :host {
-  padding: $spacing8;
-  border-radius: 5px;
+  // padding: $spacing8;
+  // border-radius: 5px;
 
   @include z-index(body);
   @include m-theme() {
@@ -10,48 +10,70 @@
     background-color: themed($m-bgColor--secondary);
   }
 
-  .m-supermindReplyConfirmationModal__textWrapper {
+  .m-supermindReplyConfirmationModal__title {
+    @include heading2Bold;
+    margin-top: unset;
+  }
+
+  .m-supermindReplyConfirmationModal__text {
+    @include body2Regular;
+    margin-bottom: $spacing6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
+  }
+
+  .m-supermindReplyConfirmationModal__actionable {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
+  }
 
-    .m-supermindReplyConfirmationModal__title {
-      @include heading2Bold;
-      margin-top: unset;
+  ::ng-deep m-formInput__checkbox {
+    margin-right: $spacing15;
+
+    br {
+      display: block;
+      margin-bottom: $spacing1;
     }
 
-    .m-supermindReplyConfirmationModal__text {
+    .m-supermindReplyConfirmationModal__checkboxSubtitle {
       @include body2Regular;
-      margin-bottom: $spacing6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeSpeed;
+      line-height: $spacing6;
     }
 
-    .m-supermindReplyConfirmationModal__actionable {
+    .m-formInputCheckbox__customLabel {
+      margin-top: -2px !important;
+      margin-left: $spacing2;
+
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-modalV2__body {
+    display: flex;
+    flex-flow: row nowrap;
+    @media screen and (max-width: $min-desktop + 1) {
+      flex-flow: column nowrap;
+    }
+    .m-supermindReplyConfirmationModal__textWrapper {
       display: flex;
-      flex-flow: row nowrap;
+      flex-flow: column nowrap;
+      margin-bottom: $spacing8;
+
+      @media screen and (min-width: $min-desktop) {
+        margin-right: $spacing12;
+        margin-bottom: 0;
+      }
     }
-
-    ::ng-deep m-formInput__checkbox {
-      margin-right: $spacing15;
-
-      br {
-        display: block;
-        margin-bottom: $spacing1;
+    .m-supermindReplyConfirmationModal__twitterPreviewWrapper {
+      p {
+        @include body1Bold;
+        margin: 0;
+        padding-bottom: $spacing4;
       }
-
-      .m-supermindReplyConfirmationModal__checkboxSubtitle {
-        @include body2Regular;
-        line-height: $spacing6;
-      }
-
-      .m-formInputCheckbox__customLabel {
-        margin-top: -2px !important;
-        margin-left: $spacing2;
-
-        @include body1Regular;
-        @include m-theme() {
-          color: themed($m-textColor--primary);
-        }
+      img {
       }
     }
   }
@@ -72,6 +94,12 @@
 
     .m-supermindReplyConfirmationModal__confirmButton {
       margin: 0 $spacing4;
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    .m-modalV2__footer {
+      display: none;
     }
   }
 }

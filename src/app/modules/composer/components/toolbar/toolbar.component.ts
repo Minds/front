@@ -534,7 +534,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
             modal.dismiss();
           },
         },
+        size: 'lg',
         injector: this.injector,
+        windowClass: 'm-modalV2__mobileFullCover',
       }
     );
   }
