@@ -137,7 +137,7 @@ body.modal-open {
           left: $spacing3;
           right: auto !important;
           @include m-theme() {
-            background-color: themed($m-transparent) !important;
+            background-color: transparent !important;
             color: themed($m-textColor--secondary) !important;
           }
         }
