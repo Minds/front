@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-sh .githooks/pre-commit && npx --no-install pretty-quick --staged --bail --pattern "**/*.*(ts|html|scss)"
+sh .githooks/pre-commit && npx -y pretty-quick --staged --bail --pattern "**/*.*(ts|html|scss)"
