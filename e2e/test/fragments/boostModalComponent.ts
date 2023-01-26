@@ -62,9 +62,10 @@ class BoostModalComponent {
    */
   public navigateToBudgetTab(tab: BoostTab): void {
     I.click(tab === 'cash' ? this.cashTabSelector : this.tokensTabSelector);
-    if (tab === 'tokens') {
-      I.click(locate('m-button button').withText('Confirm'));
-    }
+    // NOTE: keep this in case we bring back the tokens confirmation modal
+    // if (tab === 'tokens') {
+    //   I.click(locate('m-button button').withText('Confirm'));
+    // }
   }
 
   /**

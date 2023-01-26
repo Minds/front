@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 import { VerifyUniquenessNoticeComponent } from './verify-uniqueness-notice.component';
 import { PhoneVerificationService } from '../../../wallet/components/components/phone-verification/phone-verification.service';
 import { ConnectWalletModalService } from '../../../blockchain/connect-wallet/connect-wallet-modal.service';
+import { InAppVerificationExperimentService } from '../../../experiments/sub-services/in-app-verification-experiment.service';
+import { VerifyUniquenessModalLazyService } from '../../../verify-uniqueness/modal/services/verify-uniqueness-modal.service';
 
 describe('VerifyUniquenessNoticeComponent', () => {
   let comp: VerifyUniquenessNoticeComponent;
@@ -36,6 +38,14 @@ describe('VerifyUniquenessNoticeComponent', () => {
           {
             provide: ConnectWalletModalService,
             useValue: MockService(ConnectWalletModalService),
+          },
+          {
+            provide: VerifyUniquenessModalLazyService,
+            useValue: MockService(VerifyUniquenessModalLazyService),
+          },
+          {
+            provide: InAppVerificationExperimentService,
+            useValue: MockService(InAppVerificationExperimentService),
           },
           {
             provide: PhoneVerificationService,
