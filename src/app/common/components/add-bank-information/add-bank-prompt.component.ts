@@ -44,6 +44,7 @@ export class AddBankPromptComponent {
     try {
       btn.saving = true;
       btn.disabled = true;
+
       await this.cashService.createAccount();
 
       btn.disabled = false;
