@@ -21,6 +21,7 @@
         class="m-topbar--navigation--item"
         routerLink="/admin/boosts"
         routerLinkActive="m-topbar--navigation--item-active"
+        *ngIf="dynamicBoostExperiment.isActive()"
       >
         <span>Boosts</span>
       </a>
