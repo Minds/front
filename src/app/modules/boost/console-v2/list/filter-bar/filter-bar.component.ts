@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   BoostConsoleLocationFilter,
   BoostConsolePaymentMethodFilter,
   BoostConsoleStateFilter,
   BoostConsoleSuitabilityFilter,
 } from '../../../boost.types';
+import { BoostConsoleAdminStatsService } from '../../services/admin-stats.service';
 import { BoostConsoleService } from '../../services/console.service';
 
 /**
@@ -18,7 +20,7 @@ import { BoostConsoleService } from '../../services/console.service';
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.ng.scss'],
 })
-export class BoostConsoleFilterBarComponent {
+export class BoostConsoleFilterBarComponent implements OnInit {
   // state filter type values.
   readonly stateFilterTypes: BoostConsoleStateFilter[] = [
     'all',
@@ -43,7 +45,22 @@ export class BoostConsoleFilterBarComponent {
     'onchain_tokens',
   ];
 
-  constructor(public service: BoostConsoleService) {}
+  // safe pending count for admins.
+  public readonly adminPendingSafeCount$: Observable<number> = this.adminStats
+    .pendingSafeCount$;
+
+  // controversial pending count for admins.
+  public readonly adminPendingControversialCount$: Observable<number> = this
+    .adminStats.pendingControversialCount$;
+
+  constructor(
+    public service: BoostConsoleService,
+    private adminStats: BoostConsoleAdminStatsService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadAdminStats();
+  }
 
   public onStateFilterChange(val: BoostConsoleStateFilter): void {
     this.service.updateQueryParams({ state: val });
@@ -61,5 +78,16 @@ export class BoostConsoleFilterBarComponent {
 
   public onSuitabilityFilterChange(val: BoostConsoleSuitabilityFilter): void {
     this.service.updateQueryParams({ suitability: val });
+    this.loadAdminStats();
+  }
+
+  /**
+   * Load admin stats async if in an admin context.
+   * @return { void }
+   */
+  private loadAdminStats(): void {
+    if (this.service.adminContext$.getValue()) {
+      this.adminStats.fetch(); // async
+    }
   }
 }
