@@ -160,6 +160,11 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
           this.toasterService.error(e.message);
         }
         break;
+      case 'block':
+        // !! This doesn't actually delete the post
+        // It just hides the post from which user blocked its owner
+        this.deleted.emit();
+        break;
       case 'wire':
         await this.wireModalService.present(this.entity);
         break;
