@@ -26,3 +26,9 @@ Feature: Boost Display
     When I enter "test quote" in the composer text area
     And I click the post button
     Then I am able to create the post
+
+  Scenario: I should be sent to boost settings when clicking the settings cog on the boost rotator
+    Given I am logged in
+    And I am on the newsfeed
+    And I click to open the boost rotator settings
+    Then I should see "/settings/account/boosted-content" in current URL

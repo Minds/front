@@ -7,6 +7,8 @@ class BoostRotatorComponent {
   // selectors.
   private readonly boostRotatorSelector: string = '.m-newsfeed__boostRotator';
   private readonly activitySelector: string = 'm-activity';
+  private readonly boostSettingsButtonSelector: string =
+    '[data-ref=boost-rotator-settings-button]';
 
   /**
    * Whether boost rotator should be seen
@@ -68,6 +70,14 @@ class BoostRotatorComponent {
     await within(this.boostRotatorSelector, () => {
       activityComponent.clickQuoteButton();
     });
+  }
+
+  /**
+   * Click settings cog button to open boost settings.
+   * @returns { void }
+   */
+  public clickBoostSettingsButton(): void {
+    I.click(this.boostSettingsButtonSelector);
   }
 }
 

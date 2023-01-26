@@ -13,6 +13,12 @@ namespace BoostDisplaySteps {
     await boostRotatorComponent.openComposerForQuote();
   });
 
+  When('I click to open the boost rotator settings', () => {
+    boostRotatorComponent.waitForBoostFeedRotator(true);
+    boostRotatorComponent.shouldSeeBoostRotator(true);
+    boostRotatorComponent.clickBoostSettingsButton();
+  });
+
   Then('I should see the boost rotator', () => {
     boostRotatorComponent.waitForBoostFeedRotator(true);
     boostRotatorComponent.shouldSeeBoostRotator(true);
