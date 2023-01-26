@@ -19,7 +19,7 @@
     "serve:ssr": "node dist/server/main",
     "build:ssr": "ng run minds:server:production",
     "build:ssr:dev": "ng run minds:server:production",
-    "build:embed": "ng run minds-embed:build --configuration production",
+    "build:embed": "ng run minds-embed:build:production",
     "serve:embed:dev": "ng serve minds-embed --watch=true --poll=1000 --proxy-config proxy.conf.js --host=0.0.0.0 --port=4300 --disableHostCheck=true",
     "bundle-report": "webpack-bundle-analyzer dist/browser/stats.json",
     "xi18n": "gulp extract.i18n",
