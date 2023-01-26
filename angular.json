@@ -202,7 +202,6 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "include": ["**/*.spec.ts"],
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",
             "tsConfig": "src/tsconfig.spec.json",

@@ -12,16 +12,12 @@ describe('OnboardingV3Service', () => {
     },
   });
 
-  const stackableModalMock = new (function() {
+  const stackableModalMock = new (function () {
     this.present = jasmine.createSpy('present');
   })();
 
   beforeEach(() => {
-    service = new OnboardingV3Service(
-      new (() => {})(),
-      stackableModalMock,
-      apiMock
-    );
+    service = new OnboardingV3Service(null, stackableModalMock, apiMock);
   });
 
   it('should init', () => {
