@@ -12,7 +12,7 @@ describe('OnboardingV3Service', () => {
     },
   });
 
-  const stackableModalMock = new (function () {
+  const stackableModalMock = new (function() {
     this.present = jasmine.createSpy('present');
   })();
 

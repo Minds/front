@@ -6,7 +6,7 @@ import { web3WalletServiceMock } from '../../../tests/web3-wallet-service-mock.s
 import { fakeAsync, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-let restrictedAddressMock = new (function () {
+let restrictedAddressMock = new (function() {
   this.isRestricted = jasmine.createSpy('isRestricted');
 })();
 
