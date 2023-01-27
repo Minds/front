@@ -21,7 +21,7 @@ import { BlockchainPurchaseV2Component } from './token-purchase/v2/purchase/purc
 import { SendWyreService } from './sendwyre/sendwyre.service';
 import { ModalsModule } from '../modals/modals.module';
 import { ConfigsService } from '../../common/services/configs.service';
-import { Web3ModalModule } from '@bhayward93/web3modal-angular';
+import { Web3ModalModule } from '@mindsorg/web3modal-angular';
 import { createWeb3ModalConfig } from '../../helpers/web3modal-configuration';
 import { BuyTokensModalService } from './token-purchase/v2/buy-tokens-modal.service';
 import { BuyTokensModalModule } from './token-purchase/v2/buy-tokens-modal.module';
