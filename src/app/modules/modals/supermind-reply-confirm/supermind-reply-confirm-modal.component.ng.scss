@@ -83,6 +83,7 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: $spacing5;
 
     &:not(.m-supermindReplyConfirmationModal__buttonWrapper--noMargin) {
       margin-top: $minds-margin * 4;
