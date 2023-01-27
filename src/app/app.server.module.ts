@@ -17,7 +17,7 @@ import {
   ServerHeadersService,
 } from './common/services/headers.service';
 import { HlsjsPlyrDriver } from './modules/media/components/video-player/hls-driver';
-import { DefaultPlyrDriver } from '@bhayward93/ngx-plyr';
+import { DefaultPlyrDriver } from '@mindsorg/ngx-plyr';
 import * as Sentry from '@sentry/node';
 import {
   DiagnosticsService,

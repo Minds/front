@@ -3,7 +3,7 @@ import {
   PlyrDriverCreateParams,
   PlyrDriverDestroyParams,
   PlyrDriverUpdateSourceParams,
-} from '@bhayward93/ngx-plyr';
+} from '@mindsorg/ngx-plyr';
 import * as Plyr from 'plyr';
 import { Subject } from 'rxjs';
 
