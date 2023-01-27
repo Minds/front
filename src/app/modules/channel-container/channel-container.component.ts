@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +20,7 @@ import { ChannelComponent as ChannelV2Component } from '../channels/v2/channel.c
 import { TRIGGER_EXCEPTION } from '../channels/v2/content/content.service';
 import { HeadersService } from '../../common/services/headers.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
+import { isPlatformServer } from '@angular/common';
 
 /**
  * Contains and controls access to to channel pages
@@ -52,7 +55,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     protected site: SiteService,
     protected features: FeaturesService,
     protected headersService: HeadersService,
-    protected authModal: AuthModalService
+    protected authModal: AuthModalService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
@@ -153,6 +157,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   async openLoginModal(): Promise<void> {
+    if (isPlatformServer(this.platformId)) return;
     const user = await this.authModal.open();
     if (user) {
       this.load();
