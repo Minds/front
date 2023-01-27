@@ -83,7 +83,7 @@ export class BlockchainPurchaseV2Component implements OnInit {
       this.amount = 0.25;
       this.detectChanges();
     });
-    this.paramsSubscription = this.route.params.subscribe((params) => {
+    this.paramsSubscription = this.route.params.subscribe(params => {
       if (params.purchaseEth) {
         this.purchaseEth();
       }
