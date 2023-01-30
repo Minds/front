@@ -4,10 +4,10 @@ $collapse-width: 830px;
 
 :host {
   .m-boostModal__boostChangingContainer {
-    margin: 40px;
+    margin: $spacing10;
 
     @media screen and (max-width: $max-mobile) {
-      margin: 40px 20px;
+      margin: $spacing10 $spacing5;
     }
 
     .m-boostModal__boostChangingHeader {
