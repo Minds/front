@@ -33,7 +33,13 @@
     }
 
     .m-boostRotatorToolbar__buttons {
-      i {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+
+      i,
+      m-tooltipHint,
+      m-tooltip {
         cursor: pointer;
         font-size: 32px;
         line-height: 20px;
