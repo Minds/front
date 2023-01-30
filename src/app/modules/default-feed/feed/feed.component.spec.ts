@@ -10,6 +10,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
 import { DismissalService } from '../../../common/services/dismissal.service';
 import { FeedNoticeService } from '../../notices/services/feed-notice.service';
+import { Session } from '../../../services/session';
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
@@ -88,6 +89,10 @@ describe('DefaultFeedComponent', () => {
             provide: DismissalService,
             useValue: MockService(DismissalService),
           },
+          {
+            provide: Session,
+            useValue: MockService(Session),
+          },
         ],
       })
         .overrideProvider(FeedsService, {
@@ -101,6 +106,9 @@ describe('DefaultFeedComponent', () => {
     fixture = TestBed.createComponent(DefaultFeedComponent);
 
     comp = fixture.componentInstance;
+
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -206,5 +214,15 @@ describe('DefaultFeedComponent', () => {
     expect(comp.shouldShowBoostInPosition(9996)).toBe(false);
 
     expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
+  });
+
+  it('should report that a user is logged in', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+    expect(comp.isLoggedIn()).toBeTrue();
+  });
+
+  it('should report that a user is NOT logged in', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(false);
+    expect(comp.isLoggedIn()).toBeFalse();
   });
 });
