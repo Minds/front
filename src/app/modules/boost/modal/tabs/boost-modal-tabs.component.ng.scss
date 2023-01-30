@@ -3,6 +3,37 @@
 $collapse-width: 830px;
 
 :host {
+  .m-boostModal__boostChangingContainer {
+    margin: 40px;
+
+    .m-boostModal__boostChangingHeader {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      margin-bottom: $spacing2;
+
+      i {
+        font-size: 32px;
+        margin-right: $spacing4;
+      }
+
+      h3 {
+        margin: 0;
+        @include heading3Bold;
+      }
+    }
+
+    .m-boostModal__boostChangingBody {
+      @include body3Regular;
+
+      a {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+    }
+  }
+
   .m-boostModalTabs__container {
     display: flex;
     flex-flow: row nowrap;
