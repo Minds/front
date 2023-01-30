@@ -15,7 +15,6 @@ export class DynamicBoostExperimentService {
    * @returns { boolean } whether experiment is active.
    */
   public isActive(): boolean {
-    return false;
     return this.experiments.hasVariation('epic-293-dynamic-boost', true);
   }
 }
