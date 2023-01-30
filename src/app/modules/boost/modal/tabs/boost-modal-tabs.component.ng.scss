@@ -6,6 +6,10 @@ $collapse-width: 830px;
   .m-boostModal__boostChangingContainer {
     margin: 40px;
 
+    @media screen and (max-width: $max-mobile) {
+      margin: 40px 20px;
+    }
+
     .m-boostModal__boostChangingHeader {
       display: flex;
       flex-flow: row nowrap;
