@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Session } from '../../../../../../services/session';
 import { Boost, BoostState } from '../../../../boost.types';
 import { BoostConsoleService } from '../../../services/console.service';
@@ -15,8 +17,6 @@ import { BoostConsoleService } from '../../../services/console.service';
 export class BoostConsoleActionButtonsComponent {
   /** @var { Boost } boost - Boost object */
   @Input() boost: Boost = null;
-
-  @Output('onAction') onActionEmitter: EventEmitter<any> = new EventEmitter();
 
   /**
    * Button loading states
@@ -40,8 +40,6 @@ export class BoostConsoleActionButtonsComponent {
     this.approving = true;
     const promise = this.service.approve(this.boost);
 
-    this.onActionEmitter.emit();
-
     promise.then(() => {
       this.approving = false;
     });
@@ -59,8 +57,6 @@ export class BoostConsoleActionButtonsComponent {
 
     this.rejecting = true;
     const promise = this.service.reject(this.boost);
-
-    this.onActionEmitter.emit();
 
     promise.then(() => {
       this.rejecting = false;

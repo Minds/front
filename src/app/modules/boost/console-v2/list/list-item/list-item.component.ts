@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Boost, BoostPaymentMethod } from '../../../boost.types';
 
@@ -16,8 +16,6 @@ export class BoostConsoleListItemComponent {
   /** @var { Boost } boost - Boost object */
   @Input() boost: Boost = null;
 
-  @Output('onAction') onActionEmitter: EventEmitter<any> = new EventEmitter();
-
   /** @var { Object } displayOptions - options for activity display */
   public displayOptions: Object = {
     showOwnerBlock: true,
@@ -31,15 +29,6 @@ export class BoostConsoleListItemComponent {
   constructor(configs: ConfigsService) {
     this.siteUrl = configs.get('site_url');
   }
-
-  /**
-   * Removes an item from a list when an action button is clicked
-   * Currently only used for admin approve/reject actions
-   */
-  onAction(): void {
-    this.onActionEmitter.emit(this.boost);
-  }
-
   /**
    * Get receipt url
    * @return { string } receipt url
