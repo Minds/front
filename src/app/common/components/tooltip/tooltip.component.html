@@ -1,7 +1,11 @@
 <div class="m-tooltip" [class.m-tooltip--anchored]="!!anchor">
-  <i *ngIf="icon && !iconSrc" class="material-icons" [ngClass]="iconClass">{{
-    icon
-  }}</i>
+  <i
+    *ngIf="icon && !iconSrc"
+    class="material-icons"
+    [ngClass]="iconClass"
+    [ngStyle]="iconStyle"
+    >{{ icon }}</i
+  >
   <img *ngIf="iconSrc && !icon" [src]="cdnAssetsUrl + iconSrc" />
   <ng-content select="[m-tooltip--icon]"></ng-content>
   <ng-content select="[m-tooltip--anchor]"></ng-content>
@@ -25,6 +29,8 @@
       !useParentPosition && anchor == 'right'
     "
     [hidden]="hidden"
+    [ngStyle]="tooltipBubbleStyle"
+    (mousedown)="tooltipMouseDown.emit()"
   >
     <div
       *ngIf="showArrow"

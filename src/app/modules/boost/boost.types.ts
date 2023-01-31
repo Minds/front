@@ -102,3 +102,11 @@ export type BoostConsoleGetParams = {
   audience?: BoostSuitability;
   payment_method?: BoostPaymentMethod;
 };
+
+// STATS FOR ADMIN BOOST CONSOLE
+export type BoostConsoleAdminStatsResponse = {
+  global_pending: {
+    safe_count: number;
+    controversial_count: number;
+  };
+};

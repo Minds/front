@@ -37,6 +37,9 @@ describe('BoostRejectionModalComponent', () => {
             provide: BoostConsoleService,
             useValue: {
               reject: jasmine.createSpy('reject').and.returnValue(of({})),
+              decrementAdminStatCounter: jasmine.createSpy(
+                'decrementAdminStatCounter'
+              ),
             },
           },
           {
@@ -117,6 +120,9 @@ describe('BoostRejectionModalComponent', () => {
     // spyOn(comp['boostConsoleService'], 'reject');
     comp.onRejectIntent();
     expect(comp['boostConsoleService'].reject).toHaveBeenCalled();
+    expect(
+      comp['boostConsoleService'].decrementAdminStatCounter
+    ).toHaveBeenCalled();
   });
 
   it('should set modal data', (done: DoneFn) => {

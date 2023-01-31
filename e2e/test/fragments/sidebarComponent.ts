@@ -11,6 +11,7 @@ class SidebarComponent {
   private readonly moreButtonSelector: string = '[data-ref=sidenav-more]';
   private readonly supermindConsoleButtonSelector: string =
     '[data-ref=sidebarmore-supermind]';
+  private readonly walletButtonSelector: string = '[data-ref=sidenav-wallet]';
 
   /**
    * Opens the users channel from the sidebar.
@@ -38,6 +39,11 @@ class SidebarComponent {
   public expandSidebarMore(): void {
     I.waitForElement(this.moreButtonSelector);
     I.click(this.moreButtonSelector);
+  }
+
+  public openWallet(): void {
+    I.waitForElement(this.walletButtonSelector);
+    I.click(this.walletButtonSelector);
   }
 
   /**

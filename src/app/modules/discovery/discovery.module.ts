@@ -5,7 +5,6 @@ import { DiscoveryComponent } from './discovery.component';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { CommonModule } from '../../common/common.module';
 import { DiscoveryTrendsComponent } from './trends/trends.component';
-import { DiscoveryTrendComponent } from './trends/trend/trend.component';
 import { DiscoverySearchComponent } from './search/search.component';
 import { DiscoveryTagsComponent } from './tags/tags.component';
 import { DiscoverySharedModule } from './discovery-shared.module';
@@ -52,7 +51,7 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
           },
           {
             path: 'trend/:guid',
-            component: DiscoveryTrendComponent,
+            redirectTo: '/newsfeed/:guid',
           },
           {
             path: 'search',
@@ -140,8 +139,7 @@ import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/superm
               },
               {
                 path: 'trend/:guid',
-                component: DiscoveryTrendComponent,
-                data: { plus: true },
+                redirectTo: '/newsfeed/:guid',
               },
               {
                 path: 'latest/feed',

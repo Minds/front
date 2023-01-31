@@ -1,3 +1,5 @@
+import Locator = CodeceptJS.Locator;
+
 const { I } = inject();
 
 /**
@@ -10,6 +12,10 @@ class ModalComponent {
    */
   public dismissModal(): void {
     I.pressKey('Escape');
+  }
+
+  public isVisible(selector: Locator): void {
+    I.seeElement(selector);
   }
 }
 

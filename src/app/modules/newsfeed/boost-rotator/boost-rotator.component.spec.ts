@@ -1,17 +1,10 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Session } from '../../../services/session';
 import { FeaturesService } from '../../../services/features.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ChangeDetectorRef, DebugElement, ElementRef } from '@angular/core';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator.component';
-import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
-import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { Client } from '../../../services/api';
 import { ScrollService } from '../../../services/ux/scroll';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
@@ -19,8 +12,8 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { By } from '@angular/platform-browser';
-import { componentWrapperDecorator } from '@storybook/angular';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
+import { Router } from '@angular/router';
 
 describe('NewsfeedBoostRotatorComponent', () => {
   let comp: NewsfeedBoostRotatorComponent;
@@ -29,12 +22,30 @@ describe('NewsfeedBoostRotatorComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [NewsfeedBoostRotatorComponent],
-        imports: [RouterTestingModule],
+        declarations: [
+          NewsfeedBoostRotatorComponent,
+          MockComponent({
+            selector: 'm-tooltipHint',
+            inputs: [
+              'icon',
+              'storageKeyPrefix',
+              'iconStyle',
+              'tooltipBubbleStyle',
+              'showArrow',
+              'arrowOffset',
+              'experimentId',
+            ],
+            outputs: ['click'],
+          }),
+        ],
         providers: [
           {
             provide: Session,
             useValue: MockService(Session),
+          },
+          {
+            provide: Router,
+            useValue: MockService(Router),
           },
           {
             provide: Client,
@@ -146,5 +157,26 @@ describe('NewsfeedBoostRotatorComponent', () => {
     );
 
     expect(boostRotatorElement.nativeElement.hidden).toEqual(true);
+  });
+
+  it('should navigate on settings click', () => {
+    comp.onSettingsClick();
+    expect((comp as any).router.navigate).toHaveBeenCalledOnceWith([
+      '/settings/account/boosted-content',
+    ]);
+  });
+
+  it('should get the style for the tooltip bubble', () => {
+    expect(comp.tooltipBubbleStyle).toEqual({
+      'max-width': 'unset',
+      width: 'max-content',
+      right: 0,
+    });
+  });
+
+  it('should get the style for the tooltip icon', () => {
+    expect(comp.tooltipIconStyle).toEqual({
+      'font-size': 20,
+    });
   });
 });

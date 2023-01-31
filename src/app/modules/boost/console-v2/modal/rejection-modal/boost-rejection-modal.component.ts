@@ -64,6 +64,7 @@ export class BoostRejectionModalComponent implements OnInit, OnDestroy {
           }),
           tap((response: ApiResponse) => {
             this.boost.boost_status = BoostState.REJECTED;
+            this.boostConsoleService.decrementAdminStatCounter();
             this.toaster.success('Boost successfully rejected');
             this.onDismissIntent();
           }),

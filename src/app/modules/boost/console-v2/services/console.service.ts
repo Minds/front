@@ -6,6 +6,7 @@ import { catchError, switchMap, take } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
+import { BoostConsoleAdminStatsService } from './admin-stats.service';
 import {
   Boost,
   BoostConsoleGetParams,
@@ -66,6 +67,7 @@ export class BoostConsoleService {
     public session: Session,
     private api: ApiService,
     private toasterService: ToasterService,
+    private adminStats: BoostConsoleAdminStatsService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -166,6 +168,7 @@ export class BoostConsoleService {
     try {
       await this.api.post(`${this.endpoint}/${boost.guid}/approve`).toPromise();
       boost.boost_status = BoostState.APPROVED;
+      this.decrementAdminStatCounter();
     } catch (err) {
       console.log(err);
       this.toasterService.error(err?.error.message);
@@ -296,5 +299,17 @@ export class BoostConsoleService {
     }
 
     return '';
+  }
+
+  /**
+   * Decrement pending count for current suitability filter value.
+   * @returns { void }
+   */
+  public decrementAdminStatCounter(): void {
+    if (this.suitabilityFilterValue$.getValue() === 'safe') {
+      this.adminStats.decrementPendingSafeCount();
+    } else {
+      this.adminStats.decrementPendingControversialCount();
+    }
   }
 }

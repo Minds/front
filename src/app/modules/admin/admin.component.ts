@@ -9,6 +9,7 @@ import { DynamicBoostExperimentService } from '../experiments/sub-services/dynam
 export type Filter =
   | ''
   | 'interactions'
+  | 'boosts-v1' // remove this when fully transitioned to dynamic boosts
   | 'boosts'
   | 'firehose'
   | 'reports'
