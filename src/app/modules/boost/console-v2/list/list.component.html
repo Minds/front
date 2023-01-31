@@ -7,10 +7,11 @@
 </span>
 
 <ng-container *ngIf="(list$ | async) && (list$ | async).length > 0">
-  <ng-container *ngFor="let boost of list$ | async">
+  <ng-container *ngFor="let boost of list$ | async; let i = index">
     <m-boostConsole__listItem
       *ngIf="boost && boost.entity"
       [boost]="boost"
+      (onAction)="removeFromList(i)"
     ></m-boostConsole__listItem>
   </ng-container>
 </ng-container>
