@@ -1,4 +1,5 @@
 @import 'bootstrap-modal';
+@import 'defaults.scss';
 
 .modal-content {
   position: relative;
@@ -38,5 +39,117 @@ body.modal-open {
 @media screen and (min-width: 1544px) {
   .modal-xl {
     max-width: 1440px !important;
+  }
+}
+
+// ---------------------------------------------------
+// Apply this windowClass when calling modal.present()
+// To incorporate full-coverage styling in mobile widths
+.m-modalV2__mobileFullCover {
+  // Don't show unless mobile width
+  .m-modalV2__mobileTopBar {
+    display: none;
+  }
+  @media screen and (max-width: $max-mobile) {
+    .modal-dialog {
+      margin: 0;
+      min-height: 100% !important;
+    }
+    .modal-content {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      > * {
+        height: 100%;
+      }
+    }
+    .m-modalV2__inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    /////////////////////////////////////////////////
+    .m-modalV2__mobileTopBar {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 100px;
+
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      h4 {
+        @include heading2Bold;
+        margin: 0;
+        padding: $spacing5 0;
+      }
+
+      .m-modalV2MobileTopBar__button {
+        position: absolute;
+        top: 56px;
+        right: $spacing6;
+        @include body1Regular;
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+    }
+    /////////////////////////////////////////////////
+
+    .m-modalV2__header {
+      padding: $spacing8 $spacing9 0 $spacing5;
+      h4 {
+        @include heading4Bold;
+        margin: 0;
+        margin-bottom: $spacing2;
+      }
+    }
+    /////////////////////////////////////////////////
+
+    .m-modalV2__body {
+      padding: 0 $spacing9 $spacing5 $spacing5;
+      max-height: 500px;
+    }
+
+    /////////////////////////////////////////////////
+
+    .m-modalV2__footer {
+      margin-bottom: $spacing19;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      m-button {
+        margin-right: 0;
+        width: 100%;
+        .m-button {
+          width: 100%;
+        }
+      }
+    }
+
+    /////////////////////////////////////////////////
+
+    m-modalCloseButton {
+      &:not(.noAbsolutePosition) {
+        a {
+          top: $spacing10 !important;
+          left: $spacing3;
+          right: auto !important;
+          @include m-theme() {
+            background-color: transparent !important;
+            color: themed($m-textColor--secondary) !important;
+          }
+        }
+        i {
+          font-size: 28px;
+        }
+      }
+    }
   }
 }
