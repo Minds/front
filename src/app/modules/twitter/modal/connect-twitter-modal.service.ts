@@ -31,6 +31,7 @@ export class ConnectTwitterModalService {
       data: opts,
       injector: this.injector,
       size: 'md',
+      windowClass: 'm-modalV2__mobileFullCover',
     });
   }
 }
