@@ -43,14 +43,17 @@ export class AddBankPromptComponent {
   async createAccount(e: MouseEvent, btn: ButtonComponent) {
     try {
       btn.saving = true;
+      btn.disabled = true;
 
       await this.cashService.createAccount();
 
+      btn.disabled = false;
       // Now redirect to onboarding
       this.redirectToOnboarding(e);
     } catch (err) {
       this.toasterService.error(err.error.message);
       btn.saving = false; // only stop saving state on error, as we want saving state to follow through to redirect
+      btn.disabled = false;
     }
   }
 
