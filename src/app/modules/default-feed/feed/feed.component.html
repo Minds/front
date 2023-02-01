@@ -6,7 +6,7 @@
     *ngFor="let activity$ of feedsService.feed | async; let i = index"
   >
     <m-feedNotice__outlet
-      *ngIf="i > 0 && i % 6 === 0"
+      *ngIf="isLoggedIn() && i > 0 && i % 6 === 0"
       location="inline"
     ></m-feedNotice__outlet>
     <m-featured-content
