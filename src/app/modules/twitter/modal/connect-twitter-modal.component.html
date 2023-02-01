@@ -1,24 +1,27 @@
 <div class="m-modalV2__inner">
+  <div class="m-modalV2__mobileTopBar" *ngIf="contextText">
+    <h4 class="m-connectTwitterModal__mobileTopBar">
+      {{ contextText }}
+    </h4>
+  </div>
   <div class="m-modalV2__header">
-    <h4
-      class="m-connectTwitterModal__header"
-      i18n="@@CONNECT_TWITTER_MODAL__HEADER"
-    >
-      Connect to Twitter
+    <h4 class="m-connectTwitterModal__header">
+      {{ titleText }}
     </h4>
   </div>
   <div class="m-modalV2__body">
     <p class="m-connectTwitterModal__body">{{ bodyText }}</p>
-    <div class="m-modalV2__footer">
-      <m-button
-        size="small"
-        color="blue"
-        (onAction)="onConnectClick($event)"
-        [saving]="false"
-        i18n="connect to twitter|@@CONNECT_TWITTER_MODAL__CONNECT"
-        >Connect</m-button
-      >
-    </div>
+  </div>
+  <div class="m-modalV2__footer">
+    <m-button
+      size="small"
+      color="blue"
+      solid="true"
+      (onAction)="onConnectClick($event)"
+      [saving]="false"
+      i18n="connect to twitter|@@CONNECT_TWITTER_MODAL__CONNECT_TWITTER"
+      >Connect Twitter</m-button
+    >
   </div>
 </div>
 

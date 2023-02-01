@@ -12,8 +12,16 @@
       </a>
       <a
         class="m-topbar--navigation--item"
+        routerLink="/admin/boosts-v1"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span>Boosts V1</span>
+      </a>
+      <a
+        class="m-topbar--navigation--item"
         routerLink="/admin/boosts"
         routerLinkActive="m-topbar--navigation--item-active"
+        *ngIf="dynamicBoostExperiment.isActive()"
       >
         <span>Boosts</span>
       </a>
@@ -84,12 +92,5 @@
 <m-admin__liquidityProviders
   *ngIf="filter === 'liquidity-providers'"
 ></m-admin__liquidityProviders>
-<ng-container *ngIf="filter == 'boosts'">
-  <minds-admin-boosts
-    *ngIf="!dynamicBoostExperiment.isActive()"
-  ></minds-admin-boosts>
-  <m-boostConsole
-    *ngIf="dynamicBoostExperiment.isActive()"
-    adminContext="true"
-  ></m-boostConsole>
-</ng-container>
+<minds-admin-boosts *ngIf="filter == 'boosts-v1'"></minds-admin-boosts>
+<m-boostConsole *ngIf="filter == 'boosts'" adminContext="true"></m-boostConsole>

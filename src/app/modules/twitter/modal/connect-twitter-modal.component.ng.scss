@@ -10,12 +10,14 @@
         @include m-theme() {
           color: themed($m-textColor--primary);
         }
+
+        @media screen and (max-width: $max-mobile) {
+          @include heading4Bold;
+        }
       }
     }
     .m-modalV2__body {
       .m-connectTwitterModal__body {
-        margin-right: $spacing24;
-
         @include body2Regular;
         @include m-theme() {
           color: themed($m-textColor--secondary);
@@ -27,6 +29,7 @@
       display: flex;
       justify-content: end;
       margin-bottom: $spacing3;
+      margin: 0 $spacing11 $spacing8 $spacing11;
     }
   }
 }
