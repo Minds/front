@@ -4,6 +4,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
 import { FeedNoticeService } from '../../notices/services/feed-notice.service';
+import { Session } from '../../../services/session';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -41,7 +42,8 @@ export class DefaultFeedComponent implements OnInit {
     public experiments: ExperimentsService,
     private feedNoticeService: FeedNoticeService,
     private discoveryBoostExperiment: DiscoveryBoostExperimentService,
-    private dismissal: DismissalService
+    private dismissal: DismissalService,
+    private session: Session
   ) {}
 
   public ngOnInit(): void {
@@ -71,6 +73,7 @@ export class DefaultFeedComponent implements OnInit {
    */
   public shouldShowBoostInPosition(position: number): boolean {
     return (
+      this.isLoggedIn() &&
       this.discoveryBoostExperiment.isActive() &&
       ((position > 0 && position % 5 === 0) || position === 3)
     );
@@ -107,6 +110,10 @@ export class DefaultFeedComponent implements OnInit {
    * @returns { boolean }
    */
   shouldShowChannelRecommendation(index: number) {
+    if (!this.isLoggedIn()) {
+      return false;
+    }
+
     if (!this.location) {
       return false;
     }
@@ -119,5 +126,13 @@ export class DefaultFeedComponent implements OnInit {
 
     // show after the 3rd post
     return index === 2;
+  }
+
+  /**
+   * Whether a git couser is logged in.
+   * @returns { boolean } true if a user is logged in.
+   */
+  public isLoggedIn(): boolean {
+    return this.session.isLoggedIn();
   }
 }
