@@ -80,13 +80,23 @@
           m-hotkeyScroll
           [anchors]="feedViewChildren"
         >
-          <m-newsfeed__entity
-            *ngFor="let entity of feed; let i = index"
-            [entity]="entity | async"
-            [slot]="i + 1"
-            (deleted)="feedService.onDelete($event)"
-            #feedViewChildren
-          ></m-newsfeed__entity>
+          <ng-container *ngFor="let entity of feed; let i = index">
+            <m-featured-content
+              *ngIf="shouldShowBoostInPosition(i)"
+              [slot]="i + 1"
+              [displayOptions]="{
+                showOnlyCommentsInput: true,
+                isFeed: true
+              }"
+              (mViewed)="trackBoostView()"
+            ></m-featured-content>
+            <m-newsfeed__entity
+              [entity]="entity | async"
+              [slot]="i + 1"
+              (deleted)="feedService.onDelete($event)"
+              #feedViewChildren
+            ></m-newsfeed__entity>
+          </ng-container>
         </div>
       </ng-container>
     </div>

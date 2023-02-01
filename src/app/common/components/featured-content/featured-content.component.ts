@@ -17,6 +17,10 @@ import { isPlatformBrowser } from '@angular/common';
 import { FeaturesService } from '../../../services/features.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 
+/**
+ * Use to insert activity boosts into a feed
+ * (Do not use for sidebar/channel boosts)
+ */
 @Component({
   selector: 'm-featured-content',
   templateUrl: 'featured-content.component.html',
@@ -42,11 +46,15 @@ export class FeaturedContentComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) this.load();
+    console.log('ojm FEATCONTENTCOMP oninit, ');
   }
 
   async load() {
+    console.log('ojm FEATCONTENTCOMP load(), ');
+
     try {
       this.entity = await this.featuredContentService.fetch();
+      console.log('ojm FEATCONTENTCOMP load()2, ', this.entity);
     } catch (e) {
       console.error('FeaturedContentComponent.load', e);
     }
