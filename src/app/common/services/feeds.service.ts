@@ -287,12 +287,10 @@ export class FeedsService implements OnDestroy {
 
       if (rehydratedFeed) {
         this.checkForNewPosts();
-        console.log('ojm FEEDsSVC fetch() - rehydrated feed xxx');
 
         return;
       }
     }
-    console.log('ojm FEEDsSVC fetch()');
 
     this.fetchInProgress$.next(true);
     if (!this.offset.getValue()) {
@@ -318,8 +316,6 @@ export class FeedsService implements OnDestroy {
       this.newPostsLastCheckedAt = Date.now();
     }
 
-    console.log('ojm FEEDsSVC fetch() endpoint', this.endpoint);
-
     return this.client
       .get(this.endpoint, {
         ...this.params,
@@ -332,8 +328,6 @@ export class FeedsService implements OnDestroy {
         },
       })
       .then((response: any) => {
-        console.log('ojm FEEDsSVC fetch() response', response);
-
         if (this.endpoint !== endpoint) {
           // Avoid race conditions if endpoint changes
           return;

@@ -81,6 +81,15 @@
           [anchors]="feedViewChildren"
         >
           <ng-container *ngFor="let entity of feed; let i = index">
+            <m-newsfeed__entity
+              [entity]="entity | async"
+              [slot]="i + 1"
+              (deleted)="feedService.onDelete($event)"
+              #feedViewChildren
+            ></m-newsfeed__entity>
+            <!-- ----------------------------------------- -->
+            <!-- BOOSTS  -->
+            <!-- ----------------------------------------- -->
             <m-featured-content
               *ngIf="shouldShowBoostInPosition(i)"
               [slot]="i + 1"
@@ -88,14 +97,8 @@
                 showOnlyCommentsInput: true,
                 isFeed: true
               }"
-              (mViewed)="trackBoostView()"
+              showHeader="true"
             ></m-featured-content>
-            <m-newsfeed__entity
-              [entity]="entity | async"
-              [slot]="i + 1"
-              (deleted)="feedService.onDelete($event)"
-              #feedViewChildren
-            ></m-newsfeed__entity>
           </ng-container>
         </div>
       </ng-container>

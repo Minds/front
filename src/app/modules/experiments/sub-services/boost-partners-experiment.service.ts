@@ -13,8 +13,6 @@ export class BoostPartnersExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    // ojm remove
-    return true;
     return this.experiments.hasVariation('epic-303-boost-partners', true);
   }
 }

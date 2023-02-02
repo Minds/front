@@ -21,13 +21,10 @@ export class FeaturedContentService {
     private dynamicBoostExperiment: DynamicBoostExperimentService
   ) {
     this.onInit();
-    console.log('ojm FEATCONTENTSVC construct');
   }
 
   onInit() {
     this.feedSubscription = this.feedsService.feed.subscribe(feed => {
-      console.log('ojm FEATCONTENTSVC oninit feedrx', feed);
-
       this.feedLength = feed.length;
       this.maximumOffset = this.feedLength - 1;
     });
@@ -36,8 +33,7 @@ export class FeaturedContentService {
     let params = dynamicBoostExperimentActive
       ? {
           location: BoostLocation.NEWSFEED,
-          // show_boosts_after_x: 604800, ojm uncomment
-          show_boosts_after_x: 1,
+          show_boosts_after_x: 604800,
         }
       : {
           show_boosts_after_x: 604800, // 1 week
@@ -46,8 +42,6 @@ export class FeaturedContentService {
     const endpoint: string = dynamicBoostExperimentActive
       ? 'api/v3/boosts/feed'
       : 'api/v2/boost/feed';
-
-    console.log('ojm FEATCONTENTSVC oninit endpoint', endpoint);
 
     this.feedsService
       .setLimit(12)
@@ -58,10 +52,9 @@ export class FeaturedContentService {
   }
 
   /**
-   * Returns the first entity in the specified boost feed? ojm
+   * Returns the first entity in the specified boost feed
    * */
   async fetch() {
-    console.log('ojm FEATCONTENTSVC fetch() start');
     return await this.feedsService.feed
       .pipe(
         filter(entities => entities.length > 0),
@@ -70,15 +63,10 @@ export class FeaturedContentService {
         take(1),
         switchMap(async entity => {
           if (!entity) {
-            console.log('ojm FEATCONTENTSVC fetch()... NO ENTITY');
             return false;
           } else {
-            console.log('ojm FEATCONTENTSVC fetch()... HAS ENTITY');
-
             const resolvedEntity = await entity.pipe(first()).toPromise();
             this.resetOffsetAtEndOfStream();
-
-            console.log('ojm FEATCONTENTSVC fetch() end', resolvedEntity);
             return resolvedEntity;
           }
         })

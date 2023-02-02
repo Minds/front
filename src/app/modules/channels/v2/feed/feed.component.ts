@@ -287,26 +287,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   public shouldShowBoostInPosition(position: number): boolean {
     return (
       this.boostPartnersExperiment.isActive() &&
-      // Display in the 2nd slot and then every 6 posts
-      // i.e. show when i is 1, 7, 13, 19 ...
-      ((position > 6 && (position - 1) % 6 === 0) || position === 1)
+      // Displays in the 2nd slot and then every 6 posts
+      ((position > 4 && position % 5 === 0) || position === 0)
     );
-  }
-
-  /**
-   * tracks views of boosts
-   * @param { MindsUser } channel - the entity
-   * @param { number } position - position in the channel recs
-   */
-  trackBoostView(channel: MindsUser, position: number) {
-    if (this.clientMeta) {
-      this.analyticsService.trackEntityView(
-        channel,
-        this.clientMeta.build({
-          position,
-          medium: 'channel-recs',
-        })
-      );
-    }
   }
 }

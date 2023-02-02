@@ -24,6 +24,7 @@ import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.c
 @Component({
   selector: 'm-featured-content',
   templateUrl: 'featured-content.component.html',
+  styleUrls: ['featured-content.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeaturedContentComponent implements OnInit {
@@ -31,6 +32,7 @@ export class FeaturedContentComponent implements OnInit {
 
   @Input() slot: number = -1;
   @Input() displayOptions = { isFeed: true };
+  @Input() showHeader: boolean = false;
 
   @ViewChild(DynamicHostDirective)
   dynamicHost: DynamicHostDirective;
@@ -46,15 +48,11 @@ export class FeaturedContentComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) this.load();
-    console.log('ojm FEATCONTENTCOMP oninit, ');
   }
 
   async load() {
-    console.log('ojm FEATCONTENTCOMP load(), ');
-
     try {
       this.entity = await this.featuredContentService.fetch();
-      console.log('ojm FEATCONTENTCOMP load()2, ', this.entity);
     } catch (e) {
       console.error('FeaturedContentComponent.load', e);
     }
