@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostConsoleAdminStatsService } from '../../services/admin-stats.service';
@@ -45,6 +46,7 @@ describe('BoostConsoleFilterBarComponent', () => {
               },
             }),
           },
+          { provide: Router, useValue: MockService(Router) },
         ],
       }).compileComponents();
     })
