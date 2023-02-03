@@ -73,6 +73,10 @@ describe('BoostConsoleService', () => {
     (service as any).api.post.calls.reset();
 
     (service as any).session.isAdmin.and.returnValue(false);
+
+    (service as any).adminStats.decrementPendingSafeCount.calls.reset();
+    (service as any).adminStats.decrementPendingControversialCount.calls.reset();
+
     service.suitabilityFilterValue$.next('safe');
   });
 
@@ -112,23 +116,33 @@ describe('BoostConsoleService', () => {
     service.suitabilityFilterValue$.next('safe');
     (service as any).session.isAdmin.and.returnValue(true);
     (service as any).api.post.and.returnValue(of({}));
+    let boost = mockBoost;
+    boost.rejection_reason = 1;
+
+    await service.reject(mockBoost).toPromise();
+
+    expect((service as any).api.post).toHaveBeenCalledWith(
+      'api/v3/boosts/123/reject',
+      {
+        reason: boost.rejection_reason,
+      }
+    );
+  });
+
+  it('should reject and decrement admin stat count for controversial boosts', async () => {
+    service.suitabilityFilterValue$.next('controversial');
+    (service as any).session.isAdmin.and.returnValue(true);
+    (service as any).api.post.and.returnValue(of({}));
+    let boost = mockBoost;
+    boost.rejection_reason = 1;
 
     await service.reject(mockBoost);
 
-    expect(
-      (service as any).adminStats.decrementPendingSafeCount
-    ).toHaveBeenCalled();
+    expect((service as any).api.post).toHaveBeenCalledWith(
+      'api/v3/boosts/123/reject',
+      {
+        reason: boost.rejection_reason,
+      }
+    );
   });
-  //
-  // it('should reject and decrement admin stat count for controversial boosts', async () => {
-  //   service.suitabilityFilterValue$.next('controversial');
-  //   (service as any).session.isAdmin.and.returnValue(true);
-  //   (service as any).api.post.and.returnValue(of({}));
-  //
-  //   await service.reject(mockBoost);
-  //
-  //   expect(
-  //     (service as any).adminStats.decrementPendingControversialCount
-  //   ).toHaveBeenCalled();
-  // });
 });
