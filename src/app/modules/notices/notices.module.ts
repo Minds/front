@@ -13,6 +13,7 @@ import { ConnectWalletNoticeComponent } from './panels/connect-wallet/connect-wa
 import { SupermindPendingNoticeComponent } from './panels/supermind-pending/supermind-pending-notice.component';
 import { PlusUpgradeNoticeComponent } from './panels/plus-upgrade/plus-upgrade-notice.component';
 import { BoostChannelNoticeComponent } from './panels/boost-channel/boost-channel-notice.component';
+import { InviteFriendsNoticeComponent } from './panels/invite-friends/invite-friends-notice.component';
 
 @NgModule({
   imports: [CommonModule, NgCommonModule],
@@ -29,6 +30,7 @@ import { BoostChannelNoticeComponent } from './panels/boost-channel/boost-channe
     SupermindPendingNoticeComponent,
     PlusUpgradeNoticeComponent,
     BoostChannelNoticeComponent,
+    InviteFriendsNoticeComponent,
   ],
   exports: [FeedNoticeOutletComponent],
 })
