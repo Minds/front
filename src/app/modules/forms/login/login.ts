@@ -6,7 +6,11 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -50,12 +54,12 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
 
   usernameError: string;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(
     public session: Session,
     public client: Client,
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
     private zone: NgZone,
     private userAvatarService: UserAvatarService,
     private featuresService: FeaturesService,

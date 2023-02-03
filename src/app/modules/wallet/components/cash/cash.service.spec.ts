@@ -5,6 +5,7 @@ describe('CashWalletService', () => {
   let service: CashWalletService;
 
   const mockGetResponse = {
+    status: 'success',
     requirements: {
       disabled_reason: 'reason',
     },

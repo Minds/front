@@ -1,5 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { DEFAULT_AUDIENCE } from '../../boost-modal-v2.constants';
@@ -18,13 +22,13 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 export class BoostModalV2AudienceSelectorComponent
   implements OnInit, OnDestroy {
   public BoostAudience: typeof BoostAudience = BoostAudience;
-  public form: FormGroup; // form group
+  public form: UntypedFormGroup; // form group
   public audienceChangeSubscription: Subscription; // change audience in service on value change.
   public audienceInitSubscription: Subscription; // init the form using existing audience or default.
 
   constructor(
     private service: BoostModalV2Service,
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {

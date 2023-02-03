@@ -1,6 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { TwitterConnectionService } from '../../twitter/services/twitter-connection.service';
 
@@ -38,7 +38,7 @@ export class SupermindReplyConfirmModalComponent implements OnInit {
    */
   public onConfirm: () => any = noOp;
 
-  public twitterReplyCheckbox: FormControl = new FormControl();
+  public twitterReplyCheckbox: UntypedFormControl = new UntypedFormControl();
 
   /**
    * Triggered on cancel click

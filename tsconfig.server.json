@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "dist/server",
     "baseUrl": "./",
-    "target": "es2016",
     "types": ["node"]
   },
   "files": ["server.ts", "src/main.server.ts"],

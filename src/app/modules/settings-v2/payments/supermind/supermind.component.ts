@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -25,7 +25,7 @@ import {
 })
 export class SettingsV2SupermindComponent implements OnInit, OnDestroy {
   // Form group.
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   // When loading is in progress.
   public readonly loadingInProgress$: BehaviorSubject<
@@ -109,15 +109,15 @@ export class SettingsV2SupermindComponent implements OnInit, OnDestroy {
       /^\d+\.?\d{0,2}$/
     );
 
-    this.form = new FormGroup({
-      min_offchain_tokens: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      min_offchain_tokens: new UntypedFormControl('', {
         validators: [
           Validators.required,
           Validators.min(this.minThresholds.min_offchain_tokens),
           decimalPlaceValidator,
         ],
       }),
-      min_cash: new FormControl('', {
+      min_cash: new UntypedFormControl('', {
         validators: [
           Validators.required,
           Validators.min(this.minThresholds.min_cash),

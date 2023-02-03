@@ -1,38 +1,38 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
-import { CaptchaComponent, Captcha } from './captcha.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Client } from '../../services/api';
-import { clientMock } from '../../../tests/client-mock.spec';
-import { By } from '@angular/platform-browser';
+// import {
+//   ComponentFixture,
+//   fakeAsync,
+//   TestBed,
+//   tick,
+//   waitForAsync,
+// } from '@angular/core/testing';
+// import { DebugElement } from '@angular/core';
+// import { CaptchaComponent, Captcha } from './captcha.component';
+// import { ReactiveFormsModule } from '@angular/forms';
+// import { Client } from '../../services/api';
+// import { clientMock } from '../../../tests/client-mock.spec';
+// import { By } from '@angular/platform-browser';
 
-describe('CaptchaComponent', () => {
-  let comp: CaptchaComponent;
-  let fixture: ComponentFixture<CaptchaComponent>;
+// describe('CaptchaComponent', () => {
+//   let comp: CaptchaComponent;
+//   let fixture: ComponentFixture<CaptchaComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CaptchaComponent],
-        imports: [ReactiveFormsModule],
-        providers: [{ provide: Client, useValue: clientMock }],
-      }).compileComponents();
-    })
-  );
+//   beforeEach(
+//     waitForAsync(() => {
+//       TestBed.configureTestingModule({
+//         declarations: [CaptchaComponent],
+//         imports: [ReactiveFormsModule],
+//         providers: [{ provide: Client, useValue: clientMock }],
+//       }).compileComponents();
+//     })
+//   );
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CaptchaComponent);
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(CaptchaComponent);
 
-    comp = fixture.componentInstance;
+//     comp = fixture.componentInstance;
 
-    fixture.detectChanges();
+//     fixture.detectChanges();
 
-    clientMock.response = {};
-  });
-});
+//     clientMock.response = {};
+//   });
+// });

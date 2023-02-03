@@ -20,7 +20,7 @@ import { Storage } from '../../../../../services/storage';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TokenCompletedOnboardingComponent {
-  @Output() next: EventEmitter<any> = new EventEmitter();
+  @Output() next: EventEmitter<void> = new EventEmitter();
   inProgress: boolean = false;
   error: string;
 

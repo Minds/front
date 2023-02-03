@@ -5,7 +5,11 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { BehaviorSubject, combineLatest, fromEvent, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BoostImpressionRates, BoostTab } from '../../boost-modal.types';
@@ -54,7 +58,7 @@ export class BoostModalAmountInputComponent
   public activeTab$: BehaviorSubject<BoostTab> = this.service.activeTab$;
 
   // amount input form
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   // impressions input ElementRef
   @ViewChild('impressionsInput') impressionsInput: ElementRef;
@@ -211,15 +215,15 @@ export class BoostModalAmountInputComponent
     const minCurrencyAmount = this.minImpressions / rate;
     const maxCurrencyAmount = this.maxImpressions / rate;
 
-    this.form = new FormGroup({
-      currencyAmount: new FormControl(defaultCurrencyAmount, {
+    this.form = new UntypedFormGroup({
+      currencyAmount: new UntypedFormControl(defaultCurrencyAmount, {
         validators: [
           Validators.required,
           Validators.max(maxCurrencyAmount),
           Validators.min(minCurrencyAmount),
         ],
       }),
-      impressions: new FormControl(defaultViews, {
+      impressions: new UntypedFormControl(defaultViews, {
         validators: [
           Validators.required,
           Validators.max(this.maxImpressions),

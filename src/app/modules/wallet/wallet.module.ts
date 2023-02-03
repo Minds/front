@@ -36,11 +36,13 @@ import { OnchainTransferModalService } from './components/components/onchain-tra
 import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/dropdown-menu.component';
 import { WalletSharedModule } from './wallet-shared.module';
 import { WalletOnchainTransfersSummaryComponent } from './components/tokens/onchain-transfers/onchain-transfers.component';
+import { PathMatch } from '../../common/types/angular.types';
 
 export const WALLET_ROUTES: Routes = [
-  { path: 'canary', redirectTo: '..', pathMatch: 'full' },
+  { path: 'canary', redirectTo: '..', pathMatch: 'full' as PathMatch },
   {
     path: '',
+    pathMatch: 'prefix' as PathMatch,
     component: WalletDashboardComponent,
     data: {
       title: 'Wallet',
@@ -57,12 +59,12 @@ export const WALLET_ROUTES: Routes = [
           {
             path: '',
             redirectTo: 'rewards',
-            pathMatch: 'full',
+            pathMatch: 'full' as PathMatch,
           },
           {
             path: 'overview',
             redirectTo: 'balance',
-            pathMatch: 'full',
+            pathMatch: 'full' as PathMatch,
           },
           {
             path: 'balance',
@@ -102,7 +104,7 @@ export const WALLET_ROUTES: Routes = [
           {
             path: '',
             redirectTo: 'earnings',
-            pathMatch: 'full',
+            pathMatch: 'full' as PathMatch,
           },
           {
             path: 'earnings',
@@ -123,6 +125,7 @@ export const WALLET_ROUTES: Routes = [
       {
         path: '**', // redirected by RouterRedirectGuard
         canActivate: [DefaultRedirectGuard],
+        children: [],
       },
     ],
   },

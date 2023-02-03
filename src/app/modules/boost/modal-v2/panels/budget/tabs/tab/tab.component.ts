@@ -7,7 +7,11 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -48,7 +52,7 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
   @Input() public initialDuration: number = 1;
 
   // form group.
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   // text for estimated reach.
   public readonly estimatedReachText$: Observable<
@@ -69,7 +73,7 @@ export class BoostModalV2BudgetTabComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: BoostModalV2Service,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     @Inject(LOCALE_ID) private locale: string
   ) {}
 

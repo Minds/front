@@ -22,8 +22,8 @@ describe('WireService', () => {
       tokenContractServiceMock,
       web3WalletServiceMock,
       restrictedAddressMock,
-      new (() => {})(),
-      new (() => {})()
+      null,
+      null
     );
 
     clientMock.response = {};

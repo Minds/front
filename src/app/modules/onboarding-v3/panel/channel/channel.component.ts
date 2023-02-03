@@ -1,5 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { ChannelEditService } from '../../../channels/v2/edit/edit.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
@@ -28,7 +32,7 @@ export class OnboardingV3ChannelComponent
   /**
    * FormGroup
    */
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   /**
    * CDN URL
@@ -51,7 +55,7 @@ export class OnboardingV3ChannelComponent
   );
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private session: Session,
     private configs: ConfigsService,
     private channelEditService: ChannelEditService,
@@ -173,7 +177,9 @@ export class OnboardingV3ChannelComponent
    */
   async sync(): Promise<MindsChannelResponse> {
     return this.api
-      .get(`api/v1/channel/${this.session.getLoggedInUser().username}`)
+      .get<MindsChannelResponse>(
+        `api/v1/channel/${this.session.getLoggedInUser().username}`
+      )
       .pipe(
         take(1),
         catchError((e: any) => {

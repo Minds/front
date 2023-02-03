@@ -5,8 +5,8 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
   AbstractControl,
 } from '@angular/forms';
@@ -43,8 +43,8 @@ export class WalletSettingsBTCComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      addressInput: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      addressInput: new UntypedFormControl('', {
         validators: [this.validateAddressFormat],
       }),
     });

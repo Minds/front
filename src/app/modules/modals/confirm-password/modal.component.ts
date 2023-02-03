@@ -1,5 +1,9 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -16,18 +20,18 @@ export class ConfirmPasswordModalComponent {
   error: string = '';
   inProgress: boolean = false;
   done: any;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   protected submitted: boolean;
 
-  onComplete?: ({ password: string }) => void;
+  onComplete?: ({ password }) => void;
 
   constructor(
     public session: Session,
     private cd: ChangeDetectorRef,
     public modalService: ModalService,
     private client: Client,
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     protected toasterService: ToasterService
   ) {
     this.form = fb.group({
@@ -35,7 +39,7 @@ export class ConfirmPasswordModalComponent {
     });
   }
 
-  setModalData(opts: { onComplete: ({ password: string }) => void }) {
+  setModalData(opts: { onComplete: ({ password }) => void }) {
     this.onComplete = opts.onComplete;
   }
 

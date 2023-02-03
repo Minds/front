@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Client } from '../../../../services/api/client';
 import { ApiResponse } from '../../../../common/api/api.service';
 import { AdminPushNotificationsService } from '../admin-push-notifications.service';
@@ -11,7 +15,7 @@ import { NotificationDetails } from '../admin-push-notifications.component';
   templateUrl: './admin-push-notifications-form.component.html',
 })
 export class AdminPushNotificationsFormComponent {
-  public pushNotificationsForm: FormGroup = this.formBuilder.group({
+  public pushNotificationsForm: UntypedFormGroup = this.formBuilder.group({
     notificationTitle: [
       '',
       {
@@ -36,7 +40,7 @@ export class AdminPushNotificationsFormComponent {
   public inProgress: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private apiClient: Client,
     private adminPushNotificationsService: AdminPushNotificationsService
   ) {}

@@ -15,15 +15,15 @@ npx gulp build.sass --deploy-url="/static/en/"
 npx gulp generate-ngsw-appData
 
 # Build front
-npm run build -- --stats-json --outputPath=$BROWSER_PATH
+npm run build minds -- --stats-json --output-path=$BROWSER_PATH
 if [ "$?" != "0" ]; then exit 1; fi
 
 # Build embed
-npm run build:embed -- --stats-json --outputPath=$EMBED_PATH
+npm run build:embed -- --stats-json --output-path=$EMBED_PATH
 if [ "$?" != "0" ]; then exit 1; fi
 
 # Build SSR
-npm run build:ssr -- --outputPath=$SERVER_PATH
+npm run build:ssr -- --output-path=$SERVER_PATH
 if [ "$?" != "0" ]; then exit 1; fi
 
 # Build Storybook

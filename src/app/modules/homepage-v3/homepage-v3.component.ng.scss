@@ -3,7 +3,7 @@
 
 :host {
   h3 {
-    @media screen and(max-width: $m-grid-max-mobile) {
+    @media screen and (max-width: $m-grid-max-mobile) {
       font-size: 32px !important;
     }
   }
@@ -79,12 +79,12 @@
           margin-bottom: $minds-margin * 2;
           color: #fff;
 
-          @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+          @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
             font-size: 48px;
             line-height: 50px;
           }
 
-          @media screen and(max-width: $m-grid-max-mobile) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             font-size: 37px;
             line-height: 40px;
             margin-bottom: 16px;
@@ -302,7 +302,7 @@
             margin-top: 0;
             margin-bottom: 40px;
 
-            @media screen and(max-width: $m-grid-max-mobile) {
+            @media screen and (max-width: $m-grid-max-mobile) {
               margin-top: 40px;
               margin-bottom: 0;
             }
@@ -323,7 +323,7 @@
   .m-marketing__section--style-4 {
     .m-marketing__wrapper {
       .m-marketing__body {
-        @media screen and(min-width: $m-grid-min-vp) {
+        @media screen and (min-width: $m-grid-min-vp) {
           margin-left: 5em;
         }
       }
@@ -347,17 +347,17 @@
           width: 317px;
           height: 168.7px;
 
-          @media screen and(min-width: $m-grid-max-tablet) {
+          @media screen and (min-width: $m-grid-max-tablet) {
             bottom: 77px;
             left: 20px;
           }
 
-          @media screen and(min-width: $m-grid-max-mobile) and(max-width: $m-grid-max-tablet) {
+          @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
             bottom: 55px;
             left: -5px;
           }
 
-          @media screen and(max-width: $m-grid-max-mobile) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             bottom: 0;
             left: 50%;
           }
@@ -370,11 +370,11 @@
             bottom: 48px;
             left: -26px;
 
-            @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+            @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
               bottom: 25px;
               left: -46px;
             }
-            @media screen and(max-width: $m-grid-max-mobile) {
+            @media screen and (max-width: $m-grid-max-mobile) {
               bottom: -21%;
               left: 15%;
             }
@@ -392,11 +392,11 @@
 
     margin-top: 120px;
 
-    @media screen and(min-width: $m-grid-max-tablet) and (max-width: $m-grid-min-vp) {
+    @media screen and (min-width: $m-grid-max-tablet) and (max-width: $m-grid-min-vp) {
       margin-top: 170px;
     }
 
-    @media screen and(min-width: 700px) and (max-width: $m-grid-max-tablet) {
+    @media screen and (min-width: 700px) and (max-width: $m-grid-max-tablet) {
       margin-top: 11vw;
     }
 
@@ -404,7 +404,7 @@
       margin-top: 8vw;
     }
 
-    @media screen and(max-width: 680px) {
+    @media screen and (max-width: 680px) {
       margin-top: 5vw;
       margin-bottom: 10vh;
       margin-bottom: calc(var(--vh, 1vh) * 10);
@@ -414,7 +414,7 @@
       margin-right: 5%;
     }
 
-    @media screen and(max-width: $m-grid-max-mobile) {
+    @media screen and (max-width: $m-grid-max-mobile) {
       width: 100%;
       & > a:not(:first-child) {
         margin-left: 18px;
@@ -459,7 +459,7 @@
     align-items: center;
 
     .m-marketing__quotation {
-      @media screen and(max-width: $m-grid-max-tablet) {
+      @media screen and (max-width: $m-grid-max-tablet) {
         width: auto !important;
       }
     }
@@ -473,7 +473,7 @@
   .m-marketing__section {
     margin-bottom: $minds-margin * 4 !important;
 
-    @media screen and(min-width: $m-grid-max-mobile) {
+    @media screen and (min-width: $m-grid-max-mobile) {
       margin-bottom: 10vh !important;
       margin-bottom: calc(var(--vh, 1vh) * 10) !important;
     }
@@ -481,12 +481,12 @@
     h2 {
       font-size: 46px;
       line-height: 60px;
-      @media screen and(max-width: $m-grid-max-mobile) {
+      @media screen and (max-width: $m-grid-max-mobile) {
         font-size: 32px !important;
         line-height: 42px !important;
       }
 
-      @media screen and(min-width: $m-grid-max-mobile) and(max-width: $m-grid-min-vp) {
+      @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
         font-size: 38px !important;
         line-height: 50px !important;
       }
@@ -501,7 +501,7 @@
   }
 
   .m-marketing__description {
-    @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+    @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
       font-size: 17px !important;
       line-height: 24px !important;
     }
@@ -512,7 +512,7 @@
     }
   }
 
-  @media screen and(max-width: $m-grid-max-mobile) {
+  @media screen and (max-width: $m-grid-max-mobile) {
     display: block;
     margin-top: 55px;
     h1.m-homepage__minds {

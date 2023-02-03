@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
   AbstractControl,
 } from '@angular/forms';
@@ -87,8 +87,8 @@ export class WalletSettingsTokensComponent
   }
 
   ngOnInit() {
-    this.form = new FormGroup({
-      addressInput: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      addressInput: new UntypedFormControl('', {
         validators: [Validators.required, this.validateAddressFormat],
       }),
     });

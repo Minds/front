@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   ControlValueAccessor,
-  FormBuilder,
+  UntypedFormBuilder,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -91,7 +91,7 @@ describe('BoostModalV2BudgetTabComponent', () => {
               },
             }),
           },
-          FormBuilder,
+          UntypedFormBuilder,
         ],
       }).compileComponents();
     })
@@ -143,7 +143,7 @@ describe('BoostModalV2BudgetTabComponent', () => {
     combineLatest([
       (comp as any).service.dailyBudget$,
       (comp as any).service.duration$,
-    ]).subscribe(([dailyBudget, duration]) => {
+    ]).subscribe(([dailyBudget, duration]: any[]) => {
       expect(dailyBudget).toBe(10000);
       expect(duration).toBe(30);
       done();

@@ -7,7 +7,7 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -41,8 +41,8 @@ export class SettingsV2NsfwContentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
-    this.form = new FormGroup({
-      mature: new FormControl(''),
+    this.form = new UntypedFormGroup({
+      mature: new UntypedFormControl(''),
     });
 
     this.settingsSubscription = this.settingsService.settings$.subscribe(

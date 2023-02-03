@@ -1,7 +1,7 @@
 import { Component, ElementRef, SkipSelf } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryFeedsService } from './feeds.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { Modal } from '../../../services/ux/modal.service';
 
 const noOp = () => {};
@@ -20,7 +20,7 @@ export class DiscoveryFeedsSettingsComponent implements Modal<any> {
   subscriptions: Subscription[];
   onSaveIntent: (data?: any) => void = noOp;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   readonly periodOptions: { id: string; label: string }[] = [
     { id: 'relevant', label: 'Most relevant' },
     { id: '12h', label: '12h' },
@@ -45,7 +45,10 @@ export class DiscoveryFeedsSettingsComponent implements Modal<any> {
     return { id: reason.value, label: reason.label, selected: reason.selected };
   });
 
-  constructor(private service: DiscoveryFeedsService, private fb: FormBuilder) {
+  constructor(
+    private service: DiscoveryFeedsService,
+    private fb: UntypedFormBuilder
+  ) {
     this.form = fb.group({
       period: fb.control(''),
       contentType: fb.control(''),

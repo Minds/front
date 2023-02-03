@@ -7,7 +7,11 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
@@ -39,8 +43,8 @@ export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
-    this.form = new FormGroup({
-      showButtons: new FormControl(''),
+    this.form = new UntypedFormGroup({
+      showButtons: new UntypedFormControl(''),
     });
 
     this.settingsSubscription = this.settingsService.settings$.subscribe(
