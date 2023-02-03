@@ -111,7 +111,7 @@
     "twitter-text": "^3.1.0",
     "url": "^0.11.0",
     "walletlink": "^2.0.2",
-    "webtorrent": "^0.103.0",
+    "webtorrent": "^0.107.6",
     "yargs": "^17.0.1",
     "zone.js": "~0.11.4"
   },
