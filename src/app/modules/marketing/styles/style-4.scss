@@ -33,7 +33,7 @@
         @include m-on-theme(dark) {
           color: #ffffff;
         }
-        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
           font-size: 40px !important;
           line-height: 39px !important;
           text-align: left !important;
@@ -45,7 +45,7 @@
           margin: 20px 0 17px;
         }
 
-        @media screen and(max-width: $m-grid-max-mobile) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           text-align: center;
         }
       }
@@ -54,7 +54,7 @@
     p.m-marketing__description {
       margin-bottom: 42px;
 
-      @media screen and(min-width: $min-tablet) {
+      @media screen and (min-width: $min-tablet) {
         padding-right: 200px;
       }
 
@@ -76,7 +76,7 @@
         line-height: 27px;
       }
 
-      //@media screen and(min-width: $m-grid-min-vp),
+      //@media screen and (min-width: $m-grid-min-vp),
       //  screen and (max-width: $m-grid-max-mobile) {
       //  padding-right: 100px;
       //}
@@ -163,7 +163,7 @@
         transform: translate(-15px, 0);
         z-index: 2;
 
-        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
           width: 100%;
           height: auto;
         }

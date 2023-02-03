@@ -37,7 +37,7 @@ export class SupermindConsoleService {
     limit: number = 12,
     offset: number = 0,
     status: SupermindState = null
-  ): Observable<ApiResponse> {
+  ): Observable<ApiResponse | { redirect: boolean; errorMessage: any }> {
     return this.listType$.pipe(
       take(1),
       switchMap((listType: any) => {

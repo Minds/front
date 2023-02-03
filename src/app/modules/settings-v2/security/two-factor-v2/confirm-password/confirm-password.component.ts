@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take, throttleTime } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
@@ -40,7 +44,7 @@ export class SettingsTwoFactorPasswordComponent
   extends AbstractSubscriberComponent
   implements OnInit {
   // amount input form
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   // password string from user
   public readonly password$: BehaviorSubject<string> = new BehaviorSubject<
@@ -72,8 +76,8 @@ export class SettingsTwoFactorPasswordComponent
 
   ngOnInit(): void {
     // init form group.
-    this.form = new FormGroup({
-      password: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      password: new UntypedFormControl('', {
         validators: [Validators.required],
       }),
     });

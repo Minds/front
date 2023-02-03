@@ -10,7 +10,7 @@ import {
 import { Session } from '../../../../services/session';
 import { SettingsV2Service } from '../../settings-v2.service';
 import { Observable, Subscription } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Storage } from '../../../../services/storage';
 
@@ -46,11 +46,11 @@ export class SettingsV2BoostedContentComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.session.getLoggedInUser();
 
-    this.form = new FormGroup({
-      disabled_boost: new FormControl(''),
-      boost_autorotate: new FormControl(''),
-      boost_rating: new FormControl(''),
-      liquidity_spot_opt_out: new FormControl(''),
+    this.form = new UntypedFormGroup({
+      disabled_boost: new UntypedFormControl(''),
+      boost_autorotate: new UntypedFormControl(''),
+      boost_rating: new UntypedFormControl(''),
+      liquidity_spot_opt_out: new UntypedFormControl(''),
     });
 
     this.settingsSubscription = this.settingsService.settings$.subscribe(

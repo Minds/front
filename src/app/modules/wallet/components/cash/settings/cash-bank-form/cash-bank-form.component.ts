@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { requiredFor, optionalFor } from '../settings-cash.validators';
 import { WalletV2Service } from '../../../wallet-v2.service';
 import { ToasterService } from '../../../../../../common/services/toaster.service';
@@ -37,7 +37,7 @@ export class WalletCashBankFormComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     protected walletService: WalletV2Service,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private toasterService: ToasterService
   ) {}
 

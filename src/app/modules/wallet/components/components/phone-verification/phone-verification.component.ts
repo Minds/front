@@ -7,7 +7,7 @@ import {
   Output,
   ViewRef,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
@@ -61,7 +61,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
 
   constructor(
     protected session: Session,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     protected client: Client,
     protected cd: ChangeDetectorRef,
     private toast: ToasterService

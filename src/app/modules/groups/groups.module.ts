@@ -31,6 +31,7 @@ import { GroupsCreator } from './create/create';
 import { GroupsMembershipsComponent } from './memberships/memberships.component';
 import { GroupsSearchService } from './profile/feed/search.service';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
   {
@@ -38,7 +39,7 @@ const routes: Routes = [
     component: GroupsProfile,
     canDeactivate: [CanDeactivateGroupService],
     children: [
-      { path: '', redirectTo: 'feed', pathMatch: 'full' },
+      { path: '', redirectTo: 'feed', pathMatch: 'full' as PathMatch },
       { path: 'feed/review', component: GroupsProfileReviewComponent },
       { path: 'feed/:filter', component: GroupProfileFeedComponent },
       { path: 'feed', component: GroupProfileFeedComponent },
@@ -61,7 +62,11 @@ const routes: Routes = [
       title: 'Memberships',
     },
   },
-  { path: 'groups', redirectTo: '/groups/memberships', pathMatch: 'full' },
+  {
+    path: 'groups',
+    redirectTo: '/groups/memberships',
+    pathMatch: 'full' as PathMatch,
+  },
 ];
 
 @NgModule({

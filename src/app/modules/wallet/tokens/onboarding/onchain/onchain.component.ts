@@ -32,7 +32,7 @@ enum Views {
 export class TokenOnChainOnboardingComponent {
   readonly cdnAssetsUrl: string;
   @Input() skippable: boolean = true;
-  @Output() next: EventEmitter<any> = new EventEmitter();
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
   inProgress: boolean = false;
   error: string;
   display: Views;

@@ -206,6 +206,6 @@ export class AnalyticsDashboardService {
       .pipe(
         catchError(_ => of(null)),
         map(response => response)
-      );
+      ) as Observable<Response>;
   }
 }

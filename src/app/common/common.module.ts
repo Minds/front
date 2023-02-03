@@ -177,6 +177,7 @@ import { MindsBanner } from './components/banner/banner';
 import { SeeLatestButtonComponent } from './components/see-latest-button/see-latest-button.component';
 import { SupermindBadgeComponent } from './components/supermind-badge/supermind-badge.component';
 import { DynamicBoostExperimentService } from '../modules/experiments/sub-services/dynamic-boost-experiment.service';
+import { PathMatch } from './types/angular.types';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -314,6 +315,7 @@ const routes: Routes = [
   {
     path: 'email-confirmation',
     redirectTo: '/',
+    pathMatch: 'full' as PathMatch,
   },
 ];
 // ------------------------------------

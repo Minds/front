@@ -68,7 +68,7 @@ describe('SettingsV2PaymentHistoryService', () => {
       (service as any).nextPagingToken$,
     ])
       .pipe(take(1))
-      .subscribe(([rawList, hasMore, pagingToken, nextPagingToken]) => {
+      .subscribe(([rawList, hasMore, pagingToken, nextPagingToken]: any[]) => {
         expect((service as any).api.get).toHaveBeenCalled();
         expect(rawList).toEqual(mockPayments);
         expect(hasMore).toBeTrue();

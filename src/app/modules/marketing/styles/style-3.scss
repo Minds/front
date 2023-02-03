@@ -120,7 +120,7 @@
       grid-column-start: 1;
       grid-row: 1;
 
-      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+      @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
         margin-left: 60px;
       }
 

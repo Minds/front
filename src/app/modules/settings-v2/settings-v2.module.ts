@@ -72,6 +72,7 @@ import { SettingsV2WalletComponent } from './other/wallet/wallet.component';
 import { SettingsV2NostrComponent } from './account/nostr/nostr.component';
 import { SupermindExperimentGuard } from '../experiments/guards/supermind-experiment.guard';
 import { SettingsV2PaymentHistoryComponent } from './payments/payment-history/payment-history.component';
+import { PathMatch } from '../../common/types/angular.types';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -513,10 +514,15 @@ const SETTINGS_V2_ROUTES: Routes = [
         ],
       },
       { path: 'canary', redirectTo: 'account' },
-      { path: '', component: SettingsV2Component },
+      {
+        path: '',
+        component: SettingsV2Component,
+        pathMatch: 'full' as PathMatch,
+      },
       {
         path: '**',
         redirectTo: '',
+        pathMatch: 'full' as PathMatch,
       },
     ],
   },

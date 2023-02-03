@@ -19,7 +19,7 @@
           line-height: 17px;
           font-weight: 400;
           color: var(--m-pro--text-color);
-          @media screen and(max-width: $max-mobile) {
+          @media screen and (max-width: $max-mobile) {
             font-size: 20px;
           }
         }

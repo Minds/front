@@ -1,7 +1,7 @@
 ###
 # Before running this container, ensure the server is built
 ###
-FROM node:14-alpine
+FROM node:16-alpine
 
 RUN apk update && apk upgrade --no-cache
 

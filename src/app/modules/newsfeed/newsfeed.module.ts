@@ -40,22 +40,31 @@ import { NewsfeedFeedItemComponent } from './feeds/feed-item.component';
 import { VirtualMinimapComponent } from './feed/virtual-minimap';
 import { FeedComponent } from './feed/feed.component';
 import { VirtualScrollerModule } from './feed/virtual-scroller';
+import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
   {
     path: 'newsfeed',
     component: NewsfeedComponent,
     children: [
-      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
+      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' as PathMatch },
       { path: 'suggested', redirectTo: 'subscriptions' },
-      { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
-      { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
+      { path: 'top', redirectTo: 'global/top', pathMatch: 'full' as PathMatch },
+      {
+        path: 'global',
+        redirectTo: 'global/top',
+        pathMatch: 'full' as PathMatch,
+      },
       { path: 'global/:algorithm', redirectTo: 'subscriptions' },
-      { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
+      {
+        path: 'subscribed',
+        redirectTo: 'subscriptions',
+        pathMatch: 'full' as PathMatch,
+      },
       {
         path: 'subscriptions',
         component: NewsfeedSubscribedComponent,
-        pathMatch: 'full',
+        pathMatch: 'full' as PathMatch,
         canActivate: [FeedAlgorithmRedirectGuard],
       },
       {

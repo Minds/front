@@ -7,7 +7,7 @@ import {
   EventEmitter,
   OnInit,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 
 import { Country } from './country';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -30,7 +30,7 @@ export class PhoneInputCountryComponent implements OnInit {
   showDropdownMenu: boolean = false;
   allowedKeyCodes: Array<number> = [8, 33, 34, 35, 36, 37, 39, 46];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit() {
     this.fetchCountryData();

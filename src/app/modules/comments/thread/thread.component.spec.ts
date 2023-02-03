@@ -69,7 +69,7 @@ describe('CommentsThreadComponent', () => {
           LoadingSpinnerComponent,
         ],
         imports: [
-          RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
+          RouterModule.forRoot([], {}),
           HttpClientTestingModule,
           HttpClientModule,
         ],

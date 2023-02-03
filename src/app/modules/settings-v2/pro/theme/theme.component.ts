@@ -7,7 +7,11 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -48,15 +52,15 @@ export class SettingsV2ProThemeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      text_color: new FormControl(''),
-      text_color_picker: new FormControl(''),
-      primary_color: new FormControl(''),
-      primary_color_picker: new FormControl(''),
-      plain_background_color: new FormControl(''),
-      plain_background_color_picker: new FormControl(''),
-      scheme: new FormControl(''),
-      tile_ratio: new FormControl(''),
+    this.form = new UntypedFormGroup({
+      text_color: new UntypedFormControl(''),
+      text_color_picker: new UntypedFormControl(''),
+      primary_color: new UntypedFormControl(''),
+      primary_color_picker: new UntypedFormControl(''),
+      plain_background_color: new UntypedFormControl(''),
+      plain_background_color_picker: new UntypedFormControl(''),
+      scheme: new UntypedFormControl(''),
+      tile_ratio: new UntypedFormControl(''),
     });
 
     this.route.parent.params.subscribe(params => {

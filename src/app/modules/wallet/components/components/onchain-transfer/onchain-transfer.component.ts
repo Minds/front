@@ -7,8 +7,8 @@ import {
   Injector,
 } from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
   AbstractControl,
 } from '@angular/forms';
@@ -116,8 +116,8 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
     this.ethBalance = this.wallet.eth.balance;
 
-    this.form = new FormGroup({
-      amount: new FormControl(maxAmount, {
+    this.form = new UntypedFormGroup({
+      amount: new UntypedFormControl(maxAmount, {
         validators: [
           Validators.required,
           Validators.max(maxAmount),

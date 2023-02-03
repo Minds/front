@@ -46,7 +46,7 @@
       margin: 0 0 18px;
     }
 
-    @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+    @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
       font-size: 38px;
       line-height: 39px;
     }
@@ -76,12 +76,12 @@
     line-height: 27px;
     margin: 0 0 36px;
 
-    @media screen and(min-width: 700px) and (max-width: $m-grid-min-vp) {
+    @media screen and (min-width: 700px) and (max-width: $m-grid-min-vp) {
       font-size: 16px;
       line-height: 24px;
     }
 
-    @media screen and(min-width: $m-grid-max-mobile) and (max-width: 700px) {
+    @media screen and (min-width: $m-grid-max-mobile) and (max-width: 700px) {
       font-size: 15px;
       line-height: 22px;
     }
@@ -231,7 +231,7 @@
       bottom: 62px;
       left: -21px;
 
-      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+      @media screen and (min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
         bottom: -23%;
         left: 8.5%;
       }
@@ -249,7 +249,7 @@
       bottom: 8px;
       left: -45px;
 
-      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+      @media screen and (min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
         bottom: 0;
         right: 0;
         left: auto;
@@ -274,11 +274,11 @@
     align-items: flex-end;
     margin: 0 auto;
 
-    @media screen and(min-width: $m-grid-max-tablet) {
+    @media screen and (min-width: $m-grid-max-tablet) {
       width: 730px;
     }
 
-    @media screen and(max-width: $m-grid-max-tablet) {
+    @media screen and (max-width: $m-grid-max-tablet) {
       width: auto;
     }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { BehaviorSubject, Observable, timer } from 'rxjs';
 import { scan, takeWhile } from 'rxjs/operators';
 import {
@@ -32,7 +32,7 @@ export class OnboardingV3VerifyPhoneComponent {
   });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private service: OnboardingV3VerifyPhoneService
   ) {}
 

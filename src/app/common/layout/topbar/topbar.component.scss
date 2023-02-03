@@ -167,7 +167,7 @@ h1 {
         @include m-theme() {
           border-right: 1px solid themed($m-borderColor--primary);
         }
-        @media screen and(max-width: $layoutMin3ColWidth) {
+        @media screen and (max-width: $layoutMin3ColWidth) {
           @include m-theme() {
             border-right: 0;
           }
@@ -185,7 +185,7 @@ h1 {
           padding: 0 $spacing4;
         }
 
-        @media screen and(max-width: $layoutMin2ColWidth) {
+        @media screen and (max-width: $layoutMin2ColWidth) {
           // width: 20px;
           transition: width ease-in-out 0.2s;
           padding: 0;
@@ -217,7 +217,7 @@ h1 {
             padding-left: $spacing4;
           }
 
-          @media screen and(max-width: $m-grid-max-mobile) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             padding-left: 12px;
           }
         }
@@ -436,11 +436,11 @@ h1 {
   align-items: center;
   // width: 100%;
 
-  @media screen and(min-width: $m-grid-max-tablet) {
+  @media screen and (min-width: $m-grid-max-tablet) {
     // margin-left: 55px;
   }
 
-  @media screen and(min-width: $m-grid-max-mobile) {
+  @media screen and (min-width: $m-grid-max-mobile) {
     // margin-left: 27px;
   }
 

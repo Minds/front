@@ -18,17 +18,18 @@ import { AnalyticsGlobalTokensComponent } from './global-tokens/global-tokens.co
 import { AnalyticsGlobalTokensMetricItemComponent } from './global-tokens/metric-item/metric-item.component';
 import { WalletSharedModule } from '../wallet/wallet-shared.module';
 import { AnalyticsTabsComponent } from './v2/components/tabs/tabs.component';
+import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard/traffic',
-    pathMatch: 'full',
+    pathMatch: 'full' as PathMatch,
   },
   {
     path: 'dashboard/token',
     redirectTo: 'dashboard/token/supply',
-    pathMatch: 'full',
+    pathMatch: 'full' as PathMatch,
   },
   {
     path: 'dashboard/token/:tabId',

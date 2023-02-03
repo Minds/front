@@ -91,7 +91,7 @@ export class BoostConsoleService {
   public getList$(
     limit: number = 12,
     offset: number = 0
-  ): Observable<ApiResponse> {
+  ): Observable<ApiResponse | { redirect: boolean; errorMessage: any }> {
     return this.adminContext$.pipe(
       take(1),
       switchMap((adminContext: boolean) => {

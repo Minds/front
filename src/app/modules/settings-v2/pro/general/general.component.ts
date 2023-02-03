@@ -7,7 +7,11 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -43,13 +47,13 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      title: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      title: new UntypedFormControl('', {
         validators: [Validators.required],
       }),
-      headline: new FormControl(''),
-      splash: new FormControl(''),
-      published: new FormControl(''),
+      headline: new UntypedFormControl(''),
+      splash: new UntypedFormControl(''),
+      published: new UntypedFormControl(''),
     });
 
     this.route.parent.params.subscribe(params => {

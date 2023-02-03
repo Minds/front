@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CompassService } from '../compass.service';
 
@@ -41,7 +45,7 @@ export class CompassFormComponent implements OnInit {
 
     // Make a form control for each question
     this.questions.forEach(q => {
-      controls[q.questionId] = new FormControl(q.currentValue, {
+      controls[q.questionId] = new UntypedFormControl(q.currentValue, {
         validators: [
           Validators.min(q.minimumRangeValue),
           Validators.max(q.maximumRangeValue),
@@ -49,7 +53,7 @@ export class CompassFormComponent implements OnInit {
       });
     });
 
-    this.form = new FormGroup(controls);
+    this.form = new UntypedFormGroup(controls);
 
     this.init = true;
   }

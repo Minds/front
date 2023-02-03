@@ -10,8 +10,8 @@ import {
 import { ComposerService } from '../../../services/composer.service';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -61,7 +61,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   /**
    * Form group which holds all our data
    */
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   inProgress: boolean = false;
 
@@ -123,7 +123,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    */
   constructor(
     protected service: ComposerService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private supermindOnboardingModal: SupermindOnboardingModalService,
     private mindsConfig: ConfigsService,
     private entityResolverService: EntityResolverService,

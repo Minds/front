@@ -24,18 +24,23 @@ import { BoostConsoleActionButtonsComponent } from './console-v2/list/list-item/
 import { BoostConsoleService } from './console-v2/services/console.service';
 import { BoostConsoleStatsBarComponent } from './console-v2/list/list-item/stats-bar/stats-bar.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { PathMatch } from '../../common/types/angular.types';
 
 const boostRoutes: Routes = [
   {
     path: 'boost/console',
     component: BoostConsoleComponent,
     children: [
-      { path: '', redirectTo: 'newsfeed/history', pathMatch: 'full' },
+      {
+        path: '',
+        redirectTo: 'newsfeed/history',
+        pathMatch: 'full' as PathMatch,
+      },
       {
         path: ':type',
         component: BoostConsoleTypesComponent,
         children: [
-          { path: '', redirectTo: 'history', pathMatch: 'full' },
+          { path: '', redirectTo: 'history', pathMatch: 'full' as PathMatch },
           { path: 'create', component: BoostConsoleBooster },
           { path: 'history', component: BoostConsoleHistoryComponent },
           { path: 'history/:filter', component: BoostConsoleHistoryComponent },

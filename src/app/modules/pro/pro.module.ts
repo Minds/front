@@ -31,6 +31,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ProChannelFooterMenuButtonComponent } from './channel/footer-menu-button/footer-menu-button.component';
 import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
 import { ChannelsV2Service } from '../channels/v2/channels-v2.service';
+import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
   {
@@ -49,8 +50,8 @@ const routes: Routes = [
       },
       {
         path: ':username/settings',
-        redirectTo: ':username/settings/general',
-        pathMatch: 'full',
+        redirectTo: 'settings/pro_canary/:username',
+        pathMatch: 'full' as PathMatch,
       },
       {
         path: ':username',
@@ -59,7 +60,7 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: 'feed',
-            pathMatch: 'full',
+            pathMatch: 'full' as PathMatch,
           },
           {
             path: 'login',
@@ -79,7 +80,7 @@ const routes: Routes = [
   },
 ];
 
-export const PRO_DOMAIN_ROUTES = [
+export const PRO_DOMAIN_ROUTES: Routes = [
   {
     path: '',
     component: ProChannelComponent,
@@ -87,7 +88,7 @@ export const PRO_DOMAIN_ROUTES = [
       {
         path: '',
         redirectTo: 'feed',
-        pathMatch: 'full',
+        pathMatch: 'full' as PathMatch,
       },
       {
         path: 'login',

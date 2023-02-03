@@ -8,8 +8,8 @@ import {
   OnDestroy,
 } from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
   AbstractControl,
 } from '@angular/forms';
@@ -54,13 +54,13 @@ export class SettingsV2ProDomainComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      domain: new FormControl(
+    this.form = new UntypedFormGroup({
+      domain: new UntypedFormControl(
         '',
         [Validators.required],
         [this.validateDomain.bind(this)]
       ),
-      custom_head: new FormControl(''),
+      custom_head: new UntypedFormControl(''),
     });
 
     this.route.parent.params.subscribe(params => {

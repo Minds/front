@@ -7,7 +7,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "target": "es2018",
+    "target": "ES2022",
     "emitDecoratorMetadata": true,
     "typeRoots": [
       "node_modules/@types"
@@ -49,6 +49,7 @@
       "assert": [
         "../node_modules/assert"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }
