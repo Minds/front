@@ -1,4 +1,6 @@
 // Data used to init modal.
+import { RejectionReason } from '../boost.types';
+
 export type BoostModalData = {
   onDismissIntent: () => any;
   onSaveIntent: () => any;
@@ -77,6 +79,7 @@ export type BoostConfig = {
     offchain_tokens: number[];
     onchain_tokens: number[];
   };
+  rejection_reasons: RejectionReason[];
 };
 
 // Object holding estimated reach for a boost.

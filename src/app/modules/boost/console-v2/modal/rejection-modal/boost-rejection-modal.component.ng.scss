@@ -1,0 +1,45 @@
+@import 'defaults';
+
+:host {
+  .m-boost_rejection_modal {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    .m-modalV2__body {
+      padding-inline: 0px;
+    }
+
+    .m-boost_rejection_modal__reasons {
+      list-style-type: none;
+
+      .m-boost_rejection_modal__reasons_list__item {
+        font-size: 14px;
+        padding: 16px 40px;
+        min-height: 20px;
+        cursor: pointer;
+
+        @include m-theme() {
+          &:first-of-type {
+            border-top: 1px solid themed($m-borderColor--primary);
+          }
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+      }
+    }
+    .m-boost_rejection_modal__toolbar {
+      display: flex;
+      justify-content: flex-end;
+
+      &.m-modalV2__toolbar {
+        border-top: none;
+      }
+    }
+  }
+}

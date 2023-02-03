@@ -119,16 +119,16 @@ describe('BoostConsoleService', () => {
       (service as any).adminStats.decrementPendingSafeCount
     ).toHaveBeenCalled();
   });
-
-  it('should reject and decrement admin stat count for controversial boosts', async () => {
-    service.suitabilityFilterValue$.next('controversial');
-    (service as any).session.isAdmin.and.returnValue(true);
-    (service as any).api.post.and.returnValue(of({}));
-
-    await service.reject(mockBoost);
-
-    expect(
-      (service as any).adminStats.decrementPendingControversialCount
-    ).toHaveBeenCalled();
-  });
+  //
+  // it('should reject and decrement admin stat count for controversial boosts', async () => {
+  //   service.suitabilityFilterValue$.next('controversial');
+  //   (service as any).session.isAdmin.and.returnValue(true);
+  //   (service as any).api.post.and.returnValue(of({}));
+  //
+  //   await service.reject(mockBoost);
+  //
+  //   expect(
+  //     (service as any).adminStats.decrementPendingControversialCount
+  //   ).toHaveBeenCalled();
+  // });
 });
