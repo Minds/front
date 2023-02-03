@@ -14,7 +14,7 @@
   <span
     i18n="@@BOOST_CONSOLE__STATS_BAR__FAILED_CRITERIA"
     class="m-boostConsoleStatsBar__desc"
-    >Did not meet the accepted criteria for the selected audience.</span
+    >{{ getRejectionReasonLabel() }}</span
   >
 </div>
 <!-- ------------------------------------------ -->
@@ -31,19 +31,5 @@
       >Start date</span
     >
     <span class="m-boostConsoleStatsBar__desc">{{ formattedStartDate }}</span>
-  </div>
-  <div
-    class="m-boostConsoleStatsBar__column"
-    data-ref="m-boostConsole__statsBar--results"
-  >
-    <span
-      i18n="@@BOOST_CONSOLE__STATS_BAR__VIEWS"
-      class="m-boostConsoleStatsBar__title"
-    >
-      Results
-    </span>
-    <span class="m-boostConsoleStatsBar__desc"
-      >{{ boost.summary.views_delivered }} views</span
-    >
   </div>
 </div>

@@ -172,6 +172,12 @@ describe('BoostModalV2Service', () => {
         offchain_tokens: [1, 2, 3, 5, 100],
         onchain_tokens: [1, 2, 3, 5, 100],
       },
+      rejection_reasons: [
+        {
+          code: 1,
+          label: '',
+        },
+      ],
     };
 
     (service as any).config.get.and.returnValue(mockConfig);
