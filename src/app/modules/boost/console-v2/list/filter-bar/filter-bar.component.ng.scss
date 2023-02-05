@@ -27,6 +27,30 @@
     }
   }
 
+  .m-boostConsole__legacyLinkWrapper {
+    padding: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: 100%;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    p {
+      margin: 0;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    a {
+      text-decoration: underline;
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+  }
+
   .m-boostConsole__filtersWrapper {
     padding: $spacing4;
     display: flex;
