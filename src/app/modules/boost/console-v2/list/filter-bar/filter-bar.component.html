@@ -63,8 +63,11 @@
 <!-- LEGACY BOOST CONSOLE LINK -->
 <!-- ---------------------------------------- -->
 
-<div class="m-boostConsole__legacyLinkWrapper" ojm *ngIf="true">
-  <p><a routerLink="">View your legacy boosts</a></p>
+<div
+  class="m-boostConsole__legacyLinkWrapper"
+  *ngIf="legacyService.hasLegacyBoosts$ | async"
+>
+  <p><a routerLink="/boost/console">View your legacy boosts</a></p>
   <p>See posts you boosted in the retired legacy system.</p>
 </div>
 <!-- ------------------------ -->
