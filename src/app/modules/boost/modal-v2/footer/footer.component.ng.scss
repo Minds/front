@@ -25,6 +25,12 @@
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
+
+      a {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
     }
   }
 
