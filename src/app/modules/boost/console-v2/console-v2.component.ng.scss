@@ -10,4 +10,24 @@
   .m-pageLayout__pane--main {
     width: 100%;
   }
+
+  .m-boostConsole__pageTitleRow {
+    display: flex;
+  }
+  ::ng-deep .m-boostConsole__settingsButton--mobile {
+    @media screen and (min-width: $max-mobile + 1) {
+      display: none;
+    }
+    align-self: center;
+    margin: $spacing3 $spacing4 0 0;
+    padding: $spacing2;
+    border-radius: 50%;
+    @include m-theme() {
+      background-color: themed($m-borderColor--primary);
+    }
+
+    .m-boostConsole__settingsButtonIcon--mobile {
+      font-size: 20px;
+    }
+  }
 }

@@ -56,8 +56,21 @@
     </div>
   </ng-container>
   <!-- ---------------------------------------- -->
-  <div class="m-layout__spacer"></div>
+  <!-- SETTINGS COG -->
   <!-- ---------------------------------------- -->
+  <div class="m-layout__spacer"></div>
+
+  <m-tooltip
+    class="m-discovery__settingsButton"
+    icon="settings"
+    iconClass="m-boostConsole__settingsButtonIcon"
+    data-ref="boost-console-settings-button"
+    (click)="onSettingsButtonClick($event)"
+  >
+    <ng-container i18n="@@COMMON__SETTINGS">
+      Settings
+    </ng-container>
+  </m-tooltip>
 </div>
 <!-- ------------------------ -->
 <!-- DROPDOWN MENU FILTERS-->

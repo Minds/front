@@ -105,4 +105,13 @@ export class BoostConsoleV2Component implements OnInit {
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe();
   }
+
+  /**
+   * Called on settings button click - navigates to settings page.
+   * @param { MouseEvent } $event - click event.
+   * @returns { void }
+   */
+  public onSettingsButtonClick($event: MouseEvent): void {
+    this.router.navigate(['/settings/account/boosted-content']);
+  }
 }
