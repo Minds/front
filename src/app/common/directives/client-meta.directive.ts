@@ -88,8 +88,8 @@ export class ClientMetaDirective {
     const clientMetaData: ClientMetaData = {
       platform: 'web',
       campaign: '',
-      medium: '',
-      source: '',
+      medium: null,
+      source: null,
       salt: '',
       page_token: '',
       delta: 0,

@@ -2,9 +2,7 @@ import { EventEmitter, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
-import { MindsVideoPlayerComponent } from '../../media/components/video-player/player.component';
 import { AnalyticsService } from '../../../services/analytics';
-import * as snowplow from '@snowplow/browser-tracker';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
@@ -40,6 +38,8 @@ export class NewsfeedService {
     if (isPlatformBrowser(this.platformId)) {
       this.analyticsService.trackEntityView(entity, clientMeta);
     }
+
+    console.log(entity);
 
     // if it's a boost we record the boost view AND the activity view
     if (entity.boosted_guid) {

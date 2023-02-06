@@ -21,6 +21,7 @@ import { TRIGGER_EXCEPTION } from '../channels/v2/content/content.service';
 import { HeadersService } from '../../common/services/headers.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { isPlatformServer } from '@angular/common';
+import { ClientMetaDirective } from '../../common/directives/client-meta.directive';
 
 /**
  * Contains and controls access to to channel pages
@@ -46,6 +47,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   @ViewChild('proChannelComponent')
   proChannelComponent: ProChannelComponent;
+
+  @ViewChild(ClientMetaDirective) private clientMeta: ClientMetaDirective;
 
   constructor(
     protected route: ActivatedRoute,
