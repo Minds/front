@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { BoostRecommendationService } from '../../../../common/services/boost-recommendation.service';
+import { NgStyleValue } from '../../../../common/types/angular.types';
 
 /**
  * Boost button used in activity toolbar.
@@ -49,5 +50,17 @@ export class ActivityBoostButtonComponent implements OnInit {
 
   ngOnDestroy() {
     this.boostRecommendationsSubscription?.unsubscribe();
+  }
+
+  /**
+   * Get style for settings tooltip bubble.
+   * @returns { NgStyleValue } - ngStyle value.
+   */
+  get tooltipBubbleStyle(): NgStyleValue {
+    return {
+      right: 0,
+      width: '400px',
+      bottom: '35px',
+    };
   }
 }
