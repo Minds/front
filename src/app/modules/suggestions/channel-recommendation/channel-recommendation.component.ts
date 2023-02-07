@@ -2,13 +2,20 @@ import { ClientMetaDirective } from './../../../common/directives/client-meta.di
 import { animate, style, transition, trigger } from '@angular/animations';
 import {
   Component,
-  HostBinding,
   Input,
+  OnDestroy,
   OnInit,
   Optional,
   SkipSelf,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  first,
+  Observable,
+  Subscription,
+  take,
+} from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -16,6 +23,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
+import { BoostLocation } from '../../boost/boost.types';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -39,7 +47,7 @@ const listAnimation = trigger('listAnimation', [
   styleUrls: ['./channel-recommendation.component.ng.scss'],
   animations: [listAnimation],
 })
-export class ChannelRecommendationComponent implements OnInit {
+export class ChannelRecommendationComponent implements OnInit, OnDestroy {
   /**
    * the location in which this component appears
    */
@@ -75,7 +83,9 @@ export class ChannelRecommendationComponent implements OnInit {
   /**
    * How many recommendations to show at a time?
    */
-  listSize$: BehaviorSubject<number> = new BehaviorSubject(3);
+  listSize$: BehaviorSubject<number> = new BehaviorSubject(4);
+
+  private recommendationRequestSubscription: Subscription;
 
   constructor(
     private api: ApiService,
@@ -88,20 +98,34 @@ export class ChannelRecommendationComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.location) {
-      this.api
-        .get('api/v3/recommendations', {
-          location: this.location,
-          mostRecentSubscriptions: this.recentSubscriptions.list(),
-          currentChannelUserGuid: this.channelId,
-          limit: 12,
-        })
-        .toPromise()
-        .then(result => {
-          if (result) {
-            this.recommendations$.next(result.entities.map(e => e.entity));
+      this.recommendationRequestSubscription = combineLatest({
+        recommendations: this.getRecommendations(),
+        boosts: this.getBoosts(),
+      })
+        .pipe(first())
+        .subscribe(result => {
+          const recommendations = [];
+
+          if (
+            result.recommendations?.entities &&
+            result.recommendations.entities.length
+          ) {
+            recommendations.push(
+              ...result.recommendations.entities.map(e => e.entity)
+            );
           }
+
+          if (result.boosts?.boosts && result.boosts.boosts[0]?.entity) {
+            recommendations.splice(1, 0, result.boosts.boosts[0].entity);
+          }
+
+          this.recommendations$.next(recommendations);
         });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.recommendationRequestSubscription?.unsubscribe();
   }
 
   /**
@@ -144,16 +168,41 @@ export class ChannelRecommendationComponent implements OnInit {
    * When a recommendation is subscribed, remove it from the list——unless the list length is small
    */
   onSubscribed(user): void {
-    if (this.listSize$.getValue() === 3) {
+    if (this.listSize$.getValue() === 4) {
       this.listSize$.next(5);
     }
 
-    if (this.recommendations$.getValue().length <= 3) {
+    if (this.recommendations$.getValue().length <= 4) {
       return;
     }
 
     this.recommendations$.next(
       this.recommendations$.getValue().filter(u => u.guid !== user.guid)
     );
+  }
+
+  /**
+   * Get recommendations from server.
+   * @returns { Observable<any> } - recommendations from server.
+   */
+  private getRecommendations(): Observable<any> {
+    return this.api.get('api/v3/recommendations', {
+      location: this.location,
+      mostRecentSubscriptions: this.recentSubscriptions.list(),
+      currentChannelUserGuid: this.channelId,
+      limit: 12,
+    });
+  }
+
+  /**
+   * Get boosts from server.
+   * @param { number } limit - amount of boosts to get.
+   * @returns { Observable<any> } - boosts from server.
+   */
+  private getBoosts(limit: number = 1): Observable<any> {
+    return this.api.get('api/v3/boosts/feed', {
+      limit: limit,
+      location: BoostLocation.SIDEBAR,
+    });
   }
 }
