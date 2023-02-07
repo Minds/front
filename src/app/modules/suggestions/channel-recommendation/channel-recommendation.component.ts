@@ -24,6 +24,7 @@ import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
 import { BoostLocation } from '../../boost/boost.types';
+import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -93,6 +94,7 @@ export class ChannelRecommendationComponent implements OnInit, OnDestroy {
     private recentSubscriptions: RecentSubscriptionsService,
     private dismissal: DismissalService,
     private analyticsService: AnalyticsService,
+    private newsfeedService: NewsfeedService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
   ) {}
 
@@ -135,12 +137,19 @@ export class ChannelRecommendationComponent implements OnInit, OnDestroy {
    */
   trackView(channel: MindsUser, position: number) {
     if (this.parentClientMeta) {
+      const clientMeta: {} = this.parentClientMeta.build({
+        position,
+        medium: 'channel-recs',
+        campaign: `urn:boost:${channel.boosted_guid}`,
+      });
+
+      if (channel.boosted_guid) {
+        this.newsfeedService.recordView(channel, true, null, clientMeta);
+      }
+
       this.analyticsService.trackEntityView(
         channel,
-        this.parentClientMeta.build({
-          position,
-          medium: 'channel-recs',
-        })
+        this.parentClientMeta.build(clientMeta)
       );
     }
   }
