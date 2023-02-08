@@ -4,7 +4,8 @@ m-composer__monetizeV2__plus {
       color: themed($m-white);
     }
     .m-formInput__checkbox {
-      .m-formInputCheckbox__customLabel > span {
+      .m-formInputCheckbox__customLabel > span,
+      .m-formInputCheckbox__customLabel > ul > li {
         font-size: 16px;
         @include m-theme() {
           color: themed($m-textColor--primary);
