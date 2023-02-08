@@ -1,14 +1,7 @@
 import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-  Optional,
-  SkipSelf,
-} from '@angular/core';
-import { BehaviorSubject, first, Observable, Subscription } from 'rxjs';
+import { Component, Input, OnInit, Optional, SkipSelf } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -40,7 +33,7 @@ const listAnimation = trigger('listAnimation', [
   styleUrls: ['./channel-recommendation.component.ng.scss'],
   animations: [listAnimation],
 })
-export class ChannelRecommendationComponent implements OnInit, OnDestroy {
+export class ChannelRecommendationComponent implements OnInit {
   /**
    * the location in which this component appears
    */
@@ -78,8 +71,6 @@ export class ChannelRecommendationComponent implements OnInit, OnDestroy {
    */
   listSize$: BehaviorSubject<number> = new BehaviorSubject(4);
 
-  private recommendationRequestSubscription: Subscription;
-
   constructor(
     private api: ApiService,
     public experiments: ExperimentsService,
@@ -92,18 +83,20 @@ export class ChannelRecommendationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.location) {
-      this.getRecommendations()
-        .pipe(first())
-        .subscribe(result => {
-          if (result.entities && result.entities.length) {
+      this.api
+        .get('api/v3/recommendations', {
+          location: this.location,
+          mostRecentSubscriptions: this.recentSubscriptions.list(),
+          currentChannelUserGuid: this.channelId,
+          limit: 12,
+        })
+        .toPromise()
+        .then(result => {
+          if (result) {
             this.recommendations$.next(result.entities.map(e => e.entity));
           }
         });
     }
-  }
-
-  ngOnDestroy(): void {
-    this.recommendationRequestSubscription?.unsubscribe();
   }
 
   /**
@@ -169,18 +162,5 @@ export class ChannelRecommendationComponent implements OnInit, OnDestroy {
     this.recommendations$.next(
       this.recommendations$.getValue().filter(u => u.guid !== user.guid)
     );
-  }
-
-  /**
-   * Get recommendations from server.
-   * @returns { Observable<any> } - recommendations from server.
-   */
-  private getRecommendations(): Observable<any> {
-    return this.api.get('api/v3/recommendations', {
-      location: this.location,
-      mostRecentSubscriptions: this.recentSubscriptions.list(),
-      currentChannelUserGuid: this.channelId,
-      limit: 12,
-    });
   }
 }
