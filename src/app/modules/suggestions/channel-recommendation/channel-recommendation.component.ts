@@ -106,24 +106,26 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   trackView(channel: MindsUser, position: number) {
     if (this.parentClientMeta) {
-      const clientMeta: {} = this.parentClientMeta.build({
-        position,
-        medium: 'channel-recs',
-      });
-
       if (channel.boosted_guid) {
-        const clientMeta: {} = this.parentClientMeta.build({
-          position,
-          medium: 'channel-recs',
-          campaign: channel.urn,
-        });
-
-        this.newsfeedService.recordView(channel, true, null, clientMeta);
+        this.newsfeedService.recordView(
+          channel,
+          true,
+          null,
+          this.parentClientMeta.build({
+            position,
+            medium: 'channel-recs',
+            campaign: channel.urn,
+          })
+        );
+        return;
       }
 
       this.analyticsService.trackEntityView(
         channel,
-        this.parentClientMeta.build(clientMeta)
+        this.parentClientMeta.build({
+          position,
+          medium: 'channel-recs',
+        })
       );
     }
   }
