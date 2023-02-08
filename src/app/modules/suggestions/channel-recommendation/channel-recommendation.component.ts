@@ -8,14 +8,7 @@ import {
   Optional,
   SkipSelf,
 } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  first,
-  Observable,
-  Subscription,
-  take,
-} from 'rxjs';
+import { BehaviorSubject, first, Observable, Subscription } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -23,7 +16,6 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
-import { BoostLocation } from '../../boost/boost.types';
 import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
 
 const listAnimation = trigger('listAnimation', [
@@ -100,28 +92,12 @@ export class ChannelRecommendationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.location) {
-      this.recommendationRequestSubscription = combineLatest({
-        recommendations: this.getRecommendations(),
-        boosts: this.getBoosts(),
-      })
+      this.getRecommendations()
         .pipe(first())
         .subscribe(result => {
-          const recommendations = [];
-
-          if (
-            result.recommendations?.entities &&
-            result.recommendations.entities.length
-          ) {
-            recommendations.push(
-              ...result.recommendations.entities.map(e => e.entity)
-            );
+          if (result.entities && result.entities.length) {
+            this.recommendations$.next(result.entities.map(e => e.entity));
           }
-
-          if (result.boosts?.boosts && result.boosts.boosts[0]?.entity) {
-            recommendations.splice(1, 0, result.boosts.boosts[0].entity);
-          }
-
-          this.recommendations$.next(recommendations);
         });
     }
   }
@@ -140,10 +116,15 @@ export class ChannelRecommendationComponent implements OnInit, OnDestroy {
       const clientMeta: {} = this.parentClientMeta.build({
         position,
         medium: 'channel-recs',
-        campaign: `urn:boost:${channel.boosted_guid}`,
       });
 
       if (channel.boosted_guid) {
+        const clientMeta: {} = this.parentClientMeta.build({
+          position,
+          medium: 'channel-recs',
+          campaign: channel.urn,
+        });
+
         this.newsfeedService.recordView(channel, true, null, clientMeta);
       }
 
@@ -200,18 +181,6 @@ export class ChannelRecommendationComponent implements OnInit, OnDestroy {
       mostRecentSubscriptions: this.recentSubscriptions.list(),
       currentChannelUserGuid: this.channelId,
       limit: 12,
-    });
-  }
-
-  /**
-   * Get boosts from server.
-   * @param { number } limit - amount of boosts to get.
-   * @returns { Observable<any> } - boosts from server.
-   */
-  private getBoosts(limit: number = 1): Observable<any> {
-    return this.api.get('api/v3/boosts/feed', {
-      limit: limit,
-      location: BoostLocation.SIDEBAR,
     });
   }
 }
