@@ -24,6 +24,7 @@ import { MockComponent, MockService } from '../../../utils/mock';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
+import { PlusTierUrnService } from '../../../common/services/plus-tier-urn.service';
 
 /* tslint:disable */
 @Directive({
@@ -71,6 +72,10 @@ describe('ReportCreatorComponent', () => {
               reasons: FAKE_REASONS,
             },
           },
+          {
+            provide: PlusTierUrnService,
+            useValue: MockService(PlusTierUrnService),
+          },
         ],
       }).compileComponents(); // compile template and css
     })
@@ -83,9 +88,15 @@ describe('ReportCreatorComponent', () => {
     jasmine.clock().install();
     fixture = TestBed.createComponent(ReportCreatorComponent);
     clientMock.response = {};
-    fixture.detectChanges();
+
     comp = fixture.componentInstance;
-    comp.guid = '1';
+    comp.setModalData({
+      entity: {
+        guid: '1',
+      },
+    });
+
+    fixture.detectChanges();
 
     if (fixture.isStable()) {
       done();
@@ -389,6 +400,76 @@ describe('ReportCreatorComponent', () => {
       'Select a sub-reason to complete your report'
     );
   });
+
+  it('should have plus policy violation reason for plus entity', () => {
+    const entityUrn: string = 'plus:entity:urn';
+    (comp as any).plusTierUrn.isPlusTierUrn.and.returnValue(true);
+
+    comp.setModalData({
+      entity: {
+        guid: '1',
+        wire_threshold: {
+          support_tier: {
+            urn: entityUrn,
+          },
+        },
+      },
+    });
+
+    fixture.detectChanges();
+
+    const spans = fixture.debugElement.queryAll(
+      By.css(`.m-reportCreatorSubjects__subject span`)
+    );
+    const span = spans.find(span =>
+      span.nativeElement.textContent.includes('Violates Premium Content policy')
+    );
+    expect((comp as any).plusTierUrn.isPlusTierUrn).toHaveBeenCalledWith(
+      entityUrn
+    );
+    expect(span).toBeDefined();
+  });
+
+  it('should NOT have plus policy violation reason for NON plus membership entity', () => {
+    const entityUrn: string = 'plus:entity:urn';
+
+    comp.setModalData({
+      entity: {
+        guid: '1',
+        wire_threshold: {
+          support_tier: {
+            urn: `non:${entityUrn}`,
+          },
+        },
+      },
+    });
+    fixture.detectChanges();
+
+    const spans = fixture.debugElement.queryAll(
+      By.css(`.m-reportCreatorSubjects__subject span`)
+    );
+    const span = spans.find(span =>
+      span.nativeElement.textContent.includes('Violates Premium Content policy')
+    );
+    expect(span).toBeUndefined();
+  });
+
+  it('should NOT have plus policy violation reason for NON membership entity', () => {
+    comp.setModalData({
+      entity: {
+        guid: '1',
+      },
+    });
+    fixture.detectChanges();
+
+    const spans = fixture.debugElement.queryAll(
+      By.css(`.m-reportCreatorSubjects__subject span`)
+    );
+    const span = spans.find(span =>
+      span.nativeElement.textContent.includes('Violates Premium Content policy')
+    );
+    expect(span).toBeUndefined();
+  });
 });
 
 const FAKE_REASONS = [
@@ -505,5 +586,10 @@ const FAKE_REASONS = [
     value: 11,
     label: 'Another reason',
     hasMore: true,
+  },
+  {
+    value: 18,
+    label: 'Violates Premium Content policy',
+    hasMore: false,
   },
 ];
