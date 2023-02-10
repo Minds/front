@@ -40,9 +40,8 @@ export class FeaturedContentComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // if (isPlatformBrowser(this.platformId)) this.load();
     await this.featuredContentService.onInit();
-    await this.load();
+    if (isPlatformBrowser(this.platformId)) this.load();
   }
 
   async load() {
