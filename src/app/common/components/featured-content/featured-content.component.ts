@@ -15,6 +15,7 @@ import { FeaturedContentService } from './featured-content.service';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { FeaturesService } from '../../../services/features.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-featured-content',
