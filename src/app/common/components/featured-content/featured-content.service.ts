@@ -36,7 +36,6 @@ export class FeaturedContentService {
   async fetch() {
     return await this.boostFeedService.feed$
       .pipe(
-        tap(entities => console.log(entities)),
         filter(entities => entities.length > 0),
         mergeMap(feed => feed), // Convert feed array to stream
         skip(this.offset++),
