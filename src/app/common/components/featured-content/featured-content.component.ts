@@ -4,16 +4,15 @@ import {
   Component,
   ComponentFactoryResolver,
   ComponentRef,
+  Inject,
   Injector,
   Input,
   OnInit,
-  ViewChild,
-  Inject,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
 import { FeaturedContentService } from './featured-content.service';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
-import { isPlatformBrowser } from '@angular/common';
 import { FeaturesService } from '../../../services/features.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 
@@ -40,8 +39,10 @@ export class FeaturedContentComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) this.load();
+  async ngOnInit() {
+    // if (isPlatformBrowser(this.platformId)) this.load();
+    await this.featuredContentService.onInit();
+    await this.load();
   }
 
   async load() {
@@ -52,6 +53,8 @@ export class FeaturedContentComponent implements OnInit {
     }
 
     this.update();
+
+    this.detectChanges();
   }
 
   clear() {
