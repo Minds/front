@@ -126,4 +126,10 @@
       }
     }
   }
+  ::ng-deep .m-boostConsole__settingsButtonIcon {
+    @include heading3Regular;
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BoostService } from '../../../boost.service';
 import {
@@ -57,7 +58,8 @@ export class BoostConsoleFilterBarComponent implements OnInit {
   constructor(
     public service: BoostConsoleService,
     public legacyService: BoostService,
-    private adminStats: BoostConsoleAdminStatsService
+    private adminStats: BoostConsoleAdminStatsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -91,5 +93,14 @@ export class BoostConsoleFilterBarComponent implements OnInit {
     if (this.service.adminContext$.getValue()) {
       this.adminStats.fetch(); // async
     }
+  }
+
+  /**
+   * Called on settings button click - navigates to settings page.
+   * @param { MouseEvent } $event - click event.
+   * @returns { void }
+   */
+  public onSettingsButtonClick($event: MouseEvent): void {
+    this.router.navigate(['/settings/account/boosted-content']);
   }
 }

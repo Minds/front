@@ -28,7 +28,8 @@ export class BoostConsoleStatsBarComponent implements OnInit {
     const status = this.boost?.boost_status;
 
     this.boostIsRejected = status === BoostState.REJECTED;
-    this.boostIsApproved = status === BoostState.APPROVED;
+    this.boostIsApproved =
+      status === BoostState.APPROVED || status === BoostState.COMPLETED;
 
     if (this.boostIsApproved) {
       this.formattedStartDate = this.formatDate(this.boost.approved_timestamp);
