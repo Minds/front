@@ -1,152 +1,167 @@
-<!-- ------------------------ -->
-<!-- TAB FILTERS -->
-<!-- ------------------------ -->
-<div class="m-tabs__container">
-  <!-- ---------------------------------------- -->
-  <!-- TABS: USER CONTEXT --------------------- -->
-  <!-- ---------------------------------------- -->
-  <ng-container *ngIf="!(service.adminContext$ | async)">
-    <div class="m-tabs__tab" (click)="onLocationFilterChange('feed')">
-      <a
-        [class.m-tabs__tab--selected]="
-          (service.locationFilterValue$ | async) === 'feed'
-        "
-        data-ref="boost-console-tab-location-feed"
-        i18n="@@BOOST_CONSOLE__TAB_FEED"
-        >Feed</a
+<div class="m-boostConsole__filterBar">
+  <!-- ------------------------ -->
+  <!-- TAB FILTERS -->
+  <!-- ------------------------ -->
+  <div class="m-tabs__container">
+    <!-- ---------------------------------------- -->
+    <!-- TABS: USER CONTEXT --------------------- -->
+    <!-- ---------------------------------------- -->
+    <ng-container *ngIf="!(service.adminContext$ | async)">
+      <div class="m-tabs__tab" (click)="onLocationFilterChange('feed')">
+        <a
+          [class.m-tabs__tab--selected]="
+            (service.locationFilterValue$ | async) === 'feed'
+          "
+          data-ref="boost-console-tab-location-feed"
+          i18n="@@BOOST_CONSOLE__TAB_FEED"
+          >Feed</a
+        >
+      </div>
+      <div class="m-tabs__tab" (click)="onLocationFilterChange('sidebar')">
+        <a
+          [class.m-tabs__tab--selected]="
+            (service.locationFilterValue$ | async) === 'sidebar'
+          "
+          data-ref="boost-console-tab-location-sidebar"
+          i18n="@@BOOST_CONSOLE__TAB_SIDEBAR"
+          >Sidebar</a
+        >
+      </div>
+    </ng-container>
+    <!-- ---------------------------------------- -->
+    <!-- TABS: ADMIN CONTEXT -------------------- -->
+    <!-- ---------------------------------------- -->
+    <ng-container *ngIf="service.adminContext$ | async">
+      <div class="m-tabs__tab" (click)="onSuitabilityFilterChange('safe')">
+        <a
+          [class.m-tabs__tab--selected]="
+            (service.suitabilityFilterValue$ | async) === 'safe'
+          "
+          data-ref="boost-console-tab-suitability-safe"
+          i18n="@@BOOST_CONSOLE__TAB_SAFE"
+          >Safe ({{ adminPendingSafeCount$ | async }})</a
+        >
+      </div>
+      <div
+        class="m-tabs__tab"
+        (click)="onSuitabilityFilterChange('controversial')"
       >
-    </div>
-    <div class="m-tabs__tab" (click)="onLocationFilterChange('sidebar')">
-      <a
-        [class.m-tabs__tab--selected]="
-          (service.locationFilterValue$ | async) === 'sidebar'
-        "
-        data-ref="boost-console-tab-location-sidebar"
-        i18n="@@BOOST_CONSOLE__TAB_SIDEBAR"
-        >Sidebar</a
-      >
-    </div>
-  </ng-container>
+        <a
+          [class.m-tabs__tab--selected]="
+            (service.suitabilityFilterValue$ | async) === 'controversial'
+          "
+          data-ref="boost-console-tab-suitability-controversial"
+          i18n="@@BOOST_CONSOLE__TAB_CONTROVERSIAL"
+          >Controversial ({{ adminPendingControversialCount$ | async }})</a
+        >
+      </div>
+    </ng-container>
+    <!-- ---------------------------------------- -->
+    <div class="m-layout__spacer"></div>
+    <!-- ---------------------------------------- -->
+  </div>
   <!-- ---------------------------------------- -->
-  <!-- TABS: ADMIN CONTEXT -------------------- -->
+  <!-- LEGACY BOOST CONSOLE LINK: DESKTOP -->
   <!-- ---------------------------------------- -->
-  <ng-container *ngIf="service.adminContext$ | async">
-    <div class="m-tabs__tab" (click)="onSuitabilityFilterChange('safe')">
-      <a
-        [class.m-tabs__tab--selected]="
-          (service.suitabilityFilterValue$ | async) === 'safe'
-        "
-        data-ref="boost-console-tab-suitability-safe"
-        i18n="@@BOOST_CONSOLE__TAB_SAFE"
-        >Safe ({{ adminPendingSafeCount$ | async }})</a
-      >
-    </div>
-    <div
-      class="m-tabs__tab"
-      (click)="onSuitabilityFilterChange('controversial')"
-    >
-      <a
-        [class.m-tabs__tab--selected]="
-          (service.suitabilityFilterValue$ | async) === 'controversial'
-        "
-        data-ref="boost-console-tab-suitability-controversial"
-        i18n="@@BOOST_CONSOLE__TAB_CONTROVERSIAL"
-        >Controversial ({{ adminPendingControversialCount$ | async }})</a
-      >
-    </div>
-  </ng-container>
-  <!-- ---------------------------------------- -->
-  <div class="m-layout__spacer"></div>
-  <!-- ---------------------------------------- -->
-</div>
-<!-- ---------------------------------------- -->
-<!-- LEGACY BOOST CONSOLE LINK -->
-<!-- ---------------------------------------- -->
-
-<div
-  class="m-boostConsole__legacyLinkWrapper"
-  *ngIf="legacyService.hasLegacyBoosts$ | async"
->
-  <p><a routerLink="/boost/console">View your legacy boosts</a></p>
-  <p>See posts you boosted in the retired legacy system.</p>
-</div>
-<!-- ------------------------ -->
-<!-- DROPDOWN MENU FILTERS-->
-<!-- ------------------------ -->
-<div class="m-boostConsole__filtersWrapper">
-  <!-- ------------------------ -->
-  <!-- STATE FILTER DROPDOWN TRIGGER -->
-  <!-- ------------------------ -->
-  <m-dropdownMenu [menu]="stateMenu" *ngIf="!(service.adminContext$ | async)">
-    <div
-      class="m-boostConsole__filterTrigger"
-      data-ref="m-boostConsole__filterTrigger--state"
-    >
-      <span class="m-boostConsole__filterIcon material-icons">filter_list</span>
-      <span
-        class="m-boostConsole__filterTitleLabel"
-        i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__STATUS"
-        >Status
-      </span>
-      <ng-container
-        [ngTemplateOutlet]="stateTextLabel"
-        [ngTemplateOutletContext]="{
-          stateLabel: service.stateFilterValue$ | async,
-          isTriggerLabel: true
-        }"
-      ></ng-container>
-      <span class="m-boostConsole__filterCaret">▾</span>
-    </div>
-  </m-dropdownMenu>
-  <!-- ------------------------ -->
-  <!-- LOCATION FILTER DROPDOWN TRIGGER -->
-  <!-- ------------------------ -->
-  <m-dropdownMenu [menu]="locationMenu" *ngIf="service.adminContext$ | async">
-    <div
-      class="m-boostConsole__filterTrigger"
-      data-ref="m-boostConsole__filterTrigger--location"
-    >
-      <span class="m-boostConsole__filterIcon material-icons">filter_list</span>
-      <span
-        class="m-boostConsole__filterTitleLabel"
-        i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__LOCATION"
-        >Location
-      </span>
-      <ng-container
-        [ngTemplateOutlet]="locationTextLabel"
-        [ngTemplateOutletContext]="{
-          locationLabel: service.locationFilterValue$ | async
-        }"
-      ></ng-container>
-      <span class="m-boostConsole__filterCaret">▾</span>
-    </div>
-  </m-dropdownMenu>
-  <!-- ------------------------ -->
-  <!-- PAYMENT METHOD DROPDOWN TRIGGER -->
-  <!-- ------------------------ -->
-  <m-dropdownMenu
-    [menu]="paymentMethodMenu"
-    *ngIf="service.adminContext$ | async"
+  <div
+    *ngIf="legacyService.hasLegacyBoosts$ | async"
+    class="m-boostConsole__legacyLinkWrapper--desktop"
   >
-    <div
-      class="m-boostConsole__filterTrigger"
-      data-ref="m-boostConsole__filterTrigger--paymentMethod"
+    <ng-container *ngTemplateOutlet="legacyLink"></ng-container>
+  </div>
+  <!-- ------------------------ -->
+  <!-- DROPDOWN MENU FILTERS-->
+  <!-- ------------------------ -->
+  <div class="m-boostConsole__filtersWrapper">
+    <!-- ------------------------ -->
+    <!-- STATE FILTER DROPDOWN TRIGGER -->
+    <!-- ------------------------ -->
+    <m-dropdownMenu [menu]="stateMenu" *ngIf="!(service.adminContext$ | async)">
+      <div
+        class="m-boostConsole__filterTrigger"
+        data-ref="m-boostConsole__filterTrigger--state"
+      >
+        <span class="m-boostConsole__filterIcon material-icons"
+          >filter_list</span
+        >
+        <span
+          class="m-boostConsole__filterTitleLabel"
+          i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__STATUS"
+          >Status
+        </span>
+        <ng-container
+          [ngTemplateOutlet]="stateTextLabel"
+          [ngTemplateOutletContext]="{
+            stateLabel: service.stateFilterValue$ | async,
+            isTriggerLabel: true
+          }"
+        ></ng-container>
+        <span class="m-boostConsole__filterCaret">▾</span>
+      </div>
+    </m-dropdownMenu>
+    <!-- ------------------------ -->
+    <!-- LOCATION FILTER DROPDOWN TRIGGER -->
+    <!-- ------------------------ -->
+    <m-dropdownMenu [menu]="locationMenu" *ngIf="service.adminContext$ | async">
+      <div
+        class="m-boostConsole__filterTrigger"
+        data-ref="m-boostConsole__filterTrigger--location"
+      >
+        <span class="m-boostConsole__filterIcon material-icons"
+          >filter_list</span
+        >
+        <span
+          class="m-boostConsole__filterTitleLabel"
+          i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__LOCATION"
+          >Location
+        </span>
+        <ng-container
+          [ngTemplateOutlet]="locationTextLabel"
+          [ngTemplateOutletContext]="{
+            locationLabel: service.locationFilterValue$ | async
+          }"
+        ></ng-container>
+        <span class="m-boostConsole__filterCaret">▾</span>
+      </div>
+    </m-dropdownMenu>
+    <!-- ------------------------ -->
+    <!-- PAYMENT METHOD DROPDOWN TRIGGER -->
+    <!-- ------------------------ -->
+    <m-dropdownMenu
+      [menu]="paymentMethodMenu"
+      *ngIf="service.adminContext$ | async"
     >
-      <span class="m-boostConsole__filterIcon material-icons">filter_list</span>
-      <span
-        class="m-boostConsole__filterTitleLabel"
-        i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__PAYMENT_METHOD"
-        >Payment method
-      </span>
-      <ng-container
-        [ngTemplateOutlet]="paymentMethodTextLabel"
-        [ngTemplateOutletContext]="{
-          paymentMethodLabel: service.paymentMethodFilterValue$ | async
-        }"
-      ></ng-container>
-      <span class="m-boostConsole__filterCaret">▾</span>
-    </div>
-  </m-dropdownMenu>
+      <div
+        class="m-boostConsole__filterTrigger"
+        data-ref="m-boostConsole__filterTrigger--paymentMethod"
+      >
+        <span class="m-boostConsole__filterIcon material-icons"
+          >filter_list</span
+        >
+        <span
+          class="m-boostConsole__filterTitleLabel"
+          i18n="@@BOOST_CONSOLE__FILTER_BAR__TITLE_LABEL__PAYMENT_METHOD"
+          >Payment method
+        </span>
+        <ng-container
+          [ngTemplateOutlet]="paymentMethodTextLabel"
+          [ngTemplateOutletContext]="{
+            paymentMethodLabel: service.paymentMethodFilterValue$ | async
+          }"
+        ></ng-container>
+        <span class="m-boostConsole__filterCaret">▾</span>
+      </div>
+    </m-dropdownMenu>
+  </div>
+</div>
+<!-- ---------------------------------------- -->
+<!-- LEGACY BOOST CONSOLE LINK: MOBILE -->
+<!-- ---------------------------------------- -->
+<div
+  *ngIf="legacyService.hasLegacyBoosts$ | async"
+  class="m-boostConsole__legacyLinkWrapper--mobile"
+>
+  <ng-container *ngTemplateOutlet="legacyLink"></ng-container>
 </div>
 <!-- -------------------------------------------- -->
 <!-- -------------------------------------------- -->
@@ -306,4 +321,11 @@
       >On-chain tokens</ng-container
     >
   </span>
+</ng-template>
+<!-- ------------------------ -->
+<!-- TEMPLATE: LEGACY LINK -->
+<!-- ------------------------ -->
+<ng-template #legacyLink>
+  <p><a routerLink="/boost/console">View your legacy boosts</a></p>
+  <p>See posts you boosted in the retired legacy system.</p>
 </ng-template>
