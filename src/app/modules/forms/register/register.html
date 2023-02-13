@@ -44,13 +44,13 @@
     <!-- ------------------------------- -->
     <div class="m-form__field--text stretchedField">
       <div class="m-form__input--details">
-        <div class="m-form__row--label">
+        <div class="m-form__row--label m-form__row--label--username">
           <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME"
             >Username</label
           >
         </div>
         <div
-          class="m-register__error"
+          class="m-register__error m-register__error--multiLine"
           [style.visibility]="showError('username') ? 'visible' : 'hidden'"
         >
           <ng-container
