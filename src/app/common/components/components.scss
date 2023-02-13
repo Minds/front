@@ -76,7 +76,7 @@ minds-button-thumbs-down {
     appearance: none;
     display: block;
     width: 100%;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     font-size: 13px;
     cursor: pointer;
     font-weight: 600;
@@ -135,7 +135,7 @@ minds-button-thumbs-down {
   > button:hover,
   > button.subscribed,
   > button.selected {
-    //background-color: themed($m-blue-grey-400);
+    //background-color: themed($m-grey-400);
     @include m-theme() {
       color: themed($m-grey-950);
     }
@@ -209,7 +209,7 @@ minds-button-remind {
 }
 
 .minds-counter {
-  font-family: 'Roboto', 'Helvetica', sans-serif;
+  font-family: 'Inter', 'Helvetica', sans-serif;
   display: inline-block;
   font-size: 12px;
   font-weight: 800;
@@ -443,7 +443,7 @@ minds-card-video {
         max-width: calc(100% - 62px);
         vertical-align: middle;
         letter-spacing: 0.25px;
-        font-family: 'Roboto', Helvetica, sans-serif;
+        font-family: 'Inter', Helvetica, sans-serif;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         overflow: hidden;
@@ -452,7 +452,7 @@ minds-card-video {
 
       .permalink {
         text-decoration: none;
-        font-family: 'Roboto', Helvetica, sans-serif;
+        font-family: 'Inter', Helvetica, sans-serif;
         text-transform: uppercase;
         letter-spacing: 0.75px;
         text-rendering: optimizeLegibility;
@@ -532,7 +532,7 @@ minds-activity-preview {
   .mdl-card__supporting-text {
     width: 100%;
     box-sizing: border-box;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     @include m-theme() {
@@ -636,7 +636,7 @@ minds-activity-preview {
     .minds-block .minds-body a {
       //span {
       //  vertical-align: middle;
-      //  font-family: 'Roboto', Helvetica, sans-serif;
+      //  font-family: 'Inter', Helvetica, sans-serif;
       //  text-rendering: optimizeLegibility;
       //  letter-spacing: 0.75px;
       //  -webkit-font-smoothing: antialiased;
@@ -866,7 +866,7 @@ minds-activity-preview {
 }
 
 .m-activity--boost-notice {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
   text-align: center;
   font-size: 16px;

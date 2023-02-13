@@ -6,7 +6,7 @@ const chartPalette = {
     'm-amber-dark',
     'm-green-dark',
     'm-red-dark',
-    'm-blue-grey-500',
+    'm-grey-500',
   ],
   themeMaps: [
     {
@@ -62,7 +62,7 @@ const chartPalette = {
       themeMap: ['#388e3c', '#97c95d'], // 8bc34a
     },
     {
-      id: 'm-blue-grey-500',
+      id: 'm-grey-500',
       themeMap: ['#607d8b', '#6b8a99'], // 607d8b
     },
   ],

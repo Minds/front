@@ -41,7 +41,7 @@
     }
     span {
       text-transform: uppercase;
-      font-family: 'Roboto', Helvetica, sans-serif;
+      font-family: 'Inter', Helvetica, sans-serif;
       letter-spacing: 0.25px;
       @include m-theme() {
         color: themed($m-grey-600);

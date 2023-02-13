@@ -180,7 +180,7 @@ m-pro--channel-login {
         font-weight: 600;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
-        font-family: 'Roboto', Helvetica, sans-serif;
+        font-family: 'Inter', Helvetica, sans-serif;
         letter-spacing: 1px;
         //box-shadow: 0 0 6px rgba(255,255,255,0.22);
         @include m-theme() {
@@ -212,7 +212,7 @@ m-pro--channel-login {
 
         .m-register-tac {
           padding-right: 16px;
-          font-family: 'Roboto', Helvetica, sans-serif;
+          font-family: 'Inter', Helvetica, sans-serif;
           color: var(--m-pro--text-color) !important;
         }
 
@@ -232,7 +232,7 @@ m-pro--channel-login {
       }
 
       .m-register-btn {
-        font-family: 'Roboto', Helvetica, sans-serif;
+        font-family: 'Inter', Helvetica, sans-serif;
         letter-spacing: 1.25px;
         background: transparent;
         font-size: 12px;

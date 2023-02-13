@@ -56,7 +56,7 @@
 
 a {
   @include m-theme() {
-    color: themed($m-blue-grey-700);
+    color: themed($m-grey-700);
   }
 }
 
@@ -161,7 +161,7 @@ hr {
 
 .mdl-button.mdl-button--colored {
   @include m-theme() {
-    color: themed($m-blue-grey-500);
+    color: themed($m-grey-500);
   }
 }
 
@@ -199,26 +199,26 @@ hr {
 
 .mdl-button--raised.mdl-button--colored {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
     color: themed($m-white);
   }
 }
 
 .mdl-button--raised.mdl-button--colored:hover {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
 .mdl-button--raised.mdl-button--colored:active {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
 .mdl-button--raised.mdl-button--colored:focus:not(:active) {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -306,7 +306,7 @@ hr {
 
 .mdl-button--primary.mdl-button--primary {
   @include m-theme() {
-    color: themed($m-blue-grey-500);
+    color: themed($m-grey-500);
   }
 }
 
@@ -320,7 +320,7 @@ hr {
 .mdl-button--primary.mdl-button--primary.mdl-button--fab {
   @include m-theme() {
     color: themed($m-white);
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -418,7 +418,7 @@ hr {
 
 .mdl-checkbox.is-checked .mdl-checkbox__box-outline {
   @include m-theme() {
-    border: 2px solid themed($m-blue-grey-500);
+    border: 2px solid themed($m-grey-500);
   }
 }
 
@@ -438,14 +438,14 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__box-outline,
 
 .mdl-checkbox.is-focused.is-checked .mdl-checkbox__focus-helper {
   @include m-theme() {
-    box-shadow: 0 0 0 8px rgba(themed($m-blue-grey-500), 0.26);
-    background-color: rgba(themed($m-blue-grey-500), 0.26);
+    box-shadow: 0 0 0 8px rgba(themed($m-grey-500), 0.26);
+    background-color: rgba(themed($m-grey-500), 0.26);
   }
 }
 
 .mdl-checkbox.is-checked .mdl-checkbox__tick-outline {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -475,7 +475,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 
 .mdl-checkbox__ripple-container .mdl-ripple {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 .mdl-data-table {
@@ -622,7 +622,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 
 .mdl-progress > .progressbar {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -635,8 +635,8 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
       ),
       linear-gradient(
         to right,
-        themed($m-blue-grey-500),
-        themed($m-blue-grey-500)
+        themed($m-grey-500),
+        themed($m-grey-500)
       );
   }
 }
@@ -654,8 +654,8 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
         ),
         linear-gradient(
           to right,
-          themed($m-blue-grey-500),
-          themed($m-blue-grey-500)
+          themed($m-grey-500),
+          themed($m-grey-500)
         );
     }
   }
@@ -671,8 +671,8 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
       ),
       linear-gradient(
         to right,
-        themed($m-blue-grey-500),
-        themed($m-blue-grey-500)
+        themed($m-grey-500),
+        themed($m-grey-500)
       );
   }
 }
@@ -682,7 +682,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 .mdl-progress.mdl-progress--indeterminate > .bar3,
 .mdl-progress.mdl-progress__indeterminate > .bar3 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -694,7 +694,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 
 .mdl-radio.is-checked .mdl-radio__outer-circle {
   @include m-theme() {
-    border: 2px solid themed($m-blue-grey-500);
+    border: 2px solid themed($m-grey-500);
   }
 }
 
@@ -707,7 +707,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 
 .mdl-radio__inner-circle {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -743,13 +743,13 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-radio__ripple-container .mdl-ripple {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded {
   @include m-theme() {
-    color: themed($m-blue-grey-500);
+    color: themed($m-grey-500);
   }
 }
 
@@ -759,8 +759,8 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
       to right,
       transparent,
       transparent 16px,
-      themed($m-blue-grey-500) 16px,
-      themed($m-blue-grey-500) 0
+      themed($m-grey-500) 16px,
+      themed($m-grey-500) 0
     );
   }
 }
@@ -779,43 +779,43 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-slider.is-upgraded::-webkit-slider-thumb {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded::-moz-range-thumb {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded:focus:not(:active)::-webkit-slider-thumb {
   @include m-theme() {
-    box-shadow: 0 0 0 10px rgba(themed($m-blue-grey-500), 0.26);
+    box-shadow: 0 0 0 10px rgba(themed($m-grey-500), 0.26);
   }
 }
 
 .mdl-slider.is-upgraded:focus:not(:active)::-moz-range-thumb {
   @include m-theme() {
-    box-shadow: 0 0 0 10px rgba(themed($m-blue-grey-500), 0.26);
+    box-shadow: 0 0 0 10px rgba(themed($m-grey-500), 0.26);
   }
 }
 
 .mdl-slider.is-upgraded:active::-webkit-slider-thumb {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded:active::-moz-range-thumb {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded::-ms-thumb {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -823,17 +823,17 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
   @include m-theme() {
     background: radial-gradient(
       circle closest-side,
-      themed($m-blue-grey-500) 0%,
-      themed($m-blue-grey-500) 37.5%,
-      rgba(themed($m-blue-grey-500), 0.26) 37.5%,
-      rgba(themed($m-blue-grey-500), 0.26) 100%
+      themed($m-grey-500) 0%,
+      themed($m-grey-500) 37.5%,
+      rgba(themed($m-grey-500), 0.26) 37.5%,
+      rgba(themed($m-grey-500), 0.26) 100%
     );
   }
 }
 
 .mdl-slider.is-upgraded:active::-ms-thumb {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -989,7 +989,7 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-slider__background-lower {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -1007,7 +1007,7 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-switch.is-checked .mdl-switch__track {
   @include m-theme() {
-    background-color: rgba(themed($m-blue-grey-500), 0.5);
+    background-color: rgba(themed($m-grey-500), 0.5);
   }
 }
 
@@ -1029,7 +1029,7 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-switch.is-checked .mdl-switch__thumb {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
     box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
       0 3px 3px -2px rgba(themed($m-black), 0.2),
       0 1px 8px 0 rgba(themed($m-black), 0.12);
@@ -1052,8 +1052,8 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-switch.is-focused.is-checked .mdl-switch__focus-helper {
   @include m-theme() {
-    box-shadow: 0 0 0 20px rgba(themed($m-blue-grey-500), 0.26);
-    background-color: rgba(themed($m-blue-grey-500), 0.26);
+    box-shadow: 0 0 0 20px rgba(themed($m-grey-500), 0.26);
+    background-color: rgba(themed($m-grey-500), 0.26);
   }
 }
 
@@ -1076,7 +1076,7 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-switch__ripple-container .mdl-ripple {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -1100,13 +1100,13 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
 .mdl-tabs__tab .mdl-tabs__ripple-container .mdl-ripple {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -1148,13 +1148,13 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 .mdl-textfield--floating-label.is-dirty .mdl-textfield__label,
 .mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
   @include m-theme() {
-    color: themed($m-blue-grey-500);
+    color: themed($m-grey-500);
   }
 }
 
 .mdl-textfield__label:after {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500);
+    background-color: themed($m-grey-500);
   }
 }
 
@@ -1518,104 +1518,104 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .mdl-color-text--blue-grey-50 {
   @include m-theme() {
-    color: themed($m-blue-grey-50) !important;
+    color: themed($m-grey-50) !important;
   }
 }
 .mdl-color-text--blue-grey-100 {
   @include m-theme() {
-    color: themed($m-blue-grey-100) !important;
+    color: themed($m-grey-100) !important;
   }
 }
 .mdl-color-text--blue-grey-200 {
   @include m-theme() {
-    color: themed($m-blue-grey-200) !important;
+    color: themed($m-grey-200) !important;
   }
 }
 .mdl-color-text--blue-grey-300 {
   @include m-theme() {
-    color: themed($m-blue-grey-300) !important;
+    color: themed($m-grey-300) !important;
   }
 }
 .mdl-color-text--blue-grey-400 {
   @include m-theme() {
-    color: themed($m-blue-grey-400) !important;
+    color: themed($m-grey-400) !important;
   }
 }
 .mdl-color-text--blue-grey,
 .mdl-color-text--blue-grey-500 {
   @include m-theme() {
-    color: themed($m-blue-grey-500) !important;
+    color: themed($m-grey-500) !important;
   }
 }
 .mdl-color-text--blue-grey-600 {
   @include m-theme() {
-    color: themed($m-blue-grey-600) !important;
+    color: themed($m-grey-600) !important;
   }
 }
 .mdl-color-text--blue-grey-700 {
   @include m-theme() {
-    color: themed($m-blue-grey-700) !important;
+    color: themed($m-grey-700) !important;
   }
 }
 .mdl-color-text--blue-grey-800 {
   @include m-theme() {
-    color: themed($m-blue-grey-800) !important;
+    color: themed($m-grey-800) !important;
   }
 }
 .mdl-color-text--blue-grey-900 {
   @include m-theme() {
-    color: themed($m-blue-grey-900) !important;
+    color: themed($m-grey-900) !important;
   }
 }
 
 .mdl-color--blue-grey-50 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-50) !important;
+    background-color: themed($m-grey-50) !important;
   }
 }
 .mdl-color--blue-grey-100 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-100) !important;
+    background-color: themed($m-grey-100) !important;
   }
 }
 .mdl-color--blue-grey-200 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-200) !important;
+    background-color: themed($m-grey-200) !important;
   }
 }
 .mdl-color--blue-grey-300 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-300) !important;
+    background-color: themed($m-grey-300) !important;
   }
 }
 .mdl-color--blue-grey-400 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-400) !important;
+    background-color: themed($m-grey-400) !important;
   }
 }
 .mdl-color--blue-grey,
 .mdl-color--blue-grey-500 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-500) !important;
+    background-color: themed($m-grey-500) !important;
   }
 }
 .mdl-color--blue-grey-600 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-600) !important;
+    background-color: themed($m-grey-600) !important;
   }
 }
 .mdl-color--blue-grey-700 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-700) !important;
+    background-color: themed($m-grey-700) !important;
   }
 }
 .mdl-color--blue-grey-800 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-800) !important;
+    background-color: themed($m-grey-800) !important;
   }
 }
 .mdl-color--blue-grey-900 {
   @include m-theme() {
-    background-color: themed($m-blue-grey-900) !important;
+    background-color: themed($m-grey-900) !important;
   }
 }

@@ -1,4 +1,3 @@
-// General rules for themes
 @mixin m-on-theme($theme) {
   body.m-theme__#{$theme} &,
   body .m-theme--wrapper.m-theme--wrapper__#{$theme} & {
@@ -31,50 +30,90 @@
   @return map-get($theme-map, $color-name);
 }
 
+
 // Dark theme lighten percentage
 $percent: 5%;
 
-// Color palette
-$grey-990: #161616;
-$grey-950: #222;
-$grey-900: #333;
-$grey-800: #444;
-$grey-700: #555;
-$grey-600: #666;
-$grey-500: #777;
-$grey-400: #888;
-$grey-300: #999;
-$grey-200: #aaa;
-$grey-100: #ddd;
-$grey-50: #e8e8e8;
 
-$blue-grey-950: #171f23;
-$blue-grey-900: #263238;
-$blue-grey-800: #37474f;
-$blue-grey-700: #455a64;
-$blue-grey-600: #546e7a;
-$blue-grey-500: #607d8b;
-$blue-grey-400: #78909c;
-$blue-grey-300: #90a4ae;
-$blue-grey-200: #b0bec5;
-$blue-grey-100: #cfd8dc;
-$blue-grey-50: #eceff1;
+//color palette -- newly generated
 
-$blue-dark: #0052a3;
-$blue: #1b85d6;
-$blue-light: #4eb8ff;
+//greys
 
-$green-dark: #388e3c;
-$green: #4caf50;
-$green-light: #8bc34a;
-$aqua: #5dbac0;
-$amber-dark: #ffa000;
-$amber: #ffc108;
-$amber-medium: #fed12f;
-$amber-light: #ffecb3;
-$red-dark: #c62828;
-$red: #e03c20;
-$red-light: #e57373;
+$grey-50: #f2f2f2;
+$grey-100: #e8e8ea;
+$grey-200: #d0d2d5;
+$grey-300: #b9bbc0;
+$grey-400: #a1a5ab;
+$grey-500: #8a8e96;
+$grey-600: #6f7278;
+$grey-700: #53565a;
+$grey-800: #38393d;
+$grey-900: #1c1d1f;
+
+//yellows
+$yellow-50: #fffaed;
+$yellow-100: #fff6da;
+$yellow-200: #ffecb6;
+$yellow-300: #ffe391;
+$yellow-400: #ffd96d;
+$yellow-500: #ffd048;
+$yellow-600: #d4ad3a;
+$yellow-700: #a9892b;
+$yellow-800: #7f661d;
+$yellow-900: #54420e;
+
+
+//blues
+
+$blue-50: #edf1ff;
+$blue-100: #dbe3ff;
+$blue-200: #b7c7ff;
+$blue-300: #92aaff;
+$blue-400: #6e8eff;
+$blue-500: #4a72ff;
+$blue-600: #3b5dd5;
+$blue-700: #2c48aa;
+$blue-800: #1e3480;
+$blue-900: #0f1f55;
+
+//reds
+$red-50: #fff3f2;
+$red-100: #ffe8e5;
+$red-200: #fed1cb;
+$red-300: #feb9b0;
+$red-400: #fda296;
+$red-500: #fd8b7c;
+$red-600: #dc7263;
+$red-700: #bc584b;
+$red-800: #9b3f32;
+$red-900: #7b251a;
+
+//greens/success
+$green-50: #dbfffb;
+$green-100: #aff2ea;
+$green-200: #83e4d9;
+$green-300: #58d7c7;
+$green-400: #2cc9b6;
+$green-500: #00bca5;
+$green-600: #009684;
+$green-700: #007163;
+$green-800: #004b42;
+$green-900: #002621;
+
+//purples 
+$purple-50: #f5e8f7;
+$purple-100: #ebd3f0;
+$purple-200: #d8a9e1;
+$purple-300: #c67fd1;
+$purple-400: #b355c2;
+$purple-500: #a02bb3;
+$purple-600: #80228f;
+$purple-700: #601a6b;
+$purple-800: #401148;
+$purple-900: #200924;
+
+
+//system-defaults and external brands
 
 $black: #000;
 $white: #fff;
@@ -85,165 +124,150 @@ $twitter: #03b3ee;
 $whatsapp: #25d366;
 $linkedin: #0071a1;
 
-// Theme maps
-// e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
+$blue: #4a72ff;
+
+//theme maps
+
 $themes: (
-  light: (
-    m-textColor--primary: #43434d,
-    m-textColor--primaryInverted: #ffffff,
-    m-textColor--secondary: #72727c,
-    m-textColor--secondaryInverted: #b8c1ca,
-    m-textColor--tertiary: #9b9b9b,
-    m-bgColor--primary: #ffffff,
-    m-bgColor--primaryInverted: #1f252c,
-    m-bgColor--primaryDarkAlways: #1f252c,
-    m-bgColor--primaryAlt: #e7edf3,
-    m-bgColor--secondary: #f6f7f7,
-    m-bgColor--secondaryAlt: #e6ebed,
-    m-bgColor--contrast: #d8d8d8,
-    m-bgColor--contrastSubtle: #dde4e6,
-    m-bgColor--btnHover: #f0f3f7,
-    m-bgColor--btnHoverLightAlways: #f0f3f7,
-    m-bgColor--btnActive: #dadfe5,
-    m-borderColor--primary: #d3dbe3,
-    m-borderColor--secondary: #979797,
-    m-borderColor--tertiary: #ececec,
-    m-overlay: rgba(176, 176, 176, 0.5),
-    m-alert: #e03c20,
-    m-positive: #95c064,
-    // legacy colors
-      m-grey-950: $grey-950,
-    m-grey-900: $grey-900,
-    m-grey-800: $grey-800,
-    m-grey-700: $grey-700,
-    m-grey-600: $grey-600,
-    m-grey-500: $grey-500,
-    m-grey: $grey-500,
-    m-grey-400: $grey-400,
-    m-grey-300: $grey-300,
-    m-grey-200: $grey-200,
-    m-grey-100: $grey-100,
-    m-grey-50: $grey-50,
-    m-blue-grey-950: $blue-grey-950,
-    m-blue-grey-900: $blue-grey-900,
-    m-blue-grey-800: $blue-grey-800,
-    m-blue-grey-700: $blue-grey-700,
-    m-blue-grey-600: $blue-grey-600,
-    m-blue-grey-500: $blue-grey-500,
-    m-blue-grey: $blue-grey-500,
-    m-blue-grey-400: $blue-grey-400,
-    m-blue-grey-300: $blue-grey-300,
-    m-blue-grey-200: $blue-grey-200,
-    m-blue-grey-100: $blue-grey-100,
-    m-blue-grey-50: $blue-grey-50,
-    m-blue: $blue,
-    m-blue--contrast: $blue-dark,
-    m-aqua: $aqua,
-    m-green-dark: $green-dark,
-    m-green: $green,
-    m-green-light: $green-light,
-    m-amber-dark: $amber-dark,
-    m-amber: $amber,
-    m-amber-medium: $amber-medium,
-    m-amber-light: $amber-light,
-    m-red-dark: $red-dark,
-    m-red: $red,
-    m-red-light: $red-light,
-    m-black: $black,
-    m-black-always: $black,
-    m-white: $white,
-    m-white-always: $white,
-    m-marketing-bg-gradient-start: #f9fafc,
-    m-marketing-bg-colored-gradient-start: #f6eded,
-    m-marketing-bg-colored-gradient-end: #f5f5fe,
-    m-warn-bg: $amber-light,
-    m-warn-fg: $black,
-    m-facebook: $facebook,
-    m-messenger: $messenger,
-    m-twitter: $twitter,
-    m-whatsapp: $whatsapp,
-    m-linkedin: $linkedin,
-    m-activity--hover: #f8fafd,
-  ),
-  dark: (
-    m-textColor--primary: #ffffff,
-    m-textColor--primaryInverted: #43434d,
-    m-textColor--secondary: #b8c1ca,
-    m-textColor--secondaryInverted: #72727c,
-    m-textColor--tertiary: #797b82,
-    m-bgColor--primary: #1f252c,
-    m-bgColor--primaryInverted: #ffffff,
-    m-bgColor--primaryDarkAlways: #1f252c,
-    m-bgColor--primaryAlt: #1e242a,
-    m-bgColor--secondary: #1a2025,
-    m-bgColor--secondaryAlt: #232b31,
-    m-bgColor--contrast: #d8d8d8,
-    m-bgColor--contrastSubtle: #283138,
-    m-bgColor--btnHover: #343c44,
-    m-bgColor--btnHoverLightAlways: #f0f3f7,
-    m-bgColor--btnActive: #48525b,
-    m-borderColor--primary: #414c57,
-    m-borderColor--secondary: #979797,
-    m-borderColor--tertiary: #3a3f41,
-    m-overlay: rgba(0, 0, 0, 0.5),
-    m-alert: #e03c20,
-    m-positive: #95c064,
-    // legacy colors
-      m-grey-950: lighten($grey-50, $percent),
-    m-grey-900: lighten($grey-100, $percent),
-    m-grey-800: lighten($grey-200, $percent),
-    m-grey-700: lighten($grey-300, $percent),
-    m-grey-600: lighten($grey-400, $percent),
-    m-grey-500: lighten($grey-500, $percent),
-    m-grey: lighten($grey-500, $percent),
-    m-grey-400: lighten($grey-600, $percent),
-    m-grey-300: lighten($grey-700, $percent),
-    m-grey-200: lighten($grey-800, $percent),
-    m-grey-100: lighten($grey-900, $percent),
-    m-grey-50: lighten($grey-950, $percent),
-    m-blue-grey-950: lighten($blue-grey-50, $percent),
-    m-blue-grey-900: lighten($blue-grey-100, $percent),
-    m-blue-grey-800: lighten($blue-grey-200, $percent),
-    m-blue-grey-700: lighten($blue-grey-300, $percent),
-    m-blue-grey-600: lighten($blue-grey-400, $percent),
-    m-blue-grey-500: lighten($blue-grey-500, $percent),
-    m-blue-grey: lighten($blue-grey-500, $percent),
-    m-blue-grey-400: lighten($blue-grey-600, $percent),
-    m-blue-grey-300: lighten($blue-grey-700, $percent),
-    m-blue-grey-200: lighten($blue-grey-800, $percent),
-    m-blue-grey-100: lighten($blue-grey-900, $percent),
-    m-blue-grey-50: lighten($blue-grey-950, $percent),
-    m-black: $white,
-    m-black-always: $black,
-    m-white: #202527,
-    m-white-always: $white,
-    m-marketing-bg-gradient-start: #202527,
-    m-marketing-bg-colored-gradient-start: #4e5965,
-    m-marketing-bg-colored-gradient-end: #58565c,
-    m-blue: $blue,
-    m-blue--contrast: $blue-light,
-    m-aqua: $aqua,
-    m-green-dark: lighten($green-dark, $percent),
-    m-green: lighten($green, $percent),
-    m-green-light: lighten($green-light, $percent),
-    m-amber-dark: lighten($amber-dark, $percent),
-    m-amber: lighten($amber, $percent),
-    m-amber-medium: lighten($amber-medium, $percent),
-    m-amber-light: lighten($amber-light, $percent),
-    m-red-dark: lighten($red-dark, $percent),
-    m-red: lighten($red, $percent),
-    m-red-light: lighten($red-light, $percent),
-    m-warn-bg: $grey-900,
-    m-warn-fg: $white,
-    m-facebook: $facebook,
-    m-messenger: $messenger,
-    m-twitter: $twitter,
-    m-whatsapp: $whatsapp,
-    m-linkedin: $linkedin,
-    m-activity--hover: #282f38,
-  ),
+light: (
+  m-textColor--primary: $grey-900,
+  m-textColor--primaryInverted: $grey-50,
+  m-textColor--secondary: $grey-600,
+  m-textColor--secondaryInverted: $grey-400,
+  m-textColor--tertiary: $grey-400,
+  m-bgColor--primary: #ffffff,
+  m-bgColor--primaryInverted: $grey-900,
+  m-bgColor--primaryDarkAlways: $grey-900,
+  m-bgColor--primaryAlt: #f2f2f2,
+  m-bgColor--secondary: $grey-100,
+  m-bgColor--secondaryAlt: $grey-100,
+  m-bgColor--contrast: #d8d8d8,
+  m-bgColor--contrastSubtle: #dde4e6,
+  m-bgColor--btnHover: #f0f3f7,
+  m-bgColor--btnHoverLightAlways: #f0f3f7,
+  m-bgColor--btnActive: #dadfe5,
+  m-borderColor--primary: $grey-200,
+  m-borderColor--secondary: $grey-200,
+  m-borderColor--tertiary:  $grey-100,
+  m-overlay: rgba(138, 142, 150, 0.25),
+  m-alert: #BC584B,
+  m-positive: #95c064,
+  m-action: $yellow-500, 
+  // legacy colors
+  m-grey-900: $grey-900,
+  m-grey-800: $grey-800,
+  m-grey-700: $grey-700,
+  m-grey-600: $grey-600,
+  m-grey-500: $grey-500,
+  m-grey: $grey-500,
+  m-grey-400: $grey-400,
+  m-grey-300: $grey-300,
+  m-grey-200: $grey-200,
+  m-grey-100: $grey-100,
+  m-grey-50: $grey-50,
+
+  m-blue: $yellow-500,
+  m-blue--contrast: $yellow-800,
+  m-aqua: $green-300,
+  m-green-dark: $green-700,
+  m-green: $green-500,
+  m-green-light: $green-200,
+  m-amber-dark: $yellow-800,
+  m-amber: $yellow-500,
+  m-amber-medium: $yellow-600,
+  m-amber-light: $yellow-200,
+  m-red-dark: $red-700,
+  m-red: $red-500,
+  m-red-light: $red-200,
+  m-black: $black,
+  m-black-always: $black,
+  m-white: $white,
+  m-white-always: $white,
+  m-marketing-bg-gradient-start: #f9fafc,
+  m-marketing-bg-colored-gradient-start: #f6eded,
+  m-marketing-bg-colored-gradient-end: #f5f5fe,
+  m-warn-bg:  $yellow-200,
+  m-warn-fg: $black,
+  m-facebook: $facebook,
+  m-messenger: $messenger,
+  m-twitter: $twitter,
+  m-whatsapp: $whatsapp,
+  m-linkedin: $linkedin,
+  m-activity--hover: lighten($grey-500, $percent),
+),
+dark: (
+  m-textColor--primary: $grey-50,
+  m-textColor--primaryInverted: $grey-900,
+  m-textColor--secondary: $grey-400,
+  m-textColor--secondaryInverted: $grey-50,
+  m-textColor--tertiary: $grey-500,
+  m-bgColor--primary: $grey-900,
+  m-bgColor--primaryInverted: #ffffff,
+  m-bgColor--primaryDarkAlways: $grey-900,
+  m-bgColor--primaryAlt: #1e242a,
+  m-bgColor--secondary: $grey-800,
+  m-bgColor--secondaryAlt: #232b31,
+  m-bgColor--contrast: #d8d8d8,
+  m-bgColor--contrastSubtle: #283138,
+  m-bgColor--btnHover: #343c44,
+  m-bgColor--btnHoverLightAlways: #f0f3f7,
+  m-bgColor--btnActive: #48525b,
+  m-borderColor--primary: $grey-800,
+  m-borderColor--secondary: $grey-700,
+  m-borderColor--tertiary: $grey-600,
+  m-overlay: rgba(0, 0, 0, 0.5),
+  m-alert: #FD8B7C,
+  m-positive: #95c064,
+  m-action: $yellow-500, 
+  m-action--contrast: $yellow-800,
+  // legacy colors
+  // legacy colors
+  m-grey-900: $grey-900,
+  m-grey-800: $grey-800,
+  m-grey-700: $grey-700,
+  m-grey-600: $grey-600,
+  m-grey-500: $grey-500,
+  m-grey: $grey-500,
+  m-grey-400: $grey-400,
+  m-grey-300: $grey-300,
+  m-grey-200: $grey-200,
+  m-grey-100: $grey-100,
+  m-grey-50: $grey-50,
+  m-black: $white,
+  m-black-always: $black,
+  m-white: #202527,
+  m-white-always: $white,
+  m-marketing-bg-gradient-start: #202527,
+  m-marketing-bg-colored-gradient-start: #4e5965,
+  m-marketing-bg-colored-gradient-end: #58565c,
+  m-blue: $yellow-500,
+  m-blue--contrast: $yellow-800,
+  m-aqua: $green-300,
+  m-green-dark: $green-200,
+  m-green: $green-500,
+  m-green-light: $green-700,
+  m-amber-dark: $yellow-200,
+  m-amber: $yellow-600,
+  m-amber-medium: $yellow-500,
+  m-amber-light: $yellow-800,
+  m-red-dark: $red-200,
+  m-red: $red-500,
+  m-red-light: $red-700,
+  m-warn-bg: $yellow-800,
+  m-warn-fg: $white,
+  m-facebook: $facebook,
+  m-messenger: $messenger,
+  m-twitter: $twitter,
+  m-whatsapp: $whatsapp,
+  m-linkedin: $linkedin,
+  m-activity--hover: lighten($grey-400, $percent),
+),
 );
 
+
+//enable use of vars in scss (in addition to strings)
+// e.g. background-color: themed($m-grey-950)
+// OR   background-color: themed('m-grey-950')
 // Enable use of vars in scss (in addition to strings)
 // e.g. background-color: themed($m-grey-950)
 // OR   background-color: themed('m-grey-950')
@@ -260,18 +284,6 @@ $m-grey-200: 'm-grey-200';
 $m-grey-100: 'm-grey-100';
 $m-grey-50: 'm-grey-50';
 
-$m-blue-grey-950: 'm-blue-grey-950';
-$m-blue-grey-900: 'm-blue-grey-900';
-$m-blue-grey-800: 'm-blue-grey-800';
-$m-blue-grey-700: 'm-blue-grey-700';
-$m-blue-grey-600: 'm-blue-grey-600';
-$m-blue-grey: 'm-blue-grey';
-$m-blue-grey-500: 'm-blue-grey-500';
-$m-blue-grey-400: 'm-blue-grey-400';
-$m-blue-grey-300: 'm-blue-grey-300';
-$m-blue-grey-200: 'm-blue-grey-200';
-$m-blue-grey-100: 'm-blue-grey-100';
-$m-blue-grey-50: 'm-blue-grey-50';
 
 $m-black: 'm-black';
 $m-black-always: 'm-black-always';
@@ -283,6 +295,7 @@ $m-marketing-bg-colored-gradient-end: 'm-marketing-bg-colored-gradient-end';
 $m-blue--contrast: 'm-blue--contrast'; // Used for hovering over blue links, etc.
 $m-blue: 'm-blue';
 $m-aqua: 'm-aqua';
+$m-action: 'm-action';
 $m-green-dark: 'm-green-dark';
 $m-green: 'm-green';
 $m-green-light: 'm-green-light';
@@ -327,6 +340,10 @@ $m-alert: 'm-alert';
 $m-positive: 'm-positive';
 $m-activity--hover: 'm-activity--hover';
 
+
+
+//related radii tokens.  
+
 $m-borderRadius: 2px;
 $m-boxShadowBlur: 10px;
 $m-boxShadowOffset: 2px;
@@ -334,6 +351,6 @@ $m-boxShadowOffset: 2px;
 // Helpers
 
 @function checkmark-image($color) {
-  $urlEncodedColor: str-replace('' + $color, '#', '%23'); // `#` signs are bad
-  @return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" fill="#{$urlEncodedColor}"/></svg>';
+$urlEncodedColor: str-replace('' + $color, '#', '%23'); // `#` signs are bad
+@return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" fill="#{$urlEncodedColor}"/></svg>';
 }

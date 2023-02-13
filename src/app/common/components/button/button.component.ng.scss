@@ -2,7 +2,7 @@
 
 :host {
   .m-button {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     position: relative;
     cursor: pointer;
     padding: 10px 20px;
@@ -85,7 +85,7 @@
       &.m-button--solid {
         @include m-theme() {
           background-color: themed($m-blue);
-          color: themed($m-white-always);
+          color: themed($m-grey-900);
         }
 
         &:not(:disabled) {

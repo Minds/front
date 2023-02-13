@@ -7,6 +7,16 @@
 // Format:
 //{heading | body}{size#}{weight}
 
+
+//Constants for dynamic metrics
+
+$a: -0.0223;
+$b: 0.185;
+$c: -0.1745;
+
+
+//- BUTTONS
+
 //- BOLD ---------------------
 @mixin heading1Bold {
   @include _heading1;
@@ -112,31 +122,33 @@
 }
 //----------------------
 @mixin _heading1 {
-  font-size: 1.875rem; //30px
-  line-height: 2.25rem;
+  font-size: 34px; //30px
+  line-height: 48px;
+  letter-spacing: -0.16px;
+
 }
 @mixin _heading2 {
-  font-size: 1.5rem; //24px
-  line-height: 2rem;
+  font-size: 28px; //30px
+  line-height: 39px;
 }
 @mixin _heading3 {
-  font-size: 1.25rem; //20px
-  line-height: 1.75rem;
+  font-size: 23px; //30px
+  line-height: 32px;
 }
 @mixin _heading4 {
-  font-size: 1.125rem; //18px
-  line-height: 1.75rem;
+  font-size: 18px; //30px
+  line-height: 27px;
 }
 //----------------------
 @mixin _body1 {
-  font-size: 1rem; //16px
-  line-height: 1.5rem;
+  font-size: 16px; //16px
+  line-height: 22px;
 }
 @mixin _body2 {
-  font-size: 0.9375rem; //15px
-  line-height: 1.25rem;
+  font-size: 14px; //15px
+  line-height: 20px;
 }
 @mixin _body3 {
-  font-size: 0.8125rem; //13px
-  line-height: 1rem;
+  font-size: 12px; //13px
+  line-height: 17px;
 }
