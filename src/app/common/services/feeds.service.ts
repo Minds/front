@@ -287,6 +287,7 @@ export class FeedsService implements OnDestroy {
 
       if (rehydratedFeed) {
         this.checkForNewPosts();
+
         return;
       }
     }
