@@ -5,6 +5,10 @@ import { Subscription } from 'rxjs';
 import { DynamicBoostExperimentService } from '../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostLocation } from '../../../modules/boost/modal-v2/boost-modal-v2.types';
 
+/**
+ * Used to get a boosted post to be displayed
+ * via the featured content component
+ */
 @Injectable()
 export class FeaturedContentService {
   offset = 0;
@@ -47,6 +51,9 @@ export class FeaturedContentService {
       .fetch();
   }
 
+  /**
+   * Returns the first entity in the specified boost feed
+   * */
   async fetch() {
     return await this.feedsService.feed
       .pipe(
