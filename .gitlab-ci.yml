@@ -348,7 +348,7 @@ dependency_scanning:
       --kube-endpoint PUBLIC_ENDPOINT
 
 .cleanup_review: &cleanup_review
-  image: minds/aws-helm:latest
+  image: minds/oci-cli:latest
   script:
     - <<:*oci_prepare
     - helm del $CI_BUILD_REF_SLUG
@@ -369,7 +369,7 @@ dependency_scanning:
 
 review:start:
   stage: review
-  image: minds/aws-helm:latest
+  image: minds/oci-cli:latest
   script:
     - *oci_prepare
     # Download repo, use same branch name if exists
