@@ -386,7 +386,7 @@ review:start:
       --install \
       --namespace default \
       --reuse-values \
-      --values ./minds/sandbox-values.yaml \
+      --values ./minds/values-sandbox-oke.yaml
       --set front.image.repository=$CI_REGISTRY_IMAGE/server \
       --set-string front.image.tag=$CI_PIPELINE_ID \
       --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
