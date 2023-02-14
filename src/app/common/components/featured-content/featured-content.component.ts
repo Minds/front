@@ -17,9 +17,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { FeaturesService } from '../../../services/features.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 
+/**
+ * Use to insert activity boosts into a feed
+ * (Do not use for sidebar/channel boosts)
+ */
 @Component({
   selector: 'm-featured-content',
   templateUrl: 'featured-content.component.html',
+  styleUrls: ['featured-content.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeaturedContentComponent implements OnInit {
@@ -27,6 +32,7 @@ export class FeaturedContentComponent implements OnInit {
 
   @Input() slot: number = -1;
   @Input() displayOptions = { isFeed: true };
+  @Input() showHeader: boolean = false;
 
   @ViewChild(DynamicHostDirective)
   dynamicHost: DynamicHostDirective;
