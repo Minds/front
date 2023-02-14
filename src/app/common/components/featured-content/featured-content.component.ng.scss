@@ -1,0 +1,26 @@
+@import 'defaults.scss';
+
+:host {
+  header {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  ::ng-deep m-activity {
+    @include m-theme() {
+      border-top: none !important;
+    }
+  }
+}
