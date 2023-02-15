@@ -1,14 +1,16 @@
 @import 'defaults.scss';
 
 :host {
+  .m-featureContent__wrapper {
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
   header {
     padding-top: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
-
-    @include m-theme() {
-      border-top: 1px solid themed($m-borderColor--primary);
-    }
 
     h3 {
       font-size: 20px;
