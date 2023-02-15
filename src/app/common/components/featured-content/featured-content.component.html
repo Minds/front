@@ -1,4 +1,9 @@
 <div *ngIf="entity">
+  <ng-container *ngIf="showHeader"
+    ><header>
+      <h3 i18n="@@FEATURED_CONTENT__BOOSTED_CONTENT_HEADER">Boosted Content</h3>
+    </header></ng-container
+  >
   <ng-container
     *ngIf="entity?.type === 'activity'"
     [m-clientMeta]="{ medium: 'featured-content' }"
