@@ -110,3 +110,8 @@ export type BoostConsoleAdminStatsResponse = {
     controversial_count: number;
   };
 };
+
+// SINGLE BOOST GET RESPONSE
+export type BoostConsoleSingleGetResponse = {
+  boost: Boost;
+};
