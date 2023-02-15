@@ -39,8 +39,6 @@ export class NewsfeedService {
       this.analyticsService.trackEntityView(entity, clientMeta);
     }
 
-    console.log(entity);
-
     // if it's a boost we record the boost view AND the activity view
     if (entity.boosted_guid) {
       let url = `api/v2/analytics/views/boost/${entity.boosted_guid}`;

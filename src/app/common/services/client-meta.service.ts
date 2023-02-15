@@ -13,7 +13,6 @@ export type ClientMetaMedium =
   | 'featured-content'
   | 'single'
   | 'boost'
-  | 'boost'
   | 'modal'
   | null;
 
