@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
@@ -10,7 +11,38 @@ export class BoostService {
     public session: Session,
     private client: Client,
     private boostContractService: BoostContractService
-  ) {}
+  ) {
+    // Set hasLegacyBoosts$ observable
+    this.hasLegacyBoosts$ = combineLatest([
+      this.hasNewsfeedBoosts$,
+      this.hasSidebarBoosts$,
+      this.hasPeerInboxBoosts$,
+      this.hasPeerOutboxBoosts$,
+    ]).pipe(
+      map(
+        ([feed, sidebar, peerInbox, peerOutbox]) =>
+          feed || sidebar || peerInbox || peerOutbox
+      )
+    );
+  }
+
+  readonly hasLegacyBoosts$: Observable<boolean>;
+
+  readonly hasNewsfeedBoosts$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  readonly hasSidebarBoosts$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  readonly hasPeerInboxBoosts$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  readonly hasPeerOutboxBoosts$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   /**
    * Returns a promise with a collection of boosts.
@@ -181,4 +213,50 @@ export class BoostService {
    * Returns true if the transactionid indicates that the transaction is onChain;
    */
   isOnChain = (boost: any) => boost.transactionId.startsWith('0x');
+
+  // --------------------------------------------------------
+  // Check for legacy boosts
+  // --------------------------------------------------------
+
+  /**
+   * Checks if the user has any boosts in the legacy (pre-dynamic) console
+   */
+  checkForLegacyBoosts(): void {
+    this.checkForNewsfeedBoostHistory();
+    this.checkForSidebarBoostHistory();
+    this.checkForPeerInboxBoosts();
+    this.checkForPeerOutboxBoosts();
+  }
+
+  async checkForNewsfeedBoostHistory(): Promise<void> {
+    await this.load('newsfeed', '', {}).then(({ boosts, loadNext }) => {
+      if (boosts.length > 0) {
+        this.hasNewsfeedBoosts$.next(true);
+      }
+    });
+  }
+
+  async checkForSidebarBoostHistory(): Promise<void> {
+    await this.load('content', '', {}).then(({ boosts, loadNext }) => {
+      if (boosts.length > 0) {
+        this.hasSidebarBoosts$.next(true);
+      }
+    });
+  }
+
+  async checkForPeerInboxBoosts(): Promise<void> {
+    await this.load('peer', 'inbox', {}).then(({ boosts, loadNext }) => {
+      if (boosts.length > 0) {
+        this.hasPeerInboxBoosts$.next(true);
+      }
+    });
+  }
+
+  async checkForPeerOutboxBoosts(): Promise<void> {
+    await this.load('peer', 'outbox', {}).then(({ boosts, loadNext }) => {
+      if (boosts.length > 0) {
+        this.hasPeerOutboxBoosts$.next(true);
+      }
+    });
+  }
 }
