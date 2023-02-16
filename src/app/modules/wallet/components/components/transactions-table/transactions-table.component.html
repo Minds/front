@@ -26,7 +26,12 @@
 
             <!-- BOOSTS -->
             <ng-template ngSwitchCase="boost">
-              <ng-container *ngIf="!tx.otherUser; else boostOfferTemplate">
+              <ng-container
+                *ngIf="
+                  !tx.otherUser || dynamicBoostExperiment.isActive();
+                  else boostOfferTemplate
+                "
+              >
                 <div class="m-walletTransactionsTable__typeWrapper--boost">
                   <i class="material-icons">trending_up</i
                   ><span>{{ getTypeLabel(tx.type) }}ed Content</span>

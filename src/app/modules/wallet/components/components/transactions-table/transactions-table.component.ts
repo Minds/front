@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DynamicBoostExperimentService } from '../../../../experiments/sub-services/dynamic-boost-experiment.service';
 
 /**
  * Table that displays details about token/usd transactions, grouped by day
@@ -30,7 +31,9 @@ export class WalletTransactionsTableComponent {
     payout: 'Transfer to Bank Account',
   };
 
-  constructor() {}
+  constructor(
+    protected dynamicBoostExperiment: DynamicBoostExperimentService
+  ) {}
 
   getTypeLabel(type) {
     // type or superType - both are used
