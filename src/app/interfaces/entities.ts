@@ -138,6 +138,9 @@ export interface MindsUser {
   require_login?: boolean;
   email_confirmed?: boolean;
   supermind_settings?: SupermindSettings;
+  boosted?: boolean;
+  boosted_guid?: string;
+  urn?: string;
 }
 
 export interface MindsGroup {

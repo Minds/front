@@ -66,6 +66,11 @@
               channel.briefdescription
             }}</span>
             <!-- <span>@userA and @userB are subscribed</span> -->
+            <m-boostedFlag
+              *ngIf="channel.boosted"
+              text="Boosted Channel"
+              size="small"
+            ></m-boostedFlag>
           </div>
           <div class="m-channelRecommendation__subscribeContainer">
             <m-subscribeButton
