@@ -11,6 +11,10 @@
     }
   }
 
+  .m-form__row--label--username {
+    margin: 0;
+  }
+
   .m-form__input--details {
     display: flex;
     flex-flow: row nowrap;
@@ -81,6 +85,10 @@
     @include m-theme() {
       color: themed($m-red) !important;
     }
+  }
+
+  .m-register__error--multiLine {
+    min-height: 40px;
   }
 
   .ng-invalid.ng-dirty {

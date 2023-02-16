@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   NgZone,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -11,7 +12,6 @@ import {
   AbstractControl,
   UntypedFormBuilder,
   UntypedFormGroup,
-  NG_ASYNC_VALIDATORS,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -28,6 +28,7 @@ import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendl
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { PasswordRiskValidator } from '../password-risk.validator';
 import { AnalyticsService } from './../../../services/analytics';
+import { debounceTime, Subscription } from 'rxjs';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -41,7 +42,7 @@ export type Source = 'auth-modal' | 'other' | null;
   templateUrl: 'register.html',
   styleUrls: ['./register.ng.scss'],
 })
-export class RegisterForm implements OnInit {
+export class RegisterForm implements OnInit, OnDestroy {
   @Input() referrer: string;
   @Input() parentId: string = '';
   @Input() showTitle: boolean = false;
@@ -74,6 +75,11 @@ export class RegisterForm implements OnInit {
   @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;
+
+  // subscriptions.
+  private passwordPopoverSubscription: Subscription;
+  private passwordRiskCheckStatusSubscription: Subscription;
+  private usernameTouchedSubscription: Subscription;
 
   constructor(
     public session: Session,
@@ -118,13 +124,37 @@ export class RegisterForm implements OnInit {
       { validators: [this.passwordsMatchValidator] }
     );
 
-    this.form.get('password').valueChanges.subscribe(str => {
-      this.popover.show();
-    });
+    this.passwordPopoverSubscription = this.form
+      .get('password')
+      .valueChanges.subscribe(str => {
+        this.popover.show();
+      });
 
-    this.form.get('password').statusChanges.subscribe((status: any) => {
-      this.passwordRiskCheckStatus = status;
-    });
+    this.passwordRiskCheckStatusSubscription = this.form
+      .get('password')
+      .statusChanges.subscribe((status: any) => {
+        this.passwordRiskCheckStatus = status;
+      });
+
+    this.usernameTouchedSubscription = this.form
+      .get('username')
+      .valueChanges.pipe(debounceTime(450))
+      .subscribe((username: string) => {
+        const usernameField: AbstractControl<string> = this.form.get(
+          'username'
+        );
+        if (!username) {
+          usernameField.markAsUntouched();
+          return;
+        }
+        usernameField.markAsTouched();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.passwordPopoverSubscription?.unsubscribe();
+    this.passwordRiskCheckStatusSubscription?.unsubscribe();
+    this.usernameTouchedSubscription?.unsubscribe();
   }
 
   // Confirm the two passwords match each other
