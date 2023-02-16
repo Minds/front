@@ -36,7 +36,7 @@
   // when the m-seeLatestPostsButton appears, make .m-goBack's position absolute
   // because m-seeLatestPostsButton has a sticky position and its relative positioning
   // should be defining the vertical spacing rather than .m-goBack's
-  m-seelatestpostsbutton + .m-goBack {
+  m-seeLatestPostsButton.m-seeLatestPostButton--visible + .m-goBack {
     position: absolute;
     top: 60px;
   }

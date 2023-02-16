@@ -9,6 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  HostBinding,
   Inject,
   Input,
   OnDestroy,
@@ -16,7 +17,7 @@ import {
   Output,
   PLATFORM_ID,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 
@@ -64,6 +65,11 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
   @Output('click')
   onClickEmitter = new EventEmitter();
 
+  @HostBinding('class.m-seeLatestPostButton--visible')
+  visible: boolean = false;
+
+  newPostsCountSubscription: Subscription;
+
   /**
    * removes the watcher interval
    */
@@ -73,6 +79,12 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.startPolling();
+
+    this.newPostsCountSubscription = this.feedService.newPostsCount$.subscribe(
+      count => {
+        this.visible = count > 0;
+      }
+    );
   }
 
   ngOnDestroy(): void {
