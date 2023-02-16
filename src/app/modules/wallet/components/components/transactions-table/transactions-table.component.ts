@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { DynamicBoostExperimentService } from '../../../../experiments/sub-services/dynamic-boost-experiment.service';
 
 /**
  * Table that displays details about token/usd transactions, grouped by day
@@ -9,6 +8,9 @@ import { DynamicBoostExperimentService } from '../../../../experiments/sub-servi
  *
  * See it at wallet > tokens > transactions
  */
+
+// The @mindsboost user handles dynamic boosts
+export const DYNAMIC_BOOST_HANDLER_USERNAME = 'mindsboost';
 @Component({
   selector: 'm-walletTransactionsTable',
   templateUrl: './transactions-table.component.html',
@@ -31,9 +33,7 @@ export class WalletTransactionsTableComponent {
     payout: 'Transfer to Bank Account',
   };
 
-  constructor(
-    protected dynamicBoostExperiment: DynamicBoostExperimentService
-  ) {}
+  constructor() {}
 
   getTypeLabel(type) {
     // type or superType - both are used
@@ -42,5 +42,12 @@ export class WalletTransactionsTableComponent {
     } else {
       return this.typeLabels[type];
     }
+  }
+
+  // The boost was dynamic (aka v3) if it was handled by the @mindsboost account
+  isDynamicBoost(tx): boolean {
+    if (!tx.otherUser) return false;
+
+    return tx.otherUser.username === DYNAMIC_BOOST_HANDLER_USERNAME;
   }
 }

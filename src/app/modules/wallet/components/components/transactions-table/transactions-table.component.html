@@ -28,7 +28,7 @@
             <ng-template ngSwitchCase="boost">
               <ng-container
                 *ngIf="
-                  !tx.otherUser || dynamicBoostExperiment.isActive();
+                  !tx.otherUser || isDynamicBoost(tx);
                   else boostOfferTemplate
                 "
               >
