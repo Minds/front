@@ -1,13 +1,6 @@
 import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
-import {
-  Component,
-  HostBinding,
-  Input,
-  OnInit,
-  Optional,
-  SkipSelf,
-} from '@angular/core';
+import { Component, Input, OnInit, Optional, SkipSelf } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
@@ -16,6 +9,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
+import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -75,7 +69,7 @@ export class ChannelRecommendationComponent implements OnInit {
   /**
    * How many recommendations to show at a time?
    */
-  listSize$: BehaviorSubject<number> = new BehaviorSubject(3);
+  listSize$: BehaviorSubject<number> = new BehaviorSubject(4);
 
   constructor(
     private api: ApiService,
@@ -83,6 +77,7 @@ export class ChannelRecommendationComponent implements OnInit {
     private recentSubscriptions: RecentSubscriptionsService,
     private dismissal: DismissalService,
     private analyticsService: AnalyticsService,
+    private newsfeedService: NewsfeedService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
   ) {}
 
@@ -111,6 +106,20 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   trackView(channel: MindsUser, position: number) {
     if (this.parentClientMeta) {
+      if (channel.boosted_guid) {
+        this.newsfeedService.recordView(
+          channel,
+          true,
+          null,
+          this.parentClientMeta.build({
+            position,
+            medium: 'channel-recs',
+            campaign: channel.urn,
+          })
+        );
+        return;
+      }
+
       this.analyticsService.trackEntityView(
         channel,
         this.parentClientMeta.build({
@@ -144,11 +153,11 @@ export class ChannelRecommendationComponent implements OnInit {
    * When a recommendation is subscribed, remove it from the list——unless the list length is small
    */
   onSubscribed(user): void {
-    if (this.listSize$.getValue() === 3) {
+    if (this.listSize$.getValue() === 4) {
       this.listSize$.next(5);
     }
 
-    if (this.recommendations$.getValue().length <= 3) {
+    if (this.recommendations$.getValue().length <= 4) {
       return;
     }
 

@@ -36,7 +36,6 @@ import { ActivityBadgesComponent } from './badges/badges.component';
 import { ActivityPermalinkComponent } from './permalink/permalink.component';
 import { ActivityViewsComponent } from './views/views.component';
 import { ReadMoreModule } from '../../../common/read-more/v2/read-more.module';
-import { ActivityBoostedFlagComponent } from './flag/boosted-flag/boosted-flag.component';
 import { ActivityMultiImageComponent } from './content/images/multi-image.component';
 import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
 import { ActivitySupermindReplyLinkComponent } from './supermind-reply-link/supermind-reply-link.component';
@@ -78,7 +77,6 @@ import { ComposerModule } from '../../composer/composer.module';
     ActivityBoostButtonComponent,
     ActivityRelativeTimeSpanComponent,
     ActivityFlagComponent,
-    ActivityBoostedFlagComponent,
     ActivityBadgesComponent,
     ActivityPermalinkComponent,
     ActivityViewsComponent,
@@ -86,10 +84,6 @@ import { ComposerModule } from '../../composer/composer.module';
     ActivitySupermindReplyLinkComponent,
   ],
   providers: [ActivityModalCreatorService],
-  exports: [
-    ActivityComponent,
-    ActivityRemindButtonComponent,
-    ActivityBoostedFlagComponent,
-  ],
+  exports: [ActivityComponent, ActivityRemindButtonComponent],
 })
 export class ActivityModule {}
