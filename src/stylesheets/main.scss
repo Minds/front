@@ -46,6 +46,12 @@ p {
   word-wrap: break-word;
 }
 
+a {
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}
+
 .m-noshadow {
   box-shadow: 0 0 0 !important;
 }

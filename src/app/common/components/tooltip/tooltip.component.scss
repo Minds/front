@@ -20,8 +20,8 @@ m-tooltip {
   text-align: left;
   text-transform: none;
   @include m-theme() {
-    color: $white;
-    background: $blue;
+    color: $grey-900;
+    background: $yellow-500;
   }
 
   ul {
@@ -61,7 +61,7 @@ m-tooltip {
   bottom: -5px;
 
   @include m-theme() {
-    background: $blue;
+    background: $yellow-500;
   }
 
   &.m-tooltip__triangle--top {

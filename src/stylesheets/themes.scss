@@ -57,6 +57,7 @@ $yellow-200: #ffecb6;
 $yellow-300: #ffe391;
 $yellow-400: #ffd96d;
 $yellow-500: #ffd048;
+$yellow-500-alt: #db9100;
 $yellow-600: #d4ad3a;
 $yellow-700: #a9892b;
 $yellow-800: #7f661d;
@@ -152,7 +153,9 @@ light: (
   m-overlay: rgba(138, 142, 150, 0.25),
   m-alert: #BC584B,
   m-positive: #95c064,
-  m-action: $yellow-500, 
+  m-action: $yellow-500-alt,
+  m-action--contrast: $yellow-500,
+
   // legacy colors
   m-grey-900: $grey-900,
   m-grey-800: $grey-800,
@@ -166,18 +169,18 @@ light: (
   m-grey-100: $grey-100,
   m-grey-50: $grey-50,
 
-  m-blue: $yellow-500,
-  m-blue--contrast: $yellow-800,
+  m-blue: $yellow-500-alt,
+  m-blue--contrast: $yellow-500,
   m-aqua: $green-300,
   m-green-dark: $green-700,
   m-green: $green-500,
   m-green-light: $green-200,
-  m-amber-dark: $yellow-800,
-  m-amber: $yellow-500,
+  m-amber-dark: $yellow-700,
+  m-amber: $yellow-500-alt,
   m-amber-medium: $yellow-600,
   m-amber-light: $yellow-200,
   m-red-dark: $red-700,
-  m-red: $red-500,
+  m-red: $red-600,
   m-red-light: $red-200,
   m-black: $black,
   m-black-always: $black,
@@ -212,14 +215,14 @@ dark: (
   m-bgColor--btnHover: #343c44,
   m-bgColor--btnHoverLightAlways: #f0f3f7,
   m-bgColor--btnActive: #48525b,
-  m-borderColor--primary: $grey-800,
-  m-borderColor--secondary: $grey-700,
-  m-borderColor--tertiary: $grey-600,
+  m-borderColor--primary: $grey-700,
+  m-borderColor--secondary: $grey-600,
+  m-borderColor--tertiary: $grey-500,
   m-overlay: rgba(0, 0, 0, 0.5),
   m-alert: #FD8B7C,
   m-positive: #95c064,
   m-action: $yellow-500, 
-  m-action--contrast: $yellow-800,
+  m-action--contrast: $yellow-400,
   // legacy colors
   // legacy colors
   m-grey-900: $grey-900,
@@ -241,7 +244,7 @@ dark: (
   m-marketing-bg-colored-gradient-start: #4e5965,
   m-marketing-bg-colored-gradient-end: #58565c,
   m-blue: $yellow-500,
-  m-blue--contrast: $yellow-800,
+  m-blue--contrast: $yellow-400,
   m-aqua: $green-300,
   m-green-dark: $green-200,
   m-green: $green-500,
