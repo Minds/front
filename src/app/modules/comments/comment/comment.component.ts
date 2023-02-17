@@ -41,6 +41,7 @@ import { AutocompleteSuggestionsService } from '../../suggestions/services/autoc
 import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
+import { ShareModalComponent } from '../../modals/share/share';
 
 @Component({
   selector: 'm-comment',
@@ -575,5 +576,18 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   // Very new comments (less than 10s old) should be expanded for owner by default
   get disableReadMore(): boolean {
     return this.isOwner && this.commentAgeOnLoadMs < 10000;
+  }
+
+  /**
+   * Toggle share modal
+   */
+  async openShareModal(): Promise<void> {
+    return this.modalService.present(ShareModalComponent, {
+      data: {
+        url: this.entity.url,
+        commentUrn: this.comment.urn,
+      },
+      modalDialogClass: 'm-overlayModal__share',
+    }).result;
   }
 }

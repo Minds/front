@@ -481,6 +481,11 @@
           class="m-commentToolbarButton"
           [object]="comment"
         ></minds-button-thumbs-down>
+        <div class="m-commentToolbarButton">
+          <a (click)="openShareModal()"
+            ><i class="material-icons">ios_share</i></a
+          >
+        </div>
         <div
           class="m-commentToolbarButton"
           (click)="toggleReplies()"

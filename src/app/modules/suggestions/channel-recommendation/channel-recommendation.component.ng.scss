@@ -77,10 +77,16 @@
       padding: 0;
       list-style: none;
 
+      // all but last child
+      > * + * {
+        section {
+          padding-top: $spacing6;
+        }
+      }
+
       li section {
         display: flex;
         flex-direction: row;
-        padding-bottom: $minds-margin * 2;
 
         .m-channelRecommendation__avatarContainer {
           margin-right: $activityAvatarSpacingRight--feed;
@@ -159,6 +165,10 @@
             @include m-theme() {
               color: themed($m-textColor--secondary);
             }
+          }
+
+          m-boostedFlag {
+            margin-top: 4px;
           }
         }
         .m-channelRecommendation__subscribeContainer {
