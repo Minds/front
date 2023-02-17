@@ -9,7 +9,18 @@
     text-decoration: none;
   }
 
-  i {
+  &.m-boostFlag--small {
+    i {
+      font-size: 16px;
+      padding-right: $spacing1;
+    }
+
+    span {
+      @include body3Regular;
+    }
+  }
+
+  &.m-boostFlag--medium i {
     font-size: 22px;
     line-height: 20px;
     padding-right: $spacing2;

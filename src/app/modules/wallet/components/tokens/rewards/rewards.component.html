@@ -289,14 +289,11 @@
             (click)="onTransferClick($event)"
             >Transfer</a
           >
+          <p class="m-walletTokenEarnings__subheaderText">
+            Daily metrics are updated every day at 12:00 AM UTC
+          </p>
         </td>
-        <td>
-          <m-wallet__currencyValue
-            [value]="data.holding.token_amount"
-            hideCurrency="true"
-            currency="tokens"
-          ></m-wallet__currencyValue>
-        </td>
+        <td>-</td>
         <td>
           <m-wallet__currencyValue
             [value]="data.holding.alltime_summary.token_amount"
