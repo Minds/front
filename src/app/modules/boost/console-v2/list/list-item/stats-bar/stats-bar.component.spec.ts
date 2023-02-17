@@ -28,10 +28,6 @@ describe('BoostConsoleStatsBarComponent', () => {
             },
           },
         },
-        {
-          provide: BoostModalLazyService,
-          useValue: MockService(BoostModalLazyService),
-        },
       ],
     }).compileComponents();
   });
