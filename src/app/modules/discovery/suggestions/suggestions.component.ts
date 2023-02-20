@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
 import { DiscoveryService } from '../discovery.service';
 import { Location } from '@angular/common';
-import { Session } from '../../../services/session';
-import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 /**
  * List of suggested groups or users.
@@ -37,27 +35,12 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
     private route: ActivatedRoute,
     private service: SuggestionsService,
     private discoveryService: DiscoveryService,
-    public location: Location,
-    private session: Session,
-    private authModal: AuthModalService
+    public location: Location
   ) {
     super();
   }
 
   ngOnInit() {
-    if (!this.session.getLoggedInUser()) {
-      this.subscriptions.push(
-        this.session.loggedinEmitter
-          .pipe(filter(Boolean))
-          .subscribe((_: boolean) => {
-            this.loadMore();
-          })
-      );
-
-      this.authModal.open({ formDisplay: 'login' });
-      return;
-    }
-
     this.subscriptions.push(
       combineLatest([this.route.queryParamMap, this.route.url]).subscribe(
         ([queryParamMap, segments]) => {
