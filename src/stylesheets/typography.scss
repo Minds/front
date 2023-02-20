@@ -1,4 +1,6 @@
 // USAGE --------------------
+@use 'sass:math';
+
 
 // .m-myComponent {
 //   @include heading2Medium;
@@ -13,7 +15,11 @@
 $a: -0.0223;
 $b: 0.185;
 $c: -0.1745;
+$e: 2.7813;
 
+@function dynamic-letter-spacing($fontsize) {
+  @return $a + $b * math.pow($e, $c * $fontsize)
+}
 
 //- BUTTONS
 
@@ -131,6 +137,8 @@ $c: -0.1745;
   font-size: 28px; //30px
   line-height: 39px;
 }
+
+//reason for prettier is defnitely using px hard code instead of REM... 
 @mixin _heading3 {
   font-size: 23px; //30px
   line-height: 32px;
@@ -143,6 +151,8 @@ $c: -0.1745;
 @mixin _body1 {
   font-size: 16px; //16px
   line-height: 22px;
+  letter-spacing: (dynamic-letter-spacing(16))
+
 }
 @mixin _body2 {
   font-size: 14px; //15px

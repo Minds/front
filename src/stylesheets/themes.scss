@@ -57,7 +57,7 @@ $yellow-200: #ffecb6;
 $yellow-300: #ffe391;
 $yellow-400: #ffd96d;
 $yellow-500: #ffd048;
-$yellow-500-alt: #db9100;
+$yellow-500-alt: #cca328;
 $yellow-600: #d4ad3a;
 $yellow-700: #a9892b;
 $yellow-800: #7f661d;
@@ -140,8 +140,8 @@ light: (
   m-bgColor--primaryInverted: $grey-900,
   m-bgColor--primaryDarkAlways: $grey-900,
   m-bgColor--primaryAlt: #f2f2f2,
-  m-bgColor--secondary: $grey-100,
-  m-bgColor--secondaryAlt: $grey-100,
+  m-bgColor--secondary: $grey-50,
+  m-bgColor--secondaryAlt: $grey-50,
   m-bgColor--contrast: #d8d8d8,
   m-bgColor--contrastSubtle: #dde4e6,
   m-bgColor--btnHover: #f0f3f7,
@@ -154,8 +154,8 @@ light: (
   m-alert: #BC584B,
   m-positive: #95c064,
   m-action: $yellow-500-alt,
-  m-action--contrast: $yellow-500,
-
+  m-action--contrast: $yellow-700,
+  m-action-text: $grey-50,
   // legacy colors
   m-grey-900: $grey-900,
   m-grey-800: $grey-800,
@@ -170,7 +170,7 @@ light: (
   m-grey-50: $grey-50,
 
   m-blue: $yellow-500-alt,
-  m-blue--contrast: $yellow-500,
+  m-blue--contrast: $yellow-700,
   m-aqua: $green-300,
   m-green-dark: $green-700,
   m-green: $green-500,
@@ -223,6 +223,8 @@ dark: (
   m-positive: #95c064,
   m-action: $yellow-500, 
   m-action--contrast: $yellow-400,
+  m-action-text: $grey-900,
+
   // legacy colors
   // legacy colors
   m-grey-900: $grey-900,
@@ -297,6 +299,7 @@ $m-marketing-bg-colored-gradient-start: 'm-marketing-bg-colored-gradient-start';
 $m-marketing-bg-colored-gradient-end: 'm-marketing-bg-colored-gradient-end';
 $m-blue--contrast: 'm-blue--contrast'; // Used for hovering over blue links, etc.
 $m-blue: 'm-blue';
+$m-action-text: 'm-action-text';
 $m-aqua: 'm-aqua';
 $m-action: 'm-action';
 $m-green-dark: 'm-green-dark';

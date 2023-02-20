@@ -10,6 +10,7 @@
     border-radius: 999px;
     outline: 0;
     font-weight: 700;
+    letter-spacing: 0.16px;
     background-clip: padding-box;
     white-space: nowrap;
 
@@ -85,7 +86,7 @@
       &.m-button--solid {
         @include m-theme() {
           background-color: themed($m-blue);
-          color: themed($m-grey-900);
+          color: themed($m-action-text);
         }
 
         &:not(:disabled) {
