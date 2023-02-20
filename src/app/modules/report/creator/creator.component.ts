@@ -5,6 +5,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ReportService } from './../../../common/services/report.service';
+import { PlusTierUrnService } from '../../../common/services/plus-tier-urn.service';
 
 /**
  * Modal for creating reports of content policy violations
@@ -38,7 +39,7 @@ export class ReportCreatorComponent implements AfterViewInit {
 
   success: boolean = false;
   error: string = '';
-  subjects = this.reportService.reasons;
+  subjects: any[];
 
   next: boolean = false;
 
@@ -50,15 +51,25 @@ export class ReportCreatorComponent implements AfterViewInit {
     private modalService: ModalService,
     private client: Client,
     protected toasterService: ToasterService,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private plusTierUrn: PlusTierUrnService
   ) {}
 
   setModalData(opts: {
-    entity: MindsUser;
+    entity: MindsUser | any;
     onReported?: (guid: number, reason?: number, subreason?: number) => void;
   }) {
     this._opts = opts;
     this.guid = opts.entity ? opts.entity.guid : null;
+
+    const supportTierUrn: string =
+      opts.entity?.wire_threshold?.support_tier?.urn;
+    this.subjects = this.reportService.reasons.filter(reason => {
+      return (
+        reason.value !== 18 ||
+        (supportTierUrn && this.plusTierUrn.isPlusTierUrn(supportTierUrn))
+      );
+    });
   }
 
   ngAfterViewInit() {

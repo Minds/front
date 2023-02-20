@@ -26,6 +26,7 @@ describe('ReportService', () => {
       { value: '3' },
       { value: '4' },
       { value: '5' },
+      { value: '18' },
     ];
 
     (service as any).configs.get.and.returnValue(configValues);
@@ -65,6 +66,12 @@ describe('ReportService', () => {
         label: 'Personal and confidential information',
         description:
           'Sharing or threatening to share private, personal, or confidential information about someone',
+      }),
+      Object({
+        value: '18',
+        reasons: undefined,
+        label: 'Violates Premium Content policy',
+        description: 'Content violates premium content policy',
       }),
     ]);
   });

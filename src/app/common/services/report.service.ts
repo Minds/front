@@ -124,6 +124,10 @@ export class ReportService {
         label = $localize`:@@REPORT__17.1:Hacked account`;
         description = $localize`:@@REPORT_DESCRIPTION__17.1:If an account has been compromised by an unauthorized person or entity`;
         break;
+      case '18':
+        label = $localize`:@@REPORT__18:Violates Premium Content policy`;
+        description = $localize`:@@REPORT_DESCRIPTION__18:Content violates premium content policy`;
+        break;
       case '11':
         label = $localize`:@@REPORT__11:Another reason`;
         description = $localize`:@@REPORT_DESCRIPTION__11:A reason other than one listed`;
