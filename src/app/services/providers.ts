@@ -1,8 +1,8 @@
 import { ApiService } from './../common/api/api.service';
 import { ScrollRestorationService } from './scroll-restoration.service';
 import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location, ViewportScroller } from '@angular/common';
+import { Router } from '@angular/router';
+import { ImageLoaderConfig, IMAGE_LOADER, Location } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
 import { EmbedServiceV2 } from './embedV2.service';
 
@@ -59,6 +59,10 @@ import { ModalService } from './ux/modal.service';
 import { ServiceWorkerService } from '../common/services/service-worker.service';
 import { PushNotificationService } from '../common/services/push-notification.service';
 import { DismissalService } from '../common/services/dismissal.service';
+import {
+  CDN_ASSETS_URL,
+  SITE_URL,
+} from '../common/injection-tokens/url-injection-tokens';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -240,6 +244,22 @@ export const MINDS_PROVIDERS: any[] = [
     provide: ScrollRestorationService,
     useFactory: router => new ScrollRestorationService(router),
     deps: [Router],
+  },
+  {
+    provide: CDN_ASSETS_URL,
+    useFactory: configs => configs.get('cdn_assets_url'),
+    deps: [ConfigsService],
+  },
+  {
+    provide: SITE_URL,
+    useFactory: configs => configs.get('site_url'),
+    deps: [ConfigsService],
+  },
+  {
+    provide: IMAGE_LOADER,
+    useValue: (config: ImageLoaderConfig): string => {
+      return config.width ? `${config.src}?width=${config.width}` : config.src;
+    },
   },
   ThemeService,
   AuthService,

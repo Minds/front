@@ -1,5 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ConfigsService } from '../../../common/services/configs.service';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Input,
+} from '@angular/core';
+import { CDN_ASSETS_URL } from '../../../common/injection-tokens/url-injection-tokens';
 
 /**
  * A collection of images related to news media outlets
@@ -14,9 +19,5 @@ import { ConfigsService } from '../../../common/services/configs.service';
 export class MarketingAsFeaturedInV2Component {
   @Input() inThePress: boolean = false;
 
-  readonly cdnAssetsUrl: string;
-
-  constructor(private configs: ConfigsService) {
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-  }
+  constructor(@Inject(CDN_ASSETS_URL) protected cdnAssetsUrl: string) {}
 }

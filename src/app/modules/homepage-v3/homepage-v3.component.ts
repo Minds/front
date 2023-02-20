@@ -1,5 +1,5 @@
 import { AppPromptService } from './../app-prompt/app-prompt.service';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -21,6 +21,10 @@ import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import isMobileOrTablet from '../../../app/helpers/is-mobile-or-tablet';
 import { ExperimentsService } from '../experiments/experiments.service';
+import {
+  CDN_ASSETS_URL,
+  SITE_URL,
+} from '../../common/injection-tokens/url-injection-tokens';
 
 /**
  * Home page component
@@ -33,8 +37,6 @@ import { ExperimentsService } from '../experiments/experiments.service';
 export class HomepageV3Component implements OnInit {
   @ViewChild('registerForm') registerForm: RegisterForm;
 
-  readonly cdnAssetsUrl: string;
-  readonly siteUrl: string;
   readonly NEURAL_BACKGROUND_BLURHASH =
     '|03u=zF}U]rWRjt6W;s:Na=G$*F2s.jtR*xFR*s-znM{o~OrofaeWBoJWqPBoeVssUWBjYW=ogoMRibbt7R*xDR,flj?fPX9jFjYofW=oMR*n$o0bbW=n%WBoJWqj[j[ayWBoJW=fko0ayoKa}bHs.R*o0bIbIsmS2j@fk';
 
@@ -50,7 +52,6 @@ export class HomepageV3Component implements OnInit {
     public router: Router,
     public navigation: NavigationService,
     public session: Session,
-    configs: ConfigsService,
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
     private pageLayoutService: PageLayoutService,
@@ -58,11 +59,10 @@ export class HomepageV3Component implements OnInit {
     private authRedirectService: AuthRedirectService,
     private appPromptService: AppPromptService,
     private experimentsService: ExperimentsService,
-    @Inject(PLATFORM_ID) protected platformId: Object
-  ) {
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-    this.siteUrl = configs.get('site_url');
-  }
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    @Inject(CDN_ASSETS_URL) protected cdnAssetsUrl: string,
+    @Inject(SITE_URL) protected siteUrl: string
+  ) {}
 
   ngOnInit() {
     if (this.session.isLoggedIn()) {
