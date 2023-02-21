@@ -278,13 +278,7 @@ export const MINDS_PROVIDERS: any[] = [
     provide: IMAGE_LOADER,
     useValue: (config: ImageLoaderConfig): string => {
       // TODO: server-side support for config.width parameter.
-      if (config.src.startsWith('http')) {
-        return config.src;
-      }
-      const baseUrl: string = config.src.startsWith('assets/')
-        ? AppInjector.get(CDN_ASSETS_URL)
-        : AppInjector.get(CDN_URL);
-      return `${baseUrl}${config.src}`;
+      return config.src;
     },
   },
   ThemeService,
