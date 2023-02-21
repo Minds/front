@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  Input,
-} from '@angular/core';
-import { CDN_ASSETS_URL } from '../../../common/injection-tokens/url-injection-tokens';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 /**
  * A collection of images related to news media outlets
