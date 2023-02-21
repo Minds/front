@@ -2,7 +2,12 @@ import { ApiService } from './../common/api/api.service';
 import { ScrollRestorationService } from './scroll-restoration.service';
 import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { ImageLoaderConfig, IMAGE_LOADER, Location } from '@angular/common';
+import {
+  ImageLoaderConfig,
+  IMAGE_CONFIG,
+  IMAGE_LOADER,
+  Location,
+} from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
 import { EmbedServiceV2 } from './embedV2.service';
 
@@ -263,13 +268,23 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [ConfigsService],
   },
   {
+    provide: IMAGE_CONFIG,
+    useValue: {
+      // TODO: Customize breakpoints when adding support for width parameter.
+      breakpoints: [15360],
+    },
+  },
+  {
     provide: IMAGE_LOADER,
     useValue: (config: ImageLoaderConfig): string => {
+      // TODO: server-side support for config.width parameter.
+      if (config.src.startsWith('http')) {
+        return config.src;
+      }
       const baseUrl: string = config.src.startsWith('assets/')
         ? AppInjector.get(CDN_ASSETS_URL)
         : AppInjector.get(CDN_URL);
-      const url: string = `${baseUrl}${config.src}`;
-      return config.width ? `${url}?width=${config.width}` : url;
+      return `${baseUrl}${config.src}`;
     },
   },
   ThemeService,
