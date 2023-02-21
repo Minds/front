@@ -14,15 +14,11 @@ body .m-theme--wrapper.m-theme--wrapper__light {
   background-color: #fff; // $m-bgColor--primary (light)
 }
 
-
 body.m-theme__dark,
 body .m-theme--wrapper.m-theme--wrapper__dark {
   color: rgba(255, 255, 255, 0.87);
   background-color: #1f252c; //$m-bgColor--primary (dark)
 }
-
-
-
 
 // 2020 theme overrides
 body.m-theme__light.m-theme__2020,

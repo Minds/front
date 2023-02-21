@@ -30,10 +30,8 @@
   @return map-get($theme-map, $color-name);
 }
 
-
 // Dark theme lighten percentage
 $percent: 5%;
-
 
 //color palette -- newly generated
 
@@ -62,7 +60,6 @@ $yellow-600: #d4ad3a;
 $yellow-700: #a9892b;
 $yellow-800: #7f661d;
 $yellow-900: #54420e;
-
 
 //blues
 
@@ -101,7 +98,7 @@ $green-700: #007163;
 $green-800: #004b42;
 $green-900: #002621;
 
-//purples 
+//purples
 $purple-50: #f5e8f7;
 $purple-100: #ebd3f0;
 $purple-200: #d8a9e1;
@@ -112,7 +109,6 @@ $purple-600: #80228f;
 $purple-700: #601a6b;
 $purple-800: #401148;
 $purple-900: #200924;
-
 
 //system-defaults and external brands
 
@@ -130,145 +126,142 @@ $blue: #4a72ff;
 //theme maps
 
 $themes: (
-light: (
-  m-textColor--primary: $grey-900,
-  m-textColor--primaryInverted: $grey-50,
-  m-textColor--secondary: $grey-700,
-  m-textColor--secondaryInverted: $grey-400,
-  m-textColor--tertiary: $grey-600,
-  m-bgColor--primary: #ffffff,
-  m-bgColor--primaryInverted: $grey-900,
-  m-bgColor--primaryDarkAlways: $grey-900,
-  m-bgColor--primaryAlt: #f2f2f2,
-  m-bgColor--secondary: $grey-50,
-  m-bgColor--secondaryAlt: $grey-50,
-  m-bgColor--contrast: #d8d8d8,
-  m-bgColor--contrastSubtle: #dde4e6,
-  m-bgColor--btnHover: #f0f3f7,
-  m-bgColor--btnHoverLightAlways: #f0f3f7,
-  m-bgColor--btnActive: #dadfe5,
-  m-borderColor--primary: $grey-200,
-  m-borderColor--secondary: $grey-200,
-  m-borderColor--tertiary:  $grey-100,
-  m-overlay: rgba(138, 142, 150, 0.25),
-  m-alert: #BC584B,
-  m-positive: #95c064,
-  m-action: $yellow-500-alt,
-  m-action--contrast: $yellow-700,
-  m-action-text: $grey-50,
-  // legacy colors
-  m-grey-900: $grey-900,
-  m-grey-800: $grey-800,
-  m-grey-700: $grey-700,
-  m-grey-600: $grey-600,
-  m-grey-500: $grey-500,
-  m-grey: $grey-500,
-  m-grey-400: $grey-400,
-  m-grey-300: $grey-300,
-  m-grey-200: $grey-200,
-  m-grey-100: $grey-100,
-  m-grey-50: $grey-50,
-
-  m-blue: $yellow-500-alt,
-  m-blue--contrast: $yellow-700,
-  m-aqua: $green-300,
-  m-green-dark: $green-700,
-  m-green: $green-500,
-  m-green-light: $green-200,
-  m-amber-dark: $yellow-700,
-  m-amber: $yellow-500-alt,
-  m-amber-medium: $yellow-600,
-  m-amber-light: $yellow-200,
-  m-red-dark: $red-700,
-  m-red: $red-600,
-  m-red-light: $red-200,
-  m-black: $black,
-  m-black-always: $black,
-  m-white: $white,
-  m-white-always: $white,
-  m-marketing-bg-gradient-start: #f9fafc,
-  m-marketing-bg-colored-gradient-start: #f6eded,
-  m-marketing-bg-colored-gradient-end: #f5f5fe,
-  m-warn-bg:  $yellow-200,
-  m-warn-fg: $black,
-  m-facebook: $facebook,
-  m-messenger: $messenger,
-  m-twitter: $twitter,
-  m-whatsapp: $whatsapp,
-  m-linkedin: $linkedin,
-  m-activity--hover: lighten($grey-500, $percent),
-),
-dark: (
-  m-textColor--primary: $grey-50,
-  m-textColor--primaryInverted: $grey-900,
-  m-textColor--secondary: $grey-300,
-  m-textColor--secondaryInverted: $grey-50,
-  m-textColor--tertiary: $grey-400,
-  m-bgColor--primary: $grey-900,
-  m-bgColor--primaryInverted: #ffffff,
-  m-bgColor--primaryDarkAlways: $grey-900,
-  m-bgColor--primaryAlt: #1e242a,
-  m-bgColor--secondary: $grey-800,
-  m-bgColor--secondaryAlt: #232b31,
-  m-bgColor--contrast: #d8d8d8,
-  m-bgColor--contrastSubtle: #283138,
-  m-bgColor--btnHover: #343c44,
-  m-bgColor--btnHoverLightAlways: #f0f3f7,
-  m-bgColor--btnActive: #48525b,
-  m-borderColor--primary: $grey-700,
-  m-borderColor--secondary: $grey-600,
-  m-borderColor--tertiary: $grey-500,
-  m-overlay: rgba(0, 0, 0, 0.5),
-  m-alert: #FD8B7C,
-  m-positive: #95c064,
-  m-action: $yellow-500, 
-  m-action--contrast: $yellow-400,
-  m-action-text: $grey-900,
-
-  // legacy colors
-  // legacy colors
-  m-grey-900: $grey-900,
-  m-grey-800: $grey-800,
-  m-grey-700: $grey-700,
-  m-grey-600: $grey-600,
-  m-grey-500: $grey-500,
-  m-grey: $grey-500,
-  m-grey-400: $grey-400,
-  m-grey-300: $grey-300,
-  m-grey-200: $grey-200,
-  m-grey-100: $grey-100,
-  m-grey-50: $grey-50,
-  m-black: $white,
-  m-black-always: $black,
-  m-white: #202527,
-  m-white-always: $white,
-  m-marketing-bg-gradient-start: #202527,
-  m-marketing-bg-colored-gradient-start: #4e5965,
-  m-marketing-bg-colored-gradient-end: #58565c,
-  m-blue: $yellow-500,
-  m-blue--contrast: $yellow-400,
-  m-aqua: $green-300,
-  m-green-dark: $green-200,
-  m-green: $green-500,
-  m-green-light: $green-700,
-  m-amber-dark: $yellow-200,
-  m-amber: $yellow-600,
-  m-amber-medium: $yellow-500,
-  m-amber-light: $yellow-800,
-  m-red-dark: $red-200,
-  m-red: $red-500,
-  m-red-light: $red-700,
-  m-warn-bg: $yellow-800,
-  m-warn-fg: $white,
-  m-facebook: $facebook,
-  m-messenger: $messenger,
-  m-twitter: $twitter,
-  m-whatsapp: $whatsapp,
-  m-linkedin: $linkedin,
-  m-activity--hover: lighten($grey-400, $percent),
-),
+  light: (
+    m-textColor--primary: $grey-900,
+    m-textColor--primaryInverted: $grey-50,
+    m-textColor--secondary: $grey-700,
+    m-textColor--secondaryInverted: $grey-400,
+    m-textColor--tertiary: $grey-600,
+    m-bgColor--primary: #ffffff,
+    m-bgColor--primaryInverted: $grey-900,
+    m-bgColor--primaryDarkAlways: $grey-900,
+    m-bgColor--primaryAlt: #f2f2f2,
+    m-bgColor--secondary: $grey-50,
+    m-bgColor--secondaryAlt: $grey-50,
+    m-bgColor--contrast: #d8d8d8,
+    m-bgColor--contrastSubtle: #dde4e6,
+    m-bgColor--btnHover: #f0f3f7,
+    m-bgColor--btnHoverLightAlways: #f0f3f7,
+    m-bgColor--btnActive: #dadfe5,
+    m-borderColor--primary: $grey-200,
+    m-borderColor--secondary: $grey-200,
+    m-borderColor--tertiary: $grey-100,
+    m-overlay: rgba(138, 142, 150, 0.25),
+    m-alert: #bc584b,
+    m-positive: #95c064,
+    m-action: $yellow-500-alt,
+    m-action--contrast: $yellow-700,
+    m-action-text: $grey-50,
+    // legacy colors
+      m-grey-900: $grey-900,
+    m-grey-800: $grey-800,
+    m-grey-700: $grey-700,
+    m-grey-600: $grey-600,
+    m-grey-500: $grey-500,
+    m-grey: $grey-500,
+    m-grey-400: $grey-400,
+    m-grey-300: $grey-300,
+    m-grey-200: $grey-200,
+    m-grey-100: $grey-100,
+    m-grey-50: $grey-50,
+    m-blue: $yellow-500-alt,
+    m-blue--contrast: $yellow-700,
+    m-aqua: $green-300,
+    m-green-dark: $green-700,
+    m-green: $green-500,
+    m-green-light: $green-200,
+    m-amber-dark: $yellow-700,
+    m-amber: $yellow-500-alt,
+    m-amber-medium: $yellow-600,
+    m-amber-light: $yellow-200,
+    m-red-dark: $red-700,
+    m-red: $red-600,
+    m-red-light: $red-200,
+    m-black: $black,
+    m-black-always: $black,
+    m-white: $white,
+    m-white-always: $white,
+    m-marketing-bg-gradient-start: #f9fafc,
+    m-marketing-bg-colored-gradient-start: #f6eded,
+    m-marketing-bg-colored-gradient-end: #f5f5fe,
+    m-warn-bg: $yellow-200,
+    m-warn-fg: $black,
+    m-facebook: $facebook,
+    m-messenger: $messenger,
+    m-twitter: $twitter,
+    m-whatsapp: $whatsapp,
+    m-linkedin: $linkedin,
+    m-activity--hover: lighten($grey-500, $percent),
+  ),
+  dark: (
+    m-textColor--primary: $grey-50,
+    m-textColor--primaryInverted: $grey-900,
+    m-textColor--secondary: $grey-300,
+    m-textColor--secondaryInverted: $grey-50,
+    m-textColor--tertiary: $grey-400,
+    m-bgColor--primary: $grey-900,
+    m-bgColor--primaryInverted: #ffffff,
+    m-bgColor--primaryDarkAlways: $grey-900,
+    m-bgColor--primaryAlt: #1e242a,
+    m-bgColor--secondary: $grey-800,
+    m-bgColor--secondaryAlt: #232b31,
+    m-bgColor--contrast: #d8d8d8,
+    m-bgColor--contrastSubtle: #283138,
+    m-bgColor--btnHover: #343c44,
+    m-bgColor--btnHoverLightAlways: #f0f3f7,
+    m-bgColor--btnActive: #48525b,
+    m-borderColor--primary: $grey-700,
+    m-borderColor--secondary: $grey-600,
+    m-borderColor--tertiary: $grey-500,
+    m-overlay: rgba(0, 0, 0, 0.5),
+    m-alert: #fd8b7c,
+    m-positive: #95c064,
+    m-action: $yellow-500,
+    m-action--contrast: $yellow-400,
+    m-action-text: $grey-900,
+    // legacy colors
+      // legacy colors
+      m-grey-900: $grey-900,
+    m-grey-800: $grey-800,
+    m-grey-700: $grey-700,
+    m-grey-600: $grey-600,
+    m-grey-500: $grey-500,
+    m-grey: $grey-500,
+    m-grey-400: $grey-400,
+    m-grey-300: $grey-300,
+    m-grey-200: $grey-200,
+    m-grey-100: $grey-100,
+    m-grey-50: $grey-50,
+    m-black: $white,
+    m-black-always: $black,
+    m-white: #202527,
+    m-white-always: $white,
+    m-marketing-bg-gradient-start: #202527,
+    m-marketing-bg-colored-gradient-start: #4e5965,
+    m-marketing-bg-colored-gradient-end: #58565c,
+    m-blue: $yellow-500,
+    m-blue--contrast: $yellow-400,
+    m-aqua: $green-300,
+    m-green-dark: $green-200,
+    m-green: $green-500,
+    m-green-light: $green-700,
+    m-amber-dark: $yellow-200,
+    m-amber: $yellow-600,
+    m-amber-medium: $yellow-500,
+    m-amber-light: $yellow-800,
+    m-red-dark: $red-200,
+    m-red: $red-500,
+    m-red-light: $red-700,
+    m-warn-bg: $yellow-800,
+    m-warn-fg: $white,
+    m-facebook: $facebook,
+    m-messenger: $messenger,
+    m-twitter: $twitter,
+    m-whatsapp: $whatsapp,
+    m-linkedin: $linkedin,
+    m-activity--hover: lighten($grey-400, $percent),
+  ),
 );
-
 
 //enable use of vars in scss (in addition to strings)
 // e.g. background-color: themed($m-grey-950)
@@ -288,7 +281,6 @@ $m-grey-300: 'm-grey-300';
 $m-grey-200: 'm-grey-200';
 $m-grey-100: 'm-grey-100';
 $m-grey-50: 'm-grey-50';
-
 
 $m-black: 'm-black';
 $m-black-always: 'm-black-always';
@@ -346,9 +338,7 @@ $m-alert: 'm-alert';
 $m-positive: 'm-positive';
 $m-activity--hover: 'm-activity--hover';
 
-
-
-//related radii tokens.  
+//related radii tokens.
 
 $m-borderRadius: 2px;
 $m-boxShadowBlur: 10px;
@@ -357,6 +347,6 @@ $m-boxShadowOffset: 2px;
 // Helpers
 
 @function checkmark-image($color) {
-$urlEncodedColor: str-replace('' + $color, '#', '%23'); // `#` signs are bad
-@return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" fill="#{$urlEncodedColor}"/></svg>';
+  $urlEncodedColor: str-replace('' + $color, '#', '%23'); // `#` signs are bad
+  @return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" fill="#{$urlEncodedColor}"/></svg>';
 }

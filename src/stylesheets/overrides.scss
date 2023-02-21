@@ -59,7 +59,6 @@ a {
   }
 }
 
-
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -633,11 +632,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
         rgba(themed($m-white), 0.7),
         rgba(themed($m-white), 0.7)
       ),
-      linear-gradient(
-        to right,
-        themed($m-grey-500),
-        themed($m-grey-500)
-      );
+      linear-gradient(to right, themed($m-grey-500), themed($m-grey-500));
   }
 }
 
@@ -652,11 +647,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
           rgba(themed($m-white), 0.7),
           rgba(themed($m-white), 0.7)
         ),
-        linear-gradient(
-          to right,
-          themed($m-grey-500),
-          themed($m-grey-500)
-        );
+        linear-gradient(to right, themed($m-grey-500), themed($m-grey-500));
     }
   }
 }
@@ -669,11 +660,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
         rgba(themed($m-white), 0.9),
         rgba(themed($m-white), 0.9)
       ),
-      linear-gradient(
-        to right,
-        themed($m-grey-500),
-        themed($m-grey-500)
-      );
+      linear-gradient(to right, themed($m-grey-500), themed($m-grey-500));
   }
 }
 

@@ -2,48 +2,47 @@
  * NOTE: these are not relative to app path as we need preloading of the icons
  * IE is not supported
  */
- @import "~@fontsource/inter/400.css";
- @import "~@fontsource/inter/500.css";
- @import "~@fontsource/inter/700.css";
- @import "~@fontsource/inter/900.css";
+@import '~@fontsource/inter/400.css';
+@import '~@fontsource/inter/500.css';
+@import '~@fontsource/inter/700.css';
+@import '~@fontsource/inter/900.css';
 
- body {
-   font-family: "Inter", Helvetica, sans-serif
-  }
+body {
+  font-family: 'Inter', Helvetica, sans-serif;
+}
 
- @font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Material Icons'), local('MaterialIcons-Regular'),
-      url('https://cdn-assets.minds.com/front/fonts/material-icons-v2.woff2')
-        format('woff2'),
-      url('https://cdn-assets.minds.com/front/fonts/material-icons-v2.woff')
-        format('woff');
-  }
-  
-  .material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px; /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-  
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-  
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-  
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-  }
-  
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'),
+    url('https://cdn-assets.minds.com/front/fonts/material-icons-v2.woff2')
+      format('woff2'),
+    url('https://cdn-assets.minds.com/front/fonts/material-icons-v2.woff')
+      format('woff');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
