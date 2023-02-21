@@ -58,13 +58,9 @@ export class DiscoveryFeedsService {
     let algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
 
     if (isPlusPage) {
-      if (!this.featuresService.has('plus-discovery-filter')) {
-        algorithm = this.filter$.value === 'latest' ? 'latest' : 'plusFeed';
-      } else {
-        const allowedPlusAlgorithms = ['top', 'topV2', 'latest'];
-        if (!allowedPlusAlgorithms.includes(algorithm)) {
-          algorithm = 'plusFeed';
-        }
+      const allowedPlusAlgorithms = ['top', 'topV2', 'latest'];
+      if (!allowedPlusAlgorithms.includes(algorithm)) {
+        algorithm = 'plusFeed';
       }
     }
 
