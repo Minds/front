@@ -53,6 +53,7 @@ export class BoostFeedService {
     }
 
     this.feedsService.clear();
-    this.feedsService.fetch();
+    this.initialised = false;
+    this.init();
   }
 }

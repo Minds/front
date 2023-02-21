@@ -1,13 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  filter,
-  first,
-  mergeMap,
-  skip,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { filter, first, mergeMap, skip, switchMap, take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { DynamicBoostExperimentService } from '../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostFeedService } from '../../../modules/newsfeed/services/boost-feed.service';
@@ -29,7 +21,7 @@ export class FeaturedContentService {
   ) {}
 
   public async onInit() {
-    await this.boostFeedService.init();
+    await this.boostFeedService.refreshFeed();
 
     this.feedSubscription = this.boostFeedService.feed$.subscribe(feed => {
       this.feedLength = feed.length;

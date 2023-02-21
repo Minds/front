@@ -186,7 +186,7 @@ export class NewsfeedBoostRotatorComponent {
     try {
       this.inProgress = true;
 
-      await this.boostFeedService.init();
+      await this.boostFeedService.refreshFeed();
 
       this.init = true;
     } catch (e) {
