@@ -69,7 +69,6 @@ import {
   CDN_URL,
   SITE_URL,
 } from '../common/injection-tokens/url-injection-tokens';
-import { AppInjector } from '../app.module';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
