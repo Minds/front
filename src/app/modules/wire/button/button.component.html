@@ -1,12 +1,6 @@
 <button
-  class="m-btn m-btn--action m-btn--slim m-wire-button"
-  [ngClass]="{ 'm-tipButton': features.has('pay') }"
+  class="m-btn m-btn--action m-btn--slim m-wire-button m-tipButton"
   (click)="wire()"
 >
-  <ng-container *ngIf="!features.has('pay'); else tipButton">
-    <i class="ion-icon ion-flash"></i>
-  </ng-container>
-  <ng-template #tipButton>
-    <i class="material-icons">attach_money</i>
-  </ng-template>
+  <i class="material-icons">attach_money</i>
 </button>
