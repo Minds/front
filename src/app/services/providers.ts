@@ -61,8 +61,10 @@ import { PushNotificationService } from '../common/services/push-notification.se
 import { DismissalService } from '../common/services/dismissal.service';
 import {
   CDN_ASSETS_URL,
+  CDN_URL,
   SITE_URL,
 } from '../common/injection-tokens/url-injection-tokens';
+import { AppInjector } from '../app.module';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -246,6 +248,11 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [Router],
   },
   {
+    provide: CDN_URL,
+    useFactory: configs => configs.get('cdn_url'),
+    deps: [ConfigsService],
+  },
+  {
     provide: CDN_ASSETS_URL,
     useFactory: configs => configs.get('cdn_assets_url'),
     deps: [ConfigsService],
@@ -258,7 +265,11 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: IMAGE_LOADER,
     useValue: (config: ImageLoaderConfig): string => {
-      return config.width ? `${config.src}?width=${config.width}` : config.src;
+      const baseUrl: string = config.src.startsWith('assets/')
+        ? AppInjector.get(CDN_ASSETS_URL)
+        : AppInjector.get(CDN_URL);
+      const url: string = `${baseUrl}${config.src}`;
+      return config.width ? `${url}?width=${config.width}` : url;
     },
   },
   ThemeService,

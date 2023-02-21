@@ -1,5 +1,5 @@
 import { AppPromptService } from './../app-prompt/app-prompt.service';
-import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { Session } from '../../services/session';
 import { RegisterForm } from '../forms/register/register';
-import { ConfigsService } from '../../common/services/configs.service';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
@@ -21,10 +20,7 @@ import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import isMobileOrTablet from '../../../app/helpers/is-mobile-or-tablet';
 import { ExperimentsService } from '../experiments/experiments.service';
-import {
-  CDN_ASSETS_URL,
-  SITE_URL,
-} from '../../common/injection-tokens/url-injection-tokens';
+import { SITE_URL } from '../../common/injection-tokens/url-injection-tokens';
 
 /**
  * Home page component
@@ -60,7 +56,6 @@ export class HomepageV3Component implements OnInit {
     private appPromptService: AppPromptService,
     private experimentsService: ExperimentsService,
     @Inject(PLATFORM_ID) protected platformId: Object,
-    @Inject(CDN_ASSETS_URL) protected cdnAssetsUrl: string,
     @Inject(SITE_URL) protected siteUrl: string
   ) {}
 

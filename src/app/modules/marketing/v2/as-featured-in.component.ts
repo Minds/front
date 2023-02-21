@@ -18,6 +18,4 @@ import { CDN_ASSETS_URL } from '../../../common/injection-tokens/url-injection-t
 })
 export class MarketingAsFeaturedInV2Component {
   @Input() inThePress: boolean = false;
-
-  constructor(@Inject(CDN_ASSETS_URL) protected cdnAssetsUrl: string) {}
 }
