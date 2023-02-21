@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { BoostService } from '../../../boost.service';
 import {
   BoostConsoleLocationFilter,
   BoostConsolePaymentMethodFilter,
@@ -12,7 +13,7 @@ import { BoostConsoleService } from '../../services/console.service';
 
 /**
  * Filter bar component for Boost console.
- * Contains both tabs and filters
+ * Contains both tabs and filters, and link to legacy console
  *
  * Changing a filter/tab value changes the url query params only
  */
@@ -56,6 +57,7 @@ export class BoostConsoleFilterBarComponent implements OnInit {
 
   constructor(
     public service: BoostConsoleService,
+    public legacyService: BoostService,
     private adminStats: BoostConsoleAdminStatsService,
     private router: Router
   ) {}

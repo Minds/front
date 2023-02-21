@@ -176,6 +176,7 @@ import { SupermindBadgeComponent } from './components/supermind-badge/supermind-
 import { DynamicBoostExperimentService } from '../modules/experiments/sub-services/dynamic-boost-experiment.service';
 import { PathMatch } from './types/angular.types';
 import { BoostFeedService } from '../modules/newsfeed/services/boost-feed.service';
+import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -275,6 +276,7 @@ const MINDS_COMMON_COMPONENTS = [
   AutocompleteUserInputComponent,
   AddBankPromptComponent,
   ChipBadgeComponent,
+  BoostedFlagComponent,
 ];
 // ------------------------------------
 // ------------------------------------

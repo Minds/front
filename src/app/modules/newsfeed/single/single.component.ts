@@ -134,74 +134,59 @@ export class NewsfeedSingleComponent {
 
     this.inProgress = true;
 
-    this.singleGuidSubscription = this.entitiesService
-      .singleCacheFirst(guid)
-      .pipe(switchMap(activitySubscription => activitySubscription))
-      .subscribe(
-        activity => {
-          if (!activity) {
-            return; // Not yet loaded
-          }
-
-          this.activity = activity;
-
-          switch (this.activity.subtype) {
-            case 'image':
-            case 'video':
-            case 'album':
-              break;
-            case 'blog':
-              break;
-          }
-
-          this.updateMeta();
-
-          if (this.activity.require_login) this.openLoginModal();
-
-          this.inProgress = false;
-
-          if (this.activity.ownerObj) {
-            this.context.set('activity', {
-              label: `@${this.activity.ownerObj.username} posts`,
-              nameLabel: `@${this.activity.ownerObj.username}`,
-              id: this.activity.ownerObj.guid,
-            });
-          } else if (this.activity.owner_guid) {
-            this.context.set('activity', {
-              label: `this user's posts`,
-              id: this.activity.owner_guid,
-            });
-          } else {
-            this.context.reset();
-          }
-        },
-        err => {
-          this.inProgress = false;
-
-          if (err.status === 0) {
-            this.error = 'Sorry, there was a timeout error.';
-          } else {
-            this.error = "Sorry, we couldn't load the activity";
-            this.headersService.setCode(404);
-          }
+    this.singleGuidSubscription = this.loadFromFeedsService(guid).subscribe(
+      activity => {
+        if (!activity) {
+          return; // Not yet loaded
         }
-      );
+
+        this.activity = activity;
+
+        switch (this.activity.subtype) {
+          case 'image':
+          case 'video':
+          case 'album':
+            break;
+          case 'blog':
+            break;
+        }
+
+        this.updateMeta();
+
+        if (this.activity.require_login) this.openLoginModal();
+
+        this.inProgress = false;
+
+        if (this.activity.ownerObj) {
+          this.context.set('activity', {
+            label: `@${this.activity.ownerObj.username} posts`,
+            nameLabel: `@${this.activity.ownerObj.username}`,
+            id: this.activity.ownerObj.guid,
+          });
+        } else if (this.activity.owner_guid) {
+          this.context.set('activity', {
+            label: `this user's posts`,
+            id: this.activity.owner_guid,
+          });
+        } else {
+          this.context.reset();
+        }
+      },
+      err => {
+        this.inProgress = false;
+
+        if (err.status === 0) {
+          this.error = 'Sorry, there was a timeout error.';
+        } else {
+          this.error = "Sorry, we couldn't load the activity";
+          this.headersService.setCode(404);
+        }
+      }
+    );
   }
 
   loadFromFeedsService(guid: string) {
     return this.entitiesService.single(guid);
-  }
-
-  loadLegacy(guid: string) {
-    const fakeEmitter = new EventEmitter();
-
-    this.client
-      .get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
-      .then((response: any) => {
-        fakeEmitter.next(response.activity);
-      });
-
-    return fakeEmitter;
   }
 
   goToPreviousPage(): void {
