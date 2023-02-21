@@ -3,10 +3,10 @@
 <section>
   <img
     alt
+    class="m-homepage__v3__neuralBg"
     ngSrc="assets/homepage/neural.png"
     priority
     fill
-    class="m-homepage__v3__neuralBg"
     [m-blurhash]="NEURAL_BACKGROUND_BLURHASH"
     [m-blurhashFullscreen]="true"
   />
@@ -42,6 +42,7 @@
           <img
             alt="Download Android App"
             ngSrc="assets/homepage/android.png"
+            disableOptimizedSrcset
             width="120"
             height="40"
           />
@@ -53,6 +54,7 @@
           <img
             alt="Download on the App Store"
             ngSrc="assets/homepage/app-store.png"
+            disableOptimizedSrcset
             width="120"
             height="40"
           />
@@ -203,6 +205,7 @@
             alt
             class="m-marketing__imageElement--noPosition"
             ngSrc="assets/homepage/bridge-the-divide.png"
+            disableOptimizedSrcset
             fill
             loading="lazy"
           />
@@ -278,6 +281,7 @@
             alt
             class="m-marketing__imageElement--noPosition"
             ngSrc="assets/homepage/make-sense-of-your-world.png"
+            disableOptimizedSrcset
             fill
             loading="lazy"
           />
@@ -306,6 +310,7 @@
           alt
           class="m-marketing__imageElement--noPosition"
           ngSrc="assets/homepage/earn-crypto.png"
+          disableOptimizedSrcset
           fill
           loading="lazy"
         />
