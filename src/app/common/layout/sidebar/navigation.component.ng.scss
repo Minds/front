@@ -175,9 +175,9 @@
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
-        color: themed($m-textColor--secondary);
+        color: themed($m-textColor--primary);
         svg {
-          fill: themed($m-textColor--secondary);
+          fill: themed($m-textColor--primary);
         }
       }
     }

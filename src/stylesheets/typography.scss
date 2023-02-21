@@ -12,10 +12,10 @@
 
 //Constants for dynamic metrics
 
-$a: -0.0223;
+$a: 0.012;
 $b: 0.185;
 $c: -0.1745;
-$e: 2.7813;
+$e: 2.7813; //euler's number. 
 
 @function dynamic-letter-spacing($fontsize) {
   @return $a + $b * math.pow($e, $c * $fontsize)
@@ -24,6 +24,7 @@ $e: 2.7813;
 //- BUTTONS
 
 //- BOLD ---------------------
+
 @mixin heading1Bold {
   @include _heading1;
   @include _fontWeightBold;
@@ -128,37 +129,47 @@ $e: 2.7813;
 }
 //----------------------
 @mixin _heading1 {
-  font-size: 34px; //30px
-  line-height: 48px;
-  letter-spacing: -0.16px;
+  font-size: 2.125rem;//34px; 
+  line-height: 3.000rem;//48px;
+  letter-spacing: -0.012em;
 
 }
 @mixin _heading2 {
-  font-size: 28px; //30px
-  line-height: 39px;
+  font-size: 1.75rem; //28px; 
+  line-height: 2.438rem; //39px;
+  letter-spacing: -0.010em;
+
 }
 
 //reason for prettier is defnitely using px hard code instead of REM... 
 @mixin _heading3 {
-  font-size: 23px; //30px
-  line-height: 32px;
+  font-size: 1.438rem; //23px;
+  line-height: 2.000rem; //32px;
+  letter-spacing: -0.008em;
+
 }
 @mixin _heading4 {
-  font-size: 18px; //30px
-  line-height: 27px;
+  font-size: 1.188rem; //19px; 
+  line-height: 1.688rem; //27px;
+  letter-spacing: -0.005em;
+
 }
 //----------------------
 @mixin _body1 {
-  font-size: 16px; //16px
-  line-height: 22px;
-  letter-spacing: (dynamic-letter-spacing(16))
+  font-size: 1.000rem; //16px
+  line-height: 1.375rem; //22px;
+  letter-spacing: -0.001em;
 
 }
 @mixin _body2 {
-  font-size: 14px; //15px
-  line-height: 20px;
+  font-size: 0.875rem; //14px; 
+  line-height: 1.250rem; //20px;
+  letter-spacing: 0.004em;
+
 }
 @mixin _body3 {
-  font-size: 12px; //13px
-  line-height: 17px;
+  font-size: 0.750rem; //12px;
+  line-height: 1.063rem;  //17px;
+  letter-spacing: 0.011em;
+
 }

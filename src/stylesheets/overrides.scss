@@ -53,12 +53,12 @@
     min-height: 0;
   }
 }
-
 a {
   @include m-theme() {
-    color: themed($m-textColor--secondary);
+    color: themed($m-textColor--tertiary);
   }
 }
+
 
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
