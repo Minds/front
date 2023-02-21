@@ -45,6 +45,7 @@ export type ActivityDisplayOptions = {
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
+  hasLoadingPriority: boolean; // whether to load image content eagerly - should usually be first 1 or 2 activities in a feed.
 };
 
 export type ActivityEntity = {
@@ -389,6 +390,7 @@ export class ActivityService implements OnDestroy {
     isFeed: false,
     isSingle: false,
     permalinkBelowContent: false,
+    hasLoadingPriority: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
