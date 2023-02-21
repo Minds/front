@@ -1,7 +1,6 @@
 import {
   APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
-  Injector,
   NgModule,
 } from '@angular/core';
 import {
@@ -62,10 +61,6 @@ import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
 import { DevToolsModule } from './modules/devtools/devtools.module';
 import { SupermindModule } from './modules/supermind/supermind.module';
-
-// Can be used to manually get from DI programmatically. e.g. `AppInjector.get(CDN_ASSETS_URL);`
-// Should only be used in *VERY* specific circumstances - for normal use-cases, DI via constructors.
-export let AppInjector: Injector;
 
 @NgModule({
   bootstrap: [Minds],
@@ -131,8 +126,4 @@ export let AppInjector: Injector;
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class MindsModule {
-  constructor(private injector: Injector) {
-    AppInjector = this.injector;
-  }
-}
+export class MindsModule {}
