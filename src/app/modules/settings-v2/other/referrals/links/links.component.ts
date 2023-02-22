@@ -3,7 +3,6 @@ import { Session } from '../../../../../services/session';
 import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../../../helpers/is-mobile';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { FeaturesService } from '../../../../../services/features.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
@@ -46,7 +45,6 @@ export class SettingsV2ReferralsLinksComponent implements OnInit, OnDestroy {
   constructor(
     public session: Session,
     private modalService: ModalService,
-    protected featuresService: FeaturesService,
     protected router: Router,
     protected walletService: WalletV2Service,
     configs: ConfigsService

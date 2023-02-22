@@ -15,7 +15,6 @@ import { MindsChannelResponse } from '../../interfaces/responses';
 import { ProChannelComponent } from '../pro/channel/channel.component';
 import { Session } from '../../services/session';
 import { SiteService } from '../../common/services/site.service';
-import { FeaturesService } from '../../services/features.service';
 import { ChannelComponent as ChannelV2Component } from '../channels/v2/channel.component';
 import { TRIGGER_EXCEPTION } from '../channels/v2/content/content.service';
 import { HeadersService } from '../../common/services/headers.service';
@@ -53,7 +52,6 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     protected client: Client,
     protected session: Session,
     protected site: SiteService,
-    protected features: FeaturesService,
     protected headersService: HeadersService,
     protected authModal: AuthModalService,
     @Inject(PLATFORM_ID) private platformId: Object

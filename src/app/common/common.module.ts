@@ -40,7 +40,6 @@ import { MindsCard } from './components/card/card.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from '../services/attachment';
-import { IfFeatureDirective } from './directives/if-feature.directive';
 import { IfBrowserDirective } from './directives/if-browser.directive';
 import { TreeComponent } from './components/tree/tree.component';
 import { AnnouncementComponent } from './components/announcements/announcement.component';
@@ -295,7 +294,6 @@ const MINDS_DIRECTIVES = [
   GraphSVG,
   HotkeyScrollDirective,
   IfBrowserDirective,
-  IfFeatureDirective,
   InlineAutoGrow,
   MarkedDirective,
   PageLayoutContainerDirective,

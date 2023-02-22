@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ChangeDetectorRef, DebugElement, ElementRef } from '@angular/core';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator.component';
@@ -70,10 +69,6 @@ describe('NewsfeedBoostRotatorComponent', () => {
           {
             provide: ChangeDetectorRef,
             useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: FeaturesService,
-            useValue: MockService(FeaturesService),
           },
           {
             provide: FeedsService,

@@ -16,9 +16,6 @@ import { contextServiceMock } from '../../../../tests/context-service-mock.spec'
 import { SearchBarSuggestionsComponent } from './suggestions.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { FeaturesService } from '../../../services/features.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
-import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockComponent } from '../../../utils/mock';
 
@@ -55,7 +52,6 @@ describe('SearchBarSuggestionsComponent', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [
-          IfFeatureDirective,
           SearchBarSuggestionsComponent,
           MockComponent({ selector: 'm-loadingEllipsis' }),
         ],
@@ -71,7 +67,6 @@ describe('SearchBarSuggestionsComponent', () => {
           { provide: Client, useValue: clientMock },
           { provide: RecentService, useValue: recentServiceMock },
           { provide: ContextService, useValue: contextServiceMock },
-          { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: ConfigsService, useValue: { get: key => null } },
         ],
       }).compileComponents();

@@ -14,7 +14,6 @@ import {
 import { FeaturedContentService } from './featured-content.service';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { isPlatformBrowser } from '@angular/common';
-import { FeaturesService } from '../../../services/features.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 
 /**
@@ -41,7 +40,6 @@ export class FeaturedContentComponent implements OnInit {
     protected featuredContentService: FeaturedContentService,
     protected componentFactoryResolver: ComponentFactoryResolver,
     protected cd: ChangeDetectorRef,
-    protected featuresService: FeaturesService,
     protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}

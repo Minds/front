@@ -11,7 +11,6 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MockComponent, MockService } from '../../utils/mock';
-import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { PagesService } from '../../common/services/pages.service';
@@ -56,7 +55,6 @@ describe('RegisterComponent', () => {
             selector: 'm-marketing__footer',
           }),
           RegisterComponent,
-          IfFeatureDirective,
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [

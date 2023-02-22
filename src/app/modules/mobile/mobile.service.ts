@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FeaturesService } from '../../services/features.service';
 import { Session } from '../../services/session';
 
 const RELEASES_JSON_URL =
@@ -10,11 +9,7 @@ const RELEASES_JSON_URL =
 export class MobileService {
   releases: any[] = [];
 
-  constructor(
-    protected client: HttpClient,
-    protected featuresService: FeaturesService,
-    protected session: Session
-  ) {}
+  constructor(protected client: HttpClient, protected session: Session) {}
 
   async getReleases() {
     const user = this.session.getLoggedInUser();
@@ -43,14 +38,12 @@ export class MobileService {
   }
 
   shouldBeStable() {
-    return !this.featuresService.has('mobile-canary');
+    // ojm what to do here
+    // return !this.featuresService.has('mobile-canary');
+    return true;
   }
 
-  static _(
-    client: HttpClient,
-    featuresService: FeaturesService,
-    session: Session
-  ) {
-    return new MobileService(client, featuresService, session);
+  static _(client: HttpClient, session: Session) {
+    return new MobileService(client, session);
   }
 }

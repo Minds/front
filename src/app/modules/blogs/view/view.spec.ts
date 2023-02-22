@@ -34,7 +34,6 @@ import { MetaService } from '../../../common/services/meta.service';
 import { metaServiceMock } from '../../notifications/notification.service.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
-import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
@@ -73,7 +72,6 @@ xdescribe('Blog view component', () => {
           { provide: MetaService, useValue: metaServiceMock },
           { provide: ModalService, useValue: modalServiceMock },
           { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: FeaturesService, useValue: MockService(FeaturesService) },
           {
             provide: ToasterService,
             useValue: MockService(ToasterService),
