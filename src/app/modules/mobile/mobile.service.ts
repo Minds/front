@@ -38,8 +38,6 @@ export class MobileService {
   }
 
   shouldBeStable() {
-    // ojm what to do here
-    // return !this.featuresService.has('mobile-canary');
     return true;
   }
 
