@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { filter, first, mergeMap, skip, switchMap, take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { DynamicBoostExperimentService } from '../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
@@ -9,7 +9,7 @@ import { BoostFeedService } from '../../../modules/newsfeed/services/boost-feed.
  * via the featured content component
  */
 @Injectable()
-export class FeaturedContentService {
+export class FeaturedContentService implements OnDestroy {
   offset = 0;
   maximumOffset = 0;
   feedLength = 0;
@@ -21,7 +21,7 @@ export class FeaturedContentService {
   ) {}
 
   public async onInit() {
-    await this.boostFeedService.refreshFeed();
+    this.boostFeedService.init();
 
     this.feedSubscription = this.boostFeedService.feed$.subscribe(feed => {
       this.feedLength = feed.length;
@@ -61,5 +61,10 @@ export class FeaturedContentService {
 
   protected fetchNextFeed() {
     this.boostFeedService.refreshFeed();
+  }
+
+  public ngOnDestroy() {
+    this.boostFeedService.reset();
+    this.feedSubscription?.unsubscribe();
   }
 }

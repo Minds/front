@@ -186,7 +186,7 @@ export class NewsfeedBoostRotatorComponent {
     try {
       this.inProgress = true;
 
-      await this.boostFeedService.refreshFeed();
+      await this.boostFeedService.init();
 
       this.init = true;
     } catch (e) {
@@ -331,6 +331,8 @@ export class NewsfeedBoostRotatorComponent {
   ngOnDestroy() {
     if (this.rotator) window.clearInterval(this.rotator);
     this.scroll.unListen(this.scroll_listener);
+
+    this.boostFeedService.reset();
 
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
