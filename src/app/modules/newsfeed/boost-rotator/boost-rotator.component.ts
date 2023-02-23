@@ -1,12 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding,
   ViewChild,
-  ChangeDetectionStrategy,
 } from '@angular/core';
-import { first, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client } from '../../../services/api';
@@ -16,24 +15,21 @@ import { MindsUser } from '../../../interfaces/entities';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
+import { ACTIVITY_V2_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
 import {
-  ACTIVITY_FIXED_HEIGHT_RATIO,
-  ACTIVITY_V2_FIXED_HEIGHT_RATIO,
-} from '../activity/activity.service';
-import {
-  trigger,
-  transition,
   animate,
   keyframes,
   style,
+  transition,
+  trigger,
 } from '@angular/animations';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { Subscription, Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
-import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 import { NgStyleValue } from '../../../common/types/angular.types';
+import { BoostFeedService } from '../services/boost-feed.service';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -100,6 +96,8 @@ export class NewsfeedBoostRotatorComponent {
 
   @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
 
+  private latestDataFetchDetails: object = null;
+
   constructor(
     public session: Session,
     public router: Router,
@@ -110,7 +108,7 @@ export class NewsfeedBoostRotatorComponent {
     public element: ElementRef,
     private cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
-    public feedsService: FeedsService,
+    public boostFeedService: BoostFeedService,
     private dynamicBoostExperiment: DynamicBoostExperimentService,
     configs: ConfigsService
   ) {
@@ -161,7 +159,7 @@ export class NewsfeedBoostRotatorComponent {
     this.paused = !user.boost_autorotate;
 
     this.subscriptions.push(
-      this.feedsService.feed.subscribe(async boosts => {
+      this.boostFeedService.feed$.subscribe(async boosts => {
         if (!boosts.length) return;
         this.boosts = [];
         for (const boost of boosts) {
@@ -184,32 +182,11 @@ export class NewsfeedBoostRotatorComponent {
     setTimeout(() => this.calculateHeight()); // will only run for new nav
   }
 
-  async load(): Promise<boolean> {
+  async load(refresh: boolean = false): Promise<boolean> {
     try {
-      const dynamicBoostExperimentActive: boolean = this.dynamicBoostExperiment.isActive();
+      this.inProgress = true;
 
-      let params = dynamicBoostExperimentActive
-        ? {
-            location: BoostLocation.NEWSFEED,
-          }
-        : {
-            rating: this.rating,
-            rotator: 1,
-          };
-
-      params['show_boosts_after_x'] = 604800; // 1 week
-
-      this.feedsService.clear(); // Fresh each time
-      const endpoint: string = dynamicBoostExperimentActive
-        ? 'api/v3/boosts/feed'
-        : 'api/v2/boost/feed';
-
-      await this.feedsService
-        .setEndpoint(endpoint)
-        .setParams(params)
-        .setLimit(12)
-        .setOffset(0)
-        .fetch();
+      await this.boostFeedService.init();
 
       this.init = true;
     } catch (e) {
@@ -309,7 +286,7 @@ export class NewsfeedBoostRotatorComponent {
   async next(): Promise<void> {
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       try {
-        this.load();
+        this.boostFeedService.refreshFeed();
         this.currentPosition++;
       } catch (e) {
         this.currentPosition = 0;
@@ -354,6 +331,8 @@ export class NewsfeedBoostRotatorComponent {
   ngOnDestroy() {
     if (this.rotator) window.clearInterval(this.rotator);
     this.scroll.unListen(this.scroll_listener);
+
+    this.boostFeedService.reset();
 
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();

@@ -4,18 +4,18 @@ import {
   Component,
   ComponentFactoryResolver,
   ComponentRef,
+  Inject,
   Injector,
   Input,
   OnInit,
-  ViewChild,
-  Inject,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
 import { FeaturedContentService } from './featured-content.service';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
-import { isPlatformBrowser } from '@angular/common';
 import { FeaturesService } from '../../../services/features.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Use to insert activity boosts into a feed
@@ -46,7 +46,8 @@ export class FeaturedContentComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.featuredContentService.onInit();
     if (isPlatformBrowser(this.platformId)) this.load();
   }
 
@@ -58,6 +59,8 @@ export class FeaturedContentComponent implements OnInit {
     }
 
     this.update();
+
+    this.detectChanges();
   }
 
   clear() {
