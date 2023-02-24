@@ -19,6 +19,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
 import { Location } from '@angular/common';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
+import { BoostModalLazyService } from '../../boost/modal/boost-modal-lazy.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -48,6 +49,8 @@ export class NewsfeedSingleComponent {
 
   showBackButton: boolean = false;
 
+  boostModalDelayMs: number;
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -62,7 +65,8 @@ export class NewsfeedSingleComponent {
     private authModal: AuthModalService,
     protected jsonLdService: JsonLdService,
     private location: Location,
-    private routerHistory: RouterHistoryService
+    private routerHistory: RouterHistoryService,
+    private boostModal: BoostModalLazyService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -96,6 +100,19 @@ export class NewsfeedSingleComponent {
         }
         if (params.has('fixedHeight')) {
           this.fixedHeight = params.get('fixedHeight') === '1';
+        }
+
+        // Open up the boost modal after a delay
+        if (params.has('boost_modal_delay_ms')) {
+          const ms = Number(params.get('boost_modal_delay_ms'));
+          if (this.activity) {
+            console.log('ojm yes activity, yes delayparam');
+            setTimeout(() => this.openBoostModal(), ms);
+          } else {
+            console.log('ojm no activity, but yes delayparam');
+            // ojm figure this out
+            setTimeout(() => this.openBoostModal(), ms);
+          }
         }
       }
     );
@@ -273,6 +290,15 @@ export class NewsfeedSingleComponent {
 
   delete(activity) {
     this.router.navigate(['/newsfeed']);
+  }
+
+  async openBoostModal(): Promise<void> {
+    try {
+      await this.boostModal.open(this.activity);
+      return;
+    } catch (e) {
+      // do nothing.
+    }
   }
 
   get showLegacyActivity(): boolean {
