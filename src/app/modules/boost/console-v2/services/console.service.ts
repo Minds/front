@@ -68,9 +68,9 @@ export class BoostConsoleService {
     string
   > = new BehaviorSubject<string>(null);
 
-  public readonly singleBoost$: BehaviorSubject<any> = new BehaviorSubject<any>(
-    null
-  );
+  public readonly singleBoost$: BehaviorSubject<Boost> = new BehaviorSubject<
+    Boost
+  >(null);
 
   constructor(
     public session: Session,
