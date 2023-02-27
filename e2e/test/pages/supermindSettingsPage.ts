@@ -25,15 +25,8 @@ class SupermindSettingsPage {
     sidebarComponent.expandSidebarMore();
     sidebarComponent.openSupermindConsole();
 
-    await Promise.all([
-      supermindConsolePage.clickSettingsCog(),
-      I.waitForResponse(
-        resp =>
-          resp.url().includes('/api/v3/supermind/settings') &&
-          resp.status() === 200,
-        30
-      ),
-    ]);
+    supermindConsolePage.clickSettingsCog();
+    I.waitForElement(this.minOffchainTokensInputSelector);
   }
 
   /**
