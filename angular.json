@@ -71,7 +71,7 @@
           "options": {
             "outputPath": "dist/browser",
             "index": "src/index.html",
-            "baseHref": "/",
+            "baseHref": "/static/",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
