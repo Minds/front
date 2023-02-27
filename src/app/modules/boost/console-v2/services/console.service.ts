@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, switchMap, take } from 'rxjs/operators';
+import { catchError, switchMap, take, throttleTime } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
@@ -12,6 +12,7 @@ import {
   BoostConsoleGetParams,
   BoostConsoleLocationFilter,
   BoostConsolePaymentMethodFilter,
+  BoostConsoleSingleGetResponse,
   BoostConsoleStateFilter,
   BoostConsoleSuitabilityFilter,
   BoostLocation,
@@ -62,6 +63,14 @@ export class BoostConsoleService {
   public readonly inProgress$$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
+
+  public readonly singleBoostGuid$: BehaviorSubject<
+    string
+  > = new BehaviorSubject<string>(null);
+
+  public readonly singleBoost$: BehaviorSubject<Boost> = new BehaviorSubject<
+    Boost
+  >(null);
 
   constructor(
     public session: Session,
