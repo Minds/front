@@ -1,17 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  merge,
-  Observable,
-  race,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   map,
-  mergeAll,
   pairwise,
   share,
   startWith,
@@ -53,8 +45,9 @@ import {
   TagsSubjectValue,
   TitleSubjectValue,
 } from './composer-data-types';
-import { SupermindComposerPayloadType } from '../components/popup/supermind/superminds-creation.service';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { ClientMetaData } from '../../../common/services/client-meta.service';
+
 /**
  * Default values
  */
@@ -1076,7 +1069,7 @@ export class ComposerService implements OnDestroy {
   /**
    * Posts a new activity
    */
-  async post(): Promise<ActivityEntity> {
+  async post(clientMeta: ClientMetaData = null): Promise<ActivityEntity> {
     this.isPosting$.next(true);
     this.setProgress(true);
 
@@ -1084,6 +1077,10 @@ export class ComposerService implements OnDestroy {
 
     try {
       let activity;
+
+      if (clientMeta) {
+        this.payload['client_meta'] = clientMeta;
+      }
 
       if (editing) {
         activity = await this.api

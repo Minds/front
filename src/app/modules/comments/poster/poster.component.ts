@@ -5,31 +5,30 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
   Renderer2,
   ViewChild,
-  OnInit,
-  OnDestroy,
 } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { Upload } from '../../../services/api/upload';
 import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
-import autobind from '../../../helpers/autobind';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { IsCommentingService } from './is-commenting.service';
 import { Router } from '@angular/router';
 import isMobile from '../../../helpers/is-mobile';
 import moveCursorToEnd from '../../../helpers/move-cursor-to-end';
 import { SupermindBannerPopupService } from '../../supermind/supermind-banner/supermind-banner-popup.service';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'm-comment__poster',
@@ -71,6 +70,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   commentConvertedToActivity: boolean = false;
 
   subscriptions: Subscription[] = [];
+  @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
   constructor(
     public session: Session,
@@ -200,6 +200,10 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     let data = this.attachment.exportMeta();
     data['comment'] = this.content;
     data['parent_path'] = this.parent.child_path || '0:0:0';
+    data['client_meta'] = this.clientMeta.build({
+      campaign: this.entity['urn'],
+      medium: this.entity['boosted'] ? 'boost' : 'feed',
+    });
 
     let comment = {
       // Optimistic
