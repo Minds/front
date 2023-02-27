@@ -25,8 +25,8 @@ class SupermindSettingsPage {
     sidebarComponent.expandSidebarMore();
     sidebarComponent.openSupermindConsole();
 
-    supermindConsolePage.clickSettingsCog(),
-      I.waitForElement(this.minOffchainTokensInputSelector);
+    supermindConsolePage.clickSettingsCog();
+    I.waitForElement(this.minOffchainTokensInputSelector);
   }
 
   /**
