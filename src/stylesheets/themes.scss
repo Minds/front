@@ -55,7 +55,7 @@ $yellow-200: #ffecb6;
 $yellow-300: #ffe391;
 $yellow-400: #ffd96d;
 $yellow-500: #ffd048;
-$yellow-500-alt: #cca328;
+$yellow-500-alt: #ffd048;
 $yellow-600: #d4ad3a;
 $yellow-700: #a9892b;
 $yellow-800: #7f661d;
@@ -150,8 +150,10 @@ $themes: (
     m-alert: #bc584b,
     m-positive: #95c064,
     m-action: $yellow-500-alt,
-    m-action--contrast: $yellow-700,
-    m-action-text: $grey-50,
+    m-action--contrast: $yellow-400,
+    m-action-text: $grey-900,
+    m-link-text: $grey-800,
+    m-sidebar-nav-item: $yellow-500,
     // legacy colors
       m-grey-900: $grey-900,
     m-grey-800: $grey-800,
@@ -165,7 +167,7 @@ $themes: (
     m-grey-100: $grey-100,
     m-grey-50: $grey-50,
     m-blue: $yellow-500-alt,
-    m-blue--contrast: $yellow-700,
+    m-blue--contrast: $yellow-400,
     m-aqua: $green-300,
     m-green-dark: $green-700,
     m-green: $green-500,
@@ -219,6 +221,9 @@ $themes: (
     m-action: $yellow-500,
     m-action--contrast: $yellow-400,
     m-action-text: $grey-900,
+    m-link-text: $yellow-500,
+    m-sidebar-nav-item: $grey-50,
+
     // legacy colors
       // legacy colors
       m-grey-900: $grey-900,
@@ -292,8 +297,10 @@ $m-marketing-bg-colored-gradient-end: 'm-marketing-bg-colored-gradient-end';
 $m-blue--contrast: 'm-blue--contrast'; // Used for hovering over blue links, etc.
 $m-blue: 'm-blue';
 $m-action-text: 'm-action-text';
+$m-link-text: 'm-link-text';
 $m-aqua: 'm-aqua';
 $m-action: 'm-action';
+$m-sidebar-nav-item: 'm-sidebar-nav-item';
 $m-green-dark: 'm-green-dark';
 $m-green: 'm-green';
 $m-green-light: 'm-green-light';

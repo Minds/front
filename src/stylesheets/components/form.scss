@@ -185,7 +185,7 @@
             &:not(:read-only) {
               span {
                 @include m-theme() {
-                  border-color: themed($m-blue);
+                  border-color: themed($m-action);
                 }
               }
             }
@@ -511,7 +511,7 @@
     &:focus {
       &:not(:read-only) {
         @include m-theme() {
-          border-color: themed($m-blue);
+          border-color: themed($m-action);
         }
       }
     }
@@ -604,7 +604,7 @@
       &:checked ~ [class*='m-form__customInput'] {
         &[class*='__checkbox'] {
           @include m-theme() {
-            background-color: themed($m-blue);
+            background-color: themed($m-action);
           }
         }
         &:after {
@@ -655,7 +655,7 @@
           width: 0px;
           height: 0px;
           @include m-theme() {
-            border: 7px solid themed($m-blue);
+            border: 7px solid themed($m-action);
           }
         }
       }

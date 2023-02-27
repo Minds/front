@@ -172,6 +172,7 @@
       display: none;
     }
 
+
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
@@ -202,23 +203,28 @@
     }
   }
 
+
   &.m-sidebarNavigation__item--active > a,
   &:hover > a {
     cursor: pointer;
-
+    //change to be made here
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
-        color: themed($m-blue);
+        color: themed($m-action);
         svg {
-          fill: themed($m-blue);
+          fill: themed($m-action);
         }
         .m-sidebarNavigation__newWindowIcon {
           color: themed($m-textColor--secondary);
         }
       }
+
     }
   }
+
+
+
 
   &.m-sidebarNavigation__item--user {
     img {
@@ -254,6 +260,10 @@
   }
 
   .m-sidebarNavigationItem__text {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  
     margin-left: 24px;
   }
 
@@ -436,6 +446,12 @@
         @media screen and (max-width: $layoutMax3ColWidth) {
           padding: 0;
         }
+      }
+
+      span {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }  
       }
 
       &.m-sidebarNavigation__item--user img {

@@ -562,7 +562,7 @@ svg.m-facebook-icon {
 
   .m-tab-bar--active-tab {
     @include m-theme() {
-      color: themed($m-blue);
+      color: themed($m-link-text);
     }
   }
 }

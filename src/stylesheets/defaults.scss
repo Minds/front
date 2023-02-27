@@ -152,31 +152,31 @@ $borderRadius--activity: 3px;
 
 @mixin border {
   @include m-theme() {
-    border: 1px solid themed($m-borderColor--primary);
+    border: 0.5px solid themed($m-borderColor--primary);
   }
 }
 
 @mixin borderTop {
   @include m-theme() {
-    border-top: 1px solid themed($m-borderColor--primary);
+    border-top: 0.5px solid themed($m-borderColor--primary);
   }
 }
 
 @mixin borderRight {
   @include m-theme() {
-    border-right: 1px solid themed($m-borderColor--primary);
+    border-right: 0.5px solid themed($m-borderColor--primary);
   }
 }
 
 @mixin borderBottom {
   @include m-theme() {
-    border-bottom: 1px solid themed($m-borderColor--primary);
+    border-bottom: 0.5px solid themed($m-borderColor--primary);
   }
 }
 
 @mixin borderLeft {
   @include m-theme() {
-    border-left: 1px solid themed($m-borderColor--primary);
+    border-left: 0.5px solid themed($m-borderColor--primary);
   }
 }
 
