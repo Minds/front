@@ -241,7 +241,15 @@ describe('NotificationsV3NotificationComponent', () => {
     expect(comp.nounLink).toEqual(['/boost/console/newsfeed/history']);
   });
 
-  it('should get correct nounLink for boost_rejected for channels', () => {
+  it('should get correct nounLink for boost_rejected when experiment is on', () => {
+    comp.notification = {
+      type: 'boost_rejected',
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.nounLink).toEqual(['/boost/boost-console']);
+  });
+
+  it('should get correct nounLink for boost_rejected for channels when experiment is off', () => {
     const username: string = 'testuser';
     comp.notification = {
       type: 'boost_rejected',
@@ -252,10 +260,11 @@ describe('NotificationsV3NotificationComponent', () => {
         },
       },
     };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
     expect(comp.nounLink).toEqual(['/' + username]);
   });
 
-  it('should get correct nounLink for boost_rejected for activities', () => {
+  it('should get correct nounLink for boost_rejected for activities when experiment is off', () => {
     const guid: string = '12345';
     comp.notification = {
       type: 'boost_rejected',
@@ -266,6 +275,7 @@ describe('NotificationsV3NotificationComponent', () => {
         },
       },
     };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
     expect(comp.nounLink).toEqual(['/newsfeed/' + guid]);
   });
 
@@ -293,17 +303,24 @@ describe('NotificationsV3NotificationComponent', () => {
     expect(comp.nounLinkParams).toEqual(null);
   });
 
+  it('should get correct nounLinkParams for boost_rejeced when experiment is off', () => {
+    comp.notification = {
+      type: 'boost_rejected',
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(false);
+    expect(comp.nounLinkParams).toEqual(null);
+  });
+
   it('should get correct nounLinkParams for boost_accepted when experiment is on', () => {
     comp.notification = {
       type: 'boost_accepted',
       entity: {
-        target_location: BoostLocation.SIDEBAR,
+        guid: '789',
       },
     };
     (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
     expect(comp.nounLinkParams).toEqual({
-      state: 'approved',
-      location: 'sidebar',
+      boostGuid: '789',
     });
   });
 
@@ -311,13 +328,25 @@ describe('NotificationsV3NotificationComponent', () => {
     comp.notification = {
       type: 'boost_completed',
       entity: {
-        target_location: BoostLocation.NEWSFEED,
+        guid: '789',
       },
     };
     (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
     expect(comp.nounLinkParams).toEqual({
-      state: 'completed',
-      location: 'newsfeed',
+      boostGuid: '789',
+    });
+  });
+
+  it('should get correct nounLinkParams for boost_rejected when experiment is on', () => {
+    comp.notification = {
+      type: 'boost_rejected',
+      entity: {
+        guid: '789',
+      },
+    };
+    (comp as any).dynamicBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.nounLinkParams).toEqual({
+      boostGuid: '789',
     });
   });
 });
