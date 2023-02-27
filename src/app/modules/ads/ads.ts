@@ -12,6 +12,7 @@ import { Storage } from '../../services/storage';
 import { isPlatformServer } from '@angular/common';
 import { DynamicBoostExperimentService } from '../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostLocation } from '../boost/modal-v2/boost-modal-v2.types';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'm-ads-boost',
@@ -28,6 +29,8 @@ export class BoostAds implements OnInit {
   offset: string = '';
   boosts: Array<any> = [];
   rating: number = 2;
+  inProgress$ = new BehaviorSubject<boolean>(false);
+  moreData$ = new BehaviorSubject<boolean>(true);
 
   constructor(
     public client: Client,
@@ -60,16 +63,19 @@ export class BoostAds implements OnInit {
           if (!response.boosts) {
             return;
           }
-          this.boosts = response.boosts;
+          this.boosts.push(response.boosts);
 
-          if (response['load-next'])
+          if (response['load-next']) {
+            this.moreData$.next(true);
             this.storage.set('boost:offset:sidebar', response['load-next']);
+          }
         });
     }
   }
 
   private async fetchV3BoostsAsync(): Promise<void> {
     try {
+      this.inProgress$.next(true);
       const response: any = await this.client.get('api/v3/boosts/feed', {
         limit: this.limit,
         location: BoostLocation.SIDEBAR,
@@ -79,9 +85,18 @@ export class BoostAds implements OnInit {
         return;
       }
 
-      this.boosts = response.boosts.map(boost => boost.entity);
+      const boostEntities: any[] = response.boosts.map(boost => boost.entity);
+      if (!this.boosts.length) {
+        this.boosts = boostEntities;
+        return;
+      }
+      console.log('pushing to ', this.boosts, boostEntities);
+      console.log();
+      this.boosts.push(...boostEntities);
     } catch (e) {
       console.error(e);
+    } finally {
+      this.inProgress$.next(false);
     }
   }
 }

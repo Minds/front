@@ -4,7 +4,7 @@
 >
   <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
 </h3>
-<div class="m-ad-boost-entity" *ngFor="let entity of boosts">
+<div class="m-ad-boost-entity" *ngFor="let entity of boosts; let i = index">
   <ng-container *ngIf="entity.type && entity.type === 'user'; else notUser">
     <m-publisherCard [publisher]="entity"></m-publisherCard
   ></ng-container>
@@ -22,4 +22,16 @@
       class="mdl-card m-border"
     ></minds-card
   ></ng-template>
+  <div
+    class="m-adsBoost__boostYourChannelContainer"
+    *ngIf="i > 0 && i % 8 === 0"
+  >
+    <h5>Want to see your channel here?</h5>
+    <m-button color="blue" size="small" solid="true">Boost my channel</m-button>
+  </div>
 </div>
+<infinite-scroll
+  (load)="fetch()"
+  [moreData]="true"
+  [inProgress]="inProgress$ | async"
+></infinite-scroll>
