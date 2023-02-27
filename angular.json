@@ -150,6 +150,7 @@
                   "with": "src/environments/environment.hmr.ts"
                 }
               ],
+              "baseHref": "/",
               "deployUrl": "http://localhost:4200/"
             }
           },
