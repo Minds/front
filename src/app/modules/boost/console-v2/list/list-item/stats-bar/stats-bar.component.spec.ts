@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BoostConsoleStatsBarComponent } from './stats-bar.component';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
+import { BoostModalLazyService } from '../../../../modal/boost-modal-lazy.service';
+import { MockService } from '../../../../../../utils/mock';
 
 describe('BoostConsoleStatsBarComponent', () => {
   let component: BoostConsoleStatsBarComponent;
@@ -25,6 +27,10 @@ describe('BoostConsoleStatsBarComponent', () => {
               };
             },
           },
+        },
+        {
+          provide: BoostModalLazyService,
+          useValue: MockService(BoostModalLazyService),
         },
       ],
     }).compileComponents();

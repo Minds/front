@@ -321,16 +321,20 @@ export class NotificationsV3NotificationComponent
       case 'boost_accepted':
       case 'boost_completed':
         if (this.isDynamicBoostExperimentActive()) {
-          return ['/boost/boost-console'];
+          return [`/boost/boost-console`];
         } else {
           return ['/boost/console/newsfeed/history'];
         }
       case 'boost_rejected':
-        return [
-          this.notification.entity?.entity?.type === 'user'
-            ? `/${this.notification.entity?.entity?.username}`
-            : `/newsfeed/${this.notification.entity?.entity?.guid}`,
-        ];
+        if (this.isDynamicBoostExperimentActive()) {
+          return [`/boost/boost-console`];
+        } else {
+          return [
+            this.notification.entity?.entity?.type === 'user'
+              ? `/${this.notification.entity?.entity?.username}`
+              : `/newsfeed/${this.notification.entity?.entity?.guid}`,
+          ];
+        }
       // case 'boost_rejected':
       //   return ['/boost/console/newsfeed/history'];
       case 'token_rewards_summary':
@@ -375,14 +379,12 @@ export class NotificationsV3NotificationComponent
 
     if (
       (this.notification.type === 'boost_accepted' ||
-        this.notification.type === 'boost_completed') &&
+        this.notification.type === 'boost_completed' ||
+        this.notification.type === 'boost_rejected') &&
       this.isDynamicBoostExperimentActive()
     ) {
       return {
-        state: this.deriveBoostStateParamValue(this.notification.type),
-        location: this.deriveBoostLocationParamValue(
-          this.notification.entity?.target_location
-        ),
+        boostGuid: this.notification.entity?.guid,
       };
     }
 

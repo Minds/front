@@ -15,7 +15,12 @@
         </ng-container>
       </m-tooltip>
     </div>
-    <m-boostConsole__list></m-boostConsole__list>
+    <ng-container *ngIf="!singleBoostGuid">
+      <m-boostConsole__list></m-boostConsole__list>
+    </ng-container>
+    <ng-container *ngIf="singleBoostGuid">
+      <m-boostConsole__single></m-boostConsole__single>
+    </ng-container>
   </div>
   <div class="m-pageLayout__pane--right"><!-- Spacer --></div>
 </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalComponent } from './modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
+import { ClientMetaData } from '../../../../common/services/client-meta.service';
 
 /**
  * Composer data structure
@@ -50,7 +51,7 @@ export class ComposerModalService {
   /**
    * Presents the composer modal with a custom injector tree
    */
-  present(): Promise<any> {
+  present(clientMeta: ClientMetaData = null): Promise<any> {
     if (!this.emailConfirmation.ensureEmailConfirmed()) return;
     const modal = this.modalService.present(ModalComponent, {
       data: {

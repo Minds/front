@@ -11,11 +11,28 @@
     class="m-boostConsoleStatsBar__title"
     >Reason for rejection</span
   >
-  <span
-    i18n="@@BOOST_CONSOLE__STATS_BAR__FAILED_CRITERIA"
-    class="m-boostConsoleStatsBar__desc"
-    >{{ getRejectionReasonLabel() }}</span
-  >
+  <p class="m-boostConsoleStatsBar__rejectionReasonWrapper">
+    <span
+      i18n="@@BOOST_CONSOLE__STATS_BAR__FAILED_CRITERIA"
+      class="m-boostConsoleStatsBar__desc"
+      >{{ getRejectionReasonLabel() }}</span
+    >.
+    <a
+      *ngIf="!wrongAudience"
+      i18n="@@COMMON__LEARN_MORE"
+      class="m-boostConsoleStatsBar__desc m-boostConsoleStatsBar__link"
+      href="https://support.minds.com/hc/en-us/articles/11723536774292-Boost-Content-Policy"
+      target="_blank"
+      >Learn more</a
+    >
+    <a
+      *ngIf="wrongAudience"
+      i18n="@@BOOST_CONSOLE__STATS_BAR__BOOST_AGAIN"
+      class="m-boostConsoleStatsBar__desc m-boostConsoleStatsBar__link"
+      (click)="openBoostModal()"
+      >Boost again</a
+    >
+  </p>
 </div>
 <!-- ------------------------------------------ -->
 <!-- APPROVED  -->
