@@ -1,0 +1,29 @@
+<m-feedNotice
+  icon="trending_up"
+  dataRefId="boost-latest-post"
+  (dismissClick)="onDismissClick()"
+>
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__BOOST_LATEST_POST__TITLE"
+    >Boost your latest post</span
+  >
+  <p
+    class="m-feedNotice__body"
+    i18n="@@FEED_NOTICE__BOOST_LATEST_POST__GET_MORE_REACH"
+  >
+    Get even more reach and engagement now by boosting your post.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick()"
+    data-ref="feed-notice-boost-latest-post-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__BOOST_LATEST_POST__BOOST_POST">
+      Boost Post
+    </ng-container>
+  </m-button>
+</m-feedNotice>

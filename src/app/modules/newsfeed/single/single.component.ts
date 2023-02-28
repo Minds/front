@@ -101,19 +101,6 @@ export class NewsfeedSingleComponent {
         if (params.has('fixedHeight')) {
           this.fixedHeight = params.get('fixedHeight') === '1';
         }
-
-        // Open up the boost modal after a delay
-        if (params.has('boost_modal_delay_ms')) {
-          const ms = Number(params.get('boost_modal_delay_ms'));
-          if (this.activity) {
-            console.log('ojm yes activity, yes delayparam');
-            setTimeout(() => this.openBoostModal(), ms);
-          } else {
-            console.log('ojm no activity, but yes delayparam');
-            // ojm figure this out
-            setTimeout(() => this.openBoostModal(), ms);
-          }
-        }
       }
     );
 
@@ -158,6 +145,14 @@ export class NewsfeedSingleComponent {
         }
 
         this.activity = activity;
+
+        // Open up the boost modal after a delay
+        if (this.route.snapshot.queryParamMap.has('boostModalDelayMs')) {
+          const ms = Number(
+            this.route.snapshot.queryParamMap.get('boostModalDelayMs')
+          );
+          setTimeout(() => this.openBoostModal(), ms);
+        }
 
         switch (this.activity.subtype) {
           case 'image':
