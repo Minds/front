@@ -145,6 +145,8 @@
 }
 
 .m-sidebarNavigation__item {
+  margin-bottom: 8px;
+
   &.m-sidebarNavigation__item--groups {
     a {
       ::ng-deep m-tooltip {
@@ -376,15 +378,41 @@
 }
 
 .m-sidebarNavigation__item--compose {
-  margin-right: $spacing6;
   margin-top: $spacing10;
 
-  m-button {
-    display: block;
-    width: 100%;
+  // conditional styling for large compose button.
+  @media screen and (max-width: $layoutMax1ColWidth),
+    (min-width: $layoutMax3ColWidth) {
+    margin-right: $spacing6;
 
-    ::ng-deep button {
+    .m-sidebarNavigation__composeButton--small {
+      display: none;
+    }
+    .m-sidebarNavigation__composeButton--large {
+      display: block;
       width: 100%;
+
+      ::ng-deep button {
+        width: 100%;
+      }
+    }
+  }
+
+  // conditional styling for small compose button.
+  @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
+    margin-right: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .m-sidebarNavigation__composeButton--large {
+      display: none;
+    }
+    .m-sidebarNavigation__composeButton--small {
+      ::ng-deep button {
+        width: 36px;
+        height: 36px;
+      }
     }
   }
 }

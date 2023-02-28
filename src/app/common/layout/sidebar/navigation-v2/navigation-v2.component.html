@@ -214,13 +214,25 @@
         [routerLinkActiveOptions]="{ exact: true }"
         *ngIf="user"
       >
+        <!-- Which shows here is determined by media queries -->
         <m-button
+          class="m-sidebarNavigation__composeButton--large"
           color="blue"
           solid="true"
           size="medium"
           (onAction)="openComposeModal()"
           data-ref="sidenav-v2-composer"
           >Compose</m-button
+        >
+        <m-button
+          class="m-sidebarNavigation__composeButton--small"
+          color="blue"
+          solid="true"
+          size="large"
+          iconOnly="true"
+          (onAction)="openComposeModal()"
+          data-ref="sidenav-v2-composer"
+          >+</m-button
         >
       </li>
     </ul>
