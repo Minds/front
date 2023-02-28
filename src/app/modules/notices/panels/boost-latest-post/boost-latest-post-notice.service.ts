@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { catchError, map, share, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../../common/api/api.service';
 import { Session } from '../../../../services/session';
 import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
@@ -34,9 +34,8 @@ export class BoostLatestPostNoticeService {
     }),
     catchError(e => this.handleApiError(e)),
     map((apiResponse: ChannelFeedResponse) => {
-      return apiResponse.entities[0] || null;
+      return apiResponse.entities[0] || false;
     })
-    // ,share()
   );
 
   constructor(private api: ApiService, private session: Session) {}
@@ -47,6 +46,7 @@ export class BoostLatestPostNoticeService {
    * @returns { Observable<never> } RXJS EMPTY;
    */
   private handleApiError(e: any): Observable<never> {
+    console.log('ojm error', e);
     console.error(e);
     return EMPTY;
   }

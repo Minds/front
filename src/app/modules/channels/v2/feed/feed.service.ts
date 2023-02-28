@@ -195,6 +195,4 @@ export class FeedService {
 
     this.service.deleteItem(entity, (item, entity) => item.urn === entity.urn);
   }
-
-  // getLatestPost() ojm
 }

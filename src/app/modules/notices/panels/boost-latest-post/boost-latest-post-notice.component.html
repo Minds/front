@@ -21,6 +21,7 @@
     size="small"
     (onAction)="onPrimaryOptionClick()"
     data-ref="feed-notice-boost-latest-post-primary-click"
+    *ngIf="latestPost"
   >
     <ng-container i18n="@@FEED_NOTICE__BOOST_LATEST_POST__BOOST_POST">
       Boost Post

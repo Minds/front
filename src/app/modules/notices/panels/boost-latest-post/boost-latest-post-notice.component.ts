@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Session } from '../../../../services/session';
-import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 import { BoostLatestPostNoticeService } from './boost-latest-post-notice.service';
@@ -18,39 +16,27 @@ import { BoostLatestPostNoticeService } from './boost-latest-post-notice.service
   templateUrl: 'boost-latest-post-notice.component.html',
 })
 export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
-  private boostModalCompletionSubscription: Subscription;
-  private latestPost: ActivityEntity;
+  private latestPostSubscription: Subscription;
+  public latestPost: ActivityEntity = null;
 
   constructor(
     private service: BoostLatestPostNoticeService,
     private feedNotice: FeedNoticeService,
-    private boostModal: BoostModalLazyService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.service.latestPost$.subscribe(latestPost => {
-      console.log('ojm latestPostRx', latestPost);
-
       if (!latestPost) {
-        console.log('ojm nolatestPost', latestPost);
         this.onDismissClick();
       } else {
         this.latestPost = latestPost;
       }
     });
-
-    // ojm remove all boost modal tracking
-    // and close after primary button is clicked??
-    this.boostModalCompletionSubscription = this.boostModal.onComplete$.subscribe(
-      (completed: boolean) => {
-        this.onDismissClick();
-      }
-    );
   }
 
   ngOnDestroy(): void {
-    this.boostModalCompletionSubscription?.unsubscribe();
+    this.latestPostSubscription?.unsubscribe();
   }
 
   /**
@@ -59,12 +45,10 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
    * @return { void }
    */
   public onPrimaryOptionClick(): void {
-    if (!this.latestPost) {
-      return;
-    }
-    // ojm this.boostModal.open(this.session.getLoggedInUser());
+    this.onDismissClick();
+
     this.router.navigate(['newsfeed', this.latestPost.guid], {
-      queryParams: { boost_modal_delay_ms: 400 },
+      queryParams: { boostModalDelayMs: 400 },
     });
   }
 
