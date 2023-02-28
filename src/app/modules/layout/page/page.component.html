@@ -9,10 +9,17 @@
       pageLayoutService.isFullWidth$ | async
     "
   >
-    <m-sidebar--navigation
-      m-pageLayout__pane="left"
-      *ngIf="!isProDomain"
-    ></m-sidebar--navigation>
+    <ng-container *ngIf="!isProDomain">
+      <m-sidebar--navigationV2
+        *ngIf="isSidebarV2ExperimentActive(); else sidebarV1"
+        m-pageLayout__pane="left"
+      ></m-sidebar--navigationV2>
+      <ng-template #sidebarV1>
+        <m-sidebar--navigation
+          m-pageLayout__pane="left"
+        ></m-sidebar--navigation>
+      </ng-template>
+    </ng-container>
     <div
       [m-pageLayout__pane]="
         (pageLayoutService.isFullWidth$ | async) ? null : 'main'
