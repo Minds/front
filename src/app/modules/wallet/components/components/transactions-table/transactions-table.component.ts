@@ -8,6 +8,9 @@ import { Component, Input } from '@angular/core';
  *
  * See it at wallet > tokens > transactions
  */
+
+// The @mindsboost user handles dynamic boosts
+export const DYNAMIC_BOOST_HANDLER_USERNAME = 'mindsboost';
 @Component({
   selector: 'm-walletTransactionsTable',
   templateUrl: './transactions-table.component.html',
@@ -39,5 +42,12 @@ export class WalletTransactionsTableComponent {
     } else {
       return this.typeLabels[type];
     }
+  }
+
+  // The boost was dynamic (aka v3) if it was handled by the @mindsboost account
+  isDynamicBoost(tx): boolean {
+    if (!tx.otherUser) return false;
+
+    return tx.otherUser.username === DYNAMIC_BOOST_HANDLER_USERNAME;
   }
 }

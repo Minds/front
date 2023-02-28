@@ -310,6 +310,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   delete() {
     this.canShow = false;
+
+    // Tell the boost rotator to go to the next boost
+    this.nextBoost.emit();
     this.deleted.next(this.service.entity$.value);
   }
 

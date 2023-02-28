@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { Router, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MINDS_PIPES } from './pipes/pipes';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
@@ -61,7 +61,6 @@ import { HttpClient } from '@angular/common/http';
 import { AndroidAppDownloadComponent } from './components/android-app-download-button/button.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { FeedsService } from './services/feeds.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
@@ -107,7 +106,6 @@ import {
   PageLayoutContainerDirective,
   PageLayoutPaneDirective,
 } from './layout/page-layout.directive';
-import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
 import { SidebarWidgetComponent } from './components/sidebar-widget/sidebar-widget.component';
 import { SidebarNavigationSubnavDirective } from './layout/sidebar/subnav.directive';
 import { FeedFilterComponent } from './components/feed-filter/feed-filter.component';
@@ -150,7 +148,6 @@ import { TagSelectorComponent } from './components/tag-selector/tag-selector.com
 
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
-import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
 import { RelativeTimeSpanComponent } from './components/relative-time-span/relative-time-span.component';
 import { SubscriptionService } from './services/subscription.service';
@@ -177,6 +174,7 @@ import { SeeLatestButtonComponent } from './components/see-latest-button/see-lat
 import { SupermindBadgeComponent } from './components/supermind-badge/supermind-badge.component';
 import { DynamicBoostExperimentService } from '../modules/experiments/sub-services/dynamic-boost-experiment.service';
 import { PathMatch } from './types/angular.types';
+import { BoostFeedService } from '../modules/newsfeed/services/boost-feed.service';
 import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.component';
 
 const MINDS_COMMON_COMPONENTS = [
@@ -370,14 +368,11 @@ const routes: Routes = [
     {
       provide: FeaturedContentService,
       useFactory: (
-        boostedContentService: FeedsService,
+        boostFeedService: BoostFeedService,
         dynamicBoostExperiment: DynamicBoostExperimentService
       ): FeaturedContentService =>
-        new FeaturedContentService(
-          boostedContentService,
-          dynamicBoostExperiment
-        ),
-      deps: [FeedsService, DynamicBoostExperimentService],
+        new FeaturedContentService(boostFeedService, dynamicBoostExperiment),
+      deps: [BoostFeedService, DynamicBoostExperimentService],
     },
     MediaProxyService,
     SidebarNavigationService,

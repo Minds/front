@@ -1,0 +1,13 @@
+<div
+  class="m-boostConsole__singleBoostGoBack"
+  (click)="onBackClick()"
+  data-ref="boost-console-single-boost-go-back"
+>
+  <i class="material-icons">arrow_back</i>
+  <span i18n="@@BOOST_CONSOLE__SETTINGS_BACK_TO_CONSOLE">Back to console</span>
+</div>
+<m-loadingSpinner [inProgress]="!boost"></m-loadingSpinner>
+<m-boostConsole__listItem
+  *ngIf="boost"
+  [boost]="boost"
+></m-boostConsole__listItem>

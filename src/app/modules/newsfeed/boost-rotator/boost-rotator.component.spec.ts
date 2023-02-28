@@ -8,11 +8,12 @@ import { Client } from '../../../services/api';
 import { ScrollService } from '../../../services/ux/scroll';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { By } from '@angular/platform-browser';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { Router } from '@angular/router';
+import { BoostFeedService } from '../services/boost-feed.service';
 
 describe('NewsfeedBoostRotatorComponent', () => {
   let comp: NewsfeedBoostRotatorComponent;
@@ -71,8 +72,17 @@ describe('NewsfeedBoostRotatorComponent', () => {
             useValue: MockService(ChangeDetectorRef),
           },
           {
-            provide: FeedsService,
-            useValue: MockService(FeedsService),
+            provide: BoostFeedService,
+            useValue: MockService(BoostFeedService, {
+              has: ['feed$'],
+              props: {
+                feed$: {
+                  get: (): Observable<BehaviorSubject<Object>[]> =>
+                    new Observable<BehaviorSubject<Object>[]>(),
+                },
+                init: async (): Promise<void> => {},
+              },
+            }),
           },
           {
             provide: DynamicBoostExperimentService,
@@ -107,21 +117,21 @@ describe('NewsfeedBoostRotatorComponent', () => {
 
     (comp as any).scroll.listenForView.and.returnValue(of(null));
 
-    (comp as any).feedsService.setEndpoint.and.returnValue(
-      (comp as any).feedsService
-    );
-    (comp as any).feedsService.setParams.and.returnValue(
-      (comp as any).feedsService
-    );
-    (comp as any).feedsService.setLimit.and.returnValue(
-      (comp as any).feedsService
-    );
-    (comp as any).feedsService.setOffset.and.returnValue(
-      (comp as any).feedsService
-    );
-    (comp as any).feedsService.fetch.and.returnValue(
-      (comp as any).feedsService
-    );
+    // (comp as any).feedsService.setEndpoint.and.returnValue(
+    //   (comp as any).feedsService
+    // );
+    // (comp as any).feedsService.setParams.and.returnValue(
+    //   (comp as any).feedsService
+    // );
+    // (comp as any).feedsService.setLimit.and.returnValue(
+    //   (comp as any).feedsService
+    // );
+    // (comp as any).feedsService.setOffset.and.returnValue(
+    //   (comp as any).feedsService
+    // );
+    // (comp as any).feedsService.fetch.and.returnValue(
+    //   (comp as any).feedsService
+    // );
 
     // stubbing function because it contains setInterval
     // which does not play nicely with the testbed.
