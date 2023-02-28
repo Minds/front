@@ -48,7 +48,7 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
     this.onDismissClick();
 
     this.router.navigate(['newsfeed', this.latestPost.guid], {
-      queryParams: { boostModalDelayMs: 400 },
+      queryParams: { boostModalDelayMs: 1000 },
     });
   }
 
