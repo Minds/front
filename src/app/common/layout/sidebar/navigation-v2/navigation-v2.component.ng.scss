@@ -145,8 +145,6 @@
 }
 
 .m-sidebarNavigation__item {
-  margin-bottom: 8px;
-
   &.m-sidebarNavigation__item--groups {
     a {
       ::ng-deep m-tooltip {
@@ -409,6 +407,8 @@
       display: none;
     }
     .m-sidebarNavigation__composeButton--small {
+      margin-right: unset;
+
       ::ng-deep button {
         width: 36px;
         height: 36px;
@@ -498,14 +498,21 @@
           display: flex;
           align-items: center;
           justify-content: center;
-
+          margin-bottom: 8px;
           padding: 10px 24px 10px 16px;
+
           @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
             padding: 10px;
           }
 
           .m-sidebarNavigation__hashIcon {
+            width: 24px;
+            height: 24px;
             transform: translate(2px, -2px);
+
+            @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
+              transform: translate(0px, -2px);
+            }
           }
         }
       }
