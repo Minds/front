@@ -147,8 +147,6 @@
           // conditional styling for large compose button.
           @media screen and (max-width: $layoutMax1ColWidth),
             (min-width: $layoutMax3ColWidth) {
-            margin-right: $spacing6;
-
             .m-sidebarNavigation__composeButton--small {
               display: none;
             }
@@ -162,9 +160,12 @@
             }
           }
 
+          @media screen and (min-width: $layoutMax3ColWidth) {
+            margin-right: $spacing6;
+          }
+
           // conditional styling for small compose button.
           @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
-            margin-right: unset;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -173,8 +174,6 @@
               display: none;
             }
             .m-sidebarNavigation__composeButton--small {
-              margin-right: unset;
-
               ::ng-deep button {
                 width: 36px;
                 height: 36px;
