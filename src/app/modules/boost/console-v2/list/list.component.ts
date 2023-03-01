@@ -104,7 +104,6 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
       tap(_ => {
         this.inProgress$.next(true);
         this.list$.next([]);
-        // this.initialCount$.next(0);
       }),
       debounceTime(100),
       switchMap(

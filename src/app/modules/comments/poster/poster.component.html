@@ -5,6 +5,7 @@
   class="m-comment m-commentPoster"
   [ngClass]="{ 'm-commentPoster--nested': parent.child_path }"
   *ngIf="!readonly && isLoggedIn"
+  m-clientMeta
 >
   <div
     *ngIf="canShowSupermindBannerPopup"

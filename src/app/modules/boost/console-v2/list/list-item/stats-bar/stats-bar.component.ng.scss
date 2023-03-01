@@ -29,4 +29,11 @@
   .m-boostConsoleStatsBar__desc {
     @include body2Regular;
   }
+  .m-boostConsoleStatsBar__link {
+    cursor: pointer;
+    text-decoration: underline;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
 }
