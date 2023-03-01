@@ -210,12 +210,10 @@
 
             .m-sidebarNavigation__hashIcon {
               width: 24px;
-              height: 24px;
-              transform: translate(2px, -2px);
-
-              @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
-                transform: translate(0px, -2px);
-              }
+              font-family: Roboto;
+              font-weight: 700;
+              font-size: 24px;
+              text-align: center;
             }
           }
         }
