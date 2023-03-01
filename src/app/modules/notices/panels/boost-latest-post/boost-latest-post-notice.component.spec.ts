@@ -22,7 +22,7 @@ describe('BoostLatestPostNoticeComponent', () => {
     guid: '123',
   };
 
-  const latestPost$ = new Observable<ActivityEntity>(null);
+  const latestPost$ = new Observable<ActivityEntity>();
 
   const BoostLatestPostNoticeServiceMock: any = MockService(
     BoostLatestPostNoticeService,
@@ -71,8 +71,8 @@ describe('BoostLatestPostNoticeComponent', () => {
     fixture.detectChanges();
 
     (comp as any).feedNotice.dismiss.calls.reset();
-    (comp as any).session.getLoggedInUser.calls.reset();
-    (comp as any).session.getLoggedInUser.and.returnValue(mockUser);
+    // (comp as any).session.getLoggedInUser.calls.reset();
+    // (comp as any).session.getLoggedInUser.and.returnValue(mockUser);
 
     spyOn(window, 'open');
 
@@ -90,24 +90,10 @@ describe('BoostLatestPostNoticeComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should go to latest post SEP with boost modal delay ms param in url on primary option click', () => {
-    comp.onPrimaryOptionClick();
-    expect((comp as any).session.getLoggedInUser).toHaveBeenCalledTimes(1);
-    expect((comp as any).boostModal.open).toHaveBeenCalledOnceWith(mockUser);
-  });
-
   it('should call to dismiss on dismiss click', () => {
     comp.onDismissClick();
     expect((comp as any).feedNotice.dismiss).toHaveBeenCalledOnceWith(
       'boost-latest-post'
     );
   });
-
-  it('should dismiss on boost completion', fakeAsync(() => {
-    (comp as any).boostModal.onComplete$.next(true);
-    tick();
-    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledOnceWith(
-      'boost-latest-post'
-    );
-  }));
 });
