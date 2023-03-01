@@ -6,10 +6,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 import { BoostLatestPostNoticeService } from './boost-latest-post-notice.service';
 
 /**
- * Feed notice directing users to boost their latest post.
+ * Feed notice directing users to boost their latest post, if there is one.
  * Dismisses itself when user clicks primary button.
- *
- * Will be automatically dismissed if the user has made no posts.
  */
 @Component({
   selector: 'm-feedNotice--boostLatestPost',

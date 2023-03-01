@@ -46,7 +46,6 @@ export class BoostLatestPostNoticeService {
    * @returns { Observable<never> } RXJS EMPTY;
    */
   private handleApiError(e: any): Observable<never> {
-    console.log('ojm error', e);
     console.error(e);
     return EMPTY;
   }

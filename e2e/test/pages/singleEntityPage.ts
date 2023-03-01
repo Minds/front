@@ -21,6 +21,16 @@ class SingleEntityPage extends ActivityFeedPage {
     }
     I.dontSeeElement(this.backButtonSelector);
   }
+
+  /**
+   * Wait for boost modal to appear
+   * @param { number } delayMs - milliseconds to wait before checking for element
+   * @returns { void }
+   */
+  public waitForBoostModal(delayMs: number = 2000): void {
+    // Convert ms to seconds because waitForElement() uses seconds
+    I.waitForElement('m-boostModalV2', Math.ceil(delayMs / 1000));
+  }
 }
 
 module.exports = new SingleEntityPage();
