@@ -37,6 +37,7 @@ export class BoostRejectionModalComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.boost.rejection_reason = null;
+
     this.rejectionReasons = this.mindsConfig.get('boost')[
       'rejection_reasons'
     ] as RejectionReason[];

@@ -1,4 +1,4 @@
-<m-dropdownMenu [menu]="dropdownMenu">
+<m-dropdownMenu [menu]="dropdownMenu" m-clientMeta>
   <button
     class="m-activityRemindButton__icon"
     [class.has-reminded]="hasReminded"
@@ -23,7 +23,11 @@
       <m-dropdownMenu__item (click)="onRemindClick($event)" icon="repeat">
         <span>Remind</span>
       </m-dropdownMenu__item>
-      <m-dropdownMenu__item (click)="onQuotePostClick($event)" icon="create">
+      <m-dropdownMenu__item
+        (click)="onQuotePostClick($event)"
+        icon="create"
+        [m-clientMeta]="getClientMetaDetails(service.entity$.getValue())"
+      >
         <span>Quote post</span>
       </m-dropdownMenu__item>
     </ng-template>

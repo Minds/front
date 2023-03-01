@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Boost, BoostState, RejectionReason } from '../../../../boost.types';
 import * as moment from 'moment';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
+import { BoostModalLazyService } from '../../../../modal/boost-modal-lazy.service';
 
 /**
  * Row presented in boost console list items (where applicable)
@@ -22,7 +23,10 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   formattedStartDate: string = '';
   public rejectionReasons: RejectionReason[] = [];
 
-  constructor(private mindsConfig: ConfigsService) {}
+  constructor(
+    private mindsConfig: ConfigsService,
+    private boostModal: BoostModalLazyService
+  ) {}
 
   ngOnInit(): void {
     const status = this.boost?.boost_status;
@@ -52,5 +56,19 @@ export class BoostConsoleStatsBarComponent implements OnInit {
     return this.rejectionReasons.filter(reason => {
       return reason.code === this.boost.rejection_reason;
     })[0]?.label;
+  }
+
+  async openBoostModal(): Promise<void> {
+    try {
+      await this.boostModal.open(this.boost.entity);
+      return;
+    } catch (e) {
+      // do nothing.
+    }
+  }
+
+  // If the boost rejection reason is 1, then it was rejected bc of wrong audience
+  get wrongAudience(): boolean {
+    return this.boost?.rejection_reason === 1;
   }
 }

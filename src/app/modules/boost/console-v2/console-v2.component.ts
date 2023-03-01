@@ -21,6 +21,9 @@ import { BoostConsoleService } from './services/console.service';
   styleUrls: ['./console-v2.component.ng.scss'],
 })
 export class BoostConsoleV2Component implements OnInit {
+  /** Guid, if this is a single boost view page */
+  singleBoostGuid: string = '';
+
   /** @type { Subscription } routeSubscription - subscription to ActivatedRoutes query params*/
   private routeSubscription: Subscription;
 
@@ -82,8 +85,15 @@ export class BoostConsoleV2Component implements OnInit {
      * This is where the filter value subjects are actually changed.
      * (The filters/tabs just change the queryParams, which are processed here)
      */
-
     this.routeSubscription = this.route.queryParams.subscribe(params => {
+      // SINGLE BOOST PAGE ONLY
+      this.singleBoostGuid = params.boostGuid || null;
+      if (this.singleBoostGuid) {
+        this.service.singleBoostGuid$.next(this.singleBoostGuid);
+        return;
+      }
+
+      // LIST PAGE ONLY
       const stateFilter: BoostConsoleStateFilter = params.state || null;
       const locationFilter: BoostConsoleLocationFilter =
         params.location || null;
@@ -109,6 +119,7 @@ export class BoostConsoleV2Component implements OnInit {
       }
     });
   }
+
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe();
   }
