@@ -10,10 +10,10 @@
     "
   >
     <ng-container *ngIf="!isProDomain">
-      <m-sidebar--navigationV2
+      <m-sidebar__navigationV2
         *ngIf="isSidebarV2ExperimentActive(); else sidebarV1"
         m-pageLayout__pane="left"
-      ></m-sidebar--navigationV2>
+      ></m-sidebar__navigationV2>
       <ng-template #sidebarV1>
         <m-sidebar--navigation
           m-pageLayout__pane="left"

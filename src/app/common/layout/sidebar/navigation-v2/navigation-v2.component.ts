@@ -1,7 +1,5 @@
 import {
-  AfterViewInit,
   Component,
-  ComponentFactoryResolver,
   HostBinding,
   HostListener,
   Inject,
@@ -12,26 +10,27 @@ import {
   Injector,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-
 import { Navigation as NavigationService } from '../../../../services/navigation';
 import { Session } from '../../../../services/session';
 import { DynamicHostDirective } from '../../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from '../navigation.service';
 import { ConfigsService } from '../../../services/configs.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
+import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { BuyTokensModalService } from '../../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../../modules/blockchain/web3-wallet.service';
 import { EarnModalService } from '../../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
-import { AuthModalService } from '../../../../modules/auth/modal/auth-modal.service';
 import { ThemeService } from '../../../services/theme.service';
 import { ExperimentsService } from '../../../../modules/experiments/experiments.service';
 
+/**
+ * V2 version of sidebar component.
+ */
 @Component({
-  selector: 'm-sidebar--navigationV2',
+  selector: 'm-sidebar__navigationV2',
   templateUrl: 'navigation-v2.component.html',
   styleUrls: ['./navigation-v2.component.ng.scss'],
 })
@@ -64,27 +63,42 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   groupSelectedSubscription: Subscription = null;
   plusPageActive: boolean = false;
 
-  routerSubscription: Subscription;
-
   subscriptions: Subscription[] = [];
 
   isDarkTheme: boolean = false;
+
+  /**
+   * Sets display mode on resize.
+   */
+  @HostListener('window:resize')
+  public onResize(): void {
+    this.showLabels = window.innerWidth >= 1220 ? true : false;
+
+    if (window.innerWidth > 1040) {
+      this.layoutMode = 'desktop';
+    } else if (window.innerWidth >= 480) {
+      this.layoutMode = 'tablet';
+    } else {
+      this.layoutMode = 'phone';
+      this.showLabels = true;
+    }
+
+    if (this.layoutMode !== 'phone') {
+      this.sidebarNavigationService.isOpened$.next(false);
+    }
+  }
 
   constructor(
     public navigation: NavigationService,
     public session: Session,
     protected configs: ConfigsService,
-    private _componentFactoryResolver: ComponentFactoryResolver,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private route: ActivatedRoute,
-    private router: Router,
     private buyTokensModalService: BuyTokensModalService,
     private web3WalletService: Web3WalletService,
     private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
     private composerModalService: ComposerModalService,
     private injector: Injector,
-    private authModal: AuthModalService,
     private themeService: ThemeService,
     private sidebarNavigationService: SidebarNavigationService,
     private experiments: ExperimentsService
@@ -94,19 +108,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     this.chatUrl = this.configs.get('matrix')?.chat_url;
     this.sidebarNavigationService.setContainer(this);
     this.getUser();
-
-    /**
-     * Temporarily disable routerLinkActive class for the 'discovery' item so only 'discovery/plus' is highlighted
-     * */
-    this.routerSubscription = this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe((event: Event) => {
-        if (event['url'].slice(0, 15) === '/discovery/plus') {
-          this.plusPageActive = true;
-        } else {
-          this.plusPageActive = false;
-        }
-      });
   }
 
   ngOnInit() {
@@ -149,38 +150,67 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     }
   }
 
-  getUser() {
+  /**
+   * Gets user and sets it to class variable.
+   * @returns { void }
+   */
+  public getUser(): void {
     this.user = this.session.getLoggedInUser(user => {
       this.user = user;
     });
   }
 
-  toggle(): void {
+  /**
+   * Toggles sidebar being open on mobile.
+   * @returns { void }
+   */
+  public toggle(): void {
     this.sidebarNavigationService.toggle();
   }
 
-  async buyTokens() {
+  /**
+   * Open buy tokens modal after wallet connect prompt if needed.
+   * @returns { Promise<void> }
+   */
+  public async buyTokens(): Promise<void> {
     this.toggle();
     await this.web3WalletService.getCurrentWallet(true);
     await this.buyTokensModalService.open();
   }
 
-  async openEarnModal() {
+  /**
+   * Open earn modal.
+   * @returns { Promise<void> }
+   */
+  public async openEarnModal(): Promise<void> {
     this.toggle();
     await this.earnModalService.open();
   }
 
-  async openBoostModal() {
+  /**
+   * Open boost modal.
+   * @returns { Promise<void> }
+   */
+  public async openBoostModal() {
     this.toggle();
     await this.boostModalService.open(this.session.getLoggedInUser());
   }
 
-  async openComposeModal() {
+  /**
+   * Open composer modal.
+   * @returns { Promise<void> }
+   */
+  public async openComposeModal(): Promise<void> {
     this.toggle();
     await this.composerModalService.setInjector(this.injector).present();
   }
 
-  setVisible(value: boolean): void {
+  /**
+   * Set visible state.
+   * @param { boolean } value - value to set visibility state to.
+   * @returns { void }
+   */
+  public setVisible(value: boolean): void {
     this.hidden = !value;
 
     if (!value) {
@@ -191,29 +221,12 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * Don't click through the menu on mobile
+   * Don't click through the menu on mobile.
+   * @returns { void }
    */
-  onSidebarNavClick($event): void {
+  public onSidebarNavClick($event): void {
     if (this.layoutMode === 'phone') {
       $event.stopPropagation();
-    }
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.showLabels = window.innerWidth >= 1220 ? true : false;
-
-    if (window.innerWidth > 1040) {
-      this.layoutMode = 'desktop';
-    } else if (window.innerWidth >= 480) {
-      this.layoutMode = 'tablet';
-    } else {
-      this.layoutMode = 'phone';
-      this.showLabels = true;
-    }
-
-    if (this.layoutMode !== 'phone') {
-      this.sidebarNavigationService.isOpened$.next(false);
     }
   }
 
@@ -230,9 +243,11 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * We dynamically change the z-index when the
    * "sidebar more" popper is opened
    * So that users can still click on the top left logo
-   * when the popper is closed
+   * when the popper is closed.
+   * @param $event
+   * @returns { void }
    */
-  public onSidebarMoreToggle($event) {
+  public onSidebarMoreToggle($event): void {
     this.sidebarMoreOpened = $event;
   }
 
