@@ -10,7 +10,7 @@ export class SidebarV2ExperimentService {
   constructor(private experiments: ExperimentsService) {}
 
   /**
-   * Returns true if the guest mode experiment is active.
+   * Returns true if the front-5924-sidebar-v2 experiment is active.
    * @returns { boolean } whether sidebar experiment is active.
    */
   public isActive(): boolean {
