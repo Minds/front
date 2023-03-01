@@ -25,6 +25,7 @@ import { BoostConsoleService } from './console-v2/services/console.service';
 import { BoostConsoleStatsBarComponent } from './console-v2/list/list-item/stats-bar/stats-bar.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
+import { BoostConsoleSingleComponent } from './console-v2/single/single.component';
 
 const boostRoutes: Routes = [
   {
@@ -96,6 +97,7 @@ const boostRoutes: Routes = [
     BoostConsoleStateLabelComponent,
     BoostConsoleActionButtonsComponent,
     BoostConsoleStatsBarComponent,
+    BoostConsoleSingleComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,
