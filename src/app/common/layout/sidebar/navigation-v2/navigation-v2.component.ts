@@ -92,6 +92,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     public navigation: NavigationService,
     public session: Session,
     protected configs: ConfigsService,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private buyTokensModalService: BuyTokensModalService,
     private web3WalletService: Web3WalletService,
@@ -120,10 +121,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.themeService.isDark$.subscribe(isDark => {
         this.isDarkTheme = isDark;
-      })
-    );
-
-    this.subscriptions.push(
+      }),
       this.sidebarNavigationService.isOpened$.subscribe(isOpened => {
         if (this.layoutMode === 'phone') {
           this.isOpened = isOpened;
@@ -136,7 +134,17 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
         if (this.layoutMode !== 'phone' || !isOpened) {
           document.body.classList.remove('m-overlay-modal--shown--no-scroll');
         }
-      })
+      }),
+      // Temporarily disable routerLinkActive class for the 'discovery' item so only 'discovery/plus' is highlighted.
+      this.router.events
+        .pipe(filter(e => e instanceof NavigationEnd))
+        .subscribe((event: Event) => {
+          if (event['url'].slice(0, 15) === '/discovery/plus') {
+            this.plusPageActive = true;
+          } else {
+            this.plusPageActive = false;
+          }
+        })
     );
   }
 
@@ -257,6 +265,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * @returns { boolean } true if experiment is to be applied.
    */
   public showExploreExperiment(): boolean {
+    return true;
     return this.experiments.hasVariation('minds-3038-discovery-explore', true);
   }
 }
