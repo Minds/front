@@ -142,7 +142,7 @@
       .m-sidebarNavigation__item {
         &.m-sidebarNavigation__item--compose {
           margin-bottom: 20px !important;
-          margin-top: $spacing10;
+          margin-top: $spacing6;
 
           // conditional styling for large compose button.
           @media screen and (max-width: $layoutMax1ColWidth),
