@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Boost, BoostState, RejectionReason } from '../../../../boost.types';
+import {
+  Boost,
+  BoostPaymentMethod,
+  BoostState,
+  RejectionReason,
+} from '../../../../boost.types';
 import * as moment from 'moment';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
 import { BoostModalLazyService } from '../../../../modal/boost-modal-lazy.service';
@@ -70,5 +75,48 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   // If the boost rejection reason is 1, then it was rejected bc of wrong audience
   get wrongAudience(): boolean {
     return this.boost?.rejection_reason === 1;
+  }
+
+  /**
+   * Whether a boost is in a completed state.
+   * @returns { boolean } true if boost is in a completed state.
+   */
+  public isBoostCompleted(): boolean {
+    return this.boost.boost_status === BoostState.COMPLETED;
+  }
+
+  /**
+   * Gets CPM as a string, taking into account payment method
+   * and fixing the result to 2 decimal places.
+   * @returns { string } CPM as a string.
+   */
+  public getCpmString(): string {
+    const value: string = this.calculateCpmValue().toFixed(2);
+
+    switch (this.boost.payment_method) {
+      case BoostPaymentMethod.CASH:
+        return `\$${value}`;
+      case BoostPaymentMethod.OFFCHAIN_TOKENS:
+      case BoostPaymentMethod.ONCHAIN_TOKENS:
+        if (value === '1.00') {
+          return `${value} token`;
+        }
+        return `${value} tokens`;
+      default:
+        return 'Unknown';
+    }
+  }
+
+  /**
+   * Calculates CPM value. Will return 0 if no views are delivered.
+   * @returns { number } cpm value.
+   */
+  private calculateCpmValue(): number {
+    if (!this.boost.summary.views_delivered) {
+      return 0;
+    }
+    return (
+      (this.boost.payment_amount / this.boost.summary.views_delivered) * 1000
+    );
   }
 }
