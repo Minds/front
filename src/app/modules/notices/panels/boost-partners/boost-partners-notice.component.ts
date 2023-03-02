@@ -18,6 +18,7 @@ export class BoostPartnersNoticeComponent extends AbstractSubscriberComponent {
 
   /**
    * Called on primary option click.
+   * Navigate to blog post and dismiss notice.
    * @param { MouseEvent } $event - click event.
    * @return { Promise<void> }
    */
@@ -25,6 +26,7 @@ export class BoostPartnersNoticeComponent extends AbstractSubscriberComponent {
     this.router.navigate([
       '/info/blog/introducing-boost-partners-program-1477787849246904328',
     ]);
+    this.dismiss();
   }
 
   /**
