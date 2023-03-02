@@ -4,10 +4,10 @@ namespace SingleEntityPageSteps {
   When(
     'I navigate to a single entity page whose url contains a query param for opening the boost modal after a delay',
     (): void => {
-      // Go to an existing post SEP
+      // NOTE: this hardcoded guid is an extremely hacky workaround
       const existingActivityGuid = '1477879137912754189';
 
-      // NOTE: this hardcoded guid is an extremely hacky workaround
+      // Go to an existing post SEP
       I.amOnPage(`/newsfeed/${existingActivityGuid}?boostModalDelayMs=1000`);
     }
   );
