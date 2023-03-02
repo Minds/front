@@ -14,6 +14,7 @@ import { SupermindPendingNoticeComponent } from './panels/supermind-pending/supe
 import { PlusUpgradeNoticeComponent } from './panels/plus-upgrade/plus-upgrade-notice.component';
 import { BoostChannelNoticeComponent } from './panels/boost-channel/boost-channel-notice.component';
 import { InviteFriendsNoticeComponent } from './panels/invite-friends/invite-friends-notice.component';
+import { BoostPartnersNoticeComponent } from './panels/boost-partners/boost-partners-notice.component';
 
 @NgModule({
   imports: [CommonModule, NgCommonModule],
@@ -31,6 +32,7 @@ import { InviteFriendsNoticeComponent } from './panels/invite-friends/invite-fri
     PlusUpgradeNoticeComponent,
     BoostChannelNoticeComponent,
     InviteFriendsNoticeComponent,
+    BoostPartnersNoticeComponent,
   ],
   exports: [FeedNoticeOutletComponent],
 })
