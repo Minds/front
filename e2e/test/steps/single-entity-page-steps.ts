@@ -1,34 +1,20 @@
 namespace SingleEntityPageSteps {
-  const { singleEntityPage, channelPage } = inject();
+  const { I, singleEntityPage } = inject();
 
   When(
-    'I navigate to a single entity page whose url contains a query param for opening the boost modal after a delay of {string} ms',
-    (boostModalDelayMs: string): void => {
-      const delayMs = Number(boostModalDelayMs);
+    'I navigate to a single entity page whose url contains a query param for opening the boost modal after a delay',
+    (): void => {
+      // Go to an existing post SEP
+      const existingActivityGuid = '1477879137912754189';
 
-      // From the 'minds' channel page,
-      I.amOnPage('/minds');
-      channelPage.waitForContentComponent();
-
-      // First go to SEP of first post
-      const permalink = locate('[data-ref=m-activityPermalink__wrapper--link]')
-        .inside('m-activity')
-        .at(1);
-
-      I.waitForElement(permalink);
-      I.click(permalink);
-
-      // Then go to that same SEP with the queryParam
-      I.amOnPage(`?boostModalDelayMs=${delayMs}`);
+      // NOTE: this hardcoded guid is an extremely hacky workaround
+      I.amOnPage(`/newsfeed/${existingActivityGuid}?boostModalDelayMs=1000`);
     }
   );
 
   //
 
-  Then(
-    'I wait for the boost modal to appear after {string} ms',
-    (boostModalDelayMs: number = 2000) => {
-      singleEntityPage.waitForBoostModal(boostModalDelayMs);
-    }
-  );
+  Then('I wait for the boost modal to appear', () => {
+    singleEntityPage.waitForBoostModal(2000);
+  });
 }
