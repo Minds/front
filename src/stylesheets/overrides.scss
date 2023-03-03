@@ -55,11 +55,9 @@
 }
 a {
   @include m-theme() {
-    color: themed($m-textColor--tertiary) ;
+    color: themed($m-textColor--tertiary);
   }
 }
-
-
 
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {

@@ -172,7 +172,6 @@
       display: none;
     }
 
-
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
@@ -203,7 +202,6 @@
     }
   }
 
-
   &.m-sidebarNavigation__item--active > a,
   &:hover > a {
     cursor: pointer;
@@ -219,12 +217,8 @@
           color: themed($m-textColor--secondary);
         }
       }
-
     }
   }
-
-
-
 
   &.m-sidebarNavigation__item--user {
     img {
@@ -263,7 +257,7 @@
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
-  
+
     margin-left: 24px;
   }
 
@@ -451,7 +445,7 @@
       span {
         @include m-theme() {
           color: themed($m-textColor--primary);
-        }  
+        }
       }
 
       &.m-sidebarNavigation__item--user img {

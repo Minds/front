@@ -160,7 +160,6 @@ minds-button-subscribe {
       &.m-subscribeButton__subscribed {
         & > i {
           @include m-theme() {
-            ;
           }
         }
       }
