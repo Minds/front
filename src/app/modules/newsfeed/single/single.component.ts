@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -17,7 +23,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
-import { Location } from '@angular/common';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { BoostModalLazyService } from '../../boost/modal/boost-modal-lazy.service';
 
@@ -66,7 +72,8 @@ export class NewsfeedSingleComponent {
     protected jsonLdService: JsonLdService,
     private location: Location,
     private routerHistory: RouterHistoryService,
-    private boostModal: BoostModalLazyService
+    private boostModal: BoostModalLazyService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -146,8 +153,12 @@ export class NewsfeedSingleComponent {
 
         this.activity = activity;
 
-        // Open up the boost modal after a delay
-        if (this.route.snapshot.queryParamMap.has('boostModalDelayMs')) {
+        // Open up the boost modal after a delay, if logged in
+        if (
+          this.session.getLoggedInUser() &&
+          isPlatformBrowser(this.platformId) &&
+          this.route.snapshot.queryParamMap.has('boostModalDelayMs')
+        ) {
           const ms = Number(
             this.route.snapshot.queryParamMap.get('boostModalDelayMs')
           );
