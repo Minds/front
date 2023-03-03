@@ -1,0 +1,15 @@
+<div class="m-modalV2__inner m-uniswapModalBody">
+  <iframe
+    [src]="iframeUrl | safeUrl"
+    id="uniswap_modal"
+    [style.height]="action === 'swap' ? 650 : 1200"
+  ></iframe>
+  <!-- <div class="" *ngIf="action === 'add'">
+    <span class="m-uniswapModalNeedMore">
+      Insufficient funds? Buy tokens
+      <a (click)="openBuyTokens()">
+        here
+      </a>
+    </span>
+  </div> -->
+</div>
