@@ -160,7 +160,7 @@ minds-button-subscribe {
       &.m-subscribeButton__subscribed {
         & > i {
           @include m-theme() {
-            color: themed($m-blue);
+            ;
           }
         }
       }
@@ -749,7 +749,7 @@ minds-activity-preview {
 
     a {
       @include m-theme() {
-        color: themed($m-blue);
+        color: themed($m-link-text);
       }
     }
   }

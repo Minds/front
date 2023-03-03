@@ -20,7 +20,7 @@ m-dashboardLayout {
     font-weight: 400;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-blue);
+      color: themed($m-link-text);
     }
   }
 }

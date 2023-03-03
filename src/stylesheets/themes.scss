@@ -153,6 +153,8 @@ $themes: (
     m-action--contrast: $yellow-400,
     m-action-text: $grey-900,
     m-link-text: $grey-800,
+    m-link-text-contrast: $grey-700,
+
     m-sidebar-nav-item: $yellow-500,
     // legacy colors
       m-grey-900: $grey-900,
@@ -222,6 +224,8 @@ $themes: (
     m-action--contrast: $yellow-400,
     m-action-text: $grey-900, 
     m-link-text: $yellow-500,
+    m-link-text-contrast: $yellow-400,
+
     m-sidebar-nav-item: $grey-50,
 
     // legacy colors
@@ -298,6 +302,7 @@ $m-blue--contrast: 'm-blue--contrast'; // Used for hovering over blue links, etc
 $m-blue: 'm-blue';
 $m-action-text: 'm-action-text';
 $m-link-text: 'm-link-text';
+$m-link-text-contrast: 'm-link-text-contrast';
 $m-aqua: 'm-aqua';
 $m-action: 'm-action';
 $m-sidebar-nav-item: 'm-sidebar-nav-item';
