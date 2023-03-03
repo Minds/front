@@ -19,20 +19,6 @@
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
-      <a (click)="buyTokens()" data-ref="sidebarmore-buytokens-modal">
-        <m-icon from="custom" iconId="wallet"></m-icon>
-
-        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BUY_CRYPTO"
-          >Buy Crypto</span
-        >
-      </a>
-    </li>
-    <!-- ------------------------------------------------------------ -->
-    <li
-      class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser()"
-      (click)="toggleSidebar()"
-    >
       <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
         <i class="material-icons">insights</i>
         <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"

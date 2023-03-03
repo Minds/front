@@ -3,7 +3,6 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
 import { PhoneVerificationService } from '../../../wallet/components/components/phone-verification/phone-verification.service';
 import { OrderReceivedModalService } from './order-received/order-received-modal.service';
-import { TransakService } from './transak.service';
 import { UniswapModalService } from './uniswap/uniswap-modal.service';
 import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
 
@@ -20,7 +19,6 @@ export class BuyTokensModalComponent {
   paymentMethod: PaymentMethod = 'card';
 
   constructor(
-    private transakService: TransakService,
     private uniswapModalService: UniswapModalService,
     private orderReceivedModalService: OrderReceivedModalService,
     private session: Session,
@@ -60,19 +58,7 @@ export class BuyTokensModalComponent {
     if (this.paymentMethod === 'crypto') {
       await this.uniswapModalService.open();
     } else {
-      try {
-        const { status } = await this.transakService.open();
-        await this.orderReceivedModalService.open({
-          currency: status.fiatCurrency,
-          tokenAmount: status.cryptoAmount,
-          paymentAmount: status.amountPaid,
-          paymentMethod: status.paymentOptionId.includes('card')
-            ? 'Card'
-            : 'Bank',
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      this.toasterService.error('Not currently supported');
     }
   }
 
