@@ -9,6 +9,7 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { ApiService } from '../../../../common/api/api.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Message button (non-owner) - action button shown to logged-in channel visitors.
@@ -35,7 +36,8 @@ export class ChannelActionsMessageComponent {
     protected api: ApiService,
     protected configs: ConfigsService,
     protected features: FeaturesService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private toaster: ToasterService
   ) {}
 
   /**
@@ -56,7 +58,8 @@ export class ChannelActionsMessageComponent {
         this.configs.get('matrix')?.chat_url + '/#/room/' + roomId,
         'chat'
       );
-    } catch {
+    } catch (e) {
+      this.toaster.error(e.error?.message ?? 'An error has occurred');
     } finally {
       this.inProgress = false;
       this.detectChanges();
