@@ -18,7 +18,7 @@
     font-size: 24px;
 
     @include m-theme() {
-      color: themed($m-textColor--primary);
+      color: themed($m-action);
     }
 
     &.admin__badge {

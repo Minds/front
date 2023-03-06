@@ -115,7 +115,7 @@
           text-decoration: none;
           font-weight: 400;
           @include m-theme() {
-            color: themed($m-grey-300);
+            color: themed($m-grey-900);
           }
           &:hover {
             text-decoration: underline;

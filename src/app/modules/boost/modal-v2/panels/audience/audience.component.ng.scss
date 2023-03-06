@@ -91,7 +91,7 @@
         cursor: pointer;
 
         @include m-theme() {
-          accent-color: themed($m-blue);
+          accent-color: themed($m-link-text);
           background-color: themed($m-bgColor--primary);
         }
       }
