@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
@@ -11,10 +10,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   selector: 'm-feedNotice--boostPartners',
   templateUrl: 'boost-partners-notice.component.html',
 })
-export class BoostPartnersNoticeComponent extends AbstractSubscriberComponent {
-  constructor(private feedNotice: FeedNoticeService, private router: Router) {
-    super();
-  }
+export class BoostPartnersNoticeComponent {
+  constructor(private feedNotice: FeedNoticeService, private router: Router) {}
 
   /**
    * Called on primary option click.
