@@ -86,13 +86,13 @@ export class BoostModalV2AudienceSelectorComponent
    */
   public selectRadioButton(audience: BoostAudience): void {
     if (audience === BoostAudience.SAFE) {
-      this.safeOptionClickSubscription = this.isSafeOptionDisabled$.subscribe(
-        (isSafeOptionDisabled: boolean) => {
+      this.safeOptionClickSubscription = this.isSafeOptionDisabled$
+        .pipe(take(1))
+        .subscribe((isSafeOptionDisabled: boolean) => {
           if (!isSafeOptionDisabled) {
             this.form.controls.audience.setValue(audience);
           }
-        }
-      );
+        });
     } else {
       this.form.controls.audience.setValue(audience);
     }
