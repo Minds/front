@@ -44,14 +44,16 @@
           >Content that is suitable if your kids or grandma saw it.</span
         >
       </div>
-      <input
-        class="m-boostAudienceSelector__radioButton"
-        type="radio"
-        [value]="BoostAudience.SAFE"
-        aria-describedby="safe-description"
-        formControlName="audience"
-        data-ref="boost-modal-v2-audience-selector-safe-radio-button"
-      />
+      <fieldset [disabled]="isSafeOptionDisabled$ | async">
+        <input
+          class="m-boostAudienceSelector__radioButton"
+          type="radio"
+          [value]="BoostAudience.SAFE"
+          aria-describedby="safe-description"
+          formControlName="audience"
+          data-ref="boost-modal-v2-audience-selector-safe-radio-button"
+        />
+      </fieldset>
     </div>
     <div
       class="m-boostAudienceSelector__radioButtonRow"
@@ -76,14 +78,16 @@
           upsetting/controversial to a family-friendly audience.</span
         >
       </div>
-      <input
-        class="m-boostAudienceSelector__radioButton"
-        type="radio"
-        [value]="BoostAudience.CONTROVERSIAL"
-        aria-describedby="controversial-description"
-        formControlName="audience"
-        data-ref="boost-modal-v2-audience-selector-controversial-radio-button"
-      />
+      <fieldset>
+        <input
+          class="m-boostAudienceSelector__radioButton"
+          type="radio"
+          [value]="BoostAudience.CONTROVERSIAL"
+          aria-describedby="controversial-description"
+          formControlName="audience"
+          data-ref="boost-modal-v2-audience-selector-controversial-radio-button"
+        />
+      </fieldset>
     </div>
   </form>
 </div>
