@@ -92,6 +92,7 @@
 
         @include m-theme() {
           accent-color: themed($m-blue);
+          background-color: themed($m-bgColor--primary);
         }
       }
     }

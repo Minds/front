@@ -209,9 +209,10 @@
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
-        color: themed($m-action);
+        color: themed($m-textColor--primary);
         svg {
-          fill: themed($m-action);
+          fill: themed($m-textColor--primary);
+
         }
         .m-sidebarNavigation__newWindowIcon {
           color: themed($m-textColor--secondary);
