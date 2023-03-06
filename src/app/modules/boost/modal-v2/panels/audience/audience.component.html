@@ -44,7 +44,10 @@
           >Content that is suitable if your kids or grandma saw it.</span
         >
       </div>
-      <fieldset [disabled]="isSafeOptionDisabled$ | async">
+      <fieldset
+        [disabled]="isSafeOptionDisabled$ | async"
+        data-ref="boost-modal-v2-audience-selector-safe-field-set"
+      >
         <input
           class="m-boostAudienceSelector__radioButton"
           type="radio"
