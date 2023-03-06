@@ -33,6 +33,7 @@ Playwright end-to-end test automation with CodeceptJS (Gherkin) and Browserstack
 | SUPERMIND_SETTINGS_PASSWORD | Password of a dedicated user for testing Supermind Settings |
 | SUPERMIND_FILTER_TEST_USERNAME | Username of a dedicated user for testing Supermind Console filters |
 | SUPERMIND_FILTER_TEST_USERNAME | Password of a dedicated user for testing Supermind Console filters |
+| PLAYWRIGHT_EXISTING_ACTIVITY_GUID | Guid for an activity that we know to exist (i.e. has a working SEP) |
 
 ## Run Command
 
