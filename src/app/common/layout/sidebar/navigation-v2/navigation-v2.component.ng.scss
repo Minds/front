@@ -144,9 +144,10 @@
           margin-bottom: 20px !important;
           margin-top: $spacing6;
 
-          // conditional styling for large compose button.
+          // Conditional styling for large compose button.
+          // This applies to widths under $layoutMax1ColWidth OR widths over $layoutMax3ColWidth.
           @media screen and (max-width: $layoutMax1ColWidth),
-            (min-width: $layoutMax3ColWidth) {
+            (min-width: calc($layoutMax3ColWidth + 1px)) {
             .m-sidebarNavigation__composeButton--small {
               display: none;
             }
@@ -160,12 +161,12 @@
             }
           }
 
-          @media screen and (min-width: $layoutMax3ColWidth) {
+          @media screen and (min-width: calc($layoutMax3ColWidth + 1px)) {
             margin-right: $spacing6;
           }
 
           // conditional styling for small compose button.
-          @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
+          @media screen and (max-width: $layoutMax3ColWidth) and (min-width: calc($layoutMax1ColWidth + 1px)) {
             display: flex;
             align-items: center;
             justify-content: center;
