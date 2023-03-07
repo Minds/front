@@ -3,11 +3,12 @@
 <section>
   <img
     alt
-    [src]="cdnAssetsUrl + 'assets/homepage/neural.png'"
     class="m-homepage__v3__neuralBg"
+    ngSrc="./assets/homepage/neural.png"
+    priority
+    fill
     [m-blurhash]="NEURAL_BACKGROUND_BLURHASH"
     [m-blurhashFullscreen]="true"
-    loading="lazy"
   />
 
   <div class="m-homepage__v3__firstSection__container">
@@ -40,7 +41,10 @@
         <a [href]="siteUrl + 'mobile'" target="_blank">
           <img
             alt="Download Android App"
-            [src]="cdnAssetsUrl + 'assets/homepage/android.png'"
+            ngSrc="./assets/homepage/android.png"
+            disableOptimizedSrcset
+            width="120"
+            height="40"
           />
         </a>
         <a
@@ -49,7 +53,10 @@
         >
           <img
             alt="Download on the App Store"
-            [src]="cdnAssetsUrl + 'assets/homepage/app-store.png'"
+            ngSrc="./assets/homepage/app-store.png"
+            disableOptimizedSrcset
+            width="120"
+            height="40"
           />
         </a>
       </div>
@@ -196,7 +203,11 @@
         <span>
           <img
             alt
-            [src]="cdnAssetsUrl + 'assets/homepage/bridge-the-divide.png'"
+            class="m-marketing__imageElement--noPosition"
+            ngSrc="./assets/homepage/bridge-the-divide.png"
+            disableOptimizedSrcset
+            fill
+            loading="lazy"
           />
         </span>
       </div>
@@ -268,9 +279,11 @@
         <span>
           <img
             alt
-            [src]="
-              cdnAssetsUrl + 'assets/homepage/make-sense-of-your-world.png'
-            "
+            class="m-marketing__imageElement--noPosition"
+            ngSrc="./assets/homepage/make-sense-of-your-world.png"
+            disableOptimizedSrcset
+            fill
+            loading="lazy"
           />
         </span>
       </div>
@@ -293,7 +306,14 @@
           m-grid__order-2--mobile
         "
       >
-        <img alt [src]="cdnAssetsUrl + 'assets/homepage/earn-crypto.png'" />
+        <img
+          alt
+          class="m-marketing__imageElement--noPosition"
+          ngSrc="./assets/homepage/earn-crypto.png"
+          disableOptimizedSrcset
+          fill
+          loading="lazy"
+        />
       </div>
       <div
         class="

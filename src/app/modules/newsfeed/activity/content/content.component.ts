@@ -438,6 +438,10 @@ export class ActivityContentComponent
     return this.service.displayOptions.showTranslation;
   }
 
+  get hasLoadingPriority(): boolean {
+    return this.service.displayOptions.hasLoadingPriority;
+  }
+
   // Text usually goes above media, except for
   // minimal mode and rich-embed modals
   // Note: no rich-embed modals anymore
