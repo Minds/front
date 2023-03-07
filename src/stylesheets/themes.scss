@@ -136,8 +136,8 @@ $themes: (
     m-bgColor--primaryInverted: $grey-900,
     m-bgColor--primaryDarkAlways: $grey-900,
     m-bgColor--primaryAlt: #ffffff,
-    m-bgColor--secondary: $grey-50,
-    m-bgColor--secondaryAlt: $grey-50,
+    m-bgColor--secondary: $grey-100,
+    m-bgColor--secondaryAlt: $grey-100,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--contrastSubtle: #dde4e6,
     m-bgColor--btnHover: #f0f3f7,
@@ -152,9 +152,12 @@ $themes: (
     m-action: $yellow-500-alt,
     m-action--contrast: $yellow-400,
     m-action-text: $grey-900,
-    m-link-text: $grey-800,
+    m-link-text: $grey-600,
     m-link-text-contrast: $grey-700,
     m-sidebar-nav-item: $yellow-500,
+
+    //rotator button token
+    m-rotator-action: $grey-700,
     // legacy colors
       m-grey-900: $grey-900,
     m-grey-800: $grey-800,
@@ -225,6 +228,10 @@ $themes: (
     m-link-text: $yellow-500,
     m-link-text-contrast: $yellow-400,
     m-sidebar-nav-item: $grey-50,
+
+        //rotator button token
+        m-rotator-action: $grey-50,
+
     // legacy colors
       // legacy colors
       m-grey-900: $grey-900,
@@ -298,6 +305,7 @@ $m-marketing-bg-colored-gradient-end: 'm-marketing-bg-colored-gradient-end';
 $m-blue--contrast: 'm-blue--contrast'; // Used for hovering over blue links, etc.
 $m-blue: 'm-blue';
 $m-action-text: 'm-action-text';
+$m-rotator-action: 'm-rotator-action';
 $m-link-text: 'm-link-text';
 $m-link-text-contrast: 'm-link-text-contrast';
 $m-aqua: 'm-aqua';
