@@ -21,7 +21,8 @@
       [entity]="activity$ | async"
       [displayOptions]="{
         showComments: true,
-        isFeed: true
+        isFeed: true,
+        hasLoadingPriority: i < 2
       }"
       class="m-defaultFeed__activity"
     ></m-activity>
