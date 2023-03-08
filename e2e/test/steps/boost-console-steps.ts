@@ -20,6 +20,16 @@ namespace BoostConsoleSteps {
     }
   );
 
+  Given(
+    'I am on the single boost Boost Console page for a wrong audience rejected boost',
+    (filterValue: BoostConsoleStateFilterValue) => {
+      const boostGuid: string =
+        process.env.PLAYWRIGHT_USER_WRONG_AUDIENCE_REJECTED_BOOST_GUID ??
+        '1479527488425037836';
+      boostConsolePage.navigateToViaUrl(`boostGuid=${boostGuid}`);
+    }
+  );
+
   When(
     'I click to change Boost Console tabs to {string}',
     async (tab: string) => {
@@ -33,6 +43,10 @@ namespace BoostConsoleSteps {
       await boostConsolePage.switchStateFilter(filterValue);
     }
   );
+
+  When('I click to boost again', () => {
+    boostConsolePage.clickBoostAgain();
+  });
 
   Then(
     'I should see my Boost Console {string} location tab',
