@@ -177,6 +177,7 @@ import { DynamicBoostExperimentService } from '../modules/experiments/sub-servic
 import { PathMatch } from './types/angular.types';
 import { BoostFeedService } from '../modules/newsfeed/services/boost-feed.service';
 import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.component';
+import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/navigation-v2.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -252,6 +253,7 @@ const MINDS_COMMON_COMPONENTS = [
   SidebarMoreComponent,
   SidebarMoreTriggerComponent,
   SidebarNavigationComponent,
+  SidebarNavigationV2Component,
   SidebarWidgetComponent,
   SizeableLoadingSpinnerComponent,
   SocialIcons,
