@@ -10,7 +10,6 @@ import { RejectionReasonModalComponent } from './boosts/modal/rejection-reason-m
 import { AdminInteractions } from './interactions/interactions.component';
 import { InteractionsTableComponent } from './interactions/table/table.component';
 import { AdminWithdrawals } from './withdrawals/withdrawals.component';
-import { AdminFeaturesComponent } from './features/admin-features.component';
 import { CommonModule } from '../../common/common.module';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
@@ -59,7 +58,6 @@ const routes: Routes = [
     AdminVerify,
     AdminWithdrawals,
     AdminTransactionExplorersComponent,
-    AdminFeaturesComponent,
     AdminLiquidityProvidersComponent,
     AdminPushNotificationsComponent,
     AdminPushNotificationsFormComponent,

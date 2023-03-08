@@ -20,7 +20,6 @@ import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
-import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';

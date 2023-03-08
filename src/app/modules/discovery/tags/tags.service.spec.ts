@@ -3,7 +3,6 @@ import { DiscoveryTagsService } from './tags.service';
 
 let hashtagDefaultsMock = new (function() {})();
 let discoveryServiceMock = new (function() {})();
-let featuresServiceMock = new (function() {})();
 let experimentsServiceMock = new (function() {})();
 let configMock = new (function() {
   this.get = jasmine.createSpy('get');
@@ -17,7 +16,6 @@ describe('DiscoveryTagsService', () => {
       clientMock,
       hashtagDefaultsMock,
       discoveryServiceMock,
-      featuresServiceMock,
       experimentsServiceMock,
       configMock,
       null // platformId

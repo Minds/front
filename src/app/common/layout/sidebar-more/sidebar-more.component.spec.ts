@@ -1,7 +1,6 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
@@ -9,7 +8,6 @@ import { BuyTokensModalService } from '../../../modules/blockchain/token-purchas
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SupermindExperimentService } from '../../../modules/experiments/sub-services/supermind-experiment.service';
-import { FeaturesService } from '../../../services/features.service';
 import { Session } from '../../../services/session';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ThemeService } from '../../services/theme.service';
@@ -36,7 +34,6 @@ describe('SidebarMoreComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
         { provide: ThemeService, useValue: themeServiceMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
         {
           provide: Web3WalletService,
           useValue: MockService(Web3WalletService),

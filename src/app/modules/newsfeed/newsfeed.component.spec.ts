@@ -21,9 +21,6 @@ import { navigationMock } from '../../../tests/navigation-service-mock.spec';
 import { MockComponent, MockDirective, MockService } from '../../utils/mock';
 import { NewsfeedService } from './services/newsfeed.service';
 import { newsfeedServiceMock } from '../../mocks/modules/newsfeed/services/newsfeed-service.mock';
-import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
-import { FeaturesService } from '../../services/features.service';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PagesService } from '../../common/services/pages.service';
 import { pagesServiceMock } from '../../mocks/services/pages-mock.spec';
@@ -75,7 +72,6 @@ describe('NewsfeedComponent', () => {
             outputs: ['filterChange', 'switchAttempt'],
           }),
           MockComponent({ selector: 'm-liquiditySpot' }),
-          IfFeatureDirective,
           NewsfeedComponent,
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
@@ -96,7 +92,6 @@ describe('NewsfeedComponent', () => {
           { provide: Navigation, useValue: navigationMock },
           { provide: ModalService, useValue: modalServiceMock },
           { provide: NewsfeedService, useValue: newsfeedServiceMock },
-          { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: PagesService, useValue: pagesServiceMock },
           { provide: ApiService, useValue: MockService(ApiService) },
           {

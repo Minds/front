@@ -43,18 +43,6 @@
       </m-dropdownMenu__item>
     </m-dropdownMenu>
 
-    <!-- PERMAWEB SUBMENU TRIGGER -->
-    <m-dropdownMenu
-      *ngIf="shouldShowPermawebOption()"
-      [menu]="permawebSubmenu"
-      [anchorPosition]="submenuAnchorPosition"
-      data-ref="meatball-menu-permaweb"
-    >
-      <m-dropdownMenu__item hasSubmenu="true"
-        ><span>Permaweb</span>
-      </m-dropdownMenu__item>
-    </m-dropdownMenu>
-
     <ng-content></ng-content>
   </ul>
 </ng-template>
@@ -85,18 +73,6 @@
       selectable="true"
       [selected]="(license$ | async) === licenseItem.value"
       ><span>{{ licenseItem.text }}</span>
-    </m-dropdownMenu__item>
-  </ul>
-</ng-template>
-
-<!-- PERMAWEB SUBMENU ITEMS -->
-<ng-template #permawebSubmenu>
-  <ul data-ref="meatball-menu-license-menu">
-    <m-dropdownMenu__item
-      (click)="onPostToPermawebClick()"
-      selectable="true"
-      [selected]="service.postToPermaweb$ | async"
-      ><span>Post to Permaweb</span>
     </m-dropdownMenu__item>
   </ul>
 </ng-template>

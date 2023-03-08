@@ -14,9 +14,6 @@ import { sessionMock } from '../../../../../tests/session-mock.spec';
 import { ThemeService } from '../../../services/theme.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IfFeatureDirective } from '../../../directives/if-feature.directive';
-import { FeaturesService } from '../../../../services/features.service';
-import { featuresServiceMock } from '../../../../../tests/features-service-mock.spec';
 import { themeServiceMock } from '../../../../mocks/common/services/theme.service-mock.spec';
 import { By } from '@angular/platform-browser';
 import { Component, DebugElement, Input } from '@angular/core';
@@ -45,13 +42,11 @@ describe('UserMenuComponent', () => {
             selector: 'm-dropdownMenu__item',
             inputs: ['link', 'externalLink'],
           }),
-          IfFeatureDirective,
           UserMenuComponent,
         ],
         imports: [FormsModule, RouterTestingModule, NgCommonModule],
         providers: [
           { provide: Session, useValue: sessionMock },
-          { provide: FeaturesService, useValue: featuresServiceMock },
           {
             provide: ThemeService,
             useValue: themeServiceMock,

@@ -13,9 +13,8 @@ import {
 } from '@angular/core';
 import { FeaturedContentService } from './featured-content.service';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
-import { FeaturesService } from '../../../services/features.service';
-import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 import { isPlatformBrowser } from '@angular/common';
+import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 
 /**
  * Use to insert activity boosts into a feed
@@ -41,7 +40,6 @@ export class FeaturedContentComponent implements OnInit {
     protected featuredContentService: FeaturedContentService,
     protected componentFactoryResolver: ComponentFactoryResolver,
     protected cd: ChangeDetectorRef,
-    protected featuresService: FeaturesService,
     protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}

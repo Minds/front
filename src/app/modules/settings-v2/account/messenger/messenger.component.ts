@@ -11,7 +11,6 @@ import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
 import { Storage } from '../../../../services/storage';
-import { FeaturesService } from '../../../../services/features.service';
 import { MessengerService } from '../../../messenger/messenger.service';
 import { Subscription } from 'rxjs';
 
@@ -34,7 +33,6 @@ export class SettingsV2MessengerComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected storage: Storage,
-    protected featuresService: FeaturesService,
     protected messengerService: MessengerService
   ) {}
 

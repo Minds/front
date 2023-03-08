@@ -229,33 +229,20 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <ng-container *mIfFeature="'purchase-pro'; else comingSoon">
-        <a
-          routerLink="/pro"
-          [queryParams]="intervalCurrencyQueryParams"
-          data-ref="m-upgradeOptions__upgrade-to-pro-button"
-          i18n="@@COMMON__UPGRADE_TO_PRO"
+      <a
+        routerLink="/pro"
+        [queryParams]="intervalCurrencyQueryParams"
+        data-ref="m-upgradeOptions__upgrade-to-pro-button"
+        i18n="@@COMMON__UPGRADE_TO_PRO"
+      >
+        <m-button
+          color="blue"
+          class="m-upgradesUpgradeOptionsPlan__action"
+          *ngIf="!session.getLoggedInUser()?.pro"
         >
-          <m-button
-            color="blue"
-            class="m-upgradesUpgradeOptionsPlan__action"
-            *ngIf="!session.getLoggedInUser()?.pro"
-          >
-            Upgrade to Pro
-          </m-button></a
-        >
-      </ng-container>
-      <ng-template #comingSoon>
-        <a
-          routerLink="/pro"
-          data-ref="m-upgradeOptions__upgrade-to-pro-button"
-          i18n="@@COMMON__COMING_SOON"
-        >
-          <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
-            Coming soon
-          </m-button></a
-        >
-      </ng-template>
+          Upgrade to Pro
+        </m-button></a
+      >
     </div>
 
     <div

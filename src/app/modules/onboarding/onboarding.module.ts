@@ -11,7 +11,6 @@ import { GroupsTileComponent } from '../groups/tile/tile.component';
 import { Client } from '../../services/api/client';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { Session } from '../../services/session';
-import { FeaturesService } from '../../services/features.service';
 
 @NgModule({
   imports: [
@@ -28,7 +27,7 @@ import { FeaturesService } from '../../services/features.service';
   providers: [
     {
       provide: ChannelOnboardingService,
-      deps: [Client, Session, FeaturesService],
+      deps: [Client, Session],
       useFactory: ChannelOnboardingService._,
     },
   ],

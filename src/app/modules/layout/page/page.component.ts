@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
 import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.service';
 import { SiteService } from '../../../common/services/site.service';
@@ -23,7 +22,6 @@ export class PageComponent implements OnInit {
 
   constructor(
     public session: Session,
-    public featuresService: FeaturesService,
     private navigationService: SidebarNavigationService,
     private onboardingService: ChannelOnboardingService,
     private site: SiteService,
