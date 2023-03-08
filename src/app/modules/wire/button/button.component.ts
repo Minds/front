@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { SignupModalService } from '../../modals/signup/service';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 import { WireCreatorComponent } from '../v2/creator/wire-creator.component';
 import { ModalService } from '../../../services/ux/modal.service';
 
@@ -25,7 +24,6 @@ export class WireButtonComponent {
   constructor(
     public session: Session,
     private modal: SignupModalService,
-    public features: FeaturesService,
     private modalService: ModalService
   ) {}
 

@@ -17,8 +17,6 @@ import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { MockService, MockComponent, MockDirective } from '../../../utils/mock';
-import { FeaturesService } from '../../../services/features.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
@@ -93,7 +91,6 @@ describe('NewsfeedSingleComponent', () => {
           },
           { provide: MetaService, useValue: MockService(MetaService) },
           { provide: EntitiesService, useValue: MockService(EntitiesService) },
-          { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: ConfigsService, useValue: MockService(ConfigsService) },
           { provide: HeadersService, useValue: MockService(HeadersService) },
           {

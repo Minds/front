@@ -22,7 +22,6 @@ import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
 import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
 import { BlockListService } from './common/services/block-list.service';
-import { FeaturesService } from './services/features.service';
 import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
 import { DiagnosticsService } from './common/services/diagnostics/diagnostics.service';
@@ -77,7 +76,6 @@ export class Minds implements OnInit, OnDestroy {
     public upload: Upload,
     private emailConfirmationService: EmailConfirmationService,
     public router: Router,
-    public featuresService: FeaturesService,
     public themeService: ThemeService,
     private bannedService: BannedService,
     @Inject(PLATFORM_ID) private platformId: Object,

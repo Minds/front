@@ -11,7 +11,6 @@ import { DiscoveryTagSettingsComponent } from '../tags/settings.component';
 import { DiscoveryTagsService } from '../tags/tags.service';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { DiscoveryTrendsService } from '../trends/trends.service';
-import { FeaturesService } from '../../../services/features.service';
 import { ContentSettingsComponent } from '../../content-settings/content-settings/content-settings.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { ComponentType } from '@angular/cdk/overlay';
@@ -30,15 +29,15 @@ export class DiscoverySettingsButtonComponent implements OnInit {
     private service: DiscoveryTagsService,
     private modalService: ModalService,
     private injector: Injector,
-    private featuresService: FeaturesService,
     public session: Session,
     @Optional() @SkipSelf() private feeds: DiscoveryFeedsService,
     @Optional() @SkipSelf() private trends: DiscoveryTrendsService
   ) {}
 
   ngOnInit(): void {
-    this.contentSettingsFlag =
-      this.featuresService.has('content-settings-modal') || false;
+    // TODO: resolve remaining issues with nsfw settings and media type selections
+    // so that we can enable the contentSettingsFlag
+    this.contentSettingsFlag = false;
 
     if (this.contentSettingsFlag) {
       this.modalType = 'content-settings';

@@ -9,7 +9,6 @@ import {
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
 import { Subscription } from 'rxjs';
-import { FeaturesService } from '../../../services/features.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
@@ -59,7 +58,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
-    protected featuresService: FeaturesService,
     private web3WalletService: Web3WalletService,
     private buyTokensModalService: BuyTokensModalService,
     private earnModalService: EarnModalService,

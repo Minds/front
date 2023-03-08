@@ -30,9 +30,6 @@ import {
   COOKIE_OPTIONS,
   CookieModule,
 } from '@mindsorg/ngx-universal';
-import { FeaturesService } from '../../services/features.service';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
-import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { MockService, MockComponent } from '../../utils/mock';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
@@ -78,7 +75,6 @@ describe('LoginComponent', () => {
           MindsFormLoginMock,
           MindsFormRegisterMock,
           LoginComponent,
-          IfFeatureDirective,
           MarketingFooterComponent,
           MockComponent({ selector: 'm-tooltip', inputs: ['icon', 'i18n'] }),
           MockComponent({ selector: 'm-language__bar' }),
@@ -98,7 +94,6 @@ describe('LoginComponent', () => {
           Storage,
           CookieService,
           { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
-          { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: TopbarService, useValue: MockService(TopbarService) },
           {
             provide: SidebarNavigationService,

@@ -27,7 +27,6 @@ import { Subscription, Observable, Subject } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -159,7 +158,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private elementVisibilityService: ElementVisibilityService,
     private newsfeedService: NewsfeedService,
-    public featuresService: FeaturesService,
     public session: Session,
     private configs: ConfigsService,
     private interceptionObserver: IntersectionObserverService,
