@@ -9,7 +9,6 @@ import {
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
 import { Subscription } from 'rxjs';
-import { FeaturesService } from '../../../services/features.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
@@ -57,7 +56,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
-    protected featuresService: FeaturesService,
     private earnModalService: EarnModalService,
     private boostModalService: BoostModalLazyService,
     private sidebarNavigationService: SidebarNavigationService,

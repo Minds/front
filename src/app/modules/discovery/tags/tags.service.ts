@@ -6,7 +6,6 @@ import { HashtagDefaultsService } from '../../hashtags/service/defaults.service'
 import { isPlatformServer } from '@angular/common';
 import { DiscoveryService } from '../discovery.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 
 export type DiscoveryTag = any;
@@ -72,7 +71,6 @@ export class DiscoveryTagsService {
     private client: Client,
     private hashtagDefaults: HashtagDefaultsService,
     private discoveryService: DiscoveryService,
-    private featuresService: FeaturesService,
     private experiments: ExperimentsService,
     configs: ConfigsService,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -98,10 +96,7 @@ export class DiscoveryTagsService {
     let endpoint = 'api/v3/discovery/tags',
       params = entityGuid ? { entity_guid: entityGuid } : {};
 
-    if (
-      this.discoveryService.isPlusPage$.value &&
-      this.featuresService.has('plus-discovery-filter')
-    ) {
+    if (this.discoveryService.isPlusPage$.value) {
       params['wire_support_tier'] = this.plusHandler;
     }
 

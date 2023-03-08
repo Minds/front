@@ -67,6 +67,10 @@ namespace BoostSteps {
     boostModalComponent.clickSubmitButton();
   });
 
+  Then('I should see the safe option is disabled', () => {
+    boostModalComponent.checkSafeOptionIsDisabled();
+  });
+
   // Then('I can revoke a newsfeed boost', () => {
 
   // });

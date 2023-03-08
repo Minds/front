@@ -11,7 +11,6 @@ import { filter } from 'rxjs/operators';
 import { SettingsV2Service } from './settings-v2.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
-import { FeaturesService } from '../../services/features.service';
 import { Subscription } from 'rxjs';
 import { SupermindExperimentService } from '../experiments/sub-services/supermind-experiment.service';
 
@@ -31,7 +30,6 @@ export class SettingsV2Component implements OnInit {
   routeData: any;
   user: string | null = null;
   onMainNav: boolean = false;
-  hasYoutubeFeature: boolean = false;
 
   protected paramMap$: Subscription;
 
@@ -342,11 +340,8 @@ export class SettingsV2Component implements OnInit {
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
     protected toasterService: ToasterService,
-    public featuresService: FeaturesService,
     private supermindExperiment: SupermindExperimentService
-  ) {
-    this.hasYoutubeFeature = this.featuresService.has('yt-importer');
-  }
+  ) {}
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {

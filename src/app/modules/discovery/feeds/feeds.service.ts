@@ -4,7 +4,6 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 import { isPlatformServer } from '@angular/common';
 import { DiscoveryService } from '../discovery.service';
-import { FeaturesService } from '../../../services/features.service';
 
 export type DiscoveryFeedsPeriod =
   | '12h'
@@ -44,8 +43,7 @@ export class DiscoveryFeedsService {
     @Self() public feedsService: FeedsService,
     public nsfwService: NSFWSelectorConsumerService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private discoveryService: DiscoveryService,
-    private featuresService: FeaturesService
+    private discoveryService: DiscoveryService
   ) {
     this.nsfwService.build();
     this.nsfw$ = new BehaviorSubject(this.nsfwService.reasons);
@@ -58,13 +56,9 @@ export class DiscoveryFeedsService {
     let algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
 
     if (isPlusPage) {
-      if (!this.featuresService.has('plus-discovery-filter')) {
-        algorithm = this.filter$.value === 'latest' ? 'latest' : 'plusFeed';
-      } else {
-        const allowedPlusAlgorithms = ['top', 'topV2', 'latest'];
-        if (!allowedPlusAlgorithms.includes(algorithm)) {
-          algorithm = 'plusFeed';
-        }
+      const allowedPlusAlgorithms = ['top', 'topV2', 'latest'];
+      if (!allowedPlusAlgorithms.includes(algorithm)) {
+        algorithm = 'plusFeed';
       }
     }
 

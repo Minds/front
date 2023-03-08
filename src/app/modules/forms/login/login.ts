@@ -15,7 +15,6 @@ import {
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
-import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { Router } from '@angular/router';
 import { RegexService } from '../../../common/services/regex.service';
@@ -62,7 +61,6 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     fb: UntypedFormBuilder,
     private zone: NgZone,
     private userAvatarService: UserAvatarService,
-    private featuresService: FeaturesService,
     private authModal: AuthModalService,
     private router: Router,
     private regex: RegexService

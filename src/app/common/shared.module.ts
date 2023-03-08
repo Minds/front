@@ -1,6 +1,5 @@
 import { NgModule, PLATFORM_ID } from '@angular/core';
 import { PageLayoutService } from './layout/page-layout.service';
-import { FeaturesService } from '../services/features.service';
 import { ConfigsService } from './services/configs.service';
 import { AuthModalService } from '../modules/auth/modal/auth-modal.service';
 import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
@@ -17,7 +16,6 @@ import { SupermindOnboardingModalService } from '../modules/supermind/onboarding
   providers: [
     ConfigsService,
     PageLayoutService,
-    FeaturesService,
     UniswapModalService,
     AuthModalService,
     EarnModalService,

@@ -320,6 +320,10 @@
     display: none !important;
   }
 
+  .m-marketing__imageElement--noPosition {
+    position: unset !important;
+  }
+
   .m-marketing__section--style-4 {
     .m-marketing__wrapper {
       .m-marketing__body {

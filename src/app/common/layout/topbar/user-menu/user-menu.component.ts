@@ -9,7 +9,6 @@ import {
 import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../services/theme.service';
 import { Subscription } from 'rxjs';
-import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
@@ -36,7 +35,6 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
-    protected featuresService: FeaturesService,
     private helpdeskRedirectService: HelpdeskRedirectService,
     public dynamicBoostExperiment: DynamicBoostExperimentService
   ) {}

@@ -50,6 +50,25 @@
     <span class="m-boostConsoleStatsBar__desc">{{ formattedStartDate }}</span>
   </div>
   <div
+    *ngIf="isBoostCompleted()"
+    class="m-boostConsoleStatsBar__column"
+    data-ref="m-boostConsole__statsBar--cpm"
+  >
+    <span class="m-boostConsoleStatsBar__title"
+      >CPM<m-tooltip
+        ><span
+          m-tooltip--anchor
+          class="m-boostConsoleStatsBar__customInfoTooltip"
+          >𝒊</span
+        >
+        <ng-container i18n="@@BOOST_CONSOLE__STATS_BAR__CPM_EXPLANATION"
+          >CPM is the cost per 1,000 views (cost per mille)</ng-container
+        >
+      </m-tooltip>
+    </span>
+    <span class="m-boostConsoleStatsBar__desc">{{ getCpmString() }}</span>
+  </div>
+  <div
     class="m-boostConsoleStatsBar__column"
     data-ref="m-boostConsole__statsBar--results"
   >

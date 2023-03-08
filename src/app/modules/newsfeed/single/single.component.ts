@@ -8,7 +8,6 @@ import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
-import { FeaturesService } from '../../../services/features.service';
 import {
   MetaService,
   MIN_METRIC_FOR_ROBOTS,
@@ -55,7 +54,6 @@ export class NewsfeedSingleComponent {
     public session: Session,
     public entitiesService: EntitiesService,
     protected client: Client,
-    protected featuresService: FeaturesService,
     private metaService: MetaService,
     configs: ConfigsService,
     private headersService: HeadersService,
