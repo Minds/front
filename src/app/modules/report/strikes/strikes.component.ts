@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
 import { JurySessionService } from '../juryduty/session/session.service';
-import { FeaturesService } from '../../../services/features.service';
 
 /**
  * Displays strikes against a channel for
@@ -26,11 +25,7 @@ export class StrikesComponent implements OnInit {
 
   hasNewNav: boolean = false;
 
-  constructor(
-    private client: Client,
-    public service: JurySessionService,
-    protected featuresService: FeaturesService
-  ) {}
+  constructor(private client: Client, public service: JurySessionService) {}
 
   ngOnInit() {
     this.hasNewNav = true;

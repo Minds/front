@@ -1,0 +1,246 @@
+<div
+  class="m-sidebarNavigation"
+  [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+  (click)="onSidebarNavClick($event)"
+>
+  <nav>
+    <div class="m-sidebarNavigation__top">
+      <a
+        routerLink="/"
+        title="Home"
+        i18n-title="@@COMMON__HOME"
+        (click)="toggle()"
+      >
+        <img
+          *ngIf="layoutMode !== 'phone'"
+          [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+        />
+        <ng-container *ngIf="layoutMode === 'phone'">
+          <img
+            *ngIf="!isDarkTheme"
+            [src]="cdnAssetsUrl + 'assets/logos/medium-production.png'"
+          />
+          <img
+            *ngIf="isDarkTheme"
+            [src]="cdnAssetsUrl + 'assets/logos/medium-white.png'"
+          />
+        </ng-container>
+        <m-environmentFlag
+          class="m-sidebarNavigation__environmentFlag"
+        ></m-environmentFlag>
+      </a>
+
+      <i class="material-icons" (click)="toggle()">close</i>
+    </div>
+
+    <ul class="m-sidebarNavigation__list">
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        *ngIf="user"
+      >
+        <a
+          [routerLink]="['/newsfeed/subscriptions']"
+          (click)="toggle()"
+          data-ref="sidenav-newsfeed"
+        >
+          <div class="m-sidebarNavigationItem__hoverArea">
+            <i class="material-icons">home</i>
+            <span
+              class="m-sidebarNavigationItem__text m-legible"
+              i18n="@@COMMON__NEWSFEED"
+              >Newsfeed</span
+            >
+          </div>
+        </a>
+      </li>
+
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        [routerLinkActiveOptions]="{ exact: plusPageActive }"
+      >
+        <a
+          [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
+          (click)="toggle()"
+          data-ref="sidenav-discovery"
+        >
+          <div class="m-sidebarNavigationItem__hoverArea">
+            <i class="material-icons m-sidebarNavigation__hashIcon">#</i>
+            <span class="m-sidebarNavigationItem__text m-legible">
+              <ng-container
+                *ngIf="showExploreExperiment(); else showDiscoveryText"
+                i18n="@@COMMON__EXPLORE"
+                >Explore</ng-container
+              >
+              <ng-template #showDiscoveryText i18n="@@COMMON__DISCOVERY"
+                >Discovery</ng-template
+              >
+            </span>
+          </div>
+        </a>
+      </li>
+
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        [routerLinkActiveOptions]="{ exact: !plusPageActive }"
+      >
+        <a
+          routerLink="/discovery/plus/overview"
+          (click)="toggle()"
+          data-ref="sidenav-plus"
+        >
+          <div class="m-sidebarNavigationItem__hoverArea">
+            <i class="material-icons">add_to_queue</i>
+            <span
+              class="m-sidebarNavigationItem__text m-legible"
+              i18n="@@COMMON__MINDS+"
+              >Minds+</span
+            >
+          </div>
+        </a>
+      </li>
+
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        *ngIf="user"
+      >
+        <a
+          [routerLink]="['/wallet']"
+          (click)="toggle()"
+          data-ref="sidenav-wallet"
+        >
+          <div class="m-sidebarNavigationItem__hoverArea">
+            <i class="material-icons">account_balance</i>
+            <span
+              class="m-sidebarNavigationItem__text m-legible"
+              i18n="@@COMMON__WALLET"
+              >Wallet</span
+            >
+          </div>
+        </a>
+      </li>
+
+      <li
+        *ngIf="user"
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a
+          [href]="chatUrl"
+          target="chat"
+          (click)="toggle()"
+          data-ref="sidenav-chat"
+        >
+          <div class="m-sidebarNavigationItem__hoverArea">
+            <m-chatIcon m-tooltip--icon></m-chatIcon>
+            <span
+              class="m-sidebarNavigationItem__text m-legible"
+              i18n="@@COMMON__CHAT"
+              >Chat</span
+            >
+          </div>
+        </a>
+      </li>
+      <ng-container *ngIf="user">
+        <li
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--groups"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['/groups/memberships']"
+            (click)="toggle()"
+            data-ref="sidenav-groups"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">group</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__GROUPS"
+                >Groups</span
+              >
+            </div>
+          </a>
+        </li>
+      </ng-container>
+      <li
+        *ngIf="user"
+        class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a
+          [routerLink]="['/' + user.username]"
+          (click)="toggle()"
+          data-ref="sidenav-channel"
+        >
+          <div class="m-sidebarNavigationItem__hoverArea">
+            <img
+              [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
+              alt=""
+            />
+            <span class="m-sidebarNavigationItem__text m-legible">
+              @{{ user.username }}
+            </span>
+          </div>
+        </a>
+      </li>
+      <!-- Click event is handled by popperjs inside trigger component -->
+      <m-sidebarMore__trigger (toggle)="onSidebarMoreToggle($event)">
+        <li
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a data-ref="sidenav-more">
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons m-icon--more" m-tooltip--anchor
+                >more_horiz</i
+              >
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__MORE"
+                >More</span
+              >
+            </div>
+          </a>
+        </li>
+      </m-sidebarMore__trigger>
+      <li
+        class="m-sidebarNavigation__item m-sidebarNavigation__item--compose"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngIf="user"
+      >
+        <!-- Which shows here is determined by media queries -->
+        <m-button
+          class="m-sidebarNavigation__composeButton--large"
+          color="blue"
+          solid="true"
+          size="medium"
+          (onAction)="openComposeModal()"
+          data-ref="sidenav-composer"
+          >Compose</m-button
+        >
+        <m-button
+          class="m-sidebarNavigation__composeButton--small"
+          color="blue"
+          solid="true"
+          size="large"
+          iconOnly="true"
+          (onAction)="openComposeModal()"
+          data-ref="sidenav-composer"
+          >+</m-button
+        >
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<div
+  class="minds-bg-overlay m-sidebarNavigation__overlay"
+  *ngIf="isOpened && layoutMode === 'phone'"
+  (click)="toggle()"
+></div>

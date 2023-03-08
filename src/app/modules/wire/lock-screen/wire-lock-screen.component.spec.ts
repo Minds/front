@@ -21,8 +21,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
 import { WireModalService } from '../wire-modal.service';
 import { of } from 'rxjs';
-import { FeaturesService } from '../../../services/features.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';

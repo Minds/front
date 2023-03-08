@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
 import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.service';
 import { SiteService } from '../../../common/services/site.service';
@@ -10,6 +9,7 @@ import { Storage } from '../../../services/storage';
 import { MessengerService } from '../../messenger/messenger.service';
 import { isPlatformBrowser } from '@angular/common';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import { SidebarV2ExperimentService } from '../../experiments/sub-services/sidebar-v2-experiment.service';
 
 @Component({
   selector: 'm-page',
@@ -23,7 +23,6 @@ export class PageComponent implements OnInit {
 
   constructor(
     public session: Session,
-    public featuresService: FeaturesService,
     private navigationService: SidebarNavigationService,
     private onboardingService: ChannelOnboardingService,
     private site: SiteService,
@@ -31,6 +30,7 @@ export class PageComponent implements OnInit {
     private router: Router,
     private storage: Storage,
     private messengerService: MessengerService,
+    private sidebarV2Experiment: SidebarV2ExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -68,5 +68,13 @@ export class PageComponent implements OnInit {
       return false;
     }
     return isMobileOrTablet();
+  }
+
+  /**
+   * Whether sidebar V2 experiment is active.
+   * @returns { boolean }
+   */
+  public isSidebarV2ExperimentActive(): boolean {
+    return this.sidebarV2Experiment.isActive();
   }
 }

@@ -8,7 +8,6 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { PageLayoutService } from './page-layout.service';
-import { FeaturesService } from '../../services/features.service';
 
 @Directive({
   selector: '[m-pageLayout__container]',
@@ -39,10 +38,7 @@ export class PageLayoutPaneDirective implements OnInit, OnDestroy {
     return this.pane === 'right';
   }
 
-  constructor(
-    private service: PageLayoutService,
-    private featuresService: FeaturesService
-  ) {}
+  constructor(private service: PageLayoutService) {}
 
   ngOnInit() {
     switch (this.pane) {

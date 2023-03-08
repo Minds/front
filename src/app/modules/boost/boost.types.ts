@@ -18,6 +18,9 @@ export type Boost = {
   updated_timestamp: number;
   approved_timestamp: number;
   payment_tx_id?: string;
+  summary?: {
+    views_delivered?: number;
+  };
 };
 
 /**

@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
@@ -28,7 +27,6 @@ describe('ActivityComponent', () => {
             useValue: MockService(ChangeDetectorRef),
           },
           { provide: NewsfeedService, useValue: MockService(NewsfeedService) },
-          { provide: FeaturesService, useValue: MockService(FeaturesService) },
           { provide: Session, useValue: MockService(Session) },
           { provide: ConfigsService, useValue: MockService(ConfigsService) },
           {

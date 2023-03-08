@@ -32,7 +32,6 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { Router } from '@angular/router';
-import { FeaturesService } from '../../../services/features.service';
 import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -135,7 +134,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     private el: ElementRef,
     private router: Router,
     protected activityService: ActivityService,
-    protected featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
     configs: ConfigsService,
     protected toasterService: ToasterService,

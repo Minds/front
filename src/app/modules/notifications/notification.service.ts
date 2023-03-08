@@ -13,7 +13,6 @@ import { Session } from '../../services/session';
 import { MetaService } from '../../common/services/meta.service';
 import { BehaviorSubject, Subject, Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
-import { FeaturesService } from '../../services/features.service';
 
 @Injectable()
 export class NotificationService implements OnDestroy {
@@ -35,8 +34,7 @@ export class NotificationService implements OnDestroy {
     public sockets: SocketsService,
     public metaService: MetaService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    protected site: SiteService,
-    protected featuresService: FeaturesService
+    protected site: SiteService
   ) {
     if (!this.site.isProDomain) {
       this.listen();

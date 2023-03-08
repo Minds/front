@@ -13,7 +13,6 @@ import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ACTIVITY_V2_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
 import {
@@ -107,7 +106,6 @@ export class NewsfeedBoostRotatorComponent {
     public settingsService: SettingsV2Service,
     public element: ElementRef,
     private cd: ChangeDetectorRef,
-    protected featuresService: FeaturesService,
     public boostFeedService: BoostFeedService,
     private dynamicBoostExperiment: DynamicBoostExperimentService,
     configs: ConfigsService

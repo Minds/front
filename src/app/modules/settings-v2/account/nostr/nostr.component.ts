@@ -16,7 +16,6 @@ import {
 
 import { Session } from '../../../../services/session';
 import { Storage } from '../../../../services/storage';
-import { FeaturesService } from '../../../../services/features.service';
 import { MessengerService } from '../../../messenger/messenger.service';
 import { Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';

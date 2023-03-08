@@ -10,8 +10,6 @@ import { DiscoveryTagsService } from '../tags/tags.service';
 import { DiscoverySettingsButtonComponent } from './settings-button.component';
 import { TooltipComponent } from '../../../common/components/tooltip/tooltip.component';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
-import { FeaturesService } from '../../../services/features.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
@@ -37,17 +35,12 @@ describe('DiscoverySettingsButtonComponent', () => {
             provide: DiscoveryFeedsService,
             useValue: MockService(DiscoveryFeedsService),
           },
-          {
-            provide: FeaturesService,
-            useValue: featuresServiceMock,
-          },
         ],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    featuresServiceMock.mock('content-settings-modal', true);
     fixture = TestBed.createComponent(DiscoverySettingsButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

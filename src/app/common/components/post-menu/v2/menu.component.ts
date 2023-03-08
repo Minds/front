@@ -8,7 +8,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { Session } from '../../../../services/session';
-import { FeaturesService } from '../../../../services/features.service';
 import { PostMenuService } from '../post-menu.service';
 
 type Option =
@@ -59,7 +58,6 @@ export class PostMenuV2Component implements OnInit {
   constructor(
     public session: Session,
     private cd: ChangeDetectorRef,
-    public featuresService: FeaturesService,
     public service: PostMenuService
   ) {}
 

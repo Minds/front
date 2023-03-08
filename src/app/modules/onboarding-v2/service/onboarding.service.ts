@@ -1,6 +1,5 @@
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 import { EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -63,15 +62,11 @@ export class OnboardingV2Service {
   slideChanged: EventEmitter<number> = new EventEmitter<number>();
   close: EventEmitter<any> = new EventEmitter<any>();
 
-  static _(featuresService: FeaturesService, client: Client, session: Session) {
-    return new OnboardingV2Service(featuresService, client, session);
+  static _(client: Client, session: Session) {
+    return new OnboardingV2Service(client, session);
   }
 
-  constructor(
-    private featuresService: FeaturesService,
-    private client: Client,
-    private session: Session
-  ) {}
+  constructor(private client: Client, private session: Session) {}
 
   async checkProgress() {
     try {

@@ -15,6 +15,8 @@ class BoostModalComponent {
     '[data-ref=boost-modal-v2-audience-selector-controversial-radio-button]';
   private readonly safeRadioButtonSelector: string =
     '[data-ref=boost-modal-v2-audience-selector-safe-radio-button]';
+  private readonly safeRadioButtonFieldSet: string =
+    '[data-ref=boost-modal-v2-audience-selector-safe-field-set]';
 
   // budget tab
   private readonly cashTabSelector: string =
@@ -155,6 +157,14 @@ class BoostModalComponent {
    */
   public clickNextButton(): void {
     I.click(locate(this.submitButton).withText('Next'));
+  }
+
+  /**
+   * Check if safe option is disabled.
+   * @returns { void }
+   */
+  public checkSafeOptionIsDisabled(): void {
+    I.seeElement(`${this.safeRadioButtonFieldSet}[disabled]`);
   }
 }
 

@@ -46,7 +46,6 @@ import {
   ActivityModalComponent,
   ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
 } from '../modal/modal.component';
-import { FeaturesService } from '../../../../services/features.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
@@ -245,7 +244,6 @@ export class ActivityContentComponent
     private redirectService: RedirectService,
     private session: Session,
     configs: ConfigsService,
-    private features: FeaturesService,
     private injector: Injector,
     private activityModalCreator: ActivityModalCreatorService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
@@ -436,6 +434,10 @@ export class ActivityContentComponent
 
   get showTranslation(): boolean {
     return this.service.displayOptions.showTranslation;
+  }
+
+  get hasLoadingPriority(): boolean {
+    return this.service.displayOptions.hasLoadingPriority;
   }
 
   // Text usually goes above media, except for

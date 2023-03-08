@@ -40,7 +40,6 @@ import { MindsCard } from './components/card/card.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from '../services/attachment';
-import { IfFeatureDirective } from './directives/if-feature.directive';
 import { IfBrowserDirective } from './directives/if-browser.directive';
 import { TreeComponent } from './components/tree/tree.component';
 import { AnnouncementComponent } from './components/announcements/announcement.component';
@@ -177,6 +176,7 @@ import { DynamicBoostExperimentService } from '../modules/experiments/sub-servic
 import { PathMatch } from './types/angular.types';
 import { BoostFeedService } from '../modules/newsfeed/services/boost-feed.service';
 import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.component';
+import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/navigation-v2.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -252,6 +252,7 @@ const MINDS_COMMON_COMPONENTS = [
   SidebarMoreComponent,
   SidebarMoreTriggerComponent,
   SidebarNavigationComponent,
+  SidebarNavigationV2Component,
   SidebarWidgetComponent,
   SizeableLoadingSpinnerComponent,
   SocialIcons,
@@ -293,7 +294,6 @@ const MINDS_DIRECTIVES = [
   GraphSVG,
   HotkeyScrollDirective,
   IfBrowserDirective,
-  IfFeatureDirective,
   InlineAutoGrow,
   MarkedDirective,
   PageLayoutContainerDirective,

@@ -6,7 +6,6 @@ import { OnboardingV2Service } from '../service/onboarding.service';
 import { iOSVersion } from '../../../helpers/is-safari';
 import { TopbarService } from '../../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
-import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { filter } from 'rxjs/operators';
@@ -35,7 +34,6 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     private onboardingService: OnboardingV2Service,
     private topbarService: TopbarService,
     private navigationService: SidebarNavigationService,
-    private featuresService: FeaturesService,
     private pageLayoutService: PageLayoutService
   ) {
     this.routerSubscription = this.router.events

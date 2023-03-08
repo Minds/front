@@ -1,5 +1,4 @@
 import { Component, HostBinding } from '@angular/core';
-import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 
 /**
@@ -12,5 +11,5 @@ import { ExperimentsService } from '../../experiments/experiments.service';
   templateUrl: './top.component.html',
 })
 export class DiscoveryTopComponent {
-  constructor(public featuresService: FeaturesService) {}
+  constructor() {}
 }
