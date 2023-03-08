@@ -18,8 +18,6 @@ import { ConfigsService } from '../../../services/configs.service';
 import { Subscription } from 'rxjs';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { BuyTokensModalService } from '../../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
-import { Web3WalletService } from '../../../../modules/blockchain/web3-wallet.service';
 import { EarnModalService } from '../../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
@@ -94,8 +92,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     protected configs: ConfigsService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private buyTokensModalService: BuyTokensModalService,
-    private web3WalletService: Web3WalletService,
     private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
     private composerModalService: ComposerModalService,
@@ -174,16 +170,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public toggle(): void {
     this.sidebarNavigationService.toggle();
-  }
-
-  /**
-   * Open buy tokens modal after wallet connect prompt if needed.
-   * @returns { Promise<void> }
-   */
-  public async buyTokens(): Promise<void> {
-    this.toggle();
-    await this.web3WalletService.getCurrentWallet(true);
-    await this.buyTokensModalService.open();
   }
 
   /**
