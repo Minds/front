@@ -113,6 +113,7 @@ export class NewsfeedBoostRotatorComponent {
     this.interval = configs.get('boost_rotator_interval') || 5;
   }
 
+  // do not merge
   ngOnInit() {
     this.subscriptions.push(
       this.viewsCollector$
