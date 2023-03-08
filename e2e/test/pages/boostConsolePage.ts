@@ -206,6 +206,17 @@ class BoostConsolePage {
       this.stateLabel.withText(label);
     });
   }
+
+  /**
+   * Click to boost again.
+   * @param { number } feedPosition - position of item in feed.
+   * @returns { void }
+   */
+  public clickBoostAgain(feedPosition: number = 1): void {
+    I.click(
+      this.listItem.at(feedPosition).find(locate('a').withText('Boost again'))
+    );
+  }
 }
 
 export = new BoostConsolePage();

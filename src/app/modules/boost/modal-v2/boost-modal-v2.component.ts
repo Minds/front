@@ -59,6 +59,7 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
     onDismissIntent,
     onSaveIntent,
     entity,
+    disabledSafeAudience,
   }: BoostModalData) {
     this.onDismissIntent = onDismissIntent ?? (() => {});
     this.onSaveIntent = onSaveIntent ?? (() => {});
@@ -68,6 +69,10 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
       this.toast.error('NSFW content cannot be boosted.');
       this.onDismissIntent();
       return;
+    }
+
+    if (disabledSafeAudience) {
+      this.service.disabledSafeAudience$.next(disabledSafeAudience);
     }
 
     this.service.entity$.next(entity ?? null);

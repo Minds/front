@@ -3,6 +3,7 @@ import { Boost, BoostState, RejectionReason } from '../../../../boost.types';
 import * as moment from 'moment';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
 import { BoostModalLazyService } from '../../../../modal/boost-modal-lazy.service';
+import { BoostAudience } from '../../../../modal-v2/boost-modal-v2.types';
 
 /**
  * Row presented in boost console list items (where applicable)
@@ -60,7 +61,9 @@ export class BoostConsoleStatsBarComponent implements OnInit {
 
   async openBoostModal(): Promise<void> {
     try {
-      await this.boostModal.open(this.boost.entity);
+      await this.boostModal.open(this.boost.entity, {
+        disabledSafeAudience: this.wrongAudience,
+      });
       return;
     } catch (e) {
       // do nothing.
