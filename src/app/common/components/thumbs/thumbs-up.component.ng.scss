@@ -9,7 +9,7 @@
     animation: gelatine 0.5s infinite;
 
     @include m-theme() {
-      color: themed($m-blue) !important;
+      color: themed($m-action) !important;
     }
   }
 
@@ -40,4 +40,8 @@
     margin: 0;
     width: initial;
   }
+}
+
+.selected .minds-counter {
+  color:  #ffd048 !important;
 }

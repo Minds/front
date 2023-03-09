@@ -212,7 +212,7 @@
           i.material-icons,
           .minds-counter {
             @include m-theme() {
-              color: themed($m-action);
+              color: themed($m-textColor--primary);
             }
           }
         }

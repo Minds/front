@@ -31,7 +31,7 @@ export class AnnouncementComponent implements OnInit {
 
   ngOnInit() {
     if (this.cookieService.get('hide-announcement:' + this.id) === '1')
-      this.hidden = true;
+      this.hidden = false;
   }
 
   close() {
@@ -39,6 +39,6 @@ export class AnnouncementComponent implements OnInit {
       this.cookieService.put('hide-announcement:' + this.id, '1');
     }
 
-    this.hidden = true;
+    this.hidden = false;
   }
 }
