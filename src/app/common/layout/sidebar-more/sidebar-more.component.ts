@@ -9,10 +9,7 @@ import {
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
 import { Subscription } from 'rxjs';
-import { FeaturesService } from '../../../services/features.service';
 import { MindsUser } from '../../../interfaces/entities';
-import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
-import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
@@ -59,9 +56,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
-    protected featuresService: FeaturesService,
-    private web3WalletService: Web3WalletService,
-    private buyTokensModalService: BuyTokensModalService,
     private earnModalService: EarnModalService,
     private boostModalService: BoostModalLazyService,
     private sidebarNavigationService: SidebarNavigationService,
@@ -99,14 +93,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
    */
   public getHelpdeskRedirectUrl(): string {
     return this.helpdeskRedirectService.getUrl();
-  }
-
-  async buyTokens(): Promise<void> {
-    if (!this.web3WalletService.checkDeviceIsSupported()) {
-      return null;
-    }
-    await this.web3WalletService.getCurrentWallet(true);
-    await this.buyTokensModalService.open();
   }
 
   async openEarnModal() {

@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
+  FormBuilder,
+  FormControl,
+  FormGroup,
   Validators,
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
-import { DEFAULT_AUDIENCE } from '../../boost-modal-v2.constants';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { BoostAudience } from '../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 
@@ -22,27 +22,40 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 export class BoostModalV2AudienceSelectorComponent
   implements OnInit, OnDestroy {
   public BoostAudience: typeof BoostAudience = BoostAudience;
-  public form: UntypedFormGroup; // form group
-  public audienceChangeSubscription: Subscription; // change audience in service on value change.
-  public audienceInitSubscription: Subscription; // init the form using existing audience or default.
+  public form: FormGroup; // form group
+
+  private audienceChangeSubscription: Subscription; // change audience in service on value change.
+  private audienceInitSubscription: Subscription; // init the form using existing audience or default.
+  private safeOptionClickSubscription: Subscription; // initialized on safe option click.
 
   constructor(
     private service: BoostModalV2Service,
-    private formBuilder: UntypedFormBuilder
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    // init the form using existing audience or default. Allows panel to be returned to and keep old value.
-    this.audienceInitSubscription = this.service.audience$
-      .pipe(
-        take(1),
-        map((audience: BoostAudience) => audience ?? DEFAULT_AUDIENCE)
-      )
-      .subscribe((initialAudience: BoostAudience) => {
-        this.form = this.formBuilder.group({
-          audience: [initialAudience, Validators.required],
-        });
-      });
+    this.audienceInitSubscription = combineLatest([
+      this.service.audience$,
+      this.isSafeOptionDisabled$,
+    ])
+      .pipe(take(1))
+      .subscribe(
+        ([initialAudience, isSafeOptionDisabled]: [
+          BoostAudience,
+          boolean
+        ]): void => {
+          if (isSafeOptionDisabled) {
+            this.service.audience$.next(BoostAudience.CONTROVERSIAL);
+            initialAudience = BoostAudience.CONTROVERSIAL;
+          }
+          this.form = this.formBuilder.group({
+            audience: new FormControl<BoostAudience>(
+              initialAudience,
+              Validators.required
+            ),
+          });
+        }
+      );
 
     // change audience in service on value form control change.
     this.audienceChangeSubscription = this.form.controls.audience.valueChanges.subscribe(
@@ -55,13 +68,33 @@ export class BoostModalV2AudienceSelectorComponent
   ngOnDestroy(): void {
     this.audienceInitSubscription?.unsubscribe();
     this.audienceChangeSubscription?.unsubscribe();
+    this.safeOptionClickSubscription?.unsubscribe();
   }
 
   /**
-   * On radio button select, change form value.
+   * Whether safe audience is disabled.
+   * @returns { boolean } true if safe audience is disabled.
+   */
+  get isSafeOptionDisabled$(): Observable<boolean> {
+    return this.service.disabledSafeAudience$;
+  }
+
+  /**
+   * On radio button select, change form value unless audience is disabled.
    * @param { BoostAudience } audience - audience selected.
+   * @returns { void }
    */
   public selectRadioButton(audience: BoostAudience): void {
-    this.form.controls.audience.setValue(audience);
+    if (audience === BoostAudience.SAFE) {
+      this.safeOptionClickSubscription = this.isSafeOptionDisabled$
+        .pipe(take(1))
+        .subscribe((isSafeOptionDisabled: boolean) => {
+          if (!isSafeOptionDisabled) {
+            this.form.controls.audience.setValue(audience);
+          }
+        });
+    } else {
+      this.form.controls.audience.setValue(audience);
+    }
   }
 }

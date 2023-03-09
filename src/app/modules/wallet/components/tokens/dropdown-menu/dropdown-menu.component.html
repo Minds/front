@@ -15,9 +15,6 @@
     <m-dropdownMenu__item (click)="onTransferTokensClick($event)"
       ><span>Transfer On-chain</span>
     </m-dropdownMenu__item>
-    <m-dropdownMenu__item (click)="onPurchaseTokensClick($event)"
-      ><span>Purchase tokens</span>
-    </m-dropdownMenu__item>
     <m-dropdownMenu__item
       *ngIf="address$ | async"
       (click)="copyAddressToClipboard($event)"

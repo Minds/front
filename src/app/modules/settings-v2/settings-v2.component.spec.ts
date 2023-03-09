@@ -9,8 +9,6 @@ import { MockComponent, MockService } from '../../utils/mock';
 import { Client } from '../../services/api/client';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { ProService } from '../pro/pro.service';
-import { FeaturesService } from '../../services/features.service';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../common/components/loading-spinner/loading-spinner.component';
 import { SupermindExperimentService } from '../experiments/sub-services/supermind-experiment.service';
@@ -39,7 +37,6 @@ describe('SettingsV2Component', () => {
             provide: ProService,
             useValue: MockService(ProService, { get: {} }),
           },
-          { provide: FeaturesService, useValue: featuresServiceMock },
           {
             provide: ToasterService,
             useValue: MockService(ToasterService),
@@ -77,7 +74,6 @@ describe('SettingsV2Component', () => {
 
   beforeEach(() => {
     router = TestBed.inject(Router);
-    featuresServiceMock.mock('yt-importer', true);
 
     clientMock.response = [];
     clientMock.response[`api/v1/settings`] = {

@@ -6,7 +6,7 @@ import {
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UniswapModalComponent } from './uniswap-modal.component';
-import { CommonModule } from '../../../../../common/common.module';
+import { CommonModule } from '../../../../common/common.module';
 
 @NgModule({
   imports: [NgCommonModule, CommonModule, FormsModule],

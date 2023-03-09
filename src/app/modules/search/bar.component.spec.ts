@@ -18,8 +18,6 @@ import { Session } from '../../services/session';
 import { SearchBarComponent } from './bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { sessionMock } from '../../../tests/session-mock.spec';
-import { FeaturesService } from '../../services/features.service';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { RecentService } from '../../services/ux/recent';
 import { recentServiceMock } from '../../mocks/services/ux/recent-mock.spec';
 import { MockDirective } from '../../utils/mock';
@@ -71,7 +69,6 @@ describe('SearchBarComponent', () => {
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: ContextService, useValue: contextServiceMock },
-          { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: RecentService, useValue: recentServiceMock },
         ],
       }).compileComponents();

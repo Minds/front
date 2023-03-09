@@ -23,7 +23,6 @@ import { PhoneVerificationService } from '../phone-verification/phone-verificati
 import { WireCreatorComponent } from '../../../../wire/v2/creator/wire-creator.component';
 import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
-import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { ModalService } from '../../../../../services/ux/modal.service';
 import { EmailConfirmationService } from '../../../../../common/components/email-confirmation/email-confirmation.service';
 
@@ -67,7 +66,6 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   balanceIsLimit: boolean = true;
 
   constructor(
-    private buyTokensService: BuyTokensModalService,
     protected session: Session,
     protected client: Client,
     protected contract: WithdrawContractService,
@@ -261,10 +259,6 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   transferComplete(): void {
     this.toasterService.success('On-chain transfer request submitted.');
     this.modalService.dismissAll();
-  }
-
-  async onPurchaseTokensClick(e: MouseEvent): Promise<void> {
-    await this.buyTokensService.open();
   }
 
   ngOnDestroy(): void {

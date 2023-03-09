@@ -300,14 +300,6 @@
               <ng-container *ngIf="(service.tokenType$ | async) === 'onchain'">
                 {{ wallet.value.onchain.balance | number: '1.0-3' }}
               </ng-container>
-              <a
-                class="m-wireCreatorForm__topUpLink"
-                *ngIf="service.isUpgrade$ | async"
-                routerLink="/token"
-                target="_blank"
-                i18n="@@WIRE_CREATOR_FORM__TOP_UP_WALLET"
-                >Top-up wallet</a
-              >
             </ng-template>
           </span>
         </div>

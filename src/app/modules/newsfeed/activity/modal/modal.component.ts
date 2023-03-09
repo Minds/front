@@ -19,7 +19,6 @@ import {
   ActivityEntity,
   ACTIVITY_SHORT_STATUS_MAX_LENGTH,
 } from '../../activity/activity.service';
-import { FeaturesService } from '../../../../services/features.service';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { AnalyticsService } from '../../../../services/analytics';
@@ -111,7 +110,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     public attachment: AttachmentService,
     public service: ActivityModalService,
     private relatedContent: RelatedContentService,
-    private features: FeaturesService,
     private cd: ChangeDetectorRef
   ) {}
 

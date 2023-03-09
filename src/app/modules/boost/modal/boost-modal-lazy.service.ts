@@ -4,6 +4,7 @@ import { ModalRef, ModalService } from '../../../services/ux/modal.service';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostModalV2LazyModule } from '../modal-v2/boost-modal-v2-lazy.module';
 import { BoostModalV2Component } from '../modal-v2/boost-modal-v2.component';
+import { BoostModalExtraOpts } from '../modal-v2/boost-modal-v2.types';
 import { BoostModalLazyModule } from './boost-modal-lazy.module';
 import { BoostModalComponent } from './boost-modal.component';
 import { BoostableEntity } from './boost-modal.types';
@@ -32,7 +33,8 @@ export class BoostModalLazyService {
    * @returns { Promise<ModalRef<PresentableBoostModalComponent>>} - awaitable.
    */
   public async open(
-    entity: BoostableEntity = {}
+    entity: BoostableEntity = {},
+    extraOpts: BoostModalExtraOpts = {}
   ): Promise<ModalRef<PresentableBoostModalComponent>> {
     const componentRef: PresentableBoostModalComponent = await this.getComponentRef();
     const modal = this.modalService.present(componentRef, {
@@ -42,6 +44,7 @@ export class BoostModalLazyService {
           this.onComplete$.next(true);
           modal.close();
         },
+        ...extraOpts,
       },
       size: this.getModalSize(),
     });

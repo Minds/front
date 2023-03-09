@@ -25,6 +25,10 @@
   .m-boostConsoleStatsBar__title {
     @include body2Bold;
     margin-bottom: $spacing2;
+
+    .m-boostConsoleStatsBar__customInfoTooltip {
+      margin-left: $spacing2;
+    }
   }
   .m-boostConsoleStatsBar__desc {
     @include body2Regular;

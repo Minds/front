@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule as NgCommonModule } from '@angular/common';
+import {
+  CommonModule as NgCommonModule,
+  NgOptimizedImage,
+} from '@angular/common';
 import {
   FormsModule as NgFormsModule,
   ReactiveFormsModule,
@@ -19,6 +22,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     NgCommonModule,
     NgFormsModule,
+    NgOptimizedImage,
     ReactiveFormsModule,
     CommonModule,
     ModalsModule,

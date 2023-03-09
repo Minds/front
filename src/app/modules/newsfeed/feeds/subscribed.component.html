@@ -54,14 +54,12 @@
       </ng-container>
 
       <!--boost rotator-->
-      <ng-container *mIfFeature="'boost-rotator'">
-        <ng-container *mIfBrowser>
-          <m-newsfeed--boost-rotator
-            *ngIf="showBoostRotator"
-            #feedViewChildren
-            #boostRotator
-          ></m-newsfeed--boost-rotator>
-        </ng-container>
+      <ng-container *mIfBrowser>
+        <m-newsfeed--boost-rotator
+          *ngIf="showBoostRotator"
+          #feedViewChildren
+          #boostRotator
+        ></m-newsfeed--boost-rotator>
       </ng-container>
 
       <m-channelRecommendation

@@ -1,7 +1,0 @@
-@import 'defaults.scss';
-
-// specificity avoids the z-index being overridden.
-body .transak_modal {
-  // z-index used in the transak_modal is lower than that of our modals.
-  @include z-index(popover--modal);
-}

@@ -33,6 +33,8 @@ Playwright end-to-end test automation with CodeceptJS (Gherkin) and Browserstack
 | SUPERMIND_SETTINGS_PASSWORD | Password of a dedicated user for testing Supermind Settings |
 | SUPERMIND_FILTER_TEST_USERNAME | Username of a dedicated user for testing Supermind Console filters |
 | SUPERMIND_FILTER_TEST_USERNAME | Password of a dedicated user for testing Supermind Console filters |
+| PLAYWRIGHT_USER_WRONG_AUDIENCE_REJECTED_BOOST_GUID | GUID of a boost rejected for wrong audience owned by the main test user |
+
 
 ## Run Command
 

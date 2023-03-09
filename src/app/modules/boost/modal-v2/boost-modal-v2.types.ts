@@ -1,11 +1,15 @@
 // Data used to init modal.
 import { RejectionReason } from '../boost.types';
 
+export type BoostModalExtraOpts = {
+  disabledSafeAudience?: boolean;
+};
+
 export type BoostModalData = {
   onDismissIntent: () => any;
   onSaveIntent: () => any;
   entity: BoostableEntity;
-};
+} & BoostModalExtraOpts;
 
 // Subject of the boost, a channel or post.
 export enum BoostSubject {

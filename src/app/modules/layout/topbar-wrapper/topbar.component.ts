@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-topbarwrapper',
@@ -8,8 +7,5 @@ import { FeaturesService } from '../../../services/features.service';
   styleUrls: ['topbar.component.ng.scss'],
 })
 export class TopbarWrapperComponent {
-  constructor(
-    public session: Session,
-    public featuresService: FeaturesService
-  ) {}
+  constructor(public session: Session) {}
 }

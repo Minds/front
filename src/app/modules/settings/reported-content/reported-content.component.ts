@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FeaturesService } from '../../../services/features.service';
+import { Component } from '@angular/core';
 
 /**
  * Hacky wrapper around the ReportConsoleComponent
@@ -10,12 +9,4 @@ import { FeaturesService } from '../../../services/features.service';
   selector: 'm-settings--reported-content',
   templateUrl: 'reported-content.component.html',
 })
-export class SettingsReportedContentComponent implements OnInit {
-  hasNewNav: boolean = false;
-
-  constructor(protected featuresService: FeaturesService) {}
-
-  ngOnInit() {
-    this.hasNewNav = true;
-  }
-}
+export class SettingsReportedContentComponent {}

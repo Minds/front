@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule as NgCommonModule } from '@angular/common';
+import {
+  CommonModule as NgCommonModule,
+  NgOptimizedImage,
+} from '@angular/common';
 import {
   FormsModule as NgFormsModule,
   ReactiveFormsModule,
@@ -45,6 +48,7 @@ import { ComposerModule } from '../../composer/composer.module';
   imports: [
     NgCommonModule,
     NgFormsModule,
+    NgOptimizedImage,
     ReactiveFormsModule,
     RouterModule,
     CommonModule,
