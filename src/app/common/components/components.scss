@@ -815,8 +815,6 @@ minds-activity-preview {
     display: none;
   }
   .selected {
-   
-
     &:hover {
       @include m-theme() {
         color: rgba(themed($m-blue--contrast), 0.9) !important;
