@@ -209,10 +209,9 @@
         }
 
         &.selected {
-          i.material-icons,
-          .minds-counter {
+          i.material-icons {
             @include m-theme() {
-              color: themed($m-textColor--primary);
+              color: themed($m-action);
             }
           }
         }

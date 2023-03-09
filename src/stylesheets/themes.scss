@@ -156,7 +156,8 @@ $themes: (
     m-link-text-contrast: $grey-700,
     m-sidebar-nav-item: $yellow-500,
     //rotator button token
-      m-rotator-action: $grey-700,
+      m-rotator-action: $grey-800,
+    m-counter-action: $grey-800,
     // legacy colors
       m-grey-900: $grey-900,
     m-grey-800: $grey-800,
@@ -229,6 +230,7 @@ $themes: (
     m-sidebar-nav-item: $grey-50,
     //rotator button token
       m-rotator-action: $grey-50,
+    m-counter-action: $yellow-500,
     // legacy colors
       // legacy colors
       m-grey-900: $grey-900,
@@ -303,6 +305,7 @@ $m-blue--contrast: 'm-blue--contrast'; // Used for hovering over blue links, etc
 $m-blue: 'm-blue';
 $m-action-text: 'm-action-text';
 $m-rotator-action: 'm-rotator-action';
+$m-counter-action: 'm-counter-action';
 $m-link-text: 'm-link-text';
 $m-link-text-contrast: 'm-link-text-contrast';
 $m-aqua: 'm-aqua';

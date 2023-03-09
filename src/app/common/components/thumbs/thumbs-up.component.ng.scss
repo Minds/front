@@ -7,10 +7,6 @@
 
   .inProgress {
     animation: gelatine 0.5s infinite;
-
-    @include m-theme() {
-      color: themed($m-action) !important;
-    }
   }
 
   @keyframes gelatine {
@@ -42,6 +38,8 @@
   }
 }
 
-.selected .minds-counter {
-  color:  #ffd048 !important;
+.selected span.minds-counter {
+  @include m-theme() {
+    color: themed($m-counter-action) !important;
+  }
 }
