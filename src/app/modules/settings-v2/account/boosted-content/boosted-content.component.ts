@@ -13,6 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Storage } from '../../../../services/storage';
+import { BoostPartnersExperimentService } from '../../../experiments/sub-services/boost-partners-experiment.service';
 
 /**
  * Form for setting boost-related preferences
@@ -41,7 +42,8 @@ export class SettingsV2BoostedContentComponent implements OnInit {
     public session: Session,
     protected settingsService: SettingsV2Service,
     private dialogService: DialogService,
-    private storage: Storage
+    private storage: Storage,
+    protected boostPartnersExperiment: BoostPartnersExperimentService
   ) {}
 
   ngOnInit(): void {
@@ -59,8 +61,14 @@ export class SettingsV2BoostedContentComponent implements OnInit {
       boost_autorotate: new UntypedFormControl(''),
       boost_rating: new UntypedFormControl(''),
       liquidity_spot_opt_out: new UntypedFormControl(''),
-      boost_partner_suitability: new UntypedFormControl(''),
     });
+
+    if (this.boostPartnersExperiment.isActive()) {
+      this.form.addControl(
+        'boost_partner_suitability',
+        new UntypedFormControl('')
+      );
+    }
   }
 
   private setupSubscriptions(): void {
@@ -70,9 +78,12 @@ export class SettingsV2BoostedContentComponent implements OnInit {
         this.boost_autorotate.setValue(settings.boost_autorotate);
         this.boost_rating.setValue(settings.boost_rating);
         this.liquidity_spot_opt_out.setValue(settings.liquidity_spot_opt_out);
-        this.boost_partner_suitability.setValue(
-          settings.boost_partner_suitability
-        );
+
+        if (this.boostPartnersExperiment.isActive()) {
+          this.boost_partner_suitability.setValue(
+            settings.boost_partner_suitability
+          );
+        }
 
         // Register the initial values so we can track changes
         if (!this.initForm && settings.guid) {
@@ -120,12 +131,17 @@ export class SettingsV2BoostedContentComponent implements OnInit {
     }
 
     try {
-      const formValue = {
+      let formValue = {
         boost_autorotate: this.boost_autorotate.value,
         boost_rating: this.boost_rating.value,
         liquidity_spot_opt_out: this.liquidity_spot_opt_out.value,
-        boost_partner_suitability: this.boost_partner_suitability.value,
       };
+
+      if (this.boostPartnersExperiment.isActive()) {
+        formValue[
+          'boost_partner_suitability'
+        ] = this.boost_partner_suitability.value;
+      }
 
       this.user.boost_autorotate = this.boost_autorotate.value;
       this.user.boost_rating = this.boost_rating.value;
@@ -135,7 +151,6 @@ export class SettingsV2BoostedContentComponent implements OnInit {
         formValue
       );
       if (response.status === 'success') {
-        console.log('ojm submit success');
         this.formSubmitted.emit({ formSubmitted: true });
         this.form.markAsPristine();
         this.initForm = null;
