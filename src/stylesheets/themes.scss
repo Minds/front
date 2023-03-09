@@ -153,6 +153,7 @@ $themes: (
     m-action--contrast: $yellow-400,
     m-action-text: $grey-900,
     m-link-text: $grey-600,
+    m-link-text-branded: $yellow-600,
     m-link-text-contrast: $grey-700,
     m-sidebar-nav-item: $yellow-500,
     //rotator button token
@@ -226,6 +227,8 @@ $themes: (
     m-action--contrast: $yellow-400,
     m-action-text: $grey-900,
     m-link-text: $yellow-500,
+    m-link-text-branded: $yellow-500,
+
     m-link-text-contrast: $yellow-400,
     m-sidebar-nav-item: $grey-50,
     //rotator button token
@@ -307,6 +310,7 @@ $m-action-text: 'm-action-text';
 $m-rotator-action: 'm-rotator-action';
 $m-counter-action: 'm-counter-action';
 $m-link-text: 'm-link-text';
+$m-link-text-branded: 'm-link-text-branded';
 $m-link-text-contrast: 'm-link-text-contrast';
 $m-aqua: 'm-aqua';
 $m-action: 'm-action';
