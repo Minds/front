@@ -21,12 +21,12 @@
 
     .m-feedTypePopper__iconLink--active {
       @include m-theme() {
-        color: themed($m-link-text) !important;
+        color: themed($m-link-text-contrast) !important;
       }
 
       &:hover {
         @include m-theme() {
-          color: themed($m-link-text-contrast) !important;
+          color: themed($m-rotator-action) !important;
         }
       }
     }

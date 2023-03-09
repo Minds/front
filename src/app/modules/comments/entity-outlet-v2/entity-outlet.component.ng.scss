@@ -75,7 +75,7 @@
 
   .m-commentsEntityOutlet__expand,
   .m-commentsEntityOutlet__expand--hide {
-    @include body2Regular;
+    @include body2Medium;
     font-size: 0.875rem; // We have no 14px font size
     padding-top: $spacing6;
     padding-bottom: $spacing2;
