@@ -38,8 +38,3 @@
   }
 }
 
-.selected span.minds-counter {
-  @include m-theme() {
-    color: themed($m-counter-action) !important;
-  }
-}
