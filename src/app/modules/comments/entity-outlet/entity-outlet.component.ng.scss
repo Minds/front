@@ -19,7 +19,7 @@
     @include m-theme() {
       color: themed($m-link-text) !important;
     }
-    font-weight: 400;
+    font-weight: 500;
     padding: 0 20px 6px;
     cursor: pointer;
   }
@@ -34,7 +34,7 @@
 
     span {
       cursor: pointer;
-      font-weight: 400;
+      font-weight: 500;
       font-size: 16px;
 
       @include m-theme() {
