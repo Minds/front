@@ -21,15 +21,16 @@
 
     .m-feedTypePopper__iconLink--active {
       @include m-theme() {
-        color: themed($m-blue) !important;
+        color: themed($m-link-text) !important;
       }
 
       &:hover {
         @include m-theme() {
-          color: themed($m-blue--contrast) !important;
+          color: themed($m-link-text-contrast) !important;
         }
       }
     }
+  }
   }
 
   ::ng-deep popper-content {
