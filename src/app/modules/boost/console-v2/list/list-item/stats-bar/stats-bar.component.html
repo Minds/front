@@ -35,8 +35,9 @@
   </p>
 </div>
 <!-- ------------------------------------------ -->
-<!-- APPROVED  -->
+<!-- APPROVED / COMPLETED  -->
 <!-- ------------------------------------------ -->
+<!-- Start date ---------------------------------------- -->
 <div class="m-boostConsole__statsBar--columns" *ngIf="boostIsApproved">
   <div
     class="m-boostConsoleStatsBar__column"
@@ -49,6 +50,7 @@
     >
     <span class="m-boostConsoleStatsBar__desc">{{ formattedStartDate }}</span>
   </div>
+  <!-- CPM ------------------------------------------ -->
   <div
     *ngIf="isBoostCompleted()"
     class="m-boostConsoleStatsBar__column"
@@ -68,6 +70,22 @@
     </span>
     <span class="m-boostConsoleStatsBar__desc">{{ getCpmString() }}</span>
   </div>
+  <!-- Clicks ------------------------------------------ -->
+  <div
+    *ngIf="isBoostCompleted() && boost.summary?.total_clicks"
+    class="m-boostConsoleStatsBar__column"
+    data-ref="m-boostConsole__statsBar--clicks"
+  >
+    <span
+      class="m-boostConsoleStatsBar__title"
+      i18n="@@BOOST_CONSOLE__STATS_BAR__LINK_CLICKS"
+      >Link clicks</span
+    >
+    <span class="m-boostConsoleStatsBar__desc">{{
+      boost.summary.total_clicks | number
+    }}</span>
+  </div>
+  <!-- Views ------------------------------------------ -->
   <div
     class="m-boostConsoleStatsBar__column"
     data-ref="m-boostConsole__statsBar--results"
