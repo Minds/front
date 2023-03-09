@@ -4,7 +4,7 @@ import {
   Input,
   SkipSelf,
 } from '@angular/core';
-import { ConfigsService } from '../../../../../common/services/configs.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
 import { UniswapAction } from './uniswap-modal.service';
 
 /**

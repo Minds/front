@@ -23,11 +23,6 @@
           Buy tokens to support Minds and your favorite channels. Unlock premium
           features and launch advertising campaigns to expand your reach.
         </p>
-        <m-blockchain--purchase--v2
-          [hasTitle]="true"
-          (onComplete)="onPurchaseComplete($event)"
-          [launchButtons]="['analytics']"
-        ></m-blockchain--purchase--v2>
       </div>
       <div
         class="
@@ -491,21 +486,6 @@
               history of the network.</span
             >
           </p>
-        </div>
-      </div>
-
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="
-            m-grid__column-12 m-grid__column-12--mobile
-            m-marketing__body m-marketing__body--extra
-          "
-        >
-          <m-button color="blue" (onAction)="scrollToTop()">
-            <ng-container i18n="@@BLOCKCHAIN__MARKETING__BUY_TOKENS"
-              >Buy Tokens</ng-container
-            >
-          </m-button>
         </div>
       </div>
     </div>

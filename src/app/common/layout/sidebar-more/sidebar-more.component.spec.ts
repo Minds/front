@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SupermindExperimentService } from '../../../modules/experiments/sub-services/supermind-experiment.service';
@@ -34,14 +33,6 @@ describe('SidebarMoreComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
         { provide: ThemeService, useValue: themeServiceMock },
-        {
-          provide: Web3WalletService,
-          useValue: MockService(Web3WalletService),
-        },
-        {
-          provide: BuyTokensModalService,
-          useValue: MockService(BuyTokensModalService),
-        },
         {
           provide: EarnModalService,
           useValue: MockService(EarnModalService),

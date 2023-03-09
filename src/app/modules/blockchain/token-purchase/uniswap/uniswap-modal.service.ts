@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { UniswapModalComponent } from './uniswap-modal.component';
-import { ModalService } from '../../../../../services/ux/modal.service';
-import { Web3WalletService } from '../../../web3-wallet.service';
+import { ModalService } from '../../../../services/ux/modal.service';
+import { Web3WalletService } from '../../web3-wallet.service';
 
 export type UniswapAction = 'swap' | 'add';
 

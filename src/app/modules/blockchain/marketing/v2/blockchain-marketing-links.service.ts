@@ -4,8 +4,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { OnchainTransferModalService } from '../../../wallet/components/components/onchain-transfer/onchain-transfer.service';
 import { EarnModalService } from '../../earn/earn-modal.service';
-import { BuyTokensModalService } from '../../token-purchase/v2/buy-tokens-modal.service';
-import { UniswapModalService } from '../../token-purchase/v2/uniswap/uniswap-modal.service';
+import { UniswapModalService } from '../../token-purchase/uniswap/uniswap-modal.service';
 import { Web3WalletService } from '../../web3-wallet.service';
 
 /**
@@ -20,7 +19,6 @@ export class BlockchainMarketingLinksService {
     private composerModal: ComposerModalService,
     private injector: Injector,
     private web3WalletService: Web3WalletService,
-    private buyTokensModalService: BuyTokensModalService,
     private earnModalService: EarnModalService,
     private uniswapModal: UniswapModalService,
     private onchainTransferModal: OnchainTransferModalService,
@@ -28,26 +26,6 @@ export class BlockchainMarketingLinksService {
     configs: ConfigsService
   ) {
     this.siteUrl = configs.get('site_url');
-  }
-
-  /**
-   * Open buy tokens modal
-   * @returns { Promise<BlockchainMarketingLinksService> }
-   */
-  public async openBuyTokensModal(): Promise<BlockchainMarketingLinksService> {
-    if (!this.web3WalletService.checkDeviceIsSupported()) {
-      return this;
-    }
-    try {
-      await this.web3WalletService.getCurrentWallet(true);
-      await this.buyTokensModalService.open();
-    } catch (e) {
-      if (e === 'Dismissed modal') {
-        return this; // do nothing, intentionally thrown.
-      }
-      console.error(e); // do nothing
-    }
-    return this;
   }
 
   /**
