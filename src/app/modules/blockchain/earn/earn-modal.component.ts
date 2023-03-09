@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Injector } from '@angular/core';
-import { UniswapModalService } from '../token-purchase/v2/uniswap/uniswap-modal.service';
+import { UniswapModalService } from '../token-purchase/uniswap/uniswap-modal.service';
 import { Web3WalletService } from '../web3-wallet.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
