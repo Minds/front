@@ -93,6 +93,11 @@ export class BoostModalV2Service implements OnDestroy {
     number
   >(null);
 
+  // disable safe boost audience.
+  public readonly disabledSafeAudience$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   // whether boost submission is in progress.
   public readonly boostSubmissionInProgress$: BehaviorSubject<
     boolean

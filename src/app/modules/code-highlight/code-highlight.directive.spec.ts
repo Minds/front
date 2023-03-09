@@ -5,9 +5,6 @@ import { By } from '@angular/platform-browser';
 import { CodeHighlightDirective } from './code-highlight.directive';
 import { CodeHighlightService } from './code-highlight.service';
 import { codeHighlightServiceMock } from '../../mocks/modules/code-highlight/code-highlight-service.mock';
-import { FeaturesService } from '../../services/features.service';
-import { MockService } from '../../utils/mock';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 
 @Component({
   template: `
@@ -40,31 +37,4 @@ describe('CodeHighlightDirective', () => {
       By.directive(CodeHighlightDirective)
     );
   };
-
-  describe('when feature enabled', () => {
-    beforeEach(() => {
-      createComponent([
-        { provide: FeaturesService, useValue: featuresServiceMock },
-      ]);
-    });
-
-    afterEach(() => {
-      codeHighlightServiceMock.reset();
-    });
-
-    it('should highlight code blocks', () => {
-      const code = directiveElement.queryAll(By.css('code'));
-      const noHighlight = directiveElement.query(By.css('div.no-highlight'));
-
-      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-        code[0].nativeElement
-      );
-      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-        code[0].nativeElement
-      );
-      expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
-        noHighlight.nativeElement
-      );
-    });
-  });
 });

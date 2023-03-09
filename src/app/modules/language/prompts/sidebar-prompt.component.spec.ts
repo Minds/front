@@ -17,10 +17,7 @@ import {
   CookieModule,
 } from '@mindsorg/ngx-universal';
 import { ApiService } from '../../../common/api/api.service';
-import { FeaturesService } from '../../../services/features.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { ButtonComponent } from '../../../common/components/button/button.component';
-import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 
 describe('LanguageSidebarPromptComponent', () => {
   let component: LanguageSidebarPromptComponent;
@@ -33,7 +30,6 @@ describe('LanguageSidebarPromptComponent', () => {
           LanguageSidebarPromptComponent,
           SidebarWidgetComponent,
           ButtonComponent,
-          IfFeatureDirective,
         ],
         imports: [RouterTestingModule, CookieModule],
         providers: [
@@ -43,7 +39,6 @@ describe('LanguageSidebarPromptComponent', () => {
           CookieService,
           { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
           LanguageService,
-          { provide: FeaturesService, useValue: featuresServiceMock },
           {
             provide: ApiService,
             useValue: MockService(ApiService, {}),

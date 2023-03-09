@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { FeaturesService } from '../../services/features.service';
 import { Storage } from '../../services/storage';
 
 @Injectable({
@@ -9,15 +8,10 @@ import { Storage } from '../../services/storage';
 export class MessengerService {
   showLegacyMessenger$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-  constructor(
-    protected featuresService: FeaturesService,
-    protected storage: Storage
-  ) {}
+  constructor(protected storage: Storage) {}
 
   /**
-   * If there's no preferred value in local storage,
-   * determine visibility with matrix feature
-   * (don't show if feature enabled)
+   * Determine visibility with local stoarage
    */
   public setupLegacyMessengerVisibility(): void {
     const storage = this.storage.get('legacy_messenger');

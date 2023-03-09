@@ -91,14 +91,6 @@ export class BlockchainMarketingRewardsV2Component {
   }
 
   /**
-   * Open buy tokens modal.
-   * @returns { void }
-   */
-  public buyTokensClick() {
-    this.linksService.openBuyTokensModal();
-  }
-
-  /**
    * Open provide liquidity modal.
    * @returns { void }
    */

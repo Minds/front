@@ -5,7 +5,7 @@ import {
 } from './rewards.service';
 import * as moment from 'moment';
 import { Observable, Subscription, timer } from 'rxjs';
-import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
+import { UniswapModalService } from '../../../../blockchain/token-purchase/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
 import { map, shareReplay } from 'rxjs/operators';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';

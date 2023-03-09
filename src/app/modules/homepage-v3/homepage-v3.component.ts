@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { Session } from '../../services/session';
 import { RegisterForm } from '../forms/register/register';
-import { ConfigsService } from '../../common/services/configs.service';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
@@ -21,6 +20,7 @@ import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import isMobileOrTablet from '../../../app/helpers/is-mobile-or-tablet';
 import { ExperimentsService } from '../experiments/experiments.service';
+import { SITE_URL } from '../../common/injection-tokens/url-injection-tokens';
 
 /**
  * Home page component
@@ -33,8 +33,6 @@ import { ExperimentsService } from '../experiments/experiments.service';
 export class HomepageV3Component implements OnInit {
   @ViewChild('registerForm') registerForm: RegisterForm;
 
-  readonly cdnAssetsUrl: string;
-  readonly siteUrl: string;
   readonly NEURAL_BACKGROUND_BLURHASH =
     '|03u=zF}U]rWRjt6W;s:Na=G$*F2s.jtR*xFR*s-znM{o~OrofaeWBoJWqPBoeVssUWBjYW=ogoMRibbt7R*xDR,flj?fPX9jFjYofW=oMR*n$o0bbW=n%WBoJWqj[j[ayWBoJW=fko0ayoKa}bHs.R*o0bIbIsmS2j@fk';
 
@@ -50,7 +48,6 @@ export class HomepageV3Component implements OnInit {
     public router: Router,
     public navigation: NavigationService,
     public session: Session,
-    configs: ConfigsService,
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
     private pageLayoutService: PageLayoutService,
@@ -58,11 +55,9 @@ export class HomepageV3Component implements OnInit {
     private authRedirectService: AuthRedirectService,
     private appPromptService: AppPromptService,
     private experimentsService: ExperimentsService,
-    @Inject(PLATFORM_ID) protected platformId: Object
-  ) {
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-    this.siteUrl = configs.get('site_url');
-  }
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    @Inject(SITE_URL) protected siteUrl: string
+  ) {}
 
   ngOnInit() {
     if (this.session.isLoggedIn()) {

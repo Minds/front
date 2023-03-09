@@ -27,7 +27,6 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { CookieService } from '../../../common/services/cookie.service';
-import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { SiteService } from '../../../common/services/site.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
@@ -95,7 +94,6 @@ export class GroupsProfile {
     private updateMarkers: UpdateMarkersService,
     configs: ConfigsService,
     private cookieService: CookieService,
-    featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private pageLayoutService: PageLayoutService,
     protected toasterService: ToasterService,

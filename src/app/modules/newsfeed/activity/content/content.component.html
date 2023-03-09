@@ -136,6 +136,7 @@ post content to trigger upgrade modal -->
         [style.height.px]="imageHeight"
         [style.width.px]="imageWidth"
         [ngClass]="{ 'm-border': !isModal }"
+        [loading]="hasLoadingPriority ? 'eager' : 'lazy'"
       />
     </ng-template>
   </div>

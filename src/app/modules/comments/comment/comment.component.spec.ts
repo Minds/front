@@ -20,7 +20,6 @@ import {
 import { TimeDiffService } from '../../../services/timediff.service';
 import { Router } from '@angular/router';
 import { ActivityService } from '../../../common/services/activity.service';
-import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
@@ -137,10 +136,6 @@ describe('CommentComponentV2', () => {
           {
             provide: ActivityService,
             useValue: MockService(ActivityService),
-          },
-          {
-            provide: FeaturesService,
-            useValue: MockService(FeaturesService),
           },
           {
             provide: PLATFORM_ID,

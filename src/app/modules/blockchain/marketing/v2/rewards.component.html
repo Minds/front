@@ -27,12 +27,6 @@
           in a payout of Minds Tokens, which can be used to support other
           channels or boost your content for more reach.
         </p>
-
-        <m-blockchain--purchase--v2
-          [hasTitle]="true"
-          (onComplete)="onPurchaseComplete($event)"
-          [launchButtons]="['analytics', 'earn']"
-        ></m-blockchain--purchase--v2>
       </div>
 
       <div
@@ -250,11 +244,6 @@
           </p>
 
           <div class="m-marketing__engagementButtons">
-            <m-button [color]="'primary'" (onAction)="buyTokensClick()"
-              ><ng-container i18n="@@BLOCKCHAIN__MARKETING__BUY_TOKENS"
-                >Buy Tokens</ng-container
-              ></m-button
-            >
             <m-button [color]="'primary'" (onAction)="transferOnChainClick()"
               ><ng-container i18n="@@BLOCKCHAIN__MARKETING__TRANSFER_ONCHAIN"
                 >Transfer On-chain</ng-container

@@ -21,8 +21,6 @@ import { ConfigsService } from '../../services/configs.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
-import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
@@ -78,8 +76,6 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private route: ActivatedRoute,
     private router: Router,
-    private buyTokensModalService: BuyTokensModalService,
-    private web3WalletService: Web3WalletService,
     private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
     private composerModalService: ComposerModalService,
@@ -157,12 +153,6 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
 
   toggle(): void {
     this.sidebarNavigationService.toggle();
-  }
-
-  async buyTokens() {
-    this.toggle();
-    await this.web3WalletService.getCurrentWallet(true);
-    await this.buyTokensModalService.open();
   }
 
   async openEarnModal() {
