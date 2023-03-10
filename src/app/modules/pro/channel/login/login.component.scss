@@ -113,7 +113,7 @@ m-pro--channel-login {
       margin: 0;
       white-space: pre-wrap;
       font-size: 56px;
-      letter-spacing: 1px;
+      letter-spacing: -0.011em;
       line-height: 1.16;
 
       @media screen and (max-width: 720px) {
@@ -181,7 +181,7 @@ m-pro--channel-login {
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
         font-family: 'Inter', Helvetica, sans-serif;
-        letter-spacing: 1px;
+        letter-spacing: -0.011em;
         //box-shadow: 0 0 6px rgba(255,255,255,0.22);
         @include m-theme() {
           background: rgba(themed($m-white), 0.9);

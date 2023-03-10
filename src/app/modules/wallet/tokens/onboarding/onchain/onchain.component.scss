@@ -44,7 +44,7 @@
         border-radius: 4px;
         font-family: 'Inter', sans-serif;
         font-size: 15px;
-        letter-spacing: 1px;
+        letter-spacing: -0.011em;
         font-weight: 300;
         @include m-theme() {
           border: 1px solid themed($m-borderColor--primary);

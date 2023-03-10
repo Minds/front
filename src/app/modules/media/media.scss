@@ -330,7 +330,7 @@ m-media--grid {
     > * {
       display: inline-block;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: -0.011em;
       margin-left: $minds-margin;
       @include m-theme() {
         color: themed($m-grey-600);
