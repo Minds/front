@@ -16,7 +16,7 @@
     p {
       margin-bottom: 0;
       font-size: 13px;
-      letter-spacing: -0.011em;
+      letter-spacing: -0.001em;
       font-weight: 300;
 
       b {
@@ -105,7 +105,7 @@
       font-family: 'Inter', Helvetica, sans-serif;
       padding: 16px;
       font-size: 13px;
-      letter-spacing: -0.011em;
+      letter-spacing: -0.001em;
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
       }
@@ -122,7 +122,7 @@
       margin: 0;
       font-family: 'Inter', Helvetica, sans-serif;
       font-size: 14px;
-      letter-spacing: -0.011em;
+      letter-spacing: -0.001em;
     }
   }
 }
