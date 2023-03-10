@@ -123,6 +123,7 @@ $linkedin: #0071a1;
 
 $blue: #4a72ff;
 
+$blue-grey-900: #191f28;
 //theme maps
 
 $themes: (
@@ -133,15 +134,15 @@ $themes: (
     m-textColor--secondaryInverted: $grey-400,
     m-textColor--tertiary: $grey-600,
     m-bgColor--primary: #ffffff,
-    m-bgColor--primaryInverted: $grey-900,
-    m-bgColor--primaryDarkAlways: $grey-900,
+    m-bgColor--primaryInverted: $blue-grey-900,
+    m-bgColor--primaryDarkAlways: $blue-grey-900,
     m-bgColor--primaryAlt: #ffffff,
     m-bgColor--secondary: $grey-100,
     m-bgColor--secondaryAlt: $grey-100,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--contrastSubtle: #dde4e6,
-    m-bgColor--btnHover: #f0f3f7,
-    m-bgColor--btnHoverLightAlways: #f0f3f7,
+    m-bgColor--btnHover: $grey-100,
+    m-bgColor--btnHoverLightAlways: $grey-100,
     m-bgColor--btnActive: #dadfe5,
     m-borderColor--primary: $grey-200,
     m-borderColor--secondary: $grey-200,
@@ -201,14 +202,14 @@ $themes: (
   ),
   dark: (
     m-textColor--primary: $grey-50,
-    m-textColor--primaryInverted: $grey-900,
+    m-textColor--primaryInverted: $blue-grey-900,
     m-textColor--secondary: $grey-300,
     m-textColor--secondaryInverted: $grey-50,
     m-textColor--tertiary: $grey-400,
-    m-bgColor--primary: $grey-900,
+    m-bgColor--primary: $blue-grey-900,
     m-bgColor--primaryInverted: #ffffff,
-    m-bgColor--primaryDarkAlways: $grey-900,
-    m-bgColor--primaryAlt: #1e242a,
+    m-bgColor--primaryDarkAlways: $blue-grey-900,
+    m-bgColor--primaryAlt: $blue-grey-900,
     m-bgColor--secondary: $grey-800,
     m-bgColor--secondaryAlt: #232b31,
     m-bgColor--contrast: #d8d8d8,

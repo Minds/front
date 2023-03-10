@@ -57,7 +57,7 @@
     .m--blockchain--transaction-overlay--balance--subtext {
       display: block;
       margin-bottom: $minds-padding * 2;
-      letter-spacing: 1px;
+      letter-spacing: -0.001em;
       font-size: 18px;
     }
     .m--blockchain--transaction-overlay--balance--amount {
@@ -178,7 +178,7 @@
   display: block;
   margin-bottom: $minds-padding;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.011em;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-weight: 600;

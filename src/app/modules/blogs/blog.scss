@@ -334,8 +334,7 @@ minds-blog-edit {
     font-style: normal;
     font-size: 21px;
     line-height: 1.58;
-    letter-spacing: 0.5px;
-    letter-spacing: -0.003em;
+    letter-spacing: -0.008em;
     font-family: 'Inter', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
@@ -410,7 +409,7 @@ minds-blog-edit {
 .m-blog-edit--metadata {
   font-family: Inter, sans-serif;
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: -0.001em;
   padding: $minds-padding;
 
   .m-blog-edit--toggle-wrapper {
