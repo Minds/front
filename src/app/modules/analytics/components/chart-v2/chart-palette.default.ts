@@ -47,7 +47,7 @@ const chartPalette = {
     },
     {
       id: 'm-blue',
-      themeMap: ['#4a72ff', ' #ffd048'], // 44aaff
+      themeMap: ['#1b85d6', ' #ffd048'], // 44aaff
     },
     {
       id: 'm-red-dark',

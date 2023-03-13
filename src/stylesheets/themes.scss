@@ -121,14 +121,17 @@ $twitter: #03b3ee;
 $whatsapp: #25d366;
 $linkedin: #0071a1;
 
-$blue: #4a72ff;
+$blue-dark: #0052a3;
+
+$blue: #1b85d6;
+$blue-light: #4eb8ff;
 
 $blue-grey-900: #191f28;
 //theme maps
 
 $themes: (
   light: (
-    m-textColor--primary: $grey-900,
+    m-textColor--primary: #43434d,
     m-textColor--primaryInverted: $grey-50,
     m-textColor--secondary: $grey-700,
     m-textColor--secondaryInverted: $grey-400,
@@ -150,12 +153,12 @@ $themes: (
     m-overlay: rgba(138, 142, 150, 0.25),
     m-alert: #bc584b,
     m-positive: #95c064,
-    m-action: $blue-500,
-    m-action--contrast: $blue-500,
+    m-action: $blue,
+    m-action--contrast: $blue-dark,
     m-action-text: $grey-50,
-    m-link-text: $blue-500,
-    m-link-text-contrast: $blue-400,
-    m-sidebar-nav-item: $blue-500,
+    m-link-text: $blue,
+    m-link-text-contrast: $blue-light,
+    m-sidebar-nav-item: $blue,
     //rotator button token
       m-rotator-action: $grey-800,
     m-counter-action: $grey-800,
@@ -171,8 +174,8 @@ $themes: (
     m-grey-200: $grey-200,
     m-grey-100: $grey-100,
     m-grey-50: $grey-50,
-    m-blue: $blue-500,
-    m-blue--contrast: $blue-400,
+    m-blue: $blue,
+    m-blue--contrast: $blue-light,
     m-aqua: $green-300,
     m-green-dark: $green-700,
     m-green: $green-500,
