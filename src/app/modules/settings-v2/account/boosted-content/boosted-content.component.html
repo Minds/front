@@ -6,8 +6,8 @@
     class="m-settingsV2__desc"
     i18n="@@SETTINGS__BOOSTED_CONTENT__DESCRIPTION"
   >
-    Control how boost works across the site. Learn more about
-    <a routerLink="/boost">boost</a>.
+    Control how Boost works across the site. Learn more about
+    <a routerLink="/boost">Boost</a>.
   </div>
 </m-settingsV2__header>
 
@@ -17,17 +17,23 @@
     <!-- ENABLE BOOST -->
     <!-- ------------------------------------ -->
     <div class="m-form__field--radio">
-      <div class="m-form__row--label">
+      <div
+        class="m-form__row--label"
+        [ngClass]="{ 'm-settingsV2__disabled': !plus }"
+      >
         <label i18n="@@BOOSTED_CONTENT__ENABLE"
           >View Boosted Content
-          <span class="m-settingsV2__plusFeatureTag"
-            >Minds+ Feature</span
+          <a
+            routerLink="/plus"
+            class="m-settingsV2__labelFlag m-settingsV2__plusFeatureTag"
+            >Minds+</a
           ></label
         >
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n="@@BOOSTED_CONTENT__ENABLE_TOOLTIP"
-            >Minds+ users may hide Boosts from their newsfeed</ng-container
+          <ng-container i18n="@@BOOSTED_CONTENT__ENABLE__TOOLTIP"
+            >Minds+ users may hide Boosts from their newsfeed and elsewhere on
+            the site</ng-container
           >
         </m-tooltip>
       </div>
@@ -74,11 +80,127 @@
       </div>
     </div>
     <!-- ------------------------------------ -->
+    <!-- SHOW BOOSTS ON MY CHANNEL -->
+    <!-- ------------------------------------ -->
+    <ng-container *ngIf="boostPartnersExperiment.isActive()">
+      <div class="m-form__field--radio">
+        <div class="m-form__row--label">
+          <label i18n="@@BOOSTED_CONTENT__SHOW_ON_CHANNEL"
+            >Show Boosts on my channel</label
+          >
+          <m-tooltip
+            ><span m-tooltip--anchor>𝒊</span>
+            <ng-container i18n="@@BOOSTED_CONTENT__SHOW_ON_CHANNEL__TOOLTIP"
+              >You can adjust the type of Boosts served on your channel or
+              disable them entirely.</ng-container
+            >
+          </m-tooltip>
+        </div>
+        <div class="m-form__row--input">
+          <label
+            for="partner_controversial"
+            class="m-form__customInputWrapper__radio"
+          >
+            <ng-container
+              i18n="@@BOOSTED_CONTENT__SHOW_ON_CHANNEL__CONTROVERSIAL"
+              >Controversial</ng-container
+            >
+            <input
+              type="radio"
+              id="partner_controversial"
+              [value]="3"
+              name="boost_partner_suitability"
+              formControlName="boost_partner_suitability"
+              class="form-control"
+              [readonly]="inProgress"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+          <label for="partner_safe" class="m-form__customInputWrapper__radio">
+            <ng-container i18n="@@BOOSTED_CONTENT__SHOW_ON_CHANNEL__SAFE"
+              >Safe</ng-container
+            >
+            <input
+              type="radio"
+              id="partner_safe"
+              [value]="2"
+              name="boost_partner_suitability"
+              formControlName="boost_partner_suitability"
+              class="form-control"
+              [readonly]="inProgress"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+          <label for="partner_off" class="m-form__customInputWrapper__radio">
+            <ng-container i18n="@@COMMON__DISABLE">Disable</ng-container>
+            <input
+              type="radio"
+              id="partner_off"
+              [value]="1"
+              name="boost_partner_suitability"
+              formControlName="boost_partner_suitability"
+              [readonly]="inProgress"
+              class="form-control"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ------------------------------------ -->
+    <!-- CONTROVERSIAL CONTENT -->
+    <!-- ------------------------------------ -->
+    <div class="m-form__field--radio">
+      <div class="m-form__row--label">
+        <label i18n="@@BOOSTED_CONTENT__RATING_CONTROVERSIAL"
+          >Controversial Content</label
+        >
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n="@@BOOSTED_CONTENT__RATING_CONTROVERSIAL_TOOLTIP"
+            >If enabled, you acknowledge that you are willing to see
+            controversial content.</ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div class="m-form__row--input">
+        <label for="open_on" class="m-form__customInputWrapper__radio">
+          <ng-container i18n="@@COMMON__ENABLE">Enable</ng-container>
+          <input
+            type="radio"
+            id="open_on"
+            [value]="2"
+            name="boost_rating"
+            formControlName="boost_rating"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+        <label for="open_off" class="m-form__customInputWrapper__radio">
+          <ng-container i18n="@@COMMON__DISABLE">Disable</ng-container>
+          <input
+            type="radio"
+            id="open_off"
+            [value]="1"
+            name="boost_rating"
+            formControlName="boost_rating"
+            [readonly]="inProgress"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+      </div>
+    </div>
+    <!-- ------------------------------------ -->
     <!-- AUTO-ROTATION -->
     <!-- ------------------------------------ -->
     <div class="m-form__field--radio">
       <div class="m-form__row--label">
-        <label i18n="@@BOOSTED_CONTENT__AUTOROTATE">Boost Auto-rotation</label>
+        <label i18n="@@BOOSTED_CONTENT__AUTOROTATE"
+          >Boost Auto-rotation
+          <span class="m-settingsV2__labelFlag">Browser only</span></label
+        >
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
           <ng-container i18n="@@BOOSTED_CONTENT__AUTOROTATE_TOOLTIP"
@@ -111,50 +233,6 @@
             formControlName="boost_autorotate"
             class="form-control"
             [readonly]="inProgress"
-          />
-          <span class="m-form__customInput__radio"></span>
-        </label>
-      </div>
-    </div>
-    <!-- ------------------------------------ -->
-    <!-- OPEN CONTENT -->
-    <!-- ------------------------------------ -->
-    <div class="m-form__field--radio">
-      <div class="m-form__row--label">
-        <label i18n="@@BOOSTED_CONTENT__RATING">Open Content</label>
-        <m-tooltip
-          ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n="@@BOOSTED_CONTENT__RATING_TOOLTIP"
-            >Open may contain controversial content. By selecting Open, you
-            acknowledge that you are willing to see controversial
-            content.</ng-container
-          >
-        </m-tooltip>
-      </div>
-      <div class="m-form__row--input">
-        <label for="open_on" class="m-form__customInputWrapper__radio">
-          <ng-container i18n="@@COMMON__ENABLE">Enable</ng-container>
-          <input
-            type="radio"
-            id="open_on"
-            [value]="2"
-            name="boost_rating"
-            formControlName="boost_rating"
-            class="form-control"
-            [readonly]="inProgress"
-          />
-          <span class="m-form__customInput__radio"></span>
-        </label>
-        <label for="open_off" class="m-form__customInputWrapper__radio">
-          <ng-container i18n="@@COMMON__DISABLE">Disable</ng-container>
-          <input
-            type="radio"
-            id="open_off"
-            [value]="1"
-            name="boost_rating"
-            formControlName="boost_rating"
-            [readonly]="inProgress"
-            class="form-control"
           />
           <span class="m-form__customInput__radio"></span>
         </label>
