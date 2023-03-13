@@ -48,6 +48,11 @@ $grey-700: #53565a;
 $grey-800: #38393d;
 $grey-900: #1c1d1f;
 
+
+//grey-light
+
+
+
 //yellows
 $yellow-50: #fffaed;
 $yellow-100: #fff6da;
@@ -132,36 +137,36 @@ $blue-grey-900: #191f28;
 $themes: (
   light: (
     m-textColor--primary: #43434d,
-    m-textColor--primaryInverted: $grey-50,
-    m-textColor--secondary: $grey-700,
-    m-textColor--secondaryInverted: $grey-400,
-    m-textColor--tertiary: $grey-600,
+    m-textColor--primaryInverted: #ffffff,
+    m-textColor--secondary: #72727c,
+    m-textColor--secondaryInverted: #b8c1ca,
+    m-textColor--tertiary: #9b9b9b,
     m-bgColor--primary: #ffffff,
-    m-bgColor--primaryInverted: $blue-grey-900,
-    m-bgColor--primaryDarkAlways: $blue-grey-900,
-    m-bgColor--primaryAlt: #ffffff,
-    m-bgColor--secondary: $grey-100,
-    m-bgColor--secondaryAlt: $grey-100,
+    m-bgColor--primaryInverted: #1f252c,
+    m-bgColor--primaryDarkAlways: #1f252c,
+    m-bgColor--primaryAlt: #e7edf3,
+    m-bgColor--secondary: #f6f7f7,
+    m-bgColor--secondaryAlt: #e6ebed,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--contrastSubtle: #dde4e6,
-    m-bgColor--btnHover: $grey-100,
-    m-bgColor--btnHoverLightAlways: $grey-100,
+    m-bgColor--btnHover: #f0f3f7,
+    m-bgColor--btnHoverLightAlways: #f0f3f7,
     m-bgColor--btnActive: #dadfe5,
-    m-borderColor--primary: $grey-200,
-    m-borderColor--secondary: $grey-200,
-    m-borderColor--tertiary: $grey-100,
-    m-overlay: rgba(138, 142, 150, 0.25),
-    m-alert: #bc584b,
+    m-borderColor--primary: #d3dbe3,
+    m-borderColor--secondary: #979797,
+    m-borderColor--tertiary: #ececec,
+    m-overlay: rgba(176, 176, 176, 0.5),
+    m-alert: #e03c20,
     m-positive: #95c064,
     m-action: $blue,
     m-action--contrast: $blue-dark,
-    m-action-text: $grey-50,
+    m-action-text: $white,
     m-link-text: $blue,
     m-link-text-contrast: $blue-light,
     m-sidebar-nav-item: $blue,
     //rotator button token
-      m-rotator-action: $grey-800,
-    m-counter-action: $grey-800,
+      m-rotator-action: #43434d,
+    m-counter-action: #43434d,
     // legacy colors
       m-grey-900: $grey-900,
     m-grey-800: $grey-800,
@@ -175,7 +180,7 @@ $themes: (
     m-grey-100: $grey-100,
     m-grey-50: $grey-50,
     m-blue: $blue,
-    m-blue--contrast: $blue-light,
+    m-blue--contrast: $blue-dark,
     m-aqua: $green-300,
     m-green-dark: $green-700,
     m-green: $green-500,
