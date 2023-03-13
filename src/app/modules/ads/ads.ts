@@ -1,21 +1,21 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  Inject,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Component, OnInit, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { Client } from '../../services/api';
-
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { isPlatformServer } from '@angular/common';
 import { DynamicBoostExperimentService } from '../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostLocation } from '../boost/modal-v2/boost-modal-v2.types';
+import { ClientMetaSource } from '../../common/services/client-meta.service';
+
+// params for getting boost ads from the feed endpoint.
+type BoostFeedAdsParams = {
+  limit: number;
+  location: number;
+  served_by_guid?: string;
+};
 
 @Component({
   selector: 'm-ads-boost',
-  inputs: ['handler', 'limit'],
   templateUrl: 'ads.html',
   styleUrls: ['ads.ng.scss'],
   host: {
@@ -23,8 +23,11 @@ import { BoostLocation } from '../boost/modal-v2/boost-modal-v2.types';
   },
 })
 export class BoostAds implements OnInit {
-  handler: string = 'content';
-  limit: number = 2;
+  @Input() handler: string = 'content';
+  @Input() limit: number = 2;
+  @Input() servedByGuid: string = null;
+  @Input() clientMetaSource: ClientMetaSource = null;
+
   offset: string = '';
   boosts: Array<any> = [];
   rating: number = 2;
@@ -70,10 +73,20 @@ export class BoostAds implements OnInit {
 
   private async fetchV3BoostsAsync(): Promise<void> {
     try {
-      const response: any = await this.client.get('api/v3/boosts/feed', {
+      let opts: BoostFeedAdsParams = {
         limit: this.limit,
         location: BoostLocation.SIDEBAR,
-      });
+      };
+
+      if (this.servedByGuid) {
+        opts['served_by_guid'] = this.servedByGuid;
+      }
+
+      if (this.clientMetaSource) {
+        opts['source'] = this.clientMetaSource;
+      }
+
+      const response: any = await this.client.get('api/v3/boosts/feed', opts);
 
       if (!response || !response.boosts) {
         return;

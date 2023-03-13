@@ -17,13 +17,13 @@ m-sidebarWidget {
 }
 
 .m-sidebarWidget__title {
-  font-size: 18px;
   line-height: 24px;
   padding: $sidebarSpacing;
   padding-bottom: $sidebarSpacing * 0.5;
   padding-right: 40px; // Allow for dimiss
   margin: 0;
-  font-weight: 500;
+
+  @include body1Medium;
   @include m-theme() {
     color: themed($m-textColor--primary);
   }
