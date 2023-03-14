@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SupermindExperimentService } from '../../../modules/experiments/sub-services/supermind-experiment.service';
 import { Session } from '../../../services/session';
@@ -86,6 +85,13 @@ describe('SidebarMoreComponent', () => {
     component.openSupermindConsole();
     expect((component as any).router.navigate).toHaveBeenCalledWith([
       '/supermind/inbox',
+    ]);
+  });
+
+  it('should open boost console', () => {
+    component.openBoostConsole();
+    expect((component as any).router.navigate).toHaveBeenCalledWith([
+      '/boost/boost-console',
     ]);
   });
 });

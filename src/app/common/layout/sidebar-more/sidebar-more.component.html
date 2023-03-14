@@ -6,11 +6,20 @@
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
-      <a [routerLink]="'/settings'" data-ref="sidebarmore-settings">
-        <i class="material-icons">settings</i>
-        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
-          >Settings</span
-        >
+      <a (click)="openBoostConsole()" data-ref="sidebarmore-boost-console">
+        <i class="material-icons">trending_up</i>
+        <span i18n="@@COMMON__BOOST">Boost</span>
+      </a>
+    </li>
+    <!-- ------------------------------------------------------------ -->
+    <li
+      class="m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser() && shouldShowSupermindOption()"
+      (click)="toggleSidebar()"
+    >
+      <a (click)="openSupermindConsole()" data-ref="sidebarmore-supermind">
+        <i class="material-icons">tips_and_updates</i>
+        <span i18n="@@COMMON__SUPERMIND">Supermind</span>
       </a>
     </li>
     <!-- ------------------------------------------------------------ -->
@@ -32,17 +41,6 @@
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
-      <a (click)="openBoostModal()" data-ref="sidebarmore-boost-modal">
-        <i class="material-icons">trending_up</i>
-        <span i18n="@@COMMON__BOOST_CONSOLE">Boost</span>
-      </a>
-    </li>
-    <!-- ------------------------------------------------------------ -->
-    <li
-      class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser()"
-      (click)="toggleSidebar()"
-    >
       <a (click)="openEarnModal()" data-ref="sidebarmore-earn-modal">
         <i class="material-icons">attach_money</i>
         <span i18n="@@COMMON__EARN">Earn</span>
@@ -51,12 +49,14 @@
     <!-- ------------------------------------------------------------ -->
     <li
       class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser() && shouldShowSupermindOption()"
+      *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
-      <a (click)="openSupermindConsole()" data-ref="sidebarmore-supermind">
-        <i class="material-icons">tips_and_updates</i>
-        <span i18n="@@COMMON__SUPERMIND">Supermind</span>
+      <a [routerLink]="'/settings'" data-ref="sidebarmore-settings">
+        <i class="material-icons">settings</i>
+        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
+          >Settings</span
+        >
       </a>
     </li>
     <!--./././././././././././././././././././././././././././././././.-->
