@@ -1,18 +1,36 @@
 @import 'defaults.scss';
 
 :host {
-  .m-settingsV2__plusFeatureTag {
-    font-style: italic;
-    font-weight: 400;
-    font-size: 15px;
-    display: inline-block;
-    margin-left: 15px;
+  .m-settingsV2__disabled {
+    &.m-form__row--label {
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+  .m-settingsV2__labelFlag {
+    @include body2Regular;
+    font-size: 13px;
+    margin-left: $spacing2;
+
     @include m-theme() {
-      color: themed($m-amber-dark);
+      color: themed($m-textColor--tertiary);
     }
 
     @media screen and (max-width: $max-mobile) {
-      margin-left: 4px;
+      margin-left: $spacing1;
+    }
+  }
+
+  .m-settingsV2__plusFeatureTag {
+    display: inline-block;
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 
