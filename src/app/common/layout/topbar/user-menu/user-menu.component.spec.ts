@@ -13,7 +13,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
 import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
-import { UserMenuBoostExperimentService } from '../../../../modules/experiments/sub-services/top-dropdown-boost-option-experiment.service';
+import { UserMenuBoostExperimentService } from '../../../../modules/experiments/sub-services/user-menu-boost-option-experiment.service';
 import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../../mocks/responses/user.mock';
 import { MindsUser } from '../../../../interfaces/entities';

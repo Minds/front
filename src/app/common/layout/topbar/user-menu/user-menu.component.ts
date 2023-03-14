@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
-import { UserMenuBoostExperimentService } from '../../../../modules/experiments/sub-services/top-dropdown-boost-option-experiment.service';
+import { UserMenuBoostExperimentService } from '../../../../modules/experiments/sub-services/user-menu-boost-option-experiment.service';
 import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
 
 /**
