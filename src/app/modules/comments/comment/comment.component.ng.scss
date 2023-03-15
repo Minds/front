@@ -145,30 +145,30 @@
   }
   // FEATURED (aka highlighting for plus users)
   .m-comment--featured {
-    .m-comment__row--top {
+    > .m-comment__row--top {
       @include m-theme() {
         background-color: themed($m-highlight--comment);
       }
-    }
-    ::ng-deep {
-      m-hovercard {
-        .minds-avatar {
-          @include m-theme() {
-            background-color: themed($m-highlight--comment);
+      ::ng-deep {
+        m-hovercard {
+          .minds-avatar {
+            @include m-theme() {
+              background-color: themed($m-highlight--comment);
+            }
           }
         }
       }
-    }
-    .m-comment-attachment {
-      margin-right: $spacing2;
-      @include m-theme() {
-        background-color: themed($m-highlight--comment);
-      }
-
-      .m-rich-embed,
-      .m-mature-overlay {
+      .m-comment-attachment {
+        margin-right: $spacing2;
         @include m-theme() {
           background-color: themed($m-highlight--comment);
+        }
+
+        .m-rich-embed,
+        .m-mature-overlay {
+          @include m-theme() {
+            background-color: themed($m-highlight--comment);
+          }
         }
       }
     }
