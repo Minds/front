@@ -348,7 +348,7 @@ dependency_scanning:
       --kube-endpoint PUBLIC_ENDPOINT
 
 .cleanup_review: &cleanup_review
-  image: minds/oci-cli:latest
+  image: minds/ci:latest
   script:
     - *oci_prepare
     - helm del $CI_BUILD_REF_SLUG
@@ -369,7 +369,7 @@ dependency_scanning:
 
 review:start:
   stage: review
-  image: minds/oci-cli:latest
+  image: minds/ci:latest
   script:
     - *oci_prepare
     # Download repo, use same branch name if exists
@@ -442,6 +442,9 @@ review:stop:
     # Update EKS role
     - aws eks --region us-east-1 update-kubeconfig --name $AWS_EKS_CLUSTER_NAME --role-arn=$AWS_IAM_ROLE_ARN
     # Update the image tags
+    - kubectl rollout restart deployment minds-front-$IMAGE_LABEL
+    # OKE Deploy
+    - *oci_prepare
     - kubectl rollout restart deployment minds-front-$IMAGE_LABEL
     ## Update sentry
     - sentry-cli releases deploys $CI_PIPELINE_ID new -e $IMAGE_LABEL
