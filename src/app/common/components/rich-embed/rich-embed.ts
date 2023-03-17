@@ -279,7 +279,7 @@ export class MindsRichEmbed {
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-youtube',
           html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
-          src="https://www.youtube.com/embed/${matches[1]}?controls=1&modestbranding=1&origin=${origin}&rel=0"
+          src="https://www.youtube.com/embed/${matches[1]}?controls=1&modestbranding=1&origin=${origin}&rel=0&autoplay=1"
           frameborder="0"
           allowfullscreen></iframe>`),
           playable: true,
