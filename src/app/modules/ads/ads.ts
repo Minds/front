@@ -23,6 +23,7 @@ type BoostFeedAdsParams = {
   limit: number;
   location: number;
   served_by_guid?: string;
+  source?: string;
 };
 
 @Component({
