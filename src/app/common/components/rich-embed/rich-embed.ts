@@ -232,9 +232,12 @@ export class MindsRichEmbed {
   }
 
   action($event) {
+    this.recordClick();
+
     if (this.modalRequestSubscribed && this.modalService.canOpenInModal()) {
       $event.preventDefault();
       $event.stopPropagation();
+
       this.mediaModalRequested.emit();
       return;
     }
@@ -243,7 +246,6 @@ export class MindsRichEmbed {
       $event.preventDefault();
       $event.stopPropagation();
 
-      this.recordClick();
       this.embeddedInline = true;
       this.renderHtml();
     }
@@ -450,7 +452,8 @@ export class MindsRichEmbed {
    * @returns { void }
    */
   private recordClick(): void {
-    if (this.clickRecorded) {
+    // do not record click if already recorded OR in modal.
+    if (this.clickRecorded || this._isModal) {
       return;
     }
     this.clickRecorded = true;
