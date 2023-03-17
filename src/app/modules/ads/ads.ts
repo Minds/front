@@ -1,13 +1,24 @@
-import { Component, OnInit, Inject, Input, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  Input,
+  PLATFORM_ID,
+  Optional,
+  SkipSelf,
+} from '@angular/core';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { isPlatformServer } from '@angular/common';
 import { DynamicBoostExperimentService } from '../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostLocation } from '../boost/modal-v2/boost-modal-v2.types';
-import { ClientMetaSource } from '../../common/services/client-meta.service';
+import { ClientMetaData } from '../../common/services/client-meta.service';
+import { ClientMetaDirective } from '../../common/directives/client-meta.directive';
 
-// params for getting boost ads from the feed endpoint.
+/**
+ * @describe params for getting boost ads from the feed endpoint.
+ */
 type BoostFeedAdsParams = {
   limit: number;
   location: number;
@@ -25,8 +36,6 @@ type BoostFeedAdsParams = {
 export class BoostAds implements OnInit {
   @Input() handler: string = 'content';
   @Input() limit: number = 2;
-  @Input() servedByGuid: string = null;
-  @Input() clientMetaSource: ClientMetaSource = null;
 
   offset: string = '';
   boosts: Array<any> = [];
@@ -37,7 +46,8 @@ export class BoostAds implements OnInit {
     public session: Session,
     private storage: Storage,
     private dynamicBoostExperiment: DynamicBoostExperimentService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
   ) {}
 
   ngOnInit() {
@@ -78,12 +88,10 @@ export class BoostAds implements OnInit {
         location: BoostLocation.SIDEBAR,
       };
 
-      if (this.servedByGuid) {
-        opts['served_by_guid'] = this.servedByGuid;
-      }
-
-      if (this.clientMetaSource) {
-        opts['source'] = this.clientMetaSource;
+      if (this.parentClientMeta) {
+        const clientMetaData: ClientMetaData = this.parentClientMeta.build();
+        opts['served_by_guid'] = clientMetaData.served_by_guid;
+        opts['source'] = clientMetaData.source;
       }
 
       const response: any = await this.client.get('api/v3/boosts/feed', opts);

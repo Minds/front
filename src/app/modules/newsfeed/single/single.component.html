@@ -1,4 +1,10 @@
-<ng-container [m-clientMeta]="{ source: 'single', medium: 'single' }">
+<ng-container
+  [m-clientMeta]="{
+    source: 'single',
+    medium: 'single',
+    served_by_guid: activity?.ownerObj?.guid
+  }"
+>
   <div
     class="m-newsfeed__single"
     [class.m-pageLayout__container]="!showLegacyActivity"
@@ -64,12 +70,7 @@
     >
       <div class="m-pageLayoutPane__inner">
         <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-          <m-ads-boost
-            *ngIf="shouldShowSidebarBoost()"
-            [servedByGuid]="activity.ownerObj.guid"
-            clientMetaSource="single"
-            limit="1"
-          ></m-ads-boost>
+          <m-ads-boost *ngIf="shouldShowSidebarBoost()" limit="1"></m-ads-boost>
           <ng-container *ngTemplateOutlet="suggestions"></ng-container>
         </div>
       </div>
