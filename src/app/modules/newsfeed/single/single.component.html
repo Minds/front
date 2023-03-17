@@ -65,8 +65,8 @@
       <div class="m-pageLayoutPane__inner">
         <div class="m-pageLayoutPane__sticky" m-stickySidebar>
           <m-ads-boost
-            *ngIf="session.isLoggedIn() && activity?.ownerObj?.guid"
-            [servedByGuid]="activity?.ownerObj?.guid"
+            *ngIf="shouldShowSidebarBoost()"
+            [servedByGuid]="activity.ownerObj.guid"
             clientMetaSource="single"
             limit="1"
           ></m-ads-boost>
