@@ -1,4 +1,3 @@
-import { randomBytes } from 'crypto';
 import { SiteService } from './../../services/site.service';
 import {
   Component,
@@ -9,8 +8,6 @@ import {
   HostBinding,
   SkipSelf,
   HostListener,
-  Inject,
-  PLATFORM_ID,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RichEmbedService } from '../../../services/rich-embed';
@@ -24,7 +21,6 @@ import {
   ClientMetaService,
 } from '../../services/client-meta.service';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
-import { isPlatformBrowser } from '@angular/common';
 
 interface InlineEmbed {
   id: string;
@@ -58,9 +54,6 @@ export class MindsRichEmbed {
   // set to true once a click is recorded.
   private clickRecorded: boolean = false;
 
-  // class to be applied to the host.
-  private readonly hostClass: string;
-
   @Input() embeddedInline: boolean = false;
 
   @Input() displayAsColumn: boolean = false;
@@ -86,11 +79,6 @@ export class MindsRichEmbed {
     return this.isFeaturedSource || this.displayAsColumn;
   }
 
-  // set component host class.
-  @HostBinding('class') get class() {
-    return this.hostClass;
-  }
-
   // on component host click, record a click event.
   @HostListener('click') onHostClick(): void {
     this.recordClick();
@@ -107,22 +95,8 @@ export class MindsRichEmbed {
     private modalService: ModalService,
     private embedLinkWhitelist: EmbedLinkWhitelistService,
     private clientMetaService: ClientMetaService,
-    @SkipSelf() private parentClientMeta: ClientMetaDirective,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.hostClass = `m-richEmbed__host--${randomBytes(16).toString('hex')}`;
-  }
-
-  /**
-   * Gets selector for the internal iframe, using the randomized host
-   * class name as the prefix so that when doing a top-level DOM
-   * search for the element in the window:blur HostListener - we only
-   * grab THIS instances iframe.
-   * @returns { string } iframe selector.
-   */
-  get iframeSelector(): string {
-    return `.${this.hostClass} iframe`;
-  }
+    @SkipSelf() private parentClientMeta: ClientMetaDirective
+  ) {}
 
   set _src(value: any) {
     if (!value) {
