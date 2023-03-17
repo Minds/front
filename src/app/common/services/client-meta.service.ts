@@ -4,6 +4,8 @@ import hashCode from '../../helpers/hash-code';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
 import { ClientMetaDirective } from '../directives/client-meta.directive';
+import { ApiService } from '../api/api.service';
+import { lastValueFrom } from 'rxjs';
 
 export type ClientMetaMedium =
   | 'feed'
@@ -12,7 +14,7 @@ export type ClientMetaMedium =
   | 'channel-recs'
   | 'featured-content'
   | 'single'
-  | 'boost'
+  | 'boost' // @deprecated
   | 'modal'
   | null;
 
@@ -67,6 +69,7 @@ export class ClientMetaService {
     protected location: Location,
     protected session: Session,
     protected client: Client,
+    protected api: ApiService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -109,5 +112,35 @@ export class ClientMetaService {
         ...extraClientMetaData,
       },
     });
+  }
+
+  /**
+   * Record a click event.
+   * @param { string } entityGuid - guid of the entity.
+   * @param { ClientMetaDirective } clientMetaDirective - client meta directive to be used.
+   * @param { Partial<ClientMetaData> } extraClientMetaData - extra data to override the client meta directive.
+   * @returns { Promise<void> }
+   */
+  async recordClick(
+    entityGuid: string,
+    clientMetaDirective: ClientMetaDirective,
+    extraClientMetaData: Partial<ClientMetaData> = {}
+  ): Promise<void> {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
+    try {
+      await lastValueFrom(
+        this.api.post(`api/v3/analytics/click/${entityGuid}`, {
+          client_meta: {
+            ...(clientMetaDirective && clientMetaDirective.build()),
+            ...extraClientMetaData,
+          },
+        })
+      );
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

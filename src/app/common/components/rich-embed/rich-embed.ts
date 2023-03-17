@@ -1,3 +1,4 @@
+import { randomBytes } from 'crypto';
 import { SiteService } from './../../services/site.service';
 import {
   Component,
@@ -6,15 +7,24 @@ import {
   EventEmitter,
   Input,
   HostBinding,
+  SkipSelf,
+  HostListener,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
 import { RichEmbedService } from '../../../services/rich-embed';
 import { MediaProxyService } from '../../../common/services/media-proxy.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
 import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
+import {
+  ClientMetaData,
+  ClientMetaService,
+} from '../../services/client-meta.service';
+import { ClientMetaDirective } from '../../directives/client-meta.directive';
+import { isPlatformBrowser } from '@angular/common';
 
 interface InlineEmbed {
   id: string;
@@ -45,6 +55,12 @@ export class MindsRichEmbed {
   public isPaywalled: boolean = false;
   _isModal: boolean = false;
 
+  // set to true once a click is recorded.
+  private clickRecorded: boolean = false;
+
+  // class to be applied to the host.
+  private readonly hostClass: string;
+
   @Input() embeddedInline: boolean = false;
 
   @Input() displayAsColumn: boolean = false;
@@ -70,6 +86,30 @@ export class MindsRichEmbed {
     return this.isFeaturedSource || this.displayAsColumn;
   }
 
+  // set component host class.
+  @HostBinding('class') get class() {
+    return this.hostClass;
+  }
+
+  // on component host click, record a click event.
+  @HostListener('click') onHostClick(): void {
+    this.recordClick();
+  }
+
+  // listen to window blur event so that we can tell when the window loses focus due to an iframe becoming active.
+  @HostListener('window:blur', ['$event']) onWindowBlur($event): void {
+    if (isPlatformBrowser(this.platformId)) {
+      // move check on active element to end of event queue to give the active element chance to be set.
+      window.setTimeout((): void => {
+        if (
+          document.activeElement == document.querySelector(this.iframeSelector)
+        ) {
+          this.recordClick();
+        }
+      }, 0);
+    }
+  }
+
   constructor(
     private sanitizer: DomSanitizer,
     private session: Session,
@@ -79,8 +119,24 @@ export class MindsRichEmbed {
     private configs: ConfigsService,
     private site: SiteService,
     private modalService: ModalService,
-    private embedLinkWhitelist: EmbedLinkWhitelistService
-  ) {}
+    private embedLinkWhitelist: EmbedLinkWhitelistService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() private parentClientMeta: ClientMetaDirective,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.hostClass = `m-richEmbed__host--${randomBytes(16).toString('hex')}`;
+  }
+
+  /**
+   * Gets selector for the internal iframe, using the randomized host
+   * class name as the prefix so that when doing a top-level DOM
+   * search for the element in the window:blur HostListener - we only
+   * grab THIS instances iframe.
+   * @returns { string } iframe selector.
+   */
+  get iframeSelector(): string {
+    return `.${this.hostClass} iframe`;
+  }
 
   set _src(value: any) {
     if (!value) {
@@ -387,5 +443,28 @@ export class MindsRichEmbed {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * Record a click event on the rich embed.
+   * @returns { void }
+   */
+  private recordClick(): void {
+    if (this.clickRecorded) {
+      return;
+    }
+    this.clickRecorded = true;
+
+    const extraClientMetaData: Partial<ClientMetaData> = {};
+
+    if (Boolean(this.src.boosted_guid) && Boolean(this.src.urn)) {
+      extraClientMetaData.campaign = this.src.urn;
+    }
+
+    this.clientMetaService.recordClick(
+      this.src.guid,
+      this.parentClientMeta,
+      extraClientMetaData
+    );
   }
 }
