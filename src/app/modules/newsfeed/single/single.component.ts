@@ -4,7 +4,6 @@ import {
   Inject,
   Input,
   PLATFORM_ID,
-  ViewChild,
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 

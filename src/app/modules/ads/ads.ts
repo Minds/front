@@ -47,7 +47,7 @@ export class BoostAds implements OnInit {
     private storage: Storage,
     private dynamicBoostExperiment: DynamicBoostExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
+    @Optional() @SkipSelf() private parentClientMeta: ClientMetaDirective
   ) {}
 
   ngOnInit() {
