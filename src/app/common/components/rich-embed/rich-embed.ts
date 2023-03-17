@@ -214,7 +214,6 @@ export class MindsRichEmbed {
           this.renderHtml();
         }
       } else {
-        this.embeddedInline = true;
         this.renderHtml();
       }
     }
@@ -244,6 +243,7 @@ export class MindsRichEmbed {
       $event.preventDefault();
       $event.stopPropagation();
 
+      this.recordClick();
       this.embeddedInline = true;
       this.renderHtml();
     }
