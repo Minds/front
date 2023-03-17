@@ -20,6 +20,7 @@ export type Boost = {
   payment_tx_id?: string;
   summary?: {
     views_delivered?: number;
+    total_clicks?: number;
   };
 };
 

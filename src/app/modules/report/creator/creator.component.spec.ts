@@ -59,7 +59,7 @@ describe('ReportCreatorComponent', () => {
         ], // declare the test component
         imports: [FormsModule],
         providers: [
-          { provide: Session, useValue: sessionMock },
+          { provide: Session, useValue: MockService(Session) },
           { provide: Client, useValue: clientMock },
           { provide: ModalService, useValue: modalServiceMock },
           {
@@ -95,6 +95,7 @@ describe('ReportCreatorComponent', () => {
         guid: '1',
       },
     });
+    (comp as any).session.isAdmin.and.returnValue(false);
 
     fixture.detectChanges();
 
@@ -287,8 +288,12 @@ describe('ReportCreatorComponent', () => {
   }));*/
 
   it('once a item is clicked and its copyright one, next button should appear, and 2nd step should allow closing', () => {
+    (comp as any).session.isAdmin.and.returnValue(false);
+    fixture.detectChanges();
+
     const item = getSubjectItem(7);
     item.nativeElement.click();
+
     fixture.detectChanges();
     const next = fixture.debugElement.query(
       By.css('.m-reportCreator__button--dmca button')
@@ -299,10 +304,26 @@ describe('ReportCreatorComponent', () => {
       return window;
     });
     next.nativeElement.click();
+
     expect(window.open).toHaveBeenCalledWith(
       'https://support.minds.com/hc/en-us/requests/new?ticket_form_id=360003221852',
       '_blank'
     );
+  });
+
+  it('admins should see next button for copyright', () => {
+    (comp as any).session.isAdmin.and.returnValue(true);
+    fixture.detectChanges();
+
+    const item = getSubjectItem(7);
+    item.nativeElement.click();
+
+    fixture.detectChanges();
+    const submitButton = fixture.debugElement.query(
+      By.css('.m-reportCreator__button--submit button')
+    );
+
+    expect(submitButton).not.toBeNull();
   });
 
   it('should get footer category name if there is a reason label', () => {
@@ -558,7 +579,7 @@ const FAKE_REASONS = [
   },
   {
     value: 10,
-    label: 'Intellectual Property violation',
+    label: 'Intellectual property violation',
     hasMore: true,
   },
   {
