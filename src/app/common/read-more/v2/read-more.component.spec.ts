@@ -4,7 +4,11 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import exp = require('constants');
 import { sampleUsers } from '../../../../tests/samples/sample-users';
+import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
 import { siteServiceMock } from '../../../modules/notifications/notification.service.spec';
+import { MockService } from '../../../utils/mock';
+import { ClientMetaDirective } from '../../directives/client-meta.directive';
+import { ClientMetaService } from '../../services/client-meta.service';
 import { SiteService } from '../../services/site.service';
 import { ReadMoreComponent } from './read-more.component';
 import { ReadMoreModule } from './read-more.module';
@@ -22,6 +26,18 @@ describe('ReadMoreComponent', () => {
           {
             provide: SiteService,
             useValue: siteServiceMock,
+          },
+          {
+            provide: ClientMetaService,
+            useValue: MockService(ClientMetaService),
+          },
+          {
+            provide: ActivityService,
+            useValue: MockService(ActivityService),
+          },
+          {
+            provide: ClientMetaDirective,
+            useValue: MockService(ClientMetaDirective),
           },
         ],
       }).compileComponents();

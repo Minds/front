@@ -31,6 +31,8 @@ import { CodeHighlightService } from '../../code-highlight/code-highlight.servic
 import { TagsPipeMock } from '../../../mocks/pipes/tagsPipe.mock';
 import { TruncatePipe } from '../../../common/pipes/truncate.pipe';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 describe('CommentComponentV2', () => {
   let comp: CommentComponentV2;
@@ -160,6 +162,14 @@ describe('CommentComponentV2', () => {
           {
             provide: AutocompleteSuggestionsService,
             useValue: MockService(AutocompleteSuggestionsService),
+          },
+          {
+            provide: ClientMetaService,
+            useValue: MockService(ClientMetaService),
+          },
+          {
+            provide: ClientMetaDirective,
+            useValue: MockService(ClientMetaDirective),
           },
         ],
       })
