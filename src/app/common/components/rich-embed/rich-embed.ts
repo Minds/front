@@ -96,20 +96,6 @@ export class MindsRichEmbed {
     this.recordClick();
   }
 
-  // listen to window blur event so that we can tell when the window loses focus due to an iframe becoming active.
-  @HostListener('window:blur', ['$event']) onWindowBlur($event): void {
-    if (isPlatformBrowser(this.platformId)) {
-      // move check on active element to end of event queue to give the active element chance to be set.
-      window.setTimeout((): void => {
-        if (
-          document.activeElement == document.querySelector(this.iframeSelector)
-        ) {
-          this.recordClick();
-        }
-      }, 0);
-    }
-  }
-
   constructor(
     private sanitizer: DomSanitizer,
     private session: Session,
@@ -452,8 +438,7 @@ export class MindsRichEmbed {
    * @returns { void }
    */
   private recordClick(): void {
-    // do not record click if already recorded OR in modal.
-    if (this.clickRecorded || this._isModal) {
+    if (this.clickRecorded) {
       return;
     }
     this.clickRecorded = true;
