@@ -1,9 +1,12 @@
-import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import exp = require('constants');
-import { sampleUsers } from '../../../../tests/samples/sample-users';
+import { BehaviorSubject } from 'rxjs';
 import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
 import { siteServiceMock } from '../../../modules/notifications/notification.service.spec';
 import { MockService } from '../../../utils/mock';
@@ -33,7 +36,14 @@ describe('ReadMoreComponent', () => {
           },
           {
             provide: ActivityService,
-            useValue: MockService(ActivityService),
+            useValue: MockService(ActivityService, {
+              has: ['entity$'],
+              props: {
+                entity$: {
+                  get: () => new BehaviorSubject(null),
+                },
+              },
+            }),
           },
           {
             provide: ClientMetaDirective,
@@ -47,6 +57,8 @@ describe('ReadMoreComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReadMoreComponent);
     comp = fixture.componentInstance;
+
+    (comp as any).activityService.entity$.next(null);
 
     fixture.detectChanges();
   });
@@ -82,4 +94,59 @@ describe('ReadMoreComponent', () => {
 
     expect(comp.outputText.length).toBeLessThan(1000);
   });
+
+  it('should call to record click on output text click for an anchor tag and record click with boost client meta', fakeAsync(() => {
+    const boostedGuid: string = '123';
+    const urn: string = 'urn:boost:234';
+    const guid: string = '345';
+
+    (comp as any).activityService.entity$.next({
+      boosted_guid: boostedGuid,
+      urn: urn,
+      guid: guid,
+    });
+
+    const mockEvent: MouseEvent = {
+      type: 'click',
+      target: {
+        tagName: 'A',
+      },
+    } as any;
+
+    comp.onOutputTextClick(mockEvent);
+    tick();
+
+    expect((comp as any).clientMetaService.recordClick).toHaveBeenCalledWith(
+      guid,
+      (comp as any).parentClientMeta,
+      {
+        campaign: urn,
+      }
+    );
+  }));
+
+  it('should call to record click on output text click for an anchor tag and record click without boost client meta', fakeAsync(() => {
+    const guid: string = '345';
+
+    (comp as any).activityService.entity$.next({
+      boosted_guid: null,
+      guid: guid,
+    });
+
+    const mockEvent: MouseEvent = {
+      type: 'click',
+      target: {
+        tagName: 'A',
+      },
+    } as any;
+
+    comp.onOutputTextClick(mockEvent);
+    tick();
+
+    expect((comp as any).clientMetaService.recordClick).toHaveBeenCalledWith(
+      guid,
+      (comp as any).parentClientMeta,
+      {}
+    );
+  }));
 });

@@ -368,4 +368,50 @@ describe('CommentComponentV2', () => {
 
     expect(comp.showDelete()).toBeFalse();
   });
+
+  it('should call to record click on description text click for an anchor tag and record click with boost client meta', fakeAsync(() => {
+    const guid: string = '345';
+
+    (comp as any).comment = {
+      guid: guid,
+    };
+
+    const mockEvent: MouseEvent = {
+      type: 'click',
+      target: {
+        tagName: 'A',
+      },
+    } as any;
+
+    comp.onDescriptionTextClick(mockEvent);
+    tick();
+
+    expect((comp as any).clientMetaService.recordClick).toHaveBeenCalledWith(
+      guid,
+      (comp as any).parentClientMeta
+    );
+  }));
+
+  it('should call to record click on description text click for an anchor tag and record click without boost client meta', fakeAsync(() => {
+    const guid: string = '345';
+
+    (comp as any).comment = {
+      guid: guid,
+    };
+
+    const mockEvent: MouseEvent = {
+      type: 'click',
+      target: {
+        tagName: 'A',
+      },
+    } as any;
+
+    comp.onDescriptionTextClick(mockEvent);
+    tick();
+
+    expect((comp as any).clientMetaService.recordClick).toHaveBeenCalledWith(
+      guid,
+      (comp as any).parentClientMeta
+    );
+  }));
 });
