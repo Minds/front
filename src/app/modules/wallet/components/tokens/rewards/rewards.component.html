@@ -289,11 +289,20 @@
             (click)="onTransferClick($event)"
             >Transfer</a
           >
-          <p class="m-walletTokenEarnings__subheaderText">
+          <p class="m-walletTokenEarnings__subheaderText" *ngIf="isToday()">
             Daily metrics are updated every day at 12:00 AM UTC
           </p>
         </td>
-        <td>-</td>
+        <td *ngIf="isToday(); else previousDayHoldings">-</td>
+        <ng-template #previousDayHoldings>
+          <td>
+            <m-wallet__currencyValue
+              [value]="data.holding.token_amount"
+              hideCurrency="true"
+              currency="tokens"
+            ></m-wallet__currencyValue>
+          </td>
+        </ng-template>
         <td>
           <m-wallet__currencyValue
             [value]="data.holding.alltime_summary.token_amount"

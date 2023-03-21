@@ -6,14 +6,12 @@ import {
 import * as moment from 'moment';
 import { Observable, Subscription, timer } from 'rxjs';
 import { UniswapModalService } from '../../../../blockchain/token-purchase/uniswap/uniswap-modal.service';
-import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
 import { map, shareReplay } from 'rxjs/operators';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
 import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
 import { MindsUser } from '../../../../../interfaces/entities';
-import { ToasterService } from '../../../../../common/services/toaster.service';
 import { VerifyUniquenessModalLazyService } from '../../../../verify-uniqueness/modal/services/verify-uniqueness-modal.service';
 import { InAppVerificationExperimentService } from '../../../../experiments/sub-services/in-app-verification-experiment.service';
 
@@ -119,15 +117,13 @@ export class WalletTokenRewardsComponent implements OnInit {
   constructor(
     private rewards: WalletTokenRewardsService,
     private uniswapModalService: UniswapModalService,
-    private earnModalService: EarnModalService,
     protected injector: Injector,
     protected onchainTransferModal: OnchainTransferModalService,
     private walletService: WalletV2Service,
     private session: Session,
     private verifyUniquenessModal: VerifyUniquenessModalLazyService,
     private inAppVerificationExperimentService: InAppVerificationExperimentService,
-    protected connectWalletModalService: ConnectWalletModalService,
-    private toast: ToasterService
+    protected connectWalletModalService: ConnectWalletModalService
   ) {}
 
   ngOnInit() {
@@ -218,6 +214,14 @@ export class WalletTokenRewardsComponent implements OnInit {
 
     const uniswapUrl = 'https://v2.info.uniswap.org/account/';
     return uniswapUrl + address;
+  }
+
+  /**
+   * Whether friendly date is 'Today'.
+   * @returns { boolean } - true if date is today.
+   */
+  public isToday(): boolean {
+    return this.friendlyDate === 'Today';
   }
 
   /**
