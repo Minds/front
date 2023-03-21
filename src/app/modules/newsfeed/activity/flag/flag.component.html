@@ -36,5 +36,17 @@
         {{ entity.supermind.receiver_user.name }}
       </a>
     </div>
+
+    <!--------------------------->
+    <!-- MUTUAL SUBSCRIPTIONS  -->
+    <!--------------------------->
+    <div
+      *ngSwitchCase="'mutualSubscriptions'"
+      class="m-activityFlag--mutualSubscriptions m-legible"
+    >
+      <m-activityFlag__mutualSubscriptions
+        [user]="entity.ownerObj"
+      ></m-activityFlag__mutualSubscriptions>
+    </div>
   </ng-container>
 </ng-container>

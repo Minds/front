@@ -1,4 +1,29 @@
 <span [innerHTML]="outputText | tags | codeHighlight"></span>
-<span class="m-readMore__cta" (click)="toggle()" *ngIf="shouldTruncate">{{
-  showAll ? 'See less' : 'See more'
-}}</span>
+<span
+  class="m-readMore__cta"
+  (click)="toggle()"
+  *ngIf="shouldTruncate"
+  [ngClass]="{ 'm-readMore__cta--featured': paywallContext && !showAll }"
+>
+  <!-- ----------------------------------- -->
+  <!-- SEE LESS -->
+  <!-- ----------------------------------- -->
+  <ng-container *ngIf="showAll; else seeMore">
+    <ng-container i18n="@@READ_MORE__SEE_LESS">See less</ng-container>
+  </ng-container>
+  <!-- ----------------------------------- -->
+  <!-- SEE MORE -->
+  <!-- ----------------------------------- -->
+  <ng-template #seeMore>
+    <ng-container
+      *ngIf="!paywallContext; else paywallContextTemplate"
+      i18n="@@READ_MORE__SEE_MORE"
+      >See more</ng-container
+    >
+    <ng-template #paywallContextTemplate>
+      <ng-container i18n="@@READ_MORE__CONTINUE_READING"
+        >Continue reading</ng-container
+      >
+    </ng-template>
+  </ng-template>
+</span>

@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  .m-activityFlag__mutualSubscriptions {
+    display: flex;
+    flex-flow: row nowrap;
+
+    i.material-icons {
+      font-size: 18px;
+      line-height: 20px;
+      margin-right: $spacing2;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    ::ng-deep m-userAggregator {
+      flex-flow: row nowrap;
+      .m-userAggregator__userSummary,
+      .m-userAggregator__userSummary--clickable {
+        span,
+        a.m-userAggregator__usernameHref {
+          @include body2Medium;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+  }
+}

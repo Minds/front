@@ -250,13 +250,13 @@ post content to trigger upgrade modal -->
             'm-activityContentText--translated': showTranslation
           }"
         >
-          <!-- Truncate text for boost rotator posts that contain more than just text -->
           <m-readMore
             [text]="bodyText"
-            [targetLength]="isFixedHeight && !isStatus ? 180 : 280"
+            [targetLength]="initialVisibleTextLength"
             [disabled]="
               service.displayOptions.isFeed && persistentFeedExperimentActive
             "
+            [paywallContext]="usePaywallContextStyles"
             (onToggle)="onReadMoreClick($event)"
           ></m-readMore>
         </p>
@@ -285,6 +285,7 @@ post content to trigger upgrade modal -->
 <!-- Hide text only for the paywall that covers the entire size of the content component.  -->
 <ng-template #paywallTemplate let-hide="hideText"
   ><ng-container *ngIf="!hideMedia">
+    <!-- ojm remove false below  -->
     <m-activity__paywall
       *ngIf="service.shouldShowPaywall$ | async"
       [hideText]="hide"
