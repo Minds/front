@@ -62,10 +62,13 @@
       >
         <a
           [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
-          (click)="toggle()"
+          (click)="toggle(); discoveryLinkClicked = true"
           data-ref="sidenav-discovery"
         >
           <div class="m-sidebarNavigationItem__hoverArea">
+            <m-sidebarNavigation__newContentDot
+              [discoveryLinkClicked]="discoveryLinkClicked"
+            ></m-sidebarNavigation__newContentDot>
             <i class="material-icons m-sidebarNavigation__hashIcon">#</i>
             <span class="m-sidebarNavigationItem__text m-legible">
               <ng-container

@@ -8,6 +8,8 @@ import {
   ViewChild,
   OnDestroy,
   Injector,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Navigation as NavigationService } from '../../../../services/navigation';
@@ -64,6 +66,10 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   isDarkTheme: boolean = false;
+
+  // Becomes true when the discovery link is clicked.
+  // Used to determine whether to show 'new content dot'
+  discoveryLinkClicked: boolean = false;
 
   /**
    * Sets display mode on resize.
