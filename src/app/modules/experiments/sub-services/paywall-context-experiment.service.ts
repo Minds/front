@@ -13,8 +13,6 @@ export class PaywallContextExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    // ojm remove
-    return true;
     return this.experiments.hasVariation('minds-3857-paywall-context', true);
   }
 }

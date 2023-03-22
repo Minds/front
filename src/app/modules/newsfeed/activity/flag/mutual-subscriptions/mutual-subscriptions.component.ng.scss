@@ -16,8 +16,13 @@
 
     ::ng-deep m-userAggregator {
       flex-flow: row nowrap;
+      min-width: 0;
       .m-userAggregator__userSummary,
       .m-userAggregator__userSummary--clickable {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
         span,
         a.m-userAggregator__usernameHref {
           @include body2Medium;

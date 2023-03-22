@@ -217,17 +217,13 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         !entity.supermind.is_reply &&
         entity.supermind.receiver_user;
 
-      const isSomeoneElsesPaywalledPost =
-        this.paywallContextExperiment.isActive() &&
-        !!entity?.paywall &&
-        entity.ownerObj.guid !== this.session.getLoggedInUser().guid;
+      // const isSomeoneElsesPaywalledPost =
+      //   this.paywallContextExperiment.isActive() &&
+      //   !!entity?.paywall &&
+      //   entity.ownerObj.guid !== this.session.getLoggedInUser().guid;
 
       this.showFlagRow =
-        notInBoostRotator &&
-        (boosted ||
-          reminded ||
-          isSupermindOffer ||
-          isSomeoneElsesPaywalledPost);
+        notInBoostRotator && (boosted || reminded || isSupermindOffer);
 
       this.cd.markForCheck();
       this.cd.detectChanges();

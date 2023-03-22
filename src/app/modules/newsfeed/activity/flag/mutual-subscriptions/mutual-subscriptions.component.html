@@ -17,9 +17,8 @@
         class="m-userAggregator__suffixText"
         i18n="@@M__ACTIVITY_FLAG__MUTUAL_SUBSCRIPTIONS__FOLLOWS"
         >{ (totalCount$ | async), plural, =1 {follows} other {follow} }
-        {{ _user.name | truncate: 12 }}</span
+        {{ _user.name }}</span
       >
-      <!-- ojm find a way around the truncate  -->
     </m-userAggregator>
   </ng-container>
 </div>

@@ -282,10 +282,9 @@ post content to trigger upgrade modal -->
 <!-- ----------------------------------- -->
 <!-- TEMPLATE: PAYWALL -->
 <!-- ----------------------------------- -->
-<!-- Hide text only for the paywall that covers the entire size of the content component.  -->
+<!-- Hide paywall text (e.g. 'Only Minds+ users can see this post') only for the paywall that covers the entire size of the content component.  -->
 <ng-template #paywallTemplate let-hide="hideText"
   ><ng-container *ngIf="!hideMedia">
-    <!-- ojm remove false below  -->
     <m-activity__paywall
       *ngIf="service.shouldShowPaywall$ | async"
       [hideText]="hide"

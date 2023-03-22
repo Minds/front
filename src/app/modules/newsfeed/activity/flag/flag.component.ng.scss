@@ -45,7 +45,8 @@
 
   .m-activityFlag--remind,
   .m-activityFlag--socialContext,
-  .m-activityFlag--supermindRequest {
+  .m-activityFlag--supermindRequest,
+  .m-activityFlag--mutualSubscriptions {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

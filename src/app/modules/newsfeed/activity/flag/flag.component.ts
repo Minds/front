@@ -85,14 +85,14 @@ export class ActivityFlagComponent extends AbstractSubscriberComponent
     }
 
     // Mutual subscriptions (for paywalled posts)
-    if (
-      this.paywallContextExperiment.isActive() &&
-      !!this.entity.paywall &&
-      this.entity.ownerObj.guid !== this.session.getLoggedInUser().guid
-    ) {
-      this.activeFlag = 'mutualSubscriptions';
-      return;
-    }
+    // if (
+    //   this.paywallContextExperiment.isActive() &&
+    //   !!this.entity.paywall &&
+    //   this.entity.ownerObj.guid !== this.session.getLoggedInUser().guid
+    // ) {
+    //   this.activeFlag = 'mutualSubscriptions';
+    //   return;
+    // }
   }
 
   get minimalMode(): boolean {
