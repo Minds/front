@@ -219,7 +219,7 @@ m-comments__entityOutlet,
   width: 100%;
 
   m-comment:first-child {
-    margin-top: 20px;
+    margin-top: $spacing5;
   }
 
   .minds-comment {
@@ -227,11 +227,7 @@ m-comments__entityOutlet,
     margin: 0;
     background-color: transparent;
     overflow: visible;
-    padding: 5px 20px 25px 20px;
-
-    @media screen and (max-width: $max-mobile) {
-      padding: 5px 20px 25px 20px;
-    }
+    padding: $spacing2 $spacing5 $spacing3 $spacing5;
 
     .m-comment-message {
       white-space: pre-line;
@@ -264,7 +260,6 @@ m-comments__entityOutlet,
 
     .minds-body {
       font-size: 12px;
-      max-width: calc(100% - 55px);
 
       @media screen and (max-width: $max-mobile) {
         max-width: 100%;

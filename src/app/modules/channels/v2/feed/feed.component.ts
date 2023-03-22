@@ -287,6 +287,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   public shouldShowBoostInPosition(position: number): boolean {
     return (
       this.boostPartnersExperiment.isActive() &&
+      this.service.channel$.getValue()?.guid !==
+        this.session.getLoggedInUser()?.guid &&
       // Displays in the 2nd slot and then every 6 posts
       ((position > 4 && position % 5 === 0) || position === 0)
     );
