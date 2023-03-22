@@ -99,8 +99,12 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     await this.earnModalService.open();
   }
 
-  async openBoostModal() {
-    await this.boostModalService.open(this.session.getLoggedInUser());
+  /**
+   * Open Boost console.
+   * @returns { void }
+   */
+  public openBoostConsole(): void {
+    this.router.navigate(['/boost/boost-console']);
   }
 
   /**
