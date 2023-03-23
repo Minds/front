@@ -167,7 +167,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private interceptionObserver: IntersectionObserverService,
     private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
-    private paywallContextExperiment: PaywallContextExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
