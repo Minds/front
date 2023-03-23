@@ -126,6 +126,8 @@ export class WalletEarningsComponent {
         return 'Minds+ Content';
       case 'wire_referral':
         return 'Minds Pay Commissions';
+      case 'boost_partner':
+        return 'Boost Partners';
     }
 
     return id;
