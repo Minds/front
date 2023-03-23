@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+@import '../../layout/layout.scss';
+
+:host {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $topbarAlertHeight--desktop;
+
+  @media screen and (max-width: $max-mobile) {
+    height: $topbarAlertHeight--mobile;
+    padding: 0 $spacing7 0 $spacing4;
+    max-width: fit-content;
+  }
+
+  @include m-theme() {
+    background-color: themed($m-grey-700);
+  }
+
+  .m-topbarAlert__message {
+    @include unselectable;
+    @include body1Medium;
+    @include m-theme() {
+      color: themed($m-white-always);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding-right: $spacing6;
+    }
+
+    a {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+  }
+
+  .m-topbarAlert__dismissIcon {
+    font-size: 16px;
+    margin-left: $spacing2;
+    cursor: pointer;
+
+    @include unselectable;
+    @include m-theme() {
+      color: themed($m-white-always);
+
+      &:hover {
+        color: themed($m-grey-600);
+      }
+    }
+
+    &:hover {
+      @include m-theme() {
+        color: themed($m-grey-600);
+      }
+    }
+  }
+}

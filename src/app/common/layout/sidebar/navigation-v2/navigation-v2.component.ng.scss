@@ -16,10 +16,6 @@
     display: none;
   }
 
-  &.m-sidebarNavigation--sidebarMoreOpened {
-    @include z-index(sidebar--mobile);
-  }
-
   &.m-sidebarNavigation--opened {
     display: block;
 

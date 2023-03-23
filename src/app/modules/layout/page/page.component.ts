@@ -10,6 +10,8 @@ import { MessengerService } from '../../messenger/messenger.service';
 import { isPlatformBrowser } from '@angular/common';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { SidebarV2ExperimentService } from '../../experiments/sub-services/sidebar-v2-experiment.service';
+import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-page',
@@ -21,6 +23,10 @@ export class PageComponent implements OnInit {
 
   isSidebarVisible: boolean = true;
 
+  /** Whether topbar alert should be shown. */
+  protected readonly shouldShowTopbarAlert$: Observable<boolean> = this
+    .topbarAlertService.shouldShow$;
+
   constructor(
     public session: Session,
     private navigationService: SidebarNavigationService,
@@ -31,6 +37,7 @@ export class PageComponent implements OnInit {
     private storage: Storage,
     private messengerService: MessengerService,
     private sidebarV2Experiment: SidebarV2ExperimentService,
+    private topbarAlertService: TopbarAlertService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
