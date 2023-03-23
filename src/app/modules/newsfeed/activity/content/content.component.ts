@@ -522,7 +522,7 @@ export class ActivityContentComponent
    */
   get initialVisibleTextLength(): number {
     if (this.usePaywallContextStyles) {
-      return 115;
+      return 120;
     } else if (this.isFixedHeight && !this.isStatus) {
       // Show less text for boost rotator media posts
       // (the ones that that contain more than just text)

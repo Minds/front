@@ -76,6 +76,11 @@ export class ReadMoreComponent {
    * 'Show more' button will also not show if this is false
    */
   get shouldTruncate(): boolean {
+    // In paywall context, cutoff text regardless,
+    if (this.paywallContext) {
+      return this.text.length > this.targetLength;
+    }
+
     return this.text.length >= this.targetLength * 2;
   }
   /**
