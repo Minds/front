@@ -41,6 +41,10 @@
     margin-left: $spacing2;
     cursor: pointer;
 
+    @media screen and (min-width: $max-mobile) {
+      padding-top: calc($spacing1 / 2);
+    }
+
     @include unselectable;
     @include m-theme() {
       color: themed($m-white-always);
