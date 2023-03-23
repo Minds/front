@@ -176,6 +176,7 @@ import { PathMatch } from './types/angular.types';
 import { BoostFeedService } from '../modules/newsfeed/services/boost-feed.service';
 import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.component';
 import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/navigation-v2.component';
+import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-content-dot/new-content-dot.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -277,6 +278,7 @@ const MINDS_COMMON_COMPONENTS = [
   AddBankPromptComponent,
   ChipBadgeComponent,
   BoostedFlagComponent,
+  SidebarNavigationNewContentDotComponent,
 ];
 // ------------------------------------
 // ------------------------------------
