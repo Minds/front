@@ -29,6 +29,11 @@ $layoutMax2ColWidth: '1040px';
     display: none;
   }
 
+  ::ng-deep .m-sidebarWidget__title {
+    margin-bottom: $spacing6;
+    margin-top: $spacing2;
+  }
+
   // MOBILE
   @media screen and (max-width: $max-mobile) {
     .minds-list {

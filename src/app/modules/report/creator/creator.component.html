@@ -63,7 +63,9 @@
   <!-- Submit or Next -->
   <div
     *ngIf="
-      !success && ((next && subject.hasMore) || (!next && !subject.hasMore))
+      (!success &&
+        ((next && subject.hasMore) || (!next && !subject.hasMore))) ||
+      (isAdmin && subject.value === 10)
     "
   >
     <section
@@ -125,7 +127,7 @@
           (onAction)="openZendeskRequest('360003221852')"
           i18n="@@REPORT__CREATOR__SUBMIT_DMCA_NOTICE"
           color="blue"
-          *ngIf="subject.value === 10"
+          *ngIf="subject.value === 10 && !isAdmin"
         >
           Submit a DMCA notice
           <i class="material-icons" style="margin-left: 5px">launch</i>

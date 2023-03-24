@@ -31,7 +31,7 @@ import * as secp256k1 from '@noble/secp256k1';
 import { first, take } from 'rxjs/operators';
 
 /**
- * Settings form for toggling whether to display legacy messenger.
+ * Settings form for NOSTR
  */
 @Component({
   selector: 'm-settingsV2__nostr',

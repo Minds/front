@@ -115,12 +115,65 @@
   // ******************************************
   // ******************************************
 
-  .m-comment {
+  .m-comment,
+  ::ng-deep .m-comment {
     position: relative;
+
+    margin-bottom: $spacing1;
+    display: flex;
+    flex-flow: column nowrap;
   }
   .minds-body {
     margin-left: 15px;
   }
+  [class*='m-comment__row'] {
+    display: flex;
+    flex-flow: row nowrap;
+    padding-left: $spacing2;
+  }
+  .m-comment__row--top {
+    padding-top: $spacing2;
+    border-radius: $m-borderRadius;
+  }
+  .m-comment__row--bottom {
+    .m-commentRow__avatarSpacer {
+      width: 38px; // The width of the minds-avatar in the top row
+    }
+    ::ng-deep m-comments__thread {
+      flex: 1;
+    }
+  }
+  // FEATURED (aka highlighting for plus users)
+  .m-comment--featured {
+    > .m-comment__row--top {
+      @include m-theme() {
+        background-color: themed($m-highlight--comment);
+      }
+      ::ng-deep {
+        m-hovercard {
+          .minds-avatar {
+            @include m-theme() {
+              background-color: themed($m-highlight--comment);
+            }
+          }
+        }
+      }
+      .m-comment-attachment {
+        margin-right: $spacing2;
+        @include m-theme() {
+          background-color: themed($m-highlight--comment);
+        }
+
+        .m-rich-embed,
+        .m-mature-overlay {
+          @include m-theme() {
+            background-color: themed($m-highlight--comment);
+          }
+        }
+      }
+    }
+  }
+
   // COMPACT
   // (e.g. activity modal)
   .m-comment--compact {
@@ -153,6 +206,8 @@
 
   .m-comment--focused {
     margin-left: -4px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     @include m-theme() {
       border-left: 4px solid themed($m-blue);
     }
@@ -198,6 +253,13 @@
         }
         &.m-commentOwnerRowItem__name {
           font-weight: 600;
+          .m-channel--badges {
+            li {
+              &:not(:first-child) {
+                padding-left: 0px;
+              }
+            }
+          }
           @include m-theme() {
             color: themed($m-textColor--primary);
           }
@@ -416,21 +478,39 @@
     }
   }
 
-  .m-comment__menuButton i {
-    font-size: 23px;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-
-    &:hover {
+  // -----------------------------------
+  // MEATBALL SETTINGS MENU
+  // -----------------------------------
+  .m-comment__menuButton {
+    margin-right: $spacing2;
+    i {
+      &.m-commentMenuButtonIcon--desktop {
+        @media screen and (max-width: $max-mobile) {
+          display: none;
+        }
+      }
+      &.m-commentMenuButtonIcon--mobile {
+        display: none;
+        @media screen and (max-width: $max-mobile) {
+          display: block;
+        }
+      }
+      font-size: 23px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
       @include m-theme() {
-        color: themed($m-textColor--primary);
+        color: themed($m-textColor--secondary);
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
       }
     }
   }
 
+  // -----------------------------------
   // subcomments
   .m-comment {
     .m-comment {
@@ -438,6 +518,9 @@
     }
   }
 
+  // -----------------------------------
+  // ERRORS
+  // -----------------------------------
   .minds-comment {
     &.m-comment--error {
       opacity: 0.65;
@@ -457,19 +540,13 @@
       }
     }
 
+    // -----------------------------------
     .m-comment--username-wrapper {
       min-width: 150px;
       overflow-x: hidden;
       width: calc(100% - 100px);
       text-overflow: ellipsis;
       white-space: nowrap;
-    }
-  }
-
-  .m-redButton {
-    margin-right: 5px;
-    @include m-theme() {
-      color: themed($m-red);
     }
   }
 }

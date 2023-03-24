@@ -77,21 +77,9 @@
     }
 
     ::ng-deep {
-      .m-comment__toolbar {
-        margin-bottom: 4px;
-      }
-      .m-comment {
-        padding: 8px 0 8px 8px !important;
-        .minds-avatar {
-          min-width: 25px !important;
-          min-height: 25px !important;
-          img {
-            width: 24px !important;
-            height: 24px !important;
-          }
-        }
-        .m-comment--compact .minds-avatar {
-          margin-top: -9px;
+      m-comment__poster {
+        .m-comment {
+          padding-left: 0 !important;
         }
       }
     }
@@ -123,7 +111,7 @@
 
   ::ng-deep .m-commentsThreadComment--first {
     > .m-comment {
-      margin-top: 25px;
+      margin-top: $spacing4;
     }
   }
 }

@@ -172,11 +172,11 @@ import { SubscribeButton } from './components/subscribe-button-v1/subscribe';
 import { MindsBanner } from './components/banner/banner';
 import { SeeLatestButtonComponent } from './components/see-latest-button/see-latest-button.component';
 import { SupermindBadgeComponent } from './components/supermind-badge/supermind-badge.component';
-import { DynamicBoostExperimentService } from '../modules/experiments/sub-services/dynamic-boost-experiment.service';
 import { PathMatch } from './types/angular.types';
 import { BoostFeedService } from '../modules/newsfeed/services/boost-feed.service';
 import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.component';
 import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/navigation-v2.component';
+import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-content-dot/new-content-dot.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -278,6 +278,7 @@ const MINDS_COMMON_COMPONENTS = [
   AddBankPromptComponent,
   ChipBadgeComponent,
   BoostedFlagComponent,
+  SidebarNavigationNewContentDotComponent,
 ];
 // ------------------------------------
 // ------------------------------------
@@ -370,11 +371,9 @@ const routes: Routes = [
     {
       provide: FeaturedContentService,
       useFactory: (
-        boostFeedService: BoostFeedService,
-        dynamicBoostExperiment: DynamicBoostExperimentService
-      ): FeaturedContentService =>
-        new FeaturedContentService(boostFeedService, dynamicBoostExperiment),
-      deps: [BoostFeedService, DynamicBoostExperimentService],
+        boostFeedService: BoostFeedService
+      ): FeaturedContentService => new FeaturedContentService(boostFeedService),
+      deps: [BoostFeedService],
     },
     MediaProxyService,
     SidebarNavigationService,

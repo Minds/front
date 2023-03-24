@@ -152,6 +152,8 @@ $themes: (
     m-borderColor--primary: #d3dbe3,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
+    // aka #D2DBE3 @ 40%
+      m-highlight--comment: #edf0f3,
     m-overlay: rgba(176, 176, 176, 0.5),
     m-alert: #e03c20,
     m-positive: #95c064,
@@ -225,6 +227,7 @@ $themes: (
     m-borderColor--primary: $grey-700,
     m-borderColor--secondary: $grey-600,
     m-borderColor--tertiary: $grey-500,
+    m-highlight--comment: #272f37,
     m-overlay: rgba(0, 0, 0, 0.5),
     m-alert: #fd8b7c,
     m-positive: #95c064,
@@ -356,6 +359,7 @@ $m-bgColor--btnActive: 'm-bgColor--btnActive';
 $m-borderColor--primary: 'm-borderColor--primary';
 $m-borderColor--secondary: 'm-borderColor--secondary';
 $m-borderColor--tertiary: 'm-borderColor--tertiary';
+$m-highlight--comment: 'm-highlight--comment';
 $m-overlay: 'm-overlay';
 $m-alert: 'm-alert';
 $m-positive: 'm-positive';
