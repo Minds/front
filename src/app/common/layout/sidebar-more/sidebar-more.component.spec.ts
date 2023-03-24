@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
-import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SupermindExperimentService } from '../../../modules/experiments/sub-services/supermind-experiment.service';
 import { Session } from '../../../services/session';
@@ -33,10 +32,6 @@ describe('SidebarMoreComponent', () => {
         { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
         { provide: ThemeService, useValue: themeServiceMock },
         {
-          provide: EarnModalService,
-          useValue: MockService(EarnModalService),
-        },
-        {
           provide: BoostModalLazyService,
           useValue: MockService(BoostModalLazyService),
         },
@@ -50,7 +45,10 @@ describe('SidebarMoreComponent', () => {
         },
         {
           provide: Router,
-          useValue: jasmine.createSpyObj('Router', ['navigate']),
+          useValue: jasmine.createSpyObj('Router', [
+            'navigate',
+            'navigateByUrl',
+          ]),
         },
       ],
     }).compileComponents();
@@ -61,6 +59,7 @@ describe('SidebarMoreComponent', () => {
     component = fixture.componentInstance;
 
     (component as any).supermindExperiment.isActive.and.returnValue(true);
+    (component as any).router.navigateByUrl.calls.reset();
 
     fixture.detectChanges();
   });
@@ -93,5 +92,12 @@ describe('SidebarMoreComponent', () => {
     expect((component as any).router.navigate).toHaveBeenCalledWith([
       '/boost/boost-console',
     ]);
+  });
+
+  it('should open blog on earn option click', () => {
+    component.onEarnClick();
+    expect((component as any).router.navigateByUrl).toHaveBeenCalledWith(
+      '/info/blog/introducing-boost-partners-program-1477787849246904328'
+    );
   });
 });
