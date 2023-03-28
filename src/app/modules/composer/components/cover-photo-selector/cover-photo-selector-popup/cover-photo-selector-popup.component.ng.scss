@@ -1,0 +1,83 @@
+@import 'defaults.scss';
+
+:host {
+  .m-composerCoverPhotoSelector__title {
+    @include heading2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  label.m-composerCoverPhotoSelector__subtitle {
+    font-size: 15px;
+    line-height: 20px;
+    margin-top: $spacing2;
+    display: block;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-composerCoverPhotoSelector__list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style: none;
+    margin-top: $spacing12;
+    margin-bottom: 80px;
+    padding: 0;
+  }
+
+  .m-composerCoverPhotoSelectorList__item {
+    &.m-composerCoverPhotoSelectorList__item--uploadButton {
+      width: $spacing16;
+      height: $spacing16;
+      margin-right: 20px;
+      border-radius: 2px;
+      overflow: hidden;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      ::ng-deep m-file-upload {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    &.m-composerCoverPhotoSelectorList__item--preview {
+      width: 155px;
+      height: 115px;
+
+      .m-composerCoverPhotoSelector__preview {
+        border-radius: 2px;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-size: cover;
+        position: relative;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        .m-composerCoverPhotoSelector__delete {
+          position: absolute;
+          top: $spacing2;
+          right: $spacing2;
+          z-index: 1;
+          padding: 1px;
+          border: 1px solid;
+          border-radius: 50%;
+          cursor: pointer;
+
+          @include m-theme() {
+            background-color: themed($m-bgColor--primary);
+            color: themed($m-textColor--secondary);
+            border-color: themed($m-borderColor--primary);
+          }
+        }
+      }
+    }
+  }
+}

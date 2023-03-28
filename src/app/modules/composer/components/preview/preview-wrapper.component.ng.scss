@@ -39,6 +39,10 @@
         //object-fit: contain;
         object-fit: cover;
         pointer-events: none;
+
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
         @media screen and (min-width: $max-mobile) {
           height: 100%;
         }

@@ -7,4 +7,5 @@ export interface VideoPoster {
   url: string;
   file?: File;
   fileBase64?: string;
+  fileName?: string;
 }

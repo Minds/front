@@ -82,7 +82,7 @@ export class UploaderService implements OnDestroy {
   );
 
   /**
-   * Queues uploads to be delted
+   * Queues uploads to be deleted
    */
   markFileToBeRemovedAfterStop$: Observable<FileUpload> = this.stopFile$$.pipe(
     map(file => ({

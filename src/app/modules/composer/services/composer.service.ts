@@ -839,6 +839,7 @@ export class ComposerService implements OnDestroy {
           guid: activity.entity_guid,
         } as Attachment,
       ];
+
       videoPoster = { url: activity.custom_data.thumbnail_src };
     } else if (activity.entity_guid || activity.perma_url) {
       // Rich embeds (blogs included)

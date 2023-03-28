@@ -1,0 +1,63 @@
+<div class="m-composerPopup__body">
+  <div class="m-composerPopup__content">
+    <div
+      class="m-composerCoverPhotoSelector__title"
+      i18n="@@COMPOSER__COVER_PHOTO_SELECTOR__TITLE"
+    >
+      Change cover photo
+    </div>
+
+    <label
+      *ngIf="filePreview && fileName; else uploadPhoto"
+      class="m-composerCoverPhotoSelector__subtitle"
+      >{{ fileName | truncate: 30 }}</label
+    >
+    <ng-template #uploadPhoto>
+      <label
+        class="m-composerCoverPhotoSelector__subtitle"
+        i18n="@@COMPOSER__COVER_PHOTO_SELECTOR__UPLOAD_PHOTO"
+        >Upload photo</label
+      >
+    </ng-template>
+
+    <ul class="m-composerCoverPhotoSelector__list">
+      <li
+        class="m-composerCoverPhotoSelectorList__item m-composerCoverPhotoSelectorList__item--uploadButton"
+      >
+        <m-file-upload
+          (onSelect)="onFileSelect($event)"
+          accept="image/*"
+          data-ref="upload-cover-photo-button"
+          #fileUploadComponent
+        >
+          <i class="material-icons">upload</i>
+        </m-file-upload>
+      </li>
+      <li
+        class="m-composerCoverPhotoSelectorList__item m-composerCoverPhotoSelectorList__item--preview"
+      >
+        <div
+          class="m-composerCoverPhotoSelector__preview"
+          *ngIf="filePreview"
+          [style.background-image]="filePreview"
+        >
+          <div
+            class="m-composerCoverPhotoSelector__delete"
+            (click)="onRemoveFileClick($event)"
+          >
+            <m-icon iconId="close"></m-icon>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="m-composerPopup__action">
+    <m-button
+      type="button"
+      (onAction)="save()"
+      color="blue"
+      i18n="@@COMMON__SAVE"
+      >Save</m-button
+    >
+  </div>
+</div>

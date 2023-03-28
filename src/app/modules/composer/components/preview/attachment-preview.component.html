@@ -20,12 +20,6 @@
     *ngIf="!safeVideoPosterUrl; else videoPosterEl"
   ></video>
 
-  <div class="m-videoPlayer__placeholder">
-    <i class="material-icons minds-video-play-icon">
-      play_arrow
-    </i>
-  </div>
-
   <ng-template #videoPosterEl>
     <img [src]="safeVideoPosterUrl" class="m-composerPreview__image" />
   </ng-template>

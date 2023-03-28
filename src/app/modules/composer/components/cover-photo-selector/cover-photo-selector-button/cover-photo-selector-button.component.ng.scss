@@ -1,0 +1,41 @@
+@import 'defaults.scss';
+
+:host {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+  display: contents;
+
+  .m-composer__coverPhotoSelector__buttonWrapper {
+    position: absolute;
+    bottom: $spacing4;
+    width: 100%;
+  }
+
+  .m-composerCoverPhotoSelector__button {
+    appearance: none;
+    display: block;
+    margin: 0 auto;
+    border-radius: 2px;
+    padding: $spacing2;
+    line-height: 20px;
+    cursor: pointer;
+
+    @include m-theme() {
+      border: 0;
+      background-color: themed($m-bgColor--primary);
+      color: themed($m-textColor--secondary);
+    }
+
+    > span {
+      font-size: 12px;
+      margin-right: $spacing2;
+    }
+
+    > span,
+    > i {
+      vertical-align: middle;
+      line-height: 20px;
+    }
+  }
+}

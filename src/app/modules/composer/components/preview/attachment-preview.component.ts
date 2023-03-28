@@ -63,11 +63,17 @@ export class AttachmentPreviewComponent
   }
 
   ngOnInit() {
+    /**
+     * If user has uploaded a custom cover photo,
+     * Display <img> placeholder instead of
+     * <video> preview.
+     */
     this.videoPosterSubscription = this.service.videoPoster$.subscribe(
       (videoPoster: VideoPoster) => {
         this.safeVideoPosterUrl = videoPoster
           ? this.sanitizeUrl(videoPoster.url)
           : null;
+
         this.cd.markForCheck();
         this.cd.detectChanges();
       }

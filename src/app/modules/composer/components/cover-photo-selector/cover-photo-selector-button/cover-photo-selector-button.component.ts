@@ -1,29 +1,40 @@
 import { Component } from '@angular/core';
-import { FileUploadSelectEvent } from '../../../../common/components/file-upload/file-upload.component';
+import { FileUploadSelectEvent } from '../../../../../common/components/file-upload/file-upload.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ComposerService } from '../../services/composer.service';
-import { Attachment } from '../../services/attachment.service';
-import { VideoPoster } from '../../services/video-poster.service';
+import { ComposerService } from '../../../services/composer.service';
+import { Attachment } from '../../../services/attachment.service';
+import { VideoPoster } from '../../../services/video-poster.service';
+import { PopupService } from '../../popup/popup.service';
+import { ComposerCoverPhotoSelectorPopupComponent } from '../cover-photo-selector-popup/cover-photo-selector-popup.component';
 
 /**
- * Allows users to upload a custom cover photo for a video post.
- * Used in <m-composer__previewWrapper>
+ * Opens the popup that allows users to upload custom cover photo
+ * for video posts.
+ * Appears in composer when user uploads a video.
  */
 @Component({
-  selector: 'm-composer__coverPhotoSelector',
-  templateUrl: './cover-photo-selector.component.html',
+  selector: 'm-composer__coverPhotoSelectorButton',
+  templateUrl: './cover-photo-selector-button.component.html',
+  styleUrls: ['./cover-photo-selector-button.component.ng.scss'],
 })
-export class ComposerCoverPhotoSelectorComponent {
-  isExpanded = false;
+export class ComposerCoverPhotoSelectorButtonComponent {
   filePreview: SafeResourceUrl;
 
   constructor(
     private service: ComposerService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    protected popup: PopupService
   ) {}
 
-  onExpandToggle(e: MouseEvent): void {
-    this.isExpanded = !this.isExpanded;
+  /**
+   * Shows cover photo selector popup
+   * @param $event
+   */
+  async onClick($event?: MouseEvent): Promise<void> {
+    await this.popup
+      .create(ComposerCoverPhotoSelectorPopupComponent)
+      .present()
+      .toPromise(/* Promise is needed to boot-up the Observable */);
   }
 
   async onFileSelect(e: FileUploadSelectEvent): Promise<void> {
@@ -58,9 +69,6 @@ export class ComposerCoverPhotoSelectorComponent {
 
     // Emit the changed attachment
     this.service.videoPoster$.next(videoPoster);
-
-    // Un-expand itself
-    this.isExpanded = false;
   }
 
   onRemoveFileClick(e: MouseEvent): void {
