@@ -11,6 +11,7 @@
 
 <ng-template #dropdownMenu>
   <ul class="m-userMenu__dropdown">
+    <!-- Channel Option -->
     <m-dropdownMenu__item
       class="m-userMenuDropdown__item m-userMenuDropdown__username"
       [link]="['/', getCurrentUser().username]"
@@ -19,6 +20,7 @@
       @{{ getCurrentUser().username }}
     </m-dropdownMenu__item>
 
+    <!-- Upgrades Option -->
     <m-dropdownMenu__item
       *ngIf="!getCurrentUser().pro"
       class="m-userMenuDropdownItem__upgrade"
@@ -28,6 +30,7 @@
       <span i18n="@@COMMON__UPGRADE">Upgrade</span>
     </m-dropdownMenu__item>
 
+    <!-- Admin Option -->
     <m-dropdownMenu__item
       *ngIf="isAdmin()"
       link="/admin/interactions"
@@ -36,17 +39,32 @@
       <span i18n="@@COMMON__ADMIN">Admin</span>
     </m-dropdownMenu__item>
 
-    <m-dropdownMenu__item
-      [link]="boostConsoleLink"
-      data-ref="topnav-usermenu-boostconsole"
+    <!-- Boost Option -->
+    <ng-container
+      *ngIf="isUserMenuBoostExperimentActive(); else boostConsoleOption"
     >
-      <span i18n="@@COMMON__BOOST_CONSOLE">Boost Console</span>
-    </m-dropdownMenu__item>
+      <m-dropdownMenu__item
+        (click)="openBoostChannelModal()"
+        data-ref="topnav-usermenu-boost-channel"
+      >
+        <span i18n="@@COMMON__BOOST_CHANNEL">Boost Channel</span>
+      </m-dropdownMenu__item>
+    </ng-container>
+    <ng-template #boostConsoleOption>
+      <m-dropdownMenu__item
+        [link]="boostConsoleLink"
+        data-ref="topnav-usermenu-boostconsole"
+      >
+        <span i18n="@@COMMON__BOOST_CONSOLE">Boost Console</span>
+      </m-dropdownMenu__item>
+    </ng-template>
 
+    <!-- Settings Option -->
     <m-dropdownMenu__item link="/settings" data-ref="topnav-usermenu-settings">
       <span i18n="@@COMMON__SETTINGS">Settings</span>
     </m-dropdownMenu__item>
 
+    <!-- Help Option -->
     <m-dropdownMenu__item
       [externalLink]="getHelpdeskRedirectUrl()"
       data-ref="topnav-usermenu-help-zendesk"
@@ -54,6 +72,7 @@
       <span i18n="@@COMMON__HELP">Help</span>
     </m-dropdownMenu__item>
 
+    <!-- Logout Option -->
     <m-dropdownMenu__item link="/logout" data-ref="topnav-usermenu-logout">
       <span i18n="@@COMMON__LOGOUT">Logout</span>
     </m-dropdownMenu__item>

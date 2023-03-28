@@ -5,26 +5,22 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-
-import { CommonModule as NgCommonModule } from '@angular/common';
 import { UserMenuComponent } from './user-menu.component';
-import { FormsModule } from '@angular/forms';
 import { Session } from '../../../../services/session';
-import { sessionMock } from '../../../../../tests/session-mock.spec';
 import { ThemeService } from '../../../services/theme.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
-import { RouterTestingModule } from '@angular/router/testing';
-import { themeServiceMock } from '../../../../mocks/common/services/theme.service-mock.spec';
-import { By } from '@angular/platform-browser';
-import { Component, DebugElement, Input } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
+import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
+import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
+import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
+import { UserMenuBoostExperimentService } from '../../../../modules/experiments/sub-services/user-menu-boost-option-experiment.service';
+import { BehaviorSubject } from 'rxjs';
+import userMock from '../../../../mocks/responses/user.mock';
+import { MindsUser } from '../../../../interfaces/entities';
 
 describe('UserMenuComponent', () => {
   let comp: UserMenuComponent;
   let fixture: ComponentFixture<UserMenuComponent>;
-
-  function getDropdown(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-dropdownMenu'));
-  }
 
   beforeEach(
     waitForAsync(() => {
@@ -44,12 +40,36 @@ describe('UserMenuComponent', () => {
           }),
           UserMenuComponent,
         ],
-        imports: [FormsModule, RouterTestingModule, NgCommonModule],
         providers: [
-          { provide: Session, useValue: sessionMock },
+          { provide: Session, useValue: MockService(Session) },
+          {
+            provide: ChangeDetectorRef,
+            useValue: MockService(ChangeDetectorRef),
+          },
           {
             provide: ThemeService,
-            useValue: themeServiceMock,
+            useValue: MockService(ThemeService, {
+              has: ['isDark$'],
+              props: {
+                isDark$: { get: () => new BehaviorSubject<boolean>(true) },
+              },
+            }),
+          },
+          {
+            provide: HelpdeskRedirectService,
+            useValue: MockService(HelpdeskRedirectService),
+          },
+          {
+            provide: BoostModalLazyService,
+            useValue: MockService(BoostModalLazyService),
+          },
+          {
+            provide: DynamicBoostExperimentService,
+            useValue: MockService(DynamicBoostExperimentService),
+          },
+          {
+            provide: UserMenuBoostExperimentService,
+            useValue: MockService(UserMenuBoostExperimentService),
           },
         ],
       }).compileComponents(); // compile template and css
@@ -62,8 +82,9 @@ describe('UserMenuComponent', () => {
     jasmine.clock().install();
 
     fixture = TestBed.createComponent(UserMenuComponent);
-
     comp = fixture.componentInstance;
+
+    (comp as any).userMenuBoostExperiment.isActive.and.returnValue(true);
 
     fixture.detectChanges();
   });
@@ -72,31 +93,30 @@ describe('UserMenuComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  xit('Upgrade should be visible for non pro users', fakeAsync(() => {
-    sessionMock.user.pro = false;
+  it('should init', () => {
+    expect(comp).toBeTruthy();
+  });
 
-    const dropdown = getDropdown();
-    dropdown.nativeElement.click();
+  it('should determine if user menu boost experiment is active', () => {
+    (comp as any).userMenuBoostExperiment.isActive.and.returnValue(true);
+    expect(comp.isUserMenuBoostExperimentActive()).toBeTrue();
+  });
+
+  it('should determine if user menu boost experiment is NOT active', () => {
+    (comp as any).userMenuBoostExperiment.isActive.and.returnValue(false);
+    expect(comp.isUserMenuBoostExperimentActive()).toBeFalse();
+  });
+
+  it('should open boost channel modal', fakeAsync(() => {
+    const loggedInUser: MindsUser = userMock;
+
+    (comp as any).session.getLoggedInUser.and.returnValue(loggedInUser);
+
+    comp.openBoostChannelModal();
     tick();
 
-    fixture.detectChanges();
-
-    expect(
-      fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
-    ).not.toBeNull();
-  }));
-
-  xit('Upgrade should not be visible for pro users', fakeAsync(() => {
-    sessionMock.user.pro = true;
-
-    const dropdown = getDropdown();
-    dropdown.nativeElement.click();
-    tick();
-
-    fixture.detectChanges();
-
-    expect(
-      fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
-    ).toBeNull();
+    expect((comp as any).boostModalLazyService.open).toHaveBeenCalledWith(
+      loggedInUser
+    );
   }));
 });

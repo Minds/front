@@ -9,6 +9,7 @@ import {
   Self,
   ChangeDetectorRef,
   ViewChild,
+  HostBinding,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -37,6 +38,7 @@ import { RelatedContentService } from '../../../../common/services/related-conte
 export type MediaModalParams = {
   entity: any;
   activeMultiImageIndex: number;
+  isComment: boolean;
 };
 
 // Constants of dimensions calculations
@@ -95,6 +97,9 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('scrollableArea')
   scrollableArea;
+
+  @HostBinding('class.m-activityModal--isComment')
+  isComment: boolean = false;
 
   constructor(
     @Self() public activityService: ActivityService,
@@ -364,5 +369,9 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     // Prepare pager
     this.relatedContent.setBaseEntity(params.entity);
     this.relatedContent.setParent('activityModal');
+
+    // Determine if modal is displaying media from a comment,
+    // so we can show appropriate toolbar buttons
+    this.isComment = params.isComment;
   }
 }

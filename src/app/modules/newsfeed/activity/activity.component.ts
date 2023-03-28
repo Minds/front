@@ -35,6 +35,8 @@ import { debounceTime } from 'rxjs/operators';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
+import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
+import { PaywallContextExperimentService } from '../../experiments/sub-services/paywall-context-experiment.service';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -52,6 +54,7 @@ import { PersistentFeedExperimentService } from '../../experiments/sub-services/
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
     EntityMetricsSocketService,
+    MutualSubscriptionsService, // Create new instance of MutualSubscriptionsService per activity to avoid cancelled replays
   ],
   host: {
     '[class.m-activity--minimalMode]':
@@ -141,7 +144,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   avatarUrl: string;
 
-  // Whether the boost/remind/supermind flag should appear on top of owner block
+  // Whether the boost/remind/supermind/mutualSubscriptions flag
+  // should appear on top of owner block
   showFlagRow: boolean = false;
 
   @Output() previousBoost: EventEmitter<any> = new EventEmitter();
@@ -206,10 +210,16 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
       const notInBoostRotator = !this.service.displayOptions.boostRotatorMode;
       const boosted = entity.boosted;
       const reminded = entity.remind_users && entity.remind_users.length;
+
       const isSupermindOffer =
         entity.supermind &&
         !entity.supermind.is_reply &&
         entity.supermind.receiver_user;
+
+      // const isSomeoneElsesPaywalledPost =
+      //   this.paywallContextExperiment.isActive() &&
+      //   !!entity?.paywall &&
+      //   entity.ownerObj.guid !== this.session.getLoggedInUser().guid;
 
       this.showFlagRow =
         notInBoostRotator && (boosted || reminded || isSupermindOffer);

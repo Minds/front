@@ -49,7 +49,6 @@ export interface ClientMetaData {
   page_token: string;
   delta: number;
   position?: number | string;
-
   served_by_guid?: string | null;
 }
 
