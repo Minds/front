@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  HostBinding,
   Input,
   Output,
 } from '@angular/core';
@@ -25,6 +26,13 @@ export class ReadMoreComponent {
    * to the threshold having minimal or wasted impact
    */
   @Input() targetLength: number = 280;
+
+  /**
+   * Replaces the "See more" label with "Continue reading"
+   * and makes the text primary color
+   */
+  @Input()
+  paywallContext: boolean = false;
 
   /**
    * The absolute max that should be truncated. This is to avoid long words bypassing our limit
@@ -68,6 +76,11 @@ export class ReadMoreComponent {
    * 'Show more' button will also not show if this is false
    */
   get shouldTruncate(): boolean {
+    // In paywall context, cutoff text regardless,
+    if (this.paywallContext) {
+      return this.text.length > this.targetLength;
+    }
+
     return this.text.length >= this.targetLength * 2;
   }
   /**

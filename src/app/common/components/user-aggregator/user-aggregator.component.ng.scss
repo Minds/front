@@ -8,6 +8,7 @@
   .m-userAggregator__avatarContainer {
     display: flex;
     flex-flow: row nowrap;
+    margin-right: $spacing2;
 
     > * + * {
       margin-left: -$spacing2;
@@ -31,7 +32,6 @@
 
   .m-userAggregator__userSummary {
     align-self: center;
-    margin-left: $spacing2;
     min-width: 0;
     white-space: pre-wrap;
 
