@@ -42,4 +42,3 @@ export class AnnouncementComponent implements OnInit {
     this.hidden = true;
   }
 }
-
