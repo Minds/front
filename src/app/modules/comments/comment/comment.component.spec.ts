@@ -31,6 +31,8 @@ import { CodeHighlightService } from '../../code-highlight/code-highlight.servic
 import { TagsPipeMock } from '../../../mocks/pipes/tagsPipe.mock';
 import { TruncatePipe } from '../../../common/pipes/truncate.pipe';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 describe('CommentComponentV2', () => {
   let comp: CommentComponentV2;
@@ -160,6 +162,14 @@ describe('CommentComponentV2', () => {
           {
             provide: AutocompleteSuggestionsService,
             useValue: MockService(AutocompleteSuggestionsService),
+          },
+          {
+            provide: ClientMetaService,
+            useValue: MockService(ClientMetaService),
+          },
+          {
+            provide: ClientMetaDirective,
+            useValue: MockService(ClientMetaDirective),
           },
         ],
       })
@@ -358,4 +368,50 @@ describe('CommentComponentV2', () => {
 
     expect(comp.showDelete()).toBeFalse();
   });
+
+  it('should call to record click on description text click for an anchor tag and record click with boost client meta', fakeAsync(() => {
+    const guid: string = '345';
+
+    (comp as any).comment = {
+      guid: guid,
+    };
+
+    const mockEvent: MouseEvent = {
+      type: 'click',
+      target: {
+        tagName: 'A',
+      },
+    } as any;
+
+    comp.onDescriptionTextClick(mockEvent);
+    tick();
+
+    expect((comp as any).clientMetaService.recordClick).toHaveBeenCalledWith(
+      guid,
+      (comp as any).parentClientMeta
+    );
+  }));
+
+  it('should call to record click on description text click for an anchor tag and record click without boost client meta', fakeAsync(() => {
+    const guid: string = '345';
+
+    (comp as any).comment = {
+      guid: guid,
+    };
+
+    const mockEvent: MouseEvent = {
+      type: 'click',
+      target: {
+        tagName: 'A',
+      },
+    } as any;
+
+    comp.onDescriptionTextClick(mockEvent);
+    tick();
+
+    expect((comp as any).clientMetaService.recordClick).toHaveBeenCalledWith(
+      guid,
+      (comp as any).parentClientMeta
+    );
+  }));
 });
