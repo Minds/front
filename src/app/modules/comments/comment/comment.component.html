@@ -138,6 +138,7 @@
           [ngClass]="{
             'm-mature-text': comment.mature && !shouldShowMatureContent()
           }"
+          (click)="onDescriptionTextClick($event)"
         ></p
       ></ng-template>
       <!-- -------------------------------- -->

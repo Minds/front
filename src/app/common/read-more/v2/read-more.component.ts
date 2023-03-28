@@ -6,7 +6,14 @@ import {
   HostBinding,
   Input,
   Output,
+  SkipSelf,
 } from '@angular/core';
+import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
+import { ClientMetaDirective } from '../../directives/client-meta.directive';
+import {
+  ClientMetaData,
+  ClientMetaService,
+} from '../../services/client-meta.service';
 
 @Component({
   selector: 'm-readMore',
@@ -51,7 +58,38 @@ export class ReadMoreComponent {
 
   @Output() onToggle = new EventEmitter();
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private clientMetaService: ClientMetaService,
+    private activityService: ActivityService,
+    @SkipSelf() private parentClientMeta: ClientMetaDirective
+  ) {}
+
+  /**
+   * Fires on output text click. We do this because we need to listen to link clicks
+   * on anchor tags injected into the body via innerHTML, which strips any listeners
+   * off the anchor tag at the time of injection. Instead we listen to all clicks on
+   * any part of the output event, and filter out events on anchor tags to derive
+   * when an anchor tag has been clicked.
+   * @param { MouseEvent } $event - mouse event.
+   * @returns { Promise<void> }
+   */
+  public async onOutputTextClick($event: MouseEvent): Promise<void> {
+    if (($event.target as HTMLElement).tagName === 'A') {
+      const activity: any = await this.activityService.entity$.getValue();
+
+      let opts: Partial<ClientMetaData> = {};
+      if (Boolean(activity.boosted_guid)) {
+        opts.campaign = activity.urn;
+      }
+
+      this.clientMetaService.recordClick(
+        activity.guid,
+        this.parentClientMeta,
+        opts
+      );
+    }
+  }
 
   /**
    * The transformed text that the html template will render
