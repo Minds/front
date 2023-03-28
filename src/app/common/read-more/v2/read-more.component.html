@@ -1,4 +1,7 @@
-<span [innerHTML]="outputText | tags | codeHighlight"></span>
+<span
+  [innerHTML]="outputText | tags | codeHighlight"
+  (click)="onOutputTextClick($event)"
+></span>
 <span
   class="m-readMore__cta"
   (click)="toggle()"
