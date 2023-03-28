@@ -49,6 +49,7 @@ import {
 import { ModalService } from '../../../../services/ux/modal.service';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
+import { PaywallContextExperimentService } from '../../../experiments/sub-services/paywall-context-experiment.service';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -247,6 +248,7 @@ export class ActivityContentComponent
     private injector: Injector,
     private activityModalCreator: ActivityModalCreatorService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
+    private paywallContextExperiment: PaywallContextExperimentService,
     private cd: ChangeDetectorRef
   ) {
     this.siteUrl = configs.get('site_url');
@@ -504,6 +506,30 @@ export class ActivityContentComponent
 
   get showPermalink(): boolean {
     return !this.hideText && this.service.displayOptions.permalinkBelowContent;
+  }
+
+  /**
+   * For paywalled posts in the experiment, show less text and
+   * display the readMore toggle in a more distinctive color
+   */
+  get usePaywallContextStyles(): boolean {
+    return this.paywallContextExperiment.isActive() && !!this.entity?.paywall;
+  }
+
+  /**
+   * The "read more" toggle appears after this
+   * number of characters (in a post with text)
+   */
+  get initialVisibleTextLength(): number {
+    if (this.usePaywallContextStyles) {
+      return 120;
+    } else if (this.isFixedHeight && !this.isStatus) {
+      // Show less text for boost rotator media posts
+      // (the ones that that contain more than just text)
+      return 180;
+    } else {
+      return 280;
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////
