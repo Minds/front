@@ -97,7 +97,7 @@ describe('SidebarMoreComponent', () => {
   it('should open blog on earn option click', () => {
     component.onEarnClick();
     expect((component as any).router.navigateByUrl).toHaveBeenCalledWith(
-      '/info/blog/introducing-boost-partners-program-1477787849246904328'
+      '/info/blog/how-to-earn-on-minds-1486070032210333697'
     );
   });
 });
