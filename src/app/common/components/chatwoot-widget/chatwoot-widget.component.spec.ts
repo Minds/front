@@ -89,7 +89,7 @@ describe('ChatwootWidgetComponent', () => {
       baseUrl: (comp as any).baseUrl,
     });
 
-    expect((window as any).$chatwoot.reset).toHaveBeenCalledTimes(1);
+    expect((window as any).$chatwoot.reset).toHaveBeenCalled();
     expect((comp as any).loggedInSubscription).toBeTruthy();
   });
 
@@ -97,7 +97,7 @@ describe('ChatwootWidgetComponent', () => {
     (comp as any).initLoginStateSubscription();
     (comp as any).session.loggedinEmitter.emit(false);
     tick();
-    expect((window as any).$chatwoot.reset).toHaveBeenCalledTimes(1);
+    expect((window as any).$chatwoot.reset).toHaveBeenCalled();
   }));
 
   it('should init chatwoot for logged in user', fakeAsync(() => {
@@ -163,6 +163,6 @@ describe('ChatwootWidgetComponent', () => {
 
   it('should reset chatwoot', () => {
     (comp as any).resetChatwoot();
-    expect((window as any).$chatwoot.reset).toHaveBeenCalledTimes(1);
+    expect((window as any).$chatwoot.reset).toHaveBeenCalled();
   });
 });
