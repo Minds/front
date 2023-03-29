@@ -31,7 +31,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   private readonly baseUrl: string;
 
   /** url of script to load to init chatwoot */
-  private readonly scriptUrl: string;
+  private readonly scriptUrl: string = '/assets/scripts/chatwoot.js';
 
   /** subscription to login and logout states */
   private loggedInSubscription: Subscription;
@@ -47,7 +47,6 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     >('chatwoot');
     this.websiteToken = chatwootConfig.website_token;
     this.baseUrl = chatwootConfig.base_url;
-    this.scriptUrl = chatwootConfig.script_url;
   }
 
   ngOnInit(): void {
