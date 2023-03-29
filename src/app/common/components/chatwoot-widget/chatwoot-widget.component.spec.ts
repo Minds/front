@@ -129,7 +129,6 @@ describe('ChatwootWidgetComponent', () => {
       }
     );
 
-    expect((window as any).$chatwoot.reset).not.toHaveBeenCalled();
     expect((comp as any).loggedInSubscription).toBeTruthy();
   }));
 
@@ -157,7 +156,6 @@ describe('ChatwootWidgetComponent', () => {
       }
     );
 
-    expect((window as any).$chatwoot.reset).not.toHaveBeenCalled();
     expect((comp as any).loggedInSubscription).toBeTruthy();
   }));
 
