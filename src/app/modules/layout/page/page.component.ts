@@ -10,6 +10,7 @@ import { MessengerService } from '../../messenger/messenger.service';
 import { isPlatformBrowser } from '@angular/common';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { SidebarV2ExperimentService } from '../../experiments/sub-services/sidebar-v2-experiment.service';
+import { ChatwootExperimentService } from '../../experiments/sub-services/chatwoot-experiment.service';
 
 @Component({
   selector: 'm-page',
@@ -31,6 +32,7 @@ export class PageComponent implements OnInit {
     private storage: Storage,
     private messengerService: MessengerService,
     private sidebarV2Experiment: SidebarV2ExperimentService,
+    private chatwootExperiment: ChatwootExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -76,5 +78,13 @@ export class PageComponent implements OnInit {
    */
   public isSidebarV2ExperimentActive(): boolean {
     return this.sidebarV2Experiment.isActive();
+  }
+
+  /**
+   * Whether chatwoot experiment is active.
+   * @returns { boolean }
+   */
+  public isChatwootExperimentActive(): boolean {
+    return this.chatwootExperiment.isActive();
   }
 }
