@@ -14,5 +14,11 @@
     &:hover {
       text-decoration: underline;
     }
+
+    &.m-readMore__cta--featured {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
   }
 }
