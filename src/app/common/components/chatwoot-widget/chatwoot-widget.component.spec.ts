@@ -11,6 +11,7 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { MockService } from '../../../utils/mock';
 import { ApiService } from '../../api/api.service';
+import { CDN_ASSETS_URL } from '../../injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
 import { ChatwootWidgetComponent } from './chatwoot-widget.component';
 
@@ -43,6 +44,7 @@ describe('ChatwootWidgetComponent', () => {
           { provide: ApiService, useValue: MockService(ApiService) },
           { provide: ConfigsService, useValue: configMock },
           { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: CDN_ASSETS_URL, useValue: 'localhost:4200/static/en/' },
         ],
       }).compileComponents();
     })
