@@ -10,6 +10,7 @@ import { lastValueFrom, Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { ApiService } from '../../api/api.service';
+import { CDN_ASSETS_URL } from '../../injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
 import {
   ChatwootHmacGetResponse,
@@ -31,7 +32,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   private readonly baseUrl: string;
 
   /** url of script to load to init chatwoot */
-  private readonly scriptUrl: string = '/assets/scripts/chatwoot.js';
+  private readonly scriptUrl: string;
 
   /** subscription to login and logout states */
   private loggedInSubscription: Subscription;
@@ -40,13 +41,15 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     private session: Session,
     private api: ApiService,
     private config: ConfigsService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(CDN_ASSETS_URL) private cdnAssetsUrl: string
   ) {
     const chatwootConfig: ChatwootMindsConfig = this.config.get<
       ChatwootMindsConfig
     >('chatwoot');
     this.websiteToken = chatwootConfig.website_token;
     this.baseUrl = chatwootConfig.base_url;
+    this.scriptUrl = this.cdnAssetsUrl + 'assets/scripts/chatwoot.js';
   }
 
   ngOnInit(): void {
