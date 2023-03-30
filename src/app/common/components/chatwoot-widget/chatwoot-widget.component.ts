@@ -169,7 +169,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   private setChatwootSettings(): void {
     (window as any).chatwootSettings = {
       locale: 'en',
-      darkMode: 'auto',
+      darkMode: 'light',
     };
   }
 
