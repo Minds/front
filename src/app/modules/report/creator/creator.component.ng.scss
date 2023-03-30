@@ -86,7 +86,7 @@
 
     p {
       font-size: 16px;
-      letter-spacing: 1px;
+      letter-spacing: -0.001em;
     }
   }
 
@@ -95,7 +95,7 @@
       width: 100%;
       padding: 16px;
       font-size: 16px;
-      letter-spacing: 1px;
+      letter-spacing: -0.001em;
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
         background-color: rgba(themed($m-white), 0.5);

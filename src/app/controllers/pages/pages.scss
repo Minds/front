@@ -5,7 +5,7 @@ m-pages {
   min-width: 0;
 }
 .m-pages {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: Inter, Helvetica, Arial, sans-serif;
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
   }
@@ -33,7 +33,7 @@ m-pages {
     font-style: normal;
     letter-spacing: 0.5px;
     letter-spacing: -0.003em;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

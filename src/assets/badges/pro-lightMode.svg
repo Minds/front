@@ -5,7 +5,7 @@
         <g id="Badges---No-display-name" transform="translate(-1010.000000, -291.000000)">
             <g id="Group-3-Copy" transform="translate(1010.000000, 291.000000)">
                 <rect id="Rectangle" stroke="#43434D" stroke-width="2" x="1" y="1" width="27" height="14" rx="3"></rect>
-                <text id="PRO" font-family="Roboto-Bold, Roboto" font-size="11" font-weight="bold" fill="#43434D">
+                <text id="PRO" font-family="Inter-Bold, Inter" font-size="11" font-weight="bold" fill="#43434D">
                     <tspan x="4" y="12">PRO</tspan>
                 </text>
             </g>

@@ -41,7 +41,7 @@ m-upgrades__buyTokens {
       font-size: 16px;
 
       @include m-theme() {
-        color: themed($m-blue) !important;
+        color: themed($m-link-text) !important;
       }
     }
 

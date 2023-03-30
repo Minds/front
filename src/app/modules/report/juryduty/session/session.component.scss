@@ -4,7 +4,7 @@
   padding: 42px 0;
   text-align: center;
   @include m-theme() {
-    background: themed($m-blue-grey-800);
+    background: themed($m-grey-800);
   }
 
   i {

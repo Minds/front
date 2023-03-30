@@ -7,6 +7,9 @@
   span {
     @include body2Medium;
     text-decoration: none;
+    @include m-theme() {
+      color: themed($m-link-text);
+    }
   }
 
   &.m-boostFlag--small {
@@ -26,10 +29,9 @@
     padding-right: $spacing2;
   }
 
-  span,
   i {
     @include m-theme() {
-      color: themed($m-blue);
+      color: themed($m-link-text);
     }
   }
 }

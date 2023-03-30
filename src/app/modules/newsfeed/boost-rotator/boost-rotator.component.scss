@@ -79,7 +79,7 @@ m-newsfeed--boost-rotator {
     text-transform: uppercase;
     font-size: 11px;
     letter-spacing: 1.5px;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     padding: 0 8px;
     font-weight: 400;
     cursor: pointer;
@@ -128,7 +128,7 @@ m-newsfeed--boost-rotator {
     list-style: none;
     flex: 1;
     height: 10px;
-    //border-right:1px solid themed($m-blue-grey-200);
+    //border-right:1px solid themed($m-grey-200);
     cursor: pointer;
   }
 
@@ -144,7 +144,7 @@ m-newsfeed--boost-rotator {
     }
     button i {
       @include m-theme() {
-        color: themed($m-blue-grey-500);
+        color: themed($m-grey-500);
       }
     }
   }
@@ -161,7 +161,7 @@ m-newsfeed--boost-rotator {
   }
   .selected {
     @include m-theme() {
-      color: themed($m-blue-grey-500) !important;
+      color: themed($m-grey-500) !important;
     }
   }
 }

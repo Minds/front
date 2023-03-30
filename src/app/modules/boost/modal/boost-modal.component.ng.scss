@@ -23,7 +23,7 @@
       font-weight: 700;
 
       @include m-theme() {
-        color: themed($m-white-always);
+        color: themed($m-textColor--primary);
       }
     }
   }
