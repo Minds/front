@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
   PLATFORM_ID,
+  ViewEncapsulation,
 } from '@angular/core';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
@@ -24,6 +25,8 @@ import {
 @Component({
   selector: 'm-chatwootWidget',
   template: ``,
+  styleUrls: ['./chatwoot-widget.component.ng.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ChatwootWidgetComponent implements OnInit, OnDestroy {
   /** website token for chatwoot */

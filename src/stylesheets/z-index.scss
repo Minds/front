@@ -57,3 +57,7 @@ $z-index: (
 @mixin z-index($key) {
   z-index: z-index($key);
 }
+
+@mixin z-index-important($key) {
+  z-index: z-index($key) !important;
+}
