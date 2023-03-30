@@ -2,14 +2,15 @@
 
 :host {
   .m-button {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     position: relative;
     cursor: pointer;
     padding: 10px 20px;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     border-radius: 999px;
     outline: 0;
-    font-weight: 500;
+    font-weight: 700;
+    letter-spacing: 0.16px;
     background-clip: padding-box;
     white-space: nowrap;
 
@@ -85,7 +86,7 @@
       &.m-button--solid {
         @include m-theme() {
           background-color: themed($m-blue);
-          color: themed($m-white-always);
+          color: themed($m-action-text);
         }
 
         &:not(:disabled) {

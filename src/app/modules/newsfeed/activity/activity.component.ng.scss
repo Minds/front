@@ -226,21 +226,7 @@
     flex-direction: row;
     padding-bottom: $spacing3;
     align-items: center;
-
-    .m-activity__boostRotatorButtons {
-      ::ng-deep m-icon {
-        margin-right: $spacing1;
-        @include unselectable;
-        i {
-          cursor: pointer;
-          // @include heading2Regular;
-          @include unselectable;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
-        }
-      }
-    }
+    min-width: 0;
   }
   // *********************************
   // ** COMMENTS **

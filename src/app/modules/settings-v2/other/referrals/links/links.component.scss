@@ -216,7 +216,7 @@
     .m-settingsV2__referralsLinks__shareButton--sms,
     .m-settingsV2__referralsLinks__shareButton--email {
       @include m-theme() {
-        background-color: themed($m-blue-grey-500);
+        background-color: themed($m-grey-500);
       }
     }
   }

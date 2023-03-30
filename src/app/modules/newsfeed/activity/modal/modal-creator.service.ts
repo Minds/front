@@ -35,6 +35,7 @@ export class ActivityModalCreatorService {
         activeMultiImageIndex: activeMultiImageIndex
           ? activeMultiImageIndex
           : 0,
+        isComment: entity.type === 'comment',
       },
       injector,
     };
