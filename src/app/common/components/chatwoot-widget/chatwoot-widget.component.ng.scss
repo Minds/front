@@ -1,0 +1,5 @@
+@import 'defaults.scss';
+
+button.woot-widget-bubble {
+  @include z-index-important(messenger);
+}
