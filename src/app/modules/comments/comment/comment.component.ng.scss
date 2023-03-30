@@ -438,7 +438,7 @@
       font-weight: 500;
       cursor: pointer;
       @include m-theme() {
-        color: themed($m-blue);
+        color: themed($m-link-text);
       }
     }
   }

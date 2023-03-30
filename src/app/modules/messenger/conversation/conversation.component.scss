@@ -49,7 +49,7 @@
         text-align: left;
         .m-messenger--conversation-message-bubble {
           @include m-theme() {
-            background-color: themed($m-blue-grey-100) !important;
+            background-color: themed($m-grey-100) !important;
           }
         }
         img {
@@ -92,7 +92,7 @@
       button:not([disabled]) {
         &:hover {
           @include m-theme() {
-            background-color: themed($m-blue-grey-700);
+            background-color: themed($m-grey-700);
           }
         }
       }
@@ -113,7 +113,7 @@
       vertical-align: middle;
       padding: 8px;
       line-height: 1em;
-      font-family: minds_emoji, 'Roboto', Helvetica, sans-serif;
+      font-family: minds_emoji, 'Inter', Helvetica, sans-serif;
       @include m-theme() {
         background-color: themed($m-bgColor--primaryAlt);
       }
@@ -127,7 +127,7 @@
 
       &:hover {
         @include m-theme {
-          color: themed($m-blue-grey-800) !important;
+          color: themed($m-grey-800) !important;
         }
       }
     }

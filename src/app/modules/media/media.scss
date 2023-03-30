@@ -112,7 +112,7 @@ m-media--edit {
     font-weight: 600;
     font-size: 42px;
     letter-spacing: 1.5px;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     line-height: 1.2em;
@@ -131,7 +131,7 @@ m-media--edit {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -0.003em;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -272,7 +272,7 @@ m-media--grid {
 .m-media-content--meta {
   .m-media-content--title {
     h1 {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 36px;
       letter-spacing: 1.5px;
@@ -330,7 +330,7 @@ m-media--grid {
     > * {
       display: inline-block;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: -0.001em;
       margin-left: $minds-margin;
       @include m-theme() {
         color: themed($m-grey-600);
@@ -374,11 +374,11 @@ m-media--grid {
     .minds-button-edit {
       button {
         @include m-theme() {
-          color: themed($m-blue-grey-500);
+          color: themed($m-grey-500);
         }
         &:hover {
           @include m-theme() {
-            color: themed($m-blue-grey-800);
+            color: themed($m-grey-800);
           }
         }
       }
@@ -387,7 +387,7 @@ m-media--grid {
     m-post-menu {
       i {
         @include m-theme() {
-          color: themed($m-blue-grey-500) !important;
+          color: themed($m-grey-500) !important;
         }
       }
     }
@@ -417,7 +417,7 @@ m-media--grid {
     }
 
     m-boostButton .mdl-button {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 12px;
       letter-spacing: 0.5px;
@@ -428,7 +428,7 @@ m-media--grid {
   .m-media-content--owner {
     display: flex;
     align-items: center;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 300;
 
     .minds-avatar {
@@ -499,7 +499,7 @@ m-media--grid {
   .m-media-content--description {
     padding: 0 $minds-padding 0 (50px + ($minds-padding * 3));
     margin-top: ($minds-padding * 2);
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 300;
 
     h1,
@@ -515,7 +515,7 @@ m-media--grid {
   }
 
   .m-additional-block {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 300;
   }
 }

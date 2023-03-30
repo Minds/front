@@ -43,7 +43,7 @@ m-boost-console {
       p {
         margin: 0;
         padding: 0 32px;
-        font-family: 'Roboto', Helvetica, sans-serif;
+        font-family: 'Inter', Helvetica, sans-serif;
       }
 
       m-date-selector {
@@ -73,7 +73,7 @@ m-boost-console {
       .m-boost-console--overview {
         padding: 16px;
         margin: auto;
-        font-family: 'Roboto', Helvetica, sans-serif;
+        font-family: 'Inter', Helvetica, sans-serif;
 
         @media only screen and (max-width: 400px) {
           padding: 0;
@@ -133,8 +133,8 @@ m-boost-console {
 
           label {
             text-transform: uppercase;
-            font-family: 'Roboto', Helvetica, sans-serif;
-            letter-spacing: 1px;
+            font-family: 'Inter', Helvetica, sans-serif;
+            letter-spacing: 0.004em;
             font-size: 14px;
           }
           i {
@@ -159,7 +159,7 @@ m-boost-console {
       justify-content: space-between;
       padding: $minds-padding * 2;
       margin-top: $minds-padding;
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 300;
 
       > a {
@@ -174,7 +174,7 @@ m-boost-console {
 
     .m-boost-console--empty {
       text-align: center;
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 300;
       opacity: 0.65;
 
@@ -188,7 +188,7 @@ m-boost-console {
       align-items: center;
       justify-content: space-between;
       margin: $minds-padding * 2;
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 300;
 
       @media screen and (max-width: $max-mobile) {

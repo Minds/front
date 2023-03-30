@@ -6,7 +6,7 @@
   margin-top: $minds-padding * 2;
   max-width: 600px - ($minds-padding * 2);
   @include m-theme() {
-    background-color: themed($m-blue-grey-800);
+    background-color: themed($m-grey-800);
   }
 
   h3 {
@@ -15,7 +15,7 @@
     font-weight: 300;
     line-height: 1.25em;
     margin: 0 0 0.61em 0;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     letter-spacing: 0.5px;
     @include m-theme() {
       color: themed($m-grey-50);
@@ -26,7 +26,7 @@
     display: block;
     font-weight: 300;
     text-align: left;
-    font-family: 'Roboto', Helvetica;
+    font-family: 'Inter', Helvetica;
     font-size: 26px;
     letter-spacing: 2px;
     @include m-theme() {
@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   margin: 16px;
-  font-family: 'Roboto', Helvetica, sans-serif;
+  font-family: 'Inter', Helvetica, sans-serif;
   @include m-theme() {
     color: themed($m-red);
   }
