@@ -131,14 +131,14 @@ export class PreviewWrapperComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < maxLength; ++i) {
       // If incoming contains a new image that's being added to
-      // a multi-image array, add it
+      // a multi-image array, add it and move on to the next file
       if (!this.attachmentPreviews[i]) {
         this.attachmentPreviews[i] = incomingPreviews[i];
         this.detectChanges();
         break;
       }
 
-      // The progress has just changed to a non-zero value
+      // The progress has just changed to a non-zero number
       const justStartedUploading =
         (!this.attachmentPreviews[i].progress ||
           this.attachmentPreviews[i].progress === 0) &&
