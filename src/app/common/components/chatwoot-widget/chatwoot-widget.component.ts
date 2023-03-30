@@ -12,6 +12,7 @@ import { Session } from '../../../services/session';
 import { ApiService } from '../../api/api.service';
 import { CDN_ASSETS_URL } from '../../injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
+import { UserAvatarService } from '../../services/user-avatar.service';
 import {
   ChatwootHmacGetResponse,
   ChatwootMindsConfig,
@@ -41,6 +42,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     private session: Session,
     private api: ApiService,
     private config: ConfigsService,
+    private userAvatar: UserAvatarService,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Inject(CDN_ASSETS_URL) private cdnAssetsUrl: string
   ) {
@@ -134,6 +136,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
     (window as any).$chatwoot.setUser(user.guid, {
       name: `@${user.username}`,
       identifier_hash: await this.getIdentifierHash(),
+      avatar_url: this.userAvatar.getSrc(),
     });
   }
 

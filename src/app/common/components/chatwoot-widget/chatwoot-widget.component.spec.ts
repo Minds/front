@@ -13,6 +13,7 @@ import { MockService } from '../../../utils/mock';
 import { ApiService } from '../../api/api.service';
 import { CDN_ASSETS_URL } from '../../injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../services/configs.service';
+import { UserAvatarService } from '../../services/user-avatar.service';
 import { ChatwootWidgetComponent } from './chatwoot-widget.component';
 
 let configMock = new (function() {
@@ -43,6 +44,10 @@ describe('ChatwootWidgetComponent', () => {
           },
           { provide: ApiService, useValue: MockService(ApiService) },
           { provide: ConfigsService, useValue: configMock },
+          {
+            provide: UserAvatarService,
+            useValue: MockService(UserAvatarService),
+          },
           { provide: PLATFORM_ID, useValue: 'browser' },
           { provide: CDN_ASSETS_URL, useValue: 'localhost:4200/static/en/' },
         ],
@@ -104,6 +109,7 @@ describe('ChatwootWidgetComponent', () => {
 
   it('should init chatwoot for logged in user', fakeAsync(() => {
     const mockHmac: string = 'abcdef123456';
+    const avatarSrc: string = 'localhost/avatar.jpg';
     const mockUser: Partial<MindsUser> = {
       guid: '123',
       username: 'testaccount',
@@ -111,7 +117,7 @@ describe('ChatwootWidgetComponent', () => {
     (comp as any).session.isLoggedIn.and.returnValue(true);
     (comp as any).session.getLoggedInUser.and.returnValue(mockUser);
     (comp as any).api.get.and.returnValue(of({ hmac: mockHmac }));
-
+    (comp as any).userAvatar.getSrc.and.returnValue(avatarSrc);
     (comp as any).onChatwootLoad();
     tick();
 
@@ -123,11 +129,13 @@ describe('ChatwootWidgetComponent', () => {
     expect((comp as any).api.get).toHaveBeenCalledWith(
       '/api/v3/helpdesk/chatwoot/hmac'
     );
+    expect((comp as any).userAvatar.getSrc).toHaveBeenCalled();
     expect((window as any).$chatwoot.setUser).toHaveBeenCalledWith(
       mockUser.guid,
       {
         name: `@${mockUser.username}`,
         identifier_hash: mockHmac,
+        avatar_url: avatarSrc,
       }
     );
 
@@ -136,12 +144,14 @@ describe('ChatwootWidgetComponent', () => {
 
   it('should set user for chatwoot on log in', fakeAsync(() => {
     const mockHmac: string = 'abcdef123456';
+    const avatarSrc: string = 'localhost/avatar.jpg';
     const mockUser: Partial<MindsUser> = {
       guid: '123',
       username: 'testaccount',
     };
     (comp as any).session.getLoggedInUser.and.returnValue(mockUser);
     (comp as any).api.get.and.returnValue(of({ hmac: mockHmac }));
+    (comp as any).userAvatar.getSrc.and.returnValue(avatarSrc);
 
     (comp as any).initLoginStateSubscription();
     (comp as any).session.loggedinEmitter.emit(true);
@@ -150,11 +160,13 @@ describe('ChatwootWidgetComponent', () => {
     expect((comp as any).api.get).toHaveBeenCalledWith(
       '/api/v3/helpdesk/chatwoot/hmac'
     );
+    expect((comp as any).userAvatar.getSrc).toHaveBeenCalled();
     expect((window as any).$chatwoot.setUser).toHaveBeenCalledWith(
       mockUser.guid,
       {
         name: `@${mockUser.username}`,
         identifier_hash: mockHmac,
+        avatar_url: avatarSrc,
       }
     );
 
