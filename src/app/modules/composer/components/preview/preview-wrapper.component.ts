@@ -114,11 +114,10 @@ export class PreviewWrapperComponent implements OnInit, OnDestroy {
     // If initializing or deleting,
     // overwrite any existing previews with incoming ones
     // ---------------------------------------------------
-    const incomingAddition =
-      currentLength === 0 || incomingLength > currentLength;
+    const everythingIsNew = currentLength === 0;
     const incomingRemoval = currentLength > incomingLength;
 
-    if (incomingAddition || incomingRemoval) {
+    if (everythingIsNew || incomingRemoval) {
       this.attachmentPreviews = incomingPreviews;
       this.detectChanges();
       return;
@@ -128,8 +127,18 @@ export class PreviewWrapperComponent implements OnInit, OnDestroy {
     // PROCESS EVERYTHING ELSE AS A SEPARATE FILE
     // So we only update/refresh the data that we need
     // ---------------------------------------------------
-    for (let i = 0; i < currentLength; ++i) {
-      // The progress has just changed from 0/undefined to a non-zero value
+    const maxLength = Math.max(currentLength, incomingLength);
+
+    for (let i = 0; i < maxLength; ++i) {
+      // If incoming contains a new image that's being added to
+      // a multi-image array, add it
+      if (!this.attachmentPreviews[i]) {
+        this.attachmentPreviews[i] = incomingPreviews[i];
+        this.detectChanges();
+        break;
+      }
+
+      // The progress has just changed to a non-zero value
       const justStartedUploading =
         (!this.attachmentPreviews[i].progress ||
           this.attachmentPreviews[i].progress === 0) &&
