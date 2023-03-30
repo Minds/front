@@ -9,7 +9,7 @@
     @include m-theme() {
       background-color: themed($m-bgColor--primary) !important;
     }
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     font-weight: 300;
 
     ::placeholder {

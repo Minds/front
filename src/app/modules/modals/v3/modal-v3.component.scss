@@ -9,6 +9,7 @@
   pointer-events: auto;
 
   @include m-theme() {
+    color: themed($m-textColor--primary);
     background-color: themed($m-bgColor--primary);
   }
   background-clip: unset;

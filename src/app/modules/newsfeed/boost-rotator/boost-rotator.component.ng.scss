@@ -18,7 +18,7 @@
     align-items: center;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--secondaryAlt);
+      background-color: themed($m-bgColor--secondary);
       border-top: 1px solid themed($m-borderColor--primary);
     }
 
@@ -50,14 +50,14 @@
         transition: opacity 0.2s fade-in-out;
 
         @include m-theme() {
-          color: themed($m-textColor--primary);
+          color: themed($m-rotator-action);
         }
         &:active {
           opacity: 0.8;
         }
       }
       @include m-theme() {
-        color: themed($m-textColor--primary);
+        color: themed($m-rotator-action);
       }
     }
   }
