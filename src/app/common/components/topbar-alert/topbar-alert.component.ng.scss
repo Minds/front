@@ -14,8 +14,12 @@
     max-width: fit-content;
   }
 
-  @include m-theme() {
-    background-color: themed($m-grey-700);
+  @include m-on-theme(dark) {
+    background-color: #38393d;
+  }
+
+  @include m-on-theme(light) {
+    background-color: #1c1d1f;
   }
 
   .m-topbarAlert__message {
