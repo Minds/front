@@ -98,9 +98,11 @@ export class PreviewWrapperComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * For known media, we only want to detect changes for limited scenarios/properties,
-   * to prevent re-rendering the entire preview every time the
-   * progress bar status changes (which causes visual flickering)
+   * For media uploads, we only want to detect changes
+   * for limited scenarios/properties. This prevents
+   * visual flickering that would happen if we
+   * re-rendered the entire preview every time the
+   * progress bar status changes
    * @param incomingPreviews
    */
   processIncomingMediaAttachmentData(
@@ -115,23 +117,25 @@ export class PreviewWrapperComponent implements OnInit, OnDestroy {
     // overwrite any existing previews with incoming ones
     // ---------------------------------------------------
     const everythingIsNew = currentLength === 0;
-    const incomingRemoval = currentLength > incomingLength;
+    const incomingDelete = currentLength > incomingLength;
 
-    if (everythingIsNew || incomingRemoval) {
+    if (everythingIsNew || incomingDelete) {
       this.attachmentPreviews = incomingPreviews;
       this.detectChanges();
       return;
     }
 
     // ---------------------------------------------------
-    // PROCESS EVERYTHING ELSE AS A SEPARATE FILE
+    // FOR EVERYTHING ELSE, PROCESS AS A SEPARATE FILE
     // So we only update/refresh the data that we need
     // ---------------------------------------------------
     const maxLength = Math.max(currentLength, incomingLength);
 
     for (let i = 0; i < maxLength; ++i) {
-      // If incoming contains a new image that's being added to
-      // a multi-image array, add it and move on to the next file
+      // ---------------------------------------------------
+      // NEW MULTI-IMAGE ADDED TO EXISTING ARRAY
+      // Render it and move on to the next file
+      // ---------------------------------------------------
       if (!this.attachmentPreviews[i]) {
         this.attachmentPreviews[i] = incomingPreviews[i];
         this.detectChanges();
