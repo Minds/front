@@ -10,7 +10,6 @@ import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
-import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
@@ -56,7 +55,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
-    private earnModalService: EarnModalService,
     private boostModalService: BoostModalLazyService,
     private sidebarNavigationService: SidebarNavigationService,
     private helpdeskRedirectService: HelpdeskRedirectService,
@@ -95,8 +93,14 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     return this.helpdeskRedirectService.getUrl();
   }
 
-  async openEarnModal() {
-    await this.earnModalService.open();
+  /**
+   * Called on earn modal click - navigates to earn blog.
+   * @returns { void }
+   */
+  public onEarnClick(): void {
+    this.router.navigateByUrl(
+      '/info/blog/how-to-earn-on-minds-1486070032210333697'
+    );
   }
 
   /**
