@@ -121,30 +121,6 @@
     *ngIf="inProgress && comments?.length === 0"
   >
   </m-loadingSpinner>
-
-  <!-- --------------------------------  -->
-  <span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">
-    <ng-container i18n="@@MINDS__COMMENTS__NO_LIVE_COMMENTS"
-      >Could not load live comments</ng-container
-    >
-    <br />
-    <a
-      *ngIf="!inProgress"
-      (click)="retry()"
-      class="m-commentsThread__connectionLost--retry"
-      i18n="@@MINDS__COMMENTS__SOCKET_RETRY"
-    >
-      Click to retry
-    </a>
-    <span
-      [hidden]="!inProgress"
-      class="m-commentsThread__connectionLost--loading"
-      i18n="@@MINDS__COMMENTS__SOCKET_LOADING"
-    >
-      Loading...
-    </span>
-  </span>
-
   <ng-container *ngIf="direction === 'asc'">
     <ng-container *ngTemplateOutlet="posterOutlet"></ng-container>
   </ng-container>
