@@ -20,7 +20,6 @@ import { ConfigsService } from '../../../services/configs.service';
 import { Subscription } from 'rxjs';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { EarnModalService } from '../../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
 import { ThemeService } from '../../../services/theme.service';
@@ -99,7 +98,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private boostModalService: BoostModalLazyService,
-    private earnModalService: EarnModalService,
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private themeService: ThemeService,
@@ -176,15 +174,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public toggle(): void {
     this.sidebarNavigationService.toggle();
-  }
-
-  /**
-   * Open earn modal.
-   * @returns { Promise<void> }
-   */
-  public async openEarnModal(): Promise<void> {
-    this.toggle();
-    await this.earnModalService.open();
   }
 
   /**

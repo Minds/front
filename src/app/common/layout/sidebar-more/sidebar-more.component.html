@@ -41,7 +41,7 @@
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
-      <a (click)="openEarnModal()" data-ref="sidebarmore-earn-modal">
+      <a (click)="onEarnClick()" data-ref="sidebarmore-earn-modal">
         <i class="material-icons">attach_money</i>
         <span i18n="@@COMMON__EARN">Earn</span>
       </a>
