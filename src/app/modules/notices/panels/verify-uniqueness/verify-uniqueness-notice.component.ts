@@ -25,7 +25,7 @@ export class VerifyUniquenessNoticeComponent extends AbstractSubscriberComponent
   }
 
   ngOnInit(): void {
-    if (!this.isInAppVerificationExperimentActive) {
+    if (!this.isInAppVerificationExperimentActive()) {
       this.subscriptions.push(
         /**
          * Dismiss on phone verification - because connectWalletModal.joinRewards
