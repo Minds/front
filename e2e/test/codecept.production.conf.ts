@@ -68,6 +68,7 @@ export const config: CustomMainConfig = {
       video: true,
       browser: process.env.profile || 'chromium',
       restart: 'session',
+      userAgent: 'mindsbot',
       chromium: {
         browserWSEndpoint: {
           wsEndpoint: `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(

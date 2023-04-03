@@ -33,6 +33,7 @@ export const config: CustomMainConfig = {
       timeout: 10000,
       waitForTimeout: 10000,
       trace: true,
+      userAgent: 'mindsbot',
     },
     CookieHelper: {
       require: './helpers/cookie-helper.ts',
