@@ -10,6 +10,7 @@ import {
   ComposerService,
   DEFAULT_RICH_EMBED_VALUE,
 } from '../../services/composer.service';
+import { AttachmentPreviewResource } from '../../services/preview.service';
 import { UploaderService } from '../../services/uploader.service';
 
 /**
@@ -87,14 +88,87 @@ export class PreviewWrapperComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions = [
       this.attachmentPreviews$.subscribe(attachmentPreviews => {
-        this.attachmentPreviews = attachmentPreviews;
-        this.detectChanges();
+        this.processIncomingMediaAttachmentData(attachmentPreviews);
       }),
       this.richEmbedPreview$.subscribe(richEmbedPreview => {
         this.richEmbedPreview = richEmbedPreview;
         this.detectChanges();
       }),
     ];
+  }
+
+  /**
+   * For media uploads, we only want to detect changes
+   * for limited scenarios/properties. This prevents
+   * visual flickering that would happen if we
+   * re-rendered the entire preview every time the
+   * progress bar status changes
+   * @param incomingPreviews
+   */
+  processIncomingMediaAttachmentData(
+    incomingPreviews: AttachmentPreviewResource[]
+  ): void {
+    const currentLength = this.attachmentPreviews?.length || 0;
+    const incomingLength = incomingPreviews?.length || 0;
+
+    // ---------------------------------------------------
+    // HANDLE UNKNOWN AND DELETED PREVIEWS
+    // If initializing or deleting,
+    // overwrite any existing previews with incoming ones
+    // ---------------------------------------------------
+    const everythingIsNew = currentLength === 0;
+    const incomingDelete = currentLength > incomingLength;
+
+    if (everythingIsNew || incomingDelete) {
+      this.attachmentPreviews = incomingPreviews;
+      this.detectChanges();
+      return;
+    }
+
+    // ---------------------------------------------------
+    // FOR EVERYTHING ELSE, PROCESS AS A SEPARATE FILE
+    // So we only update/refresh the data that we need
+    // ---------------------------------------------------
+    const maxLength = Math.max(currentLength, incomingLength);
+
+    for (let i = 0; i < maxLength; ++i) {
+      // ---------------------------------------------------
+      // NEW MULTI-IMAGE ADDED TO EXISTING ARRAY
+      // Render it and move on to the next file
+      // ---------------------------------------------------
+      if (!this.attachmentPreviews[i]) {
+        this.attachmentPreviews[i] = incomingPreviews[i];
+        this.detectChanges();
+        break;
+      }
+
+      // The progress has just changed to a non-zero number
+      const justStartedUploading =
+        (!this.attachmentPreviews[i].progress ||
+          this.attachmentPreviews[i].progress === 0) &&
+        incomingPreviews[i]?.progress > 0;
+
+      if (incomingPreviews[i].guid) {
+        // ---------------------------------------------------
+        // FINISHED UPLOADING
+        // Update guid only, so the progress bar stops
+        // ---------------------------------------------------
+        this.attachmentPreviews[i].guid = incomingPreviews[i].guid;
+      } else if (justStartedUploading) {
+        // ---------------------------------------------------
+        // JUST STARTED UPLOADING
+        // Update the entire preview so we can see the thumbnail
+        // ---------------------------------------------------
+        this.attachmentPreviews[i] = incomingPreviews[i];
+      } else {
+        // ---------------------------------------------------
+        // ALREADY UPLOADING
+        // Just update progress bar value
+        // ---------------------------------------------------
+        this.attachmentPreviews[i].progress = incomingPreviews[i].progress;
+      }
+      this.detectChanges();
+    }
   }
 
   ngOnDestroy(): void {
