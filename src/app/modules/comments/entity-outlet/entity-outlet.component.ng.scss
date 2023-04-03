@@ -5,7 +5,7 @@
 
   .m-commentsEntityOutlet__expand {
     @include m-theme() {
-      color: themed($m-blue);
+      color: themed($m-link-text);
     }
   }
   .m-commentsEntityOutlet__expand--hide {
@@ -16,6 +16,9 @@
 
   .m-commentsEntityOutlet__expand,
   .m-commentsEntityOutlet__expand--hide {
+    @include m-theme() {
+      color: themed($m-link-text) !important;
+    }
     font-weight: 400;
     padding: 0 20px 6px;
     cursor: pointer;

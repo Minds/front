@@ -652,7 +652,7 @@ minds-groups-profile-requests {
   opacity: 0.65;
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
-    color: themed($m-blue-grey-700);
+    color: themed($m-grey-700);
   }
 }
 

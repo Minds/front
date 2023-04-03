@@ -6,15 +6,21 @@ import {
   EventEmitter,
   Input,
   HostBinding,
+  SkipSelf,
+  HostListener,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
 import { RichEmbedService } from '../../../services/rich-embed';
 import { MediaProxyService } from '../../../common/services/media-proxy.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
 import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
+import {
+  ClientMetaData,
+  ClientMetaService,
+} from '../../services/client-meta.service';
+import { ClientMetaDirective } from '../../directives/client-meta.directive';
 
 interface InlineEmbed {
   id: string;
@@ -45,6 +51,9 @@ export class MindsRichEmbed {
   public isPaywalled: boolean = false;
   _isModal: boolean = false;
 
+  // set to true once a click is recorded.
+  private clickRecorded: boolean = false;
+
   @Input() embeddedInline: boolean = false;
 
   @Input() displayAsColumn: boolean = false;
@@ -70,6 +79,11 @@ export class MindsRichEmbed {
     return this.isFeaturedSource || this.displayAsColumn;
   }
 
+  // on component host click, record a click event.
+  @HostListener('click') onHostClick(): void {
+    this.recordClick();
+  }
+
   constructor(
     private sanitizer: DomSanitizer,
     private session: Session,
@@ -79,7 +93,9 @@ export class MindsRichEmbed {
     private configs: ConfigsService,
     private site: SiteService,
     private modalService: ModalService,
-    private embedLinkWhitelist: EmbedLinkWhitelistService
+    private embedLinkWhitelist: EmbedLinkWhitelistService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() private parentClientMeta: ClientMetaDirective
   ) {}
 
   set _src(value: any) {
@@ -158,7 +174,6 @@ export class MindsRichEmbed {
           this.renderHtml();
         }
       } else {
-        this.embeddedInline = true;
         this.renderHtml();
       }
     }
@@ -177,9 +192,12 @@ export class MindsRichEmbed {
   }
 
   action($event) {
+    this.recordClick();
+
     if (this.modalRequestSubscribed && this.modalService.canOpenInModal()) {
       $event.preventDefault();
       $event.stopPropagation();
+
       this.mediaModalRequested.emit();
       return;
     }
@@ -223,7 +241,7 @@ export class MindsRichEmbed {
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-youtube',
           html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
-          src="https://www.youtube.com/embed/${matches[1]}?controls=1&modestbranding=1&origin=${origin}&rel=0"
+          src="https://www.youtube.com/embed/${matches[1]}?controls=1&modestbranding=1&origin=${origin}&rel=0&autoplay=1"
           frameborder="0"
           allowfullscreen></iframe>`),
           playable: true,
@@ -387,5 +405,28 @@ export class MindsRichEmbed {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * Record a click event on the rich embed.
+   * @returns { void }
+   */
+  private recordClick(): void {
+    if (this.clickRecorded) {
+      return;
+    }
+    this.clickRecorded = true;
+
+    const extraClientMetaData: Partial<ClientMetaData> = {};
+
+    if (Boolean(this.src.boosted_guid) && Boolean(this.src.urn)) {
+      extraClientMetaData.campaign = this.src.urn;
+    }
+
+    this.clientMetaService.recordClick(
+      this.src.guid,
+      this.parentClientMeta,
+      extraClientMetaData
+    );
   }
 }

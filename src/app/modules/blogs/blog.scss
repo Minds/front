@@ -28,14 +28,14 @@
     a {
       display: block;
       text-decoration: none;
-      font-family: 'Roboto', Helvetica, sans-serif;
+      font-family: 'Inter', Helvetica, sans-serif;
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
     }
     span {
       font-size: 11px;
-      font-family: 'Roboto', Helvetica, sans-serif;
+      font-family: 'Inter', Helvetica, sans-serif;
       cursor: default;
       padding-left: 10px;
       @include m-theme() {
@@ -103,7 +103,7 @@
     }
 
     h1.m-blog--title {
-      font-family: 'Roboto', Helvetica, sans-serif;
+      font-family: 'Inter', Helvetica, sans-serif;
       font-weight: 600;
       font-size: 26px;
       line-height: 1.3em;
@@ -282,8 +282,8 @@ minds-blog-edit {
   border-radius: 2px;
   text-transform: uppercase;
   @include m-theme() {
-    color: themed($m-blue-grey-400);
-    border: 1px solid themed($m-blue-grey-400);
+    color: themed($m-grey-400);
+    border: 1px solid themed($m-grey-400);
   }
 }
 
@@ -311,7 +311,7 @@ minds-blog-edit {
     font-weight: 600;
     font-size: 42px;
     letter-spacing: 1.5px;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     line-height: 1.2em;
@@ -323,7 +323,7 @@ minds-blog-edit {
   h4 {
     font-weight: 600;
     letter-spacing: 1.5px;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -334,9 +334,8 @@ minds-blog-edit {
     font-style: normal;
     font-size: 21px;
     line-height: 1.58;
-    letter-spacing: 0.5px;
-    letter-spacing: -0.003em;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    letter-spacing: -0.008em;
+    font-family: 'Inter', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -408,9 +407,9 @@ minds-blog-edit {
 }
 
 .m-blog-edit--metadata {
-  font-family: Roboto, sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: -0.001em;
   padding: $minds-padding;
 
   .m-blog-edit--toggle-wrapper {

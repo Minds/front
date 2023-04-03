@@ -43,6 +43,7 @@ import { ActivityMultiImageComponent } from './content/images/multi-image.compon
 import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
 import { ActivitySupermindReplyLinkComponent } from './supermind-reply-link/supermind-reply-link.component';
 import { ComposerModule } from '../../composer/composer.module';
+import { ActivityFlagMutualSubscriptionsComponent } from './flag/mutual-subscriptions/mutual-subscriptions.component';
 
 @NgModule({
   imports: [
@@ -86,6 +87,7 @@ import { ComposerModule } from '../../composer/composer.module';
     ActivityViewsComponent,
     ActivityMultiImageComponent,
     ActivitySupermindReplyLinkComponent,
+    ActivityFlagMutualSubscriptionsComponent,
   ],
   providers: [ActivityModalCreatorService],
   exports: [ActivityComponent, ActivityRemindButtonComponent],

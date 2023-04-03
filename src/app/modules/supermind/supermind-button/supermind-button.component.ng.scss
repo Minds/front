@@ -2,9 +2,8 @@
 :host {
   ::ng-deep m-button .m-button {
     background: $supermindGradient;
-
     @include m-theme() {
-      color: themed($m-white-always);
+      color: themed($m-grey-50);
     }
 
     &:hover {
@@ -13,6 +12,10 @@
 
     p {
       margin-bottom: 0;
+    }
+
+    span {
+      color: $grey-50;
     }
   }
 

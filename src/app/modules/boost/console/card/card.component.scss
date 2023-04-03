@@ -15,17 +15,17 @@ m-boost-console-card {
     align-items: center;
     justify-content: space-around;
     padding: ($minds-padding + 4px) $minds-padding $minds-padding;
-    font-family: Roboto, sans-serif;
+    font-family: Inter, sans-serif;
     font-weight: 300;
     @include m-theme() {
-      color: themed($m-blue-grey-500);
-      background-color: themed($m-blue-grey-50);
+      color: themed($m-grey-500);
+      background-color: themed($m-grey-50);
     }
   }
   .m-boost-card--rejection-reason {
     padding: 16px;
     font-size: 13px;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
@@ -37,8 +37,8 @@ m-boost-console-card {
     }
 
     @include m-theme() {
-      color: themed($m-blue-grey-500);
-      background-color: themed($m-blue-grey-50);
+      color: themed($m-grey-500);
+      background-color: themed($m-grey-50);
       border-top: 1px solid themed($m-borderColor--primary);
     }
   }

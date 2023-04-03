@@ -7,10 +7,6 @@
 
   .inProgress {
     animation: gelatine 0.5s infinite;
-
-    @include m-theme() {
-      color: themed($m-blue) !important;
-    }
   }
 
   @keyframes gelatine {

@@ -95,7 +95,6 @@ export class ActivityRemindButtonComponent {
     return (this.clientMeta.clientMetaData = {
       ...this.clientMeta.clientMetaData,
       campaign: entity['urn'],
-      medium: entity['boosted'] ? 'boost' : 'feed',
     });
   }
 

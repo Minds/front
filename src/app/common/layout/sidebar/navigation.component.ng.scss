@@ -161,10 +161,9 @@
     //flex-direction: column;
     align-items: center;
     text-decoration: none;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
     padding: 4px 0;
     font-weight: bold;
-
     font-size: 17px;
     line-height: 44px;
 
@@ -175,9 +174,9 @@
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
-        color: themed($m-textColor--secondary);
+        color: themed($m-textColor--primary);
         svg {
-          fill: themed($m-textColor--secondary);
+          fill: themed($m-textColor--primary);
         }
       }
     }
@@ -205,13 +204,13 @@
   &.m-sidebarNavigation__item--active > a,
   &:hover > a {
     cursor: pointer;
-
+    //change to be made here
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
-        color: themed($m-blue);
+        color: themed($m-textColor--primary);
         svg {
-          fill: themed($m-blue);
+          fill: themed($m-textColor--primary);
         }
         .m-sidebarNavigation__newWindowIcon {
           color: themed($m-textColor--secondary);
@@ -254,6 +253,10 @@
   }
 
   .m-sidebarNavigationItem__text {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
     margin-left: 24px;
   }
 
@@ -435,6 +438,12 @@
         line-height: 24px;
         @media screen and (max-width: $layoutMax3ColWidth) {
           padding: 0;
+        }
+      }
+
+      span {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
         }
       }
 

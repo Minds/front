@@ -18,6 +18,8 @@ import {
   AfterViewInit,
   Injector,
   HostListener,
+  SkipSelf,
+  Optional,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -41,6 +43,8 @@ import { ModalService } from '../../../services/ux/modal.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 import { ShareModalComponent } from '../../modals/share/share';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'm-comment',
@@ -139,7 +143,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     protected toasterService: ToasterService,
     private activityModalCreator: ActivityModalCreatorService,
     private injector: Injector,
-    public suggestions: AutocompleteSuggestionsService
+    public suggestions: AutocompleteSuggestionsService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -587,5 +593,27 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       },
       modalDialogClass: 'm-overlayModal__share',
     }).result;
+  }
+
+  /**
+   * Fires on output text click. We do this because we need to listen to link clicks
+   * on anchor tags injected into the body via innerHTML, which strips any listeners
+   * off the anchor tag at the time of injection. Instead we listen to all clicks on
+   * any part of the output event, and filter out events on anchor tags to derive
+   * when an anchor tag has been clicked.
+   * @param { MouseEvent } $event - mouse event.
+   * @returns { void }
+   */
+  public onDescriptionTextClick($event: MouseEvent): void {
+    if (!this.parentClientMeta) {
+      console.error('No parent client meta set');
+      return;
+    }
+    if (($event.target as HTMLElement).tagName === 'A') {
+      this.clientMetaService.recordClick(
+        this.comment.guid,
+        this.parentClientMeta
+      );
+    }
   }
 }
