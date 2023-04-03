@@ -25,19 +25,20 @@ export class VerifyUniquenessNoticeComponent extends AbstractSubscriberComponent
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      /**
-       * Dismiss on phone verification - because connectWalletModal.joinRewards
-       * fires connect your wallet modal and then only after
-       * connection calls callback fn.
-       */
-
-      this.phoneVerification.phoneVerified$
-        .pipe(filter(Boolean))
-        .subscribe((isConnected: boolean) => {
-          this.dismiss();
-        })
-    );
+    if (!this.isInAppVerificationExperimentActive) {
+      this.subscriptions.push(
+        /**
+         * Dismiss on phone verification - because connectWalletModal.joinRewards
+         * fires connect your wallet modal and then only after
+         * connection calls callback fn.
+         */
+        this.phoneVerification.phoneVerified$
+          .pipe(filter(Boolean))
+          .subscribe((isConnected: boolean) => {
+            this.dismiss();
+          })
+      );
+    }
   }
 
   public isInAppVerificationExperimentActive(): boolean {
