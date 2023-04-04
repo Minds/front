@@ -1,0 +1,56 @@
+<ng-container *ngIf="showPlayer; else placeholder">
+  <!-- TODO: Test this and created and CSS -->
+  <span
+    class="m-videoPlayer__notice--error"
+    *ngIf="status === 'failed' && !(awaitingTranscode | async)"
+  >
+    There was an error transcoding this video.
+  </span>
+  <span
+    class="m-videoPlayer__notice--created"
+    *ngIf="awaitingTranscode | async"
+  >
+    This video is waiting to be transcoded.
+  </span>
+  <div class="m-videoPlayer__screen">
+    <m-videoJsPlayer
+      *ngIf="(sources$ | async)?.length"
+      [options]="{
+        aspectRatio: '16:9',
+        autoplay: options.autoplay,
+        controls: options.hideControls,
+        muted: options.muted,
+        sources: sources$ | async,
+        poster: service.poster$ | async
+      }"
+      (onReady)="onReady($event)"
+      (onPlay)="onPlayed($event)"
+      (onEnded)="onEnded($event)"
+      (onMetadataLoaded)="emitDimensions($event)"
+      (onSeeking)="onSeeking($event)"
+      (onVolumeChange)="onVolumeChange($event)"
+      (onFullscreenChange)="fullScreenChange.next($event)"
+    >
+    </m-videoJsPlayer>
+  </div>
+</ng-container>
+
+<ng-template #placeholder>
+  <div
+    class="m-videoPlayer__placeholder"
+    [class.m-videoPlayer__placeholder--embedded]="embedded"
+    [style.background-image]="'url(' + (service.poster$ | async) + ')'"
+  >
+    <!--
+      This icon is meant to mirror the icon of the play button 
+      on the actual video, but for the placeholder.
+    -->
+    <i
+      class="material-icons vjs-big-play-button minds-video-play-icon"
+      (click)="onPlaceholderClick($event)"
+    >
+      play_arrow
+    </i>
+  </div>
+</ng-template>
+<m-autoProgress__overlay *ngIf="isModal"> </m-autoProgress__overlay>

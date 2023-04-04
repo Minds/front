@@ -1,9 +1,22 @@
-<m-videoPlayer
-  [guid]="guid"
-  [shouldPlayInModal]="shouldPlayInModal"
-  [isModal]="isModal"
-  (mediaModalRequested)="openModal($event)"
-></m-videoPlayer>
+<ng-container *ngIf="isVideoJsExperimentActive(); else v1Player">
+  <m-videoPlayerV2
+    #player
+    [guid]="guid"
+    [shouldPlayInModal]="shouldPlayInModal"
+    [isModal]="isModal"
+    [autoplay]="isModal"
+    (mediaModalRequested)="openModal($event)"
+  ></m-videoPlayerV2>
+</ng-container>
+<ng-template #v1Player>
+  <m-videoPlayer
+    #player
+    [guid]="guid"
+    [shouldPlayInModal]="shouldPlayInModal"
+    [isModal]="isModal"
+    (mediaModalRequested)="openModal($event)"
+  ></m-videoPlayer>
+</ng-template>
 
 <div
   class="m-videoPlayer--scrollaware__overlay"

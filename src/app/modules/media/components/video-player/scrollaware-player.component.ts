@@ -20,6 +20,8 @@ import { MindsVideoPlayerComponent } from './player.component';
 import { ScrollService } from '../../../../services/ux/scroll';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
+import { VideoJsExperimentService } from '../../../experiments/sub-services/videojs-experiment.service';
+import { MindsVideoPlayerV2Component } from './player-v2/player-v2.component';
 
 @Component({
   selector: 'm-videoPlayer--scrollaware',
@@ -32,7 +34,8 @@ export class ScrollAwareVideoPlayerComponent
   @Input() autoplay = true;
   @Input() isModal: boolean = false;
   @Output() mediaModalRequested: EventEmitter<void> = new EventEmitter();
-  @ViewChild(MindsVideoPlayerComponent) player: MindsVideoPlayerComponent;
+  @ViewChild('player') player: MindsVideoPlayerComponent;
+
   hasMousedOver = false;
   isInViewport = false;
 
@@ -43,6 +46,7 @@ export class ScrollAwareVideoPlayerComponent
     private scrollService: ScrollService,
     private session: Session,
     private cd: ChangeDetectorRef,
+    private videoJsExperiment: VideoJsExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -120,6 +124,10 @@ export class ScrollAwareVideoPlayerComponent
     this.hasMousedOver = true;
     // TODO: should we unmute on mouseover?
     // this.player.play({ muted: false, hideControls: false });
+  }
+
+  public isVideoJsExperimentActive(): boolean {
+    return this.videoJsExperiment.isActive();
   }
 
   detectChanges() {
