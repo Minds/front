@@ -9,7 +9,6 @@
 //   moduleMetadata,
 // } from '@storybook/angular';
 // import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-// import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 // import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 // import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 // import { ExperimentsService } from '../../../modules/experiments/experiments.service';
@@ -92,10 +91,6 @@
 //         },
 //         {
 //           provide: BoostModalLazyService,
-//           useValue: null,
-//         },
-//         {
-//           provide: EarnModalService,
 //           useValue: null,
 //         },
 //         {
