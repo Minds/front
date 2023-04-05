@@ -133,6 +133,7 @@ $blue-grey-900: #191f28;
 
 $themes: (
   light: (
+    //regression : Legacy light colors used here. 
     m-textColor--primary: #43434d,
     m-textColor--primaryInverted: #ffffff,
     m-textColor--secondary: #72727c,

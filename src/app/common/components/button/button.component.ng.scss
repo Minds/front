@@ -86,6 +86,7 @@
       &.m-button--solid {
         @include m-theme() {
           background-color: themed($m-blue);
+          border-color: themed($m-blue);
           color: themed($m-action-text);
         }
 

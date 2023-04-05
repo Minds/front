@@ -55,7 +55,7 @@
         font-weight: 500;
         cursor: pointer;
         @include m-theme() {
-          color: themed($m-grey-700);
+          color: themed($m-grey-100);
         }
       }
 
