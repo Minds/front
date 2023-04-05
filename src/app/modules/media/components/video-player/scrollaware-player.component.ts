@@ -21,7 +21,6 @@ import { ScrollService } from '../../../../services/ux/scroll';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { VideoJsExperimentService } from '../../../experiments/sub-services/videojs-experiment.service';
-import { MindsVideoPlayerV2Component } from './player-v2/player-v2.component';
 
 @Component({
   selector: 'm-videoPlayer--scrollaware',
@@ -128,8 +127,12 @@ export class ScrollAwareVideoPlayerComponent
     // this.player.play({ muted: false, hideControls: false });
   }
 
+  /**
+   * Whether video.js player should be used site-wide, else will just be used for live streams.
+   * @returns { boolean } true if video.js player should be used.
+   */
   public shouldUseVideoJSPlayer(): boolean {
-    return this.isLivestream && this.videoJsExperiment.isActive();
+    return this.videoJsExperiment.isActive() || this.isLivestream;
   }
 
   detectChanges() {

@@ -19,8 +19,8 @@ import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../../services/session';
 import { AutoProgressVideoService } from '../../video/auto-progress-overlay/auto-progress-video.service';
 import { map, take } from 'rxjs/operators';
-import { VjsPlayerComponent } from '../vjs-player/vjs-player.component';
-import { VideoJSCustomMetadata } from '../vjs-player/vjs-player.types';
+import { VjsPlayerComponent } from './vjs-player/vjs-player.component';
+import { VideoJSCustomMetadata } from './vjs-player/vjs-player.types';
 
 @Component({
   selector: 'm-videoPlayerV2',
