@@ -1,4 +1,4 @@
-<ng-container *ngIf="isVideoJsExperimentActive(); else v1Player">
+<ng-container *ngIf="shouldUseVideoJSPlayer(); else v1Player">
   <m-videoPlayerV2
     #player
     [guid]="guid"

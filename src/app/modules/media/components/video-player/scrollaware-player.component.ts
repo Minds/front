@@ -33,6 +33,8 @@ export class ScrollAwareVideoPlayerComponent
   @Input() shouldPlayInModal: boolean;
   @Input() autoplay = true;
   @Input() isModal: boolean = false;
+  @Input() isLivestream: boolean = false;
+
   @Output() mediaModalRequested: EventEmitter<void> = new EventEmitter();
   @ViewChild('player') player: MindsVideoPlayerComponent;
 
@@ -126,8 +128,8 @@ export class ScrollAwareVideoPlayerComponent
     // this.player.play({ muted: false, hideControls: false });
   }
 
-  public isVideoJsExperimentActive(): boolean {
-    return this.videoJsExperiment.isActive();
+  public shouldUseVideoJSPlayer(): boolean {
+    return this.isLivestream && this.videoJsExperiment.isActive();
   }
 
   detectChanges() {

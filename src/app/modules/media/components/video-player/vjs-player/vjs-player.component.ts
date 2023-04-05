@@ -70,15 +70,16 @@ export class VjsPlayerComponent implements AfterViewInit, OnDestroy {
    * https://videojs.com/guides/options/
    */
   @Input() protected options: Partial<{
-    fluid: boolean;
-    aspectRatio: string;
-    autoplay: boolean;
+    fluid: boolean; // dynamic aspect ratio.
+    aspectRatio: string; // aspect ratio for video.
+    autoplay: boolean; // whether autoplay should be enabled.
     sources: {
       src: string;
       type: string;
-    }[];
-    poster: string;
-    muted: VideoJSCustomAutoplayValue;
+    }[]; // sources for player.
+    poster: string; // poster to display on video before play.
+    muted: VideoJSCustomAutoplayValue; // player muted state.
+    liveui: boolean; // enables v2 livestream UI.
   }>;
 
   /** Player object - typing should be improved when types for videojs@8.x are released */
