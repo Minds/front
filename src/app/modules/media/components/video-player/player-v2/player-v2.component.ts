@@ -21,6 +21,15 @@ import { AutoProgressVideoService } from '../../video/auto-progress-overlay/auto
 import { VjsPlayerComponent } from './vjs-player/vjs-player.component';
 import { VideoJSCustomMetadata } from './vjs-player/vjs-player.types';
 
+export type PlayerV2Options = {
+  autoplay: boolean;
+  muted: boolean;
+  hideControls: boolean;
+};
+
+/**
+ * Wrapper for v2 video player (using video.js)
+ */
 @Component({
   selector: 'm-videoPlayerV2',
   templateUrl: 'player-v2.component.html',
@@ -68,11 +77,11 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
   /**
    * This is the video player component
    */
-  player: VjsPlayerComponent;
+  protected player: VjsPlayerComponent;
 
-  useEmptySource: boolean = false;
+  protected useEmptySource: boolean = false;
 
-  emptySource = {
+  protected emptySource: VideoSource = {
     id: null,
     type: null,
     size: 0,
@@ -86,7 +95,7 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
   /**
    * If the player component should be displayed
    */
-  public showPlayer = false;
+  public showPlayer: boolean = false;
 
   /**
    * True if player is muted when ready event fires.
@@ -97,7 +106,7 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
   /**
    * Options for player to use
    */
-  options: any = {
+  protected options: PlayerV2Options = {
     autoplay: true,
     muted: false,
     hideControls: true,
@@ -108,7 +117,7 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
    */
   protected init: boolean = false;
 
-  subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = [];
 
   constructor(
     public elementRef: ElementRef,
@@ -149,41 +158,60 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
     }
   }
 
+  /** Set GUID via service. */
   @Input('guid')
   set guid(guid: string) {
     this.service.setGuid(guid);
   }
 
+  /** Set isModal via service. */
   @Input('isModal')
   set isModal(isModal: boolean) {
     this.service.setIsModal(isModal);
   }
 
+  /** Set shouldPlayInModal via service. */
   @Input('shouldPlayInModal')
   set shouldPlayInModal(shouldPlayInModal: boolean) {
     this.service.setShouldPlayInModal(shouldPlayInModal);
   }
 
+  /**
+   * Gets sources subject from service.
+   * @returns { BehaviorSubject<VideoSource[]> } - sources subject.
+   */
   get sources$(): BehaviorSubject<VideoSource[]> {
     return this.service.sources$;
   }
 
+  /**
+   * Gets status from service.
+   * @returns { string } - status from service.
+   */
   get status(): string {
     return this.service.status;
   }
 
+  /**
+   * Gets isModal from service.
+   * @returns { boolean } - isModal from service.
+   */
   get isModal(): boolean {
     return this.service.isModal;
   }
 
+  /**
+   * Gets awaiting transcode state from service as observable.
+   * @returns { Observable<boolean> } - awaiting transcode state from service.
+   */
   get awaitingTranscode(): Observable<boolean> {
     return this.service.awaitingTranscode();
   }
 
   /**
-   * Placeholder clicked
-   * @param e
-   * @return void
+   * Placeholder clicked.
+   * @param { MouseEvent } e - mouse event
+   * @return { void }
    */
   onPlaceholderClick(e: MouseEvent): void {
     // // If we have a player, then play
@@ -200,15 +228,28 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
     this.service.isPlayable$.next(true);
   }
 
+  /**
+   * Set unmuted in options.
+   * @returns { void }
+   */
   unmute(): void {
     this.options.muted = false;
   }
 
+  /**
+   * Set muted in options.
+   * @returns { void }
+   */
   mute(): void {
     this.options.muted = true;
   }
 
-  async play(opts: { muted: boolean; hideControls?: boolean }) {
+  /**
+   * Manually force play, passing in muted and hideControls options.
+   * @param { PlayerV2Options } opts - options.
+   * @returns { Promise<void> }
+   */
+  async play(opts: PlayerV2Options): Promise<void> {
     this.options.muted = opts.muted;
     this.options.hideControls = opts.hideControls;
 
@@ -223,8 +264,8 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
   }
 
   /**
-   * Pause the player, if there is one
-   * @return void
+   * Pause the player, if there is one.
+   * @return { void }
    */
   pause(): void {
     if (this.player) {
@@ -235,10 +276,18 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * Determine whether player is playing currently.
+   * @returns { boolean }
+   */
   isPlaying(): boolean {
     return this.player ? this.player.isPlaying() : false;
   }
 
+  /**
+   * Stop player by pausing it.
+   * @returns { void }
+   */
   stop(): void {
     this.player.pause();
   }
@@ -312,9 +361,17 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
    */
   public onPlayed(): void {}
 
+  /**
+   * Fires on play.
+   * @returns { void }
+   */
   onPlay(): void {}
 
-  removeSources() {
+  /**
+   * Removes sources from DOM and sets isPlayable state to false.
+   * @returns { void }
+   */
+  removeSources(): void {
     const sources = this.elementRef.nativeElement.getElementsByTagName(
       'source'
     );
