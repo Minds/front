@@ -21,11 +21,11 @@ import { AutoProgressVideoService } from '../../video/auto-progress-overlay/auto
 import { VjsPlayerComponent } from './vjs-player/vjs-player.component';
 import { VideoJSCustomMetadata } from './vjs-player/vjs-player.types';
 
-export type PlayerV2Options = {
+export type PlayerV2Options = Partial<{
   autoplay: boolean;
   muted: boolean;
   hideControls: boolean;
-};
+}>;
 
 /**
  * Wrapper for v2 video player (using video.js)
@@ -250,8 +250,8 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
    * @returns { Promise<void> }
    */
   async play(opts: PlayerV2Options): Promise<void> {
-    this.options.muted = opts.muted;
-    this.options.hideControls = opts.hideControls;
+    this.options.muted = opts.muted ?? false;
+    this.options.hideControls = opts.hideControls ?? false;
 
     this.service.isPlayable$.next(true);
 
