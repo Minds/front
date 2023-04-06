@@ -190,15 +190,15 @@ describe('MindsVideoPlayerV2Component', () => {
   }));
 
   it('should get option to unmute', () => {
-    comp.options.muted = true;
+    (comp as any).options.muted = true;
     comp.unmute();
-    expect(comp.options.muted).toBeFalse();
+    expect((comp as any).options.muted).toBeFalse();
   });
 
   it('should get option to mute', () => {
-    comp.options.muted = false;
+    (comp as any).options.muted = false;
     comp.mute();
-    expect(comp.options.muted).toBeTrue();
+    expect((comp as any).options.muted).toBeTrue();
   });
 
   it('should pause', () => {
@@ -206,7 +206,7 @@ describe('MindsVideoPlayerV2Component', () => {
       pause: jasmine.createSpy('pause'),
     };
     comp.pause();
-    expect(comp.player.pause).toHaveBeenCalled();
+    expect((comp as any).player.pause).toHaveBeenCalled();
   });
 
   it('should check if is playing', () => {
@@ -233,7 +233,7 @@ describe('MindsVideoPlayerV2Component', () => {
       pause: jasmine.createSpy('pause'),
     };
     comp.stop();
-    expect(comp.player.pause).toHaveBeenCalled();
+    expect((comp as any).player.pause).toHaveBeenCalled();
   });
 
   it('should emit dimensions', () => {
