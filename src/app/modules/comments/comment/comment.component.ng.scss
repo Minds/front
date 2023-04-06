@@ -183,11 +183,10 @@
           rgba(themed($m-highlight--comment), 0.25) 25%,
           rgba(themed($m-highlight--comment), 0.5) 50%,
           rgba(themed($m-highlight--comment), 1) 75%
-         );
+        );
       }
     }
   }
-
 
   // COMPACT
   // (e.g. activity modal)
@@ -565,4 +564,3 @@
     }
   }
 }
-
