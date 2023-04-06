@@ -133,8 +133,8 @@ $blue-grey-900: #191f28;
 
 $themes: (
   light: (
-    //regression : Legacy light colors used here. 
-    m-textColor--primary: #43434d,
+    //regression : Legacy light colors used here.
+      m-textColor--primary: #43434d,
     m-textColor--primaryInverted: #ffffff,
     m-textColor--secondary: #72727c,
     m-textColor--secondaryInverted: #b8c1ca,
@@ -228,7 +228,7 @@ $themes: (
     m-borderColor--primary: $grey-700,
     m-borderColor--secondary: $grey-600,
     m-borderColor--tertiary: $grey-500,
-    m-highlight--comment: #272f37,
+    m-highlight--comment: $grey-800,
     m-overlay: rgba(0, 0, 0, 0.5),
     m-alert: #fd8b7c,
     m-positive: #95c064,

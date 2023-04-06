@@ -64,7 +64,6 @@ minds-button-thumbs-down {
     @include m-theme() {
       color: themed($m-action) !important;
     }
-
   }
   .selected:hover {
     @include m-theme() {
