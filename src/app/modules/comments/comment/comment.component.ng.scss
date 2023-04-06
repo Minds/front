@@ -174,411 +174,406 @@
     }
   }
 
-  ::ng-deep .m-read-more--button{
-      text-align: left;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      left: 0;
-      padding: 42px 16px 16px;
-      @include m-theme() {
-        background: linear-gradient(
-          to bottom,
-          rgba(themed($m-highlight--comment), 0) 0%,
-          rgba(themed($m-highlight--comment), 1) 50%
-        );
-      }
-
-      > span {
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-size: 12px;
-        cursor: pointer;
-        min-height: 20px;
-        display: inline-block;
-        font-family: 'Inter', Helvetica, sans-serif;
-      }
-    }
-  }
-
-
-
-  
-
-  // COMPACT
-  // (e.g. activity modal)
-  .m-comment--compact {
-    padding: 5px 30px 20px;
-
-    .minds-avatar {
-      margin: 0 10px 0 0 !important;
-    }
-    .m-commentOwnerRow__text {
-      flex-direction: column;
-      align-items: flex-start;
-
-      > div {
-        display: flex;
-        width: 100%;
-        max-width: 100%;
-      }
-
-      .m-commentOwnerRowItem__name,
-      .m-commentOwnerRowItem__username {
-        max-width: 70%;
-      }
-    }
-
-    .minds-body {
-      max-width: 100%;
-      margin-left: 10px;
-    }
-  }
-
-  .m-comment--focused {
-    margin-left: -4px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+  ::ng-deep .m-read-more--button {
+    text-align: left;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    padding: 42px 16px 16px;
     @include m-theme() {
-      border-left: 4px solid themed($m-blue);
+      background: linear-gradient(
+        to bottom,
+        rgba(themed($m-highlight--comment), 0) 0%,
+        rgba(themed($m-highlight--comment), 1) 50%
+      );
+    }
+
+    > span {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      cursor: pointer;
+      min-height: 20px;
+      display: inline-block;
+      font-family: 'Inter', Helvetica, sans-serif;
     }
   }
+}
 
-  .m-comment--poster {
-    padding: 12px;
+// COMPACT
+// (e.g. activity modal)
+.m-comment--compact {
+  padding: 5px 30px 20px;
+
+  .minds-avatar {
+    margin: 0 10px 0 0 !important;
   }
+  .m-commentOwnerRow__text {
+    flex-direction: column;
+    align-items: flex-start;
 
-  ::ng-deep .m-comment__ownerRow {
-    min-width: 100%;
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-
-    .m-commentOwnerRow__text {
+    > div {
       display: flex;
-      align-items: center;
-      max-width: 100%;
       width: 100%;
-
-      .m-commentOwnerRow__dot {
-        padding: 0 5px;
-      }
-
-      [class*='m-commentOwnerRowItem__'] {
-        display: inline-block;
-        line-height: 20px;
-        font-size: 15px;
-        font-weight: 400;
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
-
-        &.m-commentOwnerRowItem__name,
-        &.m-commentOwnerRowItem__username {
-          flex: auto 0 1;
-          max-width: 35%;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        &.m-commentOwnerRowItem__name {
-          font-weight: 600;
-          .m-channel--badges {
-            li {
-              &:not(:first-child) {
-                padding-left: 0px;
-              }
-            }
-          }
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-        }
-        &.m-commentOwnerRowItem__username {
-          .m-channel--badges-activity {
-            vertical-align: text-top;
-            .m-channel--badges i {
-              padding-right: 3px;
-            }
-          }
-        }
-        &.m-commentOwnerRowItem__timestamp,
-        &.m-commentOwnerRowItem__edited,
-        &.m-commentOwnerRowItem__explicit {
-          flex: auto 0 0;
-        }
-        &.m-commentOwnerRowItem__explicit {
-          font-size: 18px;
-          @include m-theme() {
-            color: themed($m-red);
-          }
-        }
-        &.m-commentOwnerRowItem__edited {
-          padding-left: $spacing1;
-        }
-      }
-
-      // compensate for m-badges padding
-      .m-commentOwnerRowItem__username + .m-commentOwnerRow__dot {
-        padding-left: 1px;
-      }
+      max-width: 100%;
     }
 
-    .m-comment__avatarWrapper--compact {
-      align-self: flex-start;
+    .m-commentOwnerRowItem__name,
+    .m-commentOwnerRowItem__username {
+      max-width: 70%;
     }
   }
 
-  ::ng-deep m-translate {
-    display: block;
-    .m-translate__hasNav2020 {
-      &.m-translate__visible {
-        padding-top: 20px;
-      }
-      > * {
-        padding: 5px 0;
-      }
-    }
-    .m-translation-wrapper .message {
-      font-size: 15px;
-    }
+  .minds-body {
+    max-width: 100%;
+    margin-left: 10px;
   }
+}
 
-  .m-comment__matureScreen {
-    margin: 5px 0 10px 0;
-
-    span {
-      font-size: 15px;
-      line-height: 23px;
-      display: block;
-    }
-    span:first-child {
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-      }
-    }
-    span:last-child {
-      font-weight: 700;
-      cursor: pointer;
-      @include m-theme() {
-        color: themed($m-blue);
-      }
-      &:hover {
-        @include m-theme() {
-          color: themed($m-blue--contrast);
-        }
-      }
-    }
+.m-comment--focused {
+  margin-left: -4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  @include m-theme() {
+    border-left: 4px solid themed($m-blue);
   }
+}
 
-  .m-comment__messageWrapper {
-    ::ng-deep m-read-more--button {
-      span {
-        font-weight: 500;
-        font-size: 14px;
-        text-transform: capitalize;
-        letter-spacing: inherit;
+.m-comment--poster {
+  padding: 12px;
+}
 
-        @include m-theme() {
-          color: themed($m-textColor--secondary) !important;
-        }
-      }
-    }
-  }
+::ng-deep .m-comment__ownerRow {
+  min-width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
 
-  .m-comment__message {
-    display: inline;
-    vertical-align: middle;
-    font-size: 16px;
-    line-height: 20px;
-    white-space: pre-line;
-    word-break: break-word;
-  }
-
-  .m-comment__attachment > * {
-    margin-top: 8px;
-  }
-
-  .m-comment__toolbar {
-    position: relative;
-    margin: 10px 0;
+  .m-commentOwnerRow__text {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .m-commentToolbar__buttons {
-    display: flex;
-    flex-direction: row;
     align-items: center;
+    max-width: 100%;
+    width: 100%;
 
-    ::ng-deep {
-      .m-commentToolbarButton {
-        margin-right: 20px;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        cursor: pointer;
-
-        transition: 0.15s color ease-out;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        > a {
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
-
-          &:hover {
-            @include m-theme() {
-              color: themed($m-textColor--primary);
-            }
-          }
-
-          &.selected {
-            @include m-theme() {
-              color: themed($m-blue) !important;
-            }
-          }
-
-          &.selected:hover {
-            @include m-theme() {
-              color: themed($m-blue--contrast) !important;
-            }
-          }
-        }
-
-        span,
-        i {
-          font-size: 15px;
-          line-height: 20px;
-          vertical-align: middle;
-          font-weight: 500;
-        }
-      }
+    .m-commentOwnerRow__dot {
+      padding: 0 5px;
     }
-  }
 
-  .m-comment__repliesToggle {
-    margin: 5px 0 10px;
-    span {
-      font-size: 15px;
+    [class*='m-commentOwnerRowItem__'] {
+      display: inline-block;
       line-height: 20px;
-      font-weight: 500;
-      cursor: pointer;
-      @include m-theme() {
-        color: themed($m-link-text);
-      }
-    }
-  }
-
-  .m-edited-text {
-    vertical-align: middle;
-    font-size: 10px;
-    line-height: 13px;
-    font-weight: 500;
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-  }
-
-  .m-comment__timestamp {
-    min-height: 20px;
-    @include m-theme() {
-      color: themed($m-textColor--tertiary);
-    }
-  }
-
-  .m-comment {
-    [class*='.m-comment__avatar'] {
-      margin-left: 0;
-    }
-
-    .minds-avatar {
-      margin: 0;
-      min-width: 38px;
-      min-height: 38px;
-
-      img {
-        width: 36px;
-        height: 36px;
-        object-fit: cover;
-      }
-    }
-  }
-
-  // -----------------------------------
-  // MEATBALL SETTINGS MENU
-  // -----------------------------------
-  .m-comment__menuButton {
-    margin-right: $spacing2;
-    i {
-      &.m-commentMenuButtonIcon--desktop {
-        @media screen and (max-width: $max-mobile) {
-          display: none;
-        }
-      }
-      &.m-commentMenuButtonIcon--mobile {
-        display: none;
-        @media screen and (max-width: $max-mobile) {
-          display: block;
-        }
-      }
-      font-size: 23px;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+      font-size: 15px;
+      font-weight: 400;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
 
-      &:hover {
+      &.m-commentOwnerRowItem__name,
+      &.m-commentOwnerRowItem__username {
+        flex: auto 0 1;
+        max-width: 35%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      &.m-commentOwnerRowItem__name {
+        font-weight: 600;
+        .m-channel--badges {
+          li {
+            &:not(:first-child) {
+              padding-left: 0px;
+            }
+          }
+        }
         @include m-theme() {
           color: themed($m-textColor--primary);
         }
       }
+      &.m-commentOwnerRowItem__username {
+        .m-channel--badges-activity {
+          vertical-align: text-top;
+          .m-channel--badges i {
+            padding-right: 3px;
+          }
+        }
+      }
+      &.m-commentOwnerRowItem__timestamp,
+      &.m-commentOwnerRowItem__edited,
+      &.m-commentOwnerRowItem__explicit {
+        flex: auto 0 0;
+      }
+      &.m-commentOwnerRowItem__explicit {
+        font-size: 18px;
+        @include m-theme() {
+          color: themed($m-red);
+        }
+      }
+      &.m-commentOwnerRowItem__edited {
+        padding-left: $spacing1;
+      }
+    }
+
+    // compensate for m-badges padding
+    .m-commentOwnerRowItem__username + .m-commentOwnerRow__dot {
+      padding-left: 1px;
     }
   }
 
-  // -----------------------------------
-  // subcomments
-  .m-comment {
-    .m-comment {
-      padding: 8px 0;
+  .m-comment__avatarWrapper--compact {
+    align-self: flex-start;
+  }
+}
+
+::ng-deep m-translate {
+  display: block;
+  .m-translate__hasNav2020 {
+    &.m-translate__visible {
+      padding-top: 20px;
+    }
+    > * {
+      padding: 5px 0;
     }
   }
+  .m-translation-wrapper .message {
+    font-size: 15px;
+  }
+}
 
-  // -----------------------------------
-  // ERRORS
-  // -----------------------------------
-  .minds-comment {
-    &.m-comment--error {
-      opacity: 0.65;
+.m-comment__matureScreen {
+  margin: 5px 0 10px 0;
+
+  span {
+    font-size: 15px;
+    line-height: 23px;
+    display: block;
+  }
+  span:first-child {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
     }
-
-    .m-comment--error-label {
+  }
+  span:last-child {
+    font-weight: 700;
+    cursor: pointer;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+    &:hover {
       @include m-theme() {
-        color: themed($m-red);
-      }
-
-      i.material-icons {
-        font-size: 1.2em;
-      }
-
-      > * {
-        vertical-align: middle;
+        color: themed($m-blue--contrast);
       }
     }
+  }
+}
 
-    // -----------------------------------
-    .m-comment--username-wrapper {
-      min-width: 150px;
-      overflow-x: hidden;
-      width: calc(100% - 100px);
-      text-overflow: ellipsis;
-      white-space: nowrap;
+.m-comment__messageWrapper {
+  ::ng-deep m-read-more--button {
+    span {
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: capitalize;
+      letter-spacing: inherit;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary) !important;
+      }
+    }
+  }
+}
+
+.m-comment__message {
+  display: inline;
+  vertical-align: middle;
+  font-size: 16px;
+  line-height: 20px;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.m-comment__attachment > * {
+  margin-top: 8px;
+}
+
+.m-comment__toolbar {
+  position: relative;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.m-commentToolbar__buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  ::ng-deep {
+    .m-commentToolbarButton {
+      margin-right: 20px;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      cursor: pointer;
+
+      transition: 0.15s color ease-out;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      > a {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        &:hover {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+
+        &.selected {
+          @include m-theme() {
+            color: themed($m-blue) !important;
+          }
+        }
+
+        &.selected:hover {
+          @include m-theme() {
+            color: themed($m-blue--contrast) !important;
+          }
+        }
+      }
+
+      span,
+      i {
+        font-size: 15px;
+        line-height: 20px;
+        vertical-align: middle;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.m-comment__repliesToggle {
+  margin: 5px 0 10px;
+  span {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    @include m-theme() {
+      color: themed($m-link-text);
+    }
+  }
+}
+
+.m-edited-text {
+  vertical-align: middle;
+  font-size: 10px;
+  line-height: 13px;
+  font-weight: 500;
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}
+
+.m-comment__timestamp {
+  min-height: 20px;
+  @include m-theme() {
+    color: themed($m-textColor--tertiary);
+  }
+}
+
+.m-comment {
+  [class*='.m-comment__avatar'] {
+    margin-left: 0;
+  }
+
+  .minds-avatar {
+    margin: 0;
+    min-width: 38px;
+    min-height: 38px;
+
+    img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+    }
+  }
+}
+
+// -----------------------------------
+// MEATBALL SETTINGS MENU
+// -----------------------------------
+.m-comment__menuButton {
+  margin-right: $spacing2;
+  i {
+    &.m-commentMenuButtonIcon--desktop {
+      @media screen and (max-width: $max-mobile) {
+        display: none;
+      }
+    }
+    &.m-commentMenuButtonIcon--mobile {
+      display: none;
+      @media screen and (max-width: $max-mobile) {
+        display: block;
+      }
+    }
+    font-size: 23px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &:hover {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}
+
+// -----------------------------------
+// subcomments
+.m-comment {
+  .m-comment {
+    padding: 8px 0;
+  }
+}
+
+// -----------------------------------
+// ERRORS
+// -----------------------------------
+.minds-comment {
+  &.m-comment--error {
+    opacity: 0.65;
+  }
+
+  .m-comment--error-label {
+    @include m-theme() {
+      color: themed($m-red);
+    }
+
+    i.material-icons {
+      font-size: 1.2em;
+    }
+
+    > * {
+      vertical-align: middle;
     }
   }
 
+  // -----------------------------------
+  .m-comment--username-wrapper {
+    min-width: 150px;
+    overflow-x: hidden;
+    width: calc(100% - 100px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
