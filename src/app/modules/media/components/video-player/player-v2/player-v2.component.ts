@@ -18,7 +18,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../../services/session';
 import { AutoProgressVideoService } from '../../video/auto-progress-overlay/auto-progress-video.service';
-import { map, take } from 'rxjs/operators';
 import { VjsPlayerComponent } from './vjs-player/vjs-player.component';
 import { VideoJSCustomMetadata } from './vjs-player/vjs-player.types';
 
@@ -48,7 +47,8 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
 
   /**
    * Controls events
-   * TODO: Maybe replace these with mouseover and mousein - it controls when the topbar shows
+   * TODO: front#5957 Maybe replace these with mouseover and mousein
+   * it controls when the topbar shows.
    */
   @Output() onControlsShown: EventEmitter<any> = new EventEmitter<any>();
   @Output() onControlsHidden: EventEmitter<any> = new EventEmitter<any>();
@@ -143,8 +143,7 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.autoProgress.cancel(); // hide autoplay window
-
+    // this.autoProgress.cancel(); // hide autoplay window
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
@@ -152,7 +151,6 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
 
   @Input('guid')
   set guid(guid: string) {
-    const oldGuid = this.service.guid;
     this.service.setGuid(guid);
   }
 
@@ -256,7 +254,7 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
         return;
       }
 
-      this.dimensions.next({
+      this.dimensions.emit({
         width: metadata.videoWidth,
         height: metadata.videoHeight,
       });
@@ -279,7 +277,7 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
    * @returns { void }
    */
   public onEnded(): void {
-    this.autoProgress.next();
+    // this.autoProgress.next();
   }
 
   /**
@@ -299,13 +297,13 @@ export class MindsVideoPlayerV2Component implements OnChanges, OnDestroy {
    * @returns { void }
    */
   public onSeeking(): void {
-    this.subscriptions.push(
-      this.autoProgress.timer$.pipe(take(1)).subscribe(timer => {
-        if (timer > 0) {
-          this.autoProgress.cancel();
-        }
-      })
-    );
+    // this.subscriptions.push(
+    //   this.autoProgress.timer$.pipe(take(1)).subscribe(timer => {
+    //     if (timer > 0) {
+    //       this.autoProgress.cancel();
+    //     }
+    //   })
+    // );
   }
 
   /**

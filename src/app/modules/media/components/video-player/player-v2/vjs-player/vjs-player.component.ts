@@ -12,8 +12,8 @@ import {
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
 import {
-  VideoJSCustomAutoplayValue,
   VideoJSCustomMetadata,
+  VideoJSCustomOptions,
 } from './vjs-player.types';
 // import { VjsAdsPlugin }  from './plugins/ads-plugin';
 
@@ -29,9 +29,9 @@ import {
       controls
       playsinline
       preload="none"
-      [poster]="options.poster ?? false"
-      [autoplay]="options.autoplay ?? false"
-      [muted]="options.muted ?? false"
+      [poster]="options?.poster ?? false"
+      [autoplay]="options?.autoplay ?? false"
+      [muted]="options?.muted ?? false"
     ></video>
   `,
   styleUrls: ['./vjs-player.component.ng.scss'],
@@ -69,18 +69,7 @@ export class VjsPlayerComponent implements AfterViewInit, OnDestroy {
    * Options for videojs. See more at:
    * https://videojs.com/guides/options/
    */
-  @Input() protected options: Partial<{
-    fluid: boolean; // dynamic aspect ratio.
-    aspectRatio: string; // aspect ratio for video.
-    autoplay: boolean; // whether autoplay should be enabled.
-    sources: {
-      src: string;
-      type: string;
-    }[]; // sources for player.
-    poster: string; // poster to display on video before play.
-    muted: VideoJSCustomAutoplayValue; // player muted state.
-    liveui: boolean; // enables v2 livestream UI.
-  }>;
+  @Input() protected options: VideoJSCustomOptions;
 
   /** Player object - typing should be improved when types for videojs@8.x are released */
   private player: Player | any;
@@ -142,7 +131,7 @@ export class VjsPlayerComponent implements AfterViewInit, OnDestroy {
    * @returns { boolean } true if playing.
    */
   public isPlaying(): boolean {
-    return !this.player.pause();
+    return !this.player.paused();
   }
 
   /**

@@ -1,5 +1,5 @@
 <ng-container *ngIf="showPlayer; else placeholder">
-  <!-- TODO: Test this and created and CSS -->
+  <!-- TODO: Test this and created and CSS front#5957 -->
   <span
     class="m-videoPlayer__notice--error"
     *ngIf="status === 'failed' && !(awaitingTranscode | async)"
@@ -18,7 +18,6 @@
       [options]="{
         aspectRatio: '16:9',
         autoplay: options.autoplay,
-        controls: options.hideControls,
         muted: options.muted,
         sources: sources$ | async,
         poster: service.poster$ | async
@@ -53,4 +52,4 @@
     </i>
   </div>
 </ng-template>
-<m-autoProgress__overlay *ngIf="isModal"> </m-autoProgress__overlay>
+<!-- <m-autoProgress__overlay *ngIf="isModal"> </m-autoProgress__overlay> -->
