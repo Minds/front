@@ -6,21 +6,22 @@
   }
 
   .inProgress {
-    animation: gelatine 0.5s infinite;
+    animation: 0.5s gelatine 0.25s;
   }
 
   @keyframes gelatine {
     from,
     to {
       transform: scale(1, 1);
-      opacity: 0.9;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1.0);
+      opacity: 1.0;
     }
     25% {
       transform: scale(0.9, 1.1);
     }
     50% {
       transform: scale(1.1, 0.9);
-      opacity: 1;
+      opacity: 0.9;
     }
     75% {
       transform: scale(0.95, 1.05);

@@ -647,7 +647,7 @@ m-text-input--autocomplete-menu {
       }
       a:hover {
         @include m-theme() {
-          color: themed($m-textColor--secondary);
+          color: themed($m-textColor--primary);
           background-color: themed($m-bgColor--secondary);
         }
       }
