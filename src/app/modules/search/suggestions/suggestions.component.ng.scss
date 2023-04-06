@@ -25,7 +25,7 @@
       box-shadow: none;
       border-bottom: 1px solid themed($m-borderColor--primary);
       border-right: 1px solid themed($m-borderColor--primary);
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
 
     @media screen and (max-width: $max-mobile) {

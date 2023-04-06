@@ -576,18 +576,18 @@
     }
 
     &.m-activityContentText__body--shortStatus {
-      @include heading2Medium;
+      @include body2Regular;
       ::ng-deep m-translate .message span,
       ::ng-deep m-readMore span {
-        @include heading2Medium;
+        @include body2Regular;
       }
     }
 
     &.m-activityContentText__body--mediumStatus {
-      @include heading4Medium;
+      @include body2Regular;
       ::ng-deep m-translate .message span,
       ::ng-deep m-readMore span {
-        @include heading4Medium;
+        @include body2Regular;
       }
     }
 
