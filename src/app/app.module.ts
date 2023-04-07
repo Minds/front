@@ -61,6 +61,7 @@ import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
 import { DevToolsModule } from './modules/devtools/devtools.module';
 import { SupermindModule } from './modules/supermind/supermind.module';
+import { AffiliatesModule } from './modules/affiliates/affiliates.module';
 
 @NgModule({
   bootstrap: [Minds],
@@ -112,6 +113,7 @@ import { SupermindModule } from './modules/supermind/supermind.module';
     CompassModule,
     DevToolsModule,
     SupermindModule,
+    AffiliatesModule,
     //last due to :username route
     AppRoutingModule,
   ],

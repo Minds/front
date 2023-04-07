@@ -1,0 +1,145 @@
+<!-- ------------------------>
+<!-- EARN METHOD: REFERRAL -->
+<!-- ------------------------>
+<ng-container *ngIf="earnMethod === 'referral'">
+  <span class="m-affiliatesShare__title">
+    <ng-container i18n="@@AFFILIATES__SHARE__TITLE__REFERRAL"
+      >Invite to Minds</ng-container
+    >
+  </span>
+  <div class="m-affiliatesShare__buttons">
+    <!-- -------------------------->
+    <!-- BUTTON: Twitter -->
+    <!-- -------------------------->
+    <div
+      class="m-affiliatesShareButtons__button m-affiliatesShareButtons__button--twitter"
+    >
+      <m-button size="large" iconOnly="true" (onAction)="openTwitter()">
+        <img src="{{ cdnAssetsUrl }}assets/icons/twitter.svg" />
+      </m-button>
+      <span i18n="@@M_SHARE__BUTTON_TWITTER">Twitter</span>
+    </div>
+    <!-- -------------------------->
+    <!-- BUTTON: Facebook -->
+    <!-- -------------------------->
+    <div
+      class="m-affiliatesShareButtons__button m-affiliatesShareButtons__button--facebook"
+    >
+      <m-button size="large" iconOnly="true" (onAction)="openFacebook()">
+        <img src="{{ cdnAssetsUrl }}assets/icons/facebook.svg" />
+      </m-button>
+      <span i18n="@@M_SHARE__BUTTON_FACEBOOK">Facebook</span>
+    </div>
+    <!-- -------------------------->
+    <!-- BUTTON: Email -->
+    <!-- -------------------------->
+    <div
+      class="m-affiliatesShareButtons__button m-affiliatesShareButtons__button--email"
+    >
+      <m-button size="large" iconOnly="true" (onAction)="openEmail()">
+        <m-icon iconId="email"></m-icon>
+      </m-button>
+      <span i18n="@@M__COMMON__EMAIL">Email</span>
+    </div>
+    <!-- -------------------------->
+    <!-- BUTTON: Messages -->
+    <!-- -------------------------->
+    <div
+      *ngIf="isMobile()"
+      class="m-affiliatesShareButtons__button m-affiliatesShareButtons__button--sms"
+    >
+      <m-button size="large" iconOnly="true" (onAction)="openSMS()">
+        <m-icon iconId="chat_bubble"></m-icon>
+      </m-button>
+      <span i18n="@@COMMON__MESSAGES">Messages</span>
+    </div>
+  </div>
+  <span
+    class="m-affiliatesShare__description"
+    i18n="@@AFFILIATES__SHARE__DESCRIPTION__REFERRAL"
+    >Your sign up invite has an expiration of 1 year.</span
+  >
+</ng-container>
+<!-- -------------------------->
+<!-- EARN METHOD: AFFILIATE  -->
+<!-- -------------------------->
+<ng-container *ngIf="earnMethod === 'affiliate'">
+  <span class="m-affiliatesShare__title">
+    <ng-container i18n="@@AFFILIATES__SHARE__TITLE__AFFILIATE"
+      >Earn with affiliate link</ng-container
+    >
+  </span>
+  <div class="m-affiliatesShare__buttons">
+    <!-- -------------------------->
+    <!-- BUTTON: Minds+ -->
+    <!-- -------------------------->
+    <div class="m-affiliatesShareButtons__button">
+      <m-button
+        size="large"
+        iconOnly="true"
+        (onAction)="copyUrlToClipboard('plus')"
+        ><m-icon iconId="add_to_queue"></m-icon
+      ></m-button>
+      <span i18n="@@COMMON__MINDS+">Minds+</span>
+    </div>
+    <!-- -------------------------->
+    <!-- BUTTON: Boost -->
+    <!-- -------------------------->
+    <div class="m-affiliatesShareButtons__button">
+      <m-button
+        size="large"
+        iconOnly="true"
+        (onAction)="copyUrlToClipboard('boost/boost-console')"
+        ><m-icon iconId="trending_up"></m-icon
+      ></m-button>
+      <span i18n="@@COMMON__BOOST">Boost</span>
+    </div>
+    <!-- -------------------------->
+    <!-- BUTTON: Pro -->
+    <!-- -------------------------->
+    <div class="m-affiliatesShareButtons__button">
+      <m-button
+        size="large"
+        iconOnly="true"
+        (onAction)="copyUrlToClipboard('pro')"
+      >
+        <img
+          *ngIf="themeService.isDark$ | async"
+          src="{{ cdnAssetsUrl }}assets/badges/proDark.svg"
+        />
+        <img
+          *ngIf="!(themeService.isDark$ | async)"
+          src="{{ cdnAssetsUrl }}assets/badges/proLight.svg"
+        />
+      </m-button>
+      <span i18n="@@COMMON__MINDS_PRO">Minds Pro</span>
+    </div>
+    <!-- -------------------------->
+    <!-- BUTTON: Creator -->
+    <!-- -------------------------->
+    <div class="m-affiliatesShareButtons__button">
+      <m-button size="large" iconOnly="true" (onAction)="copyUrlToClipboard()"
+        ><m-icon iconId="palette"></m-icon
+      ></m-button>
+      <span i18n="@@COMMON__CREATOR">Creator</span>
+    </div>
+  </div>
+
+  <span
+    class="m-affiliatesShare__description"
+    i18n="@@AFFILIATES__SHARE__DESCRIPTION__REFERRAL"
+    >Your link has an expiration of 72 hours.</span
+  >
+</ng-container>
+<!-- -------------------------->
+<!-- COPY LINK -->
+<!-- (BOTH REFERRAL AND AFFILIATE) -->
+<!-- -------------------------->
+<m-button
+  solid="true"
+  class="m-affiliatesShare__copyButton"
+  (onAction)="copyUrlToClipboard()"
+>
+  <i class="material-icons m-affiliatesShareButton__icon">content_copy</i>
+  <ng-container ii18n="@@AFFILIATES__SHARE__COPY_LINK">Copy link</ng-container>
+</m-button>

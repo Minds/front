@@ -1,0 +1,56 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  margin-bottom: $spacing16;
+  .m-affiliatesEarnings {
+    &__title {
+      display: block;
+      @include heading2Bold;
+      margin: 0;
+      padding: 0 0 $spacing4;
+    }
+    &__description {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      margin: 0;
+      padding: 0 0 $spacing4;
+    }
+    &__buttons {
+      display: flex;
+      flex-direction: row;
+      padding: 0 0 $spacing4;
+
+      @media screen and (max-width: $max-mobile) {
+        flex-flow: column nowrap;
+        ::ng-deep m-button {
+          width: 100%;
+          &:first-child {
+            margin: 0;
+            padding-bottom: $spacing4;
+          }
+          .m-button {
+            width: 100%;
+          }
+        }
+      }
+      ::ng-deep m-button {
+        display: block;
+        margin-right: 0;
+
+        &:first-child {
+          margin: 0 $spacing4 0 0;
+        }
+      }
+    }
+    &__note {
+      @include body3Regular;
+      font-size: 12;
+      line-height: 20px;
+      font-weight: 400;
+      max-width: 350px;
+    }
+  }
+}

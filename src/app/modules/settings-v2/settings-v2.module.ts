@@ -73,6 +73,8 @@ import { SettingsV2NostrComponent } from './account/nostr/nostr.component';
 import { SupermindExperimentGuard } from '../experiments/guards/supermind-experiment.guard';
 import { SettingsV2PaymentHistoryComponent } from './payments/payment-history/payment-history.component';
 import { PathMatch } from '../../common/types/angular.types';
+import { AffiliatesModule } from '../affiliates/affiliates.module';
+import { SettingsV2AffiliatesComponent } from './affiliates/affiliates.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -396,6 +398,17 @@ const SETTINGS_V2_ROUTES: Routes = [
         ],
       },
       {
+        path: 'affiliates-program',
+        component: SettingsV2Component,
+        data: {
+          isMenu: false,
+          singleLevelMenuId: 'affiliates-program',
+          title: 'Affiliates Program',
+          description:
+            'You can share links with friends and audience members to purchase products on Minds through customized links and earn money on qualifying purchases.',
+        },
+      },
+      {
         path: 'other',
         component: SettingsV2Component,
         data: {
@@ -547,6 +560,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     LanguageModule,
     NewsfeedModule,
     MessengerModule,
+    AffiliatesModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -596,6 +610,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2MessengerComponent,
     SettingsV2WalletComponent,
     SettingsV2NostrComponent,
+    SettingsV2AffiliatesComponent,
   ],
   providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],

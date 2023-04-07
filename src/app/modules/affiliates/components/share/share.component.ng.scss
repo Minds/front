@@ -1,0 +1,123 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: $spacing8 $spacing4;
+
+  .m-affiliatesShare {
+    &__title {
+      display: block;
+      @include heading3Medium;
+      padding-bottom: $spacing9;
+    }
+    &__buttons {
+      display: flex;
+      flex-flow: row nowrap;
+      padding-bottom: $spacing6;
+    }
+    &Buttons__button {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      text-align: center;
+
+      ::ng-deep m-button {
+        margin: 0 $spacing3;
+        .m-button {
+          width: 64px;
+          height: 64px;
+
+          i {
+            font-size: 32px !important;
+          }
+        }
+      }
+
+      > span {
+        @include body1Regular;
+        display: block;
+        padding-top: $spacing1;
+      }
+
+      &--twitter {
+        ::ng-deep m-button {
+          .m-button,
+          .m-button:hover {
+            img {
+              width: $spacing8;
+            }
+            @include m-theme() {
+              background-color: themed($m-twitter-2023) !important;
+              border-color: themed($m-twitter-2023) !important;
+            }
+          }
+        }
+      }
+      &--facebook {
+        ::ng-deep m-button {
+          .m-button,
+          .m-button:hover {
+            overflow: hidden;
+            img {
+              height: $spacing12;
+              position: absolute;
+              top: $spacing4;
+            }
+            @include m-theme() {
+              background-color: themed($m-facebook-2023) !important;
+              border-color: themed($m-facebook-2023) !important;
+            }
+          }
+        }
+      }
+      &--email {
+        ::ng-deep m-button {
+          .m-button,
+          .m-button:hover {
+            background-color: #334155 !important;
+            border-color: #334155 !important;
+          }
+        }
+      }
+      &--sms {
+        ::ng-deep m-button {
+          .m-button,
+          .m-button:hover {
+            @include m-theme() {
+              background-color: themed($m-sms) !important;
+              border-color: themed($m-sms) !important;
+            }
+          }
+        }
+      }
+    }
+    &__description {
+      display: block;
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      padding-bottom: $spacing7;
+    }
+  }
+  ::ng-deep m-button {
+    &.m-affiliatesShare__copyButton {
+      width: 100%;
+      margin-right: 0;
+
+      .m-button {
+        width: 100%;
+      }
+
+      .m-affiliatesShareButton__icon {
+        font-size: 16px !important;
+        margin-right: $spacing2 !important;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+}
