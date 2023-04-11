@@ -15,6 +15,7 @@ import { ContentSettingsComponent } from '../../content-settings/content-setting
 import { ModalService } from '../../../services/ux/modal.service';
 import { ComponentType } from '@angular/cdk/overlay';
 import { Session } from '../../../services/session';
+import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 
 @Component({
   selector: 'm-discovery__settingsButton',
@@ -30,6 +31,7 @@ export class DiscoverySettingsButtonComponent implements OnInit {
     private modalService: ModalService,
     private injector: Injector,
     public session: Session,
+    public onboardingV4: OnboardingV4Service,
     @Optional() @SkipSelf() private feeds: DiscoveryFeedsService,
     @Optional() @SkipSelf() private trends: DiscoveryTrendsService
   ) {}
@@ -39,12 +41,23 @@ export class DiscoverySettingsButtonComponent implements OnInit {
     // so that we can enable the contentSettingsFlag
     this.contentSettingsFlag = false;
 
-    if (this.contentSettingsFlag) {
-      this.modalType = 'content-settings';
-    }
+    // ojm remove comment
+    // ojm just using this for easy access to tags modal
+    // if (this.contentSettingsFlag) {
+    this.modalType = 'content-settings';
+    // }
+  }
+
+  ojm(): void {
+    this.onboardingV4.startOnboarding();
   }
 
   openSettingsModal(e: MouseEvent): void {
+    // ojm remove ALL changes to this file after hijacking for onboardingv4
+
+    this.ojm();
+    return;
+
     let component: ComponentType<
       | DiscoveryFeedsSettingsComponent
       | DiscoveryTagSettingsComponent

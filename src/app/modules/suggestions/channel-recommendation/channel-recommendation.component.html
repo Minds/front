@@ -7,7 +7,7 @@
     (mResized)="onResized($event)"
     *ngIf="(recommendations$ | async).length"
   >
-    <header>
+    <header *ngIf="!isOnboarding">
       <h3>
         {{ title }}
       </h3>

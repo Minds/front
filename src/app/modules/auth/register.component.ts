@@ -16,7 +16,7 @@ import { SidebarNavigationService } from '../../common/layout/sidebar/navigation
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
-import { ContentSettingsModalService } from '../content-settings/content-settings-modal.service';
+import { OnboardingV4Service } from '../onboarding-v4/onboarding-v4.service';
 
 /**
  * Standalone register page for new users to sign up
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private pageLayoutService: PageLayoutService,
     private authRedirectService: AuthRedirectService,
     private emailCodeExperiment: EmailCodeExperimentService,
-    private contentSettingsModal: ContentSettingsModalService
+    private onboardingV4Service: OnboardingV4Service
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -155,12 +155,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
     if (!this.emailCodeExperiment.isActive()) {
-      this.contentSettingsModal.open({
-        hideCompass: true,
-        onSave: () => {
-          this.contentSettingsModal.dismiss();
-        },
-      });
+      // ojm test this
+      this.onboardingV4Service.startOnboarding();
     }
   }
 

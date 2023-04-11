@@ -1,0 +1,50 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__mobileTopBar">
+    <h4 class="m-channelRecommendationModalHeader__mobileTopbar">
+      ojm test mobile topbar
+    </h4>
+    <span
+      class="m-modalV2MobileTopBar__button"
+      i18n="@@COMMON__SKIP"
+      (click)="onSkip()"
+      >Skip ojm</span
+    >
+  </div>
+  <div class="m-channelRecommendationModal__header m-modalV2__header">
+    <h4>{{ titleText }}</h4>
+    <p
+      class="m-channelRecommendationModalHeader__subtitle"
+      i18n="@@CHANNEL_RECOMMENDATION_MODAL__SUBTITLE"
+    >
+      You’ll see posts from people you subscribe to on your newsfeed.
+    </p>
+  </div>
+  <m-channelRecommendation
+    class="m-channelRecommendationModal__body m-modalV2__body"
+    location="newsfeed"
+    isOnboarding="true"
+  ></m-channelRecommendation>
+  <div class="m-channelRecommendationModal__footer m-modalV2__footer">
+    <m-button
+      *ngIf="!isMandatory"
+      class="m-channelRecommendationModal__skipButton"
+      (onAction)="onSkip()"
+      data-ref="m-channelRecommendationModal__skipButton"
+      i18n="@@COMMON__SKIP"
+      >Skip</m-button
+    >
+    <m-button
+      class="m-channelRecommendationModal__continueButton"
+      color="blue"
+      solid="true"
+      (onAction)="onContinue()"
+      i18n="@@COMMON__CONTINUE"
+      data-ref="m-channelRecommendationModal__continueButton"
+      >Continue</m-button
+    >
+  </div>
+</div>
+<!-- ----------------------------------------- -->
+<!-- MODAL CLOSE -->
+<!-- ----------------------------------------- -->
+<m-modalCloseButton *ngIf="!isMandatory"></m-modalCloseButton>

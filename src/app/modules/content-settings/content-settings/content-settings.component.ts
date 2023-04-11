@@ -21,6 +21,9 @@ export class ContentSettingsComponent implements OnInit, OnDestroy {
   /** @type { boolean } whether compass tab should be hidden */
   public hideCompass: boolean = false;
 
+  /** @type { boolean } whether the modal is being shown during onboarding */
+  public isOnboarding: boolean = false;
+
   constructor(
     public service: ContentSettingsService,
     protected compassService: CompassService,
@@ -34,14 +37,31 @@ export class ContentSettingsComponent implements OnInit, OnDestroy {
   private onSaveIntent: () => void = noOp;
 
   /**
+   * ojm update docblock
    * Set modal data
    * @param {{ function }} onSave - function to be called on save.
-   * @param {{ boolean }} showCompass - whether compass options should be shown.
+   * @param {{ boolean }} hideCompass - whether compass options should be shown.
+   * @param {{ boolean }} isOnboarding - whether modal is being shown during onboarding
    * @returns { void }
    */
-  setModalData({ onSave, hideCompass = false }): void {
+  setModalData({ onSave, hideCompass = false, isOnboarding = false }): void {
     this.onSaveIntent = onSave || noOp;
     this.hideCompass = hideCompass ?? false;
+    this.isOnboarding = isOnboarding ?? false;
+
+    // Onboarding only uses the tags tab
+    if (this.isOnboarding) {
+      this.hideCompass = true;
+    }
+  }
+
+  getModalOptions() {
+    return {
+      canDismiss: async () => {
+        // Hashtag selection is mandatory for onboarding
+        return !this.isOnboarding;
+      },
+    };
   }
 
   ngOnInit(): void {

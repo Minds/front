@@ -10,6 +10,9 @@ import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
 import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
+import { Session } from '../../../services/session';
+import noOp from '../../../helpers/no-op';
+import { OnboardingTagsExperimentService } from '../../experiments/sub-services/onboarding-tags-experiment.service';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -21,11 +24,12 @@ const listAnimation = trigger('listAnimation', [
     animate('200ms ease-out', style({ height: 0, opacity: 0 }))
   ),
 ]);
-
 /**
  * Displays channel recommendations
  *
  * See it in the newsfeed
+ *
+ * It may also be used as a modal during onboarding
  */
 @Component({
   selector: 'm-channelRecommendation',
@@ -71,6 +75,10 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   listSize$: BehaviorSubject<number> = new BehaviorSubject(4);
 
+  /** @type { boolean } whether this is being shown as a modal during onboarding */
+  @Input()
+  isOnboarding: boolean = false;
+
   constructor(
     private api: ApiService,
     public experiments: ExperimentsService,
@@ -81,6 +89,8 @@ export class ChannelRecommendationComponent implements OnInit {
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
   ) {}
 
+  // ojm see this for recs
+  // https://www.minds.com/api/v3/recommendations?location=newsfeed&&currentChannelUserGuid=undefined&limit=12
   ngOnInit(): void {
     if (this.location) {
       this.api
