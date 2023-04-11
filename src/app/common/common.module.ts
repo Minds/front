@@ -177,6 +177,7 @@ import { BoostFeedService } from '../modules/newsfeed/services/boost-feed.servic
 import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.component';
 import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/navigation-v2.component';
 import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-content-dot/new-content-dot.component';
+import { ChatwootWidgetComponent } from './components/chatwoot-widget/chatwoot-widget.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -279,6 +280,7 @@ const MINDS_COMMON_COMPONENTS = [
   ChipBadgeComponent,
   BoostedFlagComponent,
   SidebarNavigationNewContentDotComponent,
+  ChatwootWidgetComponent,
 ];
 // ------------------------------------
 // ------------------------------------
