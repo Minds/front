@@ -66,5 +66,5 @@
 
 <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
 <m-toaster></m-toaster>
-<m-joinBanner *ngIf="!isMobileOrTablet()"></m-joinBanner>
-<m-appPrompt *ngIf="isMobileOrTablet()"></m-appPrompt>
+<!-- <m-appPrompt *ngIf="isMobileOrTablet()"></m-appPrompt> -->
+<m-chatwootWidget *ngIf="isChatwootExperimentActive()"></m-chatwootWidget>
