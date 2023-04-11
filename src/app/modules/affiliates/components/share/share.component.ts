@@ -53,7 +53,6 @@ export class AffiliatesShareComponent {
   copyUrlToClipboard(segment?: string) {
     let url;
     if (segment) {
-      // ojm note this redirects and strips the username from the url :(
       url = `${this.siteUrl}${segment}?referrer=${this.referrerUsername}`;
     } else {
       url = this.shareUrl;

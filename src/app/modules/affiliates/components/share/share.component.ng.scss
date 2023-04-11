@@ -67,7 +67,7 @@
             }
             @include m-theme() {
               background-color: themed($m-facebook-2023) !important;
-              border-color: themed($m-facebook-2023) !important;
+              border-color: transparent !important;
             }
           }
         }
@@ -78,6 +78,7 @@
           .m-button:hover {
             background-color: #334155 !important;
             border-color: #334155 !important;
+            color: white !important;
           }
         }
       }

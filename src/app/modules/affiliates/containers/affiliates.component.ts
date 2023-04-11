@@ -31,8 +31,5 @@ export class AffiliatesComponent {
     }
 
     this.referrerUsername = this.session.getLoggedInUser().username;
-
-    // ojm todo: get this from service/backend and make sure it's in cents
-    this.totalEarnings = 12378;
   }
 }

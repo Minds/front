@@ -506,7 +506,7 @@ export class SettingsV2Component implements OnInit {
   }
 
   shouldShowReferralsMenuItem(): boolean {
-    return !this.shouldShowAffiliatesMenuItem;
+    return !this.shouldShowAffiliatesMenuItem();
   }
 
   private addSupermindSettings(): void {
