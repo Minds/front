@@ -2,7 +2,9 @@
   class="m-comment minds-comment minds-block"
   [class.m-comment--error]="error"
   [class.m-comment--compact]="_compact"
-  [class.m-comment--featured]="!editing && comment.ownerObj?.plus"
+  [class.m-comment--featured]="
+    !editing && comment.ownerObj?.plus && !isNotificationPreview
+  "
 >
   <div class="m-comment__row--top" [class.m-comment--focused]="comment.focused">
     <!-- -------------------------------- -->
