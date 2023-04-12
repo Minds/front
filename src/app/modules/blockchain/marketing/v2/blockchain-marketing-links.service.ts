@@ -3,9 +3,7 @@ import { Inject, Injectable, Injector } from '@angular/core';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { OnchainTransferModalService } from '../../../wallet/components/components/onchain-transfer/onchain-transfer.service';
-import { EarnModalService } from '../../earn/earn-modal.service';
 import { UniswapModalService } from '../../token-purchase/uniswap/uniswap-modal.service';
-import { Web3WalletService } from '../../web3-wallet.service';
 
 /**
  * Manages the opening of various modals and links on blockchain marketing pages.
@@ -18,30 +16,12 @@ export class BlockchainMarketingLinksService {
   constructor(
     private composerModal: ComposerModalService,
     private injector: Injector,
-    private web3WalletService: Web3WalletService,
-    private earnModalService: EarnModalService,
     private uniswapModal: UniswapModalService,
     private onchainTransferModal: OnchainTransferModalService,
     @Inject(DOCUMENT) private document: Document,
     configs: ConfigsService
   ) {
     this.siteUrl = configs.get('site_url');
-  }
-
-  /**
-   * Open earn modal.
-   * @returns { Promise<BlockchainMarketingLinksService> }
-   */
-  public async openEarnModal(): Promise<BlockchainMarketingLinksService> {
-    try {
-      await this.earnModalService.open();
-    } catch (e) {
-      if (e === 'Dismissed modal') {
-        return this; // do nothing, intentionally thrown.
-      }
-      console.error(e);
-    }
-    return this;
   }
 
   /**

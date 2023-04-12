@@ -536,9 +536,11 @@ export class WireV2Service implements OnDestroy {
       this.upgradeType$,
       this.upgradeInterval$,
       this.type$,
+      this.isUpgrade$,
     ]).pipe(
-      map(([upgradeType, upgradeInterval, paymentType]) => {
+      map(([upgradeType, upgradeInterval, paymentType, isUpgrade]) => {
         return (
+          isUpgrade &&
           this.upgrades[upgradeType][upgradeInterval].can_have_trial &&
           paymentType === 'usd'
         );

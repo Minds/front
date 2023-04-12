@@ -178,6 +178,7 @@ import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.com
 import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/navigation-v2.component';
 import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-content-dot/new-content-dot.component';
 import { TopbarAlertComponent } from './components/topbar-alert/topbar-alert.component';
+import { ChatwootWidgetComponent } from './components/chatwoot-widget/chatwoot-widget.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -281,6 +282,7 @@ const MINDS_COMMON_COMPONENTS = [
   BoostedFlagComponent,
   SidebarNavigationNewContentDotComponent,
   TopbarAlertComponent,
+  ChatwootWidgetComponent,
 ];
 // ------------------------------------
 // ------------------------------------

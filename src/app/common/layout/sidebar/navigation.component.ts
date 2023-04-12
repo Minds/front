@@ -21,7 +21,6 @@ import { ConfigsService } from '../../services/configs.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
@@ -77,7 +76,6 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private boostModalService: BoostModalLazyService,
-    private earnModalService: EarnModalService,
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private authModal: AuthModalService,
@@ -153,11 +151,6 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
 
   toggle(): void {
     this.sidebarNavigationService.toggle();
-  }
-
-  async openEarnModal() {
-    this.toggle();
-    await this.earnModalService.open();
   }
 
   async openBoostModal() {
