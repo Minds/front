@@ -6,7 +6,7 @@ import { ObjectLocalStorageService } from '../../services/object-local-storage.s
 import { SiteService } from '../../services/site.service';
 
 /** Array of alert keys */
-export const ALERT_KEYS: string[] = ['referral'];
+export const ALERT_KEYS: string[] = ['wefunder'];
 
 /** Alert key type - gets the strings at numerical indexes in the alert keys array */
 export type AlertKey = typeof ALERT_KEYS[number];

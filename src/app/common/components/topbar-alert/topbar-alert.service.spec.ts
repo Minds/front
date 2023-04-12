@@ -61,7 +61,7 @@ describe('TopbarAlertService', () => {
   it('should get no active alert when all dismissed', () => {
     (service as any).session.isLoggedIn.and.returnValue(true);
     (service as any).objectStorage.getAll.and.returnValue({
-      referral: '1',
+      wefunder: '1',
     });
 
     expect((service as any).getActiveAlert()).toBe(null);
@@ -80,7 +80,7 @@ describe('TopbarAlertService', () => {
   });
 
   it('should dismiss a notice', (done: DoneFn) => {
-    const alertKey: AlertKey = 'referral';
+    const alertKey: AlertKey = 'wefunder';
     service.dismiss(alertKey);
 
     expect((service as any).objectStorage.setSingle).toHaveBeenCalledWith(

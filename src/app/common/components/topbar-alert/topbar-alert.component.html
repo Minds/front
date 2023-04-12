@@ -1,8 +1,16 @@
 <ng-container [ngSwitch]="activeAlert$ | async">
-  <span *ngSwitchCase="'referral'" class="m-topbarAlert__message"
+  <!-- Wefunder alert -->
+  <span *ngSwitchCase="'wefunder'" class="m-topbarAlert__message"
+    >Become an owner of Minds by
+    <a href="https://wefunder.com/minds/" target="_blank"
+      >joining our Wefunder</a
+    >.</span
+  >
+  <!-- referral/affiliate alert -->
+  <!-- <span *ngSwitchCase="'referral'" class="m-topbarAlert__message"
     ><a href="/settings/other/referrals" target="_blank">Refer</a> sales, fans
     and creators for a share of earnings</span
-  >
+  > -->
 </ng-container>
 <i class="material-icons m-topbarAlert__dismissIcon" (click)="dismiss()"
   >close</i
