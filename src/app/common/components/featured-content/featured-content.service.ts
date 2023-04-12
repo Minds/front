@@ -48,23 +48,14 @@ export class FeaturedContentService implements OnDestroy {
             return false;
           } else {
             const resolvedEntity = await entity.pipe(first()).toPromise();
-            this.resetOffsetAtEndOfStream();
+            if (this.offset >= this.maximumOffset) {
+              this.boostFeedService.loadNext();
+            }
             return resolvedEntity;
           }
         })
       )
       .toPromise();
-  }
-
-  protected resetOffsetAtEndOfStream() {
-    if (this.offset >= this.maximumOffset) {
-      this.offset = 0;
-      this.fetchNextFeed();
-    }
-  }
-
-  protected fetchNextFeed() {
-    this.boostFeedService.refreshFeed();
   }
 
   public ngOnDestroy() {
