@@ -497,11 +497,12 @@
       <!-- -------------------------------- -->
       <!-- TOOLBAR -->
       <!-- -------------------------------- -->
-      <div class="m-comment__toolbar" *ngIf="comment?.guid">
-        <div
-          class="m-commentToolbar__buttons m-legible"
-          [hidden]="editing || hideToolbar"
-        >
+      <div
+        class="m-comment__toolbar"
+        [hidden]="hideToolbar"
+        *ngIf="comment?.guid"
+      >
+        <div class="m-commentToolbar__buttons m-legible" [hidden]="editing">
           <minds-button-thumbs-up
             class="m-commentToolbarButton"
             [object]="comment"
