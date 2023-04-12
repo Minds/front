@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FeedNoticeService } from '../services/feed-notice.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { NoticeKey, NoticeLocation } from '../feed-notice.types';
+import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
 
 describe('FeedNoticeOutletComponent', () => {
   let comp: FeedNoticeOutletComponent;
@@ -29,6 +30,17 @@ describe('FeedNoticeOutletComponent', () => {
               props: {
                 initialized$: {
                   get: () => new BehaviorSubject<boolean>(false),
+                },
+              },
+            }),
+          },
+          {
+            provide: TopbarAlertService,
+            useValue: MockService(TopbarAlertService, {
+              has: ['shouldShow$'],
+              props: {
+                shouldShow$: {
+                  get: () => new BehaviorSubject<boolean>(true),
                 },
               },
             }),
