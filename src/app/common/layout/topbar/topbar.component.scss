@@ -147,6 +147,14 @@ h1 {
     }
   }
 
+  &.m-topbar__top--hasAlert {
+    height: unset;
+
+    .m-topbarTop__inner {
+      height: $topbarHeight;
+    }
+  }
+
   &.m-topbar__top--loggedOut {
     .m-grid > * {
       border: none !important;

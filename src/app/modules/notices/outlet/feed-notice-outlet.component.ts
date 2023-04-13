@@ -15,6 +15,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
+import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
 
 /**
  * Outlet for feed notices - use this component to show a relevant
@@ -46,6 +47,9 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
   @Input()
   stickyTop: boolean;
 
+  @HostBinding('class.m-feedNoticeOutlet__container--topbarAlertShown')
+  topbarAlertShown: boolean;
+
   /**
    * If a notice is visible (helps us get rid of borders when no notice is shown).
    * @returns { boolean } - true if a notice is visible.
@@ -65,7 +69,10 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
     return this.location === 'top';
   }
 
-  constructor(private service: FeedNoticeService) {}
+  constructor(
+    private service: FeedNoticeService,
+    private topbarAlertService: TopbarAlertService
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -98,7 +105,12 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
             return EMPTY;
           })
         )
-        .subscribe()
+        .subscribe(),
+      this.topbarAlertService.shouldShow$
+        .pipe(distinctUntilChanged())
+        .subscribe((shouldShow: boolean) => {
+          this.topbarAlertShown = shouldShow;
+        })
     );
   }
 

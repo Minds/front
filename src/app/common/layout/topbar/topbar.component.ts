@@ -24,6 +24,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { Observable } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { TopbarAlertService } from '../../components/topbar-alert/topbar-alert.service';
 
 /**
  * The topbar of the site, visible almost everywhere
@@ -56,6 +57,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   router$;
 
+  /** Whether topbar alert should be shown. */
+  protected readonly shouldShowTopbarAlert$: Observable<boolean> = this
+    .topbarAlertService.shouldShow$;
+
   constructor(
     protected sidebarService: SidebarNavigationService,
     protected themeService: ThemeService,
@@ -69,7 +74,8 @@ export class TopbarComponent implements OnInit, OnDestroy {
     public pageLayoutService: PageLayoutService,
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
-    private guestModeExperiment: GuestModeExperimentService
+    private guestModeExperiment: GuestModeExperimentService,
+    private topbarAlertService: TopbarAlertService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 

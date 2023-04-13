@@ -1,23 +1,72 @@
-<div class="m-moderation__appeal m-border">
-  <div class="m-moderationAppeal__header mdl-color--blue mdl-color-text--white">
-    <b>{{ appeal.time_created * 1000 | date: 'short' }}</b>
-    <p>
-      <strong>Action taken:</strong>
-      <span>
-        This
-        <ng-container *ngIf="appeal.report.entity.type !== 'comment'">
-          post
-        </ng-container>
-        <ng-container *ngIf="appeal.report.entity.type == 'comment'">
-          comment
-        </ng-container>
-        has been
-      </span>
-      <b> {{ service.getAction(appeal.report) }} </b>
-      <span>for</span>
-      <b> {{ service.getReasonString(appeal.report) }} </b>
-    </p>
+<!-- ------------------------------>
+<!-- HEADER -->
+<!-- ------------------------------>
+<div class="m-moderationAppeal__header mdl-color--blue mdl-color-text--white">
+  <b>{{ appeal.time_created * 1000 | date: 'short' }}</b>
+  <p>
+    <strong>Action taken:</strong>
+    <span>
+      This {{ appeal.report.entity.type === 'comment' ? 'comment' : 'post' }}
+      has been
+    </span>
+    <b> {{ service.getAction(appeal.report) }} </b>
+    <span>for</span>
+    <b> {{ service.getReasonString(appeal.report) }} </b>
+  </p>
+</div>
+<!-- ------------------------------>
+<!-- BODY -->
+<!-- ------------------------------>
+<div class="m-moderationAppeal__body m-border">
+  <!-- ------------------------------>
+  <!-- ACTIVITY -->
+  <!-- ------------------------------>
+  <minds-card
+    *ngIf="appeal.report.entity && appeal.report.entity.type !== 'comment'"
+    class="m-report-console--card"
+    [object]="appeal.report.entity"
+    [displayOptions]="displayOptions"
+    class="mdl-card"
+    (click)="onActivityClick($event)"
+  ></minds-card>
+  <!-- ------------------------------>
+  <!-- COMMENT -->
+  <!-- ------------------------------>
+  <div
+    *ngIf="appeal.report.entity && appeal.report.entity.type == 'comment'"
+    class="m-comment-wrapper"
+  >
+    <minds-card
+      *ngIf="appeal.report.entity"
+      class="m-report-console--card"
+      [object]="appeal.report.entity"
+      class="mdl-card"
+    ></minds-card>
+    <div class="m-moderationAppeal__commentNote">
+      <a
+        target="_blank"
+        [routerLink]="['/newsfeed', appeal.report.entity.entity_guid]"
+        [queryParams]="{ focusedCommentUrn: appeal.report.entity_urn }"
+        i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD"
+      >
+        View parent and its comment thread
+      </a>
+    </div>
   </div>
+  <!-- ------------------------------>
+  <!-- NOT FOUND -->
+  <!-- ------------------------------>
+  <div *ngIf="!appeal.report.entity" class="m-comment-wrapper">
+    <div
+      class="m-moderationAppeal__commentNote"
+      i18n="@@M__COMMON__POST_NOT_FOUND"
+    >
+      Post not found
+    </div>
+  </div>
+  <!-- ------------------------------>
+  <!-- APPEAL INPUT + BUTTON -->
+  <!-- ------------------------------>
 
   <div class="m-moderationAppeal__appeal">
     <div class="m-moderationAppeal__composer" *ngIf="!appeal.note">
@@ -30,6 +79,8 @@
 
       <m-button
         [saving]="appeal.inProgress"
+        size="small"
+        color="blue"
         (onAction)="sendAppeal()"
         i18n="@@REPORT__CONSOLE__APPEAL_ACTION"
       >
@@ -39,39 +90,6 @@
     <div class="m-moderationAppeal__appealNote" *ngIf="appeal.note">
       <b>Appeal Note: </b>
       <p>{{ appeal.note }}</p>
-    </div>
-  </div>
-
-  <minds-card
-    *ngIf="appeal.report.entity && appeal.report.entity.type != 'comment'"
-    class="m-report-console--card"
-    [object]="appeal.report.entity"
-    class="mdl-card"
-  ></minds-card>
-
-  <div
-    *ngIf="appeal.report.entity && appeal.report.entity.type == 'comment'"
-    class="m-comment-wrapper"
-  >
-    <div class="m-moderationAppeal__commentNote">
-      <a
-        target="_blank"
-        [routerLink]="['/newsfeed', appeal.report.entity.entity_guid]"
-        [queryParams]="{ focusedCommentUrn: appeal.report.entity_urn }"
-        i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD"
-      >
-        View parent and its comment thread
-      </a>
-    </div>
-    <m-comment [comment]="appeal.report.entity" class="mdl-card"></m-comment>
-  </div>
-
-  <div *ngIf="!appeal.report.entity" class="m-comment-wrapper">
-    <div
-      class="m-moderationAppeal__commentNote"
-      i18n="@@M__COMMON__POST_NOT_FOUND"
-    >
-      Post not found
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
 import { REPORT_ACTIONS } from '../../../services/list-options';
@@ -10,15 +10,26 @@ import { ToasterService } from '../../../common/services/toaster.service';
  * a reported post/comment. Allows users to
  * appeal the decision and explain why.
  *
- * Includes a preview of the reported post/comment.
+ * Includes a preview of the reported post/comment
+ * with restricted interactivity (no toolbar, comments)
  */
 @Component({
   selector: 'm-moderation__appeal',
   templateUrl: 'appeal.component.html',
+  styleUrls: ['appeal.component.ng.scss'],
 })
 export class ModerationAppealComponent {
   @Input() appeal;
   note: string;
+
+  protected displayOptions = {
+    isFeed: true,
+    showComments: false,
+    autoplayVideo: false,
+    showToolbar: false,
+    showPostMenu: false,
+    bypassMediaModal: true,
+  };
 
   constructor(
     private client: Client,
