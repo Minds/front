@@ -10,7 +10,12 @@ import * as snowplow from '@snowplow/browser-tracker';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OverridableAttributes } from './experiments.types';
+import {
+  ExperimentCacheEntry,
+  ExperimentsCacheService,
+} from './experiments-cache.service';
 export { Experiment } from '@growthbook/growthbook';
+import { FeatureResult } from '@growthbook/growthbook';
 
 @Injectable({ providedIn: 'root' })
 export class ExperimentsService implements OnDestroy {
@@ -23,6 +28,7 @@ export class ExperimentsService implements OnDestroy {
     private configs: ConfigsService,
     private analytics: AnalyticsService,
     private cookieService: CookieService,
+    private experimentsCacheService: ExperimentsCacheService,
     private storage: Storage,
     private router: Router
   ) {
@@ -58,7 +64,9 @@ export class ExperimentsService implements OnDestroy {
     }
 
     this.growthbook.setFeatures(this.configs.get('growthbook')?.features);
-
+    this.experimentsCacheService.pruneRemovedFeatures(
+      this.growthbook.getFeatures()
+    );
     this.syncAttributes();
   }
 
@@ -69,7 +77,24 @@ export class ExperimentsService implements OnDestroy {
    * @returns { string } - variation to display.
    */
   public run(key: string): string {
-    const result = this.growthbook.feature(key);
+    // TODO: COOKIES EXP TIME IS SET TO SESSION. Should be same TTL as the pseudo id cookie
+    // TODO: Need to hack so that storage doesn't get cleared on account switch.
+    // TODO: Figure out how to make run again on login when we HAVE the user.
+    const cachedResult: ExperimentCacheEntry = this.experimentsCacheService.getResult(
+      key
+    );
+
+    // TODO: What if we change an experiment to a feature flag or vice versa - handled by prune?
+    if (cachedResult !== undefined) {
+      return cachedResult.result.value;
+    }
+
+    const result: FeatureResult = this.growthbook.feature(key);
+
+    // only store result in cache for experiments, not features.
+    if (result.experimentResult) {
+      this.experimentsCacheService.setResult(key, result);
+    }
 
     return result.value;
   }
@@ -87,6 +112,14 @@ export class ExperimentsService implements OnDestroy {
     } else {
       this.storage.set(CACHE_KEY, Date.now());
       console.log('MH: submitting growthbook_experiment: ' + CACHE_KEY);
+    }
+
+    // TODO: May not be needed
+    const cachedResult: ExperimentCacheEntry = this.experimentsCacheService.getResult(
+      experimentId
+    );
+    if (cachedResult) {
+      variationId = cachedResult.result.experimentResult.variationId;
     }
 
     //
@@ -115,6 +148,7 @@ export class ExperimentsService implements OnDestroy {
     try {
       return this.run(experimentId) === variation;
     } catch (e) {
+      console.warn(e);
       return false;
     }
   }
