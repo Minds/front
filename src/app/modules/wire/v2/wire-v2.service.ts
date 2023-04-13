@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { map, tap, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
 import {
@@ -180,6 +180,7 @@ interface Data {
   owner: MindsUser | null;
   usdPaymentMethodId: string;
   wallet: Wallet;
+  sourceEntityGuid: string;
 }
 
 /**
@@ -200,7 +201,8 @@ type DataArray = [
   boolean,
   MindsUser,
   string,
-  Wallet
+  Wallet,
+  string | null
 ];
 
 /**
@@ -223,6 +225,10 @@ export class WireV2Service implements OnDestroy {
   readonly entityGuid$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
   );
+
+  readonly sourceEntityGuid$: BehaviorSubject<string> = new BehaviorSubject<
+    string
+  >('');
 
   /**
    * Wire type subject
@@ -431,6 +437,7 @@ export class WireV2Service implements OnDestroy {
       ),
       this.usdPaymentMethodId$,
       this.wallet.wallet$,
+      this.sourceEntityGuid$,
     ]).pipe(
       map(
         ([
@@ -448,6 +455,7 @@ export class WireV2Service implements OnDestroy {
           owner,
           usdPaymentMethodId,
           wallet,
+          sourceEntityGuid,
         ]: DataArray): Data => ({
           entityGuid,
           type,
@@ -463,6 +471,7 @@ export class WireV2Service implements OnDestroy {
           owner,
           usdPaymentMethodId,
           wallet,
+          sourceEntityGuid,
         })
       )
     );
@@ -593,6 +602,13 @@ export class WireV2Service implements OnDestroy {
     this.entityGuid$.next(guid);
     this.ownerResolver$.next(owner);
 
+    return this;
+  }
+
+  public setSourceEntity(sourceEntity: any): WireV2Service {
+    this.sourceEntityGuid$.next(
+      sourceEntity.guid ?? sourceEntity.entityGuid ?? ''
+    );
     return this;
   }
 
@@ -913,6 +929,7 @@ export class WireV2Service implements OnDestroy {
       recurring: Boolean(
         this.canRecur(data.type, data.tokenType) && data.recurring
       ),
+      sourceEntityGuid: data.sourceEntityGuid,
     };
 
     switch (data.type) {
