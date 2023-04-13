@@ -11,7 +11,7 @@ describe('OnboardingTagsExperimentService', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    service = new DiscoveryBoostExperimentService(experimentsServiceMock);
+    service = new OnboardingTagsExperimentService(experimentsServiceMock);
   });
 
   afterEach(() => {

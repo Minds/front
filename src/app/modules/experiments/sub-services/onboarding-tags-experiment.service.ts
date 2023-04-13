@@ -17,6 +17,8 @@ export class OnboardingTagsExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
+    //ojm remove
+    return true;
     return this.experiments.hasVariation(
       'minds-3921-mandatory-onboarding-tags',
       true
