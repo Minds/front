@@ -82,7 +82,6 @@ export class TagSettingsComponent implements OnInit, OnDestroy {
 
   async submit(): Promise<void> {
     await this.discoveryTagsService.saveTags();
-    // ojm if onboardingContext, tell the service to go to next modal?
     this.service.submitRequested$.next(false);
   }
 }

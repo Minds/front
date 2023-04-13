@@ -37,7 +37,6 @@ export class ContentSettingsComponent implements OnInit, OnDestroy {
   private onSaveIntent: () => void = noOp;
 
   /**
-   * ojm update docblock
    * Set modal data
    * @param {{ function }} onSave - function to be called on save.
    * @param {{ boolean }} hideCompass - whether compass options should be shown.

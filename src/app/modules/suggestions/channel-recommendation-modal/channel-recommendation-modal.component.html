@@ -1,45 +1,57 @@
 <div class="m-modalV2__inner">
-  <div class="m-modalV2__mobileTopBar">
-    <h4 class="m-channelRecommendationModalHeader__mobileTopbar">
-      ojm test mobile topbar
+  <div class="m-channelRecommendationModal__header m-modalV2__header">
+    <h4 *ngIf="publisherType === 'user'" i18n="@@COMMON__SUBSCRIBE">
+      Subscribe
+    </h4>
+    <h4
+      *ngIf="publisherType === 'group'"
+      i18n="@@CHANNEL_RECOMMENDATION_MODAL__TITLE__GROUP"
+    >
+      Join a group
     </h4>
     <span
-      class="m-modalV2MobileTopBar__button"
+      class="m-modalV2MobileTopBar__button m-channelRecommendationModalHeader__skipButton"
       i18n="@@COMMON__SKIP"
       (click)="onSkip()"
-      >Skip ojm</span
+      >Skip</span
     >
-  </div>
-  <div class="m-channelRecommendationModal__header m-modalV2__header">
-    <h4>{{ titleText }}</h4>
-    <p
-      class="m-channelRecommendationModalHeader__subtitle"
-      i18n="@@CHANNEL_RECOMMENDATION_MODAL__SUBTITLE"
-    >
-      You’ll see posts from people you subscribe to on your newsfeed.
+    <p class="m-channelRecommendationModalHeader__subtitle">
+      <ng-container
+        *ngIf="publisherType === 'user'"
+        i18n="@@CHANNEL_RECOMMENDATION_MODAL__SUBTITLE__CHANNEL"
+        >You’ll see posts from people you subscribe to on your
+        newsfeed.</ng-container
+      >
+      <ng-container
+        *ngIf="publisherType === 'group'"
+        i18n="@@CHANNEL_RECOMMENDATION_MODAL__SUBTITLE__GROUP"
+        >Find your community, speak your mind</ng-container
+      >
     </p>
   </div>
   <m-channelRecommendation
     class="m-channelRecommendationModal__body m-modalV2__body"
     location="newsfeed"
     isOnboarding="true"
+    [publisherType]="publisherType"
+    (subscribed)="onSubscribed()"
+    (unsubscribed)="onUnsubscribed()"
   ></m-channelRecommendation>
   <div class="m-channelRecommendationModal__footer m-modalV2__footer">
     <m-button
-      *ngIf="!isMandatory"
-      class="m-channelRecommendationModal__skipButton"
+      class="m-channelRecommendationModalFooter__skipButton"
       (onAction)="onSkip()"
-      data-ref="m-channelRecommendationModal__skipButton"
+      data-ref="m-channelRecommendationModalFooter__skipButton"
       i18n="@@COMMON__SKIP"
       >Skip</m-button
     >
     <m-button
-      class="m-channelRecommendationModal__continueButton"
+      class="m-channelRecommendationModalFooter__continueButton"
       color="blue"
       solid="true"
       (onAction)="onContinue()"
       i18n="@@COMMON__CONTINUE"
-      data-ref="m-channelRecommendationModal__continueButton"
+      data-ref="m-channelRecommendationModalFooter__continueButton"
       >Continue</m-button
     >
   </div>
@@ -47,4 +59,6 @@
 <!-- ----------------------------------------- -->
 <!-- MODAL CLOSE -->
 <!-- ----------------------------------------- -->
-<m-modalCloseButton *ngIf="!isMandatory"></m-modalCloseButton>
+<m-modalCloseButton
+  class="m-channelRecommendationModal__closeButton"
+></m-modalCloseButton>

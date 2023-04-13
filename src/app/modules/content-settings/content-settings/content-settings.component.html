@@ -1,4 +1,7 @@
-<div class="m-contentSettings">
+<div
+  class="m-contentSettings"
+  [ngClass]="{ 'm-contentSettings--isOnboarding': isOnboarding }"
+>
   <div class="m-contentSettings__section--title">
     <span class="m-contentSettings__title"
       ><ng-template #standardTitle i18n="@@CONTENT_SETTINGS__TITLE"

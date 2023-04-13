@@ -155,7 +155,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
     if (!this.emailCodeExperiment.isActive()) {
-      // ojm test this
       this.onboardingV4Service.startOnboarding();
     }
   }

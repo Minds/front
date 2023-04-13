@@ -25,13 +25,14 @@
         <div class="m-discoveryFeedItem__body">
           <h4>{{ entity.name }}</h4>
           <span>{{ entity['members:count'] | number }} members</span>
-          <p *ngIf="entity.briefdescription">
-            {{
+          <p
+            *ngIf="entity.briefdescription"
+            [innerHtml]="
               entity.briefdescription.length > 140
-                ? (entity.briefdescription | slice: 0:140) + '..'
-                : entity.briefdescription
-            }}
-          </p>
+                ? (entity.briefdescription | slice: 0:140) + '...'
+                : (entity.briefdescription | slice: 0:5000 | tags)
+            "
+          ></p>
         </div>
         <div class="m-discoveryFeedItem__actions">
           <i class="material-icons">chevron_right</i>

@@ -1,19 +1,17 @@
-import { Injectable, Injector, OnDestroy } from '@angular/core';
-import { ApiService } from '../../common/api/api.service';
+import { Injectable, Injector, OnDestroy, OnInit } from '@angular/core';
 import { ModalService } from '../../services/ux/modal.service';
 import { OnboardingTagsExperimentService } from '../experiments/sub-services/onboarding-tags-experiment.service';
-import { TagSettingsComponent } from '../tag-settings/tag-settings/tag-settings.component';
 import { ContentSettingsComponent } from '../content-settings/content-settings/content-settings.component';
-import { ChannelRecommendationComponent } from '../suggestions/channel-recommendation/channel-recommendation.component';
 import { ChannelRecommendationModalComponent } from '../suggestions/channel-recommendation-modal/channel-recommendation-modal.component';
 import { Subscription, filter, take } from 'rxjs';
 import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 import { DiscoveryTagsService } from '../discovery/tags/tags.service';
 
 /**
- * Core service for onboarding v4
- * For the mandatory tag selection modal
- * followed by maybe-mandatory channel/group subscription modals
+ * Core service for onboarding v4.
+ * After new user's email is confirmed,
+ * displays the mandatory tag selection modal and
+ * maybe followed by channel/group subscription modals
  * (depending on onboarding tags experiment)
  */
 @Injectable({
@@ -22,6 +20,8 @@ import { DiscoveryTagsService } from '../discovery/tags/tags.service';
 export class OnboardingV4Service implements OnDestroy {
   /** @type { Subscription } - subscription that fires on email confirmation */
   private emailConfirmationSubscription: Subscription;
+
+  public channelSubscriptionCount = 0;
 
   constructor(
     private emailConfirmation: EmailConfirmationService,
@@ -40,7 +40,6 @@ export class OnboardingV4Service implements OnDestroy {
   }
 
   public async startOnboarding(): Promise<any> {
-    console.log('ojm V4_SVC startOnboarding()');
     this.openTagsModal();
   }
 
@@ -48,11 +47,9 @@ export class OnboardingV4Service implements OnDestroy {
    * Starts the onboarding flow with a mandatory tag selection modal
    */
   private async openTagsModal(): Promise<any> {
-    console.log('ojm V4_SVC openTagsModal()');
     const modal = this.modalService.present(ContentSettingsComponent, {
       data: {
         onSave: () => {
-          console.log('ojm V4_SVC tagsModal onSave');
           modal.close();
           this.openChannelRecommendationModal();
         },
@@ -65,41 +62,61 @@ export class OnboardingV4Service implements OnDestroy {
 
   /**
    * Opens channel recommendations modal
-   *
-   * Selections may be mandatory, depending on experiment
+   * If the experiment is active
    */
   private async openChannelRecommendationModal(): Promise<void> {
-    console.log('ojm V4_SVC openSuggestedChannelsModal()');
+    if (!this.onboardingTagsExperiment.isActive()) {
+      return;
+    }
     const modal = this.modalService.present(
       ChannelRecommendationModalComponent,
       {
         data: {
           onContinue: () => {
-            console.log('ojm V4_SVC channelRecs onContinue');
             modal.close();
-            //ojm  this.openGroupRecommendationModal();
+            this.openGroupRecommendationModal();
           },
           onSkip: () => {
-            console.log('ojm V4_SVC channelRecs onSkip');
             modal.close();
-            //ojm this.openGroupRecommendationModal();
+            this.openGroupRecommendationModal();
           },
-          isMandatory: this.onboardingTagsExperiment.isActive(),
+          publisherType: 'user',
         },
         injector: this.injector,
-        windowClass: 'm-modalV2__mobileFullCover', // ojm only do this if time, and do it for the tags one too
+        windowClass: 'm-modalV2__mobileFullCover',
       }
     );
     return modal.result;
   }
 
+  /**
+   * Opens group recommendations modal
+   * If the experiment is on
+   */
   private async openGroupRecommendationModal(): Promise<void> {
-    // ojm todo after group endpoint is implemented
-    console.log('ojm V4_SVC openSuggestedGroupsModal()');
-  }
-
-  private completeOnboarding(): void {
-    // ojm do I need to re-route here? Or do anything?
+    if (
+      !this.onboardingTagsExperiment.isActive() ||
+      this.channelSubscriptionCount < 1
+    ) {
+      return;
+    }
+    const modal = this.modalService.present(
+      ChannelRecommendationModalComponent,
+      {
+        data: {
+          onContinue: () => {
+            modal.close();
+          },
+          onSkip: () => {
+            modal.close();
+          },
+          publisherType: 'group',
+        },
+        injector: this.injector,
+        windowClass: 'm-modalV2__mobileFullCover',
+      }
+    );
+    return modal.result;
   }
 
   /**

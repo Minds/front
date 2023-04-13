@@ -1,6 +1,8 @@
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
-import { Component, Optional, SkipSelf } from '@angular/core';
+import { Component, Input, Optional, SkipSelf } from '@angular/core';
 import noOp from '../../../helpers/no-op';
+import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
+import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 
 /**
  * Displays channel recommendations as a modal
@@ -13,13 +15,9 @@ import noOp from '../../../helpers/no-op';
   styleUrls: ['./channel-recommendation-modal.component.ng.scss'],
 })
 export class ChannelRecommendationModalComponent {
-  public titleText: string = $localize`:@@COMMON__SUBSCRIBE:Subscribe`;
+  protected subscriptionCount = 0;
 
-  public bodyText: string = $localize`:@@CONNECT_TWITTER_MODAL__CONNECT_YOUR_ACCOUNT_WITH_TWITTER:Connect your Minds account with Twitter.`;
-
-  /** @type { boolean } whether onboarding users are required to make subscriptions before moving on */
-  public isMandatory: boolean = false;
-
+  protected publisherType: PublisherType = 'user';
   /**
    * Called on continue click
    */
@@ -29,44 +27,39 @@ export class ChannelRecommendationModalComponent {
    * Called on skip click
    */
   protected onSkip: () => void = noOp;
+
+  constructor(
+    protected onboardingV4Service: OnboardingV4Service,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
+  ) {}
+
   /**
    * Set modal data
    * @param {{ function }} onContinue - function to be called on Continue button click.
    * @param {{ function }} onSkip - function to be called on Skip button click.
-   * @param {{ boolean }} isMandatory - whether the user must subscribe is allowed to skip making selections during onboarding
+   * @param { PublisherType } publisherType - whether we want channel/group recs
    * @returns { void }
    */
-  setModalData({ onContinue, onSkip, isMandatory = false }): void {
+  setModalData({ onContinue, onSkip, publisherType }): void {
     this.onContinue = onContinue || noOp;
     this.onSkip = onSkip || noOp;
-    this.isMandatory = isMandatory;
+    this.publisherType = publisherType;
   }
-
-  getModalOptions() {
-    return {
-      canDismiss: async () => {
-        return !this.isMandatory;
-      },
-    };
-  }
-
-  constructor(
-    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective // ojm needed?
-  ) {}
 
   /**
-   * Keep track of subscriptions?
-   * ojm todo
+   * Increment the channel subscription count
    */
-  onSubscribed(user): void {
-    // if (this.listSize$.getValue() === 4) {
-    //   this.listSize$.next(5);
-    // }
-    // if (this.recommendations$.getValue().length <= 4) {
-    //   return;
-    // }
-    // this.recommendations$.next(
-    //   this.recommendations$.getValue().filter(u => u.guid !== user.guid)
-    // );
+  onSubscribed(): void {
+    if (this.publisherType === 'user') {
+      this.onboardingV4Service.channelSubscriptionCount++;
+    }
+  }
+  /**
+   * Decrement the channel subscription count
+   */
+  onUnsubscribed(): void {
+    if (this.publisherType === 'user') {
+      this.onboardingV4Service.channelSubscriptionCount--;
+    }
   }
 }

@@ -31,7 +31,6 @@ export class DiscoverySettingsButtonComponent implements OnInit {
     private modalService: ModalService,
     private injector: Injector,
     public session: Session,
-    public onboardingV4: OnboardingV4Service,
     @Optional() @SkipSelf() private feeds: DiscoveryFeedsService,
     @Optional() @SkipSelf() private trends: DiscoveryTrendsService
   ) {}
@@ -41,23 +40,12 @@ export class DiscoverySettingsButtonComponent implements OnInit {
     // so that we can enable the contentSettingsFlag
     this.contentSettingsFlag = false;
 
-    // ojm remove comment
-    // ojm just using this for easy access to tags modal
-    // if (this.contentSettingsFlag) {
-    this.modalType = 'content-settings';
-    // }
-  }
-
-  ojm(): void {
-    this.onboardingV4.startOnboarding();
+    if (this.contentSettingsFlag) {
+      this.modalType = 'content-settings';
+    }
   }
 
   openSettingsModal(e: MouseEvent): void {
-    // ojm remove ALL changes to this file after hijacking for onboardingv4
-
-    this.ojm();
-    return;
-
     let component: ComponentType<
       | DiscoveryFeedsSettingsComponent
       | DiscoveryTagSettingsComponent

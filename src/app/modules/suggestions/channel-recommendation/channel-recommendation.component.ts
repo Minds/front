@@ -1,6 +1,14 @@
 import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit, Optional, SkipSelf } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  SkipSelf,
+} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
@@ -10,9 +18,7 @@ import { ResizedEvent } from './../../../common/directives/resized.directive';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
 import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
-import { Session } from '../../../services/session';
-import noOp from '../../../helpers/no-op';
-import { OnboardingTagsExperimentService } from '../../experiments/sub-services/onboarding-tags-experiment.service';
+import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -25,11 +31,11 @@ const listAnimation = trigger('listAnimation', [
   ),
 ]);
 /**
- * Displays channel recommendations
+ * Displays channel/group recommendations
  *
  * See it in the newsfeed
  *
- * It may also be used as a modal during onboarding
+ * It may also be used in a modal during onboarding
  */
 @Component({
   selector: 'm-channelRecommendation',
@@ -64,6 +70,18 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   @Input()
   dismissible: boolean = false;
+
+  /**
+   * Should the widget recommend channels or groups?
+   * (onboarding v4 uses this for suggested groups)
+   */
+  @Input()
+  publisherType: PublisherType = 'user';
+
+  /** @type { boolean } whether this is being shown as a modal during onboarding */
+  @Input()
+  isOnboarding: boolean = false;
+
   /**
    * the height of the container, used to animate the mount and unmount of this component
    */
@@ -75,9 +93,15 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   listSize$: BehaviorSubject<number> = new BehaviorSubject(4);
 
-  /** @type { boolean } whether this is being shown as a modal during onboarding */
-  @Input()
-  isOnboarding: boolean = false;
+  /**
+   * Emit when user subscribes to a recommendation
+   */
+  @Output() subscribed: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Emit when user unsubscribes from a recommendation
+   */
+  @Output() unsubscribed: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private api: ApiService,
@@ -89,24 +113,48 @@ export class ChannelRecommendationComponent implements OnInit {
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
   ) {}
 
-  // ojm see this for recs
-  // https://www.minds.com/api/v3/recommendations?location=newsfeed&&currentChannelUserGuid=undefined&limit=12
   ngOnInit(): void {
-    if (this.location) {
-      this.api
-        .get('api/v3/recommendations', {
-          location: this.location,
-          mostRecentSubscriptions: this.recentSubscriptions.list(),
-          currentChannelUserGuid: this.channelId,
-          limit: 12,
-        })
-        .toPromise()
-        .then(result => {
-          if (result) {
-            this.recommendations$.next(result.entities.map(e => e.entity));
-          }
-        });
+    if (this.publisherType === 'group') {
+      this.loadGroups();
     }
+    if (this.location && this.publisherType === 'user') {
+      this.loadChannels();
+    }
+  }
+
+  /**
+   * Load list of channel suggestions
+   */
+  async loadChannels(): Promise<void> {
+    this.api
+      .get('api/v3/recommendations', {
+        location: this.location,
+        mostRecentSubscriptions: this.recentSubscriptions.list(),
+        currentChannelUserGuid: this.channelId,
+        limit: 12,
+      })
+      .toPromise()
+      .then(result => {
+        if (result) {
+          this.recommendations$.next(result.entities.map(e => e.entity));
+        }
+      });
+  }
+
+  /**
+   * Load a list of group suggestions
+   */
+  async loadGroups(): Promise<void> {
+    this.api
+      .get('api/v2/suggestions/group', {
+        limit: 12,
+      })
+      .toPromise()
+      .then(result => {
+        if (result) {
+          this.recommendations$.next(result.suggestions.map(e => e.entity));
+        }
+      });
   }
 
   /**
@@ -174,5 +222,20 @@ export class ChannelRecommendationComponent implements OnInit {
     this.recommendations$.next(
       this.recommendations$.getValue().filter(u => u.guid !== user.guid)
     );
+
+    this.subscribed.emit();
+  }
+
+  onUnsubscribed(user): void {
+    this.unsubscribed.emit();
+  }
+
+  getLink(publisher): string[] {
+    if (this.publisherType === 'user') {
+      return ['/', publisher.username];
+    }
+    if (this.publisherType === 'group') {
+      return ['/groups/profile', publisher.guid];
+    }
   }
 }
