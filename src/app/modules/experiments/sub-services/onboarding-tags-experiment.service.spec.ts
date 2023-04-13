@@ -1,4 +1,4 @@
-import { DiscoveryBoostExperimentService } from './discovery-boost-experiment.service';
+import { OnboardingTagsExperimentService } from './onboarding-tags-experiment.service';
 
 export let experimentsServiceMock = new (function() {
   this.hasVariation = jasmine.createSpy('hasVariation');
