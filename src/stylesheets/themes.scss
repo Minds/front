@@ -271,7 +271,7 @@ $themes: (
     m-amber: $yellow-600,
     m-amber-medium: $yellow-500,
     m-amber-light: $yellow-800,
-    m-red-dark: $red-200,
+    m-red-dark: $red-600,
     m-red: $red-500,
     m-red-light: $red-700,
     m-warn-bg: $yellow-800,
@@ -369,6 +369,8 @@ $m-activity--hover: 'm-activity--hover';
 //related radii tokens.
 
 $m-borderRadius: 2px;
+$m-borderRadius--highlights: 8px;
+
 $m-boxShadowBlur: 10px;
 $m-boxShadowOffset: 2px;
 

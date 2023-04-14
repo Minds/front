@@ -26,6 +26,12 @@ m--rejection-reason-modal {
             background-color: themed($m-bgColor--secondary);
           }
         }
+
+        &::selection {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
       }
     }
     .m-modal-confirm-buttons {
