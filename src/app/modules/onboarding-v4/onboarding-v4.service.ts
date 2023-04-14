@@ -6,6 +6,7 @@ import { ChannelRecommendationModalComponent } from '../suggestions/channel-reco
 import { Subscription, filter, take } from 'rxjs';
 import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 import { DiscoveryTagsService } from '../discovery/tags/tags.service';
+import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
 
 /**
  * Core service for onboarding v4.
@@ -28,7 +29,8 @@ export class OnboardingV4Service implements OnDestroy {
     private injector: Injector,
     private modalService: ModalService,
     private tagsService: DiscoveryTagsService,
-    private onboardingTagsExperiment: OnboardingTagsExperimentService
+    private onboardingTagsExperiment: OnboardingTagsExperimentService,
+    private emailCodeExperiment: EmailCodeExperimentService
   ) {
     this.setupEmailConfirmationSubscription();
   }
@@ -65,7 +67,10 @@ export class OnboardingV4Service implements OnDestroy {
    * If the experiment is active
    */
   private async openChannelRecommendationModal(): Promise<void> {
-    if (!this.onboardingTagsExperiment.isActive()) {
+    if (
+      !this.onboardingTagsExperiment.isActive() ||
+      !this.emailCodeExperiment.isActive()
+    ) {
       return;
     }
     const modal = this.modalService.present(
@@ -96,6 +101,7 @@ export class OnboardingV4Service implements OnDestroy {
   private async openGroupRecommendationModal(): Promise<void> {
     if (
       !this.onboardingTagsExperiment.isActive() ||
+      !this.emailCodeExperiment.isActive() ||
       this.channelSubscriptionCount < 1
     ) {
       return;
