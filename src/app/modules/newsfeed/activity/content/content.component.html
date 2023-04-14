@@ -78,6 +78,7 @@ post content to trigger upgrade modal -->
       [style.width.px]="isModal ? null : videoWidth"
       [isModal]="isModal"
       [style.overflow]="videoHeight && !isModal ? 'hidden' : null"
+      [isLivestream]="entity?.custom_data?.livestream ?? false"
     >
       <ng-container
         *ngTemplateOutlet="paywallTemplate"

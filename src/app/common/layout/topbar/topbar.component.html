@@ -6,6 +6,7 @@
 
 <div
   class="m-topbar__top"
+  [class.m-topbar__top--hasAlert]="shouldShowTopbarAlert$ | async"
   [class.m-topbar__top--noBorder]="
     !(pageLayoutService.hasTopbarBorder$ | async)
   "
@@ -16,6 +17,8 @@
   [class.m-topbar__top--loggedOut]="!getCurrentUser()"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
+  <m-topbarAlert *ngIf="shouldShowTopbarAlert$ | async"></m-topbarAlert>
+
   <div class="m-topbarTop__inner m-pageLayout__container">
     <div class="m-topbar__leftColumn m-pageLayout__pane--left">
       <nav class="m-topbar__nav">

@@ -1,0 +1,42 @@
+@import 'defaults.scss';
+
+[class*='m-videoPlayer__notice'] {
+  display: block;
+  height: auto;
+  line-height: normal;
+  padding: 16px;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+  // We don't use theme here because this component is used in
+  // Embed mode and theming is not available there
+  background: linear-gradient(rgba(#000, 0.5), rgba(#000, 0));
+  color: #fff;
+}
+
+.m-videoPlayer__placeholder {
+  height: 330px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  @include m-theme() {
+    background-color: themed($m-black-always);
+  }
+
+  i {
+    font-size: 70px;
+    padding-left: 5px;
+  }
+
+  &:hover {
+    i {
+      opacity: 1;
+    }
+  }
+}
+
+.m-videoPlayer__placeholder--embedded {
+  height: 100%;
+}
