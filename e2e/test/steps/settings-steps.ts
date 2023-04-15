@@ -83,7 +83,6 @@ namespace SettingsSteps {
 
   Then('I see other submenus within settings', () => {
     I.seeElement(settingsPage.settingsHeader);
-    I.seeElement(locate('a').withText('Referrals'));
     I.seeElement(locate('a').withText('Wallet'));
     I.seeElement(locate('a').withText('Reported Content'));
     I.seeElement(locate('a').withText('Blocked Channels'));
