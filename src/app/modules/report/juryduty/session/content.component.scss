@@ -3,7 +3,7 @@
 .m-juryDutySession__content {
   padding: 16px;
   @include m-theme() {
-    background: themed($m-white);
+    background: themed($m-bgColor--primary) !important;
   }
 
   h3 {
@@ -15,7 +15,7 @@
     font-size: 16px;
 
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
 
     > * {
@@ -73,14 +73,14 @@
 
   > b {
     @include m-theme() {
-      color: themed($m-grey-600);
+      color: themed($m-textColor--secondary);
     }
     display: block;
   }
   > p {
     display: inline;
     @include m-theme() {
-      color: themed($m-grey-600);
+      color: themed($m-textColor--secondary);
     }
     //padding-left: 8px;
   }

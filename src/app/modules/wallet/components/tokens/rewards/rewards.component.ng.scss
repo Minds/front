@@ -128,7 +128,7 @@
   .m-walletTokenEarnings__supportingValues {
     font-weight: 400;
     @include m-theme() {
-      color: themed($m-textColor--secondary);
+      color: themed($m-textColor--primary);
     }
   }
 

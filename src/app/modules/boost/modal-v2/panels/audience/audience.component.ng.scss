@@ -92,7 +92,7 @@
 
         @include m-theme() {
           accent-color: themed($m-link-text);
-          background-color: themed($m-bgColor--primary);
+          background-color: themed($m-white-always);
         }
       }
     }

@@ -23,7 +23,13 @@ m--rejection-reason-modal {
 
         &:hover {
           @include m-theme() {
-            background-color: themed($m-bgColor--primary);
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+
+        &::selection {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
           }
         }
       }
