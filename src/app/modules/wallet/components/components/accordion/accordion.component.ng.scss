@@ -107,7 +107,7 @@
 
   .m-walletTokenEarnings__expanded {
     @include m-theme() {
-      background-color: themed($m-bgColor--btnHover);
+      background-color: themed($m-bgColor--secondaryAlt);
     }
 
     tr:first-child td {
@@ -127,7 +127,7 @@
         font-size: 16px;
         padding: 0 20px 0 30px;
         @include m-theme() {
-          color: themed($m-textColor--secondary);
+          color: themed($m-textColor--primary);
         }
       }
       &:nth-of-type(2) {

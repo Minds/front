@@ -32,13 +32,13 @@
         height: 17px;
         width: 17px;
         @include m-theme() {
-          background-color: themed($m-bgColor--contrast);
+          background-color: themed($m-action);
         }
         i {
           font-weight: 700;
           font-size: 11px;
           @include m-theme() {
-            color: themed($m-blue);
+            color: themed($m-bgColor--primary);
           }
         }
       }

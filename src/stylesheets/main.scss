@@ -147,7 +147,7 @@ minds-topbar {
 
 .mdl-tabs__tab.is-active {
   @include m-theme() {
-    border-bottom: 2px solid themed($m-amber);
+    border-bottom: 2px solid themed($m-action);
   }
 }
 
