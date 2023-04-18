@@ -13,7 +13,8 @@ import { BoostConsoleService } from '../../services/console.service';
 
 /**
  * Filter bar component for Boost console.
- * Contains both tabs and filters, and link to legacy console
+ * Contains both tabs and filters, button to create a boost,
+ * and a link to legacy console,
  *
  * Changing a filter/tab value changes the url query params only
  */

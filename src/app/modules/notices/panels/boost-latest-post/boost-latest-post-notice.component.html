@@ -1,18 +1,39 @@
 <m-feedNotice
+  *ngIf="
+    (_targetBoostLocation === 'feed' && (service.latestPost$ | async)) ||
+    (!isInFeed && _targetBoostLocation === 'sidebar')
+  "
   icon="trending_up"
   dataRefId="boost-latest-post"
+  [dismissible]="isInFeed"
+  [showIcon]="isInFeed"
   (dismissClick)="onDismissClick()"
 >
-  <span
-    class="m-feedNotice__title"
-    i18n="@@FEED_NOTICE__BOOST_LATEST_POST__TITLE"
-    >Boost your latest post</span
-  >
-  <p
-    class="m-feedNotice__body"
-    i18n="@@FEED_NOTICE__BOOST_LATEST_POST__GET_MORE_REACH"
-  >
-    Get even more reach and engagement now by boosting your post.
+  <span class="m-feedNotice__title">
+    <ng-container
+      *ngIf="_targetBoostLocation === 'feed'"
+      i18n="@@FEED_NOTICE__BOOST_LATEST_POST__TITLE"
+      >Boost your latest post</ng-container
+    >
+    <ng-container
+      *ngIf="_targetBoostLocation === 'sidebar'"
+      i18n="@@FEED_NOTICE__BOOST_LATEST_POST__TITLE__CHANNEL"
+      >Boost your channel</ng-container
+    >
+  </span>
+  <p class="m-feedNotice__body">
+    <ng-container
+      *ngIf="_targetBoostLocation === 'feed'"
+      i18n="@@FEED_NOTICE__BOOST_LATEST_POST__GET_MORE_REACH"
+      >Get even more reach and engagement now by boosting your
+      post.</ng-container
+    >
+    <ng-container
+      *ngIf="_targetBoostLocation === 'sidebar'"
+      i18n="@@FEED_NOTICE__BOOST_LATEST_POST__GET_MORE_REACH"
+      >Get even more reach and engagement now by boosting your
+      channel.</ng-container
+    >
   </p>
   <m-button
     class="m-feedNotice__buttonPrimary"
@@ -21,10 +42,18 @@
     size="small"
     (onAction)="onPrimaryOptionClick()"
     data-ref="feed-notice-boost-latest-post-primary-click"
-    *ngIf="latestPost"
   >
-    <ng-container i18n="@@FEED_NOTICE__BOOST_LATEST_POST__BOOST_POST">
+    <ng-container
+      *ngIf="_targetBoostLocation === 'feed'"
+      i18n="@@FEED_NOTICE__BOOST_LATEST_POST__BOOST_POST"
+    >
       Boost Post
+    </ng-container>
+    <ng-container
+      *ngIf="_targetBoostLocation === 'sidebar'"
+      i18n="@@FEED_NOTICE__BOOST_LATEST_POST__BOOST_CHANNEL"
+    >
+      Boost Channel
     </ng-container>
   </m-button>
 </m-feedNotice>
