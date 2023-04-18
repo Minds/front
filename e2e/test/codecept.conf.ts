@@ -75,6 +75,10 @@ export const config: CustomMainConfig = {
     topbarComponent: './fragments/topbarComponent.ts',
     feedNoticeComponent: './fragments/feedNoticeComponent.ts',
     boostModalComponent: './fragments/boostModalComponent.ts',
+    contentSettingsComponent: './fragments/contentSettingsComponent.ts',
+    multiFactorModalComponent: './fragments/multiFactorModalComponent.ts',
+    channelRecommendationsModalComponent:
+      './fragments/channelRecommendationsModalComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {
