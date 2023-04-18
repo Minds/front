@@ -56,8 +56,13 @@ minds-button-thumbs-down {
     }
     &:hover {
       @include m-theme() {
-        color: themed($m-textColor--secondary);
+        color: themed($m-textColor--primary);
       }
+    }
+  }
+  .selected {
+    @include m-theme() {
+      color: themed($m-action) !important;
     }
   }
   .selected:hover {

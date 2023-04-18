@@ -52,7 +52,7 @@
         font-size: 0.75em !important;
         margin: 0 -0.5px 0 0.5px;
         @include m-theme() {
-          color: themed($m-white-always);
+          color: themed($m-bgColor--primary);
         }
       }
     }
