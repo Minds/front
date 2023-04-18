@@ -133,7 +133,8 @@ $blue-grey-900: #191f28;
 
 $themes: (
   light: (
-    m-textColor--primary: #43434d,
+    //regression : Legacy light colors used here.
+      m-textColor--primary: #43434d,
     m-textColor--primaryInverted: #ffffff,
     m-textColor--secondary: #72727c,
     m-textColor--secondaryInverted: #b8c1ca,
@@ -142,7 +143,7 @@ $themes: (
     m-bgColor--primaryInverted: #1f252c,
     m-bgColor--primaryDarkAlways: #1f252c,
     m-bgColor--primaryAlt: #e7edf3,
-    m-bgColor--secondary: #f6f7f7,
+    m-bgColor--secondary: $grey-200,
     m-bgColor--secondaryAlt: #e6ebed,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--contrastSubtle: #dde4e6,
@@ -153,7 +154,7 @@ $themes: (
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
     // aka #D2DBE3 @ 40%
-      m-highlight--comment: #edf0f3,
+      m-highlight--comment: $grey-100,
     m-overlay: rgba(176, 176, 176, 0.5),
     m-alert: #e03c20,
     m-positive: #95c064,
@@ -227,7 +228,7 @@ $themes: (
     m-borderColor--primary: $grey-700,
     m-borderColor--secondary: $grey-600,
     m-borderColor--tertiary: $grey-500,
-    m-highlight--comment: #272f37,
+    m-highlight--comment: $grey-800,
     m-overlay: rgba(0, 0, 0, 0.5),
     m-alert: #fd8b7c,
     m-positive: #95c064,
@@ -270,7 +271,7 @@ $themes: (
     m-amber: $yellow-600,
     m-amber-medium: $yellow-500,
     m-amber-light: $yellow-800,
-    m-red-dark: $red-200,
+    m-red-dark: $red-600,
     m-red: $red-500,
     m-red-light: $red-700,
     m-warn-bg: $yellow-800,
@@ -368,6 +369,8 @@ $m-activity--hover: 'm-activity--hover';
 //related radii tokens.
 
 $m-borderRadius: 2px;
+$m-borderRadius--highlights: 8px;
+
 $m-boxShadowBlur: 10px;
 $m-boxShadowOffset: 2px;
 

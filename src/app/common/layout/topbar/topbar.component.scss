@@ -147,6 +147,14 @@ h1 {
     }
   }
 
+  &.m-topbar__top--hasAlert {
+    height: unset;
+
+    .m-topbarTop__inner {
+      height: $topbarHeight;
+    }
+  }
+
   &.m-topbar__top--loggedOut {
     .m-grid > * {
       border: none !important;
@@ -312,7 +320,7 @@ h1 {
   border-top: 3px solid transparent;
   text-decoration: none;
   @include m-theme() {
-    color: themed($m-grey-800);
+    color: themed($m-textColor--secondary);
   }
 
   &.m-topbarNav__item--active {

@@ -21,6 +21,6 @@
   padding: 32px;
   display: block;
   @include m-theme() {
-    color: themed($m-grey-800);
+    color: themed($m-textColor--primary);
   }
 }

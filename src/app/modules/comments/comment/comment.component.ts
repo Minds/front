@@ -70,6 +70,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   // Whether comment should open in modal on `openModal` call.
   @Input('shouldOpenModal') shouldOpenModal: boolean = true;
 
+  // Whether this comment is being shown as a notification
+  @Input() isNotificationPreview: boolean = false;
+
   canPost: boolean = true;
   triedToPost: boolean = false;
   inProgress: boolean = false;

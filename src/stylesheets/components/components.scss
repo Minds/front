@@ -642,13 +642,13 @@ m-text-input--autocomplete-menu {
         white-space: nowrap;
         text-decoration: none;
         @include m-theme() {
-          color: themed($m-grey-900);
+          color: themed($m-textColor--primary);
         }
       }
       a:hover {
         @include m-theme() {
-          color: themed($m-grey-950);
-          background-color: themed($m-grey-50);
+          color: themed($m-textColor--primary);
+          background-color: themed($m-bgColor--secondary);
         }
       }
 

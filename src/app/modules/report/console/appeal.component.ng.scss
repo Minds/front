@@ -1,0 +1,111 @@
+@import 'defaults.scss';
+
+:host {
+  .m-moderationAppeal__header {
+    padding: $spacing4;
+    font-family: 'Inter', Helvetica, sans-serif;
+    border-top-right-radius: $m-borderRadius;
+    border-top-left-radius: $m-borderRadius;
+
+    > b {
+      font-size: 13px;
+    }
+
+    p {
+      margin-bottom: 0;
+      font-size: 13px;
+      letter-spacing: -0.001em;
+      font-weight: 300;
+
+      b {
+        text-transform: lowercase;
+      }
+    }
+  }
+  .m-moderationAppeal__body {
+    padding-top: $spacing2;
+    margin-bottom: $spacing4;
+    border-radius: $m-borderRadius;
+    border-top: none;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+
+    .m-comment-wrapper {
+      ::ng-deep m-comment {
+        .m-comment__row--top {
+          padding-left: 0;
+        }
+      }
+
+      .m-moderationAppeal__commentNote {
+        padding: 16px;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+
+        a {
+          text-decoration: none;
+          font-weight: inherit;
+          @include m-theme() {
+            color: themed($m-textColor--tertiary);
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .m-moderationAppeal__appeal {
+    margin: $minds-padding ($minds-padding * 2) 0;
+    margin-bottom: 16px;
+    border-radius: $m-borderRadius;
+
+    .m-moderationAppeal__composer {
+      margin: $spacing5 $spacing2;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: flex-end;
+
+      textarea {
+        display: block;
+        width: 100%;
+        resize: none;
+        font-weight: 300;
+        font-family: 'Inter', Helvetica, sans-serif;
+        padding: 16px;
+        font-size: 13px;
+        letter-spacing: -0.001em;
+        margin-bottom: $spacing2;
+        border-radius: $m-borderRadius;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
+      ::ng-deep {
+        m-button {
+          margin: $spacing3 0 0;
+        }
+      }
+    }
+
+    .m-moderationAppeal__appealNote {
+      padding: 16px;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      p {
+        margin: 0;
+        font-family: 'Inter', Helvetica, sans-serif;
+        font-size: 14px;
+        letter-spacing: -0.001em;
+      }
+    }
+  }
+}
