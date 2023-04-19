@@ -61,46 +61,6 @@
     </div>
 
     <!-- -------------------------------------------- -->
-    <!--- PENDING BALANCE ------------------------------>
-    <!-- -------------------------------------------- -->
-    <div class="m-walletBalance--cash__col">
-      <div
-        class="m-walletBalance--cash__colTitle"
-        i18n="@@WALLET_V2__BALANCE_CASH__PENDING_BALANCE_INFO_JULY_2020"
-      >
-        Pending Transfers
-        <m-tooltip icon="help">
-          This is the balance you've been paid out that will be transferred to
-          your bank. Transfers may take up to 7 days.
-        </m-tooltip>
-      </div>
-      <div class="m-walletBalance--cash__colValWrapper" *ngIf="!hasAccount">
-        <span class="m-walletBalance--cash__colVal--int">$0</span>
-      </div>
-      <ng-container *ngIf="hasAccount">
-        <div class="m-walletBalance--cash__colValWrapper">
-          <span class="m-walletBalance--cash__colVal--int">{{
-            pendingBalance.int | currency: currency | slice: 0:-3
-          }}</span
-          ><span
-            class="m-walletBalance--cash__colVal--frac"
-            *ngIf="pendingBalance.frac"
-            >.{{ pendingBalance.frac }}</span
-          >
-        </div>
-        <!-- -------------------------------------------- -->
-        <!--- PAYOUT DATE----------------------------------->
-        <!-- -------------------------------------------- -->
-        <div *ngIf="hasBank" class="m-walletBalance--cash__colSubtitle">
-          <p i18n="@@WALLET_V2__BALANCE_CASH__ESTIMATED_PAYOUT">
-            Estimated
-          </p>
-          <p>{{ nextPayoutDate }}</p>
-        </div>
-      </ng-container>
-    </div>
-
-    <!-- -------------------------------------------- -->
     <!--- Total Paid ------------------------------>
     <!-- -------------------------------------------- -->
     <div class="m-walletBalance--cash__col">
