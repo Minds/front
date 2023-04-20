@@ -43,6 +43,13 @@ body.modal-open {
     max-width: 1440px !important;
   }
 }
+// ---------------------------------------------------
+// CUSTOM SIZES
+// ---------------------------------------------------
+// smd is in between small (sm) and medium (md)
+.modal-smd {
+  max-width: 400px;
+}
 
 // ---------------------------------------------------
 // Apply this windowClass when calling modal.present()

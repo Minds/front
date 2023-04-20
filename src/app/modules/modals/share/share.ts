@@ -16,9 +16,6 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   encodedRawUrl: string = '';
   referrerParam: string = '';
 
-  // shareUrl: string = '';
-  // encodedShareUrl: string = '';
-
   shareUrlFocused: boolean = false;
   embedInputFocused: boolean = false;
 
