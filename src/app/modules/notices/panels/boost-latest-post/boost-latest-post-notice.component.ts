@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
@@ -16,7 +16,6 @@ import { Session } from '../../../../services/session';
  * In the boost console, if the user is on the 'sidebar' tab
  * (and not the 'newsfeed' tab), clicking the button opens
  * the boost modal for boosting the user's channel.
- * Upon completeing a channel boost, the page will reload.
  */
 @Component({
   selector: 'm-feedNotice--boostLatestPost',
@@ -46,43 +45,34 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private latestPostSubscription: Subscription;
   public latestPost: ActivityEntity = null;
+
+  private subscriptions: Array<Subscription> = [];
 
   constructor(
     protected service: BoostLatestPostNoticeService,
     private feedNotice: FeedNoticeService,
     private router: Router,
-    private route: ActivatedRoute,
     private session: Session,
     private boostModal: BoostModalLazyService
   ) {}
 
   ngOnInit(): void {
-    this.service.latestPost$.subscribe(latestPost => {
-      if (!latestPost) {
-        this.onDismissClick();
-      } else {
-        this.latestPost = latestPost;
-      }
-    });
-
-    // If the user boosts their channel via the boost console
-    // as a result of interacting with this notice,
-    // refresh the boost console so their fresh boost is visible
-    this.boostModal.onComplete$.subscribe(onComplete => {
-      if (
-        onComplete &&
-        !this.isInFeed &&
-        this._targetBoostLocation === 'sidebar'
-      ) {
-        this.reload();
-      }
-    });
+    this.subscriptions.push(
+      this.service.latestPost$.subscribe(latestPost => {
+        if (!latestPost) {
+          this.onDismissClick();
+        } else {
+          this.latestPost = latestPost;
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.latestPostSubscription?.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -126,19 +116,5 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
     if (this.isInFeed) {
       this.feedNotice.dismiss('boost-latest-post');
     }
-  }
-
-  /**
-   * Reloads the page using the router.
-   * iemi111 @ https://stackoverflow.com/a/63059359/7396007
-   * @returns { void }
-   */
-  private reload(): void {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['./'], {
-      relativeTo: this.route,
-      queryParamsHandling: 'merge',
-    });
   }
 }
