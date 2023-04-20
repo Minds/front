@@ -59,6 +59,12 @@
           border-color: themed($m-borderColor--primary);
         }
       }
+      &.m-button--solid {
+        @include m-theme() {
+          background-color: themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
+        }
+      }
     }
     &.m-button--primary {
       @include m-theme() {

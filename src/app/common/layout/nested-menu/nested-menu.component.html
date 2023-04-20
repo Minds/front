@@ -1,9 +1,9 @@
 <div class="m-nestedMenu" [ngClass]="{ isNested: isNested }">
-  <div
-    class="m-nestedMenu__menuWrapper"
-    *ngFor="let menu of menus; let first = first"
-  >
-    <ng-container *ngIf="!menu.shouldShow || menu.shouldShow()">
+  <ng-container *ngFor="let menu of menus; let first = first">
+    <div
+      class="m-nestedMenu__menuWrapper"
+      *ngIf="!menu.shouldShow || menu.shouldShow()"
+    >
       <div class="m-nestedMenu__headerWrapper">
         <ng-container *ngIf="first">
           <div class="m-nestedMenu__backButton">
@@ -42,6 +42,6 @@
           </ng-template>
         </ng-container>
       </ng-container>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
 </div>

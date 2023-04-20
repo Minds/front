@@ -49,7 +49,6 @@ export class SupermindReplyConfirmModalComponent implements OnInit {
     this.isTwitterReplyRequired = config.isTwitterReplyRequired || false;
     this.onConfirm = config.onConfirm || noOp;
     this.onDismiss = config.onClose || noOp;
-    // windowClass: 'm-modalV2__mobileFullCover',
   }
 
   public async ngOnInit(): Promise<void> {
