@@ -14,7 +14,12 @@
     <div
       class="m-affiliatesShareButtons__button m-affiliatesShareButtons__button--twitter"
     >
-      <m-button size="large" iconOnly="true" (onAction)="openTwitter()">
+      <m-button
+        size="large"
+        iconOnly="true"
+        (onAction)="openTwitter()"
+        data-ref="m-affiliatesShareButtons__button--twitter"
+      >
         <img src="{{ cdnAssetsUrl }}assets/icons/twitter.svg" />
       </m-button>
       <span i18n="@@M_SHARE__BUTTON_TWITTER">Twitter</span>
@@ -25,7 +30,12 @@
     <div
       class="m-affiliatesShareButtons__button m-affiliatesShareButtons__button--facebook"
     >
-      <m-button size="large" iconOnly="true" (onAction)="openFacebook()">
+      <m-button
+        size="large"
+        iconOnly="true"
+        (onAction)="openFacebook()"
+        data-ref="m-affiliatesShareButtons__button--facebook"
+      >
         <img src="{{ cdnAssetsUrl }}assets/icons/facebook.svg" />
       </m-button>
       <span i18n="@@M_SHARE__BUTTON_FACEBOOK">Facebook</span>
@@ -36,7 +46,12 @@
     <div
       class="m-affiliatesShareButtons__button m-affiliatesShareButtons__button--email"
     >
-      <m-button size="large" iconOnly="true" (onAction)="openEmail()">
+      <m-button
+        size="large"
+        iconOnly="true"
+        (onAction)="openEmail()"
+        data-ref="m-affiliatesShareButtons__button--email"
+      >
         <m-icon iconId="email"></m-icon>
       </m-button>
       <span i18n="@@M__COMMON__EMAIL">Email</span>
@@ -48,7 +63,12 @@
       *ngIf="isMobile()"
       class="m-affiliatesShareButtons__button m-affiliatesShareButtons__button--sms"
     >
-      <m-button size="large" iconOnly="true" (onAction)="openSMS()">
+      <m-button
+        size="large"
+        iconOnly="true"
+        (onAction)="openSMS()"
+        data-ref="m-affiliatesShareButtons__button--sms"
+      >
         <m-icon iconId="chat_bubble"></m-icon>
       </m-button>
       <span i18n="@@COMMON__MESSAGES">Messages</span>
@@ -78,6 +98,7 @@
         size="large"
         iconOnly="true"
         (onAction)="copyUrlToClipboard('plus')"
+        data-ref="m-affiliatesShareButtons__button--plus"
         ><m-icon iconId="add_to_queue"></m-icon
       ></m-button>
       <span i18n="@@COMMON__MINDS+">Minds+</span>
@@ -90,6 +111,7 @@
         size="large"
         iconOnly="true"
         (onAction)="copyUrlToClipboard('boost/boost-console')"
+        data-ref="m-affiliatesShareButtons__button--boost"
         ><m-icon iconId="trending_up"></m-icon
       ></m-button>
       <span i18n="@@COMMON__BOOST">Boost</span>
@@ -102,6 +124,7 @@
         size="large"
         iconOnly="true"
         (onAction)="copyUrlToClipboard('pro')"
+        data-ref="m-affiliatesShareButtons__button--pro"
       >
         <img
           *ngIf="themeService.isDark$ | async"
@@ -118,7 +141,11 @@
     <!-- BUTTON: Creator -->
     <!-- -------------------------->
     <div class="m-affiliatesShareButtons__button">
-      <m-button size="large" iconOnly="true" (onAction)="copyUrlToClipboard()"
+      <m-button
+        size="large"
+        iconOnly="true"
+        (onAction)="copyUrlToClipboard()"
+        data-ref="m-affiliatesShareButtons__button--creator"
         ><m-icon iconId="palette"></m-icon
       ></m-button>
       <span i18n="@@COMMON__CREATOR">Creator</span>
@@ -139,6 +166,7 @@
   solid="true"
   class="m-affiliatesShare__copyButton"
   (onAction)="copyUrlToClipboard()"
+  data-ref="m-affiliatesShareButtons__button--copyLink"
 >
   <i class="material-icons m-affiliatesShareButton__icon">content_copy</i>
   <ng-container ii18n="@@AFFILIATES__SHARE__COPY_LINK">Copy link</ng-container>
