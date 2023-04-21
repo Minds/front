@@ -36,6 +36,6 @@ import { BoostLatestPostNoticeService } from './panels/boost-latest-post/boost-l
     BoostLatestPostNoticeComponent,
   ],
   providers: [BoostLatestPostNoticeService],
-  exports: [FeedNoticeOutletComponent],
+  exports: [FeedNoticeOutletComponent, BoostLatestPostNoticeComponent],
 })
 export class NoticesModule {}

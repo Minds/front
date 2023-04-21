@@ -13,6 +13,7 @@ import {
   BoostConsolePaymentMethodFilter,
 } from '../boost.types';
 import { BoostConsoleService } from './services/console.service';
+import { BoostModalLazyService } from '../modal/boost-modal-lazy.service';
 
 @Component({
   selector: 'm-boostConsole',
@@ -24,8 +25,7 @@ export class BoostConsoleV2Component implements OnInit {
   /** Guid, if this is a single boost view page */
   singleBoostGuid: string = '';
 
-  /** @type { Subscription } routeSubscription - subscription to ActivatedRoutes query params*/
-  private routeSubscription: Subscription;
+  private subscriptions: Array<Subscription> = [];
 
   /** @type { BehaviorSubject<boolean> } are we viewing the boost console in the context of the admin console? */
   public readonly adminContext$: BehaviorSubject<boolean> = this.service
@@ -61,7 +61,8 @@ export class BoostConsoleV2Component implements OnInit {
     private dynamicBoostExperiment: DynamicBoostExperimentService,
     private session: Session,
     private loginReferrer: LoginReferrerService,
-    private location: Location
+    private location: Location,
+    private boostModal: BoostModalLazyService
   ) {}
 
   ngOnInit(): void {
@@ -85,43 +86,53 @@ export class BoostConsoleV2Component implements OnInit {
      * This is where the filter value subjects are actually changed.
      * (The filters/tabs just change the queryParams, which are processed here)
      */
-    this.routeSubscription = this.route.queryParams.subscribe(params => {
-      // SINGLE BOOST PAGE ONLY
-      this.singleBoostGuid = params.boostGuid || null;
-      if (this.singleBoostGuid) {
-        this.service.singleBoostGuid$.next(this.singleBoostGuid);
-        return;
-      }
+    this.subscriptions.push(
+      this.route.queryParams.subscribe(params => {
+        // SINGLE BOOST PAGE ONLY
+        this.singleBoostGuid = params.boostGuid || null;
+        if (this.singleBoostGuid) {
+          this.service.singleBoostGuid$.next(this.singleBoostGuid);
+          return;
+        }
 
-      // LIST PAGE ONLY
-      const stateFilter: BoostConsoleStateFilter = params.state || null;
-      const locationFilter: BoostConsoleLocationFilter =
-        params.location || null;
-      const suitabilityFilter: BoostConsoleSuitabilityFilter =
-        params.suitability || null;
-      const paymentMethodFilter: BoostConsolePaymentMethodFilter =
-        params.payment_method || null;
+        // LIST PAGE ONLY
+        const stateFilter: BoostConsoleStateFilter = params.state || null;
+        const locationFilter: BoostConsoleLocationFilter =
+          params.location || null;
+        const suitabilityFilter: BoostConsoleSuitabilityFilter =
+          params.suitability || null;
+        const paymentMethodFilter: BoostConsolePaymentMethodFilter =
+          params.payment_method || null;
 
-      if (stateFilter) {
-        this.service.stateFilterValue$.next(stateFilter);
-      }
+        if (stateFilter) {
+          this.service.stateFilterValue$.next(stateFilter);
+        }
 
-      if (locationFilter) {
-        this.service.locationFilterValue$.next(locationFilter);
-      }
+        if (locationFilter) {
+          this.service.locationFilterValue$.next(locationFilter);
+        }
 
-      if (suitabilityFilter) {
-        this.service.suitabilityFilterValue$.next(suitabilityFilter);
-      }
+        if (suitabilityFilter) {
+          this.service.suitabilityFilterValue$.next(suitabilityFilter);
+        }
 
-      if (paymentMethodFilter) {
-        this.service.paymentMethodFilterValue$.next(paymentMethodFilter);
-      }
-    });
+        if (paymentMethodFilter) {
+          this.service.paymentMethodFilterValue$.next(paymentMethodFilter);
+        }
+      }),
+
+      // If the user creates a boost while on the boost console page,
+      // refresh the page so their recent boost is visible
+      this.boostModal.onComplete$.subscribe(onComplete => {
+        this.reload();
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.routeSubscription?.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -131,5 +142,19 @@ export class BoostConsoleV2Component implements OnInit {
    */
   public onSettingsButtonClick($event: MouseEvent): void {
     this.router.navigate(['/settings/account/boosted-content']);
+  }
+
+  /**
+   * Reloads the page using the router.
+   * iemi111 @ https://stackoverflow.com/a/63059359/7396007
+   * @returns { void }
+   */
+  private reload(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['./'], {
+      relativeTo: this.route,
+      queryParamsHandling: 'merge',
+    });
   }
 }
