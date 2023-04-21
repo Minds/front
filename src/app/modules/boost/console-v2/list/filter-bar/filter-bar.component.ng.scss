@@ -29,6 +29,32 @@
     }
   }
 
+  [class*='m-boostConsole__boostLatestPostWrapper'] {
+    &.m-boostConsole__boostLatestPostWrapper--mobile {
+      display: none;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      &.m-boostConsole__boostLatestPostWrapper--desktop {
+        display: none;
+      }
+      &.m-boostConsole__boostLatestPostWrapper--mobile {
+        display: block;
+      }
+    }
+
+    > * {
+      display: block;
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      ::ng-deep .m-feedNotice__title {
+        @include body1Bold;
+      }
+    }
+  }
+
   [class*='m-boostConsole__legacyLinkWrapper'] {
     &.m-boostConsole__legacyLinkWrapper--mobile {
       display: none;

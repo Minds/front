@@ -26,6 +26,7 @@ import { BoostConsoleStatsBarComponent } from './console-v2/list/list-item/stats
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
 import { BoostConsoleSingleComponent } from './console-v2/single/single.component';
+import { NoticesModule } from '../notices/notices.module';
 
 const boostRoutes: Routes = [
   {
@@ -80,6 +81,7 @@ const boostRoutes: Routes = [
     AdsModule,
     MarketingModule,
     ActivityModule,
+    NoticesModule,
   ],
   declarations: [
     BoostConsoleComponent,
