@@ -1,0 +1,52 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  margin: $spacing11 0 $spacing8;
+
+  p {
+    margin: 0;
+  }
+  [class*='m-affiliatesDescription__method'] {
+    max-width: 420px;
+    padding-bottom: $spacing6;
+    .m-affiliatesDescriptionMethod {
+      &__title {
+        @include heading3Bold;
+      }
+      &__underline {
+        height: $spacing1;
+        width: $spacing24;
+        border-radius: $spacing5;
+        margin: $spacing3 0px;
+      }
+      &__description {
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        span {
+          font-weight: 700;
+        }
+      }
+    }
+
+    &.m-affiliatesDescription__method--affiliate {
+      .m-affiliatesDescriptionMethod__underline {
+        background-color: #6d28d9;
+      }
+    }
+
+    &.m-affiliatesDescription__method--affiliateReferral {
+      .m-affiliatesDescriptionMethod__underline {
+        background-color: #3b82f6;
+      }
+    }
+
+    &.m-affiliatesDescription__method--creatorReferral {
+      .m-affiliatesDescriptionMethod__underline {
+        background-color: #93c5fd;
+      }
+    }
+  }
+}
