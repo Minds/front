@@ -41,6 +41,7 @@ import { VirtualMinimapComponent } from './feed/virtual-minimap';
 import { FeedComponent } from './feed/feed.component';
 import { VirtualScrollerModule } from './feed/virtual-scroller';
 import { PathMatch } from '../../common/types/angular.types';
+import { NewsfeedTabsComponent } from './feeds/tabs/tabs.component';
 
 const routes: Routes = [
   {
@@ -122,6 +123,7 @@ const routes: Routes = [
     NewsfeedFeedItemComponent,
     VirtualMinimapComponent,
     FeedComponent,
+    NewsfeedTabsComponent,
   ],
   providers: [
     NewsfeedService,
