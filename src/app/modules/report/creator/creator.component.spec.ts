@@ -18,7 +18,6 @@ import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 import { Session } from '../../../services/session';
-import { sessionMock } from '../../../../tests/session-mock.spec';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ButtonComponent } from '../../../common/components/button/button.component';
@@ -443,7 +442,7 @@ describe('ReportCreatorComponent', () => {
       By.css(`.m-reportCreatorSubjects__subject span`)
     );
     const span = spans.find(span =>
-      span.nativeElement.textContent.includes('Violates Premium Content policy')
+      span.nativeElement.textContent.includes('Violates Premium content policy')
     );
     expect((comp as any).plusTierUrn.isPlusTierUrn).toHaveBeenCalledWith(
       entityUrn
@@ -470,7 +469,7 @@ describe('ReportCreatorComponent', () => {
       By.css(`.m-reportCreatorSubjects__subject span`)
     );
     const span = spans.find(span =>
-      span.nativeElement.textContent.includes('Violates Premium Content policy')
+      span.nativeElement.textContent.includes('Violates Premium content policy')
     );
     expect(span).toBeUndefined();
   });
@@ -487,12 +486,48 @@ describe('ReportCreatorComponent', () => {
       By.css(`.m-reportCreatorSubjects__subject span`)
     );
     const span = spans.find(span =>
-      span.nativeElement.textContent.includes('Violates Premium Content policy')
+      span.nativeElement.textContent.includes('Violates Premium content policy')
     );
     expect(span).toBeUndefined();
   });
-});
 
+  it('should have boost policy violation reason for boosted entity', () => {
+    comp.setModalData({
+      entity: {
+        guid: '1',
+        boosted: true,
+      },
+    });
+    fixture.detectChanges();
+
+    const spans = fixture.debugElement.queryAll(
+      By.css(`.m-reportCreatorSubjects__subject span`)
+    );
+    const span = spans.find(span =>
+      span.nativeElement.textContent.includes('Violates Boost content policy')
+    );
+
+    expect(span).toBeDefined();
+  });
+
+  it('should NOT have boost policy violation reason for NON-boosted entity', () => {
+    comp.setModalData({
+      entity: {
+        guid: '1',
+      },
+    });
+    fixture.detectChanges();
+
+    const spans = fixture.debugElement.queryAll(
+      By.css(`.m-reportCreatorSubjects__subject span`)
+    );
+    const span = spans.find(span =>
+      span.nativeElement.textContent.includes('Violates Boost content policy')
+    );
+
+    expect(span).not.toBeDefined();
+  });
+});
 const FAKE_REASONS = [
   {
     value: 1,
@@ -610,7 +645,12 @@ const FAKE_REASONS = [
   },
   {
     value: 18,
-    label: 'Violates Premium Content policy',
+    label: 'Violates Premium content policy',
+    hasMore: false,
+  },
+  {
+    value: 19,
+    label: 'Violates Boost content policy',
     hasMore: false,
   },
 ];

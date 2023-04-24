@@ -27,6 +27,7 @@ describe('ReportService', () => {
       { value: '4' },
       { value: '5' },
       { value: '18' },
+      { value: '19' },
     ];
 
     (service as any).configs.get.and.returnValue(configValues);
@@ -72,6 +73,12 @@ describe('ReportService', () => {
         reasons: undefined,
         label: 'Violates Premium Content policy',
         description: 'Content violates premium content policy',
+      }),
+      Object({
+        value: '19',
+        reasons: undefined,
+        label: 'Violates Boost content policy',
+        description: 'Content violates Boost content policy',
       }),
     ]);
   });

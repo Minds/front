@@ -64,10 +64,13 @@ export class ReportCreatorComponent implements AfterViewInit {
 
     const supportTierUrn: string =
       opts.entity?.wire_threshold?.support_tier?.urn;
+
     this.subjects = this.reportService.reasons.filter(reason => {
       return (
-        reason.value !== 18 ||
-        (supportTierUrn && this.plusTierUrn.isPlusTierUrn(supportTierUrn))
+        // plus violation
+        (reason.value !== 18 ||
+          (supportTierUrn && this.plusTierUrn.isPlusTierUrn(supportTierUrn))) && // boosted
+        (reason.value !== 19 || opts.entity.boosted)
       );
     });
   }

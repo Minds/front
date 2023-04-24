@@ -109,6 +109,10 @@ export class ReportService {
         label = $localize`:@@REPORT__10:Intellectual Property violation`;
         description = $localize`:@@REPORT_DESCRIPTION__10:Content posted to Minds that infringes a copyright you own or control`;
         break;
+      case '11':
+        label = $localize`:@@REPORT__11:Another reason`;
+        description = $localize`:@@REPORT_DESCRIPTION__11:A reason other than one listed`;
+        break;
       case '13':
         label = $localize`:@@REPORT__13:Malware`;
         description = $localize`:@@REPORT_DESCRIPTION__13:Code delivered over the network for the purpose of an attack`;
@@ -125,12 +129,12 @@ export class ReportService {
         description = $localize`:@@REPORT_DESCRIPTION__17.1:If an account has been compromised by an unauthorized person or entity`;
         break;
       case '18':
-        label = $localize`:@@REPORT__18:Violates Premium Content policy`;
+        label = $localize`:@@REPORT__18:Violates Premium content policy`;
         description = $localize`:@@REPORT_DESCRIPTION__18:Content violates premium content policy`;
         break;
-      case '11':
-        label = $localize`:@@REPORT__11:Another reason`;
-        description = $localize`:@@REPORT_DESCRIPTION__11:A reason other than one listed`;
+      case '19':
+        label = $localize`:@@REPORT__19:Violates Boost content policy`;
+        description = $localize`:@@REPORT_DESCRIPTION__18:Content violates Boost content policy`;
         break;
     }
 
