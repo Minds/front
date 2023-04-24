@@ -39,6 +39,8 @@ export class NewsfeedTabsComponent {
    * @returns { void }
    */
   protected onTabClick(tab: FeedAlgorithm): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     this.activeTab$.next(tab);
 
     setTimeout(

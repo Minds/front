@@ -198,16 +198,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.routerSubscription = this.router.events
-      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.showBoostRotator = false;
-        this.load();
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 100);
-      });
-
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
       () => {
         this.load();
@@ -222,7 +212,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
           this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
         }
       }
-      this.load();
+      this.load(); // load feed.
 
       if (params['message']) {
         this.message = params['message'];
@@ -293,7 +283,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.moreData = true;
     this.offset = 0;
-    this.showBoostRotator = false;
     this.inProgress = true;
 
     let queryParams = {
@@ -302,6 +291,15 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     if (this.experiments.hasVariation('newsfeed-group-posts', true)) {
       queryParams['include_group_posts'] = true;
+    }
+
+    /**
+     * Rotating the boost rotator provides feedback that something has changes
+     * to the user on shorter viewports that may not be able to see the feed
+     * under the rotator.
+     */
+    if (this.boostRotator.running) {
+      this.boostRotator?.next();
     }
 
     try {
@@ -325,7 +323,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     }
 
     this.inProgress = false;
-    this.showBoostRotator = true;
   }
 
   loadNext(feedService: FeedsService = this.feedService) {
