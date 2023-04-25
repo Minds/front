@@ -298,7 +298,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
      * to the user on shorter viewports that may not be able to see the feed
      * under the rotator.
      */
-    if (this.boostRotator.running) {
+    if (this.boostRotator?.running) {
       this.boostRotator?.next();
     }
 
@@ -521,7 +521,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     switch (feedService) {
       case this.latestFeedService:
-      case this.forYouFeedService:
         loadDiscoveryFallbackIfEnabled();
         break;
       case this.topFeedService:
@@ -531,6 +530,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         } else {
           loadDiscoveryFallbackIfEnabled();
         }
+        break;
+      case this.forYouFeedService:
         break;
     }
   }
