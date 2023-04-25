@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { WireEvent, WireEventType } from './v2/wire-v2.service';
 import { WireCreatorComponent as WireV2CreatorComponent } from './v2/creator/wire-creator.component';
 import { SupportTier } from './v2/support-tiers.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { Session } from '../../services/session';
 import { ModalService } from '../../services/ux/modal.service';
+import { ActivityEntity } from '../newsfeed/activity/activity.service';
 
 /**
  * WireModal.present() options.default interface
@@ -23,6 +23,7 @@ interface WireModalPresentOptions {
   default?: WireModalPresentDefaultOptions;
   disableThresholdCheck?: boolean /* UNUSED */;
   supportTier?: SupportTier;
+  sourceEntity?: ActivityEntity;
 }
 
 /**

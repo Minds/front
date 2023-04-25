@@ -4,8 +4,8 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output,
   OnInit,
+  Output,
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
@@ -66,6 +66,7 @@ export class WireLockScreenComponent implements OnInit {
     if (!this.entity) {
       return;
     }
+
     this.contentType = getActivityContentType(this.entity);
     if (this.contentType === 'video' || this.contentType === 'rich-embed') {
       this.hasTeaser = true;
@@ -168,6 +169,7 @@ export class WireLockScreenComponent implements OnInit {
           type: 'money',
           upgradeType: 'plus',
         },
+        sourceEntity: this.entity,
       }
     );
     if (wireEvent.type === WireEventType.Completed) {
