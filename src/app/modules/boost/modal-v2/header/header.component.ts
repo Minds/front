@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BoostModalPanel, BoostSubject } from '../boost-modal-v2.types';
 import { BoostModalV2Service } from '../services/boost-modal-v2.service';
+import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
 
 /**
  * Boost modal header - displays different title based on entity type.
@@ -12,7 +13,7 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
     <div class="m-modalV2__header">
       <div class="m-boostModalV2__headerLeft">
         <m-icon
-          *ngIf="(activePanel$ | async) !== BoostModalPanel.AUDIENCE"
+          *ngIf="(activePanel$ | async) !== firstPanel"
           iconId="chevron_left"
           (click)="openPreviousPanel()"
         ></m-icon>
@@ -44,7 +45,7 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
   `,
   styleUrls: ['header.component.ng.scss'],
 })
-export class BoostModalV2HeaderComponent {
+export class BoostModalV2HeaderComponent implements OnInit {
   // enums.
   public BoostSubject: typeof BoostSubject = BoostSubject;
   public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
@@ -57,8 +58,18 @@ export class BoostModalV2HeaderComponent {
   public readonly activePanel$: Observable<BoostModalPanel> = this.service
     .activePanel$;
 
-  constructor(private service: BoostModalV2Service) {}
+  protected firstPanel: BoostModalPanel = BoostModalPanel.AUDIENCE;
 
+  constructor(
+    private service: BoostModalV2Service,
+    private boostGoalExperiment: BoostGoalsExperimentService
+  ) {}
+
+  ngOnInit(): void {
+    if (this.boostGoalExperiment.isActive()) {
+      this.firstPanel = BoostModalPanel.GOAL;
+    }
+  }
   /**
    * Open the previous panel.
    * @returns { void }

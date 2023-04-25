@@ -1,6 +1,12 @@
 <div class="m-boostModalV2__container m-modalV2__inner">
   <m-boostModalV2__header></m-boostModalV2__header>
   <div class="m-modalV2__body" [ngSwitch]="activePanel$ | async">
+    <m-boostModalV2__goalSelector
+      *ngSwitchCase="BoostModalPanel.GOAL"
+    ></m-boostModalV2__goalSelector>
+    <m-boostModalV2__goalButtonSelector
+      *ngSwitchCase="BoostModalPanel.GOAL_BUTTON"
+    ></m-boostModalV2__goalButtonSelector>
     <m-boostModalV2__audienceSelector
       *ngSwitchCase="BoostModalPanel.AUDIENCE"
     ></m-boostModalV2__audienceSelector>

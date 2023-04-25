@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BoostModalPanel, BoostSubject } from '../boost-modal-v2.types';
 import { BoostModalV2Service } from '../services/boost-modal-v2.service';
+import { BoostGoal } from '../../boost.types';
 
 /**
  * Footer for boost modal v2. Text content and button behavior vary
@@ -17,6 +18,7 @@ export class BoostModalV2FooterComponent implements OnDestroy {
   // enums.
   public BoostSubject: typeof BoostSubject = BoostSubject;
   public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
+  public BoostGoal: typeof BoostGoal = BoostGoal;
 
   // currently active modal panel.
   public readonly activePanel$: BehaviorSubject<BoostModalPanel> = this.service
@@ -26,6 +28,10 @@ export class BoostModalV2FooterComponent implements OnDestroy {
   public readonly entityType$: Observable<BoostSubject> = this.service
     .entityType$;
 
+  // whether the next button is enabled.
+  public readonly canGoToNextPanel$: Observable<boolean> = this.service
+    .canGoToNextPanel$;
+
   // whether boost submission is in progress.
   public readonly boostSubmissionInProgress$: Observable<boolean> = this.service
     .boostSubmissionInProgress$;
@@ -33,7 +39,7 @@ export class BoostModalV2FooterComponent implements OnDestroy {
   // subscription fired once on button click.
   private buttonClickSubscription: Subscription;
 
-  public constructor(private service: BoostModalV2Service) {}
+  public constructor(protected service: BoostModalV2Service) {}
 
   ngOnDestroy(): void {
     this.buttonClickSubscription?.unsubscribe();

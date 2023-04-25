@@ -1,0 +1,96 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: $spacing6 0;
+
+  .m-boostGoalSelector__header {
+    padding: $spacing3 0;
+    margin-bottom: $spacing10;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-boostGoalSelector__title {
+      margin-top: unset;
+      margin-bottom: $spacing2;
+      @include heading3Bold;
+    }
+    .m-boostGoalSelector__subtitle {
+      margin-bottom: unset;
+      @include body1Regular;
+    }
+  }
+
+  .m-boostGoalSelector__body {
+    .m-boostGoalSelector__radioButtonRow {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      margin-bottom: $spacing6;
+      cursor: pointer;
+
+      &.m-boostGoalSelector__radioButtonRow--selected {
+        .m-boostGoalSelector__radioButtonLabel {
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+      }
+
+      &:hover {
+        .m-boostGoalSelector__radioButtonLabel {
+          font-weight: 700;
+
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+      }
+
+      .m-boostGoalSelector__radioButtonLabels {
+        display: flex;
+        flex-flow: column nowrap;
+        padding-right: $spacing6;
+        @include unselectable;
+
+        .m-boostGoalSelector__radioButtonLabel {
+          margin-bottom: $spacing2;
+          cursor: pointer;
+
+          @include heading4Regular;
+          @include unselectable;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        .m-boostGoalSelector__radioButtonSubtext {
+          cursor: pointer;
+
+          @include body3Regular;
+          @include unselectable;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      .m-boostGoalSelector__radioButton {
+        display: flex;
+        align-self: flex-start;
+        min-width: 20px;
+        min-height: 20px;
+        cursor: pointer;
+
+        @include m-theme() {
+          accent-color: themed($m-link-text);
+          background-color: themed($m-white-always);
+        }
+      }
+    }
+  }
+}

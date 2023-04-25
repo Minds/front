@@ -43,13 +43,18 @@ describe('BoostModalV2Service', () => {
     this.create = jasmine.createSpy('create');
   })();
 
+  let boostGoalExperimentMock = new (function() {
+    this.isActive = jasmine.createSpy('isActive');
+  })();
+
   beforeEach(() => {
     service = new BoostModalV2Service(
       apiMock,
       toasterMock,
       configMock,
       web3WalletMock,
-      boostContractMock
+      boostContractMock,
+      boostGoalExperimentMock
     );
 
     service.entity$.next({

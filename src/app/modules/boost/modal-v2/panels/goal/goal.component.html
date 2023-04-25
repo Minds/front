@@ -1,0 +1,164 @@
+<div
+  class="m-boostGoalSelector__header"
+  data-ref="boost-modal-v2-goal-selector-header"
+>
+  <h3
+    class="m-boostGoalSelector__title"
+    i18n="@@BOOST_MODAL_V2_GOAL__CHOOSE_A_GOAL"
+  >
+    Choose a goal
+  </h3>
+  <span
+    class="m-boostGoalSelector__subtitle"
+    i18n="@@BOOST_MODAL_V2_GOAL__SUBTITLE"
+    >What do you want to focus on?</span
+  >
+</div>
+<div class="m-boostGoalSelector__body">
+  <form [formGroup]="form">
+    <!-- --------------------------------------- -->
+    <!-- VIEWS -->
+    <!-- --------------------------------------- -->
+    <div
+      class="m-boostGoalSelector__radioButtonRow"
+      [ngClass]="{
+        'm-boostGoalSelector__radioButtonRow--selected':
+          form.controls.goal.value === BoostGoal.VIEWS
+      }"
+      (click)="selectRadioButton(BoostGoal.VIEWS)"
+    >
+      <div class="m-boostGoalSelector__radioButtonLabels">
+        <label
+          class="m-boostGoalSelector__radioButtonLabel"
+          for="views"
+          i18n="@@BOOST_MODAL_V2_GOAL__VIEWS_LABEL"
+          >Expand reach</label
+        >
+        <span
+          class="m-boostGoalSelector__radioButtonSubtext"
+          id="views-description"
+          i18n="@@BOOST_MODAL_V2_GOAL__VIEWS_DESCRIPTION"
+          >Get more people to see your post</span
+        >
+      </div>
+      <fieldset data-ref="boost-modal-v2-goal-selector-views-field-set">
+        <input
+          class="m-boostGoalSelector__radioButton"
+          type="radio"
+          [value]="BoostGoal.VIEWS"
+          aria-describedby="views-description"
+          formControlName="goal"
+          data-ref="boost-modal-v2-goal-selector-views-radio-button"
+        />
+      </fieldset>
+    </div>
+    <!-- --------------------------------------- -->
+    <!-- ENGAGEMENT -->
+    <!-- --------------------------------------- -->
+    <div
+      class="m-boostGoalSelector__radioButtonRow"
+      [ngClass]="{
+        'm-boostGoalSelector__radioButtonRow--selected':
+          form.controls.goal.value === BoostGoal.ENGAGEMENT
+      }"
+      (click)="selectRadioButton(BoostGoal.ENGAGEMENT)"
+    >
+      <div class="m-boostGoalSelector__radioButtonLabels">
+        <label
+          class="m-boostGoalSelector__radioButtonLabel"
+          for="engagement"
+          i18n="@@BOOST_MODAL_V2_GOAL__ENGAGEMENT_TITLE"
+          >Increase engagement</label
+        >
+        <span
+          class="m-boostGoalSelector__radioButtonSubtext"
+          id="engagement-description"
+          i18n="@@BOOST_MODAL_V2_GOAL__ENGAGEMENT_DESCRIPTION"
+          >Get more Votes, Reminds, Comments, etc.</span
+        >
+      </div>
+      <fieldset>
+        <input
+          class="m-boostGoalSelector__radioButton"
+          type="radio"
+          [value]="BoostGoal.ENGAGEMENT"
+          aria-describedby="engagement-description"
+          formControlName="goal"
+          data-ref="boost-modal-v2-goal-selector-engagement-radio-button"
+        />
+      </fieldset>
+    </div>
+    <!-- --------------------------------------- -->
+    <!-- SUBSCRIBERS -->
+    <!-- --------------------------------------- -->
+    <div
+      class="m-boostGoalSelector__radioButtonRow"
+      [ngClass]="{
+        'm-boostGoalSelector__radioButtonRow--selected':
+          form.controls.goal.value === BoostGoal.SUBSCRIBERS
+      }"
+      (click)="selectRadioButton(BoostGoal.SUBSCRIBERS)"
+    >
+      <div class="m-boostGoalSelector__radioButtonLabels">
+        <label
+          class="m-boostGoalSelector__radioButtonLabel"
+          for="subscribers"
+          i18n="@@BOOST_MODAL_V2_GOAL__SUBSCRIBERS_TITLE"
+          >Grow your following</label
+        >
+        <span
+          class="m-boostGoalSelector__radioButtonSubtext"
+          id="subscribers-description"
+          i18n="@@BOOST_MODAL_V2_GOAL__SUBSCRIBERS_DESCRIPTION"
+          >Gain more subscribers and grow your channel</span
+        >
+      </div>
+      <fieldset>
+        <input
+          class="m-boostGoalSelector__radioButton"
+          type="radio"
+          [value]="BoostGoal.SUBSCRIBERS"
+          aria-describedby="subscribers-description"
+          formControlName="goal"
+          data-ref="boost-modal-v2-goal-selector-subscribers-radio-button"
+        />
+      </fieldset>
+    </div>
+    <!-- --------------------------------------- -->
+    <!-- CLICKS -->
+    <!-- --------------------------------------- -->
+    <div
+      class="m-boostGoalSelector__radioButtonRow"
+      [ngClass]="{
+        'm-boostGoalSelector__radioButtonRow--selected':
+          form.controls.goal.value === BoostGoal.CLICKS
+      }"
+      (click)="selectRadioButton(BoostGoal.CLICKS)"
+    >
+      <div class="m-boostGoalSelector__radioButtonLabels">
+        <label
+          class="m-boostGoalSelector__radioButtonLabel"
+          for="clicks"
+          i18n="@@BOOST_MODAL_V2_GOAL__CLICKS_TITLE"
+          >Get more clicks</label
+        >
+        <span
+          class="m-boostGoalSelector__radioButtonSubtext"
+          id="clicks-description"
+          i18n="@@BOOST_MODAL_V2_GOAL__CLICKS_DESCRIPTION"
+          >Increase website traffic, app installs, or clicks on Minds
+        </span>
+      </div>
+      <fieldset>
+        <input
+          class="m-boostGoalSelector__radioButton"
+          type="radio"
+          [value]="BoostGoal.CLICKS"
+          aria-describedby="clicks-description"
+          formControlName="goal"
+          data-ref="boost-modal-v2-goal-selector-clicks-radio-button"
+        />
+      </fieldset>
+    </div>
+  </form>
+</div>

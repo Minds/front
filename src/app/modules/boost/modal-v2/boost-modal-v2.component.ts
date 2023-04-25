@@ -3,6 +3,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { BoostModalData, BoostModalPanel } from './boost-modal-v2.types';
 import { BoostModalV2Service } from './services/boost-modal-v2.service';
+import { BoostGoalsExperimentService } from '../../experiments/sub-services/boost-goals-experiment.service';
 
 /**
  * Boost modal v2 root level component.
@@ -26,10 +27,15 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
 
   constructor(
     private service: BoostModalV2Service,
-    private toast: ToasterService
+    private toast: ToasterService,
+    private boostGoalsExperiment: BoostGoalsExperimentService
   ) {}
 
   ngOnInit(): void {
+    if (!this.boostGoalsExperiment.isActive()) {
+      this.activePanel$.next(BoostModalPanel.AUDIENCE);
+    }
+
     this.saveIntentSubscription = this.service.callSaveIntent$.subscribe(
       onSaveIntent => {
         this.onSaveIntent();
