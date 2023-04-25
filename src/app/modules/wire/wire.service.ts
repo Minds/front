@@ -22,6 +22,7 @@ export interface WireStruc {
   recurring: boolean;
   recurringInterval?: 'once' | 'monthly' | 'yearly' | 'lifetime' | null;
   payload: any;
+  sourceEntityGuid?: string | null;
 }
 
 @Injectable()
@@ -143,6 +144,7 @@ export class WireService {
         method: payload.method,
         amount: wire.amount,
         recurring: wire.recurring,
+        source_entity_guid: wire.sourceEntityGuid,
         recurring_interval:
           wire.recurringInterval === 'lifetime'
             ? 'once'
