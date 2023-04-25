@@ -3,7 +3,9 @@
     <a
       *ngIf="shouldShowForYouTab()"
       (click)="onTabClick(feedAlgorithm.forYou)"
-      [class.m-tabs__tab--selected]="(activeTab$ | async) === 'forYou'"
+      [class.m-tabs__tab--selected]="
+        (activeTab$ | async) === feedAlgorithm.forYou
+      "
       data-ref="newsfeed-tab-link-for-you"
       i18n="@@NEWSFEED_TAGS__FOR_YOU"
       >For You</a
@@ -12,7 +14,7 @@
   <div class="m-tabs__tab">
     <a
       (click)="onTabClick(feedAlgorithm.top)"
-      [class.m-tabs__tab--selected]="(activeTab$ | async) === 'top'"
+      [class.m-tabs__tab--selected]="(activeTab$ | async) === feedAlgorithm.top"
       data-ref="newsfeed-tab-top"
       i18n="@@NEWSFEED_TAGS__TOP"
       >Top</a
@@ -21,7 +23,9 @@
   <div class="m-tabs__tab">
     <a
       (click)="onTabClick(feedAlgorithm.latest)"
-      [class.m-tabs__tab--selected]="(activeTab$ | async) === 'latest'"
+      [class.m-tabs__tab--selected]="
+        (activeTab$ | async) === feedAlgorithm.latest
+      "
       data-ref="newsfeed-tab-link-latest"
       i18n="@@NEWSFEED_TAGS__LATEST"
       >Latest</a

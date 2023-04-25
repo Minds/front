@@ -47,7 +47,7 @@ import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-histor
 export enum FeedAlgorithm {
   top = 'top',
   latest = 'latest',
-  forYou = 'forYou',
+  forYou = 'for-you',
 }
 
 const commonInjectItems: InjectItem[] = [
@@ -206,7 +206,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['algorithm']) {
-        if (params['algorithm'] in FeedAlgorithm) {
+        if (Object.values(FeedAlgorithm).includes(params['algorithm'])) {
           this.changeFeedAlgorithm(params['algorithm']);
         } else {
           this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
@@ -271,7 +271,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     switch (this.algorithm) {
       case 'top':
         return this.topFeedService;
-      case 'forYou':
+      case 'for-you':
         return this.forYouFeedService;
       default:
         return this.latestFeedService;
@@ -304,7 +304,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     try {
       switch (this.algorithm) {
-        case 'forYou':
+        case 'for-you':
           await this.forYouFeedService.setLimit(12).fetch(true);
           break;
         case 'top':
@@ -387,7 +387,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.feedAlgorithmHistory.lastAlorithm = algo;
 
     switch (algo) {
-      case 'forYou':
+      case 'for-you':
         this.forYouFeedService.clear(true);
         break;
       case 'top':
