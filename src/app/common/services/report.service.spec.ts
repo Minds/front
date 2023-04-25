@@ -71,7 +71,7 @@ describe('ReportService', () => {
       Object({
         value: '18',
         reasons: undefined,
-        label: 'Violates Premium Content policy',
+        label: 'Violates Premium content policy',
         description: 'Content violates premium content policy',
       }),
       Object({
