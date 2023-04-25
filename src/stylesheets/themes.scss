@@ -118,8 +118,11 @@ $black: #000;
 $white: #fff;
 
 $facebook: #3b5998;
+$facebook-2023: #1977f2;
 $messenger: #0084ff;
+$sms: #19c735;
 $twitter: #03b3ee;
+$twitter-2023: #1da1f1;
 $whatsapp: #25d366;
 $linkedin: #0071a1;
 
@@ -143,7 +146,7 @@ $themes: (
     m-bgColor--primaryInverted: #1f252c,
     m-bgColor--primaryDarkAlways: #1f252c,
     m-bgColor--primaryAlt: #e7edf3,
-    m-bgColor--secondary: $grey-200,
+    m-bgColor--secondary: #f6f7f7,
     m-bgColor--secondaryAlt: #e6ebed,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--contrastSubtle: #dde4e6,
@@ -154,7 +157,7 @@ $themes: (
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
     // aka #D2DBE3 @ 40%
-      m-highlight--comment: $grey-100,
+      m-highlight--comment: #edf0f3,
     m-overlay: rgba(176, 176, 176, 0.5),
     m-alert: #e03c20,
     m-positive: #95c064,
@@ -202,8 +205,11 @@ $themes: (
     m-warn-bg: $yellow-200,
     m-warn-fg: $black,
     m-facebook: $facebook,
+    m-facebook-2023: $facebook-2023,
     m-messenger: $messenger,
+    m-sms: $sms,
     m-twitter: $twitter,
+    m-twitter-2023: $twitter-2023,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
     m-activity--hover: lighten($grey-500, $percent),
@@ -277,8 +283,11 @@ $themes: (
     m-warn-bg: $yellow-800,
     m-warn-fg: $white,
     m-facebook: $facebook,
+    m-facebook-2023: $facebook-2023,
     m-messenger: $messenger,
+    m-sms: $sms,
     m-twitter: $twitter,
+    m-twitter-2023: $twitter-2023,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
     m-activity--hover: lighten($grey-400, $percent),
@@ -336,8 +345,11 @@ $m-warn-bg: 'm-warn-bg';
 $m-warn-fg: 'm-warn-fg';
 
 $m-facebook: 'm-facebook';
+$m-facebook-2023: 'm-facebook-2023';
 $m-messenger: 'm-messenger';
+$m-sms: 'm-sms';
 $m-twitter: 'm-twitter';
+$m-twitter-2023: 'm-twitter-2023';
 $m-whatsapp: 'm-whatsapp';
 $m-linkedin: 'm-linkedin';
 

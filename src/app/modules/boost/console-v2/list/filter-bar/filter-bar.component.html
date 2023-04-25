@@ -82,6 +82,13 @@
   >
     <ng-container *ngTemplateOutlet="legacyLink"></ng-container>
   </div>
+  <!-- ---------------------------------------- -->
+  <!-- BOOST CHANNEL/LATEST POST NOTICE: DESKTOP -->
+  <!-- ---------------------------------------- -->
+  <div class="m-boostConsole__boostLatestPostWrapper--desktop">
+    <ng-container *ngTemplateOutlet="boostLatestPostNotice"></ng-container>
+  </div>
+
   <!-- ------------------------ -->
   <!-- DROPDOWN MENU FILTERS-->
   <!-- ------------------------ -->
@@ -175,6 +182,12 @@
   class="m-boostConsole__legacyLinkWrapper--mobile"
 >
   <ng-container *ngTemplateOutlet="legacyLink"></ng-container>
+</div>
+<!-- ---------------------------------------- -->
+<!-- BOOST CHANNEL/LATEST POST NOTICE: MOBILE -->
+<!-- ---------------------------------------- -->
+<div class="m-boostConsole__boostLatestPostWrapper--mobile">
+  <ng-container *ngTemplateOutlet="boostLatestPostNotice"></ng-container>
 </div>
 <!-- -------------------------------------------- -->
 <!-- -------------------------------------------- -->
@@ -341,4 +354,14 @@
 <ng-template #legacyLink>
   <p><a routerLink="/boost/console">View your legacy boosts</a></p>
   <p>See posts you boosted in the retired legacy system.</p>
+</ng-template>
+<!-- ------------------------------------->
+<!-- TEMPLATE: BOOST LATEST POST NOTICE -->
+<!-- ------------------------------------->
+<ng-template #boostLatestPostNotice>
+  <m-feedNotice--boostLatestPost
+    *ngIf="!(service.adminContext$ | async)"
+    [isInFeed]="false"
+    [targetBoostLocation]="service.locationFilterValue$ | async"
+  ></m-feedNotice--boostLatestPost>
 </ng-template>

@@ -34,8 +34,6 @@ export class NestedMenuComponent {
   @Output() itemSelected: EventEmitter<any> = new EventEmitter();
   @Output() clickedBack: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
-
   itemClicked(menuHeaderId, itemId): void {
     const item = { menuHeaderId: menuHeaderId, itemId: itemId };
     this.itemSelected.emit({ item: item });

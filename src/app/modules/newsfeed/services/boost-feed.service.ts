@@ -1,7 +1,7 @@
 import { Injectable, Self } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
 import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 import { Session } from '../../../services/session';
 
@@ -14,7 +14,9 @@ export type BoostFeedOpts = {
 
 @Injectable({ providedIn: 'root' })
 export class BoostFeedService {
-  public feed$: Observable<BehaviorSubject<Object>[]> = this.feedsService.feed;
+  public feed$: Observable<
+    BehaviorSubject<Object>[]
+  > = this.feedsService.feed.pipe(shareReplay());
 
   private initialised: boolean = false;
   private servedByGuid: string = null;
@@ -74,6 +76,21 @@ export class BoostFeedService {
 
     this.feedsService.clear();
     this.feedsService.fetch();
+  }
+
+  /**
+   * Load next items in feed - will hydrate next 12 or get next 150 if needed.
+   * @returns { void }
+   */
+  public loadNext(): void {
+    if (
+      this.feedsService.canFetchMore &&
+      !this.feedsService.inProgress.getValue() &&
+      this.feedsService.offset.getValue() >= this.feedsService.feedLength
+    ) {
+      this.feedsService.fetch(); // load the next 150 in the background
+    }
+    this.feedsService.loadMore();
   }
 
   public reset(): BoostFeedService {

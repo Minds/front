@@ -1,17 +1,17 @@
-import { DiscoveryBoostExperimentService } from './discovery-boost-experiment.service';
+import { BoostPartnersExperimentService } from './boost-partners-experiment.service';
 
 export let experimentsServiceMock = new (function() {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 
-describe('DiscoveryBoostExperimentService', () => {
-  let service: DiscoveryBoostExperimentService;
+describe('BoostPartnersExperimentService', () => {
+  let service: BoostPartnersExperimentService;
 
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    service = new DiscoveryBoostExperimentService(experimentsServiceMock);
+    service = new BoostPartnersExperimentService(experimentsServiceMock);
   });
 
   afterEach(() => {
@@ -26,7 +26,7 @@ describe('DiscoveryBoostExperimentService', () => {
     (service as any).experiments.hasVariation.and.returnValue(true);
     expect(service.isActive()).toBeTruthy();
     expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'minds-3280-discovery-boosts',
+      'epic-303-boost-partners',
       true
     );
   });
@@ -35,7 +35,7 @@ describe('DiscoveryBoostExperimentService', () => {
     (service as any).experiments.hasVariation.and.returnValue(false);
     expect(service.isActive()).toBeFalsy();
     expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'minds-3280-discovery-boosts',
+      'epic-303-boost-partners',
       true
     );
   });
