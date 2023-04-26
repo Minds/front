@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 import { Session } from '../../../../services/session';
-import { CashBoostsExperimentService } from '../../../experiments/sub-services/cash-boosts-experiment.service';
 import { BoostModalService } from '../boost-modal.service';
 import { BoostableEntity, BoostSubject, BoostTab } from '../boost-modal.types';
 
@@ -15,11 +14,7 @@ import { BoostableEntity, BoostSubject, BoostTab } from '../boost-modal.types';
   styleUrls: ['./boost-modal-tabs.component.ng.scss'],
 })
 export class BoostModalTabsComponent {
-  constructor(
-    private service: BoostModalService,
-    private session: Session,
-    private cashExperiment: CashBoostsExperimentService
-  ) {}
+  constructor(private service: BoostModalService, private session: Session) {}
 
   // Active tab from service.
   public activeTab$: BehaviorSubject<BoostTab> = this.service.activeTab$;
@@ -45,13 +40,5 @@ export class BoostModalTabsComponent {
    */
   public getLoggedInUser(): MindsUser {
     return this.session.getLoggedInUser();
-  }
-
-  /**
-   * Whether boost experiment is active.
-   * @returns { boolean } true if experiment is active.
-   */
-  public isCashExperimentActive(): boolean {
-    return this.cashExperiment.isActive();
   }
 }

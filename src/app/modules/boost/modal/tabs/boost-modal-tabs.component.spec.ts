@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { MockComponent, MockService } from '../../../../utils/mock';
-import { CashBoostsExperimentService } from '../../../experiments/sub-services/cash-boosts-experiment.service';
 import { BoostModalService } from '../boost-modal.service';
 import { BoostableEntity, BoostSubject, BoostTab } from '../boost-modal.types';
 import { BoostModalTabsComponent } from './boost-modal-tabs.component';
@@ -48,10 +47,6 @@ describe('BoostModalTabsComponent', () => {
             provide: Session,
             useValue: MockService(Session),
           },
-          {
-            provide: CashBoostsExperimentService,
-            useValue: MockService(CashBoostsExperimentService),
-          },
         ],
       }).compileComponents();
     })
@@ -90,15 +85,5 @@ describe('BoostModalTabsComponent', () => {
     const user = userMock;
     (comp as any).session.getLoggedInUser.and.returnValue(user);
     expect(comp.getLoggedInUser()).toBe(user);
-  });
-
-  it('should determine when cash experiment is on', () => {
-    (comp as any).cashExperiment.isActive.and.returnValue(true);
-    expect(comp.isCashExperimentActive()).toBeTrue();
-  });
-
-  it('should determine when cash experiment is off', () => {
-    (comp as any).cashExperiment.isActive.and.returnValue(false);
-    expect(comp.isCashExperimentActive()).toBeFalse();
   });
 });

@@ -19,7 +19,6 @@ import {
   PrepareResponse,
 } from './boost-modal.types';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { CashBoostsExperimentService } from '../../experiments/sub-services/cash-boosts-experiment.service';
 
 export const MAXIMUM_SINGLE_BOOST_IMPRESSIONS = 5000;
 export const MINIMUM_SINGLE_BOOST_IMPRESSIONS = 500;
@@ -179,12 +178,8 @@ export class BoostModalService implements OnDestroy {
     private toast: ToasterService,
     private web3Wallet: Web3WalletService,
     private boostContract: BoostContractService,
-    private cashExperiment: CashBoostsExperimentService,
     private configs: ConfigsService
   ) {
-    if (!this.cashExperiment.isActive()) {
-      this.activeTab$.next('tokens');
-    }
     this.setImpressionRates();
   }
 
@@ -425,9 +420,7 @@ export class BoostModalService implements OnDestroy {
     this.entity$.next(DEFAULT_ENTITY);
     this.onchainBalance$.next(DEFAULT_BALANCE);
     this.offchainBalance$.next(DEFAULT_BALANCE);
-    this.activeTab$.next(
-      this.cashExperiment.isActive() ? DEFAULT_ACTIVE_TAB : 'tokens'
-    );
+    this.activeTab$.next(DEFAULT_ACTIVE_TAB);
     this.cashRefundPolicy$.next(false);
   }
 }

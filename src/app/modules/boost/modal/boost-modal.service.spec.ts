@@ -17,10 +17,6 @@ export let boostContractServiceMock = new (function() {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
-export let cashExperimentMock = new (function() {
-  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
-})();
-
 export let configsMock = new (function() {
   this.get = jasmine.createSpy('get').and.returnValue({});
 })();
@@ -41,7 +37,6 @@ describe('BoostModalService', () => {
       toasterServiceMock,
       web3WalletServiceMock,
       boostContractServiceMock,
-      cashExperimentMock,
       configsMock
     );
   });
