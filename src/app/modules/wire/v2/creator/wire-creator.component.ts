@@ -1,15 +1,14 @@
 import {
   ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnDestroy,
   ChangeDetectorRef,
+  Component,
+  OnDestroy,
 } from '@angular/core';
 import { WireService } from '../../wire.service';
 import { WireV2Service } from '../wire-v2.service';
 import { WalletV2Service } from '../../../wallet/components/wallet-v2.service';
 import { SupportTiersService } from '../support-tiers.service';
-import { Subscription, combineLatest } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
@@ -84,18 +83,24 @@ export class WireCreatorComponent implements OnDestroy {
     default: defaultValues,
     entity,
     supportTier,
+    sourceEntity,
   }: {
     onComplete;
     onDismissIntent;
     default?;
     entity;
     supportTier?;
+    sourceEntity?;
   }) {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
 
     if (entity) {
       this.service.setEntity(entity);
+    }
+
+    if (sourceEntity) {
+      this.service.setSourceEntity(sourceEntity);
     }
 
     if (supportTier) {
