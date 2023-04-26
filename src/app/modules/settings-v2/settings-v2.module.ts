@@ -70,7 +70,6 @@ import { SettingsV2EmailNotificationsV3Component } from './account/notifications
 import { SettingsV2ProfileComponent } from './account/profile/profile.component';
 import { SettingsV2WalletComponent } from './other/wallet/wallet.component';
 import { SettingsV2NostrComponent } from './account/nostr/nostr.component';
-import { SupermindExperimentGuard } from '../experiments/guards/supermind-experiment.guard';
 import { SettingsV2PaymentHistoryComponent } from './payments/payment-history/payment-history.component';
 import { PathMatch } from '../../common/types/angular.types';
 import { AffiliatesModule } from '../affiliates/affiliates.module';
@@ -388,7 +387,6 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'supermind',
             component: SettingsV2SupermindComponent,
-            canActivate: [SupermindExperimentGuard],
             data: {
               title: 'Supermind',
               description: 'Manage Supermind settings',

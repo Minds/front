@@ -18,7 +18,6 @@ import { InteractionType } from '../../interactions-modal/interactions-modal-dat
 import { ModalService } from '../../../../services/ux/modal.service';
 import { CounterChangeFadeIn } from '../../../../animations';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
-import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /**
@@ -49,7 +48,6 @@ export class ActivityToolbarComponent {
     private boostModal: BoostModalLazyService,
     private interactionsModalService: InteractionsModalService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
-    public supermindExperiment: SupermindExperimentService,
     public experimentsService: ExperimentsService,
     private cd: ChangeDetectorRef
   ) {}

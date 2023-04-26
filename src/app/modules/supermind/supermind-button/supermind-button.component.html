@@ -4,7 +4,6 @@
   color="blue"
   [size]="size"
   (onAction)="onClick($event)"
-  *ngIf="canShow"
 >
   <ng-container *ngIf="iconOnly; else btnText">
     <m-icon

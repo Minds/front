@@ -39,7 +39,6 @@ import { ToasterService } from '../../../../common/services/toaster.service';
 import isMobile from '../../../../helpers/is-mobile';
 import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
-import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component';
 import {
@@ -143,13 +142,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   private supermindReply: Supermind;
 
   /**
-   * Flag as to if we show supermind create button
+   * Whether Supermind request can be created.
    */
-  canCreateSupermindRequest$ = this.service.canCreateSupermindRequest$.pipe(
-    map(canCreateSupermindRequest => {
-      return this.supermindExperiment.isActive() && canCreateSupermindRequest;
-    })
-  );
+  public readonly canCreateSupermindRequest$ = this.service
+    .canCreateSupermindRequest$;
 
   /**
    * Constructor
@@ -165,7 +161,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected toaster: ToasterService,
     protected uploaderService: UploaderService,
     @Inject(PLATFORM_ID) protected platformId: Object,
-    protected supermindExperiment: SupermindExperimentService,
     public modalService: ModalService,
     private injector: Injector
   ) {}

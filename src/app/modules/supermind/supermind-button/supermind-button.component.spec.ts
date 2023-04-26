@@ -12,7 +12,6 @@ import { MockComponent, MockService } from '../../../utils/mock';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
-import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 import { SupermindButtonComponent } from './supermind-button.component';
 
 describe('SupermindButtonComponent', () => {
@@ -60,10 +59,6 @@ describe('SupermindButtonComponent', () => {
             }),
           },
           {
-            provide: SupermindExperimentService,
-            useValue: MockService(SupermindExperimentService),
-          },
-          {
             provide: Injector,
             useValue: MockService(Injector),
           },
@@ -76,7 +71,6 @@ describe('SupermindButtonComponent', () => {
     fixture = TestBed.createComponent(SupermindButtonComponent);
     comp = fixture.componentInstance;
 
-    (comp as any).supermindExperiment.isActive.and.returnValue(true);
     (comp as any).composerService.remind$.next(null);
     (comp as any).composerService.supermindRequest$.next(null);
 
