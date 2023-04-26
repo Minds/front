@@ -135,16 +135,4 @@ describe('WalletBalanceCashComponent', () => {
   it('should initialize', () => {
     expect(comp).toBeTruthy();
   });
-
-  it('should init with cashOnboardV2 to true if experiment is on', () => {
-    (comp as any).cashService.isExperimentActive.and.returnValue(true);
-    comp.ngOnInit();
-    expect(comp.cashOnboardV2).toBeTrue();
-  });
-
-  it('should init with cashOnboardV2 to false if experiment is off', () => {
-    (comp as any).cashService.isExperimentActive.and.returnValue(false);
-    comp.ngOnInit();
-    expect(comp.cashOnboardV2).toBeFalse();
-  });
 });
