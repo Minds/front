@@ -25,7 +25,6 @@ import { JsonLdService } from '../../../common/services/jsonld.service';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { BoostModalLazyService } from '../../boost/modal/boost-modal-lazy.service';
-import { BoostPartnersExperimentService } from '../../experiments/sub-services/boost-partners-experiment.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -72,7 +71,6 @@ export class NewsfeedSingleComponent {
     private location: Location,
     private routerHistory: RouterHistoryService,
     private boostModal: BoostModalLazyService,
-    private boostPartnersExperiment: BoostPartnersExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.siteUrl = configs.get('site_url');
@@ -319,8 +317,7 @@ export class NewsfeedSingleComponent {
     return (
       this.session.isLoggedIn() &&
       this.activity?.ownerObj?.guid &&
-      this.activity?.ownerObj?.guid !== this.session.getLoggedInUser().guid &&
-      this.boostPartnersExperiment.isActive()
+      this.activity?.ownerObj?.guid !== this.session.getLoggedInUser().guid
     );
   }
 }
