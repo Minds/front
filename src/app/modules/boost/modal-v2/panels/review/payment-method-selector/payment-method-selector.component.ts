@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
 import { ThemeService } from '../../../../../../common/services/theme.service';
-import { OnchainBoostsExperimentService } from '../../../../../experiments/sub-services/onchain-boosts-experiment.service';
 import { TokenBalanceService } from '../../../../../wallet/tokens/onboarding/balance.service';
 import {
   BoostPaymentCategory,
@@ -33,7 +32,6 @@ import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
         Off-chain ({{ offchainBalance$ | async }} Tokens)
       </option>
       <option
-        *ngIf="onchainBoostExperimentActive"
         [value]="BoostPaymentMethod.ONCHAIN_TOKENS"
         data-ref="boost-modal-v2-token-payment-select-onchain-option"
       >
@@ -57,9 +55,6 @@ export class BoostModalV2PaymentMethodSelectorComponent
 
   // cdn url
   private readonly cdnAssetsUrl: string;
-
-  // is experiment active to permit onchain boosting.
-  public onchainBoostExperimentActive: boolean = false;
 
   // Currently active tab.
   public paymentCategory$: BehaviorSubject<BoostPaymentCategory> = this.service
@@ -100,7 +95,6 @@ export class BoostModalV2PaymentMethodSelectorComponent
   constructor(
     private service: BoostModalV2Service,
     private tokenBalance: TokenBalanceService,
-    private onchainBoostExperiment: OnchainBoostsExperimentService,
     private theme: ThemeService,
     configs: ConfigsService
   ) {
@@ -108,8 +102,6 @@ export class BoostModalV2PaymentMethodSelectorComponent
   }
 
   ngOnInit(): void {
-    this.onchainBoostExperimentActive = this.onchainBoostExperiment.isActive();
-
     // Load token balance on active tab switch to 'tokens'.
     this.balanceLoadSubscription = this.paymentCategory$
       .pipe(
