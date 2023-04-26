@@ -30,7 +30,7 @@ export class BoostModalV2GoalButtonSelectorComponent
   implements OnInit, OnDestroy {
   public BoostGoal: typeof BoostGoal = BoostGoal;
   public BoostGoalButtonText: typeof BoostGoalButtonText = BoostGoalButtonText;
-  public form: FormGroup; // form group
+  public form: FormGroup;
   private subscriptions: Subscription[] = [];
   private currentGoal: BoostGoal;
 
@@ -64,11 +64,6 @@ export class BoostModalV2GoalButtonSelectorComponent
             this.currentGoal = goal;
 
             if (goal === BoostGoal.SUBSCRIBERS) {
-              if (!buttonText) {
-                buttonText = DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL;
-                this.service.goalButtonText$.next(buttonText);
-              }
-
               this.form = this.formBuilder.group({
                 goal_button_text: new FormControl<BoostGoalButtonText>(
                   buttonText,
@@ -76,11 +71,6 @@ export class BoostModalV2GoalButtonSelectorComponent
                 ),
               });
             } else if (goal === BoostGoal.CLICKS) {
-              if (!buttonText) {
-                buttonText = DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL;
-                this.service.goalButtonText$.next(buttonText);
-              }
-
               this.form = this.formBuilder.group({
                 goal_button_text: new FormControl<BoostGoalButtonText>(
                   buttonText,

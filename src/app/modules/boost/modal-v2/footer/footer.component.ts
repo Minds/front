@@ -29,8 +29,8 @@ export class BoostModalV2FooterComponent implements OnDestroy {
     .entityType$;
 
   // whether the next button is enabled.
-  public readonly canGoToNextPanel$: Observable<boolean> = this.service
-    .canGoToNextPanel$;
+  public readonly disableSubmitButton$: Observable<boolean> = this.service
+    .disableSubmitButton$;
 
   // whether boost submission is in progress.
   public readonly boostSubmissionInProgress$: Observable<boolean> = this.service

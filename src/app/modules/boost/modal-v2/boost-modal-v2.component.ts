@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { BoostModalData, BoostModalPanel } from './boost-modal-v2.types';
+import {
+  BoostModalData,
+  BoostModalPanel,
+  BoostSubject,
+} from './boost-modal-v2.types';
 import { BoostModalV2Service } from './services/boost-modal-v2.service';
 import { BoostGoalsExperimentService } from '../../experiments/sub-services/boost-goals-experiment.service';
 
@@ -23,28 +27,30 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
     .activePanel$;
 
   // subscriptions.
-  private saveIntentSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private service: BoostModalV2Service,
-    private toast: ToasterService,
-    private boostGoalsExperiment: BoostGoalsExperimentService
+    private toast: ToasterService
   ) {}
 
   ngOnInit(): void {
-    if (!this.boostGoalsExperiment.isActive()) {
-      this.activePanel$.next(BoostModalPanel.AUDIENCE);
-    }
-
-    this.saveIntentSubscription = this.service.callSaveIntent$.subscribe(
-      onSaveIntent => {
+    this.subscriptions.push(
+      this.service.callSaveIntent$.subscribe(onSaveIntent => {
         this.onSaveIntent();
-      }
+      }),
+      this.service.firstPanel$.subscribe((firstPanel: BoostModalPanel) => {
+        if (firstPanel === BoostModalPanel.GOAL) {
+          this.activePanel$.next(BoostModalPanel.GOAL);
+        }
+      })
     );
   }
 
   ngOnDestroy(): void {
-    this.saveIntentSubscription?.unsubscribe();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**

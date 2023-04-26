@@ -8,7 +8,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BoostModalV2FooterComponent } from './footer.component';
 import { BoostModalV2Service } from '../services/boost-modal-v2.service';
 import { BoostModalPanel, BoostSubject } from '../boost-modal-v2.types';
@@ -42,6 +42,7 @@ describe('BoostModalV2FooterComponent', () => {
                 'activePanel$',
                 'entityType$',
                 'boostSubmissionInProgress$',
+                'disableSubmitButton$',
               ],
               props: {
                 activePanel$: {
@@ -55,6 +56,9 @@ describe('BoostModalV2FooterComponent', () => {
                     new BehaviorSubject<BoostSubject>(BoostSubject.POST),
                 },
                 boostSubmissionInProgress$: {
+                  get: () => new BehaviorSubject<boolean>(false),
+                },
+                disableSubmitButton$: {
                   get: () => new BehaviorSubject<boolean>(false),
                 },
               },

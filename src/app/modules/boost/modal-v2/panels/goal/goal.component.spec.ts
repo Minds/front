@@ -31,19 +31,10 @@ describe('BoostModalV2GoalSelectorComponent', () => {
           {
             provide: BoostModalV2Service,
             useValue: MockService(BoostModalV2Service, {
-              has: ['goal$', 'goalButtonText$', 'goalButtonUrl$'],
+              has: ['goal$'],
               props: {
                 goal$: {
                   get: () => new BehaviorSubject<BoostGoal>(BoostGoal.VIEWS),
-                },
-                goalButtonText$: {
-                  get: () => new BehaviorSubject<BoostGoalButtonText>(null),
-                },
-                goalButtonUrl$: {
-                  get: () => new BehaviorSubject<string>(null),
-                },
-                activePanel$: {
-                  get: () => new BehaviorSubject<string>(null),
                 },
               },
             }),
@@ -62,8 +53,6 @@ describe('BoostModalV2GoalSelectorComponent', () => {
     comp = fixture.componentInstance;
 
     (comp as any).service.goal$.next(BoostGoal.VIEWS);
-    (comp as any).service.goalButtonText$.next(null);
-    (comp as any).service.goalButtonUrl$.next(null);
     (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     fixture.detectChanges();
@@ -84,88 +73,41 @@ describe('BoostModalV2GoalSelectorComponent', () => {
 
   it('should update service when engagement is selected', (done: DoneFn) => {
     (comp as any).service.goal$.next(BoostGoal.ENGAGEMENT);
-    (comp as any).service.goalButtonText$.next(null);
-    (comp as any).service.goalButtonUrl$.next(null);
     comp.selectRadioButton(BoostGoal.ENGAGEMENT);
 
     (comp as any).service.goal$.subscribe((goal: BoostGoal) => {
       expect(goal).toBe(BoostGoal.ENGAGEMENT);
       done();
     });
-    (comp as any).service.goalButtonText$.subscribe(
-      (buttonText: BoostGoalButtonText) => {
-        expect(buttonText).toBe(null);
-        done();
-      }
-    );
-    (comp as any).service.goalButtonUrl$.subscribe((buttonUrl: string) => {
-      expect(buttonUrl).toBe(null);
-      done();
-    });
   });
 
   it('should update service when views is selected', (done: DoneFn) => {
     (comp as any).service.goal$.next(BoostGoal.VIEWS);
-    (comp as any).service.goalButtonText$.next(null);
-    (comp as any).service.goalButtonUrl$.next(null);
     comp.selectRadioButton(BoostGoal.VIEWS);
 
     (comp as any).service.goal$.subscribe((goal: BoostGoal) => {
       expect(goal).toBe(BoostGoal.VIEWS);
       done();
     });
-    (comp as any).service.goalButtonText$.subscribe(
-      (buttonText: BoostGoalButtonText) => {
-        expect(buttonText).toBe(null);
-        done();
-      }
-    );
-    (comp as any).service.goalButtonUrl$.subscribe((buttonUrl: string) => {
-      expect(buttonUrl).toBe(null);
-      done();
-    });
   });
 
   it('should update service when subscribers is selected', (done: DoneFn) => {
     (comp as any).service.goal$.next(BoostGoal.SUBSCRIBERS);
-    (comp as any).service.goalButtonText$.next(
-      DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL
-    );
-    (comp as any).service.goalButtonUrl$.next(null);
     comp.selectRadioButton(BoostGoal.SUBSCRIBERS);
 
     (comp as any).service.goal$.subscribe((goal: BoostGoal) => {
       expect(goal).toBe(BoostGoal.SUBSCRIBERS);
       done();
     });
-    (comp as any).service.goalButtonText$.subscribe(
-      (buttonText: BoostGoalButtonText) => {
-        expect(buttonText).toBe(DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL);
-        done();
-      }
-    );
-    (comp as any).service.goalButtonUrl$.subscribe((buttonUrl: string) => {
-      expect(buttonUrl).toBe(null);
-      done();
-    });
   });
 
   it('should update service when clicks is selected', (done: DoneFn) => {
     (comp as any).service.goal$.next(BoostGoal.CLICKS);
-    (comp as any).service.goalButtonText$.next(
-      DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL
-    );
     comp.selectRadioButton(BoostGoal.CLICKS);
 
     (comp as any).service.goal$.subscribe((goal: BoostGoal) => {
       expect(goal).toBe(BoostGoal.CLICKS);
       done();
     });
-    (comp as any).service.goalButtonText$.subscribe(
-      (buttonText: BoostGoalButtonText) => {
-        expect(buttonText).toBe(DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL);
-        done();
-      }
-    );
   });
 });

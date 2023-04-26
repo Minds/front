@@ -9,10 +9,17 @@ import {
   BoostModalPanel,
   EstimatedReach,
 } from '../../boost-modal-v2.types';
+import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
+import { BoostGoal } from '../../../boost.types';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('BoostModalV2ReviewComponent', () => {
   let comp: BoostModalV2ReviewComponent;
   let fixture: ComponentFixture<BoostModalV2ReviewComponent>;
+
+  const getGoalSection = (): DebugElement =>
+    fixture.debugElement.query(By.css('.m-boostModalReview__section--goal'));
 
   beforeEach(
     waitForAsync(() => {
@@ -39,6 +46,7 @@ describe('BoostModalV2ReviewComponent', () => {
                 'totalPaymentAmountText$',
                 'estimatedReach$',
                 'activePanel$',
+                'goal$',
               ],
               props: {
                 paymentCategory$: {
@@ -75,8 +83,15 @@ describe('BoostModalV2ReviewComponent', () => {
                       BoostModalPanel.REVIEW
                     ),
                 },
+                goal$: {
+                  get: () => new BehaviorSubject<BoostGoal>(BoostGoal.VIEWS),
+                },
               },
             }),
+          },
+          {
+            provide: BoostGoalsExperimentService,
+            useValue: MockService(BoostGoalsExperimentService),
           },
         ],
       }).compileComponents();
@@ -103,6 +118,8 @@ describe('BoostModalV2ReviewComponent', () => {
       },
     });
     (comp as any).service.activePanel$.next(BoostModalPanel.REVIEW);
+    (comp as any).service.goal$.next(BoostGoal.VIEWS);
+    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     fixture.detectChanges();
 
@@ -199,5 +216,26 @@ describe('BoostModalV2ReviewComponent', () => {
       expect(val).toBe(BoostModalPanel.BUDGET);
       done();
     });
+  });
+
+  it('should show goal section when goal experiment is ON and a goal is set', () => {
+    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    (comp as any).service.goal$.next(BoostGoal.VIEWS);
+    fixture.detectChanges();
+    expect(getGoalSection()).toBeTruthy();
+  });
+
+  it('should NOT show goal section when goal experiment is ON and a goal is NOT set', () => {
+    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    (comp as any).service.goal$.next(null);
+    fixture.detectChanges();
+    expect(getGoalSection()).toBeNull();
+  });
+
+  it('should NOT show goal section when goal experiment is OFF', () => {
+    (comp as any).boostGoalsExperiment.isActive.and.returnValue(false);
+    (comp as any).service.goal$.next(null);
+    fixture.detectChanges();
+    expect(getGoalSection()).toBeNull();
   });
 });

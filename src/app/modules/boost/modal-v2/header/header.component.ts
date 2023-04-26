@@ -13,7 +13,7 @@ import { BoostGoalsExperimentService } from '../../../experiments/sub-services/b
     <div class="m-modalV2__header">
       <div class="m-boostModalV2__headerLeft">
         <m-icon
-          *ngIf="(activePanel$ | async) !== firstPanel"
+          *ngIf="previousPanel$ | async"
           iconId="chevron_left"
           (click)="openPreviousPanel()"
         ></m-icon>
@@ -45,7 +45,7 @@ import { BoostGoalsExperimentService } from '../../../experiments/sub-services/b
   `,
   styleUrls: ['header.component.ng.scss'],
 })
-export class BoostModalV2HeaderComponent implements OnInit {
+export class BoostModalV2HeaderComponent {
   // enums.
   public BoostSubject: typeof BoostSubject = BoostSubject;
   public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
@@ -58,18 +58,12 @@ export class BoostModalV2HeaderComponent implements OnInit {
   public readonly activePanel$: Observable<BoostModalPanel> = this.service
     .activePanel$;
 
-  protected firstPanel: BoostModalPanel = BoostModalPanel.AUDIENCE;
+  // previous panel in the modal flow, if any.
+  public readonly previousPanel$: Observable<BoostModalPanel> = this.service
+    .previousPanel$;
 
-  constructor(
-    private service: BoostModalV2Service,
-    private boostGoalExperiment: BoostGoalsExperimentService
-  ) {}
+  constructor(private service: BoostModalV2Service) {}
 
-  ngOnInit(): void {
-    if (this.boostGoalExperiment.isActive()) {
-      this.firstPanel = BoostModalPanel.GOAL;
-    }
-  }
   /**
    * Open the previous panel.
    * @returns { void }

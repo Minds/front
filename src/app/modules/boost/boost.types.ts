@@ -122,10 +122,10 @@ export type BoostConsoleSingleGetResponse = {
 ///////////////////////////////////////////////////////
 // BOOST GOALS
 export enum BoostGoal {
-  VIEWS = 1,
-  ENGAGEMENT = 2,
-  SUBSCRIBERS = 3,
-  CLICKS = 4,
+  VIEWS = 1, // "expand reach"
+  ENGAGEMENT = 2, // "increase engagement"
+  SUBSCRIBERS = 3, // "grow your following"
+  CLICKS = 4, // "get more clicks"
 }
 
 export enum BoostGoalButtonText {

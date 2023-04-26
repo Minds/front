@@ -11,10 +11,6 @@ import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostGoal } from '../../../boost.types';
 import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostModalPanel } from '../../boost-modal-v2.types';
-import {
-  DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL,
-  DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL,
-} from '../../boost-modal-v2.constants';
 
 /**
  * Goal selector panel for boost modal V2. Allows selection of
@@ -52,28 +48,10 @@ export class BoostModalV2GoalSelectorComponent implements OnInit, OnDestroy {
         });
       });
 
-    // When the value form control changes, set the new value in the service and
-    // also set the default goal button text and url values based on the selected goal
+    // When the value form control changes, set the new value in the service
     this.goalChangeSubscription = this.form.controls.goal.valueChanges.subscribe(
       (goal: BoostGoal) => {
         this.service.goal$.next(goal);
-
-        switch (goal) {
-          case BoostGoal.SUBSCRIBERS:
-            this.service.goalButtonText$.next(
-              DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL
-            );
-            this.service.goalButtonUrl$.next(null);
-            break;
-          case BoostGoal.CLICKS:
-            this.service.goalButtonText$.next(
-              DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL
-            );
-            break;
-          default:
-            this.service.goalButtonText$.next(null);
-            this.service.goalButtonUrl$.next(null);
-        }
       }
     );
   }
