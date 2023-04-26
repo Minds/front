@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { Session } from '../../../services/session';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostService } from '../boost.service';
 import {
   BoostConsoleSuitabilityFilter,
@@ -58,7 +57,6 @@ export class BoostConsoleV2Component implements OnInit {
     private router: Router,
     private service: BoostConsoleService,
     private legacyService: BoostService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService,
     private session: Session,
     private loginReferrer: LoginReferrerService,
     private location: Location,
@@ -66,11 +64,6 @@ export class BoostConsoleV2Component implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // if experiment is not active, redirect to root.
-    if (!this.dynamicBoostExperiment.isActive() && !this.session.isAdmin()) {
-      this.router.navigate(['/boost/console']);
-    }
-
     if (!this.session.isLoggedIn()) {
       this.loginReferrer.register(this.location.path());
       this.router.navigate(['/login']);

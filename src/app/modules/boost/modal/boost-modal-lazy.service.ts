@@ -1,17 +1,14 @@
-import { createNgModuleRef, Injectable, Injector } from '@angular/core';
+import { createNgModule, Injectable, Injector } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ModalRef, ModalService } from '../../../services/ux/modal.service';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostModalV2LazyModule } from '../modal-v2/boost-modal-v2-lazy.module';
 import { BoostModalV2Component } from '../modal-v2/boost-modal-v2.component';
-import { BoostModalExtraOpts } from '../modal-v2/boost-modal-v2.types';
-import { BoostModalLazyModule } from './boost-modal-lazy.module';
-import { BoostModalComponent } from './boost-modal.component';
-import { BoostableEntity } from './boost-modal.types';
+import {
+  BoostableEntity,
+  BoostModalExtraOpts,
+} from '../modal-v2/boost-modal-v2.types';
 
-type PresentableBoostModalComponent =
-  | typeof BoostModalV2Component
-  | typeof BoostModalComponent;
+type PresentableBoostModalComponent = typeof BoostModalV2Component;
 
 /**
  * Lazy loads boost modal.
@@ -21,11 +18,7 @@ export class BoostModalLazyService {
   // emitted to on boost completion.
   public onComplete$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(
-    private modalService: ModalService,
-    private injector: Injector,
-    private dynamicBoostExperiment: DynamicBoostExperimentService
-  ) {}
+  constructor(private modalService: ModalService, private injector: Injector) {}
 
   /**
    * Lazy load modules and open modal.
@@ -33,7 +26,7 @@ export class BoostModalLazyService {
    * @returns { Promise<ModalRef<PresentableBoostModalComponent>>} - awaitable.
    */
   public async open(
-    entity: BoostableEntity = {},
+    entity: BoostableEntity,
     extraOpts: BoostModalExtraOpts = {}
   ): Promise<ModalRef<PresentableBoostModalComponent>> {
     const componentRef: PresentableBoostModalComponent = await this.getComponentRef();
@@ -46,7 +39,7 @@ export class BoostModalLazyService {
         },
         ...extraOpts,
       },
-      size: this.getModalSize(),
+      size: 'md',
     });
     return modal;
   }
@@ -56,16 +49,10 @@ export class BoostModalLazyService {
    * @returns { Promise<PresentableBoostModalComponent> }
    */
   private async getComponentRef(): Promise<PresentableBoostModalComponent> {
-    return createNgModuleRef<BoostModalV2LazyModule | BoostModalLazyModule>(
-      this.dynamicBoostExperiment.isActive()
-        ? (await import('../modal-v2/boost-modal-v2-lazy.module'))
-            .BoostModalV2LazyModule
-        : (await import('./boost-modal-lazy.module')).BoostModalLazyModule,
+    return createNgModule<BoostModalV2LazyModule>(
+      (await import('../modal-v2/boost-modal-v2-lazy.module'))
+        .BoostModalV2LazyModule,
       this.injector
     ).instance.resolveComponent();
-  }
-
-  private getModalSize(): string {
-    return this.dynamicBoostExperiment.isActive() ? 'md' : 'lg';
   }
 }

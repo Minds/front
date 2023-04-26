@@ -5,7 +5,6 @@ import {
 } from '../../../modules/newsfeed/services/boost-feed.service';
 import { Session } from '../../../services/session';
 import { MockService } from '../../../utils/mock';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { BehaviorSubject } from 'rxjs';
 
@@ -41,10 +40,6 @@ describe('BoostFeedService', () => {
           })(),
         },
         {
-          provide: DynamicBoostExperimentService,
-          useValue: MockService(DynamicBoostExperimentService),
-        },
-        {
           provide: Session,
           useValue: MockService(Session),
         },
@@ -55,8 +50,6 @@ describe('BoostFeedService', () => {
 
     (service as any).initialised = false;
     (service as any).servedByGuid = false;
-
-    (service as any).dynamicBoostExperiment.isActive.and.returnValue(true);
 
     (service as any).feedsService.canFetchMore = true;
     (service as any).feedsService.feedLength = 12;

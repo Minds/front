@@ -54,12 +54,12 @@ export enum BoostLocation {
 // Entity that is boostable.
 export type BoostableEntity = {
   guid: string;
-  type: string;
-  subtype: string;
-  owner_guid: string;
+  type?: string;
+  subtype?: string;
+  owner_guid?: string;
   nsfw?: number[];
   nsfw_lock?: number[];
-  time_created: number | string;
+  time_created?: number | string;
 };
 
 // Boost config from server.

@@ -12,7 +12,6 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { ChangeDetectorRef } from '@angular/core';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
-import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
 import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../../mocks/responses/user.mock';
 import { MindsUser } from '../../../../interfaces/entities';
@@ -61,10 +60,6 @@ describe('UserMenuComponent', () => {
           {
             provide: BoostModalLazyService,
             useValue: MockService(BoostModalLazyService),
-          },
-          {
-            provide: DynamicBoostExperimentService,
-            useValue: MockService(DynamicBoostExperimentService),
           },
         ],
       }).compileComponents(); // compile template and css
