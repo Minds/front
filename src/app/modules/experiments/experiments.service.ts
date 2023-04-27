@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
-import { GrowthBook, Experiment } from '@growthbook/growthbook';
+import { GrowthBook } from '@growthbook/growthbook';
 import { ConfigsService } from '../../common/services/configs.service';
 import { AnalyticsService } from '../../services/analytics';
 import { Session } from '../../services/session';
@@ -11,6 +11,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OverridableAttributes } from './experiments.types';
 export { Experiment } from '@growthbook/growthbook';
+import * as moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
 export class ExperimentsService implements OnDestroy {
@@ -120,15 +121,21 @@ export class ExperimentsService implements OnDestroy {
   }
 
   /**
-   * Will return the logged in userId or a random value
-   * will generate an experiment cookie if one doesn't exist.
-   * @returns string
+   * Will return the logged in userId or null if there is no user.
+   * @returns { string } logged in userId or null if there is no user.
    */
   protected getUserId(): string {
     if (this.session.isLoggedIn()) {
       return this.session.getLoggedInUser()?.guid;
     }
+  }
 
+  /**
+   * Gets experiment cookie value or generates a new one if one
+   * does not exist - then stores and returns it.
+   * @returns { string } experiment cookie value.
+   */
+  private getExperimentCookieValue(): string {
     const cookieName = 'experiments_id';
 
     let cookieValue = this.cookieService.get(cookieName);
@@ -139,7 +146,12 @@ export class ExperimentsService implements OnDestroy {
         Math.random()
           .toString(36)
           .substr(2, 16);
-      this.cookieService.put(cookieName, cookieValue);
+
+      this.cookieService.put(cookieName, cookieValue, {
+        expires: moment()
+          .add(1, 'year')
+          .toDate(),
+      });
     }
 
     return cookieValue;
@@ -169,6 +181,7 @@ export class ExperimentsService implements OnDestroy {
       loggedIn: this.session.isLoggedIn(),
       route: this.router.url,
       id: this.getUserId(),
+      deviceId: this.getExperimentCookieValue(),
       ...attributeOverrides, // overrides.
     };
 
