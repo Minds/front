@@ -13,7 +13,6 @@ import { ComposerService } from '../../composer/services/composer.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { catchError, take, tap } from 'rxjs/operators';
 import { EmailResendService } from '../../../common/services/email-resend.service';
-import { OnboardingFeedNoticesExperimentService } from '../../experiments/sub-services/onboarding-feed-notices-experiment.service';
 import { VerifyUniquenessModalLazyService } from '../../verify-uniqueness/modal/services/verify-uniqueness-modal.service';
 import { InAppVerificationExperimentService } from '../../experiments/sub-services/in-app-verification-experiment.service';
 
@@ -41,9 +40,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     false
   );
 
-  // hidden when feed notice experiment is active.
-  public noticeExperimentActive: boolean = false;
-
   constructor(
     private onboarding: OnboardingV3Service,
     private panel: OnboardingV3PanelService,
@@ -52,17 +48,10 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     private toast: ToasterService,
     private emailResend: EmailResendService,
     private verifyUniquenessModal: VerifyUniquenessModalLazyService,
-    private noticeExperiment: OnboardingFeedNoticesExperimentService,
     private inAppVerificationExperimentService: InAppVerificationExperimentService
   ) {}
 
   ngOnInit(): void {
-    this.noticeExperimentActive = this.noticeExperiment.isActive();
-
-    if (this.noticeExperimentActive) {
-      return; // no need to load if experiment is active.
-    }
-
     // load onboarding progress from server.
     this.onboarding.load();
 

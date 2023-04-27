@@ -8,7 +8,6 @@ import { Injector } from '@angular/core';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { BehaviorSubject } from 'rxjs';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
-import { OnboardingFeedNoticesExperimentService } from '../../experiments/sub-services/onboarding-feed-notices-experiment.service';
 import { VerifyUniquenessModalLazyService } from '../../verify-uniqueness/modal/services/verify-uniqueness-modal.service';
 import { InAppVerificationExperimentService } from '../../experiments/sub-services/in-app-verification-experiment.service';
 
@@ -50,10 +49,6 @@ describe('OnboardingV3WidgetComponent', () => {
           {
             provide: EmailConfirmationService,
             useValue: MockService(EmailConfirmationService),
-          },
-          {
-            provide: OnboardingFeedNoticesExperimentService,
-            useValue: MockService(OnboardingFeedNoticesExperimentService),
           },
           {
             provide: VerifyUniquenessModalLazyService,
