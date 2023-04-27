@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BoostService } from '../../../boost.service';
 import {
   BoostConsoleLocationFilter,
   BoostConsolePaymentMethodFilter,
@@ -58,7 +57,6 @@ export class BoostConsoleFilterBarComponent implements OnInit {
 
   constructor(
     public service: BoostConsoleService,
-    public legacyService: BoostService,
     private adminStats: BoostConsoleAdminStatsService,
     private router: Router
   ) {}

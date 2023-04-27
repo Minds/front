@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { Session } from '../../../services/session';
-import { BoostService } from '../boost.service';
 import {
   BoostConsoleSuitabilityFilter,
   BoostConsoleStateFilter,
@@ -16,7 +15,6 @@ import { BoostModalV2LazyService } from '../modal-v2/boost-modal-v2-lazy.service
 
 @Component({
   selector: 'm-boostConsole',
-  providers: [BoostService],
   templateUrl: './console-v2.component.html',
   styleUrls: ['./console-v2.component.ng.scss'],
 })
@@ -56,7 +54,6 @@ export class BoostConsoleV2Component implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: BoostConsoleService,
-    private legacyService: BoostService,
     private session: Session,
     private loginReferrer: LoginReferrerService,
     private location: Location,
@@ -68,10 +65,6 @@ export class BoostConsoleV2Component implements OnInit {
       this.loginReferrer.register(this.location.path());
       this.router.navigate(['/login']);
     }
-
-    // Fire a check so we can decide whether to show
-    // a link to the legacy boost console in the filter bar comp
-    this.legacyService.checkForLegacyBoosts();
 
     /**
      * On route change, set filters
