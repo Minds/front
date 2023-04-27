@@ -38,7 +38,6 @@ import { EmailConfirmationService } from './common/components/email-confirmation
 import { ExperimentsService } from './modules/experiments/experiments.service';
 import { MultiFactorAuthConfirmationService } from './modules/auth/multi-factor-auth/services/multi-factor-auth-confirmation.service';
 import { CompassHookService } from './common/services/compass-hook.service';
-import { EmailCodeExperimentService } from './modules/experiments/sub-services/email-code-experiment.service';
 
 @Component({
   selector: 'm-app',
@@ -88,7 +87,6 @@ export class Minds implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private socketsService: SocketsService,
     private experimentsService: ExperimentsService,
-    private emailCodeExperiment: EmailCodeExperimentService,
     private multiFactorConfirmation: MultiFactorAuthConfirmationService,
     private compassHook: CompassHookService,
     private serviceWorkerService: ServiceWorkerService
@@ -272,10 +270,7 @@ export class Minds implements OnInit, OnDestroy {
         });
     }
 
-    if (
-      this.emailCodeExperiment.isActive() &&
-      this.emailConfirmationService.requiresEmailConfirmation()
-    ) {
+    if (this.emailConfirmationService.requiresEmailConfirmation()) {
       // try to verify - this should cause MFA modal to trigger from interceptor.
       this.emailConfirmationService.confirm();
     }
