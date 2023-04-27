@@ -11,7 +11,7 @@ import { ThemeService } from '../../../services/theme.service';
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
-import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 
 /**
  * Menu that contains important links we want to be extra accessible to users
@@ -35,7 +35,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     private helpdeskRedirectService: HelpdeskRedirectService,
-    private boostModalLazyService: BoostModalLazyService
+    private boostModalLazyService: BoostModalV2LazyService
   ) {}
 
   ngOnInit(): void {

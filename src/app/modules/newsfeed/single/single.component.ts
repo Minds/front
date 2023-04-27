@@ -24,7 +24,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
-import { BoostModalLazyService } from '../../boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -70,7 +70,7 @@ export class NewsfeedSingleComponent {
     protected jsonLdService: JsonLdService,
     private location: Location,
     private routerHistory: RouterHistoryService,
-    private boostModal: BoostModalLazyService,
+    private boostModal: BoostModalV2LazyService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.siteUrl = configs.get('site_url');

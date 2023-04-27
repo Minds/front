@@ -11,7 +11,7 @@ import { ThemeService } from '../../../services/theme.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ChangeDetectorRef } from '@angular/core';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
-import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../../mocks/responses/user.mock';
 import { MindsUser } from '../../../../interfaces/entities';
@@ -58,8 +58,8 @@ describe('UserMenuComponent', () => {
             useValue: MockService(HelpdeskRedirectService),
           },
           {
-            provide: BoostModalLazyService,
-            useValue: MockService(BoostModalLazyService),
+            provide: BoostModalV2LazyService,
+            useValue: MockService(BoostModalV2LazyService),
           },
         ],
       }).compileComponents(); // compile template and css

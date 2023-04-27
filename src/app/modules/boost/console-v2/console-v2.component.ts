@@ -12,7 +12,7 @@ import {
   BoostConsolePaymentMethodFilter,
 } from '../boost.types';
 import { BoostConsoleService } from './services/console.service';
-import { BoostModalLazyService } from '../modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../modal-v2/boost-modal-v2-lazy.service';
 
 @Component({
   selector: 'm-boostConsole',
@@ -60,7 +60,7 @@ export class BoostConsoleV2Component implements OnInit {
     private session: Session,
     private loginReferrer: LoginReferrerService,
     private location: Location,
-    private boostModal: BoostModalLazyService
+    private boostModal: BoostModalV2LazyService
   ) {}
 
   ngOnInit(): void {

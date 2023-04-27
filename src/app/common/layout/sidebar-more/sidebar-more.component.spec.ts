@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
-import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { Session } from '../../../services/session';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ThemeService } from '../../services/theme.service';
@@ -31,8 +31,8 @@ describe('SidebarMoreComponent', () => {
         { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
         { provide: ThemeService, useValue: themeServiceMock },
         {
-          provide: BoostModalLazyService,
-          useValue: MockService(BoostModalLazyService),
+          provide: BoostModalV2LazyService,
+          useValue: MockService(BoostModalV2LazyService),
         },
         {
           provide: SidebarNavigationService,

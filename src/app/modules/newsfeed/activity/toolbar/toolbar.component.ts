@@ -12,7 +12,7 @@ import {
 } from '../../activity/activity.service';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
-import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 import { ModalService } from '../../../../services/ux/modal.service';
@@ -45,7 +45,7 @@ export class ActivityToolbarComponent {
     public session: Session,
     private router: Router,
     private modalService: ModalService,
-    private boostModal: BoostModalLazyService,
+    private boostModal: BoostModalV2LazyService,
     private interactionsModalService: InteractionsModalService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     public experimentsService: ExperimentsService,

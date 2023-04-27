@@ -24,7 +24,7 @@ import { LoadingSpinnerComponent } from '../../../common/components/loading-spin
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
-import { BoostModalLazyService } from '../../boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 
 @Component({
   selector: 'minds-activity',
@@ -114,8 +114,8 @@ describe('NewsfeedSingleComponent', () => {
             useValue: MockService(RouterHistoryService),
           },
           {
-            provide: BoostModalLazyService,
-            useValue: MockService(BoostModalLazyService),
+            provide: BoostModalV2LazyService,
+            useValue: MockService(BoostModalV2LazyService),
           },
           {
             provide: PLATFORM_ID,

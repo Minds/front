@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { BoostLatestPostNoticeService } from './boost-latest-post-notice.service';
 import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
 import { Session } from '../../../../services/session';
-import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 
 describe('BoostLatestPostNoticeComponent', () => {
   let comp: BoostLatestPostNoticeComponent;
@@ -67,8 +67,8 @@ describe('BoostLatestPostNoticeComponent', () => {
             useValue: MockService(Session),
           },
           {
-            provide: BoostModalLazyService,
-            useValue: MockService(BoostModalLazyService),
+            provide: BoostModalV2LazyService,
+            useValue: MockService(BoostModalV2LazyService),
           },
         ],
       }).compileComponents();
