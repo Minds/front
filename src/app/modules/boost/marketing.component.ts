@@ -5,8 +5,6 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { Session } from '../../services/session';
 import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
@@ -21,8 +19,6 @@ export class BoostMarketingComponent {
   readonly topAnchor: ElementRef;
 
   constructor(
-    protected router: Router,
-    protected session: Session,
     protected cd: ChangeDetectorRef,
     private configs: ConfigsService
   ) {
@@ -37,16 +33,6 @@ export class BoostMarketingComponent {
         inline: 'nearest',
       });
     }
-  }
-
-  action() {
-    if (!this.session.isLoggedIn()) {
-      localStorage.setItem('redirect', '/boost/console/newsfeed/create');
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    this.router.navigate(['/boost/console/newsfeed/create']);
   }
 
   detectChanges() {
