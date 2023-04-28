@@ -46,6 +46,27 @@ class CookieHelper extends Helper {
   }
 
   /**
+   * Set MFA bypass cookie.
+   * @returns { this }
+   */
+  public setMFABypassCookie(code: string): this {
+    const sharedKey = process.env.BYPASS_SIGNING_KEY;
+
+    if (sharedKey) {
+      const token = jwt.sign({ data: code }, sharedKey, {
+        expiresIn: '5m',
+      });
+
+      this.setCookie({
+        name: 'two_factor_bypass',
+        value: token,
+      });
+    }
+
+    return this;
+  }
+
+  /**
    * Set a cookie manually. Will default url to process.env.E2E_DOMAIN
    * @returns { this }
    */

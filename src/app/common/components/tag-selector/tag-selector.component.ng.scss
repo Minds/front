@@ -28,7 +28,7 @@
     &.m-tagSelector__button--selected {
       .m-button {
         @include m-theme() {
-          color: themed($m-white-always) !important;
+          color: themed($m-action-text) !important;
           background-color: themed($m-blue);
         }
 
@@ -40,7 +40,7 @@
 
         i {
           @include m-theme() {
-            color: themed($m-white-always);
+            color: themed($m-action-text);
           }
         }
       }

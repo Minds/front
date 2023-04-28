@@ -3,6 +3,7 @@ import { AuthModalComponent } from './auth-modal.component';
 import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
+import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 
 @Injectable()
 export class AuthModalService {
