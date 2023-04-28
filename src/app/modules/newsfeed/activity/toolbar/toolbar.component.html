@@ -130,3 +130,14 @@
     <span>{ entity.quotes, plural, =1 {quote} other {quotes}}</span>
   </div>
 </div>
+
+<m-activity__boostCta
+  *ngIf="
+    service.displayOptions.isFeed &&
+    !service.displayOptions.minimalMode &&
+    !service.displayOptions.sidebarMode &&
+    !service.displayOptions.isModal &&
+    !service.displayOptions.isSingle
+  "
+  [entity]="entity"
+></m-activity__boostCta>

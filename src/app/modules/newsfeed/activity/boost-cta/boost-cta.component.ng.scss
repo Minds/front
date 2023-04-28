@@ -1,0 +1,30 @@
+@import 'defaults.scss';
+
+:host {
+  .m-activityBoostCta__wrapper {
+    display: block;
+    padding-left: $activitySpacingLeft--feed;
+    padding-right: $activitySpacingRight--feed;
+    padding-top: $spacing2;
+    padding-bottom: $spacing7;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $activitySpacingLeft--feed--mobile;
+      padding-right: $activitySpacingRight--feed--mobile;
+      padding-top: $spacing2;
+      padding-bottom: $spacing4;
+    }
+  }
+
+  > a {
+    display: block;
+  }
+
+  ::ng-deep m-button {
+    margin-right: 0;
+    .m-button {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
