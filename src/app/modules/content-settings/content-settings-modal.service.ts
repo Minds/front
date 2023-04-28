@@ -1,9 +1,5 @@
-import { Injectable, Injector, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
-import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
+import { Injectable, Injector } from '@angular/core';
 import { ModalRef, ModalService } from '../../services/ux/modal.service';
-import { DiscoveryTagsService } from '../discovery/tags/tags.service';
 import { FeedNoticeService } from '../notices/services/feed-notice.service';
 import { ContentSettingsComponent } from './content-settings/content-settings.component';
 
@@ -11,34 +7,22 @@ import { ContentSettingsComponent } from './content-settings/content-settings.co
 export type ModalOptions = {
   onSave: Function;
   hideCompass?: boolean;
+  isOnboarding?: boolean;
 };
 
 /**
  * Service for opening and handling of the content settings modal.
  */
 @Injectable({ providedIn: 'root' })
-export class ContentSettingsModalService implements OnDestroy {
-  /** @type { Subscription } - subscription that fires on email confirmation */
-  private emailConfirmationSubscription: Subscription;
-
+export class ContentSettingsModalService {
   /** @type { ModalRef<ContentSettingsComponent> } - modal reference */
   private modal: ModalRef<ContentSettingsComponent>;
 
   constructor(
-    private emailConfirmation: EmailConfirmationService,
     private feedNotice: FeedNoticeService,
-    private tagsService: DiscoveryTagsService,
     private modalService: ModalService,
     private injector: Injector
-  ) {
-    this.setupEmailConfirmationSubscription();
-  }
-
-  ngOnDestroy(): void {
-    if (this.emailConfirmationSubscription) {
-      this.emailConfirmationSubscription.unsubscribe();
-    }
-  }
+  ) {}
 
   /**
    * Open content settings modal.
@@ -60,27 +44,6 @@ export class ContentSettingsModalService implements OnDestroy {
     if (this.modal) {
       this.modal.dismiss();
       this.feedNotice.dismiss('update-tags');
-    }
-  }
-
-  /**
-   * Setup subscription to email confirmation, that will open the open automatically on confirmation.
-   * @returns { void }
-   */
-  private setupEmailConfirmationSubscription(): void {
-    if (!this.emailConfirmationSubscription) {
-      this.emailConfirmationSubscription = this.emailConfirmation.success$
-        .pipe(filter(Boolean), take(1))
-        .subscribe(async (success: boolean) => {
-          if (!(await this.tagsService.hasSetTags())) {
-            this.open({
-              hideCompass: true,
-              onSave: () => {
-                this.dismiss();
-              },
-            });
-          }
-        });
     }
   }
 }
