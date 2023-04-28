@@ -38,6 +38,7 @@ import { EmailConfirmationService } from './common/components/email-confirmation
 import { ExperimentsService } from './modules/experiments/experiments.service';
 import { MultiFactorAuthConfirmationService } from './modules/auth/multi-factor-auth/services/multi-factor-auth-confirmation.service';
 import { CompassHookService } from './common/services/compass-hook.service';
+import { OnboardingV4Service } from './modules/onboarding-v4/onboarding-v4.service';
 
 @Component({
   selector: 'm-app',
@@ -89,7 +90,8 @@ export class Minds implements OnInit, OnDestroy {
     private experimentsService: ExperimentsService,
     private multiFactorConfirmation: MultiFactorAuthConfirmationService,
     private compassHook: CompassHookService,
-    private serviceWorkerService: ServiceWorkerService
+    private serviceWorkerService: ServiceWorkerService,
+    private onboardingV4Service: OnboardingV4Service // force init.
   ) {
     this.name = 'Minds';
 
