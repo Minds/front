@@ -21,13 +21,16 @@ type activityComponent = typeof import('./fragments/activityComponent');
 type activityModalComponent = typeof import('./fragments/activityModalComponent');
 type boostRotatorComponent = typeof import('./fragments/boostRotatorComponent');
 type confirmationModalComponent = typeof import('./fragments/confirmationModalComponent');
+type modalComponent = typeof import('./fragments/modalComponent');
 type notificationsComponent = typeof import('./fragments/notificationsComponent');
 type sidebarComponent = typeof import('./fragments/sidebarComponent');
 type supermindOnboardingModalComponent = typeof import('./fragments/supermindOnboardingModalComponent');
 type topbarComponent = typeof import('./fragments/topbarComponent');
 type feedNoticeComponent = typeof import('./fragments/feedNoticeComponent');
-type modalComponent = typeof import('./fragments/modalComponent');
 type boostModalComponent = typeof import('./fragments/boostModalComponent');
+type contentSettingsComponent = typeof import('./fragments/contentSettingsComponent');
+type multiFactorModalComponent = typeof import('./fragments/multiFactorModalComponent');
+type channelRecommendationsModalComponent = typeof import('./fragments/channelRecommendationsModalComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
 
@@ -57,13 +60,16 @@ declare namespace CodeceptJS {
     activityModalComponent: activityModalComponent;
     boostRotatorComponent: boostRotatorComponent;
     confirmationModalComponent: confirmationModalComponent;
+    modalComponent: modalComponent;
     notificationsComponent: notificationsComponent;
     sidebarComponent: sidebarComponent;
     supermindOnboardingModalComponent: supermindOnboardingModalComponent;
     topbarComponent: topbarComponent;
     feedNoticeComponent: feedNoticeComponent;
-    modalComponent: modalComponent;
     boostModalComponent: boostModalComponent;
+    contentSettingsComponent: contentSettingsComponent;
+    multiFactorModalComponent: multiFactorModalComponent;
+    channelRecommendationsModalComponent: channelRecommendationsModalComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}

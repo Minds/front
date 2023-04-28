@@ -33,6 +33,10 @@ export class DiscoveryTagsService {
     })
   );
 
+  tagCount$: Observable<number> = this.tags$.pipe(
+    map(tags => tags?.length || 0)
+  );
+
   /**
    * Default tags without user ones
    */
