@@ -27,7 +27,7 @@ export class ActivityBoostCtaComponent {
   /**
    * The numeric code that corresponds to the user's chosen text to display on the button
    */
-  protected textEnum: BoostGoalButtonText = 2; // ojm remove default
+  protected textEnum: BoostGoalButtonText;
 
   /**
    * The url string that the user will go to if they click the button

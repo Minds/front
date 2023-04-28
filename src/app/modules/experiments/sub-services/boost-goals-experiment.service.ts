@@ -13,6 +13,8 @@ export class BoostGoalsExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
+    // ojm remove
+    return true;
     return this.experiments.hasVariation('minds-3952-boost-goals', true);
   }
 }
