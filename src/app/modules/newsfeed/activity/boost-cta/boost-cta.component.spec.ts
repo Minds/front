@@ -11,7 +11,6 @@ import { Session } from '../../../../services/session';
 import { ClientMetaService } from '../../../../common/services/client-meta.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
-import activityMock from '../../../../mocks/responses/activity.mock';
 
 describe('ActivityBoostCtaComponent', () => {
   let comp: ActivityBoostCtaComponent;
