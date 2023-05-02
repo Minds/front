@@ -67,8 +67,8 @@
 
       // hover
       &:hover {
-        background: darken(themed($m-bgColor--secondary), 3%);
-        color: darken(themed($m-textColor--primary), 3%);
+        background: darken(themed($m-bgColor--secondary), 2%);
+        color: darken(themed($m-textColor--primary), 2%);
       }
 
       // mousedown
