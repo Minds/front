@@ -65,6 +65,7 @@ describe('NewsfeedTabsComponent', () => {
 
   it('should have correct tabs when experiment is on', () => {
     (comp as any).newsfeedForYouExperiment.isActive.and.returnValue(true);
+    comp.ngOnInit();
     fixture.detectChanges();
 
     expect(getTabByText('For You')).toBeDefined();
@@ -74,6 +75,7 @@ describe('NewsfeedTabsComponent', () => {
 
   it('should have correct tabs when experiment is off', () => {
     (comp as any).newsfeedForYouExperiment.isActive.and.returnValue(false);
+    comp.ngOnInit();
     fixture.detectChanges();
 
     expect(getTabByText('For You')).toBeUndefined();

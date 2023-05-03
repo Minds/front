@@ -1,4 +1,4 @@
-import { isPlatformServer } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -43,6 +43,7 @@ import { FeedItemType } from '../feed/feed.component';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
+import { Platform } from '@angular/cdk/platform';
 
 export enum FeedAlgorithm {
   top = 'top',
@@ -181,7 +182,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private dismissal: DismissalService,
     public changeDetectorRef: ChangeDetectorRef,
     private feedNoticeService: FeedNoticeService,
-    persistentFeedExperiment: PersistentFeedExperimentService
+    persistentFeedExperiment: PersistentFeedExperimentService,
+    private platform: Platform
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -212,7 +214,16 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
           this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
         }
       }
-      this.load(); // load feed.
+
+      /**
+       * Load feed. If in firefox, do this in a timeout to avoid layout freezes.
+       * This should be removed in the future when we optimize for firefox. front#3213
+       */
+      if (isPlatformBrowser(this.platformId) && this.platform.FIREFOX) {
+        setTimeout(() => this.load(), 300);
+      } else {
+        this.load();
+      }
 
       if (params['message']) {
         this.message = params['message'];
