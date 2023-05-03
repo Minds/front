@@ -1,7 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { AffiliatesEarnMethod } from '../../types/affiliates.types';
 import { AffiliatesShareModalService } from '../../services/share-modal.service';
-import { Router } from '@angular/router';
+import {
+  AffiliatesMetrics,
+  AffiliatesMetricsService,
+} from '../../services/affiliates-metrics.service';
+import { Observable, map } from 'rxjs';
 
 /**
  * Affiliate program earnings summary,
@@ -14,18 +18,23 @@ import { Router } from '@angular/router';
   styleUrls: ['earnings.component.ng.scss'],
 })
 export class AffiliatesEarningsComponent {
-  /**
-   * Username of the referrer (aka current username)
-   */
+  /** Username of the referrer (aka current username) */
   @Input() referrerUsername: string = '';
 
-  /**
-   * Amount user has earned through affiliate program
-   */
-  @Input() totalEarnings: number;
+  /** Amount user has earned through affiliate program */
+  protected totalEarnings$: Observable<number> = this.metrics.metrics$.pipe(
+    map((metrics: AffiliatesMetrics) => metrics.amount_usd ?? 0)
+  );
+
+  /** Whether metrics are in the process of loading */
+  protected metricsLoading$: Observable<boolean> = this.metrics.loading$;
+
+  /** Whether metrics are in the process of loading */
+  protected metricsError$: Observable<boolean> = this.metrics.error$;
 
   constructor(
-    private affiliatesShareModalService: AffiliatesShareModalService
+    private affiliatesShareModalService: AffiliatesShareModalService,
+    private metrics: AffiliatesMetricsService
   ) {}
 
   /**

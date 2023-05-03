@@ -1,6 +1,8 @@
+<!-- Header -->
 <span class="m-affiliatesEarnings__title" i18n="@@AFFILIATES__EARNINGS__TITLE">
   Total Earnings
 </span>
+<!--Total amount -->
 <p
   class="m-affiliatesEarnings__description"
   i18n="@@AFFILIATES__EARNINGS__DESCRIPTION"
@@ -8,9 +10,25 @@
   Track your total earnings through your unique affiliate link, for both
   existing and new members on Minds.
 </p>
-<span class="m-affiliatesEarnings__title" *ngIf="totalEarnings > 0">
-  {{ totalEarnings | currency: 'USD' }}
+<span class="m-affiliatesEarnings__title m-affiliatesEarnings__titleAmount">
+  <ng-container
+    *ngIf="metricsLoading$ | async; else totalEarningsLoadedTemplate"
+    >...</ng-container
+  >
+  <ng-template #totalEarningsLoadedTemplate>
+    <ng-container *ngIf="!(metricsError$ | async); else metricsErrorTemplate">
+      {{ totalEarnings$ | async | currency: 'USD' }}
+    </ng-container>
+    <ng-template #metricsErrorTemplate>
+      <span
+        class="m-affiliatesEarnings__error"
+        i18n="@@AFFILIATES__EARNINGS__CURRENTLY_UNABLE_TO_CALCULATE"
+        >Currently unable to calculate</span
+      >
+    </ng-template>
+  </ng-template>
 </span>
+<!-- Buttons -->
 <div class="m-affiliatesEarnings__buttons">
   <m-button
     ><a
@@ -25,6 +43,7 @@
     >
   </m-button>
 </div>
+<!-- Footer -->
 <p class="m-affiliatesEarnings__note" i18n="@@AFFILIATES__EARNINGS__NOTE">
   Note - You will be credited as the click referrer for any purchases of Boosts
   and subscriptions (Minds+ and Pro) they make for the next 72 hours.
