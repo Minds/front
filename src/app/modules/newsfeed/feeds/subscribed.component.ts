@@ -399,6 +399,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     switch (algo) {
       case 'for-you':
+        this.latestFeedService.clear(true);
         this.forYouFeedService.clear(true);
         break;
       case 'top':
@@ -543,6 +544,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         }
         break;
       case this.forYouFeedService:
+        this.latestFallbackActive$.next(false);
         break;
     }
   }
