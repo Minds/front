@@ -32,7 +32,6 @@ import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
 import { TopHighlightsComponent } from './feeds/top-highlights/top-highlights.component';
-import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
 import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
 import { ActivityModule } from './activity/activity.module';
@@ -119,7 +118,6 @@ const routes: Routes = [
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
     TopHighlightsComponent,
-    FeedTypePopoverComponent,
     NewsfeedFeedItemComponent,
     VirtualMinimapComponent,
     FeedComponent,
