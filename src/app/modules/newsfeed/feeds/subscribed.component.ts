@@ -122,7 +122,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   };
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
-  routerSubscription: Subscription;
   private zendeskErrorSubscription: Subscription;
 
   /**
@@ -268,10 +267,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-    this.reloadFeedSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
-    this.feedsUpdatedSubscription.unsubscribe();
+    this.paramsSubscription?.unsubscribe();
+    this.reloadFeedSubscription?.unsubscribe();
+    this.feedsUpdatedSubscription?.unsubscribe();
     this.zendeskErrorSubscription?.unsubscribe();
   }
 
