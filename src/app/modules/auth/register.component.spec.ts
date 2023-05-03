@@ -23,6 +23,7 @@ import { SidebarNavigationService } from '../../common/layout/sidebar/navigation
 import { BehaviorSubject } from 'rxjs';
 import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
 import { ContentSettingsModalService } from '../content-settings/content-settings-modal.service';
+import { OnboardingV4Service } from '../onboarding-v4/onboarding-v4.service';
 
 let activatedRouteMock = new (function() {
   this.queryParams = new BehaviorSubject({
@@ -88,8 +89,8 @@ describe('RegisterComponent', () => {
             useValue: MockService(EmailCodeExperimentService),
           },
           {
-            provide: ContentSettingsModalService,
-            useValue: MockService(ContentSettingsModalService),
+            provide: OnboardingV4Service,
+            useValue: MockService(OnboardingV4Service),
           },
         ],
       }).compileComponents();
@@ -109,7 +110,6 @@ describe('RegisterComponent', () => {
   afterEach(() => {
     loginReferrerServiceMock.navigate.calls.reset();
     (comp as any).emailCodeExperiment.isActive.calls.reset();
-    (comp as any).contentSettingsModal.open.calls.reset();
   });
 
   it('should initialize', () => {
@@ -166,23 +166,5 @@ describe('RegisterComponent', () => {
       'Join Minds, and Elevate the Conversation',
       false
     );
-  });
-
-  it('should open ContentSettingsModal on registered if no email experiment is NOT active', () => {
-    (comp as any).emailCodeExperiment.isActive.and.returnValue(false);
-    (comp as any).contentSettingsModal.open.and.returnValue(true);
-    comp.registered();
-    expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
-    expect((comp as any).emailCodeExperiment.isActive).toHaveBeenCalled();
-    expect((comp as any).contentSettingsModal.open).toHaveBeenCalled();
-  });
-
-  it('should NOT open ContentSettingsModal on registered if email experiment is active', () => {
-    (comp as any).emailCodeExperiment.isActive.and.returnValue(true);
-    (comp as any).contentSettingsModal.open.and.returnValue(true);
-    comp.registered();
-    expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
-    expect((comp as any).emailCodeExperiment.isActive).toHaveBeenCalled();
-    expect((comp as any).contentSettingsModal.open).not.toHaveBeenCalled();
   });
 });

@@ -15,6 +15,7 @@ import { ContentSettingsComponent } from '../../content-settings/content-setting
 import { ModalService } from '../../../services/ux/modal.service';
 import { ComponentType } from '@angular/cdk/overlay';
 import { Session } from '../../../services/session';
+import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 
 @Component({
   selector: 'm-discovery__settingsButton',

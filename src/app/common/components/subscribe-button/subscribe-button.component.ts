@@ -31,6 +31,9 @@ export class SubscribeButtonComponent implements OnInit {
   @Output('subscribed') onSubscribed: EventEmitter<
     Partial<MindsUser>
   > = new EventEmitter();
+  @Output('unsubscribed') onUnsubscribed: EventEmitter<
+    Partial<MindsUser>
+  > = new EventEmitter();
 
   @Input() sized: boolean = false;
   @Input() iconOnly: boolean = false;
@@ -112,6 +115,7 @@ export class SubscribeButtonComponent implements OnInit {
     e.preventDefault();
     e.stopPropagation();
     this.subscribed = false;
+    this.onUnsubscribed.emit(this._user);
     try {
       await this.subscriptionService.unsubscribe(this._user as MindsUser);
       this.subscribed = false;

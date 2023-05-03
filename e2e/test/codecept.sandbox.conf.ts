@@ -28,8 +28,9 @@ export const config: CustomMainConfig = {
       keepCookies: true,
       keepBrowserState: true,
       waitForNavigation: 'domcontentloaded',
-      timeout: 10000,
-      waitForTimeout: 10000,
+      timeout: 30000,
+      waitForTimeout: 30000,
+      getPageTimeout: 30000,
       trace: true,
       userAgent: 'mindsbot',
     },
@@ -73,6 +74,10 @@ export const config: CustomMainConfig = {
     topbarComponent: './fragments/topbarComponent.ts',
     feedNoticeComponent: './fragments/feedNoticeComponent.ts',
     boostModalComponent: './fragments/boostModalComponent.ts',
+    contentSettingsComponent: './fragments/contentSettingsComponent.ts',
+    multiFactorModalComponent: './fragments/multiFactorModalComponent.ts',
+    channelRecommendationsModalComponent:
+      './fragments/channelRecommendationsModalComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {
