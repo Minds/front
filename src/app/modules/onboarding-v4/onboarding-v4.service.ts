@@ -99,9 +99,6 @@ export class OnboardingV4Service implements OnDestroy {
    * If the experiment is on
    */
   private async openGroupRecommendationModal(): Promise<void> {
-    // NOTE: Taking this out until we get the hardcoded list of group recommendtions.
-    return;
-
     if (
       !this.onboardingTagsExperiment.isActive() ||
       !this.emailCodeExperiment.isActive() ||
