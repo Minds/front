@@ -21,7 +21,6 @@ import { Session } from '../../../services/session';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { PopoverComponent } from '../popover-validation/popover.component';
 import { CaptchaComponent } from '../../captcha/captcha.component';
-import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
 import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
@@ -258,9 +257,7 @@ export class RegisterForm implements OnInit, OnDestroy {
 
   onPasswordBlur() {
     this.passwordInputHasFocus = false;
-    if (!isMobileOrTablet()) {
-      this.popover.hide();
-    }
+    this.popover.hide();
   }
 
   onShowLoginFormClick() {

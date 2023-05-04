@@ -85,6 +85,10 @@ export class PopoverComponent {
     this.detectChanges();
   }
 
+  /**
+   * Hide popover with delay and loading spinner during close state.
+   * @returns { void }
+   */
   public hideWithDelay(): void {
     setTimeout(() => {
       this.closingInProgress = true;

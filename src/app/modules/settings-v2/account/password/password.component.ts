@@ -23,9 +23,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
 import { PopoverComponent } from '../../../forms/popover-validation/popover.component';
-import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
 import { Router } from '@angular/router';
-import { ToasterService } from '../../../../common/services/toaster.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { PASSWORD_VALIDATOR } from '../../../forms/password.validator';
 import { PasswordRiskValidator } from '../../../forms/password-risk.validator';
@@ -170,9 +168,7 @@ export class SettingsV2PasswordComponent implements OnInit {
 
   onNewPasswordBlur() {
     this.newPasswordInputHasFocus = false;
-    if (!isMobileOrTablet()) {
-      this.popover.hide();
-    }
+    this.popover.hide();
   }
 
   canSubmit(): boolean {
