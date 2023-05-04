@@ -76,6 +76,8 @@ export class RegisterForm implements OnInit, OnDestroy {
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;
 
+  private passwordInputHasFocus: boolean = false;
+
   // subscriptions.
   private passwordPopoverSubscription: Subscription;
   private passwordRiskCheckStatusSubscription: Subscription;
@@ -127,13 +129,25 @@ export class RegisterForm implements OnInit, OnDestroy {
     this.passwordPopoverSubscription = this.form
       .get('password')
       .valueChanges.subscribe(str => {
-        this.popover.show();
+        if (str.length === 0) {
+          this.popover.hide();
+        } else {
+          setTimeout(() => {
+            if (this.passwordInputHasFocus && str.length > 0) {
+              this.popover.show();
+            }
+          }, 350);
+        }
       });
 
     this.passwordRiskCheckStatusSubscription = this.form
       .get('password')
       .statusChanges.subscribe((status: any) => {
         this.passwordRiskCheckStatus = status;
+
+        if (status === 'VALID') {
+          this.popover.hideWithDelay();
+        }
       });
 
     this.usernameTouchedSubscription = this.form
@@ -233,12 +247,17 @@ export class RegisterForm implements OnInit, OnDestroy {
   }
 
   onPasswordFocus() {
-    if (this.form.value.password.length > 0) {
+    this.passwordInputHasFocus = true;
+    if (
+      this.passwordRiskCheckStatus !== 'VALID' &&
+      this.form.value.password.length > 0
+    ) {
       this.popover.show();
     }
   }
 
   onPasswordBlur() {
+    this.passwordInputHasFocus = false;
     if (!isMobileOrTablet()) {
       this.popover.hide();
     }

@@ -50,6 +50,12 @@
         background-color: themed($m-bgColor--primary);
       }
 
+      .m-popover__loadingSpinner {
+        height: 172px;
+        display: flex;
+        align-items: center;
+      }
+
       &.m-popover__content--visible {
         @include z-index(toast);
         opacity: 1;
@@ -110,7 +116,7 @@
               .m-loadingSpinner__wrapper {
                 position: absolute;
                 left: -26px;
-                top: 2px;
+                top: -12px;
                 display: inline-block;
                 padding: 0;
                 .m-loadingSpinner__container {

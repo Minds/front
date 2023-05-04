@@ -36,7 +36,7 @@ export class PopoverComponent {
   riskCheck: boolean = false;
   riskCheckInProgress: boolean = false;
 
-  hidden: boolean = false;
+  public closingInProgress: boolean = false;
 
   private _password: string;
   @Input() set password(value: string) {
@@ -74,16 +74,29 @@ export class PopoverComponent {
   constructor(protected cd: ChangeDetectorRef, protected client: Client) {}
 
   show(): void {
-    if (!this.hidden) {
+    if (this._password.length > 0) {
       this.content.nativeElement.classList.add('m-popover__content--visible');
       this.detectChanges();
     }
   }
 
-  hide(keepHidden: boolean = false): void {
+  hide(): void {
     this.content.nativeElement.classList.remove('m-popover__content--visible');
-    this.hidden = keepHidden;
     this.detectChanges();
+  }
+
+  public hideWithDelay(): void {
+    setTimeout(() => {
+      this.closingInProgress = true;
+
+      setTimeout(() => {
+        this.hide();
+        this.closingInProgress = false;
+        this.detectChanges();
+      }, 350);
+
+      this.detectChanges();
+    }, 300);
   }
 
   checkSynchronousValidators(): void {
@@ -94,17 +107,6 @@ export class PopoverComponent {
     this.mixedCaseCheck = PASSWORD_VALIDATOR_MIXED_CASE_CHECK(this._password);
     this.numbersCheck = PASSWORD_VALIDATOR_NUMBERS_CHECK(this._password);
     this.spacesCheck = PASSWORD_VALIDATOR_SPACES_CHECK(this._password);
-    this.detectChanges();
-  }
-
-  async checkRules(str: string): Promise<void> {
-    if (!this.allChecksValid) {
-      this.show();
-    } else {
-      // if everything is right, wait a bit and hide
-      setTimeout(() => this.hide(true), 500);
-    }
-
     this.detectChanges();
   }
 

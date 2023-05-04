@@ -52,6 +52,8 @@ export class SettingsV2PasswordComponent implements OnInit {
   passwordIncorrect: boolean = false;
   newPasswordRiskCheckStatus: string;
 
+  private newPasswordInputHasFocus: boolean = false;
+
   constructor(
     protected cd: ChangeDetectorRef,
     private session: Session,
@@ -88,18 +90,23 @@ export class SettingsV2PasswordComponent implements OnInit {
     this.form
       .get('newPassword')
       .valueChanges.pipe(distinctUntilChanged())
-      .subscribe(val => {
-        this.popover.show();
-        if (val && val.length > 0) {
-          this.popover.checkRules(val);
-        } else {
+      .subscribe(str => {
+        if (str.length === 0) {
           this.popover.hide();
+        } else {
+          setTimeout(() => {
+            if (this.newPasswordInputHasFocus && str.length > 0) {
+              this.popover.show();
+            }
+          }, 350);
         }
-        this.detectChanges();
       });
 
     this.form.get('newPassword').statusChanges.subscribe((status: any) => {
       this.newPasswordRiskCheckStatus = status;
+      if (status === 'VALID') {
+        this.popover.hideWithDelay();
+      }
       this.detectChanges();
     });
 
@@ -152,12 +159,17 @@ export class SettingsV2PasswordComponent implements OnInit {
   }
 
   onNewPasswordFocus() {
-    if (this.newPassword.length > 0) {
+    this.newPasswordInputHasFocus = true;
+    if (
+      this.newPasswordRiskCheckStatus !== 'VALID' &&
+      this.newPassword.value.length > 0
+    ) {
       this.popover.show();
     }
   }
 
   onNewPasswordBlur() {
+    this.newPasswordInputHasFocus = false;
     if (!isMobileOrTablet()) {
       this.popover.hide();
     }
