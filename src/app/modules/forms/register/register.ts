@@ -132,6 +132,7 @@ export class RegisterForm implements OnInit, OnDestroy {
           this.popover.hide();
         } else {
           setTimeout(() => {
+            // check length again after timeout and whether element still has focus.
             if (this.passwordInputHasFocus && str.length > 0) {
               this.popover.show();
             }

@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  flush,
+  tick,
+} from '@angular/core/testing';
 import {
   ControlValueAccessor,
   FormsModule,
@@ -16,7 +22,7 @@ import { AnalyticsService } from './../../../services/analytics';
 import { RegisterForm } from './register';
 import { MockService, MockComponent } from '../../../utils/mock';
 import { FormInputCheckboxComponent } from '../../../common/components/forms/checkbox/checkbox.component';
-import { forwardRef } from '@angular/core';
+import { Input, forwardRef } from '@angular/core';
 import { Component } from '@angular/core';
 
 @Component({
@@ -61,10 +67,12 @@ class FriendlyCaptchaComponentMock implements ControlValueAccessor {
   `,
 })
 class PopoverComponentMock {
-  password;
-  riskCheckStatus;
+  @Input() password;
+  @Input() riskCheckStatus;
 
-  show = jasmine.createSpy('show');
+  public show = jasmine.createSpy('show');
+  public hide = jasmine.createSpy('hide');
+  public hideWithDelay = jasmine.createSpy('hideWithDelay');
 }
 
 describe('RegisterForm', () => {
@@ -111,6 +119,7 @@ describe('RegisterForm', () => {
     comp = fixture.componentInstance;
 
     (comp as any).experiments.hasVariation.and.returnValue(true);
+    (comp as any).passwordInputHasFocus = true;
     (comp as any).usernameValidator.existingUsernameValidator.and.returnValue(
       () => Promise.resolve(true)
     );
@@ -199,5 +208,117 @@ describe('RegisterForm', () => {
     comp.register(new MouseEvent('click'));
 
     expect(comp.errorMessage).toEqual('Passwords must match.');
+  });
+
+  it('should show popover on password change when length > 1 and password input has focus', fakeAsync(() => {
+    (comp as any).passwordInputHasFocus = true;
+    comp.form.patchValue({
+      password: 'TestPass123!',
+    });
+
+    tick(400);
+
+    expect(comp.popover.hide).not.toHaveBeenCalled();
+    expect(comp.popover.show).toHaveBeenCalled();
+  }));
+
+  it('should NOT show popover on password change when password input does NOT have focus', fakeAsync(() => {
+    (comp as any).passwordInputHasFocus = false;
+    comp.form.patchValue({
+      password: 'TestPass123!',
+    });
+
+    tick(400);
+
+    expect(comp.popover.hide).not.toHaveBeenCalled();
+    expect(comp.popover.show).not.toHaveBeenCalled();
+  }));
+
+  it('should NOT show popover on password change when password is empty and should hide', fakeAsync(() => {
+    (comp as any).passwordInputHasFocus = true;
+    comp.form.patchValue({
+      password: '',
+    });
+
+    tick(400);
+
+    expect(comp.popover.hide).toHaveBeenCalled();
+    expect(comp.popover.show).not.toHaveBeenCalled();
+  }));
+
+  it('should hide with delay on password check status change VALID', fakeAsync(() => {
+    (comp as any).passwordInputHasFocus = true;
+    (comp as any).passwordRiskValidator.riskValidator.and.returnValue(
+      Promise.resolve(true)
+    );
+    comp.form.get('password').setValue('ValidPw1!');
+
+    tick(400);
+
+    expect(comp.popover.hideWithDelay).toHaveBeenCalled();
+    flush();
+  }));
+
+  it('should NOT hide with delay on password check status change INVALID', fakeAsync(() => {
+    (comp as any).passwordInputHasFocus = true;
+    (comp as any).passwordRiskValidator.riskValidator.and.returnValue(
+      Promise.resolve(true)
+    );
+    comp.form.get('password').setValue('ValidPw1');
+
+    tick(400);
+
+    expect(comp.popover.hideWithDelay).not.toHaveBeenCalled();
+    flush();
+  }));
+
+  it('should set focus state but NOT show popover on password focus function call when password is valid', () => {
+    (comp as any).passwordInputHasFocus = false;
+    (comp as any).passwordRiskValidator.riskValidator.and.returnValue(
+      Promise.resolve(true)
+    );
+    comp.form.get('password').setValue('ValidPw1@');
+    comp.passwordRiskCheckStatus = 'VALID';
+
+    comp.onPasswordFocus();
+
+    expect((comp as any).passwordInputHasFocus).toBeTrue();
+    expect(comp.popover.show).not.toHaveBeenCalled();
+  });
+
+  it('should set focus state but NOT show popover on password focus function call when password is empty', () => {
+    (comp as any).passwordInputHasFocus = false;
+    (comp as any).passwordRiskValidator.riskValidator.and.returnValue(
+      Promise.resolve(true)
+    );
+    comp.form.get('password').setValue('');
+    comp.passwordRiskCheckStatus = 'INVALID';
+
+    comp.onPasswordFocus();
+
+    expect((comp as any).passwordInputHasFocus).toBeTrue();
+    expect(comp.popover.show).not.toHaveBeenCalled();
+  });
+
+  it('should set focus state and show popover on password focus function call when password is NOT valid and has password', () => {
+    (comp as any).passwordInputHasFocus = false;
+    (comp as any).passwordRiskValidator.riskValidator.and.returnValue(
+      Promise.resolve(true)
+    );
+    comp.form.get('password').setValue('ValidPw1@');
+    comp.passwordRiskCheckStatus = 'INVALID';
+
+    comp.onPasswordFocus();
+
+    expect((comp as any).passwordInputHasFocus).toBeTrue();
+    expect(comp.popover.show).toHaveBeenCalled();
+  });
+
+  it('should set focus state to false and hide on password blur function call', () => {
+    (comp as any).passwordInputHasFocus = true;
+    comp.onPasswordBlur();
+
+    expect((comp as any).passwordInputHasFocus).toBeFalse();
+    expect(comp.popover.hide).toHaveBeenCalled();
   });
 });
