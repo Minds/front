@@ -6,7 +6,6 @@ import { CommonModule } from '../../common/common.module';
 
 import { WalletDashboardComponent } from './components/dashboard.component';
 import { WalletBalanceTokensV2Component } from './components/tokens/balance/balance-tokens.component';
-import { WalletChartComponent } from './components/components/chart/chart.component';
 import { WalletTransactionsTableComponent } from './components/components/transactions-table/transactions-table.component';
 import { WalletRewardsPopupComponent } from './components/components/rewards-popup/rewards-popup.component';
 import { WalletSettingsTokensComponent } from './components/tokens/settings/settings-tokens.component';
@@ -65,11 +64,6 @@ export const WALLET_ROUTES: Routes = [
             path: 'overview',
             redirectTo: 'balance',
             pathMatch: 'full' as PathMatch,
-          },
-          {
-            path: 'balance',
-            canActivate: [TabStorageGuard],
-            component: WalletChartComponent,
           },
           {
             path: 'rewards',
@@ -144,7 +138,6 @@ export const WALLET_ROUTES: Routes = [
   ],
   declarations: [
     WalletDashboardComponent,
-    WalletChartComponent,
     WalletRewardsPopupComponent,
     WalletTransactionsTableComponent,
     WalletSettingsTokensComponent,
