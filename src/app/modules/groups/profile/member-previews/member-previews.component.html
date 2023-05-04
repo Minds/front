@@ -1,19 +1,45 @@
-<ul class="m-groupMemberPreviews__list">
-  <li
-    class="m-groupMemberPreviews__member"
-    [ngClass]="{ 'm-pulsating--small': member.inGathering }"
-    *ngFor="let member of members"
-  >
-    <a [routerLink]="['/', member.username]">
-      <img [src]="cdnUrl + 'icon/' + member.guid + '/small'" />
-    </a>
-  </li>
-  <li class="m-groupMemberPreviews__member--count" routerLink="members">
-    <span *ngIf="count > 0">
-      +{{ count | abbr: 0 }} Member<ng-container *ngIf="count > 1"
-        >s</ng-container
+<!-- ---------------------------------- -->
+<!-- V2 -->
+<!-- ---------------------------------- -->
+<ng-container *ngIf="v2; else v1Template">
+  <div class="m-group__memberPreviews" [@slowFade]="inProgress ? 'out' : 'in'">
+    <ng-container *ngIf="totalCount > 0">
+      <m-userAggregator
+        [users]="members"
+        [totalCount]="count"
+        [usernameAmount]="2"
+        [avatarAmount]="3"
+        [clickable]="true"
+        (onClick)="onClick()"
       >
-    </span>
-    <span *ngIf="count <= 0">+ Members</span>
-  </li>
-</ul>
+        <span suffix-text i18n="@@M__GROUP__MEMBER_PREVIEWS__ARE_MEMBERS"
+          >{ totalCount, plural, =1 {is} other {are} } are members</span
+        >
+      </m-userAggregator>
+    </ng-container>
+  </div>
+</ng-container>
+<!-- ---------------------------------- -->
+<!-- V1 -->
+<!-- ---------------------------------- -->
+<ng-template #v1Template>
+  <ul class="m-groupMemberPreviews__list">
+    <li
+      class="m-groupMemberPreviews__member"
+      [ngClass]="{ 'm-pulsating--small': member.inGathering }"
+      *ngFor="let member of members"
+    >
+      <a [routerLink]="['/', member.username]">
+        <img [src]="cdnUrl + 'icon/' + member.guid + '/small'" />
+      </a>
+    </li>
+    <li class="m-groupMemberPreviews__member--count" routerLink="members">
+      <span *ngIf="count > 0">
+        +{{ count | abbr: 0 }} Member<ng-container *ngIf="count > 1"
+          >s</ng-container
+        >
+      </span>
+      <span *ngIf="count <= 0">+ Members</span>
+    </li>
+  </ul>
+</ng-template>

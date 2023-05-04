@@ -34,6 +34,7 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { GroupsSearchService } from './feed/search.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ModernGroupsExperimentService } from '../../experiments/sub-services/modern-groups-experiment.service';
 
 /**
  * Base component for a group. Includes access (e.g. nsfw overlay),
@@ -65,7 +66,7 @@ export class GroupsProfile {
   error: string;
   paramsSubscription: Subscription;
   childParamsSubscription: Subscription;
-  queryParamsSubscripton: Subscription;
+  queryParamsSubscription: Subscription;
   groupsSearchQuerySubscription: Subscription;
 
   socketRoomName: string;
@@ -99,7 +100,8 @@ export class GroupsProfile {
     protected toasterService: ToasterService,
     private injector: Injector,
     protected publisherSearchModal: PublisherSearchModalService,
-    protected groupsSearch: GroupsSearchService
+    protected groupsSearch: GroupsSearchService,
+    private modernGroupsExperiment: ModernGroupsExperimentService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -131,6 +133,19 @@ export class GroupsProfile {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
+        /**
+         * This is a temporary workaround to allow editing in modern groups.
+         * Users are redirected here to edit, and then navigate back to modern
+         * groups on save.
+         */
+        if (this.route.snapshot.queryParamMap.has('editing')) {
+          this.editing = !!this.route.snapshot.queryParamMap.get('editing');
+        }
+        // Redirect to modern groups, unless we're editing
+        if (this.modernGroupsExperiment.isActive() && !this.editing) {
+          this.router.navigate(['group', params['guid'], 'feed']);
+        }
+
         let changed = params['guid'] !== this.guid;
 
         this.guid = params['guid'];
@@ -206,7 +221,8 @@ export class GroupsProfile {
     if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
     if (this.childParamsSubscription)
       this.childParamsSubscription.unsubscribe();
-    if (this.queryParamsSubscripton) this.queryParamsSubscripton.unsubscribe();
+    if (this.queryParamsSubscription)
+      this.queryParamsSubscription.unsubscribe();
 
     if (this.videoChatActiveSubscription)
       this.videoChatActiveSubscription.unsubscribe();
@@ -351,6 +367,14 @@ export class GroupsProfile {
 
     this.editing = false;
     this.editDone = true;
+
+    // Redirect back to modern groups after editing is complete
+    if (this.modernGroupsExperiment.isActive()) {
+      this.router.navigate(['group', this.group.guid, 'feed'], {
+        queryParams: { editing: false },
+      });
+    }
+
     this.detectChanges();
   }
 
@@ -477,7 +501,9 @@ export class GroupsProfile {
 
   onOptionsChange(options) {
     this.editing = options.editing;
-    if (options.editing === false) this.save();
+    if (options.editing === false) {
+      this.save();
+    }
   }
 
   @HostListener('window:resize') detectWidth(force: boolean = false) {
@@ -528,4 +554,9 @@ export class GroupsProfile {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+  /**
+   * Go to modern group layout
+   */
+  navigateToModernGroup(): void {}
 }

@@ -3,12 +3,23 @@
   [anchorPosition]="{ top: '100%', right: '0' }"
   class="m-groupsSettingsButton__triggerContainer"
 >
-  <i class="m-groupsSettingsButton__trigger material-icons">settings</i>
-  <i
-    *ngIf="group['is:muted']"
-    class="m-groupsSettingsButton__trigger minds-groups-button-badge material-icons"
-    >notifications_off</i
-  >
+  <ng-container *ngIf="!v2; else v2Style">
+    <i class="m-groupsSettingsButton__trigger material-icons">settings</i>
+    <i
+      *ngIf="group['is:muted']"
+      class="m-groupsSettingsButton__trigger minds-groups-button-badge material-icons"
+      >notifications_off</i
+    >
+  </ng-container>
+  <ng-template #v2Style>
+    <m-button
+      class="m-button-v2 m-button-v2--iconOnly"
+      overlay="true"
+      iconOnly="true"
+    >
+      <m-icon iconId="more_horiz" [sizeFactor]="0"></m-icon>
+    </m-button>
+  </ng-template>
 </m-dropdownMenu>
 
 <ng-template #settingsMenu>
@@ -25,13 +36,13 @@
       </m-dropdownMenu__item>
 
       <m-dropdownMenu__item
-        *ngIf="group.videoChatDisabled"
+        *ngIf="group.videoChatDisabled && !v2"
         (click)="toggleVideoChat(true)"
       >
         Enable gathering
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
-        *ngIf="!group.videoChatDisabled"
+        *ngIf="!group.videoChatDisabled && !v2"
         (click)="toggleVideoChat(false)"
       >
         Disable gathering

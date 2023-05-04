@@ -113,6 +113,10 @@ const routes: Routes = [
     GroupsProfileMembers,
     GroupsProfileRequests,
     GroupsSettingsButton,
+    GroupMembershipButton,
+    GroupsProfileReviewComponent,
+    GroupProfileFeedComponent,
+    GroupMemberPreviews,
   ],
   providers: [CanDeactivateGroupService, GroupsSearchService],
 })

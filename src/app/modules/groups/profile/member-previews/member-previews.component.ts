@@ -6,22 +6,30 @@ import { UpdateMarkersService } from '../../../../common/services/update-markers
 import { VideoChatService } from '../../../videochat/videochat.service';
 import { timer, Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { SlowFadeAnimation } from '../../../../animations';
 
 /**
  * Displays a few avatars of group members and a button that
- * goes to the full list of user
+ * goes to the full list of users
  */
 @Component({
   selector: 'm-group--member-previews',
   templateUrl: 'member-previews.component.html',
+  animations: [SlowFadeAnimation],
 })
 export class GroupMemberPreviews {
   readonly cdnUrl: string;
   @Input() group;
   members: Array<any> = [];
   count: Number = 0;
+  totalCount: Number = 0;
   inProgress: boolean = false;
   gatheringParticipantTimer;
+
+  /**
+   * Whether this is being displayed in modern groups
+   */
+  @Input() v2: boolean = false;
 
   private updateMarkersSubscription: Subscription;
   private gatheringParticipantUpdateSubscription: Subscription;
@@ -68,6 +76,8 @@ export class GroupMemberPreviews {
       if (response.total - this.members.length > 0) {
         this.count = response.total - this.members.length;
       }
+
+      this.totalCount = response.total;
       this.inProgress = false;
     } catch {
       this.inProgress = false;

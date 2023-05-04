@@ -17,7 +17,6 @@ import { GroupsService } from '../../groups.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ComposerComponent } from '../../../composer/composer.component';
 import { AsyncPipe } from '@angular/common';
-import { map } from 'rxjs/operators';
 import { GroupsSearchService } from './search.service';
 
 /**
@@ -33,6 +32,13 @@ import { GroupsSearchService } from './search.service';
 })
 export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   group: any;
+
+  @HostBinding('class')
+
+  // Whether this is displayed in modern groups
+  @Input('v2')
+  @HostBinding('class.m-group-profile-feed__sorted--v2')
+  v2: boolean = false;
 
   @Input('group') set _group(group: any) {
     if (group === this.group) {
@@ -170,7 +176,9 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   }
 
   setFilter(type: string) {
-    const route = ['/groups/profile', this.group.guid, 'feed'];
+    const route = this.v2
+      ? ['/group', this.group.guid, 'feed']
+      : ['/groups/profile', this.group.guid, 'feed'];
 
     if (type !== 'activities') {
       route.push(type);
