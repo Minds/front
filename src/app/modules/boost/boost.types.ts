@@ -7,6 +7,9 @@ export type Boost = {
   entity: any;
   target_location: number;
   target_suitability: number;
+  goal?: BoostGoal;
+  goal_button_text?: BoostGoalButtonText;
+  goal_button_url?: string;
   payment_method_id?: number;
   payment_method: number;
   payment_amount: number;

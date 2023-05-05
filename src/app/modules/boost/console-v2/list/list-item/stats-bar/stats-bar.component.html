@@ -1,103 +1,127 @@
 <!-- ------------------------------------------ -->
-<!-- REJECTED  -->
+<!-- PENDING  -->
 <!-- ------------------------------------------ -->
 <div
-  class="m-boostConsole__statsBar--rows"
-  data-ref="m-boostConsole__statsBar--rejectionReason"
-  *ngIf="boostIsRejected"
+  class="m-boostConsole__statsBar--columns"
+  *ngIf="boostIsPending && boost?.goal_button_url"
 >
-  <span
-    i18n="@@BOOST_CONSOLE__STATS_BAR__REJECTION_REASON"
-    class="m-boostConsoleStatsBar__title"
-    >Reason for rejection</span
+  <div
+    class="m-boostConsoleStatsBar__column m-boostConsole__statsBar--ctaPreview"
+    data-ref="m-boostConsole__statsBar--ctaPreview"
   >
-  <p class="m-boostConsoleStatsBar__rejectionReasonWrapper">
     <span
-      i18n="@@BOOST_CONSOLE__STATS_BAR__FAILED_CRITERIA"
-      class="m-boostConsoleStatsBar__desc"
-      >{{ getRejectionReasonLabel() }}</span
-    >.
+      i18n="@@BOOST_CONSOLE__STATS_BAR__CTA_PREVIEW"
+      class="m-boostConsoleStatsBar__title"
+      >CTA Preview</span
+    >
     <a
-      *ngIf="!wrongAudience"
-      i18n="@@COMMON__LEARN_MORE"
       class="m-boostConsoleStatsBar__desc m-boostConsoleStatsBar__link"
-      href="https://support.minds.com/hc/en-us/articles/11723536774292-Boost-Content-Policy"
       target="_blank"
-      >Learn more</a
+      [href]="boost.goal_button_url"
+      >{{ boost.goal_button_url }}</a
     >
-    <a
-      *ngIf="wrongAudience"
-      i18n="@@BOOST_CONSOLE__STATS_BAR__BOOST_AGAIN"
-      class="m-boostConsoleStatsBar__desc m-boostConsoleStatsBar__link"
-      (click)="openBoostModal()"
-      >Boost again</a
-    >
-  </p>
-</div>
-<!-- ------------------------------------------ -->
-<!-- APPROVED / COMPLETED  -->
-<!-- ------------------------------------------ -->
-<!-- Start date ---------------------------------------- -->
-<div class="m-boostConsole__statsBar--columns" *ngIf="boostIsApproved">
+  </div>
+  <!-- ------------------------------------------ -->
+  <!-- REJECTED  -->
+  <!-- ------------------------------------------ -->
   <div
-    class="m-boostConsoleStatsBar__column"
-    data-ref="m-boostConsole__statsBar--startDate"
+    class="m-boostConsole__statsBar--rows"
+    data-ref="m-boostConsole__statsBar--rejectionReason"
+    *ngIf="boostIsRejected"
   >
     <span
-      i18n="@@BOOST_CONSOLE__STATS_BAR__START_DATE"
+      i18n="@@BOOST_CONSOLE__STATS_BAR__REJECTION_REASON"
       class="m-boostConsoleStatsBar__title"
-      >Start date</span
+      >Reason for rejection</span
     >
-    <span class="m-boostConsoleStatsBar__desc">{{ formattedStartDate }}</span>
+    <p class="m-boostConsoleStatsBar__rejectionReasonWrapper">
+      <span
+        i18n="@@BOOST_CONSOLE__STATS_BAR__FAILED_CRITERIA"
+        class="m-boostConsoleStatsBar__desc"
+        >{{ getRejectionReasonLabel() }}</span
+      >.
+      <a
+        *ngIf="!wrongAudience"
+        i18n="@@COMMON__LEARN_MORE"
+        class="m-boostConsoleStatsBar__desc m-boostConsoleStatsBar__link"
+        href="https://support.minds.com/hc/en-us/articles/11723536774292-Boost-Content-Policy"
+        target="_blank"
+        >Learn more</a
+      >
+      <a
+        *ngIf="wrongAudience"
+        i18n="@@BOOST_CONSOLE__STATS_BAR__BOOST_AGAIN"
+        class="m-boostConsoleStatsBar__desc m-boostConsoleStatsBar__link"
+        (click)="openBoostModal()"
+        >Boost again</a
+      >
+    </p>
   </div>
-  <!-- CPM ------------------------------------------ -->
-  <div
-    *ngIf="isBoostCompleted()"
-    class="m-boostConsoleStatsBar__column"
-    data-ref="m-boostConsole__statsBar--cpm"
-  >
-    <span class="m-boostConsoleStatsBar__title"
-      >CPM<m-tooltip
-        ><span
-          m-tooltip--anchor
-          class="m-boostConsoleStatsBar__customInfoTooltip"
-          >𝒊</span
-        >
-        <ng-container i18n="@@BOOST_CONSOLE__STATS_BAR__CPM_EXPLANATION"
-          >CPM is the cost per 1,000 views (cost per mille)</ng-container
-        >
-      </m-tooltip>
-    </span>
-    <span class="m-boostConsoleStatsBar__desc">{{ getCpmString() }}</span>
-  </div>
-  <!-- Clicks ------------------------------------------ -->
-  <div
-    *ngIf="isBoostCompleted() && boost.summary?.total_clicks"
-    class="m-boostConsoleStatsBar__column"
-    data-ref="m-boostConsole__statsBar--clicks"
-  >
-    <span
-      class="m-boostConsoleStatsBar__title"
-      i18n="@@BOOST_CONSOLE__STATS_BAR__LINK_CLICKS"
-      >Link clicks</span
+  <!-- ------------------------------------------ -->
+  <!-- APPROVED / COMPLETED  -->
+  <!-- ------------------------------------------ -->
+  <!-- Start date ---------------------------------------- -->
+  <div class="m-boostConsole__statsBar--columns" *ngIf="boostIsApproved">
+    <div
+      class="m-boostConsoleStatsBar__column"
+      data-ref="m-boostConsole__statsBar--startDate"
     >
-    <span class="m-boostConsoleStatsBar__desc">{{
-      boost.summary.total_clicks | number
-    }}</span>
-  </div>
-  <!-- Views ------------------------------------------ -->
-  <div
-    class="m-boostConsoleStatsBar__column"
-    data-ref="m-boostConsole__statsBar--results"
-  >
-    <span
-      i18n="@@BOOST_CONSOLE__STATS_BAR__VIEWS"
-      class="m-boostConsoleStatsBar__title"
+      <span
+        i18n="@@BOOST_CONSOLE__STATS_BAR__START_DATE"
+        class="m-boostConsoleStatsBar__title"
+        >Start date</span
+      >
+      <span class="m-boostConsoleStatsBar__desc">{{ formattedStartDate }}</span>
+    </div>
+    <!-- CPM ------------------------------------------ -->
+    <div
+      *ngIf="isBoostCompleted()"
+      class="m-boostConsoleStatsBar__column"
+      data-ref="m-boostConsole__statsBar--cpm"
     >
-      Results
-    </span>
-    <span class="m-boostConsoleStatsBar__desc"
-      >{{ boost.summary.views_delivered }} views</span
+      <span class="m-boostConsoleStatsBar__title"
+        >CPM<m-tooltip
+          ><span
+            m-tooltip--anchor
+            class="m-boostConsoleStatsBar__customInfoTooltip"
+            >𝒊</span
+          >
+          <ng-container i18n="@@BOOST_CONSOLE__STATS_BAR__CPM_EXPLANATION"
+            >CPM is the cost per 1,000 views (cost per mille)</ng-container
+          >
+        </m-tooltip>
+      </span>
+      <span class="m-boostConsoleStatsBar__desc">{{ getCpmString() }}</span>
+    </div>
+    <!-- Clicks ------------------------------------------ -->
+    <div
+      *ngIf="isBoostCompleted() && boost.summary?.total_clicks"
+      class="m-boostConsoleStatsBar__column"
+      data-ref="m-boostConsole__statsBar--clicks"
     >
+      <span
+        class="m-boostConsoleStatsBar__title"
+        i18n="@@BOOST_CONSOLE__STATS_BAR__LINK_CLICKS"
+        >Link clicks</span
+      >
+      <span class="m-boostConsoleStatsBar__desc">{{
+        boost.summary.total_clicks | number
+      }}</span>
+    </div>
+    <!-- Views ------------------------------------------ -->
+    <div
+      class="m-boostConsoleStatsBar__column"
+      data-ref="m-boostConsole__statsBar--results"
+    >
+      <span
+        i18n="@@BOOST_CONSOLE__STATS_BAR__VIEWS"
+        class="m-boostConsoleStatsBar__title"
+      >
+        Results
+      </span>
+      <span class="m-boostConsoleStatsBar__desc"
+        >{{ boost.summary.views_delivered }} views</span
+      >
+    </div>
   </div>
 </div>

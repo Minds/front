@@ -23,6 +23,8 @@ import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component'
  * Tells the parent component when it is clicked
  * via the onAction event emitter.
  */
+
+export type ButtonSize = 'xsmall' | 'small' | 'medium' | 'large';
 @Component({
   selector: 'm-button',
   templateUrl: './button.component.html',
@@ -43,7 +45,7 @@ export class ButtonComponent implements AfterViewChecked {
   @Input() overlay: boolean = false;
   @Input() iconOnly: boolean = false;
   @Input() color: 'blue' | 'grey' | 'red' | 'primary' | 'secondary' = 'grey';
-  @Input() size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
+  @Input() size: ButtonSize = 'medium';
 
   @Input() pulsating: boolean = false;
   /**
