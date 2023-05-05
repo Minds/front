@@ -7,7 +7,7 @@ import {
 } from '../../../../boost.types';
 import * as moment from 'moment';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
-import { BoostModalLazyService } from '../../../../modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../../modal-v2/boost-modal-v2-lazy.service';
 import { BoostAudience } from '../../../../modal-v2/boost-modal-v2.types';
 
 /**
@@ -31,7 +31,7 @@ export class BoostConsoleStatsBarComponent implements OnInit {
 
   constructor(
     private mindsConfig: ConfigsService,
-    private boostModal: BoostModalLazyService
+    private boostModal: BoostModalV2LazyService
   ) {}
 
   ngOnInit(): void {

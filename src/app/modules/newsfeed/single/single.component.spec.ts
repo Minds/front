@@ -24,8 +24,7 @@ import { LoadingSpinnerComponent } from '../../../common/components/loading-spin
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
-import { BoostModalLazyService } from '../../boost/modal/boost-modal-lazy.service';
-import { BoostPartnersExperimentService } from '../../experiments/sub-services/boost-partners-experiment.service';
+import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 
 @Component({
   selector: 'minds-activity',
@@ -115,12 +114,8 @@ describe('NewsfeedSingleComponent', () => {
             useValue: MockService(RouterHistoryService),
           },
           {
-            provide: BoostModalLazyService,
-            useValue: MockService(BoostModalLazyService),
-          },
-          {
-            provide: BoostPartnersExperimentService,
-            useValue: MockService(BoostPartnersExperimentService),
+            provide: BoostModalV2LazyService,
+            useValue: MockService(BoostModalV2LazyService),
           },
           {
             provide: PLATFORM_ID,
@@ -414,7 +409,6 @@ describe('NewsfeedSingleComponent', () => {
   it('should determine when to show sidebar boosts', () => {
     (comp as any).session.isLoggedIn.and.returnValue(true);
     (comp as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
-    (comp as any).boostPartnersExperiment.isActive.and.returnValue(true);
     comp.activity = {
       ownerObj: {
         guid: '234',
@@ -433,7 +427,6 @@ describe('NewsfeedSingleComponent', () => {
   it('should determine when NOT to show sidebar boosts because user is not logged in', () => {
     (comp as any).session.isLoggedIn.and.returnValue(false);
     (comp as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
-    (comp as any).boostPartnersExperiment.isActive.and.returnValue(true);
     comp.activity = {
       ownerObj: {
         guid: '234',
@@ -452,29 +445,9 @@ describe('NewsfeedSingleComponent', () => {
   it('should determine when NOT to show sidebar boosts because it is the session users entity', () => {
     (comp as any).session.isLoggedIn.and.returnValue(true);
     (comp as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
-    (comp as any).boostPartnersExperiment.isActive.and.returnValue(true);
     comp.activity = {
       ownerObj: {
         guid: '123',
-      },
-    };
-
-    fixture.detectChanges();
-
-    expect(comp.shouldShowSidebarBoost()).toBeFalse();
-    const sidebarBoosts: DebugElement = fixture.debugElement.query(
-      By.css('m-ads-boost')
-    );
-    expect(sidebarBoosts).toBeNull();
-  });
-
-  it('should determine when NOT to show sidebar boosts because experiment is off', () => {
-    (comp as any).session.isLoggedIn.and.returnValue(true);
-    (comp as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
-    (comp as any).boostPartnersExperiment.isActive.and.returnValue(false);
-    comp.activity = {
-      ownerObj: {
-        guid: '234',
       },
     };
 

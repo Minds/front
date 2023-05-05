@@ -15,8 +15,6 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
-import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
-import { OnboardingV4Service } from '../onboarding-v4/onboarding-v4.service';
 
 /**
  * Standalone register page for new users to sign up
@@ -60,9 +58,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
-    private authRedirectService: AuthRedirectService,
-    private emailCodeExperiment: EmailCodeExperimentService,
-    private onboardingV4Service: OnboardingV4Service
+    private authRedirectService: AuthRedirectService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -153,9 +149,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
        * use the experiment to determine where to go
        */
       this.router.navigate([this.authRedirectService.getRedirectUrl()]);
-    }
-    if (!this.emailCodeExperiment.isActive()) {
-      this.onboardingV4Service.startOnboarding();
     }
   }
 

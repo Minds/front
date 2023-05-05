@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { ActivityService } from '../../common/services/activity.service';
-import { PageLayoutService } from '../../common/layout/page-layout.service';
-import { DynamicBoostExperimentService } from '../experiments/sub-services/dynamic-boost-experiment.service';
 
 export type Filter =
   | ''
@@ -33,8 +31,7 @@ export class AdminComponent {
   constructor(
     public session: Session,
     private route: ActivatedRoute,
-    public router: Router,
-    public dynamicBoostExperiment: DynamicBoostExperimentService
+    public router: Router
   ) {}
 
   ngOnInit() {

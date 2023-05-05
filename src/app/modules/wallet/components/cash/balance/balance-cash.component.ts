@@ -44,8 +44,6 @@ export class WalletBalanceCashComponent implements OnInit {
   childRouteSubscription: Subscription;
   childRoutePath: string;
 
-  cashOnboardV2 = false;
-
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
@@ -72,8 +70,6 @@ export class WalletBalanceCashComponent implements OnInit {
     );
 
     this.getPlus();
-
-    this.cashOnboardV2 = this.cashService.isExperimentActive();
   }
 
   ngOnDestroy() {

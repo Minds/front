@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BoostConsoleStatsBarComponent } from './stats-bar.component';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
-import { BoostModalLazyService } from '../../../../modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../../modal-v2/boost-modal-v2-lazy.service';
 import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { Boost, BoostPaymentMethod, BoostState } from '../../../../boost.types';
 
@@ -54,8 +54,8 @@ describe('BoostConsoleStatsBarComponent', () => {
           },
         },
         {
-          provide: BoostModalLazyService,
-          useValue: MockService(BoostModalLazyService),
+          provide: BoostModalV2LazyService,
+          useValue: MockService(BoostModalV2LazyService),
         },
       ],
     }).compileComponents();

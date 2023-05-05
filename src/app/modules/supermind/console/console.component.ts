@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { Session } from '../../../services/session';
-import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleService } from './services/console.service';
@@ -33,7 +32,6 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private service: SupermindConsoleService,
-    private supermindExperiment: SupermindExperimentService,
     private supermindOnboardingModal: SupermindOnboardingModalService,
     private session: Session,
     private loginReferrer: LoginReferrerService,
@@ -41,11 +39,6 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // if experiment is not active, redirect to root.
-    if (!this.supermindExperiment.isActive()) {
-      this.router.navigate(['/']);
-    }
-
     if (!this.session.isLoggedIn()) {
       this.loginReferrer.register(this.location.path());
       this.router.navigate(['/login']);
