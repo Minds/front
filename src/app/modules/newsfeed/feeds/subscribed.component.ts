@@ -44,6 +44,7 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 import { Platform } from '@angular/cdk/platform';
+import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 
 export enum FeedAlgorithm {
   top = 'top',
@@ -123,6 +124,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
   private zendeskErrorSubscription: Subscription;
+  private onboardingTagsCompletedSubscription: Subscription;
 
   /**
    * Listening for new posts.
@@ -182,7 +184,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public changeDetectorRef: ChangeDetectorRef,
     private feedNoticeService: FeedNoticeService,
     persistentFeedExperiment: PersistentFeedExperimentService,
-    private platform: Platform
+    private platform: Platform,
+    private onboardingV4Service: OnboardingV4Service
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -261,6 +264,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     );
 
+    // subscribe to onboarding tags completion and reload the feed with more relevant content.
+    this.onboardingTagsCompletedSubscription = this.onboardingV4Service.tagsCompleted$.subscribe(
+      (completed: boolean): void => {
+        this.feedService.clear();
+        this.load();
+      }
+    );
+
     this.feedNoticeService.fetch();
 
     this.context.set('activity');
@@ -271,6 +282,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.reloadFeedSubscription?.unsubscribe();
     this.feedsUpdatedSubscription?.unsubscribe();
     this.zendeskErrorSubscription?.unsubscribe();
+    this.onboardingTagsCompletedSubscription?.unsubscribe();
   }
 
   /**
