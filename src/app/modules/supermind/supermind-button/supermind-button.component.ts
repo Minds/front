@@ -10,7 +10,6 @@ import { Session } from '../../../services/session';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
-import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 
 @Component({
   selector: 'm-supermind__button',
@@ -18,11 +17,6 @@ import { SupermindExperimentService } from '../../experiments/sub-services/super
   styleUrls: ['./supermind-button.component.ng.scss'],
 })
 export class SupermindButtonComponent {
-  /**
-   * Determines if you can show the supermind button
-   */
-  canShow: boolean;
-
   /**
    * The entity to focus the supermind button on
    * Can be User or Activity
@@ -55,7 +49,6 @@ export class SupermindButtonComponent {
    *
    * @param composerModalService
    * @param composerService
-   * @param supermindExperiment
    * @param injector
    */
   constructor(
@@ -63,13 +56,8 @@ export class SupermindButtonComponent {
     private authModal: AuthModalService,
     private composerModalService: ComposerModalService,
     private composerService: ComposerService,
-    private supermindExperiment: SupermindExperimentService,
     private injector: Injector
   ) {}
-
-  ngOnInit() {
-    this.canShow = this.supermindExperiment.isActive();
-  }
 
   /**
    * Open the composer with prefilled supermind data

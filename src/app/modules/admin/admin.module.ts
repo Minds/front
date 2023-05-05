@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
-import { AdminBoosts } from './boosts/boosts';
 import { AdminFirehoseComponent } from './firehose/firehose.component';
 import { AdminReports } from './reports/reports';
 import { AdminTagcloud } from './tagcloud/tagcloud.component';
 import { AdminVerify } from './verify/verify.component';
-import { RejectionReasonModalComponent } from './boosts/modal/rejection-reason-modal.component';
 import { AdminInteractions } from './interactions/interactions.component';
 import { InteractionsTableComponent } from './interactions/table/table.component';
 import { AdminWithdrawals } from './withdrawals/withdrawals.component';
@@ -50,8 +48,6 @@ const routes: Routes = [
     AdminComponent,
     InteractionsTableComponent,
     AdminInteractions,
-    RejectionReasonModalComponent,
-    AdminBoosts,
     AdminFirehoseComponent,
     AdminReports,
     AdminTagcloud,

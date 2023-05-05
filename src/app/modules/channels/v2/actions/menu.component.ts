@@ -136,17 +136,6 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
     ]);
   }
 
-  /**
-   * Links to relevant remote boost page
-   * @param { 'newsfeed' | 'content' } type - page.
-   */
-  public viewBoosts(type: 'newsfeed' | 'content'): void {
-    this.router.navigate([
-      `/boost/console/${type}/history`,
-      { remote: this.service.channel$.getValue().username.toLowerCase() },
-    ]);
-  }
-
   async viewEmail() {
     const channel = { ...this.service.channel$.getValue() };
 

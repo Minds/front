@@ -3,17 +3,13 @@ import { AuthModalComponent } from './auth-modal.component';
 import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
-import { EmailCodeExperimentService } from '../../experiments/sub-services/email-code-experiment.service';
-import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 
 @Injectable()
 export class AuthModalService {
   constructor(
     private injector: Injector,
     private modalService: ModalService,
-    private session: Session,
-    private emailCodeExperiment: EmailCodeExperimentService,
-    private onboardingV4Service: OnboardingV4Service
+    private session: Session
   ) {}
 
   async open(
@@ -30,13 +26,6 @@ export class AuthModalService {
         formDisplay: opts.formDisplay,
         onComplete: async (user: MindsUser) => {
           modal.close(user);
-
-          if (
-            opts.formDisplay === 'register' &&
-            !this.emailCodeExperiment.isActive()
-          ) {
-            this.onboardingV4Service.startOnboarding();
-          }
         },
       },
       keyboard: false,

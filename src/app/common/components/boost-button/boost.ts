@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { Session } from '../../../services/session';
 
-import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { ModalService } from '../../../services/ux/modal.service';
 
 /**
@@ -27,7 +27,7 @@ export class BoostButton {
   constructor(
     public session: Session,
     private modalService: ModalService,
-    private boostLazyModal: BoostModalLazyService
+    private boostLazyModal: BoostModalV2LazyService
   ) {}
 
   /**

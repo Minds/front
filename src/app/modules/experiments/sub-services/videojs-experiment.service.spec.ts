@@ -4,7 +4,7 @@ export let experimentsServiceMock = new (function() {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 
-describe('UserMenuBoostExperimentService', () => {
+describe('VideoJsExperimentService', () => {
   let service: VideoJsExperimentService;
 
   beforeEach(() => {

@@ -109,6 +109,7 @@ class BoostConsolePage {
    * @returns { void }
    */
   public hasBoostsInLocationTab(tab: BoostConsoleLocationTab): void {
+    I.waitForVisible(this.listItem);
     I.seeElement(this.listItem);
     I.seeElement(this.chipBadge);
     I.seeElement(this.stateLabel);
@@ -130,6 +131,7 @@ class BoostConsolePage {
    * @returns { void }
    */
   public hasBoostsInState(state: BoostConsoleStateFilterValue): void {
+    I.waitForVisible(this.listItem);
     I.seeElement(this.listItem);
     I.seeElement(this.chipBadge);
     I.seeElement(this.stateLabel);
@@ -191,7 +193,7 @@ class BoostConsolePage {
       this.listItem.at(feedPosition).find(this.boostActionButtons)
     );
   }
-
+  // boost rotator toggle remind - broken boost in rotation, maybe 20?
   /**
    * Check that boost at feed position has a state labeling reading that of the label param.
    * @param { BoostConsoleStateFilterValue } label - text to check for.
@@ -202,6 +204,7 @@ class BoostConsolePage {
     label: BoostConsoleStateFilterValue,
     feedPosition: number = 1
   ): void {
+    I.waitForVisible(this.listItem);
     within(this.listItem.at(feedPosition), () => {
       this.stateLabel.withText(label);
     });
@@ -213,6 +216,7 @@ class BoostConsolePage {
    * @returns { void }
    */
   public clickBoostAgain(feedPosition: number = 1): void {
+    I.waitForVisible(this.listItem);
     I.click(
       this.listItem.at(feedPosition).find(locate('a').withText('Boost again'))
     );

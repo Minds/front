@@ -1,6 +1,5 @@
 import { Injectable, Self } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
 import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 import { Session } from '../../../services/session';
@@ -23,7 +22,6 @@ export class BoostFeedService {
 
   constructor(
     @Self() private feedsService: FeedsService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService,
     private session: Session
   ) {}
 
@@ -40,29 +38,17 @@ export class BoostFeedService {
     this.initialised = true;
     this.servedByGuid = opts.servedByGuid;
 
-    const dynamicBoostExperimentActive: boolean = this.dynamicBoostExperiment.isActive();
-
-    let params = dynamicBoostExperimentActive
-      ? {
-          location: BoostLocation.NEWSFEED,
-        }
-      : {
-          rating: this.session.getLoggedInUser()?.boost_rating,
-          rotator: 1,
-        };
+    let params: Object = {
+      location: BoostLocation.NEWSFEED,
+      show_boosts_after_x: 604800,
+    };
 
     if (opts.servedByGuid) {
       params['served_by_guid'] = this.servedByGuid;
     }
 
-    params['show_boosts_after_x'] = 604800; // 1 week
-
-    const endpoint: string = dynamicBoostExperimentActive
-      ? 'api/v3/boosts/feed'
-      : 'api/v2/boost/feed';
-
     await this.feedsService
-      .setEndpoint(endpoint)
+      .setEndpoint('api/v3/boosts/feed')
       .setParams(params)
       .setLimit(12)
       .setOffset(0)
