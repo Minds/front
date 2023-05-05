@@ -1,0 +1,118 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: $spacing6 0;
+
+  .m-boostGoalButtonSelector__header {
+    padding: $spacing3 0;
+    margin-bottom: $spacing10;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-boostGoalButtonSelector__title {
+      margin-top: unset;
+      margin-bottom: $spacing2;
+      @include heading3Bold;
+    }
+    .m-boostGoalButtonSelector__subtitle {
+      margin-bottom: unset;
+      @include body1Regular;
+    }
+  }
+
+  .m-boostGoalButtonSelector__body {
+    .m-boostGoalButtonSelector__textInputRow {
+      margin-bottom: $spacing6;
+      .m-boostGoalButtonSelector__textInputLabel {
+        display: block;
+        margin-bottom: $spacing3;
+        @include heading4Medium;
+        @include unselectable;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      .m-boostGoalButtonSelector__textInput {
+        outline: 0;
+        border-radius: $m-borderRadius;
+        width: 100%;
+        padding: $spacing3 $spacing4;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+        &::placeholder {
+          @include body3Regular;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+        &--invalid {
+          @include m-theme() {
+            bordercolor: themed($m-alert);
+          }
+        }
+      }
+    }
+    .m-boostGoalButtonSelector__radioButtonRow {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      margin-bottom: $spacing6;
+      cursor: pointer;
+
+      &.m-boostGoalButtonSelector__radioButtonRow--selected {
+        .m-boostGoalButtonSelector__radioButtonLabel {
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+      }
+
+      &:hover {
+        .m-boostGoalButtonSelector__radioButtonLabel {
+          font-weight: 700;
+
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+      }
+
+      .m-boostGoalButtonSelector__radioButtonLabels {
+        display: flex;
+        flex-flow: column nowrap;
+        padding-right: $spacing6;
+        @include unselectable;
+
+        .m-boostGoalButtonSelector__radioButtonLabel {
+          margin-bottom: $spacing2;
+          cursor: pointer;
+
+          @include heading4Regular;
+          @include unselectable;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      .m-boostGoalButtonSelector__radioButton {
+        display: flex;
+        align-self: flex-start;
+        min-width: 20px;
+        min-height: 20px;
+        cursor: pointer;
+
+        @include m-theme() {
+          accent-color: themed($m-link-text);
+          background-color: themed($m-white-always);
+        }
+      }
+    }
+  }
+}
