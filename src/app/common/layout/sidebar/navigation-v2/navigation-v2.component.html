@@ -60,24 +60,6 @@
         </a>
       </li>
 
-      <!-- Boost -->
-      <li
-        class="m-sidebarNavigation__item m-sidebarNavigation__item--boost"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        *ngIf="user"
-      >
-        <a [routerLink]="['/boost/boost-console']" data-ref="sidenav-boost">
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <i class="material-icons">trending_up</i>
-            <span
-              class="m-sidebarNavigationItem__text m-legible"
-              i18n="@@COMMON__BOOST"
-              >Boost</span
-            >
-          </div>
-        </a>
-      </li>
-
       <!-- Explore -->
       <li
         class="m-sidebarNavigation__item"
@@ -97,6 +79,24 @@
             <span class="m-sidebarNavigationItem__text m-legible">
               <ng-container i18n="@@COMMON__EXPLORE">Explore</ng-container>
             </span>
+          </div>
+        </a>
+      </li>
+
+      <!-- Boost -->
+      <li
+        class="m-sidebarNavigation__item m-sidebarNavigation__item--boost"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        *ngIf="user"
+      >
+        <a [routerLink]="['/boost/boost-console']" data-ref="sidenav-boost">
+          <div class="m-sidebarNavigationItem__hoverArea">
+            <i class="material-icons">trending_up</i>
+            <span
+              class="m-sidebarNavigationItem__text m-legible"
+              i18n="@@COMMON__BOOST"
+              >Boost</span
+            >
           </div>
         </a>
       </li>
