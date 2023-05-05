@@ -141,7 +141,7 @@
            * Optical alignment fix caused by the icon for Supermind 
            * being VERY left-side heavy.
            */
-          // conditional styling for mid-width nav.
+          // conditional styling for full nav.
           @media screen and (max-width: $layoutMax1ColWidth),
             (min-width: calc($layoutMax3ColWidth + 1px)) {
             i {
@@ -152,7 +152,7 @@
             }
           }
 
-          // conditional styling for full width nav.
+          // conditional styling for mid width nav.
           @media screen and (max-width: $layoutMax3ColWidth) and (min-width: calc($layoutMax1ColWidth + 1px)) {
             i {
               margin-left: 6px;
@@ -164,8 +164,11 @@
         }
 
         &.m-sidebarNavigation__item--boost i {
-          // Optical alignment fix.
-          transform: translateY(2px);
+          // Optical alignment fix for full width nav.
+          @media screen and (max-width: $layoutMax1ColWidth),
+            (min-width: calc($layoutMax3ColWidth + 1px)) {
+            transform: translateY(2px);
+          }
         }
 
         &.m-sidebarNavigation__item--compose {
