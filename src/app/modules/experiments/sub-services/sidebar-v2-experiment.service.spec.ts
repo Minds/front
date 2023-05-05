@@ -4,7 +4,7 @@ let experimentsServiceMock = new (function() {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 
-describe('SupermindExperimentService', () => {
+describe('SidebarV2ExperimentService', () => {
   let service: SidebarV2ExperimentService;
 
   beforeEach(() => {

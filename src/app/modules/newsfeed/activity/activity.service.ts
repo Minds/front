@@ -12,6 +12,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
+import { BoostGoalButtonText } from '../../boost/boost.types';
 
 export interface Supermind {
   request_guid: string;
@@ -89,6 +90,9 @@ export type ActivityEntity = {
   quotes?: number; // count of quotes
   blurhash?: string;
   supermind?: Supermind; // supermind details, if applicable
+  boosted?: boolean; // may be exported if activity is a boost
+  goal_button_text: BoostGoalButtonText; // may be exported if activity is a boost
+  goal_button_url: string; // may be exported if activity is a boost
 };
 
 // Constants of blocks

@@ -8,7 +8,7 @@ import {
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BoostChannelNoticeComponent } from './boost-channel-notice.component';
-import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { Session } from '../../../../services/session';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 import { Subject } from 'rxjs';
@@ -44,8 +44,8 @@ describe('BoostChannelNoticeComponent', () => {
             useValue: MockService(FeedNoticeService),
           },
           {
-            provide: BoostModalLazyService,
-            useValue: MockService(BoostModalLazyService, {
+            provide: BoostModalV2LazyService,
+            useValue: MockService(BoostModalV2LazyService, {
               has: ['onComplete$'],
               props: {
                 onComplete$: { get: () => new Subject<boolean>() },

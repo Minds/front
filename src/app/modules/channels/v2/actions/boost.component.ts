@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 
 /**
@@ -15,7 +15,7 @@ export class ChannelActionsBoostComponent {
   constructor(
     public service: ChannelsV2Service,
     protected modalService: ModalService,
-    private boostModal: BoostModalLazyService
+    private boostModal: BoostModalV2LazyService
   ) {}
 
   /**

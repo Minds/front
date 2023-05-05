@@ -1,5 +1,9 @@
 // Data used to init modal.
-import { RejectionReason } from '../boost.types';
+import {
+  BoostGoal,
+  BoostGoalButtonText,
+  RejectionReason,
+} from '../boost.types';
 
 export type BoostModalExtraOpts = {
   disabledSafeAudience?: boolean;
@@ -28,6 +32,8 @@ export enum BoostModalPanel {
   AUDIENCE = 1,
   BUDGET = 2,
   REVIEW = 3,
+  GOAL = 4,
+  GOAL_BUTTON = 5,
 }
 
 // Payment method for boost.
@@ -54,12 +60,12 @@ export enum BoostLocation {
 // Entity that is boostable.
 export type BoostableEntity = {
   guid: string;
-  type: string;
-  subtype: string;
-  owner_guid: string;
+  type?: string;
+  subtype?: string;
+  owner_guid?: string;
   nsfw?: number[];
   nsfw_lock?: number[];
-  time_created: number | string;
+  time_created?: number | string;
 };
 
 // Boost config from server.
@@ -104,6 +110,9 @@ export type BoostSubmissionPayload = {
   entity_guid: string;
   target_suitability: BoostAudience;
   target_location: BoostLocation;
+  goal?: BoostGoal;
+  goal_button_text?: BoostGoalButtonText;
+  goal_button_url?: string;
   payment_method: BoostPaymentMethod;
   payment_method_id?: string;
   daily_bid: number;

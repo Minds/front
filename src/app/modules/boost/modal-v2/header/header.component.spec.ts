@@ -38,7 +38,7 @@ describe('BoostModalV2HeaderComponent', () => {
           {
             provide: BoostModalV2Service,
             useValue: MockService(BoostModalV2Service, {
-              has: ['activePanel$', 'entityType$'],
+              has: ['activePanel$', 'entityType$', 'previousPanel$'],
               props: {
                 activePanel$: {
                   get: () =>
@@ -49,6 +49,9 @@ describe('BoostModalV2HeaderComponent', () => {
                 entityType$: {
                   get: () =>
                     new BehaviorSubject<BoostSubject>(BoostSubject.POST),
+                },
+                previousPanel$: {
+                  get: () => new BehaviorSubject<BoostModalPanel>(null),
                 },
               },
             }),
@@ -68,6 +71,7 @@ describe('BoostModalV2HeaderComponent', () => {
 
     (comp as any).entityType$.next(BoostSubject.POST);
     (comp as any).activePanel$.next(BoostModalPanel.AUDIENCE);
+    // (comp as any).previousPanel$.next(null);
 
     fixture.detectChanges();
 
@@ -104,20 +108,28 @@ describe('BoostModalV2HeaderComponent', () => {
     expect(getTitle().nativeElement.textContent).toBe('Boost Channel');
   });
 
-  it('should not show back button on audience panel', () => {
+  it('should NOT show back button when there is no previous panel', (done: DoneFn) => {
     (comp as any).activePanel$.next(BoostModalPanel.AUDIENCE);
+    (comp as any).service.previousPanel$.subscribe(
+      (previousPanel: BoostModalPanel) => {
+        expect(previousPanel).toBeNull();
+        done();
+      }
+    );
     fixture.detectChanges();
     expect(getBackButton()).toBeNull();
   });
 
   it('should show back button on budget panel', () => {
     (comp as any).activePanel$.next(BoostModalPanel.BUDGET);
+    (comp as any).previousPanel$.next(BoostModalPanel.AUDIENCE);
     fixture.detectChanges();
     expect(getBackButton()).toBeTruthy();
   });
 
   it('should show back button on review panel', () => {
     (comp as any).activePanel$.next(BoostModalPanel.REVIEW);
+    (comp as any).previousPanel$.next(BoostModalPanel.BUDGET);
     fixture.detectChanges();
     expect(getBackButton()).toBeTruthy();
   });

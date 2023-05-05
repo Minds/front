@@ -1,15 +1,4 @@
-<ng-container *ngIf="v2; else v1">
-  <p>
-    Please wait a moment... If a new tab doesn't open in a few seconds, please
-    <a (click)="goToCheckout()">click here</a>.
-  </p>
-</ng-container>
-
-<ng-template #v1>
-  <m-loadingSpinner [inProgress]="!intentKey"></m-loadingSpinner>
-
-  <iframe [src]="url" #iframe *ngIf="intentKey" allowtransparency="true">
-  </iframe>
-
-  <m-modalCloseButton></m-modalCloseButton>
-</ng-template>
+<p>
+  Please wait a moment... If a new tab doesn't open in a few seconds, please
+  <a (click)="goToCheckout()">click here</a>.
+</p>

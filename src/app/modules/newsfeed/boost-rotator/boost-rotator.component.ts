@@ -26,7 +26,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Subject, Subscription } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { NgStyleValue } from '../../../common/types/angular.types';
 import { BoostFeedService } from '../services/boost-feed.service';
 
@@ -107,7 +106,6 @@ export class NewsfeedBoostRotatorComponent {
     public element: ElementRef,
     private cd: ChangeDetectorRef,
     public boostFeedService: BoostFeedService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;

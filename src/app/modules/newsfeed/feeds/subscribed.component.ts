@@ -346,25 +346,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   prepend(activity: any) {
-    if (this.newUserPromo) {
-      this.autoBoost(activity);
-      activity.boostToggle = false;
-      activity.boosted = true;
-    }
     this.prepended.unshift(activity);
 
     this.newUserPromo = false;
-  }
-
-  autoBoost(activity: any) {
-    this.client.post(
-      'api/v2/boost/activity/' + activity.guid + '/' + activity.owner_guid,
-      {
-        newUserPromo: true,
-        impressions: 200,
-        destination: 'Newsfeed',
-      }
-    );
   }
 
   delete(activity) {

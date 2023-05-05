@@ -43,13 +43,18 @@ describe('BoostModalV2Service', () => {
     this.create = jasmine.createSpy('create');
   })();
 
+  let boostGoalsExperimentMock = new (function() {
+    this.isActive = jasmine.createSpy('isActive');
+  })();
+
   beforeEach(() => {
     service = new BoostModalV2Service(
       apiMock,
       toasterMock,
       configMock,
       web3WalletMock,
-      boostContractMock
+      boostContractMock,
+      boostGoalsExperimentMock
     );
 
     service.entity$.next({
@@ -223,6 +228,9 @@ describe('BoostModalV2Service', () => {
       entity_guid: '123',
       target_suitability: 1,
       target_location: 1,
+      goal: 1,
+      goal_button_text: null,
+      goal_button_url: null,
       payment_method: 1,
       payment_method_id: 'pay_123',
       daily_bid: 15,
@@ -252,6 +260,9 @@ describe('BoostModalV2Service', () => {
       entity_guid: '123',
       target_suitability: 1,
       target_location: 2,
+      goal: 1,
+      goal_button_text: null,
+      goal_button_url: null,
       payment_method: 1,
       payment_method_id: 'pay_123',
       daily_bid: 15,
@@ -281,6 +292,9 @@ describe('BoostModalV2Service', () => {
       entity_guid: '123',
       target_suitability: 2,
       target_location: 2,
+      goal: 1,
+      goal_button_text: null,
+      goal_button_url: null,
       payment_method: 1,
       payment_method_id: 'pay_123',
       daily_bid: 15,
@@ -310,6 +324,9 @@ describe('BoostModalV2Service', () => {
       entity_guid: '123',
       target_suitability: 2,
       target_location: 2,
+      goal: 1,
+      goal_button_text: null,
+      goal_button_url: null,
       payment_method: 2,
       payment_method_id: '',
       daily_bid: 15,
@@ -363,6 +380,9 @@ describe('BoostModalV2Service', () => {
       entity_guid: '123',
       target_suitability: 2,
       target_location: 2,
+      goal: 1,
+      goal_button_text: null,
+      goal_button_url: null,
       payment_method: 3,
       payment_method_id: null,
       daily_bid: 15,

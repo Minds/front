@@ -42,4 +42,9 @@
       color: themed($m-blue);
     }
   }
+  .m-boostConsole__statsBar--ctaPreview {
+    .m-boostConsoleStatsBar__link {
+      word-break: break-word;
+    }
+  }
 }
