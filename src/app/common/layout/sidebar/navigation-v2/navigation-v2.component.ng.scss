@@ -234,6 +234,8 @@
             justify-content: center;
             margin-bottom: 8px;
             padding: 10px 24px 10px 16px;
+            box-sizing: border-box;
+            max-width: 100%;
 
             @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
               padding: 10px;
