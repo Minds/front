@@ -11,7 +11,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { By } from '@angular/platform-browser';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { Router } from '@angular/router';
 import { BoostFeedService } from '../services/boost-feed.service';
 
@@ -83,10 +82,6 @@ describe('NewsfeedBoostRotatorComponent', () => {
                 init: async (): Promise<void> => {},
               },
             }),
-          },
-          {
-            provide: DynamicBoostExperimentService,
-            useValue: MockService(DynamicBoostExperimentService),
           },
           {
             provide: ConfigsService,

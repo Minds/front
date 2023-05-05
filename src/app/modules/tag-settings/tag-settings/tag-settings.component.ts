@@ -18,6 +18,9 @@ import { TagSettingsService } from '../tag-settings.service';
 export class TagSettingsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
+  // Whether this is being shown as part of the onboarding v4 flow
+  protected onboardingContext: boolean = false;
+
   tags: Array<DiscoveryTag>;
 
   @ViewChild('hashtagsTypeaheadInput', { static: true })

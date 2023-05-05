@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { Session } from '../../../services/session';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
-import { BoostService } from '../boost.service';
 import {
   BoostConsoleSuitabilityFilter,
   BoostConsoleStateFilter,
@@ -13,11 +11,10 @@ import {
   BoostConsolePaymentMethodFilter,
 } from '../boost.types';
 import { BoostConsoleService } from './services/console.service';
-import { BoostModalLazyService } from '../modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../modal-v2/boost-modal-v2-lazy.service';
 
 @Component({
   selector: 'm-boostConsole',
-  providers: [BoostService],
   templateUrl: './console-v2.component.html',
   styleUrls: ['./console-v2.component.ng.scss'],
 })
@@ -57,28 +54,17 @@ export class BoostConsoleV2Component implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: BoostConsoleService,
-    private legacyService: BoostService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService,
     private session: Session,
     private loginReferrer: LoginReferrerService,
     private location: Location,
-    private boostModal: BoostModalLazyService
+    private boostModal: BoostModalV2LazyService
   ) {}
 
   ngOnInit(): void {
-    // if experiment is not active, redirect to root.
-    if (!this.dynamicBoostExperiment.isActive() && !this.session.isAdmin()) {
-      this.router.navigate(['/boost/console']);
-    }
-
     if (!this.session.isLoggedIn()) {
       this.loginReferrer.register(this.location.path());
       this.router.navigate(['/login']);
     }
-
-    // Fire a check so we can decide whether to show
-    // a link to the legacy boost console in the filter bar comp
-    this.legacyService.checkForLegacyBoosts();
 
     /**
      * On route change, set filters

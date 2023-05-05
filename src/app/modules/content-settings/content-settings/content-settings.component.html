@@ -1,8 +1,20 @@
-<div class="m-contentSettings">
+<div
+  class="m-contentSettings"
+  [ngClass]="{ 'm-contentSettings--isOnboarding': isOnboarding }"
+>
   <div class="m-contentSettings__section--title">
-    <span class="m-contentSettings__title">Content Settings</span>
+    <span class="m-contentSettings__title"
+      ><ng-template #standardTitle i18n="@@CONTENT_SETTINGS__TITLE"
+        >Content Settings</ng-template
+      >
+      <ng-container
+        *ngIf="isOnboarding && activeTab === 'tags'; else standardTitle"
+        i18n="@@COMMON__HASHTAGS"
+        >Hashtags</ng-container
+      ></span
+    >
   </div>
-  <div class="m-contentSettings__section--tabs">
+  <div class="m-contentSettings__section--tabs" *ngIf="!isOnboarding">
     <div class="m-tabs__container">
       <div class="m-tabs__tab">
         <a
@@ -36,11 +48,19 @@
     <!-- ----------------------------------------- -->
     <div class="m-contentSettings__section--subtitle">
       <span class="m-contentSettings__subtitle">
-        <ng-container
-          *ngIf="activeTab === 'tags'"
-          i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__TAGS"
-          >The tags you select will allow us to recommend content relevant to
-          your areas of interest</ng-container
+        <ng-container *ngIf="activeTab === 'tags'"
+          ><ng-container
+            *ngIf="!isOnboarding"
+            i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__TAGS"
+            >The tags you select will allow us to recommend content relevant to
+            your areas of interest</ng-container
+          >
+          <ng-container
+            *ngIf="isOnboarding"
+            i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__ONBOARDING_TAGS"
+            >Select at least 3 tags that are of interest to you. This helps us
+            recommend relevant content.</ng-container
+          ></ng-container
         >
         <ng-container
           *ngIf="activeTab === 'compass'"
@@ -71,21 +91,34 @@
     </div>
   </div>
   <!-- ----------------------------------------- -->
-  <!-- FORMS -->
+  <!-- FORM SUBMISSION -->
   <!-- ----------------------------------------- -->
   <div class="m-contentSettings__section--toolbar">
     <m-button
       *ngIf="activeTab === 'tags'"
       color="blue"
       (onAction)="submit()"
-      [disabled]="!(discoveryTagsService.tagsChanged$ | async)"
+      [solid]="isOnboarding"
+      [disabled]="
+        !(discoveryTagsService.tagsChanged$ | async) ||
+        (isOnboarding && (discoveryTagsService.tagCount$ | async) < 3)
+      "
       [saving]="discoveryTagsService.saving$ | async"
-      >Save</m-button
+      data-ref="content-settings-modal-tags-submit-button"
     >
+      <ng-container *ngIf="!isOnboarding" i18n="@@COMMON__SAVE"
+        >Save</ng-container
+      >
+      <ng-container *ngIf="isOnboarding" i18n="@@COMMON__CONTINUE"
+        >Continue</ng-container
+      >
+    </m-button>
     <m-button *ngIf="activeTab === 'compass'" color="blue" (onAction)="submit()"
       >Save</m-button
     >
   </div>
 </div>
-
-<m-modalCloseButton></m-modalCloseButton>
+<!-- ----------------------------------------- -->
+<!-- MODAL CLOSE -->
+<!-- ----------------------------------------- -->
+<m-modalCloseButton *ngIf="!isOnboarding"></m-modalCloseButton>

@@ -7,7 +7,7 @@
     (mResized)="onResized($event)"
     *ngIf="(recommendations$ | async).length"
   >
-    <header>
+    <header *ngIf="!isOnboarding">
       <h3>
         {{ title }}
       </h3>
@@ -40,7 +40,7 @@
       >
         <section>
           <a
-            [routerLink]="['/', channel.username]"
+            [routerLink]="getLink(channel)"
             class="m-channelRecommendation__avatarContainer"
           >
             <m-hovercard [publisher]="channel" [offset]="[0, 15]">
@@ -52,7 +52,7 @@
           </a>
           <div class="m-channelRecommendation__contentContainer">
             <a
-              [routerLink]="['/', channel.username]"
+              [routerLink]="getLink(channel)"
               class="m-channelRecommendation__title"
             >
               <strong>{{ channel.name }}</strong>
@@ -62,9 +62,10 @@
                 badges="[ 'admin', 'verified' ]"
               ></m-channel--badges>
             </a>
-            <span class="m-channelRecommendation__description">{{
-              channel.briefdescription
-            }}</span>
+            <span
+              class="m-channelRecommendation__description"
+              [innerHtml]="channel.briefdescription | slice: 0:5000 | tags"
+            ></span>
             <!-- <span>@userA and @userB are subscribed</span> -->
             <m-boostedFlag
               *ngIf="channel.boosted"
@@ -80,6 +81,7 @@
               sized="true"
               iconOnly="true"
               (subscribed)="onSubscribed($event)"
+              (unsubscribed)="onUnsubscribed($event)"
             ></m-subscribeButton>
           </div>
         </section>

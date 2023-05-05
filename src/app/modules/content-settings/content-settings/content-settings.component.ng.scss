@@ -19,6 +19,30 @@
     @media screen and (max-width: $max-mobile) {
       height: 100vh;
     }
+
+    &--isOnboarding {
+      .m-contentSettings__main {
+        height: auto;
+        flex-grow: 2;
+        @media screen and (max-width: $min-tablet) {
+          height: 70%;
+        }
+      }
+      .m-contentSettings__section--subtitle {
+        text-align: center;
+      }
+      .m-contentSettings__section--toolbar {
+        @media screen and (max-width: $min-tablet) {
+          ::ng-deep m-button {
+            margin-right: 0;
+            width: 100%;
+            .m-button {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
   }
 
   span {
@@ -37,6 +61,11 @@
   }
   .m-contentSettings__section--title {
     padding-top: 45px;
+    padding-bottom: 20px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-top: 0;
+    }
 
     .m-contentSettings__title {
       font-size: 24px;
@@ -62,22 +91,15 @@
     }
   }
   .m-contentSettings__main {
-    // min-height: 60%;
-    // max-height: 60%;
     height: 60%;
 
     overflow: scroll;
     overflow-x: hidden;
-    padding-top: 30px;
+    padding-top: 10px;
     padding-bottom: 30px;
 
     @media screen and (max-width: $min-tablet) {
       height: 70%;
-    }
-
-    @media screen and (max-width: $max-mobile) {
-      // min-height: 70% !important;
-      // max-height: 70% !important;
     }
 
     .m-contentSettings__section--subtitle {
@@ -86,12 +108,12 @@
         color: themed($m-textColor--secondary);
       }
       @media screen and (max-width: $max-mobile) {
-        padding-top: 20px;
+        padding-top: $spacing5;
       }
     }
 
     .m-contentSettings__formWrapper {
-      margin-bottom: 40px;
+      margin-bottom: $spacing10;
     }
   }
   .m-contentSettings__section--toolbar {
@@ -104,7 +126,8 @@
     }
 
     @media screen and (max-width: $max-mobile) {
-      padding: 20px;
+      padding: $spacing5;
+      margin-bottom: $spacing4;
     }
   }
 }

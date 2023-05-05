@@ -11,9 +11,7 @@ import { ThemeService } from '../../../services/theme.service';
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
-import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
-import { UserMenuBoostExperimentService } from '../../../../modules/experiments/sub-services/user-menu-boost-option-experiment.service';
-import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 
 /**
  * Menu that contains important links we want to be extra accessible to users
@@ -29,7 +27,6 @@ import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-mod
 export class UserMenuComponent implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;
 
-  boostConsoleLink: string = '/boost/console';
   isDark: boolean = false;
   themeSubscription: Subscription;
 
@@ -38,9 +35,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     private helpdeskRedirectService: HelpdeskRedirectService,
-    private boostModalLazyService: BoostModalLazyService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService,
-    private userMenuBoostExperiment: UserMenuBoostExperimentService
+    private boostModalLazyService: BoostModalV2LazyService
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +44,6 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
-
-    if (this.dynamicBoostExperiment.isActive()) {
-      this.boostConsoleLink = '/boost/boost-console';
-    }
   }
 
   getCurrentUser(): MindsUser {
@@ -82,15 +73,6 @@ export class UserMenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.themeSubscription?.unsubscribe();
-  }
-
-  /**
-   * Whether user menu boost experiment is active - when active we show a
-   * boost channel option, when inactive we show a link to the boost console.
-   * @returns { boolean }
-   */
-  public isUserMenuBoostExperimentActive(): boolean {
-    return this.userMenuBoostExperiment.isActive();
   }
 
   /**

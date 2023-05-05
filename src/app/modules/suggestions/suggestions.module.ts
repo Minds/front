@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { AutocompleteSuggestionsService } from './services/autocomplete-suggestions.service';
 import { ChannelRecommendationComponent } from './channel-recommendation/channel-recommendation.component';
+import { ChannelRecommendationModalComponent } from './channel-recommendation-modal/channel-recommendation-modal.component';
 
 @NgModule({
   imports: [
@@ -14,8 +15,14 @@ import { ChannelRecommendationComponent } from './channel-recommendation/channel
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [ChannelRecommendationComponent],
-  exports: [ChannelRecommendationComponent],
+  declarations: [
+    ChannelRecommendationComponent,
+    ChannelRecommendationModalComponent,
+  ],
+  exports: [
+    ChannelRecommendationComponent,
+    ChannelRecommendationModalComponent,
+  ],
   providers: [AutocompleteSuggestionsService],
 })
 export class SuggestionsModule {}

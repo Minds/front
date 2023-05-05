@@ -9,6 +9,9 @@ namespace CommonSteps {
     registerPage,
     channelPage,
     confirmationModalComponent,
+    contentSettingsComponent,
+    multiFactorModalComponent,
+    channelRecommendationsModalComponent,
   } = inject();
 
   /**
@@ -26,7 +29,20 @@ namespace CommonSteps {
     registerPage.clickJoinNow();
 
     I.waitForNavigation({ timeout: 30000 });
-    // TODO: Handle email code verification.
+
+    // mfa modal.
+    const code: string = '123123';
+    multiFactorModalComponent.enterCode(code, true);
+    multiFactorModalComponent.submit();
+
+    // content settings modal (tags).
+    contentSettingsComponent.clickTagByIndex(1);
+    contentSettingsComponent.clickTagByIndex(2);
+    contentSettingsComponent.clickTagByIndex(3);
+    contentSettingsComponent.clickContinue();
+
+    // skip channel recommendations.
+    channelRecommendationsModalComponent.skip();
   });
 
   /**

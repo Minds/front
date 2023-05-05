@@ -24,7 +24,6 @@ import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { catchError, take } from 'rxjs/operators';
-import { BoostPartnersExperimentService } from '../../../experiments/sub-services/boost-partners-experiment.service';
 import { AnalyticsService } from '../../../../services/analytics';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { MindsUser } from '../../../../interfaces/entities';
@@ -108,7 +107,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ComposerModalService,
     private injector: Injector,
-    public boostPartnersExperiment: BoostPartnersExperimentService,
     private analyticsService: AnalyticsService,
     private clientMeta: ClientMetaDirective,
     @Inject(PLATFORM_ID) platformId: Object
@@ -286,7 +284,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    */
   public shouldShowBoostInPosition(position: number): boolean {
     return (
-      this.boostPartnersExperiment.isActive() &&
       this.service.channel$.getValue()?.guid !==
         this.session.getLoggedInUser()?.guid &&
       // Displays in the 2nd slot and then every 6 posts

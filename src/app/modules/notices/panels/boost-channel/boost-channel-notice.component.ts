@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
-import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
@@ -16,7 +16,7 @@ export class BoostChannelNoticeComponent implements OnInit, OnDestroy {
 
   constructor(
     private feedNotice: FeedNoticeService,
-    private boostModal: BoostModalLazyService,
+    private boostModal: BoostModalV2LazyService,
     private session: Session
   ) {}
 

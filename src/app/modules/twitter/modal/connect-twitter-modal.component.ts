@@ -14,7 +14,7 @@ export class ConnectTwitterModalComponent implements OnDestroy {
   public contextText: string = '';
 
   // title text - can be overridden via setModalData().
-  public titleText: string = $localize`:@@@@CONNECT_TWITTER_MODAL__HEADER:Connect to Twitter`;
+  public titleText: string = $localize`:@@CONNECT_TWITTER_MODAL__HEADER:Connect to Twitter`;
 
   // body text - can be overridden via setModalData().
   public bodyText: string = $localize`:@@CONNECT_TWITTER_MODAL__CONNECT_YOUR_ACCOUNT_WITH_TWITTER:Connect your Minds account with Twitter.`;

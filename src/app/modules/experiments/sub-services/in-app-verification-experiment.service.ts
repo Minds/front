@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ExperimentsService } from '../experiments.service';
 
 /**
- * Returns whether dynamic boost pricing experiment is active ('epic-293-dynamic-boost'), based
+ * Returns whether dynamic boost pricing experiment is active ('epic-275-in-app-verification'), based
  * upon whether the user has been assigned the experimental variant / the feature
  * flag is enabled.
  */
