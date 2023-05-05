@@ -9,8 +9,4 @@ import { Subscription } from 'rxjs';
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.ng.scss'],
 })
-export class GroupFeedComponent {
-  groupGuidSubscription: Subscription;
-
-  constructor(protected service: GroupService) {}
-}
+export class GroupFeedComponent {}

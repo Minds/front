@@ -100,7 +100,6 @@ export class GroupsProfileMembers {
     this.inProgress = true;
     this.httpSubscription = this.client.get(endpoint, params).subscribe(
       (response: any) => {
-        console.log(response);
         if (!response.members) {
           this.moreData = false;
           this.inProgress = false;

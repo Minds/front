@@ -1,5 +1,5 @@
 import { Component, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client } from '../../../../services/api';
 import { UpdateMarkersService } from '../../../../common/services/update-markers.service';
@@ -7,6 +7,7 @@ import { VideoChatService } from '../../../videochat/videochat.service';
 import { timer, Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { SlowFadeAnimation } from '../../../../animations';
+import { Session } from '../../../../services/session';
 
 /**
  * Displays a few avatars of group members and a button that
@@ -35,18 +36,30 @@ export class GroupMemberPreviews {
    */
   @Input() v2: boolean = false;
 
+  // Get guid in case we need to reroute
+  private groupGuid: string;
+
   private updateMarkersSubscription: Subscription;
   private gatheringParticipantUpdateSubscription: Subscription;
 
   constructor(
     private client: Client,
     private updateMarkers: UpdateMarkersService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private session: Session,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (params['guid']) {
+        this.groupGuid = params['guid'];
+      }
+    });
+
     const checkIntervalSeconds = 2;
     this.gatheringParticipantTimer = timer(0, checkIntervalSeconds * 1000);
     this.load();
@@ -68,17 +81,31 @@ export class GroupMemberPreviews {
     try {
       let response: any = await this.client.get(
         `api/v1/groups/membership/${this.group.guid}`,
-        { limit: 4 }
+        { limit: 5 }
       );
 
       if (!response.members) {
         return false;
       }
 
-      // We need to make sure we only pass as many members
-      // as we want to display to the userAggregator
-      this.members = response.members.slice(0, this.membersCount);
+      this.members = response.members;
       this.totalCount = response.total;
+
+      if (this.v2) {
+        if (this.session.getLoggedInUser()) {
+          // Remove this user from the previews.
+          // They already know if they're in the group.
+          this.members = this.members.filter(member => {
+            return member.guid !== this.session.getLoggedInUser().guid;
+          });
+        }
+        // Make sure we only pass as many members
+        // as we want to display in the userAggregator
+        if (this.members.length > 0) {
+          this.members = this.members.slice(0, this.membersCount);
+        }
+      }
+
       this.inProgress = false;
     } catch {
       this.inProgress = false;
@@ -130,5 +157,15 @@ export class GroupMemberPreviews {
 
   currentTimestamp() {
     return Date.now() / 1000;
+  }
+
+  /**
+   * Navigate to members view on click
+   * @param $event
+   */
+  onAggregatorClick($event): void {
+    if (this.v2 && this.groupGuid) {
+      this.router.navigate(['group', this.groupGuid, 'members']);
+    }
   }
 }

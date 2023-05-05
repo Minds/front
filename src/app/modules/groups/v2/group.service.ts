@@ -135,13 +135,6 @@ export class GroupService {
   );
 
   /**
-   * The activity type filter applied to the feed
-   */
-  readonly filter$: BehaviorSubject<GroupFeedFilter> = new BehaviorSubject<
-    GroupFeedFilter
-  >(DEFAULT_GROUP_FEED_FILTER);
-
-  /**
    * Whether a user is editing the channel profile
    *
    * Editing occurs in v1 groups profile page
@@ -210,7 +203,7 @@ export class GroupService {
   );
 
   /**
-   * The group that gets reurned in the apiResponse$
+   * The group that gets returned in the apiResponse$
    */
   group$: Observable<MindsGroup> = this.apiResponse$.pipe(
     distinctUntilChanged(),

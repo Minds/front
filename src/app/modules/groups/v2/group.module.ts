@@ -22,14 +22,13 @@ import { GroupMemberPreviewsComponent } from './member-previews/member-previews.
 const routes: Routes = [
   {
     path: 'group/:guid',
-    redirectTo: 'group/:guid/feed/',
+    redirectTo: 'group/:guid/feed',
     pathMatch: 'full',
   },
   {
     path: 'group/:guid/:view',
     component: GroupComponent,
   },
-  { path: 'group/:guid/:view/:filter', component: GroupComponent },
 ];
 
 /**

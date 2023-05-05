@@ -64,11 +64,6 @@ export class GroupComponent implements OnInit, OnDestroy {
         if (params['view']) {
           this.service.view$.next(params['view']);
         }
-        if (params['filter']) {
-          if (params['view'] && params['view'] === 'feed') {
-            this.service.filter$.next(params['filter']);
-          }
-        }
       }),
       this.route.queryParamMap.subscribe((params: ParamMap) => {
         if (params.has('editing')) {

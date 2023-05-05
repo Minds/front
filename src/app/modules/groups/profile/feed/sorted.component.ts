@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { Session } from '../../../../services/session';
 import { SortedService } from './sorted.service';
@@ -91,6 +91,7 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     protected sortedService: SortedService,
     protected session: Session,
     protected router: Router,
+    protected route: ActivatedRoute,
     protected client: Client,
     protected cd: ChangeDetectorRef,
     public groupsSearch: GroupsSearchService
@@ -174,15 +175,23 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   }
 
   setFilter(type: string) {
-    const route = this.v2
-      ? ['/group', this.group.guid, 'feed']
-      : ['/groups/profile', this.group.guid, 'feed'];
+    if (!this.v2) {
+      const route = ['/groups/profile', this.group.guid, 'feed'];
 
-    if (type !== 'activities') {
-      route.push(type);
+      if (type !== 'activities') {
+        route.push(type);
+      }
+
+      this.router.navigate(route);
+    } else {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: {
+          filter: type,
+        },
+        queryParamsHandling: 'merge',
+      });
     }
-
-    this.router.navigate(route);
   }
 
   isMember() {
@@ -272,5 +281,16 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   patchEntity(entity) {
     entity.dontPin = !(this.group['is:moderator'] || this.group['is:owner']);
     return entity;
+  }
+
+  /**
+   * Reroute to the correct endpoint for the version of groups we're using
+   */
+  onReviewNoticeClick($event): void {
+    if (this.v2) {
+      this.router.navigate(['group', this.group.guid, 'review']);
+    } else {
+      this.router.navigate(['groups', this.group.guid, 'feed', 'review']);
+    }
   }
 }
