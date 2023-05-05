@@ -41,9 +41,7 @@
       overflow-x: hidden;
       max-height: calc(100vh - 75px);
 
-      &::-webkit-scrollbar {
-        display: none;
-      }
+      @include hide-scrollbar;
 
       @media screen and (max-width: $max-mobile) {
         max-height: 100vh;
