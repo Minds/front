@@ -17,6 +17,7 @@ export class SidebarV2ReorgExperimentService {
    * @returns { number } currently active variation.
    */
   public getActiveVariation(): number {
+    return 2;
     return parseInt(this.experiments.run('front-5924-sidebar-v2-reorg') ?? '0');
   }
 
