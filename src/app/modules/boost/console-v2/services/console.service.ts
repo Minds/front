@@ -39,7 +39,7 @@ export class BoostConsoleService {
   // (e.g. feed or sidebar)
   public readonly locationFilterValue$: BehaviorSubject<
     BoostConsoleLocationFilter
-  > = new BehaviorSubject<BoostConsoleLocationFilter>('feed');
+  > = new BehaviorSubject<BoostConsoleLocationFilter>('sidebar');
 
   // Subject containing status filter for console to display.
   // (Used in user boost context only)
