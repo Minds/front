@@ -39,25 +39,13 @@
       <span i18n="@@COMMON__ADMIN">Admin</span>
     </m-dropdownMenu__item>
 
-    <!-- Boost Option -->
-    <ng-container
-      *ngIf="isUserMenuBoostExperimentActive(); else boostConsoleOption"
+    <!-- Boost Channel Option -->
+    <m-dropdownMenu__item
+      (click)="openBoostChannelModal()"
+      data-ref="topnav-usermenu-boost-channel"
     >
-      <m-dropdownMenu__item
-        (click)="openBoostChannelModal()"
-        data-ref="topnav-usermenu-boost-channel"
-      >
-        <span i18n="@@COMMON__BOOST_CHANNEL">Boost Channel</span>
-      </m-dropdownMenu__item>
-    </ng-container>
-    <ng-template #boostConsoleOption>
-      <m-dropdownMenu__item
-        [link]="boostConsoleLink"
-        data-ref="topnav-usermenu-boostconsole"
-      >
-        <span i18n="@@COMMON__BOOST_CONSOLE">Boost Console</span>
-      </m-dropdownMenu__item>
-    </ng-template>
+      <span i18n="@@COMMON__BOOST_CHANNEL">Boost Channel</span>
+    </m-dropdownMenu__item>
 
     <!-- Settings Option -->
     <m-dropdownMenu__item link="/settings" data-ref="topnav-usermenu-settings">

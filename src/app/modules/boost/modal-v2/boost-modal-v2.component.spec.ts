@@ -40,7 +40,7 @@ describe('BoostModalV2Component', () => {
       })
         .overrideProvider(BoostModalV2Service, {
           useValue: MockService(BoostModalV2Service, {
-            has: ['activePanel$', 'callSaveIntent$', 'entity$'],
+            has: ['activePanel$', 'callSaveIntent$', 'entity$', 'firstPanel$'],
             props: {
               activePanel$: {
                 get: () =>
@@ -57,6 +57,12 @@ describe('BoostModalV2Component', () => {
                     time_created: '99999999999',
                   }),
               },
+              firstPanel$: {
+                get: () =>
+                  new BehaviorSubject<BoostModalPanel>(
+                    BoostModalPanel.AUDIENCE
+                  ),
+              },
             },
           }),
         })
@@ -69,6 +75,7 @@ describe('BoostModalV2Component', () => {
     comp = fixture.componentInstance;
 
     (comp as any).service.activePanel$.next(BoostModalPanel.REVIEW);
+    (comp as any).service.firstPanel$.next(BoostModalPanel.AUDIENCE);
 
     fixture.detectChanges();
 

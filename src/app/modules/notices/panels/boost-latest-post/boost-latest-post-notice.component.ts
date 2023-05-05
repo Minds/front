@@ -5,7 +5,7 @@ import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 import { BoostLatestPostNoticeService } from './boost-latest-post-notice.service';
 import { BoostConsoleLocationFilter } from '../../../boost/boost.types';
-import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { Session } from '../../../../services/session';
 
 /**
@@ -54,7 +54,7 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
     private feedNotice: FeedNoticeService,
     private router: Router,
     private session: Session,
-    private boostModal: BoostModalLazyService
+    private boostModal: BoostModalV2LazyService
   ) {}
 
   ngOnInit(): void {

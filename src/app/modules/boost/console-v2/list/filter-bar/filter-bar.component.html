@@ -74,15 +74,6 @@
     </m-tooltip>
   </div>
   <!-- ---------------------------------------- -->
-  <!-- LEGACY BOOST CONSOLE LINK: DESKTOP -->
-  <!-- ---------------------------------------- -->
-  <div
-    *ngIf="legacyService.hasLegacyBoosts$ | async"
-    class="m-boostConsole__legacyLinkWrapper--desktop"
-  >
-    <ng-container *ngTemplateOutlet="legacyLink"></ng-container>
-  </div>
-  <!-- ---------------------------------------- -->
   <!-- BOOST CHANNEL/LATEST POST NOTICE: DESKTOP -->
   <!-- ---------------------------------------- -->
   <div class="m-boostConsole__boostLatestPostWrapper--desktop">
@@ -173,15 +164,6 @@
       </div>
     </m-dropdownMenu>
   </div>
-</div>
-<!-- ---------------------------------------- -->
-<!-- LEGACY BOOST CONSOLE LINK: MOBILE -->
-<!-- ---------------------------------------- -->
-<div
-  *ngIf="legacyService.hasLegacyBoosts$ | async"
-  class="m-boostConsole__legacyLinkWrapper--mobile"
->
-  <ng-container *ngTemplateOutlet="legacyLink"></ng-container>
 </div>
 <!-- ---------------------------------------- -->
 <!-- BOOST CHANNEL/LATEST POST NOTICE: MOBILE -->
@@ -347,13 +329,6 @@
       >On-chain tokens</ng-container
     >
   </span>
-</ng-template>
-<!-- ------------------------ -->
-<!-- TEMPLATE: LEGACY LINK -->
-<!-- ------------------------ -->
-<ng-template #legacyLink>
-  <p><a routerLink="/boost/console">View your legacy boosts</a></p>
-  <p>See posts you boosted in the retired legacy system.</p>
 </ng-template>
 <!-- ------------------------------------->
 <!-- TEMPLATE: BOOST LATEST POST NOTICE -->

@@ -189,9 +189,6 @@ export class RegisterForm implements OnInit, OnDestroy {
 
     let opts = { ...this.form.value };
 
-    const friendlyCaptchaEnabled = this.isFriendlyCaptchaEnabled();
-    opts['friendly_captcha_enabled'] = friendlyCaptchaEnabled;
-
     this.client
       .post('api/v1/register', opts)
       .then((data: any) => {
@@ -205,9 +202,7 @@ export class RegisterForm implements OnInit, OnDestroy {
         this.inProgress = false;
 
         // refresh CAPTCHA.
-        friendlyCaptchaEnabled
-          ? this.friendlyCaptchaEl.reset()
-          : this.captchaEl.refresh();
+        this.friendlyCaptchaEl.reset();
 
         if (e.status === 'failed') {
           // incorrect login details
@@ -259,13 +254,6 @@ export class RegisterForm implements OnInit, OnDestroy {
       this.form.get(field).touched &&
       this.form.get(field).dirty
     );
-  }
-
-  /**
-   * True if FriendlyCAPTCHA feat flag is enabled.
-   */
-  public isFriendlyCaptchaEnabled(): boolean {
-    return this.experiments.hasVariation('engine-2272-captcha', true);
   }
 
   get username() {

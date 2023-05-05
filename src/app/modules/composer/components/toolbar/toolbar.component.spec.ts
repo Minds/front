@@ -13,12 +13,6 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { UploaderService } from '../../services/uploader.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
-import { MediaQuotesExperimentService } from '../../../experiments/sub-services/media-quotes-experiment.service';
-import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
-
-export let mediaQuotesExperimentServiceMock = new (function() {
-  this.isActive = jasmine.createSpy('isActive').and.returnValue(true);
-})();
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -136,14 +130,6 @@ describe('Composer Toolbar', () => {
           {
             provide: UploaderService,
             useValue: uploaderServiceMock,
-          },
-          {
-            provide: MediaQuotesExperimentService,
-            useValue: mediaQuotesExperimentServiceMock,
-          },
-          {
-            provide: SupermindExperimentService,
-            useValue: MockService(SupermindExperimentService),
           },
         ],
       }).compileComponents();

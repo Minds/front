@@ -1,9 +1,7 @@
-import { OnInit } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { EmailCodeExperimentService } from '../../experiments/sub-services/email-code-experiment.service';
 import {
   MultiFactorAuthService,
   MultiFactorPanel,
@@ -48,7 +46,6 @@ export class MultiFactorAuthBaseComponent {
   constructor(
     private service: MultiFactorAuthService,
     private emailConfirmation: EmailConfirmationService,
-    private emailCodeExperiment: EmailCodeExperimentService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -75,14 +72,11 @@ export class MultiFactorAuthBaseComponent {
   }
 
   /**
-   * Whether the user is confirming their email (and experiment is active).
-   * @returns { boolean } - true if the user is confirming their email (and experiment is active).
+   * Whether the user is confirming their email.
+   * @returns { boolean } - true if the user is confirming their email.
    */
   public isConfirmingEmail(): boolean {
-    return (
-      this.emailCodeExperiment.isActive() &&
-      this.emailConfirmation.requiresEmailConfirmation()
-    );
+    return this.emailConfirmation.requiresEmailConfirmation();
   }
 
   /**

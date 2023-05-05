@@ -232,15 +232,10 @@
     <!-- ------------------------------- -->
     <div class="m-form__field--text stretchedField m-registerForm__captcha">
       <div class="m-form__row--input">
-        <ng-container *ngIf="!isFriendlyCaptchaEnabled(); else friendlyCaptcha">
-          <m-captcha formControlName="captcha"></m-captcha>
-        </ng-container>
-        <ng-template #friendlyCaptcha>
-          <m-friendlyCaptcha
-            formControlName="captcha"
-            [puzzleOrigin]="'registration'"
-          ></m-friendlyCaptcha>
-        </ng-template>
+        <m-friendlyCaptcha
+          formControlName="captcha"
+          [puzzleOrigin]="'registration'"
+        ></m-friendlyCaptcha>
       </div>
     </div>
   </div>

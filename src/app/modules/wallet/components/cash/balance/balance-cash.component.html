@@ -2,34 +2,7 @@
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 <div class="m-walletBalance--cash" *ngIf="init && cashWallet">
-  <m-addBankPrompt *ngIf="cashOnboardV2"></m-addBankPrompt>
-
-  <div
-    class="m-walletBalance---cash__onboardingNotice"
-    *ngIf="
-      !cashOnboardV2 &&
-      childRoutePath !== 'settings' &&
-      (!hasAccount || !hasBank)
-    "
-  >
-    <p>
-      <a routerLink="settings" i18n="@@WALLET_V2__BALANCE_CASH__ADD_BANK_INFO"
-        >Add your bank information</a
-      >
-    </p>
-    <p>
-      <ng-container
-        *ngIf="!hasAccount"
-        i18n="@@WALLET_V2__BALANCE_CASH__START_RECEIVING_CASH_INFO"
-        >Start receiving cash payouts by adding your bank details.
-      </ng-container>
-      <ng-container
-        *ngIf="hasAccount"
-        i18n="@@WALLET_V2__BALANCE_CASH__FINISH_ADDING_DETAILS_INFO"
-        >Finish adding your bank details to start receiving cash payouts.
-      </ng-container>
-    </p>
-  </div>
+  <m-addBankPrompt></m-addBankPrompt>
 
   <div class="m-walletBalance--cash__colContainer">
     <!-- -------------------------------------------- -->

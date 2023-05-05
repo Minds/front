@@ -2,7 +2,6 @@ import { DismissalService } from './../../../common/services/dismissal.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
 import { FeedNoticeService } from '../../notices/services/feed-notice.service';
 import { Session } from '../../../services/session';
 
@@ -41,7 +40,6 @@ export class DefaultFeedComponent implements OnInit {
     public feedsService: FeedsService,
     public experiments: ExperimentsService,
     private feedNoticeService: FeedNoticeService,
-    private discoveryBoostExperiment: DiscoveryBoostExperimentService,
     private dismissal: DismissalService,
     private session: Session
   ) {}
@@ -74,7 +72,6 @@ export class DefaultFeedComponent implements OnInit {
   public shouldShowBoostInPosition(position: number): boolean {
     return (
       this.isLoggedIn() &&
-      this.discoveryBoostExperiment.isActive() &&
       ((position > 0 && position % 5 === 0) || position === 3)
     );
   }

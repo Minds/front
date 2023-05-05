@@ -21,7 +21,7 @@ import { ConfigsService } from '../../services/configs.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ThemeService } from '../../services/theme.service';
@@ -75,7 +75,7 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private route: ActivatedRoute,
     private router: Router,
-    private boostModalService: BoostModalLazyService,
+    private boostModalService: BoostModalV2LazyService,
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private authModal: AuthModalService,

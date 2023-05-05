@@ -283,8 +283,7 @@ class ComposerModalComponent {
           locate('m-activity').withDescendant(
             locate('span').withText(postContent)
           )
-        ),
-      10
+        )
     );
     if (textStorageKey) {
       storage.add(textStorageKey, postContent);

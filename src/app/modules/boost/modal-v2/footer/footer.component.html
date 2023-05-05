@@ -40,7 +40,7 @@
     color="blue"
     [solid]="true"
     [saving]="boostSubmissionInProgress$ | async"
-    [disabled]="boostSubmissionInProgress$ | async"
+    [disabled]="disableSubmitButton$ | async"
     (onAction)="onButtonClick($event)"
     data-ref="boost-modal-v2-footer-next-button"
   >
@@ -70,7 +70,7 @@
 <ng-template #reviewPanelFooter let-boostSubject="boostSubject"
   ><span i18n="@@BOOST_MODAL_V2_FOOTER__ONCE_APPROVED">
     By clicking Boost {{ boostSubject }}, you agree to Minds'
-    <a routerLink="/content-policy" target="_blank">Content Policy</a> and
-    <a routerLink="/p/terms" target="_blank">Refund Policy</a>.</span
+    <a href="/content-policy" target="_blank">Content Policy</a> and
+    <a href="/p/terms" target="_blank">Refund Policy</a>.</span
   ></ng-template
 >

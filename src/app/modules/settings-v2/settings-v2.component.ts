@@ -7,9 +7,7 @@ import { SettingsV2Service } from './settings-v2.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
 import { Subscription } from 'rxjs';
-import { SupermindExperimentService } from '../experiments/sub-services/supermind-experiment.service';
 import { AffiliatesExperimentService } from '../experiments/sub-services/affiliates-experiment.service';
-import { NestedMenuItem } from '../../common/layout/nested-menu/nested-menu.component';
 
 /**
  * Container that determines what form/menu(s)
@@ -192,6 +190,10 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__PAYMENTS__RECURRING__LABEL:Recurring Payments`,
             id: 'recurring-payments',
           },
+          {
+            label: $localize`:@@SETTINGS__SUPERMIND__HEADER__LABEL:Supermind`,
+            id: 'supermind',
+          },
         ],
       },
     ],
@@ -348,7 +350,6 @@ export class SettingsV2Component implements OnInit {
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
     protected toasterService: ToasterService,
-    private supermindExperiment: SupermindExperimentService,
     private affiliatesExperiment: AffiliatesExperimentService
   ) {}
 
@@ -389,7 +390,6 @@ export class SettingsV2Component implements OnInit {
       });
 
     // Conditionally show feature flagged items
-    this.addSupermindSettings();
     this.setProRoutes();
     this.setSecondaryPane();
     this.loadSettings();
@@ -507,14 +507,5 @@ export class SettingsV2Component implements OnInit {
 
   shouldShowReferralsMenuItem(): boolean {
     return !this.shouldShowAffiliatesMenuItem();
-  }
-
-  private addSupermindSettings(): void {
-    if (this.supermindExperiment.isActive()) {
-      this.secondaryMenus.payments[0].items.push({
-        label: 'Supermind',
-        id: 'supermind',
-      });
-    }
   }
 }

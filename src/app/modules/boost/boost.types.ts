@@ -7,6 +7,9 @@ export type Boost = {
   entity: any;
   target_location: number;
   target_suitability: number;
+  goal?: BoostGoal;
+  goal_button_text?: BoostGoalButtonText;
+  goal_button_url?: string;
   payment_method_id?: number;
   payment_method: number;
   payment_amount: number;
@@ -85,7 +88,6 @@ export enum BoostSuitability {
 export type BoostConsoleSuitabilityFilter = 'safe' | 'controversial';
 
 ///////////////////////////////////////////////////////
-
 // BOOST LOCATION
 export enum BoostLocation {
   NEWSFEED = 1,
@@ -119,3 +121,22 @@ export type BoostConsoleAdminStatsResponse = {
 export type BoostConsoleSingleGetResponse = {
   boost: Boost;
 };
+
+///////////////////////////////////////////////////////
+// BOOST GOALS
+export enum BoostGoal {
+  VIEWS = 1, // "expand reach"
+  ENGAGEMENT = 2, // "increase engagement"
+  SUBSCRIBERS = 3, // "grow your following"
+  CLICKS = 4, // "get more clicks"
+}
+
+export enum BoostGoalButtonText {
+  SUBSCRIBE_TO_MY_CHANNEL = 1,
+  GET_CONNECTED = 2,
+  STAY_IN_THE_LOOP = 3,
+  LEARN_MORE = 4,
+  GET_STARTED = 5,
+  SIGN_UP = 6,
+  TRY_FOR_FREE = 7,
+}
