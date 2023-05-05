@@ -8,7 +8,6 @@ import {
 import * as moment from 'moment';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
 import { BoostModalV2LazyService } from '../../../../modal-v2/boost-modal-v2-lazy.service';
-import { BoostAudience } from '../../../../modal-v2/boost-modal-v2.types';
 
 /**
  * Row presented in boost console list items (where applicable)
@@ -23,6 +22,8 @@ import { BoostAudience } from '../../../../modal-v2/boost-modal-v2.types';
 export class BoostConsoleStatsBarComponent implements OnInit {
   /** @var { Boost } boost - Boost object */
   @Input() boost: Boost = null;
+
+  boostIsPending: boolean = false;
   boostIsRejected: boolean = false;
   boostIsApproved: boolean = false;
 
@@ -37,6 +38,7 @@ export class BoostConsoleStatsBarComponent implements OnInit {
   ngOnInit(): void {
     const status = this.boost?.boost_status;
 
+    this.boostIsPending = status === BoostState.PENDING;
     this.boostIsRejected = status === BoostState.REJECTED;
     this.boostIsApproved =
       status === BoostState.APPROVED || status === BoostState.COMPLETED;

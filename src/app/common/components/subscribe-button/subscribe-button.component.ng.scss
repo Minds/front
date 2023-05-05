@@ -1,0 +1,6 @@
+:host {
+  .m-subscribeButtonText--projected:not(:empty)
+    + .m-subscribeButtonText--default {
+    display: none;
+  }
+}
