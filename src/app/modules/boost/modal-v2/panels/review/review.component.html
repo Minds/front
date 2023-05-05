@@ -11,6 +11,53 @@
 </div>
 <div class="m-boostModalReview__body">
   <div
+    *ngIf="boostGoalsExperiment.isActive() && (goal$ | async)"
+    class="m-boostModalReview__section m-boostModalReview__section--goal"
+    (click)="changePanel(BoostModalPanel.GOAL)"
+    data-ref="boost-modal-v2-goal-section"
+  >
+    <div class="m-boostModalReview__sectionLeft">
+      <h4
+        class="m-boostModalReview__sectionTitle"
+        i18n="@@BOOST_MODAL_V2_REVIEW__REVIEW_YOUR_GOAL"
+      >
+        Goal
+      </h4>
+      <p
+        [ngSwitch]="goal$ | async"
+        class="m-boostModalReview__sectionSubtext"
+        data-ref="boost-modal-v2-goal-text"
+      >
+        <ng-container
+          *ngSwitchCase="BoostGoal.VIEWS"
+          i18n="@@BOOST_MODAL_V2_REVIEW__EXPAND_REACH"
+          >Expand reach</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="BoostGoal.ENGAGEMENT"
+          i18n="@@BOOST_MODAL_V2_REVIEW__INCREASE_ENGAGEMENT"
+          >Increase engagement</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="BoostGoal.SUBSCRIBERS"
+          i18n="@@BOOST_MODAL_V2_REVIEW__GROW_YOUR_FOLLOWING"
+          >Grow your following</ng-container
+        >
+        <ng-container
+          *ngSwitchCase="BoostGoal.CLICKS"
+          i18n="@@BOOST_MODAL_V2_REVIEW__GET_MORE_CLICKS"
+          >Get more clicks</ng-container
+        >
+      </p>
+    </div>
+    <div
+      class="m-boostModalReview__sectionRight"
+      data-ref="boost-modal-v2-goal-back-icon-container"
+    >
+      <m-icon iconId="chevron_right"></m-icon>
+    </div>
+  </div>
+  <div
     class="m-boostModalReview__section"
     (click)="changePanel(BoostModalPanel.AUDIENCE)"
     data-ref="boost-modal-v2-audience-section"
