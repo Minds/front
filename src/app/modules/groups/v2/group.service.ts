@@ -31,11 +31,6 @@ export class GroupService {
   readonly guid$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   /**
-   * Group name
-   */
-  readonly name$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-
-  /**
    * Whether to show the Requests tab
    */
   readonly showRequestsTab$: Observable<boolean>;
@@ -222,7 +217,6 @@ export class GroupService {
     map(apiResponse => {
       const group = apiResponse?.group || null;
 
-      this.name$.next(group ? group.name : '');
       this.moderated$.next(group ? !!group.moderated : false);
       this.memberCount$.next(group ? group['members:count'] : 0);
       this.requestCount$.next(group ? group['requests:count'] : 0);
@@ -236,6 +230,7 @@ export class GroupService {
       this.isMuted$.next(group ? group['is:creator'] : false);
 
       return group;
-    })
+    }),
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 }

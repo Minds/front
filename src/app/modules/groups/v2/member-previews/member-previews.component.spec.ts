@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupMemberPreviewsComponent } from './member-previews.component';
+import { GroupService } from '../group.service';
+import { MockService } from '../../../../utils/mock';
 
 describe('GroupMemberPreviewsComponent', () => {
   let component: GroupMemberPreviewsComponent;
@@ -9,6 +11,9 @@ describe('GroupMemberPreviewsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GroupMemberPreviewsComponent],
+      providers: [
+        { provide: GroupService, useValue: MockService(GroupService) },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GroupMemberPreviewsComponent);

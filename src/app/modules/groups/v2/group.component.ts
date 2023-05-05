@@ -58,7 +58,7 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.route.params.subscribe(params => {
         // Get group guid, view and filter from url
-        if (params['guid']) {
+        if (params['guid'] && params['guid'] !== this.currentGroup?.guid) {
           this.service.guid$.next(params['guid']);
         }
         if (params['view']) {

@@ -33,8 +33,6 @@ import { GroupsSearchService } from './search.service';
 export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   group: any;
 
-  @HostBinding('class')
-
   // Whether this is displayed in modern groups
   @Input('v2')
   @HostBinding('class.m-group-profile-feed__sorted--v2')

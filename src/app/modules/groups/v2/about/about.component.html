@@ -6,7 +6,7 @@
     *ngIf="group.briefdescription"
     class="m-groupAbout__section--desc m-groupAbout__section"
     m-read-more
-    [maxHeightAllowed]="200"
+    [maxHeightAllowed]="350"
   >
     <div
       class="m-groupAboutDesc__content"
@@ -14,11 +14,7 @@
       data-ref="data-minds-group-bio"
     ></div>
 
-    <m-read-more--button
-      wrapperClass="m-groupAboutDesc__readMore"
-      i18n="@@COMMON__READ_MORE"
-    >
-      Read More
+    <m-read-more--button [v2]="true" showOnlyFadeout="true">
     </m-read-more--button>
   </div>
 </div>

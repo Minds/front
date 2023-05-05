@@ -16,7 +16,7 @@
       data-ref="data-minds-group-avatar"
     ></minds-avatar>
     <m-group__actions></m-group__actions>
-    <h1 class="m-groupHeaderInfo__name">
+    <h1 class="m-groupHeaderInfo__name" [title]="group.name">
       <span>
         {{ group.name | truncate: 20 }}
       </span>

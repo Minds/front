@@ -21,6 +21,10 @@ export class GroupMemberPreviews {
   readonly cdnUrl: string;
   @Input() group;
   members: Array<any> = [];
+
+  // v2 only. Count of members to display on user aggregator
+  membersCount: number = 3;
+
   count: Number = 0;
   totalCount: Number = 0;
   inProgress: boolean = false;
@@ -64,19 +68,16 @@ export class GroupMemberPreviews {
     try {
       let response: any = await this.client.get(
         `api/v1/groups/membership/${this.group.guid}`,
-        { limit: 5 }
+        { limit: 4 }
       );
 
       if (!response.members) {
         return false;
       }
 
-      this.members = response.members;
-
-      if (response.total - this.members.length > 0) {
-        this.count = response.total - this.members.length;
-      }
-
+      // We need to make sure we only pass as many members
+      // as we want to display to the userAggregator
+      this.members = response.members.slice(0, this.membersCount);
       this.totalCount = response.total;
       this.inProgress = false;
     } catch {
