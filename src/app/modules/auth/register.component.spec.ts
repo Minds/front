@@ -21,9 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { BehaviorSubject } from 'rxjs';
-import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
 import { ContentSettingsModalService } from '../content-settings/content-settings-modal.service';
-import { OnboardingV4Service } from '../onboarding-v4/onboarding-v4.service';
 
 let activatedRouteMock = new (function() {
   this.queryParams = new BehaviorSubject({
@@ -85,12 +83,8 @@ describe('RegisterComponent', () => {
             useValue: MockService(AuthRedirectService),
           },
           {
-            provide: EmailCodeExperimentService,
-            useValue: MockService(EmailCodeExperimentService),
-          },
-          {
-            provide: OnboardingV4Service,
-            useValue: MockService(OnboardingV4Service),
+            provide: ContentSettingsModalService,
+            useValue: MockService(ContentSettingsModalService),
           },
         ],
       }).compileComponents();
@@ -109,7 +103,6 @@ describe('RegisterComponent', () => {
 
   afterEach(() => {
     loginReferrerServiceMock.navigate.calls.reset();
-    (comp as any).emailCodeExperiment.isActive.calls.reset();
   });
 
   it('should initialize', () => {

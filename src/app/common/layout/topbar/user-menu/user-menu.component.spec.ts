@@ -11,9 +11,7 @@ import { ThemeService } from '../../../services/theme.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ChangeDetectorRef } from '@angular/core';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
-import { BoostModalLazyService } from '../../../../modules/boost/modal/boost-modal-lazy.service';
-import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
-import { UserMenuBoostExperimentService } from '../../../../modules/experiments/sub-services/user-menu-boost-option-experiment.service';
+import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../../mocks/responses/user.mock';
 import { MindsUser } from '../../../../interfaces/entities';
@@ -60,16 +58,8 @@ describe('UserMenuComponent', () => {
             useValue: MockService(HelpdeskRedirectService),
           },
           {
-            provide: BoostModalLazyService,
-            useValue: MockService(BoostModalLazyService),
-          },
-          {
-            provide: DynamicBoostExperimentService,
-            useValue: MockService(DynamicBoostExperimentService),
-          },
-          {
-            provide: UserMenuBoostExperimentService,
-            useValue: MockService(UserMenuBoostExperimentService),
+            provide: BoostModalV2LazyService,
+            useValue: MockService(BoostModalV2LazyService),
           },
         ],
       }).compileComponents(); // compile template and css
@@ -84,8 +74,6 @@ describe('UserMenuComponent', () => {
     fixture = TestBed.createComponent(UserMenuComponent);
     comp = fixture.componentInstance;
 
-    (comp as any).userMenuBoostExperiment.isActive.and.returnValue(true);
-
     fixture.detectChanges();
   });
 
@@ -95,16 +83,6 @@ describe('UserMenuComponent', () => {
 
   it('should init', () => {
     expect(comp).toBeTruthy();
-  });
-
-  it('should determine if user menu boost experiment is active', () => {
-    (comp as any).userMenuBoostExperiment.isActive.and.returnValue(true);
-    expect(comp.isUserMenuBoostExperimentActive()).toBeTrue();
-  });
-
-  it('should determine if user menu boost experiment is NOT active', () => {
-    (comp as any).userMenuBoostExperiment.isActive.and.returnValue(false);
-    expect(comp.isUserMenuBoostExperimentActive()).toBeFalse();
   });
 
   it('should open boost channel modal', fakeAsync(() => {

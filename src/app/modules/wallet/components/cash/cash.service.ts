@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, shareReplay, switchMapTo } from 'rxjs/operators';
 import { ApiService } from '../../../../common/api/api.service';
-import { ExperimentsService } from '../../../experiments/experiments.service';
 
 @Injectable({
   providedIn: 'root',
@@ -72,10 +71,7 @@ export class CashWalletService {
    */
   isLoading$$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-  constructor(
-    private api: ApiService,
-    protected experimentsService: ExperimentsService
-  ) {}
+  constructor(private api: ApiService) {}
 
   /**
    * Creates a stripe account
@@ -85,19 +81,10 @@ export class CashWalletService {
   }
 
   /**
-   * Takes the user to stripe connect onboarding screen
+   * Takes the user to stripe connect onboarding screen.
+   * @returns { void }
    */
-  redirectToOnboarding() {
+  public redirectToOnboarding(): void {
     location.href = '/api/v3/payments/stripe/connect/onboarding';
-  }
-
-  /**
-   * Helper to know if the experiment is on
-   */
-  isExperimentActive(): boolean {
-    return this.experimentsService.hasVariation(
-      'minds-3455-restricted-fix',
-      true
-    );
   }
 }

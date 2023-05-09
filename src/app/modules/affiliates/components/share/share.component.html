@@ -1,6 +1,8 @@
-<!-- ------------------------>
+<!-- ------------------------------------------------->
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/-->
 <!-- EARN METHOD: REFERRAL -->
-<!-- ------------------------>
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/-->
+<!-- ------------------------------------------------->
 <ng-container *ngIf="earnMethod === 'referral'">
   <span class="m-affiliatesShare__title">
     <ng-container i18n="@@AFFILIATES__SHARE__TITLE__REFERRAL"
@@ -74,15 +76,36 @@
       <span i18n="@@COMMON__MESSAGES">Messages</span>
     </div>
   </div>
+  <!-- -------------------------->
+  <!-- BUTTON: Copy link -->
+  <!-- -------------------------->
+  <m-button
+    solid="true"
+    class="m-affiliatesShare__copyButton"
+    (onAction)="copyUrlToClipboard()"
+    data-ref="m-affiliatesShareButtons__button--copyLink"
+  >
+    <i class="material-icons m-affiliatesShareButton__icon">content_copy</i>
+    <ng-container ii18n="@@AFFILIATES__SHARE__COPY_LINK"
+      >Copy link</ng-container
+    >
+  </m-button>
+  <!-- -------------------------->
+  <!-- SUBTEXT -->
+  <!-- -------------------------->
   <span
     class="m-affiliatesShare__description"
     i18n="@@AFFILIATES__SHARE__DESCRIPTION__REFERRAL"
-    >Your sign up invite has an expiration of 1 year.</span
+    >Earn for up to 1 year from when someone uses your link to sign up.</span
   >
 </ng-container>
-<!-- -------------------------->
+
+<!-- ------------------------------------------------->
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/-->
 <!-- EARN METHOD: AFFILIATE  -->
-<!-- -------------------------->
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/-->
+<!-- ------------------------------------------------->
+
 <ng-container *ngIf="earnMethod === 'affiliate'">
   <span class="m-affiliatesShare__title">
     <ng-container i18n="@@AFFILIATES__SHARE__TITLE__AFFILIATE"
@@ -137,37 +160,14 @@
       </m-button>
       <span i18n="@@COMMON__MINDS_PRO">Minds Pro</span>
     </div>
-    <!-- -------------------------->
-    <!-- BUTTON: Creator -->
-    <!-- -------------------------->
-    <div class="m-affiliatesShareButtons__button">
-      <m-button
-        size="large"
-        iconOnly="true"
-        (onAction)="copyUrlToClipboard()"
-        data-ref="m-affiliatesShareButtons__button--creator"
-        ><m-icon iconId="palette"></m-icon
-      ></m-button>
-      <span i18n="@@COMMON__CREATOR">Creator</span>
-    </div>
   </div>
-
+  <!-- -------------------------->
+  <!-- SUBTEXT -->
+  <!-- -------------------------->
   <span
-    class="m-affiliatesShare__description"
+    class="m-affiliatesShare__description m-affiliatesShare__description--referral"
     i18n="@@AFFILIATES__SHARE__DESCRIPTION__REFERRAL"
-    >Your link has an expiration of 72 hours.</span
+    >Earn for up to 72 hours from when someone uses your link to make a
+    purchase.</span
   >
 </ng-container>
-<!-- -------------------------->
-<!-- COPY LINK -->
-<!-- (BOTH REFERRAL AND AFFILIATE) -->
-<!-- -------------------------->
-<m-button
-  solid="true"
-  class="m-affiliatesShare__copyButton"
-  (onAction)="copyUrlToClipboard()"
-  data-ref="m-affiliatesShareButtons__button--copyLink"
->
-  <i class="material-icons m-affiliatesShareButton__icon">content_copy</i>
-  <ng-container ii18n="@@AFFILIATES__SHARE__COPY_LINK">Copy link</ng-container>
-</m-button>

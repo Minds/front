@@ -1,4 +1,13 @@
 <ng-container *ngIf="group">
+  <div class="m-groupReview__topBar">
+    <a class="m-groupReview__topBarBackButton" routerLink="..">
+      <i class="material-icons">arrow_back</i>
+    </a>
+    <h5 class="m-groupReview__topBarTitle" i18n="@@GROUPS_REVIEW__REVIEW_QUEUE">
+      Review Queue
+    </h5>
+  </div>
+
   <div class="minds-list">
     <div>
       <div
@@ -10,6 +19,12 @@
           [canDelete]="group['is:owner'] || group['is:moderator']"
           (deleted)="delete(entity)"
           [attr.data-minds-activity-guid]="entity.guid"
+          [displayOptions]="{
+            isFeed: true,
+            showComments: false,
+            showToolbar: false,
+            autoplayVideo: false
+          }"
         >
         </m-activity>
 
@@ -17,19 +32,18 @@
 
         <div bottom-content class="m-groups-feed--review-actions">
           <m-button
-            color="blue"
-            (onAction)="approve(entity, i)"
-            i18n="@@COMMON__APPROVE"
-          >
-            Approve
-          </m-button>
-
-          <m-button
             color="red"
             (onAction)="reject(entity, i)"
             i18n="@@COMMON__REJECT"
           >
             Reject
+          </m-button>
+          <m-button
+            color="blue"
+            (onAction)="approve(entity, i)"
+            i18n="@@COMMON__APPROVE"
+          >
+            Approve
           </m-button>
         </div>
 

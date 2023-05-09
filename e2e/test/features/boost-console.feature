@@ -49,9 +49,10 @@ Feature: BoostConsole
     When I click to change Boost Console state filter to "Completed"
     Then I should see my Boost Console state filter says "Completed"
 
-  Scenario: Safe option disabled on reboost
-    Given I am logged in
-    And I am on the single boost Boost Console page for a wrong audience rejected boost 
-    When I click to boost again
-    Then I should see the safe option is disabled
+# Test disabled while minds-3952-boost-goals feature flag is pending
+  # Scenario: Safe option disabled on reboost
+  #   Given I am logged in
+  #   And I am on the single boost Boost Console page for a wrong audience rejected boost
+  #   When I click to boost again
+  #   Then I should see the safe option is disabled
 

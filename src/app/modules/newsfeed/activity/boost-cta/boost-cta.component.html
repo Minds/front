@@ -1,0 +1,81 @@
+<ng-container *ngIf="textEnum">
+  <!-- ------------------------------- -->
+  <!-- CUSTOM URL BUTTON  -->
+  <!-- ------------------------------- -->
+  <ng-container *ngIf="url; else subscribeButton">
+    <a class="m-activityBoostCta__wrapper" [href]="url" target="_blank"
+      ><m-button
+        color="blue"
+        solid="true"
+        size="small"
+        data-ref="m-activityBoostCta__customButton"
+        (onAction)="recordClick($event)"
+      >
+        <ng-container
+          *ngTemplateOutlet="displayText"
+        ></ng-container></m-button></a
+  ></ng-container>
+  <!-- ------------------------------- -->
+  <!-- SUBSCRIBE BUTTON  -->
+  <!-- ------------------------------- -->
+  <ng-template #subscribeButton>
+    <ng-container *ngIf="!subscribedOnLoad">
+      <m-subscribeButton
+        class="m-activityBoostCta__wrapper"
+        sized="true"
+        size="small"
+        showIcons="false"
+        disableAfterSubscribe="true"
+        data-ref="m-activityBoostCta__subscribeButton"
+        (onAction)="recordClick($event)"
+      >
+        <div subscribeButtonText>
+          <ng-container *ngTemplateOutlet="displayText"></ng-container>
+        </div>
+      </m-subscribeButton>
+    </ng-container>
+  </ng-template>
+</ng-container>
+
+<!-- ------------------------------- -->
+<!-- DISPLAY TEXT -->
+<!-- ------------------------------- -->
+<ng-template #displayText>
+  <ng-container [ngSwitch]="textEnum">
+    <span
+      *ngSwitchCase="BoostGoalButtonText.SUBSCRIBE_TO_MY_CHANNEL"
+      i18n="@@BOOST_CTA__TEXT__SUBSCRIBE_TO_MY_CHANNEL"
+      >Subscribe to my channel</span
+    >
+    <span
+      *ngSwitchCase="BoostGoalButtonText.GET_CONNECTED"
+      i18n="@@BOOST_CTA__TEXT__GET_CONNECTED"
+      >Get connected</span
+    >
+    <span
+      *ngSwitchCase="BoostGoalButtonText.STAY_IN_THE_LOOP"
+      i18n="@@BOOST_CTA__TEXT__STAY_IN_THE_LOOP"
+      >Stay in the loop</span
+    >
+    <span
+      *ngSwitchCase="BoostGoalButtonText.LEARN_MORE"
+      i18n="@@BOOST_CTA__TEXT__LEARN_MORE"
+      >Learn more</span
+    >
+    <span
+      *ngSwitchCase="BoostGoalButtonText.GET_STARTED"
+      i18n="@@BOOST_CTA__TEXT__GET_STARTED"
+      >Get started</span
+    >
+    <span
+      *ngSwitchCase="BoostGoalButtonText.SIGN_UP"
+      i18n="@@BOOST_CTA__TEXT__SIGN_UP"
+      >Sign up</span
+    >
+    <span
+      *ngSwitchCase="BoostGoalButtonText.TRY_FOR_FREE"
+      i18n="@@BOOST_CTA__TEXT__TRY_FOR_FREE"
+      >Try for free</span
+    >
+  </ng-container>
+</ng-template>

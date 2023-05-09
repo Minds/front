@@ -9,7 +9,7 @@ import { Observable, map } from 'rxjs';
 
 /**
  * Affiliate program earnings summary,
- * including total earnings, links to earn more,
+ * including total earnings,
  * link to earnings table
  */
 @Component({
@@ -18,9 +18,6 @@ import { Observable, map } from 'rxjs';
   styleUrls: ['earnings.component.ng.scss'],
 })
 export class AffiliatesEarningsComponent {
-  /** Username of the referrer (aka current username) */
-  @Input() referrerUsername: string = '';
-
   /** Amount user has earned through affiliate program */
   protected totalEarnings$: Observable<number> = this.metrics.metrics$.pipe(
     map((metrics: AffiliatesMetrics) => metrics.amount_usd ?? 0)
@@ -32,22 +29,5 @@ export class AffiliatesEarningsComponent {
   /** Whether metrics are in the process of loading */
   protected metricsError$: Observable<boolean> = this.metrics.error$;
 
-  constructor(
-    private affiliatesShareModalService: AffiliatesShareModalService,
-    private metrics: AffiliatesMetricsService
-  ) {}
-
-  /**
-   * Opens the affiliate share modal with invite links
-   */
-  async openShareModal(): Promise<void> {
-    const earnMethod: AffiliatesEarnMethod = 'affiliate';
-
-    const opts = {
-      referrerUsername: this.referrerUsername,
-      earnMethod: earnMethod,
-    };
-
-    this.affiliatesShareModalService.open(opts);
-  }
+  constructor(private metrics: AffiliatesMetricsService) {}
 }

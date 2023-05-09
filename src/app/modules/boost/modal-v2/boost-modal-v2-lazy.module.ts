@@ -12,6 +12,8 @@ import { BoostModalV2BudgetTabBarComponent } from './panels/budget/tabs/tab-bar/
 import { BoostModalV2BudgetTabComponent } from './panels/budget/tabs/tab/tab.component';
 import { BoostModalV2ReviewComponent } from './panels/review/review.component';
 import { BoostModalV2PaymentMethodSelectorComponent } from './panels/review/payment-method-selector/payment-method-selector.component';
+import { BoostModalV2GoalSelectorComponent } from './panels/goal/goal.component';
+import { BoostModalV2GoalButtonSelectorComponent } from './panels/goal-button/goal-button.component';
 
 /**
  * Lazy loaded module.
@@ -28,6 +30,8 @@ import { BoostModalV2PaymentMethodSelectorComponent } from './panels/review/paym
     BoostModalV2Component,
     BoostModalV2HeaderComponent,
     BoostModalV2FooterComponent,
+    BoostModalV2GoalSelectorComponent,
+    BoostModalV2GoalButtonSelectorComponent,
     BoostModalV2AudienceSelectorComponent,
     BoostModalV2BudgetSelectorComponent,
     BoostModalV2BudgetTabBarComponent,
