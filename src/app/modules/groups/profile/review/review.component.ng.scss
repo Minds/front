@@ -1,19 +1,69 @@
 @import 'defaults.scss';
 
 :host {
-  .m-groupReview__item {
-    margin-bottom: 20px;
-    @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--primary);
+  .m-groupReview__topBar {
+    margin: $spacing8 0 $spacing8 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    @include unselectable;
+
+    padding-left: $activityAvatarSpacingLeft--feed;
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $activityAvatarSpacingLeft--feed--mobile;
+    }
+
+    .m-groupReview__topBarBackButton {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      margin-right: $spacing4;
+      text-decoration: none;
+      cursor: pointer;
+
+      &,
+      i {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    .m-groupReview__topBarTitle {
+      margin: unset;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
     }
   }
 
-  .m-groups-feed--review-actions {
-    padding: 20px 0;
-    text-align: right;
+  .minds-list {
+    .m-groupReview__item {
+      &:last-of-type {
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+      }
+    }
 
-    > button {
-      margin-left: 20px;
+    .m-groups-feed--review-actions {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+      margin: $spacing8 0 $spacing4 0;
+
+      padding-left: $activityAvatarSpacingLeft--feed;
+      padding-right: $activitySpacingRight--feed;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $activityAvatarSpacingLeft--feed--mobile;
+        padding-right: $activitySpacingRight--feed--mobile;
+      }
+
+      > * + * {
+        margin-left: $spacing4;
+      }
     }
   }
 }
