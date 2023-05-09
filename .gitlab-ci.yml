@@ -250,7 +250,7 @@ prepare:review:
   services:
     - docker:dind
   script:
-    - docker login -u $CI_REGISTRY_USER -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker login -u $CI_REGISTRY_USER -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
     - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
     - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
   dependencies:
