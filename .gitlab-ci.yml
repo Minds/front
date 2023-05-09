@@ -250,8 +250,7 @@ prepare:review:
   services:
     - docker:dind
   script:
-    - export CI_REGISTRY="registry.gitlab.com" # TODO fix
-    - docker login -u $CI_REGISTRY_USER -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker login -u $CI_REGISTRY_USER -p ${CI_BUILD_TOKEN} registry.gitlab.com
     - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
     - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
   dependencies:
@@ -286,8 +285,7 @@ prepare:production:
   services:
     - docker:dind
   script:
-    - export CI_REGISTRY="registry.gitlab.com" # TODO fix
-    - docker login -u $CI_REGISTRY_USER -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker login -u $CI_REGISTRY_USER -p ${CI_BUILD_TOKEN} registry.gitlab.com
     - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
     - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
     - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:latest
@@ -437,8 +435,7 @@ review:stop:
     - aws s3 sync dist $S3_REPOSITORY_URL --cache-control max-age=31536000
     - $(aws ecr get-login --no-include-email --region us-east-1)
     ## Update docker server container
-    - export CI_REGISTRY="registry.gitlab.com" # TODO fix
-    - docker login -u $CI_REGISTRY_USER -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker login -u $CI_REGISTRY_USER -p ${CI_BUILD_TOKEN} registry.gitlab.com
     - docker pull $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
     - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
     - docker push $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
