@@ -9,10 +9,10 @@
   }
   [class*='m-affiliatesDescription__method'] {
     max-width: 420px;
-    padding-bottom: $spacing6;
+    padding-bottom: $spacing9;
     .m-affiliatesDescriptionMethod {
       &__title {
-        @include heading3Bold;
+        @include heading4Bold;
       }
       &__underline {
         height: $spacing1;
@@ -38,6 +38,7 @@
     }
 
     &.m-affiliatesDescription__method--affiliateReferral {
+      padding-bottom: $spacing6;
       .m-affiliatesDescriptionMethod__underline {
         background-color: #3b82f6;
       }
@@ -47,6 +48,30 @@
       .m-affiliatesDescriptionMethod__underline {
         background-color: #93c5fd;
       }
+    }
+  }
+  .m-affiliatesDescriptionInvite {
+    &__title {
+      display: block;
+      @include heading2Bold;
+      margin: 0;
+      padding: $spacing8 0 $spacing4;
+    }
+    &__description {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      margin: 0;
+      padding: 0 0 $spacing4;
+    }
+  }
+  ::ng-deep m-button.m-affiliatesDescriptionInvite__button {
+    display: block;
+    margin-right: 0;
+    width: 100%;
+    .m-button {
+      width: 100%;
     }
   }
 }
