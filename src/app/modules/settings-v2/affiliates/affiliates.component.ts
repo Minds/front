@@ -8,7 +8,4 @@ import { Component } from '@angular/core';
   templateUrl: 'affiliates.component.html',
   styleUrls: ['affiliates.component.ng.scss'],
 })
-export class SettingsV2AffiliatesComponent {
-  constructor() {}
-  ngOnInit() {}
-}
+export class SettingsV2AffiliatesComponent {}

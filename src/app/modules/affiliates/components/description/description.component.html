@@ -1,3 +1,6 @@
+<!-- ----------------------------------------->
+<!-- METHOD: AFFILIATE -->
+<!-- ----------------------------------------->
 <div class="m-affiliatesDescription__method--affiliate">
   <span
     class="m-affiliatesDescriptionMethod__title"
@@ -13,6 +16,34 @@
   </p>
 </div>
 <!-- ----------------------------------------->
+<!-- BUTTON: REFER AND EARN -->
+<!-- ----------------------------------------->
+<m-button (onAction)="openShareModal('affiliate')" color="blue" solid="true"
+  ><ng-container i18n="@@AFFILIATES__EARNINGS__REFER_AND_EARN"
+    >Refer and earn</ng-container
+  >
+</m-button>
+<!-- ----------------------------------------->
+<!-- INVITE YOUR FRIEND -->
+<!-- ----------------------------------------->
+<span
+  class="m-affiliatesDescriptionInvite__title"
+  i18n="@@AFFILIATES__INVITE__TITLE"
+>
+  Invite your friend to Minds
+</span>
+<p
+  class="m-affiliatesDescriptionInvite__description"
+  i18n="@@AFFILIATES__INVITE__DESCRIPTION"
+>
+  Track rewards for friends that use your invite code to sign up on Minds. Earn
+  for up to 1 year.
+</p>
+
+<!-- ----------------------------------------->
+<!-- METHOD: AFFILIATE REFERRAL -->
+<!-- ----------------------------------------->
+
 <div class="m-affiliatesDescription__method--affiliateReferral">
   <span
     class="m-affiliatesDescriptionMethod__title"
@@ -24,9 +55,12 @@
     class="m-affiliatesDescriptionMethod__description"
     i18n="@@AFFILIATES_DESCRIPTION__AFFILIATE_REFERRAL__DESCRIPTION"
   >
-    Earn <span>5%</span> of all sales your affiliates refer to others.
+    Earn <span>5%</span> of all of your affiliates’ earnings on their sales to
+    others.
   </p>
 </div>
+<!-- ----------------------------------------->
+<!-- METHOD: CREATOR REFERRAL -->
 <!-- ----------------------------------------->
 <div class="m-affiliatesDescription__method--creatorReferral">
   <span
@@ -43,3 +77,14 @@
     like Supermind, Memberships, and Tips.
   </p>
 </div>
+<!-- ----------------------------------------->
+<!-- BUTTON: INVITE AND EARN -->
+<!-- ----------------------------------------->
+<m-button
+  color="blue"
+  (onAction)="openShareModal('referral')"
+  class="m-affiliatesDescriptionInvite__button"
+  ><ng-container i18n="@@AFFILIATES__INVITE__BUTTON"
+    >Invite and earn</ng-container
+  >
+</m-button>
