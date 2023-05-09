@@ -70,7 +70,7 @@ lint:
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "Preparing E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - git clone --branch=master https://$CI_REGISTRY_USER:${CI_JOB_TOKEN}@gitlab.com/minds/cypress-tests.git
+    - git clone --branch=master https://$CI_REGISTRY_USER:${CI_REGISTRY_PASSWORD}@gitlab.com/minds/cypress-tests.git
     - echo "Checking if branch exists..."
     - BRANCH_EXISTS=$(git ls-remote --heads https://www.gitlab.com/minds/cypress-tests $CI_BUILD_REF_NAME | wc -l)
     - cd ./cypress-tests
@@ -373,7 +373,7 @@ review:start:
   script:
     - *oci_prepare
     # Download repo, use same branch name if exists
-    - HELM_GIT_REPO=https://$CI_REGISTRY_USER:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
+    - HELM_GIT_REPO=https://$CI_REGISTRY_USER:${CI_REGISTRY_PASSWORD}@gitlab.com/minds/helm-charts.git
     - git clone --branch=master $HELM_GIT_REPO
     - BRANCH_EXISTS=$(git ls-remote --heads $HELM_GIT_REPO $CI_BUILD_REF_NAME | wc -l)
     - cd ./helm-charts
