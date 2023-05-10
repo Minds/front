@@ -45,12 +45,5 @@
         }
       }
     }
-    &__note {
-      @include body3Regular;
-      font-size: 12;
-      line-height: 20px;
-      font-weight: 400;
-      max-width: 350px;
-    }
   }
 }

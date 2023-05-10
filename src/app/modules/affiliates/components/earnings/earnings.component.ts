@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 /**
  * Affiliate program earnings summary,
- * including total earnings, links to earn more,
+ * including total earnings,
  * link to earnings table
  */
 @Component({
@@ -15,30 +15,7 @@ import { Router } from '@angular/router';
 })
 export class AffiliatesEarningsComponent {
   /**
-   * Username of the referrer (aka current username)
-   */
-  @Input() referrerUsername: string = '';
-
-  /**
    * Amount user has earned through affiliate program
    */
   @Input() totalEarnings: number;
-
-  constructor(
-    private affiliatesShareModalService: AffiliatesShareModalService
-  ) {}
-
-  /**
-   * Opens the affiliate share modal with invite links
-   */
-  async openShareModal(): Promise<void> {
-    const earnMethod: AffiliatesEarnMethod = 'affiliate';
-
-    const opts = {
-      referrerUsername: this.referrerUsername,
-      earnMethod: earnMethod,
-    };
-
-    this.affiliatesShareModalService.open(opts);
-  }
 }
