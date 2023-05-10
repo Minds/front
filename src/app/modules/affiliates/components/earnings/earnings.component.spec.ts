@@ -68,7 +68,6 @@ describe('AffiliatesEarningsComponent', () => {
     (comp as any).metrics.metrics$.next(defaultMetrics);
     (comp as any).metrics.loading$.next(false);
     (comp as any).metrics.error$.next(false);
-    comp.referrerUsername = 'testUser';
 
     if (fixture.isStable()) {
       done();
@@ -142,21 +141,6 @@ describe('AffiliatesEarningsComponent', () => {
         done();
       });
   });
-
-  it('should open the share modal', fakeAsync(() => {
-    const username: string = 'testUser';
-    comp.referrerUsername = username;
-
-    comp.openShareModal();
-    tick();
-
-    expect((comp as any).affiliatesShareModalService.open).toHaveBeenCalledWith(
-      {
-        referrerUsername: username,
-        earnMethod: 'affiliate',
-      }
-    );
-  }));
 
   it('should show loading ellipsis in earnings title when loading', () => {
     (comp as any).metrics.loading$.next(true);
