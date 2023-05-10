@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
 import { GuestModeExperimentService } from '../experiments/sub-services/guest-mode-experiment.service';
+import { ActivatedRoute } from '@angular/router';
+import { ResetPasswordModalService } from '../auth/reset-password-modal/reset-password-modal.service';
 
 /**
  * Routes users to a "homepage" depending on active experiments.
@@ -13,12 +15,28 @@ import { GuestModeExperimentService } from '../experiments/sub-services/guest-mo
 export class HomepageContainerComponent implements OnInit {
   constructor(
     private metaService: MetaService,
-    private guestModeExperiment: GuestModeExperimentService
+    private guestModeExperiment: GuestModeExperimentService,
+    private route: ActivatedRoute,
+    private resetPasswordModal: ResetPasswordModalService
   ) {}
 
   isGuestMode: boolean;
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      // open reset password modal
+      if (params['resetPassword']) {
+        let opts = {};
+
+        if (params['username'] && params['code']) {
+          opts['username'] = params.get('username');
+          opts['code'] = params.get('code');
+        }
+
+        this.resetPasswordModal.open(opts);
+      }
+    });
+
     this.metaService
       .setTitle(`Minds`, false)
       .setDescription(

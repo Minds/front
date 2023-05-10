@@ -24,6 +24,20 @@
     }
   }
 
+  // The button takes the full width of the container
+  .m-formLayout--buttonStretched {
+    // ojm make this work
+    .m-form__buttonsContainer {
+      justify-content: stretch;
+      m-button {
+        margin-right: 0;
+        .m-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
   [class*='m-formLayout--'] {
     &:not(.m-formLayout--buttonInline) {
       .m-form__fieldsContainer {

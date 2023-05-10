@@ -1,0 +1,152 @@
+<div class="m-resetPasswordForm--step-3">
+  <h3 class="ng-star-inserted">Enter Your New Password</h3>
+
+  <div class="m-resetPasswordForm__form">
+    <div
+      class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+      [mdl]
+    >
+      <input
+        class="mdl-textfield__input"
+        type="password"
+        id="password"
+        #password
+        data-ref="data-minds-forgot-password-text-input-1"
+      />
+      <label
+        class="mdl-textfield__label"
+        for="password"
+        i18n="@@M__COMMON__PASSWORD"
+        >Password</label
+      >
+    </div>
+    <div></div>
+
+    <div
+      class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+      [mdl]
+    >
+      <input
+        class="mdl-textfield__input"
+        type="password"
+        id="password2"
+        #password2
+        (keydown.enter)="password == password2 ? reset(password2) : null"
+        data-ref="data-minds-forgot-password-text-input-2"
+      />
+      <label
+        class="mdl-textfield__label"
+        for="password2"
+        i18n="@@MINDS__HOME__FORGOT_PASSWORD__CONFIRM_PASSWORD_LABEL"
+        >Password (confirm)
+      </label>
+    </div>
+    <div class="m-resetPasswordForm__singleButtonWrapper">
+      <m-button
+        (onAction)="reset(password2)"
+        [saving]="inProgress"
+        i18n="@@MINDS__HOME__FORGOT_PASSWORD__RESET_ACTION"
+        data-ref="data-minds-forgot-password-submit"
+      >
+        Reset
+      </m-button>
+    </div>
+  </div>
+</div>
+
+<!-- --------------------------------------- -->
+<!-- ------------------------------- -->
+<!-- PASSWORD FIELD -->
+<!-- ------------------------------- -->
+<!-- <div class="m-form__field--text stretchedField">
+      <div class="m-form__input--details">
+        <div class="m-form__row--label">
+          <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
+            Password
+          </label>
+        </div>
+        <div
+          class="m-register__error"
+          [style.visibility]="showError('password') ? 'visible' : 'hidden'"
+        >
+          <ng-container
+            *ngIf="this.form.get('password').errors?.invalidPassword"
+            i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_PASSWORD"
+          >
+            Invalid password.&nbsp;
+          </ng-container>
+          <ng-container
+            *ngIf="this.form.get('password').errors?.passwordSecurityFailed"
+            i18n="@@MINDS__REGISTER__EXCEPTION__PASSWORD_SECURITY_CHECK_FAILED"
+          >
+            Password security check failed.&nbsp;
+          </ng-container>
+        </div>
+      </div>
+      <m-popover
+        #popover
+        [password]="this.form.get('password').value"
+        [riskCheckStatus]="passwordRiskCheckStatus"
+      >
+        <div class="m-form__row--input">
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            [placeholder]="showLabels ? '' : 'Password'"
+            i18n-placeholder="@@M__COMMON__PASSWORD"
+            readonly
+            onfocus="this.removeAttribute('readonly');"
+            (focus)="onPasswordFocus()"
+            (blur)="onPasswordBlur()"
+            [class.m-input--hide-placeholder]="showLabels"
+            data-ref="data-minds-register-password-input-1"
+          />
+        </div>
+      </m-popover>
+    </div> -->
+
+<!-- ------------------------------- -->
+<!-- PASSWORD2 FIELD -->
+<!-- ------------------------------- -->
+<!-- <div
+      class="m-form__field--text stretchedField m-registerForm__confirmPassword"
+    >
+      <div class="m-form__input--details">
+        <div class="m-form__row--label">
+          <label
+            for="password2"
+            *ngIf="showLabels"
+            i18n="@@MINDS_REGISTRATION__CONFIRM_YOUR_PASSWORD"
+          >
+            Confirm password
+          </label>
+        </div>
+        <div
+          class="m-register__error"
+          [style.visibility]="this.form.get('password2').touched && this.form.get('password2').dirty ? 'visible' : 'hidden'"
+        >
+          <ng-container
+            *ngIf="this.form.errors?.passwordsMatch"
+            i18n="@@MINDS__REGISTER__EXCEPTION__PASSWORDS_MUST_MATCH"
+          >
+            Passwords must match.
+          </ng-container>
+        </div>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="password"
+          id="password2"
+          formControlName="password2"
+          [placeholder]="showLabels ? '' : 'Confirm your password'"
+          i18n-placeholder="@@FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER"
+          (keydown.enter)="register($event)"
+          readonly
+          onfocus="this.removeAttribute('readonly');"
+          [class.m-input--hide-placeholder]="showLabels"
+          data-ref="data-minds-register-password-input-2"
+          [class.ng-invalid]="this.form.errors?.passwordsMatch"
+        />
+      </div>
+    </div> -->
