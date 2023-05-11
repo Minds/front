@@ -10,12 +10,16 @@ import { SupermindConsoleListItemComponent } from './console/list/list-item/list
 import { SupermindConsoleFilterBarComponent } from './console/list/filter-bar/filter-bar.component';
 import { SupermindConsoleStateLabelComponent } from './console/list/list-item/state-label/state-label.component';
 import { SupermindConsoleActionButtonsComponent } from './console/list/list-item/action-bar/action-buttons.component';
+import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
   {
     path: 'supermind',
     component: SupermindConsoleComponent,
-    children: [{ path: ':listType', component: SupermindConsoleListComponent }],
+    children: [
+      { path: '', redirectTo: 'inbox', pathMatch: 'full' as PathMatch },
+      { path: ':listType', component: SupermindConsoleListComponent },
+    ],
   },
 ];
 

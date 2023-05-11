@@ -119,7 +119,7 @@ namespace SupermindConsoleSteps {
   });
 
   When('I navigate via sidebar to the supermind console', async () => {
-    await supermindConsolePage.navigateToViaSidebar();
+    supermindConsolePage.navigateTo();
     supermindConsolePage.hasTabSelected('Inbound');
   });
 

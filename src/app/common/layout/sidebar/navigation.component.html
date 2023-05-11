@@ -113,14 +113,7 @@
           </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text m-legible">
-            <ng-container
-              *ngIf="showExploreExperiment(); else showDiscoveryText"
-              i18n="@@COMMON__EXPLORE"
-              >Explore</ng-container
-            >
-            <ng-template #showDiscoveryText i18n="@@COMMON__DISCOVERY"
-              >Discovery</ng-template
-            >
+            <ng-container i18n="@@COMMON__EXPLORE">Explore</ng-container>
           </span>
         </a>
       </li>
