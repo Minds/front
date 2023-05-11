@@ -40,7 +40,11 @@ import { ContextService } from './context.service';
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpHeaders,
+} from '@angular/common/http';
 import { BlockListService } from '../common/services/block-list.service';
 import { EntitiesService } from '../common/services/entities.service';
 import { InMemoryStorageService } from './in-memory-storage.service';
@@ -68,7 +72,12 @@ import {
   CDN_ASSETS_URL,
   CDN_URL,
   SITE_URL,
+  STRAPI_URL,
 } from '../common/injection-tokens/url-injection-tokens';
+
+import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -267,6 +276,11 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [ConfigsService],
   },
   {
+    provide: STRAPI_URL,
+    useFactory: configs => configs.get('strapi')?.url,
+    deps: [ConfigsService],
+  },
+  {
     provide: IMAGE_CONFIG,
     useValue: {
       // TODO: Customize breakpoints when adding support for width parameter.
@@ -287,4 +301,17 @@ export const MINDS_PROVIDERS: any[] = [
   ServiceWorkerService,
   PushNotificationService,
   DismissalService,
+  {
+    provide: APOLLO_OPTIONS,
+    useFactory(httpLink: HttpLink, strapiUrl: string) {
+      return {
+        cache: new InMemoryCache(),
+        link: httpLink.create({
+          uri: strapiUrl + '/graphql',
+        }),
+        shouldBatch: true,
+      };
+    },
+    deps: [HttpLink, STRAPI_URL],
+  },
 ];

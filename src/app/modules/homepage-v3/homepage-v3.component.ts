@@ -20,7 +20,11 @@ import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import isMobileOrTablet from '../../../app/helpers/is-mobile-or-tablet';
 import { ExperimentsService } from '../experiments/experiments.service';
-import { SITE_URL } from '../../common/injection-tokens/url-injection-tokens';
+import {
+  SITE_URL,
+  STRAPI_URL,
+} from '../../common/injection-tokens/url-injection-tokens';
+import { Apollo, gql } from 'apollo-angular';
 
 /**
  * Home page component
@@ -36,12 +40,8 @@ export class HomepageV3Component implements OnInit {
   readonly NEURAL_BACKGROUND_BLURHASH =
     '|03u=zF}U]rWRjt6W;s:Na=G$*F2s.jtR*xFR*s-znM{o~OrofaeWBoJWqPBoeVssUWBjYW=ogoMRibbt7R*xDR,flj?fPX9jFjYofW=oMR*n$o0bbW=n%WBoJWqj[j[ayWBoJW=fko0ayoKa}bHs.R*o0bIbIsmS2j@fk';
 
-  headline = $localize`:@@ELEVATE_THE_GLOBAL_CONVERSATION:Elevate the global conversation`;
-  description = $localize`:@@HOMEPAGE__V3__SUBHEADER:Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.`;
-
-  descriptionExperiment = $localize`:@@HOMEPAGE__V3__SUBHEADER__EXPERIMENT:The decentralized social network and digital content marketplace. You’re in control.`;
-
-  copyExperiment: boolean = false;
+  data: any = {};
+  loading = true;
 
   constructor(
     public client: Client,
@@ -54,9 +54,10 @@ export class HomepageV3Component implements OnInit {
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
     private appPromptService: AppPromptService,
-    private experimentsService: ExperimentsService,
+    private apollo: Apollo,
     @Inject(PLATFORM_ID) protected platformId: Object,
-    @Inject(SITE_URL) protected siteUrl: string
+    @Inject(SITE_URL) protected siteUrl: string,
+    @Inject(STRAPI_URL) public strapiUrl: string
   ) {}
 
   ngOnInit() {
@@ -65,10 +66,53 @@ export class HomepageV3Component implements OnInit {
       return;
     }
 
-    this.copyExperiment = this.experimentsService.hasVariation(
-      'front-homepage-copy-3549',
-      true
-    );
+    this.apollo
+      .watchQuery({
+        query: gql`
+          {
+            homepage {
+              data {
+                id
+                attributes {
+                  hero {
+                    h1
+                    body
+                    ctaText
+                    heroStats {
+                      id
+                      label
+                      number
+                    }
+                  }
+                  sections {
+                    id
+                    leftAligned
+                    title
+                    body
+                    image {
+                      data {
+                        attributes {
+                          url
+                        }
+                      }
+                    }
+                  }
+                  sectionTail {
+                    h3
+                    ctaText
+                  }
+                }
+              }
+            }
+          }
+        `,
+      })
+      .valueChanges.subscribe((result: any) => {
+        console.log(result);
+
+        this.loading = result.loading;
+        this.data = result.data.homepage.data;
+      });
 
     this.pageLayoutService.useFullWidth();
     this.pageLayoutService.removeTopbarBackground();
