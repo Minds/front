@@ -19,6 +19,7 @@ import { ModalService } from '../../../../services/ux/modal.service';
 import { CounterChangeFadeIn } from '../../../../animations';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -49,7 +50,8 @@ export class ActivityToolbarComponent {
     private interactionsModalService: InteractionsModalService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     public experimentsService: ExperimentsService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {
@@ -76,7 +78,21 @@ export class ActivityToolbarComponent {
     this.paywallBadgeSubscription.unsubscribe();
   }
 
-  toggleComments(): void {
+  /**
+   * Toggle showing of comments.
+   * @returns { void }
+   */
+  public toggleComments(): void {
+    // use snapshot of entity from activity service to ensure it is up to date.
+    const entitySnapshot: ActivityEntity = this.service.entity$.getValue();
+    if (!entitySnapshot.allow_comments) {
+      this.toast.warn('This user has disabled comments on their post');
+
+      if (!entitySnapshot['comments:count']) {
+        return;
+      }
+    }
+
     if (
       this.service.displayOptions.fixedHeight ||
       (this.service.displayOptions.isFeed &&

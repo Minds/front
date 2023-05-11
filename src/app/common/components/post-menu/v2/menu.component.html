@@ -35,6 +35,28 @@
       </span>
     </m-dropdownMenu__item>
 
+    <!-- Disable vs Allow Comments -->
+    <ng-container
+      *ngIf="service.entity.ownerObj.guid == session.getLoggedInUser().guid"
+    >
+      <ng-container
+        *ngIf="service.entity.allow_comments; else enableCommentsTemplate"
+      >
+        <m-dropdownMenu__item (click)="onSelectedOption('disable-comments')">
+          <span i18n="@@M__ACTION__DISABLE_COMMENTS">
+            Disable comments
+          </span>
+        </m-dropdownMenu__item>
+      </ng-container>
+      <ng-template #enableCommentsTemplate>
+        <m-dropdownMenu__item (click)="onSelectedOption('allow-comments')">
+          <span i18n="@@M__ACTION__ENABLE_COMMENTS">
+            Enable comments
+          </span>
+        </m-dropdownMenu__item>
+      </ng-template>
+    </ng-container>
+
     <m-dropdownMenu__item
       (click)="onSelectedOption('boost')"
       *ngIf="shouldShowBoost()"
@@ -208,6 +230,7 @@
         Undo remind
       </span>
     </m-dropdownMenu__item>
+
     <!-- REPORT -->
     <m-dropdownMenu__item
       (click)="onSelectedOption('report')"
