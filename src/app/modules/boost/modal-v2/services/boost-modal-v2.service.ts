@@ -145,17 +145,26 @@ export class BoostModalV2Service implements OnDestroy {
     })
   );
 
-  // first panel that should be shown, depending on entityType and goal experiment
-  public readonly firstPanel$: Observable<BoostModalPanel> = combineLatest([
+  // Whether a Boost goal can be set
+  public canSetBoostGoal$: Observable<boolean> = combineLatest([
     this.entityType$,
     this.disabledGoalPanel$,
   ]).pipe(
     map(([entityType, disabledGoalPanel]) => {
-      if (
+      return (
         this.boostGoalsExperiment.isActive() &&
         !disabledGoalPanel &&
         entityType === BoostSubject.POST
-      ) {
+      );
+    })
+  );
+
+  // first panel that should be shown, depending on entityType and goal experiment
+  public readonly firstPanel$: Observable<
+    BoostModalPanel
+  > = this.canSetBoostGoal$.pipe(
+    map((canSetBoostGoal: boolean) => {
+      if (canSetBoostGoal) {
         return BoostModalPanel.GOAL;
       } else {
         return BoostModalPanel.AUDIENCE;
@@ -290,7 +299,7 @@ export class BoostModalV2Service implements OnDestroy {
     this.goal$,
     this.goalButtonText$,
     this.goalButtonUrl$,
-    this.disabledGoalPanel$,
+    this.canSetBoostGoal$,
   ]).pipe(
     map(
       ([
@@ -304,7 +313,7 @@ export class BoostModalV2Service implements OnDestroy {
         goal,
         goalButtonText,
         goalButtonUrl,
-        disableGoalPanel,
+        canSetBoostGoal,
       ]: [
         BoostableEntity,
         BoostSubject,
@@ -318,15 +327,7 @@ export class BoostModalV2Service implements OnDestroy {
         string,
         boolean
       ]): BoostSubmissionPayload => {
-        const boostGoalOptions: Partial<BoostSubmissionPayload> = !disableGoalPanel
-          ? {
-              goal: goal,
-              goal_button_text: goalButtonText,
-              goal_button_url: goalButtonUrl,
-            }
-          : {};
-
-        return {
+        let payload: BoostSubmissionPayload = {
           entity_guid: entity?.guid,
           target_suitability: audience,
           target_location:
@@ -337,8 +338,18 @@ export class BoostModalV2Service implements OnDestroy {
           payment_method_id: paymentMethodId,
           daily_bid: dailyBudget,
           duration_days: duration,
-          ...boostGoalOptions,
         };
+
+        if (canSetBoostGoal) {
+          payload = {
+            ...payload,
+            goal: goal,
+            goal_button_text: goalButtonText,
+            goal_button_url: goalButtonUrl,
+          };
+        }
+
+        return payload;
       }
     )
   );

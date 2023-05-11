@@ -79,14 +79,10 @@ export class BoostModalV2ReviewComponent {
   // whether goal section should be shown.
   public readonly showGoalSection$: Observable<boolean> = combineLatest([
     this.service.goal$,
-    this.service.disabledGoalPanel$,
+    this.service.canSetBoostGoal$,
   ]).pipe(
-    map(([goal, disabledGoalPanel]: [BoostGoal, boolean]): boolean => {
-      return (
-        this.boostGoalsExperiment.isActive() &&
-        Boolean(goal) &&
-        !disabledGoalPanel
-      );
+    map(([goal, canSetBoostGoal]: [BoostGoal, boolean]): boolean => {
+      return canSetBoostGoal && Boolean(goal);
     })
   );
 
