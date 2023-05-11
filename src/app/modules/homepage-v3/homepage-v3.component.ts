@@ -108,8 +108,6 @@ export class HomepageV3Component implements OnInit {
         `,
       })
       .valueChanges.subscribe((result: any) => {
-        console.log(result);
-
         this.loading = result.loading;
         this.data = result.data.homepage.data;
       });

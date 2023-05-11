@@ -7,6 +7,7 @@ import {
   IMAGE_CONFIG,
   IMAGE_LOADER,
   Location,
+  isPlatformBrowser,
 } from '@angular/common';
 import {
   BrowserModule,
@@ -318,9 +319,10 @@ export const MINDS_PROVIDERS: any[] = [
       httpLink: HttpLink,
       cache: InMemoryCache,
       transferState: TransferState,
+      platformId: Object,
       strapiUrl: string
     ) {
-      const isBrowser = transferState.hasKey<any>(STATE_KEY);
+      const isBrowser = isPlatformBrowser(platformId);
 
       if (isBrowser) {
         const state = transferState.get<any>(STATE_KEY, null);
@@ -334,14 +336,14 @@ export const MINDS_PROVIDERS: any[] = [
       }
 
       return {
-        cache: new InMemoryCache(),
+        cache,
         link: httpLink.create({
           uri: strapiUrl + '/graphql',
         }),
         shouldBatch: true,
-        ssrMode: true,
+        ...(isBrowser ? { ssrForceFetchDelay: 200 } : { ssrMode: true }),
       };
     },
-    deps: [HttpLink, APOLLO_CACHE, TransferState, STRAPI_URL],
+    deps: [HttpLink, APOLLO_CACHE, TransferState, PLATFORM_ID, STRAPI_URL],
   },
 ];
