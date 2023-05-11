@@ -79,7 +79,7 @@ import {
   STRAPI_URL,
 } from '../common/injection-tokens/url-injection-tokens';
 
-import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+import { APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
 
@@ -339,6 +339,7 @@ export const MINDS_PROVIDERS: any[] = [
           uri: strapiUrl + '/graphql',
         }),
         shouldBatch: true,
+        ssrMode: true,
       };
     },
     deps: [HttpLink, APOLLO_CACHE, TransferState, STRAPI_URL],
