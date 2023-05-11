@@ -174,7 +174,6 @@ describe('RegisterForm', () => {
       previousUrl: null,
       referrer: undefined,
       parentId: '',
-      friendly_captcha_enabled: true,
     });
   });
 
