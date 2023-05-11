@@ -120,8 +120,11 @@ describe('ActivityToolbarComponent', () => {
     comp = fixture.componentInstance;
 
     (comp as any).experimentsService.hasVariation.and.returnValue(true);
-    (comp as any).service.entity$.next(mockEntity);
     (comp as any).service.displayOptions = mockDisplayOptions;
+
+    let entity: any = mockEntity;
+    entity.allow_comments = true;
+    (comp as any).service.entity$.next(entity);
 
     fixture.detectChanges();
   });
