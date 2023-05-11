@@ -7,6 +7,7 @@ import {
 
 export type BoostModalExtraOpts = {
   disabledSafeAudience?: boolean;
+  disabledGoalPanel?: boolean;
 };
 
 export type BoostModalData = {

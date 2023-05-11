@@ -118,6 +118,11 @@ export class BoostModalV2Service implements OnDestroy {
     boolean
   > = new BehaviorSubject<boolean>(false);
 
+  // Whether "goal" panel should be disabled.
+  public readonly disabledGoalPanel$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   // whether boost submission is in progress.
   public readonly boostSubmissionInProgress$: BehaviorSubject<
     boolean
@@ -141,12 +146,14 @@ export class BoostModalV2Service implements OnDestroy {
   );
 
   // first panel that should be shown, depending on entityType and goal experiment
-  public readonly firstPanel$: Observable<
-    BoostModalPanel
-  > = this.entityType$.pipe(
-    map(entityType => {
+  public readonly firstPanel$: Observable<BoostModalPanel> = combineLatest([
+    this.entityType$,
+    this.disabledGoalPanel$,
+  ]).pipe(
+    map(([entityType, disabledGoalPanel]) => {
       if (
         this.boostGoalsExperiment.isActive() &&
+        !disabledGoalPanel &&
         entityType === BoostSubject.POST
       ) {
         return BoostModalPanel.GOAL;
@@ -283,6 +290,7 @@ export class BoostModalV2Service implements OnDestroy {
     this.goal$,
     this.goalButtonText$,
     this.goalButtonUrl$,
+    this.disabledGoalPanel$,
   ]).pipe(
     map(
       ([
@@ -296,6 +304,7 @@ export class BoostModalV2Service implements OnDestroy {
         goal,
         goalButtonText,
         goalButtonUrl,
+        disableGoalPanel,
       ]: [
         BoostableEntity,
         BoostSubject,
@@ -306,8 +315,17 @@ export class BoostModalV2Service implements OnDestroy {
         BoostAudience,
         BoostGoal,
         BoostGoalButtonText,
-        string
+        string,
+        boolean
       ]): BoostSubmissionPayload => {
+        const boostGoalOptions: Partial<BoostSubmissionPayload> = !disableGoalPanel
+          ? {
+              goal: goal,
+              goal_button_text: goalButtonText,
+              goal_button_url: goalButtonUrl,
+            }
+          : {};
+
         return {
           entity_guid: entity?.guid,
           target_suitability: audience,
@@ -315,13 +333,11 @@ export class BoostModalV2Service implements OnDestroy {
             entityType === BoostSubject.CHANNEL
               ? BoostLocation.SIDEBAR
               : BoostLocation.NEWSFEED,
-          goal: goal,
-          goal_button_text: goalButtonText,
-          goal_button_url: goalButtonUrl,
           payment_method: Number(paymentMethod),
           payment_method_id: paymentMethodId,
           daily_bid: dailyBudget,
           duration_days: duration,
+          ...boostGoalOptions,
         };
       }
     )

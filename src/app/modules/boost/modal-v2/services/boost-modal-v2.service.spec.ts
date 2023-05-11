@@ -9,6 +9,7 @@ import {
   BoostSubject,
 } from '../boost-modal-v2.types';
 import { BoostModalV2Service } from './boost-modal-v2.service';
+import { BoostGoal, BoostGoalButtonText } from '../../boost.types';
 
 describe('BoostModalV2Service', () => {
   let service: BoostModalV2Service;
@@ -64,6 +65,7 @@ describe('BoostModalV2Service', () => {
       owner_guid: '234',
       time_created: '99999999999',
     });
+    service.disabledGoalPanel$.next(false);
   });
 
   afterEach(() => {
@@ -327,6 +329,76 @@ describe('BoostModalV2Service', () => {
       goal: 1,
       goal_button_text: null,
       goal_button_url: null,
+      payment_method: 2,
+      payment_method_id: '',
+      daily_bid: 15,
+      duration_days: 30,
+    });
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  });
+
+  it('should submit a boost with a boost goal', () => {
+    service.paymentMethod$.next(BoostPaymentMethod.OFFCHAIN_TOKENS);
+    service.paymentMethodId$.next('');
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.goal$.next(BoostGoal.CLICKS);
+    service.goalButtonText$.next(BoostGoalButtonText.GET_STARTED);
+    service.goalButtonUrl$.next('~url~');
+
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+
+    expect((service as any).api.post).toHaveBeenCalledWith('api/v3/boosts', {
+      entity_guid: '123',
+      target_suitability: 2,
+      target_location: 2,
+      payment_method: 2,
+      payment_method_id: '',
+      daily_bid: 15,
+      duration_days: 30,
+      goal: BoostGoal.CLICKS,
+      goal_button_text: BoostGoalButtonText.GET_STARTED,
+      goal_button_url: '~url~',
+    });
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  });
+
+  it('should submit a boost without boost goals when goal panel is disabled', () => {
+    service.disabledGoalPanel$.next(true);
+    service.paymentMethod$.next(BoostPaymentMethod.OFFCHAIN_TOKENS);
+    service.paymentMethodId$.next('');
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.CONTROVERSIAL);
+    service.goal$.next(BoostGoal.CLICKS);
+    service.goalButtonText$.next(BoostGoalButtonText.GET_STARTED);
+    service.goalButtonUrl$.next('~url~');
+
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+
+    expect((service as any).api.post).toHaveBeenCalledWith('api/v3/boosts', {
+      entity_guid: '123',
+      target_suitability: 2,
+      target_location: 2,
       payment_method: 2,
       payment_method_id: '',
       daily_bid: 15,
@@ -677,10 +749,88 @@ describe('BoostModalV2Service', () => {
   });
 
   it('should NOT navigate to previous panel from audience', (done: DoneFn) => {
+    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    service.disabledGoalPanel$.next(false);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
     service.activePanel$.next(BoostModalPanel.AUDIENCE);
     service.openPreviousPanel();
     service.activePanel$.subscribe(val => {
       expect(val).toBe(BoostModalPanel.AUDIENCE);
+      done();
+    });
+  });
+
+  it('should emit GOAL panel when experiment is active, goal panel is not disabled and entity type is post', done => {
+    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    service.disabledGoalPanel$.next(false);
+    service.entity$.next({
+      guid: '123',
+      type: 'activity',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+      expect(panel).toBe(BoostModalPanel.GOAL);
+      done();
+    });
+  });
+
+  it('should emit AUDIENCE panel when experiment is not active', done => {
+    (service as any).boostGoalsExperiment.isActive.and.returnValue(false);
+    service.disabledGoalPanel$.next(false);
+    service.entity$.next({
+      guid: '123',
+      type: 'activity',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+      expect(panel).toBe(BoostModalPanel.AUDIENCE);
+      done();
+    });
+  });
+
+  it('should emit AUDIENCE panel when goal panel is disabled', done => {
+    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    service.disabledGoalPanel$.next(true);
+    service.entity$.next({
+      guid: '123',
+      type: 'activity',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+      expect(panel).toBe(BoostModalPanel.AUDIENCE);
+      done();
+    });
+  });
+
+  it('should emit AUDIENCE panel when entity type is NOT post', done => {
+    (service as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    service.disabledGoalPanel$.next(false);
+    service.entity$.next({
+      guid: '123',
+      type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.firstPanel$.subscribe((panel: BoostModalPanel): void => {
+      expect(panel).toBe(BoostModalPanel.AUDIENCE);
       done();
     });
   });

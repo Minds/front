@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { BoostPaymentCategory } from '../../boost-modal-v2.types';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
@@ -47,6 +47,7 @@ describe('BoostModalV2ReviewComponent', () => {
                 'estimatedReach$',
                 'activePanel$',
                 'goal$',
+                'disabledGoalPanel$',
               ],
               props: {
                 paymentCategory$: {
@@ -86,6 +87,9 @@ describe('BoostModalV2ReviewComponent', () => {
                 goal$: {
                   get: () => new BehaviorSubject<BoostGoal>(BoostGoal.VIEWS),
                 },
+                disabledGoalPanel$: {
+                  get: () => new BehaviorSubject<boolean>(false),
+                },
               },
             }),
           },
@@ -119,6 +123,7 @@ describe('BoostModalV2ReviewComponent', () => {
     });
     (comp as any).service.activePanel$.next(BoostModalPanel.REVIEW);
     (comp as any).service.goal$.next(BoostGoal.VIEWS);
+    (comp as any).service.disabledGoalPanel$.next(false);
     (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     fixture.detectChanges();
@@ -237,5 +242,49 @@ describe('BoostModalV2ReviewComponent', () => {
     (comp as any).service.goal$.next(null);
     fixture.detectChanges();
     expect(getGoalSection()).toBeNull();
+  });
+
+  it('should determine whether the goal section should be shown', (done: DoneFn) => {
+    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    (comp as any).service.goal$.next(BoostGoal.VIEWS);
+    (comp as any).service.disabledGoalPanel$.next(false);
+
+    comp.showGoalSection$.pipe(take(1)).subscribe((shouldShow: boolean) => {
+      expect(shouldShow).toBeTrue();
+      done();
+    });
+  });
+
+  it('should determine whether the goal section should NOT be shown because experiment is off', (done: DoneFn) => {
+    (comp as any).boostGoalsExperiment.isActive.and.returnValue(false);
+    (comp as any).service.goal$.next(BoostGoal.VIEWS);
+    (comp as any).service.disabledGoalPanel$.next(false);
+
+    comp.showGoalSection$.pipe(take(1)).subscribe((shouldShow: boolean) => {
+      expect(shouldShow).toBeFalse();
+      done();
+    });
+  });
+
+  it('should determine whether the goal section should NOT be shown because goal is null', (done: DoneFn) => {
+    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    (comp as any).service.goal$.next(null);
+    (comp as any).service.disabledGoalPanel$.next(false);
+
+    comp.showGoalSection$.pipe(take(1)).subscribe((shouldShow: boolean) => {
+      expect(shouldShow).toBeFalse();
+      done();
+    });
+  });
+
+  it('should determine whether the goal section should NOT be shown because panel is disabled', (done: DoneFn) => {
+    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
+    (comp as any).service.goal$.next(BoostGoal.VIEWS);
+    (comp as any).service.disabledGoalPanel$.next(true);
+
+    comp.showGoalSection$.pipe(take(1)).subscribe((shouldShow: boolean) => {
+      expect(shouldShow).toBeFalse();
+      done();
+    });
   });
 });

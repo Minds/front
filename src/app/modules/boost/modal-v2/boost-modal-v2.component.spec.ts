@@ -40,7 +40,14 @@ describe('BoostModalV2Component', () => {
       })
         .overrideProvider(BoostModalV2Service, {
           useValue: MockService(BoostModalV2Service, {
-            has: ['activePanel$', 'callSaveIntent$', 'entity$', 'firstPanel$'],
+            has: [
+              'activePanel$',
+              'callSaveIntent$',
+              'entity$',
+              'firstPanel$',
+              'disabledSafeAudience$',
+              'disabledGoalPanel$',
+            ],
             props: {
               activePanel$: {
                 get: () =>
@@ -63,6 +70,12 @@ describe('BoostModalV2Component', () => {
                     BoostModalPanel.AUDIENCE
                   ),
               },
+              disabledSafeAudience$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              disabledGoalPanel$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
             },
           }),
         })
@@ -76,6 +89,8 @@ describe('BoostModalV2Component', () => {
 
     (comp as any).service.activePanel$.next(BoostModalPanel.REVIEW);
     (comp as any).service.firstPanel$.next(BoostModalPanel.AUDIENCE);
+    (comp as any).service.disabledSafeAudience$.next(false);
+    (comp as any).service.disabledGoalPanel$.next(false);
 
     fixture.detectChanges();
 
@@ -99,7 +114,10 @@ describe('BoostModalV2Component', () => {
     expect(comp.onSaveIntent).toHaveBeenCalled();
   });
 
-  it('should set modal data', (done: DoneFn) => {
+  it('should set modal data', () => {
+    (comp as any).service.disabledSafeAudience$.next(false);
+    (comp as any).service.disabledGoalPanel$.next(false);
+
     const entity: BoostableEntity = {
       guid: '234',
       type: 'activity',
@@ -112,12 +130,13 @@ describe('BoostModalV2Component', () => {
       onDismissIntent: () => void 0,
       onSaveIntent: () => void 0,
       entity: entity,
+      disabledSafeAudience: true,
+      disabledGoalPanel: true,
     });
 
-    (comp as any).service.entity$.subscribe(val => {
-      expect(val).toEqual(entity);
-      done();
-    });
+    expect((comp as any).service.entity$.getValue()).toEqual(entity);
+    expect((comp as any).service.disabledSafeAudience$.getValue()).toBeTrue();
+    expect((comp as any).service.disabledGoalPanel$.getValue()).toBeTrue();
   });
 
   it('should try set modal data and call to dismiss if entity is nsfw', () => {

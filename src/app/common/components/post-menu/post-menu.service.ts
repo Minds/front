@@ -347,7 +347,10 @@ export class PostMenuService {
 
   async openBoostModal(): Promise<void> {
     try {
-      await this.boostModal.open(this.entity);
+      await this.boostModal.open(this.entity, {
+        disabledGoalPanel:
+          this.session.getLoggedInUser().guid !== this.entity.owner_guid,
+      });
       return;
     } catch (e) {
       // do nothing.
