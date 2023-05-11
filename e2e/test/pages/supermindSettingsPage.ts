@@ -21,6 +21,17 @@ class SupermindSettingsPage {
    * Navigate to console via sidebar.
    * @returns { void }
    */
+  public async navigateTo(): Promise<void> {
+    I.amOnPage('/settings/payments/supermind');
+  }
+
+  /**
+   * Navigate to console via sidebar.
+   * Note - due to minds#3997 the position of this element in the sidebar is unstable.
+   * Do not use until front-5924-sidebar-v2-reorg has concluded, and at that point update the logic.
+   * In the interim navigate directly via the navigateTo function of this class.
+   * @returns { void }
+   */
   public async navigateToViaSupermindConsole(): Promise<void> {
     sidebarComponent.expandSidebarMore();
     sidebarComponent.openSupermindConsole();

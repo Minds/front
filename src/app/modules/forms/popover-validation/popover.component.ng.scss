@@ -50,6 +50,12 @@
         background-color: themed($m-bgColor--primary);
       }
 
+      .m-popover__loadingSpinner {
+        height: 172px;
+        display: flex;
+        align-items: center;
+      }
+
       &.m-popover__content--visible {
         @include z-index(toast);
         opacity: 1;
@@ -107,15 +113,18 @@
 
             ::ng-deep m-loadingSpinner {
               position: relative;
+
               .m-loadingSpinner__wrapper {
-                position: absolute;
-                left: -26px;
-                top: 2px;
-                display: inline-block;
                 padding: 0;
+                display: inline-flex;
+                margin-left: -26px;
+                margin-right: 11px;
+                margin-top: 2px;
+
                 .m-loadingSpinner__container {
                   height: 15px;
                   width: 15px;
+                  transform: translateY(2px);
                 }
               }
             }
@@ -123,6 +132,7 @@
             ::ng-deep {
               m-tooltip {
                 margin-left: 2px !important;
+
                 .m-tooltip > i {
                   font-size: 13px;
                 }

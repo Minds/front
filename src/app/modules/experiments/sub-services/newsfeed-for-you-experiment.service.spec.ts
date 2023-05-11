@@ -1,17 +1,17 @@
-import { SidebarV2ExperimentService } from './sidebar-v2-experiment.service';
+import { NewsfeedForYouExperimentService } from './newsfeed-for-you-experiment.service';
 
-let experimentsServiceMock = new (function() {
+export let experimentsServiceMock = new (function() {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 
-describe('SidebarV2ExperimentService', () => {
-  let service: SidebarV2ExperimentService;
+describe('NewsfeedForYouExperimentService', () => {
+  let service: NewsfeedForYouExperimentService;
 
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    service = new SidebarV2ExperimentService(experimentsServiceMock);
+    service = new NewsfeedForYouExperimentService(experimentsServiceMock);
   });
 
   afterEach(() => {
@@ -26,7 +26,7 @@ describe('SidebarV2ExperimentService', () => {
     (service as any).experiments.hasVariation.and.returnValue(true);
     expect(service.isActive()).toBeTruthy();
     expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'front-5924-sidebar-v2',
+      'minds-3953-newsfeed-for-you',
       true
     );
   });
@@ -35,7 +35,7 @@ describe('SidebarV2ExperimentService', () => {
     (service as any).experiments.hasVariation.and.returnValue(false);
     expect(service.isActive()).toBeFalsy();
     expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'front-5924-sidebar-v2',
+      'minds-3953-newsfeed-for-you',
       true
     );
   });

@@ -229,7 +229,7 @@ export class NewsfeedBoostRotatorComponent {
     if (this.bounds.top > 0) {
       if (!this.running) this.start();
     } else {
-      console.log('[rotator]: out of view', this.rotator);
+      // console.log('[rotator]: out of view', this.rotator);
       if (this.running) {
         this.running = false;
         window.clearInterval(this.rotator);

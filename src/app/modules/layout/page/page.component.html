@@ -12,7 +12,7 @@
   >
     <ng-container *ngIf="!isProDomain">
       <m-sidebar__navigationV2
-        *ngIf="isSidebarV2ExperimentActive(); else sidebarV1"
+        *ngIf="showSidebarV2; else sidebarV1"
         m-pageLayout__pane="left"
       ></m-sidebar__navigationV2>
       <ng-template #sidebarV1>
