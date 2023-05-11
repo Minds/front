@@ -23,9 +23,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
 import { PopoverComponent } from '../../../forms/popover-validation/popover.component';
-import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
 import { Router } from '@angular/router';
-import { ToasterService } from '../../../../common/services/toaster.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { PASSWORD_VALIDATOR } from '../../../forms/password.validator';
 import { PasswordRiskValidator } from '../../../forms/password-risk.validator';
@@ -51,6 +49,8 @@ export class SettingsV2PasswordComponent implements OnInit {
   form;
   passwordIncorrect: boolean = false;
   newPasswordRiskCheckStatus: string;
+
+  private newPasswordInputHasFocus: boolean = false;
 
   constructor(
     protected cd: ChangeDetectorRef,
@@ -88,18 +88,23 @@ export class SettingsV2PasswordComponent implements OnInit {
     this.form
       .get('newPassword')
       .valueChanges.pipe(distinctUntilChanged())
-      .subscribe(val => {
-        this.popover.show();
-        if (val && val.length > 0) {
-          this.popover.checkRules(val);
-        } else {
+      .subscribe(str => {
+        if (str.length === 0) {
           this.popover.hide();
+        } else {
+          setTimeout(() => {
+            if (this.newPasswordInputHasFocus && str.length > 0) {
+              this.popover.show();
+            }
+          }, 350);
         }
-        this.detectChanges();
       });
 
     this.form.get('newPassword').statusChanges.subscribe((status: any) => {
       this.newPasswordRiskCheckStatus = status;
+      if (status === 'VALID') {
+        this.popover.hideWithDelay();
+      }
       this.detectChanges();
     });
 
@@ -152,15 +157,18 @@ export class SettingsV2PasswordComponent implements OnInit {
   }
 
   onNewPasswordFocus() {
-    if (this.newPassword.length > 0) {
+    this.newPasswordInputHasFocus = true;
+    if (
+      this.newPasswordRiskCheckStatus !== 'VALID' &&
+      this.newPassword.value.length > 0
+    ) {
       this.popover.show();
     }
   }
 
   onNewPasswordBlur() {
-    if (!isMobileOrTablet()) {
-      this.popover.hide();
-    }
+    this.newPasswordInputHasFocus = false;
+    this.popover.hide();
   }
 
   canSubmit(): boolean {
