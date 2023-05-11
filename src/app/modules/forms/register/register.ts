@@ -21,7 +21,6 @@ import { Session } from '../../../services/session';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { PopoverComponent } from '../popover-validation/popover.component';
 import { CaptchaComponent } from '../../captcha/captcha.component';
-import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
 import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
@@ -76,6 +75,8 @@ export class RegisterForm implements OnInit, OnDestroy {
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;
 
+  private passwordInputHasFocus: boolean = false;
+
   // subscriptions.
   private passwordPopoverSubscription: Subscription;
   private passwordRiskCheckStatusSubscription: Subscription;
@@ -127,13 +128,26 @@ export class RegisterForm implements OnInit, OnDestroy {
     this.passwordPopoverSubscription = this.form
       .get('password')
       .valueChanges.subscribe(str => {
-        this.popover.show();
+        if (str.length === 0) {
+          this.popover.hide();
+        } else {
+          setTimeout(() => {
+            // check length again after timeout and whether element still has focus.
+            if (this.passwordInputHasFocus && str.length > 0) {
+              this.popover.show();
+            }
+          }, 350);
+        }
       });
 
     this.passwordRiskCheckStatusSubscription = this.form
       .get('password')
       .statusChanges.subscribe((status: any) => {
         this.passwordRiskCheckStatus = status;
+
+        if (status === 'VALID') {
+          this.popover.hideWithDelay();
+        }
       });
 
     this.usernameTouchedSubscription = this.form
@@ -228,15 +242,18 @@ export class RegisterForm implements OnInit, OnDestroy {
   }
 
   onPasswordFocus() {
-    if (this.form.value.password.length > 0) {
+    this.passwordInputHasFocus = true;
+    if (
+      this.passwordRiskCheckStatus !== 'VALID' &&
+      this.form.value.password.length > 0
+    ) {
       this.popover.show();
     }
   }
 
   onPasswordBlur() {
-    if (!isMobileOrTablet()) {
-      this.popover.hide();
-    }
+    this.passwordInputHasFocus = false;
+    this.popover.hide();
   }
 
   onShowLoginFormClick() {
