@@ -1,4 +1,4 @@
-import { isPlatformServer } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -43,10 +43,12 @@ import { FeedItemType } from '../feed/feed.component';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
+import { Platform } from '@angular/cdk/platform';
 
 export enum FeedAlgorithm {
   top = 'top',
   latest = 'latest',
+  forYou = 'for-you',
 }
 
 const commonInjectItems: InjectItem[] = [
@@ -86,9 +88,19 @@ export class TopFeedService extends FeedsService {
   injectItems = commonInjectItems;
 }
 
+/**
+ * Service for "For You" feed.
+ */
+@Injectable()
+export class ForYouFeedService extends FeedsService {
+  endpoint = 'api/v3/newsfeed/feed/clustered-recommendations';
+  limit = new BehaviorSubject(12);
+  injectItems = commonInjectItems;
+}
+
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [LatestFeedService, TopFeedService],
+  providers: [LatestFeedService, TopFeedService, ForYouFeedService],
   templateUrl: 'subscribed.component.html',
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
@@ -110,7 +122,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   };
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
-  routerSubscription: Subscription;
+  private zendeskErrorSubscription: Subscription;
 
   /**
    * Listening for new posts.
@@ -158,6 +170,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private context: ContextService,
     @Self() public latestFeedService: LatestFeedService,
     @Self() public topFeedService: TopFeedService,
+    @Self() public forYouFeedService: ForYouFeedService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
@@ -168,7 +181,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private dismissal: DismissalService,
     public changeDetectorRef: ChangeDetectorRef,
     private feedNoticeService: FeedNoticeService,
-    persistentFeedExperiment: PersistentFeedExperimentService
+    persistentFeedExperiment: PersistentFeedExperimentService,
+    private platform: Platform
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -180,20 +194,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (this.persistentFeedExperimentActive) {
       this.topFeedService.setCachingEnabled(true);
       this.latestFeedService.setCachingEnabled(true);
+      this.forYouFeedService.setCachingEnabled(true);
     }
   }
 
   ngOnInit() {
-    this.routerSubscription = this.router.events
-      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.showBoostRotator = false;
-        this.load();
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 100);
-      });
-
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
       () => {
         this.load();
@@ -202,13 +207,22 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['algorithm']) {
-        if (params['algorithm'] in FeedAlgorithm) {
+        if (Object.values(FeedAlgorithm).includes(params['algorithm'])) {
           this.changeFeedAlgorithm(params['algorithm']);
         } else {
           this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
         }
       }
-      this.load();
+
+      /**
+       * Load feed. If in firefox, do this in a timeout to avoid layout freezes.
+       * This should be removed in the future when we optimize for firefox. front#3213
+       */
+      if (isPlatformBrowser(this.platformId) && this.platform.FIREFOX) {
+        setTimeout(() => this.load(), 300);
+      } else {
+        this.load();
+      }
 
       if (params['message']) {
         this.message = params['message'];
@@ -218,7 +232,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     });
 
     // catch Zendesk errors and make them domain specific.
-    this.route.queryParams.subscribe(params => {
+    this.zendeskErrorSubscription = this.route.queryParams.subscribe(params => {
       if (params.kind === 'error') {
         if (
           /User is invalid: External minds-guid:\d+ has already been taken/.test(
@@ -253,21 +267,24 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-    this.reloadFeedSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
-    this.feedsUpdatedSubscription.unsubscribe();
+    this.paramsSubscription?.unsubscribe();
+    this.reloadFeedSubscription?.unsubscribe();
+    this.feedsUpdatedSubscription?.unsubscribe();
+    this.zendeskErrorSubscription?.unsubscribe();
   }
 
   /**
    * returns feedService based on algorithm
    **/
   get feedService(): FeedsService {
-    if (this.algorithm === 'top') {
-      return this.topFeedService;
+    switch (this.algorithm) {
+      case 'top':
+        return this.topFeedService;
+      case 'for-you':
+        return this.forYouFeedService;
+      default:
+        return this.latestFeedService;
     }
-
-    return this.latestFeedService;
   }
 
   async load() {
@@ -275,7 +292,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.moreData = true;
     this.offset = 0;
-    this.showBoostRotator = false;
     this.inProgress = true;
 
     let queryParams = {
@@ -286,8 +302,20 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       queryParams['include_group_posts'] = true;
     }
 
+    /**
+     * Rotating the boost rotator provides feedback that something has changes
+     * to the user on shorter viewports that may not be able to see the feed
+     * under the rotator.
+     */
+    if (this.boostRotator?.running) {
+      this.boostRotator?.next();
+    }
+
     try {
       switch (this.algorithm) {
+        case 'for-you':
+          await this.forYouFeedService.setLimit(12).fetch(true);
+          break;
         case 'top':
           await this.topFeedService.setLimit(12).fetch(true);
           break;
@@ -304,7 +332,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     }
 
     this.inProgress = false;
-    this.showBoostRotator = true;
   }
 
   loadNext(feedService: FeedsService = this.feedService) {
@@ -369,12 +396,17 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.feedAlgorithmHistory.lastAlorithm = algo;
 
     switch (algo) {
+      case 'for-you':
+        this.latestFeedService.clear(true);
+        this.forYouFeedService.clear(true);
+        break;
       case 'top':
         this.topFeedService.clear(true);
         break;
       case 'latest':
         this.latestFeedService.clear(true);
         this.topFeedService.clear(true);
+        break;
     }
   }
 
@@ -508,6 +540,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         } else {
           loadDiscoveryFallbackIfEnabled();
         }
+        break;
+      case this.forYouFeedService:
+        this.latestFallbackActive$.next(false);
         break;
     }
   }

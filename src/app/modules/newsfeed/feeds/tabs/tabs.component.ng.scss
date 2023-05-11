@@ -1,0 +1,27 @@
+@import 'defaults.scss';
+
+$selectedTabBorderThickness: 5px;
+
+:host {
+  .m-tabs__container {
+    margin: unset;
+    padding-top: $selectedTabBorderThickness;
+    overflow-x: auto;
+    @include hide-scrollbar;
+
+    padding-left: $activityAvatarSpacingLeft--feed;
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $activityAvatarSpacingLeft--feed--mobile;
+    }
+
+    .m-tabs__tab a {
+      margin-right: $spacing6;
+      margin-left: unset;
+      white-space: nowrap;
+    }
+
+    .m-tabs__tab--selected {
+      border-width: $selectedTabBorderThickness;
+    }
+  }
+}
