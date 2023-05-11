@@ -1,6 +1,6 @@
 import { ApiService } from './../common/api/api.service';
 import { ScrollRestorationService } from './scroll-restoration.service';
-import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
+import { Compiler, InjectionToken, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ImageLoaderConfig,
@@ -8,7 +8,11 @@ import {
   IMAGE_LOADER,
   Location,
 } from '@angular/common';
-import { TransferState } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  makeStateKey,
+  TransferState,
+} from '@angular/platform-browser';
 import { EmbedServiceV2 } from './embedV2.service';
 
 import { ScrollService } from './ux/scroll';
@@ -78,6 +82,9 @@ import {
 import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
+
+const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
+const STATE_KEY = makeStateKey<any>('apollo.state');
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -302,8 +309,30 @@ export const MINDS_PROVIDERS: any[] = [
   PushNotificationService,
   DismissalService,
   {
+    provide: APOLLO_CACHE,
+    useValue: new InMemoryCache(),
+  },
+  {
     provide: APOLLO_OPTIONS,
-    useFactory(httpLink: HttpLink, strapiUrl: string) {
+    useFactory(
+      httpLink: HttpLink,
+      cache: InMemoryCache,
+      transferState: TransferState,
+      strapiUrl: string
+    ) {
+      const isBrowser = transferState.hasKey<any>(STATE_KEY);
+
+      if (isBrowser) {
+        const state = transferState.get<any>(STATE_KEY, null);
+        cache.restore(state);
+      } else {
+        transferState.onSerialize(STATE_KEY, () => {
+          return cache.extract();
+        });
+        // Reset cache after extraction to avoid sharing between requests
+        cache.reset();
+      }
+
       return {
         cache: new InMemoryCache(),
         link: httpLink.create({
@@ -312,6 +341,6 @@ export const MINDS_PROVIDERS: any[] = [
         shouldBatch: true,
       };
     },
-    deps: [HttpLink, STRAPI_URL],
+    deps: [HttpLink, APOLLO_CACHE, TransferState, STRAPI_URL],
   },
 ];
