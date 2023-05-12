@@ -82,7 +82,7 @@
 
   <a
     *ngIf="showTitle"
-    [routerLink]="['/forgot-password']"
+    (click)="onForgotPasswordClick()"
     data-ref="data-minds-forgot-password-button"
   >
     Forgot your Password?

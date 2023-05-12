@@ -1,5 +1,4 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { Client } from '../../../../../services/api';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import {
   FormBuilder,
@@ -36,13 +35,15 @@ export class ResetPasswordModalRequestFormComponent
   protected secondsBetweenResends: number;
 
   constructor(
-    protected client: Client,
     protected toaster: ToasterService,
     private formBuilder: FormBuilder,
     protected service: ResetPasswordModalService
   ) {}
 
   ngOnInit(): void {
+    // Always show the first panel on load
+    this.service.activePanel$.next('enterUsername');
+
     this.subscriptions.push(
       this.service.activePanel$.subscribe(activePanel => {
         this.activePanel = activePanel;
@@ -73,15 +74,10 @@ export class ResetPasswordModalRequestFormComponent
         Validators.minLength(4),
       ]),
     });
-
-    this.form.controls.username.valueChanges.subscribe(changes => {
-      console.log('ojm REQ valueChanges', changes);
-    });
   }
 
   /**
-   * Request password reset for an email.
-   * @param username - username to be checked.
+   * Request a reset password email to be sent.
    */
   async request(): Promise<void> {
     if (!this.canSubmit) {
@@ -95,6 +91,10 @@ export class ResetPasswordModalRequestFormComponent
     }
 
     this.service.request(usernameValue);
+  }
+
+  openAuthModal($event): void {
+    this.service.openAuthModal();
   }
 
   get canSubmit(): boolean {

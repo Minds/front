@@ -15,6 +15,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { Router } from '@angular/router';
+import { AuthModalService } from '../modal/auth-modal.service';
 
 export type ResetPasswordModalPanel =
   | 'enterUsername'
@@ -56,8 +57,36 @@ export class ResetPasswordModalService implements OnDestroy {
     private router: Router,
     private toaster: ToasterService,
     private api: ApiService,
+    private authModal: AuthModalService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
+
+  async open(
+    opts: { username?: string; code?: string } = {}
+  ): Promise<MindsUser> {
+    if (this.session.isLoggedIn()) {
+      return this.session.getLoggedInUser();
+    }
+
+    const { ResetPasswordModalModule } = await import(
+      './reset-password-modal.module'
+    );
+
+    const modal = this.modalService.present(ResetPasswordModalComponent, {
+      data: {
+        username: opts.username ?? null,
+        code: opts.code ?? null,
+        onComplete: () => {
+          modal.close();
+        },
+      },
+      keyboard: false,
+      injector: this.injector,
+      lazyModule: ResetPasswordModalModule,
+    });
+
+    return modal.result;
+  }
 
   /**
    * Request a password reset email to be sent
@@ -115,54 +144,38 @@ export class ResetPasswordModalService implements OnDestroy {
 
       this.session.login(response.user);
       this.router.navigate(['/newsfeed']);
+      this.dismiss();
     } catch (e) {
       this.toaster.error(
         e.message ||
           'There was a problem trying to reset your password. Please try again.'
       );
       console.log(e);
-      this.activePanel$.next('enterUsername');
     } finally {
       this.inProgress$.next(false);
     }
   }
 
   startEmailTimer(): void {
-    console.log('ojm SVC starting email timer...');
     this.canSendEmail$.next(false);
     if (isPlatformBrowser(this.platformId)) {
       this.emailTimer = setTimeout(() => {
         this.canSendEmail$.next(true);
-        console.log('ojm SVC email timer finished');
       }, MIN_MS_BETWEEN_RESET_PASSWORD_EMAILS);
     }
   }
 
-  async open(
-    opts: { username?: string; code?: string } = {}
-  ): Promise<MindsUser> {
-    if (this.session.isLoggedIn()) {
-      return this.session.getLoggedInUser();
-    }
+  openAuthModal(): void {
+    this.dismiss();
+    this.authModal.open({ formDisplay: 'login' });
+  }
 
-    const { ResetPasswordModalModule } = await import(
-      './reset-password-modal.module'
-    );
-
-    const modal = this.modalService.present(ResetPasswordModalComponent, {
-      data: {
-        username: opts.username ?? null, // ojm check if elvis works
-        code: opts.code ?? null,
-        onComplete: async (user: MindsUser) => {
-          modal.close(user); // ojm is this what I want? or do I also want to complete the login
-        },
-      },
-      keyboard: false,
-      injector: this.injector,
-      lazyModule: ResetPasswordModalModule,
-    });
-
-    return modal.result;
+  /**
+   * Dismisses the modal
+   * And ensures that the first panel appears if it's opened again
+   */
+  dismiss() {
+    this.modalService.dismissAll();
   }
 
   ngOnDestroy(): void {

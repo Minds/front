@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
 import { GuestModeExperimentService } from '../experiments/sub-services/guest-mode-experiment.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ResetPasswordModalService } from '../auth/reset-password-modal/reset-password-modal.service';
 
 /**
@@ -17,23 +17,34 @@ export class HomepageContainerComponent implements OnInit {
     private metaService: MetaService,
     private guestModeExperiment: GuestModeExperimentService,
     private route: ActivatedRoute,
+    private router: Router,
     private resetPasswordModal: ResetPasswordModalService
   ) {}
 
   isGuestMode: boolean;
 
+  queryParams;
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       // open reset password modal
       if (params['resetPassword']) {
-        let opts = {};
+        this.queryParams = params;
+        this.openResetPasswordModal();
+      }
+    });
 
-        if (params['username'] && params['code']) {
-          opts['username'] = params.get('username');
-          opts['code'] = params.get('code');
+    this.router.events.subscribe(navEvent => {
+      if (navEvent instanceof NavigationEnd) {
+        // Keep track of router events here
+        // in case we click 'forgot password' from the auth modal
+        // while we're already on the homepage (aka queryParams
+        // subscription above doesn't fire)
+        if (this.route.snapshot.queryParamMap.has('resetPassword')) {
+          if (navEvent.url.includes('resetPassword')) {
+            this.openResetPasswordModal();
+          }
         }
-
-        this.resetPasswordModal.open(opts);
       }
     });
 
@@ -46,5 +57,19 @@ export class HomepageContainerComponent implements OnInit {
       .setOgUrl('/');
 
     this.isGuestMode = this.guestModeExperiment.isActive();
+  }
+
+  /**
+   * Opens the reset password modal
+   */
+  openResetPasswordModal(): void {
+    let opts = {};
+
+    if (this.queryParams['username'] && this.queryParams['code']) {
+      opts['username'] = this.queryParams['username'];
+      opts['code'] = this.queryParams['code'];
+    }
+
+    this.resetPasswordModal.open(opts);
   }
 }

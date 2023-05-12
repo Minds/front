@@ -14,8 +14,6 @@ export class ResetPasswordExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    //ojm remove
-    return true;
     return this.experiments.hasVariation('front-5986-reset-password', true);
   }
 }

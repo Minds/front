@@ -55,6 +55,7 @@ export class ResetPasswordModalComponent {
    *
    * @param username the username of the user who forgot their password
    * @param code the code that was emailed to them for verification
+   * @param onComplete
    * @param onDismissIntent
    * @param defaults
    */
@@ -63,7 +64,5 @@ export class ResetPasswordModalComponent {
     this.code = code;
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
-
-    console.log('ojm SETTING MODAL DATA', username, code);
   }
 }

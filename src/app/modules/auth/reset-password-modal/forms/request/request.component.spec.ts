@@ -1,24 +1,40 @@
-//ojm todo
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { RequestComponent } from './request.component';
+import { ResetPasswordModalRequestFormComponent } from './request.component';
+import { ToasterService } from '../../../../../common/services/toaster.service';
+import { MockService } from '../../../../../utils/mock';
+import { ResetPasswordModalService } from '../../reset-password-modal.service';
+import { FormBuilder } from '@angular/forms';
 
-// describe('RequestComponent', () => {
-//   let component: RequestComponent;
-//   let fixture: ComponentFixture<RequestComponent>;
+describe('ResetPasswordModalRequestFormComponent', () => {
+  let component: ResetPasswordModalRequestFormComponent;
+  let fixture: ComponentFixture<ResetPasswordModalRequestFormComponent>;
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ RequestComponent ]
-//     })
-//     .compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ResetPasswordModalRequestFormComponent],
+      providers: [
+        {
+          provide: ToasterService,
+          useValue: MockService(ToasterService),
+        },
+        {
+          provide: FormBuilder,
+          userValue: MockService(FormBuilder),
+        },
+        {
+          provide: ResetPasswordModalService,
+          useValue: MockService(ResetPasswordModalService),
+        },
+      ],
+    }).compileComponents();
 
-//     fixture = TestBed.createComponent(RequestComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+    fixture = TestBed.createComponent(ResetPasswordModalRequestFormComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

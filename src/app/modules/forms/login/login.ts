@@ -182,7 +182,6 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     this.done.emit(true);
 
     if (this.resetPasswordExperiment.isActive()) {
-      // ojm see why this doesn't reopen when click from auth modal on homepage
       this.router.navigate(['/'], { queryParams: { resetPassword: true } });
     } else {
       this.router.navigate(['/forgot-password']);

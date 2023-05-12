@@ -9,9 +9,16 @@ import { MindsFormsModule } from '../../forms/forms.module';
 import { ResetPasswordModalComponent } from './reset-password-modal.component';
 import { ResetPasswordModalRequestFormComponent } from './forms/request/request.component';
 import { ResetPasswordModalResetFormComponent } from './forms/reset/reset.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [NgCommonModule, CommonModule, MindsFormsModule],
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    MindsFormsModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     ResetPasswordModalComponent,
     ResetPasswordModalRequestFormComponent,
