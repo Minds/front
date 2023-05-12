@@ -1,0 +1,30 @@
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a
+      *ngIf="shouldShowForYouTab"
+      [routerLink]="['../' + feedAlgorithm.forYou]"
+      routerLinkActive="m-tabs__tab--selected"
+      data-ref="newsfeed-tab-link-for-you"
+      i18n="@@NEWSFEED_TAGS__FOR_YOU"
+      >For You</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      [routerLink]="['../' + feedAlgorithm.top]"
+      routerLinkActive="m-tabs__tab--selected"
+      data-ref="newsfeed-tab-top"
+      i18n="@@NEWSFEED_TAGS__TOP"
+      >Top</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      [routerLink]="['../' + feedAlgorithm.latest]"
+      routerLinkActive="m-tabs__tab--selected"
+      data-ref="newsfeed-tab-link-latest"
+      i18n="@@NEWSFEED_TAGS__LATEST"
+      >Latest</a
+    >
+  </div>
+</div>

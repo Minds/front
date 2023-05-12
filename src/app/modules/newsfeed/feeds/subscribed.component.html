@@ -20,21 +20,8 @@
 
     <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
 
-    <m-feedHeader>
-      <span
-        title
-        i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
-        *ngIf="algorithm === 'top'"
-        >Top Posts</span
-      >
-      <span
-        title
-        i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
-        *ngIf="algorithm === 'latest'"
-        >Latest Posts</span
-      >
-      <m-feedTypePopover [type]="algorithm"></m-feedTypePopover>
-    </m-feedHeader>
+    <m-newsfeed__tabs></m-newsfeed__tabs>
+
     <div *ngIf="!persistentFeedExperimentActive" class="minds-list">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
