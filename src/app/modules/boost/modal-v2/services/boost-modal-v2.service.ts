@@ -150,7 +150,7 @@ export class BoostModalV2Service implements OnDestroy {
       return (
         this.boostGoalsExperiment.isActive() &&
         entityType === BoostSubject.POST &&
-        entity.owner_guid === this.session.getLoggedInUser().guid
+        entity?.owner_guid === this.session.getLoggedInUser().guid
       );
     })
   );

@@ -230,13 +230,6 @@ describe('BoostModalV2ReviewComponent', () => {
     expect(getGoalSection()).toBeTruthy();
   });
 
-  it('should NOT show goal section when service says it can be set but a goal is NOT already set', () => {
-    (comp as any).service.canSetBoostGoal$.next(true);
-    (comp as any).service.goal$.next(null);
-    fixture.detectChanges();
-    expect(getGoalSection()).toBeNull();
-  });
-
   it('should NOT show goal section when service says a goal cannot be set', () => {
     (comp as any).service.canSetBoostGoal$.next(false);
     (comp as any).service.goal$.next(null);
