@@ -23,7 +23,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, startWith } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import {
@@ -106,7 +106,7 @@ export class ForYouFeedService extends FeedsService {
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   prepended: Array<any> = [];
   offset: string | number = '';
-  showBoostRotator: boolean = true;
+  showBoostRotator: boolean = false;
   inProgress: boolean = false;
   moreData: boolean = true;
   algorithm: FeedAlgorithm;
@@ -122,6 +122,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   };
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
+  routerSubscription: Subscription;
   private zendeskErrorSubscription: Subscription;
 
   /**
@@ -199,6 +200,18 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.routerSubscription = this.router.events
+      .pipe(
+        filter((event: RouterEvent) => event instanceof NavigationEnd),
+        startWith(this.router)
+      )
+      .subscribe(() => {
+        this.load();
+        setTimeout(() => {
+          this.showBoostRotator = true;
+        }, 50);
+      });
+
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
       () => {
         this.load();
@@ -212,16 +225,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         } else {
           this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
         }
-      }
-
-      /**
-       * Load feed. If in firefox, do this in a timeout to avoid layout freezes.
-       * This should be removed in the future when we optimize for firefox. front#3213
-       */
-      if (isPlatformBrowser(this.platformId) && this.platform.FIREFOX) {
-        setTimeout(() => this.load(), 300);
-      } else {
-        this.load();
       }
 
       if (params['message']) {
@@ -267,6 +270,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.routerSubscription?.unsubscribe();
     this.paramsSubscription?.unsubscribe();
     this.reloadFeedSubscription?.unsubscribe();
     this.feedsUpdatedSubscription?.unsubscribe();
