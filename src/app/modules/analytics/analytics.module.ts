@@ -28,12 +28,12 @@ const routes: Routes = [
   },
   {
     path: 'dashboard/token',
-    redirectTo: '/newsfeed/subscriptions/latest',
+    redirectTo: 'dashboard/traffic',
     pathMatch: 'full' as PathMatch,
   },
   {
     path: 'dashboard/token/:tabId',
-    redirectTo: '/newsfeed/subscriptions/latest',
+    redirectTo: 'dashboard/traffic',
     pathMatch: 'full' as PathMatch,
   },
   {
