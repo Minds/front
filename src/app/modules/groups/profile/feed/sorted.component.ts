@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  HostBinding,
   Input,
   OnDestroy,
   OnInit,
@@ -18,6 +17,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ComposerComponent } from '../../../composer/composer.component';
 import { AsyncPipe } from '@angular/common';
 import { GroupsSearchService } from './search.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Container for group feeds. Includes content type filter, search results,
@@ -94,7 +94,8 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute,
     protected client: Client,
     protected cd: ChangeDetectorRef,
-    public groupsSearch: GroupsSearchService
+    public groupsSearch: GroupsSearchService,
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {
@@ -202,7 +203,21 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     return this.type === 'activities';
   }
 
-  prepend(activity: any) {
+  /**
+   * Prepend an activity to the feed.
+   * @param { any } activity - activity to prepend.
+   * @returns { void }
+   */
+  public prepend(activity: any): void {
+    if (
+      this.group.moderated &&
+      !(this.group['is:moderator'] || this.group['is:owner'])
+    ) {
+      this.toast.success(
+        'Your post is pending approval from the group moderators'
+      );
+    }
+
     if (!activity || !this.isActivityFeed()) {
       return;
     }

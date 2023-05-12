@@ -18,6 +18,8 @@ import { HomepageV3Component } from './homepage-v3.component';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { RouterModule } from '@angular/router';
 
+import { MarkdownModule } from 'ngx-markdown';
+
 @NgModule({
   imports: [
     NgCommonModule,
@@ -32,6 +34,7 @@ import { RouterModule } from '@angular/router';
     CaptchaModule,
     RouterModule,
     MarketingModule,
+    MarkdownModule.forChild(),
   ],
   declarations: [HomepageV3Component],
   exports: [HomepageV3Component],

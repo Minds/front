@@ -182,13 +182,15 @@ export class NewsfeedBoostRotatorComponent {
     try {
       this.inProgress = true;
 
-      await this.boostFeedService.init();
-
       this.init = true;
+
+      await this.boostFeedService.init();
     } catch (e) {
       if (e && e.message) {
         console.warn(e);
       }
+
+      this.init = false;
 
       throw e;
     }
@@ -229,7 +231,7 @@ export class NewsfeedBoostRotatorComponent {
     if (this.bounds.top > 0) {
       if (!this.running) this.start();
     } else {
-      console.log('[rotator]: out of view', this.rotator);
+      // console.log('[rotator]: out of view', this.rotator);
       if (this.running) {
         this.running = false;
         window.clearInterval(this.rotator);

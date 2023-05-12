@@ -18,6 +18,12 @@
           [canDelete]="group['is:owner'] || group['is:moderator']"
           (deleted)="delete(entity)"
           [attr.data-minds-activity-guid]="entity.guid"
+          [displayOptions]="{
+            isFeed: true,
+            showComments: false,
+            showToolbar: false,
+            autoplayVideo: false
+          }"
         >
         </m-activity>
 
@@ -25,19 +31,18 @@
 
         <div bottom-content class="m-groups-feed--review-actions">
           <m-button
-            color="blue"
-            (onAction)="approve(entity, i)"
-            i18n="@@COMMON__APPROVE"
-          >
-            Approve
-          </m-button>
-
-          <m-button
             color="red"
             (onAction)="reject(entity, i)"
             i18n="@@COMMON__REJECT"
           >
             Reject
+          </m-button>
+          <m-button
+            color="blue"
+            (onAction)="approve(entity, i)"
+            i18n="@@COMMON__APPROVE"
+          >
+            Approve
           </m-button>
         </div>
 

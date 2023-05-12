@@ -66,6 +66,9 @@ class SupermindConsolePage {
 
   /**
    * Navigate to console via sidebar.
+   * Note - due to minds#3997 the position of this element in the sidebar is unstable.
+   * Do not use until front-5924-sidebar-v2-reorg has concluded, and at that point update the logic.
+   * In the interim navigate directly via the navigateTo function of this class.
    * @returns { Promise<void> }
    */
   public async navigateToViaSidebar(): Promise<void> {

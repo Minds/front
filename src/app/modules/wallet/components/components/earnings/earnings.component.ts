@@ -7,10 +7,10 @@ import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 
 const SUM_AMOUNT = (arr, currencyType): number => {
-  return arr.reduce((acc, item) => {
+  return arr.reduce((acc: number, item) => {
     const amount =
       currencyType === 'usd' ? item.amount_usd : item.amount_tokens;
-    return acc + amount;
+    return acc + parseInt(amount);
   }, 0);
 };
 
@@ -128,6 +128,10 @@ export class WalletEarningsComponent {
         return 'Minds Pay Commissions';
       case 'boost_partner':
         return 'Boost Partners';
+      case 'affiliate':
+        return 'Affiliate';
+      case 'affiliate_referrer':
+        return 'Affiliate Referrer';
     }
 
     return id;

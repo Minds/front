@@ -7,8 +7,18 @@
     &__title {
       display: block;
       @include heading2Bold;
+      line-height: 34px;
       margin: 0;
       padding: 0 0 $spacing4;
+
+      .m-affiliatesEarnings__error {
+        @include body2Regular;
+        line-height: 34px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
     }
     &__description {
       @include body2Regular;
@@ -44,13 +54,6 @@
           margin: 0 $spacing4 0 0;
         }
       }
-    }
-    &__note {
-      @include body3Regular;
-      font-size: 12;
-      line-height: 20px;
-      font-weight: 400;
-      max-width: 350px;
     }
   }
 }

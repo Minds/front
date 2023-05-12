@@ -50,13 +50,14 @@
       "
     >
       <a
-        class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
+        class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message m-groupSorted__reviewQueue"
         (click)="onReviewNoticeClick($event)"
         routerLink="review"
+        draggable="false"
       >
-        <i class="material-icons">rate_review</i>
         {{ group['adminqueue:count'] }} new
-        {{ group['adminqueue:count'] === 1 ? 'post' : 'posts' }} in review queue
+        {{ group['adminqueue:count'] === 1 ? 'post' : 'posts' }} in the review
+        queue
       </a>
     </ng-container>
 
