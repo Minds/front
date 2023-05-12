@@ -62,6 +62,8 @@ import { CompassModule } from './modules/compass/compass.module';
 import { DevToolsModule } from './modules/devtools/devtools.module';
 import { SupermindModule } from './modules/supermind/supermind.module';
 import { AffiliatesModule } from './modules/affiliates/affiliates.module';
+import { ApolloModule } from 'apollo-angular';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   bootstrap: [Minds],
@@ -70,6 +72,8 @@ import { AffiliatesModule } from './modules/affiliates/affiliates.module';
     BrowserModule.withServerTransition({ appId: 'm-app' }),
     BrowserTransferStateModule,
     CookieModule.forRoot(),
+    ApolloModule,
+    MarkdownModule.forRoot(),
     // TransferHttpCacheModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
