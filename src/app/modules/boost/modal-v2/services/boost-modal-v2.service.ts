@@ -52,6 +52,7 @@ import {
 } from '../boost-modal-v2.types';
 import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostGoal, BoostGoalButtonText } from '../../boost.types';
+import { Session } from '../../../../services/session';
 
 /**
  * Service for creation and submission of boosts.
@@ -118,11 +119,6 @@ export class BoostModalV2Service implements OnDestroy {
     boolean
   > = new BehaviorSubject<boolean>(false);
 
-  // Whether "goal" panel should be disabled.
-  public readonly disabledGoalPanel$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
-
   // whether boost submission is in progress.
   public readonly boostSubmissionInProgress$: BehaviorSubject<
     boolean
@@ -147,14 +143,14 @@ export class BoostModalV2Service implements OnDestroy {
 
   // Whether a Boost goal can be set
   public canSetBoostGoal$: Observable<boolean> = combineLatest([
+    this.entity$,
     this.entityType$,
-    this.disabledGoalPanel$,
   ]).pipe(
-    map(([entityType, disabledGoalPanel]) => {
+    map(([entity, entityType]: [BoostableEntity, BoostSubject]) => {
       return (
         this.boostGoalsExperiment.isActive() &&
-        !disabledGoalPanel &&
-        entityType === BoostSubject.POST
+        entityType === BoostSubject.POST &&
+        entity.owner_guid === this.session.getLoggedInUser().guid
       );
     })
   );
@@ -368,6 +364,7 @@ export class BoostModalV2Service implements OnDestroy {
 
   constructor(
     private api: ApiService,
+    private session: Session,
     private toast: ToasterService,
     private config: ConfigsService,
     private web3Wallet: Web3WalletService,

@@ -77,14 +77,8 @@ export class BoostModalV2ReviewComponent {
   public readonly goal$: Observable<BoostGoal> = this.service.goal$;
 
   // whether goal section should be shown.
-  public readonly showGoalSection$: Observable<boolean> = combineLatest([
-    this.service.goal$,
-    this.service.canSetBoostGoal$,
-  ]).pipe(
-    map(([goal, canSetBoostGoal]: [BoostGoal, boolean]): boolean => {
-      return canSetBoostGoal && Boolean(goal);
-    })
-  );
+  public readonly showGoalSection$: Observable<boolean> = this.service
+    .canSetBoostGoal$;
 
   constructor(
     private service: BoostModalV2Service,

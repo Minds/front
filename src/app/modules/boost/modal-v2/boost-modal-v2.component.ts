@@ -72,7 +72,6 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
     onSaveIntent,
     entity,
     disabledSafeAudience,
-    disabledGoalPanel,
   }: BoostModalData) {
     this.onDismissIntent = onDismissIntent ?? (() => {});
     this.onSaveIntent = onSaveIntent ?? (() => {});
@@ -86,10 +85,6 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
 
     if (disabledSafeAudience) {
       this.service.disabledSafeAudience$.next(disabledSafeAudience);
-    }
-
-    if (disabledGoalPanel) {
-      this.service.disabledGoalPanel$.next(disabledGoalPanel);
     }
 
     this.service.entity$.next(entity ?? null);
