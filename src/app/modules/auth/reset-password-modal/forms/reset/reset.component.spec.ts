@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { Session } from '../../../../../services/session';
 import { sessionMock } from '../../../../../services/session-mock';
 import { PasswordRiskValidator } from '../../../../forms/password-risk.validator';
+import { BehaviorSubject } from 'rxjs';
 
 describe('ResetPasswordModalResetFormComponent', () => {
   let component: ResetPasswordModalResetFormComponent;
@@ -28,17 +29,32 @@ describe('ResetPasswordModalResetFormComponent', () => {
         },
         {
           provide: ResetPasswordModalService,
-          useValue: MockService(ResetPasswordModalService),
+          useValue: MockService(ResetPasswordModalService, {
+            has: ['inProgress$'],
+            props: {
+              inProgress$: { get: () => new BehaviorSubject<boolean>(false) },
+            },
+          }),
         },
         {
           provide: PasswordRiskValidator,
-          useValue: MockService(PasswordRiskValidator),
+          useValue: MockService(PasswordRiskValidator, {
+            has: ['inProgress$'],
+            props: {
+              inProgress$: { get: () => new BehaviorSubject<boolean>(false) },
+            },
+          }),
         },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ResetPasswordModalResetFormComponent);
     component = fixture.componentInstance;
+
+    (component as any).passwordRiskValidator.riskValidator.and.returnValue(() =>
+      Promise.resolve(true)
+    );
+
     fixture.detectChanges();
   });
 
