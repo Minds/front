@@ -52,6 +52,7 @@ import {
 } from '../boost-modal-v2.types';
 import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostGoal, BoostGoalButtonText } from '../../boost.types';
+import { Session } from '../../../../services/session';
 
 /**
  * Service for creation and submission of boosts.
@@ -140,15 +141,26 @@ export class BoostModalV2Service implements OnDestroy {
     })
   );
 
+  // Whether a Boost goal can be set
+  public canSetBoostGoal$: Observable<boolean> = combineLatest([
+    this.entity$,
+    this.entityType$,
+  ]).pipe(
+    map(([entity, entityType]: [BoostableEntity, BoostSubject]) => {
+      return (
+        this.boostGoalsExperiment.isActive() &&
+        entityType === BoostSubject.POST &&
+        entity?.owner_guid === this.session.getLoggedInUser().guid
+      );
+    })
+  );
+
   // first panel that should be shown, depending on entityType and goal experiment
   public readonly firstPanel$: Observable<
     BoostModalPanel
-  > = this.entityType$.pipe(
-    map(entityType => {
-      if (
-        this.boostGoalsExperiment.isActive() &&
-        entityType === BoostSubject.POST
-      ) {
+  > = this.canSetBoostGoal$.pipe(
+    map((canSetBoostGoal: boolean) => {
+      if (canSetBoostGoal) {
         return BoostModalPanel.GOAL;
       } else {
         return BoostModalPanel.AUDIENCE;
@@ -283,6 +295,7 @@ export class BoostModalV2Service implements OnDestroy {
     this.goal$,
     this.goalButtonText$,
     this.goalButtonUrl$,
+    this.canSetBoostGoal$,
   ]).pipe(
     map(
       ([
@@ -296,6 +309,7 @@ export class BoostModalV2Service implements OnDestroy {
         goal,
         goalButtonText,
         goalButtonUrl,
+        canSetBoostGoal,
       ]: [
         BoostableEntity,
         BoostSubject,
@@ -306,23 +320,32 @@ export class BoostModalV2Service implements OnDestroy {
         BoostAudience,
         BoostGoal,
         BoostGoalButtonText,
-        string
+        string,
+        boolean
       ]): BoostSubmissionPayload => {
-        return {
+        let payload: BoostSubmissionPayload = {
           entity_guid: entity?.guid,
           target_suitability: audience,
           target_location:
             entityType === BoostSubject.CHANNEL
               ? BoostLocation.SIDEBAR
               : BoostLocation.NEWSFEED,
-          goal: goal,
-          goal_button_text: goalButtonText,
-          goal_button_url: goalButtonUrl,
           payment_method: Number(paymentMethod),
           payment_method_id: paymentMethodId,
           daily_bid: dailyBudget,
           duration_days: duration,
         };
+
+        if (canSetBoostGoal) {
+          payload = {
+            ...payload,
+            goal: goal,
+            goal_button_text: goalButtonText,
+            goal_button_url: goalButtonUrl,
+          };
+        }
+
+        return payload;
       }
     )
   );
@@ -341,6 +364,7 @@ export class BoostModalV2Service implements OnDestroy {
 
   constructor(
     private api: ApiService,
+    private session: Session,
     private toast: ToasterService,
     private config: ConfigsService,
     private web3Wallet: Web3WalletService,

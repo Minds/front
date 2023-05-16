@@ -5,10 +5,12 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import { ReplaySubject } from 'rxjs';
 import { TopbarAlertComponent } from './topbar-alert.component';
-import { AlertKey, TopbarAlertService } from './topbar-alert.service';
+import { TopbarAlertService } from './topbar-alert.service';
 import { MockService } from '../../../utils/mock';
+import { MarkdownModule } from 'ngx-markdown';
 
 describe('TopbarAlertComponent', () => {
   let comp: TopbarAlertComponent;
@@ -17,15 +19,19 @@ describe('TopbarAlertComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
+        imports: [MarkdownModule.forRoot()],
         declarations: [TopbarAlertComponent],
         providers: [
           {
             provide: TopbarAlertService,
             useValue: MockService(TopbarAlertService, {
-              has: ['activeAlert$'],
+              has: ['shouldShow$', 'copyData$'],
               props: {
-                activeAlert$: {
-                  get: () => new BehaviorSubject<AlertKey>('referral'),
+                shouldShow$: {
+                  get: () => new ReplaySubject<boolean>(),
+                },
+                copyData$: {
+                  get: () => new ReplaySubject<any>(),
                 },
               },
             }),
@@ -38,8 +44,6 @@ describe('TopbarAlertComponent', () => {
   beforeEach(done => {
     fixture = TestBed.createComponent(TopbarAlertComponent);
     comp = fixture.componentInstance;
-
-    (comp as any).service.activeAlert$.next('referral');
 
     fixture.detectChanges();
 
@@ -57,21 +61,23 @@ describe('TopbarAlertComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should get active alert from service', (done: DoneFn) => {
-    const activeAlert: string = 'test';
-    (comp as any).service.activeAlert$.next(activeAlert);
-    (comp as any).activeAlert$.subscribe((_activeAlert: string) => {
-      expect(_activeAlert).toBe(activeAlert);
-      done();
-    });
-  });
-
   it('should call to dismiss the active notice', fakeAsync(() => {
-    const activeAlert: string = 'test';
-    (comp as any).service.activeAlert$.next(activeAlert);
+    (comp as any).service.shouldShow$.next(true);
     (comp as any).dismiss();
     tick();
 
-    expect((comp as any).service.dismiss).toHaveBeenCalledWith(activeAlert);
+    expect((comp as any).service.dismiss).toHaveBeenCalled();
   }));
+
+  it('should render message from service.copyData$', () => {
+    (comp as any).service.shouldShow$.next(true);
+
+    const message = 'Test message';
+    (comp as any).service.copyData$.next({ attributes: { message } });
+    fixture.detectChanges();
+    const messageEl = fixture.debugElement.query(
+      By.css('.m-topbarAlert__message')
+    ).nativeElement;
+    expect(messageEl.innerHTML).toContain(message);
+  });
 });

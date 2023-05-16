@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MarkedDirective } from '../../../../common/directives/marked.directive';
 
 /**
  * Page describing the terms of service for
@@ -8,10 +7,8 @@ import { MarkedDirective } from '../../../../common/directives/marked.directive'
 @Component({
   selector: 'm-aux__monetizationTerms',
   templateUrl: './monetization-terms.component.html',
-  providers: [MarkedDirective],
+  providers: [],
 })
 export class AuxMonetizationTermsComponent {
   init: boolean = false;
-
-  constructor(private markedDirective: MarkedDirective) {}
 }

@@ -42,8 +42,11 @@
         border-radius: $m-borderRadius;
         width: 100%;
         padding: $spacing3 $spacing4;
+        background-color: unset;
+
         @include m-theme() {
           border: 1px solid themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
         }
         &::placeholder {
           @include body3Regular;
