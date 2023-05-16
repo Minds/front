@@ -2,11 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { MockService } from '../../../utils/mock';
 import { ResetPasswordModalService } from './reset-password-modal.service';
-import { FormBuilder } from '@angular/forms';
 import { ResetPasswordModalComponent } from './reset-password-modal.component';
-import { Session } from 'protractor';
 import { sessionMock } from '../../../services/session-mock';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Session } from '../../../services/session';
 
 describe('ResetPasswordModalComponent', () => {
   let component: ResetPasswordModalComponent;
