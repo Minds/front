@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { firstValueFrom, Observable } from 'rxjs';
-import { AlertKey, TopbarAlertService } from './topbar-alert.service';
+import { map } from 'rxjs';
+import { TopbarAlertService } from './topbar-alert.service';
 
 /**
  * Topbar alert component - intended to show above normal site topbar
@@ -14,8 +14,10 @@ import { AlertKey, TopbarAlertService } from './topbar-alert.service';
   styleUrls: ['./topbar-alert.component.ng.scss'],
 })
 export class TopbarAlertComponent {
-  /** Get currently active alert */
-  protected activeAlert$: Observable<AlertKey> = this.service.activeAlert$;
+  protected message$ = this.service.copyData$.pipe(
+    map(copyData => copyData.attributes.message)
+  );
+  protected shouldShow$ = this.service.shouldShow$;
 
   constructor(private service: TopbarAlertService) {}
 
@@ -24,6 +26,6 @@ export class TopbarAlertComponent {
    * @returns { Promise<void> }
    */
   protected async dismiss(): Promise<void> {
-    this.service.dismiss(await firstValueFrom(this.activeAlert$));
+    this.service.dismiss();
   }
 }

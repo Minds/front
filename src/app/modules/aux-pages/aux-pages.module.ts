@@ -11,6 +11,7 @@ import { AuxRightsComponent } from './pages/rights/rights.component';
 import { AuxContactComponent } from './pages/contact/contact.component';
 import { AuxMonetizationTermsComponent } from './pages/monetization-terms/monetization-terms.component';
 import { PathMatch } from '../../common/types/angular.types';
+import { MarkdownModule } from 'ngx-markdown';
 
 const AUX_ROUTES: Routes = [
   {
@@ -108,6 +109,7 @@ const AUX_ROUTES: Routes = [
     CommonModule,
     RouterModule.forChild(AUX_ROUTES),
     MarketingModule,
+    MarkdownModule,
   ],
   declarations: [
     AuxComponent,

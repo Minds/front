@@ -1,13 +1,23 @@
 <div class="m-popover__wrapper">
   <ng-content></ng-content>
   <div class="m-popover__content" #content>
+    <!-- Loading spinner panel -->
+    <div class="m-popover__loadingSpinner" *ngIf="closingInProgress">
+      <m-sizeableLoadingSpinner
+        [inProgress]="true"
+        [spinnerHeight]="'20px'"
+        [spinnerWidth]="'20px'"
+      ></m-sizeableLoadingSpinner>
+    </div>
+    <!-- Close button -->
     <i
       class="m-popover__close material-icons"
       *ngIf="isMobileOrTablet"
       (click)="hide()"
       >close</i
     >
-    <ul class="m-popover__rules">
+    <!-- Rules -->
+    <ul class="m-popover__rules" *ngIf="!closingInProgress">
       <li
         [class.m-popover__rule--checked]="lengthCheck"
         i18n="@@REGISTRATION_VALIDATOR__MORE_THAN_8_CHARACTERS"

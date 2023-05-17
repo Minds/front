@@ -16,8 +16,8 @@ namespace SupermindSettingsSteps {
 
   Before(() => {});
 
-  Given('I am on the Supermind settings page', async () => {
-    await supermindSettingsPage.navigateToViaSupermindConsole();
+  Given('I am on the Supermind settings page', () => {
+    supermindSettingsPage.navigateTo();
   });
 
   Given('I fill out random Supermind settings values', () => {
