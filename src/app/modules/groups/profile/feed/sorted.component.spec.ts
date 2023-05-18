@@ -7,7 +7,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { SortedService } from './sorted.service';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '../../../../services/api';
 import { ChangeDetectorRef } from '@angular/core';
 import { GroupsSearchService } from './search.service';
@@ -86,6 +86,7 @@ describe('GroupProfileFeedSortedComponent', () => {
           { provide: GroupsService, useValue: MockService(GroupsService) },
           { provide: Session, useValue: sessionMock },
           { provide: Router, useValue: MockService(Router) },
+          { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
           { provide: Client, useValue: clientMock },
           {
             provide: ChangeDetectorRef,

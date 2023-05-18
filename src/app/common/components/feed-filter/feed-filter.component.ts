@@ -35,7 +35,7 @@ export type FeedFilterDateRangeType = 'all' | 'custom';
 /**
  * Feed filter label/value set
  */
-interface LabelValue<T> {
+export interface LabelValue<T> {
   label?: string;
   value: T;
   hidden?: boolean;

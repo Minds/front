@@ -1,0 +1,27 @@
+<div class="m-groupHeader" *ngIf="service.group$ | async as group">
+  <div class="m-groupHeader__banner">
+    <div
+      class="m-groupHeaderBanner__background"
+      [ngStyle]="bannerBackgroundImageCss(group)"
+      data-ref="data-minds-group-banner"
+    ></div>
+    <m-group__actions></m-group__actions>
+  </div>
+
+  <div class="m-groupHeader__info">
+    <minds-avatar
+      class="m-groupHeaderInfo__avatar"
+      [object]="group"
+      [editMode]="false"
+      data-ref="data-minds-group-avatar"
+    ></minds-avatar>
+    <m-group__actions></m-group__actions>
+    <h1 class="m-groupHeaderInfo__name" [title]="group.name">
+      <span>
+        {{ group.name | truncate: 20 }}
+      </span>
+    </h1>
+    <!-- SIDEBAR CONTENT MOVES HERE FOR MOBILE ONLY  -->
+    <m-group__about class="m-groupHeaderInfo__sidebar"></m-group__about>
+  </div>
+</div>

@@ -63,40 +63,75 @@
 </ng-template>
 
 <!-- ----------------------------- -->
-<!-- CUSTOM TYPES -->
+<!-- CUSTOM TYPES: V1 -->
 <!-- ----------------------------- -->
-<m-dropdownMenu
-  #customTypeDropdown
-  [menu]="customTypeMenu"
-  [anchorPosition]="{ top: '100%', right: '0' }"
->
-  <label [ngClass]="[labelClass]">
-    <i
-      *ngIf="getCurrentCustomTypeProp('icon')"
-      class="material-icons m-sortSelectorLabel__icon"
-      >{{ getCurrentCustomTypeProp('icon') }}</i
-    >
+<ng-container *ngIf="!v2; else v2TypesMenu">
+  <m-dropdownMenu
+    #customTypeDropdown
+    [menu]="customTypeMenu"
+    [anchorPosition]="{ top: '100%', right: '0' }"
+  >
+    <label [ngClass]="[labelClass]">
+      <i
+        *ngIf="getCurrentCustomTypeProp('icon')"
+        class="material-icons m-sortSelectorLabel__icon"
+        >{{ getCurrentCustomTypeProp('icon') }}</i
+      >
 
-    <span class="m-sortSelectorLabel__text">{{
-      getCurrentCustomTypeProp('label')
-    }}</span>
+      <span class="m-sortSelectorLabel__text">{{
+        getCurrentCustomTypeProp('label')
+      }}</span>
 
-    <i class="material-icons m-sortSelectorLabel__caret">keyboard_arrow_down</i>
-  </label>
-</m-dropdownMenu>
+      <i class="material-icons m-sortSelectorLabel__caret"
+        >keyboard_arrow_down</i
+      >
+    </label>
+  </m-dropdownMenu>
 
-<ng-template #customTypeMenu>
-  <ul>
-    <m-dropdownMenu__item
-      *ngFor="let item of getCustomTypes()"
-      (click)="setCustomType(item.id); closeDropdowns()"
-      [icon]="item.icon"
-      [selectable]="true"
-      [selected]="item.id === customType"
-      ><span>{{ item.label }}</span></m-dropdownMenu__item
-    >
-  </ul>
+  <ng-template #customTypeMenu>
+    <ul>
+      <m-dropdownMenu__item
+        *ngFor="let item of getCustomTypes()"
+        (click)="setCustomType(item.id); closeDropdowns()"
+        [icon]="item.icon"
+        [selectable]="true"
+        [selected]="item.id === customType"
+        ><span>{{ item.label }}</span></m-dropdownMenu__item
+      >
+    </ul>
+  </ng-template>
+</ng-container>
+<!-- ----------------------------- -->
+<!-- CUSTOM TYPES: V2 -->
+<!-- ----------------------------- -->
+<ng-template #v2TypesMenu>
+  <m-dropdownMenu
+    #customTypeDropdown
+    [menu]="customTypeMenu"
+    [anchorPosition]="{ top: '100%', left: '0' }"
+  >
+    <div class="m-sortSelectorMenu__trigger">
+      <span>Type: </span
+      ><span class="m-sortSelectorMenuTrigger__selectionLabel">{{
+        getCurrentCustomTypeProp('label')
+      }}</span
+      ><span>▾</span>
+    </div>
+  </m-dropdownMenu>
+
+  <ng-template #customTypeMenu>
+    <ul>
+      <m-dropdownMenu__item
+        *ngFor="let item of getCustomTypes()"
+        (click)="setCustomType(item.id); closeDropdowns()"
+        [selectable]="true"
+        [selected]="item.id === customType"
+        ><span>{{ item.label }}</span></m-dropdownMenu__item
+      >
+    </ul>
+  </ng-template>
 </ng-template>
+
 <!-- ----------------------------- -->
 <!-- MINDS+ -->
 <!-- ----------------------------- -->
