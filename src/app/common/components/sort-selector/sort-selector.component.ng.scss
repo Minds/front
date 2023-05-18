@@ -53,4 +53,37 @@
       }
     }
   }
+
+  &.m-sortSelector--v2 {
+    .m-sortSelectorMenu__trigger {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      font-size: 14px;
+      line-height: 19px;
+
+      > span {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        &.m-sortSelectorMenuTrigger__selectionLabel {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+
+      > span:first-child {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      > * + * {
+        margin-left: 9px;
+      }
+    }
+  }
 }

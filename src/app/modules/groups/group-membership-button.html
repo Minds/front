@@ -1,81 +1,103 @@
-<ng-container *ngIf="iconsOnly; else normalView">
-  <m-button
-    (onAction)="join($event)"
-    *ngIf="
+<ng-container *ngIf="group">
+  <ng-container *ngIf="iconsOnly; else normalView">
+    <m-button
+      (onAction)="join($event)"
+      *ngIf="
           !group['is:banned'] &&
           !group['is:awaiting'] &&
           !group['is:invited'] &&
           !group['is:member']
         "
-    iconOnly="true"
-  >
-    <i class="material-icons"> add </i>
-  </m-button>
-
-  <m-button (onAction)="leave()" *ngIf="group['is:member']" iconOnly="true">
-    <i class="material-icons"> check </i>
-  </m-button>
-</ng-container>
-
-<ng-template #normalView>
-  <m-button
-    class="m-group__membershipButton--join"
-    *ngIf="
-          !group['is:banned'] &&
-          !group['is:awaiting'] &&
-          !group['is:invited'] &&
-          !group['is:member']
-        "
-    (onAction)="join($event)"
-    i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION_SINGLE_NG_CONTAINER"
-    [saving]="inProgress"
-    size="small"
-  >
-    <ng-container>Join</ng-container>
-  </m-button>
-  <ng-container *ngIf="group['is:invited'] &amp;&amp; !group['is:member']">
-    <m-button
-      class="m-group__membershipButton--verdict"
-      (onAction)="accept()"
-      [saving]="inProgress"
-      i18n="@@M__ACTION__ACCEPT"
-      size="small"
-      >Accept</m-button
+      iconOnly="true"
     >
-    <m-button
-      class="m-group__membershipButton--verdict"
-      (onAction)="decline()"
-      [saving]="inProgress"
-      i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
-      size="small"
-      >Decline</m-button
-    >
+      <i class="material-icons"> add </i>
+    </m-button>
+
+    <m-button (onAction)="leave()" *ngIf="group['is:member']" iconOnly="true">
+      <i class="material-icons"> check </i>
+    </m-button>
   </ng-container>
-  <m-button
-    class="m-group__membershipButton--leave"
-    *ngIf="group['is:member']"
-    (onAction)="leave()"
-    [saving]="inProgress"
-    i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION"
-    size="small"
-    >Leave</m-button
-  >
-  <m-button
-    class="m-group__membershipButton--cancel"
-    *ngIf="group['is:awaiting']"
-    (onAction)="cancelRequest()"
-    [saving]="inProgress"
-    i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
-    size="small"
-    >Cancel request</m-button
-  >
-  <m-modal-signup-on-action
-    [open]="showModal"
-    (closed)="join($event); showModal = false"
-    action="join a group"
-    i18n-action="@@GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE"
-    [overrideOnboarding]="true"
-    *ngIf="!session.isLoggedIn()"
-  >
-  </m-modal-signup-on-action>
-</ng-template>
+  <!-- ----------------------------------- -->
+  <ng-template #normalView>
+    <!-- ----------------------------  -->
+    <!-- JOIN  -->
+    <!-- ----------------------------  -->
+    <m-button
+      class="m-group__membershipButton--join"
+      *ngIf="
+          !group['is:banned'] &&
+          !group['is:awaiting'] &&
+          !group['is:invited'] &&
+          !group['is:member']
+        "
+      (onAction)="join($event)"
+      [saving]="inProgress"
+      [size]="buttonSize"
+      [overlay]="v2"
+    >
+      <ng-container
+        *ngIf="!v2"
+        i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION_SINGLE_NG_CONTAINER"
+        >Join</ng-container
+      >
+      <ng-container *ngIf="v2" i18n="@@GROUPS__JOIN_BUTTON__JOIN_GROUP"
+        >Join Group</ng-container
+      >
+    </m-button>
+    <!-- ----------------------------  -->
+    <!-- ACCEPT & DECLINE INVITATION -->
+    <!-- (TWO BUTTONS DISPLAYED)-->
+    <!-- ----------------------------  -->
+    <ng-container *ngIf="group['is:invited'] &amp;&amp; !group['is:member']">
+      <m-button
+        class="m-group__membershipButton--verdict"
+        (onAction)="accept()"
+        [saving]="inProgress"
+        i18n="@@M__ACTION__ACCEPT"
+        [size]="buttonSize"
+        [overlay]="v2"
+        >Accept</m-button
+      >
+      <m-button
+        class="m-group__membershipButton--verdict"
+        (onAction)="decline()"
+        [saving]="inProgress"
+        i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
+        [size]="buttonSize"
+        [overlay]="v2"
+        >Decline</m-button
+      >
+    </ng-container>
+    <!-- ----------------------------  -->
+    <!-- LEAVE GROUP  -->
+    <!-- ----------------------------  -->
+    <m-button
+      class="m-group__membershipButton--leave"
+      *ngIf="group['is:member']"
+      (onAction)="leave()"
+      [saving]="inProgress"
+      [size]="buttonSize"
+      [overlay]="v2"
+    >
+      <ng-container *ngIf="!v2" i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION"
+        >Leave</ng-container
+      >
+      <ng-container *ngIf="v2" i18n="@@GROUPS__JOIN_BUTTON__LEAVE_GROUP"
+        >Leave Group</ng-container
+      >
+    </m-button>
+    <!-- ----------------------------  -->
+    <!-- CANCEL REQUEST TO JOIN -->
+    <!-- ----------------------------  -->
+    <m-button
+      class="m-group__membershipButton--cancel"
+      *ngIf="group['is:awaiting']"
+      (onAction)="cancelRequest()"
+      [saving]="inProgress"
+      i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
+      [size]="buttonSize"
+      [overlay]="v2"
+      >Cancel request</m-button
+    >
+  </ng-template>
+</ng-container>

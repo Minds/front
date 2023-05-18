@@ -1,0 +1,81 @@
+@import 'defaults.scss';
+@import '../../../common/layout/layout.scss';
+
+:host {
+  display: block;
+  min-height: 100%;
+  border-right: 1px solid;
+  position: relative;
+
+  @media screen and (max-width: $max-mobile) {
+    border: none;
+  }
+
+  @include m-theme() {
+    border-color: themed($m-borderColor--primary);
+  }
+
+  .m-group__narrowBrief {
+    display: none;
+    padding: 20px 20px 0;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      display: block;
+    }
+  }
+
+  .m-group__tabs {
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 20px;
+
+      .m-tabs__tab > a:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .m-group__toolbar {
+    display: flex;
+    justify-content: space-between;
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-tabs__container {
+      @include m-theme() {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .m-group__searchBtnWrapper {
+    margin-right: 32px;
+    display: flex;
+    align-items: center;
+
+    .m-groupSearchBtn {
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 10px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-group__view--members,
+  .m-group__view--requests {
+    display: block;
+    padding: $spacing5;
+  }
+
+  ::ng-deep m-explicit-overlay {
+    .m-channel--explicit-overlay--container {
+      top: 75px;
+      .m-channel--explicit-overlay--content {
+        padding: 0 $spacing4;
+      }
+    }
+  }
+}

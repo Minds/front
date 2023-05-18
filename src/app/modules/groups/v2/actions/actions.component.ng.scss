@@ -1,0 +1,34 @@
+@import 'defaults.scss';
+
+:host {
+  .m-group__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $spacing5 $spacing5 0 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 14px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: $spacing2 $spacing5 0 0;
+    }
+
+    > * {
+      margin-left: $spacing4;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  ::ng-deep {
+    m-button {
+      display: inline-block;
+      margin-right: 0;
+    }
+  }
+}
