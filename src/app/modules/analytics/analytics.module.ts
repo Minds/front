@@ -28,19 +28,13 @@ const routes: Routes = [
   },
   {
     path: 'dashboard/token',
-    redirectTo: 'dashboard/token/supply',
+    redirectTo: 'dashboard/traffic',
     pathMatch: 'full' as PathMatch,
   },
   {
     path: 'dashboard/token/:tabId',
-    component: AnalyticsGlobalTokensComponent,
-    data: {
-      title: 'Analytics',
-      description: 'Global Tokens dashboard',
-      ogImage: '/assets/og-images/analytics-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
-    },
+    redirectTo: 'dashboard/traffic',
+    pathMatch: 'full' as PathMatch,
   },
   {
     path: 'dashboard/:category',

@@ -321,4 +321,5 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
       (position > 4 && position % 5 === 0) || position === 0
     );
   }
+
 }
