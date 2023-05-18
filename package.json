@@ -8,7 +8,7 @@
     "preinstall": "git config core.hooksPath .git/hooks/",
     "build": "ng build --configuration production",
     "prebuild:dev": "gulp build.sass",
-    "build:dev": "ng build --watch=true --poll=1000",
+    "build:dev": "ng build minds --watch=true --poll=1000",
     "preserve:dev": "gulp build.sass",
     "serve:dev": "ng serve --configuration hmr --hmr --proxy-config proxy.conf.js --host=0.0.0.0 minds --allowed-hosts=all",
     "test": "ng test --source-map=false",
