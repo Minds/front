@@ -5,7 +5,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { BoostRecommendationService } from '../../../../common/services/boost-recommendation.service';
 import { NgStyleValue } from '../../../../common/types/angular.types';
 
 /**
@@ -18,7 +17,7 @@ import { NgStyleValue } from '../../../../common/types/angular.types';
   styleUrls: ['./boost-button.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ActivityBoostButtonComponent implements OnInit {
+export class ActivityBoostButtonComponent {
   @Input()
   object = {
     guid: undefined,
@@ -26,31 +25,6 @@ export class ActivityBoostButtonComponent implements OnInit {
   boostRecommendationsSubscription: Subscription;
   shouldShowTooltip$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   shouldShowShimmer$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  constructor(public boostRecommendationService: BoostRecommendationService) {}
-
-  ngOnInit() {
-    this.boostRecommendationsSubscription = this.boostRecommendationService.boostRecommendations$.subscribe(
-      boostRecommendations => {
-        if (boostRecommendations.find(guid => guid === this.object.guid)) {
-          // if this was the first time we were recommending boost, show the tooltip
-          if (!this.boostRecommendationService.boostRecommended$.getValue()) {
-            this.shouldShowTooltip$.next(true);
-          }
-
-          // shimmer the boost button
-          this.shouldShowShimmer$.next(true);
-        } else {
-          this.shouldShowTooltip$.next(false);
-          this.shouldShowShimmer$.next(false);
-        }
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    this.boostRecommendationsSubscription?.unsubscribe();
-  }
 
   /**
    * Get style for settings tooltip bubble.
