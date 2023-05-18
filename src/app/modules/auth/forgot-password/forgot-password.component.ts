@@ -6,6 +6,7 @@ import { Session } from '../../../services/session';
 import { RegexService } from '../../../common/services/regex.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 
 @Component({
   moduleId: module.id,
@@ -32,18 +33,35 @@ export class ForgotPasswordComponent {
     public session: Session,
     public regex: RegexService,
     public toaster: ToasterService,
-    private pageLayout: PageLayoutService
+    private pageLayout: PageLayoutService,
+    private resetPasswordExperiment: ResetPasswordExperimentService
   ) {}
 
   ngOnInit() {
     this.pageLayout.useFullWidth();
     this.paramsSubscription = this.route.params.subscribe(params => {
-      if (params['code']) {
-        this.setCode(params['code']);
-      }
+      if (this.resetPasswordExperiment.isActive()) {
+        let queryParams = {
+          resetPassword: true,
+        };
 
-      if (params['username']) {
-        this.username = params['username'];
+        if (params['username'] && params['code']) {
+          queryParams['username'] = params['username'];
+          queryParams['code'] = params['code'];
+        }
+
+        // Go to homepage and open the reset password modal there
+        this.router.navigate(['/'], {
+          queryParams: queryParams,
+        });
+      } else {
+        if (params['code']) {
+          this.setCode(params['code']);
+        }
+
+        if (params['username']) {
+          this.username = params['username'];
+        }
       }
     });
   }

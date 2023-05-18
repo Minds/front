@@ -1,0 +1,109 @@
+<div *ngIf="form" class="m-resetPassword__form m-formWrapper ">
+  <form
+    [formGroup]="form"
+    [ngClass]="{
+      'm-formLayout--buttonStretched': activePanel !== 'emailSent',
+      'm-resetPasswordForm--multipleButtons': activePanel === 'emailSent'
+    }"
+  >
+    <div class="m-form__fieldsContainer">
+      <p class="m-resetPasswordForm__description">
+        <ng-container
+          *ngIf="activePanel === 'enterUsername'"
+          i18n="@@RESET_PASSWORD__ENTER_USERNAME__DESCRIPTION"
+        >
+          To request a new password, enter your username.</ng-container
+        >
+        <ng-container
+          *ngIf="activePanel === 'emailSent'"
+          i18n="@@RESET_PASSWORD__EMAIL_SENT__DESCRIPTION"
+        >
+          We have sent a reset link to your registered email address. If you
+          didn’t get an email, hit resend after
+          {{ secondsBetweenResends }} seconds.</ng-container
+        >
+        <ng-container
+          *ngIf="activePanel === 'invalidUsername'"
+          i18n="@@RESET_PASSWORD__INVALID_USERNAME__DESCRIPTION"
+        >
+          We’re sorry, but it seems that there is no such username on Minds. Are
+          you sure you entered the right one?</ng-container
+        >
+      </p>
+      <div
+        class="m-form__field--text stretchedField"
+        *ngIf="activePanel === 'enterUsername'"
+      >
+        <div class="m-form__row--label">
+          <label
+            for="username"
+            i18n="@@M__COMMON__USERNAME"
+            id="username-description"
+            >Username</label
+          >
+        </div>
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            formControlName="username"
+            (keydown.enter)="request()"
+            data-ref="data-minds-forgot-password-username-input"
+            aria-describedby="username-description"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__buttonsContainer">
+      <div
+        *ngIf="activePanel === 'emailSent'"
+        class="m-resetPasswordFormButtonsContainer__loginLink"
+      >
+        <a
+          i18n="@@RESET_PASSWORD__EMAIL_SENT_PANEL__LOGIN_LINK__LOG_IN"
+          (click)="openAuthModal($event)"
+          >Log In</a
+        >
+        <span i18n="@@RESET_PASSWORD__EMAIL_SENT_PANEL__LOGIN_LINK__TO_MINDS">
+          to Minds</span
+        >
+      </div>
+
+      <m-button
+        *ngIf="activePanel === 'enterUsername' || activePanel === 'emailSent'"
+        (onAction)="request()"
+        [saving]="inProgress"
+        [disabled]="!canSubmit"
+        solid="true"
+        color="blue"
+        data-ref="data-minds-forgot-password-submit"
+      >
+        <ng-container
+          *ngIf="activePanel === 'enterUsername'"
+          i18n="@@M__ACTION__CONTINUE"
+        >
+          Continue</ng-container
+        >
+        <ng-container
+          *ngIf="activePanel === 'emailSent'"
+          i18n="@@RESET_PASSWORD__RESEND_BUTTON_LABEL"
+        >
+          Resend</ng-container
+        >
+      </m-button>
+      <m-button
+        *ngIf="activePanel === 'invalidUsername'"
+        (onAction)="service.activePanel$.next('enterUsername')"
+        color="blue"
+        i18n="@@RESET_PASSWORD__ENTER_VALID_USERNAME"
+        data-ref="data-minds-forgot-password-enter-valid-username-button"
+      >
+        Enter Valid Username
+      </m-button>
+    </div>
+  </form>
+</div>

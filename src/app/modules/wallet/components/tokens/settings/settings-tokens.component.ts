@@ -26,7 +26,6 @@ import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { getBrowser } from '../../../../../utils/browser';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
 import { Subscription } from 'rxjs';
-import { ethers } from 'ethers';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 
 enum Views {
