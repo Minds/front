@@ -285,13 +285,18 @@ export class PostMenuService {
     }
   }
 
-  async allowComments(areAllowed: boolean) {
-    this.entity.allow_comments = areAllowed;
+  /**
+   * Change permissions on whether to allow comments on a post or not.
+   * @param { boolean } allowed - whether users are to be allowed to comment the entity.
+   * @returns { Promise<void> }
+   */
+  public async allowComments(allowed: boolean): Promise<void> {
+    this.entity.allow_comments = allowed;
     const result = await this.activityService.toggleAllowComments(
       this.entity,
-      areAllowed
+      allowed
     );
-    if (result !== areAllowed) {
+    if (result !== allowed) {
       this.entity.allow_comments = result;
     }
   }

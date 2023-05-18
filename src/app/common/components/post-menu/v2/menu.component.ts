@@ -163,6 +163,12 @@ export class PostMenuV2Component implements OnInit {
       case 'unblock':
         this.service.unBlock();
         break;
+      case 'allow-comments':
+        this.service.allowComments(true);
+        break;
+      case 'disable-comments':
+        this.service.allowComments(false);
+        break;
       case 'boost':
         this.service.openBoostModal();
         break;
