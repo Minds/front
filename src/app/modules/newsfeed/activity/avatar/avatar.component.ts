@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   ActivityDisplayOptions,
@@ -7,15 +13,12 @@ import {
 } from '../activity.service';
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /**
  * Displays the avatar for the activity
  * (or avatars - both group and post owner - if it's a group post
  * displayed outside of the group's profile feed
- *
- * Currently does NOT cover avatars in modals or sidebar/minimal modes.
- * Those are handled in m-activity__ownerBlock
- * ojm TODO do this now?
  */
 @Component({
   selector: 'm-activity__avatar',
@@ -26,62 +29,90 @@ export class ActivityAvatarComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   @Input() entity: ActivityEntity;
-  @Input() displayOptions: ActivityDisplayOptions;
 
-  userAvatarUrl: string;
+  /** Is this activity the quoted/reminded post? */
+  @Input() wasQuoted: boolean = false;
 
+  /** Is this activity the container of a reminded post? */
+  isRemind: boolean = false;
+  /**
+   * For when we are showing a group post outside of the group's feed
+   */
   showGroupContext: boolean = false;
+
+  userAvatarSize: string = 'medium';
 
   groupAvatarUrl: string;
   groupUrl: string;
 
+  // Note: currently ownerBlocks are only visible in minimalMode for quotes/reminds
+  // and sidebar suggestions stemming from group posts
+  @HostBinding('class.m-activity__avatar--minimalMode')
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
+  get quoteOrRemind(): boolean {
+    return this.wasQuoted || this.isRemind;
+  }
+
   constructor(
     private service: ActivityService,
     private session: Session,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private experimentsService: ExperimentsService
   ) {}
 
   ngOnInit(): void {
-    if (!this.entity || !this.displayOptions) {
+    if (!this.entity) {
       return;
     }
 
     this.subscriptions.push(
-      this.service.showGroupContext$.subscribe((should: boolean) => {
-        this.showGroupContext = should;
+      this.service.showGroupContext$.subscribe((show: boolean) => {
+        this.showGroupContext =
+          show && !this.service.displayOptions.minimalMode;
 
-        console.log('ojm show group', should);
-        if (should) {
+        // We only show the user avatar in minimal mode
+        if (this.showGroupContext) {
+          this.userAvatarSize = 'small';
+
           const group = this.entity.containerObj;
 
           this.groupAvatarUrl = `${this.configs.get('cdn_url')}fs/v1/avatars/${
             group.guid
           }/medium/${group.icontime}`;
 
-          // ojm handle v2 link
-          // ojm test this
-          this.groupUrl = `groups/profile/${group.guid}`;
+          this.groupUrl = this.experimentsService.hasVariation(
+            'epic-318-modern-groups',
+            true
+          )
+            ? `/group/${group.guid}`
+            : `/groups/profile/${group.guid}`;
         }
+      }),
+      this.service.isRemind$.subscribe((is: boolean) => {
+        this.isRemind = is;
       })
     );
-
-    const currentUser = this.session.getLoggedInUser();
-    const iconTime: number =
-      currentUser && currentUser.guid === this.entity.ownerObj.guid
-        ? currentUser.icontime
-        : this.entity.ownerObj.icontime;
-
-    this.userAvatarUrl =
-      this.configs.get('cdn_url') +
-      'icon/' +
-      this.entity.ownerObj.guid +
-      '/medium/' +
-      iconTime;
   }
 
   ngOnDestroy(): void {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  get iconTime(): number {
+    const currentUser = this.session.getLoggedInUser();
+    return currentUser && currentUser.guid === this.entity.ownerObj.guid
+      ? currentUser.icontime
+      : this.entity.ownerObj.icontime;
+  }
+
+  get userAvatarUrl(): string {
+    return `${this.configs.get('cdn_url')}icon/${this.entity.ownerObj.guid}/${
+      this.userAvatarSize
+    }/${this.iconTime}`;
   }
 }

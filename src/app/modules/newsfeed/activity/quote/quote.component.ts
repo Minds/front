@@ -31,19 +31,6 @@ export class ActivityQuoteComponent {
     this.service.isNsfwConsented$.next(true); // Parent entity should have done this
 
     this.quotedEntity = entity.remind_object;
-
-    const currentUser = this.session.getLoggedInUser();
-    const iconTime: number =
-      currentUser && currentUser.guid === entity.ownerObj.guid
-        ? currentUser.icontime
-        : this.quotedEntity.ownerObj.icontime;
-
-    this.avatarUrl =
-      this.configs.get('cdn_url') +
-      'icon/' +
-      this.quotedEntity.ownerObj.guid +
-      '/medium/' +
-      iconTime;
   }
 
   /**

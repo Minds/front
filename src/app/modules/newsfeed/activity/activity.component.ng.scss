@@ -191,6 +191,10 @@
     .m-activityTop__avatarColumn,
     ::ng-deep m-activity__quote .m-activityTop__avatarColumn {
       padding-right: $activityAvatarSpacingRight--single;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-right: $activityAvatarSpacingRight--single--mobile;
+      }
     }
   }
 
@@ -208,11 +212,6 @@
     padding-top: $spacing4;
   }
 
-  .m-activityTop__avatarColumn,
-  ::ng-deep m-activity__quote .m-activityTop__avatarColumn {
-    padding-right: $activityAvatarSpacingRight--feed;
-  }
-
   .m-activityTop__mainColumn,
   ::ng-deep m-activity__quote .m-activityTop__mainColumn {
     display: flex;
@@ -228,6 +227,16 @@
     align-items: center;
     min-width: 0;
   }
+
+  .m-activityTop__avatarColumn,
+  ::ng-deep m-activity__quote .m-activityTop__avatarColumn {
+    padding-right: $activityAvatarSpacingRight--feed;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-right: $activityAvatarSpacingRight--feed--mobile;
+    }
+  }
+
   // *********************************
   // ** COMMENTS **
   // *********************************
@@ -246,27 +255,6 @@
   & > m-comments__entityOutlet {
     & > m-comment__poster .m-commentPoster__wrapper {
       margin: 10px;
-    }
-  }
-
-  // *********************************
-  // ** AVATAR **
-  // *********************************
-
-  .m-activity__avatar,
-  ::ng-deep m-activity__quote .m-activity__avatar {
-    padding-right: $activityAvatarSpacingRight--feed;
-
-    @media screen and (max-width: $max-mobile) {
-      padding-right: $activityAvatarSpacingRight--feed--mobile;
-    }
-
-    img {
-      border-radius: 50%;
-      width: $activityAvatarWidth;
-      height: $activityAvatarWidth;
-      object-fit: cover;
-      box-sizing: border-box;
     }
   }
 
