@@ -1,0 +1,91 @@
+<div *ngIf="form" class="m-resetPassword__form m-formWrapper ">
+  <form [formGroup]="form" class="m-formLayout--buttonStretched">
+    <div class="m-form__fieldsContainer">
+      <p
+        class="m-resetPasswordForm__description"
+        i18n="@@RESET_PASSWORD__NEW_PASSWORD__DESCRIPTION"
+      >
+        Enter your new password
+      </p>
+      <!-- ------------------------------- -->
+      <!-- PASSWORD FIELD -->
+      <!-- ------------------------------- -->
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label
+            for="password"
+            i18n="@@M__COMMON__PASSWORD"
+            id="password-description"
+            >Password</label
+          >
+        </div>
+        <m-popover
+          #popover
+          [password]="this.form.get('password').value"
+          [riskCheckStatus]="passwordRiskCheckStatus"
+        >
+          <div class="m-form__row--input">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              formControlName="password"
+              (keydown.enter)="reset()"
+              data-ref="data-minds-reset-password-form-password-1-input"
+              aria-describedby="password-description"
+              class="form-control"
+              [disabled]="inProgress"
+              readonly
+              onfocus="this.removeAttribute('readonly');"
+              (focus)="onPasswordFocus()"
+              (blur)="onPasswordBlur()"
+            />
+          </div>
+        </m-popover>
+      </div>
+
+      <!-- ------------------------------- -->
+      <!-- PASSWORD2 FIELD -->
+      <!-- ------------------------------- -->
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label
+            for="password2"
+            i18n="@@RESET_PASSWORD__CONFIRM_PASSWORD"
+            id="password2-description"
+            >Confirm Password</label
+          >
+        </div>
+
+        <div class="m-form__row--input">
+          <input
+            type="password"
+            name="password2"
+            id="password2"
+            formControlName="password2"
+            data-ref="data-minds-reset-password-form-password-2-input"
+            aria-describedby="password2-description"
+            class="form-control"
+            [disabled]="inProgress"
+            readonly
+            onfocus="this.removeAttribute('readonly');"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__buttonsContainer">
+      <m-button
+        (onAction)="reset()"
+        [saving]="inProgress"
+        [disabled]="!canSubmit"
+        solid="true"
+        color="blue"
+        data-ref="data-minds-reset-password-submit"
+        i18n="@@COMMON__RESET"
+      >
+        Reset
+      </m-button>
+    </div>
+  </form>
+</div>

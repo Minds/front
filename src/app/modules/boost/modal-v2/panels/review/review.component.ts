@@ -76,6 +76,10 @@ export class BoostModalV2ReviewComponent {
   // selected boost goal
   public readonly goal$: Observable<BoostGoal> = this.service.goal$;
 
+  // whether goal section should be shown.
+  public readonly showGoalSection$: Observable<boolean> = this.service
+    .canSetBoostGoal$;
+
   constructor(
     private service: BoostModalV2Service,
     protected boostGoalsExperiment: BoostGoalsExperimentService

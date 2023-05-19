@@ -22,8 +22,8 @@ import { ButtonComponent } from '../../../common/components/button/button.compon
 import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/multi-factor-auth-service';
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
-import { Router } from '@angular/router';
 import { RegexService } from '../../../common/services/regex.service';
+import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 
 describe('LoginForm', () => {
   let comp: LoginForm;
@@ -121,6 +121,10 @@ describe('LoginForm', () => {
             }),
           },
           RegexService,
+          {
+            provide: ResetPasswordExperimentService,
+            useValue: MockService(ResetPasswordExperimentService),
+          },
         ],
       }).compileComponents(); // compile template and css
     })

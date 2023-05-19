@@ -76,6 +76,7 @@ export type ActivityEntity = {
   owner_guid?: string;
   url?: string;
   urn?: string;
+  allow_comments?: boolean; // whether comments are allowed on the activity.
   boosted_guid?: string;
   activity_type?: string; // all blogs are rich-embeds
   content_type?: string; // blogs and rich-embeds are separate

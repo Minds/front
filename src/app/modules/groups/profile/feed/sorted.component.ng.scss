@@ -1,6 +1,26 @@
 @import 'defaults.scss';
 
 :host {
+  &.m-group-profile-feed__sorted--v2 {
+    .m-mindsList__tools {
+      margin-top: $spacing3;
+      margin-bottom: $spacing3;
+      padding-left: $spacing5;
+
+      ::ng-deep .m-group--sorted__SortSelector {
+        margin: 0;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-top: $spacing1;
+        margin-bottom: $spacing1;
+        padding-bottom: 0;
+      }
+    }
+    .m-groupSorted__searchDisplay {
+      padding: $spacing3 $spacing5;
+    }
+  }
   .m-mindsList__tools {
     padding: $spacing3;
     border-radius: 0;

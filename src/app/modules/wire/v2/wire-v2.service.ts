@@ -15,6 +15,8 @@ import { ProService } from '../../pro/pro.service';
 import { SupportTier } from './support-tiers.service';
 import { Session } from '../../../services/session';
 import { ToasterService } from '../../../common/services/toaster.service';
+import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import { isSafari } from '../../../helpers/is-safari';
 
 /**
  * Wire event types
@@ -886,6 +888,20 @@ export class WireV2Service implements OnDestroy {
             );
           }
         } else {
+          if (isMobileOrTablet()) {
+            return invalid(
+              'Onchain payment is not currently possible on mobile devices',
+              true
+            );
+          }
+
+          if (isSafari()) {
+            return invalid(
+              'Onchain payment is not currently possible with Safari',
+              true
+            );
+          }
+
           // On-chain & Eth
           if (!data.owner || !data.owner.eth_wallet) {
             return invalid(
