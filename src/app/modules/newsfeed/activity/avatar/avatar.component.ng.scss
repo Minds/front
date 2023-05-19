@@ -1,0 +1,38 @@
+@import 'defaults.scss';
+
+:host {
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+  position: relative;
+
+  [class*='m-activity__avatarContainer'] {
+    img {
+      border-radius: 50%;
+      object-fit: cover;
+      box-sizing: border-box;
+    }
+
+    &.m-activity__avatarContainer--primary {
+      img {
+        width: $activityAvatarWidth;
+        height: $activityAvatarWidth;
+      }
+    }
+
+    &.m-activity__avatarContainer--secondary {
+      position: absolute;
+      top: $spacing10;
+      left: $spacing9;
+
+      img {
+        width: $spacing6;
+        height: $spacing6;
+      }
+    }
+  }
+}
