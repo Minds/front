@@ -6,11 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {
-  ActivityDisplayOptions,
-  ActivityEntity,
-  ActivityService,
-} from '../activity.service';
+import { ActivityEntity, ActivityService } from '../activity.service';
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';

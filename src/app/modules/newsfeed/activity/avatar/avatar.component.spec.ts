@@ -12,6 +12,10 @@ describe('ActivityAvatarComponent', () => {
   let component: ActivityAvatarComponent;
   let fixture: ComponentFixture<ActivityAvatarComponent>;
 
+  let mockDisplayOptions: any = {
+    minimalMode: false,
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ActivityAvatarComponent],
@@ -27,6 +31,7 @@ describe('ActivityAvatarComponent', () => {
               isRemind$: {
                 get: () => new BehaviorSubject<boolean>(false),
               },
+              displayOptions: mockDisplayOptions,
             },
           }),
         },
