@@ -23,7 +23,7 @@ describe('ActivityAvatarComponent', () => {
         {
           provide: ActivityService,
           useValue: MockService(ActivityService, {
-            has: ['showGroupContext$', 'isRemind$'],
+            has: ['showGroupContext$', 'isRemind$', 'displayOptions'],
             props: {
               showGroupContext$: {
                 get: () => new BehaviorSubject<boolean>(false),
