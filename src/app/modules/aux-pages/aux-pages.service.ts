@@ -23,12 +23,14 @@ export const AUX_PAGE_QUERY = gql`
           body
           slug
           updatedAt
-          ogTitle
-          ogDescription
-          ogImage {
-            data {
-              attributes {
-                url
+          metadata {
+            title
+            description
+            ogImage {
+              data {
+                attributes {
+                  url
+                }
               }
             }
           }
@@ -38,10 +40,19 @@ export const AUX_PAGE_QUERY = gql`
   }
 `;
 
-// image data input
+// image data input.
 export type ImageDataInput = {
   attributes: {
     url: string;
+  };
+};
+
+// metadata input.
+export type MetadataInput = {
+  title: string;
+  description: string;
+  ogImage: {
+    data: ImageDataInput;
   };
 };
 
@@ -51,11 +62,7 @@ export type AuxPageInput = {
   body: string;
   slug: string;
   updatedAt: number;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: {
-    data: ImageDataInput[];
-  };
+  metadata: MetadataInput;
 };
 
 /**
@@ -135,21 +142,23 @@ export class AuxPagesService {
   );
 
   // og:title data.
-  public readonly ogTitle$: Observable<string> = this.copyData$.pipe(
-    map((copyData: AuxPageInput) => copyData?.ogTitle ?? null)
+  public readonly metadataTitle$: Observable<string> = this.copyData$.pipe(
+    map((copyData: AuxPageInput) => copyData?.metadata.title ?? null)
   );
 
   // og:description data.
-  public readonly ogDescription$: Observable<string> = this.copyData$.pipe(
-    map((copyData: AuxPageInput) => copyData?.ogDescription ?? null)
+  public readonly metadataDescription$: Observable<
+    string
+  > = this.copyData$.pipe(
+    map((copyData: AuxPageInput) => copyData?.metadata.description ?? null)
   );
 
   // og:image data.
   public readonly ogImage$: Observable<string> = this.copyData$.pipe(
     map((copyData: AuxPageInput) => {
-      const imageData: ImageDataInput[] = copyData?.ogImage.data;
-      if (imageData && imageData.length && imageData[0].attributes.url) {
-        return this.strapiUrl + imageData[0].attributes.url;
+      const imageData: ImageDataInput = copyData?.metadata.ogImage.data;
+      if (imageData && imageData.attributes.url) {
+        return this.strapiUrl + imageData.attributes.url;
       }
       return null;
     })

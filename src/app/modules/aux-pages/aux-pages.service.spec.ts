@@ -21,27 +21,23 @@ describe('AuxPagesService', () => {
     body: 'body',
     slug: 'slug',
     updatedAt: 1684753308000,
-    ogTitle: 'ogTitle',
-    ogDescription: 'ogDescription',
-    ogImage: {
-      data: [
-        {
+    metadata: {
+      title: 'ogTitle',
+      description: 'ogDescription',
+      ogImage: {
+        data: {
           attributes: {
             url: 'ogImage.png',
           },
         },
-      ],
+      },
     },
   };
 
   const mockResponse = {
     data: {
       auxPages: {
-        data: [
-          {
-            attributes: mockAttributes,
-          },
-        ],
+        data: [{ attributes: mockAttributes }],
       },
     },
   };
@@ -112,11 +108,11 @@ describe('AuxPagesService', () => {
     op.flush(mockResponse);
   });
 
-  it('should get ogTitle on fetchContent', (done: DoneFn) => {
+  it('should get metadataTitle on fetchContent', (done: DoneFn) => {
     service.path$.next('privacy');
 
-    (service as any).ogTitle$.subscribe(ogTitle => {
-      expect(ogTitle).toBe(mockAttributes.ogTitle);
+    (service as any).metadataTitle$.subscribe(metadataTitle => {
+      expect(metadataTitle).toBe(mockAttributes.metadata.title);
       controller.verify();
       done();
     });
@@ -126,11 +122,11 @@ describe('AuxPagesService', () => {
     op.flush(mockResponse);
   });
 
-  it('should get ogDescription on fetchContent', (done: DoneFn) => {
+  it('should get metadataDescription on fetchContent', (done: DoneFn) => {
     service.path$.next('privacy');
 
-    (service as any).ogDescription$.subscribe(ogDescription => {
-      expect(ogDescription).toBe(mockAttributes.ogDescription);
+    (service as any).metadataDescription$.subscribe(metadataDescription => {
+      expect(metadataDescription).toBe(mockAttributes.metadata.description);
       controller.verify();
       done();
     });
@@ -145,7 +141,8 @@ describe('AuxPagesService', () => {
 
     (service as any).ogImage$.subscribe(ogImage => {
       expect(ogImage).toBe(
-        'https://www.minds.com/' + mockAttributes.ogImage.data[0].attributes.url
+        'https://www.minds.com/' +
+          mockAttributes.metadata.ogImage.data.attributes.url
       );
       controller.verify();
       done();

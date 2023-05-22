@@ -79,21 +79,38 @@ export class AuxComponent implements OnInit, OnDestroy {
         this.router.navigate(['/p/privacy']);
       });
 
+    this.setMetadata();
+  }
+
+  /**
+   * Set Metadata for page from CMS data held by service.
+   * @returns { void }
+   */
+  private setMetadata(): void {
     this.metadataSubscription = combineLatest([
-      this.service.ogTitle$,
-      this.service.ogDescription$,
+      this.service.metadataTitle$,
+      this.service.metadataDescription$,
       this.service.ogImage$,
     ])
       .pipe(take(1))
       .subscribe(
-        ([ogTitle, ogDescription, ogImage]: [string, string, string]) => {
-          this.meta
-            .setTitle(ogTitle)
-            .setDescription(ogDescription)
-            .setOgImage(ogImage, {
+        ([metadataTitle, metadataDescription, ogImage]: [
+          string,
+          string,
+          string
+        ]) => {
+          if (metadataTitle) {
+            this.meta.setTitle(metadataTitle);
+          }
+          if (metadataDescription) {
+            this.meta.setDescription(metadataDescription);
+          }
+          if (ogImage) {
+            this.meta.setOgImage(ogImage, {
               height: 1200,
               width: 1200,
             });
+          }
         }
       );
   }

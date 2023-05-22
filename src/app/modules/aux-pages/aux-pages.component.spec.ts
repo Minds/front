@@ -35,8 +35,8 @@ describe('AuxComponent', () => {
               'headerCopy$',
               'bodyCopy$',
               'updatedAtDateString$',
-              'ogTitle$',
-              'ogDescription$',
+              'metadataTitle$',
+              'metadataDescription$',
               'ogImage$',
               'notFound$',
               'loading$',
@@ -50,9 +50,11 @@ describe('AuxComponent', () => {
               updatedAtDateString$: {
                 get: () => new BehaviorSubject<string>('Jan 1st 1970'),
               },
-              ogTitle$: { get: () => new BehaviorSubject<string>('ogTitle') },
-              ogDescription$: {
-                get: () => new BehaviorSubject<string>('ogDescription'),
+              metadataTitle$: {
+                get: () => new BehaviorSubject<string>('title'),
+              },
+              metadataDescription$: {
+                get: () => new BehaviorSubject<string>('description'),
               },
               ogImage$: {
                 get: () => new BehaviorSubject<string>('ogImage'),
@@ -86,8 +88,8 @@ describe('AuxComponent', () => {
     (comp as any).service.headerCopy$.next('headerText');
     (comp as any).service.bodyCopy$.next('bodyText');
     (comp as any).service.updatedAtDateString$.next('Jan 1st 1970');
-    (comp as any).service.ogTitle$.next('ogTitle');
-    (comp as any).service.ogDescription$.next('ogDescription');
+    (comp as any).service.metadataTitle$.next('title');
+    (comp as any).service.metadataDescription$.next('description');
     (comp as any).service.ogImage$.next('ogImage');
     (comp as any).service.notFound$.next(false);
     (comp as any).service.loading$.next(false);
@@ -98,16 +100,16 @@ describe('AuxComponent', () => {
   it('should instantiate', () => {
     (comp as any).service.path$.next('privacy');
     (comp as any).service.notFound$.next(false);
-    (comp as any).service.ogTitle$.next('ogTitle');
-    (comp as any).service.ogDescription$.next('ogDescription');
+    (comp as any).service.metadataTitle$.next('title');
+    (comp as any).service.metadataDescription$.next('description');
     (comp as any).service.ogImage$.next('ogImage');
 
     expect(comp).toBeTruthy();
 
     expect((comp as any).service.path$.getValue()).toBe('privacy');
-    expect((comp as any).meta.setTitle).toHaveBeenCalledOnceWith('ogTitle');
+    expect((comp as any).meta.setTitle).toHaveBeenCalledOnceWith('title');
     expect((comp as any).meta.setDescription).toHaveBeenCalledOnceWith(
-      'ogDescription'
+      'description'
     );
     expect((comp as any).meta.setOgImage).toHaveBeenCalledOnceWith('ogImage', {
       height: 1200,
@@ -122,16 +124,16 @@ describe('AuxComponent', () => {
 
     (comp as any).service.path$.next('privacy');
     (comp as any).service.notFound$.next(false);
-    (comp as any).service.ogTitle$.next('ogTitle2');
-    (comp as any).service.ogDescription$.next('ogDescription2');
+    (comp as any).service.metadataTitle$.next('title2');
+    (comp as any).service.metadataDescription$.next('description2');
     (comp as any).service.ogImage$.next('ogImage');
 
     (comp as any).route.params.next({ path: 'terms' });
 
     expect((comp as any).service.path$.getValue()).toBe('terms');
-    expect((comp as any).meta.setTitle).toHaveBeenCalledOnceWith('ogTitle2');
+    expect((comp as any).meta.setTitle).toHaveBeenCalledOnceWith('title2');
     expect((comp as any).meta.setDescription).toHaveBeenCalledOnceWith(
-      'ogDescription2'
+      'description2'
     );
     expect((comp as any).meta.setOgImage).toHaveBeenCalledOnceWith('ogImage', {
       height: 1200,
