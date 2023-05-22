@@ -4,13 +4,36 @@ import { MarkdownModule } from 'ngx-markdown';
 import { AuxComponent } from './aux-pages.component';
 import { AuxPagesService } from './aux-pages.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MetaService } from '../../common/services/meta.service';
 import { Session } from '../../services/session';
 import { MockComponent, MockService } from '../../utils/mock';
+import {
+  StrapiMetaService,
+  StrapiMetadata,
+} from '../../common/services/strapi-meta.service';
 
 describe('AuxComponent', () => {
   let comp: AuxComponent;
   let fixture: ComponentFixture<AuxComponent>;
+
+  const mockMetadata: StrapiMetadata = {
+    title: 'ogTitle',
+    description: 'ogDescription',
+    canonicalUrl: 'https://0.0.0.0/canonicalUrl',
+    robots: 'all',
+    author: 'Minds',
+    ogAuthor: 'ogMinds',
+    ogUrl: 'https://0.0.0.0/ogUrl',
+    ogType: 'ogType',
+    ogImage: {
+      data: {
+        attributes: {
+          url: 'ogImage.png',
+          height: 1200,
+          width: 1200,
+        },
+      },
+    },
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -35,9 +58,7 @@ describe('AuxComponent', () => {
               'headerCopy$',
               'bodyCopy$',
               'updatedAtDateString$',
-              'metadataTitle$',
-              'metadataDescription$',
-              'ogImage$',
+              'metadata$',
               'notFound$',
               'loading$',
             ],
@@ -50,14 +71,8 @@ describe('AuxComponent', () => {
               updatedAtDateString$: {
                 get: () => new BehaviorSubject<string>('Jan 1st 1970'),
               },
-              metadataTitle$: {
-                get: () => new BehaviorSubject<string>('title'),
-              },
-              metadataDescription$: {
-                get: () => new BehaviorSubject<string>('description'),
-              },
-              ogImage$: {
-                get: () => new BehaviorSubject<string>('ogImage'),
+              metadata$: {
+                get: () => new BehaviorSubject<StrapiMetadata>(mockMetadata),
               },
               notFound$: { get: () => new BehaviorSubject<boolean>(false) },
               loading$: { get: () => new BehaviorSubject<boolean>(false) },
@@ -69,7 +84,10 @@ describe('AuxComponent', () => {
           useValue: { params: new BehaviorSubject<any>({ path: 'privacy' }) },
         },
         { provide: Router, useValue: MockService(Router) },
-        { provide: MetaService, useValue: MockService(MetaService) },
+        {
+          provide: StrapiMetaService,
+          useValue: MockService(StrapiMetaService),
+        },
         { provide: Session, useValue: MockService(Session) },
       ],
     }).compileComponents();
@@ -77,68 +95,31 @@ describe('AuxComponent', () => {
     fixture = TestBed.createComponent(AuxComponent);
     comp = fixture.componentInstance;
 
-    (comp as any).meta.setTitle.calls.reset();
-    (comp as any).meta.setDescription.calls.reset();
-    (comp as any).meta.setOgImage.calls.reset();
-
-    (comp as any).meta.setTitle.and.returnValue((comp as any).meta);
-    (comp as any).meta.setDescription.and.returnValue((comp as any).meta);
-    (comp as any).meta.setOgImage.and.returnValue((comp as any).meta);
+    (comp as any).strapiMeta.apply.calls.reset();
 
     (comp as any).service.headerCopy$.next('headerText');
     (comp as any).service.bodyCopy$.next('bodyText');
     (comp as any).service.updatedAtDateString$.next('Jan 1st 1970');
-    (comp as any).service.metadataTitle$.next('title');
-    (comp as any).service.metadataDescription$.next('description');
-    (comp as any).service.ogImage$.next('ogImage');
+    (comp as any).service.metadata$.next(mockMetadata);
     (comp as any).service.notFound$.next(false);
     (comp as any).service.loading$.next(false);
 
     fixture.detectChanges();
   });
 
-  it('should instantiate', () => {
-    (comp as any).service.path$.next('privacy');
-    (comp as any).service.notFound$.next(false);
-    (comp as any).service.metadataTitle$.next('title');
-    (comp as any).service.metadataDescription$.next('description');
-    (comp as any).service.ogImage$.next('ogImage');
-
+  it('should init', () => {
     expect(comp).toBeTruthy();
-
-    expect((comp as any).service.path$.getValue()).toBe('privacy');
-    expect((comp as any).meta.setTitle).toHaveBeenCalledOnceWith('title');
-    expect((comp as any).meta.setDescription).toHaveBeenCalledOnceWith(
-      'description'
-    );
-    expect((comp as any).meta.setOgImage).toHaveBeenCalledOnceWith('ogImage', {
-      height: 1200,
-      width: 1200,
-    });
   });
 
-  it('should load on route param change', () => {
-    (comp as any).meta.setTitle.calls.reset();
-    (comp as any).meta.setDescription.calls.reset();
-    (comp as any).meta.setOgImage.calls.reset();
-
+  it('should init with route param', () => {
     (comp as any).service.path$.next('privacy');
     (comp as any).service.notFound$.next(false);
-    (comp as any).service.metadataTitle$.next('title2');
-    (comp as any).service.metadataDescription$.next('description2');
-    (comp as any).service.ogImage$.next('ogImage');
+    (comp as any).service.metadata$.next(mockMetadata);
 
     (comp as any).route.params.next({ path: 'terms' });
 
     expect((comp as any).service.path$.getValue()).toBe('terms');
-    expect((comp as any).meta.setTitle).toHaveBeenCalledOnceWith('title2');
-    expect((comp as any).meta.setDescription).toHaveBeenCalledOnceWith(
-      'description2'
-    );
-    expect((comp as any).meta.setOgImage).toHaveBeenCalledOnceWith('ogImage', {
-      height: 1200,
-      width: 1200,
-    });
+    expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(mockMetadata);
   });
 
   it('should get header copy from service', (done: DoneFn) => {

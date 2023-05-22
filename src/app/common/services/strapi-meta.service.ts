@@ -4,25 +4,25 @@ import { STRAPI_URL } from '../injection-tokens/url-injection-tokens';
 
 // metadata type.
 export type StrapiMetadata = {
-  title: string;
-  description: string;
-  canonicalUrl: string;
-  robots: string;
-  author: string;
-  ogAuthor: string;
-  ogUrl: string;
-  ogType: string;
-  ogImage: {
-    data: StrapiImageData;
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  robots?: string;
+  author?: string;
+  ogAuthor?: string;
+  ogUrl?: string;
+  ogType?: string;
+  ogImage?: {
+    data?: StrapiImageData;
   };
 };
 
 // image data type.
 export type StrapiImageData = {
-  attributes: {
+  attributes?: {
     url: string;
-    height: number;
-    width: number;
+    height?: number;
+    width?: number;
   };
 };
 

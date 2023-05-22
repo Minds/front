@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import {
   AUX_PAGE_QUERY,
-  AuxPageInput,
+  AuxPageData,
   AuxPagesService,
 } from './aux-pages.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -10,13 +10,12 @@ import {
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { Apollo } from 'apollo-angular';
-import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 
 describe('AuxPagesService', () => {
   let service: AuxPagesService;
   let controller: ApolloTestingController;
 
-  const mockAttributes: AuxPageInput = {
+  const mockAttributes: AuxPageData = {
     h1: 'h1',
     body: 'body',
     slug: 'slug',
@@ -24,10 +23,18 @@ describe('AuxPagesService', () => {
     metadata: {
       title: 'ogTitle',
       description: 'ogDescription',
+      canonicalUrl: 'https://0.0.0.0/canonicalUrl',
+      robots: 'all',
+      author: 'Minds',
+      ogAuthor: 'ogMinds',
+      ogUrl: 'https://0.0.0.0/ogUrl',
+      ogType: 'ogType',
       ogImage: {
         data: {
           attributes: {
             url: 'ogImage.png',
+            height: 1200,
+            width: 1200,
           },
         },
       },
@@ -45,11 +52,7 @@ describe('AuxPagesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ApolloTestingModule],
-      providers: [
-        AuxPagesService,
-        Apollo,
-        { provide: STRAPI_URL, useValue: 'https://www.minds.com/' },
-      ],
+      providers: [AuxPagesService, Apollo],
     });
 
     service = TestBed.inject(AuxPagesService);
@@ -108,42 +111,11 @@ describe('AuxPagesService', () => {
     op.flush(mockResponse);
   });
 
-  it('should get metadataTitle on fetchContent', (done: DoneFn) => {
+  it('should get metadata on fetchContent', (done: DoneFn) => {
     service.path$.next('privacy');
 
-    (service as any).metadataTitle$.subscribe(metadataTitle => {
-      expect(metadataTitle).toBe(mockAttributes.metadata.title);
-      controller.verify();
-      done();
-    });
-
-    const op = controller.expectOne(AUX_PAGE_QUERY);
-    expect(op.operation.variables.path).toEqual('privacy');
-    op.flush(mockResponse);
-  });
-
-  it('should get metadataDescription on fetchContent', (done: DoneFn) => {
-    service.path$.next('privacy');
-
-    (service as any).metadataDescription$.subscribe(metadataDescription => {
-      expect(metadataDescription).toBe(mockAttributes.metadata.description);
-      controller.verify();
-      done();
-    });
-
-    const op = controller.expectOne(AUX_PAGE_QUERY);
-    expect(op.operation.variables.path).toEqual('privacy');
-    op.flush(mockResponse);
-  });
-
-  it('should get ogImage on fetchContent', (done: DoneFn) => {
-    service.path$.next('privacy');
-
-    (service as any).ogImage$.subscribe(ogImage => {
-      expect(ogImage).toBe(
-        'https://www.minds.com/' +
-          mockAttributes.metadata.ogImage.data.attributes.url
-      );
+    (service as any).metadata$.subscribe(metadata => {
+      expect(metadata).toEqual(mockAttributes.metadata);
       controller.verify();
       done();
     });
