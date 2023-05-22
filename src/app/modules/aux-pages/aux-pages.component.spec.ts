@@ -37,7 +37,7 @@ describe('AuxComponent', () => {
               'updatedAtDateString$',
               'ogTitle$',
               'ogDescription$',
-              'ogImagePath$',
+              'ogImage$',
               'notFound$',
               'loading$',
             ],
@@ -54,8 +54,8 @@ describe('AuxComponent', () => {
               ogDescription$: {
                 get: () => new BehaviorSubject<string>('ogDescription'),
               },
-              ogImagePath$: {
-                get: () => new BehaviorSubject<string>('ogImagePath'),
+              ogImage$: {
+                get: () => new BehaviorSubject<string>('ogImage'),
               },
               notFound$: { get: () => new BehaviorSubject<boolean>(false) },
               loading$: { get: () => new BehaviorSubject<boolean>(false) },
@@ -88,7 +88,7 @@ describe('AuxComponent', () => {
     (comp as any).service.updatedAtDateString$.next('Jan 1st 1970');
     (comp as any).service.ogTitle$.next('ogTitle');
     (comp as any).service.ogDescription$.next('ogDescription');
-    (comp as any).service.ogImagePath$.next('ogImagePath');
+    (comp as any).service.ogImage$.next('ogImage');
     (comp as any).service.notFound$.next(false);
     (comp as any).service.loading$.next(false);
 
@@ -100,7 +100,7 @@ describe('AuxComponent', () => {
     (comp as any).service.notFound$.next(false);
     (comp as any).service.ogTitle$.next('ogTitle');
     (comp as any).service.ogDescription$.next('ogDescription');
-    (comp as any).service.ogImagePath$.next('ogImagePath');
+    (comp as any).service.ogImage$.next('ogImage');
 
     expect(comp).toBeTruthy();
 
@@ -109,13 +109,10 @@ describe('AuxComponent', () => {
     expect((comp as any).meta.setDescription).toHaveBeenCalledOnceWith(
       'ogDescription'
     );
-    expect((comp as any).meta.setOgImage).toHaveBeenCalledOnceWith(
-      'ogImagePath',
-      {
-        height: 1200,
-        width: 1200,
-      }
-    );
+    expect((comp as any).meta.setOgImage).toHaveBeenCalledOnceWith('ogImage', {
+      height: 1200,
+      width: 1200,
+    });
   });
 
   it('should load on route param change', () => {
@@ -127,7 +124,7 @@ describe('AuxComponent', () => {
     (comp as any).service.notFound$.next(false);
     (comp as any).service.ogTitle$.next('ogTitle2');
     (comp as any).service.ogDescription$.next('ogDescription2');
-    (comp as any).service.ogImagePath$.next('ogImagePath2');
+    (comp as any).service.ogImage$.next('ogImage');
 
     (comp as any).route.params.next({ path: 'terms' });
 
@@ -136,13 +133,10 @@ describe('AuxComponent', () => {
     expect((comp as any).meta.setDescription).toHaveBeenCalledOnceWith(
       'ogDescription2'
     );
-    expect((comp as any).meta.setOgImage).toHaveBeenCalledOnceWith(
-      'ogImagePath2',
-      {
-        height: 1200,
-        width: 1200,
-      }
-    );
+    expect((comp as any).meta.setOgImage).toHaveBeenCalledOnceWith('ogImage', {
+      height: 1200,
+      width: 1200,
+    });
   });
 
   it('should get header copy from service', (done: DoneFn) => {

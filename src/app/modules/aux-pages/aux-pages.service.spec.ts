@@ -1,24 +1,37 @@
 import { TestBed } from '@angular/core/testing';
-import { AUX_PAGE_QUERY, AuxPagesService } from './aux-pages.service';
+import {
+  AUX_PAGE_QUERY,
+  AuxPageInput,
+  AuxPagesService,
+} from './aux-pages.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { Apollo } from 'apollo-angular';
+import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 
 describe('AuxPagesService', () => {
   let service: AuxPagesService;
   let controller: ApolloTestingController;
 
-  const mockAttributes = {
+  const mockAttributes: AuxPageInput = {
     h1: 'h1',
     body: 'body',
     slug: 'slug',
     updatedAt: 1684753308000,
     ogTitle: 'ogTitle',
     ogDescription: 'ogDescription',
-    ogImagePath: 'ogImagePath',
+    ogImage: {
+      data: [
+        {
+          attributes: {
+            url: 'ogImage.png',
+          },
+        },
+      ],
+    },
   };
 
   const mockResponse = {
@@ -36,7 +49,11 @@ describe('AuxPagesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ApolloTestingModule],
-      providers: [AuxPagesService, Apollo],
+      providers: [
+        AuxPagesService,
+        Apollo,
+        { provide: STRAPI_URL, useValue: 'https://www.minds.com/' },
+      ],
     });
 
     service = TestBed.inject(AuxPagesService);
@@ -123,11 +140,13 @@ describe('AuxPagesService', () => {
     op.flush(mockResponse);
   });
 
-  it('should get ogImagePath on fetchContent', (done: DoneFn) => {
+  it('should get ogImage on fetchContent', (done: DoneFn) => {
     service.path$.next('privacy');
 
-    (service as any).ogImagePath$.subscribe(ogImagePath => {
-      expect(ogImagePath).toBe(mockAttributes.ogImagePath);
+    (service as any).ogImage$.subscribe(ogImage => {
+      expect(ogImage).toBe(
+        'https://www.minds.com/' + mockAttributes.ogImage.data[0].attributes.url
+      );
       controller.verify();
       done();
     });

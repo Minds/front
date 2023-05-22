@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, gql } from 'apollo-angular';
 import {
@@ -11,6 +11,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 
 // query to get aux page by url slug.
 export const AUX_PAGE_QUERY = gql`
@@ -24,22 +25,37 @@ export const AUX_PAGE_QUERY = gql`
           updatedAt
           ogTitle
           ogDescription
-          ogImagePath
+          ogImage {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
         }
       }
     }
   }
 `;
 
+// image data input
+export type ImageDataInput = {
+  attributes: {
+    url: string;
+  };
+};
+
 // aux page input data.
 export type AuxPageInput = {
   h1: string;
   body: string;
   slug: string;
-  updatedAt: string;
+  updatedAt: number;
   ogTitle: string;
   ogDescription: string;
-  ogImagePath: string;
+  ogImage: {
+    data: ImageDataInput[];
+  };
 };
 
 /**
@@ -128,12 +144,21 @@ export class AuxPagesService {
     map((copyData: AuxPageInput) => copyData?.ogDescription ?? null)
   );
 
-  // og:image path.
-  public readonly ogImagePath$: Observable<string> = this.copyData$.pipe(
-    map((copyData: AuxPageInput) => copyData?.ogImagePath ?? null)
+  // og:image data.
+  public readonly ogImage$: Observable<string> = this.copyData$.pipe(
+    map((copyData: AuxPageInput) => {
+      const imageData: ImageDataInput[] = copyData?.ogImage.data;
+      if (imageData && imageData.length && imageData[0].attributes.url) {
+        return this.strapiUrl + imageData[0].attributes.url;
+      }
+      return null;
+    })
   );
 
-  constructor(private apollo: Apollo) {}
+  constructor(
+    private apollo: Apollo,
+    @Inject(STRAPI_URL) private strapiUrl: string
+  ) {}
 
   /**
    * Fetch content from CMS.

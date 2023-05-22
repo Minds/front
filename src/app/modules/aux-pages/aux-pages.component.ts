@@ -82,15 +82,15 @@ export class AuxComponent implements OnInit, OnDestroy {
     this.metadataSubscription = combineLatest([
       this.service.ogTitle$,
       this.service.ogDescription$,
-      this.service.ogImagePath$,
+      this.service.ogImage$,
     ])
       .pipe(take(1))
       .subscribe(
-        ([ogTitle, ogDescription, ogImagePath]: [string, string, string]) => {
+        ([ogTitle, ogDescription, ogImage]: [string, string, string]) => {
           this.meta
             .setTitle(ogTitle)
             .setDescription(ogDescription)
-            .setOgImage(ogImagePath, {
+            .setOgImage(ogImage, {
               height: 1200,
               width: 1200,
             });
