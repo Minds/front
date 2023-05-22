@@ -117,7 +117,11 @@
       m-read-more
       maxHeightAllowed="52"
     >
-      <p [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags">
+      <p
+        [innerHtml]="
+          publisher.briefdescription.toString() | slice: 0:5000 | tags
+        "
+      >
         {{ publisher.briefdescription }}
       </p>
       <m-read-more--button
