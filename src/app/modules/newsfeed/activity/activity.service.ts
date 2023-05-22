@@ -446,17 +446,6 @@ export class ActivityService implements OnDestroy {
       entity.containerObj.type === 'group' &&
       !this.displayOptions.inSingleGroupFeed;
 
-    console.log('ojm showGroupContext?', showGroupContext);
-    console.log(
-      'ojm itsa group post?',
-      entity.containerObj && entity.containerObj.type === 'group'
-    );
-
-    console.log(
-      'ojm displayOpts inSingleGroupFeed',
-      this.displayOptions.inSingleGroupFeed
-    );
-
     this.showGroupContext$.next(showGroupContext);
 
     return this;
@@ -470,11 +459,6 @@ export class ActivityService implements OnDestroy {
   setDisplayOptions(
     options: Partial<ActivityDisplayOptions> = {}
   ): ActivityService {
-    console.log(
-      'ojm displayOptsTWO inSingleGroupFeed',
-      this.displayOptions,
-      options.inSingleGroupFeed
-    );
     this.displayOptions = Object.assign(this.displayOptions, options);
 
     this.displayOptions.showOnlyCommentsInput = false;
