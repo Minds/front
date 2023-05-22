@@ -1,11 +1,9 @@
 <!-- ------------------------------------------ -->
 <!-- PENDING  -->
 <!-- ------------------------------------------ -->
-<div
-  class="m-boostConsole__statsBar--columns"
-  *ngIf="boostIsPending && boost?.goal_button_url"
->
+<div class="m-boostConsole__statsBar--columns">
   <div
+    *ngIf="showCtaPreview$ | async"
     class="m-boostConsoleStatsBar__column m-boostConsole__statsBar--ctaPreview"
     data-ref="m-boostConsole__statsBar--ctaPreview"
   >
