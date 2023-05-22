@@ -45,6 +45,6 @@ Please report all security issues to [security@minds.com](mailto:security@minds.
 
 Use [NVM](https://github.com/nvm-sh/nvm) to manage node versions. The preferred node version is contained within `.nvmrc`. Consider [updating your bash profile](https://github.com/nvm-sh/nvm#automatically-call-nvm-use) so `nvm use` is called automatically whenever your CD into the repo.
 
-**_Copyright Minds 2012 - 2021_**
+**_Copyright Minds 2012 - 2023_**
 
 Copyright for portions of Minds are held by [Elgg](http://elgg.org), 2013 as part of the [Elgg](http://elgg.org) project. All other copyright for Minds is held by Minds, Inc.
