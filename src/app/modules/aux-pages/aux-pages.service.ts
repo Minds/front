@@ -1,6 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, gql } from 'apollo-angular';
+import {
+  STRAPI_METADATA_SNIPPET,
+  StrapiMetadata,
+} from '../../common/services/strapi-meta.service';
 import {
   BehaviorSubject,
   EMPTY,
@@ -11,7 +15,6 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 
 // query to get aux page by url slug.
 export const AUX_PAGE_QUERY = gql`
@@ -23,46 +26,20 @@ export const AUX_PAGE_QUERY = gql`
           body
           slug
           updatedAt
-          metadata {
-            title
-            description
-            ogImage {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
-          }
+          ${STRAPI_METADATA_SNIPPET}
         }
       }
     }
   }
 `;
 
-// image data input.
-export type ImageDataInput = {
-  attributes: {
-    url: string;
-  };
-};
-
-// metadata input.
-export type MetadataInput = {
-  title: string;
-  description: string;
-  ogImage: {
-    data: ImageDataInput;
-  };
-};
-
 // aux page input data.
-export type AuxPageInput = {
+export type AuxPageData = {
   h1: string;
   body: string;
   slug: string;
   updatedAt: number;
-  metadata: MetadataInput;
+  metadata: StrapiMetadata;
 };
 
 /**
@@ -78,7 +55,7 @@ export class AuxPagesService {
   // whether request to CMS is mid-flight.
   public readonly loading$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
-  >(false);
+  >(true);
 
   // whether no data has been found in CMS.
   public readonly notFound$: BehaviorSubject<boolean> = new BehaviorSubject<
@@ -86,7 +63,7 @@ export class AuxPagesService {
   >(false);
 
   // Data from CMS - reload will be triggered on path change.
-  private readonly copyData$: Observable<AuxPageInput> = this.path$.pipe(
+  private readonly copyData$: Observable<AuxPageData> = this.path$.pipe(
     // filter out null paths, e.g. during init.
     filter(Boolean),
     // set loading state and reset not found state.
@@ -101,7 +78,7 @@ export class AuxPagesService {
     ),
     // parse result.
     map(
-      (result: ApolloQueryResult<any>): AuxPageInput => {
+      (result: ApolloQueryResult<any>): AuxPageData => {
         if (result.loading) {
           return null;
         }
@@ -122,52 +99,30 @@ export class AuxPagesService {
 
   // header copy data.
   public readonly headerCopy$: Observable<string> = this.copyData$.pipe(
-    map((copyData: AuxPageInput) => copyData?.h1 ?? null)
+    map((copyData: AuxPageData) => copyData?.h1 ?? null)
   );
 
   // body copy data.
   public readonly bodyCopy$: Observable<string> = this.copyData$.pipe(
-    map((copyData: AuxPageInput) => copyData?.body ?? null)
+    map((copyData: AuxPageData) => copyData?.body ?? null)
   );
 
   // updated at date data.
   public readonly updatedAtDateString$: Observable<
     string
   > = this.copyData$.pipe(
-    map((copyData: AuxPageInput) =>
+    map((copyData: AuxPageData) =>
       copyData?.updatedAt
         ? new Date(copyData.updatedAt).toLocaleDateString()
         : null
     )
   );
 
-  // og:title data.
-  public readonly metadataTitle$: Observable<string> = this.copyData$.pipe(
-    map((copyData: AuxPageInput) => copyData?.metadata.title ?? null)
+  public readonly metadata$: Observable<StrapiMetadata> = this.copyData$.pipe(
+    map((copyData: AuxPageData) => copyData?.metadata ?? null)
   );
 
-  // og:description data.
-  public readonly metadataDescription$: Observable<
-    string
-  > = this.copyData$.pipe(
-    map((copyData: AuxPageInput) => copyData?.metadata.description ?? null)
-  );
-
-  // og:image data.
-  public readonly ogImage$: Observable<string> = this.copyData$.pipe(
-    map((copyData: AuxPageInput) => {
-      const imageData: ImageDataInput = copyData?.metadata.ogImage.data;
-      if (imageData && imageData.attributes.url) {
-        return this.strapiUrl + imageData.attributes.url;
-      }
-      return null;
-    })
-  );
-
-  constructor(
-    private apollo: Apollo,
-    @Inject(STRAPI_URL) private strapiUrl: string
-  ) {}
+  constructor(private apollo: Apollo) {}
 
   /**
    * Fetch content from CMS.

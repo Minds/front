@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuxPagesService } from './aux-pages.service';
-import { Observable, Subscription, combineLatest, filter, take } from 'rxjs';
+import { Observable, Subscription, filter, take } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MetaService } from '../../common/services/meta.service';
+import {
+  StrapiMetaService,
+  StrapiMetadata,
+} from '../../common/services/strapi-meta.service';
 
 /**
  * Container for auxiliary pages (/p/ pages).
@@ -41,7 +44,7 @@ export class AuxComponent implements OnInit, OnDestroy {
     private service: AuxPagesService,
     private route: ActivatedRoute,
     private router: Router,
-    private meta: MetaService
+    private strapiMeta: StrapiMetaService
   ) {}
 
   ngOnInit(): void {
@@ -87,31 +90,10 @@ export class AuxComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private setMetadata(): void {
-    this.metadataSubscription = combineLatest([
-      this.service.metadataTitle$,
-      this.service.metadataDescription$,
-      this.service.ogImage$,
-    ])
+    this.metadataSubscription = this.service.metadata$
       .pipe(take(1))
-      .subscribe(
-        ([metadataTitle, metadataDescription, ogImage]: [
-          string,
-          string,
-          string
-        ]) => {
-          if (metadataTitle) {
-            this.meta.setTitle(metadataTitle);
-          }
-          if (metadataDescription) {
-            this.meta.setDescription(metadataDescription);
-          }
-          if (ogImage) {
-            this.meta.setOgImage(ogImage, {
-              height: 1200,
-              width: 1200,
-            });
-          }
-        }
-      );
+      .subscribe((metadata: StrapiMetadata): void => {
+        this.strapiMeta.apply(metadata);
+      });
   }
 }
