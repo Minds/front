@@ -7,7 +7,6 @@ import { SettingsV2Service } from './settings-v2.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
 import { Subscription } from 'rxjs';
-import { AffiliatesExperimentService } from '../experiments/sub-services/affiliates-experiment.service';
 
 /**
  * Container that determines what form/menu(s)
@@ -55,7 +54,6 @@ export class SettingsV2Component implements OnInit {
         {
           label: $localize`:@@SETTINGS__AFFILIATES_PROGRAM__LABEL:Affiliates Program`,
           id: 'affiliates-program',
-          shouldShow: this.shouldShowAffiliatesMenuItem.bind(this),
         },
         { label: $localize`:@@SETTINGS__OTHER__LABEL:Other`, id: 'other' },
       ],
@@ -256,20 +254,6 @@ export class SettingsV2Component implements OnInit {
     other: [
       {
         header: {
-          label: $localize`:@@SETTINGS__OTHER__REFERRALS__HEADER__LABEL:Referrals`,
-          id: 'referrals',
-        },
-        items: [
-          {
-            label: $localize`:@@SETTINGS__OTHER__REFERRALS__REFERRALS__LABEL:Referrals`,
-            id: 'referrals',
-            shouldShow: this.shouldShowReferralsMenuItem.bind(this),
-          },
-        ],
-        shouldShow: this.shouldShowReferralsMenuItem.bind(this),
-      },
-      {
-        header: {
           label: $localize`:@@SETTINGS__OTHER__PRIVACY__HEADER__LABEL:Privacy`,
           id: 'privacy',
         },
@@ -349,8 +333,7 @@ export class SettingsV2Component implements OnInit {
     protected session: Session,
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
-    protected toasterService: ToasterService,
-    private affiliatesExperiment: AffiliatesExperimentService
+    protected toasterService: ToasterService
   ) {}
 
   ngOnInit() {
@@ -499,13 +482,5 @@ export class SettingsV2Component implements OnInit {
 
   shouldShowPlusMenuItem(): boolean {
     return !this.session.getLoggedInUser().plus;
-  }
-
-  shouldShowAffiliatesMenuItem(): boolean {
-    return this.affiliatesExperiment.isActive();
-  }
-
-  shouldShowReferralsMenuItem(): boolean {
-    return !this.shouldShowAffiliatesMenuItem();
   }
 }
