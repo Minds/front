@@ -13,7 +13,7 @@ import {
 } from 'rxjs';
 
 // query to get aux page by url slug.
-const AUX_PAGE_QUERY = gql`
+export const AUX_PAGE_QUERY = gql`
   query AuxPages($path: String!) {
     auxPages(filters: { slug: { eq: $path } }) {
       data {
@@ -32,7 +32,7 @@ const AUX_PAGE_QUERY = gql`
 `;
 
 // aux page input data.
-type AuxPageInput = {
+export type AuxPageInput = {
   h1: string;
   body: string;
   slug: string;
