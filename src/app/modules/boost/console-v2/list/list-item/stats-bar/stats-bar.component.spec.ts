@@ -4,6 +4,8 @@ import { ConfigsService } from '../../../../../../common/services/configs.servic
 import { BoostModalV2LazyService } from '../../../../modal-v2/boost-modal-v2-lazy.service';
 import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { Boost, BoostPaymentMethod, BoostState } from '../../../../boost.types';
+import { BoostConsoleService } from '../../../services/console.service';
+import { BehaviorSubject, take } from 'rxjs';
 
 describe('BoostConsoleStatsBarComponent', () => {
   let component: BoostConsoleStatsBarComponent;
@@ -39,6 +41,17 @@ describe('BoostConsoleStatsBarComponent', () => {
       ],
       providers: [
         {
+          provide: BoostConsoleService,
+          useValue: MockService(BoostConsoleService, {
+            has: ['adminContext$'],
+            props: {
+              adminContext$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+            },
+          }),
+        },
+        {
           provide: ConfigsService,
           useValue: {
             get: () => {
@@ -66,6 +79,8 @@ describe('BoostConsoleStatsBarComponent', () => {
     component = fixture.componentInstance;
 
     component.boost = mockBoost;
+
+    (component as any).service.adminContext$.next(false);
 
     fixture.detectChanges();
   });
@@ -138,5 +153,58 @@ describe('BoostConsoleStatsBarComponent', () => {
     component.boost.payment_amount = 1;
 
     expect(component.getCpmString()).toBe('0.00 tokens');
+  });
+
+  it('should show CTA preview when in an admin context', (done: DoneFn) => {
+    (component as any).service.adminContext$.next(true);
+    component.boost.boost_status = BoostState.PENDING;
+    component.boost.goal_button_url = 'https://www.minds.com/';
+    component.boostIsPending = true;
+
+    component.showCtaPreview$
+      .pipe(take(1))
+      .subscribe((showCtaPreview: boolean): void => {
+        expect(showCtaPreview).toBeTrue();
+        done();
+      });
+  });
+
+  it('should NOT show CTA preview when NOT in an admin context', (done: DoneFn) => {
+    (component as any).service.adminContext$.next(false);
+    component.boost.goal_button_url = 'https://www.minds.com/';
+    component.boostIsPending = true;
+
+    component.showCtaPreview$
+      .pipe(take(1))
+      .subscribe((showCtaPreview: boolean): void => {
+        expect(showCtaPreview).toBeFalse();
+        done();
+      });
+  });
+
+  it('should NOT show CTA preview when boost is NOT in a pending context', (done: DoneFn) => {
+    (component as any).service.adminContext$.next(true);
+    component.boost.goal_button_url = 'https://www.minds.com/';
+    component.boostIsPending = false;
+
+    component.showCtaPreview$
+      .pipe(take(1))
+      .subscribe((showCtaPreview: boolean): void => {
+        expect(showCtaPreview).toBeFalse();
+        done();
+      });
+  });
+
+  it('should NOT show CTA preview when boost has no goal_button_url', (done: DoneFn) => {
+    (component as any).service.adminContext$.next(true);
+    component.boost.goal_button_url = undefined;
+    component.boostIsPending = true;
+
+    component.showCtaPreview$
+      .pipe(take(1))
+      .subscribe((showCtaPreview: boolean): void => {
+        expect(showCtaPreview).toBeFalse();
+        done();
+      });
   });
 });

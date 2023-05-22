@@ -30,6 +30,7 @@ import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ClientMetaData } from '../../../../common/services/client-meta.service';
+import { ComposerModalService } from '../modal/modal.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -107,6 +108,7 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
     protected injector: Injector,
     protected toasterService: ToasterService,
     protected blogPreloadService: BlogPreloadService,
+    private composerModal: ComposerModalService,
     configs: ConfigsService,
     protected uploaderService: UploaderService
   ) {
@@ -214,6 +216,7 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
 
     this.blogPreloadService.next(message);
     this.router.navigate(['/blog/v2/edit/new']);
+    this.composerModal.dismiss();
   }
 
   /**

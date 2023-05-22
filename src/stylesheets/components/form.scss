@@ -24,6 +24,27 @@
     }
   }
 
+  // The button takes the full width of the container
+  .m-formLayout--buttonStretched {
+    .m-form__buttonsContainer {
+      justify-content: stretch;
+      max-width: 100%;
+
+      @media screen and (max-width: $max-mobile) {
+        max-width: 100%;
+        width: auto;
+      }
+
+      m-button {
+        width: 100%;
+        margin-right: 0;
+        .m-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
   [class*='m-formLayout--'] {
     &:not(.m-formLayout--buttonInline) {
       .m-form__fieldsContainer {
