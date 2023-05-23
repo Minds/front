@@ -1,22 +1,6 @@
-<m-tooltip
-  class="m-boostButton__tooltip"
-  [anchor]="'bottom'"
-  [enabled]="false"
-  [hidden]="!(shouldShowTooltip$ | async)"
-  [showArrow]="true"
-  [tooltipBubbleStyle]="tooltipBubbleStyle"
-  [arrowOffset]="2"
+<button
+  class="m-btn m-btn--slim m-boostButton"
+  data-ref="data-minds-activity-boost-button"
 >
-  <button
-    m-tooltip--anchor
-    class="m-btn m-btn--slim m-boostButton"
-    data-ref="data-minds-activity-boost-button"
-  >
-    <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
-    <!-- <span class="m-boostButton__label">Boost</span> -->
-  </button>
-
-  <ng-container i18n="@@M__ACTION__BOOST__TOOLTIP"
-    >Use your tokens to get more views</ng-container
-  >
-</m-tooltip>
+  <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
+</button>
