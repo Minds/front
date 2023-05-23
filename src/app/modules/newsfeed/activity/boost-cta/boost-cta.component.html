@@ -21,6 +21,8 @@
   <ng-template #subscribeButton>
     <ng-container *ngIf="!subscribedOnLoad">
       <m-subscribeButton
+        *ngIf="entity && entity.ownerObj"
+        [user]="entity.ownerObj"
         class="m-activityBoostCta__wrapper"
         sized="true"
         size="small"
