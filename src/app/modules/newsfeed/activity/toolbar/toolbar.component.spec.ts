@@ -63,7 +63,6 @@ describe('ActivityToolbarComponent', () => {
         }),
         MockComponent({
           selector: 'm-activity__boostButton',
-          inputs: ['object'],
           outputs: ['click'],
         }),
         MockComponent({

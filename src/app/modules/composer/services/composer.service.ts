@@ -21,7 +21,6 @@ import {
   AttachmentValidationPayload,
   AttachmentValidatorService,
 } from './attachment-validator.service';
-import { BoostRecommendationService } from '../../../common/services/boost-recommendation.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 import { UploaderService } from './uploader.service';
 import {
@@ -389,7 +388,6 @@ export class ComposerService implements OnDestroy {
     protected feedsUpdate: FeedsUpdateService,
     private hashtagsFromString: HashtagsFromStringService,
     private attachmentValidator: AttachmentValidatorService,
-    private boostRecommendationService: BoostRecommendationService,
     private onboardingService: OnboardingV3Service,
     private uploaderService: UploaderService,
     private toasterService: ToasterService
@@ -1104,10 +1102,6 @@ export class ComposerService implements OnDestroy {
 
       this.reset();
       this.isPosting$.next(false);
-      setTimeout(
-        () => this.boostRecommendationService.recommendBoost(activity.guid),
-        1000
-      );
       this.setProgress(false);
 
       activity.boostToggle = true;

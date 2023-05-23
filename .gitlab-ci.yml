@@ -432,7 +432,7 @@ review:stop:
     - docker:dind
   script:
     ## Sync assets with CDN
-    - aws s3 sync dist $S3_REPOSITORY_URL --cache-control max-age=31536000
+    - aws s3 sync dist $S3_REPOSITORY_URL/$IMAGE_LABEL --cache-control max-age=31536000
     - $(aws ecr get-login --no-include-email --region us-east-1)
     ## Update docker server container
     - docker login -u $CI_REGISTRY_USER -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
