@@ -4,6 +4,7 @@ import { Session } from '../../../../services/session';
 import { PostMenuService } from '../post-menu.service';
 import { PostMenuV2Component } from './menu.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
+import { AdminSupersetLinkService } from '../../../services/admin-superset-link.service';
 
 describe('PostMenuV2Component', () => {
   let comp: PostMenuV2Component;
@@ -28,6 +29,10 @@ describe('PostMenuV2Component', () => {
           provide: ChangeDetectorRef,
           useValue: MockService(ChangeDetectorRef),
         },
+        {
+          provide: AdminSupersetLinkService,
+          useValue: MockService(AdminSupersetLinkService),
+        },
       ],
     })
       .overrideProvider(PostMenuService, {
@@ -37,6 +42,13 @@ describe('PostMenuV2Component', () => {
 
     fixture = TestBed.createComponent(PostMenuV2Component);
     comp = fixture.componentInstance;
+
+    comp.entity = {
+      guid: '123',
+      ownerObj: {
+        guid: '234',
+      },
+    };
 
     spyOn(comp.optionSelected, 'emit');
 
@@ -147,5 +159,22 @@ describe('PostMenuV2Component', () => {
     await comp.onSelectedOption(option);
     expect(comp.service.openReportModal).toHaveBeenCalled();
     expect(comp.optionSelected.emit).toHaveBeenCalledWith(option);
+  });
+
+  it('should get user superset url from admin superset link service', () => {
+    comp.entity = {
+      guid: '123',
+      ownerObj: {
+        guid: '234',
+      },
+    };
+
+    const url: string = 'https://www.minds.com/';
+    (comp as any).adminSupersetLink.getUserOverviewUrl.and.returnValue(url);
+
+    expect(comp.getUserSupersetUrl()).toBe(url);
+    expect(
+      (comp as any).adminSupersetLink.getUserOverviewUrl
+    ).toHaveBeenCalledOnceWith('234');
   });
 });
