@@ -46,7 +46,14 @@
     <!-- ----------------------------------------- -->
     <!-- SEARCH QUERY DISPLAY -->
     <!-- ----------------------------------------- -->
-    <div class="m-channelFeed__searchDisplay" *ngIf="service.query$ | async">
+    <div
+      class="m-channelFeed__searchDisplay"
+      *ngIf="service.query$ | async"
+      [ngClass]="{
+        'm-channelFeed__searchDisplay--bottomBorder':
+          (service.isOwner$ | async) && !isGrid
+      }"
+    >
       <span i18n="@@M__CHANNEL_FEED__SEARCH_RESULTS_FOR"
         >Search results for:
       </span>

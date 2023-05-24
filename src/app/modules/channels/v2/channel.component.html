@@ -55,9 +55,19 @@
 
           <div class="m-tabs__tab">
             <a
+              [routerLink]="['/', username, 'groups']"
+              routerLinkActive="m-tabs__tab--selected"
+              i18n="@@COMMON__GROUPS"
+              data-ref="data-minds-channel-groups-button"
+              >Groups</a
+            >
+          </div>
+
+          <div class="m-tabs__tab">
+            <a
               [routerLink]="['/', username, 'about']"
               [class.m-tabs__tab--selected]="
-                ['about', 'subscribers', 'subscriptions', 'groups'].includes(
+                ['about', 'subscribers', 'subscriptions'].includes(
                   view$ | async
                 )
               "
@@ -67,7 +77,7 @@
             >
           </div>
         </div>
-        <div class="m-channel__searchBtnWrapper">
+        <div class="m-channel__searchBtnWrapper" *ngIf="isFeedView">
           <a class="m-channelSearchBtn" (click)="openSearchModal($event)"
             ><i class="material-icons">search</i></a
           >

@@ -15,6 +15,7 @@ import { FeedsService } from '../../../../common/services/feeds.service';
   selector: 'm-channel__list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'list.component.html',
+  styleUrls: ['list.component.ng.scss'],
 })
 export class ChannelListComponent {
   /**
@@ -26,6 +27,11 @@ export class ChannelListComponent {
    * Can the user search?
    */
   @Input() canSearch: boolean = false;
+
+  /**
+   * Should we show the navigation tabs at the top of this component?
+   */
+  @Input() showTabs: boolean = true;
 
   /**
    * Search event

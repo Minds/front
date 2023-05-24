@@ -27,6 +27,7 @@
       background: transparent;
       border: none;
       box-sizing: border-box;
+      outline: none;
 
       @include m-theme() {
         color: themed($m-textColor--primary);
