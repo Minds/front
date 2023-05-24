@@ -36,7 +36,6 @@ import { EntityMetricsSocketService } from '../../../common/services/entity-metr
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
-import { PaywallContextExperimentService } from '../../experiments/sub-services/paywall-context-experiment.service';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -71,19 +70,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() set entity(entity) {
     this.service.setEntity(entity);
     this.isBoost = entity?.boosted ?? false;
-
-    const currentUser = this.session.getLoggedInUser();
-    const iconTime: number =
-      currentUser && currentUser.guid === entity.ownerObj.guid
-        ? currentUser.icontime
-        : entity.ownerObj.icontime;
-
-    this.avatarUrl =
-      this.configs.get('cdn_url') +
-      'icon/' +
-      entity.ownerObj.guid +
-      '/medium/' +
-      iconTime;
   }
 
   @Input() set displayOptions(options) {
@@ -141,8 +127,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   private interceptionObserverSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
-
-  avatarUrl: string;
 
   // Whether the boost/remind/supermind/mutualSubscriptions flag
   // should appear on top of owner block
@@ -215,11 +199,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         entity.supermind &&
         !entity.supermind.is_reply &&
         entity.supermind.receiver_user;
-
-      // const isSomeoneElsesPaywalledPost =
-      //   this.paywallContextExperiment.isActive() &&
-      //   !!entity?.paywall &&
-      //   entity.ownerObj.guid !== this.session.getLoggedInUser().guid;
 
       this.showFlagRow =
         notInBoostRotator && (boosted || reminded || isSupermindOffer);

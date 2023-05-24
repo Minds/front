@@ -27,4 +27,13 @@
       >Latest</a
     >
   </div>
+  <div class="m-tabs__tab" *ngIf="shouldShowGroupsTab">
+    <a
+      [routerLink]="['../' + feedAlgorithm.groups]"
+      routerLinkActive="m-tabs__tab--selected"
+      data-ref="newsfeed-tab-link-groups"
+      i18n="@@COMMON__GROUPS"
+      >Groups</a
+    >
+  </div>
 </div>

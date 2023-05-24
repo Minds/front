@@ -44,11 +44,13 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 import { Platform } from '@angular/cdk/platform';
+import { Session } from '../../../services/session';
 
 export enum FeedAlgorithm {
   top = 'top',
   latest = 'latest',
   forYou = 'for-you',
+  groups = 'groups',
 }
 
 const commonInjectItems: InjectItem[] = [
@@ -98,9 +100,24 @@ export class ForYouFeedService extends FeedsService {
   injectItems = commonInjectItems;
 }
 
+/**
+ * Service for "Groups" feed.
+ */
+@Injectable()
+export class GroupsFeedService extends FeedsService {
+  endpoint = 'api/v2/feeds/subscribed/activities';
+  limit = new BehaviorSubject(12);
+  injectItems = commonInjectItems;
+}
+
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [LatestFeedService, TopFeedService, ForYouFeedService],
+  providers: [
+    LatestFeedService,
+    TopFeedService,
+    ForYouFeedService,
+    GroupsFeedService,
+  ],
   templateUrl: 'subscribed.component.html',
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
@@ -172,6 +189,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     @Self() public latestFeedService: LatestFeedService,
     @Self() public topFeedService: TopFeedService,
     @Self() public forYouFeedService: ForYouFeedService,
+    @Self() public groupsFeedService: GroupsFeedService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
@@ -183,7 +201,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public changeDetectorRef: ChangeDetectorRef,
     private feedNoticeService: FeedNoticeService,
     persistentFeedExperiment: PersistentFeedExperimentService,
-    private platform: Platform
+    private platform: Platform,
+    private session: Session
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -196,6 +215,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       this.topFeedService.setCachingEnabled(true);
       this.latestFeedService.setCachingEnabled(true);
       this.forYouFeedService.setCachingEnabled(true);
+      this.groupsFeedService.setCachingEnabled(true);
     }
   }
 
@@ -286,6 +306,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         return this.topFeedService;
       case 'for-you':
         return this.forYouFeedService;
+      case 'groups':
+        return this.groupsFeedService;
       default:
         return this.latestFeedService;
     }
@@ -329,6 +351,17 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
             this.topFeedService.setLimit(3).fetch(true),
             this.latestFeedService.fetch(true),
           ]);
+          break;
+        case 'groups':
+          const params = {
+            group_posts_for_user_guid:
+              this.session.getLoggedInUser()?.guid || '',
+          };
+
+          await this.groupsFeedService
+            .setParams(params)
+            .setLimit(12)
+            .fetch(true);
           break;
       }
     } catch (e) {
@@ -395,6 +428,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         this.latestFeedService.clear(true);
         this.topFeedService.clear(true);
         break;
+      case 'groups':
+        this.groupsFeedService.clear(true);
     }
   }
 
@@ -530,6 +565,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         }
         break;
       case this.forYouFeedService:
+        this.latestFallbackActive$.next(false);
+        break;
+      case this.groupsFeedService:
         this.latestFallbackActive$.next(false);
         break;
     }
