@@ -1,28 +1,18 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
-<m-marketing
-  class="m-token__marketing"
-  pageTitle="Tokens"
-  i18n-pageTitle="@@COMMON__TOKENS"
->
+<m-loadingSpinner [inProgress]="loading"></m-loadingSpinner>
+
+<m-marketing *ngIf="!loading" class="m-token__marketing">
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
-        <h1 i18n="@@COMMON__TOKENS">Tokens</h1>
-
-        <h2>
-          <ng-container i18n="@@MARKETING__FUEL_OF_NETWORK"
-            >The <em>fuel</em> of the Minds network</ng-container
-          >
-        </h2>
-
-        <p
+        <h1 *ngIf="data?.hero?.h1">{{ data.hero.h1 }}</h1>
+        <markdown
+          ngPreserveWhitespaces
+          *ngIf="data?.hero?.body"
           class="m-marketing__description"
-          i18n="@@MARKETING__BUY_TOKENS_SUPPORT_FAVORITE_CHANNELS"
+          >{{ data.hero.body }}</markdown
         >
-          Buy tokens to support Minds and your favorite channels. Unlock premium
-          features and launch advertising campaigns to expand your reach.
-        </p>
       </div>
       <div
         class="
@@ -30,13 +20,17 @@
           m-marketing__image m-marketing__imageContainer
         "
       >
-        <span>
+        <span
+          [ngClass]="{
+            'm-marketing__imageSpan--noBackgroundEffects': !data.hero
+              ?.showBackgroundEffects
+          }"
+        >
           <img
-            [src]="
-              cdnAssetsUrl + 'assets/product-pages/token/v2/mobile-tokens.png'
-            "
+            *ngIf="data?.hero?.heroBackground?.data?.attributes?.url"
+            [src]="strapiUrl + data.hero.heroBackground.data.attributes.url"
             class="m-marketing__image--tall"
-            alt="Minds mobile wallet"
+            alt="Minds Token"
           />
         </span>
       </div>
@@ -46,448 +40,42 @@
   <ng-container slot="2">
     <m-marketing__asFeaturedInBlockchain></m-marketing__asFeaturedInBlockchain>
 
-    <!-- Earn daily rewards section -->
-    <div class="m-marketing__section m-marketing__section--style-4">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING__EARN_DAILY_REWARDS">Earn daily rewards</h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING__TOKEN_GRANT_VIEWS_EXPLANATION"
-          >
-            Tokens grant you advertising views on the network. Launch
-            advertising campaigns, send offers for other channels to promote
-            your post and grow your audience to new levels.
-          </p>
-
-          <div class="m-marketing__links">
-            <ol>
-              <li>
-                <a
-                  (click)="provideLiquidityClick()"
-                  target="_blank"
-                  i18n="@@TOKEN_MARKETING__PROVIDE_LIQUIDITY_ON_UNISWAP"
-                >
-                  Provide liquidity
-                </a>
-                <span> on Uniswap </span>
-              </li>
-              <li>
-                <a
-                  target="_blank"
-                  i18n="@@TOKEN_MARKETING__CREATE_CONTENT"
-                  #composerOpenAnchor
-                >
-                  Create content
-                </a>
-                <span i18n="connective|@@COMMON__AND"> and </span>
-
-                <a
-                  (click)="navigateToReferrals()"
-                  target="_blank"
-                  i18n="@@TOKEN_MARKETING__REFER_FRIENDS"
-                >
-                  refer friends
-                </a>
-              </li>
-
-              <li>
-                <a
-                  (click)="holdClick()"
-                  target="_blank"
-                  i18n="hold (your tokens onchain)|@@TOKEN_MARKETING__HOLD"
-                >
-                  Hold
-                </a>
-                <span
-                  i18n="
-                     (hold) your tokens
-                    onchain|@@TOKEN_MARKETING__YOUR_TOKENS_ONCHAIN
-                  "
-                  >your tokens on-chain</span
-                >
-              </li>
-            </ol>
-            <div class="m-marketing__links">
-              <h3 i18n="@@COMMON__USEFUL_LINKS">Useful links</h3>
-
-              <ul>
-                <li>
-                  <a
-                    routerLink="/rewards"
-                    target="_blank"
-                    i18n="@@TOKEN_MARKETING__LEARN_ABOUT_TOKEN_REWARDS"
-                  >
-                    Learn about Token Rewards
-                  </a>
-                </li>
-                <li>
-                  <a
-                    routerLink="/wallet"
-                    target="_blank"
-                    i18n="@@COMMON__WALLET"
-                    >Wallet</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="
-                cdnAssetsUrl +
-                'assets/product-pages/token/v2/earn-daily-rewards.jpg'
-              "
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="
-                cdnAssetsUrl +
-                'assets/product-pages/token/v2/earn-daily-rewards-overlay.png'
-              "
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Airdrop section -->
-    <div class="m-marketing__section m-marketing__section--style-3">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING__AIRDROP">Airdrop</h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING__CONNECT_YOUR_WALLET_QUALIFY"
-          >
-            Coming soon: Connect your wallet to see if you qualify for a MINDS
-            airdrop. You can read our blog to learn more about who qualifies.
-          </p>
-          <div class="m-marketing__buttonWrapper">
-            <m-button [color]="'blue'" (onAction)="airdropClick()"
-              ><ng-container i18n="@@MARKETING__CONNECT_WALLET"
-                >Connect Wallet</ng-container
-              ></m-button
-            >
-          </div>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/token/v2/airdrop.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="
-                cdnAssetsUrl +
-                'assets/product-pages/token/v2/airdrop-overlay.png'
-              "
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Buy Premium Subscriptions -->
-    <div class="m-marketing__section m-marketing__section--style-4">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@COMMON__BUY_PREMIUM_SUBSCRIPTIONS">
-            Buy premium subscriptions
-          </h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING__SPEND_TOKENS_TO_UPGRADE"
-          >
-            Spend tokens to upgrade your channel to Pro or Plus. Access
-            exclusive content and other custom offerings from your favorite
-            creators.
-          </p>
-
-          <div class="m-marketing__links">
-            <h3 i18n="@@COMMON__USEFUL_LINKS">Useful links</h3>
-
-            <ul>
-              <li>
-                <a
-                  routerLink="/pro"
-                  target="_blank"
-                  i18n="@@COMMON__LEARN_ABOUT_PRO"
-                >
-                  Learn About Pro
-                </a>
-              </li>
-              <li>
-                <a
-                  routerLink="/plus"
-                  target="_blank"
-                  i18n="@@COMMON__LEARN_ABOUT_PLUS"
-                >
-                  Learn About Plus
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/token/token-3.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/product-pages/token/token-3-ux.png'"
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Expand your reach section -->
-    <div class="m-marketing__section m-marketing__section--style-3">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING__EXPAND_YOUR_REACH">Expand your reach</h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING__TOKEN_GRANT_VIEWS_EXPLANATION"
-          >
-            Tokens grant you advertising views on the network. Launch
-            advertising campaigns, send offers for other channels to promote
-            your post and grow your audience to new levels.
-          </p>
-
-          <div class="m-marketing__links">
-            <h3 i18n="@@COMMON__USEFUL_LINKS">Useful links</h3>
-
-            <ul>
-              <li>
-                <a
-                  [href]="
-                    cdnAssetsUrl + 'assets/documents/Minds-Whitepaper-v2.pdf'
-                  "
-                  target="_blank"
-                >
-                  <span i18n="@@COMMON__DOWNLOAD_WHITEPAPER"
-                    >Download Whitepaper</span
-                  >
-                  <i class="material-icons">cloud_download</i>
-                </a>
-              </li>
-              <li>
-                <a
-                  routerLink="/wallet"
-                  target="_blank"
-                  i18n="@@COMMON__SETUP_WALLET"
-                >
-                  Setup Wallet
-                </a>
-              </li>
-              <li>
-                <a
-                  routerLink="/boost"
-                  target="_blank"
-                  i18n="@@COMMON__LEARN_ABOUT_BOOST"
-                >
-                  Learn About Boost
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/token/token-2.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/product-pages/token/token-2-ux.png'"
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Send tips and support channels -->
-
-    <div class="m-marketing__section m-marketing__section--style-4">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@COMMON__SEND_TIPS_SUPPORT_CHANNELS">
-            Send tips and support other channels
-          </h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_ENJOY_POST_OTHER_CHANNELS"
-          >
-            Enjoy a post from another channel? Send them tokens to show your
-            support. Tokens help other creators promote their content and build
-            their network.
-          </p>
-          <div class="m-marketing__links">
-            <h3 i18n="@@COMMON__USEFUL_LINKS">Useful links</h3>
-
-            <ul>
-              <li>
-                <a
-                  routerLink="/pay"
-                  target="_blank"
-                  i18n="@@COMMON__LEARN_ABOUT_MINDS_PAY"
-                >
-                  Learn About Minds Pay
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/token/v2/support.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/product-pages/token/token-4-ux.png'"
-            />
-          </span>
-        </div>
-      </div>
+    <div *ngFor="let sectionData of data?.section">
+      <m-marketing__generalSection
+        [leftAligned]="sectionData.leftAligned"
+        [title]="sectionData.title"
+        [body]="sectionData.body"
+        [imageUrl]="
+          sectionData.image?.data?.attributes?.url
+            ? strapiUrl + sectionData.image?.data?.attributes?.url
+            : null
+        "
+        [imageOverlayUrl]="
+          sectionData.imageOverlay?.data?.attributes?.url
+            ? strapiUrl + sectionData.imageOverlay?.data?.attributes?.url
+            : null
+        "
+        [actionButtons]="sectionData.actionButtons"
+        [showBodyBackground]="sectionData.showBodyBackground"
+        [showBackgroundEffects]="sectionData.showBackgroundEffects"
+      ></m-marketing__generalSection>
     </div>
 
     <!-- Final section -->
 
-    <div class="m-marketing__section m-marketing__section--tail">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@COMMON__OTHER">Other</h2>
-        </div>
-      </div>
-
-      <div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
-        <div
-          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h3 i18n="@@COMMON__OPEN_SOURCE">Open Source</h3>
-
-          <p class="m-marketing__description">
-            <span
-              i18n="
-                 view the Minds
-                Project@@BLOCKCHAIN__MARKETING__VIEW_THE_MINDS_PROJECT
-              "
-              >View the
-            </span>
-            <a
-              href="https://gitlab.com/minds"
-              target="_blank"
-              i18n="
-                 view the Minds Project on
-                Gitlab@@BLOCKCHAIN__MARKETING__MINDS_PROJECT_ON_GITLAB
-              "
-              >Minds project on Gitlab
-            </a>
-            <span
-              i18n="
-                 view the Minds Project on
-                Gitlab@@BLOCKCHAIN__MARKETING__MINDS_PROJECT_ON_GITLAB
-              "
-              >to view source code, report issues, submit merge requests and
-              follow the project roadmap.</span
-            >
-          </p>
-        </div>
-
-        <div
-          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h3 i18n="is secure|@@MARKETING_SECURE">Secure</h3>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING__ACCEPTED_COINBASE_CUSTODY"
-          >
-            Minds tokens are accepted by
-            <a href="https://custody.coinbase.com/" target="_blank"
-              >Coinbase Custody</a
-            >
-            for added security. The smart contracts have been fully audited and
-            are available to view
-            <a href="https://gitlab.com/minds/token/" target="_blank">here</a>.
-          </p>
-        </div>
-
-        <div
-          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h3 i18n="@@COMMON__ETHERSCAN">Etherscan</h3>
-          <p class="m-marketing__description">
-            <span
-              i18n="
-                 view the MINDS
-                token@@BLOCKCHAIN__MARKETING__VIEW_THE_MINDS_TOKEN
-              "
-              >View the
-            </span>
-            <a
-              href="https://etherscan.io/token/0xb26631c6dda06ad89b93c71400d25692de89c068"
-              target="_blank"
-              i18n="
-                 view the MINDS token on
-                Etherscan@@BLOCKCHAIN__MARKETING__MINDS_TOKEN_ON_ETHERSCAN
-              "
-              >MINDS token on Etherscan
-            </a>
-            <span
-              i18n="
-                 view the MINDS token on Etherscan
-                to@@BLOCKCHAIN__MARKETING__TO_INDEPENDENTLY_ACCESS
-              "
-              >to independently access, search, and verify the transaction
-              history of the network.</span
-            >
-          </p>
-        </div>
-      </div>
+    <div
+      class="m-marketing__section m-marketing__section--tail"
+      *ngIf="data?.otherFeaturesSection"
+    >
+      <m-marketing__otherFeaturesSection
+        [title]="data.otherFeaturesSection?.title ?? null"
+        [column1Title]="data.otherFeaturesSection?.column1Title"
+        [column1Body]="data.otherFeaturesSection?.column1Body"
+        [column2Title]="data.otherFeaturesSection?.column2Title"
+        [column2Body]="data.otherFeaturesSection?.column2Body"
+        [column3Title]="data.otherFeaturesSection?.column3Title"
+        [column3Body]="data.otherFeaturesSection?.column3Body"
+      ></m-marketing__otherFeaturesSection>
     </div>
   </ng-container>
 </m-marketing>

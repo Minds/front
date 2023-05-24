@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { MetaService } from './meta.service';
-import { STRAPI_URL } from '../injection-tokens/url-injection-tokens';
+import { MetaService } from '../meta.service';
+import { STRAPI_URL } from '../../injection-tokens/url-injection-tokens';
 
 // metadata type.
 export type StrapiMetadata = {

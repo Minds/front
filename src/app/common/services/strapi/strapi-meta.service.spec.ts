@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { MetaService } from './meta.service';
-import { STRAPI_URL } from '../injection-tokens/url-injection-tokens';
+import { MetaService } from '../meta.service';
+import { STRAPI_URL } from '../../injection-tokens/url-injection-tokens';
 import { StrapiMetaService, StrapiMetadata } from './strapi-meta.service';
-import { MockService } from '../../utils/mock';
+import { MockService } from '../../../utils/mock';
 
 describe('StrapiMetaService', () => {
   let service: StrapiMetaService;

@@ -11,6 +11,7 @@ import { BlockchainMarketingTokenV2Component } from './v2/token.component';
 import { BlockchainMarketingRewardsV2Component } from './v2/rewards.component';
 import { OnchainTransferModalService } from '../../wallet/components/components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet/components/wallet-v2.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 const routes: Routes = [
   {
@@ -21,14 +22,6 @@ const routes: Routes = [
     path: 'token',
     component: BlockchainMarketingTokenV2Component,
     data: {
-      title:
-        'Buy, Support, & Expand Your Audience with Social Media Cryptocurrency',
-      description:
-        'Buy Minds tokens to expand your reach, support your favorite channels, and unlock premium features on Minds.',
-      ogImage: '/assets/og-images/tokens-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
-      canonicalUrl: '/token',
       preventLayoutReset: true,
     },
   },
@@ -40,11 +33,6 @@ const routes: Routes = [
     path: 'rewards',
     component: BlockchainMarketingRewardsV2Component,
     data: {
-      title: 'Rewards',
-      description: 'Earn tokens for your contributions to the network',
-      ogImage: '/assets/og-images/rewards-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
       preventLayoutReset: true,
     },
   },
@@ -53,6 +41,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
+    MarkdownModule.forRoot(),
     NgCommonModule,
     CommonModule,
     FormsModule,

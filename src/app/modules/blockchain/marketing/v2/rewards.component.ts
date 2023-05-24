@@ -3,11 +3,24 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Inject,
+  OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
+import { GraphQLError } from 'graphql';
+import {
+  RewardsMarketingPageResponse,
+  RewardsMarketingService,
+} from './rewards.service';
+import { Subscription } from 'rxjs';
+import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
+import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { MarketingAttributes } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 
 /**
  * Rewards marketing page
@@ -16,9 +29,17 @@ import { BlockchainMarketingLinksService } from './blockchain-marketing-links.se
   selector: 'm-blockchainMarketing__rewards--v2',
   templateUrl: 'rewards.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./rewards.component.ng.scss'],
+  styleUrls: [
+    './rewards.component.ng.scss',
+    '../../../marketing/styles/markdown-style.ng.scss',
+  ],
 })
-export class BlockchainMarketingRewardsV2Component {
+export class BlockchainMarketingRewardsV2Component
+  implements OnInit, OnDestroy {
+  public data: MarketingAttributes;
+  public loading: boolean = true;
+  public errors: readonly GraphQLError[];
+
   readonly cdnAssetsUrl: string;
 
   readonly contributionValues: { [key: string]: number };
@@ -26,14 +47,37 @@ export class BlockchainMarketingRewardsV2Component {
   @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
+  private copyDataSubscription: Subscription;
+
   constructor(
     protected router: Router,
     protected cd: ChangeDetectorRef,
     private linksService: BlockchainMarketingLinksService,
+    private service: RewardsMarketingService,
+    private strapiMeta: StrapiMetaService,
+    @Inject(STRAPI_URL) public strapiUrl: string,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.contributionValues = configs.get('contribution_values');
+  }
+
+  ngOnInit(): void {
+    this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
+      (result: ApolloQueryResult<RewardsMarketingPageResponse>): void => {
+        this.data = result.data.rewardsMarketingPage.data.attributes;
+        this.loading = result.loading;
+        this.errors = result.errors;
+        if (this.data.metadata) {
+          this.strapiMeta.apply(this.data.metadata);
+        }
+        this.detectChanges();
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.copyDataSubscription?.unsubscribe();
   }
 
   scrollToTop() {

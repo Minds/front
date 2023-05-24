@@ -1,0 +1,61 @@
+<div
+  class="m-marketing__section"
+  [ngClass]="{
+    'm-marketing__section--style-3': leftAligned,
+    'm-marketing__section--style-4': !leftAligned
+  }"
+>
+  <div class="m-grid m-marketing__wrapper">
+    <div
+      class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+      [ngClass]="{
+        'm-marketing__body--noBodyBackground': !showBodyBackground
+      }"
+    >
+      <h2>{{ title }}</h2>
+      <markdown class="m-marketing__description" ngPreserveWhitespaces>{{
+        body
+      }}</markdown>
+      <div class="m-marketing__buttonWrapper">
+        <ng-container *ngFor="let actionButton of actionButtons">
+          <a
+            *ngIf="actionButton.navigationUrl; else predefinedActionTemplate"
+            [href]="actionButton.navigationUrl"
+            target="_blank"
+          >
+            <m-button color="blue">{{ actionButton.text }}</m-button>
+          </a>
+          <ng-template #predefinedActionTemplate>
+            <m-button
+              color="blue"
+              (onAction)="onActionButtonClick(actionButton.action ?? null)"
+            >
+              {{ actionButton.text }}
+            </m-button>
+          </ng-template>
+        </ng-container>
+      </div>
+    </div>
+    <div class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image">
+      <span
+        [ngClass]="{
+          'm-marketing__body--noBackgroundEffects': !showBackgroundEffects
+        }"
+      >
+        <img
+          *ngIf="imageUrl"
+          class="m-marketing__image--1"
+          [src]="imageUrl"
+          loading="lazy"
+        />
+
+        <img
+          *ngIf="imageOverlayUrl"
+          class="m-marketing__image--2"
+          [src]="imageOverlayUrl"
+          loading="lazy"
+        />
+      </span>
+    </div>
+  </div>
+</div>

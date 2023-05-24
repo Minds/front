@@ -172,7 +172,7 @@
 
         // Deco
 
-        &::before {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::before {
           content: '';
           display: block;
           position: absolute;
@@ -191,7 +191,7 @@
           }
         }
 
-        &::after {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::after {
           content: '';
           display: block;
           position: absolute;

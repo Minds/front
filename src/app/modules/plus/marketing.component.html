@@ -1,31 +1,18 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
-<m-marketing
-  class="m-plus__marketing"
-  pageTitle="Minds+"
-  i18n-pageTitle="@@COMMON__MINDS_PLUS"
->
+<m-loadingSpinner [inProgress]="loading"></m-loadingSpinner>
+
+<m-marketing *ngIf="!loading" class="m-plus__marketing">
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
-        <h1 i18n="@@MARKETING_PLUS__MINDS_PLUS">Minds+</h1>
-
-        <h2
+        <h1 *ngIf="data?.hero?.h1">{{ data.hero.h1 }}</h1>
+        <markdown
           ngPreserveWhitespaces
-          i18n="@@MARKETING_PLUS__UPGRADE_CHANNEL_PREMIUM_FEATURES"
-        >
-          Join the world's first <em>community-powered</em> streaming service
-        </h2>
-
-        <p
+          *ngIf="data?.hero?.body"
           class="m-marketing__description"
-          i18n="@@MARKETING_PLUS__SUPPORT_MINDS_UNLOCK_FEATURES"
+          >{{ data.hero.body }}</markdown
         >
-          Your monthly payments are shared directly with the creators who submit
-          the most popular content. Unlock new features and help fund Minds
-          filmmakers, writers, artists, memers, podcasters, musicians,
-          journalists and more.
-        </p>
 
         <div class="m-plusMarketing__subscription">
           <m-plus--subscription
@@ -64,11 +51,17 @@
           m-marketing__image m-marketing__imageContainer
         "
       >
-        <span>
+        <span
+          [ngClass]="{
+            'm-marketing__imageSpan--noBackgroundEffects': !data.hero
+              ?.showBackgroundEffects
+          }"
+        >
           <img
-            [src]="cdnAssetsUrl + 'assets/product-pages/plus/mobile-plus.png'"
+            *ngIf="data?.hero?.heroBackground?.data?.attributes?.url"
+            [src]="strapiUrl + data.hero.heroBackground.data.attributes.url"
             class="m-marketing__image--tall"
-            alt="Minds plus"
+            alt="Minds Plus"
           />
         </span>
       </div>
@@ -78,200 +71,39 @@
   <ng-container slot="2">
     <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
 
-    <!-- Section 2 -->
-
-    <div class="m-marketing__section m-marketing__section--style-3">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING_PLUS__ACCESS_PREMIUM_CONTENT">
-            Access premium videos, blogs and photos from independent creators
-          </h2>
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_PLUS__PREMIUM_CONTENT_SECTION"
-          >
-            We are democratizing the way media is created and consumed. Every
-            time you watch a video, read a blog or view a photo in Minds+, that
-            creator earns revenue. Your attention and support enables them to
-            make a living doing what they love.
-          </p>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-3.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-3-ux.png'"
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 3 -->
-
-    <div class="m-marketing__section m-marketing__section--style-4">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING_PLUS__EARN_REVENUE">
-            Submit content to Minds+ and earn a share of revenue
-          </h2>
-
-          <p class="m-marketing__description">
-            <ng-container
-              i18n="@@MARKETING_PLUS__MONTHLY_REVENUE_MODEL_SECTION"
-            >
-              Minds+ is a new model for creators and brands to gain exposure and
-              monetize their content. Our monthly revenue is shared directly
-              with the creators who contribute the most popular and engaging
-              exclusive content to Minds+.
-            </ng-container>
-            <br /><br />
-            <ng-container
-              i18n="
-                 @@MARKETING_PLUS__MONTHLY_REVENUE_MODEL_SECTION__ELIGIBILITY
-              "
-            >
-              If you pay for your membership in tokens, you are only eligible to
-              be paid out in tokens. If you pay in cash, you are eligible to be
-              paid out in cash, Bitcoin, Ether or tokens.
-            </ng-container>
-          </p>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_PLUS__NETFLIX_ANALOGY_SECTION"
-          >
-            Imagine Netflix, but if anyone could submit content and earn!
-          </p>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-2.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-2-ux.png'"
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 4 -->
-
-    <div class="m-marketing__section m-marketing__section--style-3">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING_PLUS__PROTECT_YOUR_CONTENT">
-            Protect your content from censorship and demonetization
-          </h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_PLUS__PROTECTED_CONTENT_SECTION"
-          >
-            Migrate your entire YouTube library to Minds and automatically sync
-            new uploads. Optionally post your public content to the Permaweb, a
-            censorship-resistant and decentralized storage system. Upload
-            unlimited HD video up to 95 minutes in duration. Get priority
-            support.
-          </p>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/token/token-3.jpg'"
-            />
-          </span>
-        </div>
-      </div>
+    <div *ngFor="let sectionData of data?.section">
+      <m-marketing__generalSection
+        [leftAligned]="sectionData.leftAligned"
+        [title]="sectionData.title"
+        [body]="sectionData.body"
+        [imageUrl]="
+          sectionData.image?.data?.attributes?.url
+            ? strapiUrl + sectionData.image?.data?.attributes?.url
+            : null
+        "
+        [imageOverlayUrl]="
+          sectionData.imageOverlay?.data?.attributes?.url
+            ? strapiUrl + sectionData.imageOverlay?.data?.attributes?.url
+            : null
+        "
+        [actionButtons]="sectionData.actionButtons"
+        [showBodyBackground]="sectionData.showBodyBackground"
+        [showBackgroundEffects]="sectionData.showBackgroundEffects"
+      ></m-marketing__generalSection>
     </div>
 
     <!-- Final section -->
-
     <div class="m-marketing__section m-marketing__section--tail">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING_PLUS__OTHER_PLUS_FEATURES">
-            Other Minds+ features
-          </h2>
-        </div>
-      </div>
-
-      <div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
-        <div
-          class="
-            m-grid__column-4 m-grid__column-4--tablet m-grid__column-12--mobile
-            m-marketing__body
-          "
-        >
-          <h3 i18n="@@MARKETING_PLUS__RECIEVE_A_BADGE">Receive a badge</h3>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_PLUS__MEMBERS_RECEIVE_BADGE_SECTION"
-          >
-            Get a badge on your channel to increase your reputation and stand
-            out.
-          </p>
-        </div>
-
-        <div
-          class="
-            m-grid__column-4 m-grid__column-4--tablet m-grid__column-12--mobile
-            m-marketing__body
-          "
-        >
-          <h3 i18n="@@MARKETING_PLUS__HIDE_BOOST">Hide boosted content</h3>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_PLUS__HIDE_BOOST_SECTION"
-          >
-            Remove all boosted content from your feeds to keep your experience
-            ad-free.
-          </p>
-        </div>
-        <div
-          class="
-            m-grid__column-4 m-grid__column-4--tablet m-grid__column-12--mobile
-            m-marketing__body
-          "
-        >
-          <h3 i18n="@@MARKETING_PLUS__VERIFY_CHANNEL">Verify your channel</h3>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_PLUS__VERIFY_CHANNEL_SECTION"
-          >
-            Request to verify your digital identity and let people know you are
-            real.
-          </p>
-        </div>
-      </div>
+      <m-marketing__otherFeaturesSection
+        *ngIf="data?.otherFeaturesSection"
+        [title]="data.otherFeaturesSection?.title ?? null"
+        [column1Title]="data.otherFeaturesSection?.column1Title"
+        [column1Body]="data.otherFeaturesSection?.column1Body"
+        [column2Title]="data.otherFeaturesSection?.column2Title"
+        [column2Body]="data.otherFeaturesSection?.column2Body"
+        [column3Title]="data.otherFeaturesSection?.column3Title"
+        [column3Body]="data.otherFeaturesSection?.column3Body"
+      ></m-marketing__otherFeaturesSection>
 
       <div class="m-grid m-marketing__wrapper">
         <div
