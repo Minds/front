@@ -13,6 +13,7 @@ import { BoostModalV2AudienceSelectorComponent } from './audience.component';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostAudience } from '../../boost-modal-v2.types';
 import { MockService } from '../../../../../utils/mock';
+import { BoostTargetExperimentService } from '../../../../experiments/sub-services/boost-target-experiment.service';
 
 describe('BoostModalV2AudienceSelectorComponent', () => {
   let comp: BoostModalV2AudienceSelectorComponent;
@@ -43,6 +44,10 @@ describe('BoostModalV2AudienceSelectorComponent', () => {
                 },
               },
             }),
+          },
+          {
+            provide: BoostTargetExperimentService,
+            useValue: MockService(BoostTargetExperimentService),
           },
         ],
       }).compileComponents();
