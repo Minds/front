@@ -4,6 +4,38 @@
   display: block;
 
   // *********************************
+  // ** GROUP CONTEXT **
+  // *********************************
+  &.m-activity__ownerBlock--groupContext {
+    &:not(.m-activity__ownerBlock--minimalMode) {
+      .m-activity__ownerBlock {
+        align-items: flex-start;
+        margin-bottom: $spacing2;
+      }
+    }
+    .m-activityOwnerBlock__avatar {
+      padding-right: 0.75rem;
+    }
+    .m-activityOwnerBlockColumn__displayNameWrapper {
+      margin-top: $spacing1;
+
+      .m-activityOwnerBlock__secondaryName {
+        display: inline-block;
+        margin-left: 0;
+
+        span {
+          @include body3Bold;
+        }
+      }
+      ::ng-deep .m-activityPermalink__wrapper .m-activityPermalink__text {
+        // body3Regular override
+        font-size: 0.75rem !important;
+        line-height: 1.063rem !important;
+        letter-spacing: 0.011em !important;
+      }
+    }
+  }
+  // *********************************
   // ** MINIMAL MODE **
   // *********************************
 
@@ -13,39 +45,7 @@
     padding-top: $spacing2;
     padding-bottom: $spacing2;
 
-    .m-activityOwnerBlock__avatar {
-      ::ng-deep m-hovercard {
-        img {
-          height: 35px;
-          width: 35px;
-          @include border;
-        }
-      }
-      .m-activityOwnerBlock__remindIcon--minimalMode {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        border-radius: 50%;
-        height: 17px;
-        width: 17px;
-        @include m-theme() {
-          background-color: themed($m-action);
-        }
-        i {
-          font-weight: 700;
-          font-size: 11px;
-          @include m-theme() {
-            color: themed($m-bgColor--primary);
-          }
-        }
-      }
-    }
-
-    .m-activityOwnerBlock__displayName,
-    .m-activityOwnerBlock__groupName {
+    .m-activityOwnerBlock__primaryName {
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
@@ -53,8 +53,7 @@
 
     &.m-activity__ownerBlock--quoteOrRemind {
       // Use a bit more room when there is a remind icon overlaying avatar
-      .m-activityOwnerBlock__displayName,
-      .m-activityOwnerBlock__groupName {
+      .m-activityOwnerBlock__primaryName {
         margin-left: $spacing2;
       }
     }
@@ -68,8 +67,7 @@
       padding: 20px $activitySpacing--modal 0;
     }
 
-    a.m-activityOwnerBlock__username,
-    a.m-activityOwnerBlock__groupName {
+    a.m-activityOwnerBlock__secondaryName {
       margin-left: 0;
     }
   }
@@ -119,16 +117,10 @@
       align-self: center;
       padding-right: $spacing2;
       position: relative;
-      img {
-        border-radius: 50%;
-        width: $activityAvatarWidth;
-        height: $activityAvatarWidth;
-        object-fit: cover;
-      }
     }
   }
 
-  a.m-activityOwnerBlock__displayName {
+  a.m-activityOwnerBlock__primaryName {
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
@@ -144,8 +136,7 @@
     }
   }
 
-  a.m-activityOwnerBlock__username,
-  a.m-activityOwnerBlock__groupName {
+  a.m-activityOwnerBlock__secondaryName {
     margin-left: $spacing1;
     @media screen and (max-width: $max-mobile) {
       display: none;
@@ -163,16 +154,6 @@
     @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--secondary);
-    }
-  }
-
-  a.m-activityOwnerBlock__groupName {
-    text-decoration: none;
-    &:hover {
-      text-decoration: none !important;
-      span > span {
-        text-decoration: underline;
-      }
     }
   }
 

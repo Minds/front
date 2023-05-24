@@ -148,4 +148,5 @@ export interface MindsGroup {
   type: string;
   name: string;
   banner: boolean;
+  icontime?: string;
 }

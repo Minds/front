@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { PostMenuService } from '../post-menu.service';
+import { AdminSupersetLinkService } from '../../../services/admin-superset-link.service';
 
 type Option =
   | 'edit'
@@ -58,7 +59,8 @@ export class PostMenuV2Component implements OnInit {
   constructor(
     public session: Session,
     private cd: ChangeDetectorRef,
-    public service: PostMenuService
+    public service: PostMenuService,
+    private adminSupersetLink: AdminSupersetLinkService
   ) {}
 
   ngOnInit() {
@@ -199,7 +201,11 @@ export class PostMenuV2Component implements OnInit {
     this.cd.markForCheck();
   }
 
+  /**
+   * Get Superset URL for user overview.
+   * @returns { string } URL pointing to Superset user overview page.
+   */
   public getUserSupersetUrl(): string {
-    return `https://analytics.minds.com/superset/dashboard/41/?preselect_filters={"286":{"USER_GUID":"${this.entity.ownerObj.guid}"}}`;
+    return this.adminSupersetLink.getUserOverviewUrl(this.entity.ownerObj.guid);
   }
 }

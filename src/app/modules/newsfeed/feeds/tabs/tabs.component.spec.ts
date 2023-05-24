@@ -5,6 +5,7 @@ import { NewsfeedTabsComponent } from './tabs.component';
 import { MockService } from '../../../../utils/mock';
 import { NewsfeedForYouExperimentService } from '../../../experiments/sub-services/newsfeed-for-you-experiment.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 describe('NewsfeedTabsComponent', () => {
   let comp: NewsfeedTabsComponent;
@@ -36,6 +37,10 @@ describe('NewsfeedTabsComponent', () => {
           {
             provide: NewsfeedForYouExperimentService,
             useValue: MockService(NewsfeedForYouExperimentService),
+          },
+          {
+            provide: ExperimentsService,
+            useValue: MockService(ExperimentsService),
           },
         ],
       }).compileComponents();
