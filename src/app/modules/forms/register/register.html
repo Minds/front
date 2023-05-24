@@ -89,6 +89,7 @@
           i18n-placeholder="@@M__COMMON__USERNAME"
           readonly
           onfocus="this.removeAttribute('readonly');"
+          ontouchstart="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           [pattern]="alphanumericPattern"
           data-ref="data-minds-register-username-input"
@@ -173,6 +174,7 @@
             i18n-placeholder="@@M__COMMON__PASSWORD"
             readonly
             onfocus="this.removeAttribute('readonly');"
+            ontouchstart="this.removeAttribute('readonly');"
             (focus)="onPasswordFocus()"
             (blur)="onPasswordBlur()"
             [class.m-input--hide-placeholder]="showLabels"
@@ -220,6 +222,7 @@
           (keydown.enter)="register($event)"
           readonly
           onfocus="this.removeAttribute('readonly');"
+          ontouchstart="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           data-ref="data-minds-register-password-input-2"
           [class.ng-invalid]="this.form.errors?.passwordsMatch"
