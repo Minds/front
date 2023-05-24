@@ -50,6 +50,10 @@ describe('BoostModalV2Service', () => {
     this.isActive = jasmine.createSpy('isActive');
   })();
 
+  let boostTargetExperimentMock = new (function() {
+    this.isActive = jasmine.createSpy('isActive');
+  })();
+
   let sessionMock = new (function() {
     this.getLoggedInUser = jasmine
       .createSpy('getLoggedInUser')
@@ -64,7 +68,8 @@ describe('BoostModalV2Service', () => {
       configMock,
       web3WalletMock,
       boostContractMock,
-      boostGoalsExperimentMock
+      boostGoalsExperimentMock,
+      boostTargetExperimentMock
     );
 
     service.entity$.next({
