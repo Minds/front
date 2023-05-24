@@ -73,8 +73,20 @@
         [canDelete]="group['is:owner'] || group['is:moderator']"
         (deleted)="delete($event)"
       ></m-activity>
+      <!-- ----------------------------------------- -->
+      <!-- BOOSTS  -->
+      <!-- ----------------------------------------- -->
+      <m-featured-content
+        *ngIf="shouldShowBoostInPosition(i)"
+        [slot]="i + 1"
+        [displayOptions]="{
+          showOnlyCommentsInput: true,
+          isFeed: true
+        }"
+        showHeader="true"
+        [servedByGuid]="group.guid"
+      ></m-featured-content>
     </ng-container>
-
     <infinite-scroll
       (load)="loadMore()"
       [moreData]="feedsService.hasMore | async"
