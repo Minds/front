@@ -45,6 +45,7 @@ import { ActivitySupermindReplyLinkComponent } from './supermind-reply-link/supe
 import { ComposerModule } from '../../composer/composer.module';
 import { ActivityFlagMutualSubscriptionsComponent } from './flag/mutual-subscriptions/mutual-subscriptions.component';
 import { ActivityBoostCtaComponent } from './boost-cta/boost-cta.component';
+import { ActivityAvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
   imports: [
@@ -90,6 +91,7 @@ import { ActivityBoostCtaComponent } from './boost-cta/boost-cta.component';
     ActivitySupermindReplyLinkComponent,
     ActivityFlagMutualSubscriptionsComponent,
     ActivityBoostCtaComponent,
+    ActivityAvatarComponent,
   ],
   providers: [ActivityModalCreatorService],
   exports: [ActivityComponent, ActivityRemindButtonComponent],

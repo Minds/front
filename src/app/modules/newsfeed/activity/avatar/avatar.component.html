@@ -1,0 +1,37 @@
+<ng-container *ngIf="entity">
+  <ng-container *ngIf="showGroupContext; else userAvatarTemplate">
+    <!-- GROUP  -->
+    <!-- Contains both group avatar and smaller user avatar - for group posts outside of the group's profile feed context -->
+    <m-hovercard
+      [publisher]="entity.containerObj"
+      [offset]="[0, 15]"
+      class="m-activity__avatarContainer--primary"
+    >
+      <a [routerLink]="groupUrl">
+        <img [src]="groupAvatarUrl" />
+      </a>
+    </m-hovercard>
+    <ng-container *ngTemplateOutlet="userAvatarTemplate"></ng-container>
+  </ng-container>
+  <!-- USER -->
+  <ng-template #userAvatarTemplate>
+    <m-hovercard
+      [publisher]="entity.ownerObj"
+      [offset]="[0, 15]"
+      [ngClass]="{
+        'm-activity__avatarContainer--primary': !showGroupContext,
+        'm-activity__avatarContainer--secondary': showGroupContext
+      }"
+    >
+      <a [routerLink]="['/', entity.ownerObj.username]">
+        <img [src]="userAvatarUrl" />
+      </a>
+    </m-hovercard>
+    <div
+      *ngIf="minimalMode && quoteOrRemind"
+      class="m-activityAvatar__remindIcon--minimalMode"
+    >
+      <i class="material-icons">repeat</i>
+    </div>
+  </ng-template>
+</ng-container>
