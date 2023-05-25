@@ -55,9 +55,7 @@ export class YoutubeMigrationMarketingComponent implements OnInit, OnDestroy {
       (
         result: ApolloQueryResult<YoutubeMigrationMarketingPageResponse>
       ): void => {
-        console.log('data', result.data);
         this.data = result.data.youtubeMigrationMarketingPage.data.attributes;
-        console.log('this.data', this.data);
         this.loading = result.loading;
         this.errors = result.errors;
         if (this.data.metadata) {

@@ -53,7 +53,7 @@ export type ProductMarketingSection = {
 // full attributes returned for a marketing page when using full query.
 export type ProductMarketingAttributes = {
   hero: ProductMarketingHero;
-  sections: ProductMarketingSection;
+  sections: ProductMarketingSection[];
   otherFeaturesSection: ProductMarketingOtherFeaturesSection;
   metadata: StrapiMetadata;
 };

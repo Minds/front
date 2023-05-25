@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import {
-  REWARDS_MARKETING_PAGE_QUERY,
-  RewardsMarketingService,
-} from './rewards.service';
+  TOKEN_MARKETING_PAGE_QUERY,
+  TokenMarketingService,
+} from './token.service';
 import {
   ApolloTestingController,
   ApolloTestingModule,
@@ -10,12 +10,12 @@ import {
 import { take } from 'rxjs';
 import { productMarketingMockData } from '../../../../mocks/modules/marketing/product-marketing.mock';
 
-describe('RewardsMarketingService', () => {
-  let service: RewardsMarketingService;
+describe('TokenMarketingService', () => {
+  let service: TokenMarketingService;
   let controller: ApolloTestingController;
   let mockResponse: any = {
     data: {
-      rewardsMarketingPage: {
+      tokenMarketingPage: {
         data: {
           ...productMarketingMockData,
         },
@@ -26,10 +26,10 @@ describe('RewardsMarketingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
-      providers: [RewardsMarketingService],
+      providers: [TokenMarketingService],
     });
 
-    service = TestBed.inject(RewardsMarketingService);
+    service = TestBed.inject(TokenMarketingService);
     controller = TestBed.inject(ApolloTestingController);
   });
 
@@ -48,7 +48,7 @@ describe('RewardsMarketingService', () => {
       done();
     });
 
-    const op = controller.expectOne(REWARDS_MARKETING_PAGE_QUERY);
+    const op = controller.expectOne(TOKEN_MARKETING_PAGE_QUERY);
     op.flush(mockResponse);
   });
 });

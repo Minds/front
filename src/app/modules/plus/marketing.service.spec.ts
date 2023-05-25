@@ -1,21 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import {
-  REWARDS_MARKETING_PAGE_QUERY,
-  RewardsMarketingService,
-} from './rewards.service';
+  PLUS_MARKETING_PAGE_QUERY,
+  PlusMarketingService,
+} from './marketing.service';
 import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { take } from 'rxjs';
-import { productMarketingMockData } from '../../../../mocks/modules/marketing/product-marketing.mock';
+import { productMarketingMockData } from '../../mocks/modules/marketing/product-marketing.mock';
 
-describe('RewardsMarketingService', () => {
-  let service: RewardsMarketingService;
+describe('PlusMarketingService', () => {
+  let service: PlusMarketingService;
   let controller: ApolloTestingController;
   let mockResponse: any = {
     data: {
-      rewardsMarketingPage: {
+      plusMarketingPage: {
         data: {
           ...productMarketingMockData,
         },
@@ -26,10 +26,10 @@ describe('RewardsMarketingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
-      providers: [RewardsMarketingService],
+      providers: [PlusMarketingService],
     });
 
-    service = TestBed.inject(RewardsMarketingService);
+    service = TestBed.inject(PlusMarketingService);
     controller = TestBed.inject(ApolloTestingController);
   });
 
@@ -48,7 +48,7 @@ describe('RewardsMarketingService', () => {
       done();
     });
 
-    const op = controller.expectOne(REWARDS_MARKETING_PAGE_QUERY);
+    const op = controller.expectOne(PLUS_MARKETING_PAGE_QUERY);
     op.flush(mockResponse);
   });
 });
