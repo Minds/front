@@ -12,9 +12,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { ToasterService } from '../../../../common/services/toaster.service';
-import { Session } from '../../../../services/session';
-import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
 import { GraphQLError } from 'graphql';
 import {
   TokenMarketingPageResponse,
@@ -55,9 +52,6 @@ export class BlockchainMarketingTokenV2Component
   constructor(
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    private linksService: BlockchainMarketingLinksService,
-    private session: Session,
-    private toast: ToasterService,
     private service: TokenMarketingService,
     private strapiMeta: StrapiMetaService,
     @Inject(STRAPI_URL) public strapiUrl: string,
@@ -94,55 +88,6 @@ export class BlockchainMarketingTokenV2Component
         inline: 'nearest',
       });
     }
-  }
-
-  /**
-   * Called on purchase completed.
-   * @returns { void }
-   */
-  public onPurchaseComplete($event): void {
-    // do nothing
-  }
-
-  /**
-   * Opens composer modal
-   * @returns { BlockchainMarketingTokenComponent } - Chainable.
-   */
-  public openComposerModal(): void {
-    this.linksService.openComposerModal();
-  }
-
-  /**
-   * Open provide liquidity modal.
-   * @returns { void }
-   */
-  public provideLiquidityClick() {
-    this.linksService.openLiquidityProvisionModal();
-  }
-
-  /**
-   * Open referrals page.
-   * @returns { void }
-   */
-  public navigateToReferrals(): void {
-    this.linksService.navigateToReferrals();
-  }
-
-  /**
-   * Open hold modal.
-   * @returns { void }
-   */
-  public holdClick(): void {
-    this.linksService.openTransferOnchainModal();
-  }
-
-  /**
-   * Open airdrop modal.
-   * @returns { void }
-   */
-  public airdropClick(): void {
-    this.toast.warn('Coming soon!');
-    // this.linksService.openAirdropModal();
   }
 
   detectChanges() {

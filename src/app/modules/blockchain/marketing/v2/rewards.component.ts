@@ -90,72 +90,12 @@ export class BlockchainMarketingRewardsV2Component
     }
   }
 
-  action() {
-    this.router.navigate(['/wallet/tokens/overview']);
-  }
-
-  /**
-   * Opens composer modal.
-   * @returns { void }
-   */
-  public openComposerModal(): void {
-    this.linksService.openComposerModal();
-  }
-
-  /**
-   * Open referrals page.
-   * @returns { void }
-   */
-  public navigateToReferrals(): void {
-    this.linksService.navigateToReferrals();
-  }
-
-  /**
-   * Open whitepaper.
-   * @returns { void }
-   */
-  public navigateToWhitepaper(): void {
-    this.linksService.navigateToWhitepaper();
-  }
-
-  /**
-   * Open explanatory blog.
-   * @returns { void }
-   */
-  public navigateToBlog(): void {
-    this.linksService.navigateToBlog();
-  }
-
   /**
    * Open join rewards modal.
    * @returns { void }
    */
   public joinRewardsClick(): void {
     this.linksService.navigateToJoinRewards();
-  }
-
-  /**
-   * Open provide liquidity modal.
-   * @returns { void }
-   */
-  public provideLiquidityClick(): void {
-    this.linksService.openLiquidityProvisionModal();
-  }
-
-  /**
-   * Open transfer on-chain modal.
-   * @returns { void }
-   */
-  public transferOnChainClick(): void {
-    this.linksService.openTransferOnchainModal();
-  }
-
-  /**
-   * Called on purchase completed.
-   * @returns { void }
-   */
-  public onPurchaseComplete($event): void {
-    // do nothing
   }
 
   public detectChanges() {
