@@ -44,7 +44,7 @@
 
   <!-- referral ping -->
   <ng-template ngSwitchCase="referral_ping">
-    <a [routerLink]="['/settings/other/referrals']">
+    <a [routerLink]="['/settings/affiliates-program']">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_PING">
         Free tokens are waiting for you! Once you join the rewards program by
         setting up your Minds wallet, both you and
@@ -58,7 +58,7 @@
 
   <!-- referral pending -->
   <ng-template ngSwitchCase="referral_pending">
-    <a [routerLink]="['/settings/other/referrals']">
+    <a [routerLink]="['/settings/affiliates-program']">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_PENDING">
         You have a pending referral!
         <span class="pseudo-link mdl-color-text--blue-grey-400">{{
@@ -72,7 +72,7 @@
 
   <!-- referral complete -->
   <ng-template ngSwitchCase="referral_complete">
-    <a [routerLink]="['/settings/other/referrals']">
+    <a [routerLink]="['/settings/affiliates-program']">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_COMPLETE">
         You've earned tokens for the completed referral of
         <span class="pseudo-link mdl-color-text--blue-grey-400">{{

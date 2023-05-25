@@ -37,8 +37,8 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Privacy', routerLink: ['/p/privacy'] },
     {
-      label: 'Referrals',
-      routerLink: ['/settings/other/referrals'],
+      label: 'Affiliates',
+      routerLink: ['/settings/affiliates-program'],
     },
     { label: 'Mobile App', routerLink: ['/mobile'] },
     { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
@@ -78,10 +78,10 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
       isDark => (this.isDark = isDark)
     );
 
-    // For logged out users, remove referrals link
+    // For logged out users, remove affiliates link
     if (!this.getCurrentUser()) {
       this.footerLinks = this.footerLinks.filter(link => {
-        return link.label !== 'Referrals';
+        return link.label !== 'Affiliates';
       });
     }
   }
