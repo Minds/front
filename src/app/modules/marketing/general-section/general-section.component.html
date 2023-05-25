@@ -21,6 +21,7 @@
           <a
             *ngIf="actionButton.navigationUrl; else predefinedActionTemplate"
             [href]="actionButton.navigationUrl"
+            [attr.data-ref]="actionButton.dataRef ?? null"
             target="_blank"
           >
             <m-button color="blue">{{ actionButton.text }}</m-button>
@@ -29,6 +30,7 @@
             <m-button
               color="blue"
               (onAction)="onActionButtonClick(actionButton.action ?? null)"
+              [attr.data-ref]="actionButton.dataRef ?? null"
             >
               {{ actionButton.text }}
             </m-button>

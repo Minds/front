@@ -9,6 +9,7 @@ export const STRAPI_ACTION_BUTTON_SNIPPET = `
     text
     action
     navigationUrl
+    dataRef
   }
 `;
 
@@ -23,6 +24,7 @@ export type StrapiActionButton = {
   text: string;
   action?: StrapiAction;
   navigationUrl?: string;
+  dataRef?: string;
 };
 
 // actions that trigger login if not logged in already.
