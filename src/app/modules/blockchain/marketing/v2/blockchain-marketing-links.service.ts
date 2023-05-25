@@ -71,11 +71,11 @@ export class BlockchainMarketingLinksService {
   }
 
   /**
-   * Opens navigate to referrals modal.
+   * Opens navigate to affiliates modal.
    * @returns { BlockchainMarketingLinksService } - Chainable.
    */
-  public navigateToReferrals(): BlockchainMarketingLinksService {
-    this.openInNewWindow(`${this.siteUrl}settings/other/referrals`);
+  public navigateToAffiliates(): BlockchainMarketingLinksService {
+    this.openInNewWindow(`${this.siteUrl}settings/affiliates-program`);
     return this;
   }
 
