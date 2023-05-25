@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, fromEvent } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
@@ -50,8 +50,6 @@ export class BlockchainMarketingTokenV2Component
   @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
-  @ViewChild('composerOpenAnchor') readonly composerOpenAnchor: ElementRef;
-
   private copyDataSubscription: Subscription;
 
   constructor(
@@ -86,20 +84,6 @@ export class BlockchainMarketingTokenV2Component
 
   ngOnDestroy(): void {
     this.copyDataSubscription?.unsubscribe();
-  }
-
-  ngAfterViewInit(): void {
-    this.subscriptions.push(
-      fromEvent(this.composerOpenAnchor.nativeElement, 'click').subscribe(
-        $event => {
-          if (!this.session.isLoggedIn()) {
-            this.router.navigate(['/']);
-            return;
-          }
-          this.openComposerModal();
-        }
-      )
-    );
   }
 
   scrollToTop() {

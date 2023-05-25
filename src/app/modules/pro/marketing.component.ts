@@ -5,6 +5,8 @@ import {
   ElementRef,
   ChangeDetectorRef,
   Inject,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -32,7 +34,7 @@ import { MarketingAttributes } from '../../common/services/strapi/marketing-page
     '../marketing/styles/markdown-style.ng.scss',
   ],
 })
-export class ProMarketingComponent {
+export class ProMarketingComponent implements OnInit, OnDestroy {
   public data: MarketingAttributes;
   public loading: boolean = true;
   public errors: readonly GraphQLError[];
