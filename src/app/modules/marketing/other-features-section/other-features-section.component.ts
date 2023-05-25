@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'm-marketing__otherFeaturesSection',
   templateUrl: 'other-features-section.component.html',
+  styleUrls: ['./other-features-section.component.ng.scss'],
 })
 export class MarketingOtherFeaturesSectionComponent {
   @Input() title: string; // title to be displayed above comments.
