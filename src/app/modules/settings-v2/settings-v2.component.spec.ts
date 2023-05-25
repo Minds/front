@@ -11,7 +11,6 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { ProService } from '../pro/pro.service';
 import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../common/components/loading-spinner/loading-spinner.component';
-import { AffiliatesExperimentService } from '../experiments/sub-services/affiliates-experiment.service';
 
 describe('SettingsV2Component', () => {
   let component: SettingsV2Component;
@@ -40,10 +39,6 @@ describe('SettingsV2Component', () => {
           {
             provide: ToasterService,
             useValue: MockService(ToasterService),
-          },
-          {
-            provide: AffiliatesExperimentService,
-            useValue: MockService(AffiliatesExperimentService),
           },
         ],
         imports: [

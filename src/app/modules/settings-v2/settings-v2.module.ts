@@ -45,8 +45,6 @@ import { SettingsV2AutoplayVideosComponent } from './account/autoplay-videos/aut
 import { YoutubeMigrationConnectComponent } from '../media/youtube-migration/connect/connect.component';
 import { YoutubeMigrationConfigComponent } from '../media/youtube-migration/config/config.component';
 import { YoutubeMigrationComponent } from '../media/youtube-migration/youtube-migration.component';
-import { ReferralsV2Module } from './other/referrals/referrals.module';
-import { SettingsV2ReferralsComponent } from './other/referrals/referrals.component';
 import { LanguageModule } from '../language/language.module';
 import { SettingsV2I18nHack } from './settings-i18n-hack.component';
 import { SettingsV2HeaderComponent } from './settings-header.component';
@@ -417,13 +415,7 @@ const SETTINGS_V2_ROUTES: Routes = [
         children: [
           {
             path: 'referrals',
-            component: SettingsV2ReferralsComponent,
-            data: {
-              title: 'Referrals',
-              description:
-                'If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!',
-              id: 'referrals',
-            },
+            redirectTo: '/settings/affiliates-program',
           },
           {
             path: 'wallet',
@@ -554,7 +546,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     // WalletV2Module,
     ProModule,
     YoutubeMigrationModule,
-    ReferralsV2Module,
     LanguageModule,
     NewsfeedModule,
     MessengerModule,

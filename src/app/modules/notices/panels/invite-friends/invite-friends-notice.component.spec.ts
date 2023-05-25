@@ -107,7 +107,7 @@ describe('InviteYourFriendsComponent', () => {
   it('should navigate on secondary option click', () => {
     comp.onSecondaryOptionClick();
     expect((comp as any).router.navigate).toHaveBeenCalledWith([
-      '/settings/other/referrals',
+      '/settings/affiliates-program',
     ]);
   });
 
