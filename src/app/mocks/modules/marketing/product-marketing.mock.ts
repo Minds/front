@@ -35,6 +35,7 @@ export const productMarketingMockData = {
             text: 'Action Text',
             action: 'open_composer',
             navigationUrl: null,
+            dataRef: 'data-ref-action-button',
           },
         ],
         leftAligned: true,
