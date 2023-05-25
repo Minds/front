@@ -12,7 +12,7 @@ import { DebugElement } from '@angular/core';
 import { BoostModalV2AudienceSelectorComponent } from './audience.component';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostAudience } from '../../boost-modal-v2.types';
-import { MockComponent, MockService } from '../../../../../utils/mock';
+import { MockService } from '../../../../../utils/mock';
 import { BoostTargetExperimentService } from '../../../../experiments/sub-services/boost-target-experiment.service';
 
 describe('BoostModalV2AudienceSelectorComponent', () => {
@@ -28,16 +28,7 @@ describe('BoostModalV2AudienceSelectorComponent', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [ReactiveFormsModule, FormsModule],
-        declarations: [
-          BoostModalV2AudienceSelectorComponent,
-          MockComponent({
-            selector: 'm-formInput__checkbox',
-          }),
-          MockComponent({
-            selector: 'form',
-            inputs: ['formGroup'],
-          }),
-        ],
+        declarations: [BoostModalV2AudienceSelectorComponent],
         providers: [
           {
             provide: BoostModalV2Service,
