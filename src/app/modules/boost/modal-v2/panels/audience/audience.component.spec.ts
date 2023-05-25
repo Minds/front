@@ -12,7 +12,7 @@ import { DebugElement } from '@angular/core';
 import { BoostModalV2AudienceSelectorComponent } from './audience.component';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostAudience } from '../../boost-modal-v2.types';
-import { MockService } from '../../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostTargetExperimentService } from '../../../../experiments/sub-services/boost-target-experiment.service';
 
 describe('BoostModalV2AudienceSelectorComponent', () => {
@@ -28,12 +28,27 @@ describe('BoostModalV2AudienceSelectorComponent', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [ReactiveFormsModule, FormsModule],
-        declarations: [BoostModalV2AudienceSelectorComponent],
+        declarations: [
+          BoostModalV2AudienceSelectorComponent,
+          MockComponent({
+            selector: 'm-formInput__checkbox',
+          }),
+          MockComponent({
+            selector: 'form',
+            inputs: ['formGroup'],
+          }),
+        ],
         providers: [
           {
             provide: BoostModalV2Service,
             useValue: MockService(BoostModalV2Service, {
-              has: ['audience$', 'disabledSafeAudience$'],
+              has: [
+                'audience$',
+                'disabledSafeAudience$',
+                'targetPlatformWeb$',
+                'targetPlatformAndroid$',
+                'targetPlatformIos$',
+              ],
               props: {
                 audience$: {
                   get: () =>
@@ -41,6 +56,15 @@ describe('BoostModalV2AudienceSelectorComponent', () => {
                 },
                 disabledSafeAudience$: {
                   get: () => new BehaviorSubject<boolean>(false),
+                },
+                targetPlatformWeb$: {
+                  get: () => new BehaviorSubject<boolean>(true),
+                },
+                targetPlatformAndroid$: {
+                  get: () => new BehaviorSubject<boolean>(true),
+                },
+                targetPlatformIos$: {
+                  get: () => new BehaviorSubject<boolean>(true),
                 },
               },
             }),

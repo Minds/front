@@ -84,6 +84,30 @@ export class BoostModalV2AudienceSelectorComponent
               'targetPlatformIos',
               new FormControl(initialTargetPlatformIos, Validators.required)
             );
+
+            this.subscriptions.push(
+              // Target Platform WEB Subscription
+              // Change value in service on form control value change.
+              this.form.controls.targetPlatformWeb.valueChanges.subscribe(
+                (val: boolean) => {
+                  this.service.targetPlatformWeb$.next(val);
+                }
+              ),
+              // Target Platform ANDROID Subscription
+              // Change value in service on form control value change.
+              this.form.controls.targetPlatformAndroid.valueChanges.subscribe(
+                (val: boolean) => {
+                  this.service.targetPlatformAndroid$.next(val);
+                }
+              ),
+              // Target Platform iOS Subscription
+              // Change value in service on form control value change.
+              this.form.controls.targetPlatformIos.valueChanges.subscribe(
+                (val: boolean) => {
+                  this.service.targetPlatformIos$.next(val);
+                }
+              )
+            );
           }
         }
       );
@@ -93,30 +117,6 @@ export class BoostModalV2AudienceSelectorComponent
       (audience: BoostAudience) => {
         this.service.audience$.next(audience);
       }
-    );
-
-    this.subscriptions.push(
-      // Target Platform WEB Subscription
-      // Change value in service on form control value change.
-      this.form.controls.targetPlatformWeb.valueChanges.subscribe(
-        (val: boolean) => {
-          this.service.targetPlatformWeb$.next(val);
-        }
-      ),
-      // Target Platform ANDROID Subscription
-      // Change value in service on form control value change.
-      this.form.controls.targetPlatformAndroid.valueChanges.subscribe(
-        (val: boolean) => {
-          this.service.targetPlatformAndroid$.next(val);
-        }
-      ),
-      // Target Platform iOS Subscription
-      // Change value in service on form control value change.
-      this.form.controls.targetPlatformIos.valueChanges.subscribe(
-        (val: boolean) => {
-          this.service.targetPlatformIos$.next(val);
-        }
-      )
     );
   }
 
