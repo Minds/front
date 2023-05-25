@@ -17,7 +17,7 @@ import {
 import { GraphQLError } from 'graphql';
 import { StrapiMetaService } from '../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
-import { MarketingAttributes } from '../../../common/services/strapi/marketing-page/marketing-page.types';
+import { ProductMarketingAttributes } from '../../../common/services/strapi/marketing-page/marketing-page.types';
 
 /**
  * Marketing page for Minds Pay
@@ -30,7 +30,7 @@ import { MarketingAttributes } from '../../../common/services/strapi/marketing-p
   styleUrls: ['../../marketing/styles/markdown-style.ng.scss'],
 })
 export class PayMarketingComponent {
-  public data: MarketingAttributes;
+  public data: ProductMarketingAttributes;
   public loading: boolean = true;
   public errors: readonly GraphQLError[];
 

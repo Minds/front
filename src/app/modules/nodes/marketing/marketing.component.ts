@@ -18,7 +18,7 @@ import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-token
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Subscription } from 'rxjs';
 import { GraphQLError } from 'graphql';
-import { MarketingAttributes } from '../../../common/services/strapi/marketing-page/marketing-page.types';
+import { ProductMarketingAttributes } from '../../../common/services/strapi/marketing-page/marketing-page.types';
 
 /**
  * The marketing page for nodes
@@ -32,7 +32,7 @@ import { MarketingAttributes } from '../../../common/services/strapi/marketing-p
   styleUrls: ['../../marketing/styles/markdown-style.ng.scss'],
 })
 export class NodesMarketingComponent implements OnInit, OnDestroy {
-  public data: MarketingAttributes;
+  public data: ProductMarketingAttributes;
   public loading: boolean = true;
   public errors: readonly GraphQLError[];
   readonly cdnAssetsUrl: string;

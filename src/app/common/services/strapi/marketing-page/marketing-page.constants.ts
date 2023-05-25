@@ -2,7 +2,7 @@ import { STRAPI_ACTION_BUTTON_SNIPPET } from '../strapi-action-resolver.service'
 import { STRAPI_METADATA_SNIPPET } from '../strapi-meta.service';
 
 // full sub-query to get all marketing page data.
-export const MARKETING_PAGE_QUERY_FULL: string = `
+export const PRODUCT_MARKETING_PAGE_QUERY_FULL: string = `
   data {
     attributes {
       hero {

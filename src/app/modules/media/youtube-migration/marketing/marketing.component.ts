@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { LoginReferrerService } from '../../../../services/login-referrer.service';
-import { MarketingAttributes } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
+import { ProductMarketingAttributes } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 import { GraphQLError } from 'graphql';
 import { Subscription } from 'rxjs';
 import {
@@ -28,7 +28,7 @@ import { ApolloQueryResult } from '@apollo/client/core';
   styleUrls: ['../../../marketing/styles/markdown-style.ng.scss'],
 })
 export class YoutubeMigrationMarketingComponent implements OnInit, OnDestroy {
-  public data: MarketingAttributes;
+  public data: ProductMarketingAttributes;
   public loading: boolean = true;
   public errors: readonly GraphQLError[];
 

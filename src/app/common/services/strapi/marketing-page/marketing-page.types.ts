@@ -2,10 +2,9 @@ import { StrapiActionButton } from '../strapi-action-resolver.service';
 import { StrapiMetadata } from '../strapi-meta.service';
 
 // hero section.
-export type MarketingHero = {
+export type ProductMarketingHero = {
   h1: string;
   body: string;
-  ctaText: string;
   showBackgroundEffects: boolean;
   image: {
     data: {
@@ -17,7 +16,7 @@ export type MarketingHero = {
 };
 
 // other features section.
-export type MarketingOtherFeaturesSection = {
+export type ProductMarketingOtherFeaturesSection = {
   title: string;
   column1Title: string;
   column1Body: string;
@@ -28,7 +27,7 @@ export type MarketingOtherFeaturesSection = {
 };
 
 // marketing section.
-export type MarketingSection = {
+export type ProductMarketingSection = {
   title: string;
   body: string;
   image: {
@@ -52,9 +51,9 @@ export type MarketingSection = {
 };
 
 // full attributes returned for a marketing page when using full query.
-export type MarketingAttributes = {
-  hero: MarketingHero;
-  sections: MarketingSection;
-  otherFeaturesSection: MarketingOtherFeaturesSection;
+export type ProductMarketingAttributes = {
+  hero: ProductMarketingHero;
+  sections: ProductMarketingSection;
+  otherFeaturesSection: ProductMarketingOtherFeaturesSection;
   metadata: StrapiMetadata;
 };

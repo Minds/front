@@ -20,7 +20,7 @@ import {
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { MarketingAttributes } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
+import { ProductMarketingAttributes } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 
 /**
  * Multi-page tokens marketing component
@@ -37,7 +37,7 @@ import { MarketingAttributes } from '../../../../common/services/strapi/marketin
 export class BlockchainMarketingTokenV2Component
   extends AbstractSubscriberComponent
   implements OnInit, OnDestroy {
-  public data: MarketingAttributes;
+  public data: ProductMarketingAttributes;
   public loading: boolean = true;
   public errors: readonly GraphQLError[];
 

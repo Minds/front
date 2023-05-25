@@ -20,7 +20,7 @@ import {
 import { ApolloQueryResult } from '@apollo/client/core';
 import { StrapiMetaService } from '../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
-import { MarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
+import { ProductMarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
 
 /**
  * Marketing page that describes the benefits of upgrading to Pro
@@ -35,7 +35,7 @@ import { MarketingAttributes } from '../../common/services/strapi/marketing-page
   ],
 })
 export class ProMarketingComponent implements OnInit, OnDestroy {
-  public data: MarketingAttributes;
+  public data: ProductMarketingAttributes;
   public loading: boolean = true;
   public errors: readonly GraphQLError[];
 

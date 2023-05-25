@@ -21,7 +21,7 @@ import { GraphQLError } from 'graphql';
 import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 import { Subscription } from 'rxjs';
 import { StrapiMetaService } from '../../common/services/strapi/strapi-meta.service';
-import { MarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
+import { ProductMarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
 
 /**
  * Marketing page for Minds+
@@ -37,7 +37,7 @@ import { MarketingAttributes } from '../../common/services/strapi/marketing-page
   ],
 })
 export class PlusMarketingComponent implements OnInit, OnDestroy {
-  public data: MarketingAttributes;
+  public data: ProductMarketingAttributes;
   public loading: boolean = true;
   public errors: readonly GraphQLError[];
 
