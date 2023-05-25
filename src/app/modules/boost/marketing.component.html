@@ -25,8 +25,8 @@
           }"
         >
           <img
-            *ngIf="data?.hero?.heroBackground?.data?.attributes?.url"
-            [src]="strapiUrl + data.hero.heroBackground.data.attributes.url"
+            *ngIf="data?.hero?.image?.data?.attributes?.url"
+            [src]="strapiUrl + data.hero.image.data.attributes.url"
             class="m-marketing__image--tall"
             alt="Minds Boost"
           />
@@ -39,7 +39,7 @@
     <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
 
     <!-- Section 2 -->
-    <div *ngFor="let sectionData of data?.section">
+    <div *ngFor="let sectionData of data?.sections">
       <m-marketing__generalSection
         [leftAligned]="sectionData.leftAligned"
         [title]="sectionData.title"

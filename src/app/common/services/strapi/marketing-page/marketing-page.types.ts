@@ -7,7 +7,7 @@ export type MarketingHero = {
   body: string;
   ctaText: string;
   showBackgroundEffects: boolean;
-  heroBackground: {
+  image: {
     data: {
       attributes: {
         url: string;
@@ -31,10 +31,6 @@ export type MarketingOtherFeaturesSection = {
 export type MarketingSection = {
   title: string;
   body: string;
-  leftAligned: boolean;
-  showBackgroundEffects: boolean;
-  showBodyBackground: boolean;
-  actionButtons: StrapiActionButton[];
   image: {
     data: {
       attributes: {
@@ -49,12 +45,16 @@ export type MarketingSection = {
       };
     };
   };
+  actionButtons: StrapiActionButton[];
+  leftAligned: boolean;
+  showBackgroundEffects: boolean;
+  showBodyBackground: boolean;
 };
 
 // full attributes returned for a marketing page when using full query.
 export type MarketingAttributes = {
   hero: MarketingHero;
-  section: MarketingSection;
+  sections: MarketingSection;
   otherFeaturesSection: MarketingOtherFeaturesSection;
   metadata: StrapiMetadata;
 };

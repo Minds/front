@@ -9,7 +9,7 @@ export const MARKETING_PAGE_QUERY_FULL: string = `
         h1
         body
         showBackgroundEffects
-        heroBackground {
+        image {
           data {
             attributes {
               url
@@ -17,13 +17,9 @@ export const MARKETING_PAGE_QUERY_FULL: string = `
           }
         }
       }
-      section {
+      sections {
         title
         body
-        leftAligned
-        showBackgroundEffects
-        showBodyBackground
-        ${STRAPI_ACTION_BUTTON_SNIPPET}
         image {
           data {
             attributes {
@@ -38,6 +34,10 @@ export const MARKETING_PAGE_QUERY_FULL: string = `
             }
           }
         }
+        ${STRAPI_ACTION_BUTTON_SNIPPET}
+        leftAligned
+        showBackgroundEffects
+        showBodyBackground
       }
       otherFeaturesSection {
         title
