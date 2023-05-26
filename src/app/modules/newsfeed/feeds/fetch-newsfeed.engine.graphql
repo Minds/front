@@ -1,0 +1,33 @@
+query FetchNewsfeed(
+    $algorithm: String!
+    $limit: Int!,
+    $cursor: String
+) {
+    newsfeed(algorithm: $algorithm, first: $limit, after: $cursor) {
+        edges {
+            cursor
+            node {
+                id
+                ... on ActivityNode {
+                    legacy
+                }
+                ... on BoostNode {
+                    goalButtonUrl
+                    goalButtonText
+                    legacy
+                }
+                ... on FeedNoticeNode {
+                    location
+                    key
+                }
+            }
+        }
+
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+        }
+    }
+}

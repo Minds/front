@@ -139,10 +139,11 @@ export class ActivityToolbarComponent {
    **/
   get showMetrics(): boolean {
     return (
-      this.entity['thumbs:up:count'] > 0 ||
-      this.entity['thumbs:down:count'] > 0 ||
-      this.entity?.reminds > 0 ||
-      this.entity?.quotes > 0
+      this.entity &&
+      (this.entity['thumbs:up:count'] > 0 ||
+        this.entity['thumbs:down:count'] > 0 ||
+        this.entity?.reminds > 0 ||
+        this.entity?.quotes > 0)
     );
   }
 }
