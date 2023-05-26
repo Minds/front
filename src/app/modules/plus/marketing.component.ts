@@ -12,16 +12,16 @@ import {
 import { ConfigsService } from '../../common/services/configs.service';
 import { Session } from '../../services/session';
 import { PlusVerifyComponent } from './verify/verify.component';
-import {
-  PlusMarketingPageResponse,
-  PlusMarketingService,
-} from './marketing.service';
+import { PlusMarketingService } from './marketing.service';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { GraphQLError } from 'graphql';
 import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 import { Subscription } from 'rxjs';
 import { StrapiMetaService } from '../../common/services/strapi/strapi-meta.service';
-import { ProductMarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../common/services/strapi/marketing-page/marketing-page.types';
 import {
   StrapiAction,
   StrapiActionResolverService,
@@ -67,8 +67,8 @@ export class PlusMarketingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
-      (result: ApolloQueryResult<PlusMarketingPageResponse>): void => {
-        this.data = result.data.plusMarketingPage.data.attributes;
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
         this.loading = result.loading;
         this.errors = result.errors;
         if (this.data.metadata) {

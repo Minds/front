@@ -11,14 +11,12 @@ import { productMarketingMockData } from '../../../../mocks/modules/marketing/pr
 import { YoutubeMigrationMarketingComponent } from './marketing.component';
 import { Session } from '../../../../services/session';
 import { LoginReferrerService } from '../../../../services/login-referrer.service';
-import {
-  YoutubeMigrationMarketingPageResponse,
-  YoutubeMigrationMarketingService,
-} from './marketing.service';
+import { YoutubeMigrationMarketingService } from './marketing.service';
 import {
   StrapiAction,
   StrapiActionResolverService,
 } from '../../../../common/services/strapi/strapi-action-resolver.service';
+import { ProductMarketingResponse } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 
 describe('YoutubeMigrationMarketingComponent', () => {
   let comp: YoutubeMigrationMarketingComponent;
@@ -28,10 +26,12 @@ describe('YoutubeMigrationMarketingComponent', () => {
     loading: false,
     networkStatus: 7,
     data: {
-      youtubeMigrationMarketingPage: {
-        data: {
-          ...productMarketingMockData,
-        },
+      productPages: {
+        data: [
+          {
+            ...productMarketingMockData,
+          },
+        ],
       },
     },
   };
@@ -102,7 +102,7 @@ describe('YoutubeMigrationMarketingComponent', () => {
                 get: () => {
                   return {
                     valueChanges: new BehaviorSubject<
-                      ApolloQueryResult<YoutubeMigrationMarketingPageResponse>
+                      ApolloQueryResult<ProductMarketingResponse>
                     >(mockResponse),
                   };
                 },
@@ -142,7 +142,7 @@ describe('YoutubeMigrationMarketingComponent', () => {
 
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
-      mockResponse.data.youtubeMigrationMarketingPage.data.attributes.metadata
+      mockResponse.data.productPages.data[0].attributes.metadata
     );
   });
 

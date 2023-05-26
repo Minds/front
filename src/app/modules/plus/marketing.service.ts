@@ -1,24 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Apollo, QueryRef, gql } from 'apollo-angular';
-import { PRODUCT_MARKETING_PAGE_QUERY_FULL } from '../../common/services/strapi/marketing-page/marketing-page.constants';
-import { ProductMarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
-
-// query to get page copy.
-export const PLUS_MARKETING_PAGE_QUERY = gql`
-  {
-    plusMarketingPage {
-      ${PRODUCT_MARKETING_PAGE_QUERY_FULL}
-    }
-  }
-`;
-
-export type PlusMarketingPageResponse = {
-  plusMarketingPage: {
-    data: {
-      attributes: ProductMarketingAttributes;
-    };
-  };
-};
+import { Apollo, QueryRef } from 'apollo-angular';
+import { PRODUCT_PAGE_QUERY_FULL } from '../../common/services/strapi/marketing-page/marketing-page.constants';
+import { ProductMarketingResponse } from '../../common/services/strapi/marketing-page/marketing-page.types';
 
 /**
  * Service for the getting content from our CMS.
@@ -26,9 +9,12 @@ export type PlusMarketingPageResponse = {
 @Injectable({ providedIn: 'root' })
 export class PlusMarketingService {
   public readonly copyData: QueryRef<
-    PlusMarketingPageResponse
-  > = this.apollo.watchQuery<PlusMarketingPageResponse>({
-    query: PLUS_MARKETING_PAGE_QUERY,
+    ProductMarketingResponse
+  > = this.apollo.watchQuery<ProductMarketingResponse>({
+    query: PRODUCT_PAGE_QUERY_FULL,
+    variables: {
+      slug: 'plus',
+    },
   });
 
   constructor(private apollo: Apollo) {}

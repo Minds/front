@@ -1,7 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ChangeDetectorRef } from '@angular/core';
-import { RewardsMarketingPageResponse } from './rewards.service';
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
@@ -15,6 +14,7 @@ import {
   StrapiAction,
   StrapiActionResolverService,
 } from '../../../../common/services/strapi/strapi-action-resolver.service';
+import { ProductMarketingResponse } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 
 describe('BlockchainMarketingTokenV2Component', () => {
   let comp: BlockchainMarketingTokenV2Component;
@@ -24,10 +24,12 @@ describe('BlockchainMarketingTokenV2Component', () => {
     loading: false,
     networkStatus: 7,
     data: {
-      tokenMarketingPage: {
-        data: {
-          ...productMarketingMockData,
-        },
+      productPages: {
+        data: [
+          {
+            ...productMarketingMockData,
+          },
+        ],
       },
     },
   };
@@ -93,7 +95,7 @@ describe('BlockchainMarketingTokenV2Component', () => {
                 get: () => {
                   return {
                     valueChanges: new BehaviorSubject<
-                      ApolloQueryResult<RewardsMarketingPageResponse>
+                      ApolloQueryResult<ProductMarketingResponse>
                     >(mockResponse),
                   };
                 },
@@ -133,7 +135,7 @@ describe('BlockchainMarketingTokenV2Component', () => {
 
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
-      mockResponse.data.tokenMarketingPage.data.attributes.metadata
+      mockResponse.data.productPages.data[0].attributes.metadata
     );
   });
 

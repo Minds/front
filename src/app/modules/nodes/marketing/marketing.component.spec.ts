@@ -7,16 +7,14 @@ import { NodesMarketingComponent } from './marketing.component';
 import { productMarketingMockData } from '../../../mocks/modules/marketing/product-marketing.mock';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
-import {
-  NodesMarketingPageResponse,
-  NodesMarketingService,
-} from './marketing.service';
+import { NodesMarketingService } from './marketing.service';
 import { StrapiMetaService } from '../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
 import {
   StrapiAction,
   StrapiActionResolverService,
 } from '../../../common/services/strapi/strapi-action-resolver.service';
+import { ProductMarketingResponse } from '../../../common/services/strapi/marketing-page/marketing-page.types';
 
 describe('NodesMarketingComponent', () => {
   let comp: NodesMarketingComponent;
@@ -26,10 +24,12 @@ describe('NodesMarketingComponent', () => {
     loading: false,
     networkStatus: 7,
     data: {
-      nodesMarketingPage: {
-        data: {
-          ...productMarketingMockData,
-        },
+      productPages: {
+        data: [
+          {
+            ...productMarketingMockData,
+          },
+        ],
       },
     },
   };
@@ -96,7 +96,7 @@ describe('NodesMarketingComponent', () => {
                 get: () => {
                   return {
                     valueChanges: new BehaviorSubject<
-                      ApolloQueryResult<NodesMarketingPageResponse>
+                      ApolloQueryResult<ProductMarketingResponse>
                     >(mockResponse),
                   };
                 },
@@ -135,7 +135,7 @@ describe('NodesMarketingComponent', () => {
 
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
-      mockResponse.data.nodesMarketingPage.data.attributes.metadata
+      mockResponse.data.productPages.data[0].attributes.metadata
     );
   });
 

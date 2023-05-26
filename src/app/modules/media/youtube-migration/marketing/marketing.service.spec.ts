@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  YOUTUBE_MIGRATION_MARKETING_PAGE_QUERY,
-  YoutubeMigrationMarketingService,
-} from './marketing.service';
+import { YoutubeMigrationMarketingService } from './marketing.service';
 import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { take } from 'rxjs';
 import { productMarketingMockData } from '../../../../mocks/modules/marketing/product-marketing.mock';
+import { PRODUCT_PAGE_QUERY_FULL } from '../../../../common/services/strapi/marketing-page/marketing-page.constants';
 
 describe('YoutubeMigrationMarketingService', () => {
   let service: YoutubeMigrationMarketingService;
@@ -48,7 +46,7 @@ describe('YoutubeMigrationMarketingService', () => {
       done();
     });
 
-    const op = controller.expectOne(YOUTUBE_MIGRATION_MARKETING_PAGE_QUERY);
+    const op = controller.expectOne(PRODUCT_PAGE_QUERY_FULL);
     op.flush(mockResponse);
   });
 });

@@ -12,15 +12,15 @@ import { Router } from '@angular/router';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
 import { GraphQLError } from 'graphql';
-import {
-  RewardsMarketingPageResponse,
-  RewardsMarketingService,
-} from './rewards.service';
+import { RewardsMarketingService } from './rewards.service';
 import { Subscription } from 'rxjs';
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { ProductMarketingAttributes } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 import {
   StrapiAction,
   StrapiActionResolverService,
@@ -69,8 +69,8 @@ export class BlockchainMarketingRewardsV2Component
 
   ngOnInit(): void {
     this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
-      (result: ApolloQueryResult<RewardsMarketingPageResponse>): void => {
-        this.data = result.data.rewardsMarketingPage.data.attributes;
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
         this.loading = result.loading;
         this.errors = result.errors;
         if (this.data.metadata) {

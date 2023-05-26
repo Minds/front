@@ -13,14 +13,14 @@ import { Subscription } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { GraphQLError } from 'graphql';
-import {
-  TokenMarketingPageResponse,
-  TokenMarketingService,
-} from './token.service';
+import { TokenMarketingService } from './token.service';
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { ProductMarketingAttributes } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 import {
   StrapiAction,
   StrapiActionResolverService,
@@ -69,8 +69,8 @@ export class BlockchainMarketingTokenV2Component
 
   ngOnInit(): void {
     this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
-      (result: ApolloQueryResult<TokenMarketingPageResponse>): void => {
-        this.data = result.data.tokenMarketingPage.data.attributes;
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
         this.loading = result.loading;
         this.errors = result.errors;
         if (this.data.metadata) {

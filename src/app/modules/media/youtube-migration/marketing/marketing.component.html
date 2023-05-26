@@ -71,18 +71,18 @@
 
     <div class="m-marketing__section m-marketing__section--tail">
       <m-marketing__otherFeaturesSection
-        *ngIf="data?.otherFeaturesSection"
-        [title]="data.otherFeaturesSection?.title ?? null"
-        [column1Title]="data.otherFeaturesSection?.column1Title"
-        [column1Body]="data.otherFeaturesSection?.column1Body"
-        [column2Title]="data.otherFeaturesSection?.column2Title"
-        [column2Body]="data.otherFeaturesSection?.column2Body"
-        [column3Title]="data.otherFeaturesSection?.column3Title"
-        [column3Body]="data.otherFeaturesSection?.column3Body"
+        *ngIf="data?.other"
+        [title]="data.other?.title ?? null"
+        [column1Title]="data.other?.column1Title"
+        [column1Body]="data.other?.column1Body"
+        [column2Title]="data.other?.column2Title"
+        [column2Body]="data.other?.column2Body"
+        [column3Title]="data.other?.column3Title"
+        [column3Body]="data.other?.column3Body"
       ></m-marketing__otherFeaturesSection>
 
       <div
-        *ngIf="data?.sectionTail?.actionButton"
+        *ngIf="data?.footer?.actionButton"
         class="m-grid m-marketing__wrapper"
       >
         <div
@@ -93,24 +93,24 @@
         >
           <a
             *ngIf="
-              data.sectionTail.actionButton.navigationUrl;
+              data.footer.actionButton.navigationUrl;
               else predefinedActionTemplate
             "
-            [href]="data.sectionTail.actionButton.navigationUrl"
-            [attr.data-ref]="data.sectionTail.actionButton.dataRef ?? null"
+            [href]="data.footer.actionButton.navigationUrl"
+            [attr.data-ref]="data.footer.actionButton.dataRef ?? null"
             target="_blank"
           >
             <m-button color="blue">{{
-              data.sectionTail.actionButton.text
+              data.footer.actionButton.text
             }}</m-button>
           </a>
           <ng-template #predefinedActionTemplate>
             <m-button
               color="blue"
-              (onAction)="resolveAction(data.sectionTail.actionButton.action ?? null)"
-              [attr.data-ref]="data.sectionTail.actionButton.dataRef ?? null"
+              (onAction)="resolveAction(data.footer.actionButton.action ?? null)"
+              [attr.data-ref]="data.footer.actionButton.dataRef ?? null"
             >
-              {{ data.sectionTail.actionButton.text }}
+              {{ data.footer.actionButton.text }}
             </m-button>
           </ng-template>
         </div>

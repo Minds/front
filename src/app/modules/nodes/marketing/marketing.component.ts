@@ -9,16 +9,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
-import {
-  NodesMarketingPageResponse,
-  NodesMarketingService,
-} from './marketing.service';
+import { NodesMarketingService } from './marketing.service';
 import { StrapiMetaService } from '../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Subscription } from 'rxjs';
 import { GraphQLError } from 'graphql';
-import { ProductMarketingAttributes } from '../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../../common/services/strapi/marketing-page/marketing-page.types';
 import {
   StrapiAction,
   StrapiActionResolverService,
@@ -59,8 +59,8 @@ export class NodesMarketingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
-      (result: ApolloQueryResult<NodesMarketingPageResponse>): void => {
-        this.data = result.data.nodesMarketingPage.data.attributes;
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
         this.loading = result.loading;
         this.errors = result.errors;
         if (this.data.metadata) {

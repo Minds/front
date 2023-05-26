@@ -10,13 +10,13 @@ import { Router } from '@angular/router';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { LoginReferrerService } from '../../../../services/login-referrer.service';
-import { ProductMarketingAttributes } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 import { GraphQLError } from 'graphql';
 import { Subscription } from 'rxjs';
-import {
-  YoutubeMigrationMarketingPageResponse,
-  YoutubeMigrationMarketingService,
-} from './marketing.service';
+import { YoutubeMigrationMarketingService } from './marketing.service';
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
 import { ApolloQueryResult } from '@apollo/client/core';
@@ -57,10 +57,8 @@ export class YoutubeMigrationMarketingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
-      (
-        result: ApolloQueryResult<YoutubeMigrationMarketingPageResponse>
-      ): void => {
-        this.data = result.data.youtubeMigrationMarketingPage.data.attributes;
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
         this.loading = result.loading;
         this.errors = result.errors;
         if (this.data.metadata) {

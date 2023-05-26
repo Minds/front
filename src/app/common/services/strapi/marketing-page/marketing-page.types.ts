@@ -59,7 +59,16 @@ export type ProductMarketingSectionTail = {
 export type ProductMarketingAttributes = {
   hero: ProductMarketingHero;
   sections: ProductMarketingSection[];
-  otherFeaturesSection: ProductMarketingOtherFeaturesSection;
-  sectionTail: ProductMarketingSectionTail;
+  other: ProductMarketingOtherFeaturesSection;
+  footer: ProductMarketingSectionTail;
   metadata: StrapiMetadata;
+};
+
+// full response
+export type ProductMarketingResponse = {
+  productPages: {
+    data: {
+      attributes: ProductMarketingAttributes;
+    }[];
+  };
 };

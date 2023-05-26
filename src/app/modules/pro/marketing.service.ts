@@ -1,24 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Apollo, QueryRef, gql } from 'apollo-angular';
-import { PRODUCT_MARKETING_PAGE_QUERY_FULL } from '../../common/services/strapi/marketing-page/marketing-page.constants';
-import { ProductMarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
-
-// query to get page copy.
-export const PRO_MARKETING_PAGE_QUERY = gql`
-  {
-    proMarketingPage {
-      ${PRODUCT_MARKETING_PAGE_QUERY_FULL}
-    }
-  }
-`;
-
-export type ProMarketingPageResponse = {
-  proMarketingPage: {
-    data: {
-      attributes: ProductMarketingAttributes;
-    };
-  };
-};
+import { Apollo, QueryRef } from 'apollo-angular';
+import { PRODUCT_PAGE_QUERY_FULL } from '../../common/services/strapi/marketing-page/marketing-page.constants';
+import { ProductMarketingResponse } from '../../common/services/strapi/marketing-page/marketing-page.types';
 
 /**
  * Service for the getting of content from our CMS.
@@ -26,9 +9,12 @@ export type ProMarketingPageResponse = {
 @Injectable({ providedIn: 'root' })
 export class ProMarketingService {
   public readonly copyData: QueryRef<
-    ProMarketingPageResponse
-  > = this.apollo.watchQuery<ProMarketingPageResponse>({
-    query: PRO_MARKETING_PAGE_QUERY,
+    ProductMarketingResponse
+  > = this.apollo.watchQuery<ProductMarketingResponse>({
+    query: PRODUCT_PAGE_QUERY_FULL,
+    variables: {
+      slug: 'pro',
+    },
   });
 
   constructor(private apollo: Apollo) {}

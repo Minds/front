@@ -4,10 +4,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { BehaviorSubject } from 'rxjs';
 import { ProMarketingComponent } from './marketing.component';
-import {
-  ProMarketingPageResponse,
-  ProMarketingService,
-} from './marketing.service';
+import { ProMarketingService } from './marketing.service';
 import { productMarketingMockData } from '../../mocks/modules/marketing/product-marketing.mock';
 import { MockComponent, MockService } from '../../utils/mock';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -18,6 +15,7 @@ import {
   StrapiAction,
   StrapiActionResolverService,
 } from '../../common/services/strapi/strapi-action-resolver.service';
+import { ProductMarketingResponse } from '../../common/services/strapi/marketing-page/marketing-page.types';
 
 describe('ProMarketingComponent', () => {
   let comp: ProMarketingComponent;
@@ -27,10 +25,12 @@ describe('ProMarketingComponent', () => {
     loading: false,
     networkStatus: 7,
     data: {
-      proMarketingPage: {
-        data: {
-          ...productMarketingMockData,
-        },
+      productPages: {
+        data: [
+          {
+            ...productMarketingMockData,
+          },
+        ],
       },
     },
   };
@@ -102,7 +102,7 @@ describe('ProMarketingComponent', () => {
                 get: () => {
                   return {
                     valueChanges: new BehaviorSubject<
-                      ApolloQueryResult<ProMarketingPageResponse>
+                      ApolloQueryResult<ProductMarketingResponse>
                     >(mockResponse),
                   };
                 },
@@ -141,7 +141,7 @@ describe('ProMarketingComponent', () => {
 
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
-      mockResponse.data.proMarketingPage.data.attributes.metadata
+      mockResponse.data.productPages.data[0].attributes.metadata
     );
   });
 

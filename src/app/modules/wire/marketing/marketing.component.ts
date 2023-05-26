@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Subscription } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client/core';
-import {
-  PayMarketingPageResponse,
-  PayMarketingService,
-} from './marketing.service';
+import { PayMarketingService } from './marketing.service';
 import { GraphQLError } from 'graphql';
 import { StrapiMetaService } from '../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
-import { ProductMarketingAttributes } from '../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../../common/services/strapi/marketing-page/marketing-page.types';
 import {
   StrapiAction,
   StrapiActionResolverService,
@@ -59,8 +59,8 @@ export class PayMarketingComponent {
 
   ngOnInit(): void {
     this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
-      (result: ApolloQueryResult<PayMarketingPageResponse>): void => {
-        this.data = result.data.payMarketingPage.data.attributes;
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
         this.loading = result.loading;
         this.errors = result.errors;
         if (this.data.metadata) {

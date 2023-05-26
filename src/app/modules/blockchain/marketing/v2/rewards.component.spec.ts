@@ -2,10 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ChangeDetectorRef } from '@angular/core';
 import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
-import {
-  RewardsMarketingPageResponse,
-  RewardsMarketingService,
-} from './rewards.service';
+import { RewardsMarketingService } from './rewards.service';
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
@@ -18,6 +15,7 @@ import {
   StrapiAction,
   StrapiActionResolverService,
 } from '../../../../common/services/strapi/strapi-action-resolver.service';
+import { ProductMarketingResponse } from '../../../../common/services/strapi/marketing-page/marketing-page.types';
 
 describe('BlockchainMarketingRewardsV2Component', () => {
   let comp: BlockchainMarketingRewardsV2Component;
@@ -27,10 +25,12 @@ describe('BlockchainMarketingRewardsV2Component', () => {
     loading: false,
     networkStatus: 7,
     data: {
-      rewardsMarketingPage: {
-        data: {
-          ...productMarketingMockData,
-        },
+      productPages: {
+        data: [
+          {
+            ...productMarketingMockData,
+          },
+        ],
       },
     },
   };
@@ -100,7 +100,7 @@ describe('BlockchainMarketingRewardsV2Component', () => {
                 get: () => {
                   return {
                     valueChanges: new BehaviorSubject<
-                      ApolloQueryResult<RewardsMarketingPageResponse>
+                      ApolloQueryResult<ProductMarketingResponse>
                     >(mockResponse),
                   };
                 },
@@ -140,7 +140,7 @@ describe('BlockchainMarketingRewardsV2Component', () => {
 
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
-      mockResponse.data.rewardsMarketingPage.data.attributes.metadata
+      mockResponse.data.productPages.data[0].attributes.metadata
     );
   });
 

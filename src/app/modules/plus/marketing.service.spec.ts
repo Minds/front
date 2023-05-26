@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  PLUS_MARKETING_PAGE_QUERY,
-  PlusMarketingService,
-} from './marketing.service';
+import { PlusMarketingService } from './marketing.service';
 import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { take } from 'rxjs';
 import { productMarketingMockData } from '../../mocks/modules/marketing/product-marketing.mock';
+import { PRODUCT_PAGE_QUERY_FULL } from '../../common/services/strapi/marketing-page/marketing-page.constants';
 
 describe('PlusMarketingService', () => {
   let service: PlusMarketingService;
@@ -48,7 +46,7 @@ describe('PlusMarketingService', () => {
       done();
     });
 
-    const op = controller.expectOne(PLUS_MARKETING_PAGE_QUERY);
+    const op = controller.expectOne(PRODUCT_PAGE_QUERY_FULL);
     op.flush(mockResponse);
   });
 });

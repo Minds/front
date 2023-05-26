@@ -43,7 +43,7 @@ export const productMarketingMockData = {
         showBodyBackground: true,
       },
     ],
-    otherFeaturesSection: {
+    other: {
       title: 'Other Features Title',
       column1Title: 'Column 1 Title',
       column1Body: 'Column 1 Body',

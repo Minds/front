@@ -11,14 +11,14 @@ import {
 import { ConfigsService } from '../../common/services/configs.service';
 import { Subscription } from 'rxjs';
 import { GraphQLError } from 'graphql';
-import {
-  BoostMarketingPageResponse,
-  BoostMarketingService,
-} from './marketing.service';
+import { BoostMarketingService } from './marketing.service';
 import { StrapiMetaService } from '../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { ProductMarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../common/services/strapi/marketing-page/marketing-page.types';
 import {
   StrapiAction,
   StrapiActionResolverService,
@@ -54,8 +54,8 @@ export class BoostMarketingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
-      (result: ApolloQueryResult<BoostMarketingPageResponse>): void => {
-        this.data = result.data.boostMarketingPage.data.attributes;
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
         this.loading = result.loading;
         this.errors = result.errors;
         if (this.data.metadata) {

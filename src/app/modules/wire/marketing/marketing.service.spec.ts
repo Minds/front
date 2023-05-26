@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  PAY_MARKETING_PAGE_QUERY,
-  PayMarketingService,
-} from './marketing.service';
+import { PayMarketingService } from './marketing.service';
 import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { take } from 'rxjs';
 import { productMarketingMockData } from '../../../mocks/modules/marketing/product-marketing.mock';
+import { PRODUCT_PAGE_QUERY_FULL } from '../../../common/services/strapi/marketing-page/marketing-page.constants';
 
 describe('PayMarketingService', () => {
   let service: PayMarketingService;
@@ -48,7 +46,7 @@ describe('PayMarketingService', () => {
       done();
     });
 
-    const op = controller.expectOne(PAY_MARKETING_PAGE_QUERY);
+    const op = controller.expectOne(PRODUCT_PAGE_QUERY_FULL);
     op.flush(mockResponse);
   });
 });

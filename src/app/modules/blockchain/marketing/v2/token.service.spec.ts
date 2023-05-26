@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  TOKEN_MARKETING_PAGE_QUERY,
-  TokenMarketingService,
-} from './token.service';
+import { TokenMarketingService } from './token.service';
 import {
   ApolloTestingController,
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { take } from 'rxjs';
 import { productMarketingMockData } from '../../../../mocks/modules/marketing/product-marketing.mock';
+import { PRODUCT_PAGE_QUERY_FULL } from '../../../../common/services/strapi/marketing-page/marketing-page.constants';
 
 describe('TokenMarketingService', () => {
   let service: TokenMarketingService;
@@ -48,7 +46,7 @@ describe('TokenMarketingService', () => {
       done();
     });
 
-    const op = controller.expectOne(TOKEN_MARKETING_PAGE_QUERY);
+    const op = controller.expectOne(PRODUCT_PAGE_QUERY_FULL);
     op.flush(mockResponse);
   });
 });

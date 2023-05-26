@@ -4,10 +4,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { BehaviorSubject } from 'rxjs';
 import { PayMarketingComponent } from './marketing.component';
-import {
-  PayMarketingPageResponse,
-  PayMarketingService,
-} from './marketing.service';
+import { PayMarketingService } from './marketing.service';
 import { productMarketingMockData } from '../../../mocks/modules/marketing/product-marketing.mock';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { StrapiMetaService } from '../../../common/services/strapi/strapi-meta.service';
@@ -17,6 +14,7 @@ import {
   StrapiAction,
   StrapiActionResolverService,
 } from '../../../common/services/strapi/strapi-action-resolver.service';
+import { ProductMarketingResponse } from '../../../common/services/strapi/marketing-page/marketing-page.types';
 
 describe('PayMarketingComponent', () => {
   let comp: PayMarketingComponent;
@@ -26,10 +24,12 @@ describe('PayMarketingComponent', () => {
     loading: false,
     networkStatus: 7,
     data: {
-      payMarketingPage: {
-        data: {
-          ...productMarketingMockData,
-        },
+      productPages: {
+        data: [
+          {
+            ...productMarketingMockData,
+          },
+        ],
       },
     },
   };
@@ -95,7 +95,7 @@ describe('PayMarketingComponent', () => {
                 get: () => {
                   return {
                     valueChanges: new BehaviorSubject<
-                      ApolloQueryResult<PayMarketingPageResponse>
+                      ApolloQueryResult<ProductMarketingResponse>
                     >(mockResponse),
                   };
                 },
@@ -135,7 +135,7 @@ describe('PayMarketingComponent', () => {
 
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
-      mockResponse.data.payMarketingPage.data.attributes.metadata
+      mockResponse.data.productPages.data[0].attributes.metadata
     );
   });
 
