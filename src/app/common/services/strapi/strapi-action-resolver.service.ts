@@ -3,13 +3,24 @@ import { BlockchainMarketingLinksService } from '../../../modules/blockchain/mar
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 
-// snippet for getting action buttons that can be dropped into a query.
-export const STRAPI_ACTION_BUTTON_SNIPPET = `
+export const STRAPI_ACTION_BUTTON_ATTRIBUTES = `
+  text
+  action
+  navigationUrl
+  dataRef
+`;
+
+// snippet for getting action buttons (note: plural) that can be dropped into a query.
+export const STRAPI_ACTION_BUTTONS_SNIPPET = `
   actionButtons {
-    text
-    action
-    navigationUrl
-    dataRef
+    ${STRAPI_ACTION_BUTTON_ATTRIBUTES}
+  }
+`;
+
+// snippet for getting action buttons (note: singular) that can be dropped into a query.
+export const STRAPI_ACTION_BUTTON_SNIPPET = `
+  actionButton {
+    ${STRAPI_ACTION_BUTTON_ATTRIBUTES}
   }
 `;
 
@@ -17,7 +28,8 @@ export const STRAPI_ACTION_BUTTON_SNIPPET = `
 export type StrapiAction =
   | 'open_composer'
   | 'open_uniswap_v2_liquidity'
-  | 'open_onchain_transfer_modal';
+  | 'open_onchain_transfer_modal'
+  | 'scroll_to_top';
 
 // action button type.
 export type StrapiActionButton = {
@@ -65,6 +77,9 @@ export class StrapiActionResolverService {
         break;
       case 'open_onchain_transfer_modal':
         this.links.openTransferOnchainModal();
+        break;
+      case 'scroll_to_top':
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         break;
       default:
         console.warn('Action not yet implemented: ', action);

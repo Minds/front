@@ -81,26 +81,38 @@
         [column3Body]="data.otherFeaturesSection?.column3Body"
       ></m-marketing__otherFeaturesSection>
 
-      <div class="m-grid m-marketing__wrapper">
-        <div class="m-grid__column-12 m-marketing__body">
-          <h3
-            class="m-marketingTitle__centered"
-            i18n="@@MARKETING_YT_MIGRATION__TAKE_BACK_CONTROL_YOUR_MEDIA"
-          >
-            Take back control of your social media
-          </h3>
-        </div>
-      </div>
-      <div class="m-grid m-marketing__wrapper">
+      <div
+        *ngIf="data?.sectionTail?.actionButton"
+        class="m-grid m-marketing__wrapper"
+      >
         <div
-          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
+          class="
+            m-grid__column-12 m-grid__column-12--mobile
+            m-marketing__body m-marketing__body--extra
+          "
         >
-          <m-button
-            (onAction)="action()"
-            i18n="@@MARKETING_YT_MIGRATION__BREAK_FREE_FROM_GOOGLE"
+          <a
+            *ngIf="
+              data.sectionTail.actionButton.navigationUrl;
+              else predefinedActionTemplate
+            "
+            [href]="data.sectionTail.actionButton.navigationUrl"
+            [attr.data-ref]="data.sectionTail.actionButton.dataRef ?? null"
+            target="_blank"
           >
-            Break free from Google
-          </m-button>
+            <m-button color="blue">{{
+              data.sectionTail.actionButton.text
+            }}</m-button>
+          </a>
+          <ng-template #predefinedActionTemplate>
+            <m-button
+              color="blue"
+              (onAction)="resolveAction(data.sectionTail.actionButton.action ?? null)"
+              [attr.data-ref]="data.sectionTail.actionButton.dataRef ?? null"
+            >
+              {{ data.sectionTail.actionButton.text }}
+            </m-button>
+          </ng-template>
         </div>
       </div>
     </div>

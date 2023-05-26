@@ -13,6 +13,10 @@ import {
   BoostMarketingPageResponse,
   BoostMarketingService,
 } from './marketing.service';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../common/services/strapi/strapi-action-resolver.service';
 
 describe('BoostMarketingComponent', () => {
   let comp: BoostMarketingComponent;
@@ -101,6 +105,10 @@ describe('BoostMarketingComponent', () => {
           }),
         },
         {
+          provide: StrapiActionResolverService,
+          useValue: MockService(StrapiActionResolverService),
+        },
+        {
           provide: StrapiMetaService,
           useValue: MockService(StrapiMetaService),
         },
@@ -128,6 +136,14 @@ describe('BoostMarketingComponent', () => {
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
       mockResponse.data.boostMarketingPage.data.attributes.metadata
+    );
+  });
+
+  it('should pass call to resolve action to service', () => {
+    const action: StrapiAction = 'open_composer';
+    comp.resolveAction(action);
+    expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledOnceWith(
+      action
     );
   });
 });

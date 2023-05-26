@@ -1,4 +1,7 @@
-import { STRAPI_ACTION_BUTTON_SNIPPET } from '../strapi-action-resolver.service';
+import {
+  STRAPI_ACTION_BUTTON_SNIPPET,
+  STRAPI_ACTION_BUTTONS_SNIPPET,
+} from '../strapi-action-resolver.service';
 import { STRAPI_METADATA_SNIPPET } from '../strapi-meta.service';
 
 // full sub-query to get all marketing page data.
@@ -34,7 +37,7 @@ export const PRODUCT_MARKETING_PAGE_QUERY_FULL: string = `
             }
           }
         }
-        ${STRAPI_ACTION_BUTTON_SNIPPET}
+        ${STRAPI_ACTION_BUTTONS_SNIPPET}
         leftAligned
         showBackgroundEffects
         showBodyBackground
@@ -47,6 +50,9 @@ export const PRODUCT_MARKETING_PAGE_QUERY_FULL: string = `
         column2Body
         column3Title
         column3Body
+      }
+      sectionTail {
+        ${STRAPI_ACTION_BUTTON_SNIPPET}
       }
       ${STRAPI_METADATA_SNIPPET}
     }

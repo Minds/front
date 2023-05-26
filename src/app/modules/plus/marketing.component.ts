@@ -22,6 +22,10 @@ import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 import { Subscription } from 'rxjs';
 import { StrapiMetaService } from '../../common/services/strapi/strapi-meta.service';
 import { ProductMarketingAttributes } from '../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../common/services/strapi/strapi-action-resolver.service';
 
 /**
  * Marketing page for Minds+
@@ -55,6 +59,7 @@ export class PlusMarketingComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private service: PlusMarketingService,
     private strapiMeta: StrapiMetaService,
+    private strapiActionResolver: StrapiActionResolverService,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -78,18 +83,17 @@ export class PlusMarketingComponent implements OnInit, OnDestroy {
     this.copyDataSubscription?.unsubscribe();
   }
 
-  openVerifyModal() {
-    this.modalService.present(PlusVerifyComponent);
+  /**
+   * Resolve an action from a Strapi action button.
+   * @param { StrapiAction } action - action to resolve.
+   * @returns { void }
+   */
+  public resolveAction(action: StrapiAction): void {
+    this.strapiActionResolver.resolve(action);
   }
 
-  scrollToTop() {
-    if (this.topAnchor.nativeElement) {
-      this.topAnchor.nativeElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest',
-      });
-    }
+  openVerifyModal() {
+    this.modalService.present(PlusVerifyComponent);
   }
 
   detectChanges() {

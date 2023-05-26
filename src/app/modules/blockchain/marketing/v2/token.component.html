@@ -76,6 +76,41 @@
         [column3Title]="data.otherFeaturesSection?.column3Title"
         [column3Body]="data.otherFeaturesSection?.column3Body"
       ></m-marketing__otherFeaturesSection>
+
+      <div
+        *ngIf="data?.sectionTail?.actionButton"
+        class="m-grid m-marketing__wrapper"
+      >
+        <div
+          class="
+            m-grid__column-12 m-grid__column-12--mobile
+            m-marketing__body m-marketing__body--extra
+          "
+        >
+          <a
+            *ngIf="
+              data.sectionTail.actionButton.navigationUrl;
+              else predefinedActionTemplate
+            "
+            [href]="data.sectionTail.actionButton.navigationUrl"
+            [attr.data-ref]="data.sectionTail.actionButton.dataRef ?? null"
+            target="_blank"
+          >
+            <m-button color="blue">{{
+              data.sectionTail.actionButton.text
+            }}</m-button>
+          </a>
+          <ng-template #predefinedActionTemplate>
+            <m-button
+              color="blue"
+              (onAction)="resolveAction(data.sectionTail.actionButton.action ?? null)"
+              [attr.data-ref]="data.sectionTail.actionButton.dataRef ?? null"
+            >
+              {{ data.sectionTail.actionButton.text }}
+            </m-button>
+          </ng-template>
+        </div>
+      </div>
     </div>
   </ng-container>
 </m-marketing>

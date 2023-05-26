@@ -14,6 +14,10 @@ import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-to
 import { ApolloQueryResult } from '@apollo/client/core';
 import { BehaviorSubject } from 'rxjs';
 import { productMarketingMockData } from '../../../../mocks/modules/marketing/product-marketing.mock';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../../common/services/strapi/strapi-action-resolver.service';
 
 describe('BlockchainMarketingRewardsV2Component', () => {
   let comp: BlockchainMarketingRewardsV2Component;
@@ -108,6 +112,10 @@ describe('BlockchainMarketingRewardsV2Component', () => {
           provide: StrapiMetaService,
           useValue: MockService(StrapiMetaService),
         },
+        {
+          provide: StrapiActionResolverService,
+          useValue: MockService(StrapiActionResolverService),
+        },
         { provide: STRAPI_URL, useValue: 'https://www.minds.com/test-strapi/' },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
@@ -133,6 +141,14 @@ describe('BlockchainMarketingRewardsV2Component', () => {
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
       mockResponse.data.rewardsMarketingPage.data.attributes.metadata
+    );
+  });
+
+  it('should pass call to resolve action to service', () => {
+    const action: StrapiAction = 'open_composer';
+    comp.resolveAction(action);
+    expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledOnceWith(
+      action
     );
   });
 });

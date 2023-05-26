@@ -11,6 +11,10 @@ import { BehaviorSubject } from 'rxjs';
 import { productMarketingMockData } from '../../../../mocks/modules/marketing/product-marketing.mock';
 import { BlockchainMarketingTokenV2Component } from './token.component';
 import { TokenMarketingService } from './token.service';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../../common/services/strapi/strapi-action-resolver.service';
 
 describe('BlockchainMarketingTokenV2Component', () => {
   let comp: BlockchainMarketingTokenV2Component;
@@ -101,6 +105,10 @@ describe('BlockchainMarketingTokenV2Component', () => {
           provide: StrapiMetaService,
           useValue: MockService(StrapiMetaService),
         },
+        {
+          provide: StrapiActionResolverService,
+          useValue: MockService(StrapiActionResolverService),
+        },
         { provide: STRAPI_URL, useValue: 'https://www.minds.com/test-strapi/' },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
@@ -126,6 +134,14 @@ describe('BlockchainMarketingTokenV2Component', () => {
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
       mockResponse.data.tokenMarketingPage.data.attributes.metadata
+    );
+  });
+
+  it('should pass call to resolve action to service', () => {
+    const action: StrapiAction = 'open_composer';
+    comp.resolveAction(action);
+    expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledOnceWith(
+      action
     );
   });
 });

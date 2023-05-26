@@ -19,6 +19,10 @@ import { ApolloQueryResult } from '@apollo/client/core';
 import { Subscription } from 'rxjs';
 import { GraphQLError } from 'graphql';
 import { ProductMarketingAttributes } from '../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../common/services/strapi/strapi-action-resolver.service';
 
 /**
  * The marketing page for nodes
@@ -47,6 +51,7 @@ export class NodesMarketingComponent implements OnInit, OnDestroy {
     configs: ConfigsService,
     private service: NodesMarketingService,
     private strapiMeta: StrapiMetaService,
+    private strapiActionResolver: StrapiActionResolverService,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -70,14 +75,13 @@ export class NodesMarketingComponent implements OnInit, OnDestroy {
     this.copyDataSubscription?.unsubscribe();
   }
 
-  scrollToTop() {
-    if (this.topAnchor.nativeElement) {
-      this.topAnchor.nativeElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest',
-      });
-    }
+  /**
+   * Resolve an action from a Strapi action button.
+   * @param { StrapiAction } action - action to resolve.
+   * @returns { void }
+   */
+  public resolveAction(action: StrapiAction): void {
+    this.strapiActionResolver.resolve(action);
   }
 
   action() {

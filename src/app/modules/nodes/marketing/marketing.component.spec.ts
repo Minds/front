@@ -13,6 +13,10 @@ import {
 } from './marketing.service';
 import { StrapiMetaService } from '../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../common/services/strapi/strapi-action-resolver.service';
 
 describe('NodesMarketingComponent', () => {
   let comp: NodesMarketingComponent;
@@ -104,6 +108,10 @@ describe('NodesMarketingComponent', () => {
           provide: StrapiMetaService,
           useValue: MockService(StrapiMetaService),
         },
+        {
+          provide: StrapiActionResolverService,
+          useValue: MockService(StrapiActionResolverService),
+        },
         { provide: STRAPI_URL, useValue: 'https://www.minds.com/test-strapi/' },
       ],
     }).compileComponents();
@@ -128,6 +136,14 @@ describe('NodesMarketingComponent', () => {
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
       mockResponse.data.nodesMarketingPage.data.attributes.metadata
+    );
+  });
+
+  it('should pass call to resolve action to service', () => {
+    const action: StrapiAction = 'open_composer';
+    comp.resolveAction(action);
+    expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledOnceWith(
+      action
     );
   });
 });

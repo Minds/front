@@ -13,6 +13,10 @@ import { MockComponent, MockService } from '../../../utils/mock';
 import { StrapiMetaService } from '../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
 import { ConfigsService } from '../../../common/services/configs.service';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../common/services/strapi/strapi-action-resolver.service';
 
 describe('PayMarketingComponent', () => {
   let comp: PayMarketingComponent;
@@ -103,6 +107,10 @@ describe('PayMarketingComponent', () => {
           provide: StrapiMetaService,
           useValue: MockService(StrapiMetaService),
         },
+        {
+          provide: StrapiActionResolverService,
+          useValue: MockService(StrapiActionResolverService),
+        },
         { provide: STRAPI_URL, useValue: 'https://www.minds.com/test-strapi/' },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
@@ -128,6 +136,14 @@ describe('PayMarketingComponent', () => {
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
       mockResponse.data.payMarketingPage.data.attributes.metadata
+    );
+  });
+
+  it('should pass call to resolve action to service', () => {
+    const action: StrapiAction = 'open_composer';
+    comp.resolveAction(action);
+    expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledOnceWith(
+      action
     );
   });
 });

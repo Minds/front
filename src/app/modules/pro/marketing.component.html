@@ -81,17 +81,38 @@
         [column3Body]="data.otherFeaturesSection?.column3Body"
       ></m-marketing__otherFeaturesSection>
 
-      <div class="m-grid m-marketing__wrapper">
+      <div
+        *ngIf="data?.sectionTail?.actionButton"
+        class="m-grid m-marketing__wrapper"
+      >
         <div
-          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+          class="
+            m-grid__column-12 m-grid__column-12--mobile
+            m-marketing__body m-marketing__body--extra
+          "
         >
-          <m-button
-            color="blue"
-            (onAction)="scrollToTop()"
-            data-ref="data-minds-pro-upgrade-button"
+          <a
+            *ngIf="
+              data.sectionTail.actionButton.navigationUrl;
+              else predefinedActionTemplate
+            "
+            [href]="data.sectionTail.actionButton.navigationUrl"
+            [attr.data-ref]="data.sectionTail.actionButton.dataRef ?? null"
+            target="_blank"
           >
-            <span i18n="@@MARKETING_PRO__UPGRADE_TO_PRO">Upgrade to Pro</span>
-          </m-button>
+            <m-button color="blue">{{
+              data.sectionTail.actionButton.text
+            }}</m-button>
+          </a>
+          <ng-template #predefinedActionTemplate>
+            <m-button
+              color="blue"
+              (onAction)="resolveAction(data.sectionTail.actionButton.action ?? null)"
+              [attr.data-ref]="data.sectionTail.actionButton.dataRef ?? null"
+            >
+              {{ data.sectionTail.actionButton.text }}
+            </m-button>
+          </ng-template>
         </div>
       </div>
     </div>

@@ -15,6 +15,10 @@ import {
   YoutubeMigrationMarketingPageResponse,
   YoutubeMigrationMarketingService,
 } from './marketing.service';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../../common/services/strapi/strapi-action-resolver.service';
 
 describe('YoutubeMigrationMarketingComponent', () => {
   let comp: YoutubeMigrationMarketingComponent;
@@ -110,6 +114,10 @@ describe('YoutubeMigrationMarketingComponent', () => {
           provide: StrapiMetaService,
           useValue: MockService(StrapiMetaService),
         },
+        {
+          provide: StrapiActionResolverService,
+          useValue: MockService(StrapiActionResolverService),
+        },
         { provide: STRAPI_URL, useValue: 'https://www.minds.com/test-strapi/' },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
@@ -135,6 +143,14 @@ describe('YoutubeMigrationMarketingComponent', () => {
     expect(comp.loading).toBe(false);
     expect((comp as any).strapiMeta.apply).toHaveBeenCalledWith(
       mockResponse.data.youtubeMigrationMarketingPage.data.attributes.metadata
+    );
+  });
+
+  it('should pass call to resolve action to service', () => {
+    const action: StrapiAction = 'open_composer';
+    comp.resolveAction(action);
+    expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledOnceWith(
+      action
     );
   });
 });

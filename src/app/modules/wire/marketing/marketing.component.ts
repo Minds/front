@@ -18,6 +18,10 @@ import { GraphQLError } from 'graphql';
 import { StrapiMetaService } from '../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
 import { ProductMarketingAttributes } from '../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../common/services/strapi/strapi-action-resolver.service';
 
 /**
  * Marketing page for Minds Pay
@@ -46,6 +50,7 @@ export class PayMarketingComponent {
     protected cd: ChangeDetectorRef,
     private service: PayMarketingService,
     private strapiMeta: StrapiMetaService,
+    private strapiActionResolver: StrapiActionResolverService,
     @Inject(STRAPI_URL) public strapiUrl: string,
     configs: ConfigsService
   ) {
@@ -70,14 +75,13 @@ export class PayMarketingComponent {
     this.copyDataSubscription?.unsubscribe();
   }
 
-  scrollToTop() {
-    if (this.topAnchor.nativeElement) {
-      this.topAnchor.nativeElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest',
-      });
-    }
+  /**
+   * Resolve an action from a Strapi action button.
+   * @param { StrapiAction } action - action to resolve.
+   * @returns { void }
+   */
+  public resolveAction(action: StrapiAction): void {
+    this.strapiActionResolver.resolve(action);
   }
 
   action() {

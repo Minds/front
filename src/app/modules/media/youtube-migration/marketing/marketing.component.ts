@@ -20,6 +20,10 @@ import {
 import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
 import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
 import { ApolloQueryResult } from '@apollo/client/core';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../../common/services/strapi/strapi-action-resolver.service';
 
 @Component({
   selector: 'm-youtubeMigration__marketing',
@@ -44,6 +48,7 @@ export class YoutubeMigrationMarketingComponent implements OnInit, OnDestroy {
     protected loginReferrer: LoginReferrerService,
     private service: YoutubeMigrationMarketingService,
     private strapiMeta: StrapiMetaService,
+    private strapiActionResolver: StrapiActionResolverService,
     @Inject(STRAPI_URL) public strapiUrl: string,
     configs: ConfigsService
   ) {
@@ -78,6 +83,15 @@ export class YoutubeMigrationMarketingComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
+  }
+
+  /**
+   * Resolve an action from a Strapi action button.
+   * @param { StrapiAction } action - action to resolve.
+   * @returns { void }
+   */
+  public resolveAction(action: StrapiAction): void {
+    this.strapiActionResolver.resolve(action);
   }
 
   detectChanges() {

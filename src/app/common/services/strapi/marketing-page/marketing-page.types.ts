@@ -50,10 +50,16 @@ export type ProductMarketingSection = {
   showBodyBackground: boolean;
 };
 
+// marketing section tail / footer
+export type ProductMarketingSectionTail = {
+  actionButton: StrapiActionButton;
+};
+
 // full attributes returned for a marketing page when using full query.
 export type ProductMarketingAttributes = {
   hero: ProductMarketingHero;
   sections: ProductMarketingSection[];
   otherFeaturesSection: ProductMarketingOtherFeaturesSection;
+  sectionTail: ProductMarketingSectionTail;
   metadata: StrapiMetadata;
 };
