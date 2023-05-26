@@ -17,7 +17,7 @@
     }
 
     @include m-theme() {
-      color: themed($m-grey-300);
+      color: themed($m-textColor--primary);
     }
 
     @include m-on-theme(dark) {
