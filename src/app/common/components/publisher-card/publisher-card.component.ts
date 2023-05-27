@@ -18,7 +18,7 @@ import { UserAvatarService } from '../../services/user-avatar.service';
 export type PublisherCardSize = 'small' | 'medium' | 'large';
 
 /**
- * Reusable card to display info about users
+ * Reusable card to display info about users/groups
  *
  * Configurable to display different types of information
  *

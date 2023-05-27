@@ -56,20 +56,22 @@
         </div>
       </div>
       <!-- SUBSCRIBE BUTTON -->
-      <!-- For channels -->
-      <m-subscribeButton
-        *ngIf="showSubscribeButton && type === 'user'"
-        [user]="publisher"
-        [sized]="sized"
-        [iconOnly]="btnIconOnly"
-        [disableSubscribe]="disableSubscribe"
-        [enableRecheck]="recheckSubscribed"
-      ></m-subscribeButton>
-      <!-- For groups -->
-      <ng-content
-        *ngIf="showSubscribeButton"
-        select=".m-publisherCard__button"
-      ></ng-content>
+      <ng-container *ngIf="showSubscribeButton">
+        <!-- For channels -->
+        <m-subscribeButton
+          *ngIf="type === 'user'"
+          [user]="publisher"
+          [sized]="sized"
+          [iconOnly]="btnIconOnly"
+          [disableSubscribe]="disableSubscribe"
+          [enableRecheck]="recheckSubscribed"
+        ></m-subscribeButton>
+        <!-- For groups -->
+        <m-group__membershipButton>
+          *ngIf="type === 'group'" [group]="publisher" [iconOnly]="btnIconOnly"
+          ></m-group__membershipButton
+        ></ng-container
+      >
     </div>
     <!-- - SUBS ---------------------------- -->
     <div class="m-publisherCard__subs" *ngIf="shouldShowSubs">

@@ -1,0 +1,124 @@
+<ng-container *ngIf="service.group$ | async">
+  <!-- PRIMARY BUTTON  -->
+  <!-- Includes these buttons: Join, Leave, Cancel Request, Accept Invitation -->
+  <m-button
+    *ngIf="buttonType$ | async"
+    [attr.data-ref]="'group-membership-button-' + (buttonType$ | async)"
+    (onAction)="onPrimaryButtonClick($event)"
+    [saving]="(service.inProgress$ | async) && !iconOnly"
+    [disabled]="service.inProgress$ | async"
+    [overlay]="overlay"
+    [iconOnly]="iconOnly"
+    [size]="buttonSize"
+    [color]="color"
+  >
+    <!-- -----  -->
+    <!-- JOIN  -->
+    <!-- -----  -->
+    <ng-container *ngIf="(buttonType$ | async) === 'join'">
+      <i
+        *ngIf="iconOnly"
+        class="material-icons"
+        title="Join Group"
+        i18n-title="@@GROUPS__JOIN_BUTTON__JOIN_GROUP"
+        >add</i
+      >
+      <ng-container
+        *ngIf="!iconOnly && !verbose"
+        i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION_SINGLE_NG_CONTAINER"
+        >Join</ng-container
+      >
+      <ng-container
+        *ngIf="!iconOnly && verbose"
+        i18n="@@GROUPS__JOIN_BUTTON__JOIN_GROUP"
+        >Join Group</ng-container
+      >
+    </ng-container>
+    <!-- -----  -->
+    <!-- LEAVE  -->
+    <!-- -----  -->
+    <ng-container *ngIf="(buttonType$ | async) === 'leave'">
+      <i
+        *ngIf="iconOnly"
+        class="material-icons"
+        title="Leave Group"
+        i18n-title="@@GROUPS__JOIN_BUTTON__LEAVE_GROUP"
+        >{{ isMemberIcon }}</i
+      >
+      <ng-container
+        *ngIf="!iconOnly && !verbose"
+        i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION_SINGLE_NG_CONTAINER"
+        >Leave</ng-container
+      >
+      <ng-container
+        *ngIf="!iconOnly && verbose"
+        i18n="@@GROUPS__JOIN_BUTTON__LEAVE_GROUP"
+        >Leave Group</ng-container
+      >
+    </ng-container>
+    <!-- -----  -->
+    <!-- CANCEL REQUEST  -->
+    <!-- -----  -->
+    <ng-container *ngIf="(buttonType$ | async) === 'awaiting'">
+      <i
+        *ngIf="iconOnly"
+        class="material-icons"
+        title="Cancel Request"
+        i18n-title="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
+        >close</i
+      >
+      <ng-container
+        *ngIf="!iconOnly"
+        i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
+        >Cancel Request</ng-container
+      ></ng-container
+    >
+    <!-- -----  -->
+    <!-- ACCEPT INVITATION  -->
+    <!-- -----  -->
+    <ng-container *ngIf="(buttonType$ | async) === 'invited'">
+      <i
+        *ngIf="iconOnly"
+        class="material-icons"
+        title="Accept"
+        i18n-title="@@GROUPS__JOIN_BUTTON__ACCEPT_ACTION"
+        >check</i
+      >
+      <ng-container
+        *ngIf="!iconOnly"
+        i18n="@@GROUPS__JOIN_BUTTON__ACCEPT_ACTION"
+        >Accept</ng-container
+      ></ng-container
+    >
+    <!-- -----  -->
+  </m-button>
+  <!-- ----------------------------------- -->
+  <!-- SECONDARY BUTTON  (includes Decline Invitation only)-->
+  <!-- DECLINE INVITATION  -->
+  <m-button
+    *ngIf="(buttonType$ | async) === 'invited'"
+    (onAction)="declineInvitation()"
+    [saving]="(service.inProgress$ | async) && !iconOnly"
+    [disabled]="service.inProgress$ | async"
+    [overlay]="overlay"
+    [iconOnly]="iconOnly"
+    [size]="buttonSize"
+    [color]="color"
+  >
+    <ng-container *ngIf="(buttonType$ | async) === 'invited'">
+      <i
+        *ngIf="iconOnly"
+        class="material-icons"
+        title="Decline"
+        i18n-title="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
+        >close</i
+      >
+      <ng-container
+        *ngIf="!iconOnly"
+        i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
+        >Decline</ng-container
+      ></ng-container
+    >
+  </m-button>
+  <!-- ----------------------------------- -->
+</ng-container>

@@ -21,34 +21,6 @@
     }
   }
 
-  .m-groups--tile-block {
-    margin-top: 75px;
-    position: relative;
-    z-index: 2;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-
-    h3 {
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 24px;
-      margin: 16px 0 8px 0;
-      padding: 0 16px;
-      @include m-theme() {
-        color: themed($m-grey-800);
-      }
-    }
-    span {
-      text-transform: uppercase;
-      font-family: 'Inter', Helvetica, sans-serif;
-      letter-spacing: 0.25px;
-      @include m-theme() {
-        color: themed($m-grey-600);
-      }
-    }
-  }
-
   .m-groups--tile-buttons {
     text-align: center;
     padding: 16px;

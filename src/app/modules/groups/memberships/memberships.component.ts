@@ -4,6 +4,9 @@ import { UpdateMarkersService } from '../../../common/services/update-markers.se
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 
+/**
+ * Page with a list of all the groups you belong to
+ */
 @Component({
   selector: 'm-groupsMemberships',
   templateUrl: './memberships.component.html',
