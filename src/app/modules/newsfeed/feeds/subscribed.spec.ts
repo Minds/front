@@ -208,6 +208,7 @@ describe('NewsfeedSubscribedComponent', () => {
     fixture = TestBed.createComponent(NewsfeedSubscribedComponent);
     component = fixture.componentInstance;
 
+    (component as any).algorithm = 'for-you';
     (component as any).router.events.next(mockNavigationEndEvent);
 
     fixture.detectChanges();
