@@ -81,7 +81,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
   verbose: boolean = false;
 
   /**
-   * The icon to show when user is has joined the group
+   * The icon to show when user has joined the group
    * (only relevant when iconOnly is true)
    */
   @Input() isMemberIcon = 'close';
@@ -173,7 +173,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    * @param { MouseEvent } - mouse event.
    * @returns { void }
    */
-  protected async join(): Promise<void> {
+  public async join(): Promise<void> {
     if (!this.session.isLoggedIn()) {
       let endpoint = this.modernGroupsExperiment.isActive()
         ? `/group/${this.group.guid}?join=true`
@@ -190,28 +190,28 @@ export class GroupMembershipButtonComponent implements OnDestroy {
   /**
    * Leave a group
    */
-  protected async leave() {
+  public async leave() {
     this.service.leave();
   }
 
   /**
    * Accept an invitation to join a group
    */
-  protected async acceptInvitation() {
+  public async acceptInvitation() {
     this.service.acceptInvitation();
   }
 
   /**
    * Decline an invitation to join a group
    */
-  protected async declineInvitation() {
+  public async declineInvitation() {
     this.service.declineInvitation();
   }
 
   /**
    * Cancel a group join request
    */
-  protected async cancelRequest() {
+  public async cancelRequest() {
     this.service.cancelRequest();
   }
 }
