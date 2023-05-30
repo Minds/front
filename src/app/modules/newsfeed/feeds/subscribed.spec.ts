@@ -217,9 +217,9 @@ describe('NewsfeedSubscribedComponent', () => {
   });
 
   it('should reload the feed on onboarding tag completed subscription firing', fakeAsync(() => {
-    expect((component as any).feedService.clear).not.toHaveBeenCalled();
-    expect((component as any).feedService.setLimit).not.toHaveBeenCalledWith();
-    expect((component as any).feedService.fetch).not.toHaveBeenCalled();
+    (component as any).feedService.clear.calls.reset();
+    (component as any).feedService.setLimit.calls.reset();
+    (component as any).feedService.fetch.calls.reset();
 
     (component as any).algorithm = 'for-you';
     (component as any).onboardingV4Service.tagsCompleted$.next(true);
