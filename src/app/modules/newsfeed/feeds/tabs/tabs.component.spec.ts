@@ -3,7 +3,6 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { NewsfeedTabsComponent } from './tabs.component';
 import { MockService } from '../../../../utils/mock';
-import { NewsfeedForYouExperimentService } from '../../../experiments/sub-services/newsfeed-for-you-experiment.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 
@@ -35,20 +34,19 @@ describe('NewsfeedTabsComponent', () => {
         declarations: [NewsfeedTabsComponent],
         providers: [
           {
-            provide: NewsfeedForYouExperimentService,
-            useValue: MockService(NewsfeedForYouExperimentService),
-          },
-          {
+            provide: ExperimentsService,
+            useValue: MockService(ExperimentsService),
           },
         ],
       }).compileComponents();
+    })
   );
 
   beforeEach(done => {
     fixture = TestBed.createComponent(NewsfeedTabsComponent);
     comp = fixture.componentInstance;
 
-    (comp as any).newsfeedForYouExperiment.isActive.and.returnValue(true);
+    (comp as any).experimentsService.hasVariation.and.returnValue(true);
 
     fixture.detectChanges();
     if (fixture.isStable()) {
@@ -65,23 +63,25 @@ describe('NewsfeedTabsComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should have correct tabs when experiment is on', () => {
-    (comp as any).newsfeedForYouExperiment.isActive.and.returnValue(true);
+  it('should have correct tabs when group experiment is on', () => {
+    (comp as any).experimentsService.hasVariation.and.returnValue(true);
     comp.ngOnInit();
     fixture.detectChanges();
 
     expect(getTabByText('For You')).toBeDefined();
     expect(getTabByText('Top')).toBeDefined();
     expect(getTabByText('Latest')).toBeDefined();
+    expect(getTabByText('Groups')).toBeDefined();
   });
 
   it('should have correct tabs when experiment is off', () => {
-    (comp as any).newsfeedForYouExperiment.isActive.and.returnValue(false);
+    (comp as any).experimentsService.hasVariation.and.returnValue(false);
     comp.ngOnInit();
     fixture.detectChanges();
 
-    expect(getTabByText('For You')).toBeUndefined();
+    expect(getTabByText('For You')).toBeDefined();
     expect(getTabByText('Top')).toBeDefined();
     expect(getTabByText('Latest')).toBeDefined();
+    expect(getTabByText('Groups')).toBeUndefined();
   });
 });

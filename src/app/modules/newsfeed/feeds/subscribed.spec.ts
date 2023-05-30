@@ -5,10 +5,18 @@ import {
   tick,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterEvent,
+} from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { EventEmitter, Injector, PLATFORM_ID } from '@angular/core';
-import { NewsfeedSubscribedComponent } from './subscribed.component';
+import {
+  GroupsFeedService,
+  NewsfeedSubscribedComponent,
+} from './subscribed.component';
 import {
   LatestFeedService,
   TopFeedService,
@@ -31,10 +39,17 @@ import { Platform } from '@angular/cdk/platform';
 import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { Session } from '../../../services/session';
 
 describe('NewsfeedSubscribedComponent', () => {
   let component: NewsfeedSubscribedComponent;
   let fixture: ComponentFixture<NewsfeedSubscribedComponent>;
+
+  const mockNavigationEndEvent: NavigationEnd = new NavigationEnd(
+    0,
+    'http://localhost',
+    'http://localhost'
+  );
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -73,7 +88,18 @@ describe('NewsfeedSubscribedComponent', () => {
           provide: NavigationService,
           useValue: MockService(NavigationService),
         },
-        { provide: Router, useValue: MockService(Router) },
+        {
+          provide: Router,
+          useValue: MockService(Router, {
+            has: ['events'],
+            props: {
+              events: {
+                get: () =>
+                  new BehaviorSubject<RouterEvent>(mockNavigationEndEvent),
+              },
+            },
+          }),
+        },
         {
           provide: ActivatedRoute,
           useValue: MockService(ActivatedRoute, {
@@ -141,6 +167,10 @@ describe('NewsfeedSubscribedComponent', () => {
             },
           }),
         },
+        {
+          provide: Session,
+          useValue: MockService(Session),
+        },
       ],
     })
       .overrideProvider(ForYouFeedService, {
@@ -164,12 +194,22 @@ describe('NewsfeedSubscribedComponent', () => {
           this.fetch = jasmine.createSpy('fetch').and.returnValue(this);
         })(),
       })
+      .overrideProvider(GroupsFeedService, {
+        useValue: new (function() {
+          this.clear = jasmine.createSpy('clear').and.returnValue(this);
+          this.setLimit = jasmine.createSpy('setLimit').and.returnValue(this);
+          this.fetch = jasmine.createSpy('fetch').and.returnValue(this);
+        })(),
+      })
       .compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NewsfeedSubscribedComponent);
     component = fixture.componentInstance;
+
+    (component as any).router.events.next(mockNavigationEndEvent);
+
     fixture.detectChanges();
   });
 
