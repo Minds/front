@@ -258,28 +258,32 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     });
 
     // catch Zendesk errors and make them domain specific.
-    this.zendeskErrorSubscription = this.route.queryParams.subscribe(params => {
-      if (params.kind === 'error') {
-        if (
-          /User is invalid: External minds-guid:\d+ has already been taken/.test(
-            params.message
-          )
-        ) {
-          this.toast.error('Your email is already linked to a support account');
-          return;
-        }
+    this.zendeskErrorSubscription = this.route.queryParams
+      .pipe(filter(Boolean))
+      .subscribe(params => {
+        if (params.kind === 'error') {
+          if (
+            /User is invalid: External minds-guid:\d+ has already been taken/.test(
+              params.message
+            )
+          ) {
+            this.toast.error(
+              'Your email is already linked to a support account'
+            );
+            return;
+          }
 
-        if (
-          params.message ===
-          'Please use one of the options below to sign in to Zendesk.'
-        ) {
-          this.toast.error('Authentication method invalid');
-          return;
-        }
+          if (
+            params.message ===
+            'Please use one of the options below to sign in to Zendesk.'
+          ) {
+            this.toast.error('Authentication method invalid');
+            return;
+          }
 
-        this.toast.error(params.message ?? 'An unknown error has occurred');
-      }
-    });
+          this.toast.error(params.message ?? 'An unknown error has occurred');
+        }
+      });
 
     this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
       newPost => {
