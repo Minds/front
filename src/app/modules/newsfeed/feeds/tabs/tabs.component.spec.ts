@@ -68,6 +68,9 @@ describe('NewsfeedTabsComponent', () => {
     comp.ngOnInit();
     fixture.detectChanges();
 
+    expect((comp as any).experimentsService.hasVariation).toHaveBeenCalledWith(
+      'minds-3990-group-feed'
+    );
     expect(getTabByText('For You')).toBeDefined();
     expect(getTabByText('Top')).toBeDefined();
     expect(getTabByText('Latest')).toBeDefined();
@@ -79,6 +82,9 @@ describe('NewsfeedTabsComponent', () => {
     comp.ngOnInit();
     fixture.detectChanges();
 
+    expect((comp as any).experimentsService.hasVariation).toHaveBeenCalledWith(
+      'minds-3990-group-feed'
+    );
     expect(getTabByText('For You')).toBeDefined();
     expect(getTabByText('Top')).toBeDefined();
     expect(getTabByText('Latest')).toBeDefined();
