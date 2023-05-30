@@ -104,7 +104,12 @@ describe('NewsfeedSubscribedComponent', () => {
           useValue: MockService(ActivatedRoute, {
             has: ['params', 'queryParams'],
             props: {
-              params: { get: () => new BehaviorSubject<any>(null) },
+              params: {
+                get: () =>
+                  new BehaviorSubject<any>({
+                    algorithm: 'for-you',
+                  }),
+              },
               queryParams: { get: () => new BehaviorSubject<any>(null) },
             },
           }),
