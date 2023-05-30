@@ -182,13 +182,15 @@ export class NewsfeedBoostRotatorComponent {
     try {
       this.inProgress = true;
 
-      await this.boostFeedService.init();
-
       this.init = true;
+
+      await this.boostFeedService.init();
     } catch (e) {
       if (e && e.message) {
         console.warn(e);
       }
+
+      this.init = false;
 
       throw e;
     }

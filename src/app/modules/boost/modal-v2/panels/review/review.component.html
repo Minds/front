@@ -11,7 +11,7 @@
 </div>
 <div class="m-boostModalReview__body">
   <div
-    *ngIf="boostGoalsExperiment.isActive() && (goal$ | async)"
+    *ngIf="showGoalSection$ | async"
     class="m-boostModalReview__section m-boostModalReview__section--goal"
     (click)="changePanel(BoostModalPanel.GOAL)"
     data-ref="boost-modal-v2-goal-section"

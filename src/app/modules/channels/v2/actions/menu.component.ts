@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
 import { ChannelAdminConfirmationService } from './admin-confirmation/admin-confirmation.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { AdminSupersetLinkService } from '../../../../common/services/admin-superset-link.service';
 
 export interface ProToggleResponse {
   status?: string;
@@ -42,7 +43,8 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
     protected router: Router,
     private client: Client,
     private adminConfirmation: ChannelAdminConfirmationService,
-    activity: ActivityService
+    activity: ActivityService,
+    private adminSupersetLink: AdminSupersetLinkService
   ) {
     super();
   }
@@ -286,9 +288,13 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
     }
   }
 
+  /**
+   * Get Superset URL for user overview.
+   * @returns { string } URL pointing to Superset user overview page.
+   */
   public getUserSupersetUrl(): string {
-    return `https://analytics.minds.com/superset/dashboard/41/?preselect_filters={"286":{"USER_GUID":"${
+    return this.adminSupersetLink.getUserOverviewUrl(
       this.service.channel$.getValue().guid
-    }"}}`;
+    );
   }
 }

@@ -65,8 +65,10 @@
           @include m-theme() {
             color: themed($m-textColor--primary) !important;
           }
+
           ::ng-deep m-icon,
-          i {
+          i,
+          m-chatIcon {
             margin-right: 15px;
             font-size: 22px;
             vertical-align: middle;
@@ -75,6 +77,14 @@
             @include m-theme() {
               color: themed($m-textColor--primary);
               fill: themed($m-textColor--primary);
+            }
+          }
+
+          ::ng-deep m-chatIcon {
+            display: inline-block;
+
+            i {
+              font-size: 20px !important;
             }
           }
         }

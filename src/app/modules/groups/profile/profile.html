@@ -33,6 +33,7 @@
       *ngIf="group && (group['is:member'] || group.membership == 2 || session.isAdmin())"
       [ngClass]="[ 'm-group--' + filter + '-view' ]"
       [class.m-group--view-mode]="!editing"
+      class="m-groupGrid__header"
     >
       <minds-banner
         [object]="group"

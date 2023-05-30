@@ -100,7 +100,12 @@
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
-      padding-bottom: $spacing7;
+      padding-top: $spacing7;
+      text-align: center;
+      margin: 0 $spacing4;
+    }
+    &__description--referral {
+      padding-top: $spacing1;
     }
   }
   ::ng-deep m-button {

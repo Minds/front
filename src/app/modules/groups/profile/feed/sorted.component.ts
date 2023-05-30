@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { Session } from '../../../../services/session';
 import { SortedService } from './sorted.service';
@@ -17,8 +17,8 @@ import { GroupsService } from '../../groups.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ComposerComponent } from '../../../composer/composer.component';
 import { AsyncPipe } from '@angular/common';
-import { map } from 'rxjs/operators';
 import { GroupsSearchService } from './search.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Container for group feeds. Includes content type filter, search results,
@@ -33,6 +33,11 @@ import { GroupsSearchService } from './search.service';
 })
 export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   group: any;
+
+  // Whether this is displayed in modern groups
+  @Input('v2')
+  @HostBinding('class.m-group-profile-feed__sorted--v2')
+  v2: boolean = false;
 
   @Input('group') set _group(group: any) {
     if (group === this.group) {
@@ -87,9 +92,11 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     protected sortedService: SortedService,
     protected session: Session,
     protected router: Router,
+    protected route: ActivatedRoute,
     protected client: Client,
     protected cd: ChangeDetectorRef,
-    public groupsSearch: GroupsSearchService
+    public groupsSearch: GroupsSearchService,
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {
@@ -170,13 +177,23 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   }
 
   setFilter(type: string) {
-    const route = ['/groups/profile', this.group.guid, 'feed'];
+    if (!this.v2) {
+      const route = ['/groups/profile', this.group.guid, 'feed'];
 
-    if (type !== 'activities') {
-      route.push(type);
+      if (type !== 'activities') {
+        route.push(type);
+      }
+
+      this.router.navigate(route);
+    } else {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: {
+          filter: type,
+        },
+        queryParamsHandling: 'merge',
+      });
     }
-
-    this.router.navigate(route);
   }
 
   isMember() {
@@ -187,7 +204,21 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     return this.type === 'activities';
   }
 
-  prepend(activity: any) {
+  /**
+   * Prepend an activity to the feed.
+   * @param { any } activity - activity to prepend.
+   * @returns { void }
+   */
+  public prepend(activity: any): void {
+    if (
+      this.group.moderated &&
+      !(this.group['is:moderator'] || this.group['is:owner'])
+    ) {
+      this.toast.success(
+        'Your post is pending approval from the group moderators'
+      );
+    }
+
     if (!activity || !this.isActivityFeed()) {
       return;
     }
@@ -266,5 +297,28 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   patchEntity(entity) {
     entity.dontPin = !(this.group['is:moderator'] || this.group['is:owner']);
     return entity;
+  }
+
+  /**
+   * Reroute to the correct endpoint for the version of groups we're using
+   */
+  onReviewNoticeClick($event): void {
+    if (this.v2) {
+      this.router.navigate(['group', this.group.guid, 'review']);
+    } else {
+      this.router.navigate(['groups', this.group.guid, 'feed', 'review']);
+    }
+  }
+
+  /**
+   * Whether a boost should be shown in a given feed position.
+   * @param { number } position - index / position in feed.
+   * @returns { boolean } - true if a boost should be shown in given feed position
+   */
+  public shouldShowBoostInPosition(position: number): boolean {
+    return (
+      // Displays in the 2nd slot and then every 6 posts
+      (position > 4 && position % 5 === 0) || position === 0
+    );
   }
 }

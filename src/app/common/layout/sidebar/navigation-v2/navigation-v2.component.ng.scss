@@ -38,10 +38,10 @@
 
     nav {
       overflow-y: auto;
+      overflow-x: hidden;
       max-height: calc(100vh - 75px);
-      &::-webkit-scrollbar {
-        display: none;
-      }
+
+      @include hide-scrollbar;
 
       @media screen and (max-width: $max-mobile) {
         max-height: 100vh;
@@ -136,6 +136,41 @@
       margin: 0;
 
       .m-sidebarNavigation__item {
+        &.m-sidebarNavigation__item--supermind {
+          /**
+           * Optical alignment fix caused by the icon for Supermind 
+           * being VERY left-side heavy.
+           */
+          // conditional styling for full nav.
+          @media screen and (max-width: $layoutMax1ColWidth),
+            (min-width: calc($layoutMax3ColWidth + 1px)) {
+            i {
+              margin-left: 2px;
+            }
+            span {
+              margin-left: 18px;
+            }
+          }
+
+          // conditional styling for mid width nav.
+          @media screen and (max-width: $layoutMax3ColWidth) and (min-width: calc($layoutMax1ColWidth + 1px)) {
+            i {
+              margin-left: 6px;
+            }
+            span {
+              margin-left: 14px;
+            }
+          }
+        }
+
+        &.m-sidebarNavigation__item--boost i {
+          // Optical alignment fix for full width nav.
+          @media screen and (max-width: $layoutMax1ColWidth),
+            (min-width: calc($layoutMax3ColWidth + 1px)) {
+            transform: translateY(2px);
+          }
+        }
+
         &.m-sidebarNavigation__item--compose {
           margin-bottom: 20px !important;
           margin-top: $spacing6;
@@ -200,6 +235,8 @@
             justify-content: center;
             margin-bottom: 8px;
             padding: 10px 24px 10px 16px;
+            box-sizing: border-box;
+            max-width: 100%;
 
             @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
               padding: 10px;

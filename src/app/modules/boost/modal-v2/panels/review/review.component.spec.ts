@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { BoostPaymentCategory } from '../../boost-modal-v2.types';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
@@ -47,6 +47,7 @@ describe('BoostModalV2ReviewComponent', () => {
                 'estimatedReach$',
                 'activePanel$',
                 'goal$',
+                'canSetBoostGoal$',
               ],
               props: {
                 paymentCategory$: {
@@ -86,6 +87,9 @@ describe('BoostModalV2ReviewComponent', () => {
                 goal$: {
                   get: () => new BehaviorSubject<BoostGoal>(BoostGoal.VIEWS),
                 },
+                canSetBoostGoal$: {
+                  get: () => new BehaviorSubject<boolean>(true),
+                },
               },
             }),
           },
@@ -119,6 +123,7 @@ describe('BoostModalV2ReviewComponent', () => {
     });
     (comp as any).service.activePanel$.next(BoostModalPanel.REVIEW);
     (comp as any).service.goal$.next(BoostGoal.VIEWS);
+    (comp as any).service.canSetBoostGoal$.next(true);
     (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
 
     fixture.detectChanges();
@@ -218,22 +223,15 @@ describe('BoostModalV2ReviewComponent', () => {
     });
   });
 
-  it('should show goal section when goal experiment is ON and a goal is set', () => {
-    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
+  it('should show goal section when goal service says it can be set and there is a goal', () => {
+    (comp as any).service.canSetBoostGoal$.next(true);
     (comp as any).service.goal$.next(BoostGoal.VIEWS);
     fixture.detectChanges();
     expect(getGoalSection()).toBeTruthy();
   });
 
-  it('should NOT show goal section when goal experiment is ON and a goal is NOT set', () => {
-    (comp as any).boostGoalsExperiment.isActive.and.returnValue(true);
-    (comp as any).service.goal$.next(null);
-    fixture.detectChanges();
-    expect(getGoalSection()).toBeNull();
-  });
-
-  it('should NOT show goal section when goal experiment is OFF', () => {
-    (comp as any).boostGoalsExperiment.isActive.and.returnValue(false);
+  it('should NOT show goal section when service says a goal cannot be set', () => {
+    (comp as any).service.canSetBoostGoal$.next(false);
     (comp as any).service.goal$.next(null);
     fixture.detectChanges();
     expect(getGoalSection()).toBeNull();

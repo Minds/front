@@ -49,7 +49,7 @@ export class InviteFriendsNoticeComponent extends AbstractSubscriberComponent {
    * @returns { void }
    */
   public onSecondaryOptionClick(): void {
-    this.router.navigate(['/settings/other/referrals']);
+    this.router.navigate(['/settings/affiliates-program']);
   }
 
   /**

@@ -25,7 +25,6 @@ import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-m
 import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ThemeService } from '../../services/theme.service';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -80,8 +79,7 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
     private injector: Injector,
     private authModal: AuthModalService,
     private themeService: ThemeService,
-    private sidebarNavigationService: SidebarNavigationService,
-    private experiments: ExperimentsService
+    private sidebarNavigationService: SidebarNavigationService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -217,14 +215,5 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
    */
   public onSidebarMoreToggle($event) {
     this.sidebarMoreOpened = $event;
-  }
-
-  /**
-   * Experiment where we change the wording of "Discovery" to "Explore".
-   * https://gitlab.com/minds/minds/-/issues/3038
-   * @returns { boolean } true if experiment is to be applied.
-   */
-  public showExploreExperiment(): boolean {
-    return this.experiments.hasVariation('minds-3038-discovery-explore', true);
   }
 }

@@ -1,58 +1,104 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, filter, map, Observable, Subscription } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import {
+  combineLatest,
+  filter,
+  firstValueFrom,
+  map,
+  Observable,
+  ReplaySubject,
+} from 'rxjs';
 import { Session } from '../../../services/session';
 import { ObjectLocalStorageService } from '../../services/object-local-storage.service';
-import { SiteService } from '../../services/site.service';
+import { Apollo, gql } from 'apollo-angular';
 
-/** Array of alert keys */
-export const ALERT_KEYS: string[] = ['wefunder'];
+/** Alert key type */
+export type AlertKey = string;
 
-/** Alert key type - gets the strings at numerical indexes in the alert keys array */
-export type AlertKey = typeof ALERT_KEYS[number];
+export const GET_TOPBAR_QUERY = gql`
+  {
+    topbarAlert {
+      data {
+        id
+        attributes {
+          message
+          enabled
+          url
+          identifier
+          onlyDisplayAfter
+        }
+      }
+    }
+  }
+`;
 
 /**
  * Service managing the showing and dismiss handling of topbar alerts,
  * that are intended to show above the site nav topbar.
  */
 @Injectable({ providedIn: 'root' })
-export class TopbarAlertService implements OnDestroy {
-  /** currently active alert */
-  public readonly activeAlert$: BehaviorSubject<AlertKey> = new BehaviorSubject<
-    AlertKey
-  >(null);
+export class TopbarAlertService {
+  /** Copy data to be returned from strapi */
+  copyData$: Observable<any> = this.apollo
+    .watchQuery({
+      query: GET_TOPBAR_QUERY,
+    })
+    .valueChanges.pipe(map((result: any) => result.data.topbarAlert.data));
 
-  /** whether alert should be shown based on whether an active alert is set */
-  public readonly shouldShow$: Observable<boolean> = this.activeAlert$.pipe(
-    map((activeAlert: AlertKey) => Boolean(activeAlert))
+  /** Identifier, used for dismissing */
+  identifier$: Observable<string> = this.copyData$.pipe(
+    map(copyData => copyData.attributes.identifier)
+  );
+
+  /** Enabled (on/off) */
+  enabled$: Observable<boolean> = this.copyData$.pipe(
+    map(copyData => Boolean(copyData.attributes.enabled))
+  );
+
+  /** Timestamp at which we will show to alert */
+  onlyDisplayAfter$: Observable<number> = this.copyData$.pipe(
+    map(copyData => Date.parse(copyData.attributes.onlyDisplayAfter))
+  );
+
+  /** Array of alerts that have been dismissed (hyrdated on construct) */
+  dismissedAlerts$: ReplaySubject<AlertKey[]> = new ReplaySubject();
+
+  /** Logic for dictating if the alert should display */
+  shouldShow$: Observable<boolean> = combineLatest([
+    this.identifier$,
+    this.dismissedAlerts$,
+    this.onlyDisplayAfter$,
+    this.enabled$,
+    this.session.user$.pipe(map(user => !!user)),
+  ]).pipe(
+    map(
+      ([
+        identifier,
+        dismissedAlerts,
+        onlyDisplayAfter,
+        enabled,
+        isLoggedIn,
+      ]) => {
+        return (
+          dismissedAlerts.indexOf(identifier) === -1 &&
+          onlyDisplayAfter < Date.now() &&
+          enabled &&
+          isLoggedIn
+        );
+      }
+    )
   );
 
   /** storage key */
   private readonly storageKey = 'topbar-alert:dismissed';
 
-  /** array of alert keys */
-  private readonly alertKeys: AlertKey[] = ALERT_KEYS;
-
-  /** logged in subscription */
-  private readonly loggedInSubscription: Subscription;
-
   constructor(
     private session: Session,
-    private site: SiteService,
     private objectStorage: ObjectLocalStorageService,
+    private apollo: Apollo,
     @Inject(PLATFORM_ID) private platformId: string
   ) {
-    this.activeAlert$.next(this.getActiveAlert());
-
-    this.loggedInSubscription = this.session.loggedinEmitter
-      .pipe(filter(Boolean))
-      .subscribe((loggedIn: boolean) => {
-        this.activeAlert$.next(this.getActiveAlert());
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.loggedInSubscription?.unsubscribe();
+    this.dismissedAlerts$.next(this.getDismissedAlerts());
   }
 
   /**
@@ -60,44 +106,25 @@ export class TopbarAlertService implements OnDestroy {
    * @param { AlertKey } alertKey - key for alert to dismiss.
    * @returns { void }
    */
-  public dismiss(alertKey: AlertKey): void {
+  public async dismiss(): Promise<void> {
+    const alertKey = await firstValueFrom(this.identifier$);
     if (isPlatformBrowser(this.platformId)) {
       this.objectStorage.setSingle(this.storageKey, {
         [alertKey]: '1',
       });
     }
-    this.activeAlert$.next(null);
-  }
-
-  /**
-   * Get the alert that should be made active, or null if none should.
-   * @returns { AlertKey } alert that should be active.
-   */
-  private getActiveAlert(): AlertKey {
-    if (!this.session.isLoggedIn() || this.site.isProDomain) {
-      return null;
-    }
-
-    const undismissedAlerts: AlertKey[] = this.getUndismissedAlerts();
-
-    return undismissedAlerts.length ? undismissedAlerts[0] : null;
+    this.dismissedAlerts$.next(this.getDismissedAlerts());
   }
 
   /**
    * Gets an array of undismissed alerts.
    * @returns { AlertKey[] } - array of the keys of undismissed alerts.
    */
-  private getUndismissedAlerts(): AlertKey[] {
+  private getDismissedAlerts(): AlertKey[] {
     if (isPlatformServer(this.platformId)) {
       return [];
     }
 
-    const dismissedAlerts: string[] = Object.keys(
-      this.objectStorage.getAll(this.storageKey)
-    );
-
-    return this.alertKeys.filter(
-      (alertKey: AlertKey) => !dismissedAlerts.includes(alertKey)
-    );
+    return Object.keys(this.objectStorage.getAll(this.storageKey));
   }
 }

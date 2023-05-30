@@ -65,12 +65,12 @@ lint:
         export E2E_DOMAIN=https://www.minds.com
         export PRODUCTION=true
       else
-        export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+        export E2E_DOMAIN=https://$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
         export PRODUCTION=false
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "Preparing E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/cypress-tests.git
+    - git clone --branch=master https://$CI_REGISTRY_USER:${CI_REGISTRY_PASSWORD}@gitlab.com/minds/cypress-tests.git
     - echo "Checking if branch exists..."
     - BRANCH_EXISTS=$(git ls-remote --heads https://www.gitlab.com/minds/cypress-tests $CI_BUILD_REF_NAME | wc -l)
     - cd ./cypress-tests
@@ -117,7 +117,7 @@ lint:
       if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
         export E2E_DOMAIN=https://www.minds.com
       else
-        export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+        export E2E_DOMAIN=https://$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
       fi
     - export BYPASS_SIGNING_KEY=$BYPASS_SIGNING_KEY
     - sh ./e2e/test/setup_and_run.sh
@@ -250,7 +250,7 @@ prepare:review:
   services:
     - docker:dind
   script:
-    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker login -u $CI_REGISTRY_USER -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
     - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
     - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
   dependencies:
@@ -285,7 +285,7 @@ prepare:production:
   services:
     - docker:dind
   script:
-    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker login -u $CI_REGISTRY_USER -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
     - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
     - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
     - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:latest
@@ -351,10 +351,10 @@ dependency_scanning:
   image: minds/ci:latest
   script:
     - *oci_prepare
-    - helm del $CI_BUILD_REF_SLUG
+    - helm del $CI_COMMIT_REF_SLUG
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+    url: https://$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
     action: stop
   variables:
     GIT_STRATEGY: none
@@ -373,7 +373,7 @@ review:start:
   script:
     - *oci_prepare
     # Download repo, use same branch name if exists
-    - HELM_GIT_REPO=https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
+    - HELM_GIT_REPO=https://$CI_REGISTRY_USER:${CI_REGISTRY_PASSWORD}@gitlab.com/minds/helm-charts.git
     - git clone --branch=master $HELM_GIT_REPO
     - BRANCH_EXISTS=$(git ls-remote --heads $HELM_GIT_REPO $CI_BUILD_REF_NAME | wc -l)
     - cd ./helm-charts
@@ -389,19 +389,19 @@ review:start:
       --values ./minds/values-sandbox-oke.yaml
       --set front.image.repository=$CI_REGISTRY_IMAGE/server \
       --set-string front.image.tag=$CI_PIPELINE_ID \
-      --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
-      --set cdn_domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
-      --set siteUrl=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN/
+      --set domain=$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+      --set cdn_domain=$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+      --set siteUrl=https://$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN/
       --set-string environments.sandbox.routingCookie=false
       --timeout 800s \
       --wait \
-      $CI_BUILD_REF_SLUG \
+      $CI_COMMIT_REF_SLUG \
       ./minds"
     # Update sentry
     - sentry-cli releases deploys $CI_PIPELINE_ID new -e review-$CI_COMMIT_REF_SLUG
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+    url: https://$CI_COMMIT_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
     on_stop: review:stop
   except:
     refs:
@@ -432,10 +432,10 @@ review:stop:
     - docker:dind
   script:
     ## Sync assets with CDN
-    - aws s3 sync dist $S3_REPOSITORY_URL --cache-control max-age=31536000
+    - aws s3 sync dist $S3_REPOSITORY_URL/$IMAGE_LABEL --cache-control max-age=31536000
     - $(aws ecr get-login --no-include-email --region us-east-1)
     ## Update docker server container
-    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker login -u $CI_REGISTRY_USER -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
     - docker pull $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
     - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
     - docker push $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL

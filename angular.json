@@ -91,7 +91,8 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/jitsi-api.min.js"
+              "src/shims/jitsi-api.min.js",
+              "node_modules/marked/marked.min.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]

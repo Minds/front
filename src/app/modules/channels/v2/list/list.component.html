@@ -1,4 +1,4 @@
-<div class="m-tabs__container">
+<div class="m-tabs__container" *ngIf="showTabs">
   <div class="m-tabs__tab">
     <a routerLink="../subscribers" routerLinkActive="m-tabs__tab--selected"
       >Subscribers</a
@@ -7,11 +7,6 @@
   <div class="m-tabs__tab">
     <a routerLink="../subscriptions" routerLinkActive="m-tabs__tab--selected"
       >Subscriptions</a
-    >
-  </div>
-  <div class="m-tabs__tab">
-    <a routerLink="../groups" routerLinkActive="m-tabs__tab--selected"
-      >Groups</a
     >
   </div>
 </div>

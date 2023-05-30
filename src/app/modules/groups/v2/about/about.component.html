@@ -1,0 +1,20 @@
+<div *ngIf="service.group$ | async as group" class="m-group__about">
+  <m-group__memberPreviews
+    class="m-groupAbout__section--memberPreviews m-groupAbout__section"
+  ></m-group__memberPreviews>
+  <div
+    *ngIf="group.briefdescription"
+    class="m-groupAbout__section--desc m-groupAbout__section"
+    m-read-more
+    [maxHeightAllowed]="350"
+  >
+    <div
+      class="m-groupAboutDesc__content"
+      [innerHtml]="group.briefdescription | slice: 0:5000 | tags"
+      data-ref="data-minds-group-bio"
+    ></div>
+
+    <m-read-more--button [v2]="true" showOnlyFadeout="true">
+    </m-read-more--button>
+  </div>
+</div>

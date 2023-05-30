@@ -23,7 +23,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, startWith } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import {
@@ -45,11 +45,13 @@ import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 import { Platform } from '@angular/cdk/platform';
 import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
+import { Session } from '../../../services/session';
 
 export enum FeedAlgorithm {
   top = 'top',
   latest = 'latest',
   forYou = 'for-you',
+  groups = 'groups',
 }
 
 const commonInjectItems: InjectItem[] = [
@@ -99,15 +101,30 @@ export class ForYouFeedService extends FeedsService {
   injectItems = commonInjectItems;
 }
 
+/**
+ * Service for "Groups" feed.
+ */
+@Injectable()
+export class GroupsFeedService extends FeedsService {
+  endpoint = 'api/v2/feeds/subscribed/activities';
+  limit = new BehaviorSubject(12);
+  injectItems = commonInjectItems;
+}
+
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [LatestFeedService, TopFeedService, ForYouFeedService],
+  providers: [
+    LatestFeedService,
+    TopFeedService,
+    ForYouFeedService,
+    GroupsFeedService,
+  ],
   templateUrl: 'subscribed.component.html',
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   prepended: Array<any> = [];
   offset: string | number = '';
-  showBoostRotator: boolean = true;
+  showBoostRotator: boolean = false;
   inProgress: boolean = false;
   moreData: boolean = true;
   algorithm: FeedAlgorithm;
@@ -125,6 +142,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   reloadFeedSubscription: Subscription;
   private zendeskErrorSubscription: Subscription;
   private onboardingTagsCompletedSubscription: Subscription;
+  routerSubscription: Subscription;
 
   /**
    * Listening for new posts.
@@ -173,6 +191,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     @Self() public latestFeedService: LatestFeedService,
     @Self() public topFeedService: TopFeedService,
     @Self() public forYouFeedService: ForYouFeedService,
+    @Self() public groupsFeedService: GroupsFeedService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
@@ -185,7 +204,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private feedNoticeService: FeedNoticeService,
     persistentFeedExperiment: PersistentFeedExperimentService,
     private platform: Platform,
-    private onboardingV4Service: OnboardingV4Service
+    private onboardingV4Service: OnboardingV4Service,
+    private session: Session
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -198,10 +218,23 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       this.topFeedService.setCachingEnabled(true);
       this.latestFeedService.setCachingEnabled(true);
       this.forYouFeedService.setCachingEnabled(true);
+      this.groupsFeedService.setCachingEnabled(true);
     }
   }
 
   ngOnInit() {
+    this.routerSubscription = this.router.events
+      .pipe(
+        filter((event: RouterEvent) => event instanceof NavigationEnd),
+        startWith(this.router)
+      )
+      .subscribe(() => {
+        this.load();
+        setTimeout(() => {
+          this.showBoostRotator = true;
+        }, 50);
+      });
+
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
       () => {
         this.load();
@@ -215,16 +248,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         } else {
           this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
         }
-      }
-
-      /**
-       * Load feed. If in firefox, do this in a timeout to avoid layout freezes.
-       * This should be removed in the future when we optimize for firefox. front#3213
-       */
-      if (isPlatformBrowser(this.platformId) && this.platform.FIREFOX) {
-        setTimeout(() => this.load(), 300);
-      } else {
-        this.load();
       }
 
       if (params['message']) {
@@ -278,6 +301,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.routerSubscription?.unsubscribe();
     this.paramsSubscription?.unsubscribe();
     this.reloadFeedSubscription?.unsubscribe();
     this.feedsUpdatedSubscription?.unsubscribe();
@@ -294,6 +318,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         return this.topFeedService;
       case 'for-you':
         return this.forYouFeedService;
+      case 'groups':
+        return this.groupsFeedService;
       default:
         return this.latestFeedService;
     }
@@ -337,6 +363,17 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
             this.topFeedService.setLimit(3).fetch(true),
             this.latestFeedService.fetch(true),
           ]);
+          break;
+        case 'groups':
+          const params = {
+            group_posts_for_user_guid:
+              this.session.getLoggedInUser()?.guid || '',
+          };
+
+          await this.groupsFeedService
+            .setParams(params)
+            .setLimit(12)
+            .fetch(true);
           break;
       }
     } catch (e) {
@@ -403,6 +440,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         this.latestFeedService.clear(true);
         this.topFeedService.clear(true);
         break;
+      case 'groups':
+        this.groupsFeedService.clear(true);
     }
   }
 
@@ -538,6 +577,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         }
         break;
       case this.forYouFeedService:
+        this.latestFallbackActive$.next(false);
+        break;
+      case this.groupsFeedService:
         this.latestFallbackActive$.next(false);
         break;
     }

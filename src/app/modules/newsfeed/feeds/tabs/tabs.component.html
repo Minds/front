@@ -1,7 +1,6 @@
 <div class="m-tabs__container">
   <div class="m-tabs__tab">
     <a
-      *ngIf="shouldShowForYouTab"
       [routerLink]="['../' + feedAlgorithm.forYou]"
       routerLinkActive="m-tabs__tab--selected"
       data-ref="newsfeed-tab-link-for-you"
@@ -25,6 +24,15 @@
       data-ref="newsfeed-tab-link-latest"
       i18n="@@NEWSFEED_TAGS__LATEST"
       >Latest</a
+    >
+  </div>
+  <div class="m-tabs__tab" *ngIf="shouldShowGroupsTab">
+    <a
+      [routerLink]="['../' + feedAlgorithm.groups]"
+      routerLinkActive="m-tabs__tab--selected"
+      data-ref="newsfeed-tab-link-groups"
+      i18n="@@COMMON__GROUPS"
+      >Groups</a
     >
   </div>
 </div>

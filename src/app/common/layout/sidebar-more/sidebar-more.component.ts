@@ -13,6 +13,8 @@ import { MindsUser } from '../../../interfaces/entities';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
 import { Router } from '@angular/router';
+import { SidebarV2ReorgExperimentService } from '../../../modules/experiments/sub-services/front-5924-sidebar-v2-reorg.service';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'm-sidebarMore',
@@ -35,8 +37,8 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Privacy', routerLink: ['/p/privacy'] },
     {
-      label: 'Referrals',
-      routerLink: ['/settings/other/referrals'],
+      label: 'Affiliates',
+      routerLink: ['/settings/affiliates-program'],
     },
     { label: 'Mobile App', routerLink: ['/mobile'] },
     { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
@@ -49,26 +51,37 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
   ];
   maxFooterLinks = 4;
 
+  /** Whether experiment controlling reorganization of menu items variation is active */
+  public showReorgVariation: boolean = false;
+
+  public readonly chatUrl: string;
+
   constructor(
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     private sidebarNavigationService: SidebarNavigationService,
     private helpdeskRedirectService: HelpdeskRedirectService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private sidebarV2ReorgExperiment: SidebarV2ReorgExperimentService,
+    private configs: ConfigsService
+  ) {
+    this.chatUrl = this.configs.get('matrix')?.chat_url;
+  }
 
   ngOnInit(): void {
+    this.showReorgVariation = this.shouldShowReorgVariation();
+
     this.session.isLoggedIn(() => this.detectChanges());
 
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
 
-    // For logged out users, remove referrals link
+    // For logged out users, remove affiliates link
     if (!this.getCurrentUser()) {
       this.footerLinks = this.footerLinks.filter(link => {
-        return link.label !== 'Referrals';
+        return link.label !== 'Affiliates';
       });
     }
   }
@@ -139,5 +152,13 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
+  }
+
+  /**
+   * Whether menu item reorganisation experiment is active.
+   * @returns { boolean } true if menu item reorganisation experiment is active.
+   */
+  public shouldShowReorgVariation(): boolean {
+    return this.sidebarV2ReorgExperiment.isReorgVariationActive();
   }
 }

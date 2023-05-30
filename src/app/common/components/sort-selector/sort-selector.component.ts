@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostBinding,
   HostListener,
   Input,
   OnDestroy,
@@ -108,6 +109,11 @@ export class SortSelectorComponent implements OnInit {
   @Input() labelClass: string = 'm-sortSelector__label';
 
   @Input() showPlusFilter: boolean = false;
+
+  // Whether this is displayed in modern groups
+  @Input('v2')
+  @HostBinding('class.m-sortSelector--v2')
+  v2: boolean = false;
 
   @Output() onChange: EventEmitter<{
     algorithm;

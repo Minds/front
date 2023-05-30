@@ -26,7 +26,6 @@ import { ToasterService } from '../../common/services/toaster.service';
   templateUrl: './group-membership-button.html',
 })
 export class GroupMembershipButton {
-  showModal: boolean = false;
   group: any;
   membership: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
@@ -34,6 +33,22 @@ export class GroupMembershipButton {
   @HostBinding('class.m-groupsJoin--iconsOnly')
   @Input()
   iconsOnly: boolean = false;
+
+  // How big is the button? (For non-iconsOnly)
+  buttonSize: string = 'small';
+
+  // Use modern groups styling
+  private _v2: boolean;
+  @Input() set v2(value: boolean) {
+    this._v2 = value;
+    if (value) {
+      this.buttonSize = 'xsmall';
+    }
+  }
+
+  get v2(): boolean {
+    return this._v2;
+  }
 
   constructor(
     public session: Session,
@@ -74,7 +89,6 @@ export class GroupMembershipButton {
     }
 
     if (!this.session.isLoggedIn()) {
-      //this.showModal = true;
       this.loginReferrer.register(
         `/groups/profile/${this.group.guid}/feed?join=true`
       );
@@ -86,6 +100,7 @@ export class GroupMembershipButton {
       .join(this.group)
       .then(() => {
         this.inProgress = false;
+
         if (this.isPublic()) {
           this.group['is:member'] = true;
           this.membership.next({

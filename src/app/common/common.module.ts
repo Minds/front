@@ -118,7 +118,6 @@ import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
-import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm.component';
 import { EnvironmentFlagComponent } from '../common/components/environment-flag/environment-flag.component';
@@ -136,7 +135,6 @@ import { DateRangeModalService } from './components/date-range-modal/date-range-
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
 import { FormInputSliderV2Component } from './components/slider/v2/slider.component';
@@ -179,6 +177,8 @@ import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/nav
 import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-content-dot/new-content-dot.component';
 import { TopbarAlertComponent } from './components/topbar-alert/topbar-alert.component';
 import { ChatwootWidgetComponent } from './components/chatwoot-widget/chatwoot-widget.component';
+
+import { MarkdownModule } from 'ngx-markdown';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -300,7 +300,6 @@ const MINDS_DIRECTIVES = [
   HotkeyScrollDirective,
   IfBrowserDirective,
   InlineAutoGrow,
-  MarkedDirective,
   PageLayoutContainerDirective,
   PageLayoutPaneDirective,
   PreventDoubleClickDirective,
@@ -337,6 +336,7 @@ const routes: Routes = [
     NgxPopperjsModule,
     QRCodeModule,
     RouterModule.forChild(routes),
+    MarkdownModule.forChild(),
   ],
   declarations: [
     MINDS_COMMON_COMPONENTS,
@@ -391,7 +391,6 @@ const routes: Routes = [
     PublisherSearchModalService,
     DateRangeModalService,
     JsonLdService,
-    BoostRecommendationService,
     AuthRedirectService,
     SubscriptionService,
     RecentSubscriptionsService,
