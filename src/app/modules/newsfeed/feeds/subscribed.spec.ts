@@ -53,7 +53,6 @@ describe('NewsfeedSubscribedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
       declarations: [
         NewsfeedSubscribedComponent,
         MockComponent({
@@ -210,7 +209,6 @@ describe('NewsfeedSubscribedComponent', () => {
 
     (component as any).algorithm = 'for-you';
     (component as any).router.events.next(mockNavigationEndEvent);
-
     fixture.detectChanges();
   });
 
