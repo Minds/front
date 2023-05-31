@@ -1,0 +1,79 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  cursor: pointer;
+  padding: $spacing2;
+  border-radius: 4px;
+
+  @include unselectable;
+  @include m-theme() {
+    // hover
+    &:hover {
+      background: themed($m-bgColor--secondary);
+    }
+
+    // mousedown
+    &:active:hover {
+      background: darken(themed($m-bgColor--secondary), 4%);
+    }
+  }
+
+  .m-selectableEntityCard__avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    flex-basis: 100%;
+
+    &.m-selectableEntityCard__avatar--selected {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      /**
+       * Keep the background image loaded and avoid "flashing in"
+       * by always having the src set and changing it to a size of 0
+      * when selected.
+       */
+      background-size: 0 0;
+
+      @include m-theme() {
+        background-color: themed($m-action);
+
+        span {
+          color: themed($m-grey-900);
+        }
+      }
+    }
+  }
+
+  .m-selectableEntityCard__infoTextContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    margin-left: $spacing3;
+
+    .m-selectableEntityCard__entityName {
+      margin-bottom: $spacing1;
+
+      @include body1Bold;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-selectableEntityCard__entityInfo {
+      @include body3Bold;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}

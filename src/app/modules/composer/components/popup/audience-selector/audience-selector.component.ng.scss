@@ -1,0 +1,66 @@
+@import 'defaults.scss';
+
+:host {
+  // overflow-y: hidden;
+  // max-height: 98vh;
+
+  .m-composerPopup__body {
+    .m-composerPopup__content {
+      .m-composerPopup__title {
+        @include heading3Bold;
+        @include unselectable;
+      }
+      .m-composerPopup__subtitle {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        @include heading4Bold;
+        @include unselectable;
+
+        .material-icons {
+          @include unselectable;
+          margin-right: $spacing1;
+        }
+      }
+    }
+    .m-composerAudience__myChannelContainer {
+      m-selectableEntityCard {
+        margin: $spacing4 0;
+      }
+    }
+
+    .m-composerAudience__groupsList {
+      display: flex;
+      flex-flow: column nowrap;
+      overflow-y: auto;
+      max-height: 340px;
+
+      // @media screen and (max-width: $max-mobile) {
+      //   max-height: 100%;
+      //   // max-height: 60vh;
+      // }
+
+      @include vertical-scroll;
+
+      m-selectableEntityCard {
+        margin-top: $spacing4;
+
+        &:last-of-type {
+          margin-bottom: $spacing4;
+        }
+      }
+    }
+
+    .m-composerPopup__action {
+      // height: $footerHeight;
+      //   @media screen and (max-width: $max-mobile) {
+      //     position: sticky;
+      //     bottom: 0;
+
+      //     @include m-theme() {
+      //       background: themed($m-bgColor--primary);
+      //     }
+      //   }
+    }
+  }
+}

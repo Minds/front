@@ -38,6 +38,9 @@ import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-pi
 import { UploaderService } from './services/uploader.service';
 import { ComposerSupermindComponent } from './components/popup/supermind/supermind.component';
 import { PaymentsModule } from '../payments/payments.module';
+import { ComposerAudienceSelectorComponent } from './components/audience-selector/audience-selector.component';
+import { ComposerAudienceSelectorService } from './services/audience.service';
+import { ComposerAudienceSelectorPanelComponent } from './components/popup/audience-selector/audience-selector.component';
 
 /**
  * Exported components
@@ -54,6 +57,7 @@ const COMPONENTS = [
   ComposerMonetizeV2PlusComponent,
   ComposerMonetizeV2MembershipsComponent,
   ComposerTitleBarDropdownComponent,
+  ComposerAudienceSelectorComponent,
 ];
 
 /**
@@ -72,6 +76,7 @@ const INTERNAL_COMPONENTS = [
   TextAreaComponent,
   ComposerCoverPhotoSelectorComponent,
   ComposerSupermindComponent,
+  ComposerAudienceSelectorPanelComponent,
 ];
 
 const PROVIDERS = [
@@ -80,6 +85,7 @@ const PROVIDERS = [
   RichEmbedService,
   PreviewService,
   UploaderService,
+  ComposerAudienceSelectorService,
 ];
 
 /**

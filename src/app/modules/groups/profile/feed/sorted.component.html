@@ -6,7 +6,7 @@
 <m-composer
   *ngIf="isMember()"
   (onPost)="prepend($event)"
-  [containerGuid]="group.guid"
+  [container]="group"
   #composer
 ></m-composer>
 

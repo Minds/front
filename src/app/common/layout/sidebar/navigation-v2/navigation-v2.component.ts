@@ -24,6 +24,7 @@ import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boos
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
 import { ThemeService } from '../../../services/theme.service';
 import { SidebarV2ReorgExperimentService } from '../../../../modules/experiments/sub-services/front-5924-sidebar-v2-reorg.service';
+import { ComposerService } from '../../../../modules/composer/services/composer.service';
 
 /**
  * V2 version of sidebar component.
@@ -101,6 +102,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private boostModalService: BoostModalV2LazyService,
+    private composerService: ComposerService,
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private themeService: ThemeService,
@@ -196,6 +198,11 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public async openComposeModal(): Promise<void> {
     this.toggle();
+    // required so that the sidebar doesn't get stuck in the context
+    // of another instantiated composer, for example within a group,
+    // where it will pick up the container guid.
+    this.composerService.reset();
+
     await this.composerModalService.setInjector(this.injector).present();
   }
 
