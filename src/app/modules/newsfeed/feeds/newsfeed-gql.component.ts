@@ -1,21 +1,13 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   Inject,
-  Injectable,
-  Injector,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
-  QueryList,
-  Self,
-  SkipSelf,
   ViewChild,
-  ViewChildren,
-  ViewContainerRef,
 } from '@angular/core';
 import {
   ActivatedRoute,
@@ -27,25 +19,13 @@ import * as _ from 'lodash';
 import {
   BehaviorSubject,
   Observable,
-  ReplaySubject,
-  Subject,
   Subscription,
   combineLatest,
-  concat,
   firstValueFrom,
   interval,
-  lastValueFrom,
   of,
 } from 'rxjs';
-import {
-  filter,
-  startWith,
-  takeUntil,
-  tap,
-  delay,
-  delayWhen,
-  map,
-} from 'rxjs/operators';
+import { filter, startWith, tap, delayWhen, map } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ToasterService } from '../../../common/services/toaster.service';
@@ -292,7 +272,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(() => {
           this.load();
           setTimeout(() => {
-            this.showBoostRotator = true;
+            this.showBoostRotator = this.isFirstRun && true;
           }, 50);
         }),
       /**
@@ -438,6 +418,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     this.algorithm = algo;
     this.feedAlgorithmHistory.lastAlorithm = algo;
 
+    // Hide the boost rotator
+    this.showBoostRotator = false;
+
     // Reset the page size to the default
     this.pageSize$.next(PAGE_SIZE);
 
@@ -446,22 +429,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
       limit: PAGE_SIZE,
       algorithm: this.algorithm,
     });
-  }
-
-  /**
-   * smooth scrolls to top and changes feed algorithm
-   **/
-  onShowMoreTopFeed() {
-    if (isPlatformServer(this.platformId)) return;
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-    setTimeout(() => {
-      this.changeFeedAlgorithm(FeedAlgorithm.top);
-      this.load();
-    }, 500);
   }
 
   /**
@@ -488,6 +455,21 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
       behavior: 'smooth',
       top: bottomOfBoostRotatorOffset || 0,
     });
+  }
+
+  /**
+   * smooth scrolls to top and changes feed algorithm
+   */
+  onShowMoreTopFeed() {
+    if (isPlatformServer(this.platformId)) return;
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+    setTimeout(() => {
+      this.changeFeedAlgorithm(FeedAlgorithm.top);
+    }, 500);
   }
 
   /**

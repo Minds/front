@@ -20,14 +20,29 @@ query FetchNewsfeed(
                     location
                     key
                 }
+                ... on FeedHighlightsConnection {
+                    edges {
+                        node {
+                            legacy
+                        }
+                    }
+                    pageInfo {
+                        ...PageInfo
+                    }
+                }
             }
         }
 
         pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
+            ...PageInfo
         }
     }
+}
+
+fragment PageInfo on PageInfo
+{
+  hasPreviousPage
+  hasNextPage
+  startCursor
+  endCursor
 }

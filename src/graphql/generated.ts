@@ -83,8 +83,13 @@ export type BoostNode = NodeInterface & {
   legacy: Scalars['String']['output'];
 };
 
-export type Connection = {
+export type Connection = ConnectionInterface & {
   __typename?: 'Connection';
+  edges: Array<EdgeInterface>;
+  pageInfo: PageInfo;
+};
+
+export type ConnectionInterface = {
   edges: Array<EdgeInterface>;
   pageInfo: PageInfo;
 };
@@ -98,6 +103,23 @@ export type EdgeImpl = EdgeInterface & {
 export type EdgeInterface = {
   cursor: Scalars['String']['output'];
   node?: Maybe<NodeInterface>;
+};
+
+export type FeedHighlightsConnection = ConnectionInterface &
+  NodeInterface & {
+    __typename?: 'FeedHighlightsConnection';
+    /** Explicitly will only return activity edges */
+    edges: Array<ActivityEdge>;
+    id: Scalars['ID']['output'];
+    pageInfo: PageInfo;
+  };
+
+export type FeedHighlightsEdge = EdgeInterface & {
+  __typename?: 'FeedHighlightsEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: FeedHighlightsConnection;
+  type: Scalars['String']['output'];
 };
 
 export type FeedNoticeEdge = EdgeInterface & {
@@ -142,7 +164,7 @@ export type PageInfo = {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
-  newsfeed: Connection;
+  newsfeed: ConnectionInterface;
 };
 
 export type QueryActivityArgs = {
@@ -201,68 +223,134 @@ export type FetchNewsfeedQueryVariables = Exact<{
 
 export type FetchNewsfeedQuery = {
   __typename?: 'Query';
-  newsfeed: {
-    __typename?: 'Connection';
-    edges: Array<
-      | {
-          __typename?: 'ActivityEdge';
-          cursor: string;
-          node: { __typename?: 'ActivityNode'; legacy: string; id: string };
-        }
-      | {
-          __typename?: 'BoostEdge';
-          cursor: string;
-          node: {
-            __typename?: 'BoostNode';
-            goalButtonUrl?: string | null;
-            goalButtonText?: number | null;
-            legacy: string;
-            id: string;
-          };
-        }
-      | {
-          __typename?: 'EdgeImpl';
-          cursor: string;
-          node?:
-            | { __typename?: 'ActivityNode'; legacy: string; id: string }
-            | {
+  newsfeed:
+    | {
+        __typename?: 'Connection';
+        edges: Array<
+          | {
+              __typename?: 'ActivityEdge';
+              cursor: string;
+              node: { __typename?: 'ActivityNode'; legacy: string; id: string };
+            }
+          | {
+              __typename?: 'BoostEdge';
+              cursor: string;
+              node: {
                 __typename?: 'BoostNode';
                 goalButtonUrl?: string | null;
                 goalButtonText?: number | null;
                 legacy: string;
                 id: string;
-              }
-            | {
+              };
+            }
+          | {
+              __typename?: 'EdgeImpl';
+              cursor: string;
+              node?:
+                | { __typename?: 'ActivityNode'; legacy: string; id: string }
+                | {
+                    __typename?: 'BoostNode';
+                    goalButtonUrl?: string | null;
+                    goalButtonText?: number | null;
+                    legacy: string;
+                    id: string;
+                  }
+                | {
+                    __typename?: 'FeedHighlightsConnection';
+                    id: string;
+                    edges: Array<{
+                      __typename?: 'ActivityEdge';
+                      node: { __typename?: 'ActivityNode'; legacy: string };
+                    }>;
+                    pageInfo: {
+                      __typename?: 'PageInfo';
+                      hasPreviousPage: boolean;
+                      hasNextPage: boolean;
+                      startCursor?: string | null;
+                      endCursor?: string | null;
+                    };
+                  }
+                | {
+                    __typename?: 'FeedNoticeNode';
+                    location: string;
+                    key: string;
+                    id: string;
+                  }
+                | { __typename?: 'NodeImpl'; id: string }
+                | { __typename?: 'UserNode'; id: string }
+                | null;
+            }
+          | {
+              __typename?: 'FeedHighlightsEdge';
+              cursor: string;
+              node: {
+                __typename?: 'FeedHighlightsConnection';
+                id: string;
+                edges: Array<{
+                  __typename?: 'ActivityEdge';
+                  node: { __typename?: 'ActivityNode'; legacy: string };
+                }>;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              };
+            }
+          | {
+              __typename?: 'FeedNoticeEdge';
+              cursor: string;
+              node: {
                 __typename?: 'FeedNoticeNode';
                 location: string;
                 key: string;
                 id: string;
-              }
-            | { __typename?: 'NodeImpl'; id: string }
-            | { __typename?: 'UserNode'; id: string }
-            | null;
-        }
-      | {
-          __typename?: 'FeedNoticeEdge';
+              };
+            }
+        >;
+        pageInfo: {
+          __typename?: 'PageInfo';
+          hasPreviousPage: boolean;
+          hasNextPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        };
+      }
+    | {
+        __typename?: 'FeedHighlightsConnection';
+        edges: Array<{
+          __typename?: 'ActivityEdge';
           cursor: string;
-          node: {
-            __typename?: 'FeedNoticeNode';
-            location: string;
-            key: string;
-            id: string;
-          };
-        }
-    >;
-    pageInfo: {
-      __typename?: 'PageInfo';
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      startCursor?: string | null;
-      endCursor?: string | null;
-    };
-  };
+          node: { __typename?: 'ActivityNode'; legacy: string; id: string };
+        }>;
+        pageInfo: {
+          __typename?: 'PageInfo';
+          hasPreviousPage: boolean;
+          hasNextPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        };
+      };
 };
 
+export type PageInfoFragment = {
+  __typename?: 'PageInfo';
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  startCursor?: string | null;
+  endCursor?: string | null;
+};
+
+export const PageInfoFragmentDoc = gql`
+  fragment PageInfo on PageInfo {
+    hasPreviousPage
+    hasNextPage
+    startCursor
+    endCursor
+  }
+`;
 export const FetchNewsfeedDocument = gql`
   query FetchNewsfeed($algorithm: String!, $limit: Int!, $cursor: String) {
     newsfeed(algorithm: $algorithm, first: $limit, after: $cursor) {
@@ -282,16 +370,24 @@ export const FetchNewsfeedDocument = gql`
             location
             key
           }
+          ... on FeedHighlightsConnection {
+            edges {
+              node {
+                legacy
+              }
+            }
+            pageInfo {
+              ...PageInfo
+            }
+          }
         }
       }
       pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
+        ...PageInfo
       }
     }
   }
+  ${PageInfoFragmentDoc}
 `;
 
 @Injectable({

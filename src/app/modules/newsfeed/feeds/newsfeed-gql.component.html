@@ -34,11 +34,6 @@
         ></m-newsfeed--boost-rotator>
       </ng-container>
 
-      <!-- <m-channelRecommendation
-        location="newsfeed"
-        *ngIf="shouldShowChannelRecommendation('emptyState')"
-      ></m-channelRecommendation> -->
-
       <!--actual feed-->
       <ng-container
         *ngFor="
@@ -89,14 +84,17 @@
               (deleted)="delete(edge.node)"
             ></m-activity>
           </ng-template>
+
+          <ng-template ngSwitchCase="FeedHighlightsEdge">
+            <m-topHighlights
+              (onSeeMore)="onShowMoreTopFeed()"
+              *ngIf="!(isTopHighlightsDismissed$ | async)"
+              [connection]="edge.node"
+            ></m-topHighlights>
+          </ng-template>
         </ng-container>
 
-        <!-- <m-topHighlights
-          (onSeeMore)="onShowMoreTopFeed()"
-          *ngIf="
-            shouldShowTopHighlights(i) && !(isTopHighlightsDismissed$ | async)
-          "
-        ></m-topHighlights> -->
+        <!--  -->
 
         <!-- <m-channelRecommendation
           location="newsfeed"
