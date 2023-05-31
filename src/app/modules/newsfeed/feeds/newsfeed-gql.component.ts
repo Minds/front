@@ -65,12 +65,7 @@ import {
   FetchNewsfeedQueryVariables,
   PageInfo,
 } from '../../../../graphql/generated';
-
-export enum FeedAlgorithm {
-  top = 'top',
-  latest = 'latest',
-  forYou = 'for-you',
-}
+import { FeedAlgorithm } from './subscribed.component';
 
 const PAGE_SIZE = 12;
 
@@ -495,8 +490,10 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  /** */
+  /**
+   * Improves the scroll performance
+   */
   trackByFn(i: number, entry) {
-    return entry.id;
+    return entry.node.id;
   }
 }
