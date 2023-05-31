@@ -309,4 +309,16 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
       this.router.navigate(['groups', this.group.guid, 'feed', 'review']);
     }
   }
+
+  /**
+   * Whether a boost should be shown in a given feed position.
+   * @param { number } position - index / position in feed.
+   * @returns { boolean } - true if a boost should be shown in given feed position
+   */
+  public shouldShowBoostInPosition(position: number): boolean {
+    return (
+      // Displays in the 2nd slot and then every 6 posts
+      (position > 4 && position % 5 === 0) || position === 0
+    );
+  }
 }

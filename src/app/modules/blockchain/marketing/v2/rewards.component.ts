@@ -59,11 +59,11 @@ export class BlockchainMarketingRewardsV2Component {
   }
 
   /**
-   * Open referrals page.
+   * Open affiliates page.
    * @returns { void }
    */
-  public navigateToReferrals(): void {
-    this.linksService.navigateToReferrals();
+  public navigateToAffiliates(): void {
+    this.linksService.navigateToAffiliates();
   }
 
   /**

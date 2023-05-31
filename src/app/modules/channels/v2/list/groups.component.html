@@ -1,5 +1,6 @@
 <m-channel__list
   [feedsService]="feed"
   [canSearch]="true"
+  [showTabs]="false"
   (onSearch)="searchQuery$.next($event)"
 ></m-channel__list>

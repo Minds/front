@@ -16,6 +16,7 @@ import {
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /**
  * A row dedicated to information about the owner of the post, among other things.
@@ -31,12 +32,20 @@ import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
   styleUrls: ['./owner-block.component.ng.scss'],
 })
 export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription[];
+  private subscriptions: Subscription[] = [];
 
   entity: ActivityEntity;
 
   /** Is this activity the container of a reminded post? */
   isRemind: boolean = false;
+
+  /**
+   * Whether we need to show the group avatar as well as the user avatar,
+   * because this is a group post displayed outside of the group's feed
+   * and requires additional contextual information displayed
+   */
+  @HostBinding('class.m-activity__ownerBlock--groupContext')
+  showGroupContext: boolean = false;
 
   /** Is this activity the quoted/reminded post? */
   @Input() wasQuoted: boolean = false;
@@ -46,18 +55,20 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityService,
     public session: Session,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private experimentsService: ExperimentsService
   ) {}
 
   ngOnInit() {
-    this.subscriptions = [
+    this.subscriptions.push(
       this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
       }),
-    ];
-    this.subscriptions.push(
       this.service.isRemind$.subscribe((is: boolean) => {
         this.isRemind = is;
+      }),
+      this.service.showGroupContext$.subscribe((show: boolean) => {
+        this.showGroupContext = show;
       })
     );
   }
@@ -75,16 +86,15 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
     return this.service.displayOptions.minimalMode;
   }
 
-  @HostBinding('class.m-activity__ownerBlock--groupPost')
+  @HostBinding('class.m-activity__ownerBlock--quoteOrRemind')
+  get quoteOrRemind(): boolean {
+    return this.wasQuoted || this.isRemind;
+  }
+
   get group(): MindsGroup | null {
     return this.entity.containerObj && this.entity.containerObj.type === 'group'
       ? this.entity.containerObj
       : null;
-  }
-
-  @HostBinding('class.m-activity__ownerBlock--quoteOrRemind')
-  get quoteOrRemind(): boolean {
-    return this.wasQuoted || this.isRemind;
   }
 
   get isFeed(): boolean {
@@ -125,6 +135,13 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
 
   get ownerGuid(): string {
     return this.owner.guid;
+  }
+
+  get groupUrl(): string {
+    const guid = this.entity.containerObj.guid;
+    return this.experimentsService.hasVariation('epic-318-modern-groups', true)
+      ? `/group/${guid}`
+      : `/groups/profile/${guid}`;
   }
 
   /**

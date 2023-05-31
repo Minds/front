@@ -64,6 +64,13 @@
         padding-right: 40px;
       }
 
+      &.m-channelFeed__searchDisplay--bottomBorder {
+        padding-bottom: 25px;
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
       span {
         @include m-theme() {
           color: themed($m-textColor--secondary);

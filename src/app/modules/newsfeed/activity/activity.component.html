@@ -6,20 +6,18 @@
           !service.displayOptions.minimalMode &&
           !service.displayOptions.isSidebarBoost
         "
-        class="m-activityTop__avatarColumn m-activity__avatar"
+        class="m-activityTop__avatarColumn"
       >
         <ng-container *ngIf="entity$ | async as entity">
+          <!-- ----------------------------------- -->
+          <!-- FLAG ROW SPACER  -->
+          <!-- ----------------------------------- -->
           <div *ngIf="showFlagRow" class="m-activityLeftColumn__spacer"></div>
+          <!-- ----------------------------------- -->
+          <!-- AVATAR  -->
+          <!-- ----------------------------------- -->
+          <m-activity__avatar [entity]="entity"></m-activity__avatar>
         </ng-container>
-        <m-hovercard
-          *ngIf="entity$ | async as entity"
-          [publisher]="entity.ownerObj"
-          [offset]="[0, 15]"
-        >
-          <a [routerLink]="['/', entity.ownerObj.username]">
-            <img [src]="avatarUrl" class="m-border" />
-          </a>
-        </m-hovercard>
       </div>
       <div class="m-activityTop__mainColumn" *ngIf="entity$ | async as entity">
         <div class="m-activity__flagRow" *ngIf="showFlagRow">
