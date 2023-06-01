@@ -43,6 +43,7 @@
       * when selected.
        */
       background-size: 0 0;
+      background-repeat: no-repeat;
 
       @include m-theme() {
         background-color: themed($m-action);

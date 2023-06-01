@@ -53,7 +53,7 @@ export class ComposerAudienceSelectorService {
   /** Whether groups fetch request is in progress */
   public groupsLoadInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
-  >(false);
+  >(true);
 
   /** Whether last groups fetch request returned a paging token indicating that more can be fetched */
   public groupsHasNext$: Observable<boolean> = this.groupsPagingToken$.pipe(

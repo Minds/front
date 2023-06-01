@@ -16,7 +16,7 @@
     </div>
 
     <h4 class="m-composerPopup__subtitle" (click)="toggleGroupsExpand()">
-      My Groups
+      <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My Groups</span>
       <ng-container *ngIf="groupsExpanded$ | async; else collapsedTemplate">
         <span class="material-icons">expand_more</span>
       </ng-container>
@@ -25,38 +25,59 @@
       </ng-template>
     </h4>
 
-    <div
-      *ngIf="groupsExpanded$ | async"
-      class="m-composerAudience__groupsList"
-      #scrollSource
-    >
-      <ng-container *ngFor="let group of groups$ | async">
-        <m-selectableEntityCard
-          [entity]="group"
-          (click)="onEntitySelect(group)"
-          [selected]="(selectedAudience$ | async)?.guid === group.guid"
-        ></m-selectableEntityCard>
+    <ng-container *ngIf="groupsExpanded$ | async">
+      <ng-container *ngIf="!(groups$ | async)?.length">
+        <div
+          class="m-composerAudience__noGroupsContainer"
+          *ngIf="!(groupsLoadInProgress$ | async); else loadingSpinnerTemplate"
+        >
+          <span
+            class="m-composerAudience__noGroupsSpan"
+            i18n="@@COMPOSER_AUDIENCE_SELECTOR__NOT_IN_ANY_GROUPS"
+            >Looks like you're not in any groups.</span
+          >
+          <m-button size="small" (click)="onDiscoverGroupsClick()">
+            <ng-container i18n="@@COMPOSER_AUDIENCE_SELECTOR__DISCOVER_GROUPS"
+              >Discover groups</ng-container
+            >
+          </m-button>
+        </div>
+        <ng-template #loadingSpinnerTemplate>
+          <m-loadingSpinner
+            [inProgress]="groupsLoadInProgress$ | async"
+          ></m-loadingSpinner>
+        </ng-template>
       </ng-container>
-      <infinite-scroll
-        *ngIf="
-          (groups$ | async) &&
-          (groups$ | async).length > 0 &&
-          (groupsHasNext$ | async)
-        "
-        (load)="loadNextGroups()"
-        [inProgress]="groupsLoadInProgress$ | async"
-        [hidden]="groupsLoadInProgress$ | async"
-        [scrollSource]="scrollSource"
-        [moreData]="groupsHasNext$ | async"
-        [distance]="'50%'"
-      ></infinite-scroll>
-    </div>
+      <div class="m-composerAudience__groupsList" #scrollSource>
+        <ng-container *ngFor="let group of groups$ | async">
+          <m-selectableEntityCard
+            [entity]="group"
+            (click)="onEntitySelect(group)"
+            [selected]="(selectedAudience$ | async)?.guid === group.guid"
+          ></m-selectableEntityCard>
+        </ng-container>
+        <infinite-scroll
+          *ngIf="
+            (groups$ | async) &&
+            (groups$ | async).length > 0 &&
+            (groupsHasNext$ | async)
+          "
+          (load)="loadNextGroups()"
+          [inProgress]="groupsLoadInProgress$ | async"
+          [hidden]="groupsLoadInProgress$ | async"
+          [scrollSource]="scrollSource"
+          [moreData]="groupsHasNext$ | async"
+          [distance]="'50%'"
+        ></infinite-scroll>
+      </div>
+    </ng-container>
   </div>
 
   <div class="m-composerPopup__action">
     <m-button
       class="m-composerPopup__save"
       (onAction)="save()"
+      color="blue"
       data-ref="nsfw-save-button"
       i18n="@@COMMON__SAVE"
       >Save</m-button

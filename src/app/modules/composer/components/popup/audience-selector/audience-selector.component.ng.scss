@@ -31,6 +31,23 @@
       }
     }
 
+    .m-composerAudience__noGroupsContainer {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-composerAudience__noGroupsSpan {
+        margin-bottom: $spacing6;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      m-button {
+        margin-bottom: $spacing5;
+      }
+    }
+
     .m-composerAudience__groupsList {
       display: flex;
       flex-flow: column nowrap;

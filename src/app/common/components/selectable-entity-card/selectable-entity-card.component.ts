@@ -42,7 +42,9 @@ export class SelectableEntityCardComponent implements OnInit {
    * @returns { string } avatar src.
    */
   public getAvatarSrc(): string {
-    return `${this.cdnUrl}icon/${this.entity?.guid}/large/${Date.now()}`;
+    return this.entity.type === 'user'
+      ? `${this.cdnUrl}icon/${this.entity?.guid}/large/${Date.now()}`
+      : `${this.cdnUrl}fs/v1/avatars/${this.entity?.guid}/${Date.now()}`;
   }
 
   /**
