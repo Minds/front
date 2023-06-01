@@ -210,6 +210,14 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   public prepend(activity: any): void {
+    // if new activity does not belong to this group, do not prepend.
+    if (
+      !activity?.container_guid ||
+      activity.container_guid !== this.group.guid
+    ) {
+      return;
+    }
+
     if (
       this.group.moderated &&
       !(this.group['is:moderator'] || this.group['is:owner'])
