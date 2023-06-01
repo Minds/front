@@ -1,4 +1,5 @@
 @import 'defaults.scss';
+
 :host {
   display: flex;
   flex-direction: row;
@@ -26,9 +27,18 @@
     }
   }
 
+  @include m-on-theme(light) {
+    border-color: #53565a;
+  }
+
   .m-composerAudienceSelector__dropdownArrow {
     // force arrow over a few px because the icon being
     // centered makes the component look left-side heavy.
     transform: translateX(6px);
   }
+}
+
+:host(.m-composerAudienceSelector__host--disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

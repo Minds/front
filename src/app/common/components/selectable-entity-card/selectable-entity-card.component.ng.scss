@@ -52,6 +52,12 @@
           color: themed($m-grey-900);
         }
       }
+
+      @include m-on-theme(light) {
+        span {
+          color: #fff;
+        }
+      }
     }
   }
 

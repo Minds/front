@@ -740,7 +740,7 @@ export class ComposerService implements OnDestroy {
    * @param { ActivityContainer } container - container to post to.
    * @returns { this }
    */
-  setContainer(container: ActivityContainer | null): this {
+  public setContainer(container: ActivityContainer | null): this {
     this.audienceSelectorService.selectedAudience$.next(container);
 
     if (container && container.guid) {
@@ -753,7 +753,7 @@ export class ComposerService implements OnDestroy {
    * Gets the container GUID for this instance.
    * @returns { string } container guid if one is set.
    */
-  getContainerGuid(): string {
+  public getContainerGuid(): string {
     return this.container?.guid ?? null;
   }
 

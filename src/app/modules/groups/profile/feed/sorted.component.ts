@@ -231,6 +231,10 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (!activity || !this.isActivityFeed()) {
+      return;
+    }
+
     if (
       this.group.moderated &&
       !(this.group['is:moderator'] || this.group['is:owner'])
@@ -238,10 +242,6 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
       this.toast.success(
         'Your post is pending approval from the group moderators'
       );
-    }
-
-    if (!activity || !this.isActivityFeed()) {
-      return;
     }
 
     let feedItem = {
