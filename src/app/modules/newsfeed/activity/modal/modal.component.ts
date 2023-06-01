@@ -72,7 +72,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   entity: any;
   isMultiImage: boolean = false;
 
-  subscriptions: Subscription[];
+  subscriptions: Subscription[] = [];
 
   // Used for backdrop click detection hack
   isOpen: boolean = false;
@@ -126,7 +126,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
     this.modalHeight = window.innerHeight - ACTIVITY_MODAL_PADDING;
 
-    this.subscriptions = [
+    this.subscriptions.push(
       this.activityService.entity$.subscribe((entity: ActivityEntity) => {
         if (!entity) {
           return;
@@ -143,27 +143,19 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         this.isContentReady = true;
         this.cd.detectChanges();
       }),
-    ];
 
-    this.subscriptions.push(
       this.activityService.activeMultiImageIndex$.subscribe(i => {
         this.activeMultiImageIndex = i;
-      })
-    );
+      }),
 
-    this.subscriptions.push(
       this.activityService.isQuote$.subscribe(is => {
         this.isQuote = is;
-      })
-    );
+      }),
 
-    this.subscriptions.push(
       this.activityService.isMultiImage$.subscribe(is => {
         this.isMultiImage = is;
-      })
-    );
+      }),
 
-    this.subscriptions.push(
       this.activityService.canonicalUrl$.subscribe(canonicalUrl => {
         if (!this.entity) return;
         /**
@@ -187,12 +179,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
          * (but don't actually redirect)
          */
         this.location.replaceState(canonicalUrl);
-      })
-    );
+      }),
 
-    // When user clicks a link from inside the modal
-    this.subscriptions.push(
       this.router.events.subscribe((event: Event) => {
+        // When user clicks a link from inside the modal
         if (event instanceof NavigationStart) {
           if (!this.navigatedAway) {
             this.navigatedAway = true;
