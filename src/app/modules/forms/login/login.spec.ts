@@ -24,6 +24,12 @@ import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { RegexService } from '../../../common/services/regex.service';
 import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
+import { Router } from '@angular/router';
+
+export class RouterStub {
+  url = '';
+  navigate(commands: any[], extras?: any) {}
+}
 
 describe('LoginForm', () => {
   let comp: LoginForm;
@@ -121,6 +127,7 @@ describe('LoginForm', () => {
             }),
           },
           RegexService,
+          { provide: Router, useClass: RouterStub },
           {
             provide: ResetPasswordExperimentService,
             useValue: MockService(ResetPasswordExperimentService),
