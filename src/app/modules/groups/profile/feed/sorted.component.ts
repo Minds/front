@@ -19,6 +19,7 @@ import { ComposerComponent } from '../../../composer/composer.component';
 import { AsyncPipe } from '@angular/common';
 import { GroupsSearchService } from './search.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
 
 /**
  * Container for group feeds. Includes content type filter, search results,
@@ -84,6 +85,10 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   feed$: Observable<BehaviorSubject<Object>[]>;
 
   groupsSearchQuerySubscription: Subscription;
+
+  /** Listening for new posts. */
+  private feedsUpdatedSubscription: Subscription;
+
   query: string = '';
 
   constructor(
@@ -96,6 +101,7 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     public groupsSearch: GroupsSearchService,
+    public feedsUpdate: FeedsUpdateService,
     private toast: ToasterService
   ) {}
 
@@ -108,12 +114,19 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
         this.load(true);
       }
     );
+
+    this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
+      newPost => {
+        this.prepend(newPost);
+      }
+    );
   }
 
   ngOnDestroy(): void {
     if (this.groupsSearchQuerySubscription) {
       this.groupsSearchQuerySubscription.unsubscribe();
     }
+    this.feedsUpdatedSubscription?.unsubscribe();
   }
 
   async load(refresh: boolean = false) {
