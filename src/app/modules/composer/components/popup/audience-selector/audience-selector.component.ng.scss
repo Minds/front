@@ -1,11 +1,11 @@
 @import 'defaults.scss';
 
 :host {
-  // overflow-y: hidden;
-  // max-height: 98vh;
-
   .m-composerPopup__body {
     .m-composerPopup__content {
+      display: flex;
+      flex-flow: column nowrap;
+
       .m-composerPopup__title {
         @include heading3Bold;
         @include unselectable;
@@ -14,12 +14,14 @@
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
+        margin: 0 0 $spacing4 0;
+
         @include heading4Bold;
         @include unselectable;
 
         .material-icons {
           @include unselectable;
-          margin-right: $spacing1;
+          margin-left: $spacing2;
         }
       }
     }
@@ -35,36 +37,21 @@
       overflow-y: auto;
       max-height: 340px;
 
-      // @media screen and (max-width: $max-mobile) {
-      //   max-height: 100%;
-      //   // max-height: 60vh;
-      // }
+      @media screen and (max-width: $max-mobile) {
+        flex-grow: 1;
+        flex-basis: 0;
+        max-height: unset;
+      }
 
       @include vertical-scroll;
 
       m-selectableEntityCard {
         margin-bottom: $spacing4;
-
-        // &:last-of-type {
-        //   margin-bottom: $spacing4;
-        // }
       }
 
       infinite-scroll {
         padding: unset;
       }
-    }
-
-    .m-composerPopup__action {
-      // height: $footerHeight;
-      //   @media screen and (max-width: $max-mobile) {
-      //     position: sticky;
-      //     bottom: 0;
-
-      //     @include m-theme() {
-      //       background: themed($m-bgColor--primary);
-      //     }
-      //   }
     }
   }
 }
