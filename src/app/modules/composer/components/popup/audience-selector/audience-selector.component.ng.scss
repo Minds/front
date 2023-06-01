@@ -43,11 +43,15 @@
       @include vertical-scroll;
 
       m-selectableEntityCard {
-        margin-top: $spacing4;
+        margin-bottom: $spacing4;
 
-        &:last-of-type {
-          margin-bottom: $spacing4;
-        }
+        // &:last-of-type {
+        //   margin-bottom: $spacing4;
+        // }
+      }
+
+      infinite-scroll {
+        padding: unset;
       }
     }
 
