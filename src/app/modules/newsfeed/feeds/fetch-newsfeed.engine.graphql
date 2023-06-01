@@ -23,7 +23,24 @@ query FetchNewsfeed(
                 ... on FeedHighlightsConnection {
                     edges {
                         node {
+                            id
                             legacy
+                        }
+                    }
+                    pageInfo {
+                        ...PageInfo
+                    }
+                }
+                ... on PublisherRecsConnection {
+                    edges {
+                        publisherNode: node {
+                            id
+                            ... on UserNode {
+                                legacy
+                            }
+                            ... on BoostNode {
+                                legacy
+                            }
                         }
                     }
                     pageInfo {

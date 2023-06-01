@@ -144,6 +144,12 @@ export type Mutation = {
   dummyMutation?: Maybe<Scalars['String']['output']>;
 };
 
+export type NewsfeedConnection = ConnectionInterface & {
+  __typename?: 'NewsfeedConnection';
+  edges: Array<EdgeInterface>;
+  pageInfo: PageInfo;
+};
+
 export type NodeImpl = NodeInterface & {
   __typename?: 'NodeImpl';
   id: Scalars['ID']['output'];
@@ -161,10 +167,30 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+export type PublisherRecsConnection = ConnectionInterface &
+  NodeInterface & {
+    __typename?: 'PublisherRecsConnection';
+    /**
+     * TODO: clean this up to help with typing. Union types wont work due to the following error being outputted
+     * `Error: ConnectionInterface.edges expects type "[EdgeInterface!]!" but PublisherRecsConnection.edges provides type "[UnionUserEdgeBoostEdge!]!".`
+     */
+    edges: Array<EdgeInterface>;
+    id: Scalars['ID']['output'];
+    pageInfo: PageInfo;
+  };
+
+export type PublisherRecsEdge = EdgeInterface & {
+  __typename?: 'PublisherRecsEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: PublisherRecsConnection;
+  type: Scalars['String']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
-  newsfeed: ConnectionInterface;
+  newsfeed: NewsfeedConnection;
 };
 
 export type QueryActivityArgs = {
@@ -177,6 +203,14 @@ export type QueryNewsfeedArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UserEdge = EdgeInterface & {
+  __typename?: 'UserEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: UserNode;
+  type: Scalars['String']['output'];
 };
 
 export type UserNode = NodeInterface & {
@@ -200,6 +234,7 @@ export type UserNode = NodeInterface & {
   isSubscriber: Scalars['Boolean']['output'];
   /** The user is a verified */
   isVerified: Scalars['Boolean']['output'];
+  legacy: Scalars['String']['output'];
   name: Scalars['String']['output'];
   nsfw: Array<Scalars['Int']['output']>;
   nsfwLock: Array<Scalars['Int']['output']>;
@@ -223,72 +258,47 @@ export type FetchNewsfeedQueryVariables = Exact<{
 
 export type FetchNewsfeedQuery = {
   __typename?: 'Query';
-  newsfeed:
-    | {
-        __typename?: 'Connection';
-        edges: Array<
-          | {
-              __typename?: 'ActivityEdge';
-              cursor: string;
-              node: { __typename?: 'ActivityNode'; legacy: string; id: string };
-            }
-          | {
-              __typename?: 'BoostEdge';
-              cursor: string;
-              node: {
+  newsfeed: {
+    __typename?: 'NewsfeedConnection';
+    edges: Array<
+      | {
+          __typename?: 'ActivityEdge';
+          cursor: string;
+          node: { __typename?: 'ActivityNode'; legacy: string; id: string };
+        }
+      | {
+          __typename?: 'BoostEdge';
+          cursor: string;
+          node: {
+            __typename?: 'BoostNode';
+            goalButtonUrl?: string | null;
+            goalButtonText?: number | null;
+            legacy: string;
+            id: string;
+          };
+        }
+      | {
+          __typename?: 'EdgeImpl';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | {
                 __typename?: 'BoostNode';
                 goalButtonUrl?: string | null;
                 goalButtonText?: number | null;
                 legacy: string;
                 id: string;
-              };
-            }
-          | {
-              __typename?: 'EdgeImpl';
-              cursor: string;
-              node?:
-                | { __typename?: 'ActivityNode'; legacy: string; id: string }
-                | {
-                    __typename?: 'BoostNode';
-                    goalButtonUrl?: string | null;
-                    goalButtonText?: number | null;
-                    legacy: string;
-                    id: string;
-                  }
-                | {
-                    __typename?: 'FeedHighlightsConnection';
-                    id: string;
-                    edges: Array<{
-                      __typename?: 'ActivityEdge';
-                      node: { __typename?: 'ActivityNode'; legacy: string };
-                    }>;
-                    pageInfo: {
-                      __typename?: 'PageInfo';
-                      hasPreviousPage: boolean;
-                      hasNextPage: boolean;
-                      startCursor?: string | null;
-                      endCursor?: string | null;
-                    };
-                  }
-                | {
-                    __typename?: 'FeedNoticeNode';
-                    location: string;
-                    key: string;
-                    id: string;
-                  }
-                | { __typename?: 'NodeImpl'; id: string }
-                | { __typename?: 'UserNode'; id: string }
-                | null;
-            }
-          | {
-              __typename?: 'FeedHighlightsEdge';
-              cursor: string;
-              node: {
+              }
+            | {
                 __typename?: 'FeedHighlightsConnection';
                 id: string;
                 edges: Array<{
                   __typename?: 'ActivityEdge';
-                  node: { __typename?: 'ActivityNode'; legacy: string };
+                  node: {
+                    __typename?: 'ActivityNode';
+                    id: string;
+                    legacy: string;
+                  };
                 }>;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -297,42 +307,207 @@ export type FetchNewsfeedQuery = {
                   startCursor?: string | null;
                   endCursor?: string | null;
                 };
-              };
-            }
-          | {
-              __typename?: 'FeedNoticeEdge';
-              cursor: string;
-              node: {
+              }
+            | {
                 __typename?: 'FeedNoticeNode';
                 location: string;
                 key: string;
                 id: string;
-              };
-            }
-        >;
-        pageInfo: {
-          __typename?: 'PageInfo';
-          hasPreviousPage: boolean;
-          hasNextPage: boolean;
-          startCursor?: string | null;
-          endCursor?: string | null;
-        };
-      }
-    | {
-        __typename?: 'FeedHighlightsConnection';
-        edges: Array<{
-          __typename?: 'ActivityEdge';
+              }
+            | { __typename?: 'NodeImpl'; id: string }
+            | {
+                __typename?: 'PublisherRecsConnection';
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: {
+                        __typename?: 'ActivityNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename?: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename?: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename?: 'UserNode'; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeedHighlightsEdge';
           cursor: string;
-          node: { __typename?: 'ActivityNode'; legacy: string; id: string };
-        }>;
-        pageInfo: {
-          __typename?: 'PageInfo';
-          hasPreviousPage: boolean;
-          hasNextPage: boolean;
-          startCursor?: string | null;
-          endCursor?: string | null;
-        };
-      };
+          node: {
+            __typename?: 'FeedHighlightsConnection';
+            id: string;
+            edges: Array<{
+              __typename?: 'ActivityEdge';
+              node: { __typename?: 'ActivityNode'; id: string; legacy: string };
+            }>;
+            pageInfo: {
+              __typename?: 'PageInfo';
+              hasPreviousPage: boolean;
+              hasNextPage: boolean;
+              startCursor?: string | null;
+              endCursor?: string | null;
+            };
+          };
+        }
+      | {
+          __typename?: 'FeedNoticeEdge';
+          cursor: string;
+          node: {
+            __typename?: 'FeedNoticeNode';
+            location: string;
+            key: string;
+            id: string;
+          };
+        }
+      | {
+          __typename?: 'PublisherRecsEdge';
+          cursor: string;
+          node: {
+            __typename?: 'PublisherRecsConnection';
+            id: string;
+            edges: Array<
+              | {
+                  __typename?: 'ActivityEdge';
+                  publisherNode: { __typename?: 'ActivityNode'; id: string };
+                }
+              | {
+                  __typename?: 'BoostEdge';
+                  publisherNode: {
+                    __typename?: 'BoostNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'EdgeImpl';
+                  publisherNode?:
+                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeedHighlightsConnection'; id: string }
+                    | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'NodeImpl'; id: string }
+                    | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'UserNode'; legacy: string; id: string }
+                    | null;
+                }
+              | {
+                  __typename?: 'FeedHighlightsEdge';
+                  publisherNode: {
+                    __typename?: 'FeedHighlightsConnection';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedNoticeEdge';
+                  publisherNode: { __typename?: 'FeedNoticeNode'; id: string };
+                }
+              | {
+                  __typename?: 'PublisherRecsEdge';
+                  publisherNode: {
+                    __typename?: 'PublisherRecsConnection';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'UserEdge';
+                  publisherNode: {
+                    __typename?: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+            >;
+            pageInfo: {
+              __typename?: 'PageInfo';
+              hasPreviousPage: boolean;
+              hasNextPage: boolean;
+              startCursor?: string | null;
+              endCursor?: string | null;
+            };
+          };
+        }
+      | {
+          __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
+    >;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
 };
 
 export type PageInfoFragment = {
@@ -373,7 +548,24 @@ export const FetchNewsfeedDocument = gql`
           ... on FeedHighlightsConnection {
             edges {
               node {
+                id
                 legacy
+              }
+            }
+            pageInfo {
+              ...PageInfo
+            }
+          }
+          ... on PublisherRecsConnection {
+            edges {
+              publisherNode: node {
+                id
+                ... on UserNode {
+                  legacy
+                }
+                ... on BoostNode {
+                  legacy
+                }
               }
             }
             pageInfo {

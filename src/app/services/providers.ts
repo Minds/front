@@ -25,7 +25,6 @@ import { Session } from './session';
 import { ThirdPartyNetworksService } from './third-party-networks';
 import { AnalyticsService } from './analytics';
 import { Navigation } from './navigation';
-import { WalletService } from './wallet';
 import { AttachmentService } from './attachment';
 import { Sidebar } from './ui/sidebar';
 import { EmbedService } from './embed.service';
@@ -157,11 +156,6 @@ export const MINDS_PROVIDERS: any[] = [
   ThirdPartyNetworksService,
   AnalyticsService,
   Navigation,
-  {
-    provide: WalletService,
-    useFactory: WalletService._,
-    deps: [Session, Client, SocketsService, PLATFORM_ID, ConfigsService],
-  },
   AttachmentService,
   {
     provide: Sidebar,

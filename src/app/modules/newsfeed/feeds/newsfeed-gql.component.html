@@ -23,17 +23,6 @@
         </ng-container>
       </ng-container>
 
-      <!---------------------------
-        Display the boost rotator
-      ----------------------------->
-      <ng-container *mIfBrowser>
-        <m-newsfeed--boost-rotator
-          *ngIf="showBoostRotator"
-          #feedViewChildren
-          #boostRotator
-        ></m-newsfeed--boost-rotator>
-      </ng-container>
-
       <!--actual feed-->
       <ng-container
         *ngFor="
@@ -42,6 +31,17 @@
           trackBy: trackByFn
         "
       >
+        <!---------------------------
+          Display the boost rotator
+        ----------------------------->
+        <ng-container *mIfBrowser>
+          <m-newsfeed--boost-rotator
+            *ngIf="i === 1 && showBoostRotator"
+            #feedViewChildren
+            #boostRotator
+          ></m-newsfeed--boost-rotator>
+        </ng-container>
+
         <ng-container [ngSwitch]="edge.__typename">
           <!----------------
             InFeedNotice
@@ -92,18 +92,15 @@
               [connection]="edge.node"
             ></m-topHighlights>
           </ng-template>
+
+          <ng-template ngSwitchCase="PublisherRecsEdge">
+            <m-channelRecommendation
+              location="newsfeed"
+              [dismissible]="true"
+              [connection]="edge.node"
+            ></m-channelRecommendation>
+          </ng-template>
         </ng-container>
-
-        <!--  -->
-
-        <!-- <m-channelRecommendation
-          location="newsfeed"
-          [dismissible]="true"
-          *ngIf="
-            shouldShowChannelRecommendation('feed', i) &&
-            !(isChannelRecommendationDismissed$ | async)
-          "
-        ></m-channelRecommendation> -->
       </ng-container>
 
       <infinite-scroll

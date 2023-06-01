@@ -35,25 +35,25 @@ export class ChatIconComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.session.getLoggedInUser()) {
-      this.unreadSubscripton = this.unread$.subscribe(
-        unread => (this.unread = unread)
-      );
+      // this.unreadSubscripton = this.unread$.subscribe(
+      //   unread => (this.unread = unread)
+      // );
     }
   }
 
   ngOnDestroy() {
     if (this.unreadSubscripton) {
-      this.unreadSubscripton.unsubscribe();
+      // this.unreadSubscripton.unsubscribe();
     }
   }
 
   @HostListener('window:focus', ['$event'])
   onWindowFocus(e: Event) {
-    this.chatIconService.startPolling();
+    //this.chatIconService.startPolling();
   }
 
   @HostListener('window:blur', ['$event'])
   onWindowBlur(e: Event) {
-    this.chatIconService.stopPolling();
+    //this.chatIconService.stopPolling();
   }
 }

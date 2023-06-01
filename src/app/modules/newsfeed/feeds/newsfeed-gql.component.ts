@@ -46,6 +46,7 @@ import {
   PageInfo,
 } from '../../../../graphql/generated';
 import { FeedAlgorithm } from './subscribed.component';
+import { BoostFeedService } from '../services/boost-feed.service';
 
 const PAGE_SIZE = 12;
 
@@ -157,13 +158,11 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
     private toast: ToasterService,
-    private experiments: ExperimentsService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private dismissal: DismissalService,
     public changeDetectorRef: ChangeDetectorRef,
-    private platform: Platform,
-    private apollo: Apollo,
-    private fetchNewsfeed: FetchNewsfeedGQL
+    private fetchNewsfeed: FetchNewsfeedGQL,
+    protected boostFeedService: BoostFeedService
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -260,6 +259,8 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    this.boostFeedService.init(); // Kick off the loading
+
     this.subscriptions = [
       /**
        * Ensures we only start to load after the component has been initialised
