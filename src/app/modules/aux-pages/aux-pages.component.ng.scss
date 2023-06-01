@@ -172,24 +172,5 @@
         }
       }
     }
-
-    ::ng-deep {
-      m-aux__contact {
-        ul {
-          margin-top: -20px;
-          list-style-type: none;
-          padding-left: 0;
-        }
-      }
-
-      m-button button {
-        margin: 0 0 30px;
-
-        a {
-          text-decoration: none !important;
-          color: inherit !important;
-        }
-      }
-    }
   }
 }
