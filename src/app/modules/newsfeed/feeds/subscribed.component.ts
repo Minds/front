@@ -23,7 +23,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter, startWith } from 'rxjs/operators';
+import { filter, first, map, scan, startWith } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import {
@@ -220,16 +220,31 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    /**
+     * Emits a count of how many times the route has changed.
+     * (count includes the initial load)
+     */
     this.routerSubscription = this.router.events
       .pipe(
         filter((event: RouterEvent) => event instanceof NavigationEnd),
-        startWith(this.router)
+        startWith(this.router),
+        map(() => {
+          return 1;
+        }),
+        scan((accumulator, current) => {
+          return accumulator + current;
+        }, 0)
       )
-      .subscribe(() => {
+      .subscribe(count => {
         this.load();
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 50);
+
+        if (count === 1) {
+          setTimeout(() => {
+            this.showBoostRotator = true;
+          }, 50);
+        } else {
+          this.showBoostRotator = false;
+        }
       });
 
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
