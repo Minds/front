@@ -33,7 +33,6 @@ import { ContextService } from '../../../services/context.service';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { ComposerComponent } from '../../composer/composer.component';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
-import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from '../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from '../services/feed-algorithm-history.service';
 import { QueryRef } from 'apollo-angular';
@@ -154,7 +153,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     public route: ActivatedRoute,
     private feedAlgorithmHistory: FeedAlgorithmHistoryService,
     private context: ContextService,
-    protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
     private toast: ToasterService,
@@ -285,12 +283,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
           }, 50);
         }),
       /**
-       * Subscription called when the newsfeed sidebar link is clicked again
-       */
-      this.newsfeedService.onReloadFeed.subscribe(() => {
-        this.load();
-      }),
-      /**
        * Set the algorithm to use
        */
       this.route.params.subscribe(params => {
@@ -366,6 +358,10 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     if (this.boostRotator?.running) {
       this.boostRotator?.next();
+    }
+
+    if (!this.isFirstRun) {
+      this.feedQuery.refetch();
     }
   }
 
