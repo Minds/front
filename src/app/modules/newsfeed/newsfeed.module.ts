@@ -42,6 +42,7 @@ import { VirtualScrollerModule } from './feed/virtual-scroller';
 import { PathMatch } from '../../common/types/angular.types';
 import { NewsfeedTabsComponent } from './feeds/tabs/tabs.component';
 import { NewsfeedGqlComponent } from './feeds/newsfeed-gql.component';
+import { NewsfeedExperimentComponent } from './feeds/newsfeed-experiment.component';
 
 const routes: Routes = [
   {
@@ -64,14 +65,13 @@ const routes: Routes = [
       },
       {
         path: 'subscriptions',
-        //component: NewsfeedSubscribedComponent,
-        component: NewsfeedGqlComponent,
+        component: NewsfeedExperimentComponent,
         pathMatch: 'full' as PathMatch,
         canActivate: [FeedAlgorithmRedirectGuard],
       },
       {
         path: 'subscriptions/:algorithm',
-        component: NewsfeedGqlComponent,
+        component: NewsfeedExperimentComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
           title: 'Newsfeed',
@@ -125,6 +125,7 @@ const routes: Routes = [
     FeedComponent,
     NewsfeedTabsComponent,
     NewsfeedGqlComponent,
+    NewsfeedExperimentComponent,
   ],
   providers: [
     NewsfeedService,
