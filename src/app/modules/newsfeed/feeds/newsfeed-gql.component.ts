@@ -441,6 +441,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
       limit: PAGE_SIZE,
       algorithm: this.algorithm,
     });
+
+    // Reset any prepended posts
+    this.prepended = [];
   }
 
   /**
