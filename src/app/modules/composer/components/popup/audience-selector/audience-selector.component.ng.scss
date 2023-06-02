@@ -68,6 +68,11 @@
 
       infinite-scroll {
         padding: unset;
+
+        ::ng-deep m-button,
+        .m-loadingSpinner__wrapper {
+          padding: 0 0 $spacing5 0;
+        }
       }
     }
   }

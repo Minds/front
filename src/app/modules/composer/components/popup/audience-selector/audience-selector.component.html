@@ -57,14 +57,9 @@
           ></m-selectableEntityCard>
         </ng-container>
         <infinite-scroll
-          *ngIf="
-            (groups$ | async) &&
-            (groups$ | async).length > 0 &&
-            (groupsHasNext$ | async)
-          "
+          *ngIf="(groups$ | async) && (groups$ | async).length > 0"
           (load)="loadNextGroups()"
           [inProgress]="groupsLoading$ | async"
-          [hidden]="groupsLoading$ | async"
           [scrollSource]="scrollSource"
           [moreData]="groupsHasNext$ | async"
           [distance]="'50%'"
