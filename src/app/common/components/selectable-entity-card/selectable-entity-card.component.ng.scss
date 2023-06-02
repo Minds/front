@@ -40,7 +40,7 @@
       /**
        * Keep the background image loaded and avoid "flashing in"
        * by always having the src set and changing it to a size of 0
-      * when selected.
+       * when selected.
        */
       background-size: 0 0;
       background-repeat: no-repeat;
