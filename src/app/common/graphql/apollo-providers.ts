@@ -27,16 +27,16 @@ export const APOLLO_PROIVDERS = [
     ) {
       const isBrowser = isPlatformBrowser(platformId);
 
-      //   if (isBrowser) {
-      //     const state = transferState.get<any>(STATE_KEY, null);
-      //     cache.restore(state);
-      //   } else {
-      //     transferState.onSerialize(STATE_KEY, () => {
-      //       return cache.extract();
-      //     });
-      //     // Reset cache after extraction to avoid sharing between requests
-      //     cache.reset();
-      //   }
+      if (isBrowser) {
+        const state = transferState.get<any>(STATE_KEY, null);
+        cache.restore(state);
+      } else {
+        transferState.onSerialize(STATE_KEY, () => {
+          return cache.extract();
+        });
+        // Reset cache after extraction to avoid sharing between requests
+        cache.reset();
+      }
 
       return {
         strapi: {
@@ -53,7 +53,7 @@ export const APOLLO_PROIVDERS = [
             uri: '/api/graphql',
           }),
           shouldBatch: true,
-          //...(isBrowser ? { ssrForceFetchDelay: 200 } : { ssrMode: true }),
+          ...(isBrowser ? { ssrForceFetchDelay: 200 } : { ssrMode: true }),
         },
       };
     },

@@ -71,7 +71,7 @@ export class HomepageV3Component implements OnInit {
       .watchQuery({
         query: gql`
           query homepage {
-            homepage @namedClient(name: "strapi") {
+            homepage {
               data {
                 id
                 attributes {
