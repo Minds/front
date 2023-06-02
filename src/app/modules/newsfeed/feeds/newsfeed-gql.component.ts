@@ -32,14 +32,13 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { ContextService } from '../../../services/context.service';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { ComposerComponent } from '../../composer/composer.component';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from '../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from '../services/feed-algorithm-history.service';
-import { Platform } from '@angular/cdk/platform';
-import { Apollo, Query, QueryRef } from 'apollo-angular';
+import { QueryRef } from 'apollo-angular';
 import {
+  FeedNoticeNode,
   FetchNewsfeedGQL,
   FetchNewsfeedQuery,
   FetchNewsfeedQueryVariables,
@@ -100,10 +99,6 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     'channel-recommendation:feed'
   );
 
-  isDiscoveryFallbackDismissed$ = this.dismissal.dismissed(
-    'feed:discovery-fallback'
-  );
-
   newsfeedEndText = $localize`:@@COMMON__FEED_END:End of your newsfeed`;
 
   /**
@@ -130,6 +125,11 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    * Note: This observable will return the entire cached list, pageSize$ should be used for pagination
    */
   edges$: Observable<FetchNewsfeedQuery['newsfeed']['edges']>;
+
+  /**
+   * Local referenc of feed notices we have seen, so we don't get them returned again
+   */
+  inFeedNoticesDelivered$: Observable<string[]>;
 
   /**
    * Total number of edges we have in memory
@@ -255,6 +255,14 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
 
         return pageInfo.hasNextPage;
       })
+    );
+
+    this.inFeedNoticesDelivered$ = this.edges$.pipe(
+      map(edges =>
+        edges
+          .filter(edge => edge.__typename === 'FeedNoticeEdge')
+          .map(edge => (<FeedNoticeNode>edge.node).key)
+      )
     );
   }
 
@@ -384,6 +392,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     const result = await this.feedQuery.fetchMore({
       variables: {
         cursor: pageInfo.endCursor,
+        inFeedNoticesDelivered: await firstValueFrom(
+          this.inFeedNoticesDelivered$
+        ),
       },
     });
 

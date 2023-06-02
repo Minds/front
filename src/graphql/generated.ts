@@ -202,6 +202,7 @@ export type QueryNewsfeedArgs = {
   algorithm: Scalars['String']['input'];
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  inFeedNoticesDelivered?: InputMaybe<Array<Scalars['String']['input']>>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -254,6 +255,9 @@ export type FetchNewsfeedQueryVariables = Exact<{
   algorithm: Scalars['String']['input'];
   limit: Scalars['Int']['input'];
   cursor?: InputMaybe<Scalars['String']['input']>;
+  inFeedNoticesDelivered?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
 }>;
 
 export type FetchNewsfeedQuery = {
@@ -527,8 +531,18 @@ export const PageInfoFragmentDoc = gql`
   }
 `;
 export const FetchNewsfeedDocument = gql`
-  query FetchNewsfeed($algorithm: String!, $limit: Int!, $cursor: String) {
-    newsfeed(algorithm: $algorithm, first: $limit, after: $cursor) {
+  query FetchNewsfeed(
+    $algorithm: String!
+    $limit: Int!
+    $cursor: String
+    $inFeedNoticesDelivered: [String!]
+  ) {
+    newsfeed(
+      algorithm: $algorithm
+      first: $limit
+      after: $cursor
+      inFeedNoticesDelivered: $inFeedNoticesDelivered
+    ) {
       edges {
         cursor
         node {

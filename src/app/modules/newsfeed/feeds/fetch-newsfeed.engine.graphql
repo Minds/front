@@ -1,9 +1,10 @@
 query FetchNewsfeed(
     $algorithm: String!
     $limit: Int!,
-    $cursor: String
+    $cursor: String,
+    $inFeedNoticesDelivered: [String!]
 ) {
-    newsfeed(algorithm: $algorithm, first: $limit, after: $cursor) {
+    newsfeed(algorithm: $algorithm, first: $limit, after: $cursor, inFeedNoticesDelivered: $inFeedNoticesDelivered) {
         edges {
             cursor
             node {
