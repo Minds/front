@@ -1,4 +1,4 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -46,11 +46,15 @@ import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-histor
 import { Platform } from '@angular/cdk/platform';
 import { Session } from '../../../services/session';
 
-export enum FeedAlgorithm {
-  top = 'top',
-  latest = 'latest',
-  forYou = 'for-you',
-  groups = 'groups',
+export type FeedAlgorithm = 'top' | 'latest' | 'for-you' | 'groups';
+
+const fruit = ['apple', 'banana', 'grape'] as const;
+type Fruit = typeof fruit[number];
+const isFruit = (x: any): x is Fruit => fruit.includes(x);
+
+let myfruit = 'pear';
+if (isFruit(myfruit)) {
+  console.log("My fruit is of type 'Fruit'");
 }
 
 const commonInjectItems: InjectItem[] = [
@@ -206,7 +210,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   ) {
     if (isPlatformServer(this.platformId)) return;
 
-    const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlorithm;
+    const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlgorithm;
     if (storedfeedAlgorithm) {
       this.algorithm = storedfeedAlgorithm;
     }
@@ -240,7 +244,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['algorithm']) {
-        if (Object.values(FeedAlgorithm).includes(params['algorithm'])) {
+        if (
+          ['top', 'latest', 'for-you', 'groups'].includes(params['algorithm'])
+        ) {
           this.changeFeedAlgorithm(params['algorithm']);
         } else {
           this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
@@ -414,7 +420,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    **/
   changeFeedAlgorithm(algo: FeedAlgorithm) {
     this.algorithm = algo;
-    this.feedAlgorithmHistory.lastAlorithm = algo;
+    this.feedAlgorithmHistory.lastAlgorithm = algo;
 
     switch (algo) {
       case 'for-you':
@@ -444,7 +450,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       behavior: 'smooth',
     });
     setTimeout(() => {
-      this.changeFeedAlgorithm(FeedAlgorithm.top);
+      this.changeFeedAlgorithm('top');
       this.load();
     }, 500);
   }

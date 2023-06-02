@@ -24,11 +24,6 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
 import { IPageInfo, VirtualScrollerComponent } from './virtual-scroller';
 
-export enum FeedAlgorithm {
-  top = 'top',
-  latest = 'latest',
-}
-
 export enum FeedItemType {
   activity = 'activity',
   feedNotice = 'feedNotice',

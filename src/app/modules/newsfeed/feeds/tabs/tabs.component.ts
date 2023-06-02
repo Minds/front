@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsfeedForYouExperimentService } from '../../../experiments/sub-services/newsfeed-for-you-experiment.service';
-import { FeedAlgorithm } from '../subscribed.component';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /*
@@ -12,9 +11,6 @@ import { ExperimentsService } from '../../../experiments/experiments.service';
   styleUrls: ['./tabs.component.ng.scss'],
 })
 export class NewsfeedTabsComponent implements OnInit {
-  /** Feed algorithm enum. */
-  protected readonly feedAlgorithm: typeof FeedAlgorithm = FeedAlgorithm;
-
   /** Whether For You tab should be shown */
   protected shouldShowForYouTab: boolean = false;
 
