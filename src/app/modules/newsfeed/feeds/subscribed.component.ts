@@ -23,7 +23,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter, first, map, scan, startWith } from 'rxjs/operators';
+import { filter, map, scan, startWith } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import {
