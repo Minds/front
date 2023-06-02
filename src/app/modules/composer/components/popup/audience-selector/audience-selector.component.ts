@@ -1,5 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
   ActivityContainer,
   ComposerAudienceSelectorService,
@@ -8,6 +14,7 @@ import { Session } from '../../../../../services/session';
 import { MindsUser } from '../../../../../interfaces/entities';
 import { ComposerModalService } from '../../modal/modal.service';
 import { Router } from '@angular/router';
+import { SelectableEntity } from '../../../../../common/components/selectable-entity-card/selectable-entity-card.component';
 
 /**
  * Composer audience selector panel.
@@ -17,7 +24,8 @@ import { Router } from '@angular/router';
   templateUrl: 'audience-selector.component.html',
   styleUrls: ['./audience-selector.component.ng.scss'],
 })
-export class ComposerAudienceSelectorPanelComponent implements OnInit {
+export class ComposerAudienceSelectorPanelComponent
+  implements OnInit, OnDestroy {
   /** Signal event emitter to parent's popup service. */
   @Output() dismissIntent: EventEmitter<any> = new EventEmitter<any>();
 
@@ -30,19 +38,24 @@ export class ComposerAudienceSelectorPanelComponent implements OnInit {
     boolean
   > = new BehaviorSubject<boolean>(false);
 
-  /** List of groups from service. */
-  public readonly groups$: Observable<any[]> = this.audienceSelectorService
-    .groups$;
+  /** List of groups held in local state. */
+  public readonly groups$: BehaviorSubject<
+    SelectableEntity[]
+  > = new BehaviorSubject<SelectableEntity[]>([]);
 
   /** Whether groups are currently loading. */
-  public readonly groupsLoadInProgress$: Observable<boolean> = this
-    .audienceSelectorService.groupsLoadInProgress$;
+  public readonly groupsLoading$: Observable<boolean> = this
+    .audienceSelectorService.groupsLoading$;
 
   /** Whether there are more groups to load. */
   public readonly groupsHasNext$: Observable<boolean> = this
     .audienceSelectorService.groupsHasNext$;
 
+  /** Currently logged in user. */
   public loggedInUser: MindsUser = null;
+
+  /** Subscription to group page emissions */
+  private groupsPageSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -53,6 +66,19 @@ export class ComposerAudienceSelectorPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUser = this.session.getLoggedInUser();
+
+    this.groupsPageSubscription = this.audienceSelectorService.groupsPage$.subscribe(
+      (groups: SelectableEntity[]): void => {
+        if (groups && groups.length) {
+          this.groups$.next([...this.groups$.getValue(), ...groups]);
+        }
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.groupsPageSubscription?.unsubscribe();
+    this.audienceSelectorService.reset();
   }
 
   /**

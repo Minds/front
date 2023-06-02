@@ -29,7 +29,7 @@
       <ng-container *ngIf="!(groups$ | async)?.length">
         <div
           class="m-composerAudience__noGroupsContainer"
-          *ngIf="!(groupsLoadInProgress$ | async); else loadingSpinnerTemplate"
+          *ngIf="!(groupsLoading$ | async); else loadingSpinnerTemplate"
         >
           <span
             class="m-composerAudience__noGroupsSpan"
@@ -44,7 +44,7 @@
         </div>
         <ng-template #loadingSpinnerTemplate>
           <m-loadingSpinner
-            [inProgress]="groupsLoadInProgress$ | async"
+            [inProgress]="groupsLoading$ | async"
           ></m-loadingSpinner>
         </ng-template>
       </ng-container>
@@ -63,8 +63,8 @@
             (groupsHasNext$ | async)
           "
           (load)="loadNextGroups()"
-          [inProgress]="groupsLoadInProgress$ | async"
-          [hidden]="groupsLoadInProgress$ | async"
+          [inProgress]="groupsLoading$ | async"
+          [hidden]="groupsLoading$ | async"
           [scrollSource]="scrollSource"
           [moreData]="groupsHasNext$ | async"
           [distance]="'50%'"

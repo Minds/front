@@ -10,14 +10,15 @@ import { ComposerService } from '../../services/composer.service';
  */
 @Component({
   selector: 'm-composer__audienceSelectorButton',
-  templateUrl: 'audience-selector.component.html',
-  styleUrls: ['./audience-selector.component.ng.scss'],
+  templateUrl: 'audience-selector-button.component.html',
+  styleUrls: ['./audience-selector-button.component.ng.scss'],
   host: {
     '(click)': 'onClick($event)',
     'data-ref': 'composer-audience-selector-button',
   },
 })
-export class ComposerAudienceSelectorComponent implements OnInit, OnDestroy {
+export class ComposerAudienceSelectorButtonComponent
+  implements OnInit, OnDestroy {
   /** bind disabled class to host component. */
   @HostBinding('class.m-composerAudienceSelector__host--disabled')
   disabled: boolean = false;

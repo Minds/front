@@ -27,10 +27,6 @@
     }
   }
 
-  @include m-on-theme(light) {
-    border-color: #53565a;
-  }
-
   .m-composerAudienceSelector__dropdownArrow {
     // force arrow over a few px because the icon being
     // centered makes the component look left-side heavy.

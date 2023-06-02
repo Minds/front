@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
-  debounceTime,
+  catchError,
   map,
-  scan,
-  shareReplay,
+  of,
   switchMap,
   tap,
 } from 'rxjs';
-import { ApiService } from '../../../common/api/api.service';
+import { ApiResponse, ApiService } from '../../../common/api/api.service';
+import { SelectableEntity } from '../../../common/components/selectable-entity-card/selectable-entity-card.component';
 
 export type ActivityContainer = {
   guid: string;
@@ -40,52 +40,69 @@ export class ComposerAudienceSelectorService {
     })
   );
 
-  /** Next paging token for groups list */
-  public groupsNextPagingToken$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >(null);
+  /** Current paging token. */
+  private readonly groupsPagingToken$: BehaviorSubject<
+    number
+  > = new BehaviorSubject<number>(0);
 
-  /** Current paging token groups list */
-  public groupsPagingToken$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('0');
+  /** Next paging token. */
+  private readonly groupsNextPagingToken$: BehaviorSubject<
+    number
+  > = new BehaviorSubject<number>(0);
 
   /** Whether groups fetch request is in progress */
-  public groupsLoadInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
+  public groupsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(true);
 
   /** Whether last groups fetch request returned a paging token indicating that more can be fetched */
-  public groupsHasNext$: Observable<boolean> = this.groupsPagingToken$.pipe(
-    map((pagingToken: string) => Boolean(pagingToken))
-  );
-
-  /** List of groups. */
-  public readonly groups$: Observable<any[]> = this.groupsPagingToken$.pipe(
-    debounceTime(100), // Hack to prevent first cancelled call
-    tap(_ => this.groupsLoadInProgress$.next(true)),
-    switchMap(pagingOffset =>
-      this.api.get('api/v1/groups/member', {
-        offset: pagingOffset,
-        limit: 12,
-      })
-    ),
-    tap(response => {
-      this.groupsNextPagingToken$.next(response['load-next']);
-    }),
-    map(response => response.groups || []),
-    tap(_ => this.groupsLoadInProgress$.next(false)),
-    scan((a, c) => [...a, ...c], []),
-    shareReplay()
+  public groupsHasNext$: Observable<boolean> = this.groupsNextPagingToken$.pipe(
+    map((offset: number): boolean => Boolean(offset))
   );
 
   /**
+   * Groups page - change offset to advance page.
+   */
+  public readonly groupsPage$: Observable<
+    SelectableEntity[]
+  > = this.groupsPagingToken$.pipe(
+    tap((_: unknown): void => this.groupsLoading$.next(true)),
+    switchMap(
+      (page: number): Observable<ApiResponse> =>
+        this.api.get('api/v1/groups/member', {
+          offset: page,
+          limit: 12,
+        })
+    ),
+    map((response: ApiResponse): SelectableEntity[] => {
+      this.groupsNextPagingToken$.next(response['load-next'] ?? null);
+      this.groupsLoading$.next(false);
+      return response?.groups ?? [];
+    }),
+    catchError(
+      (e: unknown): Observable<null> => {
+        console.error(e);
+        return of(null);
+      }
+    )
+  );
+
+  constructor(private api: ApiService) {}
+
+  /**
    * Load next batch of groups.
-   * returns { void }
+   * @returns { void }
    */
   public loadNextGroups(): void {
     this.groupsPagingToken$.next(this.groupsNextPagingToken$.getValue());
   }
 
-  constructor(private api: ApiService) {}
+  /**
+   * Reset state.
+   * @returns { void }
+   */
+  public reset(): void {
+    this.groupsPagingToken$.next(0);
+    this.groupsNextPagingToken$.next(0);
+  }
 }
