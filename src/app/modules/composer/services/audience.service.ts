@@ -55,7 +55,7 @@ export class ComposerAudienceSelectorService {
     boolean
   >(true);
 
-  /** Whether last groups fetch request returned a paging token indicating that more can be fetched */
+  /** Whether last groups fetch request returned a paging token - indicating that more can be fetched */
   public groupsHasNext$: Observable<boolean> = this.groupsNextPagingToken$.pipe(
     map((offset: number): boolean => Boolean(offset))
   );
