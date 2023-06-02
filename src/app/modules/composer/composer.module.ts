@@ -38,7 +38,7 @@ import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-pi
 import { UploaderService } from './services/uploader.service';
 import { ComposerSupermindComponent } from './components/popup/supermind/supermind.component';
 import { PaymentsModule } from '../payments/payments.module';
-import { ComposerAudienceSelectorButtonComponent } from './components/audience-selector/audience-selector-button.component';
+import { ComposerAudienceSelectorButtonComponent } from './components/audience-selector-button/audience-selector-button.component';
 import { ComposerAudienceSelectorService } from './services/audience.service';
 import { ComposerAudienceSelectorPanelComponent } from './components/popup/audience-selector/audience-selector.component';
 

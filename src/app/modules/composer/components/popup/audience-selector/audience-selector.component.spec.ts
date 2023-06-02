@@ -1,139 +1,206 @@
-// import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-// import { BehaviorSubject } from 'rxjs';
-// import { ToasterService } from '../../../../../common/services/toaster.service';
-// import { MockComponent, MockService } from '../../../../../utils/mock';
-// import { Supermind } from '../../../../supermind/supermind.types';
-// import { ComposerService } from '../../../services/composer.service';
-// import { SupermindComposerPayloadType } from '../supermind/superminds-creation.service';
-// import { NsfwComponent } from './audience-selector.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComposerAudienceSelectorPanelComponent } from './audience-selector.component';
+import {
+  ActivityContainer,
+  ComposerAudienceSelectorService,
+} from '../../../services/audience.service';
+import { Session } from '../../../../../services/session';
+import { Router } from '@angular/router';
+import { ComposerModalService } from '../../modal/modal.service';
+import { MockComponent, MockService } from '../../../../../utils/mock';
+import { BehaviorSubject } from 'rxjs';
+import { SelectableEntity } from '../../../../../common/components/selectable-entity-card/selectable-entity-card.component';
+import userMock from '../../../../../mocks/responses/user.mock';
 
-// describe('Composer NSFW Component', () => {
-//   let comp: NsfwComponent;
-//   let fixture: ComponentFixture<NsfwComponent>;
+const mockSelectableEntities: SelectableEntity[] = [
+  {
+    guid: '1',
+    name: 'Group One',
+    type: 'group',
+    'members:count': 100,
+  },
+  {
+    guid: '2',
+    name: 'Group Two',
+    type: 'group',
+    'members:count': 200,
+  },
+  {
+    guid: '3',
+    name: 'Group Three',
+    type: 'group',
+    'members:count': 300,
+  },
+];
 
-//   const supermindRequestMock = {
-//     receiver_guid: '123',
-//     reply_type: 1,
-//     twitter_required: true,
-//     payment_options: {
-//       amount: 10,
-//       payment_type: 1,
-//     },
-//     terms_agreed: true,
-//     refund_policy_agreed: true,
-//   };
+const mockSelectableEntitiesContinued: SelectableEntity[] = [
+  {
+    guid: '4',
+    name: 'Group Four',
+    type: 'group',
+    'members:count': 400,
+  },
+  {
+    guid: '5',
+    name: 'Group Five',
+    type: 'group',
+    'members:count': 500,
+  },
+  {
+    guid: '6',
+    name: 'Group Six',
+    type: 'group',
+    'members:count': 600,
+  },
+];
 
-//   const supermindReplyMock = {
-//     guid: '123',
-//     activity_guid: '321',
-//     sender_guid: '234',
-//     receiver_guid: '345',
-//     status: 1,
-//     payment_amount: 10,
-//     payment_method: 1,
-//     payment_txid: '0x0',
-//     created_timestamp: 123,
-//     updated_timestamp: 123,
-//     expiry_threshold: 123,
-//     twitter_required: false,
-//     reply_type: 1,
-//     entity: {},
-//     receiver_entity: {},
-//   };
+describe('ComposerAudienceSelectorPanelComponent', () => {
+  let comp: ComposerAudienceSelectorPanelComponent;
+  let fixture: ComponentFixture<ComposerAudienceSelectorPanelComponent>;
 
-//   const composerServiceMock: any = MockService(ComposerService, {
-//     has: ['nsfw$', 'supermindRequest$', 'supermindReply$'],
-//     props: {
-//       nsfw$: { get: () => new BehaviorSubject<number[]>([]) },
-//       supermindRequest$: {
-//         get: () =>
-//           new BehaviorSubject<SupermindComposerPayloadType>(
-//             supermindRequestMock
-//           ),
-//       },
-//       supermindReply$: {
-//         get: () => new BehaviorSubject<Supermind>(supermindReplyMock),
-//       },
-//     },
-//   });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        ComposerAudienceSelectorPanelComponent,
+        MockComponent({
+          selector: 'm-selectableEntityCard',
+          inputs: ['entity', 'selected'],
+          outputs: ['click'],
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['size', 'color'],
+          outputs: ['click', 'onAction'],
+        }),
+        MockComponent({
+          selector: 'm-loadingSpinner',
+          inputs: ['inProgress'],
+        }),
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: [
+            'load',
+            'inProgress',
+            'scrollSource',
+            'moreData',
+            'distance',
+          ],
+          outputs: ['load'],
+        }),
+      ],
+      providers: [
+        { provide: Session, useValue: MockService(Session) },
+        {
+          provide: ComposerAudienceSelectorService,
+          useValue: MockService(ComposerAudienceSelectorService, {
+            has: [
+              'selectedAudience$',
+              'groupsLoading$',
+              'groupsHasNext$',
+              'groupsPage$',
+            ],
+            props: {
+              selectedAudience$: {
+                get: () => new BehaviorSubject<ActivityContainer>(null),
+              },
+              groupsLoading$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              groupsHasNext$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+              groupsPage$: {
+                get: () =>
+                  new BehaviorSubject<SelectableEntity[]>(
+                    mockSelectableEntities
+                  ),
+              },
+            },
+          }),
+        },
+        { provide: Router, useValue: MockService(Router) },
+        {
+          provide: ComposerModalService,
+          useValue: MockService(ComposerModalService),
+        },
+      ],
+    }).compileComponents();
 
-//   beforeEach(
-//     waitForAsync(() => {
-//       TestBed.configureTestingModule({
-//         declarations: [
-//           NsfwComponent,
-//           MockComponent({
-//             selector: 'm-button',
-//             outputs: ['onAction'],
-//           }),
-//         ],
-//         providers: [
-//           {
-//             provide: ComposerService,
-//             useValue: composerServiceMock,
-//           },
-//           {
-//             provide: ToasterService,
-//             useValue: MockService(ToasterService),
-//           },
-//         ],
-//       }).compileComponents();
-//     })
-//   );
+    fixture = TestBed.createComponent(ComposerAudienceSelectorPanelComponent);
+    comp = fixture.componentInstance;
 
-//   beforeEach(done => {
-//     fixture = TestBed.createComponent(NsfwComponent);
-//     comp = fixture.componentInstance;
-//     fixture.detectChanges();
+    (comp as any).audienceSelectorService.selectedAudience$.next(null);
+    (comp as any).audienceSelectorService.groupsLoading$.next(false);
+    (comp as any).audienceSelectorService.groupsHasNext$.next(false);
+    (comp as any).audienceSelectorService.groupsPage$.next(
+      mockSelectableEntities
+    );
+    (comp as any).session.getLoggedInUser.and.returnValue(userMock);
 
-//     (comp as any).service.nsfw$.next([]);
-//     (comp as any).service.supermindRequest$.next(supermindRequestMock);
-//     (comp as any).service.supermindReply$.next(supermindReplyMock);
+    fixture.detectChanges();
+  });
 
-//     if (fixture.isStable()) {
-//       done();
-//     } else {
-//       fixture.whenStable().then(() => {
-//         fixture.detectChanges();
-//         done();
-//       });
-//     }
-//   });
+  it('should initialise', () => {
+    expect(comp).toBeTruthy();
+    expect(comp.loggedInUser).toEqual(userMock);
+    expect(comp.groups$.getValue()).toEqual(mockSelectableEntities);
+  });
 
-//   it('should instantiate', () => {
-//     expect(comp).toBeTruthy();
-//   });
+  it('should append more groups when service emits next groups page', () => {
+    (comp as any).audienceSelectorService.groupsPage$.next(
+      mockSelectableEntitiesContinued
+    );
+    expect(comp.groups$.getValue()).toEqual([
+      ...mockSelectableEntities,
+      ...mockSelectableEntitiesContinued,
+    ]);
+  });
 
-//   it('should save tags if there are tags and the post is NOT supermind content', () => {
-//     const nsfwState = [1, 2, 3];
-//     comp.state = nsfwState;
-//     (comp as any).service.supermindRequest$.next(null);
-//     (comp as any).service.supermindReply$.next(null);
+  it('should reset audience on destroy', () => {
+    comp.ngOnDestroy();
+    expect((comp as any).audienceSelectorService.reset).toHaveBeenCalled();
+  });
 
-//     comp.save();
+  it('should emit to dismiss on save', () => {
+    spyOn(comp.dismissIntent, 'emit');
+    comp.save();
+    expect((comp as any).dismissIntent.emit).toHaveBeenCalled();
+  });
 
-//     expect((comp as any).service.nsfw$.getValue()).toEqual(nsfwState);
-//   });
+  it('should update selected entity on entity selection', () => {
+    const newEntity: SelectableEntity = mockSelectableEntities[1];
+    expect(
+      (comp as any).audienceSelectorService.selectedAudience$.getValue()
+    ).not.toEqual(newEntity);
 
-//   it('should save tags if there are NO tags and the post is IS supermind content', () => {
-//     const nsfwState = [];
-//     comp.state = nsfwState;
+    comp.onEntitySelect(newEntity);
+    expect(
+      (comp as any).audienceSelectorService.selectedAudience$.getValue()
+    ).toEqual(newEntity);
+  });
 
-//     comp.save();
+  it('should toggle group section to expand and close', () => {
+    comp.groupsExpanded$.next(true);
 
-//     expect((comp as any).service.nsfw$.getValue()).toEqual(nsfwState);
-//   });
+    comp.toggleGroupsExpand();
+    expect(comp.groupsExpanded$.getValue()).toBe(false);
 
-//   it('should NOT save tags if there are tags and the post is IS supermind content', () => {
-//     const nsfwState = [1, 2, 3];
-//     comp.state = nsfwState;
+    comp.toggleGroupsExpand();
+    expect(comp.groupsExpanded$.getValue()).toBe(true);
+  });
 
-//     comp.save();
+  it('should call to load next groups', () => {
+    comp.loadNextGroups();
+    expect(
+      (comp as any).audienceSelectorService.loadNextGroups
+    ).toHaveBeenCalledTimes(1);
+  });
 
-//     expect((comp as any).toasterService.error).toHaveBeenCalledWith(
-//       'You may not create an NSFW supermind at this time.'
-//     );
-//     // should not have been called
-//     expect((comp as any).service.nsfw$.getValue()).toEqual([]);
-//   });
-// });
+  it('should dismiss modal and navigate on discover groups click', () => {
+    comp.onDiscoverGroupsClick();
+    expect((comp as any).composerModalService.dismiss).toHaveBeenCalled();
+    expect((comp as any).router.navigate).toHaveBeenCalledWith([
+      '/discovery/suggestions/group',
+    ]);
+  });
+});
