@@ -10,6 +10,7 @@
         @include heading3Bold;
         @include unselectable;
       }
+
       .m-composerPopup__subtitle {
         display: flex;
         flex-flow: row nowrap;
@@ -25,6 +26,7 @@
         }
       }
     }
+
     .m-composerAudience__myChannelContainer {
       m-selectableEntityCard {
         margin: $spacing4 0;
