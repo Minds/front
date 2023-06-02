@@ -221,8 +221,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     /**
-     * Emits a count of how many times the route has changed.
+     * Emits a count of how many times the route has changed
      * (count includes the initial load)
+     *
+     * Reload the feed when the route changes and
+     * hide the boost rotator whenever we switch tabs
      */
     this.routerSubscription = this.router.events
       .pipe(
