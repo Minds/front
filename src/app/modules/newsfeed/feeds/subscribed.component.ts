@@ -48,15 +48,6 @@ import { Session } from '../../../services/session';
 
 export type FeedAlgorithm = 'top' | 'latest' | 'for-you' | 'groups';
 
-const fruit = ['apple', 'banana', 'grape'] as const;
-type Fruit = typeof fruit[number];
-const isFruit = (x: any): x is Fruit => fruit.includes(x);
-
-let myfruit = 'pear';
-if (isFruit(myfruit)) {
-  console.log("My fruit is of type 'Fruit'");
-}
-
 const commonInjectItems: InjectItem[] = [
   {
     type: FeedItemType.feedNotice,
