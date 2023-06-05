@@ -30,6 +30,14 @@
       >
         <span>Quote post</span>
       </m-dropdownMenu__item>
+      <m-dropdownMenu__item
+        (click)="onGroupShareClick($event)"
+        icon="group"
+        data-ref="remind-button-group-share"
+        [m-clientMeta]="getClientMetaDetails(service.entity$.getValue())"
+      >
+        <span i18n="@@REMIND_BUTTON__GROUP_SHARE">Group share</span>
+      </m-dropdownMenu__item>
     </ng-template>
   </ul>
 </ng-template>

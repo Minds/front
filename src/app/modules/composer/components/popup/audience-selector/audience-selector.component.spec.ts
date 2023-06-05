@@ -11,6 +11,7 @@ import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BehaviorSubject } from 'rxjs';
 import { SelectableEntity } from '../../../../../common/components/selectable-entity-card/selectable-entity-card.component';
 import userMock from '../../../../../mocks/responses/user.mock';
+import { ComposerService } from '../../../services/composer.service';
 
 const mockSelectableEntities: SelectableEntity[] = [
   {
@@ -98,6 +99,7 @@ describe('ComposerAudienceSelectorPanelComponent', () => {
               'groupsLoading$',
               'groupsHasNext$',
               'groupsPage$',
+              'shareToGroupMode$',
             ],
             props: {
               selectedAudience$: {
@@ -114,6 +116,9 @@ describe('ComposerAudienceSelectorPanelComponent', () => {
                   new BehaviorSubject<SelectableEntity[]>(
                     mockSelectableEntities
                   ),
+              },
+              shareToGroupMode$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
             },
           }),
@@ -135,6 +140,7 @@ describe('ComposerAudienceSelectorPanelComponent', () => {
     (comp as any).audienceSelectorService.groupsPage$.next(
       mockSelectableEntities
     );
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
     (comp as any).session.getLoggedInUser.and.returnValue(userMock);
 
     fixture.detectChanges();
