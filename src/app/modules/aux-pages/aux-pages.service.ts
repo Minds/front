@@ -4,7 +4,7 @@ import { Apollo, gql } from 'apollo-angular';
 import {
   STRAPI_METADATA_SNIPPET,
   StrapiMetadata,
-} from '../../common/services/strapi/strapi-meta.service';
+} from '../../common/services/strapi-meta.service';
 import {
   BehaviorSubject,
   EMPTY,

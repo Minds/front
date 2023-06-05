@@ -9,7 +9,7 @@ import { MockComponent, MockService } from '../../utils/mock';
 import {
   StrapiMetaService,
   StrapiMetadata,
-} from '../../common/services/strapi/strapi-meta.service';
+} from '../../common/services/strapi-meta.service';
 
 describe('AuxComponent', () => {
   let comp: AuxComponent;

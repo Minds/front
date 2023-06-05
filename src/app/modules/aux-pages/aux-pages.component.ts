@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   StrapiMetaService,
   StrapiMetadata,
-} from '../../common/services/strapi/strapi-meta.service';
+} from '../../common/services/strapi-meta.service';
 
 /**
  * Container for auxiliary pages (/p/ pages).
