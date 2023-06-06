@@ -7,7 +7,7 @@
   (click)="onClickImage($event, 0)"
 >
   <mat-grid-tile
-    *ngFor="let image of images$ | async; let i = index"
+    *ngFor="let image of images$ | async; let i = index; trackBy: trackByFn"
     [rowspan]="(count$ | async) === 3 && i === 1 ? 2 : 1"
     class="m-border"
   >

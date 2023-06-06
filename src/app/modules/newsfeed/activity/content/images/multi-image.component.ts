@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ActivityService } from '../../../activity/activity.service';
 
@@ -6,6 +11,7 @@ import { ActivityService } from '../../../activity/activity.service';
   selector: 'm-activityContent__multiImage',
   templateUrl: './multi-image.component.html',
   styleUrls: ['./multi-image.component.ng.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActivityMultiImageComponent {
   @Output() onClick: EventEmitter<any> = new EventEmitter();
@@ -22,5 +28,12 @@ export class ActivityMultiImageComponent {
 
     this.service.activeMultiImageIndex$.next(index);
     this.onClick.emit($event);
+  }
+
+  /**
+   * Improves the  performance
+   */
+  trackByFn(i: number, image) {
+    return image.src;
   }
 }

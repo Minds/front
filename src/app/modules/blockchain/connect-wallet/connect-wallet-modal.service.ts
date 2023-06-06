@@ -33,7 +33,8 @@ export class ConnectWalletModalService {
     private emailConfirmation: EmailConfirmationService
   ) {
     if (!this.walletService.wallet.loaded) {
-      this.walletService.loadWallet();
+      // We should not need to do mutliple calls
+      // this.walletService.loadWallet();
     }
     this.isConnected$ = this.walletService.wallet$.pipe(
       skipWhile(wallet => wallet.receiver.address === undefined),
