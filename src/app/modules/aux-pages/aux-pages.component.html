@@ -1,5 +1,15 @@
-<m-marketing class="m-aux__marketing" [useFullWidth]="false">
+<m-loadingSpinner [inProgress]="loading$ | async"></m-loadingSpinner>
+
+<m-marketing
+  class="m-aux__marketing"
+  [useFullWidth]="false"
+  *ngIf="!(loading$ | async)"
+>
   <div class="m-marketing__main">
-    <router-outlet></router-outlet>
+    <h1>{{ headerCopy$ | async }}</h1>
+    <markdown ngPreserveWhitespaces [data]="bodyCopy$ | async"></markdown>
+    <p class="m-aux__lastUpdated">
+      Last Updated {{ updatedAtDateString$ | async }}
+    </p>
   </div>
 </m-marketing>
