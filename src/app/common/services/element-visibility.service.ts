@@ -22,7 +22,7 @@ export class ElementVisibilityService implements OnDestroy {
 
   protected enabled: boolean = true;
 
-  protected offset: number = 0;
+  protected offset: number = -75; // 75px is how much we offset the topbar
 
   constructor(protected scroll: ScrollService) {
     this.init();
