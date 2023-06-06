@@ -179,6 +179,7 @@ import { TopbarAlertComponent } from './components/topbar-alert/topbar-alert.com
 import { ChatwootWidgetComponent } from './components/chatwoot-widget/chatwoot-widget.component';
 
 import { MarkdownModule } from 'ngx-markdown';
+import { FormErrorComponent } from './components/form-error/form-error.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -283,6 +284,7 @@ const MINDS_COMMON_COMPONENTS = [
   SidebarNavigationNewContentDotComponent,
   TopbarAlertComponent,
   ChatwootWidgetComponent,
+  FormErrorComponent,
 ];
 // ------------------------------------
 // ------------------------------------

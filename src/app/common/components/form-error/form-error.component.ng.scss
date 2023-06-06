@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  div {
+    overflow: hidden;
+
+    @include m-theme() {
+      color: themed($m-alert);
+    }
+  }
+}

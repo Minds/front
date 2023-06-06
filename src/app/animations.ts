@@ -5,6 +5,7 @@ import {
   transition,
   keyframes,
   state,
+  AnimationTriggerMetadata,
 } from '@angular/animations';
 
 export const animations: any[] = [
@@ -143,6 +144,38 @@ export const CounterChangeFadeIn = trigger('counterChange', [
         style({ opacity: 1, transform: 'translateY(0px)', offset: 0 }),
         style({ opacity: 0, transform: 'translateY(-5px)', offset: 1 }),
       ])
+    ),
+  ]),
+]);
+
+/**
+ * Grows and shrinks smoothly on enter and leave.
+ */
+export const GrowShrinkFast: AnimationTriggerMetadata = trigger('growShrink', [
+  state('in', style({ height: '*' })),
+  transition(':enter', [
+    style({
+      height: '0px',
+      opacity: 0,
+      margin: 0,
+    }),
+    animate(
+      '0.2s ease-in',
+      style({
+        height: '*',
+        opacity: 1,
+        margin: '*',
+      })
+    ),
+  ]),
+  transition(':leave', [
+    animate(
+      '0.2s ease-out',
+      style({
+        height: '0px',
+        opacity: 0,
+        margin: 0,
+      })
     ),
   ]),
 ]);
