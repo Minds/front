@@ -40,6 +40,7 @@ export const GET_TOPBAR_QUERY = gql`
 export class TopbarAlertService {
   /** Copy data to be returned from strapi */
   copyData$: Observable<any> = this.apollo
+    .use('strapi')
     .watchQuery({
       query: GET_TOPBAR_QUERY,
     })
