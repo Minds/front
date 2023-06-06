@@ -108,6 +108,12 @@
       padding: 0 $spacing5 $spacing3;
       @include heading4Bold;
     }
+
+    span {
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .m-groupHeaderInfo__sidebar {
