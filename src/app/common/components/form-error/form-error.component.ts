@@ -69,7 +69,7 @@ export class FormErrorComponent {
     }
     if (errors.minlength && errors.minlength.requiredLength) {
       errorStrings.push(
-        `Must be atleast ${errors.minlength.requiredLength} characters long`
+        `Must be at least ${errors.minlength.requiredLength} characters long`
       );
     }
     if (errors.maxlength && errors.maxlength.requiredLength) {

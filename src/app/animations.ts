@@ -152,30 +152,18 @@ export const CounterChangeFadeIn = trigger('counterChange', [
  * Grows and shrinks smoothly on enter and leave.
  */
 export const GrowShrinkFast: AnimationTriggerMetadata = trigger('growShrink', [
-  state('in', style({ height: '*' })),
+  state('in', style({ height: '*', opacity: 1, margin: '*' })),
   transition(':enter', [
-    style({
-      height: '0px',
-      opacity: 0,
-      margin: 0,
-    }),
+    style({ height: '0px', opacity: 0, margin: 0 }),
     animate(
-      '0.2s ease-in',
-      style({
-        height: '*',
-        opacity: 1,
-        margin: '*',
-      })
+      '0.3s cubic-bezier(0.24, 1, 0.32, 1)',
+      style({ height: '*', opacity: 1, margin: '*' })
     ),
   ]),
   transition(':leave', [
     animate(
-      '0.2s ease-out',
-      style({
-        height: '0px',
-        opacity: 0,
-        margin: 0,
-      })
+      '0.3s cubic-bezier(0.24, 1, 0.32, 1)',
+      style({ height: '0px', opacity: 0, margin: 0 })
     ),
   ]),
 ]);
