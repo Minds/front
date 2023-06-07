@@ -82,6 +82,7 @@ export class BoostModalV2GoalButtonSelectorComponent
                   buttonUrl ? buttonUrl : null,
                   [
                     Validators.required,
+                    Validators.minLength(5),
                     this.goalButtonUrlValidator('goal_button_url'),
                   ]
                 ),

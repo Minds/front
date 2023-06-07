@@ -148,11 +148,30 @@ export const CounterChangeFadeIn = trigger('counterChange', [
   ]),
 ]);
 
+
+
+/**
+ * refactor of growShrinkFast using transition and state.
+ */
+
+export const GrowShrinkFast: AnimationTriggerMetadata = trigger('growShrink', [
+  state('in', style({ height: '*', opacity: 1, margin: '*' })),
+  transition(':enter', [
+    style({ height: '0px', opacity: 0, margin: 0 }),
+    animate('0.3s cubic-bezier(0.24, 1, 0.32, 1)', style({ height: '*', opacity: 1, margin: '*' })),
+  ]),
+  transition(':leave', [
+    animate('0.3s cubic-bezier(0.24, 1, 0.32, 1)', style({ height: '0px', opacity: 0, margin: 0 })),
+  ]),
+]);
+
+
 /**
  * Grows and shrinks smoothly on enter and leave.
  */
-export const GrowShrinkFast: AnimationTriggerMetadata = trigger('growShrink', [
-  state('in', style({ height: '*' })),
+
+/**
+ export const GrowShrinkFast: AnimationTriggerMetadata = trigger('growShrink', [
   transition(':enter', [
     style({
       height: '0px',
@@ -179,3 +198,6 @@ export const GrowShrinkFast: AnimationTriggerMetadata = trigger('growShrink', [
     ),
   ]),
 ]);
+
+ */
+
