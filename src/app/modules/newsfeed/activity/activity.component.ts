@@ -240,7 +240,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
             })
           );
         });
-      this.elementVisibilityService.checkVisibility();
+
+      // Wait 1 second before recording the initial view
+      setTimeout(() => this.elementVisibilityService.checkVisibility(), 1000);
 
       // Only needed when metrics toolbar is visible.
       if (this.service.displayOptions.showToolbar) {

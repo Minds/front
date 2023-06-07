@@ -1,4 +1,4 @@
-<article *ngIf="(topFeedService.feed | async)?.length">
+<article *ngIf="connection || (topFeedService.feed | async)?.length">
   <header>
     <h3 class="m-topHighlights__title">Highlights</h3>
 
@@ -10,7 +10,24 @@
     </m-dropdownMenu>
   </header>
 
-  <section>
+  <section *ngIf="connection.edges.length; else legacyHighlights">
+    <ul>
+      <li
+        *ngFor="let edge of connection.edges; let i = index; trackBy: trackByFn"
+      >
+        <m-activity
+          [entity]="edge.node.legacy | parseJson"
+          [displayOptions]="{
+            showOnlyCommentsInput: true,
+            isFeed: true
+          }"
+          [slot]="i + 1"
+        ></m-activity>
+      </li>
+    </ul>
+  </section>
+
+  <ng-template #legacyHighlights>
     <ul>
       <li *ngFor="let activity$ of topFeedService.feed | async; let i = index">
         <m-activity
@@ -24,7 +41,7 @@
         ></m-activity>
       </li>
     </ul>
-  </section>
+  </ng-template>
 
   <footer class="m-topHighlights__showMore__container">
     <a

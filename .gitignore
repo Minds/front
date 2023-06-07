@@ -43,6 +43,7 @@ cypress/videos
 !/.gitlab
 !/.githooks
 !/.prettierrc
+!/.prettierignore
 !.gitattributes
 !.gitkeep
 !/.nvmrc

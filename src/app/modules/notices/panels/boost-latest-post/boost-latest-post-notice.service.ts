@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../../common/api/api.service';
 import { Session } from '../../../../services/session';
 import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
@@ -35,7 +35,8 @@ export class BoostLatestPostNoticeService {
     catchError(e => this.handleApiError(e)),
     map((apiResponse: ChannelFeedResponse) => {
       return apiResponse.entities[0] || false;
-    })
+    }),
+    shareReplay()
   );
 
   constructor(private api: ApiService, private session: Session) {}
