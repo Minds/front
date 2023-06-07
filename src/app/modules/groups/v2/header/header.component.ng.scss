@@ -118,6 +118,10 @@
       @media screen and (min-width: $layoutMin3ColWidth) {
         margin-right: $spacing20;
       }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-top: 12px;
+      }
     }
   }
 
