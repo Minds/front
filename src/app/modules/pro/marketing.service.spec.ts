@@ -23,7 +23,7 @@ describe('ProMarketingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ApolloTestingModule],
+      imports: [ApolloTestingModule.withClients(['strapi'])],
       providers: [ProMarketingService],
     });
 

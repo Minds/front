@@ -23,7 +23,7 @@ describe('BoostMarketingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ApolloTestingModule],
+      imports: [ApolloTestingModule.withClients(['strapi'])],
       providers: [BoostMarketingService],
     });
 

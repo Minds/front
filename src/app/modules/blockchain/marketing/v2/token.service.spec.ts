@@ -23,7 +23,7 @@ describe('TokenMarketingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ApolloTestingModule],
+      imports: [ApolloTestingModule.withClients(['strapi'])],
       providers: [TokenMarketingService],
     });
 

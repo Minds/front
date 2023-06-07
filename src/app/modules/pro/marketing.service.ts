@@ -10,7 +10,7 @@ import { ProductMarketingResponse } from '../../common/services/strapi/marketing
 export class ProMarketingService {
   public readonly copyData: QueryRef<
     ProductMarketingResponse
-  > = this.apollo.watchQuery<ProductMarketingResponse>({
+  > = this.apollo.use('strapi').watchQuery<ProductMarketingResponse>({
     query: PRODUCT_PAGE_QUERY_FULL,
     variables: {
       slug: 'pro',

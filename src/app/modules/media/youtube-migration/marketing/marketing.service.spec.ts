@@ -23,7 +23,7 @@ describe('YoutubeMigrationMarketingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ApolloTestingModule],
+      imports: [ApolloTestingModule.withClients(['strapi'])],
       providers: [YoutubeMigrationMarketingService],
     });
 
