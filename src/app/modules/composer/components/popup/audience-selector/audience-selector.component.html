@@ -38,7 +38,7 @@
     </ng-container>
     <ng-template #expandableSubtitleTemplate>
       <h4 class="m-composerPopup__subtitle" (click)="toggleGroupsExpand()">
-        <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My Groups</span>
+        <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My groups</span>
         <ng-container *ngIf="groupsExpanded$ | async; else collapsedTemplate">
           <span class="material-icons">expand_more</span>
         </ng-container>
