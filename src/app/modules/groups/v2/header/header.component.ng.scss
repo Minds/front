@@ -1,4 +1,5 @@
 @import 'defaults.scss';
+@import '../../../../common//layout//layout.scss';
 
 :host {
   .m-groupHeader__banner {
@@ -113,6 +114,10 @@
       white-space: nowrap;
       overflow-x: hidden;
       text-overflow: ellipsis;
+
+      @media screen and (min-width: $layoutMin3ColWidth) {
+        margin-right: $spacing20;
+      }
     }
   }
 
