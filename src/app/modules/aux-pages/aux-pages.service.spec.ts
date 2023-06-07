@@ -51,7 +51,10 @@ describe('AuxPagesService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ApolloTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        ApolloTestingModule.withClients(['strapi']),
+      ],
       providers: [AuxPagesService, Apollo],
     });
 
