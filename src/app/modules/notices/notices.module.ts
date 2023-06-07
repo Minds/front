@@ -16,6 +16,7 @@ import { BoostChannelNoticeComponent } from './panels/boost-channel/boost-channe
 import { InviteFriendsNoticeComponent } from './panels/invite-friends/invite-friends-notice.component';
 import { BoostLatestPostNoticeComponent } from './panels/boost-latest-post/boost-latest-post-notice.component';
 import { BoostLatestPostNoticeService } from './panels/boost-latest-post/boost-latest-post-notice.service';
+import { FeedNoticeSwitchComponent } from './outlet/feed-notice-switch.component';
 
 @NgModule({
   imports: [CommonModule, NgCommonModule],
@@ -34,8 +35,13 @@ import { BoostLatestPostNoticeService } from './panels/boost-latest-post/boost-l
     BoostChannelNoticeComponent,
     InviteFriendsNoticeComponent,
     BoostLatestPostNoticeComponent,
+    FeedNoticeSwitchComponent,
   ],
   providers: [BoostLatestPostNoticeService],
-  exports: [FeedNoticeOutletComponent, BoostLatestPostNoticeComponent],
+  exports: [
+    FeedNoticeOutletComponent,
+    FeedNoticeSwitchComponent,
+    BoostLatestPostNoticeComponent,
+  ],
 })
 export class NoticesModule {}

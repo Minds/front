@@ -27,7 +27,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: string = '';
-  showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
   showRightSidebar: boolean = true;
@@ -104,13 +103,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
       }
 
       this.newUserPromo = !!params['newUser'];
-
-      if (params['ts']) {
-        this.showBoostRotator = false;
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 300);
-      }
     });
 
     this.context.set('activity');
