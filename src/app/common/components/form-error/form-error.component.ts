@@ -19,7 +19,7 @@ import { GrowShrinkFast } from '../../../animations';
       [@growShrink]="(errorString$ | async)?.length"
       [ngStyle]="customStyle"
     >
-      {{ errorString$ | async }}
+      <span>{{ errorString$ | async }}</span>
     </div>
   `,
   styleUrls: ['./form-error.component.ng.scss'],

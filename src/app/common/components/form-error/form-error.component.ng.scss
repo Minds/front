@@ -1,9 +1,10 @@
 @import 'defaults.scss';
 
 :host {
-  div {
+  span {
     overflow: hidden;
 
+    @include body2Regular;
     @include m-theme() {
       color: themed($m-alert);
     }
