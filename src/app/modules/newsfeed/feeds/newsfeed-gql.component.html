@@ -1,0 +1,124 @@
+<div class="m-newsfeed__inner">
+  <ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
+    <ng-container>
+      <m-composer [size]="'compact'" #composer></m-composer>
+    </ng-container>
+
+    <m-newsfeed__tabs></m-newsfeed__tabs>
+
+    <div class="m-newsfeed__list">
+      <!---------------------------------------------------------
+        Only show the new composer post when on the 'latest' tab
+      ----------------------------------------------------------->
+      <ng-container *ngIf="algorithm === 'latest'">
+        <ng-container *ngFor="let preActivity of prepended; let i = index">
+          <m-activity
+            [entity]="preActivity"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            (deleted)="delete(preActivity)"
+          ></m-activity>
+        </ng-container>
+      </ng-container>
+
+      <!--actual feed-->
+      <ng-container
+        *ngFor="
+          let edge of edges$ | async | slice: 0:(pageSize$ | async);
+          let i = index;
+          trackBy: trackByFn
+        "
+      >
+        <!---------------------------
+          Display the boost rotator
+        ----------------------------->
+        <ng-container *mIfBrowser>
+          <m-newsfeed--boost-rotator
+            *ngIf="i === 1 && showBoostRotator"
+            #feedViewChildren
+            #boostRotator
+          ></m-newsfeed--boost-rotator>
+        </ng-container>
+
+        <ng-container [ngSwitch]="edge.__typename">
+          <!----------------
+            InFeedNotice
+          ----------------->
+          <ng-template ngSwitchCase="FeedNoticeEdge">
+            <m-feedNotice__switch
+              [key]="edge.node.key"
+              [location]="edge.node.location"
+            ></m-feedNotice__switch>
+          </ng-template>
+
+          <!----------------
+            Boosts
+          ----------------->
+          <ng-template ngSwitchCase="BoostEdge">
+            <m-activity
+              *ngIf="edge.node"
+              [entity]="edge.node.legacy"
+              [displayOptions]="{
+                showOnlyCommentsInput: true,
+                isFeed: true
+              }"
+              [slot]="i + 1"
+              (deleted)="delete(edge.node)"
+            ></m-activity>
+          </ng-template>
+
+          <!----------------
+            Activity
+          ----------------->
+          <ng-template ngSwitchCase="ActivityEdge">
+            <m-activity
+              *ngIf="edge.node"
+              [entity]="edge.node.legacy"
+              [displayOptions]="{
+                showOnlyCommentsInput: true,
+                isFeed: true
+              }"
+              [slot]="i + 1"
+              (deleted)="delete(edge.node)"
+            ></m-activity>
+          </ng-template>
+
+          <ng-template ngSwitchCase="FeedHighlightsEdge">
+            <m-topHighlights
+              (onSeeMore)="onShowMoreTopFeed()"
+              *ngIf="!(isTopHighlightsDismissed$ | async)"
+              [connection]="edge.node"
+            ></m-topHighlights>
+          </ng-template>
+
+          <ng-template ngSwitchCase="PublisherRecsEdge">
+            <m-channelRecommendation
+              location="newsfeed"
+              [dismissible]="true"
+              [connection]="edge.node"
+            ></m-channelRecommendation>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+
+      <infinite-scroll
+        (load)="fetchMore()"
+        [moreData]="canShowMoreEdges$ | async"
+        [inProgress]="inProgress"
+        [endText]="newsfeedEndText"
+      >
+      </infinite-scroll>
+    </div>
+  </ng-container>
+</div>
+
+<!-- <ng-container *ngIf="algorithm === 'latest'">
+  <ng-container *mIfBrowser>
+    <m-seeLatestPostsButton
+      [feedService]="feedService"
+      (click)="scrollToUnderBoostRotator()"
+    ></m-seeLatestPostsButton>
+  </ng-container>
+</ng-container> -->
