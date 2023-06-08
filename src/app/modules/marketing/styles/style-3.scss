@@ -30,7 +30,7 @@
         min-height: 0;
       }
 
-      &::before {
+      &:not(.m-marketing__body--noBodyBackground)::before {
         content: '';
         position: absolute;
         top: 0;
@@ -178,7 +178,7 @@
 
         // Deco
 
-        &::after {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::after {
           content: '';
           display: block;
           position: absolute;

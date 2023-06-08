@@ -14,6 +14,7 @@ import { PayMarketingComponent } from './marketing/marketing.component';
 import { WireV2Module } from './v2/wire-v2.module';
 import { WireModalService } from './wire-modal.service';
 import { MarketingModule } from '../marketing/marketing.module';
+import { MarkdownModule } from 'ngx-markdown';
 
 const wireRoutes: Routes = [
   { path: 'wire', redirectTo: 'pay' },
@@ -21,11 +22,6 @@ const wireRoutes: Routes = [
     path: 'pay',
     component: PayMarketingComponent,
     data: {
-      title: 'Minds Pay (Wire)',
-      description: 'Send and receive payments in USD, BTC, ETH and Tokens',
-      ogImage: '/assets/og-images/pay-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
       preventLayoutReset: true,
     },
   },
@@ -37,6 +33,7 @@ const wireRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(wireRoutes),
+    MarkdownModule.forRoot(),
     CommonModule,
     PaymentsModule,
     WireV2Module,

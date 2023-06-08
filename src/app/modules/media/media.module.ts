@@ -39,12 +39,6 @@ const routes: Routes = [
     path: 'youtube-migration',
     component: YoutubeMigrationMarketingComponent,
     data: {
-      title: 'YouTube Migration',
-      description:
-        'Link your accounts so that every new upload to YouTube also posts to Minds. Import your full video library to protect your content from unfair censorship and demonetization.',
-      ogImage: '/assets/og-images/youtube-migration-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
       preventLayoutReset: true,
     },
   },
