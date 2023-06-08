@@ -18,6 +18,9 @@ import { MarketingAsFeaturedInComponent } from './as-featured-in.component';
 import { MarketingAsFeaturedInBlockchainComponent } from './as-featured-in-blockchain/as-featured-in-blockchain.component';
 import { LanguageModule } from '../language/language.module';
 import { MarketingAsFeaturedInV2Component } from './v2/as-featured-in.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { MarketingOtherFeaturesSectionComponent } from './other-features-section/other-features-section.component';
+import { MarketingGeneralSectionComponent } from './general-section/general-section.component';
 
 @NgModule({
   imports: [
@@ -29,6 +32,7 @@ import { MarketingAsFeaturedInV2Component } from './v2/as-featured-in.component'
     CommonModule,
     ModalsModule,
     LanguageModule,
+    MarkdownModule.forRoot(),
   ],
   declarations: [
     MarketingComponent,
@@ -36,6 +40,8 @@ import { MarketingAsFeaturedInV2Component } from './v2/as-featured-in.component'
     MarketingAsFeaturedInComponent,
     MarketingAsFeaturedInV2Component,
     MarketingAsFeaturedInBlockchainComponent,
+    MarketingGeneralSectionComponent,
+    MarketingOtherFeaturesSectionComponent,
   ],
   exports: [
     MarketingComponent,
@@ -43,6 +49,8 @@ import { MarketingAsFeaturedInV2Component } from './v2/as-featured-in.component'
     MarketingAsFeaturedInComponent,
     MarketingAsFeaturedInV2Component,
     MarketingAsFeaturedInBlockchainComponent,
+    MarketingGeneralSectionComponent,
+    MarketingOtherFeaturesSectionComponent,
   ],
 })
 export class MarketingModule {}
