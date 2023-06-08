@@ -25,7 +25,7 @@
     .m-marketing__body {
       position: relative;
 
-      &::after {
+      &:not(.m-marketing__body--noBodyBackground)::after {
         content: '';
         display: block;
         position: absolute;
@@ -88,7 +88,7 @@
 
         // Deco
 
-        &::before {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::before {
           content: '';
           display: block;
           position: absolute;
@@ -111,7 +111,7 @@
           }
         }
 
-        &::after {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::after {
           content: '';
           display: block;
           position: absolute;

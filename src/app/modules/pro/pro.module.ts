@@ -32,6 +32,7 @@ import { ProChannelFooterMenuButtonComponent } from './channel/footer-menu-butto
 import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
 import { ChannelsV2Service } from '../channels/v2/channels-v2.service';
 import { PathMatch } from '../../common/types/angular.types';
+import { MarkdownModule } from 'ngx-markdown';
 
 const routes: Routes = [
   {
@@ -41,10 +42,6 @@ const routes: Routes = [
         path: '',
         component: ProMarketingComponent,
         data: {
-          title: 'Minds Pro',
-          description: 'The ultimate platform for creators and brands',
-          ogImage: '/assets/product-pages/pro/pro-1.jpg',
-          canonicalUrl: '/pro',
           preventLayoutReset: true,
         },
       },
@@ -137,6 +134,7 @@ export const PRO_DOMAIN_ROUTES: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
+    MarkdownModule.forRoot(),
     MindsFormsModule,
     NewsfeedModule,
     WireModule,

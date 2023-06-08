@@ -19,6 +19,7 @@ import { BoostConsoleStatsBarComponent } from './console-v2/list/list-item/stats
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { BoostConsoleSingleComponent } from './console-v2/single/single.component';
 import { NoticesModule } from '../notices/notices.module';
+import { MarkdownModule } from 'ngx-markdown';
 
 const boostRoutes: Routes = [
   {
@@ -34,9 +35,6 @@ const boostRoutes: Routes = [
     path: 'boost',
     component: BoostMarketingComponent,
     data: {
-      title: 'Boost',
-      description: 'Expand your reach and gain thousands of views',
-      ogImage: '/assets/product-pages/boost/boost-1.jpg',
       preventLayoutReset: true,
     },
   },
@@ -48,6 +46,7 @@ const boostRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(boostRoutes),
+    MarkdownModule.forRoot(),
     CommonModule,
     AdsModule,
     MarketingModule,
