@@ -11,6 +11,7 @@ import { YoutubeMigrationMarketingComponent } from './marketing/marketing.compon
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { MarketingModule } from '../../marketing/marketing.module';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MarketingModule } from '../../marketing/marketing.module';
     FormsModule,
     ReactiveFormsModule,
     MarketingModule,
+    MarkdownModule.forRoot(),
   ],
   exports: [
     YoutubeMigrationComponent,
