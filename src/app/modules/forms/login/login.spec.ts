@@ -126,6 +126,7 @@ describe('LoginForm', () => {
               },
             }),
           },
+          { provide: Router, useClass: RouterStub },
           RegexService,
           { provide: Router, useClass: RouterStub },
           {

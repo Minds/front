@@ -28,18 +28,6 @@
   }
 
   // *********************************
-  // ** COMPOSER - QUOTE **
-  // *********************************
-  m-composerpreview--quote & {
-    .m-activity__flagRow {
-      display: none;
-    }
-    .m-activityLeftColumn__spacer {
-      height: 0;
-    }
-  }
-
-  // *********************************
   // ** FEED **
   // *********************************
 
@@ -81,10 +69,6 @@
         height: calc(100% - 68px);
       }
 
-      .m-activity__flagRow {
-        padding-bottom: 0;
-      }
-
       ::ng-deep {
         m-activity__nsfwConsent {
           flex: 1;
@@ -123,9 +107,6 @@
       padding-top: 0;
       padding-left: 0;
       padding-right: 0;
-    }
-    .m-activity__flagRow {
-      display: none;
     }
   }
 
@@ -220,14 +201,6 @@
     min-width: 0; // See https://stackoverflow.com/a/66689926
   }
 
-  .m-activity__flagRow {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: $spacing3;
-    align-items: center;
-    min-width: 0;
-  }
-
   .m-activityTop__avatarColumn,
   ::ng-deep m-activity__quote .m-activityTop__avatarColumn {
     padding-right: $activityAvatarSpacingRight--feed;
@@ -258,6 +231,9 @@
     }
   }
 
+  // *********************************
+  // ** FLAG ROW **
+  // *********************************
   .m-activityLeftColumn__spacer {
     height: $spacing8;
   }
