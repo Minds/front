@@ -3,12 +3,7 @@
     <ng-container *ngTemplateOutlet="sortSelector"></ng-container>
   </div>
 </ng-container>
-<m-composer
-  *ngIf="isMember()"
-  (onPost)="prepend($event)"
-  [containerGuid]="group.guid"
-  #composer
-></m-composer>
+<m-composer *ngIf="isMember()" [container]="group" #composer></m-composer>
 
 <div class="minds-list">
   <div>
