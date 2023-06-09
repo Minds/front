@@ -65,9 +65,9 @@ export class OnboardingV4Service implements OnDestroy {
    * If the experiment is active
    */
   private async openPublisherRecommendationsModal(): Promise<void> {
-    // if (!this.onboardingTagsExperiment.isActive()) {
-    //   return;
-    // }
+    if (!this.onboardingTagsExperiment.isActive()) {
+      return;
+    }
     const modal = this.modalService.present(
       PublisherRecommendationsModalComponent,
       {
@@ -94,12 +94,12 @@ export class OnboardingV4Service implements OnDestroy {
    * If the experiment is on
    */
   private async openGroupRecommendationModal(): Promise<void> {
-    // if (
-    //   !this.onboardingTagsExperiment.isActive() ||
-    //   this.channelSubscriptionCount < 1
-    // ) {
-    //   return;
-    // }
+    if (
+      !this.onboardingTagsExperiment.isActive() ||
+      this.channelSubscriptionCount < 1
+    ) {
+      return;
+    }
     const modal = this.modalService.present(
       PublisherRecommendationsModalComponent,
       {
