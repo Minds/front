@@ -12,7 +12,6 @@ import {
   BoostConsoleGetParams,
   BoostConsoleLocationFilter,
   BoostConsolePaymentMethodFilter,
-  BoostConsoleSingleGetResponse,
   BoostConsoleStateFilter,
   BoostConsoleSuitabilityFilter,
   BoostLocation,
@@ -72,6 +71,10 @@ export class BoostConsoleService {
     Boost
   >(null);
 
+  public readonly remoteUserGuid$: BehaviorSubject<
+    string
+  > = new BehaviorSubject<string>(null);
+
   constructor(
     public session: Session,
     private api: ApiService,
@@ -104,7 +107,8 @@ export class BoostConsoleService {
     return this.adminContext$.pipe(
       take(1),
       switchMap((adminContext: boolean) => {
-        let context = adminContext ? '/admin' : '';
+        let context =
+          adminContext || this.remoteUserGuid$.getValue() ? '/admin' : '';
         let endpoint = `${this.endpoint}${context}`;
 
         let params: BoostConsoleGetParams = {
@@ -114,6 +118,7 @@ export class BoostConsoleService {
           status: null,
           audience: null,
           payment_method: null,
+          remote_user_guid: null,
         };
         // -------------------------------------------
         // FILTERS FOR BOTH USERS + ADMINS
@@ -123,8 +128,8 @@ export class BoostConsoleService {
           params.location = this.getBoostLocationFromFilterValue(location);
         }
         // -------------------------------------------
-        // FILTERS FOR USERS ONLY
-        if (!this.adminContext$.getValue()) {
+        if (!adminContext) {
+          // FILTERS FOR USERS
           const state = this.stateFilterValue$.getValue();
 
           if (state) {
@@ -133,24 +138,32 @@ export class BoostConsoleService {
         }
         // -------------------------------------------
         // FILTERS FOR ADMINS ONLY
-        if (this.adminContext$.getValue() && this.session.isAdmin()) {
-          params.status = BoostState.PENDING;
+        if (this.session.isAdmin()) {
+          if (adminContext) {
+            params.status = BoostState.PENDING;
 
-          const suitability = this.suitabilityFilterValue$.getValue();
-          const paymentMethod = this.paymentMethodFilterValue$.getValue();
+            const suitability = this.suitabilityFilterValue$.getValue();
+            const paymentMethod = this.paymentMethodFilterValue$.getValue();
 
-          if (suitability) {
-            params.audience = this.getBoostSuitabilityFromFilterValue(
-              suitability
-            );
-          }
+            if (suitability) {
+              params.audience = this.getBoostSuitabilityFromFilterValue(
+                suitability
+              );
+            }
 
-          if (paymentMethod) {
-            params.payment_method = this.getBoostPaymentMethodFromFilterValue(
-              paymentMethod
-            );
+            if (paymentMethod) {
+              params.payment_method = this.getBoostPaymentMethodFromFilterValue(
+                paymentMethod
+              );
+            }
+          } else {
+            const remoteUserGuid = this.remoteUserGuid$.getValue();
+            if (remoteUserGuid) {
+              params.remote_user_guid = remoteUserGuid;
+            }
           }
         }
+
         // -------------------------------------------
         return this.api.get<ApiResponse>(endpoint, params);
       }),
