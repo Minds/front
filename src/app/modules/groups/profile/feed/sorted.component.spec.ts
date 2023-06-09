@@ -14,6 +14,7 @@ import { GroupsSearchService } from './search.service';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { BehaviorSubject, of } from 'rxjs';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
 
 describe('GroupProfileFeedSortedComponent', () => {
   let comp: GroupProfileFeedSortedComponent;
@@ -57,28 +58,45 @@ describe('GroupProfileFeedSortedComponent', () => {
         declarations: [
           GroupProfileFeedSortedComponent,
           MockComponent({
+            selector: 'm-composer',
+            inputs: ['container'],
+            outputs: [],
+          }),
+          MockComponent({
+            selector: 'm-tooltip',
+            inputs: ['icon'],
+            outputs: [],
+          }),
+          MockComponent({
+            selector: 'm-activity',
+            inputs: ['displayOptions', 'entity', 'slot', 'canDelete'],
+            outputs: ['deleted'],
+          }),
+          MockComponent({
+            selector: 'm-featured-content',
+            inputs: ['slot', 'displayOptions', 'showHeader', 'servedByGuid'],
+            outputs: [],
+          }),
+          MockComponent({
+            selector: 'infinite-scroll',
+            inputs: ['moreData', 'inProgress'],
+            outputs: ['load'],
+          }),
+          MockComponent({
+            selector: 'm-groups__kick-modal',
+            inputs: ['user', 'group'],
+            outputs: ['closed'],
+          }),
+          MockComponent({
             selector: 'm-sort-selector',
             inputs: [
               'allowedAlgorithms',
               'allowedPeriods',
               'allowedCustomTypes',
               'customType',
+              'v2',
             ],
-          }),
-          MockComponent({
-            selector: 'infinite-scroll',
-            inputs: ['moreData', 'inProgress'],
-          }),
-          MockComponent({
-            selector: 'm-composer',
-            inputs: ['containerGuid'],
-          }),
-          MockComponent({
-            selector: 'm-tooltip',
-          }),
-          MockComponent({
-            selector: 'm-activity',
-            inputs: ['entity', 'displayOptions', 'slot', 'canDelete'],
+            outputs: ['onChange'],
           }),
         ],
         imports: [RouterTestingModule],
@@ -98,6 +116,15 @@ describe('GroupProfileFeedSortedComponent', () => {
               has: ['query$'],
               props: {
                 query$: { get: () => new BehaviorSubject<string>('') },
+              },
+            }),
+          },
+          {
+            provide: FeedsUpdateService,
+            useValue: MockService(FeedsUpdateService, {
+              has: ['postEmitter'],
+              props: {
+                postEmitter: { get: () => new BehaviorSubject<any>(null) },
               },
             }),
           },
@@ -171,9 +198,11 @@ describe('GroupProfileFeedSortedComponent', () => {
     const activity = {
       guid: 123,
       urn: 'urn:activity:123',
+      container_guid: 234,
     };
     comp.type === 'activities';
     comp.group = {
+      guid: 234,
       moderated: false,
       'is:moderator': false,
       'is:owner': false,
@@ -193,9 +222,11 @@ describe('GroupProfileFeedSortedComponent', () => {
     const activity = {
       guid: 234,
       urn: 'urn:activity:234',
+      container_guid: 345,
     };
     comp.type === 'activities';
     comp.group = {
+      guid: 345,
       moderated: true,
       'is:moderator': false,
       'is:owner': false,
@@ -217,9 +248,11 @@ describe('GroupProfileFeedSortedComponent', () => {
     const activity = {
       guid: 345,
       urn: 'urn:activity:345',
+      container_guid: 456,
     };
     comp.type === 'activities';
     comp.group = {
+      guid: 456,
       moderated: true,
       'is:moderator': false,
       'is:owner': true,
@@ -239,9 +272,11 @@ describe('GroupProfileFeedSortedComponent', () => {
     const activity = {
       guid: 456,
       urn: 'urn:activity:456',
+      container_guid: 567,
     };
     comp.type === 'activities';
     comp.group = {
+      guid: 567,
       moderated: true,
       'is:moderator': true,
       'is:owner': false,

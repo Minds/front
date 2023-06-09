@@ -9,7 +9,6 @@ import { MindsVideoPlayerV2Component } from './player-v2.component';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { ChangeDetectorRef, ElementRef, PLATFORM_ID } from '@angular/core';
 import { VideoPlayerService, VideoSource } from '../player.service';
-import { AutoProgressVideoService } from '../../video/auto-progress-overlay/auto-progress-video.service';
 import { BehaviorSubject, of } from 'rxjs';
 
 describe('MindsVideoPlayerV2Component', () => {
@@ -47,10 +46,6 @@ describe('MindsVideoPlayerV2Component', () => {
           {
             provide: ChangeDetectorRef,
             useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: AutoProgressVideoService,
-            useValue: MockService(AutoProgressVideoService),
           },
           {
             provide: PLATFORM_ID,

@@ -151,7 +151,7 @@
 
         // Deco
 
-        &::after {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::after {
           content: '';
           display: block;
           position: absolute;

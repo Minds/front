@@ -1,9 +1,9 @@
-import { Injectable, Injector, OnDestroy, OnInit } from '@angular/core';
+import { Injectable, Injector, OnDestroy } from '@angular/core';
 import { ModalService } from '../../services/ux/modal.service';
 import { OnboardingTagsExperimentService } from '../experiments/sub-services/onboarding-tags-experiment.service';
 import { ContentSettingsComponent } from '../content-settings/content-settings/content-settings.component';
 import { ChannelRecommendationModalComponent } from '../suggestions/channel-recommendation-modal/channel-recommendation-modal.component';
-import { Subscription, filter, take } from 'rxjs';
+import { Subject, Subscription, filter, take } from 'rxjs';
 import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 import { DiscoveryTagsService } from '../discovery/tags/tags.service';
 
@@ -20,6 +20,9 @@ import { DiscoveryTagsService } from '../discovery/tags/tags.service';
 export class OnboardingV4Service implements OnDestroy {
   /** @type { Subscription } - subscription that fires on email confirmation */
   private emailConfirmationSubscription: Subscription;
+
+  // fires on tag modal completion.
+  public readonly tagsCompleted$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private emailConfirmation: EmailConfirmationService,
@@ -50,6 +53,7 @@ export class OnboardingV4Service implements OnDestroy {
         onSave: () => {
           modal.close();
           this.openChannelRecommendationModal();
+          this.tagsCompleted$.next(true);
         },
         isOnboarding: true,
       },

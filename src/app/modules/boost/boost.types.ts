@@ -107,6 +107,7 @@ export type BoostConsoleGetParams = {
   status?: BoostState;
   audience?: BoostSuitability;
   payment_method?: BoostPaymentMethod;
+  remote_user_guid?: string; // user guid for admin lookup
 };
 
 // STATS FOR ADMIN BOOST CONSOLE
