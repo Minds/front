@@ -2,7 +2,7 @@ import { Injectable, Injector, OnDestroy, OnInit } from '@angular/core';
 import { ModalService } from '../../services/ux/modal.service';
 import { OnboardingTagsExperimentService } from '../experiments/sub-services/onboarding-tags-experiment.service';
 import { ContentSettingsComponent } from '../content-settings/content-settings/content-settings.component';
-import { ChannelRecommendationModalComponent } from '../suggestions/channel-recommendation-modal/channel-recommendation-modal.component';
+import { PublisherRecommendationsModalComponent } from '../suggestions/publisher-recommendations-modal/publisher-recommendations-modal.component';
 import { Subscription, filter, take } from 'rxjs';
 import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 import { DiscoveryTagsService } from '../discovery/tags/tags.service';
@@ -51,7 +51,7 @@ export class OnboardingV4Service implements OnDestroy {
       data: {
         onSave: () => {
           modal.close();
-          this.openChannelRecommendationModal();
+          this.openPublisherRecommendationsModal();
         },
         isOnboarding: true,
       },
@@ -61,15 +61,15 @@ export class OnboardingV4Service implements OnDestroy {
   }
 
   /**
-   * Opens channel recommendations modal
+   * Opens publisher recommendations modal
    * If the experiment is active
    */
-  private async openChannelRecommendationModal(): Promise<void> {
-    if (!this.onboardingTagsExperiment.isActive()) {
-      return;
-    }
+  private async openPublisherRecommendationsModal(): Promise<void> {
+    // if (!this.onboardingTagsExperiment.isActive()) {
+    //   return;
+    // }
     const modal = this.modalService.present(
-      ChannelRecommendationModalComponent,
+      PublisherRecommendationsModalComponent,
       {
         data: {
           onContinue: () => {
@@ -94,14 +94,14 @@ export class OnboardingV4Service implements OnDestroy {
    * If the experiment is on
    */
   private async openGroupRecommendationModal(): Promise<void> {
-    if (
-      !this.onboardingTagsExperiment.isActive() ||
-      this.channelSubscriptionCount < 1
-    ) {
-      return;
-    }
+    // if (
+    //   !this.onboardingTagsExperiment.isActive() ||
+    //   this.channelSubscriptionCount < 1
+    // ) {
+    //   return;
+    // }
     const modal = this.modalService.present(
-      ChannelRecommendationModalComponent,
+      PublisherRecommendationsModalComponent,
       {
         data: {
           onContinue: () => {

@@ -45,6 +45,7 @@ import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 import { Platform } from '@angular/cdk/platform';
 import { Session } from '../../../services/session';
+import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 
 export enum FeedAlgorithm {
   top = 'top',
@@ -63,7 +64,7 @@ const commonInjectItems: InjectItem[] = [
     indexes: i => (i > 0 && i % 5 === 0) || i === 3,
   },
   {
-    type: FeedItemType.channelRecommendations,
+    type: FeedItemType.publisherRecommendations,
     indexes: (i, feedLength) =>
       feedLength <= 3 ? i === feedLength - 1 : i === 2,
   },
@@ -143,6 +144,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   private zendeskErrorSubscription: Subscription;
 
   /**
+   * Should we show channel or group recs?
+   */
+  recommendationsPublisherType: PublisherType;
+
+  /**
    * Listening for new posts.
    */
   private feedsUpdatedSubscription: Subscription;
@@ -157,9 +163,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    */
   isTopHighlightsDismissed$ = this.dismissal.dismissed('top-highlights');
   /**
-   * Whether channel recommendation is dismissed
+   * Whether publisher recommendations is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
+  isPublisherRecommendationsDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
   isDiscoveryFallbackDismissed$ = this.dismissal.dismissed(
@@ -284,6 +290,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.recommendationsPublisherType = this.getPublisherType();
+
     this.feedNoticeService.fetch();
 
     this.context.set('activity');
@@ -315,6 +323,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
   async load() {
     if (isPlatformServer(this.platformId)) return;
+
+    this.recommendationsPublisherType = this.getPublisherType();
 
     this.moreData = true;
     this.offset = 0;
@@ -464,12 +474,12 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * whether channel recommendation should be shown
+   * whether publisher recommendations should be shown
    * @param { string } location the location where the widget is to be shown
    * @param { number } index the index of the feed
    * @returns { boolean }
    */
-  public shouldShowChannelRecommendation(location: string, index?: number) {
+  public shouldShowPublisherRecommendations(location: string, index?: number) {
     if (this.feedService.inProgress && !this.feedService.feedLength) {
       return false;
     }
@@ -570,6 +580,20 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       case this.groupsFeedService:
         this.latestFallbackActive$.next(false);
         break;
+    }
+  }
+
+  /**
+   * Randomly choose whether to show user or group recs
+   *
+   * Except if we're on the Group feed tab only show group recs
+   */
+  getPublisherType(): PublisherType {
+    switch (this.algorithm) {
+      case 'groups':
+        return 'group';
+      default:
+        return Math.random() < 0.5 ? 'user' : 'group';
     }
   }
 }

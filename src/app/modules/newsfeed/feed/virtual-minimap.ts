@@ -45,7 +45,7 @@ export class VirtualMinimapComponent {
     switch (feedItem?.type) {
       case FeedItemType.activity:
         return '#4caf50' + (isActive ? '' : '99');
-      case FeedItemType.channelRecommendations:
+      case FeedItemType.publisherRecommendations:
         return '#e91e63' + (isActive ? '' : '99');
       case FeedItemType.featuredContent:
         return '#2196f3' + (isActive ? '' : '99');

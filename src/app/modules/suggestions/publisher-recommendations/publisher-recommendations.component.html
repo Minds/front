@@ -8,12 +8,26 @@
     *ngIf="(recommendations$ | async).length"
   >
     <header *ngIf="!isOnboarding">
-      <h3>
+      <h3 *ngIf="title; else defaultTitle">
         {{ title }}
       </h3>
+      <ng-template #defaultTitle>
+        <h3
+          *ngIf="publisherType === 'user'"
+          i18n="@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS"
+        >
+          Recommended Channels
+        </h3>
+        <h3
+          *ngIf="publisherType === 'group'"
+          i18n="@@M_DISCOVERY_CARD_CAROUSEL__RECOMMENDED_GROUPS"
+        >
+          Recommended Groups
+        </h3>
+      </ng-template>
       <div>
         <a
-          [routerLink]="['/discovery/suggestions/user']"
+          [routerLink]="['/', 'discovery', 'suggestions', publisherType]"
           [queryParams]="channelId && { u: channelId }"
           i18n="@@COMMON__SEE_MORE__ACTION"
           >See more</a
@@ -31,51 +45,51 @@
       <li
         @listAnimation
         *ngFor="
-          let channel of recommendations$
+          let publisher of recommendations$
             | async
             | slice: 0:(listSize$ | async);
           let i = index
         "
-        (mViewed)="trackView(channel, i + 1)"
+        (mViewed)="trackView(publisher, i + 1)"
       >
         <section>
           <a
-            [routerLink]="getLink(channel)"
-            class="m-channelRecommendation__avatarContainer"
+            [routerLink]="getLink(publisher)"
+            class="m-publisherRecommendations__avatarContainer"
           >
-            <m-hovercard [publisher]="channel" [offset]="[0, 15]">
+            <m-hovercard [publisher]="publisher" [offset]="[0, 15]">
               <minds-avatar
-                [object]="channel"
+                [object]="publisher"
                 [editMode]="false"
               ></minds-avatar>
             </m-hovercard>
           </a>
-          <div class="m-channelRecommendation__contentContainer">
+          <div class="m-publisherRecommendations__contentContainer">
             <a
-              [routerLink]="getLink(channel)"
-              class="m-channelRecommendation__title"
+              [routerLink]="getLink(publisher)"
+              class="m-publisherRecommendations__title"
             >
-              <strong>{{ channel.name }}</strong>
+              <strong>{{ publisher.name }}</strong>
               <m-channel--badges
                 class="m-channel--badges-activity m-activityOwnerBlockPrimaryName__badges"
-                [user]="channel"
+                [user]="publisher"
                 badges="[ 'admin', 'verified' ]"
               ></m-channel--badges>
             </a>
             <span
-              class="m-channelRecommendation__description"
-              [innerHtml]="channel.briefdescription | slice: 0:5000 | tags"
+              class="m-publisherRecommendations__description"
+              [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags"
             ></span>
             <m-boostedFlag
-              *ngIf="channel.boosted"
+              *ngIf="publisher.boosted"
               text="Boosted Channel"
               size="small"
             ></m-boostedFlag>
           </div>
-          <div class="m-channelRecommendation__subscribeContainer">
+          <div class="m-publisherRecommendations__subscribeContainer">
             <m-subscribeButton
               *ngIf="publisherType === 'user'"
-              [user]="channel"
+              [user]="publisher"
               [enableRecheck]="false"
               subscribedIcon="check"
               sized="true"
@@ -85,11 +99,11 @@
             ></m-subscribeButton>
             <m-group__membershipButton
               *ngIf="publisherType === 'group'"
-              [group]="channel"
+              [group]="publisher"
               iconOnly="true"
               isMemberIcon="check"
               color="blue"
-              (onMembershipChange)="onGroupMembershipChange($event, channel)"
+              (onMembershipChange)="onGroupMembershipChange($event, publisher)"
             ></m-group__membershipButton>
           </div>
         </section>

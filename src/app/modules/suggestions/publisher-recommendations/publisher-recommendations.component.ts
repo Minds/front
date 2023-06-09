@@ -1,4 +1,4 @@
-import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
 import {
   Component,
@@ -14,9 +14,9 @@ import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { ResizedEvent } from './../../../common/directives/resized.directive';
-import { DismissalService } from './../../../common/services/dismissal.service';
-import { AnalyticsService } from './../../../services/analytics';
+import { ResizedEvent } from '../../../common/directives/resized.directive';
+import { DismissalService } from '../../../common/services/dismissal.service';
+import { AnalyticsService } from '../../../services/analytics';
 import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
 import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 import { GroupMembershipChangeOuput } from '../../../common/components/group-membership-button/group-membership-button.component';
@@ -35,17 +35,15 @@ const listAnimation = trigger('listAnimation', [
 /**
  * Displays channel/group recommendations
  *
- * See it in the newsfeed
- *
- * It may also be used in a modal during onboarding-v4
+ * See it in the newsfeed and onboarding
  */
 @Component({
-  selector: 'm-channelRecommendation',
-  templateUrl: './channel-recommendation.component.html',
-  styleUrls: ['./channel-recommendation.component.ng.scss'],
+  selector: 'm-publisherRecommendations',
+  templateUrl: './publisher-recommendations.component.html',
+  styleUrls: ['./publisher-recommendations.component.ng.scss'],
   animations: [listAnimation],
 })
-export class ChannelRecommendationComponent implements OnInit {
+export class PublisherRecommendationsComponent implements OnInit {
   /**
    * the location in which this component appears
    */
@@ -63,10 +61,10 @@ export class ChannelRecommendationComponent implements OnInit {
   @Input()
   visible: boolean = true;
   /**
-   * The title of channel recommendation widget
+   * The title of publisher recommendations widget
    */
   @Input()
-  title: string = $localize`:@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS:Recommended Channels`;
+  title: string;
   /**
    * Whether the widget should have a close button
    */

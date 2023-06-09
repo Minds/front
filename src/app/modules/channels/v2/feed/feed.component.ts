@@ -26,7 +26,6 @@ import { ComposerModalService } from '../../../composer/components/modal/modal.s
 import { catchError, take } from 'rxjs/operators';
 import { AnalyticsService } from '../../../../services/analytics';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
-import { MindsUser } from '../../../../interfaces/entities';
 
 /**
  * Container for channel feed, including filters and composer (if user is channel owner)
@@ -88,7 +87,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   feed: Object[] = [];
 
-  readonly channelRecommendationTitle = $localize`:@@M__CHANNEL_RECOMMENDATION__CONSIDER_SUBSCRIBING_TO:Consider subscribing to`;
+  readonly publisherRecommendationsTitle = $localize`:@@M__CHANNEL_RECOMMENDATION__CONSIDER_SUBSCRIBING_TO:Consider subscribing to`;
 
   /**
    * Constructor
@@ -262,7 +261,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   }
 
   /**
-   * Determines whether the channel recommendations should be shown
+   * Determines whether the publisher recommendations should be shown
    * @returns { Observable<boolean> }
    */
   get channelRecommendationVisible$(): Observable<boolean> {

@@ -58,13 +58,13 @@
                 *ngIf="!(isTopHighlightsDismissed$ | async)"
               ></m-topHighlights>
             </ng-container>
-
-            <ng-container *ngSwitchCase="'channelRecommendations'">
-              <m-channelRecommendation
+            <ng-container *ngSwitchCase="'publisherRecommendations'">
+              <m-publisherRecommendations
                 location="newsfeed"
                 [dismissible]="true"
-                *ngIf="!(isChannelRecommendationDismissed$ | async)"
-              ></m-channelRecommendation>
+                *ngIf="!(isPublisherRecommendationsDismissed$ | async)"
+                [publisherType]="recommendationsPublisherType"
+              ></m-publisherRecommendations>
             </ng-container>
           </ng-container>
         </m-feedItem>

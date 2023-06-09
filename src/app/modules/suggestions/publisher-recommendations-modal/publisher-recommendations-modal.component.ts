@@ -10,11 +10,11 @@ import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
  * See it during the onboarding v4 flow
  */
 @Component({
-  selector: 'm-channelRecommendationModal',
-  templateUrl: './channel-recommendation-modal.component.html',
-  styleUrls: ['./channel-recommendation-modal.component.ng.scss'],
+  selector: 'm-publisherRecommendationsModal',
+  templateUrl: './publisher-recommendations-modal.component.html',
+  styleUrls: ['./publisher-recommendations-modal.component.ng.scss'],
 })
-export class ChannelRecommendationModalComponent {
+export class PublisherRecommendationsModalComponent {
   protected subscriptionCount = 0;
 
   protected publisherType: PublisherType = 'user';

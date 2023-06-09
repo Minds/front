@@ -30,7 +30,7 @@ type feedNoticeComponent = typeof import('./fragments/feedNoticeComponent');
 type boostModalComponent = typeof import('./fragments/boostModalComponent');
 type contentSettingsComponent = typeof import('./fragments/contentSettingsComponent');
 type multiFactorModalComponent = typeof import('./fragments/multiFactorModalComponent');
-type channelRecommendationsModalComponent = typeof import('./fragments/channelRecommendationsModalComponent');
+type publisherRecommendationsModalComponent = typeof import('./fragments/publisherRecommendationsModalComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
 
@@ -69,7 +69,7 @@ declare namespace CodeceptJS {
     boostModalComponent: boostModalComponent;
     contentSettingsComponent: contentSettingsComponent;
     multiFactorModalComponent: multiFactorModalComponent;
-    channelRecommendationsModalComponent: channelRecommendationsModalComponent;
+    publisherRecommendationsModalComponent: publisherRecommendationsModalComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}
