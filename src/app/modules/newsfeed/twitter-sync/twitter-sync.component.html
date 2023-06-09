@@ -69,7 +69,11 @@
         <b>It's important that the prepopulated link is not changed</b>.
       </p>
 
-      <m-button color="blue" (onAction)="postToTwitter($event)">
+      <m-button
+        color="blue"
+        [saving]="strapiDataRequestInProgress$ | async"
+        (onAction)="postToTwitter($event)"
+      >
         Create a Tweet
       </m-button>
     </div>

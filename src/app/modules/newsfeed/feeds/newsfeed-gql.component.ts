@@ -42,7 +42,7 @@ import {
   FetchNewsfeedQuery,
   FetchNewsfeedQueryVariables,
   PageInfo,
-} from '../../../../graphql/generated';
+} from '../../../../graphql/generated.engine';
 import { FeedAlgorithm } from './subscribed.component';
 import { BoostFeedService } from '../services/boost-feed.service';
 
