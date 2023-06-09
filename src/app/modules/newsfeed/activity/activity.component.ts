@@ -123,7 +123,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
-  entitySubscription: Subscription;
   private interceptionObserverSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
@@ -186,7 +185,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
-    this.entitySubscription.unsubscribe();
     if (
       this.entityMetricSocketsExperiment.isActive() &&
       this.interceptionObserverSubscription
