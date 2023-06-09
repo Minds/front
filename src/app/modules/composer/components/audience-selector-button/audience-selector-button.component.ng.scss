@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+  margin: 0 0 $spacing5 $spacing10;
+  padding: $spacing1 $spacing3;
+  border-radius: 32px;
+  cursor: pointer;
+
+  @include body3Bold;
+  @include unselectable;
+  @include m-theme() {
+    color: themed($m-action);
+    border: 1px solid themed($m-borderColor--primary);
+
+    // hover
+    &:hover {
+      background: darken(themed($m-bgColor--primary), 2%);
+    }
+
+    // mousedown
+    &:active:hover {
+      background: darken(themed($m-bgColor--primary), 4%);
+    }
+  }
+
+  .m-composerAudienceSelector__dropdownArrow {
+    // force arrow over a few px because the icon being
+    // centered makes the component look left-side heavy.
+    transform: translateX(6px);
+  }
+}
+
+:host(.m-composerAudienceSelector__host--disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

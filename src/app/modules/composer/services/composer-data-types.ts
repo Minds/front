@@ -2,6 +2,7 @@ import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { Supermind } from '../../supermind/supermind.types';
 import { SupermindComposerPayloadType } from '../components/popup/supermind/superminds-creation.service';
 import { Attachment } from './attachment.service';
+import { ActivityContainer } from './audience.service';
 import { RichEmbed } from './rich-embed.service';
 import { FileUpload } from './uploader.service';
 import { VideoPoster } from './video-poster.service';
@@ -132,4 +133,5 @@ export interface Data {
   remind: RemindSubjectValue;
   supermindRequest: SupermindRequestSubjectValue;
   supermindReply: SupermindReplySubjectValue;
+  container: ActivityContainer;
 }
