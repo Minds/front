@@ -1,7 +1,6 @@
 <div class="m-tabs__container">
   <div class="m-tabs__tab">
     <a
-      *ngIf="shouldShowForYouTab"
       [routerLink]="['../' + feedAlgorithm.forYou]"
       routerLinkActive="m-tabs__tab--selected"
       data-ref="newsfeed-tab-link-for-you"
