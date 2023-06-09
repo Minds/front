@@ -147,9 +147,13 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
         this.feed = feed;
       }),
       this.feedsUpdate.postEmitter.subscribe(newPost => {
+        const currentChannelGuid: string = this.service.guid$.getValue();
+
         if (
-          this.feedService.guid$.getValue() ===
-          this.session.getLoggedInUser().guid
+          // if the current channel is owned by the logged in user.
+          currentChannelGuid === this.session.getLoggedInUser().guid &&
+          // if new activity is a post to the users channel.
+          currentChannelGuid === newPost?.container_guid
         ) {
           this.prepend(newPost);
         }

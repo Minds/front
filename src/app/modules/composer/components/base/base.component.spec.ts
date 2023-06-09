@@ -66,6 +66,7 @@ describe('BaseComponent', () => {
               'isDirty$',
               'message$',
               'isMovingContent$',
+              'isEditing$',
             ],
             props: {
               attachmentError$: { get: () => new BehaviorSubject<any>(null) },
@@ -76,6 +77,7 @@ describe('BaseComponent', () => {
               isMovingContent$: {
                 get: () => new BehaviorSubject<boolean>(false),
               },
+              isEditing$: { get: () => new BehaviorSubject<boolean>(false) },
             },
           }),
         },

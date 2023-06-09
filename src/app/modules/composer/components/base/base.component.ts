@@ -90,6 +90,9 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
+  /** Is this an edit? */
+  public readonly isEditing$: Observable<boolean> = this.service.isEditing$;
+
   /**
    * Constructor
    * @param service
