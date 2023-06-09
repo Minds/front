@@ -164,8 +164,7 @@ export class NewsfeedBoostRotatorComponent {
         if (this.currentPosition >= this.boosts.length) {
           this.currentPosition = 0;
         }
-        // Recalculate height because it may have been empty
-        setTimeout(() => this.calculateHeight());
+
         // distinctuntilchange is now safe
         this.viewsCollector$.next(this.currentPosition);
 
@@ -175,7 +174,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.calculateHeight()); // will only run for new nav
+    this.calculateHeight();
   }
 
   async load(refresh: boolean = false): Promise<boolean> {
@@ -378,5 +377,9 @@ export class NewsfeedBoostRotatorComponent {
     return {
       'font-size': 20,
     };
+  }
+
+  trackByFn(i: number, boost): string {
+    return boost.guid;
   }
 }

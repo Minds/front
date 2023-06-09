@@ -114,7 +114,7 @@
       }
 
       @include m-theme() {
-        color: themed($m-grey-300);
+        color: themed($m-textColor--primary);
       }
 
       @include m-on-theme(dark) {
@@ -172,7 +172,7 @@
 
         // Deco
 
-        &::before {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::before {
           content: '';
           display: block;
           position: absolute;
@@ -191,7 +191,7 @@
           }
         }
 
-        &::after {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::after {
           content: '';
           display: block;
           position: absolute;

@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+:host {
+  .m-marketing__description ::ng-deep p {
+    margin-bottom: 42px;
+
+    @media screen and (min-width: $m-grid-max-tablet) {
+      padding-right: 200px;
+    }
+
+    @media screen and (min-width: 900px) and (max-width: $m-grid-min-vp) {
+      padding-right: 100px;
+    }
+
+    @media screen and (max-width: 900px) {
+      padding-right: 0;
+    }
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    @include m-on-theme(dark) {
+      color: #ffffff;
+    }
+
+    @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+      font-size: 17px;
+      line-height: 24px;
+    }
+
+    @media screen and (max-width: $m-grid-max-mobile) {
+      padding-right: 0;
+      margin-bottom: 30px;
+      font-size: 16px;
+      line-height: 23px;
+      text-align: center;
+    }
+  }
+}
