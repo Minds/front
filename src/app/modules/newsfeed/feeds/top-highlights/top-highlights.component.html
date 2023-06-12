@@ -10,7 +10,7 @@
     </m-dropdownMenu>
   </header>
 
-  <section *ngIf="connection.edges.length; else legacyHighlights">
+  <section *ngIf="connection?.edges?.length; else legacyHighlights">
     <ul>
       <li
         *ngFor="let edge of connection.edges; let i = index; trackBy: trackByFn"
