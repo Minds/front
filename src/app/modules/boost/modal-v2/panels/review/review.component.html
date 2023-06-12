@@ -70,19 +70,23 @@
         Audience
       </h4>
       <p
-        [ngSwitch]="audience$ | async"
         class="m-boostModalReview__sectionSubtext"
         data-ref="boost-modal-v2-audience-text"
       >
-        <ng-container
-          *ngSwitchCase="BoostAudience.SAFE"
-          i18n="@@BOOST_MODAL_V2_REVIEW__SAFE"
-          >Safe</ng-container
+        <ng-container [ngSwitch]="audience$ | async">
+          <ng-container
+            *ngSwitchCase="BoostAudience.SAFE"
+            i18n="@@BOOST_MODAL_V2_REVIEW__SAFE"
+            >Safe</ng-container
+          >
+          <ng-container
+            *ngSwitchCase="BoostAudience.CONTROVERSIAL"
+            i18n="@@BOOST_MODAL_V2_REVIEW__CONTROVERSIAL"
+            >Controversial</ng-container
+          ></ng-container
         >
-        <ng-container
-          *ngSwitchCase="BoostAudience.CONTROVERSIAL"
-          i18n="@@BOOST_MODAL_V2_REVIEW__CONTROVERSIAL"
-          >Controversial</ng-container
+        <ng-container *ngIf="service.targetPlatformChanged$ | async"
+          >; {{ service.targetPlatformSummaryText$ | async }}</ng-container
         >
       </p>
     </div>

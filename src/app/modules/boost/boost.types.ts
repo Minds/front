@@ -7,6 +7,9 @@ export type Boost = {
   entity: any;
   target_location: number;
   target_suitability: number;
+  target_platform_web?: boolean;
+  target_platform_android?: boolean;
+  target_platform_ios?: boolean;
   goal?: BoostGoal;
   goal_button_text?: BoostGoalButtonText;
   goal_button_url?: string;
