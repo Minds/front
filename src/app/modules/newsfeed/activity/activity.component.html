@@ -12,7 +12,10 @@
           <!-- ----------------------------------- -->
           <!-- FLAG ROW SPACER  -->
           <!-- ----------------------------------- -->
-          <div *ngIf="showFlagRow" class="m-activityLeftColumn__spacer"></div>
+          <div
+            *ngIf="service.showFlagRow$ | async"
+            class="m-activityLeftColumn__spacer"
+          ></div>
           <!-- ----------------------------------- -->
           <!-- AVATAR  -->
           <!-- ----------------------------------- -->
@@ -20,9 +23,9 @@
         </ng-container>
       </div>
       <div class="m-activityTop__mainColumn" *ngIf="entity$ | async as entity">
-        <div class="m-activity__flagRow" *ngIf="showFlagRow">
-          <m-activity__flag></m-activity__flag>
-        </div>
+        <m-activity__flag
+          *ngIf="service.showFlagRow$ | async"
+        ></m-activity__flag>
         <m-activity__ownerBlock
           *ngIf="service.displayOptions.showOwnerBlock"
           (deleted)="delete()"

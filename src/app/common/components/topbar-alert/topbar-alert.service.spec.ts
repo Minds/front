@@ -29,7 +29,10 @@ describe('TopbarAlertService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ApolloTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        ApolloTestingModule.withClients(['strapi']),
+      ],
       providers: [
         TopbarAlertService,
         { provide: Session, useValue: sessionMock },

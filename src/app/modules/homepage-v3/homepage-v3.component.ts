@@ -67,9 +67,10 @@ export class HomepageV3Component implements OnInit {
     }
 
     this.apollo
+      .use('strapi')
       .watchQuery({
         query: gql`
-          {
+          query homepage {
             homepage {
               data {
                 id

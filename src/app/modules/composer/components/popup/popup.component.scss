@@ -63,6 +63,10 @@ m-composer__popup {
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
+
+    @media screen and (max-width: $max-mobile) {
+      margin-right: $spacing6;
+    }
   }
 }
 

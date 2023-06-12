@@ -3,15 +3,28 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Inject,
+  OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { fromEvent } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { ToasterService } from '../../../../common/services/toaster.service';
-import { Session } from '../../../../services/session';
-import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
+import { GraphQLError } from 'graphql';
+import { TokenMarketingService } from './token.service';
+import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
+import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
+import { ApolloQueryResult } from '@apollo/client/core';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../../common/services/strapi/strapi-action-resolver.service';
 
 /**
  * Multi-page tokens marketing component
@@ -19,24 +32,34 @@ import { BlockchainMarketingLinksService } from './blockchain-marketing-links.se
 @Component({
   selector: 'm-blockchainMarketing__token--v2',
   templateUrl: 'token.component.html',
-  styleUrls: ['./token.component.ng.scss'],
+  styleUrls: [
+    './token.component.ng.scss',
+    '../../../marketing/styles/markdown-style.ng.scss',
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlockchainMarketingTokenV2Component extends AbstractSubscriberComponent {
+export class BlockchainMarketingTokenV2Component
+  extends AbstractSubscriberComponent
+  implements OnInit, OnDestroy {
+  public data: ProductMarketingAttributes;
+  public loading: boolean = true;
+  public errors: readonly GraphQLError[];
+
   public readonly cdnAssetsUrl: string;
   public readonly siteUrl: string;
 
   @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
-  @ViewChild('composerOpenAnchor') readonly composerOpenAnchor: ElementRef;
+  private copyDataSubscription: Subscription;
 
   constructor(
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    private linksService: BlockchainMarketingLinksService,
-    private session: Session,
-    private toast: ToasterService,
+    private service: TokenMarketingService,
+    private strapiMeta: StrapiMetaService,
+    private strapiActionResolver: StrapiActionResolverService,
+    @Inject(STRAPI_URL) public strapiUrl: string,
     configs: ConfigsService
   ) {
     super();
@@ -44,77 +67,31 @@ export class BlockchainMarketingTokenV2Component extends AbstractSubscriberCompo
     this.siteUrl = configs.get('site_url');
   }
 
-  ngAfterViewInit(): void {
-    this.subscriptions.push(
-      fromEvent(this.composerOpenAnchor.nativeElement, 'click').subscribe(
-        $event => {
-          if (!this.session.isLoggedIn()) {
-            this.router.navigate(['/']);
-            return;
-          }
-          this.openComposerModal();
+  ngOnInit(): void {
+    this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
+        this.loading = result.loading;
+        this.errors = result.errors;
+        if (this.data.metadata) {
+          this.strapiMeta.apply(this.data.metadata);
         }
-      )
+        this.detectChanges();
+      }
     );
   }
 
-  scrollToTop() {
-    if (this.topAnchor.nativeElement) {
-      this.topAnchor.nativeElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest',
-      });
-    }
+  ngOnDestroy(): void {
+    this.copyDataSubscription?.unsubscribe();
   }
 
   /**
-   * Called on purchase completed.
+   * Resolve an action from a Strapi action button.
+   * @param { StrapiAction } action - action to resolve.
    * @returns { void }
    */
-  public onPurchaseComplete($event): void {
-    // do nothing
-  }
-
-  /**
-   * Opens composer modal
-   * @returns { BlockchainMarketingTokenComponent } - Chainable.
-   */
-  public openComposerModal(): void {
-    this.linksService.openComposerModal();
-  }
-
-  /**
-   * Open provide liquidity modal.
-   * @returns { void }
-   */
-  public provideLiquidityClick() {
-    this.linksService.openLiquidityProvisionModal();
-  }
-
-  /**
-   * Open affiliates page.
-   * @returns { void }
-   */
-  public navigateToAffiliates(): void {
-    this.linksService.navigateToAffiliates();
-  }
-
-  /**
-   * Open hold modal.
-   * @returns { void }
-   */
-  public holdClick(): void {
-    this.linksService.openTransferOnchainModal();
-  }
-
-  /**
-   * Open airdrop modal.
-   * @returns { void }
-   */
-  public airdropClick(): void {
-    this.toast.warn('Coming soon!');
-    // this.linksService.openAirdropModal();
+  public resolveAction(action: StrapiAction): void {
+    this.strapiActionResolver.resolve(action);
   }
 
   detectChanges() {

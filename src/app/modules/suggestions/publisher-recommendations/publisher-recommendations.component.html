@@ -1,6 +1,6 @@
 <div
   style="transition: all 0.3s; overflow: hidden; flex: 1;"
-  [style.height.px]="containerHeight$ | async"
+  [style.height.px]="!connection ? (containerHeight$ | async) : undefined"
   *ngIf="visible"
 >
   <article
@@ -41,14 +41,15 @@
         </m-dropdownMenu>
       </div>
     </header>
-    <ul *ngIf="(recommendations$ | async).length">
+    <ul *ngIf="(recommendations$ | async).length" [@.disabled]="connection">
       <li
         @listAnimation
         *ngFor="
           let publisher of recommendations$
             | async
             | slice: 0:(listSize$ | async);
-          let i = index
+          let i = index;
+          trackBy: trackByFn
         "
         (mViewed)="trackView(publisher, i + 1)"
       >

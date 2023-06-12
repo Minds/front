@@ -23,7 +23,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter, startWith } from 'rxjs/operators';
+import { filter, map, scan, startWith } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import {
@@ -44,6 +44,7 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 import { Platform } from '@angular/cdk/platform';
+import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 import { Session } from '../../../services/session';
 import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 
@@ -140,8 +141,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   };
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
-  routerSubscription: Subscription;
   private zendeskErrorSubscription: Subscription;
+  private onboardingTagsCompletedSubscription: Subscription;
+  routerSubscription: Subscription;
 
   /**
    * Should we show channel or group recs?
@@ -208,6 +210,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private feedNoticeService: FeedNoticeService,
     persistentFeedExperiment: PersistentFeedExperimentService,
     private platform: Platform,
+    private onboardingV4Service: OnboardingV4Service,
     private session: Session
   ) {
     if (isPlatformServer(this.platformId)) return;
@@ -226,16 +229,34 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    /**
+     * Emits a count of how many times the route has changed
+     * (count includes the initial load)
+     *
+     * Reload the feed when the route changes and
+     * hide the boost rotator whenever we switch tabs
+     */
     this.routerSubscription = this.router.events
       .pipe(
         filter((event: RouterEvent) => event instanceof NavigationEnd),
-        startWith(this.router)
+        startWith(this.router),
+        map(() => {
+          return 1;
+        }),
+        scan((accumulator, current) => {
+          return accumulator + current;
+        }, 0)
       )
-      .subscribe(() => {
+      .subscribe(count => {
         this.load();
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 50);
+
+        if (count === 1) {
+          setTimeout(() => {
+            this.showBoostRotator = true;
+          }, 50);
+        } else {
+          this.showBoostRotator = false;
+        }
       });
 
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
@@ -261,28 +282,32 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     });
 
     // catch Zendesk errors and make them domain specific.
-    this.zendeskErrorSubscription = this.route.queryParams.subscribe(params => {
-      if (params.kind === 'error') {
-        if (
-          /User is invalid: External minds-guid:\d+ has already been taken/.test(
-            params.message
-          )
-        ) {
-          this.toast.error('Your email is already linked to a support account');
-          return;
-        }
+    this.zendeskErrorSubscription = this.route.queryParams
+      .pipe(filter(Boolean))
+      .subscribe(params => {
+        if (params.kind === 'error') {
+          if (
+            /User is invalid: External minds-guid:\d+ has already been taken/.test(
+              params.message
+            )
+          ) {
+            this.toast.error(
+              'Your email is already linked to a support account'
+            );
+            return;
+          }
 
-        if (
-          params.message ===
-          'Please use one of the options below to sign in to Zendesk.'
-        ) {
-          this.toast.error('Authentication method invalid');
-          return;
-        }
+          if (
+            params.message ===
+            'Please use one of the options below to sign in to Zendesk.'
+          ) {
+            this.toast.error('Authentication method invalid');
+            return;
+          }
 
-        this.toast.error(params.message ?? 'An unknown error has occurred');
-      }
-    });
+          this.toast.error(params.message ?? 'An unknown error has occurred');
+        }
+      });
 
     this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
       newPost => {
@@ -291,6 +316,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     );
 
     this.recommendationsPublisherType = this.getPublisherType();
+
+    // subscribe to onboarding tags completion and reload the feed with more relevant content.
+    this.onboardingTagsCompletedSubscription = this.onboardingV4Service.tagsCompleted$.subscribe(
+      (completed: boolean): void => {
+        this.feedService.clear();
+        this.load();
+      }
+    );
 
     this.feedNoticeService.fetch();
 
@@ -303,6 +336,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.reloadFeedSubscription?.unsubscribe();
     this.feedsUpdatedSubscription?.unsubscribe();
     this.zendeskErrorSubscription?.unsubscribe();
+    this.onboardingTagsCompletedSubscription?.unsubscribe();
   }
 
   /**

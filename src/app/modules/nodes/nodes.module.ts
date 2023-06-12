@@ -6,17 +6,13 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MarketingModule } from '../marketing/marketing.module';
+import { MarkdownModule } from 'ngx-markdown';
 
 const routes: Routes = [
   {
     path: 'nodes',
     component: NodesMarketingComponent,
     data: {
-      title: 'Minds Nodes',
-      description: 'Launch your own social networking app',
-      ogImage: '/assets/og-images/nodes-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
       preventLayoutReset: true,
     },
   },
@@ -25,6 +21,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
+    MarkdownModule.forRoot(),
     NgCommonModule,
     CommonModule,
     FormsModule,

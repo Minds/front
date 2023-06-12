@@ -14,6 +14,9 @@
       [inputId]="textareaId"
       (onCreateBlog)="createBlog()"
     ></m-composer__titleBar>
+    <m-composer__audienceSelectorButton
+      *ngIf="isModal && !(isEditing$ | async)"
+    ></m-composer__audienceSelectorButton>
     <div class="m-composerBase__scrollableArea">
       <m-composer__textArea
         [inputId]="textareaId"
