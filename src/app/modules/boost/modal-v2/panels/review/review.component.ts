@@ -81,7 +81,7 @@ export class BoostModalV2ReviewComponent {
     .canSetBoostGoal$;
 
   constructor(
-    private service: BoostModalV2Service,
+    protected service: BoostModalV2Service,
     protected boostGoalsExperiment: BoostGoalsExperimentService
   ) {}
 
