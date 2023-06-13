@@ -1,4 +1,5 @@
 @import 'defaults.scss';
+@import '../../../../common//layout//layout.scss';
 
 :host {
   .m-groupHeader__banner {
@@ -107,6 +108,20 @@
     @media screen and (max-width: $max-mobile) {
       padding: 0 $spacing5 $spacing3;
       @include heading4Bold;
+    }
+
+    span {
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+
+      @media screen and (min-width: $layoutMin3ColWidth) {
+        margin-right: $spacing20;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-top: 12px;
+      }
     }
   }
 
