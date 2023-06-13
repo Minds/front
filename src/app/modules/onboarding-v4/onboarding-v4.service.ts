@@ -98,10 +98,7 @@ export class OnboardingV4Service implements OnDestroy {
    * If the experiment is on
    */
   private async openGroupRecommendationModal(): Promise<void> {
-    if (
-      !this.onboardingTagsExperiment.isActive() ||
-      this.channelSubscriptionCount < 1
-    ) {
+    if (!this.onboardingTagsExperiment.isActive()) {
       return;
     }
     const modal = this.modalService.present(
