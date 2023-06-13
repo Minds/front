@@ -5,7 +5,7 @@
     (onAction)="tag.selected ? removeTag(tag) : addTag(tag)"
     [color]="tag.selected ? 'blue' : 'grey'"
     size="small"
-    >{{ tag.value | titlecase }}
+    >{{ tag.value }}
     <i class="material-icons">{{ getIcon(tag) }}</i>
   </m-button>
 </ng-container>
