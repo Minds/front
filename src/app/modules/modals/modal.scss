@@ -1,7 +1,6 @@
 @import 'defaults.scss';
 
-m-modal-signup,
-m-modal-signup-on-action {
+m-modal-signup {
   position: relative;
   @include z-index(modal);
   display: block;
