@@ -1,6 +1,10 @@
-import { Component, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectorRef,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Client } from '../../../../services/api';
 import { UpdateMarkersService } from '../../../../common/services/update-markers.service';
 import { VideoChatService } from '../../../videochat/videochat.service';
@@ -17,6 +21,7 @@ import { Session } from '../../../../services/session';
   selector: 'm-group--member-previews',
   templateUrl: 'member-previews.component.html',
   animations: [SlowFadeAnimation],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupMemberPreviews {
   readonly cdnUrl: string;
@@ -48,6 +53,7 @@ export class GroupMemberPreviews {
     private router: Router,
     private route: ActivatedRoute,
     private session: Session,
+    private cd: ChangeDetectorRef,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -111,6 +117,8 @@ export class GroupMemberPreviews {
       this.inProgress = false;
     }
 
+    this.detectChanges();
+
     this.updateMarkersSubscription = this.updateMarkers
       .getByEntityGuid(this.group.guid)
       .subscribe(
@@ -139,6 +147,7 @@ export class GroupMemberPreviews {
       if (member.guid === user_guid) {
         member.inGathering = true;
         member.lastGatheringMarkerTimestamp = this.currentTimestamp();
+        this.detectChanges();
       }
     }
   }
@@ -153,6 +162,7 @@ export class GroupMemberPreviews {
         }
       }
     }
+    this.detectChanges();
   }
 
   currentTimestamp() {
@@ -167,5 +177,14 @@ export class GroupMemberPreviews {
     if (this.v2 && this.groupGuid) {
       this.router.navigate(['group', this.groupGuid, 'members']);
     }
+  }
+
+  /**
+   * Run change detection.
+   * @returns { void }
+   */
+  private detectChanges(): void {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }
