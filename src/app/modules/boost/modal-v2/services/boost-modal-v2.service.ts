@@ -47,12 +47,14 @@ import {
   BoostSubject,
   BoostSubmissionPayload,
   BoostSubmitResponse,
+  BoostTargetPlatformLabel,
   EstimatedReach,
   PrepareResponse,
 } from '../boost-modal-v2.types';
 import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostGoal, BoostGoalButtonText } from '../../boost.types';
 import { Session } from '../../../../services/session';
+import { BoostTargetExperimentService } from '../../../experiments/sub-services/boost-target-experiment.service';
 
 /**
  * Service for creation and submission of boosts.
@@ -88,6 +90,21 @@ export class BoostModalV2Service implements OnDestroy {
   public readonly audience$: BehaviorSubject<
     BoostAudience
   > = new BehaviorSubject<BoostAudience>(DEFAULT_AUDIENCE);
+
+  // current selection for whether to target users on the web
+  public readonly targetPlatformWeb$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(true);
+
+  // current selection for whether to target android users
+  public readonly targetPlatformAndroid$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(true);
+
+  // current selection for target iOS users
+  public readonly targetPlatformIos$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(true);
 
   // currently selected payment category.
   public readonly paymentCategory$: BehaviorSubject<
@@ -134,6 +151,54 @@ export class BoostModalV2Service implements OnDestroy {
     })
   );
 
+  // A comma-separated list of the selected target platforms (web/android/iOS)
+  // (or 'None', if nothing is selected)
+  public readonly targetPlatformSummaryText$: Observable<
+    string
+  > = combineLatest([
+    this.targetPlatformWeb$,
+    this.targetPlatformAndroid$,
+    this.targetPlatformIos$,
+  ]).pipe(
+    map(([web, android, ios]: [boolean, boolean, boolean]) => {
+      let text,
+        platforms: BoostTargetPlatformLabel[] = [];
+
+      if (web) {
+        platforms.push('Web');
+      }
+      if (android) {
+        platforms.push('Android');
+      }
+      if (ios) {
+        platforms.push('iOS');
+      }
+      if (platforms.length > 0) {
+        text = platforms.join(', ');
+      } else {
+        text = 'None';
+      }
+
+      return text;
+    })
+  );
+
+  /**
+   * Whether any of the default target platform values have changed
+   * (e.g. web/android/iOS, all enabled by default)
+   *
+   * This determines whether we display platform info in the review panel
+   */
+  public readonly targetPlatformChanged$: Observable<boolean> = combineLatest([
+    this.targetPlatformWeb$,
+    this.targetPlatformAndroid$,
+    this.targetPlatformIos$,
+  ]).pipe(
+    map(([web, android, ios]: [boolean, boolean, boolean]) => {
+      return !web || !android || !ios;
+    })
+  );
+
   // Whether or not the selected goal comes with a custom CTA button
   public readonly goalRequiresButton$: Observable<boolean> = this.goal$.pipe(
     map(goal => {
@@ -173,21 +238,48 @@ export class BoostModalV2Service implements OnDestroy {
     this.activePanel$,
     this.goal$,
     this.goalButtonUrl$,
+    this.targetPlatformWeb$,
+    this.targetPlatformAndroid$,
+    this.targetPlatformIos$,
     this.boostSubmissionInProgress$,
   ]).pipe(
     map(
-      ([activePanel, goal, goalButtonUrl, submissionInProgress]: [
+      ([
+        activePanel,
+        goal,
+        goalButtonUrl,
+        targetPlatformWeb,
+        targetPlatformAndroid,
+        targetPlatformIos,
+        submissionInProgress,
+      ]: [
         BoostModalPanel,
         BoostGoal,
         string,
+        boolean,
+        boolean,
+        boolean,
         boolean
       ]) => {
-        const stillNeedButtonUrl =
-          activePanel === BoostModalPanel.GOAL_BUTTON &&
-          goal === BoostGoal.CLICKS &&
-          !goalButtonUrl;
+        let panelRequirementsAreMet = true;
 
-        return stillNeedButtonUrl || submissionInProgress;
+        switch (activePanel) {
+          case BoostModalPanel.GOAL_BUTTON:
+            if (goal === BoostGoal.CLICKS) {
+              // Still need button URL
+              panelRequirementsAreMet = !!goalButtonUrl;
+            }
+            break;
+          case BoostModalPanel.AUDIENCE:
+            if (this.boostTargetExperiment.isActive()) {
+              // Still need a target platform
+              panelRequirementsAreMet =
+                targetPlatformWeb || targetPlatformAndroid || targetPlatformIos;
+            }
+            break;
+        }
+
+        return !panelRequirementsAreMet || submissionInProgress;
       }
     )
   );
@@ -292,6 +384,9 @@ export class BoostModalV2Service implements OnDestroy {
     this.duration$,
     this.dailyBudget$,
     this.audience$,
+    this.targetPlatformWeb$,
+    this.targetPlatformAndroid$,
+    this.targetPlatformIos$,
     this.goal$,
     this.goalButtonText$,
     this.goalButtonUrl$,
@@ -306,6 +401,9 @@ export class BoostModalV2Service implements OnDestroy {
         duration,
         dailyBudget,
         audience,
+        targetPlatformWeb,
+        targetPlatformAndroid,
+        targetPlatformIos,
         goal,
         goalButtonText,
         goalButtonUrl,
@@ -318,6 +416,9 @@ export class BoostModalV2Service implements OnDestroy {
         number,
         number,
         BoostAudience,
+        boolean,
+        boolean,
+        boolean,
         BoostGoal,
         BoostGoalButtonText,
         string,
@@ -335,6 +436,15 @@ export class BoostModalV2Service implements OnDestroy {
           daily_bid: dailyBudget,
           duration_days: duration,
         };
+
+        if (this.boostTargetExperiment.isActive()) {
+          payload = {
+            ...payload,
+            target_platform_web: targetPlatformWeb,
+            target_platform_android: targetPlatformAndroid,
+            target_platform_ios: targetPlatformIos,
+          };
+        }
 
         if (canSetBoostGoal) {
           payload = {
@@ -369,7 +479,8 @@ export class BoostModalV2Service implements OnDestroy {
     private config: ConfigsService,
     private web3Wallet: Web3WalletService,
     private boostContract: BoostContractService,
-    private boostGoalsExperiment: BoostGoalsExperimentService
+    private boostGoalsExperiment: BoostGoalsExperimentService,
+    private boostTargetExperiment: BoostTargetExperimentService
   ) {
     // set default duration and budgets on payment category change.
     this.paymentCategoryChangeSubscription = this.paymentCategory$.subscribe(

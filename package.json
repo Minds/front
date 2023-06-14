@@ -27,7 +27,8 @@
     "prepare": "husky install",
     "docs:json": "compodoc -p ./tsconfig.doc.json -e json -d .",
     "storybook": "npm run docs:json && ng run minds:storybook",
-    "build-storybook": "npm run docs:json && ng run minds:build-storybook"
+    "build-storybook": "npm run docs:json && ng run minds:build-storybook",
+    "graphql:codegen:compile": "graphql-codegen"
   },
   "private": true,
   "dependencies": {
@@ -129,6 +130,11 @@
     "@angularclass/hmr": "^3.0.0",
     "@babel/core": "^7.17.8",
     "@compodoc/compodoc": "^1.1.19",
+    "@graphql-codegen/cli": "^4.0.0",
+    "@graphql-codegen/client-preset": "^4.0.0",
+    "@graphql-codegen/typescript": "^4.0.0",
+    "@graphql-codegen/typescript-apollo-angular": "^3.5.6",
+    "@graphql-codegen/typescript-operations": "^4.0.0",
     "@storybook/addon-actions": "^7.0.0-beta.33",
     "@storybook/addon-essentials": "^7.0.0-beta.33",
     "@storybook/addon-interactions": "^7.0.0-beta.33",

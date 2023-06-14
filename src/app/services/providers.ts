@@ -1,19 +1,15 @@
 import { ApiService } from './../common/api/api.service';
 import { ScrollRestorationService } from './scroll-restoration.service';
-import { Compiler, InjectionToken, NgZone, PLATFORM_ID } from '@angular/core';
+import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ImageLoaderConfig,
   IMAGE_CONFIG,
   IMAGE_LOADER,
   Location,
-  isPlatformBrowser,
 } from '@angular/common';
-import {
-  BrowserModule,
-  makeStateKey,
-  TransferState,
-} from '@angular/platform-browser';
+import { TransferState } from '@angular/platform-browser';
+
 import { EmbedServiceV2 } from './embedV2.service';
 
 import { ScrollService } from './ux/scroll';
@@ -29,7 +25,6 @@ import { Session } from './session';
 import { ThirdPartyNetworksService } from './third-party-networks';
 import { AnalyticsService } from './analytics';
 import { Navigation } from './navigation';
-import { WalletService } from './wallet';
 import { AttachmentService } from './attachment';
 import { Sidebar } from './ui/sidebar';
 import { EmbedService } from './embed.service';
@@ -45,11 +40,7 @@ import { ContextService } from './context.service';
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
-import {
-  HTTP_INTERCEPTORS,
-  HttpClient,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { BlockListService } from '../common/services/block-list.service';
 import { EntitiesService } from '../common/services/entities.service';
 import { InMemoryStorageService } from './in-memory-storage.service';
@@ -79,13 +70,7 @@ import {
   SITE_URL,
   STRAPI_URL,
 } from '../common/injection-tokens/url-injection-tokens';
-
-import { APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular/http';
-import { InMemoryCache } from '@apollo/client/core';
-
-const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
-const STATE_KEY = makeStateKey<any>('apollo.state');
+import { APOLLO_PROIVDERS } from '../common/graphql/apollo-providers';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -171,11 +156,6 @@ export const MINDS_PROVIDERS: any[] = [
   ThirdPartyNetworksService,
   AnalyticsService,
   Navigation,
-  {
-    provide: WalletService,
-    useFactory: WalletService._,
-    deps: [Session, Client, SocketsService, PLATFORM_ID, ConfigsService],
-  },
   AttachmentService,
   {
     provide: Sidebar,
@@ -309,41 +289,5 @@ export const MINDS_PROVIDERS: any[] = [
   ServiceWorkerService,
   PushNotificationService,
   DismissalService,
-  {
-    provide: APOLLO_CACHE,
-    useValue: new InMemoryCache(),
-  },
-  {
-    provide: APOLLO_OPTIONS,
-    useFactory(
-      httpLink: HttpLink,
-      cache: InMemoryCache,
-      transferState: TransferState,
-      platformId: Object,
-      strapiUrl: string
-    ) {
-      const isBrowser = isPlatformBrowser(platformId);
-
-      if (isBrowser) {
-        const state = transferState.get<any>(STATE_KEY, null);
-        cache.restore(state);
-      } else {
-        transferState.onSerialize(STATE_KEY, () => {
-          return cache.extract();
-        });
-        // Reset cache after extraction to avoid sharing between requests
-        cache.reset();
-      }
-
-      return {
-        cache,
-        link: httpLink.create({
-          uri: strapiUrl + '/graphql',
-        }),
-        shouldBatch: true,
-        ...(isBrowser ? { ssrForceFetchDelay: 200 } : { ssrMode: true }),
-      };
-    },
-    deps: [HttpLink, APOLLO_CACHE, TransferState, PLATFORM_ID, STRAPI_URL],
-  },
+  ...APOLLO_PROIVDERS,
 ];

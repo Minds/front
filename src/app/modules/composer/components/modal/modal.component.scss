@@ -14,8 +14,7 @@ m-composer__modal {
   }
 
   @media screen and (max-width: $max-mobile) {
-    height: var(--mobileVH);
-
+    height: calc(var(--mobileVH) - $spacing4);
     border-radius: 0;
 
     // flex: 1;

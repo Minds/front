@@ -19,6 +19,12 @@ import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
 import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
 import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
+import {
+  BoostNode,
+  PublisherRecsConnection,
+  UserNode,
+} from '../../../../graphql/generated';
+import { ParseJson } from '../../../common/pipes/parse-json';
 
 const listAnimation = trigger('listAnimation', [
   transition(':enter', [
@@ -42,6 +48,7 @@ const listAnimation = trigger('listAnimation', [
   templateUrl: './channel-recommendation.component.html',
   styleUrls: ['./channel-recommendation.component.ng.scss'],
   animations: [listAnimation],
+  providers: [ParseJson],
 })
 export class ChannelRecommendationComponent implements OnInit {
   /**
@@ -103,6 +110,11 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   @Output() unsubscribed: EventEmitter<any> = new EventEmitter<any>();
 
+  /**
+   * New graphql way of loading data, if this value is inputted then no additional data calls will be made
+   */
+  @Input() connection: PublisherRecsConnection;
+
   constructor(
     private api: ApiService,
     public experiments: ExperimentsService,
@@ -110,10 +122,24 @@ export class ChannelRecommendationComponent implements OnInit {
     private dismissal: DismissalService,
     private analyticsService: AnalyticsService,
     private newsfeedService: NewsfeedService,
-    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    private parseJson: ParseJson
   ) {}
 
   ngOnInit(): void {
+    if (this.connection) {
+      this.recommendations$.next(
+        this.connection.edges.map((e: any) => {
+          return <MindsUser>(
+            this.parseJson.transform(
+              (<UserNode | BoostNode>e.publisherNode).legacy
+            )
+          );
+        })
+      );
+      return; // Don't load data via api
+    }
+
     if (this.publisherType === 'group') {
       this.loadGroups();
     }
@@ -237,5 +263,12 @@ export class ChannelRecommendationComponent implements OnInit {
     if (this.publisherType === 'group') {
       return ['/groups/profile', publisher.guid];
     }
+  }
+
+  /**
+   * Improves change detection
+   */
+  trackByFn(i: number, user: MindsUser) {
+    return user.guid;
   }
 }

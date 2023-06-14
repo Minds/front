@@ -30,12 +30,12 @@
     </div>
     <!-- ----------------------------------- -->
 
-    <ng-container *ngFor="let entity of boosts; let i = index">
+    <ng-container
+      *ngFor="let entity of boosts; let i = index; trackBy: trackByFn"
+    >
       <div
-        [hidden]="!boosts.length"
         class="m-newsfeedBoostRotator__item"
         *ngIf="shouldRender(i)"
-        @fastFade
         [style.visibility]="i === currentPosition ? 'visible' : 'hidden'"
         [style.height.px]="height"
       >

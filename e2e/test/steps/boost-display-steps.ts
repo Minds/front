@@ -25,7 +25,7 @@ namespace BoostDisplaySteps {
   });
 
   Then('I should not see the boost rotator', () => {
-    boostRotatorComponent.waitForBoostFeedRotator();
+    //boostRotatorComponent.waitForBoostFeedRotator();
     boostRotatorComponent.shouldSeeBoostRotator(false);
   });
 }

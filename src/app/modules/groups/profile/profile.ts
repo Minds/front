@@ -143,7 +143,9 @@ export class GroupsProfile {
         }
         // Redirect to modern groups, unless we're editing
         if (this.modernGroupsExperiment.isActive() && !this.editing) {
-          this.router.navigate(['group', params['guid'], 'feed']);
+          this.router.navigate(['group', params['guid'], 'feed'], {
+            replaceUrl: true,
+          });
         }
 
         let changed = params['guid'] !== this.guid;

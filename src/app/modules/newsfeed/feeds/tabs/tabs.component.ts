@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsfeedForYouExperimentService } from '../../../experiments/sub-services/newsfeed-for-you-experiment.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /*
@@ -11,19 +10,12 @@ import { ExperimentsService } from '../../../experiments/experiments.service';
   styleUrls: ['./tabs.component.ng.scss'],
 })
 export class NewsfeedTabsComponent implements OnInit {
-  /** Whether For You tab should be shown */
-  protected shouldShowForYouTab: boolean = false;
-
   /** Whether Groups tab should be shown */
   protected shouldShowGroupsTab: boolean = false;
 
-  constructor(
-    private newsfeedForYouExperiment: NewsfeedForYouExperimentService,
-    private experimentsService: ExperimentsService
-  ) {}
+  constructor(private experimentsService: ExperimentsService) {}
 
   ngOnInit(): void {
-    this.shouldShowForYouTab = this.newsfeedForYouExperiment.isActive();
     this.shouldShowGroupsTab = this.experimentsService.hasVariation(
       'minds-3990-group-feed'
     );

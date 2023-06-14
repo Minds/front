@@ -19,6 +19,7 @@ import { Session } from '../../services/session';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CookieService } from '../../common/services/cookie.service';
 import { UploaderService } from './services/uploader.service';
+import { ActivityContainer } from './services/audience.service';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer
@@ -31,6 +32,8 @@ import { UploaderService } from './services/uploader.service';
   templateUrl: 'composer.component.html',
 })
 export class ComposerComponent implements OnInit, OnDestroy {
+  private container: ActivityContainer;
+
   /**
    * Is this an embedded composer (i.e. no modal)
    */
@@ -59,9 +62,10 @@ export class ComposerComponent implements OnInit, OnDestroy {
    * @param containerGuid
    * @private
    */
-  @Input('containerGuid') set _containerGuid(containerGuid: any) {
-    if (typeof containerGuid !== 'undefined') {
-      this.service.setContainerGuid(containerGuid);
+  @Input('container') set _container(container: any) {
+    if (container && typeof container.guid !== 'undefined') {
+      this.service.setContainer(container);
+      this.container = container;
     }
   }
 
@@ -178,6 +182,8 @@ export class ComposerComponent implements OnInit, OnDestroy {
     //
 
     try {
+      this.service.setContainer(this.container ?? null);
+
       const event = await this.composerModalService
         .setInjector(this.injector)
         .present();

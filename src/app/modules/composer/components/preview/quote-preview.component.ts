@@ -47,7 +47,6 @@ export class QuotePreviewComponent {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       ActivityComponent
     );
-    // const activity = componentFactory.create(this.injector);
 
     const activity = this.outletRef.viewContainerRef.createComponent(
       componentFactory
@@ -60,6 +59,7 @@ export class QuotePreviewComponent {
       showPostMenu: false,
       showPinnedBadge: false,
       showMetrics: false,
+      isComposerPreview: true,
     };
 
     activity.changeDetectorRef.detectChanges();
