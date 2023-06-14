@@ -13,6 +13,7 @@ import { BoostModalV2AudienceSelectorComponent } from './audience.component';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostAudience } from '../../boost-modal-v2.types';
 import { MockService } from '../../../../../utils/mock';
+import { BoostTargetExperimentService } from '../../../../experiments/sub-services/boost-target-experiment.service';
 
 describe('BoostModalV2AudienceSelectorComponent', () => {
   let comp: BoostModalV2AudienceSelectorComponent;
@@ -32,7 +33,13 @@ describe('BoostModalV2AudienceSelectorComponent', () => {
           {
             provide: BoostModalV2Service,
             useValue: MockService(BoostModalV2Service, {
-              has: ['audience$', 'disabledSafeAudience$'],
+              has: [
+                'audience$',
+                'disabledSafeAudience$',
+                'targetPlatformWeb$',
+                'targetPlatformAndroid$',
+                'targetPlatformIos$',
+              ],
               props: {
                 audience$: {
                   get: () =>
@@ -41,8 +48,21 @@ describe('BoostModalV2AudienceSelectorComponent', () => {
                 disabledSafeAudience$: {
                   get: () => new BehaviorSubject<boolean>(false),
                 },
+                targetPlatformWeb$: {
+                  get: () => new BehaviorSubject<boolean>(true),
+                },
+                targetPlatformAndroid$: {
+                  get: () => new BehaviorSubject<boolean>(true),
+                },
+                targetPlatformIos$: {
+                  get: () => new BehaviorSubject<boolean>(true),
+                },
               },
             }),
+          },
+          {
+            provide: BoostTargetExperimentService,
+            useValue: MockService(BoostTargetExperimentService),
           },
         ],
       }).compileComponents();

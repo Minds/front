@@ -48,6 +48,7 @@ export type ActivityDisplayOptions = {
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
   hasLoadingPriority: boolean; // whether to load image content eagerly - should usually be first 1 or 2 activities in a feed.
   inSingleGroupFeed: boolean; // whether the activity is being presented in the feed of a single specific group page
+  isComposerPreview: boolean; // is the activity being presented in the composer as a preview (e.g. to display a quote post)
 };
 
 export type ActivityEntity = {
@@ -273,10 +274,11 @@ export class ActivityService implements OnDestroy {
     map(user => user !== null)
   );
 
-  /**
-   * TODO
-   */
-  isBoost$: Observable<boolean> = this.entity$.pipe();
+  isBoost$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return entity && entity?.boosted;
+    })
+  );
 
   /**
    * If the post is a quote this will emit true
@@ -326,7 +328,12 @@ export class ActivityService implements OnDestroy {
    */
   isSupermindRequest$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
-      return entity && entity.supermind && entity.supermind.is_reply;
+      return (
+        entity &&
+        entity.supermind &&
+        !entity.supermind.is_reply &&
+        !!entity.supermind.receiver_user
+      );
     })
   );
 
@@ -378,6 +385,28 @@ export class ActivityService implements OnDestroy {
    */
   showGroupContext$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  /**
+   * Whether to show a row at the top of the activity that informs
+   * whether the post was boosted, reminded, or is a supermind offer
+   */
+  readonly showFlagRow$: Observable<boolean> = combineLatest([
+    this.isSupermindRequest$,
+    this.isBoost$,
+    this.isRemind$,
+  ]).pipe(
+    map(([isSupermindRequest, isBoost, isRemind]) => {
+      // Don't show in boost rotator, minimal mode, etc.
+      const isInApprovedContext =
+        !this.displayOptions.minimalMode &&
+        !this.displayOptions.isComposerPreview &&
+        !this.displayOptions.boostRotatorMode;
+
+      const contentRequiresFlag = isSupermindRequest || isBoost || isRemind;
+
+      return !!isInApprovedContext && !!contentRequiresFlag;
+    })
+  );
+
   displayOptions: ActivityDisplayOptions = {
     autoplayVideo: true,
     showOwnerBlock: true,
@@ -405,6 +434,7 @@ export class ActivityService implements OnDestroy {
     permalinkBelowContent: false,
     hasLoadingPriority: false,
     inSingleGroupFeed: false,
+    isComposerPreview: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -447,7 +477,6 @@ export class ActivityService implements OnDestroy {
       !this.displayOptions.inSingleGroupFeed;
 
     this.showGroupContext$.next(showGroupContext);
-
     return this;
   }
 

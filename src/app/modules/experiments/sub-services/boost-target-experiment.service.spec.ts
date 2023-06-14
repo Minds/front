@@ -1,17 +1,17 @@
-import { NewsfeedForYouExperimentService } from './newsfeed-for-you-experiment.service';
+import { BoostTargetExperimentService } from './boost-target-experiment.service';
 
 export let experimentsServiceMock = new (function() {
   this.hasVariation = jasmine.createSpy('hasVariation');
 })();
 
-describe('NewsfeedForYouExperimentService', () => {
-  let service: NewsfeedForYouExperimentService;
+describe('BoostTargetExperimentService', () => {
+  let service: BoostTargetExperimentService;
 
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    service = new NewsfeedForYouExperimentService(experimentsServiceMock);
+    service = new BoostTargetExperimentService(experimentsServiceMock);
   });
 
   afterEach(() => {
@@ -26,7 +26,7 @@ describe('NewsfeedForYouExperimentService', () => {
     (service as any).experiments.hasVariation.and.returnValue(true);
     expect(service.isActive()).toBeTruthy();
     expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'minds-3953-newsfeed-for-you',
+      'minds-4030-boost-platform-targeting',
       true
     );
   });
@@ -35,7 +35,7 @@ describe('NewsfeedForYouExperimentService', () => {
     (service as any).experiments.hasVariation.and.returnValue(false);
     expect(service.isActive()).toBeFalsy();
     expect((service as any).experiments.hasVariation).toHaveBeenCalledWith(
-      'minds-3953-newsfeed-for-you',
+      'minds-4030-boost-platform-targeting',
       true
     );
   });
