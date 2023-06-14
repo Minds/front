@@ -164,7 +164,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     if (isPlatformServer(this.platformId)) return;
 
-    const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlorithm;
+    const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlgorithm;
     if (storedfeedAlgorithm) {
       this.algorithm = storedfeedAlgorithm;
     }
@@ -424,7 +424,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    **/
   changeFeedAlgorithm(algo: FeedAlgorithm) {
     this.algorithm = algo;
-    this.feedAlgorithmHistory.lastAlorithm = algo;
+    this.feedAlgorithmHistory.lastAlgorithm = algo;
 
     // Hide the boost rotator
     this.showBoostRotator = false;
