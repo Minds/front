@@ -9,6 +9,7 @@ import { combineLatest, Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BoostAudience } from '../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
+import { BoostTargetExperimentService } from '../../../../experiments/sub-services/boost-target-experiment.service';
 
 /**
  * Audience selector panel for boost modal V2. Allows selection of
@@ -24,26 +25,41 @@ export class BoostModalV2AudienceSelectorComponent
   public BoostAudience: typeof BoostAudience = BoostAudience;
   public form: FormGroup; // form group
 
+  /**
+   * Whether the collapsible container for the target platform
+   * checkboxes is open
+   */
+  protected targetPlatformContainerOpen: boolean = false;
+
   private audienceChangeSubscription: Subscription; // change audience in service on value change.
   private audienceInitSubscription: Subscription; // init the form using existing audience or default.
   private safeOptionClickSubscription: Subscription; // initialized on safe option click.
 
+  private subscriptions: Subscription[] = [];
+
   constructor(
     private service: BoostModalV2Service,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    protected boostTargetExperiment: BoostTargetExperimentService
   ) {}
 
   ngOnInit(): void {
     this.audienceInitSubscription = combineLatest([
       this.service.audience$,
       this.isSafeOptionDisabled$,
+      this.service.targetPlatformWeb$,
+      this.service.targetPlatformAndroid$,
+      this.service.targetPlatformIos$,
     ])
       .pipe(take(1))
       .subscribe(
-        ([initialAudience, isSafeOptionDisabled]: [
-          BoostAudience,
-          boolean
-        ]): void => {
+        ([
+          initialAudience,
+          isSafeOptionDisabled,
+          initialTargetPlatformWeb,
+          initialTargetPlatformAndroid,
+          initialTargetPlatformIos,
+        ]: [BoostAudience, boolean, boolean, boolean, boolean]): void => {
           if (isSafeOptionDisabled) {
             this.service.audience$.next(BoostAudience.CONTROVERSIAL);
             initialAudience = BoostAudience.CONTROVERSIAL;
@@ -54,6 +70,45 @@ export class BoostModalV2AudienceSelectorComponent
               Validators.required
             ),
           });
+
+          if (this.boostTargetExperiment.isActive()) {
+            this.form.addControl(
+              'targetPlatformWeb',
+              new FormControl(initialTargetPlatformWeb, Validators.required)
+            );
+            this.form.addControl(
+              'targetPlatformAndroid',
+              new FormControl(initialTargetPlatformAndroid, Validators.required)
+            );
+            this.form.addControl(
+              'targetPlatformIos',
+              new FormControl(initialTargetPlatformIos, Validators.required)
+            );
+
+            this.subscriptions.push(
+              // Target Platform WEB Subscription
+              // Change value in service on form control value change.
+              this.form.controls.targetPlatformWeb.valueChanges.subscribe(
+                (val: boolean) => {
+                  this.service.targetPlatformWeb$.next(val);
+                }
+              ),
+              // Target Platform ANDROID Subscription
+              // Change value in service on form control value change.
+              this.form.controls.targetPlatformAndroid.valueChanges.subscribe(
+                (val: boolean) => {
+                  this.service.targetPlatformAndroid$.next(val);
+                }
+              ),
+              // Target Platform iOS Subscription
+              // Change value in service on form control value change.
+              this.form.controls.targetPlatformIos.valueChanges.subscribe(
+                (val: boolean) => {
+                  this.service.targetPlatformIos$.next(val);
+                }
+              )
+            );
+          }
         }
       );
 
@@ -69,6 +124,10 @@ export class BoostModalV2AudienceSelectorComponent
     this.audienceInitSubscription?.unsubscribe();
     this.audienceChangeSubscription?.unsubscribe();
     this.safeOptionClickSubscription?.unsubscribe();
+
+    for (let subscription of this.subscriptions) {
+      subscription?.unsubscribe();
+    }
   }
 
   /**

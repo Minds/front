@@ -1,29 +1,18 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
-<m-marketing
-  class="m-pay__marketing"
-  pageTitle="Minds Pay"
-  i18n-pageTitle="@@PAY__MARKETING__PAGE__TITLE"
->
+<m-loadingSpinner [inProgress]="loading"></m-loadingSpinner>
+
+<m-marketing *ngIf="!loading" class="m-pay__marketing">
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
-        <h1 i18n="@@MARKETING_WIRE__MINDS_PAY">
-          Minds Pay
-        </h1>
-
-        <h2 ngPreserveWhitespaces i18n="@@MARKETING_WIRE__SEND_RECEIVE_INFO">
-          Send and receive payments in
-          <em>USD, BTC, ETH and Tokens</em>
-        </h2>
-
-        <p
+        <h1 *ngIf="data?.hero?.h1">{{ data.hero.h1 }}</h1>
+        <markdown
+          ngPreserveWhitespaces
+          *ngIf="data?.hero?.body"
           class="m-marketing__description"
-          i18n="@@MARKETING_WIRE__ENABLE_CRYPTO_PAYMENTS"
+          >{{ data.hero.body }}</markdown
         >
-          Enable your supporters or friends to pay you in dollars or
-          cryptocurrency. Get tips and monthly subscriptions for your content.
-        </p>
 
         <div>
           <m-button
@@ -39,8 +28,18 @@
       <div
         class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
       >
-        <span>
-          <img [src]="cdnAssetsUrl + 'assets/product-pages/pay/pay-1.jpg'" />
+        <span
+          [ngClass]="{
+            'm-marketing__imageSpan--noBackgroundEffects': !data.hero
+              ?.showBackgroundEffects
+          }"
+        >
+          <img
+            *ngIf="data?.hero?.image?.data?.attributes?.url"
+            [src]="strapiUrl + data.hero.image.data.attributes.url"
+            class="m-marketing__image--tall"
+            alt="Minds Pay"
+          />
         </span>
       </div>
     </div>
@@ -49,155 +48,73 @@
   <ng-container slot="2">
     <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
 
-    <!-- Section 2 -->
-
-    <div class="m-marketing__section m-marketing__section--style-3">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING_WIRE__MULTI_CURRENCY_SUPPORT">
-            Multi-currency support
-          </h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_WIRE__RECEIVE_TIPS_INFO"
-          >
-            Receive tips and subscription payments in USD, Bitcoin, Ether or
-            Minds Tokens by linking your crypto addresses and bank account.
-          </p>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_WIRE__MANAGE_ACCOUNTS_INFO"
-          >
-            Manage your accounts and keep track of all of your transactions in
-            your Minds Wallet.
-          </p>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pay/pay-2.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pay/pay-2-ux.png'"
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 3 -->
-
-    <div class="m-marketing__section m-marketing__section--style-4">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING_WIRE__SUBSCRIPTION_TIERS">
-            Subscription Tiers
-          </h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_WIRE__SETUP_DIFFERENT_TIERS_INFO"
-          >
-            Set up different subscription tiers to offer your fans in exchange
-            for recurring monthly payments in USD or Minds Tokens (BTC and ETH
-            not yet supported).
-          </p>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_WIRE__POST_CONTENT_INFO"
-          >
-            Post content behind paywalls that is only accessible to the
-            subscription tiers you select.
-          </p>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_WIRE__START_BUILDING"
-          >
-            Start building your own revenue streams today!
-          </p>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pay/pay-3.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pay/pay-3-ux.png'"
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 4 -->
-
-    <div class="m-marketing__section m-marketing__section--style-3">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n="@@MARKETING_WIRE__TIPPING">Tipping</h2>
-
-          <p
-            class="m-marketing__description"
-            i18n="@@MARKETING_WIRE__TIPPING_DESCRIPTION"
-          >
-            Every post on Minds has a button to send a tip to the author in
-            Minds Tokens, USD, Bitcoin and Ether. Tipping is a great way to show
-            your support for your favorite channels and allow them to keep
-            creating!
-          </p>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pay/pay-4.jpg'"
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pay/pay-4-ux.png'"
-            />
-          </span>
-        </div>
-      </div>
+    <div *ngFor="let sectionData of data?.sections">
+      <m-marketing__generalSection
+        [leftAligned]="sectionData.leftAligned"
+        [title]="sectionData.title"
+        [body]="sectionData.body"
+        [imageUrl]="
+          sectionData.image?.data?.attributes?.url
+            ? strapiUrl + sectionData.image?.data?.attributes?.url
+            : null
+        "
+        [imageOverlayUrl]="
+          sectionData.imageOverlay?.data?.attributes?.url
+            ? strapiUrl + sectionData.imageOverlay?.data?.attributes?.url
+            : null
+        "
+        [actionButtons]="sectionData.actionButtons"
+        [showBodyBackground]="sectionData.showBodyBackground"
+        [showBackgroundEffects]="sectionData.showBackgroundEffects"
+      ></m-marketing__generalSection>
     </div>
 
     <!-- Final section -->
 
     <div class="m-marketing__section m-marketing__section--tail">
-      <div class="m-grid m-marketing__wrapper">
+      <m-marketing__otherFeaturesSection
+        *ngIf="data?.other"
+        [title]="data.other?.title ?? null"
+        [column1Title]="data.other?.column1Title"
+        [column1Body]="data.other?.column1Body"
+        [column2Title]="data.other?.column2Title"
+        [column2Body]="data.other?.column2Body"
+        [column3Title]="data.other?.column3Title"
+        [column3Body]="data.other?.column3Body"
+      ></m-marketing__otherFeaturesSection>
+
+      <div
+        *ngIf="data?.footer?.actionButton"
+        class="m-grid m-marketing__wrapper"
+      >
         <div
-          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+          class="
+            m-grid__column-12 m-grid__column-12--mobile
+            m-marketing__body m-marketing__body--extra
+          "
         >
-          <m-button
-            color="blue"
-            (onAction)="scrollToTop()"
-            i18n="@@MARKETING_WIRE__MONETIZE_YOUR_CHANNEL"
+          <a
+            *ngIf="
+              data.footer.actionButton.navigationUrl;
+              else predefinedActionTemplate
+            "
+            [href]="data.footer.actionButton.navigationUrl"
+            [attr.data-ref]="data.footer.actionButton.dataRef ?? null"
+            target="_blank"
           >
-            Monetize your channel
-          </m-button>
+            <m-button color="blue">{{
+              data.footer.actionButton.text
+            }}</m-button>
+          </a>
+          <ng-template #predefinedActionTemplate>
+            <m-button
+              color="blue"
+              (onAction)="resolveAction(data.footer.actionButton.action ?? null)"
+              [attr.data-ref]="data.footer.actionButton.dataRef ?? null"
+            >
+              {{ data.footer.actionButton.text }}
+            </m-button>
+          </ng-template>
         </div>
       </div>
     </div>

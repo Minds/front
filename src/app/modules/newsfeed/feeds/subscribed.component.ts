@@ -44,6 +44,7 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 import { Platform } from '@angular/cdk/platform';
+import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 import { Session } from '../../../services/session';
 
 export enum FeedAlgorithm {
@@ -139,8 +140,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   };
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
-  routerSubscription: Subscription;
   private zendeskErrorSubscription: Subscription;
+  private onboardingTagsCompletedSubscription: Subscription;
+  routerSubscription: Subscription;
 
   /**
    * Listening for new posts.
@@ -202,6 +204,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private feedNoticeService: FeedNoticeService,
     persistentFeedExperiment: PersistentFeedExperimentService,
     private platform: Platform,
+    private onboardingV4Service: OnboardingV4Service,
     private session: Session
   ) {
     if (isPlatformServer(this.platformId)) return;
@@ -273,32 +276,44 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     });
 
     // catch Zendesk errors and make them domain specific.
-    this.zendeskErrorSubscription = this.route.queryParams.subscribe(params => {
-      if (params.kind === 'error') {
-        if (
-          /User is invalid: External minds-guid:\d+ has already been taken/.test(
-            params.message
-          )
-        ) {
-          this.toast.error('Your email is already linked to a support account');
-          return;
-        }
+    this.zendeskErrorSubscription = this.route.queryParams
+      .pipe(filter(Boolean))
+      .subscribe(params => {
+        if (params.kind === 'error') {
+          if (
+            /User is invalid: External minds-guid:\d+ has already been taken/.test(
+              params.message
+            )
+          ) {
+            this.toast.error(
+              'Your email is already linked to a support account'
+            );
+            return;
+          }
 
-        if (
-          params.message ===
-          'Please use one of the options below to sign in to Zendesk.'
-        ) {
-          this.toast.error('Authentication method invalid');
-          return;
-        }
+          if (
+            params.message ===
+            'Please use one of the options below to sign in to Zendesk.'
+          ) {
+            this.toast.error('Authentication method invalid');
+            return;
+          }
 
-        this.toast.error(params.message ?? 'An unknown error has occurred');
-      }
-    });
+          this.toast.error(params.message ?? 'An unknown error has occurred');
+        }
+      });
 
     this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
       newPost => {
         this.prepend(newPost);
+      }
+    );
+
+    // subscribe to onboarding tags completion and reload the feed with more relevant content.
+    this.onboardingTagsCompletedSubscription = this.onboardingV4Service.tagsCompleted$.subscribe(
+      (completed: boolean): void => {
+        this.feedService.clear();
+        this.load();
       }
     );
 
@@ -313,6 +328,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.reloadFeedSubscription?.unsubscribe();
     this.feedsUpdatedSubscription?.unsubscribe();
     this.zendeskErrorSubscription?.unsubscribe();
+    this.onboardingTagsCompletedSubscription?.unsubscribe();
   }
 
   /**

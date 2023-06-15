@@ -85,11 +85,7 @@
             >
               <!-- FLAG -->
               <m-activity__flag
-                class="m-activity__flagRow"
-                *ngIf="
-                  entity.boosted ||
-                  (entity.remind_users && entity.remind_users.length)
-                "
+                *ngIf="activityService.showFlagRow$ | async"
               ></m-activity__flag>
               <!-- OWNER BLOCK -->
               <m-activity__ownerBlock>

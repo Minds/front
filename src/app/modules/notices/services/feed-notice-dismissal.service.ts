@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { EventEmitter, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { FeedNoticeStorageArray, NoticeKey } from '../feed-notice.types';
 import { isPlatformServer } from '@angular/common';
 import * as moment from 'moment';
@@ -19,6 +19,9 @@ export class FeedNoticeDismissalService {
   // Amount of days until dismissal is considered expired.
   private readonly expirationDays: number = 60;
 
+  // Called when a notice is dismissed
+  public readonly dismissedEvent$: EventEmitter<NoticeKey> = new EventEmitter();
+
   constructor(private objectStorage: ObjectLocalStorageService) {}
 
   /**
@@ -32,6 +35,7 @@ export class FeedNoticeDismissalService {
         timestamp: moment(),
       },
     });
+    this.dismissedEvent$.next(noticeId);
     return this;
   }
 

@@ -105,6 +105,12 @@ export class BoostConsoleV2Component implements OnInit {
         if (paymentMethodFilter) {
           this.service.paymentMethodFilterValue$.next(paymentMethodFilter);
         }
+
+        // ADMIN REMOTE LOOKUP
+        const remoteUserGuid: string = params.remoteUserGuid || null;
+        if (remoteUserGuid) {
+          this.service.remoteUserGuid$.next(remoteUserGuid);
+        }
       }),
 
       // If the user creates a boost while on the boost console page,

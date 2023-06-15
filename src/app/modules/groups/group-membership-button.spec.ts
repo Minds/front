@@ -11,7 +11,6 @@ import { DebugElement } from '@angular/core';
 
 import { By } from '@angular/platform-browser';
 
-import { SignupOnActionModalMock } from '../../mocks/modules/modals/signup/signup-on-action.mock';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { uploadMock } from '../../../tests/upload-mock.spec';
 
@@ -75,11 +74,7 @@ describe('GroupMembershipButton', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [
-          SignupOnActionModalMock,
-          GroupMembershipButton,
-          ButtonComponent,
-        ],
+        declarations: [GroupMembershipButton, ButtonComponent],
         imports: [RouterTestingModule],
         providers: [
           { provide: Session, useValue: sessionMock },
