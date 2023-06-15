@@ -177,9 +177,9 @@ import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/nav
 import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-content-dot/new-content-dot.component';
 import { TopbarAlertComponent } from './components/topbar-alert/topbar-alert.component';
 import { ChatwootWidgetComponent } from './components/chatwoot-widget/chatwoot-widget.component';
-
 import { MarkdownModule } from 'ngx-markdown';
 import { FormErrorComponent } from './components/form-error/form-error.component';
+import { SelectableEntityCardComponent } from './components/selectable-entity-card/selectable-entity-card.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -285,6 +285,7 @@ const MINDS_COMMON_COMPONENTS = [
   TopbarAlertComponent,
   ChatwootWidgetComponent,
   FormErrorComponent,
+  SelectableEntityCardComponent,
 ];
 // ------------------------------------
 // ------------------------------------

@@ -3,11 +3,28 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Inject,
+  OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { BlockchainMarketingLinksService } from './blockchain-marketing-links.service';
+import { GraphQLError } from 'graphql';
+import { RewardsMarketingService } from './rewards.service';
+import { Subscription } from 'rxjs';
+import { StrapiMetaService } from '../../../../common/services/strapi/strapi-meta.service';
+import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
+import { ApolloQueryResult } from '@apollo/client/core';
+import {
+  ProductMarketingAttributes,
+  ProductMarketingResponse,
+} from '../../../../common/services/strapi/marketing-page/marketing-page.types';
+import {
+  StrapiAction,
+  StrapiActionResolverService,
+} from '../../../../common/services/strapi/strapi-action-resolver.service';
 
 /**
  * Rewards marketing page
@@ -16,9 +33,17 @@ import { BlockchainMarketingLinksService } from './blockchain-marketing-links.se
   selector: 'm-blockchainMarketing__rewards--v2',
   templateUrl: 'rewards.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./rewards.component.ng.scss'],
+  styleUrls: [
+    './rewards.component.ng.scss',
+    '../../../marketing/styles/markdown-style.ng.scss',
+  ],
 })
-export class BlockchainMarketingRewardsV2Component {
+export class BlockchainMarketingRewardsV2Component
+  implements OnInit, OnDestroy {
+  public data: ProductMarketingAttributes;
+  public loading: boolean = true;
+  public errors: readonly GraphQLError[];
+
   readonly cdnAssetsUrl: string;
 
   readonly contributionValues: { [key: string]: number };
@@ -26,60 +51,47 @@ export class BlockchainMarketingRewardsV2Component {
   @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
+  private copyDataSubscription: Subscription;
+
   constructor(
     protected router: Router,
     protected cd: ChangeDetectorRef,
     private linksService: BlockchainMarketingLinksService,
+    private service: RewardsMarketingService,
+    private strapiMeta: StrapiMetaService,
+    private strapiActionResolver: StrapiActionResolverService,
+    @Inject(STRAPI_URL) public strapiUrl: string,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.contributionValues = configs.get('contribution_values');
   }
 
-  scrollToTop() {
-    if (this.topAnchor.nativeElement) {
-      this.topAnchor.nativeElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest',
-      });
-    }
+  ngOnInit(): void {
+    this.copyDataSubscription = this.service.copyData.valueChanges.subscribe(
+      (result: ApolloQueryResult<ProductMarketingResponse>): void => {
+        this.data = result.data.productPages.data[0].attributes;
+        this.loading = result.loading;
+        this.errors = result.errors;
+        if (this.data.metadata) {
+          this.strapiMeta.apply(this.data.metadata);
+        }
+        this.detectChanges();
+      }
+    );
   }
 
-  action() {
-    this.router.navigate(['/wallet/tokens/overview']);
-  }
-
-  /**
-   * Opens composer modal.
-   * @returns { void }
-   */
-  public openComposerModal(): void {
-    this.linksService.openComposerModal();
+  ngOnDestroy(): void {
+    this.copyDataSubscription?.unsubscribe();
   }
 
   /**
-   * Open affiliates page.
+   * Resolve an action from a Strapi action button.
+   * @param { StrapiAction } action - action to resolve.
    * @returns { void }
    */
-  public navigateToAffiliates(): void {
-    this.linksService.navigateToAffiliates();
-  }
-
-  /**
-   * Open whitepaper.
-   * @returns { void }
-   */
-  public navigateToWhitepaper(): void {
-    this.linksService.navigateToWhitepaper();
-  }
-
-  /**
-   * Open explanatory blog.
-   * @returns { void }
-   */
-  public navigateToBlog(): void {
-    this.linksService.navigateToBlog();
+  public resolveAction(action: StrapiAction): void {
+    this.strapiActionResolver.resolve(action);
   }
 
   /**
@@ -88,30 +100,6 @@ export class BlockchainMarketingRewardsV2Component {
    */
   public joinRewardsClick(): void {
     this.linksService.navigateToJoinRewards();
-  }
-
-  /**
-   * Open provide liquidity modal.
-   * @returns { void }
-   */
-  public provideLiquidityClick(): void {
-    this.linksService.openLiquidityProvisionModal();
-  }
-
-  /**
-   * Open transfer on-chain modal.
-   * @returns { void }
-   */
-  public transferOnChainClick(): void {
-    this.linksService.openTransferOnchainModal();
-  }
-
-  /**
-   * Called on purchase completed.
-   * @returns { void }
-   */
-  public onPurchaseComplete($event): void {
-    // do nothing
   }
 
   public detectChanges() {

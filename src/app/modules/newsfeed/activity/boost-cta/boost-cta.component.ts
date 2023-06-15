@@ -22,7 +22,6 @@ import { BoostGoalsExperimentService } from '../../../experiments/sub-services/b
   styleUrls: ['./boost-cta.component.ng.scss'],
 })
 export class ActivityBoostCtaComponent {
-  // public readonly BoostGoalButtonText = BoostGoalButtonText;
   public BoostGoalButtonText: typeof BoostGoalButtonText = BoostGoalButtonText;
   /**
    * The numeric code that corresponds to the user's chosen text to display on the button

@@ -9,6 +9,10 @@
     padding-top: $spacing4;
     padding-left: $activitySpacing--modal;
     padding-right: $activitySpacing--modal;
+
+    [class*='m-activityFlag--'] {
+      padding-bottom: 0;
+    }
   }
 
   // *********************************
@@ -23,6 +27,7 @@
 
   [class*='m-activityFlag--'] {
     padding-right: $spacing4;
+    padding-bottom: $spacing3;
 
     > * {
       vertical-align: middle;

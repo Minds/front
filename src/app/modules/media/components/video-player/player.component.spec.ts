@@ -3,7 +3,6 @@ import { MindsVideoPlayerComponent } from './player.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ChangeDetectorRef, ElementRef, PLATFORM_ID } from '@angular/core';
 import { VideoPlayerService, VideoSource } from './player.service';
-import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
 import { BehaviorSubject } from 'rxjs';
 
 describe('MindsVideoPlayerComponent', () => {
@@ -15,9 +14,6 @@ describe('MindsVideoPlayerComponent', () => {
       TestBed.configureTestingModule({
         declarations: [
           MindsVideoPlayerComponent,
-          MockComponent({
-            selector: 'm-autoProgress__overlay',
-          }),
           MockComponent({
             selector: 'plyr',
             inputs: [
@@ -54,10 +50,6 @@ describe('MindsVideoPlayerComponent', () => {
           {
             provide: ChangeDetectorRef,
             useValue: MockService(ChangeDetectorRef),
-          },
-          {
-            provide: AutoProgressVideoService,
-            useValue: MockService(AutoProgressVideoService),
           },
           {
             provide: PLATFORM_ID,

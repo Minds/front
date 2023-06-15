@@ -3,12 +3,7 @@
     <ng-container *ngTemplateOutlet="sortSelector"></ng-container>
   </div>
 </ng-container>
-<m-composer
-  *ngIf="isMember()"
-  (onPost)="prepend($event)"
-  [containerGuid]="group.guid"
-  #composer
-></m-composer>
+<m-composer *ngIf="isMember()" [container]="group" #composer></m-composer>
 
 <div class="minds-list">
   <div>
@@ -50,7 +45,7 @@
       "
     >
       <a
-        class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message m-groupSorted__reviewQueue"
+        class="m-groupSorted__reviewQueue"
         (click)="onReviewNoticeClick($event)"
         routerLink="review"
         draggable="false"

@@ -92,5 +92,64 @@
         />
       </fieldset>
     </div>
+    <div
+      *ngIf="boostTargetExperiment.isActive()"
+      class="m-boostAudienceSelector__targetPlatformContainer"
+    >
+      <div
+        class="m-boostAudienceTargetPlatformContainer__header"
+        (click)="targetPlatformContainerOpen = !targetPlatformContainerOpen"
+        data-ref="boost-modal-v2-platform-selector-collapsible-container-toggle"
+      >
+        <span
+          i18n="@@BOOST_MODAL_V2_AUDIENCE__TARGET_PLATFORM_LABEL__PLACEMENTS"
+          >Placements</span
+        >
+        <m-icon
+          [iconId]="targetPlatformContainerOpen ? 'expand_less' : 'expand_more'"
+        ></m-icon>
+      </div>
+      <div class="m-boostAudienceTargetPlatformContainer__body">
+        <ng-container *ngIf="!targetPlatformContainerOpen">
+          <div
+            class="m-boostAudienceTargetPlatformContainer__summaryWrapper"
+            (click)="targetPlatformContainerOpen = !targetPlatformContainerOpen"
+          >
+            <span class="m-boostAudienceTargetPlatformContainer__label">{{
+              service.targetPlatformSummaryText$ | async
+            }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="targetPlatformContainerOpen">
+          <div class="m-boostAudienceTargetPlatformContainer__checkboxRow">
+            <span class="m-boostAudienceTargetPlatformContainer__label"
+              >Web</span
+            >
+            <m-formInput__checkbox
+              data-ref="boost-modal-v2-platform-selector-web"
+              formControlName="targetPlatformWeb"
+            ></m-formInput__checkbox>
+          </div>
+          <div class="m-boostAudienceTargetPlatformContainer__checkboxRow">
+            <span class="m-boostAudienceTargetPlatformContainer__label"
+              >Android</span
+            >
+            <m-formInput__checkbox
+              data-ref="boost-modal-v2-platform-selector-android"
+              formControlName="targetPlatformAndroid"
+            ></m-formInput__checkbox>
+          </div>
+          <div class="m-boostAudienceTargetPlatformContainer__checkboxRow">
+            <span class="m-boostAudienceTargetPlatformContainer__label"
+              >iOS</span
+            >
+            <m-formInput__checkbox
+              data-ref="boost-modal-v2-platform-selector-ios"
+              formControlName="targetPlatformIos"
+            ></m-formInput__checkbox>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </form>
 </div>

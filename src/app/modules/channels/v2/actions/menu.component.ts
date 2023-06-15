@@ -138,6 +138,18 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
     ]);
   }
 
+  /**
+   * Links to a remote user's boost console page
+   */
+  public viewBoosts(): void {
+    this.router.navigate(['/boost/boost-console'], {
+      queryParams: {
+        location: 'feed',
+        remoteUserGuid: this.service.channel$.getValue().guid,
+      },
+    });
+  }
+
   async viewEmail() {
     const channel = { ...this.service.channel$.getValue() };
 
