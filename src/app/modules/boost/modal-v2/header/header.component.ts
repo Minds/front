@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BoostModalPanel, BoostSubject } from '../boost-modal-v2.types';
 import { BoostModalV2Service } from '../services/boost-modal-v2.service';
-import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
 
 /**
  * Boost modal header - displays different title based on entity type.

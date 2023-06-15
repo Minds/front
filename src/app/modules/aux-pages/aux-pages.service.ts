@@ -130,7 +130,7 @@ export class AuxPagesService {
    * @returns { Observable<ApolloQueryResult<any>> } result.
    */
   private fetchContent(path: string): Observable<ApolloQueryResult<any>> {
-    return this.apollo.watchQuery({
+    return this.apollo.use('strapi').watchQuery({
       query: AUX_PAGE_QUERY,
       variables: {
         path: path,

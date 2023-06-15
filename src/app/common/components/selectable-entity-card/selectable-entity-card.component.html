@@ -1,0 +1,17 @@
+<div
+  class="m-selectableEntityCard__avatar"
+  [style.background-image]="'url(' + avatarSrc + ')'"
+  [ngClass]="{
+    'm-selectableEntityCard__avatar--selected': selected
+  }"
+>
+  <span *ngIf="selected" class="material-icons">done</span>
+</div>
+<div class="m-selectableEntityCard__infoTextContainer">
+  <span class="m-selectableEntityCard__entityName">{{
+    title | truncate: 24
+  }}</span>
+  <span class="m-selectableEntityCard__entityInfo">{{
+    subtext | truncate: 24
+  }}</span>
+</div>

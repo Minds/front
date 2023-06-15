@@ -123,14 +123,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
-  entitySubscription: Subscription;
   private interceptionObserverSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
-
-  // Whether the boost/remind/supermind/mutualSubscriptions flag
-  // should appear on top of owner block
-  showFlagRow: boolean = false;
 
   @Output() previousBoost: EventEmitter<any> = new EventEmitter();
   @Output() nextBoost: EventEmitter<any> = new EventEmitter();
@@ -185,33 +180,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
-
-    this.entitySubscription = this.service.entity$.subscribe(entity => {
-      if (!entity) {
-        return;
-      }
-
-      const notInBoostRotator = !this.service.displayOptions.boostRotatorMode;
-      const boosted = entity.boosted;
-      const reminded = entity.remind_users && entity.remind_users.length;
-
-      const isSupermindOffer =
-        entity.supermind &&
-        !entity.supermind.is_reply &&
-        entity.supermind.receiver_user;
-
-      this.showFlagRow =
-        notInBoostRotator && (boosted || reminded || isSupermindOffer);
-
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    });
   }
 
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
-    this.entitySubscription.unsubscribe();
     if (
       this.entityMetricSocketsExperiment.isActive() &&
       this.interceptionObserverSubscription
@@ -240,7 +213,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
             })
           );
         });
-      this.elementVisibilityService.checkVisibility();
+
+      // Wait 1 second before recording the initial view
+      setTimeout(() => this.elementVisibilityService.checkVisibility(), 1000);
 
       // Only needed when metrics toolbar is visible.
       if (this.service.displayOptions.showToolbar) {

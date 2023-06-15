@@ -52,6 +52,8 @@ export enum BoostAudience {
   CONTROVERSIAL = 2,
 }
 
+export type BoostTargetPlatformLabel = 'Web' | 'Android' | 'iOS';
+
 export enum BoostLocation {
   NEWSFEED = 1,
   SIDEBAR = 2,
@@ -109,6 +111,9 @@ export type BoostSubmissionPayload = {
   guid?: string;
   entity_guid: string;
   target_suitability: BoostAudience;
+  target_platform_web?: boolean;
+  target_platform_android?: boolean;
+  target_platform_ios?: boolean;
   target_location: BoostLocation;
   goal?: BoostGoal;
   goal_button_text?: BoostGoalButtonText;

@@ -19,6 +19,7 @@ import { ComposerComponent } from '../../../composer/composer.component';
 import { AsyncPipe } from '@angular/common';
 import { GroupsSearchService } from './search.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
 
 /**
  * Container for group feeds. Includes content type filter, search results,
@@ -84,6 +85,10 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   feed$: Observable<BehaviorSubject<Object>[]>;
 
   groupsSearchQuerySubscription: Subscription;
+
+  /** Listening for new posts. */
+  private feedsUpdatedSubscription: Subscription;
+
   query: string = '';
 
   constructor(
@@ -96,6 +101,7 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     public groupsSearch: GroupsSearchService,
+    public feedsUpdate: FeedsUpdateService,
     private toast: ToasterService
   ) {}
 
@@ -108,12 +114,19 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
         this.load(true);
       }
     );
+
+    this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
+      newPost => {
+        this.prepend(newPost);
+      }
+    );
   }
 
   ngOnDestroy(): void {
     if (this.groupsSearchQuerySubscription) {
       this.groupsSearchQuerySubscription.unsubscribe();
     }
+    this.feedsUpdatedSubscription?.unsubscribe();
   }
 
   async load(refresh: boolean = false) {
@@ -210,6 +223,18 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   public prepend(activity: any): void {
+    // if new activity does not belong to this group, do not prepend.
+    if (
+      !activity?.container_guid ||
+      activity.container_guid !== this.group.guid
+    ) {
+      return;
+    }
+
+    if (!activity || !this.isActivityFeed()) {
+      return;
+    }
+
     if (
       this.group.moderated &&
       !(this.group['is:moderator'] || this.group['is:owner'])
@@ -217,10 +242,6 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
       this.toast.success(
         'Your post is pending approval from the group moderators'
       );
-    }
-
-    if (!activity || !this.isActivityFeed()) {
-      return;
     }
 
     let feedItem = {
