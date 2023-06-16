@@ -287,7 +287,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
        */
       this.route.params.subscribe(params => {
         if (params['algorithm']) {
-          if (Object.values(FeedAlgorithm).includes(params['algorithm'])) {
+          if (
+            ['top', 'latest', 'for-you', 'groups'].includes(params['algorithm'])
+          ) {
             this.changeFeedAlgorithm(params['algorithm']);
           } else {
             this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
@@ -479,7 +481,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
       behavior: 'smooth',
     });
     setTimeout(() => {
-      this.changeFeedAlgorithm(FeedAlgorithm.top);
+      this.changeFeedAlgorithm('top');
     }, 500);
   }
 
