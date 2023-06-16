@@ -55,7 +55,7 @@ export class PublisherRecommendationsComponent implements OnInit {
    * the location in which this component appears
    */
   @Input()
-  location: 'newsfeed' | 'discovery-feed' | 'channel';
+  location: 'newsfeed' | 'discovery-feed' | 'channel' | 'groups-memberships';
   /**
    * the channel id for which the recommendations should be contextualized.
    */
@@ -90,6 +90,12 @@ export class PublisherRecommendationsComponent implements OnInit {
   isOnboarding: boolean = false;
 
   /**
+   * How many recommendations to show at a time when
+   * the component is loaded
+   */
+  @Input() initialListSize: number = 4;
+
+  /**
    * the height of the container, used to animate the mount and unmount of this component
    */
   containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -98,7 +104,9 @@ export class PublisherRecommendationsComponent implements OnInit {
   /**
    * How many recommendations to show at a time?
    */
-  listSize$: BehaviorSubject<number> = new BehaviorSubject(4);
+  listSize$: BehaviorSubject<number> = new BehaviorSubject(
+    this.initialListSize
+  );
 
   /**
    * Emit when user subscribes to a recommendation
@@ -237,11 +245,11 @@ export class PublisherRecommendationsComponent implements OnInit {
    * When a recommendation is subscribed, remove it from the list——unless the list length is small
    */
   onSubscribed(user): void {
-    if (this.listSize$.getValue() === 4) {
-      this.listSize$.next(5);
+    if (this.listSize$.getValue() === this.initialListSize) {
+      this.listSize$.next(this.initialListSize);
     }
 
-    if (this.recommendations$.getValue().length <= 4) {
+    if (this.recommendations$.getValue().length <= this.initialListSize) {
       return;
     }
 

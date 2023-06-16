@@ -39,6 +39,7 @@ import { FeedNoticeSwitchComponent } from './outlet/feed-notice-switch.component
   ],
   providers: [BoostLatestPostNoticeService],
   exports: [
+    FeedNoticeComponent,
     FeedNoticeOutletComponent,
     FeedNoticeSwitchComponent,
     BoostLatestPostNoticeComponent,

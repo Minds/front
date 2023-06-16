@@ -1,0 +1,12 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding-top: $spacing4;
+  padding-bottom: $spacing6;
+  ::ng-deep m-button {
+    &:first-child {
+      margin-right: $spacing2;
+    }
+  }
+}

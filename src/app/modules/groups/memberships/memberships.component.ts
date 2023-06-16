@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import isMobile from '../../../helpers/is-mobile';
 
 /**
  * Page with a list of all the groups you belong to
@@ -19,6 +20,11 @@ export class GroupsMembershipsComponent implements OnInit, OnDestroy {
   moreData: boolean = true;
   readonly cdnUrl: string;
   $updateMarker;
+
+  /**
+   * How many recommendations to show
+   */
+  recommendationsListSize: number;
 
   constructor(
     private client: Client,
@@ -44,6 +50,7 @@ export class GroupsMembershipsComponent implements OnInit, OnDestroy {
         offset: this.offset,
         limit: 1,
       });
+
       if (!response.entities && this.offset) {
         this.moreData = false;
         throw 'No entities found';
@@ -60,6 +67,11 @@ export class GroupsMembershipsComponent implements OnInit, OnDestroy {
       this.moreData = response.entities && response.entities.length;
     } catch (e) {
     } finally {
+      if (this.groups && this.groups.length) {
+        this.recommendationsListSize = this.isMobile() ? 1 : 3;
+      } else {
+        this.recommendationsListSize = 5;
+      }
       this.inProgress = false;
     }
   }
@@ -80,5 +92,10 @@ export class GroupsMembershipsComponent implements OnInit, OnDestroy {
           ).length > 0;
       }
     });
+  }
+
+  isMobile() {
+    console.log('ojm isMobile()', isMobile());
+    return isMobile();
   }
 }

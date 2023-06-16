@@ -15,7 +15,7 @@ export class FeedAlgorithmHistoryService {
    * Gets last feed algorithm from storage.
    * @returns { string } - feed type a user last accessed.
    */
-  get lastAlorithm(): FeedAlgorithm | undefined {
+  get lastAlgorithm(): FeedAlgorithm | undefined {
     const algo = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
     return FeedAlgorithm[algo];
   }
@@ -25,7 +25,7 @@ export class FeedAlgorithmHistoryService {
    * @param { string } - feed type
    * @returns { void }
    */
-  set lastAlorithm(tab: FeedAlgorithm) {
+  set lastAlgorithm(tab: FeedAlgorithm) {
     this.storage.set(FEED_ALGORITHM_STORAGE_KEY, tab);
   }
 }

@@ -8,48 +8,30 @@
       <!-- ---------------  -->
       <!-- HEADER -->
       <!-- ---------------  -->
-      <div class="m-groupsMemberships__header">
-        <h2>Groups</h2>
-        <!-- ---------------  -->
-        <!-- BUTTONS  -->
-        <!-- ---------------  -->
-        <div class="m-groupsMemberships__buttons">
-          <m-button size="small"
-            ><a routerLink="/groups/create"
-              ><span>Create group</span></a
-            ></m-button
-          >
-          <m-button size="small"
-            ><a routerLink="/discovery/suggestions/group"
-              ><span>Discover groups</span></a
-            ></m-button
-          >
-        </div>
-        <!-- ---------------  -->
-        <!-- DROPDOWN  -->
-        <!-- (MOBILE ONLY) -->
-        <!-- ---------------  -->
-        <m-dropdownMenu [menu]="dropdownMenu" class="m-groupsMemberships__menu">
-          <i class="material-icons">more_vert</i>
-        </m-dropdownMenu>
+      <h2>Groups</h2>
 
-        <ng-template #dropdownMenu>
-          <ul>
-            <m-dropdownMenu__item [link]="'/groups/create'">
-              Create group
-            </m-dropdownMenu__item>
-            <m-dropdownMenu__item [link]="'/discovery/suggestions/group'">
-              Discover groups
-            </m-dropdownMenu__item>
-          </ul>
-        </ng-template>
-        <!-- ---------------  -->
-      </div>
-
+      <ng-container *ngIf="!inProgress">
+        <m-findGroupsButtons
+          class="m-groupsMembershipsHeader__findGroupsButtons"
+          *ngIf="groups?.length"
+        ></m-findGroupsButtons>
+        <m-feedNotice--noGroups
+          *ngIf="!groups?.length"
+        ></m-feedNotice--noGroups>
+      </ng-container>
       <!-- ---------------  -->
       <!-- BODY -->
       <!-- ---------------  -->
-      <div *ngIf="groups && groups.length">
+      <m-publisherRecommendations
+        *ngIf="!inProgress"
+        class="m-groupsMemberships__publisherRecommendations"
+        location="groups-memberships"
+        [dismissible]="false"
+        publisherType="group"
+        [initialListSize]="recommendationsListSize"
+      ></m-publisherRecommendations>
+      <!-- </div> -->
+      <div class="m-groupsMemberships__list" *ngIf="groups && groups.length">
         <m-publisherCard
           *ngFor="let group of groups"
           [publisher]="group"
@@ -62,12 +44,7 @@
           [inProgress]="this.inProgress"
         ></infinite-scroll>
       </div>
-      <div *ngIf="!groups?.length && !inProgress">
-        <p>
-          You aren't a member of any groups yet.<br />
-          <a routerLink="/discovery/suggestions/group">Discover groups</a>.
-        </p>
-      </div>
+
       <!-- ---------------  -->
     </div>
   </div>

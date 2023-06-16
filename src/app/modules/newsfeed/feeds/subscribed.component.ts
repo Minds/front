@@ -215,7 +215,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   ) {
     if (isPlatformServer(this.platformId)) return;
 
-    const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlorithm;
+    const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlgorithm;
     if (storedfeedAlgorithm) {
       this.algorithm = storedfeedAlgorithm;
     }
@@ -458,7 +458,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    **/
   changeFeedAlgorithm(algo: FeedAlgorithm) {
     this.algorithm = algo;
-    this.feedAlgorithmHistory.lastAlorithm = algo;
+    this.feedAlgorithmHistory.lastAlgorithm = algo;
 
     switch (algo) {
       case 'for-you':
