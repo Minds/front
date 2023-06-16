@@ -58,8 +58,10 @@ export class TwitterSyncComponent implements OnInit {
     this.twitterSyncService
       .getConnectedAccount()
       .then(account => {
-        this.isSetup = true;
-        this.updateForm.controls.discoverable.setValue(account.discoverable);
+        if (account?.twitter_username) {
+          this.isSetup = true;
+          this.updateForm.controls.discoverable.setValue(account?.discoverable);
+        }
       })
       .finally(() => {
         this.inProgress = false;

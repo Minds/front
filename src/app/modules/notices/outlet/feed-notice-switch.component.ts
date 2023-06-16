@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { NoticeKey, NoticeLocation } from '../feed-notice.types';
 import { Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
 import { FeedNoticeDismissalService } from '../services/feed-notice-dismissal.service';
 
@@ -71,6 +71,9 @@ export class FeedNoticeSwitchComponent implements OnInit, OnDestroy {
         .subscribe((shouldShow: boolean) => {
           this.topbarAlertShown = shouldShow;
         }),
+      this.dismissalService.dismissedEvent$
+        .pipe(filter(noticeId => noticeId === this.key))
+        .subscribe(() => (this.isDismissed = true)),
     ];
   }
 
