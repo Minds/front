@@ -15,6 +15,8 @@ import {
 } from '../../../../utils/mock';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
+import { ComposerAudienceSelectorService } from '../../services/audience.service';
 
 describe('BaseComponent', () => {
   let comp: BaseComponent;
@@ -81,6 +83,17 @@ describe('BaseComponent', () => {
             },
           }),
         },
+        {
+          provide: ComposerAudienceSelectorService,
+          useValue: MockService(ComposerAudienceSelectorService, {
+            has: ['shareToGroupMode$'],
+            props: {
+              shareToGroupMode$: {
+                get: () => new BehaviorSubject<boolean>(false),
+              },
+            },
+          }),
+        },
         { provide: Router, useValue: MockService(Router) },
         {
           provide: InMemoryStorageService,
@@ -118,6 +131,8 @@ describe('BaseComponent', () => {
 
     (comp as any).service.message$.next('');
     (comp as any).service.isMovingContent$.next(false);
+    (comp as any).service.supermindRequest$.next(null);
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
 
     fixture.detectChanges();
   });
@@ -137,5 +152,43 @@ describe('BaseComponent', () => {
       '/blog/v2/edit/new',
     ]);
     expect((comp as any).composerModal.dismiss).toHaveBeenCalled();
+  });
+
+  it('should display audience selector popup on init when in share to group mode', () => {
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(true);
+    (comp as any).service.supermindRequest$.next(null);
+
+    (comp as any).popup.setUp.calls.reset();
+    (comp as any).popup.present.and.returnValue(
+      new BehaviorSubject<boolean>(true)
+    );
+    (comp as any).popup.create.and.returnValue((comp as any).popup);
+
+    comp.ngAfterViewInit();
+
+    expect((comp as any).popup.setUp).toHaveBeenCalledTimes(1);
+    expect((comp as any).popup.create).toHaveBeenCalledOnceWith(
+      ComposerAudienceSelectorPanelComponent
+    );
+    expect((comp as any).popup.present).toHaveBeenCalledTimes(1);
+  });
+
+  it('should NOT display audience selector popup on init when NOT in share to group mode', () => {
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
+    (comp as any).service.supermindRequest$.next(null);
+
+    (comp as any).popup.setUp.calls.reset();
+    (comp as any).popup.present.and.returnValue(
+      new BehaviorSubject<boolean>(true)
+    );
+    (comp as any).popup.create.and.returnValue((comp as any).popup);
+
+    comp.ngAfterViewInit();
+
+    expect((comp as any).popup.setUp).toHaveBeenCalledTimes(1);
+    expect((comp as any).popup.create).not.toHaveBeenCalledOnceWith(
+      ComposerAudienceSelectorPanelComponent
+    );
+    expect((comp as any).popup.present).not.toHaveBeenCalledTimes(1);
   });
 });

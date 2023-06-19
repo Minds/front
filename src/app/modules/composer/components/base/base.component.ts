@@ -24,13 +24,20 @@ import { InMemoryStorageService } from '../../../../services/in-memory-storage.s
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { distinctUntilChanged, first, map } from 'rxjs/operators';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  firstValueFrom,
+} from 'rxjs';
 import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
 import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ClientMetaData } from '../../../../common/services/client-meta.service';
 import { ComposerModalService } from '../modal/modal.service';
+import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
+import { ComposerAudienceSelectorService } from '../../services/audience.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -105,6 +112,7 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
   constructor(
     protected service: ComposerService,
     protected popup: PopupService,
+    protected audienceSelectorService: ComposerAudienceSelectorService,
     protected router: Router,
     protected inMemoryStorage: InMemoryStorageService,
     protected cd: ChangeDetectorRef,
@@ -136,6 +144,11 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
      */
     if (this.service.supermindRequest$.getValue()) {
       this.displaySupermindRequestPopup();
+    }
+
+    // if the audience selector is in share to group mode, open popup on load.
+    if (this.audienceSelectorService.shareToGroupMode$.getValue()) {
+      this.displayAudienceSelectorPopup();
     }
 
     this.subscriptions.push(
@@ -323,6 +336,16 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
       .create(ComposerSupermindComponent)
       .present()
       .toPromise(/* Promise is needed to boot-up the Observable */);
+  }
+
+  /**
+   * Launch audience selector panel popup.
+   * @returns { Promise<void> }
+   */
+  private async displayAudienceSelectorPopup(): Promise<void> {
+    await firstValueFrom(
+      this.popup.create(ComposerAudienceSelectorPanelComponent).present()
+    );
   }
 
   /**
