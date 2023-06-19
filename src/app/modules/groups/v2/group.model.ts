@@ -32,6 +32,8 @@ export interface MindsGroup {
   'is:member': boolean;
   'is:creator': boolean;
   'is:awaiting': boolean;
+  'is:banned': boolean;
+  'is:invited': boolean;
   'is:muted': boolean;
   'thumbs:up:count': number;
   'thumbs:down:count': number;

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { GroupService } from '../group.service';
 import { Subscription } from 'rxjs';
+import { GroupMembershipChangeOuput } from '../../../../common/components/group-membership-button/group-membership-button.component';
 
 /**
  * Toolbar at top of group banner, with options that change
@@ -25,12 +26,9 @@ export class GroupActionsComponent {
    * Fires when membership changes as result of
    * clicking the membership button
    *
-   * Button gets stuck loading without it
    */
-  onMembershipChange($event): void {
-    if ($event.member) {
-      this.service.isMember$.next($event.member);
-    }
+  onMembershipChange($event: GroupMembershipChangeOuput): void {
+    this.service.isMember$.next($event.isMember);
   }
 
   /**

@@ -7,7 +7,6 @@ import { CommonModule } from '../../common/common.module';
 import { ModalsModule } from '../modals/modals.module';
 import { VideoChatModule } from '../videochat/videochat.module';
 
-import { GroupMembershipButton } from './group-membership-button';
 import { GroupsProfileMembersInvite } from './profile/members/invite/invite';
 import { GroupsCard } from './card/card';
 import { GroupsCardUserActionsButton } from './profile/card-user-actions-button';
@@ -88,7 +87,6 @@ const routes: Routes = [
   declarations: [
     GroupsProfile,
     GroupsCreator,
-    GroupMembershipButton,
     GroupsProfileMembersInvite,
     GroupsCard,
     GroupsCardUserActionsButton,
@@ -106,14 +104,12 @@ const routes: Routes = [
   exports: [
     GroupsProfile,
     GroupsCreator,
-    GroupMembershipButton,
     GroupsProfileMembersInvite,
     GroupsCard,
     GroupsCardUserActionsButton,
     GroupsProfileMembers,
     GroupsProfileRequests,
     GroupsSettingsButton,
-    GroupMembershipButton,
     GroupsProfileReviewComponent,
     GroupProfileFeedComponent,
     GroupMemberPreviews,

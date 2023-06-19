@@ -9,7 +9,9 @@
   <m-group__membershipButton
     class="m-groupActions__button--membership"
     [group]="service.group$ | async"
-    v2=" true"
-    (membership)="onMembershipChange($event)"
+    buttonSize="xsmall"
+    overlay="true"
+    verbose="true"
+    (onMembershipChange)="onMembershipChange($event)"
   ></m-group__membershipButton>
 </div>
