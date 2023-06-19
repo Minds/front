@@ -35,6 +35,8 @@ import { PublisherSearchModalService } from '../../../common/services/publisher-
 import { GroupsSearchService } from './feed/search.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ModernGroupsExperimentService } from '../../experiments/sub-services/modern-groups-experiment.service';
+import { GroupMembershipChangeOuput } from '../../../common/components/group-membership-button/group-membership-button.component';
+import { GroupAccessType } from '../v2/group.types';
 
 /**
  * Base component for a group. Includes access (e.g. nsfw overlay),
@@ -409,11 +411,16 @@ export class GroupsProfile {
     );
   }
 
-  change_membership(membership: any) {
-    if (!membership.error || membership.error === 'already_a_member') {
+  /**
+   * If the user's isMember status changes, reload the page
+   * @param membership fired when membership changes
+   */
+  change_membership(membership: GroupMembershipChangeOuput) {
+    if (
+      this.group['is:member'] !== membership.isMember &&
+      this.group.membership !== GroupAccessType.PUBLIC
+    ) {
       this.load();
-    } else {
-      this.error = membership.error;
     }
   }
 

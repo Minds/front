@@ -17,3 +17,12 @@ export type GroupFeedFilter =
 
 export const DEFAULT_GROUP_VIEW: GroupView = 'feed';
 export const DEFAULT_GROUP_FEED_FILTER: GroupFeedFilter = 'activities';
+
+/**
+ * Is the group public or private?
+ */
+export enum GroupAccessType {
+  PRIVATE = 0,
+  // UNKNOWN = 1,
+  PUBLIC = 2,
+}

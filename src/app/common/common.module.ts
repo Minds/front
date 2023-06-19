@@ -178,6 +178,8 @@ import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-co
 import { TopbarAlertComponent } from './components/topbar-alert/topbar-alert.component';
 import { ChatwootWidgetComponent } from './components/chatwoot-widget/chatwoot-widget.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { GroupMembershipButtonComponent } from './components/group-membership-button/group-membership-button.component';
+import { GroupMembershipService } from './services/group-membership.service';
 import { SelectableEntityCardComponent } from './components/selectable-entity-card/selectable-entity-card.component';
 
 const MINDS_COMMON_COMPONENTS = [
@@ -218,6 +220,7 @@ const MINDS_COMMON_COMPONENTS = [
   FormInputSliderComponent,
   FormInputSliderV2Component,
   FriendlyCaptchaComponent,
+  GroupMembershipButtonComponent,
   HovercardComponent,
   IconComponent,
   InfiniteScroll,
@@ -396,6 +399,7 @@ const routes: Routes = [
     SubscriptionService,
     RecentSubscriptionsService,
     ReportService,
+    GroupMembershipService,
   ],
 })
 export class CommonModule {}
