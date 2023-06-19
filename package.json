@@ -28,7 +28,8 @@
     "docs:json": "compodoc -p ./tsconfig.doc.json -e json -d .",
     "storybook": "npm run docs:json && ng run minds:storybook",
     "build-storybook": "npm run docs:json && ng run minds:build-storybook",
-    "graphql:codegen:compile": "graphql-codegen"
+    "graphql:codegen:compile:engine": "graphql-codegen -c ./codegen.engine.ts",
+    "graphql:codegen:compile:strapi": "graphql-codegen -c ./codegen.strapi.ts"
   },
   "private": true,
   "dependencies": {

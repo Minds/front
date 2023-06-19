@@ -11,7 +11,7 @@ import { ExperimentsService } from '../../../experiments/experiments.service';
 import {
   ActivityEdge,
   FeedHighlightsConnection,
-} from '../../../../../graphql/generated';
+} from '../../../../../graphql/generated.engine';
 
 @Component({
   selector: 'm-topHighlights',
