@@ -110,6 +110,7 @@ export const config: CustomMainConfig = {
     channelPage: './pages/channelPage.ts',
     commonPage: './pages/commonPage.ts',
     devtoolsPage: './pages/devtoolsPage.ts',
+    groupsMembershipPage: './pages/groupsMembershipPage.ts',
     loginPage: './pages/loginPage.ts',
     newsfeedPage: './pages/newsfeedPage.ts',
     registerPage: './pages/registerPage.ts',
