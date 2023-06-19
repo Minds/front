@@ -1,17 +1,17 @@
-<m-button color="blue" data-ref="find-groups-buttons-create-group"
-  ><a routerLink="/groups/create"
-    ><span i18n="@@FIND_GROUPS_BUTTONS__CREATE">Create</span
-    ><span class="m-hideOnSmall">&nbsp;</span
-    ><span class="m-hideOnSmall" i18n="@@COMMON__GROUP">group</span></a
-  ></m-button
+<m-button
+  (onAction)="onClickCreate($event)"
+  color="blue"
+  data-ref="find-groups-buttons-create-group"
+  ><span i18n="@@FIND_GROUPS_BUTTONS__CREATE">Create</span
+  ><span class="m-hideOnSmall">&nbsp;</span
+  ><span class="m-hideOnSmall" i18n="@@COMMON__GROUP">group</span></m-button
 >
 <m-button
+  (onAction)="onClickDiscover($event)"
   color="blue"
   solid="true"
   data-ref="find-groups-buttons-discover-groups"
-  ><a routerLink="/discovery/suggestions/group"
-    ><span i18n="@@FIND_GROUPS_BUTTONS__DISCOVER">Discover</span
-    ><span class="m-hideOnSmall">&nbsp;</span
-    ><span class="m-hideOnSmall" i18n="@@COMMON__GROUPS">groups</span></a
-  ></m-button
+  ><span i18n="@@FIND_GROUPS_BUTTONS__DISCOVER">Discover</span
+  ><span class="m-hideOnSmall">&nbsp;</span
+  ><span class="m-hideOnSmall" i18n="@@COMMON__GROUPS">groups</span></m-button
 >

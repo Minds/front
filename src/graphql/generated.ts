@@ -138,6 +138,27 @@ export type FeedNoticeNode = NodeInterface & {
   location: Scalars['String']['output'];
 };
 
+export type GroupEdge = EdgeInterface & {
+  __typename?: 'GroupEdge';
+  cursor: Scalars['String']['output'];
+  node: GroupNode;
+  type: Scalars['String']['output'];
+};
+
+export type GroupNode = NodeInterface & {
+  __typename?: 'GroupNode';
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** A placeholder query used by thecodingmachine/graphqlite when there are no declared mutations. */
@@ -318,6 +339,7 @@ export type FetchNewsfeedQuery = {
                 key: string;
                 id: string;
               }
+            | { __typename?: 'GroupNode'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -352,6 +374,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GroupNode'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | {
@@ -374,6 +397,10 @@ export type FetchNewsfeedQuery = {
                         __typename?: 'FeedNoticeNode';
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: { __typename?: 'GroupNode'; id: string };
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
@@ -432,6 +459,11 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'GroupEdge';
+          cursor: string;
+          node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
@@ -457,6 +489,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GroupNode'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
@@ -472,6 +505,10 @@ export type FetchNewsfeedQuery = {
               | {
                   __typename?: 'FeedNoticeEdge';
                   publisherNode: { __typename?: 'FeedNoticeNode'; id: string };
+                }
+              | {
+                  __typename?: 'GroupEdge';
+                  publisherNode: { __typename?: 'GroupNode'; id: string };
                 }
               | {
                   __typename?: 'PublisherRecsEdge';

@@ -95,7 +95,6 @@ export class GroupsMembershipsComponent implements OnInit, OnDestroy {
   }
 
   isMobile() {
-    console.log('ojm isMobile()', isMobile());
     return isMobile();
   }
 }
