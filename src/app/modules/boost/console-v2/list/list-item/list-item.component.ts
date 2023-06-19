@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Boost, BoostPaymentMethod } from '../../../boost.types';
+import { ActivityEntity } from '../../../../newsfeed/activity/activity.service';
 
 /**
  * Boost console list item - a single boost entity
@@ -20,7 +21,7 @@ export class BoostConsoleListItemComponent {
   public displayOptions: Object = {
     showOwnerBlock: true,
     showComments: false,
-    showToolbar: false,
+    showToolbarButtonsRow: false, // Just show the CTA button, if there is one
     showInteractions: false,
     isFeed: true,
     isInset: true,
@@ -71,5 +72,22 @@ export class BoostConsoleListItemComponent {
       default:
         return '';
     }
+  }
+
+  /**
+   * Get activity entity.
+   * Which needs a bit of manipulation to get the CTA working
+   * @return { ActivityEntity }
+   */
+  getBoostedEntity(boost: Boost): ActivityEntity {
+    let activityEntity = boost.entity;
+    if (boost.goal_button_text) {
+      activityEntity['goal_button_text'] = boost.goal_button_text;
+    }
+    if (boost.goal_button_url) {
+      activityEntity['goal_button_url'] = boost.goal_button_url;
+    }
+
+    return activityEntity;
   }
 }

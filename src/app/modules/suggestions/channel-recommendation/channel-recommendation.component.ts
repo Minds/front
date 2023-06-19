@@ -19,11 +19,13 @@ import { DismissalService } from './../../../common/services/dismissal.service';
 import { AnalyticsService } from './../../../services/analytics';
 import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
 import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
+import { GroupMembershipChangeOuput } from '../../../common/components/group-membership-button/group-membership-button.component';
+import { MindsGroup } from '../../groups/v2/group.model';
 import {
   BoostNode,
   PublisherRecsConnection,
   UserNode,
-} from '../../../../graphql/generated';
+} from '../../../../graphql/generated.engine';
 import { ParseJson } from '../../../common/pipes/parse-json';
 
 const listAnimation = trigger('listAnimation', [
@@ -41,7 +43,7 @@ const listAnimation = trigger('listAnimation', [
  *
  * See it in the newsfeed
  *
- * It may also be used in a modal during onboarding
+ * It may also be used in a modal during onboarding-v4
  */
 @Component({
   selector: 'm-channelRecommendation',
@@ -262,6 +264,17 @@ export class ChannelRecommendationComponent implements OnInit {
     }
     if (this.publisherType === 'group') {
       return ['/groups/profile', publisher.guid];
+    }
+  }
+
+  onGroupMembershipChange(
+    $event: GroupMembershipChangeOuput,
+    group: MindsGroup
+  ) {
+    if ($event.isMember) {
+      this.onSubscribed(group);
+    } else {
+      this.onUnsubscribed(group);
     }
   }
 

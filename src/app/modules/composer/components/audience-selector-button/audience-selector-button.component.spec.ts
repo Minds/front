@@ -32,10 +32,13 @@ describe('ComposerAudienceSelectorButtonComponent', () => {
         {
           provide: ComposerAudienceSelectorService,
           useValue: MockService(ComposerAudienceSelectorService, {
-            has: ['selectedAudience$'],
+            has: ['selectedAudience$', 'shareToGroupMode$'],
             props: {
               selectedAudience$: {
                 get: () => new BehaviorSubject<ActivityContainer>(null),
+              },
+              shareToGroupMode$: {
+                get: () => new BehaviorSubject<boolean>(false),
               },
             },
           }),
@@ -76,6 +79,7 @@ describe('ComposerAudienceSelectorButtonComponent', () => {
     (comp as any).composerService.isSupermindRequest$.next(false);
     (comp as any).composerService.isGroupPost$.next(false);
     (comp as any).composerService.remind$.next(null);
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
   });
 
   it('should instantiate', () => {
@@ -89,6 +93,7 @@ describe('ComposerAudienceSelectorButtonComponent', () => {
     (comp as any).composerService.isSupermindRequest$.next(false);
     (comp as any).composerService.isGroupPost$.next(false);
     (comp as any).composerService.remind$.next(null);
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
 
     comp.ngOnInit();
     tick();
@@ -96,13 +101,14 @@ describe('ComposerAudienceSelectorButtonComponent', () => {
     expect(comp.disabled).toBe(false);
   }));
 
-  it('should initialize with a true disabled state post is a remind', fakeAsync(() => {
+  it('should initialize with a true disabled state post is a remind and NOT in share to group mode', fakeAsync(() => {
     comp.ngOnDestroy();
     (comp as any).audienceSelectorService.selectedAudience$.next(null);
     (comp as any).composerService.supermindRequest$.next(null);
     (comp as any).composerService.isSupermindRequest$.next(false);
     (comp as any).composerService.isGroupPost$.next(false);
     (comp as any).composerService.remind$.next(true);
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
 
     comp.ngOnInit();
     tick();
@@ -110,18 +116,49 @@ describe('ComposerAudienceSelectorButtonComponent', () => {
     expect(comp.disabled).toBe(true);
   }));
 
-  it('should initialize with a true disabled state post is a group post', fakeAsync(() => {
+  it('should initialize with a false disabled state post is a remind and in share to group mode', fakeAsync(() => {
+    comp.ngOnDestroy();
+    (comp as any).audienceSelectorService.selectedAudience$.next(null);
+    (comp as any).composerService.supermindRequest$.next(null);
+    (comp as any).composerService.isSupermindRequest$.next(false);
+    (comp as any).composerService.isGroupPost$.next(false);
+    (comp as any).composerService.remind$.next(true);
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(true);
+
+    comp.ngOnInit();
+    tick();
+
+    expect(comp.disabled).toBe(false);
+  }));
+
+  it('should initialize with a true disabled state post is a group post and NOT in share to group mode', fakeAsync(() => {
     comp.ngOnDestroy();
     (comp as any).audienceSelectorService.selectedAudience$.next(null);
     (comp as any).composerService.supermindRequest$.next(null);
     (comp as any).composerService.isSupermindRequest$.next(false);
     (comp as any).composerService.isGroupPost$.next(true);
     (comp as any).composerService.remind$.next(false);
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
 
     comp.ngOnInit();
     tick();
 
     expect(comp.disabled).toBe(true);
+  }));
+
+  it('should initialize with a false disabled state post is a group post and in share to group mode', fakeAsync(() => {
+    comp.ngOnDestroy();
+    (comp as any).audienceSelectorService.selectedAudience$.next(null);
+    (comp as any).composerService.supermindRequest$.next(null);
+    (comp as any).composerService.isSupermindRequest$.next(false);
+    (comp as any).composerService.isGroupPost$.next(true);
+    (comp as any).composerService.remind$.next(false);
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(true);
+
+    comp.ngOnInit();
+    tick();
+
+    expect(comp.disabled).toBe(false);
   }));
 
   it('should initialize with a true disabled state post is a Supermind request and reset audience', fakeAsync(() => {
@@ -139,6 +176,7 @@ describe('ComposerAudienceSelectorButtonComponent', () => {
     (comp as any).composerService.isSupermindRequest$.next(true);
     (comp as any).composerService.isGroupPost$.next(false);
     (comp as any).composerService.remind$.next(null);
+    (comp as any).audienceSelectorService.shareToGroupMode$.next(false);
 
     comp.ngOnInit();
     tick();

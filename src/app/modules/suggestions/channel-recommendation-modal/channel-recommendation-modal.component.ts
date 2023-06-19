@@ -5,7 +5,7 @@ import { PublisherType } from '../../../common/components/publisher-search-modal
 import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
 
 /**
- * Displays channel recommendations as a modal
+ * Displays channel/group recommendations as a modal
  *
  * See it during the onboarding v4 flow
  */

@@ -25,6 +25,7 @@ import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component'
  */
 
 export type ButtonSize = 'xsmall' | 'small' | 'medium' | 'large';
+export type ButtonColor = 'blue' | 'grey' | 'red' | 'primary' | 'secondary';
 @Component({
   selector: 'm-button',
   templateUrl: './button.component.html',
@@ -44,7 +45,7 @@ export class ButtonComponent implements AfterViewChecked {
   @Input() disabled: boolean = false;
   @Input() overlay: boolean = false;
   @Input() iconOnly: boolean = false;
-  @Input() color: 'blue' | 'grey' | 'red' | 'primary' | 'secondary' = 'grey';
+  @Input() color: ButtonColor = 'grey';
   @Input() size: ButtonSize = 'medium';
 
   @Input() pulsating: boolean = false;

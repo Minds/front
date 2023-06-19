@@ -43,11 +43,16 @@ export class MetaService {
 
     value = this.stripHtml(value);
 
-    // Full title for og:title
-    this.ogTitle = value || defaultTitle;
+    let ogTitle: string = value || defaultTitle;
+
+    if (ogTitle.length > 250) {
+      ogTitle = ogTitle.substring(0, 247) + '...';
+    }
+
+    this.ogTitle = ogTitle;
 
     if (value.length > 60) {
-      value = value.substr(0, 57) + '...';
+      value = value.substring(0, 57) + '...';
     }
 
     if (value && join) {

@@ -34,9 +34,10 @@
       ></div>
     </div>
     <div class="body">
-      <h3>{{ entity.name }}</h3>
+      <h3 class="m-groups--tile__groupName">{{ entity.name }}</h3>
       <span i18n="@@GROUPS__TILE__MEMBERS_COUNT"
-        ><b>{{ entity['members:count'] | number }}</b> members</span
+        ><b>{{ entity['members:count'] | number }}</b> {
+        entity['members:count'], plural, =1 {member} other {members} }</span
       >
     </div>
   </a>
@@ -45,6 +46,7 @@
     <m-group__membershipButton
       *ngIf="!entity['is:member']; else isMember"
       [group]="entity"
+      (onMembershipChange)="onMembershipChange($event)"
     ></m-group__membershipButton>
 
     <ng-template #isMember>

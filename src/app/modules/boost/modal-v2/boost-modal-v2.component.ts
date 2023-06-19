@@ -7,7 +7,6 @@ import {
   BoostSubject,
 } from './boost-modal-v2.types';
 import { BoostModalV2Service } from './services/boost-modal-v2.service';
-import { BoostGoalsExperimentService } from '../../experiments/sub-services/boost-goals-experiment.service';
 
 /**
  * Boost modal v2 root level component.
