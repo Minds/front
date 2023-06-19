@@ -25,7 +25,7 @@ import {
   BoostNode,
   PublisherRecsConnection,
   UserNode,
-} from '../../../../graphql/generated';
+} from '../../../../graphql/generated.engine';
 import { ParseJson } from '../../../common/pipes/parse-json';
 
 const listAnimation = trigger('listAnimation', [
