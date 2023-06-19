@@ -1,6 +1,4 @@
-import { FeedNoticeKey } from '../types/feednotice.types';
-
-const { I, feedNoticeComponent } = inject();
+const { I } = inject();
 
 /**
  * The page that shows what groups you are a member of
@@ -23,22 +21,22 @@ class GroupsMembershipPage {
     return '[data-ref=find-groups-buttons-discover-groups]';
   }
 
-  get feedNotice(): string {
-    return 'm-feedNotice';
+  get noGroupsFeedNoticeTitle(): string {
+    return 'm-feedNotice [data-ref=feed-notice-title-no-groups]';
   }
 
-  get publisherRecs(): string {
-    return 'm-publisherRecommendations';
+  get recommendedGroupsTitle(): string {
+    return 'm-publisherRecommendations [data-ref=publisher-recommendations-title-groups]';
   }
 
-  clickCreateButton() {
-    I.waitForElement(this.createGroupButton, 5);
-    I.click(this.createGroupButton);
+  clickCreateGroupButton() {
+    // I.waitForElement(this.createGroupButton, 5);
+    I.click(locate(this.createGroupButton));
   }
 
-  clickDiscoverButton() {
-    I.waitForElement(this.discoverGroupsButton, 5);
-    I.click(this.discoverGroupsButton);
+  clickDiscoverGroupsButton() {
+    // I.waitForElement(this.discoverGroupsButton, 5);
+    I.click(locate(this.discoverGroupsButton));
   }
 
   /**
@@ -46,8 +44,16 @@ class GroupsMembershipPage {
    * @param { FeedNoticeKey } feedNoticeKey - key to check for.
    * @returns { void }
    */
-  public hasFeedNotice(feedNoticeKey: FeedNoticeKey = 'no-groups'): void {
-    feedNoticeComponent.has(feedNoticeKey);
+  public hasNoGroupsFeedNotice(): void {
+    I.seeElement(locate(this.noGroupsFeedNoticeTitle));
+  }
+
+  /**
+   * Whether the page has group recommendations
+   * @returns { void }
+   */
+  public hasRecommendedGroups(): void {
+    I.seeElement(locate(this.recommendedGroupsTitle));
   }
 }
 

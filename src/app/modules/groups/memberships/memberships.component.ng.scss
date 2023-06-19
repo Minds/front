@@ -52,7 +52,7 @@
       display: block;
 
       article {
-        padding: $spacing4 0 $sidePadding;
+        padding: $spacing4 $sidePadding $sidePadding;
 
         @include m-theme() {
           border-top: 1px solid themed($m-borderColor--primary);

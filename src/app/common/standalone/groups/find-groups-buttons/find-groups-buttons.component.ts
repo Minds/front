@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '../../../common.module';
-import isMobile from '../../../../helpers/is-mobile';
-import { Router } from '@angular/router';
+import { CommonModule as NgCommonModule } from '@angular/common'; // ojm
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 /**
  * Buttons that allow users to create/discover groups
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 @Component({
   standalone: true,
   selector: 'm-findGroupsButtons',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './find-groups-buttons.component.html',
   styleUrls: ['./find-groups-buttons.component.ng.scss'],
 })
@@ -20,6 +20,7 @@ export class FindGroupsButtonsComponent {
   constructor(private router: Router) {}
 
   onClickCreate($event): void {
+    console.log('ojm clickCreate');
     this.router.navigate['/groups/create'];
   }
   onClickDiscover($event): void {
