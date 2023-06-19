@@ -1,3 +1,6 @@
+<!-- ---------------------------------------------------  -->
+<!-- SUPERMIND BANNER/BUTTON -->
+<!-- ---------------------------------------------------  -->
 <div
   class="m-activityToolbar__largeActions"
   *ngIf="
@@ -17,13 +20,16 @@
     data-ref="activity-large-supermind-action"
   ></m-supermind__button>
 </div>
-
+<!-- ---------------------------------------------------  -->
+<!-- TOOLBAR BUTTONS ROW -->
+<!-- ---------------------------------------------------  -->
 <div
   class="m-activityToolbar__actions"
   [ngClass]="{
     'm-activityToolbar__actions--noMetrics': !showMetrics,
     'm-activityToolbar__actions--hasComments': entity['comments:count'] > 0
   }"
+  *ngIf="service.displayOptions.showToolbarButtonsRow"
 >
   <minds-button-thumbs-up
     [object]="entity"
@@ -47,16 +53,6 @@
       service.displayOptions.showComments
     "
   ></minds-button-comment>
-  <!-- Show wire if not own post -->
-  <!-- <ng-container
-    *ngIf="
-      session.getLoggedInUser() &&
-      session.getLoggedInUser().guid != entity.ownerObj.guid
-    "
-  >
-    <m-wire-button [object]="entity"></m-wire-button>
-  </ng-container> -->
-
   <m-supermind__button
     [entity]="entity"
     [iconOnly]="true"
@@ -75,7 +71,9 @@
     ></m-activity__boostButton>
   </ng-container>
 </div>
-
+<!-- ---------------------------------------------------  -->
+<!-- METRICS  -->
+<!-- ---------------------------------------------------  -->
 <div
   class="m-activityToolbar__metrics m-legible"
   *ngIf="service.displayOptions.showInteractions && showMetrics"
@@ -128,7 +126,9 @@
     <span>{ entity.quotes, plural, =1 {quote} other {quotes}}</span>
   </div>
 </div>
-
+<!-- ---------------------------------------------------  -->
+<!-- BOOST CTA -->
+<!-- ---------------------------------------------------  -->
 <m-activity__boostCta
   *ngIf="
     service.displayOptions.isFeed &&
