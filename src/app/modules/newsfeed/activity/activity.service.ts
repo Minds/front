@@ -28,6 +28,7 @@ export type ActivityDisplayOptions = {
   showOnlyCommentsInput: boolean;
   showOnlyCommentsToggle: boolean;
   showToolbar: boolean;
+  showToolbarButtonsRow: boolean; // (Assuming showToolbar is true), set this to false if you only want to see boost CTA/supermind buttons
   showInteractions: boolean;
   showEditedTag: boolean;
   showVisibilityState: boolean;
@@ -414,6 +415,7 @@ export class ActivityService implements OnDestroy {
     showOnlyCommentsInput: true,
     showOnlyCommentsToggle: false,
     showToolbar: true,
+    showToolbarButtonsRow: true,
     showInteractions: false,
     showEditedTag: false,
     showVisibilityState: false,

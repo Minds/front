@@ -800,6 +800,7 @@ export class ComposerService implements OnDestroy {
 
     // Reset audience
     this.audienceSelectorService.selectedAudience$.next(null);
+    this.audienceSelectorService.shareToGroupMode$.next(false);
 
     // Reset original source
     this.entity = null;

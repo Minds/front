@@ -42,6 +42,11 @@ export class ActivityBoostCtaComponent {
   subscribedOnLoad: boolean = false;
 
   /**
+   * True when we're showing the user their own post
+   */
+  disableSubscribe: boolean = false;
+
+  /**
    * The owner of the boost with the CTA. Used to determine subscription status.
    */
   private _entity: ActivityEntity;
@@ -50,10 +55,13 @@ export class ActivityBoostCtaComponent {
       this._entity = entity;
     }
 
-    if (entity.ownerObj && this.session.getLoggedInUser()) {
-      this.subscribedOnLoad =
-        entity.ownerObj.subscribed ||
-        entity.ownerObj.guid === this.session.getLoggedInUser().guid;
+    if (entity.ownerObj) {
+      this.subscribedOnLoad = entity.ownerObj.subscribed;
+
+      if (this.session.getLoggedInUser()) {
+        this.disableSubscribe =
+          entity.ownerObj.guid === this.session.getLoggedInUser().guid;
+      }
     }
 
     this.textEnum = this.entity?.goal_button_text;

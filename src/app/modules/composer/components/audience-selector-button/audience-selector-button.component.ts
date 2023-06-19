@@ -75,10 +75,13 @@ export class ComposerAudienceSelectorButtonComponent
    * @returns { boolean } true if host component should be disabled.
    */
   private shouldDisable(): boolean {
+    if (this.composerService.supermindRequest$.getValue()) {
+      return true;
+    }
     return (
-      Boolean(this.composerService.remind$.getValue()) ||
-      Boolean(this.composerService.supermindRequest$.getValue()) ||
-      this.composerService.isGroupPost$.getValue()
+      !this.audienceSelectorService.shareToGroupMode$.getValue() &&
+      (Boolean(this.composerService.remind$.getValue()) ||
+        this.composerService.isGroupPost$.getValue())
     );
   }
 }

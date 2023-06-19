@@ -60,6 +60,10 @@ export class ComposerAudienceSelectorService {
     map((offset: number): boolean => Boolean(offset))
   );
 
+  public readonly shareToGroupMode$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   /**
    * Groups page - change offset to advance page.
    */

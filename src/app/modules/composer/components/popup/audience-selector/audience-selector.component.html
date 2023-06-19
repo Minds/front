@@ -1,13 +1,27 @@
 <div class="m-composerPopup__body">
   <div class="m-composerPopup__content">
-    <h3
-      class="m-composerPopup__title"
-      i18n="@@COMPOSER_AUDIENCE_SELECTOR__CHOOSE_AUDIENCE"
+    <ng-container
+      *ngIf="!(shareToGroupMode$ | async); else shareToGroupTitleTemplate"
     >
-      Choose audience
-    </h3>
-
-    <div class="m-composerAudience__myChannelContainer">
+      <h3
+        class="m-composerPopup__title"
+        i18n="@@COMPOSER_AUDIENCE_SELECTOR__CHOOSE_AUDIENCE"
+      >
+        Choose audience
+      </h3>
+    </ng-container>
+    <ng-template #shareToGroupTitleTemplate>
+      <h3
+        class="m-composerPopup__title m-composerPopup__title--shareToGroupMode"
+        i18n="@@COMPOSER_AUDIENCE_SELECTOR__SHARE_TO_A_GROUP"
+      >
+        Share to a group
+      </h3>
+    </ng-template>
+    <div
+      *ngIf="!(shareToGroupMode$ | async)"
+      class="m-composerAudience__myChannelContainer"
+    >
       <m-selectableEntityCard
         [entity]="loggedInUser"
         (click)="onEntitySelect(null)"
@@ -15,17 +29,28 @@
       ></m-selectableEntityCard>
     </div>
 
-    <h4 class="m-composerPopup__subtitle" (click)="toggleGroupsExpand()">
-      <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My Groups</span>
-      <ng-container *ngIf="groupsExpanded$ | async; else collapsedTemplate">
-        <span class="material-icons">expand_more</span>
-      </ng-container>
-      <ng-template #collapsedTemplate>
-        <span class="material-icons">chevron_right</span>
-      </ng-template>
-    </h4>
+    <ng-container
+      *ngIf="shareToGroupMode$ | async; else expandableSubtitleTemplate"
+    >
+      <h4 class="m-composerPopup__subtitle">
+        <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My groups</span>
+      </h4>
+    </ng-container>
+    <ng-template #expandableSubtitleTemplate>
+      <h4 class="m-composerPopup__subtitle" (click)="toggleGroupsExpand()">
+        <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My groups</span>
+        <ng-container *ngIf="groupsExpanded$ | async; else collapsedTemplate">
+          <span class="material-icons">expand_more</span>
+        </ng-container>
+        <ng-template #collapsedTemplate>
+          <span class="material-icons">chevron_right</span>
+        </ng-template>
+      </h4>
+    </ng-template>
 
-    <ng-container *ngIf="groupsExpanded$ | async">
+    <ng-container
+      *ngIf="(groupsExpanded$ | async) || (shareToGroupMode$ | async)"
+    >
       <ng-container *ngIf="!(groups$ | async)?.length">
         <div
           class="m-composerAudience__noGroupsContainer"
