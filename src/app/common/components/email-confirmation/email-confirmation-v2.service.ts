@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Session } from '../../../services/session';
 import { FeedNoticeService } from '../../../modules/notices/services/feed-notice.service';
 import { ApiResponse, ApiService } from '../../api/api.service';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 
 /**
  * Service handling the sending of new confirmation emails, verification of email addresses
@@ -16,24 +16,40 @@ export class EmailConfirmationV2Service {
     private feedNotice: FeedNoticeService
   ) {}
 
-  public sendEmail(): Promise<ApiResponse> {
-    return firstValueFrom(this.api.post<ApiResponse>('api/v3/email/send'));
+  /**
+   * Send a new email containing a confirmation code.
+   * @param { string } key - if a previous email has been sent, pass the key
+   * that you got in response here so that resend requests generate a new email
+   *  with the same code.
+   * @returns { Observable<ApiResponse> }
+   */
+  public sendEmail(key: string = null): Observable<ApiResponse> {
+    const options = key
+      ? {
+          headers: {
+            'X-MINDS-EMAIL-2FA-KEY': key,
+          },
+        }
+      : undefined;
+    return this.api.post<ApiResponse>('api/v3/email/send', null, options);
   }
 
-  public submitCode(code: string): Promise<ApiResponse> {
-    return firstValueFrom(
-      this.api.post<ApiResponse>(
-        'api/v3/email/verify',
-        {},
-        {
-          // headers: {
-          //   'X-MINDS-2FA-CODE': code
-          // },
+  /**
+   * Submit a confirmation code.
+   * @param { string } code - the code to submit.
+   * @param { string } key - the code that was sent back upon the email being sent.
+   * @returns { Observable<ApiResponse> }
+   */
+  public submitCode(code: string, key: string): Observable<ApiResponse> {
+    const options = key
+      ? {
+          headers: {
+            'X-MINDS-2FA-CODE': code,
+            'X-MINDS-EMAIL-2FA-KEY': key,
+          },
         }
-      )
-    );
-
-    // 'X-MINDS-EMAIL-2FA-KEY'
+      : undefined;
+    return this.api.post<ApiResponse>('api/v3/email/verify', null, options);
   }
 
   /**
@@ -50,7 +66,7 @@ export class EmailConfirmationV2Service {
    * @param { boolean } state - state to set to (defaults to true).
    * @returns { void }
    */
-  private updateLocalConfirmationState(state: boolean = true): void {
+  public updateLocalConfirmationState(state: boolean = true): void {
     let updatedUser = this.session.getLoggedInUser();
     updatedUser.email_confirmed = state;
     this.session.inject(updatedUser);

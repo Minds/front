@@ -9,8 +9,8 @@ import { ComponentOnboardingV5ActionButton } from '../../../../../graphql/genera
 export class OnboardingV5FooterComponent {
   @Input() public readonly actionButton: ComponentOnboardingV5ActionButton;
   @Input() public readonly skipButton: ComponentOnboardingV5ActionButton;
-  @Input() public readonly hasCompletedStep: boolean = false;
   @Input() public readonly saving: boolean = false;
+  @Input() public readonly disabledActionButton: boolean = false;
 
   @Output() public readonly actionButtonClick = new EventEmitter<boolean>();
   @Output() public readonly skipButtonClick = new EventEmitter<boolean>();

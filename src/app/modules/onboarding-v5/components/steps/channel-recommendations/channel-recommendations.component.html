@@ -17,7 +17,7 @@
   ></m-channelRecommendation>
 </div>
 <m-onboardingV5__footer
-  [hasCompletedStep]="hasCompletedStep$ | async"
+  [disabledActionButton]="!(hasCompletedStep$ | async)"
   [actionButton]="data.actionButton ?? null"
   [skipButton]="data.skipButton ?? null"
   (actionButtonClick)="onActionButtonClick()"

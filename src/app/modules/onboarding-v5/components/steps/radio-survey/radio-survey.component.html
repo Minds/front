@@ -40,7 +40,7 @@
   </form>
 </div>
 <m-onboardingV5__footer
-  [hasCompletedStep]="formGroup.get('selectedKey').valid"
+  [disabledActionButton]="!formGroup.get('selectedKey').valid"
   [actionButton]="data.actionButton ?? null"
   [skipButton]="data.skipButton ?? null"
   (actionButtonClick)="onActionButtonClick()"

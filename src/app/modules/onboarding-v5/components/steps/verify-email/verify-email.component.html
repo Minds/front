@@ -19,7 +19,8 @@
   ></p>
 </div>
 <m-onboardingV5__footer
-  [hasCompletedStep]="formGroup.get('code').valid"
+  [disabledActionButton]="!codeInputFormControl.valid && !(inProgress$ | async)"
+  [saving]="inProgress$ | async"
   [actionButton]="data.actionButton ?? null"
   [skipButton]="data.skipButton ?? null"
   (actionButtonClick)="onActionButtonClick()"

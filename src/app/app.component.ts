@@ -100,7 +100,7 @@ export class Minds implements OnInit, OnDestroy {
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
-    //this.onboardingV5ModalService.open(); // TODO: Remove
+    this.onboardingV5ModalService.open(); // TODO: Remove
   }
 
   async ngOnInit() {

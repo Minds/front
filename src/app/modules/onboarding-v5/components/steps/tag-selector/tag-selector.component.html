@@ -39,7 +39,7 @@
 </div>
 <m-onboardingV5__footer
   [saving]="tagsSaving$ | async"
-  [hasCompletedStep]="isStepCompleted$ | async"
+  [disabledActionButton]="!(isStepCompleted$ | async)"
   [actionButton]="data.actionButton ?? null"
   [skipButton]="data.skipButton ?? null"
   (actionButtonClick)="onActionButtonClick()"
