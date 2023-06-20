@@ -18,11 +18,9 @@ namespace GroupsMembershipSteps {
   // -----------------------------------------------
   Then('I should see the no groups notice', () => {
     groupsMembershipPage.hasNoGroupsFeedNotice();
-    pause();
   });
 
   Then('I should see recommended groups', () => {
     groupsMembershipPage.hasRecommendedGroups();
-    pause();
   });
 }
