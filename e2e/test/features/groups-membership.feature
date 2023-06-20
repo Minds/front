@@ -21,5 +21,5 @@ Feature: Groups Membership
   Scenario: Clicking discover groups button
     Given I am logged in
     And I am on the groups membership page
-    When I click the create group button
+    When I click the discover groups button
     Then I should see "/discovery/suggestions/group" in current URL

@@ -143,6 +143,10 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    if (this.initialListSize) {
+      this.listSize$.next(this.initialListSize);
+    }
+
     if (this.connection) {
       this.recommendations$.next(
         this.connection.edges.map((e: any) => {

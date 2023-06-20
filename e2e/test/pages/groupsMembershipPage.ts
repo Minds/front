@@ -30,12 +30,10 @@ class GroupsMembershipPage {
   }
 
   clickCreateGroupButton() {
-    // I.waitForElement(this.createGroupButton, 5);
     I.click(locate(this.createGroupButton));
   }
 
   clickDiscoverGroupsButton() {
-    // I.waitForElement(this.discoverGroupsButton, 5);
     I.click(locate(this.discoverGroupsButton));
   }
 

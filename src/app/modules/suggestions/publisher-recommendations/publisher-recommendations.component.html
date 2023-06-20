@@ -52,7 +52,7 @@
         *ngFor="
           let publisher of recommendations$
             | async
-            | slice: 0:(listSize$ | async) - 1;
+            | slice: 0:(listSize$ | async);
           let i = index;
           trackBy: trackByFn
         "

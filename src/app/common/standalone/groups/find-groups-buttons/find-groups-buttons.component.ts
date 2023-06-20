@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '../../../common.module';
-import { CommonModule as NgCommonModule } from '@angular/common'; // ojm
 import { Router, RouterLink, RouterModule } from '@angular/router';
 
 /**
@@ -20,7 +19,6 @@ export class FindGroupsButtonsComponent {
   constructor(private router: Router) {}
 
   onClickCreate($event): void {
-    console.log('ojm clickCreate');
     this.router.navigate['/groups/create'];
   }
   onClickDiscover($event): void {
