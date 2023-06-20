@@ -178,6 +178,7 @@ import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-co
 import { TopbarAlertComponent } from './components/topbar-alert/topbar-alert.component';
 import { ChatwootWidgetComponent } from './components/chatwoot-widget/chatwoot-widget.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { FormErrorComponent } from './components/form-error/form-error.component';
 import { GroupMembershipButtonComponent } from './components/group-membership-button/group-membership-button.component';
 import { GroupMembershipService } from './services/group-membership.service';
 import { SelectableEntityCardComponent } from './components/selectable-entity-card/selectable-entity-card.component';
@@ -286,6 +287,7 @@ const MINDS_COMMON_COMPONENTS = [
   SidebarNavigationNewContentDotComponent,
   TopbarAlertComponent,
   ChatwootWidgetComponent,
+  FormErrorComponent,
   SelectableEntityCardComponent,
 ];
 // ------------------------------------
