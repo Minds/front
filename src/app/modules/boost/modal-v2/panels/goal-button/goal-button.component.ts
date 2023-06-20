@@ -1,20 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { combineLatest, Observable, Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
 import { BoostGoal, BoostGoalButtonText } from '../../../boost.types';
 import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
 import { BoostModalPanel } from '../../boost-modal-v2.types';
-import {
-  DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL,
-  DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL,
-} from '../../boost-modal-v2.constants';
 
 /**
  * Goal button selector panel for boost modal V2. Allows selection of
@@ -33,6 +32,9 @@ export class BoostModalV2GoalButtonSelectorComponent
   public form: FormGroup;
   private subscriptions: Subscription[] = [];
   private currentGoal: BoostGoal;
+  private urlRegex: RegExp = new RegExp(
+    '^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$'
+  );
 
   constructor(
     protected service: BoostModalV2Service,
@@ -78,7 +80,10 @@ export class BoostModalV2GoalButtonSelectorComponent
                 ),
                 goal_button_url: new FormControl<string>(
                   buttonUrl ? buttonUrl : null,
-                  Validators.required
+                  [
+                    Validators.required,
+                    this.goalButtonUrlValidator('goal_button_url'),
+                  ]
                 ),
               });
             }
@@ -109,6 +114,30 @@ export class BoostModalV2GoalButtonSelectorComponent
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  /**
+   * Form control for goal button.
+   * @returns { AbstractControl<string> }
+   */
+  get goalButtonFormControl(): AbstractControl<string> {
+    return this.form.get<string>('goal_button_url');
+  }
+
+  /**
+   * Goal button URL validator.
+   * @param { string } controlName - name of the control.
+   * @returns { ValidatorFn } validator function.
+   */
+  public goalButtonUrlValidator(controlName: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!this.urlRegex.test(control?.value)) {
+        return {
+          error: true,
+          customMessage: "Please enter a valid URL (starting 'http')",
+        };
+      }
+    };
   }
 
   /**
