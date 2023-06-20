@@ -12,11 +12,8 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
 import { EmailConfirmationV2Service } from '../../../../../common/components/email-confirmation/email-confirmation-v2.service';
 import {
   BehaviorSubject,
-  Observable,
   Subscription,
-  combineLatest,
   firstValueFrom,
-  map,
   takeWhile,
   timer,
 } from 'rxjs';
@@ -148,6 +145,21 @@ export class OnboardingV5VerifyEmailContentComponent
   }
 
   /**
+   * On paste, submit code providing trimmed pasted data is correct length.
+   * @param { KeyboardEvent } $event - event.
+   * @returns { void }
+   */
+  public onPaste($event: KeyboardEvent): void {
+    // bounce to back of event queue as this fires
+    // BEFORE the form alue is updated.
+    setTimeout(() => {
+      if (this.codeInputFormControl.value.trim().length === 6) {
+        this.submitCode();
+      }
+    }, 0);
+  }
+
+  /**
    * Send confirmation email.
    * @returns { Promise<void> }
    */
@@ -202,7 +214,7 @@ export class OnboardingV5VerifyEmailContentComponent
     try {
       await firstValueFrom(
         this.emailConfirmation.submitCode(
-          this.codeInputFormControl.value,
+          this.codeInputFormControl.value.trim(),
           this.confirmationKey
         )
       );

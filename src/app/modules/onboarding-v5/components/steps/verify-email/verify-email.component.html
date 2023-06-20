@@ -9,6 +9,7 @@
       formControlName="code"
       class="m-onboardingV5VerifyEmail__input"
       (keydown.enter)="onActionButtonClick()"
+      (paste)="onPaste($event)"
       [placeholder]="data?.verifyEmailForm?.inputPlaceholder ?? ''"
     />
   </form>
