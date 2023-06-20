@@ -6,6 +6,9 @@
   <article
     (mResized)="onResized($event)"
     *ngIf="(recommendations$ | async).length"
+    [ngClass]="{
+      'm-channelRecommendation__article--noOuterPadding': noOuterPadding
+    }"
   >
     <header *ngIf="!isOnboarding">
       <h3>

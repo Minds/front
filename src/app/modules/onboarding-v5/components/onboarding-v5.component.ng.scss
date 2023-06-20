@@ -1,0 +1,7 @@
+@import 'defaults.scss';
+@import '../stylesheets/two-column-layout.ng.scss';
+
+:host {
+  height: 100%;
+  max-height: 100%;
+}

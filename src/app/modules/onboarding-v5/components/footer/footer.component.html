@@ -1,0 +1,24 @@
+<div class="m-onboardingV5__footer">
+  <ng-container
+    *ngIf="skipButton && !hasCompletedStep; else actionButtonTemplate"
+  >
+    <m-button
+      (onAction)="onSkipButtonClick()"
+      color="blue"
+      [attr.data-ref]="skipButton?.dataRef ?? ''"
+      [saving]="saving"
+      >{{ skipButton.text }}
+    </m-button>
+  </ng-container>
+  <ng-template #actionButtonTemplate>
+    <m-button
+      (onAction)="onActionButtonClick()"
+      color="blue"
+      [solid]="'true'"
+      [attr.data-ref]="actionButton?.dataRef ?? ''"
+      [disabled]="!hasCompletedStep"
+      [saving]="saving"
+      >{{ actionButton?.text }}</m-button
+    >
+  </ng-template>
+</div>

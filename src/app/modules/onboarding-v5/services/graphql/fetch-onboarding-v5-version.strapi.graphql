@@ -1,0 +1,101 @@
+query FetchOnboardingV5Versions {
+  onboardingV5Versions {
+    data {
+      attributes {
+        publishedAt
+        steps {
+          __typename
+          ... on ComponentOnboardingV5OnboardingStep {
+            id
+            carousel {
+              id
+              __typename
+              title
+              media {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                    alternativeText
+                    hash
+                    mime
+                    name
+                    provider
+                    size
+                  }
+                }
+              }
+            }
+            title
+            description
+            stepKey
+            stepType
+            verifyEmailForm {
+              id
+              __typename
+              inputLabel
+              inputPlaceholder
+              resendCodeText
+              resendCodeActionText
+            }
+            tagSelector {
+              id
+              __typename
+              customTagInputText
+            }
+            radioSurveyQuestion
+            radioSurveyQuestionKey
+            radioSurvey {
+              id
+              __typename
+              optionTitle
+              optionDescription
+              optionKey
+            }
+            userSelector {
+              id
+              __typename
+            }
+            groupSelector {
+              id
+              __typename
+            }
+            actionButton {
+              id
+              __typename
+              text
+              dataRef
+            }
+            skipButton {
+              id
+              __typename
+              text
+              dataRef
+            }
+          }
+        }
+        completionStep {
+          id
+          __typename
+          message
+          media {
+            data {
+              attributes {
+                url
+                height
+                width
+                alternativeText
+                hash
+                mime
+                name
+                provider
+                size
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

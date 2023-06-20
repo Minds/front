@@ -1,0 +1,48 @@
+<ng-container *ngIf="visibleCarouselItem$ | async">
+  <div class="m-featureCarousel__carousel">
+    <h3 class="m-featureCarousel__itemTitle">
+      {{ (visibleCarouselItem$ | async).title }}
+    </h3>
+    <img
+      class="m-featureCarousel__itemImage"
+      [alt]="(visibleCarouselItem$ | async).media.alternativeText ?? 'Onboarding carousel image'"
+      [src]="(visibleCarouselItem$ | async).media.fullUrl"
+    />
+    <div
+      class="m-featureCarousel__itemSelector"
+      [ngClass]="{
+        'm-featureCarousel__itemSelector--hidden':
+          (carouselItems$ | async)?.length <= 1
+      }"
+    >
+      <i
+        class="material-icons m-featureCarousel__itemSelectorArrow"
+        (click)="moveCarousel(CarouselMoveDirection.BACK)"
+        [ngClass]="{
+          'm-featureCarousel__itemSelectorArrow--disabled':
+            (visibleCarouselIndex$ | async) === 0
+        }"
+        >arrow_back</i
+      >
+      <div
+        *ngFor="let item of carouselItems$ | async; let i = index"
+        class="m-featureCarousel__itemSelectorDot"
+        [ngClass]="{
+          'm-featureCarousel__itemSelectorDot--inactive':
+            i !== (visibleCarouselIndex$ | async)
+        }"
+        (click)="jumpCarousel(i)"
+      ></div>
+      <i
+        class="material-icons m-featureCarousel__itemSelectorArrow"
+        (click)="moveCarousel(CarouselMoveDirection.FORWARD)"
+        [ngClass]="{
+          'm-featureCarousel__itemSelectorArrow--disabled':
+            (visibleCarouselIndex$ | async) ===
+            (carouselItems$ | async).length - 1
+        }"
+        >arrow_forward</i
+      >
+    </div>
+  </div>
+</ng-container>

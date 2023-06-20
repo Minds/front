@@ -100,6 +100,12 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   listSize$: BehaviorSubject<number> = new BehaviorSubject(4);
 
+  @Input('listSize') set _listSize(size: number) {
+    this.listSize$.next(size);
+  }
+
+  @Input() noOuterPadding: boolean = false;
+
   /**
    * Emit when user subscribes to a recommendation
    */
@@ -109,6 +115,8 @@ export class ChannelRecommendationComponent implements OnInit {
    * Emit when user unsubscribes from a recommendation
    */
   @Output() unsubscribed: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() loaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   /**
    * New graphql way of loading data, if this value is inputted then no additional data calls will be made
@@ -161,6 +169,7 @@ export class ChannelRecommendationComponent implements OnInit {
       })
       .toPromise()
       .then(result => {
+        this.loaded.emit(true);
         if (result) {
           this.recommendations$.next(result.entities.map(e => e.entity));
         }
@@ -177,6 +186,7 @@ export class ChannelRecommendationComponent implements OnInit {
       })
       .toPromise()
       .then(result => {
+        this.loaded.emit(true);
         if (result) {
           this.recommendations$.next(result.suggestions.map(e => e.entity));
         }

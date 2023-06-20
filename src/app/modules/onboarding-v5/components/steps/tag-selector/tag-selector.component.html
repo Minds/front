@@ -1,0 +1,47 @@
+<div class="m-onboardingV5__stepContentContainer">
+  <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
+  <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
+
+  <ng-container *ngIf="!(tagsLoading$ | async); else loadingSpinnerTemplate">
+    <div class="m-onboardingV5TagSelector__tagsContainer">
+      <div
+        *ngFor="let tag of tags$ | async"
+        class="m-onboardingV5TagSelector__tags"
+        [ngClass]="{
+          'm-onboardingV5TagSelector__tags--selected': tag.selected
+        }"
+        (click)="onTagClick(tag)"
+      >
+        #{{ tag.value | titlecase }}
+      </div>
+    </div>
+    <form
+      [formGroup]="formGroup"
+      class="m-onboardingV5TagSelector__customTagInputContainer"
+    >
+      <label
+        for="customTag"
+        class="m-onboardingV5TagSelector__customTagInputLabel"
+        >{{ data.tagSelector?.customTagInputText }}</label
+      >
+      <input
+        formControlName="customTag"
+        id="customTag"
+        class="m-onboardingV5TagSelector__customTagInput"
+        (keydown.enter)="onCustomInputSubmit($event)"
+        type="text"
+      />
+    </form>
+  </ng-container>
+  <ng-template #loadingSpinnerTemplate>
+    <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+  </ng-template>
+</div>
+<m-onboardingV5__footer
+  [saving]="tagsSaving$ | async"
+  [hasCompletedStep]="isStepCompleted$ | async"
+  [actionButton]="data.actionButton ?? null"
+  [skipButton]="data.skipButton ?? null"
+  (actionButtonClick)="onActionButtonClick()"
+  (skipButtonClick)="onSkipButtonClick()"
+></m-onboardingV5__footer>

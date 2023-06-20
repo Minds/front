@@ -28,6 +28,10 @@
       margin: 0;
     }
 
+    &.m-channelRecommendation__article--noOuterPadding {
+      padding: unset;
+    }
+
     header {
       display: flex;
       flex-direction: row;

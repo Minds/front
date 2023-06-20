@@ -1,0 +1,48 @@
+<div class="m-onboardingV5__stepContentContainer">
+  <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
+  <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
+  <p class="m-onboardingV5RadioSurvey__title">
+    {{ data?.radioSurveyQuestion }}
+  </p>
+  <form class="m-onboardingV5RadioSurvey__form" [formGroup]="formGroup">
+    <div
+      *ngFor="let radioOption of data?.radioSurvey; let i = index"
+      class="m-onboardingV5RadioSurvey__radioOptionContainer"
+      (click)="onOptionContainerClick(radioOption.optionKey, i)"
+    >
+      <div class="m-onboardingV5RadioSurvey__radioOptionLeft">
+        <input
+          [id]="radioOption.optionKey"
+          class="m-onboardingV5RadioSurvey__radioInput"
+          type="radio"
+          formControlName="selectedKey"
+          [value]="radioOption.optionKey"
+        />
+        <label
+          [for]="radioOption.optionKey"
+          class="m-onboardingV5RadioSurvey__radioInputLabel"
+          ><!--Icon positioning element--></label
+        >
+      </div>
+      <div class="m-onboardingV5RadioSurvey__radioOptionRight">
+        <label
+          [for]="radioOption.optionKey"
+          class="m-onboardingV5RadioSurvey__radioOptionTitle"
+          >{{ radioOption.optionTitle }}</label
+        >
+        <label
+          [for]="radioOption.optionKey"
+          class="m-onboardingV5RadioSurvey__radioOptionDescription"
+          >{{ radioOption.optionDescription }}</label
+        >
+      </div>
+    </div>
+  </form>
+</div>
+<m-onboardingV5__footer
+  [hasCompletedStep]="formGroup.get('selectedKey').valid"
+  [actionButton]="data.actionButton ?? null"
+  [skipButton]="data.skipButton ?? null"
+  (actionButtonClick)="onActionButtonClick()"
+  (skipButtonClick)="onSkipButtonClick()"
+></m-onboardingV5__footer>

@@ -1,0 +1,27 @@
+<div class="m-onboardingV5__stepContentContainer">
+  <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
+  <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
+  <form class="m-onboardingV5VerifyEmail__codeForm" [formGroup]="formGroup">
+    <label for="code" class="m-onboardingV5VerifyEmail__inputLabel">{{
+      data.verifyEmailForm?.inputLabel
+    }}</label>
+    <input
+      formControlName="code"
+      class="m-onboardingV5VerifyEmail__input"
+      (keydown.enter)="onActionButtonClick()"
+      [placeholder]="data?.verifyEmailForm?.inputPlaceholder ?? ''"
+    />
+  </form>
+  <p
+    (click)="onResendCodeTextClick($event)"
+    class="m-onboardingV5VerifyEmail__resendCodeText"
+    [innerHtml]="resendCodeString"
+  ></p>
+</div>
+<m-onboardingV5__footer
+  [hasCompletedStep]="formGroup.get('code').valid"
+  [actionButton]="data.actionButton ?? null"
+  [skipButton]="data.skipButton ?? null"
+  (actionButtonClick)="onActionButtonClick()"
+  (skipButtonClick)="onSkipButtonClick()"
+></m-onboardingV5__footer>

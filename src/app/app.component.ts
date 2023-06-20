@@ -39,6 +39,7 @@ import { ExperimentsService } from './modules/experiments/experiments.service';
 import { MultiFactorAuthConfirmationService } from './modules/auth/multi-factor-auth/services/multi-factor-auth-confirmation.service';
 import { CompassHookService } from './common/services/compass-hook.service';
 import { OnboardingV4Service } from './modules/onboarding-v4/onboarding-v4.service';
+import { OnboardingV5ModalLazyService } from './modules/onboarding-v5/services/onboarding-v5-modal-lazy.service';
 
 @Component({
   selector: 'm-app',
@@ -91,13 +92,15 @@ export class Minds implements OnInit, OnDestroy {
     private multiFactorConfirmation: MultiFactorAuthConfirmationService,
     private compassHook: CompassHookService,
     private serviceWorkerService: ServiceWorkerService,
-    private onboardingV4Service: OnboardingV4Service // force init.
+    private onboardingV4Service: OnboardingV4Service, // force init.
+    private onboardingV5ModalService: OnboardingV5ModalLazyService // TODO: Remove - here for dev
   ) {
     this.name = 'Minds';
 
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
+    //this.onboardingV5ModalService.open(); // TODO: Remove
   }
 
   async ngOnInit() {
