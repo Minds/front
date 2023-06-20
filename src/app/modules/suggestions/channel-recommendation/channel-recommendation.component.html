@@ -70,7 +70,6 @@
               class="m-channelRecommendation__description"
               [innerHtml]="channel.briefdescription | slice: 0:5000 | tags"
             ></span>
-            <!-- <span>@userA and @userB are subscribed</span> -->
             <m-boostedFlag
               *ngIf="channel.boosted"
               text="Boosted Channel"
@@ -79,6 +78,7 @@
           </div>
           <div class="m-channelRecommendation__subscribeContainer">
             <m-subscribeButton
+              *ngIf="publisherType === 'user'"
               [user]="channel"
               [enableRecheck]="false"
               subscribedIcon="check"
@@ -87,6 +87,14 @@
               (subscribed)="onSubscribed($event)"
               (unsubscribed)="onUnsubscribed($event)"
             ></m-subscribeButton>
+            <m-group__membershipButton
+              *ngIf="publisherType === 'group'"
+              [group]="channel"
+              iconOnly="true"
+              isMemberIcon="check"
+              color="blue"
+              (onMembershipChange)="onGroupMembershipChange($event, channel)"
+            ></m-group__membershipButton>
           </div>
         </section>
       </li>

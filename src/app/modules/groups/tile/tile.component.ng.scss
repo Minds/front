@@ -19,4 +19,31 @@
       }
     }
   }
+
+  .m-groups--tile-block {
+    margin-top: 75px;
+    position: relative;
+    z-index: 2;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+
+    h3.m-groups--tile__groupName {
+      @include heading3Bold;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      margin: $spacing4 0 $spacing2 0;
+      padding: 0 $spacing4;
+    }
+
+    span {
+      font-family: 'Inter', Helvetica, sans-serif;
+      text-transform: capitalize;
+      letter-spacing: 0.25px;
+      @include m-theme() {
+        color: themed($m-grey-600);
+      }
+    }
+  }
 }

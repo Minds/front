@@ -299,7 +299,7 @@ export class NewsfeedBoostRotatorComponent {
     const lastBoostIndex = this.boosts.length - 1;
 
     const previousBoostIndex = index - 1 < 0 ? lastBoostIndex : index - 1;
-    const currentBoostIndex = index;
+    const currentBoostIndex = this.currentPosition;
     const nextBoostIndex = index + 1;
 
     // show the current boost and an additional boost

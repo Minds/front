@@ -90,10 +90,9 @@
             <div class="m-groupInfo__actionButtons">
               <m-group__membershipButton
                 [group]="group"
-                (membership)="change_membership($event)"
+                (onMembershipChange)="change_membership($event)"
                 *ngIf="(!group['is:creator'] || (session.isAdmin()) && !group['is:invited'])"
-              >
-              </m-group__membershipButton>
+              ></m-group__membershipButton>
               <m-button
                 style="margin-left: 8"
                 (onAction)="videochat.activate(group)"
@@ -185,7 +184,7 @@
 
     <m-group__membershipButton
       [group]="group"
-      (membership)="change_membership($event)"
+      (onMembershipChange)="change_membership($event)"
       *ngIf="!error"
     ></m-group__membershipButton>
   </div>

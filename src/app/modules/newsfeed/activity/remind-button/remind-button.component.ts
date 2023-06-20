@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ClientMetaData } from '../../../../common/services/client-meta.service';
+import { ComposerAudienceSelectorService } from '../../../composer/services/audience.service';
 
 /**
  * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating a remind or a quote post.
@@ -32,6 +33,7 @@ export class ActivityRemindButtonComponent {
   constructor(
     public service: ActivityService,
     private injector: Injector,
+    private audienceSelectorService: ComposerAudienceSelectorService,
     private composerService: ComposerService,
     private composerModalService: ComposerModalService,
     private toasterService: ToasterService,
@@ -89,6 +91,33 @@ export class ActivityRemindButtonComponent {
     this.incrementCounter();
 
     this.toasterService.success('Post has been reminded');
+  }
+
+  /**
+   * On group share click, opens composer modal to quote, starting
+   * with the audience selector panel in share to group mode.
+   * @returns { Promise<void> }
+   */
+  async onGroupShareClick(): Promise<void> {
+    if (!this.session.isLoggedIn()) {
+      this.openAuthModal();
+      return;
+    }
+
+    const entity = this.service.entity$.getValue();
+
+    this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
+    this.composerService.remind$.next(entity);
+    this.audienceSelectorService.shareToGroupMode$.next(true);
+
+    if (this.service.displayOptions.isModal) {
+      this.toasterService.warn(
+        'Sorry, you can not create a quoted post from inside a modal at this time. Please try from newsfeed post or make a remind.'
+      );
+      return;
+    }
+
+    this.composerModalService.setInjector(this.injector).present();
   }
 
   public getClientMetaDetails(entity: any): Partial<ClientMetaData> {
