@@ -19,6 +19,8 @@ export class NewsfeedExperimentComponent implements OnInit {
   constructor(private experimentsService: ExperimentsService) {}
 
   ngOnInit() {
-    this.useGql = this.experimentsService.hasVariation('engine-2570-gql', true);
+    //ojm remove
+    this.useGql = true;
+    // this.useGql = this.experimentsService.hasVariation('engine-2570-gql', true);
   }
 }
