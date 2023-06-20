@@ -1,0 +1,12 @@
+@import 'defaults.scss';
+
+:host {
+  span {
+    overflow: hidden;
+
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-alert);
+    }
+  }
+}
