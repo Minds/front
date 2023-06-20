@@ -19,8 +19,10 @@
   ></p>
 </div>
 <m-onboardingV5__footer
-  [disabledActionButton]="!codeInputFormControl.valid && !(inProgress$ | async)"
-  [saving]="inProgress$ | async"
+  [disabledActionButton]="
+    !codeInputFormControl.valid && !(codeSubmissionInProgress$ | async)
+  "
+  [saving]="codeSubmissionInProgress$ | async"
   [actionButton]="data.actionButton ?? null"
   [skipButton]="data.skipButton ?? null"
   (actionButtonClick)="onActionButtonClick()"

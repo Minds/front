@@ -28,7 +28,7 @@ import { AuthRedirectService } from '../../../common/services/auth-redirect.serv
   providedIn: 'root',
 })
 export class OnboardingV5Service implements OnDestroy {
-  private readonly stepFetchInProgress$: BehaviorSubject<
+  public readonly stepFetchInProgress$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(true);
 

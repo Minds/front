@@ -13,6 +13,9 @@ import { OnboardingStep } from '../types/onboarding-v5.types';
   ],
 })
 export class OnboardingV5Component implements OnInit, OnDestroy {
+  public stepFetchInProgress$: Observable<boolean> = this.service
+    .stepFetchInProgress$;
+
   public readonly carouselItems$: Observable<CarouselItem[]> = this.service
     .activeStepCarouselItems$;
 

@@ -1,48 +1,60 @@
-<div
-  class="m-twoColumnLayout"
-  *ngIf="!(onboardingCompleted$ | async); else completionSplashTemplate"
+<ng-container
+  *ngIf="!(stepFetchInProgress$ | async); else loadingInProgressTemplate"
 >
-  <div class="m-twoColumnLayout__leftContainer">
-    <m-onboardingV5__stepper></m-onboardingV5__stepper>
-    <ng-container [ngSwitch]="(activeStep$ | async)?.stepType">
-      <m-onboardingV5__verifyEmailContent
-        *ngSwitchCase="'verify_email'"
-        [title]="(activeStep$ | async)?.data?.title"
-        [description]="(activeStep$ | async)?.data?.description"
-        [data]="(activeStep$ | async)?.data"
-      ></m-onboardingV5__verifyEmailContent>
-      <m-onboardingV5__tagSelectorContent
-        *ngSwitchCase="'tag_selector'"
-        [title]="(activeStep$ | async)?.data?.title"
-        [description]="(activeStep$ | async)?.data?.description"
-        [data]="(activeStep$ | async)?.data"
-      ></m-onboardingV5__tagSelectorContent>
-      <m-onboardingV5__radioSurveyContent
-        *ngSwitchCase="'survey'"
-        [title]="(activeStep$ | async)?.data?.title"
-        [description]="(activeStep$ | async)?.data?.description"
-        [data]="(activeStep$ | async)?.data"
-      ></m-onboardingV5__radioSurveyContent>
-      <m-onboardingV5__channelRecommendationsContent
-        *ngSwitchCase="'user_selector'"
-        publisherType="user"
-        [title]="(activeStep$ | async)?.data?.title"
-        [description]="(activeStep$ | async)?.data?.description"
-        [data]="(activeStep$ | async)?.data"
-      ></m-onboardingV5__channelRecommendationsContent>
-      <m-onboardingV5__channelRecommendationsContent
-        *ngSwitchCase="'group_selector'"
-        publisherType="group"
-        [title]="(activeStep$ | async)?.data?.title"
-        [description]="(activeStep$ | async)?.data?.description"
-        [data]="(activeStep$ | async)?.data"
-      ></m-onboardingV5__channelRecommendationsContent>
-    </ng-container>
+  <div
+    class="m-twoColumnLayout"
+    *ngIf="!(onboardingCompleted$ | async); else completionSplashTemplate"
+  >
+    <div class="m-twoColumnLayout__leftContainer">
+      <m-onboardingV5__stepper></m-onboardingV5__stepper>
+      <ng-container [ngSwitch]="(activeStep$ | async)?.stepType">
+        <m-onboardingV5__verifyEmailContent
+          *ngSwitchCase="'verify_email'"
+          [title]="(activeStep$ | async)?.data?.title"
+          [description]="(activeStep$ | async)?.data?.description"
+          [data]="(activeStep$ | async)?.data"
+        ></m-onboardingV5__verifyEmailContent>
+        <m-onboardingV5__tagSelectorContent
+          *ngSwitchCase="'tag_selector'"
+          [title]="(activeStep$ | async)?.data?.title"
+          [description]="(activeStep$ | async)?.data?.description"
+          [data]="(activeStep$ | async)?.data"
+        ></m-onboardingV5__tagSelectorContent>
+        <m-onboardingV5__radioSurveyContent
+          *ngSwitchCase="'survey'"
+          [title]="(activeStep$ | async)?.data?.title"
+          [description]="(activeStep$ | async)?.data?.description"
+          [data]="(activeStep$ | async)?.data"
+        ></m-onboardingV5__radioSurveyContent>
+        <m-onboardingV5__channelRecommendationsContent
+          *ngSwitchCase="'user_selector'"
+          publisherType="user"
+          [title]="(activeStep$ | async)?.data?.title"
+          [description]="(activeStep$ | async)?.data?.description"
+          [data]="(activeStep$ | async)?.data"
+        ></m-onboardingV5__channelRecommendationsContent>
+        <m-onboardingV5__channelRecommendationsContent
+          *ngSwitchCase="'group_selector'"
+          publisherType="group"
+          [title]="(activeStep$ | async)?.data?.title"
+          [description]="(activeStep$ | async)?.data?.description"
+          [data]="(activeStep$ | async)?.data"
+        ></m-onboardingV5__channelRecommendationsContent>
+      </ng-container>
+    </div>
+    <div class="m-twoColumnLayout__rightContainer">
+      <m-featureCarousel [carouselItems$]="carouselItems$"></m-featureCarousel>
+    </div>
   </div>
-  <div class="m-twoColumnLayout__rightContainer">
-    <m-featureCarousel [carouselItems$]="carouselItems$"></m-featureCarousel>
-  </div>
-</div>
-<ng-template #completionSplashTemplate>
-  <m-onboardingV5__completedSplash></m-onboardingV5__completedSplash>
+  <ng-template #completionSplashTemplate>
+    <m-onboardingV5__completedSplash></m-onboardingV5__completedSplash>
+  </ng-template>
+</ng-container>
+<ng-template #loadingInProgressTemplate>
+  <m-sizeableLoadingSpinner
+    class="m-onboardingV5__loadingSpinner"
+    inProgress="true"
+    spinnerHeight="64px"
+    spinnerWidth="64px"
+  ></m-sizeableLoadingSpinner>
 </ng-template>

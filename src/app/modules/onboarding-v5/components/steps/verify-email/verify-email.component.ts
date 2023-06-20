@@ -61,18 +61,6 @@ export class OnboardingV5VerifyEmailContentComponent
     boolean
   > = new BehaviorSubject<boolean>(false);
 
-  /** Whether an action is in progress. */
-  public inProgress$: Observable<boolean> = combineLatest([
-    this.emailSendInProgress$,
-    this.codeSubmissionInProgress$,
-  ]).pipe(
-    map(
-      ([emailSendInProgress, codeSubmissionInProgress]: [boolean, boolean]) => {
-        return emailSendInProgress || codeSubmissionInProgress;
-      }
-    )
-  );
-
   /** Seconds remaining before a user can try to request a new email again. */
   public retrySecondsRemaining = 0;
 
