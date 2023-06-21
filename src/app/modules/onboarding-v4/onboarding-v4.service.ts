@@ -21,8 +21,6 @@ export class OnboardingV4Service implements OnDestroy {
   /** @type { Subscription } - subscription that fires on email confirmation */
   private emailConfirmationSubscription: Subscription;
 
-  public channelSubscriptionCount = 0;
-
   // fires on tag modal completion.
   public readonly tagsCompleted$: Subject<boolean> = new Subject<boolean>();
 
@@ -98,10 +96,7 @@ export class OnboardingV4Service implements OnDestroy {
    * If the experiment is on
    */
   private async openGroupRecommendationModal(): Promise<void> {
-    if (
-      !this.onboardingTagsExperiment.isActive() ||
-      this.channelSubscriptionCount < 1
-    ) {
+    if (!this.onboardingTagsExperiment.isActive()) {
       return;
     }
     const modal = this.modalService.present(
