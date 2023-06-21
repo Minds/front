@@ -119,8 +119,8 @@ export class OnboardingV5Service implements OnDestroy {
             this.steps$.next(steps);
             this.activeStep$.next(this.getActiveStepFromSteps(steps));
           } else {
-            // TODO: Could we have a stubbed response.
             this.authRedirect.redirect();
+            this.dismiss$.next(true);
           }
 
           if (cmsData?.completionStep) {
