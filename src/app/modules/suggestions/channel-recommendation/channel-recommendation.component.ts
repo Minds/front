@@ -239,6 +239,8 @@ export class ChannelRecommendationComponent implements OnInit {
    * When a recommendation is subscribed, remove it from the list——unless the list length is small
    */
   onSubscribed(user): void {
+    this.subscribed.emit();
+
     if (this.listSize$.getValue() === 4) {
       this.listSize$.next(5);
     }
@@ -250,8 +252,6 @@ export class ChannelRecommendationComponent implements OnInit {
     this.recommendations$.next(
       this.recommendations$.getValue().filter(u => u.guid !== user.guid)
     );
-
-    this.subscribed.emit();
   }
 
   onUnsubscribed(user): void {
