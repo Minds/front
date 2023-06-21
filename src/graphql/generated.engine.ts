@@ -141,6 +141,7 @@ export type FeedNoticeNode = NodeInterface & {
 export type GroupEdge = EdgeInterface & {
   __typename?: 'GroupEdge';
   cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   node: GroupNode;
   type: Scalars['String']['output'];
 };
@@ -374,7 +375,11 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GroupNode'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | {
@@ -400,7 +405,11 @@ export type FetchNewsfeedQuery = {
                     }
                   | {
                       __typename?: 'GroupEdge';
-                      publisherNode: { __typename?: 'GroupNode'; id: string };
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
@@ -489,7 +498,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
-                    | { __typename?: 'GroupNode'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
@@ -508,7 +517,11 @@ export type FetchNewsfeedQuery = {
                 }
               | {
                   __typename?: 'GroupEdge';
-                  publisherNode: { __typename?: 'GroupNode'; id: string };
+                  publisherNode: {
+                    __typename?: 'GroupNode';
+                    legacy: string;
+                    id: string;
+                  };
                 }
               | {
                   __typename?: 'PublisherRecsEdge';
@@ -615,6 +628,9 @@ export const FetchNewsfeedDocument = gql`
                   legacy
                 }
                 ... on BoostNode {
+                  legacy
+                }
+                ... on GroupNode {
                   legacy
                 }
               }
