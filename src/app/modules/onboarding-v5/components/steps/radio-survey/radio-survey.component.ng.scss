@@ -101,6 +101,8 @@
           width: 100%;
 
           .m-onboardingV5RadioSurvey__radioOptionTitle {
+            cursor: pointer;
+
             @include body2Bold;
             @include m-theme() {
               color: themed($m-textColor--primary);
@@ -108,6 +110,8 @@
           }
 
           .m-onboardingV5RadioSurvey__radioOptionDescription {
+            cursor: pointer;
+
             @include body2Regular;
             @include m-theme() {
               color: themed($m-textColor--secondary);
