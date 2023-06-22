@@ -417,7 +417,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   prepend(activity: any) {
-    if (activity?.container_guid) {
+    if (activity?.containerObj) {
       return;
     }
 
