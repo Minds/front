@@ -7,6 +7,11 @@
     padding-left: $leftContainerPaddingX;
     padding-right: $leftContainerPaddingX;
     overflow-y: scroll;
+    @include vertical-scroll;
+
+    @include vertical-scroll(
+      $scrollbarContrastColor: '#{$m-bgColor--contrast}'
+    );
 
     .m-onboardingV5__stepTitle {
       margin-top: $spacing12;

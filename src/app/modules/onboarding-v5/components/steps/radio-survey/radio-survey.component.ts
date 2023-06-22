@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ComponentOnboardingV5OnboardingStep } from '../../../../../../graphql/generated.strapi';
 import { OnboardingV5Service } from '../../../services/onboarding-v5.service';
 import { FeatureCarouselService } from '../../../../../common/components/feature-carousel/feature-carousel.service';
+import { AnalyticsService } from '../../../../../services/analytics';
 
 @Component({
   selector: 'm-onboardingV5__radioSurveyContent',
@@ -21,7 +22,8 @@ export class OnboardingV5RadioSurveyContentComponent implements OnInit {
 
   constructor(
     private service: OnboardingV5Service,
-    private featuredCarouselService: FeatureCarouselService
+    private featuredCarouselService: FeatureCarouselService,
+    private analytics: AnalyticsService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,15 @@ export class OnboardingV5RadioSurveyContentComponent implements OnInit {
 
   public onActionButtonClick(): void {
     // TODO: Add save logic.
+    const questionKey: string = this.data.radioSurveyQuestionKey;
+    const selectedKey: string = this.formGroup.get('selectedKey').value;
+
+    if (questionKey && selectedKey) {
+      this.analytics.trackClick(
+        `onboarding-segment--${questionKey}--${selectedKey}`
+      );
+    }
+
     this.service.continue();
   }
 
