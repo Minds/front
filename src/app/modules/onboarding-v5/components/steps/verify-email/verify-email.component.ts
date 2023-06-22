@@ -124,7 +124,7 @@ export class OnboardingV5VerifyEmailContentComponent
         );
         return;
       }
-      this.sendEmail();
+      this.sendEmail(true);
     }
   }
 
@@ -163,7 +163,7 @@ export class OnboardingV5VerifyEmailContentComponent
    * Send confirmation email.
    * @returns { Promise<void> }
    */
-  private async sendEmail(): Promise<void> {
+  private async sendEmail(resend: boolean = false): Promise<void> {
     this.emailSendInProgress$.next(true);
     this.startRetryTimer();
 
@@ -174,6 +174,12 @@ export class OnboardingV5VerifyEmailContentComponent
 
       if (!response?.key) {
         throw new Error('No email confirmation key provided in response');
+      }
+
+      if (resend) {
+        this.toast.success(
+          'Confirmation email has been resent - please be sure to check your junk folder.'
+        );
       }
 
       this.confirmationKey = response.key;
