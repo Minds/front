@@ -33,17 +33,23 @@ export class OnboardingV5RadioSurveyContentComponent implements OnInit {
   }
 
   public onActionButtonClick(): void {
-    // TODO: Add save logic.
-    const questionKey: string = this.data.radioSurveyQuestionKey;
+    const stepKey: string = this.data.stepKey;
     const selectedKey: string = this.formGroup.get('selectedKey').value;
 
-    if (questionKey && selectedKey) {
+    if (stepKey && selectedKey) {
       this.analytics.trackClick(
-        `onboarding-segment--${questionKey}--${selectedKey}`
+        `onboarding-segment--${stepKey}--${selectedKey}`
       );
     }
 
-    this.service.continue();
+    let additionalData: Object = null;
+    if (stepKey === 'onboarding_interest_survey') {
+      additionalData = {
+        onboarding_interest: selectedKey,
+      };
+    }
+
+    this.service.continue(additionalData);
   }
 
   public onSkipButtonClick(): void {

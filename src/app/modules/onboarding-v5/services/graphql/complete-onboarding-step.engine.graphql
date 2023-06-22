@@ -1,7 +1,7 @@
 mutation CompleteOnboardingStep(
   $stepKey: String!,
   $stepType: String!,
-  $additionalData: [KeyValuePairInput!]!
+  $additionalData: [KeyValuePairInput!]
 ) {
   completeOnboardingStep(stepKey: $stepKey, stepType: $stepType, additionalData: $additionalData) {
     userGuid

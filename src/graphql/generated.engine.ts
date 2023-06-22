@@ -232,7 +232,7 @@ export type Mutation = {
 };
 
 export type MutationCompleteOnboardingStepArgs = {
-  additionalData: Array<KeyValuePairInput>;
+  additionalData?: InputMaybe<Array<KeyValuePairInput>>;
   stepKey: Scalars['String']['input'];
   stepType: Scalars['String']['input'];
 };
@@ -723,7 +723,7 @@ export type PageInfoFragment = {
 export type CompleteOnboardingStepMutationVariables = Exact<{
   stepKey: Scalars['String']['input'];
   stepType: Scalars['String']['input'];
-  additionalData: Array<KeyValuePairInput> | KeyValuePairInput;
+  additionalData?: InputMaybe<Array<KeyValuePairInput> | KeyValuePairInput>;
 }>;
 
 export type CompleteOnboardingStepMutation = {
@@ -869,7 +869,7 @@ export const CompleteOnboardingStepDocument = gql`
   mutation CompleteOnboardingStep(
     $stepKey: String!
     $stepType: String!
-    $additionalData: [KeyValuePairInput!]!
+    $additionalData: [KeyValuePairInput!]
   ) {
     completeOnboardingStep(
       stepKey: $stepKey

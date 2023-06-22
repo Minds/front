@@ -45,7 +45,6 @@ query FetchOnboardingV5Versions {
               customTagInputText
             }
             radioSurveyQuestion
-            radioSurveyQuestionKey
             radioSurvey {
               id
               __typename

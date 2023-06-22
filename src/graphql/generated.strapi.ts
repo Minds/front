@@ -374,7 +374,6 @@ export type ComponentOnboardingV5OnboardingStep = {
   id: Scalars['ID']['output'];
   radioSurvey?: Maybe<Array<Maybe<ComponentOnboardingV5RadioOption>>>;
   radioSurveyQuestion?: Maybe<Scalars['String']['output']>;
-  radioSurveyQuestionKey?: Maybe<Scalars['String']['output']>;
   skipButton?: Maybe<ComponentOnboardingV5SkipButton>;
   stepKey: Scalars['String']['output'];
   stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
@@ -1794,7 +1793,6 @@ export type FetchOnboardingV5VersionsQuery = {
               stepKey: string;
               stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
               radioSurveyQuestion?: string | null;
-              radioSurveyQuestionKey?: string | null;
               carousel: Array<{
                 __typename: 'ComponentOnboardingV5CarouselItem';
                 id: string;
@@ -1963,7 +1961,6 @@ export const FetchOnboardingV5VersionsDocument = gql`
                 customTagInputText
               }
               radioSurveyQuestion
-              radioSurveyQuestionKey
               radioSurvey {
                 id
                 __typename

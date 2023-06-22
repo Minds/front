@@ -25,6 +25,9 @@ import { CarouselItem } from '../../../common/components/feature-carousel/featur
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
 import { AuthRedirectService } from '../../../common/services/auth-redirect.service';
 import {
+  CompleteOnboardingStepGQL,
+  CompleteOnboardingStepMutation,
+  KeyValuePairInput,
   SetOnboardingStateGQL,
   SetOnboardingStateMutation,
 } from '../../../../graphql/generated.engine';
@@ -88,6 +91,7 @@ export class OnboardingV5Service implements OnDestroy {
     private stepsGql: FetchOnboardingV5VersionsGQL,
     private authRedirect: AuthRedirectService,
     private setOnboardingStateGQL: SetOnboardingStateGQL,
+    private completeOnboardingStepGQL: CompleteOnboardingStepGQL,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {}
 
@@ -168,8 +172,15 @@ export class OnboardingV5Service implements OnDestroy {
     return activeSteps.length ? activeSteps[0] : steps[0];
   }
 
-  public continue(): void {
+  public continue(additionalData: Object = null): void {
     const currentlyActiveStep: OnboardingStep = this.activeStep$.getValue();
+
+    this.completeOnboardingStep(
+      currentlyActiveStep.stepType,
+      currentlyActiveStep.data.stepKey,
+      additionalData
+    );
+
     let steps: OnboardingStep[] = this.steps$.getValue();
 
     for (let i = 0; i < steps.length; i++) {
@@ -203,5 +214,29 @@ export class OnboardingV5Service implements OnDestroy {
           this.dismiss$.next(true);
         });
       });
+  }
+
+  private async completeOnboardingStep(
+    stepType: string,
+    stepKey: string,
+    additionalData: Object = null
+  ): Promise<MutationResult<CompleteOnboardingStepMutation>> {
+    let additionalDataInput: KeyValuePairInput[] = [];
+    if (additionalData) {
+      for (const [key, value] of Object.entries(additionalData)) {
+        additionalDataInput.push({
+          key: key,
+          value: value,
+        });
+      }
+    }
+
+    return firstValueFrom(
+      this.completeOnboardingStepGQL.mutate({
+        stepType: stepType,
+        stepKey: stepKey,
+        additionalData: additionalDataInput,
+      })
+    );
   }
 }
