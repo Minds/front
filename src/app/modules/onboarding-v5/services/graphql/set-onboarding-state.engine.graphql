@@ -1,0 +1,7 @@
+mutation SetOnboardingState($completed: Boolean!) {
+  setOnboardingState(completed: $completed) {
+    userGuid
+    startedAt
+    completedAt
+  }
+}

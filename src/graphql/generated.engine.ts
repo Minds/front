@@ -138,10 +138,115 @@ export type FeedNoticeNode = NodeInterface & {
   location: Scalars['String']['output'];
 };
 
+export type GiftCardBalanceByProductId = {
+  __typename?: 'GiftCardBalanceByProductId';
+  balance: Scalars['Float']['output'];
+  productId: GiftCardProductIdEnum;
+};
+
+export type GiftCardEdge = EdgeInterface & {
+  __typename?: 'GiftCardEdge';
+  cursor: Scalars['String']['output'];
+  node: GiftCardNode;
+};
+
+export type GiftCardNode = NodeInterface & {
+  __typename?: 'GiftCardNode';
+  amount: Scalars['Float']['output'];
+  balance: Scalars['Float']['output'];
+  claimedAt?: Maybe<Scalars['Int']['output']>;
+  claimedByGuid?: Maybe<Scalars['String']['output']>;
+  expiresAt: Scalars['Int']['output'];
+  guid?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  issuedAt: Scalars['Int']['output'];
+  issuedByGuid?: Maybe<Scalars['String']['output']>;
+  productId: GiftCardProductIdEnum;
+  /**
+   * Returns transactions relating to the gift card
+   * TODO: Find a way to make this not part of the data model
+   */
+  transactions: GiftCardTransactionsConnection;
+};
+
+export type GiftCardNodeTransactionsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export enum GiftCardOrderingEnum {
+  CreatedAsc = 'CREATED_ASC',
+  CreatedDesc = 'CREATED_DESC',
+  ExpiringAsc = 'EXPIRING_ASC',
+  ExpiringDesc = 'EXPIRING_DESC',
+}
+
+export enum GiftCardProductIdEnum {
+  Boost = 'BOOST',
+  Plus = 'PLUS',
+  Pro = 'PRO',
+  Supermind = 'SUPERMIND',
+}
+
+export type GiftCardTransaction = NodeInterface & {
+  __typename?: 'GiftCardTransaction';
+  amount: Scalars['Float']['output'];
+  createdAt: Scalars['Int']['output'];
+  giftCardGuid?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  paymentGuid?: Maybe<Scalars['String']['output']>;
+};
+
+export type GiftCardTransactionEdge = EdgeInterface & {
+  __typename?: 'GiftCardTransactionEdge';
+  cursor: Scalars['String']['output'];
+  node: GiftCardTransaction;
+};
+
+export type GiftCardTransactionsConnection = ConnectionInterface & {
+  __typename?: 'GiftCardTransactionsConnection';
+  edges: Array<GiftCardTransactionEdge>;
+  pageInfo: PageInfo;
+};
+
+export type GiftCardsConnection = ConnectionInterface & {
+  __typename?: 'GiftCardsConnection';
+  edges: Array<GiftCardEdge>;
+  pageInfo: PageInfo;
+};
+
+export type KeyValuePairInput = {
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  /** A placeholder query used by thecodingmachine/graphqlite when there are no declared mutations. */
-  dummyMutation?: Maybe<Scalars['String']['output']>;
+  /** Mark an onboarding step for a user as completed. */
+  completeOnboardingStep: OnboardingStepProgressState;
+  createGiftCard: GiftCardNode;
+  /** Sets onboarding state for the currently logged in user. */
+  setOnboardingState: OnboardingState;
+};
+
+export type MutationCompleteOnboardingStepArgs = {
+  additionalData: Array<KeyValuePairInput>;
+  stepKey: Scalars['String']['input'];
+  stepType: Scalars['String']['input'];
+};
+
+export type MutationCreateGiftCardArgs = {
+  amount: Scalars['Float']['input'];
+  expiresAt?: InputMaybe<Scalars['Int']['input']>;
+  giftCardPaymentTypeEnum?: InputMaybe<Scalars['Int']['input']>;
+  productIdEnum: Scalars['Int']['input'];
+  stripePaymentMethodId: Scalars['String']['input'];
+};
+
+export type MutationSetOnboardingStateArgs = {
+  completed: Scalars['Boolean']['input'];
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -157,6 +262,23 @@ export type NodeImpl = NodeInterface & {
 
 export type NodeInterface = {
   id: Scalars['ID']['output'];
+};
+
+export type OnboardingState = {
+  __typename?: 'OnboardingState';
+  /** Whether onboarding is completed. */
+  completed: Scalars['Boolean']['output'];
+  completedAt?: Maybe<Scalars['Int']['output']>;
+  startedAt: Scalars['Int']['output'];
+  userGuid?: Maybe<Scalars['String']['output']>;
+};
+
+export type OnboardingStepProgressState = {
+  __typename?: 'OnboardingStepProgressState';
+  completedAt?: Maybe<Scalars['Int']['output']>;
+  stepKey: Scalars['String']['output'];
+  stepType: Scalars['String']['output'];
+  userGuid?: Maybe<Scalars['String']['output']>;
 };
 
 export type PageInfo = {
@@ -190,11 +312,46 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Returns an individual gift card */
+  giftCard: GiftCardNode;
+  /** Returns a list of gift card transactions */
+  giftCardTransactions: GiftCardTransactionsConnection;
+  /** Returns a list of gift cards belonging to a user */
+  giftCards: GiftCardsConnection;
+  /** The available balance a user has */
+  giftCardsBalance: Scalars['Float']['output'];
+  /** The available balances of each gift card types */
+  giftCardsBalances: Array<GiftCardBalanceByProductId>;
   newsfeed: NewsfeedConnection;
+  /** Gets onboarding state for the currently logged in user. */
+  onboardingState: OnboardingState;
+  /** Get the currently logged in users onboarding step progress. */
+  onboardingStepProgress: Array<OnboardingStepProgressState>;
 };
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryGiftCardArgs = {
+  guid: Scalars['String']['input'];
+};
+
+export type QueryGiftCardTransactionsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryGiftCardsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  includeIssued?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  ordering?: InputMaybe<GiftCardOrderingEnum>;
+  productId?: InputMaybe<GiftCardProductIdEnum>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -318,6 +475,8 @@ export type FetchNewsfeedQuery = {
                 key: string;
                 id: string;
               }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -352,6 +511,8 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | {
@@ -372,6 +533,20 @@ export type FetchNewsfeedQuery = {
                       __typename?: 'FeedNoticeEdge';
                       publisherNode: {
                         __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
                         id: string;
                       };
                     }
@@ -432,6 +607,16 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'GiftCardEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardNode'; id: string };
+        }
+      | {
+          __typename?: 'GiftCardTransactionEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardTransaction'; id: string };
+        }
+      | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
@@ -457,6 +642,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
@@ -472,6 +659,17 @@ export type FetchNewsfeedQuery = {
               | {
                   __typename?: 'FeedNoticeEdge';
                   publisherNode: { __typename?: 'FeedNoticeNode'; id: string };
+                }
+              | {
+                  __typename?: 'GiftCardEdge';
+                  publisherNode: { __typename?: 'GiftCardNode'; id: string };
+                }
+              | {
+                  __typename?: 'GiftCardTransactionEdge';
+                  publisherNode: {
+                    __typename?: 'GiftCardTransaction';
+                    id: string;
+                  };
                 }
               | {
                   __typename?: 'PublisherRecsEdge';
@@ -520,6 +718,64 @@ export type PageInfoFragment = {
   hasNextPage: boolean;
   startCursor?: string | null;
   endCursor?: string | null;
+};
+
+export type CompleteOnboardingStepMutationVariables = Exact<{
+  stepKey: Scalars['String']['input'];
+  stepType: Scalars['String']['input'];
+  additionalData: Array<KeyValuePairInput> | KeyValuePairInput;
+}>;
+
+export type CompleteOnboardingStepMutation = {
+  __typename?: 'Mutation';
+  completeOnboardingStep: {
+    __typename?: 'OnboardingStepProgressState';
+    userGuid?: string | null;
+    stepKey: string;
+    stepType: string;
+    completedAt?: number | null;
+  };
+};
+
+export type GetOnboardingStateQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetOnboardingStateQuery = {
+  __typename?: 'Query';
+  onboardingState: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  };
+};
+
+export type GetOnboardingStepProgressQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetOnboardingStepProgressQuery = {
+  __typename?: 'Query';
+  onboardingStepProgress: Array<{
+    __typename?: 'OnboardingStepProgressState';
+    userGuid?: string | null;
+    stepKey: string;
+    stepType: string;
+    completedAt?: number | null;
+  }>;
+};
+
+export type SetOnboardingStateMutationVariables = Exact<{
+  completed: Scalars['Boolean']['input'];
+}>;
+
+export type SetOnboardingStateMutation = {
+  __typename?: 'Mutation';
+  setOnboardingState: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  };
 };
 
 export const PageInfoFragmentDoc = gql`
@@ -604,6 +860,108 @@ export class FetchNewsfeedGQL extends Apollo.Query<
   FetchNewsfeedQueryVariables
 > {
   document = FetchNewsfeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CompleteOnboardingStepDocument = gql`
+  mutation CompleteOnboardingStep(
+    $stepKey: String!
+    $stepType: String!
+    $additionalData: [KeyValuePairInput!]!
+  ) {
+    completeOnboardingStep(
+      stepKey: $stepKey
+      stepType: $stepType
+      additionalData: $additionalData
+    ) {
+      userGuid
+      stepKey
+      stepType
+      completedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CompleteOnboardingStepGQL extends Apollo.Mutation<
+  CompleteOnboardingStepMutation,
+  CompleteOnboardingStepMutationVariables
+> {
+  document = CompleteOnboardingStepDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetOnboardingStateDocument = gql`
+  query GetOnboardingState {
+    onboardingState {
+      userGuid
+      startedAt
+      completedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetOnboardingStateGQL extends Apollo.Query<
+  GetOnboardingStateQuery,
+  GetOnboardingStateQueryVariables
+> {
+  document = GetOnboardingStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetOnboardingStepProgressDocument = gql`
+  query GetOnboardingStepProgress {
+    onboardingStepProgress {
+      userGuid
+      stepKey
+      stepType
+      completedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetOnboardingStepProgressGQL extends Apollo.Query<
+  GetOnboardingStepProgressQuery,
+  GetOnboardingStepProgressQueryVariables
+> {
+  document = GetOnboardingStepProgressDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetOnboardingStateDocument = gql`
+  mutation SetOnboardingState($completed: Boolean!) {
+    setOnboardingState(completed: $completed) {
+      userGuid
+      startedAt
+      completedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetOnboardingStateGQL extends Apollo.Mutation<
+  SetOnboardingStateMutation,
+  SetOnboardingStateMutationVariables
+> {
+  document = SetOnboardingStateDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

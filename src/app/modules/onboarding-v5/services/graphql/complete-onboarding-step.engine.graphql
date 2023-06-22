@@ -1,0 +1,12 @@
+mutation CompleteOnboardingStep(
+  $stepKey: String!,
+  $stepType: String!,
+  $additionalData: [KeyValuePairInput!]!
+) {
+  completeOnboardingStep(stepKey: $stepKey, stepType: $stepType, additionalData: $additionalData) {
+    userGuid
+    stepKey
+    stepType
+    completedAt
+  }
+}

@@ -13,6 +13,7 @@ import {
   Subscription,
   catchError,
   distinctUntilChanged,
+  firstValueFrom,
   map,
   of,
   take,
@@ -23,6 +24,11 @@ import { OnboardingStep } from '../types/onboarding-v5.types';
 import { CarouselItem } from '../../../common/components/feature-carousel/feature-carousel.component';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
 import { AuthRedirectService } from '../../../common/services/auth-redirect.service';
+import {
+  SetOnboardingStateGQL,
+  SetOnboardingStateMutation,
+} from '../../../../graphql/generated.engine';
+import { MutationResult } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -81,8 +87,25 @@ export class OnboardingV5Service implements OnDestroy {
   constructor(
     private stepsGql: FetchOnboardingV5VersionsGQL,
     private authRedirect: AuthRedirectService,
+    private setOnboardingStateGQL: SetOnboardingStateGQL,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {}
+
+  private async startOnboarding(): Promise<
+    MutationResult<SetOnboardingStateMutation>
+  > {
+    return firstValueFrom(
+      this.setOnboardingStateGQL.mutate({ completed: false })
+    );
+  }
+
+  private async completeOnboarding(): Promise<
+    MutationResult<SetOnboardingStateMutation>
+  > {
+    return firstValueFrom(
+      this.setOnboardingStateGQL.mutate({ completed: true })
+    );
+  }
 
   public fetchSteps(): void {
     this.stepsGqlSubscription = this.stepsGql
@@ -115,7 +138,7 @@ export class OnboardingV5Service implements OnDestroy {
                 data: stepData,
               });
             }
-
+            this.startOnboarding();
             this.steps$.next(steps);
             this.activeStep$.next(this.getActiveStepFromSteps(steps));
           } else {
@@ -165,6 +188,12 @@ export class OnboardingV5Service implements OnDestroy {
   }
 
   public finishOnboarding(): void {
+    try {
+      this.completeOnboarding();
+    } catch (e) {
+      console.error(e);
+    }
+
     this.completionStepShowSubscription = timer(1000)
       .pipe(take(1))
       .subscribe(() => {
