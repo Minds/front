@@ -27,6 +27,8 @@ import { AuthRedirectService } from '../../../common/services/auth-redirect.serv
 import {
   CompleteOnboardingStepGQL,
   CompleteOnboardingStepMutation,
+  GetOnboardingStateGQL,
+  GetOnboardingStateQuery,
   KeyValuePairInput,
   SetOnboardingStateGQL,
   SetOnboardingStateMutation,
@@ -90,10 +92,23 @@ export class OnboardingV5Service implements OnDestroy {
   constructor(
     private stepsGql: FetchOnboardingV5VersionsGQL,
     private authRedirect: AuthRedirectService,
+    private getOnboardingStateGQL: GetOnboardingStateGQL,
     private setOnboardingStateGQL: SetOnboardingStateGQL,
     private completeOnboardingStepGQL: CompleteOnboardingStepGQL,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {}
+
+  public async hasCompletedOnboarding(): Promise<boolean> {
+    try {
+      const response: ApolloQueryResult<GetOnboardingStateQuery> = await firstValueFrom(
+        this.getOnboardingStateGQL.fetch()
+      );
+      return Boolean(response?.data?.onboardingState?.completedAt);
+    } catch (e) {
+      console.error(e);
+      return true; // presume true if there is an error getting state.
+    }
+  }
 
   private async startOnboarding(): Promise<
     MutationResult<SetOnboardingStateMutation>

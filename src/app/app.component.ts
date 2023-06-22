@@ -40,6 +40,7 @@ import { MultiFactorAuthConfirmationService } from './modules/auth/multi-factor-
 import { CompassHookService } from './common/services/compass-hook.service';
 import { OnboardingV4Service } from './modules/onboarding-v4/onboarding-v4.service';
 import { OnboardingV5ModalLazyService } from './modules/onboarding-v5/services/onboarding-v5-modal-lazy.service';
+import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding-v5.service';
 
 @Component({
   selector: 'm-app',
@@ -93,14 +94,14 @@ export class Minds implements OnInit, OnDestroy {
     private compassHook: CompassHookService,
     private serviceWorkerService: ServiceWorkerService,
     private onboardingV4Service: OnboardingV4Service, // force init.
-    private onboardingV5ModalService: OnboardingV5ModalLazyService // TODO: Remove - here for dev
+    private onboardingV5Service: OnboardingV5Service,
+    private onboardingV5ModalService: OnboardingV5ModalLazyService
   ) {
     this.name = 'Minds';
 
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
-    this.onboardingV5ModalService.open(); // TODO: Remove
   }
 
   async ngOnInit() {
@@ -195,6 +196,11 @@ export class Minds implements OnInit, OnDestroy {
         if (user.language !== language) {
           console.log('[app]:: language change', user.language, language);
           window.location.href = window.location.href;
+        }
+
+        const hasCompletedOnboarding: boolean = await this.onboardingV5Service.hasCompletedOnboarding();
+        if (!hasCompletedOnboarding) {
+          this.onboardingV5ModalService.open();
         }
       }
     });
