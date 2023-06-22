@@ -45,21 +45,4 @@ export class ChannelRecommendationModalComponent {
     this.onSkip = onSkip || noOp;
     this.publisherType = publisherType;
   }
-
-  /**
-   * Increment the channel subscription count
-   */
-  onSubscribed(): void {
-    if (this.publisherType === 'user') {
-      this.onboardingV4Service.channelSubscriptionCount++;
-    }
-  }
-  /**
-   * Decrement the channel subscription count
-   */
-  onUnsubscribed(): void {
-    if (this.publisherType === 'user') {
-      this.onboardingV4Service.channelSubscriptionCount--;
-    }
-  }
 }
