@@ -41,6 +41,7 @@ import { CompassHookService } from './common/services/compass-hook.service';
 import { OnboardingV4Service } from './modules/onboarding-v4/onboarding-v4.service';
 import { OnboardingV5ModalLazyService } from './modules/onboarding-v5/services/onboarding-v5-modal-lazy.service';
 import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding-v5.service';
+import { OnboardingV5ExperimentService } from './modules/experiments/sub-services/onboarding-v5-experiment.service';
 
 @Component({
   selector: 'm-app',
@@ -95,7 +96,8 @@ export class Minds implements OnInit, OnDestroy {
     private serviceWorkerService: ServiceWorkerService,
     private onboardingV4Service: OnboardingV4Service, // force init.
     private onboardingV5Service: OnboardingV5Service,
-    private onboardingV5ModalService: OnboardingV5ModalLazyService
+    private onboardingV5ModalService: OnboardingV5ModalLazyService,
+    private onboardingV5ExperimentService: OnboardingV5ExperimentService
   ) {
     this.name = 'Minds';
 
@@ -146,7 +148,16 @@ export class Minds implements OnInit, OnDestroy {
       //   this.sso.connect();
       // }
 
-      this.checkEmailConfirmation();
+      if (this.session.getLoggedInUser()) {
+        const onboardingV5Shown = await this.tryShowingOnboardingV5();
+
+        // we do not need to check if this needs to be shown if
+        // OnboardingV5 has been shown / the experiment is off.
+        // We should be able to remove when OnboardingV5 is fully released.
+        if (!onboardingV5Shown) {
+          this.checkEmailConfirmation();
+        }
+      }
 
       if (isPlatformBrowser(this.platformId)) {
         this.serviceWorkerService.watchForUpdates();
@@ -198,10 +209,7 @@ export class Minds implements OnInit, OnDestroy {
           window.location.href = window.location.href;
         }
 
-        const hasCompletedOnboarding: boolean = await this.onboardingV5Service.hasCompletedOnboarding();
-        if (!hasCompletedOnboarding) {
-          this.onboardingV5ModalService.open();
-        }
+        this.tryShowingOnboardingV5();
       }
     });
 
@@ -231,6 +239,21 @@ export class Minds implements OnInit, OnDestroy {
     // TODO uncomment this when we want logged out users
     // to complete the social compass questionnaire
     // this.compassHook.listen();
+  }
+
+  /**
+   * Try to show onboarding V5 if it should be shown.
+   * @returns { Promise<boolean> } true if onboarding v5 modal has been shown.
+   */
+  private async tryShowingOnboardingV5(): Promise<boolean> {
+    if (
+      this.onboardingV5ExperimentService.isGlobalOnSwitchActive() &&
+      !(await this.onboardingV5Service.hasCompletedOnboarding())
+    ) {
+      this.onboardingV5ModalService.open();
+      return true;
+    }
+    return false;
   }
 
   ngOnDestroy() {

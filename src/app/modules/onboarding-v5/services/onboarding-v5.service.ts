@@ -34,6 +34,10 @@ import {
   SetOnboardingStateMutation,
 } from '../../../../graphql/generated.engine';
 import { MutationResult } from 'apollo-angular';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MindsUser } from '../../../interfaces/entities';
+import { OnboardingV5CompletionStorageService } from './onboarding-v5-completion-storage.service';
+import { Session } from '../../../services/session';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +89,7 @@ export class OnboardingV5Service implements OnDestroy {
 
   public readonly dismiss$: Subject<boolean> = new Subject<boolean>();
 
+  private readonly releaseTimestamp: number;
   private stepsGqlSubscription: Subscription;
   private completionStepShowSubscription: Subscription;
   private dismissalSubscription: Subscription;
@@ -95,34 +100,65 @@ export class OnboardingV5Service implements OnDestroy {
     private getOnboardingStateGQL: GetOnboardingStateGQL,
     private setOnboardingStateGQL: SetOnboardingStateGQL,
     private completeOnboardingStepGQL: CompleteOnboardingStepGQL,
+    private completionStorage: OnboardingV5CompletionStorageService,
+    private configs: ConfigsService,
+    private session: Session,
     @Inject(STRAPI_URL) public strapiUrl: string
-  ) {}
+  ) {
+    this.releaseTimestamp =
+      this.configs.get('onboarding_v5_release_timestamp') ?? 0;
+  }
 
   public async hasCompletedOnboarding(): Promise<boolean> {
     try {
+      const loggedInUser: MindsUser = this.session.getLoggedInUser();
+
+      // check whether we have marked it as completed in local storage already.
+      const storedCompletionState: boolean = this.completionStorage.isCompleted(
+        loggedInUser.guid
+      );
+      if (storedCompletionState) {
+        return storedCompletionState;
+      }
+
+      // check whether user existed before onboarding v5 release.
+      if (this.isPreOnboardingV5ReleaseUser(this.session.getLoggedInUser())) {
+        this.completionStorage.setAsCompleted(loggedInUser.guid);
+        return true;
+      }
+
+      // else get it from the server.
       const response: ApolloQueryResult<GetOnboardingStateQuery> = await firstValueFrom(
         this.getOnboardingStateGQL.fetch()
       );
-      return Boolean(response?.data?.onboardingState?.completedAt);
+
+      // if completed, set it in local storage.
+      const completed: boolean = Boolean(
+        response?.data?.onboardingState?.completedAt
+      );
+      if (completed) {
+        this.completionStorage.setAsCompleted(loggedInUser.guid);
+      }
+
+      return completed;
     } catch (e) {
       console.error(e);
       return true; // presume true if there is an error getting state.
     }
   }
 
-  private async startOnboarding(): Promise<
-    MutationResult<SetOnboardingStateMutation>
-  > {
-    return firstValueFrom(
-      this.setOnboardingStateGQL.mutate({ completed: false })
-    );
-  }
+  public async setOnboardingCompletedState(
+    completed = false
+  ): Promise<MutationResult<SetOnboardingStateMutation>> {
+    // if completed, set it in local storage.
+    if (completed) {
+      this.completionStorage.setAsCompleted(
+        this.session.getLoggedInUser().guid
+      );
+    }
 
-  private async completeOnboarding(): Promise<
-    MutationResult<SetOnboardingStateMutation>
-  > {
     return firstValueFrom(
-      this.setOnboardingStateGQL.mutate({ completed: true })
+      this.setOnboardingStateGQL.mutate({ completed: completed })
     );
   }
 
@@ -157,7 +193,6 @@ export class OnboardingV5Service implements OnDestroy {
                 data: stepData,
               });
             }
-            this.startOnboarding();
             this.steps$.next(steps);
             this.activeStep$.next(this.getActiveStepFromSteps(steps));
           } else {
@@ -215,7 +250,7 @@ export class OnboardingV5Service implements OnDestroy {
 
   public finishOnboarding(): void {
     try {
-      this.completeOnboarding();
+      this.setOnboardingCompletedState(true);
     } catch (e) {
       console.error(e);
     }
@@ -253,5 +288,9 @@ export class OnboardingV5Service implements OnDestroy {
         additionalData: additionalDataInput,
       })
     );
+  }
+
+  public isPreOnboardingV5ReleaseUser(user: MindsUser): boolean {
+    return user.time_created < this.releaseTimestamp;
   }
 }
