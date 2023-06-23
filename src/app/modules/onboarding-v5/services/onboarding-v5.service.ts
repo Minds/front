@@ -2,20 +2,20 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import {
   ComponentOnboardingV5CarouselItem,
   ComponentOnboardingV5CompletionStep,
+  ComponentOnboardingV5OnboardingStep,
   FetchOnboardingV5VersionsGQL,
   FetchOnboardingV5VersionsQuery,
   OnboardingV5Version,
+  OnboardingV5VersionStepsDynamicZone,
 } from '../../../../graphql/generated.strapi';
 import {
   BehaviorSubject,
   Observable,
   Subject,
   Subscription,
-  catchError,
   distinctUntilChanged,
   firstValueFrom,
   map,
-  of,
   take,
   timer,
 } from 'rxjs';
@@ -29,7 +29,10 @@ import {
   CompleteOnboardingStepMutation,
   GetOnboardingStateGQL,
   GetOnboardingStateQuery,
+  GetOnboardingStepProgressGQL,
+  GetOnboardingStepProgressQuery,
   KeyValuePairInput,
+  OnboardingStepProgressState,
   SetOnboardingStateGQL,
   SetOnboardingStateMutation,
 } from '../../../../graphql/generated.engine';
@@ -58,9 +61,12 @@ export class OnboardingV5Service implements OnDestroy {
   public readonly completionStep$: BehaviorSubject<
     ComponentOnboardingV5CompletionStep
   > = new BehaviorSubject<ComponentOnboardingV5CompletionStep>(null);
+
   public readonly onboardingCompleted$: Subject<boolean> = new Subject<
     boolean
   >();
+
+  public readonly dismiss$: Subject<boolean> = new Subject<boolean>();
 
   public readonly activeStepCarouselItems$: Observable<
     CarouselItem[]
@@ -87,18 +93,17 @@ export class OnboardingV5Service implements OnDestroy {
     })
   );
 
-  public readonly dismiss$: Subject<boolean> = new Subject<boolean>();
-
   private readonly releaseTimestamp: number;
-  private stepsGqlSubscription: Subscription;
-  private completionStepShowSubscription: Subscription;
+  private skipOnboardingProgressCheck: boolean = false;
   private dismissalSubscription: Subscription;
+  private completionStepShowSubscription: Subscription;
 
   constructor(
-    private stepsGql: FetchOnboardingV5VersionsGQL,
     private authRedirect: AuthRedirectService,
+    private fetchOnboardingV5VersionsGql: FetchOnboardingV5VersionsGQL,
     private getOnboardingStateGQL: GetOnboardingStateGQL,
     private setOnboardingStateGQL: SetOnboardingStateGQL,
+    private getOnboardingStepProgressGQL: GetOnboardingStepProgressGQL,
     private completeOnboardingStepGQL: CompleteOnboardingStepGQL,
     private completionStorage: OnboardingV5CompletionStorageService,
     private configs: ConfigsService,
@@ -107,6 +112,11 @@ export class OnboardingV5Service implements OnDestroy {
   ) {
     this.releaseTimestamp =
       this.configs.get('onboarding_v5_release_timestamp') ?? 0;
+  }
+
+  ngOnDestroy(): void {
+    this.completionStepShowSubscription?.unsubscribe();
+    this.dismissalSubscription?.unsubscribe();
   }
 
   public async hasCompletedOnboarding(): Promise<boolean> {
@@ -155,6 +165,8 @@ export class OnboardingV5Service implements OnDestroy {
       this.completionStorage.setAsCompleted(
         this.session.getLoggedInUser().guid
       );
+    } else {
+      this.skipOnboardingProgressCheck = true;
     }
 
     return firstValueFrom(
@@ -162,64 +174,42 @@ export class OnboardingV5Service implements OnDestroy {
     );
   }
 
-  public fetchSteps(): void {
-    this.stepsGqlSubscription = this.stepsGql
-      .fetch()
-      .pipe(
-        take(1),
-        catchError((e: unknown) => {
-          console.error(e);
-          return of(null);
-        })
-      )
-      .subscribe(
-        (response: ApolloQueryResult<FetchOnboardingV5VersionsQuery>) => {
-          this.stepFetchInProgress$.next(false);
+  public async fetchSteps(): Promise<void> {
+    let stepProgressResponse: ApolloQueryResult<GetOnboardingStepProgressQuery>;
 
-          const cmsData: OnboardingV5Version = response?.data
-            ?.onboardingV5Versions?.data[0].attributes as OnboardingV5Version;
-
-          if (cmsData?.steps) {
-            let steps: OnboardingStep[] = [];
-            for (let stepData of cmsData.steps) {
-              if (stepData.__typename === 'Error') {
-                console.error(stepData);
-                continue;
-              }
-              stepData = stepData;
-              steps.push({
-                completed: false,
-                stepType: stepData.stepType,
-                data: stepData,
-              });
-            }
-            this.steps$.next(steps);
-            this.activeStep$.next(this.getActiveStepFromSteps(steps));
-          } else {
-            this.authRedirect.redirect();
-            this.dismiss$.next(true);
-          }
-
-          if (cmsData?.completionStep) {
-            this.completionStep$.next(cmsData.completionStep);
-          }
-        }
-      );
-  }
-
-  ngOnDestroy(): void {
-    this.stepsGqlSubscription?.unsubscribe();
-    this.completionStepShowSubscription?.unsubscribe();
-    this.dismissalSubscription?.unsubscribe();
-  }
-
-  private getActiveStepFromSteps(steps: OnboardingStep[]): OnboardingStep {
-    const activeSteps: OnboardingStep[] = steps.filter(
-      (step: OnboardingStep): boolean => {
-        return !step.completed;
+    try {
+      if (!this.skipOnboardingProgressCheck) {
+        stepProgressResponse = await firstValueFrom(
+          this.getOnboardingStepProgressGQL.fetch()
+        );
       }
-    );
-    return activeSteps.length ? activeSteps[0] : steps[0];
+
+      const stepsResponse: ApolloQueryResult<FetchOnboardingV5VersionsQuery> = await firstValueFrom(
+        this.fetchOnboardingV5VersionsGql.fetch()
+      );
+
+      const cmsData: OnboardingV5Version = stepsResponse?.data
+        ?.onboardingV5Versions?.data[0].attributes as OnboardingV5Version;
+
+      if (cmsData?.steps) {
+        this.parseSteps(
+          cmsData.steps,
+          stepProgressResponse?.data?.onboardingStepProgress
+        );
+
+        if (cmsData?.completionStep) {
+          this.completionStep$.next(cmsData.completionStep);
+        }
+      } else {
+        throw new Error('No steps found');
+      }
+    } catch (e) {
+      console.error(e);
+      this.authRedirect.redirect();
+      this.dismiss$.next(true);
+    } finally {
+      this.stepFetchInProgress$.next(false);
+    }
   }
 
   public continue(additionalData: Object = null): void {
@@ -266,6 +256,71 @@ export class OnboardingV5Service implements OnDestroy {
       });
   }
 
+  public isPreOnboardingV5ReleaseUser(user: MindsUser): boolean {
+    return user.time_created < this.releaseTimestamp;
+  }
+
+  private parseSteps(
+    stepsData: OnboardingV5VersionStepsDynamicZone[],
+    stepProgressData: OnboardingStepProgressState[] = null
+  ) {
+    let onboardingSteps: OnboardingStep[] = [];
+
+    for (let stepData of stepsData) {
+      if (stepData.__typename === 'Error') {
+        console.error(stepData);
+        continue;
+      }
+
+      let onboardingStep = this.buildStepData(stepData, stepProgressData);
+
+      onboardingSteps.push(onboardingStep);
+    }
+
+    onboardingSteps = onboardingSteps.sort(
+      (a: OnboardingStep, b: OnboardingStep): number => {
+        return a.completed === b.completed ? 0 : a.completed ? -1 : 1;
+      }
+    );
+
+    this.steps$.next(onboardingSteps);
+    this.activeStep$.next(this.getActiveStepFromSteps(onboardingSteps));
+  }
+
+  private buildStepData(
+    stepData: ComponentOnboardingV5OnboardingStep,
+    stepProgressData: OnboardingStepProgressState[] = null
+  ): OnboardingStep {
+    let onboardingStep: OnboardingStep = {
+      completed: false,
+      stepType: stepData.stepType,
+      data: stepData,
+    };
+
+    if (stepProgressData?.length) {
+      let stepProgress: OnboardingStepProgressState = stepProgressData.find(
+        (stepProgress: OnboardingStepProgressState): boolean => {
+          return stepProgress.stepKey === onboardingStep.data?.stepKey;
+        }
+      );
+
+      if (stepProgress) {
+        onboardingStep.completed = Boolean(stepProgress.completedAt);
+      }
+    }
+
+    return onboardingStep;
+  }
+
+  private getActiveStepFromSteps(steps: OnboardingStep[]): OnboardingStep {
+    const activeSteps: OnboardingStep[] = steps.filter(
+      (step: OnboardingStep): boolean => {
+        return !step.completed;
+      }
+    );
+    return activeSteps.length ? activeSteps[0] : steps[0];
+  }
+
   private async completeOnboardingStep(
     stepType: string,
     stepKey: string,
@@ -288,9 +343,5 @@ export class OnboardingV5Service implements OnDestroy {
         additionalData: additionalDataInput,
       })
     );
-  }
-
-  public isPreOnboardingV5ReleaseUser(user: MindsUser): boolean {
-    return user.time_created < this.releaseTimestamp;
   }
 }
