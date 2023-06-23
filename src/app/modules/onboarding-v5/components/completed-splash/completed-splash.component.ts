@@ -7,6 +7,9 @@ import {
 } from '../../../../../graphql/generated.strapi';
 import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-tokens';
 
+/**
+ * Completed splash screen.
+ */
 @Component({
   selector: 'm-onboardingV5__completedSplash',
   template: `
@@ -28,11 +31,14 @@ import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-to
   styleUrls: ['completed-splash.component.ng.scss'],
 })
 export class OnboardingV5CompletedSplashComponent implements OnInit, OnDestroy {
+  /** Message to show on completion. */
   public message: string = 'Welcome to Minds';
+
+  /** Attributes of image to show (will fall back to icon if not set). */
   public imageAttributes: UploadFile;
 
+  /** Data subscription. */
   private dataSubscription: Subscription;
-  private dismissalSubscription: Subscription;
 
   constructor(
     private service: OnboardingV5Service,
@@ -50,6 +56,5 @@ export class OnboardingV5CompletedSplashComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dataSubscription?.unsubscribe();
-    this.dismissalSubscription?.unsubscribe();
   }
 }

@@ -15,6 +15,10 @@ import {
 } from '@angular/forms';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 
+/**
+ * Tag selector content panel for onboarding v5.
+ * Allows a user to select their tag preferences.
+ */
 @Component({
   selector: 'm-onboardingV5__tagSelectorContent',
   templateUrl: './tag-selector.component.html',
@@ -24,18 +28,30 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
   ],
 })
 export class OnboardingV5TagSelectorContentComponent implements OnInit {
+  /** Title for section. */
   @Input() public readonly title: string;
+
+  /** Description for section. */
   @Input() public readonly description: string;
+
+  /** Data from CMS. */
   @Input() public readonly data: ComponentOnboardingV5OnboardingStep;
 
+  /** Tags from tags service. */
   public readonly tags$: Observable<DiscoveryTag[]> = this.tagsService
     .userAndDefault$;
+
+  /** Whether tags are currently loading. */
   public readonly tagsLoading$: Observable<boolean> = this.tagsService
     .inProgress$;
+
+  /** Whether tags are currently saving. */
   public readonly tagsSaving$: Observable<boolean> = this.tagsService.saving$;
 
+  /** Form group. */
   public formGroup: FormGroup;
 
+  /** Whether step can be considered completed based upon the amount of selected tags. */
   public readonly isStepCompleted$: Observable<
     boolean
   > = this.tagsService.tags$.pipe(
@@ -66,6 +82,11 @@ export class OnboardingV5TagSelectorContentComponent implements OnInit {
     });
   }
 
+  /**
+   * Fired on tag click - adds or removes the tag.
+   * @param { DiscoveryTag } tag - tag to add or remove.
+   * @returns { Promise<void> }
+   */
   public async onTagClick(tag: DiscoveryTag): Promise<void> {
     if (!tag.selected) {
       tag.selected = true;
@@ -76,15 +97,28 @@ export class OnboardingV5TagSelectorContentComponent implements OnInit {
     }
   }
 
+  /**
+   * On action button click - save all tags and then continue.
+   * @returns { Promise<void> }
+   */
   public async onActionButtonClick(): Promise<void> {
     await this.tagsService.saveTags();
     this.service.continue();
   }
 
+  /**
+   * On skip button click - skip.
+   * @returns { void }
+   */
   public onSkipButtonClick(): void {
     this.service.continue();
   }
 
+  /**
+   * Handles submission of a custom tag.
+   * @param { KeyboardEvent } $event - keyboard event.
+   * @returns { void }
+   */
   public onCustomInputSubmit($event: KeyboardEvent): void {
     $event.preventDefault();
 
@@ -94,7 +128,6 @@ export class OnboardingV5TagSelectorContentComponent implements OnInit {
     const errors: ValidationErrors = formControl.errors;
 
     if (errors) {
-      console.log(errors);
       if (formControl?.errors.pattern) {
         this.toast.error(`Tags may only contain alphanumeric characters`);
       }
@@ -119,6 +152,11 @@ export class OnboardingV5TagSelectorContentComponent implements OnInit {
     });
   }
 
+  /**
+   * Add a tag to the tags service.
+   * @param { DiscoveryTag } tag - tag to add.
+   * @returns { void }
+   */
   private addTag(tag: DiscoveryTag): void {
     this.tagsService.addSingleTag(tag);
     const userAndDefaultTags = this.tagsService.userAndDefault$.getValue();

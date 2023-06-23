@@ -1,16 +1,17 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FeatureCarouselService } from './feature-carousel.service';
 import {
   BehaviorSubject,
   Observable,
   Subscription,
   combineLatest,
   map,
-  of,
   take,
 } from 'rxjs';
-import { FeaturedContentService } from '../featured-content/featured-content.service';
-import { FeatureCarouselService } from './feature-carousel.service';
 
+/**
+ * Item for display in the carousel.
+ */
 export type CarouselItem = {
   title: string;
   media: {
@@ -19,27 +20,38 @@ export type CarouselItem = {
   };
 };
 
+/**
+ * Move direction for carousel.
+ */
 enum CarouselMoveDirection {
   BACK,
   FORWARD,
 }
 
+/**
+ * Carousel that shows a list of items and allows the user to navigate between them.
+ */
 @Component({
   selector: 'm-featureCarousel',
   templateUrl: './feature-carousel.component.html',
   styleUrls: ['feature-carousel.component.ng.scss'],
 })
 export class FeatureCarouselComponent implements OnInit, OnDestroy {
+  /** Move direction for carousel. */
   public readonly CarouselMoveDirection: typeof CarouselMoveDirection = CarouselMoveDirection;
 
+  /** Items to be shown in carousel. */
   @Input() public readonly carouselItems$: Observable<CarouselItem[]>;
 
+  /** Index of currently visible carousel item. */
   public readonly visibleCarouselIndex$: BehaviorSubject<
     number
   > = new BehaviorSubject<number>(0);
 
+  /** Currently visible carousel item */
   public visibleCarouselItem$: Observable<CarouselItem>;
 
+  // subscriptions.
   private carouselMoveSubscription: Subscription;
   private jumpToItemIndexSubscription: Subscription;
   private jumpCarouselSubscription: Subscription;
@@ -47,6 +59,7 @@ export class FeatureCarouselComponent implements OnInit, OnDestroy {
   constructor(private service: FeatureCarouselService) {}
 
   ngOnInit(): void {
+    // set visible carousel item observable, from carousel items and visible item index.
     this.visibleCarouselItem$ = combineLatest([
       this.carouselItems$,
       this.visibleCarouselIndex$,
@@ -56,6 +69,7 @@ export class FeatureCarouselComponent implements OnInit, OnDestroy {
       })
     );
 
+    // subscription so that external components can jump the carousel to specific indexes.
     this.jumpToItemIndexSubscription = this.service.jumpToItemIndex$.subscribe(
       index => {
         this.jumpCarousel(index);
@@ -69,6 +83,11 @@ export class FeatureCarouselComponent implements OnInit, OnDestroy {
     this.jumpToItemIndexSubscription?.unsubscribe();
   }
 
+  /**
+   * Move the carousel in a specified direction.
+   * @param { CarouselMoveDirection } direction - direction to move.
+   * @returns { void }
+   */
   public moveCarousel(direction: CarouselMoveDirection): void {
     this.carouselMoveSubscription?.unsubscribe();
 
@@ -98,6 +117,10 @@ export class FeatureCarouselComponent implements OnInit, OnDestroy {
       );
   }
 
+  /**
+   * Jump carousel to a specified index.
+   * @returns { void }
+   */
   public jumpCarousel(index: number): void {
     this.jumpCarouselSubscription = this.carouselItems$
       .pipe(take(1))
