@@ -178,7 +178,7 @@ export class OnboardingV5VerifyEmailContentComponent
 
       if (resend) {
         this.toast.success(
-          'Confirmation email has been resent - please be sure to check your junk folder.'
+          'Confirmation email has been resent; please be sure to check your junk folder.'
         );
       }
 

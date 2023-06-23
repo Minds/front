@@ -23,7 +23,7 @@ export type CarouselItem = {
 /**
  * Move direction for carousel.
  */
-enum CarouselMoveDirection {
+export enum CarouselMoveDirection {
   BACK,
   FORWARD,
 }
