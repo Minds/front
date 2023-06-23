@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ComponentOnboardingV5ActionButton } from '../../../../../graphql/generated.strapi';
+import { OnboardingV5Service } from '../../services/onboarding-v5.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'm-onboardingV5__footer',
@@ -13,6 +15,11 @@ export class OnboardingV5FooterComponent {
   @Input() public readonly disabledActionButton: boolean = false;
   @Output() public readonly actionButtonClick = new EventEmitter<boolean>();
   @Output() public readonly skipButtonClick = new EventEmitter<boolean>();
+
+  public readonly completionInProgress$: BehaviorSubject<boolean> = this.service
+    .completionInProgress$;
+
+  constructor(private service: OnboardingV5Service) {}
 
   public onActionButtonClick(): void {
     this.actionButtonClick.emit(true);

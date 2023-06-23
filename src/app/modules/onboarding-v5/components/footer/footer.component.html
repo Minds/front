@@ -6,7 +6,7 @@
       (onAction)="onSkipButtonClick()"
       color="blue"
       [attr.data-ref]="skipButton?.dataRef ?? ''"
-      [saving]="saving"
+      [saving]="saving || (completionInProgress$ | async)"
       >{{ skipButton?.text }}
     </m-button>
   </ng-container>
@@ -17,7 +17,7 @@
       [solid]="'true'"
       [attr.data-ref]="actionButton?.dataRef ?? ''"
       [disabled]="disabledActionButton"
-      [saving]="saving"
+      [saving]="saving || (completionInProgress$ | async)"
       >{{ actionButton?.text }}</m-button
     >
   </ng-template>

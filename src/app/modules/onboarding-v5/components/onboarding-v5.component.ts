@@ -30,7 +30,7 @@ export class OnboardingV5Component implements OnInit, OnDestroy {
   constructor(private service: OnboardingV5Service) {}
 
   ngOnInit(): void {
-    this.service.fetchSteps();
+    this.service.start();
     this.disableBackNavigation();
   }
 

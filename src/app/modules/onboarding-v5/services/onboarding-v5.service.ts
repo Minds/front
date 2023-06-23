@@ -66,6 +66,10 @@ export class OnboardingV5Service implements OnDestroy {
     boolean
   >();
 
+  public readonly completionInProgress$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   public readonly dismiss$: Subject<boolean> = new Subject<boolean>();
 
   public readonly activeStepCarouselItems$: Observable<
@@ -174,7 +178,7 @@ export class OnboardingV5Service implements OnDestroy {
     );
   }
 
-  public async fetchSteps(): Promise<void> {
+  public async start(): Promise<void> {
     let stepProgressResponse: ApolloQueryResult<GetOnboardingStepProgressQuery>;
 
     try {
@@ -239,6 +243,7 @@ export class OnboardingV5Service implements OnDestroy {
   }
 
   public finishOnboarding(): void {
+    this.completionInProgress$.next(true);
     try {
       this.setOnboardingCompletedState(true);
     } catch (e) {
@@ -251,6 +256,7 @@ export class OnboardingV5Service implements OnDestroy {
         this.onboardingCompleted$.next(true);
 
         this.dismissalSubscription = timer(1200).subscribe(() => {
+          this.completionInProgress$.next(false);
           this.dismiss$.next(true);
         });
       });
