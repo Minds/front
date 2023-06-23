@@ -311,7 +311,6 @@ export type ComponentMetadataGeneralPageMetadataInput = {
 
 export type ComponentOnboardingV5ActionButton = {
   __typename?: 'ComponentOnboardingV5ActionButton';
-  action?: Maybe<Enum_Componentonboardingv5Actionbutton_Action>;
   dataRef?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   text: Scalars['String']['output'];
@@ -362,7 +361,6 @@ export type ComponentOnboardingV5CompletionStepInput = {
 export type ComponentOnboardingV5GroupSelectorStep = {
   __typename?: 'ComponentOnboardingV5GroupSelectorStep';
   id: Scalars['ID']['output'];
-  noop?: Maybe<Scalars['String']['output']>;
 };
 
 export type ComponentOnboardingV5OnboardingStep = {
@@ -432,7 +430,6 @@ export type ComponentOnboardingV5TagSelectorStep = {
 export type ComponentOnboardingV5UserSelectorStep = {
   __typename?: 'ComponentOnboardingV5UserSelectorStep';
   id: Scalars['ID']['output'];
-  noop?: Maybe<Scalars['String']['output']>;
 };
 
 export type ComponentOnboardingV5VerifyEmailStep = {
@@ -598,11 +595,6 @@ export enum Enum_Componentcommonactionbutton_Action {
   OpenOnchainTransferModal = 'open_onchain_transfer_modal',
   OpenUniswapV2Liquidity = 'open_uniswap_v2_liquidity',
   ScrollToTop = 'scroll_to_top',
-}
-
-export enum Enum_Componentonboardingv5Actionbutton_Action {
-  Next = 'next',
-  VerifyEmail = 'verify_email',
 }
 
 export enum Enum_Componentonboardingv5Onboardingstep_Steptype {
