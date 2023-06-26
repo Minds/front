@@ -3,6 +3,7 @@
     *ngIf="skipButton && disabledActionButton; else actionButtonTemplate"
   >
     <m-button
+      class="m-onboardingV5Footer__skipButton"
       (onAction)="onSkipButtonClick()"
       color="blue"
       [attr.data-ref]="skipButton?.dataRef ?? ''"
@@ -12,6 +13,7 @@
   </ng-container>
   <ng-template #actionButtonTemplate>
     <m-button
+      class="m-onboardingV5Footer__actionButton"
       (onAction)="onActionButtonClick()"
       color="blue"
       [solid]="'true'"
