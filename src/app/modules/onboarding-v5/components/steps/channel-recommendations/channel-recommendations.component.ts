@@ -21,16 +21,16 @@ export class OnboardingV5ChannelRecommendationsContentComponent {
   private readonly MIN_SUBSCRIPTION_THRESHOLD = 1;
 
   /** Title for section. */
-  @Input() public readonly title: string;
+  @Input() public title: string;
 
   /** Description for section. */
-  @Input() public readonly description: string;
+  @Input() public description: string;
 
   /** Data from CMS. */
-  @Input() public readonly data: ComponentOnboardingV5OnboardingStep;
+  @Input() public data: ComponentOnboardingV5OnboardingStep;
 
   /** Publisher type to get recommendations for. */
-  @Input() public readonly publisherType: PublisherType = 'user';
+  @Input() public publisherType: PublisherType = 'user';
 
   /** Whether recommendations have been loaded. */
   public loaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -84,7 +84,7 @@ export class OnboardingV5ChannelRecommendationsContentComponent {
     // if a user reloads it is possible to get into a state where
     // some already subscribed channels are shown - thus unsubscription would
     // take this into negative values.
-    if (count >= 0) {
+    if (count > 0) {
       this.subscriptionsCount$.next(count - 1);
     }
   }
