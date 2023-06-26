@@ -31,13 +31,13 @@ import { OnboardingStepContentInterface } from '../step-content.interface';
 export class OnboardingV5TagSelectorContentComponent
   implements OnInit, OnboardingStepContentInterface {
   /** Title for section. */
-  @Input() public readonly title: string;
+  @Input() public title: string;
 
   /** Description for section. */
-  @Input() public readonly description: string;
+  @Input() public description: string;
 
   /** Data from CMS. */
-  @Input() public readonly data: ComponentOnboardingV5OnboardingStep;
+  @Input() public data: ComponentOnboardingV5OnboardingStep;
 
   /** Tags from tags service. */
   public readonly tags$: Observable<DiscoveryTag[]> = this.tagsService
@@ -160,8 +160,8 @@ export class OnboardingV5TagSelectorContentComponent
    * @returns { void }
    */
   private addTag(tag: DiscoveryTag): void {
-    this.tagsService.addSingleTag(tag);
-    const userAndDefaultTags = this.tagsService.userAndDefault$.getValue();
+    this.tagsService.addTag(tag);
+    let userAndDefaultTags = this.tagsService.userAndDefault$.getValue();
     userAndDefaultTags.push(tag);
     this.tagsService.userAndDefault$.next(userAndDefaultTags);
   }
