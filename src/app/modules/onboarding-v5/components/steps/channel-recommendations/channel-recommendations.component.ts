@@ -3,6 +3,7 @@ import { ComponentOnboardingV5OnboardingStep } from '../../../../../../graphql/g
 import { OnboardingV5Service } from '../../../services/onboarding-v5.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { PublisherType } from '../../../../../common/components/publisher-search-modal/publisher-search-modal.component';
+import { OnboardingStepContentInterface } from '../step-content.interface';
 
 /**
  * Recommendations content panel for onboarding v5.
@@ -16,7 +17,8 @@ import { PublisherType } from '../../../../../common/components/publisher-search
     '../../../stylesheets/onboarding-v5-common.ng.scss',
   ],
 })
-export class OnboardingV5ChannelRecommendationsContentComponent {
+export class OnboardingV5ChannelRecommendationsContentComponent
+  implements OnboardingStepContentInterface {
   /** Threshold for minimum subscriptions. */
   private readonly MIN_SUBSCRIPTION_THRESHOLD = 1;
 

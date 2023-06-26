@@ -14,6 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ToasterService } from '../../../../../common/services/toaster.service';
+import { OnboardingStepContentInterface } from '../step-content.interface';
 
 /**
  * Tag selector content panel for onboarding v5.
@@ -27,7 +28,8 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
     '../../../stylesheets/onboarding-v5-common.ng.scss',
   ],
 })
-export class OnboardingV5TagSelectorContentComponent implements OnInit {
+export class OnboardingV5TagSelectorContentComponent
+  implements OnInit, OnboardingStepContentInterface {
   /** Title for section. */
   @Input() public readonly title: string;
 

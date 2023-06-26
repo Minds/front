@@ -4,6 +4,7 @@ import { ComponentOnboardingV5OnboardingStep } from '../../../../../../graphql/g
 import { OnboardingV5Service } from '../../../services/onboarding-v5.service';
 import { FeatureCarouselService } from '../../../../../common/components/feature-carousel/feature-carousel.service';
 import { AnalyticsService } from '../../../../../services/analytics';
+import { OnboardingStepContentInterface } from '../step-content.interface';
 
 /**
  * Radio survey content panel for onboarding v5.
@@ -23,15 +24,16 @@ import { AnalyticsService } from '../../../../../services/analytics';
     '../../../stylesheets/onboarding-v5-common.ng.scss',
   ],
 })
-export class OnboardingV5RadioSurveyContentComponent implements OnInit {
+export class OnboardingV5RadioSurveyContentComponent
+  implements OnInit, OnboardingStepContentInterface {
   /** Title for section. */
-  @Input() public readonly title: string;
+  @Input() public title: string;
 
   /** Description for section. */
-  @Input() public readonly description: string;
+  @Input() public description: string;
 
   /** Data from CMS. */
-  @Input() public readonly data: ComponentOnboardingV5OnboardingStep;
+  @Input() public data: ComponentOnboardingV5OnboardingStep;
 
   /** Form group. */
   public formGroup: FormGroup;

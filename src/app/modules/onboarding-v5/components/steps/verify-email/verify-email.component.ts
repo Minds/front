@@ -17,6 +17,7 @@ import {
   takeWhile,
   timer,
 } from 'rxjs';
+import { OnboardingStepContentInterface } from '../step-content.interface';
 
 /**
  * Verify email content panel for onboarding v5
@@ -32,7 +33,7 @@ import {
   ],
 })
 export class OnboardingV5VerifyEmailContentComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy, OnboardingStepContentInterface {
   /** Content title. */
   @Input() public readonly title: string;
 
