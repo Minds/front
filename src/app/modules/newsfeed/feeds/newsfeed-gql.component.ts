@@ -45,6 +45,7 @@ import {
 } from '../../../../graphql/generated.engine';
 import { FeedAlgorithm } from './subscribed.component';
 import { BoostFeedService } from '../services/boost-feed.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 const PAGE_SIZE = 12;
 
@@ -160,7 +161,8 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     private dismissal: DismissalService,
     public changeDetectorRef: ChangeDetectorRef,
     private fetchNewsfeed: FetchNewsfeedGQL,
-    protected boostFeedService: BoostFeedService
+    protected boostFeedService: BoostFeedService,
+    protected experimentsService: ExperimentsService
   ) {
     if (isPlatformServer(this.platformId)) return;
 
@@ -279,7 +281,12 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(() => {
           this.load();
           setTimeout(() => {
-            this.showBoostRotator = this.isFirstRun && true;
+            this.showBoostRotator =
+              this.isFirstRun &&
+              !this.experimentsService.hasVariation(
+                'minds-4105-remove-rotator',
+                true
+              );
           }, 50);
         }),
       /**
