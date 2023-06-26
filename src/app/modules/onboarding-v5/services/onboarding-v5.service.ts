@@ -274,9 +274,9 @@ export class OnboardingV5Service implements OnDestroy {
       additionalData
     );
 
-    let steps: OnboardingStep[] = this.steps$.getValue();
+    let steps: OnboardingStep[] = this.steps$.getValue() ?? [];
 
-    for (let i = 0; i < steps.length; i++) {
+    for (let i = 0; i < steps?.length; i++) {
       if (steps[i].stepType === currentlyActiveStep.stepType) {
         steps[i].completed = true;
 
