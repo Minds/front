@@ -35,13 +35,13 @@ import { OnboardingStepContentInterface } from '../step-content.interface';
 export class OnboardingV5VerifyEmailContentComponent
   implements OnInit, OnDestroy, OnboardingStepContentInterface {
   /** Content title. */
-  @Input() public readonly title: string;
+  @Input() public title: string;
 
   /** Content description. */
-  @Input() public readonly description: string;
+  @Input() public description: string;
 
   /** CMS data. */
-  @Input() public readonly data: ComponentOnboardingV5OnboardingStep;
+  @Input() public data: ComponentOnboardingV5OnboardingStep;
 
   /** Form group. */
   public formGroup: FormGroup;
@@ -94,8 +94,8 @@ export class OnboardingV5VerifyEmailContentComponent
     return this.data?.verifyEmailForm?.resendCodeText?.replace(
       '{action}',
       '<a class="m-onboardingV5VerifyEmail__resendCodeAction" style="cursor: pointer">' +
-        this.data?.verifyEmailForm?.resendCodeActionText ??
-        'resend code' + '</a>'
+        (this.data?.verifyEmailForm?.resendCodeActionText ?? 'resend code') +
+        '</a>'
     );
   }
 
@@ -236,7 +236,7 @@ export class OnboardingV5VerifyEmailContentComponent
         this.toast.error(e?.error?.message ?? 'The provided code is invalid.');
         return;
       }
-      this.toast.error('An unknown error has occurred');
+      this.toast.error('An unknown error has occurred.');
     } finally {
       this.codeSubmissionInProgress$.next(false);
     }
