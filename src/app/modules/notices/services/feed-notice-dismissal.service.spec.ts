@@ -23,7 +23,7 @@ describe('FeedNoticeDismissalService', () => {
   });
 
   it('should set dismiss state in notice', () => {
-    service.dismissNotice('build-your-algorithm');
+    service.dismissNotice('boost-channel');
     expect((service as any).objectStorage.setSingle).toHaveBeenCalledWith(
       (service as any).storageKey,
       jasmine.any(Object)
@@ -32,16 +32,16 @@ describe('FeedNoticeDismissalService', () => {
 
   it('should determine if notice is dismissed', () => {
     (service as any).objectStorage.getAll.and.returnValue({
-      'build-your-algorithm': {
+      'boost-channel': {
         timestamp: moment().toDate(),
       },
     });
-    expect(service.isNoticeDismissed('build-your-algorithm')).toBeTruthy();
+    expect(service.isNoticeDismissed('boost-channel')).toBeTruthy();
   });
 
   it('should determine if notice is not dismissed', () => {
     (service as any).objectStorage.getAll.and.returnValue({
-      'build-your-algorithm': {
+      'boost-channel': {
         timestamp: moment().toDate(),
       },
     });
@@ -50,13 +50,13 @@ describe('FeedNoticeDismissalService', () => {
 
   it('should determine if notice dismissal is expired', () => {
     (service as any).objectStorage.getAll.and.returnValue({
-      'build-your-algorithm': {
+      'boost-channel': {
         timestamp: moment()
           .subtract(90, 'days')
           .toDate(),
       },
     });
-    expect(service.isNoticeDismissed('build-your-algorithm')).toBeFalsy();
+    expect(service.isNoticeDismissed('boost-channel')).toBeFalsy();
   });
 
   it('should determine notice is not dismissed if nothing in object storage', () => {

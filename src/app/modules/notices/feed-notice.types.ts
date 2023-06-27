@@ -5,7 +5,6 @@ export type NoticeKey =
   | 'setup-channel'
   | 'verify-uniqueness'
   | 'connect-wallet'
-  | 'build-your-algorithm'
   | 'enable-push-notifications'
   | 'update-tags'
   | 'plus-upgrade'
