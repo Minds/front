@@ -149,11 +149,11 @@ export class Minds implements OnInit, OnDestroy {
       // }
 
       if (this.session.getLoggedInUser()) {
-        const onboardingV5Shown = await this.tryShowingOnboardingV5();
-
-        // We do not need to this to be shown if OnboardingV5 has been shown.
-        // We should be able to remove when OnboardingV5 is fully released.
-        if (!onboardingV5Shown) {
+        if (await this.shouldShowOnboardingV5()) {
+          this.onboardingV5ModalService.open();
+        } else {
+          // We do not need to this to be shown if OnboardingV5 has been shown.
+          // We should be able to remove when OnboardingV5 is fully released.
           this.checkEmailConfirmation();
         }
       }
@@ -208,11 +208,11 @@ export class Minds implements OnInit, OnDestroy {
           window.location.href = window.location.href;
         }
 
-        const onboardingV5Shown: boolean = await this.tryShowingOnboardingV5();
-
-        // We do not need to this to be shown if OnboardingV5 has been shown.
-        // We should be able to remove when OnboardingV5 is fully released.
-        if (!onboardingV5Shown) {
+        if (await this.shouldShowOnboardingV5()) {
+          this.onboardingV5ModalService.open();
+        } else {
+          // We do not need to this to be shown if OnboardingV5 has been shown.
+          // We should be able to remove when OnboardingV5 is fully released.
           this.checkEmailConfirmation();
         }
       }
@@ -247,18 +247,14 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   /**
-   * Try to show onboarding V5 if it should be shown.
-   * @returns { Promise<boolean> } true if onboarding v5 modal has been shown.
+   * Whether onboarding v5 should be shown.
+   * @returns { Promise<boolean> } true if onboarding v5 should be shown.
    */
-  private async tryShowingOnboardingV5(): Promise<boolean> {
-    if (
+  private async shouldShowOnboardingV5(): Promise<boolean> {
+    return (
       this.onboardingV5ExperimentService.isGlobalOnSwitchActive() &&
       !(await this.onboardingV5Service.hasCompletedOnboarding())
-    ) {
-      this.onboardingV5ModalService.open();
-      return true;
-    }
-    return false;
+    );
   }
 
   ngOnDestroy() {
@@ -293,22 +289,12 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   /**
-   * Checks whether email confirmation if required and sets up subscription so
-   * that the function is called again on login events (including register).
-   * If a user should confirm their email, will call confirm function, which will
-   * cause MFA modal to trigger via MultiFactorHttpInterceptorService.
+   * Checks whether email confirmation if required. will then call
+   * confirm function, which will cause MFA modal to trigger
+   * via MultiFactorHttpInterceptorService.
    * @returns { void }
    */
   private checkEmailConfirmation(): void {
-    if (!this.emailConfirmationLoginSubscription) {
-      // re-trigger on login events, so that when a user registers it opens.
-      this.emailConfirmationLoginSubscription = this.session.loggedinEmitter
-        .pipe(filter(Boolean))
-        .subscribe((loggedIn: boolean): void => {
-          this.checkEmailConfirmation();
-        });
-    }
-
     if (this.emailConfirmationService.requiresEmailConfirmation()) {
       // try to verify - this should cause MFA modal to trigger from interceptor.
       this.emailConfirmationService.confirm();
