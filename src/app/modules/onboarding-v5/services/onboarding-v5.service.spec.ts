@@ -127,12 +127,63 @@ describe('OnboardingV5Service', () => {
 
     it('should determine there is carousel items for the currently active step', (done: DoneFn) => {
       let activeStep: OnboardingStep = mockActiveStep;
+      activeStep.data.carousel = [
+        {
+          id: '1',
+          title: 'title',
+          media: {
+            data: {
+              attributes: {
+                url: '/url',
+                alternativeText: 'altText',
+                hash: 'hash',
+                mime: 'mine',
+                name: 'name',
+                provider: 'provider',
+                size: 123,
+              },
+            },
+          },
+        },
+        {
+          id: '2',
+          title: 'title2',
+          media: {
+            data: {
+              attributes: {
+                url: '/url2',
+                alternativeText: 'altText2',
+                hash: 'hash2',
+                mime: 'mine2',
+                name: 'name2',
+                provider: 'provider2',
+                size: 234,
+              },
+            },
+          },
+        },
+      ];
       service.activeStep$.next(activeStep);
 
       (service as any).activeStepCarouselItems$
         .pipe(take(1))
         .subscribe((activeStepCarouselItems: CarouselItem[]) => {
-          expect(activeStepCarouselItems).toEqual([]);
+          expect(activeStepCarouselItems).toEqual([
+            {
+              title: 'title',
+              media: {
+                fullUrl: 'https://example.minds.com/url',
+                altText: 'altText',
+              },
+            },
+            {
+              title: 'title2',
+              media: {
+                fullUrl: 'https://example.minds.com/url2',
+                altText: 'altText2',
+              },
+            },
+          ]);
           done();
         });
     });
