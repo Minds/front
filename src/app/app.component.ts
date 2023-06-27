@@ -151,8 +151,7 @@ export class Minds implements OnInit, OnDestroy {
       if (this.session.getLoggedInUser()) {
         const onboardingV5Shown = await this.tryShowingOnboardingV5();
 
-        // we do not need to check if this needs to be shown if
-        // OnboardingV5 has been shown / the experiment is off.
+        // We do not need to this to be shown if OnboardingV5 has been shown.
         // We should be able to remove when OnboardingV5 is fully released.
         if (!onboardingV5Shown) {
           this.checkEmailConfirmation();
@@ -209,7 +208,13 @@ export class Minds implements OnInit, OnDestroy {
           window.location.href = window.location.href;
         }
 
-        this.tryShowingOnboardingV5();
+        const onboardingV5Shown: boolean = await this.tryShowingOnboardingV5();
+
+        // We do not need to this to be shown if OnboardingV5 has been shown.
+        // We should be able to remove when OnboardingV5 is fully released.
+        if (!onboardingV5Shown) {
+          this.checkEmailConfirmation();
+        }
       }
     });
 
