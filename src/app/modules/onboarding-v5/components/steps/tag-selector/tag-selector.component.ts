@@ -147,11 +147,22 @@ export class OnboardingV5TagSelectorContentComponent
       return;
     }
 
+    if (
+      this.tagsService.userAndDefault$.value.findIndex(
+        i => i.value.toLowerCase() === formControl.value.toLowerCase()
+      ) !== -1
+    ) {
+      this.toast.warn('This tag has already been added');
+      return;
+    }
+
     this.addTag({
       selected: true,
       value: formControl.value,
       type: 'user',
     });
+
+    formControl.reset();
   }
 
   /**
@@ -160,9 +171,17 @@ export class OnboardingV5TagSelectorContentComponent
    * @returns { void }
    */
   private addTag(tag: DiscoveryTag): void {
-    this.tagsService.addTag(tag);
-    let userAndDefaultTags = this.tagsService.userAndDefault$.getValue();
-    userAndDefaultTags.push(tag);
-    this.tagsService.userAndDefault$.next(userAndDefaultTags);
+    if (
+      this.tagsService.userAndDefault$
+        .getValue()
+        .findIndex(i => i.value === tag.value) === -1
+    ) {
+      this.tagsService.userAndDefault$.next([
+        ...this.tagsService.userAndDefault$.value,
+        tag,
+      ]);
+
+      this.tagsService.addTag(tag);
+    }
   }
 }
