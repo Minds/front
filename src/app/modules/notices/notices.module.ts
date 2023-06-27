@@ -17,9 +17,11 @@ import { InviteFriendsNoticeComponent } from './panels/invite-friends/invite-fri
 import { BoostLatestPostNoticeComponent } from './panels/boost-latest-post/boost-latest-post-notice.component';
 import { BoostLatestPostNoticeService } from './panels/boost-latest-post/boost-latest-post-notice.service';
 import { FeedNoticeSwitchComponent } from './outlet/feed-notice-switch.component';
+import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
+import { NoGroupsNoticeComponent } from './panels/no-groups/no-groups-notice.component';
 
 @NgModule({
-  imports: [CommonModule, NgCommonModule],
+  imports: [CommonModule, NgCommonModule, FindGroupsButtonsComponent],
   declarations: [
     FeedNoticeComponent,
     FeedNoticeOutletComponent,
@@ -35,6 +37,7 @@ import { FeedNoticeSwitchComponent } from './outlet/feed-notice-switch.component
     BoostChannelNoticeComponent,
     InviteFriendsNoticeComponent,
     BoostLatestPostNoticeComponent,
+    NoGroupsNoticeComponent,
     FeedNoticeSwitchComponent,
   ],
   providers: [BoostLatestPostNoticeService],
@@ -43,6 +46,7 @@ import { FeedNoticeSwitchComponent } from './outlet/feed-notice-switch.component
     FeedNoticeOutletComponent,
     FeedNoticeSwitchComponent,
     BoostLatestPostNoticeComponent,
+    NoGroupsNoticeComponent,
   ],
 })
 export class NoticesModule {}

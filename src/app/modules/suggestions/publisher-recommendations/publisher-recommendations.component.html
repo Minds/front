@@ -8,19 +8,24 @@
     *ngIf="(recommendations$ | async).length"
   >
     <header *ngIf="!isOnboarding">
-      <h3 *ngIf="title; else defaultTitle">
+      <h3
+        *ngIf="title; else defaultTitle"
+        data-ref="publisher-recommendations-title-custom"
+      >
         {{ title }}
       </h3>
       <ng-template #defaultTitle>
         <h3
           *ngIf="publisherType === 'user'"
           i18n="@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS"
+          data-ref="publisher-recommendations-title-channels"
         >
           Recommended Channels
         </h3>
         <h3
           *ngIf="publisherType === 'group'"
           i18n="@@M_DISCOVERY_CARD_CAROUSEL__RECOMMENDED_GROUPS"
+          data-ref="publisher-recommendations-title-groups"
         >
           Recommended Groups
         </h3>
@@ -47,7 +52,7 @@
         *ngFor="
           let publisher of recommendations$
             | async
-            | slice: 0:(listSize$ | async) - 1;
+            | slice: 0:(listSize$ | async);
           let i = index;
           trackBy: trackByFn
         "

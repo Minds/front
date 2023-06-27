@@ -9,4 +9,16 @@
       margin-right: $spacing2;
     }
   }
+
+  a {
+    display: inline-block;
+    margin-right: $spacing2;
+    text-decoration: none;
+    @media screen and ($max-mobile) {
+      &:first-child {
+        margin-right: 0;
+        margin-bottom: $spacing2;
+      }
+    }
+  }
 }

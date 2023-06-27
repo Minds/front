@@ -4,12 +4,13 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Optional,
   Output,
   SkipSelf,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription, map, take } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -23,6 +24,7 @@ import { GroupMembershipChangeOuput } from '../../../common/components/group-mem
 import { MindsGroup } from '../../groups/v2/group.model';
 import {
   BoostNode,
+  GroupNode,
   PublisherRecsConnection,
   UserNode,
 } from '../../../../graphql/generated.engine';
@@ -50,7 +52,7 @@ const listAnimation = trigger('listAnimation', [
   animations: [listAnimation],
   providers: [ParseJson],
 })
-export class PublisherRecommendationsComponent implements OnInit {
+export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   /**
    * the location in which this component appears
    */
@@ -99,8 +101,12 @@ export class PublisherRecommendationsComponent implements OnInit {
    * the height of the container, used to animate the mount and unmount of this component
    */
   containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
-  /** a list of recommended channels */
-  recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
+
+  /** a list of recommended channels or groups */
+  recommendations$: BehaviorSubject<
+    (MindsUser | MindsGroup)[]
+  > = new BehaviorSubject([]);
+
   /**
    * How many recommendations to show at a time?
    */
@@ -123,6 +129,8 @@ export class PublisherRecommendationsComponent implements OnInit {
    */
   @Input() connection: PublisherRecsConnection;
 
+  private subscriptions: Subscription[] = [];
+
   constructor(
     private api: ApiService,
     public experiments: ExperimentsService,
@@ -135,16 +143,37 @@ export class PublisherRecommendationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.initialListSize) {
+      this.listSize$.next(this.initialListSize);
+    }
+
     if (this.connection) {
       this.recommendations$.next(
         this.connection.edges.map((e: any) => {
-          return <MindsUser>(
+          return <MindsUser | MindsGroup>(
             this.parseJson.transform(
-              (<UserNode | BoostNode>e.publisherNode).legacy
+              (<UserNode | BoostNode | GroupNode>e.publisherNode).legacy
             )
           );
         })
       );
+
+      this.subscriptions.push(
+        this.recommendations$.pipe(take(1)).subscribe(recs => {
+          // Makes sure we know what the publisher type is,
+          // even if the recommendations are coming from gql
+          let rec = recs[0];
+
+          if (
+            rec &&
+            rec.type &&
+            (rec.type === 'user' || rec.type === 'group')
+          ) {
+            this.publisherType = rec.type;
+          }
+        })
+      );
+
       return; // Don't load data via api
     }
 
@@ -153,6 +182,12 @@ export class PublisherRecommendationsComponent implements OnInit {
     }
     if (this.location && this.publisherType === 'user') {
       this.loadChannels();
+    }
+  }
+
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 

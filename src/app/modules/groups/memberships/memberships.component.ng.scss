@@ -51,18 +51,19 @@
     &.m-groupsMemberships__publisherRecommendations {
       display: block;
 
-      padding: $spacing4 $sidePadding 0;
-      @include m-theme() {
-        border-top: 1px solid themed($m-borderColor--primary);
-      }
-      @media screen and (max-width: $max-mobile) {
-        padding: $spacing4 $sidePadding--mobile 0;
-        @include m-theme() {
-          border-top: 5px solid themed($m-borderColor--primary);
-        }
-      }
       article {
-        padding: 0;
+        padding: $spacing4 $sidePadding $sidePadding;
+
+        @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary);
+        }
+
+        @media screen and (max-width: $max-mobile) {
+          padding: $spacing4 $sidePadding--mobile 0;
+          @include m-theme() {
+            border-top: 5px solid themed($m-borderColor--primary);
+          }
+        }
       }
     }
   }
