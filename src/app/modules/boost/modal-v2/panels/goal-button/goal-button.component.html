@@ -158,6 +158,11 @@
           i18n="@@BOOST_MODAL_V2_GOAL_BUTTON__URL_LABEL"
           >URL</label
         >
+        <m-formError
+          *ngIf="goalButtonFormControl && goalButtonFormControl.dirty"
+          [errors]="form.get('goal_button_url')?.errors"
+        >
+        </m-formError>
         <input
           class="m-boostGoalButtonSelector__textInput"
           type="url"
@@ -175,7 +180,7 @@
         class="m-boostGoalButtonSelector__radioButtonRow"
         [ngClass]="{
           'm-boostGoalButtonSelector__radioButtonRow--selected':
-            form.controls.goal_button_text.value ===
+            form?.controls.goal_button_text.value ===
             BoostGoalButtonText.LEARN_MORE
         }"
         (click)="selectRadioButton(BoostGoalButtonText.LEARN_MORE)"
@@ -209,7 +214,7 @@
         class="m-boostGoalButtonSelector__radioButtonRow"
         [ngClass]="{
           'm-boostGoalButtonSelector__radioButtonRow--selected':
-            form.controls.goal_button_text.value ===
+            form?.controls.goal_button_text.value ===
             BoostGoalButtonText.GET_STARTED
         }"
         (click)="selectRadioButton(BoostGoalButtonText.GET_STARTED)"
@@ -243,7 +248,8 @@
         class="m-boostGoalButtonSelector__radioButtonRow"
         [ngClass]="{
           'm-boostGoalButtonSelector__radioButtonRow--selected':
-            form.controls.goal_button_text.value === BoostGoalButtonText.SIGN_UP
+            form?.controls.goal_button_text.value ===
+            BoostGoalButtonText.SIGN_UP
         }"
         (click)="selectRadioButton(BoostGoalButtonText.SIGN_UP)"
       >
@@ -276,7 +282,7 @@
         class="m-boostGoalButtonSelector__radioButtonRow"
         [ngClass]="{
           'm-boostGoalButtonSelector__radioButtonRow--selected':
-            form.controls.goal_button_text.value ===
+            form?.controls.goal_button_text.value ===
             BoostGoalButtonText.TRY_FOR_FREE
         }"
         (click)="selectRadioButton(BoostGoalButtonText.TRY_FOR_FREE)"

@@ -57,6 +57,13 @@ export class ComposerAudienceSelectorPanelComponent
   /** Subscription to group page emissions */
   private groupsPageSubscription: Subscription;
 
+  /**
+   * Whether share to group mode is enabled - prevents channel from being
+   * selected and changes various parts of the template to provide clearer context.
+   */
+  public readonly shareToGroupMode$: Observable<boolean> = this
+    .audienceSelectorService.shareToGroupMode$;
+
   constructor(
     private router: Router,
     private composerModalService: ComposerModalService,

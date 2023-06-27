@@ -7,8 +7,14 @@
       flex-flow: column nowrap;
 
       .m-composerPopup__title {
+        margin: 0 0 $spacing4 0;
+
         @include heading3Bold;
         @include unselectable;
+
+        &.m-composerPopup__title--shareToGroupMode {
+          margin: 0 0 $spacing6 0;
+        }
       }
 
       .m-composerPopup__subtitle {
@@ -29,7 +35,7 @@
 
     .m-composerAudience__myChannelContainer {
       m-selectableEntityCard {
-        margin: $spacing4 0;
+        margin: 0 0 $spacing4 0;
       }
     }
 

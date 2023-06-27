@@ -25,7 +25,7 @@ import {
   BoostNode,
   PublisherRecsConnection,
   UserNode,
-} from '../../../../graphql/generated';
+} from '../../../../graphql/generated.engine';
 import { ParseJson } from '../../../common/pipes/parse-json';
 
 const listAnimation = trigger('listAnimation', [
@@ -41,7 +41,13 @@ const listAnimation = trigger('listAnimation', [
 /**
  * Displays channel/group recommendations
  *
+<<<<<<< HEAD:src/app/modules/suggestions/publisher-recommendations/publisher-recommendations.component.ts
  * See it in the newsfeed and onboarding
+=======
+ * See it in the newsfeed
+ *
+ * It may also be used in a modal during onboarding-v4
+>>>>>>> daed627292d287a8ef22633bbdb6b7b765a8e2f5:src/app/modules/suggestions/channel-recommendation/channel-recommendation.component.ts
  */
 @Component({
   selector: 'm-publisherRecommendations',
@@ -237,6 +243,8 @@ export class PublisherRecommendationsComponent implements OnInit {
    * When a recommendation is subscribed, remove it from the list——unless the list length is small
    */
   onSubscribed(user): void {
+    this.subscribed.emit();
+
     if (this.listSize$.getValue() === 4) {
       this.listSize$.next(5);
     }
@@ -248,8 +256,6 @@ export class PublisherRecommendationsComponent implements OnInit {
     this.recommendations$.next(
       this.recommendations$.getValue().filter(u => u.guid !== user.guid)
     );
-
-    this.subscribed.emit();
   }
 
   onUnsubscribed(user): void {
@@ -275,6 +281,7 @@ export class PublisherRecommendationsComponent implements OnInit {
       this.onUnsubscribed(group);
     }
   }
+
   /**
    * Improves change detection
    */

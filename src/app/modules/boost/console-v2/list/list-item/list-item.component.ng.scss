@@ -85,6 +85,11 @@
     &.m-boostConsole__listItem__middleBar {
       border-top: 0 !important;
       padding-bottom: $spacing4;
+
+      .m-activityBoostCta__wrapper {
+        padding-top: $spacing6;
+        padding-bottom: $spacing2;
+      }
     }
   }
   ::ng-deep m-publisherCard {
