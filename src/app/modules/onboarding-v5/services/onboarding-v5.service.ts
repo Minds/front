@@ -203,7 +203,7 @@ export class OnboardingV5Service implements OnDestroy {
         this.session.getLoggedInUser().guid
       );
     } else {
-      //
+      // if not completed, skip progress check on next load.
       this.skipOnboardingProgressCheck = true;
     }
 
@@ -409,7 +409,7 @@ export class OnboardingV5Service implements OnDestroy {
   }
 
   /**
-   * Trigger completion flow for onboarding.
+   * Update the server to tell it that the user has completed a step via mutation.
    * @param { string } stepType - the type of the step.
    * @param { string } stepKey - the key of the step.
    * @param { Object } additionalData - additional data to be passed to the server.

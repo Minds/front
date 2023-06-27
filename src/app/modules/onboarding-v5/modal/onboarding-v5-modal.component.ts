@@ -34,7 +34,7 @@ export class OnboardingV5ModalComponent implements OnInit, OnDestroy {
 
   /**
    * Get modal options - can dismiss is fixed to false so that only direct
-   * programmatic calls to dismiss will dismiss the modal.
+   * programmatic calls to dismiss, will dismiss the modal.
    * @returns { { canDismiss: () => Promise<boolean> } } modal options.
    */
   public getModalOptions(): { canDismiss: () => Promise<boolean> } {

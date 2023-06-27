@@ -91,7 +91,10 @@ export class FeatureCarouselComponent implements OnInit, OnDestroy {
   public moveCarousel(direction: CarouselMoveDirection): void {
     this.carouselMoveSubscription?.unsubscribe();
 
-    combineLatest([this.carouselItems$, this.visibleCarouselIndex$])
+    this.carouselMoveSubscription = combineLatest([
+      this.carouselItems$,
+      this.visibleCarouselIndex$,
+    ])
       .pipe(take(1))
       .subscribe(
         ([carouselItems, visibleCarouselIndex]: [

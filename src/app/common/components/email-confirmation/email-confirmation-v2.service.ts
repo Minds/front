@@ -41,15 +41,12 @@ export class EmailConfirmationV2Service {
    * @returns { Observable<ApiResponse> }
    */
   public submitCode(code: string, key: string): Observable<ApiResponse> {
-    const options = key
-      ? {
-          headers: {
-            'X-MINDS-2FA-CODE': code,
-            'X-MINDS-EMAIL-2FA-KEY': key,
-          },
-        }
-      : undefined;
-    return this.api.post<ApiResponse>('api/v3/email/verify', null, options);
+    return this.api.post<ApiResponse>('api/v3/email/verify', null, {
+      headers: {
+        'X-MINDS-2FA-CODE': code,
+        'X-MINDS-EMAIL-2FA-KEY': key,
+      },
+    });
   }
 
   /**
