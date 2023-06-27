@@ -43,6 +43,7 @@ namespace CommonSteps {
 
     // skip publisher recommendations.
     publisherRecommendationsModalComponent.skip();
+    publisherRecommendationsModalComponent.skip();
   });
 
   /**

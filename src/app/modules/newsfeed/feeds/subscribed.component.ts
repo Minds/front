@@ -427,6 +427,10 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   prepend(activity: any) {
+    if (activity?.containerObj) {
+      return;
+    }
+
     this.prepended.unshift(activity);
 
     this.newUserPromo = false;

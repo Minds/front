@@ -28,6 +28,7 @@
         size="small"
         showIcons="false"
         disableAfterSubscribe="true"
+        [disableSubscribe]="disableSubscribe"
         data-ref="m-activityBoostCta__subscribeButton"
         (onAction)="recordClick($event)"
       >

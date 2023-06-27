@@ -25,7 +25,7 @@ import {
   BoostNode,
   PublisherRecsConnection,
   UserNode,
-} from '../../../../graphql/generated';
+} from '../../../../graphql/generated.engine';
 import { ParseJson } from '../../../common/pipes/parse-json';
 
 const listAnimation = trigger('listAnimation', [
@@ -245,6 +245,8 @@ export class PublisherRecommendationsComponent implements OnInit {
    * When a recommendation is subscribed, remove it from the list——unless the list length is small
    */
   onSubscribed(user): void {
+    this.subscribed.emit();
+
     if (this.listSize$.getValue() === this.initialListSize) {
       this.listSize$.next(this.initialListSize);
     }
@@ -256,8 +258,6 @@ export class PublisherRecommendationsComponent implements OnInit {
     this.recommendations$.next(
       this.recommendations$.getValue().filter(u => u.guid !== user.guid)
     );
-
-    this.subscribed.emit();
   }
 
   onUnsubscribed(user): void {
@@ -283,6 +283,7 @@ export class PublisherRecommendationsComponent implements OnInit {
       this.onUnsubscribed(group);
     }
   }
+
   /**
    * Improves change detection
    */

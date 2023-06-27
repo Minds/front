@@ -1,1 +1,2 @@
-/codegen.ts
+/codegen.engine.ts
+/codegen.strapi.ts
