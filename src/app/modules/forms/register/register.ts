@@ -222,7 +222,11 @@ export class RegisterForm implements OnInit, OnDestroy {
           this.onboardingV5ExperimentService.isGlobalOnSwitchActive() &&
           this.onboardingV5ExperimentService.isEnrollmentActive()
         ) {
-          await this.onboardingV5Service.setOnboardingCompletedState(false);
+          try {
+            await this.onboardingV5Service.setOnboardingCompletedState(false);
+          } catch (e) {
+            console.error(e);
+          }
         }
 
         this.done.next(data.user);
