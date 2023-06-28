@@ -175,9 +175,14 @@ export class OnboardingV5Service implements OnDestroy {
         this.getOnboardingStateGQL.fetch()
       );
 
+      // user has not started onboarding.
+      if (!Boolean(response.data.onboardingState)) {
+        return true;
+      }
+
       // if completed, set it in local storage.
       const completed: boolean = Boolean(
-        response?.data?.onboardingState?.completedAt
+        response.data.onboardingState.completedAt
       );
 
       if (completed) {
