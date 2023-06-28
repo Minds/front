@@ -13,6 +13,7 @@
   .m-featureCarousel__carousel {
     display: flex;
     flex-flow: column nowrap;
+    justify-content: space-between;
     align-items: center;
     max-height: 100%;
     height: 100%;
@@ -29,10 +30,15 @@
     }
 
     .m-featureCarousel__itemImage {
-      flex-grow: 1;
-      max-height: 100%;
+      flex: 1;
+      min-height: 0;
+      max-height: 1400px;
       height: 100%;
       margin-bottom: $spacing24;
+
+      @media screen and (max-height: 600px) {
+        visibility: hidden;
+      }
     }
   }
 
