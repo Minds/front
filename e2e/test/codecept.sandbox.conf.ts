@@ -78,6 +78,7 @@ export const config: CustomMainConfig = {
     multiFactorModalComponent: './fragments/multiFactorModalComponent.ts',
     channelRecommendationsModalComponent:
       './fragments/channelRecommendationsModalComponent.ts',
+    reportModalComponent: './fragments/reportModalComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {
