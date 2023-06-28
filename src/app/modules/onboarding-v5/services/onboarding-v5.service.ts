@@ -111,8 +111,8 @@ export class OnboardingV5Service implements OnDestroy {
   /** Timestamp of Onboarding V5 release - users before this will not have their onboarding status checked. */
   private readonly releaseTimestamp: number;
 
-  /** Skip onboarding progress check - should be true immediately after registration to avoid unnecessary call. */
-  private skipOnboardingProgressCheck: boolean = false;
+  /** Should be true immediately after registration to avoid unnecessary call. */
+  private firstLoad: boolean = false;
 
   /** Subscription to call for dismissal of modal. */
   private dismissalSubscription: Subscription;
@@ -147,6 +147,12 @@ export class OnboardingV5Service implements OnDestroy {
    */
   public async hasCompletedOnboarding(): Promise<boolean> {
     try {
+      // if we have set that this is the first time we are loading onboarding,
+      // we can skip the checks and return false.
+      if (this.firstLoad) {
+        return false;
+      }
+
       const loggedInUser: MindsUser = this.session.getLoggedInUser();
 
       // check whether we have marked it as completed in local storage already.
@@ -204,7 +210,7 @@ export class OnboardingV5Service implements OnDestroy {
       );
     } else {
       // if not completed, skip progress check on next load.
-      this.skipOnboardingProgressCheck = true;
+      this.firstLoad = true;
     }
 
     return firstValueFrom(
@@ -222,7 +228,7 @@ export class OnboardingV5Service implements OnDestroy {
 
     try {
       // try to get existing progress unless skipped.
-      if (!this.skipOnboardingProgressCheck) {
+      if (!this.firstLoad) {
         stepProgressResponse = await firstValueFrom(
           this.getOnboardingStepProgressGQL.fetch()
         );
