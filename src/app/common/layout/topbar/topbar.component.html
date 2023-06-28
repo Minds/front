@@ -32,7 +32,12 @@
             aria-label="Minds"
           >
             <img
-              [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+              [src]="
+                cdnAssetsUrl +
+                ((isDarkTheme$ | async)
+                  ? 'assets/temp/fishtank-dark-mode.png'
+                  : 'assets/temp/fishtank-light-mode.png')
+              "
               class="m-topbar__logo--bulb"
               alt="Minds"
             />
@@ -43,7 +48,7 @@
                     (pageLayoutService.hasTopbarBackground$ | async)
                   : !(isDarkTheme$ | async)
               "
-              [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+              [src]="cdnAssetsUrl + 'assets/temp/fishtank.png'"
               class="m-topbar__logo--full"
               alt="minds"
             />
@@ -54,7 +59,7 @@
                     !(pageLayoutService.hasTopbarBackground$ | async)
                   : (isDarkTheme$ | async)
               "
-              [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
+              [src]="cdnAssetsUrl + 'assets/temp/fishtank.png'"
               class="m-topbar__logo--full"
               alt="minds"
             />

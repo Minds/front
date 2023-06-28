@@ -13,16 +13,16 @@
       >
         <img
           *ngIf="layoutMode !== 'phone'"
-          [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+          [src]="cdnAssetsUrl + 'assets/temp/fishtank.png'"
         />
         <ng-container *ngIf="layoutMode === 'phone'">
           <img
             *ngIf="!isDarkTheme"
-            [src]="cdnAssetsUrl + 'assets/logos/medium-production.png'"
+            [src]="cdnAssetsUrl + 'assets/temp/fishtank.png'"
           />
           <img
             *ngIf="isDarkTheme"
-            [src]="cdnAssetsUrl + 'assets/logos/medium-white.png'"
+            [src]="cdnAssetsUrl + 'assets/temp/fishtank.png'"
           />
         </ng-container>
         <m-environmentFlag
