@@ -100,7 +100,7 @@ describe('OnboardingV5Service', () => {
       .and.returnValue(999);
     (service as any).session.getLoggedInUser.and.returnValue(userMock);
     (service as any).completionStorage.isCompleted.and.returnValue(false);
-    (service as any).skipOnboardingProgressCheck = false;
+    (service as any).firstLoad = false;
   });
 
   afterEach(() => {
@@ -228,13 +228,28 @@ describe('OnboardingV5Service', () => {
           },
         })
       );
+    });
+
+    it('should determine that a user has completed onboarding because the servers returns no onboarding state (not started)', async () => {
+      (service as any).completionStorage.isCompleted.and.returnValue(false);
+      let _userMock = userMock;
+      _userMock.time_created = 999;
+      (service as any).session.getLoggedInUser.and.returnValue(_userMock);
+      Object.defineProperty(service, 'releaseTimestamp', { value: 1 });
+      (service as any).getOnboardingStateGQL.fetch.and.returnValue(
+        of({
+          data: {
+            onboardingState: null,
+          },
+        })
+      );
 
       expect(await service.hasCompletedOnboarding()).toBe(true);
       expect((service as any).completionStorage.isCompleted).toHaveBeenCalled();
       expect((service as any).getOnboardingStateGQL.fetch).toHaveBeenCalled();
       expect(
         (service as any).completionStorage.setAsCompleted
-      ).toHaveBeenCalledWith(_userMock.guid);
+      ).not.toHaveBeenCalled();
     });
 
     it('should fallback on error fetching to presume that a user has completed onboarding', async () => {
@@ -255,6 +270,14 @@ describe('OnboardingV5Service', () => {
       ).not.toHaveBeenCalledWith(_userMock.guid);
     });
 
+    it('should determine if a user has NOT completed onboarding because this is the first load', async () => {
+      (service as any).firstLoad = true;
+      expect(await service.hasCompletedOnboarding()).toBe(false);
+      expect(
+        (service as any).completionStorage.setAsCompleted
+      ).not.toHaveBeenCalled();
+    });
+
     it('should determine if a user has NOT completed onboarding because the servers returns that they have NOT', async () => {
       (service as any).completionStorage.isCompleted.and.returnValue(false);
       let _userMock = userMock;
@@ -270,22 +293,6 @@ describe('OnboardingV5Service', () => {
           },
         })
       );
-
-      expect(await service.hasCompletedOnboarding()).toBe(false);
-      expect((service as any).completionStorage.isCompleted).toHaveBeenCalled();
-      expect((service as any).getOnboardingStateGQL.fetch).toHaveBeenCalled();
-      expect(
-        (service as any).completionStorage.setAsCompleted
-      ).not.toHaveBeenCalledWith(_userMock.guid);
-    });
-
-    it('should determine if a user has NOT completed onboarding because the servers returns an empty response', async () => {
-      (service as any).completionStorage.isCompleted.and.returnValue(false);
-      let _userMock = userMock;
-      _userMock.time_created = 999;
-      (service as any).session.getLoggedInUser.and.returnValue(_userMock);
-      Object.defineProperty(service, 'releaseTimestamp', { value: 1 });
-      (service as any).getOnboardingStateGQL.fetch.and.returnValue(of(null));
 
       expect(await service.hasCompletedOnboarding()).toBe(false);
       expect((service as any).completionStorage.isCompleted).toHaveBeenCalled();
@@ -316,7 +323,7 @@ describe('OnboardingV5Service', () => {
       (service as any).setOnboardingStateGQL.mutate.and.returnValue(
         of({ completed: false })
       );
-      (service as any).skipOnboardingProgressCheck = false;
+      (service as any).firstLoad = false;
 
       await service.setOnboardingCompletedState(false);
 
@@ -326,7 +333,7 @@ describe('OnboardingV5Service', () => {
       expect(
         (service as any).setOnboardingStateGQL.mutate
       ).toHaveBeenCalledWith({ completed: false });
-      expect((service as any).skipOnboardingProgressCheck).toBeTrue();
+      expect((service as any).firstLoad).toBeTrue();
     });
   });
 
@@ -342,7 +349,7 @@ describe('OnboardingV5Service', () => {
       (service as any).fetchOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockOnboardingV5VersionsData)
       );
-      (service as any).skipOnboardingProgressCheck = false;
+      (service as any).firstLoad = false;
 
       await service.start();
 
@@ -417,7 +424,7 @@ describe('OnboardingV5Service', () => {
       (service as any).fetchOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockOnboardingV5VersionsData)
       );
-      (service as any).skipOnboardingProgressCheck = false;
+      (service as any).firstLoad = false;
 
       await service.start();
 
@@ -492,7 +499,7 @@ describe('OnboardingV5Service', () => {
       (service as any).fetchOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockOnboardingV5VersionsData)
       );
-      (service as any).skipOnboardingProgressCheck = false;
+      (service as any).firstLoad = false;
 
       await service.start();
 
@@ -547,7 +554,7 @@ describe('OnboardingV5Service', () => {
       (service as any).fetchOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockOnboardingV5VersionsData)
       );
-      (service as any).skipOnboardingProgressCheck = true;
+      (service as any).firstLoad = true;
 
       await service.start();
 
@@ -606,7 +613,7 @@ describe('OnboardingV5Service', () => {
       (service as any).fetchOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockOnboardingV5VersionsData)
       );
-      (service as any).skipOnboardingProgressCheck = false;
+      (service as any).firstLoad = false;
 
       await service.start();
 
