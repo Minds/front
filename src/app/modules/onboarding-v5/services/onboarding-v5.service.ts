@@ -203,15 +203,17 @@ export class OnboardingV5Service implements OnDestroy {
    * so that the onboarding progress check is skipped on next load - which is
    * intended to be used to avoid an unnecessary server call during registration.
    * @param { boolean } completed - whether to set to completed or not.
+   * @param { MindsUser } user - user to set completed state for - defaults to session logged in user.
    * @returns { Promise<MutationResult<SetOnboardingStateMutation>> } result.
    */
   public async setOnboardingCompletedState(
-    completed: boolean = false
+    completed: boolean = false,
+    user: MindsUser | null = null
   ): Promise<MutationResult<SetOnboardingStateMutation>> {
     // if completed, set it in local storage.
     if (completed) {
       this.completionStorage.setAsCompleted(
-        this.session.getLoggedInUser().guid
+        user?.guid ?? this.session.getLoggedInUser().guid
       );
     } else {
       // if not completed, skip progress check on next load.

@@ -195,6 +195,7 @@ describe('RegisterForm', () => {
   });
 
   it('should register successfully a new user and set onboarding state to true if experiments are on', fakeAsync(() => {
+    const user = { guid: '1234' };
     (comp as any).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
       true
     );
@@ -202,9 +203,7 @@ describe('RegisterForm', () => {
       true
     );
 
-    (comp as any).client.post.and.returnValue(
-      Promise.resolve({ user: { guid: '1234' } })
-    );
+    (comp as any).client.post.and.returnValue(Promise.resolve({ user: user }));
 
     comp.form.get('username').setValue('testuser');
     comp.form.get('email').setValue('testuser@example.com');
@@ -234,7 +233,7 @@ describe('RegisterForm', () => {
     flush();
     expect(
       (comp as any).onboardingV5Service.setOnboardingCompletedState
-    ).toHaveBeenCalledWith(false);
+    ).toHaveBeenCalledWith(false, user);
   }));
 
   it('should display an error message when the form is invalid', () => {

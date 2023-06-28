@@ -304,12 +304,30 @@ describe('OnboardingV5Service', () => {
   });
 
   describe('setOnboardingCompletedState', () => {
-    it('should set onboarding completed state to true', async () => {
+    it('should set onboarding completed state to true with no user param provided', async () => {
       (service as any).setOnboardingStateGQL.mutate.and.returnValue(
         of({ completed: true })
       );
 
       await service.setOnboardingCompletedState(true);
+
+      expect(
+        (service as any).completionStorage.setAsCompleted
+      ).toHaveBeenCalledWith(userMock.guid);
+      expect(
+        (service as any).setOnboardingStateGQL.mutate
+      ).toHaveBeenCalledWith({ completed: true });
+    });
+
+    it('should set onboarding completed state to true with a user param provided', async () => {
+      let user = userMock;
+      userMock.guid = '2345';
+
+      (service as any).setOnboardingStateGQL.mutate.and.returnValue(
+        of({ completed: true })
+      );
+
+      await service.setOnboardingCompletedState(true, user);
 
       expect(
         (service as any).completionStorage.setAsCompleted

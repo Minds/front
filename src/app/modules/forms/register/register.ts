@@ -213,7 +213,6 @@ export class RegisterForm implements OnInit, OnDestroy {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
         this.inProgress = false;
-        this.session.login(data.user);
 
         // If onboarding v5 is globally enabled, and enrollment is enabled,
         // set completed state to false. Modal showing is delegated to app component
@@ -223,12 +222,16 @@ export class RegisterForm implements OnInit, OnDestroy {
           this.onboardingV5ExperimentService.isEnrollmentActive()
         ) {
           try {
-            await this.onboardingV5Service.setOnboardingCompletedState(false);
+            await this.onboardingV5Service.setOnboardingCompletedState(
+              false,
+              data.user
+            );
           } catch (e) {
             console.error(e);
           }
         }
 
+        this.session.login(data.user);
         this.done.next(data.user);
       })
       .catch(e => {
