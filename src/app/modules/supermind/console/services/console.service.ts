@@ -41,6 +41,11 @@ export class SupermindConsoleService {
     return this.listType$.pipe(
       take(1),
       switchMap((listType: any) => {
+        if (listType === 'explore') {
+          console.error('Cannot get explore list type in this way.');
+          return of(null);
+        }
+
         let endpoint = `api/v3/supermind/${listType}`;
 
         let params: SupermindConsoleGetParams = {};
@@ -75,6 +80,11 @@ export class SupermindConsoleService {
       take(1),
       // switch stream to be the api request and call it with correct list type and status.
       switchMap((listType: any) => {
+        if (listType === 'explore') {
+          console.error('Cannot count explore list type.');
+          return of(null);
+        }
+
         let endpoint: string = `api/v3/supermind/${listType}/count`;
         let params: SupermindConsoleCountParams = {};
 
@@ -111,6 +121,11 @@ export class SupermindConsoleService {
     status: SupermindState = null,
     listType: SupermindConsoleListType
   ): Observable<number> {
+    if (listType === 'explore') {
+      console.error('Cannot count explore list type.');
+      return of(null);
+    }
+
     let endpoint: string = `api/v3/supermind/${listType}/count`;
     let params: SupermindConsoleCountParams = {};
 
