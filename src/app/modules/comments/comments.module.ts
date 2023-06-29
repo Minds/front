@@ -15,7 +15,6 @@ import { CommentsThreadComponent } from './thread/thread.component';
 import { CommentsService } from './comments.service';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
-import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.component';
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outlet.component';
 import { SupermindSharedModule } from '../supermind/supermind-shared.module';
@@ -40,7 +39,6 @@ import { SupermindSharedModule } from '../supermind/supermind-shared.module';
     CommentPosterComponent,
     CommentsTreeComponent,
     CommentsThreadComponent,
-    CommentsEntityOutletComponent,
     CommentsEntityOutletV2Component,
   ],
   exports: [
@@ -49,7 +47,6 @@ import { SupermindSharedModule } from '../supermind/supermind-shared.module';
     CommentPosterComponent,
     CommentsTreeComponent,
     CommentsThreadComponent,
-    CommentsEntityOutletComponent,
     CommentsEntityOutletV2Component,
   ],
   providers: [CommentsService],
