@@ -63,7 +63,7 @@ export class SupermindConsoleExploreFeedComponent implements OnInit, OnDestroy {
     this.loadFeed();
 
     this.pendingCountSubscription = this.service
-      .countByListType$(SupermindState.CREATED, 'inbox')
+      .countByListType$('inbox', SupermindState.CREATED)
       .pipe(take(1))
       .subscribe((count: number) => {
         this.showPendingSupermindNotice$.next(count > 0);

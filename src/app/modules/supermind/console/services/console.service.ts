@@ -113,13 +113,13 @@ export class SupermindConsoleService {
 
   /**
    * Get a count of all Supermind requests for a given status type by list type.
-   * @param { SupermindState } status - status to check (null will count ALL statuses).
    * @param { SupermindState } listType - list type to check for.
+   * @param { SupermindState } status - status to check (null will count ALL statuses).
    * @returns { Observable<number> } observable of count.
    */
   public countByListType$(
-    status: SupermindState = null,
-    listType: SupermindConsoleListType
+    listType: SupermindConsoleListType,
+    status: SupermindState = null
   ): Observable<number> {
     if (listType === 'explore') {
       console.error('Cannot count explore list type.');
