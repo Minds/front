@@ -220,7 +220,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   updatePlaceholder(): void {
-    this.placeholder = $localize`:@@COMMON__SEARCH:Search Minds`;
+    this.placeholder = $localize`:@@COMMON__SEARCH:Search Fishnet`;
     if (window.innerWidth < 550) {
       this.placeholder = $localize`:@@COMMON__SEARCH__SHORT:Search`;
     }

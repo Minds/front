@@ -12,6 +12,6 @@ export class AuthRedirectService {
    * @returns { string } redirect URL.
    */
   public getRedirectUrl(): string {
-    return '/newsfeed/subscriptions/for-you';
+    return '/newsfeed/subscriptions/latest';
   }
 }

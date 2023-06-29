@@ -48,7 +48,7 @@
                     (pageLayoutService.hasTopbarBackground$ | async)
                   : !(isDarkTheme$ | async)
               "
-              [src]="cdnAssetsUrl + 'assets/temp/fishtank.png'"
+              [src]="cdnAssetsUrl + 'assets/temp/fishtank-live-light-mode.png'"
               class="m-topbar__logo--full"
               alt="minds"
             />
@@ -59,7 +59,7 @@
                     !(pageLayoutService.hasTopbarBackground$ | async)
                   : (isDarkTheme$ | async)
               "
-              [src]="cdnAssetsUrl + 'assets/temp/fishtank.png'"
+              [src]="cdnAssetsUrl + 'assets/temp/fishtank-live-dark-mode.png'"
               class="m-topbar__logo--full"
               alt="minds"
             />
@@ -114,7 +114,7 @@
             <m-button
               class="m-topbarLoginWrapper__joinMindsNow"
               (onAction)="onJoinNowClick()"
-              title="Join Minds Now"
+              title="Join Fishnet Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
               data-ref="topnav-join-now"
               color="blue"
