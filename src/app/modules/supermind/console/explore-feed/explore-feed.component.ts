@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
   Observable,
@@ -32,21 +31,24 @@ export class SupermindConsoleExploreFeedComponent implements OnInit, OnDestroy {
     boolean
   > = new BehaviorSubject<boolean>(true);
 
-  /** Whether feed load is in progress. */
-  public readonly feedLoadInProgress$: Observable<boolean> = this.feedsService
-    .inProgress;
-
   /** Whether the component should be considered in its initial load phase. */
   public loading$: Observable<boolean> = combineLatest([
-    this.feedLoadInProgress$,
+    this.inProgress$,
     this.pendingCountRequestInProgress$,
     this.feedsService.feed,
   ]).pipe(
-    map(([feedLoadInProgress, pendingCountRequestInProgress, feed]) => {
-      return (
-        pendingCountRequestInProgress || (feedLoadInProgress && feed.length < 1)
-      );
-    })
+    map(
+      ([feedLoadInProgress, pendingCountRequestInProgress, feed]: [
+        boolean,
+        boolean,
+        any[]
+      ]) => {
+        return (
+          pendingCountRequestInProgress ||
+          (feedLoadInProgress && feed.length < 1)
+        );
+      }
+    )
   );
 
   // subscription to pending count.
@@ -54,7 +56,6 @@ export class SupermindConsoleExploreFeedComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: SupermindConsoleService,
-    public route: ActivatedRoute,
     private feedsService: FeedsService
   ) {}
 

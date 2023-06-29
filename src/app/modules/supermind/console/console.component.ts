@@ -47,7 +47,7 @@ export class SupermindConsoleComponent implements OnDestroy {
       .pipe(
         filter(event => event instanceof NavigationEnd),
         // switchMap into the first child.
-        switchMap(() => this.route.firstChild.url)
+        switchMap((_: unknown) => this.route.firstChild.url)
       )
       .subscribe((url: UrlSegment[]): void => {
         const param = url[0].path ?? null;
