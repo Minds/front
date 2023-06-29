@@ -1,9 +1,17 @@
-import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { LoginReferrerService } from '../../../services/login-referrer.service';
-import { Session } from '../../../services/session';
+import { Component, OnDestroy } from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  UrlSegment,
+} from '@angular/router';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  filter,
+  switchMap,
+} from 'rxjs';
 import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleService } from './services/console.service';
@@ -16,7 +24,7 @@ import { SupermindConsoleService } from './services/console.service';
   templateUrl: './console.component.html',
   styleUrls: ['./console.component.ng.scss'],
 })
-export class SupermindConsoleComponent implements OnInit, OnDestroy {
+export class SupermindConsoleComponent implements OnDestroy {
   /** @type { Subscription } routeSubscription - subscription to ActivatedRoutes firstChild.url */
   private routeSubscription: Subscription;
 
@@ -29,49 +37,45 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
     .isSingleSupermindPage$;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
+    private route: ActivatedRoute,
     private service: SupermindConsoleService,
-    private supermindOnboardingModal: SupermindOnboardingModalService,
-    private session: Session,
-    private loginReferrer: LoginReferrerService,
-    private location: Location
-  ) {}
+    private supermindOnboardingModal: SupermindOnboardingModalService
+  ) {
+    // listen to router events. If outside of constructor will miss initial navigation event.
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        // switchMap into the first child.
+        switchMap(() => this.route.firstChild.url)
+      )
+      .subscribe((url: UrlSegment[]): void => {
+        const param = url[0].path ?? null;
 
-  ngOnInit(): void {
-    if (!this.session.isLoggedIn()) {
-      this.loginReferrer.register(this.location.path());
-      this.router.navigate(['/login']);
-    }
-
-    // on route change, set list type.
-    this.routeSubscription = this.route.firstChild.url.subscribe(segments => {
-      const param: string = segments[0].path;
-
-      if (param === 'inbox') {
-        // Launch onboarding modal (if user hasn't seen it yet)
-        this.supermindOnboardingModal.setContentType('reply');
-        if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
-          this.openSupermindOnboardingModal();
+        if (param === 'inbox') {
+          // Launch onboarding modal (if user hasn't seen it yet)
+          this.supermindOnboardingModal.setContentType('reply');
+          if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
+            this.openSupermindOnboardingModal();
+          }
         }
-      }
 
-      if (
-        param === 'inbox' ||
-        param === 'outbox' ||
-        this.service.isNumericListType(param)
-      ) {
-        this.listType$.next(param);
-        return;
-      }
-      this.listType$.next('inbox');
-    });
+        if (
+          param === 'inbox' ||
+          param === 'outbox' ||
+          param === 'explore' ||
+          this.service.isNumericListType(param)
+        ) {
+          this.listType$.next(param);
+          return;
+        }
+
+        this.listType$.next('explore');
+      });
   }
 
   ngOnDestroy(): void {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
+    this.routeSubscription?.unsubscribe();
   }
 
   /**

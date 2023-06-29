@@ -102,6 +102,39 @@ export class SupermindConsoleService {
   }
 
   /**
+   * Get a count of all Supermind requests for a given status type by list type.
+   * @param { SupermindState } status - status to check (null will count ALL statuses).
+   * @param { SupermindState } listType - list type to check for.
+   * @returns { Observable<number> } observable of count.
+   */
+  public countByListType$(
+    status: SupermindState = null,
+    listType: SupermindConsoleListType
+  ): Observable<number> {
+    let endpoint: string = `api/v3/supermind/${listType}/count`;
+    let params: SupermindConsoleCountParams = {};
+
+    // If it's a single entity page, do not call endpoint, return 1.
+    if (this.isNumericListType(listType)) {
+      return of(1);
+    }
+
+    if (status) {
+      params.status = status;
+    }
+
+    return this.api.get(endpoint, params).pipe(
+      map((response: ApiResponse) => {
+        return response['count'] ?? 0;
+      }),
+      catchError((e: unknown) => {
+        console.error(e);
+        return of(0);
+      })
+    );
+  }
+
+  /**
    * Determine whether a list type is numeric.
    * @param { string | number } value - value to check.
    * @returns { boolean }

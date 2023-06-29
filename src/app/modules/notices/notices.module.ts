@@ -42,6 +42,7 @@ import { FeedNoticeSwitchComponent } from './outlet/feed-notice-switch.component
     FeedNoticeOutletComponent,
     FeedNoticeSwitchComponent,
     BoostLatestPostNoticeComponent,
+    SupermindPendingNoticeComponent,
   ],
 })
 export class NoticesModule {}
