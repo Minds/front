@@ -247,7 +247,7 @@
       }
     }
 
-    ::ng-deep m-channelRecommendation > div {
+    ::ng-deep m-publisherRecommendations > div {
       @include m-theme() {
         border-bottom: 1px solid themed($m-borderColor--primary);
       }

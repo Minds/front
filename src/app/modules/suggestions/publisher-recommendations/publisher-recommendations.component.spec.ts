@@ -1,8 +1,8 @@
-import { AnalyticsService } from './../../../services/analytics';
-import { RecentSubscriptionsService } from './../../../common/services/recent-subscriptions.service';
+import { AnalyticsService } from '../../../services/analytics';
+import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApiService } from '../../../common/api/api.service';
-import { ChannelRecommendationComponent } from './channel-recommendation.component';
+import { PublisherRecommendationsComponent } from './publisher-recommendations.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { MockService } from '../../../utils/mock';
 import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
@@ -10,13 +10,13 @@ import { MindsUser } from '../../../interfaces/entities';
 import userMock from '../../../mocks/responses/user.mock';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
-describe('ChannelRecommendationComponent', () => {
-  let component: ChannelRecommendationComponent;
-  let fixture: ComponentFixture<ChannelRecommendationComponent>;
+describe('PublisherRecommendationsComponent', () => {
+  let component: PublisherRecommendationsComponent;
+  let fixture: ComponentFixture<PublisherRecommendationsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChannelRecommendationComponent],
+      declarations: [PublisherRecommendationsComponent],
       providers: [
         {
           provide: ApiService,
@@ -47,7 +47,7 @@ describe('ChannelRecommendationComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelRecommendationComponent);
+    fixture = TestBed.createComponent(PublisherRecommendationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

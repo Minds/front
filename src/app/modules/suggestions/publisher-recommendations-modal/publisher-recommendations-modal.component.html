@@ -1,5 +1,5 @@
 <div class="m-modalV2__inner">
-  <div class="m-channelRecommendationModal__header m-modalV2__header">
+  <div class="m-publisherRecommendationsModal__header m-modalV2__header">
     <h4 *ngIf="publisherType === 'user'" i18n="@@COMMON__SUBSCRIBE">
       Subscribe
     </h4>
@@ -10,12 +10,12 @@
       Join a group
     </h4>
     <span
-      class="m-modalV2MobileTopBar__button m-channelRecommendationModalHeader__skipButton"
+      class="m-modalV2MobileTopBar__button m-publisherRecommendationsModalHeader__skipButton"
       i18n="@@COMMON__SKIP"
       (click)="onSkip()"
       >Skip</span
     >
-    <p class="m-channelRecommendationModalHeader__subtitle">
+    <p class="m-publisherRecommendationsModalHeader__subtitle">
       <ng-container
         *ngIf="publisherType === 'user'"
         i18n="@@CHANNEL_RECOMMENDATION_MODAL__SUBTITLE__CHANNEL"
@@ -29,27 +29,27 @@
       >
     </p>
   </div>
-  <m-channelRecommendation
-    class="m-channelRecommendationModal__body m-modalV2__body"
+  <m-publisherRecommendations
+    class="m-publisherRecommendationsModal__body m-modalV2__body"
     location="newsfeed"
     isOnboarding="true"
     [publisherType]="publisherType"
-  ></m-channelRecommendation>
-  <div class="m-channelRecommendationModal__footer m-modalV2__footer">
+  ></m-publisherRecommendations>
+  <div class="m-publisherRecommendationsModal__footer m-modalV2__footer">
     <m-button
-      class="m-channelRecommendationModalFooter__skipButton"
+      class="m-publisherRecommendationsModalFooter__skipButton"
       (onAction)="onSkip()"
-      data-ref="m-channelRecommendationModalFooter__skipButton"
+      data-ref="m-publisherRecommendationsModalFooter__skipButton"
       i18n="@@COMMON__SKIP"
       >Skip</m-button
     >
     <m-button
-      class="m-channelRecommendationModalFooter__continueButton"
+      class="m-publisherRecommendationsModalFooter__continueButton"
       color="blue"
       solid="true"
       (onAction)="onContinue()"
       i18n="@@COMMON__CONTINUE"
-      data-ref="m-channelRecommendationModalFooter__continueButton"
+      data-ref="m-publisherRecommendationsModalFooter__continueButton"
       >Continue</m-button
     >
   </div>
@@ -58,5 +58,5 @@
 <!-- MODAL CLOSE -->
 <!-- ----------------------------------------- -->
 <m-modalCloseButton
-  class="m-channelRecommendationModal__closeButton"
+  class="m-publisherRecommendationsModal__closeButton"
 ></m-modalCloseButton>

@@ -6,6 +6,15 @@ import { AbstractSubscriberComponent } from '../components/abstract-subscriber/a
 
 const DEFAULT_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 
+/**
+ * Note about the channel-recommendation identifier:
+ * this refers to the m-publisherRecommendations component
+ * (which could show either channels OR groups), but we're keeping
+ * the original identifier name for backward compatibility.
+ *
+ * Since are using one identifier for both channel recs and group recs,
+ * if the user dismisses one, the other won't show either.
+ */
 export type DismissIdentifier =
   | 'top-highlights'
   | 'channel-recommendation:feed'

@@ -49,10 +49,11 @@
         ></m-newsfeed--boost-rotator>
       </ng-container>
 
-      <m-channelRecommendation
+      <m-publisherRecommendations
         location="newsfeed"
-        *ngIf="shouldShowChannelRecommendation('emptyState')"
-      ></m-channelRecommendation>
+        *ngIf="shouldShowPublisherRecommendations('emptyState')"
+        [publisherType]="recommendationsPublisherType"
+      ></m-publisherRecommendations>
 
       <!--actual feed-->
       <ng-container
@@ -88,14 +89,15 @@
           (deleted)="delete(activity)"
           #feedViewChildren
         ></m-activity>
-        <m-channelRecommendation
+        <m-publisherRecommendations
           location="newsfeed"
           [dismissible]="true"
+          [publisherType]="recommendationsPublisherType"
           *ngIf="
-            shouldShowChannelRecommendation('feed', i) &&
-            !(isChannelRecommendationDismissed$ | async)
+            shouldShowPublisherRecommendations('feed', i) &&
+            !(isPublisherRecommendationsDismissed$ | async)
           "
-        ></m-channelRecommendation>
+        ></m-publisherRecommendations>
       </ng-container>
 
       <infinite-scroll

@@ -12,14 +12,8 @@
   >
     <ng-container *ngIf="!isProDomain">
       <m-sidebar__navigationV2
-        *ngIf="showSidebarV2; else sidebarV1"
         m-pageLayout__pane="left"
       ></m-sidebar__navigationV2>
-      <ng-template #sidebarV1>
-        <m-sidebar--navigation
-          m-pageLayout__pane="left"
-        ></m-sidebar--navigation>
-      </ng-template>
     </ng-container>
     <div
       [m-pageLayout__pane]="
