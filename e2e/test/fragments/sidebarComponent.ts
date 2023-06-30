@@ -10,7 +10,7 @@ class SidebarComponent {
   private readonly channelButtonSelector: string = '[data-ref=sidenav-channel]';
   private readonly moreButtonSelector: string = '[data-ref=sidenav-more]';
   private readonly supermindConsoleButtonSelector: string =
-    '[data-ref=sidebarmore-supermind]';
+    '[data-ref=sidenav-supermind]';
   private readonly walletButtonSelector: string = '[data-ref=sidenav-wallet]';
 
   /**
