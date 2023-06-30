@@ -11,7 +11,8 @@ export type NoticeKey =
   | 'plus-upgrade'
   | 'boost-channel'
   | 'invite-friends'
-  | 'boost-latest-post';
+  | 'boost-latest-post'
+  | 'no-groups';
 
 // Location of component - where should it show 'top' or feed, or 'inline' in the feed.
 export type NoticeLocation = 'top' | 'inline';

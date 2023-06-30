@@ -48,6 +48,7 @@ export const config: CustomMainConfig = {
     channelPage: './pages/channelPage.ts',
     commonPage: './pages/commonPage.ts',
     devtoolsPage: './pages/devtoolsPage.ts',
+    groupsMembershipPage: './pages/groupsMembershipPage.ts',
     loginPage: './pages/loginPage.ts',
     newsfeedPage: './pages/newsfeedPage.ts',
     registerPage: './pages/registerPage.ts',
@@ -76,8 +77,8 @@ export const config: CustomMainConfig = {
     boostModalComponent: './fragments/boostModalComponent.ts',
     contentSettingsComponent: './fragments/contentSettingsComponent.ts',
     multiFactorModalComponent: './fragments/multiFactorModalComponent.ts',
-    channelRecommendationsModalComponent:
-      './fragments/channelRecommendationsModalComponent.ts',
+    publisherRecommendationsModalComponent:
+      './fragments/publisherRecommendationsModalComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {

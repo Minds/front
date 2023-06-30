@@ -26,14 +26,15 @@
       }"
       class="m-defaultFeed__activity"
     ></m-activity>
-    <m-channelRecommendation
+    <m-publisherRecommendations
       [location]="location"
       [dismissible]="true"
       *ngIf="
-        shouldShowChannelRecommendation(i) &&
-        !(isChannelRecommendationDismissed$ | async)
+        shouldShowPublisherRecommendations(i) &&
+        !(isPublisherRecommendationsDismissed$ | async)
       "
-    ></m-channelRecommendation>
+      [publisherType]="recommendationsPublisherType"
+    ></m-publisherRecommendations>
   </ng-container>
 
   <infinite-scroll

@@ -1,10 +1,10 @@
 const { I } = inject();
 
 /**
- * Channel recommendations modal component.
+ * Publisher recommendations modal component.
  */
-class ChannelRecommendationsModalComponent {
-  private modalSelector: string = 'm-channelRecommendationModal';
+class PublisherRecommendationsModalComponent {
+  private modalSelector: string = 'm-publisherRecommendationsModal';
 
   /**
    * Click skip button.
@@ -19,4 +19,4 @@ class ChannelRecommendationsModalComponent {
   }
 }
 
-export = new ChannelRecommendationsModalComponent();
+export = new PublisherRecommendationsModalComponent();

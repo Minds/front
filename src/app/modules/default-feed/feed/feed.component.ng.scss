@@ -2,7 +2,7 @@
 
 :host {
   .m-defaultFeed__feed {
-    m-channelRecommendation {
+    m-publisherRecommendations {
       @include m-theme() {
         border-top: 1px solid themed($m-borderColor--primary);
       }
