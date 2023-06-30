@@ -27,6 +27,7 @@ import { catchError, take } from 'rxjs/operators';
 import { AnalyticsService } from '../../../../services/analytics';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { MindsUser } from '../../../../interfaces/entities';
+import { ComposerService } from '../../../composer/services/composer.service';
 
 /**
  * Container for channel feed, including filters and composer (if user is channel owner)
@@ -36,7 +37,7 @@ import { MindsUser } from '../../../../interfaces/entities';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
-  providers: [FeedService, FeedsService],
+  providers: [FeedService, FeedsService, ComposerService],
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
