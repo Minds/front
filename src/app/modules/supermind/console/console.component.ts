@@ -43,7 +43,7 @@ export class SupermindConsoleComponent implements OnDestroy {
     private supermindOnboardingModal: SupermindOnboardingModalService
   ) {
     // listen to router events. If outside of constructor will miss initial navigation event.
-    this.router.events
+    this.routeSubscription = this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
         // switchMap into the first child.
