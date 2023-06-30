@@ -16,6 +16,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 @Component({
   selector: 'm-discovery__suggestions',
   templateUrl: './suggestions.component.html',
+  styleUrls: ['./suggestions.component.ng.scss'],
   providers: [SuggestionsService],
 })
 export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent

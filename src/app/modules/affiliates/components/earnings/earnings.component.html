@@ -30,11 +30,11 @@
 </span>
 <!-- Buttons -->
 <div class="m-affiliatesEarnings__buttons">
-  <m-button
-    ><a
-      [routerLink]="['/wallet/cash/earnings']"
-      i18n="@@AFFILIATES__EARNINGS__VIEW_BUTTON"
-      >View earnings</a
-    >
-  </m-button>
+  <a [routerLink]="['/wallet/cash/earnings']">
+    <m-button
+      ><ng-container i18n="@@AFFILIATES__EARNINGS__VIEW_BUTTON">
+        View earnings</ng-container
+      ></m-button
+    ></a
+  >
 </div>

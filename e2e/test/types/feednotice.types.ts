@@ -1,1 +1,1 @@
-export type FeedNoticeKey = 'supermind_pending';
+export type FeedNoticeKey = 'supermind_pending' | 'no-groups';
