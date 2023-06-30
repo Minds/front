@@ -31,6 +31,9 @@ import { GroupsMembershipsComponent } from './memberships/memberships.component'
 import { GroupsSearchService } from './profile/feed/search.service';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
+import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
+import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { NoticesModule } from '../notices/notices.module';
 
 const routes: Routes = [
   {
@@ -83,6 +86,9 @@ const routes: Routes = [
     NewsfeedModule,
     ComposerModule,
     ActivityModule,
+    SuggestionsModule,
+    NoticesModule,
+    FindGroupsButtonsComponent, // standalone
   ],
   declarations: [
     GroupsProfile,

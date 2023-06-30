@@ -19,7 +19,7 @@ export class FeedAlgorithmRedirectGuard implements CanActivate {
    * @returns false
    */
   canActivate() {
-    const lastFeedAlgorithm = this.feedAlgorithmHistory.lastAlorithm;
+    const lastFeedAlgorithm = this.feedAlgorithmHistory.lastAlgorithm;
 
     if (lastFeedAlgorithm) {
       this.router.navigateByUrl(`/newsfeed/subscriptions/${lastFeedAlgorithm}`);

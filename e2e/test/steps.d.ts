@@ -5,6 +5,7 @@ type channelPage = typeof import('./pages/channelPage');
 type commonPage = typeof import('./pages/commonPage');
 type devtoolsPage = typeof import('./pages/devtoolsPage');
 type loginPage = typeof import('./pages/loginPage');
+type groupsMembershipPage = typeof import('./pages/groupsMembershipPage');
 type newsfeedPage = typeof import('./pages/newsfeedPage');
 type registerPage = typeof import('./pages/registerPage');
 type rewardsMarketingPage = typeof import('./pages/rewardsMarketingPage');
@@ -30,7 +31,7 @@ type feedNoticeComponent = typeof import('./fragments/feedNoticeComponent');
 type boostModalComponent = typeof import('./fragments/boostModalComponent');
 type contentSettingsComponent = typeof import('./fragments/contentSettingsComponent');
 type multiFactorModalComponent = typeof import('./fragments/multiFactorModalComponent');
-type channelRecommendationsModalComponent = typeof import('./fragments/channelRecommendationsModalComponent');
+type publisherRecommendationsModalComponent = typeof import('./fragments/publisherRecommendationsModalComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
 
@@ -43,6 +44,7 @@ declare namespace CodeceptJS {
     channelPage: channelPage;
     commonPage: commonPage;
     devtoolsPage: devtoolsPage;
+    groupsMembershipPage: groupsMembershipPage;
     loginPage: loginPage;
     newsfeedPage: newsfeedPage;
     registerPage: registerPage;
@@ -69,7 +71,7 @@ declare namespace CodeceptJS {
     boostModalComponent: boostModalComponent;
     contentSettingsComponent: contentSettingsComponent;
     multiFactorModalComponent: multiFactorModalComponent;
-    channelRecommendationsModalComponent: channelRecommendationsModalComponent;
+    publisherRecommendationsModalComponent: publisherRecommendationsModalComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}

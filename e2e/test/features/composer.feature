@@ -51,4 +51,16 @@ Feature: Composer
     When I click on the sidebar composer button
     Then the composer text area should be empty
 
+  Scenario: should allow new users to post with images from create your first post button
+    Given I create a new user
+    And I am on my channel page
+    And I click the Create your first post button
+    When I add files via the upload button
+      | filename |
+      | image1.jpg |
+    Then I should see 1 previews of my selected imaged
+    When I click the post button
+    Then I am able to create the post
+    
+
 

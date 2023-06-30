@@ -35,13 +35,13 @@
     <!-- ----------------------------------------- -->
     <!-- WIDGET: CHANNEL RECOMMENDATION -->
     <!-- ----------------------------------------- -->
-    <m-channelRecommendation
-      [title]="channelRecommendationTitle"
+    <m-publisherRecommendations
+      [title]="publisherRecommendationsTitle"
       location="channel"
       [channelId]="service.guid$ | async"
       [visible]="channelRecommendationVisible$ | async"
       *ngIf="!isOwnedChannel"
-    ></m-channelRecommendation>
+    ></m-publisherRecommendations>
 
     <!-- ----------------------------------------- -->
     <!-- SEARCH QUERY DISPLAY -->
