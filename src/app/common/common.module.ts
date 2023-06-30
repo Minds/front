@@ -3,7 +3,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MINDS_PIPES } from './pipes/pipes';
-import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarWalletBalance } from './layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { QualityScoreComponent } from './components/quality-score/quality-score.component';
@@ -257,7 +256,6 @@ const MINDS_COMMON_COMPONENTS = [
   SeeLatestButtonComponent,
   SidebarMoreComponent,
   SidebarMoreTriggerComponent,
-  SidebarNavigationComponent,
   SidebarNavigationV2Component,
   SidebarWidgetComponent,
   SizeableLoadingSpinnerComponent,
