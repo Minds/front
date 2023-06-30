@@ -113,7 +113,7 @@ export class SupermindConsoleService {
 
   /**
    * Get a count of all Supermind requests for a given status type by list type.
-   * @param { SupermindState } listType - list type to check for.
+   * @param { SupermindConsoleListType } listType - list type to check for.
    * @param { SupermindState } status - status to check (null will count ALL statuses).
    * @returns { Observable<number> } observable of count.
    */
