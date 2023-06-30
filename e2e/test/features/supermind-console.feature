@@ -93,6 +93,7 @@ Feature: Supermind Console
     When I make a supermind offer
     And I log in as "playwright_tests_user"
     And I navigate via sidebar to the supermind console
+    And I click to change tabs to "Inbound"
     And I click "decline" on latest Supermind
     Then the latest supermind offer should be "declined"
 
@@ -102,6 +103,7 @@ Feature: Supermind Console
     When I make a supermind offer
     And I log in as "playwright_tests_user"
     And I navigate via sidebar to the supermind console
+    And I click to change tabs to "Inbound"
     And I click "accept" on latest Supermind
     And I make a supermind reply
     Then the latest supermind offer should be "accepted"
@@ -114,12 +116,13 @@ Feature: Supermind Console
     When I make a supermind offer
     And I log in as "playwright_tests_user"
     And I navigate via sidebar to the supermind console
+    And I click to change tabs to "Inbound"
     And I click "accept" on latest Supermind
     And I try to make an NSFW supermind reply
     Then I should see an 'error' toaster saying 'You may not create an NSFW supermind at this time.'
 
 Scenario: Navigating to the Supermind Console sends users to the Explore tab by default
-    Given I am logged in
+    Given I log in as "playwright_tests_user"
     When I navigate via sidebar to the supermind console
     Then I see the Supermind explore feed
 
