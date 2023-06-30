@@ -7,7 +7,6 @@
 // } from '@storybook/angular';
 // import { PageComponent } from '../../modules/layout/page/page.component';
 // import { TopbarWrapperComponent } from '../../modules/layout/topbar-wrapper/topbar.component';
-// import { SidebarNavigationComponent } from './sidebar/navigation.component';
 // import { TopbarComponent } from './v3-topbar/v3-topbar.component';
 
 // TODO
@@ -18,7 +17,6 @@
 //       imports: [CommonModule],
 //       // Imports both components to allow component composition with Storybook
 //       declarations: [
-//         SidebarNavigationComponent,
 //         TopbarWrapperComponent,
 //         TopbarComponent,
 //         PageComponent,
@@ -42,7 +40,6 @@
 //       <m-body>
 //         <div class="m-pageLayout__container" m-pageLayout__container>
 //           <div class="m-pageLayout__container--main">
-//             <m-sidebar--navigation m-pageLayout__pane="left" class="m-pageLayout__pane--left"></m-sidebar--navigation>
 //             <div m-pageLayout__pane="main" class="m-pageLayout__pane--main">main</div>
 //             <div m-pageLayout__pane="right" class="m-pageLayout__pane--right">
 //               <div class="m-pageLayoutPane__inner">

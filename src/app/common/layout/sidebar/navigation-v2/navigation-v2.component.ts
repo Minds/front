@@ -23,7 +23,6 @@ import { filter } from 'rxjs/operators';
 import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
 import { ThemeService } from '../../../services/theme.service';
-import { SidebarV2ReorgExperimentService } from '../../../../modules/experiments/sub-services/front-5924-sidebar-v2-reorg.service';
 import { ComposerService } from '../../../../modules/composer/services/composer.service';
 
 /**
@@ -106,8 +105,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private themeService: ThemeService,
-    private sidebarNavigationService: SidebarNavigationService,
-    private sidebarV2ReorgService: SidebarV2ReorgExperimentService
+    private sidebarNavigationService: SidebarNavigationService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -120,8 +118,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.onResize();
     }
-
-    this.showReorgVariation = this.shouldShowReorgVariation();
 
     this.settingsLink = '/settings';
 
@@ -250,13 +246,5 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public onSidebarMoreToggle($event): void {
     this.sidebarMoreOpened = $event;
-  }
-
-  /**
-   * Whether menu item reorganisation experiment is active.
-   * @returns { boolean } true if menu item reorganisation experiment is active.
-   */
-  public shouldShowReorgVariation(): boolean {
-    return this.sidebarV2ReorgService.isReorgVariationActive();
   }
 }

@@ -1,188 +1,91 @@
 <div class="m-sidebarMore">
   <ul class="m-sidebarMore__dropdown">
-    <!-- Reorganised order variation -->
-    <ng-container *ngIf="showReorgVariation; else standardVariationTemplate">
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a (click)="onEarnClick()" data-ref="sidebarmore-earn-modal">
-          <i class="material-icons">attach_money</i>
-          <span i18n="@@COMMON__EARN">Earn</span>
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
-          <i class="material-icons">insights</i>
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
-            >Analytics</span
-          >
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a [href]="chatUrl" data-ref="sidebarmore-chat">
-          <m-chatIcon m-tooltip--icon></m-chatIcon>
-          <span
-            class="m-sidebarNavigationItem__text m-legible"
-            i18n="@@COMMON__CHAT"
-            >Chat</span
-          >
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a [routerLink]="'/settings'" data-ref="sidebarmore-settings">
-          <i class="material-icons">settings</i>
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
-            >Settings</span
-          >
-        </a>
-      </li>
-      <!--./././././././././././././././././././././././././././././././.-->
-      <li
-        class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer"
-        *ngIf="getCurrentUser()"
-      ></li>
-      <!--./././././././././././././././././././././././././././././././.-->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a (click)="toggleTheme()">
-          <ng-container *ngIf="isDark">
-            <i class="material-icons">light_mode</i>
-            <span i18n="@@COMMON__LIGHT_MODE">Enter Light Mode</span>
-          </ng-container>
-          <ng-container *ngIf="!isDark">
-            <i class="material-icons">dark_mode</i>
-            <span i18n="@@COMMON__DARK_MODE">Enter Dark Mode</span>
-          </ng-container>
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li class="m-sidebarMoreDropdown__item" (click)="toggleSidebar()">
-        <a
-          [href]="getHelpdeskRedirectUrl()"
-          target="_blank"
-          data-ref="sidebarmore-help-zendesk"
+    <!-- ------------------------------------------------------------ -->
+    <li
+      class="m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
+    >
+      <a (click)="onEarnClick()" data-ref="sidebarmore-earn-modal">
+        <i class="material-icons">attach_money</i>
+        <span i18n="@@COMMON__EARN">Earn</span>
+      </a>
+    </li>
+    <!-- ------------------------------------------------------------ -->
+    <li
+      class="m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
+    >
+      <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
+        <i class="material-icons">insights</i>
+        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
+          >Analytics</span
         >
-          <i class="material-icons">help</i>
-          <span i18n="@@COMMON__HELP">Help</span>
-        </a>
-      </li>
-    </ng-container>
-    <!-- Standard order variation -->
-    <ng-template #standardVariationTemplate>
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a (click)="openBoostConsole()" data-ref="sidebarmore-boost-console">
-          <i class="material-icons">trending_up</i>
-          <span i18n="@@COMMON__BOOST">Boost</span>
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a (click)="openSupermindConsole()" data-ref="sidebarmore-supermind">
-          <i class="material-icons">tips_and_updates</i>
-          <span i18n="@@COMMON__SUPERMIND">Supermind</span>
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
-          <i class="material-icons">insights</i>
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
-            >Analytics</span
-          >
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a (click)="onEarnClick()" data-ref="sidebarmore-earn-modal">
-          <i class="material-icons">attach_money</i>
-          <span i18n="@@COMMON__EARN">Earn</span>
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a [routerLink]="'/settings'" data-ref="sidebarmore-settings">
-          <i class="material-icons">settings</i>
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
-            >Settings</span
-          >
-        </a>
-      </li>
-      <!--./././././././././././././././././././././././././././././././.-->
-      <li
-        class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer"
-        *ngIf="getCurrentUser()"
-      ></li>
-      <!--./././././././././././././././././././././././././././././././.-->
-      <li
-        class="m-sidebarMoreDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleSidebar()"
-      >
-        <a (click)="toggleTheme()">
-          <ng-container *ngIf="isDark">
-            <i class="material-icons">light_mode</i>
-            <span i18n="@@COMMON__LIGHT_MODE">Enter Light Mode</span>
-          </ng-container>
-          <ng-container *ngIf="!isDark">
-            <i class="material-icons">dark_mode</i>
-            <span i18n="@@COMMON__DARK_MODE">Enter Dark Mode</span>
-          </ng-container>
-        </a>
-      </li>
-      <!-- ------------------------------------------------------------ -->
-      <li class="m-sidebarMoreDropdown__item" (click)="toggleSidebar()">
-        <a
-          [href]="getHelpdeskRedirectUrl()"
-          target="_blank"
-          data-ref="sidebarmore-help-zendesk"
+      </a>
+    </li>
+    <!-- ------------------------------------------------------------ -->
+    <li
+      class="m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
+    >
+      <a [href]="chatUrl" data-ref="sidebarmore-chat">
+        <m-chatIcon m-tooltip--icon></m-chatIcon>
+        <span
+          class="m-sidebarNavigationItem__text m-legible"
+          i18n="@@COMMON__CHAT"
+          >Chat</span
         >
-          <i class="material-icons">help</i>
-          <span i18n="@@COMMON__HELP">Help</span>
-        </a>
-      </li>
-    </ng-template>
+      </a>
+    </li>
+    <!-- ------------------------------------------------------------ -->
+    <li
+      class="m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
+    >
+      <a [routerLink]="'/settings'" data-ref="sidebarmore-settings">
+        <i class="material-icons">settings</i>
+        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
+          >Settings</span
+        >
+      </a>
+    </li>
+    <!--./././././././././././././././././././././././././././././././.-->
+    <li
+      class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer"
+      *ngIf="getCurrentUser()"
+    ></li>
+    <!--./././././././././././././././././././././././././././././././.-->
+    <li
+      class="m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
+    >
+      <a (click)="toggleTheme()">
+        <ng-container *ngIf="isDark">
+          <i class="material-icons">light_mode</i>
+          <span i18n="@@COMMON__LIGHT_MODE">Enter Light Mode</span>
+        </ng-container>
+        <ng-container *ngIf="!isDark">
+          <i class="material-icons">dark_mode</i>
+          <span i18n="@@COMMON__DARK_MODE">Enter Dark Mode</span>
+        </ng-container>
+      </a>
+    </li>
+    <!-- ------------------------------------------------------------ -->
+    <li class="m-sidebarMoreDropdown__item" (click)="toggleSidebar()">
+      <a
+        [href]="getHelpdeskRedirectUrl()"
+        target="_blank"
+        data-ref="sidebarmore-help-zendesk"
+      >
+        <i class="material-icons">help</i>
+        <span i18n="@@COMMON__HELP">Help</span>
+      </a>
+    </li>
+
     <!--./././././././././././././././././././././././././././././././.-->
     <li
       class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer

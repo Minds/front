@@ -46,7 +46,8 @@
   }
 
   ::ng-deep {
-    m-comments__entityOutlet {
+    m-comments__entityOutletv2 {
+      display: contents;
       .m-commentPoster {
         margin: 0 20px;
         width: 90%;

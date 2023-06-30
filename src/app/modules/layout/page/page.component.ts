@@ -12,7 +12,6 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
 import { Observable } from 'rxjs';
 import { ChatwootExperimentService } from '../../experiments/sub-services/chatwoot-experiment.service';
-import { SidebarV2ReorgExperimentService } from '../../experiments/sub-services/front-5924-sidebar-v2-reorg.service';
 
 @Component({
   selector: 'm-page',
@@ -40,14 +39,12 @@ export class PageComponent implements OnInit {
     private router: Router,
     private storage: Storage,
     private messengerService: MessengerService,
-    private sidebarV2ReorgExperiment: SidebarV2ReorgExperimentService,
     private topbarAlertService: TopbarAlertService,
     private chatwootExperiment: ChatwootExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
-    this.showSidebarV2 = this.shouldShowSidebarV2();
     this.isSidebarVisible = this.navigationService.container
       ? !this.navigationService.container.hidden
       : true;
@@ -81,14 +78,6 @@ export class PageComponent implements OnInit {
       return false;
     }
     return isMobileOrTablet();
-  }
-
-  /**
-   * Whether sidebar V2 experiment is active.
-   * @returns { boolean }
-   */
-  public shouldShowSidebarV2(): boolean {
-    return this.sidebarV2ReorgExperiment.isSidebarV2VariationActive();
   }
 
   /**
