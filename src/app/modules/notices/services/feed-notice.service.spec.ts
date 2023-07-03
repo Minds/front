@@ -11,7 +11,7 @@ const defaultNotices = [
     position: null,
   },
   {
-    key: 'build-your-algorithm',
+    key: 'boost-channel',
     location: 'inline',
     should_show: true,
     dismissed: false,
@@ -58,7 +58,7 @@ export let apiServiceMock = new (function() {
           should_show: true,
         },
         {
-          key: 'build-your-algorithm',
+          key: 'boost-channel',
           location: 'inline',
           should_show: true,
         },
@@ -121,32 +121,32 @@ describe('FeedNoticeService', () => {
   it('should unregister an outlet by position', () => {
     let updatedNotices = defaultNotices;
     for (let notice of updatedNotices) {
-      if (notice.location === 'build-your-algorithm') {
+      if (notice.location === 'boost-channel') {
         notice.position = 1;
       }
     }
     (service as any).notices$.next(updatedNotices);
     expect((service as any).notices$.getValue()).toEqual(updatedNotices);
 
-    service.unregister('build-your-algorithm');
+    service.unregister('boost-channel');
     expect((service as any).notices$.getValue()).toEqual(defaultNotices);
   });
 
   it('should dismiss', () => {
     let updatedNotices = defaultNotices;
     for (let notice of updatedNotices) {
-      if (notice.location === 'build-your-algorithm') {
+      if (notice.location === 'boost-channel') {
         notice.dismissed = true;
       }
     }
 
-    service.dismiss('build-your-algorithm');
+    service.dismiss('boost-channel');
 
     expect((service as any).notices$.getValue()).toEqual(updatedNotices);
   });
 
   it('should undismiss', () => {
-    let noticeKey: NoticeKey = 'build-your-algorithm',
+    let noticeKey: NoticeKey = 'boost-channel',
       updatedNotices = defaultNotices;
 
     for (let notice of updatedNotices) {
@@ -169,7 +169,7 @@ describe('FeedNoticeService', () => {
     ).toBeTruthy();
 
     expect(
-      service.shouldBeStickyTop({ key: 'build-your-algorithm' } as FeedNotice)
+      service.shouldBeStickyTop({ key: 'boost-channel' } as FeedNotice)
     ).toBeFalsy();
   });
 });

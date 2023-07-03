@@ -23,6 +23,7 @@ import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
 import { IPageInfo, VirtualScrollerComponent } from './virtual-scroller';
+import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 
 export enum FeedAlgorithm {
   top = 'top',
@@ -34,7 +35,7 @@ export enum FeedItemType {
   feedNotice = 'feedNotice',
   featuredContent = 'featuredContent',
   topHighlights = 'topHighlights',
-  channelRecommendations = 'channelRecommendations',
+  publisherRecommendations = 'publisherRecommendations',
 }
 
 export interface IFeedItem {
@@ -64,13 +65,18 @@ export class FeedComponent implements OnInit, OnDestroy, AfterViewInit {
   isDev = isDevMode();
 
   /**
+   * Should we show channel or group recs?
+   */
+  recommendationsPublisherType: PublisherType;
+
+  /**
    * Whether top highlights is dismissed
    */
   isTopHighlightsDismissed$ = this.dismissal.dismissed('top-highlights');
   /**
-   * Whether channel recommendation is dismissed
+   * Whether publisher recommendation is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
+  isPublisherRecommendationsDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
   loadNextThrottler = new BehaviorSubject<IPageInfo>(null);
@@ -126,6 +132,11 @@ export class FeedComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shouldRestoreScroll = !!this.scrollRestoration.getOffsetForRoute(
       this.router.url
     );
+
+    /**
+     * Randomly choose whether to show user or group recs
+     */
+    this.recommendationsPublisherType = Math.random() < 0.5 ? 'user' : 'group';
   }
 
   ngAfterViewInit(): void {
@@ -233,10 +244,10 @@ export class FeedComponent implements OnInit, OnDestroy, AfterViewInit {
               id: `topHighlights-${injectItemIndex}-${feedId}`,
             });
             break;
-          case FeedItemType.channelRecommendations:
+          case FeedItemType.publisherRecommendations:
             newFeedItems.splice(i, 0, {
-              type: FeedItemType.channelRecommendations,
-              id: `channelRecommendations-${injectItemIndex}-${feedId}`,
+              type: FeedItemType.publisherRecommendations,
+              id: `publisherRecommendations-${injectItemIndex}-${feedId}`,
             });
             break;
         }

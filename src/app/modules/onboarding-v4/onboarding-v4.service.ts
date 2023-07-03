@@ -2,7 +2,7 @@ import { Injectable, Injector, OnDestroy } from '@angular/core';
 import { ModalService } from '../../services/ux/modal.service';
 import { OnboardingTagsExperimentService } from '../experiments/sub-services/onboarding-tags-experiment.service';
 import { ContentSettingsComponent } from '../content-settings/content-settings/content-settings.component';
-import { ChannelRecommendationModalComponent } from '../suggestions/channel-recommendation-modal/channel-recommendation-modal.component';
+import { PublisherRecommendationsModalComponent } from '../suggestions/publisher-recommendations-modal/publisher-recommendations-modal.component';
 import { Subject, Subscription, filter, take } from 'rxjs';
 import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 import { DiscoveryTagsService } from '../discovery/tags/tags.service';
@@ -52,7 +52,7 @@ export class OnboardingV4Service implements OnDestroy {
       data: {
         onSave: () => {
           modal.close();
-          this.openChannelRecommendationModal();
+          this.openChannelRecommendationsModal();
           this.tagsCompleted$.next(true);
         },
         isOnboarding: true,
@@ -63,24 +63,24 @@ export class OnboardingV4Service implements OnDestroy {
   }
 
   /**
-   * Opens channel recommendations modal
+   * Opens publisher recommendations modal for channels
    * If the experiment is active
    */
-  private async openChannelRecommendationModal(): Promise<void> {
+  private async openChannelRecommendationsModal(): Promise<void> {
     if (!this.onboardingTagsExperiment.isActive()) {
       return;
     }
     const modal = this.modalService.present(
-      ChannelRecommendationModalComponent,
+      PublisherRecommendationsModalComponent,
       {
         data: {
           onContinue: () => {
             modal.close();
-            this.openGroupRecommendationModal();
+            this.openGroupRecommendationsModal();
           },
           onSkip: () => {
             modal.close();
-            this.openGroupRecommendationModal();
+            this.openGroupRecommendationsModal();
           },
           publisherType: 'user',
         },
@@ -92,15 +92,15 @@ export class OnboardingV4Service implements OnDestroy {
   }
 
   /**
-   * Opens group recommendations modal
+   * Opens publisher recommendations modal for groups
    * If the experiment is on
    */
-  private async openGroupRecommendationModal(): Promise<void> {
+  private async openGroupRecommendationsModal(): Promise<void> {
     if (!this.onboardingTagsExperiment.isActive()) {
       return;
     }
     const modal = this.modalService.present(
-      ChannelRecommendationModalComponent,
+      PublisherRecommendationsModalComponent,
       {
         data: {
           onContinue: () => {

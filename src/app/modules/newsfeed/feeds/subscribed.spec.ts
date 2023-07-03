@@ -66,7 +66,7 @@ describe('NewsfeedSubscribedComponent', () => {
           selector: 'm-newsfeed__tabs',
         }),
         MockComponent({
-          selector: 'm-channelRecommendation',
+          selector: 'm-publisherRecommendations',
         }),
         MockComponent({
           selector: 'infinite-scroll',
