@@ -92,7 +92,7 @@
         display: flex;
         flex-direction: row;
 
-        .m-channelRecommendation__avatarContainer {
+        .m-publisherRecommendations__avatarContainer {
           margin-right: $activityAvatarSpacingRight--feed;
 
           @media screen and (max-width: $max-mobile) {
@@ -113,7 +113,7 @@
             }
           }
         }
-        .m-channelRecommendation__contentContainer {
+        .m-publisherRecommendations__contentContainer {
           flex: 1;
           display: flex;
           justify-content: center;
@@ -121,7 +121,7 @@
           align-items: flex-start;
           overflow: hidden;
 
-          .m-channelRecommendation__title {
+          .m-publisherRecommendations__title {
             display: block;
             font-size: 16px;
             line-height: 24px;
@@ -152,7 +152,7 @@
             }
           }
 
-          .m-channelRecommendation__description {
+          .m-publisherRecommendations__description {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -175,7 +175,7 @@
             margin-top: 4px;
           }
         }
-        .m-channelRecommendation__subscribeContainer {
+        .m-publisherRecommendations__subscribeContainer {
           margin-left: $minds-margin;
         }
       }

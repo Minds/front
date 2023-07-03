@@ -1,28 +1,30 @@
-import { ClientMetaDirective } from './../../../common/directives/client-meta.directive';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
 import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Optional,
   Output,
   SkipSelf,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription, map, take } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { ResizedEvent } from './../../../common/directives/resized.directive';
-import { DismissalService } from './../../../common/services/dismissal.service';
-import { AnalyticsService } from './../../../services/analytics';
+import { ResizedEvent } from '../../../common/directives/resized.directive';
+import { DismissalService } from '../../../common/services/dismissal.service';
+import { AnalyticsService } from '../../../services/analytics';
 import { NewsfeedService } from '../../newsfeed/services/newsfeed.service';
 import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 import { GroupMembershipChangeOuput } from '../../../common/components/group-membership-button/group-membership-button.component';
 import { MindsGroup } from '../../groups/v2/group.model';
 import {
   BoostNode,
+  GroupNode,
   PublisherRecsConnection,
   UserNode,
 } from '../../../../graphql/generated.engine';
@@ -41,23 +43,21 @@ const listAnimation = trigger('listAnimation', [
 /**
  * Displays channel/group recommendations
  *
- * See it in the newsfeed
- *
- * It may also be used in a modal during onboarding-v4
+ * See it in the newsfeed and onboarding
  */
 @Component({
-  selector: 'm-channelRecommendation',
-  templateUrl: './channel-recommendation.component.html',
-  styleUrls: ['./channel-recommendation.component.ng.scss'],
+  selector: 'm-publisherRecommendations',
+  templateUrl: './publisher-recommendations.component.html',
+  styleUrls: ['./publisher-recommendations.component.ng.scss'],
   animations: [listAnimation],
   providers: [ParseJson],
 })
-export class ChannelRecommendationComponent implements OnInit {
+export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   /**
    * the location in which this component appears
    */
   @Input()
-  location: 'newsfeed' | 'discovery-feed' | 'channel';
+  location: 'newsfeed' | 'discovery-feed' | 'channel' | 'groups-memberships';
   /**
    * the channel id for which the recommendations should be contextualized.
    */
@@ -70,10 +70,10 @@ export class ChannelRecommendationComponent implements OnInit {
   @Input()
   visible: boolean = true;
   /**
-   * The title of channel recommendation widget
+   * The title of publisher recommendations widget
    */
   @Input()
-  title: string = $localize`:@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS:Recommended Channels`;
+  title: string;
   /**
    * Whether the widget should have a close button
    */
@@ -92,15 +92,27 @@ export class ChannelRecommendationComponent implements OnInit {
   isOnboarding: boolean = false;
 
   /**
+   * How many recommendations to show at a time when
+   * the component is loaded
+   */
+  @Input() initialListSize: number = 4;
+
+  /**
    * the height of the container, used to animate the mount and unmount of this component
    */
   containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
-  /** a list of recommended channels */
-  recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
+
+  /** a list of recommended channels or groups */
+  recommendations$: BehaviorSubject<
+    (MindsUser | MindsGroup)[]
+  > = new BehaviorSubject([]);
+
   /**
    * How many recommendations to show at a time?
    */
-  listSize$: BehaviorSubject<number> = new BehaviorSubject(4);
+  listSize$: BehaviorSubject<number> = new BehaviorSubject(
+    this.initialListSize
+  );
 
   @Input('listSize') set _listSize(size: number) {
     this.listSize$.next(size);
@@ -125,6 +137,8 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   @Input() connection: PublisherRecsConnection;
 
+  private subscriptions: Subscription[] = [];
+
   constructor(
     private api: ApiService,
     public experiments: ExperimentsService,
@@ -137,16 +151,37 @@ export class ChannelRecommendationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.initialListSize) {
+      this.listSize$.next(this.initialListSize);
+    }
+
     if (this.connection) {
       this.recommendations$.next(
         this.connection.edges.map((e: any) => {
-          return <MindsUser>(
+          return <MindsUser | MindsGroup>(
             this.parseJson.transform(
-              (<UserNode | BoostNode>e.publisherNode).legacy
+              (<UserNode | BoostNode | GroupNode>e.publisherNode).legacy
             )
           );
         })
       );
+
+      this.subscriptions.push(
+        this.recommendations$.pipe(take(1)).subscribe(recs => {
+          // Makes sure we know what the publisher type is,
+          // even if the recommendations are coming from gql
+          let rec = recs[0];
+
+          if (
+            rec &&
+            rec.type &&
+            (rec.type === 'user' || rec.type === 'group')
+          ) {
+            this.publisherType = rec.type;
+          }
+        })
+      );
+
       return; // Don't load data via api
     }
 
@@ -155,6 +190,12 @@ export class ChannelRecommendationComponent implements OnInit {
     }
     if (this.location && this.publisherType === 'user') {
       this.loadChannels();
+    }
+  }
+
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -251,11 +292,11 @@ export class ChannelRecommendationComponent implements OnInit {
   onSubscribed(user): void {
     this.subscribed.emit();
 
-    if (this.listSize$.getValue() === 4) {
-      this.listSize$.next(5);
+    if (this.listSize$.getValue() === this.initialListSize) {
+      this.listSize$.next(this.initialListSize);
     }
 
-    if (this.recommendations$.getValue().length <= 4) {
+    if (this.recommendations$.getValue().length <= this.initialListSize) {
       return;
     }
 

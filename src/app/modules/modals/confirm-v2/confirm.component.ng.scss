@@ -7,7 +7,7 @@
   @include z-index(body);
   @include m-theme() {
     color: themed($m-textColor--primary);
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-confirmationModal__textWrapper {
@@ -20,7 +20,7 @@
     }
 
     .m-confirmationModal__text {
-      @include body2Regular;
+      @include body1Regular;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeSpeed;
     }

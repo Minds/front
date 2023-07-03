@@ -11,7 +11,7 @@ namespace CommonSteps {
     confirmationModalComponent,
     contentSettingsComponent,
     multiFactorModalComponent,
-    channelRecommendationsModalComponent,
+    publisherRecommendationsModalComponent,
   } = inject();
 
   /**
@@ -41,9 +41,9 @@ namespace CommonSteps {
     contentSettingsComponent.clickTagByIndex(3);
     contentSettingsComponent.clickContinue();
 
-    // skip channel recommendations and group recommendations modal.
-    channelRecommendationsModalComponent.skip();
-    channelRecommendationsModalComponent.skip();
+    // skip publisher recommendations.
+    publisherRecommendationsModalComponent.skip();
+    publisherRecommendationsModalComponent.skip();
   });
 
   /**

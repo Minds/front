@@ -4,6 +4,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { FeedNoticeService } from '../../notices/services/feed-notice.service';
 import { Session } from '../../../services/session';
+import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -30,11 +31,16 @@ export class DefaultFeedComponent implements OnInit {
   visibleHeader: boolean = false;
 
   /**
-   * Whether channel recommendation component is dismissed
+   * Whether publisher recommendations component is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
+  isPublisherRecommendationsDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
+
+  /**
+   * Should we show channel or group recs?
+   */
+  recommendationsPublisherType: PublisherType;
 
   constructor(
     public feedsService: FeedsService,
@@ -47,6 +53,11 @@ export class DefaultFeedComponent implements OnInit {
   public ngOnInit(): void {
     this.load(true);
     this.feedNoticeService.fetch();
+
+    /**
+     * Randomly choose whether to show user or group recs
+     */
+    this.recommendationsPublisherType = Math.random() < 0.5 ? 'user' : 'group';
   }
 
   /**
@@ -102,11 +113,11 @@ export class DefaultFeedComponent implements OnInit {
   }
 
   /**
-   * whether channel recommendation should be shown
+   * whether publisher recommendations should be shown
    * @param { number } index the index of the feed
    * @returns { boolean }
    */
-  shouldShowChannelRecommendation(index: number) {
+  shouldShowPublisherRecommendations(index: number) {
     if (!this.isLoggedIn()) {
       return false;
     }

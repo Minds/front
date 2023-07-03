@@ -1,7 +1,7 @@
 @import 'defaults';
 
 :host {
-  .m-channelRecommendationModal {
+  .m-publisherRecommendationsModal {
     &__header {
       position: relative;
       text-align: center;
@@ -15,7 +15,7 @@
           color: themed($m-textColor--primary);
         }
       }
-      .m-channelRecommendationModalHeader__subtitle {
+      .m-publisherRecommendationsModalHeader__subtitle {
         margin: 0 0 1rem 0;
         font-size: 16px;
         font-weight: 400;
@@ -24,7 +24,7 @@
           color: themed($m-textColor--secondary);
         }
       }
-      .m-channelRecommendationModalHeader__skipButton {
+      .m-publisherRecommendationsModalHeader__skipButton {
         display: none;
 
         @media screen and (max-width: $max-mobile) {
@@ -58,7 +58,7 @@
         }
       }
 
-      .m-channelRecommendationModalFooter__skipButton {
+      .m-publisherRecommendationsModalFooter__skipButton {
         margin-right: $spacing4;
         @media screen and (max-width: $max-mobile) {
           display: none;
@@ -66,7 +66,7 @@
       }
     }
   }
-  .m-channelRecommendationModal__closeButton {
+  .m-publisherRecommendationsModal__closeButton {
     @media screen and (max-width: $max-mobile) {
       display: none;
     }

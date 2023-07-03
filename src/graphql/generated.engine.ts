@@ -190,6 +190,11 @@ export enum GiftCardProductIdEnum {
   Supermind = 'SUPERMIND',
 }
 
+export type GiftCardTargetInput = {
+  targetEmail?: InputMaybe<Scalars['String']['input']>;
+  targetUserGuid?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GiftCardTransaction = NodeInterface & {
   __typename?: 'GiftCardTransaction';
   amount: Scalars['Float']['output'];
@@ -217,6 +222,28 @@ export type GiftCardsConnection = ConnectionInterface & {
   pageInfo: PageInfo;
 };
 
+export type GroupEdge = EdgeInterface & {
+  __typename?: 'GroupEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: GroupNode;
+  type: Scalars['String']['output'];
+};
+
+export type GroupNode = NodeInterface & {
+  __typename?: 'GroupNode';
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
+};
+
 export type KeyValuePairInput = {
   key: Scalars['String']['input'];
   value: Scalars['String']['input'];
@@ -224,11 +251,16 @@ export type KeyValuePairInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  claimGiftCard: GiftCardNode;
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+};
+
+export type MutationClaimGiftCardArgs = {
+  claimCode: Scalars['String']['input'];
 };
 
 export type MutationCompleteOnboardingStepArgs = {
@@ -240,9 +272,9 @@ export type MutationCompleteOnboardingStepArgs = {
 export type MutationCreateGiftCardArgs = {
   amount: Scalars['Float']['input'];
   expiresAt?: InputMaybe<Scalars['Int']['input']>;
-  giftCardPaymentTypeEnum?: InputMaybe<Scalars['Int']['input']>;
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
+  targetInput: GiftCardTargetInput;
 };
 
 export type MutationSetOnboardingStateArgs = {
@@ -266,8 +298,6 @@ export type NodeInterface = {
 
 export type OnboardingState = {
   __typename?: 'OnboardingState';
-  /** Whether onboarding is completed. */
-  completed: Scalars['Boolean']['output'];
   completedAt?: Maybe<Scalars['Int']['output']>;
   startedAt: Scalars['Int']['output'];
   userGuid?: Maybe<Scalars['String']['output']>;
@@ -324,7 +354,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   newsfeed: NewsfeedConnection;
   /** Gets onboarding state for the currently logged in user. */
-  onboardingState: OnboardingState;
+  onboardingState?: Maybe<OnboardingState>;
   /** Get the currently logged in users onboarding step progress. */
   onboardingStepProgress: Array<OnboardingStepProgressState>;
 };
@@ -477,6 +507,7 @@ export type FetchNewsfeedQuery = {
               }
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -513,6 +544,11 @@ export type FetchNewsfeedQuery = {
                         | { __typename?: 'FeedNoticeNode'; id: string }
                         | { __typename?: 'GiftCardNode'; id: string }
                         | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | {
@@ -547,6 +583,14 @@ export type FetchNewsfeedQuery = {
                       __typename?: 'GiftCardTransactionEdge';
                       publisherNode: {
                         __typename?: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
                         id: string;
                       };
                     }
@@ -617,6 +661,11 @@ export type FetchNewsfeedQuery = {
           node: { __typename?: 'GiftCardTransaction'; id: string };
         }
       | {
+          __typename?: 'GroupEdge';
+          cursor: string;
+          node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
@@ -644,6 +693,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
@@ -668,6 +718,14 @@ export type FetchNewsfeedQuery = {
                   __typename?: 'GiftCardTransactionEdge';
                   publisherNode: {
                     __typename?: 'GiftCardTransaction';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'GroupEdge';
+                  publisherNode: {
+                    __typename?: 'GroupNode';
+                    legacy: string;
                     id: string;
                   };
                 }
@@ -741,12 +799,12 @@ export type GetOnboardingStateQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetOnboardingStateQuery = {
   __typename?: 'Query';
-  onboardingState: {
+  onboardingState?: {
     __typename?: 'OnboardingState';
     userGuid?: string | null;
     startedAt: number;
     completedAt?: number | null;
-  };
+  } | null;
 };
 
 export type GetOnboardingStepProgressQueryVariables = Exact<{
@@ -834,6 +892,9 @@ export const FetchNewsfeedDocument = gql`
                   legacy
                 }
                 ... on BoostNode {
+                  legacy
+                }
+                ... on GroupNode {
                   legacy
                 }
               }

@@ -1,64 +1,71 @@
 query FetchNewsfeed(
-    $algorithm: String!
-    $limit: Int!,
-    $cursor: String,
-    $inFeedNoticesDelivered: [String!]
+  $algorithm: String!
+  $limit: Int!
+  $cursor: String
+  $inFeedNoticesDelivered: [String!]
 ) {
-    newsfeed(algorithm: $algorithm, first: $limit, after: $cursor, inFeedNoticesDelivered: $inFeedNoticesDelivered) {
-        edges {
-            cursor
+  newsfeed(
+    algorithm: $algorithm
+    first: $limit
+    after: $cursor
+    inFeedNoticesDelivered: $inFeedNoticesDelivered
+  ) {
+    edges {
+      cursor
+      node {
+        id
+        ... on ActivityNode {
+          legacy
+        }
+        ... on BoostNode {
+          goalButtonUrl
+          goalButtonText
+          legacy
+        }
+        ... on FeedNoticeNode {
+          location
+          key
+        }
+        ... on FeedHighlightsConnection {
+          edges {
             node {
-                id
-                ... on ActivityNode {
-                    legacy
-                }
-                ... on BoostNode {
-                    goalButtonUrl
-                    goalButtonText
-                    legacy
-                }
-                ... on FeedNoticeNode {
-                    location
-                    key
-                }
-                ... on FeedHighlightsConnection {
-                    edges {
-                        node {
-                            id
-                            legacy
-                        }
-                    }
-                    pageInfo {
-                        ...PageInfo
-                    }
-                }
-                ... on PublisherRecsConnection {
-                    edges {
-                        publisherNode: node {
-                            id
-                            ... on UserNode {
-                                legacy
-                            }
-                            ... on BoostNode {
-                                legacy
-                            }
-                        }
-                    }
-                    pageInfo {
-                        ...PageInfo
-                    }
-                }
+              id
+              legacy
             }
-        }
-
-        pageInfo {
+          }
+          pageInfo {
             ...PageInfo
+          }
         }
+        ... on PublisherRecsConnection {
+          edges {
+            publisherNode: node {
+              id
+              ... on UserNode {
+                legacy
+              }
+              ... on BoostNode {
+                legacy
+              }
+              ... on GroupNode {
+                legacy
+              }
+            }
+          }
+          pageInfo {
+            ...PageInfo
+          }
+        }
+      }
     }
+
+    pageInfo {
+      ...PageInfo
+    }
+  }
 }
 
-fragment PageInfo on PageInfo
-{
+fragment PageInfo on PageInfo {
   hasPreviousPage
   hasNextPage
   startCursor
