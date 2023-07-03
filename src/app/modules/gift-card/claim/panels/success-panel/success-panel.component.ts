@@ -142,11 +142,11 @@ export class GiftCardClaimSuccessPanelComponent implements OnInit, OnDestroy {
               }
             )?.[0];
 
-            if (balance) {
-              this.balance$.next(balance?.balance);
+            if (!balance) {
+              throw new Error('No matching balance found in response.');
             }
 
-            throw new Error('Unable to load gift card balance.');
+            this.balance$.next(balance?.balance);
           } catch (e) {
             console.error(e);
             this.toast.warn('Unable to load gift card balance.');
