@@ -138,6 +138,90 @@ export type FeedNoticeNode = NodeInterface & {
   location: Scalars['String']['output'];
 };
 
+export type GiftCardBalanceByProductId = {
+  __typename?: 'GiftCardBalanceByProductId';
+  balance: Scalars['Float']['output'];
+  productId: GiftCardProductIdEnum;
+};
+
+export type GiftCardEdge = EdgeInterface & {
+  __typename?: 'GiftCardEdge';
+  cursor: Scalars['String']['output'];
+  node: GiftCardNode;
+};
+
+export type GiftCardNode = NodeInterface & {
+  __typename?: 'GiftCardNode';
+  amount: Scalars['Float']['output'];
+  balance: Scalars['Float']['output'];
+  claimedAt?: Maybe<Scalars['Int']['output']>;
+  claimedByGuid?: Maybe<Scalars['String']['output']>;
+  expiresAt: Scalars['Int']['output'];
+  guid?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  issuedAt: Scalars['Int']['output'];
+  issuedByGuid?: Maybe<Scalars['String']['output']>;
+  productId: GiftCardProductIdEnum;
+  /**
+   * Returns transactions relating to the gift card
+   * TODO: Find a way to make this not part of the data model
+   */
+  transactions: GiftCardTransactionsConnection;
+};
+
+export type GiftCardNodeTransactionsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export enum GiftCardOrderingEnum {
+  CreatedAsc = 'CREATED_ASC',
+  CreatedDesc = 'CREATED_DESC',
+  ExpiringAsc = 'EXPIRING_ASC',
+  ExpiringDesc = 'EXPIRING_DESC',
+}
+
+export enum GiftCardProductIdEnum {
+  Boost = 'BOOST',
+  Plus = 'PLUS',
+  Pro = 'PRO',
+  Supermind = 'SUPERMIND',
+}
+
+export type GiftCardTargetInput = {
+  targetEmail?: InputMaybe<Scalars['String']['input']>;
+  targetUserGuid?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GiftCardTransaction = NodeInterface & {
+  __typename?: 'GiftCardTransaction';
+  amount: Scalars['Float']['output'];
+  createdAt: Scalars['Int']['output'];
+  giftCardGuid?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  paymentGuid?: Maybe<Scalars['String']['output']>;
+};
+
+export type GiftCardTransactionEdge = EdgeInterface & {
+  __typename?: 'GiftCardTransactionEdge';
+  cursor: Scalars['String']['output'];
+  node: GiftCardTransaction;
+};
+
+export type GiftCardTransactionsConnection = ConnectionInterface & {
+  __typename?: 'GiftCardTransactionsConnection';
+  edges: Array<GiftCardTransactionEdge>;
+  pageInfo: PageInfo;
+};
+
+export type GiftCardsConnection = ConnectionInterface & {
+  __typename?: 'GiftCardsConnection';
+  edges: Array<GiftCardEdge>;
+  pageInfo: PageInfo;
+};
+
 export type GroupEdge = EdgeInterface & {
   __typename?: 'GroupEdge';
   cursor: Scalars['String']['output'];
@@ -162,8 +246,20 @@ export type GroupNode = NodeInterface & {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /** A placeholder query used by thecodingmachine/graphqlite when there are no declared mutations. */
-  dummyMutation?: Maybe<Scalars['String']['output']>;
+  claimGiftCard: GiftCardNode;
+  createGiftCard: GiftCardNode;
+};
+
+export type MutationClaimGiftCardArgs = {
+  claimCode: Scalars['String']['input'];
+};
+
+export type MutationCreateGiftCardArgs = {
+  amount: Scalars['Float']['input'];
+  expiresAt?: InputMaybe<Scalars['Int']['input']>;
+  productIdEnum: Scalars['Int']['input'];
+  stripePaymentMethodId: Scalars['String']['input'];
+  targetInput: GiftCardTargetInput;
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -212,11 +308,48 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Returns an individual gift card */
+  giftCard: GiftCardNode;
+  /** Returns an individual gift card by its claim code. */
+  giftCardByClaimCode: GiftCardNode;
+  /** Returns a list of gift card transactions */
+  giftCardTransactions: GiftCardTransactionsConnection;
+  /** Returns a list of gift cards belonging to a user */
+  giftCards: GiftCardsConnection;
+  /** The available balance a user has */
+  giftCardsBalance: Scalars['Float']['output'];
+  /** The available balances of each gift card types */
+  giftCardsBalances: Array<GiftCardBalanceByProductId>;
   newsfeed: NewsfeedConnection;
 };
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryGiftCardArgs = {
+  guid: Scalars['String']['input'];
+};
+
+export type QueryGiftCardByClaimCodeArgs = {
+  claimCode: Scalars['String']['input'];
+};
+
+export type QueryGiftCardTransactionsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryGiftCardsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  includeIssued?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  ordering?: InputMaybe<GiftCardOrderingEnum>;
+  productId?: InputMaybe<GiftCardProductIdEnum>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -271,6 +404,52 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type ClaimGiftCardMutationVariables = Exact<{
+  claimCode: Scalars['String']['input'];
+}>;
+
+export type ClaimGiftCardMutation = {
+  __typename?: 'Mutation';
+  claimGiftCard: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+    claimedByGuid?: string | null;
+  };
+};
+
+export type GetGiftCardBalancesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGiftCardBalancesQuery = {
+  __typename?: 'Query';
+  giftCardsBalances: Array<{
+    __typename?: 'GiftCardBalanceByProductId';
+    productId: GiftCardProductIdEnum;
+    balance: number;
+  }>;
+};
+
+export type GetGiftCardByCodeQueryVariables = Exact<{
+  claimCode: Scalars['String']['input'];
+}>;
+
+export type GetGiftCardByCodeQuery = {
+  __typename?: 'Query';
+  giftCardByClaimCode: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+  };
 };
 
 export type FetchNewsfeedQueryVariables = Exact<{
@@ -340,6 +519,8 @@ export type FetchNewsfeedQuery = {
                 key: string;
                 id: string;
               }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
@@ -375,6 +556,8 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
                         | {
                             __typename?: 'GroupNode';
                             legacy: string;
@@ -400,6 +583,20 @@ export type FetchNewsfeedQuery = {
                       __typename?: 'FeedNoticeEdge';
                       publisherNode: {
                         __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
                         id: string;
                       };
                     }
@@ -468,6 +665,16 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'GiftCardEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardNode'; id: string };
+        }
+      | {
+          __typename?: 'GiftCardTransactionEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardTransaction'; id: string };
+        }
+      | {
           __typename?: 'GroupEdge';
           cursor: string;
           node: { __typename?: 'GroupNode'; id: string };
@@ -498,6 +705,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
@@ -514,6 +723,17 @@ export type FetchNewsfeedQuery = {
               | {
                   __typename?: 'FeedNoticeEdge';
                   publisherNode: { __typename?: 'FeedNoticeNode'; id: string };
+                }
+              | {
+                  __typename?: 'GiftCardEdge';
+                  publisherNode: { __typename?: 'GiftCardNode'; id: string };
+                }
+              | {
+                  __typename?: 'GiftCardTransactionEdge';
+                  publisherNode: {
+                    __typename?: 'GiftCardTransaction';
+                    id: string;
+                  };
                 }
               | {
                   __typename?: 'GroupEdge';
@@ -580,6 +800,81 @@ export const PageInfoFragmentDoc = gql`
     endCursor
   }
 `;
+export const ClaimGiftCardDocument = gql`
+  mutation ClaimGiftCard($claimCode: String!) {
+    claimGiftCard(claimCode: $claimCode) {
+      guid
+      productId
+      amount
+      balance
+      expiresAt
+      claimedAt
+      claimedByGuid
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ClaimGiftCardGQL extends Apollo.Mutation<
+  ClaimGiftCardMutation,
+  ClaimGiftCardMutationVariables
+> {
+  document = ClaimGiftCardDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardBalancesDocument = gql`
+  query GetGiftCardBalances {
+    giftCardsBalances {
+      productId
+      balance
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardBalancesGQL extends Apollo.Query<
+  GetGiftCardBalancesQuery,
+  GetGiftCardBalancesQueryVariables
+> {
+  document = GetGiftCardBalancesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardByCodeDocument = gql`
+  query GetGiftCardByCode($claimCode: String!) {
+    giftCardByClaimCode(claimCode: $claimCode) {
+      guid
+      productId
+      amount
+      balance
+      expiresAt
+      claimedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardByCodeGQL extends Apollo.Query<
+  GetGiftCardByCodeQuery,
+  GetGiftCardByCodeQueryVariables
+> {
+  document = GetGiftCardByCodeDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const FetchNewsfeedDocument = gql`
   query FetchNewsfeed(
     $algorithm: String!

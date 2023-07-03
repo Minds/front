@@ -1,0 +1,26 @@
+<h2
+  class="m-giftCardLoggedOut__title"
+  i18n="@@GIFT_CARD_PANEL__LOGGED_OUT__SIGN_IN_TO_CLAIM"
+>
+  Sign in to claim your gift
+</h2>
+<p class="m-giftCardLoggedOut__description">
+  <span i18n="@@GIFT_CARD_PANEL__LOGGED_OUT__DONT_HAVE_AN_ACCOUNT"
+    >Don't have an account?</span
+  >
+  <span>&nbsp;</span>
+  <span
+    class="m-giftCardLoggedOut__joinNowLink"
+    i18n="@@GIFT_CARD_PANEL__LOGGED_OUT__JOIN_MINDS_NOW"
+    (click)="openAuthModal('register')"
+    >Join Minds Now</span
+  >
+</p>
+<m-button
+  class="m-giftCardLoggedOut__actionButton"
+  [color]="'blue'"
+  (onAction)="openAuthModal('login')"
+  ><ng-container i18n="@@GIFT_CARD_PANEL__LOGGED_OUT__SIGN_IN"
+    >Sign in</ng-container
+  ></m-button
+>
