@@ -5,7 +5,7 @@
     *ngIf="!(loaded$ | async)"
     [inProgress]="!(loaded$ | async)"
   ></m-loadingSpinner>
-  <m-channelRecommendation
+  <m-publisherRecommendations
     location="newsfeed"
     isOnboarding="true"
     noOuterPadding="true"
@@ -14,7 +14,7 @@
     (subscribed)="onSubscribed()"
     (unsubscribed)="onUnsubscribed()"
     (loaded)="onLoaded($event)"
-  ></m-channelRecommendation>
+  ></m-publisherRecommendations>
 </div>
 <m-onboardingV5__footer
   [disabledActionButton]="!(hasCompletedStep$ | async)"

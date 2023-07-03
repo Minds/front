@@ -5,40 +5,43 @@
     class="m-twoColumnLayout"
     *ngIf="!(onboardingCompleted$ | async); else completionSplashTemplate"
   >
-    <div class="m-twoColumnLayout__leftContainer">
+    <div
+      class="m-twoColumnLayout__leftContainer"
+      *ngIf="activeStep$ | async as activeStep"
+    >
       <m-onboardingV5__stepper></m-onboardingV5__stepper>
-      <ng-container [ngSwitch]="(activeStep$ | async)?.stepType">
+      <ng-container [ngSwitch]="activeStep.stepType">
         <m-onboardingV5__verifyEmailContent
           *ngSwitchCase="'verify_email'"
-          [title]="(activeStep$ | async)?.data?.title"
-          [description]="(activeStep$ | async)?.data?.description"
-          [data]="(activeStep$ | async)?.data"
+          [title]="activeStep.data?.title"
+          [description]="activeStep.data?.description"
+          [data]="activeStep.data"
         ></m-onboardingV5__verifyEmailContent>
         <m-onboardingV5__tagSelectorContent
           *ngSwitchCase="'tag_selector'"
-          [title]="(activeStep$ | async)?.data?.title"
-          [description]="(activeStep$ | async)?.data?.description"
-          [data]="(activeStep$ | async)?.data"
+          [title]="activeStep.data?.title"
+          [description]="activeStep.data?.description"
+          [data]="activeStep.data"
         ></m-onboardingV5__tagSelectorContent>
         <m-onboardingV5__radioSurveyContent
           *ngSwitchCase="'survey'"
-          [title]="(activeStep$ | async)?.data?.title"
-          [description]="(activeStep$ | async)?.data?.description"
-          [data]="(activeStep$ | async)?.data"
+          [title]="activeStep.data?.title"
+          [description]="activeStep.data?.description"
+          [data]="activeStep.data"
         ></m-onboardingV5__radioSurveyContent>
         <m-onboardingV5__channelRecommendationsContent
           *ngSwitchCase="'user_selector'"
           publisherType="user"
-          [title]="(activeStep$ | async)?.data?.title"
-          [description]="(activeStep$ | async)?.data?.description"
-          [data]="(activeStep$ | async)?.data"
+          [title]="activeStep.data?.title"
+          [description]="activeStep.data?.description"
+          [data]="activeStep.data"
         ></m-onboardingV5__channelRecommendationsContent>
         <m-onboardingV5__channelRecommendationsContent
           *ngSwitchCase="'group_selector'"
           publisherType="group"
-          [title]="(activeStep$ | async)?.data?.title"
-          [description]="(activeStep$ | async)?.data?.description"
-          [data]="(activeStep$ | async)?.data"
+          [title]="activeStep.data?.title"
+          [description]="activeStep.data?.description"
+          [data]="activeStep.data"
         ></m-onboardingV5__channelRecommendationsContent>
       </ng-container>
     </div>
