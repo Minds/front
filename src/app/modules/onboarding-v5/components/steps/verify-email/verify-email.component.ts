@@ -154,7 +154,7 @@ export class OnboardingV5VerifyEmailContentComponent
     // bounce to back of event queue as this fires
     // BEFORE the form value is updated.
     setTimeout(() => {
-      if (this.codeInputFormControl.value.trim().length === 6) {
+      if (this.codeInputFormControl.value.trim()?.length === 6) {
         this.submitCode();
       }
     }, 0);
