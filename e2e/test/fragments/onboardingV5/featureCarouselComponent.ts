@@ -64,9 +64,9 @@ class FeatureCarouselComponent {
   /**
    * Click the dot at a given index.
    * @param { number } index - index of dot to click.
-   * @returns { Promise<void> }
+   * @returns { void }
    */
-  public async clickDotAtIndex(index: number): Promise<void> {
+  public clickDotAtIndex(index: number): void {
     I.click(locate(this.itemDotSelector).at(index + 1));
   }
 }
