@@ -44,7 +44,7 @@ class OnboardingV5ModalComponent {
    * @returns { void }
    */
   public isContinueDisabled(): void {
-    I.seeElement(`${this.continueButtonSelector}[disabled]`);
+    I.seeElement(`${this.continueButtonSelector} [disabled]`);
   }
 
   /**
