@@ -49,6 +49,23 @@ class OnboardingV5ModalComponent {
   }
 
   /**
+   * Click the skip button, and optionally wait for progress to save.
+   * @param { boolean } waitForProgressSave - will wait for progress save to complete before continuing. Defaults to false.
+   * @returns { Promise<void> }
+   */
+  public async clickSkip(waitForProgressSave: boolean = false): Promise<void> {
+    if (waitForProgressSave) {
+      await I.clickAndWait(
+        locate(this.skipButtonSelector),
+        '/api/graphql',
+        200
+      );
+      return;
+    }
+    I.click(this.skipButtonSelector);
+  }
+
+  /**
    * Whether continue button si disabled.
    * @returns { void }
    */
@@ -58,31 +75,29 @@ class OnboardingV5ModalComponent {
 
   /**
    * Complete whole onboarding flow from registration to logged-in page landing.
-   * @returns { void }
+   * @returns { Promise<void> }
    */
-  public completeOnboarding(): void {
+  public async completeOnboarding(): Promise<void> {
     // verify email.
     const verificationCode: string = '123123';
     onboardingV5VerifyEmailComponent.setBypassCookieForCode(verificationCode);
     onboardingV5VerifyEmailComponent.fillCodeInput(verificationCode);
     I.wait(1);
-    onboardingV5ModalComponent.clickContinue();
+    await onboardingV5ModalComponent.clickContinue(true);
 
     // tags step.
     onboardingV5TagSelectorComponent.selectFirstTags(Number(3));
-    onboardingV5ModalComponent.clickContinue();
+    await onboardingV5ModalComponent.clickContinue(true);
 
     // survey step.
     onboardingV5SurveyComponent.selectOptionByIndex(1);
-    onboardingV5ModalComponent.clickContinue();
+    await onboardingV5ModalComponent.clickContinue(true);
 
     // user selector step.
-    onboardingV5PublisherRecsComponent.selectRecommendationByIndex(0);
-    onboardingV5ModalComponent.clickContinue();
+    await onboardingV5ModalComponent.clickSkip(true);
 
     // group selector step.
-    onboardingV5PublisherRecsComponent.selectRecommendationByIndex(0);
-    onboardingV5ModalComponent.clickContinue();
+    await onboardingV5ModalComponent.clickSkip(true);
 
     // completion step.
     onboardingV5CompletionPanelComponent.waitForCompletion();
