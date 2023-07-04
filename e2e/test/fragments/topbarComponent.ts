@@ -4,7 +4,12 @@ const { I } = inject();
  * Topbar component.
  */
 class TopbarComponent {
+  // selectors
+  private topbarRootSelector: string = 'm-topbar';
   private notificationButtonSelector: string = 'm-notifications--topbar-toggle';
+  private joinNowButton: CodeceptJS.Locator = locate(
+    `${this.topbarRootSelector} m-button`
+  ).withText('Join Now');
 
   /**
    * Open notifications flyout and wait for list to load.
@@ -20,6 +25,13 @@ class TopbarComponent {
         30
       ),
     ]);
+  }
+  /**
+   * Click join now button.
+   * @returns { void }
+   */
+  public clickJoinNowButton(): void {
+    I.click(this.joinNowButton);
   }
 }
 

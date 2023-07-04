@@ -9,9 +9,7 @@ namespace CommonSteps {
     registerPage,
     channelPage,
     confirmationModalComponent,
-    contentSettingsComponent,
-    multiFactorModalComponent,
-    publisherRecommendationsModalComponent,
+    onboardingV5ModalComponent,
   } = inject();
 
   /**
@@ -25,25 +23,13 @@ namespace CommonSteps {
 
     I.clearCookie();
     registerPage.navigateToByUrl();
+    registerPage.setupRegistrationBypassCookies();
     registerPage.fillForm(username, password, email);
     registerPage.clickJoinNow();
 
     I.waitForNavigation({ timeout: 30000 });
 
-    // mfa modal.
-    const code: string = '123123';
-    multiFactorModalComponent.enterCode(code, true);
-    multiFactorModalComponent.submit();
-
-    // content settings modal (tags).
-    contentSettingsComponent.clickTagByIndex(1);
-    contentSettingsComponent.clickTagByIndex(2);
-    contentSettingsComponent.clickTagByIndex(3);
-    contentSettingsComponent.clickContinue();
-
-    // skip publisher recommendations.
-    publisherRecommendationsModalComponent.skip();
-    publisherRecommendationsModalComponent.skip();
+    onboardingV5ModalComponent.completeOnboarding();
   });
 
   /**
@@ -149,6 +135,10 @@ namespace CommonSteps {
     I.wait(seconds);
   });
 
+  Given('I navigate to {string}', (path: string) => {
+    I.amOnPage(path);
+  });
+
   //
 
   When('I click the cancel button on the confirmation modal', () => {
@@ -161,6 +151,10 @@ namespace CommonSteps {
 
   When('I cancel the system confirmation dialog', () => {
     I.cancelPopup();
+  });
+
+  When('I refresh the page', () => {
+    I.refreshPage();
   });
 
   //
@@ -184,5 +178,10 @@ namespace CommonSteps {
 
   Then('I see the {string} modal', (selector: string) => {
     modalComponent.isVisible(locate(selector));
+  });
+
+  // Debug helper
+  Then('I pause', () => {
+    pause();
   });
 }
