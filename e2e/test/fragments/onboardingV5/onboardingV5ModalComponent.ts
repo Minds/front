@@ -17,6 +17,7 @@ class OnboardingV5ModalComponent {
 
   private continueButtonSelector: string =
     '[data-test=onboarding-v5-footer-action-button]';
+
   private skipButtonSelector: string =
     '[data-test=onboarding-v5-footer-skip-button]';
 
@@ -31,10 +32,18 @@ class OnboardingV5ModalComponent {
   /**
    * Click the continue button, and optionally wait for progress to save.
    * @param { boolean } waitForProgressSave - will wait for progress save to complete before continuing. Defaults to false.
+   * @returns { Promise<void> }
    */
-  public clickContinue(waitForProgressSave: boolean = false): void {
+  public async clickContinue(
+    waitForProgressSave: boolean = false
+  ): Promise<void> {
     if (waitForProgressSave) {
-      I.clickAndWait(locate(this.continueButtonSelector), '/api/graphql', 200);
+      await I.clickAndWait(
+        locate(this.continueButtonSelector),
+        '/api/graphql',
+        200
+      );
+      return;
     }
     I.click(this.continueButtonSelector);
   }

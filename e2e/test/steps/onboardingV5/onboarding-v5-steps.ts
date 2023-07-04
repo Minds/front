@@ -13,14 +13,17 @@ namespace OnboardingV5Steps {
   } = inject();
 
   // General
-  Given('I click the onboarding v5 continue button', (): void => {
-    onboardingV5ModalComponent.clickContinue();
-  });
+  Given(
+    'I click the onboarding v5 continue button',
+    async (): Promise<void> => {
+      await onboardingV5ModalComponent.clickContinue();
+    }
+  );
 
   Given(
     'I click the onboarding v5 continue button and wait for progress to save',
-    (): void => {
-      onboardingV5ModalComponent.clickContinue(true);
+    async (): Promise<void> => {
+      await onboardingV5ModalComponent.clickContinue(true);
     }
   );
 

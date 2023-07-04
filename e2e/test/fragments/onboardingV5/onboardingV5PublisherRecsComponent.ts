@@ -10,7 +10,7 @@ class OnboardingV5PublisherRecsComponent {
     'm-onboardingV5__channelRecommendationsContent';
   private publisherRecommendationsSelector: string =
     'm-publisherRecommendations';
-  private optionSubscribeSelector: string = `${this.publisherRecommendationsSelector} button[type=submit]`;
+  private optionSubscribeSelector: string = `${this.publisherRecommendationsSelector} button`;
 
   /**
    * Assert that component is visible.
