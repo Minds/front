@@ -22,6 +22,7 @@
           'm-featureCarousel__itemSelectorArrow--disabled':
             (visibleCarouselIndex$ | async) === 0
         }"
+        data-test="feature-carousel-back-arrow"
         >arrow_back</i
       >
       <div
@@ -29,9 +30,12 @@
         class="m-featureCarousel__itemSelectorDot"
         [ngClass]="{
           'm-featureCarousel__itemSelectorDot--inactive':
-            i !== (visibleCarouselIndex$ | async)
+            i !== (visibleCarouselIndex$ | async),
+          'm-featureCarousel__itemSelectorDot--active':
+            i === (visibleCarouselIndex$ | async)
         }"
         (click)="jumpCarousel(i)"
+        data-test="feature-carousel-selector-dot"
       ></div>
       <i
         class="material-icons m-featureCarousel__itemSelectorArrow"
@@ -40,6 +44,7 @@
           'm-featureCarousel__itemSelectorArrow--disabled':
             (visibleCarouselIndex$ | async) === carouselItems.length - 1
         }"
+        data-test="feature-carousel-forward-arrow"
         >arrow_forward</i
       >
     </div>

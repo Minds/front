@@ -11,6 +11,7 @@
           'm-onboardingV5TagSelector__tags--selected': tag.selected
         }"
         (click)="onTagClick(tag)"
+        data-test="onboarding-v5-tag"
       >
         #{{ tag.value | titlecase }}
       </div>
@@ -30,6 +31,7 @@
         class="m-onboardingV5TagSelector__customTagInput"
         (keydown.enter)="onCustomInputSubmit($event)"
         type="text"
+        data-test="onboarding-v5-tag-selector-custom-tag-input"
       />
     </form>
   </ng-container>
