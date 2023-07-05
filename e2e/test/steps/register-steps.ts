@@ -1,4 +1,5 @@
 import { generateARandomString } from '../utils/utils';
+import mockOnboardingResponse from '../scripts/generated/strapi-onboarding-version-response.json';
 
 namespace CommonSteps {
   const { I, topbarComponent, registerPage } = inject();
@@ -15,6 +16,18 @@ namespace CommonSteps {
     const username = generateARandomString();
     const email = 'noreply@minds.com';
     const password = generateARandomString() + 'A1!';
+
+    I.mockRouteAndBypassServiceWorker(
+      '**/graphql',
+      {
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(mockOnboardingResponse),
+      },
+      (responseString: string): boolean => {
+        return responseString.includes('FetchOnboardingV5Versions');
+      }
+    );
 
     registerPage.fillForm(username, password, email);
     registerPage.clickJoinNow();

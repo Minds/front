@@ -28,7 +28,7 @@ class RegisterPage {
    * @return { void }
    */
   public clickJoinNow(): void {
-    I.click(this.selectButtonSelector);
+    I.clickAndWait(locate(this.selectButtonSelector), 'graphql', 200);
   }
 
   /**

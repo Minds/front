@@ -1,5 +1,12 @@
 import Helper from '@codeceptjs/helper';
 
+// generic route response.
+type MindsGenericRouteResponse = {
+  status: number;
+  contentType: string;
+  body: string;
+};
+
 /**
  * Common helpers to be accessed through I. e.g. `await I.clickAndWait(foo, bar);`
  * Make sure to run `npm run def` to update typings after adding a new helper.
@@ -48,6 +55,46 @@ class CommonHelper extends Helper {
       },
       amount
     );
+  }
+
+  /**
+   * Mock a route while bypassing the service worker. For some requests the service worker
+   * will intercept and prevent you from mocking the route. This method will temporarily set
+   * the Nsgw-Bypass header to 1, mock the route, and then set the header back to '' and stop
+   * mocking the route when a match for the route has been completed.
+   *
+   * Note this WILL bypass service workers until the route has been matched!
+   *
+   * @param { string } route - route to match; can be a regex string.
+   * @param { MindsGenericRouteResponse } response - the response you want the route to return. Ensure the body is a string.
+   * @param { Function } additionalMatchCondition - optional callback function to add an additional
+   *  match condition. Is useful if the same route is used for multiple requests and you want to
+   *  mock only one of them. (e.g. for graphql).
+   * @returns { Promise<void> }
+   */
+  public async mockRouteAndBypassServiceWorker(
+    route: string,
+    response: MindsGenericRouteResponse,
+    additionalMatchCondition: (responseString: string) => boolean = () => true
+  ): Promise<void> {
+    const { Playwright } = this.helpers;
+
+    // Set service worker bypass header to 1
+    Playwright.haveRequestHeaders({
+      'Ngsw-Bypass': '1',
+    });
+
+    Playwright.mockRoute(route, route => {
+      if (!additionalMatchCondition(route.request().postData())) {
+        // Stop mocking the route and reset service worker bypass header.
+        Playwright.stopMockingRoute(route);
+        Playwright.haveRequestHeaders({
+          'Ngsw-Bypass': '',
+        });
+        return route.fulfill(response);
+      }
+      return route.continue();
+    });
   }
 }
 
