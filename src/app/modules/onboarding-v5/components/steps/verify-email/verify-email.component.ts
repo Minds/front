@@ -151,14 +151,13 @@ export class OnboardingV5VerifyEmailContentComponent
    * @returns { void }
    */
   public onPaste($event: KeyboardEvent): void {
-    console.log('$event', $event);
     // bounce to back of event queue as this fires
     // BEFORE the form value is updated.
     setTimeout(() => {
-      if (this.codeInputFormControl.value.trim()?.length === 6) {
+      if (this.codeInputFormControl.value.trim().length === 6) {
         this.submitCode();
       }
-    }, 100);
+    }, 0);
   }
 
   /**
