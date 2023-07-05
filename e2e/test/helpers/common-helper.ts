@@ -1,4 +1,5 @@
 import Helper from '@codeceptjs/helper';
+import { Request } from 'playwright';
 
 // generic route response.
 type MindsGenericRouteResponse = {
@@ -67,7 +68,7 @@ class CommonHelper extends Helper {
    *
    * @param { string } route - route to match; can be a regex string.
    * @param { MindsGenericRouteResponse } response - the response you want the route to return. Ensure the body is a string.
-   * @param { Function } additionalMatchCondition - optional callback function to add an additional
+   * @param { function({request: Request}):boolean } additionalMatchCondition - optional callback function to add an additional
    *  match condition. Is useful if the same route is used for multiple requests and you want to
    *  mock only one of them. (e.g. for graphql).
    * @returns { Promise<void> }
@@ -75,7 +76,7 @@ class CommonHelper extends Helper {
   public async mockRouteAndBypassServiceWorker(
     route: string,
     response: MindsGenericRouteResponse,
-    additionalMatchCondition: (responseString: string) => boolean = () => true
+    additionalMatchCondition: (request: Request) => boolean = () => true
   ): Promise<void> {
     const { Playwright } = this.helpers;
 
@@ -85,7 +86,10 @@ class CommonHelper extends Helper {
     });
 
     Playwright.mockRoute(route, (route: any): void => {
-      if (!additionalMatchCondition || additionalMatchCondition(route)) {
+      if (
+        !additionalMatchCondition ||
+        additionalMatchCondition(route.request())
+      ) {
         // Stop mocking the route and reset service worker bypass header.
         Playwright.stopMockingRoute(route);
         Playwright.haveRequestHeaders({

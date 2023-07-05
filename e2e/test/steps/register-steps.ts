@@ -1,5 +1,6 @@
 import { generateARandomString } from '../utils/utils';
 import mockOnboardingResponse from '../scripts/generated/strapi-onboarding-version-response.json';
+import { Request } from 'playwright';
 
 namespace CommonSteps {
   const { I, topbarComponent, registerPage } = inject();
@@ -24,11 +25,8 @@ namespace CommonSteps {
         contentType: 'application/json',
         body: JSON.stringify(mockOnboardingResponse),
       },
-      (route: any): boolean => {
-        return route
-          .request()
-          .postData()
-          .includes('FetchOnboardingV5Versions');
+      (request: Request): boolean => {
+        return request.postData().includes('FetchOnboardingV5Versions');
       }
     );
 

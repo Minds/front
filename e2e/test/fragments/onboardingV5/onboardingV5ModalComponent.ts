@@ -1,3 +1,4 @@
+import { Request } from 'playwright';
 import mockOnboardingResponse from '../../scripts/generated/strapi-onboarding-version-response.json';
 
 const {
@@ -86,8 +87,8 @@ class OnboardingV5ModalComponent {
         contentType: 'application/json',
         body: JSON.stringify(mockOnboardingResponse),
       },
-      (responseString: string): boolean => {
-        return responseString.includes('FetchOnboardingV5Versions');
+      (request: Request): boolean => {
+        return request.postData().includes('FetchOnboardingV5Versions');
       }
     );
 
