@@ -1,10 +1,11 @@
+import mockOnboardingResponse from '../../scripts/generated/strapi-onboarding-version-response.json';
+
 const {
   I,
   onboardingV5ModalComponent,
   onboardingV5VerifyEmailComponent,
   onboardingV5TagSelectorComponent,
   onboardingV5SurveyComponent,
-  onboardingV5PublisherRecsComponent,
   onboardingV5CompletionPanelComponent,
 } = inject();
 
@@ -78,6 +79,18 @@ class OnboardingV5ModalComponent {
    * @returns { Promise<void> }
    */
   public async completeOnboarding(): Promise<void> {
+    I.mockRouteAndBypassServiceWorker(
+      '**/graphql',
+      {
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(mockOnboardingResponse),
+      },
+      (responseString: string): boolean => {
+        return responseString.includes('FetchOnboardingV5Versions');
+      }
+    );
+
     // verify email.
     const verificationCode: string = '123123';
     onboardingV5VerifyEmailComponent.setBypassCookieForCode(verificationCode);
