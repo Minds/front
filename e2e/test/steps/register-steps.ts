@@ -24,8 +24,11 @@ namespace CommonSteps {
         contentType: 'application/json',
         body: JSON.stringify(mockOnboardingResponse),
       },
-      (responseString: string): boolean => {
-        return responseString.includes('FetchOnboardingV5Versions');
+      (route: any): boolean => {
+        return route
+          .request()
+          .postData()
+          .includes('FetchOnboardingV5Versions');
       }
     );
 

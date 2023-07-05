@@ -36,7 +36,6 @@ namespace OnboardingV5Steps {
     'I fill out onboarding v5 email code input with {string}',
     (code: string) => {
       onboardingV5VerifyEmailComponent.fillCodeInput(code);
-      I.wait(1);
     }
   );
 

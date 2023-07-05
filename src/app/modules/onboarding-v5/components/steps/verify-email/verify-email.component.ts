@@ -49,6 +49,11 @@ export class OnboardingV5VerifyEmailContentComponent
   /** Confirmation key to be passed with code submission. */
   public confirmationKey: string;
 
+  /** Whether component is loaded (following email being sent). */
+  public readonly loaded$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
   /** When email sending is in progress */
   public readonly emailSendInProgress$: BehaviorSubject<
     boolean
@@ -151,13 +156,14 @@ export class OnboardingV5VerifyEmailContentComponent
    * @returns { void }
    */
   public onPaste($event: KeyboardEvent): void {
+    console.log('$event', $event);
     // bounce to back of event queue as this fires
     // BEFORE the form value is updated.
     setTimeout(() => {
       if (this.codeInputFormControl.value.trim()?.length === 6) {
         this.submitCode();
       }
-    }, 0);
+    }, 100);
   }
 
   /**
@@ -188,6 +194,9 @@ export class OnboardingV5VerifyEmailContentComponent
       console.error(e);
       this.toast.error('An unknown error has occurred.');
     } finally {
+      if (!this.loaded$.getValue()) {
+        this.loaded$.next(true);
+      }
       this.emailSendInProgress$.next(false);
     }
   }

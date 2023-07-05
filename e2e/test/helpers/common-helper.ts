@@ -84,8 +84,8 @@ class CommonHelper extends Helper {
       'Ngsw-Bypass': '1',
     });
 
-    Playwright.mockRoute(route, route => {
-      if (!additionalMatchCondition(route.request().postData())) {
+    Playwright.mockRoute(route, (route: any): void => {
+      if (!additionalMatchCondition || additionalMatchCondition(route)) {
         // Stop mocking the route and reset service worker bypass header.
         Playwright.stopMockingRoute(route);
         Playwright.haveRequestHeaders({

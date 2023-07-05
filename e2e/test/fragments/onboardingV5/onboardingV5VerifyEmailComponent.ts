@@ -14,7 +14,21 @@ class OnboardingV5VerifyEmailComponent {
    * @returns { void }
    */
   public fillCodeInput(code: string): void {
-    I.fillField(this.codeInputSelector, code);
+    I.waitForElement(this.codeInputSelector);
+    I.click(this.codeInputSelector);
+
+    // press keys one by one else we trigger the paste event.
+    for (let char of code.split('')) {
+      I.pressKey(char);
+    }
+  }
+
+  /**
+   * Click the code input.
+   * @returns { void }
+   */
+  public clickCodeInput(code: string): void {
+    I.click(this.codeInputSelector);
   }
 
   /**
