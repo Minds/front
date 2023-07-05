@@ -1,37 +1,32 @@
-<ng-container *ngIf="loaded$ | async; else loadingSpinnerTemplate">
-  <div class="m-onboardingV5__stepContentContainer">
-    <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
-    <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
-    <form class="m-onboardingV5VerifyEmail__codeForm" [formGroup]="formGroup">
-      <label for="code" class="m-onboardingV5VerifyEmail__inputLabel">{{
-        data.verifyEmailForm?.inputLabel
-      }}</label>
-      <input
-        formControlName="code"
-        class="m-onboardingV5VerifyEmail__input"
-        (keydown.enter)="onActionButtonClick()"
-        (paste)="onPaste($event)"
-        [placeholder]="data?.verifyEmailForm?.inputPlaceholder ?? ''"
-        data-test="onboarding-v5-verify-email-input"
-      />
-    </form>
-    <p
-      (click)="onResendCodeTextClick($event)"
-      class="m-onboardingV5VerifyEmail__resendCodeText"
-      [innerHtml]="resendCodeString"
-    ></p>
-  </div>
-  <m-onboardingV5__footer
-    [disabledActionButton]="
-      !codeInputFormControl.valid && !(codeSubmissionInProgress$ | async)
-    "
-    [saving]="codeSubmissionInProgress$ | async"
-    [actionButton]="data.actionButton ?? null"
-    [skipButton]="data.skipButton ?? null"
-    (actionButtonClick)="onActionButtonClick()"
-    (skipButtonClick)="onSkipButtonClick()"
-  ></m-onboardingV5__footer>
-</ng-container>
-<ng-template #loadingSpinnerTemplate>
-  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
-</ng-template>
+<div class="m-onboardingV5__stepContentContainer">
+  <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
+  <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
+  <form class="m-onboardingV5VerifyEmail__codeForm" [formGroup]="formGroup">
+    <label for="code" class="m-onboardingV5VerifyEmail__inputLabel">{{
+      data.verifyEmailForm?.inputLabel
+    }}</label>
+    <input
+      formControlName="code"
+      class="m-onboardingV5VerifyEmail__input"
+      (keydown.enter)="onActionButtonClick()"
+      (paste)="onPaste($event)"
+      [placeholder]="data?.verifyEmailForm?.inputPlaceholder ?? ''"
+      data-test="onboarding-v5-verify-email-input"
+    />
+  </form>
+  <p
+    (click)="onResendCodeTextClick($event)"
+    class="m-onboardingV5VerifyEmail__resendCodeText"
+    [innerHtml]="resendCodeString"
+  ></p>
+</div>
+<m-onboardingV5__footer
+  [disabledActionButton]="
+    !codeInputFormControl.valid && !(codeSubmissionInProgress$ | async)
+  "
+  [saving]="codeSubmissionInProgress$ | async"
+  [actionButton]="data.actionButton ?? null"
+  [skipButton]="data.skipButton ?? null"
+  (actionButtonClick)="onActionButtonClick()"
+  (skipButtonClick)="onSkipButtonClick()"
+></m-onboardingV5__footer>

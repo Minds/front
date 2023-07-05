@@ -49,11 +49,6 @@ export class OnboardingV5VerifyEmailContentComponent
   /** Confirmation key to be passed with code submission. */
   public confirmationKey: string;
 
-  /** Whether component is loaded (following email being sent). */
-  public readonly loaded$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
-
   /** When email sending is in progress */
   public readonly emailSendInProgress$: BehaviorSubject<
     boolean
@@ -194,9 +189,6 @@ export class OnboardingV5VerifyEmailContentComponent
       console.error(e);
       this.toast.error('An unknown error has occurred.');
     } finally {
-      if (!this.loaded$.getValue()) {
-        this.loaded$.next(true);
-      }
       this.emailSendInProgress$.next(false);
     }
   }

@@ -39,6 +39,16 @@ class OnboardingV5VerifyEmailComponent {
   public setBypassCookieForCode(code: string): void {
     I.setMFABypassCookie(code);
   }
+
+  /**
+   * Wait for email send response.
+   * @returns { void }
+   */
+  public waitForEmailSendResponse(): void {
+    I.waitForResponse(resp => {
+      return resp.url().includes('/api/v3/email/send') && resp.status() === 200;
+    });
+  }
 }
 
 export = new OnboardingV5VerifyEmailComponent();

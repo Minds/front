@@ -92,6 +92,8 @@ class OnboardingV5ModalComponent {
       }
     );
 
+    onboardingV5VerifyEmailComponent.waitForEmailSendResponse();
+
     // verify email.
     const verificationCode: string = '123123';
     onboardingV5VerifyEmailComponent.setBypassCookieForCode(verificationCode);
