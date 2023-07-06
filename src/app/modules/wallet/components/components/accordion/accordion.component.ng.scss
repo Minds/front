@@ -52,6 +52,17 @@
     .m-walletTokenEarnings__header {
       td {
         padding: 15px 0;
+
+        .m-walletTokenEarnings__subheaderText {
+          margin-top: $spacing1;
+          margin-bottom: 0;
+          padding-right: $spacing4;
+
+          @include body3Regular;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
       }
       &:hover {
         cursor: pointer;
@@ -96,7 +107,7 @@
 
   .m-walletTokenEarnings__expanded {
     @include m-theme() {
-      background-color: themed($m-bgColor--btnHover);
+      background-color: themed($m-bgColor--secondaryAlt);
     }
 
     tr:first-child td {
@@ -116,7 +127,7 @@
         font-size: 16px;
         padding: 0 20px 0 30px;
         @include m-theme() {
-          color: themed($m-textColor--secondary);
+          color: themed($m-textColor--primary);
         }
       }
       &:nth-of-type(2) {

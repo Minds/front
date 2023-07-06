@@ -110,6 +110,39 @@
     }
   }
 
+  // ************************************
+  // ** MODAL DISPLAYING COMMENT MEDIA **
+  // ************************************
+  // Don't show the toolbar buttons that
+  // won't work for comment media modals
+  .m-activityModal--isComment & {
+    .m-activityToolbar__largeActions {
+      ::ng-deep {
+        m-supermind__banner,
+        m-supermind__button {
+          display: none;
+        }
+      }
+    }
+    .m-activityToolbar__actions {
+      justify-content: space-around;
+      ::ng-deep {
+        > * {
+          // Ensure the remaining buttons
+          // are spaced evenly
+          flex-grow: 0;
+          flex-basis: $spacing5;
+        }
+
+        m-supermind__button,
+        m-activity__remindButton,
+        minds-button-comment,
+        m-activity__boostButton {
+          display: none;
+        }
+      }
+    }
+  }
   // *********************************
   // ** SINGLE **
   // *********************************
@@ -212,7 +245,7 @@
           i.material-icons,
           .minds-counter {
             @include m-theme() {
-              color: themed($m-blue);
+              color: themed($m-action);
             }
           }
         }

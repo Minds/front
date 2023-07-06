@@ -1,0 +1,87 @@
+@import 'defaults.scss';
+
+:host {
+  .m-composerPopup__body {
+    .m-composerPopup__content {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-composerPopup__title {
+        margin: 0 0 $spacing4 0;
+
+        @include heading3Bold;
+        @include unselectable;
+
+        &.m-composerPopup__title--shareToGroupMode {
+          margin: 0 0 $spacing6 0;
+        }
+      }
+
+      .m-composerPopup__subtitle {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        margin: 0 0 $spacing4 0;
+
+        @include heading4Bold;
+        @include unselectable;
+
+        .material-icons {
+          @include unselectable;
+          margin-left: $spacing2;
+        }
+      }
+    }
+
+    .m-composerAudience__myChannelContainer {
+      m-selectableEntityCard {
+        margin: 0 0 $spacing4 0;
+      }
+    }
+
+    .m-composerAudience__noGroupsContainer {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-composerAudience__noGroupsSpan {
+        margin-bottom: $spacing6;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      m-button {
+        margin-bottom: $spacing5;
+      }
+    }
+
+    .m-composerAudience__groupsList {
+      display: flex;
+      flex-flow: column nowrap;
+      overflow-y: auto;
+      max-height: 340px;
+
+      @media screen and (max-width: $max-mobile) {
+        flex-grow: 1;
+        flex-basis: 0;
+        max-height: unset;
+      }
+
+      @include vertical-scroll;
+
+      m-selectableEntityCard {
+        margin-bottom: $spacing4;
+      }
+
+      infinite-scroll {
+        padding: unset;
+
+        ::ng-deep m-button,
+        .m-loadingSpinner__wrapper {
+          padding: 0 0 $spacing5 0;
+        }
+      }
+    }
+  }
+}

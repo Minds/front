@@ -9,18 +9,13 @@ import { PlusSubscriptionComponent } from './subscription/subscription.component
 import { PlusVerifyComponent } from './verify/verify.component';
 import { PlusService } from './plus.service';
 import { MarketingModule } from '../marketing/marketing.module';
+import { MarkdownModule } from 'ngx-markdown';
 
 const plusRoutes: Routes = [
   {
     path: 'plus',
     component: PlusMarketingComponent,
     data: {
-      title: 'Minds Plus',
-      description: `Support Minds and unlock features such as hiding ads, accessing exclusive content, receiving a badge and verifying your channel.`,
-      canonicalUrl: '/plus',
-      ogImage: '/assets/og-images/plus-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
       preventLayoutReset: true,
     },
   },
@@ -33,6 +28,7 @@ const plusRoutes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(plusRoutes),
+    MarkdownModule.forRoot(),
     MarketingModule,
   ],
   declarations: [

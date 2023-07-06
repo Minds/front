@@ -1,7 +1,6 @@
 import { Component, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 import { TranslationService } from '../../services/translation';
-import { FeaturesService } from '../../services/features.service';
 import { ToasterService } from '../../common/services/toaster.service';
 
 /**
@@ -52,7 +51,6 @@ export class Translate {
   constructor(
     public translationService: TranslationService,
     public changeDetectorRef: ChangeDetectorRef,
-    public featuresService: FeaturesService,
     private toasterService: ToasterService
   ) {}
 

@@ -5,10 +5,10 @@ import {
   Component,
   EventEmitter,
   Injector,
-  Output,
-  ViewChild,
   Input,
   OnDestroy,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
 import {
@@ -22,14 +22,22 @@ import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { FeaturesService } from '../../../../services/features.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { first, map, distinctUntilChanged } from 'rxjs/operators';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, first, map } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  firstValueFrom,
+} from 'rxjs';
 import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
 import { UploaderService } from '../../services/uploader.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
-import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
+import { ClientMetaData } from '../../../../common/services/client-meta.service';
+import { ComposerModalService } from '../modal/modal.service';
+import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
+import { ComposerAudienceSelectorService } from '../../services/audience.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -87,6 +95,11 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
 
   isDirty: boolean = false;
 
+  @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
+
+  /** Is this an edit? */
+  public readonly isEditing$: Observable<boolean> = this.service.isEditing$;
+
   /**
    * Constructor
    * @param service
@@ -99,13 +112,14 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
   constructor(
     protected service: ComposerService,
     protected popup: PopupService,
+    protected audienceSelectorService: ComposerAudienceSelectorService,
     protected router: Router,
     protected inMemoryStorage: InMemoryStorageService,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
     protected toasterService: ToasterService,
-    protected featuresService: FeaturesService,
     protected blogPreloadService: BlogPreloadService,
+    private composerModal: ComposerModalService,
     configs: ConfigsService,
     protected uploaderService: UploaderService
   ) {
@@ -130,6 +144,11 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
      */
     if (this.service.supermindRequest$.getValue()) {
       this.displaySupermindRequestPopup();
+    }
+
+    // if the audience selector is in share to group mode, open popup on load.
+    if (this.audienceSelectorService.shareToGroupMode$.getValue()) {
+      this.displayAudienceSelectorPopup();
     }
 
     this.subscriptions.push(
@@ -213,6 +232,7 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
 
     this.blogPreloadService.next(message);
     this.router.navigate(['/blog/v2/edit/new']);
+    this.composerModal.dismiss();
   }
 
   /**
@@ -275,7 +295,19 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
       this.error = '';
       this.detectChanges();
 
-      const activity = await this.service.post();
+      let clientMeta: ClientMetaData = null;
+      const quoteEntity = this.service.remind$.getValue();
+      if (quoteEntity) {
+        let newMetaData = {
+          campaign: quoteEntity['urn'],
+        };
+        if (quoteEntity['boosted']) {
+          newMetaData['medium'] = 'boost';
+        }
+        clientMeta = this.clientMeta.build(newMetaData);
+      }
+
+      const activity = await this.service.post(clientMeta);
       this.onPostEmitter.next(activity);
     } catch (e) {
       this.error = (e && e.message) || 'Internal error';
@@ -304,6 +336,16 @@ export class BaseComponent implements AfterViewInit, OnDestroy {
       .create(ComposerSupermindComponent)
       .present()
       .toPromise(/* Promise is needed to boot-up the Observable */);
+  }
+
+  /**
+   * Launch audience selector panel popup.
+   * @returns { Promise<void> }
+   */
+  private async displayAudienceSelectorPopup(): Promise<void> {
+    await firstValueFrom(
+      this.popup.create(ComposerAudienceSelectorPanelComponent).present()
+    );
   }
 
   /**

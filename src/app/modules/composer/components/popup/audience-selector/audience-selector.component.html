@@ -1,0 +1,106 @@
+<div class="m-composerPopup__body">
+  <div class="m-composerPopup__content">
+    <ng-container
+      *ngIf="!(shareToGroupMode$ | async); else shareToGroupTitleTemplate"
+    >
+      <h3
+        class="m-composerPopup__title"
+        i18n="@@COMPOSER_AUDIENCE_SELECTOR__CHOOSE_AUDIENCE"
+      >
+        Choose audience
+      </h3>
+    </ng-container>
+    <ng-template #shareToGroupTitleTemplate>
+      <h3
+        class="m-composerPopup__title m-composerPopup__title--shareToGroupMode"
+        i18n="@@COMPOSER_AUDIENCE_SELECTOR__SHARE_TO_A_GROUP"
+      >
+        Share to a group
+      </h3>
+    </ng-template>
+    <div
+      *ngIf="!(shareToGroupMode$ | async)"
+      class="m-composerAudience__myChannelContainer"
+    >
+      <m-selectableEntityCard
+        [entity]="loggedInUser"
+        (click)="onEntitySelect(null)"
+        [selected]="(selectedAudience$ | async)?.guid === null"
+      ></m-selectableEntityCard>
+    </div>
+
+    <ng-container
+      *ngIf="shareToGroupMode$ | async; else expandableSubtitleTemplate"
+    >
+      <h4 class="m-composerPopup__subtitle">
+        <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My groups</span>
+      </h4>
+    </ng-container>
+    <ng-template #expandableSubtitleTemplate>
+      <h4 class="m-composerPopup__subtitle" (click)="toggleGroupsExpand()">
+        <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My groups</span>
+        <ng-container *ngIf="groupsExpanded$ | async; else collapsedTemplate">
+          <span class="material-icons">expand_more</span>
+        </ng-container>
+        <ng-template #collapsedTemplate>
+          <span class="material-icons">chevron_right</span>
+        </ng-template>
+      </h4>
+    </ng-template>
+
+    <ng-container
+      *ngIf="(groupsExpanded$ | async) || (shareToGroupMode$ | async)"
+    >
+      <ng-container *ngIf="!(groups$ | async)?.length">
+        <div
+          class="m-composerAudience__noGroupsContainer"
+          *ngIf="!(groupsLoading$ | async); else loadingSpinnerTemplate"
+        >
+          <span
+            class="m-composerAudience__noGroupsSpan"
+            i18n="@@COMPOSER_AUDIENCE_SELECTOR__NOT_IN_ANY_GROUPS"
+            >Looks like you're not in any groups.</span
+          >
+          <m-button size="small" (click)="onDiscoverGroupsClick()">
+            <ng-container i18n="@@COMPOSER_AUDIENCE_SELECTOR__DISCOVER_GROUPS"
+              >Discover groups</ng-container
+            >
+          </m-button>
+        </div>
+        <ng-template #loadingSpinnerTemplate>
+          <m-loadingSpinner
+            [inProgress]="groupsLoading$ | async"
+          ></m-loadingSpinner>
+        </ng-template>
+      </ng-container>
+      <div class="m-composerAudience__groupsList" #scrollSource>
+        <ng-container *ngFor="let group of groups$ | async">
+          <m-selectableEntityCard
+            [entity]="group"
+            (click)="onEntitySelect(group)"
+            [selected]="(selectedAudience$ | async)?.guid === group.guid"
+          ></m-selectableEntityCard>
+        </ng-container>
+        <infinite-scroll
+          *ngIf="(groups$ | async) && (groups$ | async).length > 0"
+          (load)="loadNextGroups()"
+          [inProgress]="groupsLoading$ | async"
+          [scrollSource]="scrollSource"
+          [moreData]="groupsHasNext$ | async"
+          [distance]="'50%'"
+        ></infinite-scroll>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      (onAction)="save()"
+      color="blue"
+      data-ref="composer-audience-selector-save-button"
+      i18n="@@COMMON__SAVE"
+      >Save</m-button
+    >
+  </div>
+</div>

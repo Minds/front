@@ -1,4 +1,4 @@
-import { isPlatformServer } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -23,7 +23,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map, scan, startWith } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import {
@@ -43,10 +43,16 @@ import { FeedItemType } from '../feed/feed.component';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { DismissalService } from './../../../common/services/dismissal.service';
 import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
+import { Platform } from '@angular/cdk/platform';
+import { OnboardingV4Service } from '../../onboarding-v4/onboarding-v4.service';
+import { Session } from '../../../services/session';
+import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
 
 export enum FeedAlgorithm {
   top = 'top',
   latest = 'latest',
+  forYou = 'for-you',
+  groups = 'groups',
 }
 
 const commonInjectItems: InjectItem[] = [
@@ -59,7 +65,7 @@ const commonInjectItems: InjectItem[] = [
     indexes: i => (i > 0 && i % 5 === 0) || i === 3,
   },
   {
-    type: FeedItemType.channelRecommendations,
+    type: FeedItemType.publisherRecommendations,
     indexes: (i, feedLength) =>
       feedLength <= 3 ? i === feedLength - 1 : i === 2,
   },
@@ -86,15 +92,40 @@ export class TopFeedService extends FeedsService {
   injectItems = commonInjectItems;
 }
 
+/**
+ * Service for "For You" feed.
+ */
+@Injectable()
+export class ForYouFeedService extends FeedsService {
+  endpoint = 'api/v3/newsfeed/feed/clustered-recommendations';
+  limit = new BehaviorSubject(12);
+  injectItems = commonInjectItems;
+}
+
+/**
+ * Service for "Groups" feed.
+ */
+@Injectable()
+export class GroupsFeedService extends FeedsService {
+  endpoint = 'api/v2/feeds/subscribed/activities';
+  limit = new BehaviorSubject(12);
+  injectItems = commonInjectItems;
+}
+
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [LatestFeedService, TopFeedService],
+  providers: [
+    LatestFeedService,
+    TopFeedService,
+    ForYouFeedService,
+    GroupsFeedService,
+  ],
   templateUrl: 'subscribed.component.html',
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   prepended: Array<any> = [];
   offset: string | number = '';
-  showBoostRotator: boolean = true;
+  showBoostRotator: boolean = false;
   inProgress: boolean = false;
   moreData: boolean = true;
   algorithm: FeedAlgorithm;
@@ -110,7 +141,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   };
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
+  private zendeskErrorSubscription: Subscription;
+  private onboardingTagsCompletedSubscription: Subscription;
   routerSubscription: Subscription;
+
+  /**
+   * Should we show channel or group recs?
+   */
+  recommendationsPublisherType: PublisherType;
 
   /**
    * Listening for new posts.
@@ -127,9 +165,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    */
   isTopHighlightsDismissed$ = this.dismissal.dismissed('top-highlights');
   /**
-   * Whether channel recommendation is dismissed
+   * Whether publisher recommendations is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
+  isPublisherRecommendationsDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
   isDiscoveryFallbackDismissed$ = this.dismissal.dismissed(
@@ -158,6 +196,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private context: ContextService,
     @Self() public latestFeedService: LatestFeedService,
     @Self() public topFeedService: TopFeedService,
+    @Self() public forYouFeedService: ForYouFeedService,
+    @Self() public groupsFeedService: GroupsFeedService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
@@ -168,11 +208,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private dismissal: DismissalService,
     public changeDetectorRef: ChangeDetectorRef,
     private feedNoticeService: FeedNoticeService,
-    persistentFeedExperiment: PersistentFeedExperimentService
+    persistentFeedExperiment: PersistentFeedExperimentService,
+    private platform: Platform,
+    private onboardingV4Service: OnboardingV4Service,
+    private session: Session
   ) {
     if (isPlatformServer(this.platformId)) return;
 
-    const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlorithm;
+    const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlgorithm;
     if (storedfeedAlgorithm) {
       this.algorithm = storedfeedAlgorithm;
     }
@@ -180,18 +223,40 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (this.persistentFeedExperimentActive) {
       this.topFeedService.setCachingEnabled(true);
       this.latestFeedService.setCachingEnabled(true);
+      this.forYouFeedService.setCachingEnabled(true);
+      this.groupsFeedService.setCachingEnabled(true);
     }
   }
 
   ngOnInit() {
+    /**
+     * Emits a count of how many times the route has changed
+     * (count includes the initial load)
+     *
+     * Reload the feed when the route changes and
+     * hide the boost rotator whenever we switch tabs
+     */
     this.routerSubscription = this.router.events
-      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.showBoostRotator = false;
+      .pipe(
+        filter((event: RouterEvent) => event instanceof NavigationEnd),
+        startWith(this.router),
+        map(() => {
+          return 1;
+        }),
+        scan((accumulator, current) => {
+          return accumulator + current;
+        }, 0)
+      )
+      .subscribe(count => {
         this.load();
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 100);
+
+        if (count === 1) {
+          setTimeout(() => {
+            this.showBoostRotator = true;
+          }, 50);
+        } else {
+          this.showBoostRotator = false;
+        }
       });
 
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
@@ -202,13 +267,12 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['algorithm']) {
-        if (params['algorithm'] in FeedAlgorithm) {
+        if (Object.values(FeedAlgorithm).includes(params['algorithm'])) {
           this.changeFeedAlgorithm(params['algorithm']);
         } else {
           this.router.navigate([`/newsfeed/subscriptions/${this.algorithm}`]);
         }
       }
-      this.load();
 
       if (params['message']) {
         this.message = params['message'];
@@ -218,32 +282,46 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     });
 
     // catch Zendesk errors and make them domain specific.
-    this.route.queryParams.subscribe(params => {
-      if (params.kind === 'error') {
-        if (
-          /User is invalid: External minds-guid:\d+ has already been taken/.test(
-            params.message
-          )
-        ) {
-          this.toast.error('Your email is already linked to a support account');
-          return;
-        }
+    this.zendeskErrorSubscription = this.route.queryParams
+      .pipe(filter(Boolean))
+      .subscribe(params => {
+        if (params.kind === 'error') {
+          if (
+            /User is invalid: External minds-guid:\d+ has already been taken/.test(
+              params.message
+            )
+          ) {
+            this.toast.error(
+              'Your email is already linked to a support account'
+            );
+            return;
+          }
 
-        if (
-          params.message ===
-          'Please use one of the options below to sign in to Zendesk.'
-        ) {
-          this.toast.error('Authentication method invalid');
-          return;
-        }
+          if (
+            params.message ===
+            'Please use one of the options below to sign in to Zendesk.'
+          ) {
+            this.toast.error('Authentication method invalid');
+            return;
+          }
 
-        this.toast.error(params.message ?? 'An unknown error has occurred');
-      }
-    });
+          this.toast.error(params.message ?? 'An unknown error has occurred');
+        }
+      });
 
     this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
       newPost => {
         this.prepend(newPost);
+      }
+    );
+
+    this.recommendationsPublisherType = this.getPublisherType();
+
+    // subscribe to onboarding tags completion and reload the feed with more relevant content.
+    this.onboardingTagsCompletedSubscription = this.onboardingV4Service.tagsCompleted$.subscribe(
+      (completed: boolean): void => {
+        this.feedService.clear();
+        this.load();
       }
     );
 
@@ -253,29 +331,37 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-    this.reloadFeedSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
-    this.feedsUpdatedSubscription.unsubscribe();
+    this.routerSubscription?.unsubscribe();
+    this.paramsSubscription?.unsubscribe();
+    this.reloadFeedSubscription?.unsubscribe();
+    this.feedsUpdatedSubscription?.unsubscribe();
+    this.zendeskErrorSubscription?.unsubscribe();
+    this.onboardingTagsCompletedSubscription?.unsubscribe();
   }
 
   /**
    * returns feedService based on algorithm
    **/
   get feedService(): FeedsService {
-    if (this.algorithm === 'top') {
-      return this.topFeedService;
+    switch (this.algorithm) {
+      case 'top':
+        return this.topFeedService;
+      case 'for-you':
+        return this.forYouFeedService;
+      case 'groups':
+        return this.groupsFeedService;
+      default:
+        return this.latestFeedService;
     }
-
-    return this.latestFeedService;
   }
 
   async load() {
     if (isPlatformServer(this.platformId)) return;
 
+    this.recommendationsPublisherType = this.getPublisherType();
+
     this.moreData = true;
     this.offset = 0;
-    this.showBoostRotator = false;
     this.inProgress = true;
 
     let queryParams = {
@@ -286,8 +372,20 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       queryParams['include_group_posts'] = true;
     }
 
+    /**
+     * Rotating the boost rotator provides feedback that something has changes
+     * to the user on shorter viewports that may not be able to see the feed
+     * under the rotator.
+     */
+    if (this.boostRotator?.running) {
+      this.boostRotator?.next();
+    }
+
     try {
       switch (this.algorithm) {
+        case 'for-you':
+          await this.forYouFeedService.setLimit(12).fetch(true);
+          break;
         case 'top':
           await this.topFeedService.setLimit(12).fetch(true);
           break;
@@ -298,13 +396,23 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
             this.latestFeedService.fetch(true),
           ]);
           break;
+        case 'groups':
+          const params = {
+            group_posts_for_user_guid:
+              this.session.getLoggedInUser()?.guid || '',
+          };
+
+          await this.groupsFeedService
+            .setParams(params)
+            .setLimit(12)
+            .fetch(true);
+          break;
       }
     } catch (e) {
       console.error('Load Feed', e);
     }
 
     this.inProgress = false;
-    this.showBoostRotator = true;
   }
 
   loadNext(feedService: FeedsService = this.feedService) {
@@ -319,25 +427,13 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   prepend(activity: any) {
-    if (this.newUserPromo) {
-      this.autoBoost(activity);
-      activity.boostToggle = false;
-      activity.boosted = true;
+    if (activity?.containerObj) {
+      return;
     }
+
     this.prepended.unshift(activity);
 
     this.newUserPromo = false;
-  }
-
-  autoBoost(activity: any) {
-    this.client.post(
-      'api/v2/boost/activity/' + activity.guid + '/' + activity.owner_guid,
-      {
-        newUserPromo: true,
-        impressions: 200,
-        destination: 'Newsfeed',
-      }
-    );
   }
 
   delete(activity) {
@@ -366,15 +462,22 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    **/
   changeFeedAlgorithm(algo: FeedAlgorithm) {
     this.algorithm = algo;
-    this.feedAlgorithmHistory.lastAlorithm = algo;
+    this.feedAlgorithmHistory.lastAlgorithm = algo;
 
     switch (algo) {
+      case 'for-you':
+        this.latestFeedService.clear(true);
+        this.forYouFeedService.clear(true);
+        break;
       case 'top':
         this.topFeedService.clear(true);
         break;
       case 'latest':
         this.latestFeedService.clear(true);
         this.topFeedService.clear(true);
+        break;
+      case 'groups':
+        this.groupsFeedService.clear(true);
     }
   }
 
@@ -409,12 +512,12 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * whether channel recommendation should be shown
+   * whether publisher recommendations should be shown
    * @param { string } location the location where the widget is to be shown
    * @param { number } index the index of the feed
    * @returns { boolean }
    */
-  public shouldShowChannelRecommendation(location: string, index?: number) {
+  public shouldShowPublisherRecommendations(location: string, index?: number) {
     if (this.feedService.inProgress && !this.feedService.feedLength) {
       return false;
     }
@@ -509,6 +612,26 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
           loadDiscoveryFallbackIfEnabled();
         }
         break;
+      case this.forYouFeedService:
+        this.latestFallbackActive$.next(false);
+        break;
+      case this.groupsFeedService:
+        this.latestFallbackActive$.next(false);
+        break;
+    }
+  }
+
+  /**
+   * Randomly choose whether to show user or group recs
+   *
+   * Except if we're on the Group feed tab only show group recs
+   */
+  getPublisherType(): PublisherType {
+    switch (this.algorithm) {
+      case 'groups':
+        return 'group';
+      default:
+        return Math.random() < 0.5 ? 'user' : 'group';
     }
   }
 }

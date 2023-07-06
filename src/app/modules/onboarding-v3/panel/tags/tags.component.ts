@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DefaultTagsV2ExperimentService } from '../../../experiments/sub-services/default-tags-v2-experiment.service';
 import { OnboardingV3TagsService, Tag } from './tags.service';
 
 /**
@@ -15,16 +14,10 @@ import { OnboardingV3TagsService, Tag } from './tags.service';
   },
 })
 export class OnboardingV3TagsComponent implements OnInit {
-  public defaultTagsV2ExperimentActive = false;
-
-  constructor(
-    private service: OnboardingV3TagsService,
-    private defaultTagsV2Experiment: DefaultTagsV2ExperimentService
-  ) {}
+  constructor(private service: OnboardingV3TagsService) {}
 
   ngOnInit() {
     // load tags on init
-    this.defaultTagsV2ExperimentActive = this.defaultTagsV2Experiment.isActive();
     this.service.loadTags();
   }
 

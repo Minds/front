@@ -17,6 +17,7 @@ import { ExperimentsService } from '../../../modules/experiments/experiments.ser
 import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catpcha/friendly-captcha.component';
 import { ToasterService } from '../../services/toaster.service';
 import { CounterChangeFadeIn } from '../../../animations';
+import { ClientMetaDirective } from '../../directives/client-meta.directive';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -55,6 +56,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
 
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;
+
+  @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
   constructor(
     public session: Session,
@@ -111,12 +114,14 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       const user = await this.authModal.open();
       if (!user) return;
     }
-    let data = {};
+    let data = {
+      client_meta: this.clientMeta.build({
+        campaign: this.object['urn'],
+      }),
+    };
 
     if (this.isFriendlyCaptchaFeatureEnabled()) {
-      data = {
-        puzzle_solution: solution,
-      };
+      data['puzzle_solution'] = solution;
     }
 
     try {

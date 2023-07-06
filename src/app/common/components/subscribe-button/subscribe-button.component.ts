@@ -12,6 +12,7 @@ import { Session } from '../../../services/session';
 import { ToasterService } from '../../services/toaster.service';
 import { SubscriptionService } from '../../services/subscription.service';
 import { MindsUser } from './../../../interfaces/entities';
+import { ButtonSize } from '../button/button.component';
 
 @Component({
   selector: 'm-subscribeButton',
@@ -31,12 +32,26 @@ export class SubscribeButtonComponent implements OnInit {
   @Output('subscribed') onSubscribed: EventEmitter<
     Partial<MindsUser>
   > = new EventEmitter();
+  @Output('unsubscribed') onUnsubscribed: EventEmitter<
+    Partial<MindsUser>
+  > = new EventEmitter();
 
   @Input() sized: boolean = false;
+
+  // only show the icons, no text
   @Input() iconOnly: boolean = false;
+
+  // show the icons next to the text
+  @Input() showIcons: boolean = true;
+
+  // the size of the m-button
+  @Input() size: ButtonSize = 'xsmall';
 
   // disable subscription - allows for a user to preview their own card.
   @Input() disableSubscribe: boolean = false;
+
+  // disable the button after the user subscribes
+  @Input() disableAfterSubscribe: boolean = false;
 
   // When true, will use channel api to double check that the subscription status is correct
   // (used for entities that aren't normalised)
@@ -112,6 +127,7 @@ export class SubscribeButtonComponent implements OnInit {
     e.preventDefault();
     e.stopPropagation();
     this.subscribed = false;
+    this.onUnsubscribed.emit(this._user);
     try {
       await this.subscriptionService.unsubscribe(this._user as MindsUser);
       this.subscribed = false;

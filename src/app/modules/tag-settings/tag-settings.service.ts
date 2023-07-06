@@ -7,6 +7,4 @@ export class TagSettingsService {
   submitRequested$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-
-  constructor() {}
 }

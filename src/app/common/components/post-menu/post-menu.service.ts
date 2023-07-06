@@ -13,7 +13,7 @@ import { ToasterService } from '../../services/toaster.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { SubscriptionService } from '../../services/subscription.service';
-import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { BoostModalV2LazyService } from '../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 
 @Injectable()
 export class PostMenuService {
@@ -43,7 +43,7 @@ export class PostMenuService {
     protected toasterService: ToasterService,
     public embedService: EmbedServiceV2,
     public subscriptionService: SubscriptionService,
-    private boostModal: BoostModalLazyService
+    private boostModal: BoostModalV2LazyService
   ) {}
 
   setEntity(entity): PostMenuService {
@@ -285,13 +285,18 @@ export class PostMenuService {
     }
   }
 
-  async allowComments(areAllowed: boolean) {
-    this.entity.allow_comments = areAllowed;
+  /**
+   * Change permissions on whether to allow comments on a post or not.
+   * @param { boolean } allowed - whether users are to be allowed to comment the entity.
+   * @returns { Promise<void> }
+   */
+  public async allowComments(allowed: boolean): Promise<void> {
+    this.entity.allow_comments = allowed;
     const result = await this.activityService.toggleAllowComments(
       this.entity,
-      areAllowed
+      allowed
     );
-    if (result !== areAllowed) {
+    if (result !== allowed) {
       this.entity.allow_comments = result;
     }
   }

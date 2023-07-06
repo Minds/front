@@ -1,16 +1,18 @@
 @import 'defaults.scss';
 
 :host {
-  display: flex;
-  flex-direction: column;
+  .m-boostConsole__filterBar {
+    display: flex;
+    flex-direction: column;
 
-  @media screen and (max-width: $max-mobile) {
-    flex-direction: row;
-    justify-content: space-between;
-  }
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
 
-  @include m-theme() {
-    border-bottom: 1px solid themed($m-borderColor--primary);
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
   }
 
   .m-tabs__container {
@@ -23,6 +25,32 @@
     .m-tabs__tab > a {
       @media screen and (max-width: $max-mobile) {
         margin-right: $spacing4;
+      }
+    }
+  }
+
+  [class*='m-boostConsole__boostLatestPostWrapper'] {
+    &.m-boostConsole__boostLatestPostWrapper--mobile {
+      display: none;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      &.m-boostConsole__boostLatestPostWrapper--desktop {
+        display: none;
+      }
+      &.m-boostConsole__boostLatestPostWrapper--mobile {
+        display: block;
+      }
+    }
+
+    > * {
+      display: block;
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      ::ng-deep .m-feedNotice__title {
+        @include body1Bold;
       }
     }
   }
@@ -85,6 +113,12 @@
       @media screen and (min-width: $max-mobile + 1) {
         display: none;
       }
+    }
+  }
+  ::ng-deep .m-boostConsole__settingsButtonIcon {
+    @include heading3Regular;
+    @media screen and (max-width: $max-mobile) {
+      display: none;
     }
   }
 }

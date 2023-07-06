@@ -2,15 +2,9 @@
  * @author Ben Hayward
  * @desc Spec tests for the thread component
  */
-import {
-  ComponentFixture,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CommentsThreadComponent } from './thread.component';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { fakeAsync } from '@angular/core/testing';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockService, MockComponent } from '../../../utils/mock';
 import { CommentsScrollDirective } from '../scroll';
@@ -23,7 +17,6 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 import { ActivityService } from '../../../common/services/activity.service';
-import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { LoadingSpinnerComponent } from '../../../common/components/loading-spinner/loading-spinner.component';
 
@@ -69,7 +62,7 @@ describe('CommentsThreadComponent', () => {
           LoadingSpinnerComponent,
         ],
         imports: [
-          RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
+          RouterModule.forRoot([], {}),
           HttpClientTestingModule,
           HttpClientModule,
         ],
@@ -135,48 +128,5 @@ describe('CommentsThreadComponent', () => {
 
   it('should be instantiated', () => {
     expect(comp).toBeTruthy();
-  });
-
-  it('should show message to user on socket connection error', fakeAsync(() => {
-    comp.sockets.error$.next(true);
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(
-        fixture.debugElement.query(By.css('.m-commentsThread__connectionLost'))
-      ).not.toBeNull();
-    });
-  }));
-
-  it('should allow a user to retry on socket connection error', fakeAsync(() => {
-    let retry = () =>
-      fixture.debugElement.query(
-        By.css('.m-commentsThread__connectionLost--retry')
-      );
-
-    comp.sockets.error$.next(true);
-    comp.inProgress = false;
-
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(retry()).not.toBeNull();
-      retry().nativeElement.click();
-      tick(1000);
-
-      fixture.detectChanges();
-      expect(retry()).toBeNull();
-      tick(2000);
-    });
-  }));
-
-  it('should not show message to user when no error from sockets', () => {
-    comp.sockets.error$.next(false);
-    fixture.detectChanges();
-    expect(
-      fixture.debugElement.query(By.css('.m-commentsThread__connectionLost'))
-    ).toBeNull();
   });
 });

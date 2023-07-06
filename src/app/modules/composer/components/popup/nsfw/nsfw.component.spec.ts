@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
-import { ComplexOuterSubscriber } from 'rxjs/internal/innerSubscribe';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { Supermind } from '../../../../supermind/supermind.types';

@@ -9,7 +9,7 @@
   >
     <!-- ACTIVITY V2 BOOST ROTATOR TOP ROW  -->
     <div *ngIf="init" class="m-boostRotator__toolbar">
-      <m-activity__flag--boosted></m-activity__flag--boosted>
+      <m-boostedFlag></m-boostedFlag>
       <div class="m-boostRotatorToolbar__buttons">
         <i class="material-icons" (click)="prev()">chevron_left</i>
         <i class="material-icons" (click)="next()">chevron_right</i>
@@ -30,12 +30,12 @@
     </div>
     <!-- ----------------------------------- -->
 
-    <ng-container *ngFor="let entity of boosts; let i = index">
+    <ng-container
+      *ngFor="let entity of boosts; let i = index; trackBy: trackByFn"
+    >
       <div
-        [hidden]="!boosts.length"
         class="m-newsfeedBoostRotator__item"
         *ngIf="shouldRender(i)"
-        @fastFade
         [style.visibility]="i === currentPosition ? 'visible' : 'hidden'"
         [style.height.px]="height"
       >

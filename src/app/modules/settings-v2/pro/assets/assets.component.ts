@@ -9,7 +9,11 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -57,9 +61,9 @@ export class SettingsV2ProAssetsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      logo: new FormControl(''),
-      background: new FormControl(''),
+    this.form = new UntypedFormGroup({
+      logo: new UntypedFormControl(''),
+      background: new UntypedFormControl(''),
     });
 
     this.route.parent.params.subscribe(params => {

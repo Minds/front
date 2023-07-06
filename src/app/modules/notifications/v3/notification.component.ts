@@ -19,7 +19,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 
 import { Session } from '../../../services/session';
 import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { InteractionsModalService } from '../../newsfeed/interactions-modal/interactions-modal.service';
 import { NotificationsV3Service } from './notifications-v3.service';
 
@@ -49,7 +48,6 @@ export class NotificationsV3NotificationComponent
     private service: NotificationsV3Service,
     private cd: ChangeDetectorRef,
     private interactionsModalService: InteractionsModalService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -320,17 +318,8 @@ export class NotificationsV3NotificationComponent
         return ['/boost/console/offers/history/outbox'];
       case 'boost_accepted':
       case 'boost_completed':
-        if (this.isDynamicBoostExperimentActive()) {
-          return ['/boost/boost-console'];
-        } else {
-          return ['/boost/console/newsfeed/history'];
-        }
       case 'boost_rejected':
-        return [
-          this.notification.entity?.entity?.type === 'user'
-            ? `/${this.notification.entity?.entity?.username}`
-            : `/newsfeed/${this.notification.entity?.entity?.guid}`,
-        ];
+        return [`/boost/boost-console`];
       // case 'boost_rejected':
       //   return ['/boost/console/newsfeed/history'];
       case 'token_rewards_summary':
@@ -374,15 +363,12 @@ export class NotificationsV3NotificationComponent
     }
 
     if (
-      (this.notification.type === 'boost_accepted' ||
-        this.notification.type === 'boost_completed') &&
-      this.isDynamicBoostExperimentActive()
+      this.notification.type === 'boost_accepted' ||
+      this.notification.type === 'boost_completed' ||
+      this.notification.type === 'boost_rejected'
     ) {
       return {
-        state: this.deriveBoostStateParamValue(this.notification.type),
-        location: this.deriveBoostLocationParamValue(
-          this.notification.entity?.target_location
-        ),
+        boostGuid: this.notification.entity?.guid,
       };
     }
 
@@ -578,13 +564,5 @@ export class NotificationsV3NotificationComponent
       default:
         return '';
     }
-  }
-
-  /**
-   * Whether dynamic boost experiment is active.
-   * @returns { boolean } true if dynamic boost experiment is active.
-   */
-  private isDynamicBoostExperimentActive(): boolean {
-    return this.dynamicBoostExperiment.isActive();
   }
 }

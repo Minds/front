@@ -91,7 +91,9 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
    * Load feed.
    * @returns { Observable<ApiResponse> }
    */
-  public load$(): Observable<ApiResponse> {
+  public load$(): Observable<
+    ApiResponse | { redirect: boolean; errorMessage: any }
+  > {
     return combineLatest([
       this.locationFilterValue$,
       this.stateFilterValue$,
@@ -115,7 +117,9 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
           BoostConsoleStateFilter,
           BoostConsoleSuitabilityFilter,
           BoostConsolePaymentMethodFilter
-        ]): Observable<ApiResponse> => {
+        ]): Observable<
+          ApiResponse | { redirect: boolean; errorMessage: any }
+        > => {
           return this.service.getList$(this.requestLimit, 0);
         }
       ),

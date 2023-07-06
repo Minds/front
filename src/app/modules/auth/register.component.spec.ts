@@ -11,7 +11,6 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MockComponent, MockService } from '../../utils/mock';
-import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { PagesService } from '../../common/services/pages.service';
@@ -22,7 +21,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { BehaviorSubject } from 'rxjs';
-import { EmailCodeExperimentService } from '../experiments/sub-services/email-code-experiment.service';
 import { ContentSettingsModalService } from '../content-settings/content-settings-modal.service';
 
 let activatedRouteMock = new (function() {
@@ -56,7 +54,6 @@ describe('RegisterComponent', () => {
             selector: 'm-marketing__footer',
           }),
           RegisterComponent,
-          IfFeatureDirective,
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [
@@ -86,10 +83,6 @@ describe('RegisterComponent', () => {
             useValue: MockService(AuthRedirectService),
           },
           {
-            provide: EmailCodeExperimentService,
-            useValue: MockService(EmailCodeExperimentService),
-          },
-          {
             provide: ContentSettingsModalService,
             useValue: MockService(ContentSettingsModalService),
           },
@@ -110,8 +103,6 @@ describe('RegisterComponent', () => {
 
   afterEach(() => {
     loginReferrerServiceMock.navigate.calls.reset();
-    (comp as any).emailCodeExperiment.isActive.calls.reset();
-    (comp as any).contentSettingsModal.open.calls.reset();
   });
 
   it('should initialize', () => {
@@ -168,23 +159,5 @@ describe('RegisterComponent', () => {
       'Join Minds, and Elevate the Conversation',
       false
     );
-  });
-
-  it('should open ContentSettingsModal on registered if no email experiment is NOT active', () => {
-    (comp as any).emailCodeExperiment.isActive.and.returnValue(false);
-    (comp as any).contentSettingsModal.open.and.returnValue(true);
-    comp.registered();
-    expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
-    expect((comp as any).emailCodeExperiment.isActive).toHaveBeenCalled();
-    expect((comp as any).contentSettingsModal.open).toHaveBeenCalled();
-  });
-
-  it('should NOT open ContentSettingsModal on registered if email experiment is active', () => {
-    (comp as any).emailCodeExperiment.isActive.and.returnValue(true);
-    (comp as any).contentSettingsModal.open.and.returnValue(true);
-    comp.registered();
-    expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
-    expect((comp as any).emailCodeExperiment.isActive).toHaveBeenCalled();
-    expect((comp as any).contentSettingsModal.open).not.toHaveBeenCalled();
   });
 });

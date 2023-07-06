@@ -20,7 +20,7 @@
   <!-- ---------------------------- -->
   <ng-container *ngIf="boost.entity.type && boost.entity.type === 'activity'">
     <m-activity
-      [entity]="boost.entity"
+      [entity]="getBoostedEntity(boost)"
       [canDelete]="false"
       [displayOptions]="displayOptions"
       [autoplayVideo]="false"

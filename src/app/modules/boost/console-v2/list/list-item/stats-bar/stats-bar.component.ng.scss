@@ -2,31 +2,50 @@
 
 :host {
   [class*='m-boostConsole__statsBar'] {
-    padding-top: $spacing4;
     padding-bottom: $spacing4;
   }
 
   .m-boostConsole__statsBar--rows {
     display: flex;
     flex-direction: column;
+    padding-top: $spacing4;
   }
   .m-boostConsole__statsBar--columns {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
+    width: 100%;
 
     .m-boostConsoleStatsBar__column {
       display: flex;
       flex-direction: column;
       margin-right: $spacing4;
       flex: 1;
+      flex-basis: 90px;
+      padding-top: $spacing4;
     }
   }
 
   .m-boostConsoleStatsBar__title {
     @include body2Bold;
     margin-bottom: $spacing2;
+
+    .m-boostConsoleStatsBar__customInfoTooltip {
+      margin-left: $spacing2;
+    }
   }
   .m-boostConsoleStatsBar__desc {
     @include body2Regular;
+  }
+  .m-boostConsoleStatsBar__link {
+    cursor: pointer;
+    text-decoration: underline;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
+  .m-boostConsole__statsBar--ctaPreview {
+    .m-boostConsoleStatsBar__link {
+      word-break: break-word;
+    }
   }
 }

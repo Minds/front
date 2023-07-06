@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 import { GroupsService } from '../../groups.service';
 
@@ -38,6 +38,9 @@ export class GroupsProfileMembers {
   private searchDelayTimer;
 
   httpSubscription;
+
+  // Whether this is displayed in modern groups
+  @Input() v2: boolean = false;
 
   constructor(
     public session: Session,
@@ -97,7 +100,6 @@ export class GroupsProfileMembers {
     this.inProgress = true;
     this.httpSubscription = this.client.get(endpoint, params).subscribe(
       (response: any) => {
-        console.log(response);
         if (!response.members) {
           this.moreData = false;
           this.inProgress = false;

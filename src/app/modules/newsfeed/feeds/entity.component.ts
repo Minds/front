@@ -13,7 +13,6 @@ import {
 
 import { GroupsTileComponent } from '../../groups/tile/tile.component';
 import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
-import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-newsfeed__entity',
@@ -28,8 +27,7 @@ export class NewsfeedEntityComponent {
 
   constructor(
     protected componentFactoryResolver: ComponentFactoryResolver,
-    protected cd: ChangeDetectorRef,
-    public featuresService: FeaturesService
+    protected cd: ChangeDetectorRef
   ) {}
 
   @Input('entity') set setEntity(entity) {

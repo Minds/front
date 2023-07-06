@@ -44,13 +44,13 @@
     <!-- ------------------------------- -->
     <div class="m-form__field--text stretchedField">
       <div class="m-form__input--details">
-        <div class="m-form__row--label">
+        <div class="m-form__row--label m-form__row--label--username">
           <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME"
             >Username</label
           >
         </div>
         <div
-          class="m-register__error"
+          class="m-register__error m-register__error--multiLine"
           [style.visibility]="showError('username') ? 'visible' : 'hidden'"
         >
           <ng-container
@@ -89,6 +89,7 @@
           i18n-placeholder="@@M__COMMON__USERNAME"
           readonly
           onfocus="this.removeAttribute('readonly');"
+          ontouchstart="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           [pattern]="alphanumericPattern"
           data-ref="data-minds-register-username-input"
@@ -173,6 +174,7 @@
             i18n-placeholder="@@M__COMMON__PASSWORD"
             readonly
             onfocus="this.removeAttribute('readonly');"
+            ontouchstart="this.removeAttribute('readonly');"
             (focus)="onPasswordFocus()"
             (blur)="onPasswordBlur()"
             [class.m-input--hide-placeholder]="showLabels"
@@ -220,6 +222,7 @@
           (keydown.enter)="register($event)"
           readonly
           onfocus="this.removeAttribute('readonly');"
+          ontouchstart="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           data-ref="data-minds-register-password-input-2"
           [class.ng-invalid]="this.form.errors?.passwordsMatch"
@@ -232,15 +235,10 @@
     <!-- ------------------------------- -->
     <div class="m-form__field--text stretchedField m-registerForm__captcha">
       <div class="m-form__row--input">
-        <ng-container *ngIf="!isFriendlyCaptchaEnabled(); else friendlyCaptcha">
-          <m-captcha formControlName="captcha"></m-captcha>
-        </ng-container>
-        <ng-template #friendlyCaptcha>
-          <m-friendlyCaptcha
-            formControlName="captcha"
-            [puzzleOrigin]="'registration'"
-          ></m-friendlyCaptcha>
-        </ng-template>
+        <m-friendlyCaptcha
+          formControlName="captcha"
+          [puzzleOrigin]="'registration'"
+        ></m-friendlyCaptcha>
       </div>
     </div>
   </div>

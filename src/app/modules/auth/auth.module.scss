@@ -1,6 +1,6 @@
 //** FOOTER -----------------------------------------
 
-@media screen and(max-width: $m-grid-max-mobile) {
+@media screen and (max-width: $m-grid-max-mobile) {
   m-body m-register,
   m-body m-login {
     margin-bottom: 50;
@@ -32,7 +32,7 @@ m-body m-login {
       @include m-theme() {
         border: none;
       }
-      @media screen and(max-width: $max-mobile) {
+      @media screen and (max-width: $max-mobile) {
         padding-bottom: 80px;
       }
 
@@ -53,12 +53,12 @@ m-body m-login {
         padding-right: 0;
       }
 
-      @media screen and(max-width: $m-grid-min-vp) {
+      @media screen and (max-width: $m-grid-min-vp) {
         text-align: left;
         padding-right: 0;
         padding-left: 32px;
       }
-      @media screen and(max-width: $m-grid-max-mobile) {
+      @media screen and (max-width: $m-grid-max-mobile) {
         padding-left: 0px;
       }
     }

@@ -1,0 +1,39 @@
+<div class="m-grid m-marketing__wrapper">
+  <div
+    *ngIf="title"
+    class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
+  >
+    <h2>{{ title }}</h2>
+  </div>
+</div>
+
+<div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
+  <div
+    class="
+      m-grid__column-4 m-grid__column-4--tablet m-grid__column-12--mobile
+      m-marketing__body
+    "
+  >
+    <h3>{{ column1Title }}</h3>
+    <markdown class="m-marketing__description" [data]="column1Body"></markdown>
+  </div>
+
+  <div
+    class="
+      m-grid__column-4 m-grid__column-4--tablet m-grid__column-12--mobile
+      m-marketing__body
+    "
+  >
+    <h3>{{ column2Title }}</h3>
+    <markdown class="m-marketing__description" [data]="column2Body"></markdown>
+  </div>
+  <div
+    class="
+      m-grid__column-4 m-grid__column-4--tablet m-grid__column-12--mobile
+      m-marketing__body
+    "
+  >
+    <h3>{{ column3Title }}</h3>
+    <markdown class="m-marketing__description" [data]="column3Body"></markdown>
+  </div>
+</div>

@@ -7,7 +7,11 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormArray,
+  UntypedFormBuilder,
+} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -44,12 +48,12 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     protected router: Router,
     protected route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      tag_list: new FormArray([]),
+    this.form = new UntypedFormGroup({
+      tag_list: new UntypedFormArray([]),
     });
 
     /**
@@ -116,7 +120,7 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
   }
 
   addTag(tag, label) {
-    const tag_list = <FormArray>this.tag_list;
+    const tag_list = <UntypedFormArray>this.tag_list;
     tag_list.push(
       this.fb.group({
         tag: [tag],
@@ -126,7 +130,7 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
   }
 
   setTags(tags: Array<{ label: string; tag: string }>) {
-    (<FormArray>this.tag_list).clear();
+    (<UntypedFormArray>this.tag_list).clear();
     this.detectChanges();
     for (const tag of tags) {
       this.addTag(tag.tag, tag.label);

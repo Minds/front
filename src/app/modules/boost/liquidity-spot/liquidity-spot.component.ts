@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
-import { UniswapModalService } from '../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
+import { UniswapModalService } from '../../blockchain/token-purchase/uniswap/uniswap-modal.service';
 import { LiquiditySpotService } from './liquidity-spot.service';
 
 @Component({

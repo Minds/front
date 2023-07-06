@@ -22,7 +22,7 @@
   .m-report-console--header {
     margin: 16px;
     padding: 16px;
-    font-family: 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter', Helvetica, sans-serif;
 
     > b {
       font-size: 13px;
@@ -31,7 +31,7 @@
     p {
       margin-bottom: 0;
       font-size: 13px;
-      letter-spacing: 1px;
+      letter-spacing: -0.001em;
       font-weight: 300;
 
       b {
@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     margin: ($minds-padding * 2) ($minds-padding * 2) 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
 
     .m-report-console--info {
       flex-grow: 1;
@@ -94,7 +94,7 @@
     .m-report-console--comment-note {
       padding: 16px;
       text-align: center;
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
       font-weight: 300;
 
@@ -121,10 +121,10 @@
       resize: none;
       height: 5em;
       font-weight: 300;
-      font-family: 'Roboto', Helvetica, sans-serif;
+      font-family: 'Inter', Helvetica, sans-serif;
       padding: 16px;
       font-size: 13px;
-      letter-spacing: 1px;
+      letter-spacing: -0.001em;
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
       }
@@ -144,9 +144,9 @@
 
     p {
       margin: 0;
-      font-family: 'Roboto', Helvetica, sans-serif;
+      font-family: 'Inter', Helvetica, sans-serif;
       font-size: 14px;
-      letter-spacing: 1px;
+      letter-spacing: -0.001em;
     }
   }
 }

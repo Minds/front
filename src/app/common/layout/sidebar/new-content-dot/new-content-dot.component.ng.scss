@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  position: relative;
+  div {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    @include m-theme() {
+      background-color: themed($m-blue);
+    }
+  }
+}

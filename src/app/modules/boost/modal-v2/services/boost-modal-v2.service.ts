@@ -26,9 +26,12 @@ import { BoostContractService } from '../../../blockchain/contracts/boost-contra
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import {
   DEFAULT_AUDIENCE,
+  DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL,
+  DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL,
   DEFAULT_CASH_DURATION,
   DEFAULT_DAILY_CASH_BUDGET,
   DEFAULT_DAILY_TOKEN_BUDGET,
+  DEFAULT_GOAL,
   DEFAULT_PAYMENT_CATEGORY,
   DEFAULT_TOKEN_DURATION,
 } from '../boost-modal-v2.constants';
@@ -44,9 +47,14 @@ import {
   BoostSubject,
   BoostSubmissionPayload,
   BoostSubmitResponse,
+  BoostTargetPlatformLabel,
   EstimatedReach,
   PrepareResponse,
 } from '../boost-modal-v2.types';
+import { BoostGoalsExperimentService } from '../../../experiments/sub-services/boost-goals-experiment.service';
+import { BoostGoal, BoostGoalButtonText } from '../../boost.types';
+import { Session } from '../../../../services/session';
+import { BoostTargetExperimentService } from '../../../experiments/sub-services/boost-target-experiment.service';
 
 /**
  * Service for creation and submission of boosts.
@@ -63,10 +71,40 @@ export class BoostModalV2Service implements OnDestroy {
     BoostModalPanel
   > = new BehaviorSubject<BoostModalPanel>(BoostModalPanel.AUDIENCE);
 
+  // currently selected goal.
+  public readonly goal$: BehaviorSubject<BoostGoal> = new BehaviorSubject<
+    BoostGoal
+  >(DEFAULT_GOAL);
+
+  // currently selected goal button text.
+  public readonly goalButtonText$: BehaviorSubject<
+    BoostGoalButtonText
+  > = new BehaviorSubject<BoostGoalButtonText>(null);
+
+  // currently selected goal button url.
+  public readonly goalButtonUrl$: BehaviorSubject<string> = new BehaviorSubject<
+    string
+  >(null);
+
   // currently selected audience.
   public readonly audience$: BehaviorSubject<
     BoostAudience
   > = new BehaviorSubject<BoostAudience>(DEFAULT_AUDIENCE);
+
+  // current selection for whether to target users on the web
+  public readonly targetPlatformWeb$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(true);
+
+  // current selection for whether to target android users
+  public readonly targetPlatformAndroid$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(true);
+
+  // current selection for target iOS users
+  public readonly targetPlatformIos$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(true);
 
   // currently selected payment category.
   public readonly paymentCategory$: BehaviorSubject<
@@ -93,6 +131,11 @@ export class BoostModalV2Service implements OnDestroy {
     number
   >(null);
 
+  // disable safe boost audience.
+  public readonly disabledSafeAudience$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   // whether boost submission is in progress.
   public readonly boostSubmissionInProgress$: BehaviorSubject<
     boolean
@@ -106,6 +149,175 @@ export class BoostModalV2Service implements OnDestroy {
     map(entity => {
       return entity?.type === 'user' ? BoostSubject.CHANNEL : BoostSubject.POST;
     })
+  );
+
+  // A comma-separated list of the selected target platforms (web/android/iOS)
+  // (or 'None', if nothing is selected)
+  public readonly targetPlatformSummaryText$: Observable<
+    string
+  > = combineLatest([
+    this.targetPlatformWeb$,
+    this.targetPlatformAndroid$,
+    this.targetPlatformIos$,
+  ]).pipe(
+    map(([web, android, ios]: [boolean, boolean, boolean]) => {
+      let text,
+        platforms: BoostTargetPlatformLabel[] = [];
+
+      if (web) {
+        platforms.push('Web');
+      }
+      if (android) {
+        platforms.push('Android');
+      }
+      if (ios) {
+        platforms.push('iOS');
+      }
+      if (platforms.length > 0) {
+        text = platforms.join(', ');
+      } else {
+        text = 'None';
+      }
+
+      return text;
+    })
+  );
+
+  /**
+   * Whether any of the default target platform values have changed
+   * (e.g. web/android/iOS, all enabled by default)
+   *
+   * This determines whether we display platform info in the review panel
+   */
+  public readonly targetPlatformChanged$: Observable<boolean> = combineLatest([
+    this.targetPlatformWeb$,
+    this.targetPlatformAndroid$,
+    this.targetPlatformIos$,
+  ]).pipe(
+    map(([web, android, ios]: [boolean, boolean, boolean]) => {
+      return !web || !android || !ios;
+    })
+  );
+
+  // Whether or not the selected goal comes with a custom CTA button
+  public readonly goalRequiresButton$: Observable<boolean> = this.goal$.pipe(
+    map(goal => {
+      return goal === BoostGoal.SUBSCRIBERS || goal === BoostGoal.CLICKS;
+    })
+  );
+
+  // Whether a Boost goal can be set
+  public canSetBoostGoal$: Observable<boolean> = combineLatest([
+    this.entity$,
+    this.entityType$,
+  ]).pipe(
+    map(([entity, entityType]: [BoostableEntity, BoostSubject]) => {
+      return (
+        this.boostGoalsExperiment.isActive() &&
+        entityType === BoostSubject.POST &&
+        entity?.owner_guid === this.session.getLoggedInUser().guid
+      );
+    })
+  );
+
+  // first panel that should be shown, depending on entityType and goal experiment
+  public readonly firstPanel$: Observable<
+    BoostModalPanel
+  > = this.canSetBoostGoal$.pipe(
+    map((canSetBoostGoal: boolean) => {
+      if (canSetBoostGoal) {
+        return BoostModalPanel.GOAL;
+      } else {
+        return BoostModalPanel.AUDIENCE;
+      }
+    })
+  );
+
+  // Whether the NEXT button should be disabled.
+  public readonly disableSubmitButton$: Observable<boolean> = combineLatest([
+    this.activePanel$,
+    this.goal$,
+    this.goalButtonUrl$,
+    this.targetPlatformWeb$,
+    this.targetPlatformAndroid$,
+    this.targetPlatformIos$,
+    this.boostSubmissionInProgress$,
+  ]).pipe(
+    map(
+      ([
+        activePanel,
+        goal,
+        goalButtonUrl,
+        targetPlatformWeb,
+        targetPlatformAndroid,
+        targetPlatformIos,
+        submissionInProgress,
+      ]: [
+        BoostModalPanel,
+        BoostGoal,
+        string,
+        boolean,
+        boolean,
+        boolean,
+        boolean
+      ]) => {
+        let panelRequirementsAreMet = true;
+
+        switch (activePanel) {
+          case BoostModalPanel.GOAL_BUTTON:
+            if (goal === BoostGoal.CLICKS) {
+              // Still need button URL
+              panelRequirementsAreMet = !!goalButtonUrl;
+            }
+            break;
+          case BoostModalPanel.AUDIENCE:
+            if (this.boostTargetExperiment.isActive()) {
+              // Still need a target platform
+              panelRequirementsAreMet =
+                targetPlatformWeb || targetPlatformAndroid || targetPlatformIos;
+            }
+            break;
+        }
+
+        return !panelRequirementsAreMet || submissionInProgress;
+      }
+    )
+  );
+
+  /**
+   * The panel you would go to if you clicked 'back' on the activePanel
+   */
+  public readonly previousPanel$: Observable<BoostModalPanel> = combineLatest([
+    this.activePanel$,
+    this.firstPanel$,
+    this.goalRequiresButton$,
+  ]).pipe(
+    map(
+      ([activePanel, firstPanel, goalRequiresButton]: [
+        BoostModalPanel,
+        BoostModalPanel,
+        boolean
+      ]) => {
+        switch (activePanel) {
+          case BoostModalPanel.GOAL:
+            return null;
+          case BoostModalPanel.GOAL_BUTTON:
+            return BoostModalPanel.GOAL;
+          case BoostModalPanel.AUDIENCE:
+            if (firstPanel === BoostModalPanel.AUDIENCE) {
+              return null;
+            } else if (goalRequiresButton) {
+              return BoostModalPanel.GOAL_BUTTON;
+            } else {
+              return BoostModalPanel.GOAL;
+            }
+          case BoostModalPanel.BUDGET:
+            return BoostModalPanel.AUDIENCE;
+          case BoostModalPanel.REVIEW:
+            return BoostModalPanel.BUDGET;
+        }
+      }
+    )
   );
 
   // total payment amount to be charged.
@@ -172,6 +384,13 @@ export class BoostModalV2Service implements OnDestroy {
     this.duration$,
     this.dailyBudget$,
     this.audience$,
+    this.targetPlatformWeb$,
+    this.targetPlatformAndroid$,
+    this.targetPlatformIos$,
+    this.goal$,
+    this.goalButtonText$,
+    this.goalButtonUrl$,
+    this.canSetBoostGoal$,
   ]).pipe(
     map(
       ([
@@ -182,6 +401,13 @@ export class BoostModalV2Service implements OnDestroy {
         duration,
         dailyBudget,
         audience,
+        targetPlatformWeb,
+        targetPlatformAndroid,
+        targetPlatformIos,
+        goal,
+        goalButtonText,
+        goalButtonUrl,
+        canSetBoostGoal,
       ]: [
         BoostableEntity,
         BoostSubject,
@@ -189,9 +415,16 @@ export class BoostModalV2Service implements OnDestroy {
         BoostPaymentMethodId,
         number,
         number,
-        BoostAudience
+        BoostAudience,
+        boolean,
+        boolean,
+        boolean,
+        BoostGoal,
+        BoostGoalButtonText,
+        string,
+        boolean
       ]): BoostSubmissionPayload => {
-        return {
+        let payload: BoostSubmissionPayload = {
           entity_guid: entity?.guid,
           target_suitability: audience,
           target_location:
@@ -203,6 +436,26 @@ export class BoostModalV2Service implements OnDestroy {
           daily_bid: dailyBudget,
           duration_days: duration,
         };
+
+        if (this.boostTargetExperiment.isActive()) {
+          payload = {
+            ...payload,
+            target_platform_web: targetPlatformWeb,
+            target_platform_android: targetPlatformAndroid,
+            target_platform_ios: targetPlatformIos,
+          };
+        }
+
+        if (canSetBoostGoal) {
+          payload = {
+            ...payload,
+            goal: goal,
+            goal_button_text: goalButtonText,
+            goal_button_url: goalButtonUrl,
+          };
+        }
+
+        return payload;
       }
     )
   );
@@ -214,15 +467,20 @@ export class BoostModalV2Service implements OnDestroy {
   private submitBoostSubscription: Subscription;
   private submitBoostOnchainSubscription: Subscription;
   private paymentCategoryChangeSubscription: Subscription;
-  private openPreviousPanelSubscription: Subscription;
   private boostSubmissionPayloadSnapshotSubscription: Subscription;
+  private goalSubscription: Subscription;
+  private previousPanelSubscription: Subscription;
+  private goalRequiresButtonSubscription: Subscription;
 
   constructor(
     private api: ApiService,
+    private session: Session,
     private toast: ToasterService,
     private config: ConfigsService,
     private web3Wallet: Web3WalletService,
-    private boostContract: BoostContractService
+    private boostContract: BoostContractService,
+    private boostGoalsExperiment: BoostGoalsExperimentService,
+    private boostTargetExperiment: BoostTargetExperimentService
   ) {
     // set default duration and budgets on payment category change.
     this.paymentCategoryChangeSubscription = this.paymentCategory$.subscribe(
@@ -240,6 +498,25 @@ export class BoostModalV2Service implements OnDestroy {
       }
     );
 
+    // When the goal changes, set defaults for goal-related fields
+    this.goalSubscription = this.goal$.subscribe(goal => {
+      switch (goal) {
+        case BoostGoal.SUBSCRIBERS:
+          this.goalButtonText$.next(DEFAULT_BUTTON_TEXT_FOR_SUBSCRIBER_GOAL);
+          this.goalButtonUrl$.next(null);
+
+          break;
+        case BoostGoal.CLICKS:
+          this.goalButtonText$.next(DEFAULT_BUTTON_TEXT_FOR_CLICKS_GOAL);
+          break;
+        case BoostGoal.ENGAGEMENT:
+        case BoostGoal.VIEWS:
+          this.goalButtonText$.next(null);
+          this.goalButtonUrl$.next(null);
+          break;
+      }
+    });
+
     // store a snapshot of payload for subscriptionless reference.
     this.boostSubmissionPayloadSnapshotSubscription = this.boostSubmissionPayload$.subscribe(
       (boostSubmissionPayload: BoostSubmissionPayload) =>
@@ -251,8 +528,10 @@ export class BoostModalV2Service implements OnDestroy {
     this.paymentCategoryChangeSubscription?.unsubscribe();
     this.submitBoostSubscription?.unsubscribe();
     this.submitBoostOnchainSubscription?.unsubscribe();
-    this.openPreviousPanelSubscription?.unsubscribe();
     this.boostSubmissionPayloadSnapshotSubscription?.unsubscribe();
+    this.goalSubscription?.unsubscribe();
+    this.previousPanelSubscription?.unsubscribe();
+    this.goalRequiresButtonSubscription?.unsubscribe();
   }
 
   /**
@@ -270,6 +549,12 @@ export class BoostModalV2Service implements OnDestroy {
    */
   public changePanelFrom(fromPanel: BoostModalPanel): void {
     switch (fromPanel) {
+      case BoostModalPanel.GOAL:
+        this.switchFromGoalPanel();
+        break;
+      case BoostModalPanel.GOAL_BUTTON:
+        this.switchFromGoalButtonPanel();
+        break;
       case BoostModalPanel.AUDIENCE:
         this.switchFromAudiencePanel();
         break;
@@ -290,22 +575,41 @@ export class BoostModalV2Service implements OnDestroy {
   }
 
   /**
-   * Open previous modal panel. If on the audience panel, does nothing.
+   * Open previous modal panel. If on the first panel, does nothing.
    * @returns { void }
    */
   public openPreviousPanel(): void {
-    this.openPreviousPanelSubscription = this.activePanel$
+    this.previousPanelSubscription = this.previousPanel$
       .pipe(take(1))
-      .subscribe((activePanel: BoostModalPanel) => {
-        switch (activePanel) {
-          case BoostModalPanel.BUDGET:
-            this.activePanel$.next(BoostModalPanel.AUDIENCE);
-            break;
-          case BoostModalPanel.REVIEW:
-            this.activePanel$.next(BoostModalPanel.BUDGET);
-            break;
+      .subscribe((previousPanel: BoostModalPanel) => {
+        if (previousPanel) {
+          this.activePanel$.next(previousPanel);
         }
       });
+  }
+
+  /**
+   * Switch from goal panel to goal button.
+   * @returns { void }
+   */
+  private switchFromGoalPanel(): void {
+    this.goalRequiresButtonSubscription = this.goalRequiresButton$
+      .pipe(take(1))
+      .subscribe(goalRequiresButton => {
+        this.activePanel$.next(
+          goalRequiresButton
+            ? BoostModalPanel.GOAL_BUTTON
+            : BoostModalPanel.AUDIENCE
+        );
+      });
+  }
+
+  /**
+   * Switch from goal button panel to audience.
+   * @returns { void }
+   */
+  private switchFromGoalButtonPanel(): void {
+    this.activePanel$.next(BoostModalPanel.AUDIENCE);
   }
 
   /**

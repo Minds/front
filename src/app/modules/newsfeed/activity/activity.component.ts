@@ -27,7 +27,6 @@ import { Subscription, Observable, Subject } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -36,6 +35,7 @@ import { debounceTime } from 'rxjs/operators';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
+import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -53,6 +53,7 @@ import { PersistentFeedExperimentService } from '../../experiments/sub-services/
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
     EntityMetricsSocketService,
+    MutualSubscriptionsService, // Create new instance of MutualSubscriptionsService per activity to avoid cancelled replays
   ],
   host: {
     '[class.m-activity--minimalMode]':
@@ -69,19 +70,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() set entity(entity) {
     this.service.setEntity(entity);
     this.isBoost = entity?.boosted ?? false;
-
-    const currentUser = this.session.getLoggedInUser();
-    const iconTime: number =
-      currentUser && currentUser.guid === entity.ownerObj.guid
-        ? currentUser.icontime
-        : entity.ownerObj.icontime;
-
-    this.avatarUrl =
-      this.configs.get('cdn_url') +
-      'icon/' +
-      entity.ownerObj.guid +
-      '/medium/' +
-      iconTime;
   }
 
   @Input() set displayOptions(options) {
@@ -135,15 +123,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
-  entitySubscription: Subscription;
   private interceptionObserverSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
-
-  avatarUrl: string;
-
-  // Whether the boost/remind/supermind flag should appear on top of owner block
-  showFlagRow: boolean = false;
 
   @Output() previousBoost: EventEmitter<any> = new EventEmitter();
   @Output() nextBoost: EventEmitter<any> = new EventEmitter();
@@ -159,7 +141,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private elementVisibilityService: ElementVisibilityService,
     private newsfeedService: NewsfeedService,
-    public featuresService: FeaturesService,
     public session: Session,
     private configs: ConfigsService,
     private interceptionObserver: IntersectionObserverService,
@@ -199,32 +180,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
-
-    this.entitySubscription = this.service.entity$.subscribe(entity => {
-      if (!entity) {
-        return;
-      }
-
-      const notInBoostRotator = !this.service.displayOptions.boostRotatorMode;
-      const boosted = entity.boosted;
-      const reminded = entity.remind_users && entity.remind_users.length;
-      const isSupermindOffer =
-        entity.supermind &&
-        !entity.supermind.is_reply &&
-        entity.supermind.receiver_user;
-
-      this.showFlagRow =
-        notInBoostRotator && (boosted || reminded || isSupermindOffer);
-
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    });
   }
 
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
     this.guestModeSubscription.unsubscribe();
-    this.entitySubscription.unsubscribe();
     if (
       this.entityMetricSocketsExperiment.isActive() &&
       this.interceptionObserverSubscription
@@ -253,7 +213,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
             })
           );
         });
-      this.elementVisibilityService.checkVisibility();
+
+      // Wait 1 second before recording the initial view
+      setTimeout(() => this.elementVisibilityService.checkVisibility(), 1000);
 
       // Only needed when metrics toolbar is visible.
       if (this.service.displayOptions.showToolbar) {
@@ -312,6 +274,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   delete() {
     this.canShow = false;
+
+    // Tell the boost rotator to go to the next boost
+    this.nextBoost.emit();
     this.deleted.next(this.service.entity$.value);
   }
 

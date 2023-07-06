@@ -11,7 +11,7 @@ import {
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
-  FormBuilder,
+  UntypedFormBuilder,
 } from '@angular/forms';
 
 export const FORM_INPUT_SLIDER_VALUE_ACCESSOR: any = {
@@ -47,7 +47,7 @@ export class FormInputSliderComponent implements ControlValueAccessor {
 
   propagateChange = (_: any) => {};
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     if (this.startValue) {
       this.value = this.startValue;
     } else {

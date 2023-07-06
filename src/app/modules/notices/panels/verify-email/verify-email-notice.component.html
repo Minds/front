@@ -14,17 +14,6 @@
     (onAction)="onPrimaryOptionClick($event)"
     data-ref="feed-notice-verify-email-primary-click"
   >
-    <ng-container
-      *ngIf="!isEmailCodeExperimentActive(); else verifyCodeText"
-      i18n="@@FEED_NOTICE__VERIFY_EMAIL__RESEND_EMAIL"
-    >
-      Re-send email
-    </ng-container>
-    <ng-template
-      #verifyCodeText
-      i18n="@@FEED_NOTICE__VERIFY_EMAIL__VERIFY_EMAIL"
-    >
-      Verify email
-    </ng-template>
+    Verify email
   </m-button>
 </m-feedNotice>

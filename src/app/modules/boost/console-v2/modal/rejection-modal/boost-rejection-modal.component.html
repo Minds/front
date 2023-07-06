@@ -1,0 +1,40 @@
+<div class="m-boost_rejection_modal" data-ref="boost-rejection-modal">
+  <div class="m-boost_rejection_modal__header m-modalV2__header">
+    <h2 class="m-modalV2Header__title">Specify a reason for the rejection</h2>
+  </div>
+
+  <div class="m-modalV2__body">
+    <ul class="m-boost_rejection_modal__reasons mdl-list">
+      <li
+        class="m-boost_rejection_modal__reasons_list__item mdl-list__item"
+        [class.selected]="reason.code === boost.rejection_reason"
+        *ngFor="let reason of rejectionReasons; let i = index"
+        (click)="selectReason(reason)"
+      >
+        <span class="mdl-list__item-primary-content">{{ reason.label }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="m-boost_rejection_modal__toolbar m-modalV2__toolbar">
+    <m-button
+      class="m-boost_rejection_modal__toolbar__cancel_button"
+      (onAction)="onDismissIntent()"
+    >
+      Cancel
+    </m-button>
+    <m-button
+      class="m-boost_rejection_modal__toolbar__cancel_button"
+      color="red"
+      [disabled]="boost.rejection_reason === null || (saving | async)"
+      [saving]="saving | async"
+      (onAction)="onRejectIntent()"
+    >
+      Reject
+    </m-button>
+  </div>
+</div>
+
+<m-modalCloseButton
+  data-ref="boost-rejection-modal-close-button"
+></m-modalCloseButton>

@@ -49,6 +49,9 @@ export class FeedNoticeComponent implements OnInit, OnDestroy {
   // Icon to be shown.
   @Input() icon: string = 'info';
 
+  // Whether the icon should be shown
+  @Input() showIcon: boolean = true;
+
   // id to append to data-ref attribute so we can report
   // to analytics which notice has been interacted with.
   @Input() dataRefId: string = 'unknown';

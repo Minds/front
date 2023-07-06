@@ -3,17 +3,13 @@ import { AuthModalComponent } from './auth-modal.component';
 import { MindsUser } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
-import { EmailCodeExperimentService } from '../../experiments/sub-services/email-code-experiment.service';
-import { ContentSettingsModalService } from '../../content-settings/content-settings-modal.service';
 
 @Injectable()
 export class AuthModalService {
   constructor(
     private injector: Injector,
     private modalService: ModalService,
-    private contentSettingsModal: ContentSettingsModalService,
-    private session: Session,
-    private emailCodeExperiment: EmailCodeExperimentService
+    private session: Session
   ) {}
 
   async open(
@@ -30,18 +26,6 @@ export class AuthModalService {
         formDisplay: opts.formDisplay,
         onComplete: async (user: MindsUser) => {
           modal.close(user);
-
-          if (
-            opts.formDisplay === 'register' &&
-            !this.emailCodeExperiment.isActive()
-          ) {
-            this.contentSettingsModal.open({
-              hideCompass: true,
-              onSave: () => {
-                this.contentSettingsModal.dismiss();
-              },
-            });
-          }
         },
       },
       keyboard: false,

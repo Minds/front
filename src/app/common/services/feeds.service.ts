@@ -287,6 +287,7 @@ export class FeedsService implements OnDestroy {
 
       if (rehydratedFeed) {
         this.checkForNewPosts();
+
         return;
       }
     }
@@ -356,7 +357,7 @@ export class FeedsService implements OnDestroy {
           }
           this.pagingToken = response['load-next'];
 
-          if (!this.pagingToken) {
+          if (!this.pagingToken && !response['has_more']) {
             this.canFetchMore = false;
           }
         } else {

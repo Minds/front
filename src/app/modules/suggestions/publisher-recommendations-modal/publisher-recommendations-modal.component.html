@@ -1,0 +1,62 @@
+<div class="m-modalV2__inner">
+  <div class="m-publisherRecommendationsModal__header m-modalV2__header">
+    <h4 *ngIf="publisherType === 'user'" i18n="@@COMMON__SUBSCRIBE">
+      Subscribe
+    </h4>
+    <h4
+      *ngIf="publisherType === 'group'"
+      i18n="@@CHANNEL_RECOMMENDATION_MODAL__TITLE__GROUP"
+    >
+      Join a group
+    </h4>
+    <span
+      class="m-modalV2MobileTopBar__button m-publisherRecommendationsModalHeader__skipButton"
+      i18n="@@COMMON__SKIP"
+      (click)="onSkip()"
+      >Skip</span
+    >
+    <p class="m-publisherRecommendationsModalHeader__subtitle">
+      <ng-container
+        *ngIf="publisherType === 'user'"
+        i18n="@@CHANNEL_RECOMMENDATION_MODAL__SUBTITLE__CHANNEL"
+        >You’ll see posts from people you subscribe to on your
+        newsfeed.</ng-container
+      >
+      <ng-container
+        *ngIf="publisherType === 'group'"
+        i18n="@@CHANNEL_RECOMMENDATION_MODAL__SUBTITLE__GROUP"
+        >Find your community, speak your mind</ng-container
+      >
+    </p>
+  </div>
+  <m-publisherRecommendations
+    class="m-publisherRecommendationsModal__body m-modalV2__body"
+    location="newsfeed"
+    isOnboarding="true"
+    [publisherType]="publisherType"
+  ></m-publisherRecommendations>
+  <div class="m-publisherRecommendationsModal__footer m-modalV2__footer">
+    <m-button
+      class="m-publisherRecommendationsModalFooter__skipButton"
+      (onAction)="onSkip()"
+      data-ref="m-publisherRecommendationsModalFooter__skipButton"
+      i18n="@@COMMON__SKIP"
+      >Skip</m-button
+    >
+    <m-button
+      class="m-publisherRecommendationsModalFooter__continueButton"
+      color="blue"
+      solid="true"
+      (onAction)="onContinue()"
+      i18n="@@COMMON__CONTINUE"
+      data-ref="m-publisherRecommendationsModalFooter__continueButton"
+      >Continue</m-button
+    >
+  </div>
+</div>
+<!-- ----------------------------------------- -->
+<!-- MODAL CLOSE -->
+<!-- ----------------------------------------- -->
+<m-modalCloseButton
+  class="m-publisherRecommendationsModal__closeButton"
+></m-modalCloseButton>

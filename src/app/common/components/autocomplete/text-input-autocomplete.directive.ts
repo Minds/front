@@ -94,7 +94,7 @@ export class TextInputAutocompleteDirective implements OnDestroy {
       }
     | undefined;
 
-  private menuHidden$ = new Subject();
+  private menuHidden$ = new Subject<any>();
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -295,7 +295,7 @@ export class TextInputAutocompleteDirective implements OnDestroy {
   private hideMenu() {
     if (this.menu) {
       this.menu.component.destroy();
-      this.menuHidden$.next();
+      this.menuHidden$.next(null);
       this.menuHidden.emit();
       this.menu = undefined;
     }

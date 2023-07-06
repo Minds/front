@@ -8,15 +8,14 @@ import {
   OnDestroy,
 } from '@angular/core';
 import {
-  FormGroup,
+  UntypedFormGroup,
   FormControl,
-  FormBuilder,
+  UntypedFormBuilder,
   Validators,
 } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
 import { Storage } from '../../../../services/storage';
-import { FeaturesService } from '../../../../services/features.service';
 import { MessengerService } from '../../../messenger/messenger.service';
 import { Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
@@ -32,7 +31,7 @@ import * as secp256k1 from '@noble/secp256k1';
 import { first, take } from 'rxjs/operators';
 
 /**
- * Settings form for toggling whether to display legacy messenger.
+ * Settings form for NOSTR
  */
 @Component({
   selector: 'm-settingsV2__nostr',
@@ -44,7 +43,7 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
 
   inProgress: boolean = false;
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   nip05Alias$ = this.nostrService.nip05Alias$;
   publicKey$ = this.nostrService.publicKey$;
@@ -64,7 +63,7 @@ export class SettingsV2NostrComponent implements OnInit, OnDestroy {
     protected nostrService: NostrService,
     protected configs: ConfigsService,
     protected toasterService: ToasterService,
-    protected fb: FormBuilder
+    protected fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {

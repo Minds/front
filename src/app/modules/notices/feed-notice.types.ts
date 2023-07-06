@@ -5,11 +5,13 @@ export type NoticeKey =
   | 'setup-channel'
   | 'verify-uniqueness'
   | 'connect-wallet'
-  | 'build-your-algorithm'
   | 'enable-push-notifications'
   | 'update-tags'
   | 'plus-upgrade'
-  | 'boost-channel';
+  | 'boost-channel'
+  | 'invite-friends'
+  | 'boost-latest-post'
+  | 'no-groups';
 
 // Location of component - where should it show 'top' or feed, or 'inline' in the feed.
 export type NoticeLocation = 'top' | 'inline';

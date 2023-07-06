@@ -25,6 +25,15 @@
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
+
+      a {
+        cursor: pointer;
+        text-decoration: none;
+
+        @include m-theme() {
+          color: themed($m-link-text);
+        }
+      }
     }
   }
 

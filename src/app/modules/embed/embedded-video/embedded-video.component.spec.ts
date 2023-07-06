@@ -14,7 +14,7 @@ import {
   NgxResponse,
 } from '@mindsorg/ngx-universal';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
-import { DefaultPlyrDriver } from 'ngx-plyr';
+import { DefaultPlyrDriver } from '@mindsorg/ngx-plyr';
 import { BehaviorSubject, of } from 'rxjs';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { ServerXhr } from '../../../app.server.module';

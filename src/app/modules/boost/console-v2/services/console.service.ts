@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, switchMap, take } from 'rxjs/operators';
+import { catchError, switchMap, take, throttleTime } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Session } from '../../../../services/session';
@@ -11,13 +11,13 @@ import {
   Boost,
   BoostConsoleGetParams,
   BoostConsoleLocationFilter,
+  BoostConsolePaymentMethodFilter,
   BoostConsoleStateFilter,
   BoostConsoleSuitabilityFilter,
   BoostLocation,
+  BoostPaymentMethod,
   BoostState,
   BoostSuitability,
-  BoostConsolePaymentMethodFilter,
-  BoostPaymentMethod,
 } from '../../boost.types';
 
 /**
@@ -38,7 +38,7 @@ export class BoostConsoleService {
   // (e.g. feed or sidebar)
   public readonly locationFilterValue$: BehaviorSubject<
     BoostConsoleLocationFilter
-  > = new BehaviorSubject<BoostConsoleLocationFilter>('feed');
+  > = new BehaviorSubject<BoostConsoleLocationFilter>('sidebar');
 
   // Subject containing status filter for console to display.
   // (Used in user boost context only)
@@ -62,6 +62,18 @@ export class BoostConsoleService {
   public readonly inProgress$$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
+
+  public readonly singleBoostGuid$: BehaviorSubject<
+    string
+  > = new BehaviorSubject<string>(null);
+
+  public readonly singleBoost$: BehaviorSubject<Boost> = new BehaviorSubject<
+    Boost
+  >(null);
+
+  public readonly remoteUserGuid$: BehaviorSubject<
+    string
+  > = new BehaviorSubject<string>(null);
 
   constructor(
     public session: Session,
@@ -91,11 +103,12 @@ export class BoostConsoleService {
   public getList$(
     limit: number = 12,
     offset: number = 0
-  ): Observable<ApiResponse> {
+  ): Observable<ApiResponse | { redirect: boolean; errorMessage: any }> {
     return this.adminContext$.pipe(
       take(1),
       switchMap((adminContext: boolean) => {
-        let context = adminContext ? '/admin' : '';
+        let context =
+          adminContext || this.remoteUserGuid$.getValue() ? '/admin' : '';
         let endpoint = `${this.endpoint}${context}`;
 
         let params: BoostConsoleGetParams = {
@@ -105,6 +118,7 @@ export class BoostConsoleService {
           status: null,
           audience: null,
           payment_method: null,
+          remote_user_guid: null,
         };
         // -------------------------------------------
         // FILTERS FOR BOTH USERS + ADMINS
@@ -114,8 +128,8 @@ export class BoostConsoleService {
           params.location = this.getBoostLocationFromFilterValue(location);
         }
         // -------------------------------------------
-        // FILTERS FOR USERS ONLY
-        if (!this.adminContext$.getValue()) {
+        if (!adminContext) {
+          // FILTERS FOR USERS
           const state = this.stateFilterValue$.getValue();
 
           if (state) {
@@ -124,24 +138,32 @@ export class BoostConsoleService {
         }
         // -------------------------------------------
         // FILTERS FOR ADMINS ONLY
-        if (this.adminContext$.getValue() && this.session.isAdmin()) {
-          params.status = BoostState.PENDING;
+        if (this.session.isAdmin()) {
+          if (adminContext) {
+            params.status = BoostState.PENDING;
 
-          const suitability = this.suitabilityFilterValue$.getValue();
-          const paymentMethod = this.paymentMethodFilterValue$.getValue();
+            const suitability = this.suitabilityFilterValue$.getValue();
+            const paymentMethod = this.paymentMethodFilterValue$.getValue();
 
-          if (suitability) {
-            params.audience = this.getBoostSuitabilityFromFilterValue(
-              suitability
-            );
-          }
+            if (suitability) {
+              params.audience = this.getBoostSuitabilityFromFilterValue(
+                suitability
+              );
+            }
 
-          if (paymentMethod) {
-            params.payment_method = this.getBoostPaymentMethodFromFilterValue(
-              paymentMethod
-            );
+            if (paymentMethod) {
+              params.payment_method = this.getBoostPaymentMethodFromFilterValue(
+                paymentMethod
+              );
+            }
+          } else {
+            const remoteUserGuid = this.remoteUserGuid$.getValue();
+            if (remoteUserGuid) {
+              params.remote_user_guid = remoteUserGuid;
+            }
           }
         }
+
         // -------------------------------------------
         return this.api.get<ApiResponse>(endpoint, params);
       }),
@@ -180,24 +202,18 @@ export class BoostConsoleService {
   /**
    * Rejects a boost (action taken by admin)
    * @param boost
+   * @return Observable<ApiResponse>
    */
-  async reject(boost: Boost): Promise<void> {
+  public reject(boost: Boost): Observable<ApiResponse> {
     if (!this.session.isAdmin()) {
       console.log('Only admins can reject boosts');
       return;
     }
 
     this.inProgress$$.next(true);
-    try {
-      await this.api.post(`${this.endpoint}/${boost.guid}/reject`).toPromise();
-      boost.boost_status = BoostState.REJECTED;
-      this.decrementAdminStatCounter();
-    } catch (err) {
-      console.log(err);
-      this.toasterService.error(err?.error.message);
-    } finally {
-      this.inProgress$$.next(false);
-    }
+    return this.api.post<ApiResponse>(`${this.endpoint}/${boost.guid}/reject`, {
+      reason: boost.rejection_reason,
+    });
   }
 
   /**
@@ -311,7 +327,7 @@ export class BoostConsoleService {
    * Decrement pending count for current suitability filter value.
    * @returns { void }
    */
-  private decrementAdminStatCounter(): void {
+  public decrementAdminStatCounter(): void {
     if (this.suitabilityFilterValue$.getValue() === 'safe') {
       this.adminStats.decrementPendingSafeCount();
     } else {

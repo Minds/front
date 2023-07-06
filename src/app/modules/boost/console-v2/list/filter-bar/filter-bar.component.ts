@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
   BoostConsoleLocationFilter,
@@ -11,7 +12,8 @@ import { BoostConsoleService } from '../../services/console.service';
 
 /**
  * Filter bar component for Boost console.
- * Contains both tabs and filters
+ * Contains both tabs and filters, button to create a boost,
+ * and a link to legacy console,
  *
  * Changing a filter/tab value changes the url query params only
  */
@@ -55,7 +57,8 @@ export class BoostConsoleFilterBarComponent implements OnInit {
 
   constructor(
     public service: BoostConsoleService,
-    private adminStats: BoostConsoleAdminStatsService
+    private adminStats: BoostConsoleAdminStatsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -89,5 +92,14 @@ export class BoostConsoleFilterBarComponent implements OnInit {
     if (this.service.adminContext$.getValue()) {
       this.adminStats.fetch(); // async
     }
+  }
+
+  /**
+   * Called on settings button click - navigates to settings page.
+   * @param { MouseEvent } $event - click event.
+   * @returns { void }
+   */
+  public onSettingsButtonClick($event: MouseEvent): void {
+    this.router.navigate(['/settings/account/boosted-content']);
   }
 }

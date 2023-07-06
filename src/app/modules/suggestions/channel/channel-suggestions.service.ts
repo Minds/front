@@ -92,7 +92,7 @@ export class SuggestionsService {
         }
       }
       if (opts.user) {
-        // contextual channel recommendations doesn't support pagination
+        // contextual publisher recommendations doesn't support pagination
         this.hasMoreData$.next(false);
       } else {
         this.hasMoreData$.next(suggestions.length >= opts.limit);

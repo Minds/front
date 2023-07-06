@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding-top: $spacing4;
+  padding-bottom: $spacing6;
+  ::ng-deep m-button {
+    &:first-child {
+      margin-right: $spacing2;
+    }
+  }
+
+  a {
+    display: inline-block;
+    margin-right: $spacing2;
+    text-decoration: none;
+    @media screen and ($max-mobile) {
+      &:first-child {
+        margin-right: 0;
+        margin-bottom: $spacing2;
+      }
+    }
+  }
+}

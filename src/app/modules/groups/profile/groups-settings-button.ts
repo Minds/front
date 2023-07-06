@@ -4,8 +4,10 @@ import {
   Output,
   EventEmitter,
   Injector,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { GroupsService } from '../groups.service';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
@@ -14,17 +16,24 @@ import { Session } from '../../../services/session';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ConfirmV2Component } from '../../modals/confirm-v2/confirm.component';
 import { ModalService } from '../../../services/ux/modal.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'minds-groups-settings-button',
   templateUrl: 'groups-settings-button.html',
   styleUrls: ['./groups-settings-button.ng.scss'],
 })
-export class GroupsSettingsButton {
+export class GroupsSettingsButton implements OnInit, OnDestroy {
   group: any = {
     'is:muted': false,
     deleted: false,
   };
+
+  /**
+   * Whether to use v2 styles and items
+   * (i.e. Gatherings are removed in v2)
+   */
+  @Input() v2: boolean = false;
 
   @Input('group') set _group(value: any) {
     if (!value) return;
@@ -45,6 +54,8 @@ export class GroupsSettingsButton {
 
   featureModalOpen: boolean = false;
 
+  subscriptions: Subscription[] = [];
+
   constructor(
     public service: GroupsService,
     public client: Client,
@@ -52,10 +63,27 @@ export class GroupsSettingsButton {
     private injector: Injector,
     public modalService: ModalService,
     public router: Router,
+    protected route: ActivatedRoute,
     protected toasterService: ToasterService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    this.subscriptions.push(
+      // Hacky workaround for v2 groups so we can use v1 groups to do editing.
+      // If we don't change this here, we won't be able to access the 'save' option
+      this.route.queryParams.subscribe(params => {
+        if (params['editing']) {
+          this.editing = params['editing'];
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 
   async mute() {
     this.group['is:muted'] = true;

@@ -8,7 +8,11 @@ import {
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Session } from '../../../../services/session';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { Element, Node } from '@angular/compiler';
@@ -20,14 +24,14 @@ import { Element, Node } from '@angular/compiler';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class YoutubeMigrationConnectComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   readonly username: string;
 
   constructor(
     protected youtubeService: YoutubeMigrationService,
     public router: Router,
     protected cd: ChangeDetectorRef,
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
     session: Session,
     protected toasterService: ToasterService
   ) {

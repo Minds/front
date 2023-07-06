@@ -45,8 +45,8 @@
     <ng-container *ngFor="let earningsGroup of earnings$ | async">
       <tbody>
         <tr
-          (click)="toggleRow(earningsGroup.id)"
           class="m-walletTokenEarnings__header"
+          (click)="toggleRow(earningsGroup.id)"
         >
           <td>{{ getFriendlyLabel(earningsGroup.id) }}</td>
           <td>
@@ -72,7 +72,7 @@
 
       <tbody
         class="m-walletTokenEarnings__expanded"
-        *ngIf="expandedRow === earningsGroup.id"
+        *ngIf="shouldExpandRow(earningsGroup.id)"
       >
         <tr *ngFor="let item of earningsGroup.items">
           <td>
@@ -96,7 +96,7 @@
 
 <!-- Reusable row arrow -->
 <ng-template #expandArrow let-rowId="rowId">
-  <i class="material-icons" (click)="toggleRow(rowId)">{{
-    expandedRow === rowId ? 'expand_less' : 'expand_more'
+  <i class="material-icons">{{
+    !shouldExpandRow(rowId) ? 'expand_less' : 'expand_more'
   }}</i>
 </ng-template>

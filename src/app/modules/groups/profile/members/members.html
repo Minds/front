@@ -1,4 +1,4 @@
-<a class="m-group__goBack" routerLink="..">&lt; Back to feed</a>
+<a *ngIf="!v2" class="m-group__goBack" routerLink="..">&lt; Back to feed</a>
 <div class="">
   <minds-groups-profile-members-invite
     *ngIf="canInvite"

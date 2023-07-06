@@ -1,0 +1,347 @@
+@import 'defaults.scss';
+@import '../../layout.scss';
+
+.m-pageLayout__container--fullWidth :host {
+  display: none !important;
+  @media screen and (max-width: $layoutMax1ColWidth) {
+    display: block;
+  }
+}
+
+:host {
+  display: block;
+  position: relative;
+
+  @media screen and (max-width: $max-mobile) {
+    display: none;
+  }
+
+  &.m-sidebarNavigation--opened {
+    display: block;
+
+    .m-sidebarNavigation.m-sidebarNavigation--slide {
+      transform: translateX(316px);
+    }
+  }
+
+  .m-sidebarNavigation {
+    @include z-index(sidebar);
+    min-width: 0;
+    display: block;
+    width: $layoutSidebarFullWidth;
+    height: calc(100vh - 75px);
+    position: fixed;
+    box-sizing: border-box;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow: visible;
+
+    nav {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: calc(100vh - 75px);
+
+      @include hide-scrollbar;
+
+      @media screen and (max-width: $max-mobile) {
+        max-height: 100vh;
+      }
+
+      m-sidebarMore__trigger {
+        display: block;
+
+        popper-content {
+          position: static;
+        }
+      }
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      border-right: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      width: $layoutSidebarSmallWidth;
+    }
+
+    .m-sidebarNavigation__top {
+      display: none;
+    }
+
+    &:not(.m-sidebarNavigation--slide) {
+      @include m-theme() {
+        border-right: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    &.m-sidebarNavigation--slide {
+      @include z-index(sidebar--mobile);
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: -316px;
+      width: 316px;
+      height: 100vh;
+      max-width: 79vw;
+      padding: 0;
+      transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+      border-right: 1px solid transparent !important;
+
+      @include m-theme() {
+        box-shadow: 0 0 10px rgba(themed($m-black-always), 0.1);
+      }
+
+      .m-sidebarNavigationItem__text {
+        display: block;
+      }
+
+      .m-sidebarNavigation__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        height: 75px;
+        padding: 0 20px;
+
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+
+        a {
+          text-decoration: none;
+          display: flex;
+          align-items: end;
+
+          & > img {
+            height: 36px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .m-sidebarNavigation__list {
+        padding: 0 20px 0;
+      }
+    }
+
+    .m-sidebarNavigation__list {
+      padding-top: 34px !important;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .m-sidebarNavigation__item {
+        &.m-sidebarNavigation__item--supermind {
+          /**
+           * Optical alignment fix caused by the icon for Supermind 
+           * being VERY left-side heavy.
+           */
+          // conditional styling for full nav.
+          @media screen and (max-width: $layoutMax1ColWidth),
+            (min-width: calc($layoutMax3ColWidth + 1px)) {
+            i {
+              margin-left: 2px;
+            }
+            span {
+              margin-left: 18px;
+            }
+          }
+
+          // conditional styling for mid width nav.
+          @media screen and (max-width: $layoutMax3ColWidth) and (min-width: calc($layoutMax1ColWidth + 1px)) {
+            i {
+              margin-left: 6px;
+            }
+            span {
+              margin-left: 14px;
+            }
+          }
+        }
+
+        &.m-sidebarNavigation__item--boost i {
+          // Optical alignment fix for full width nav.
+          @media screen and (max-width: $layoutMax1ColWidth),
+            (min-width: calc($layoutMax3ColWidth + 1px)) {
+            transform: translateY(2px);
+          }
+        }
+
+        &.m-sidebarNavigation__item--compose {
+          margin-bottom: 20px !important;
+          margin-top: $spacing6;
+
+          // Conditional styling for large compose button.
+          // This applies to widths under $layoutMax1ColWidth OR widths over $layoutMax3ColWidth.
+          @media screen and (max-width: $layoutMax1ColWidth),
+            (min-width: calc($layoutMax3ColWidth + 1px)) {
+            .m-sidebarNavigation__composeButton--small {
+              display: none;
+            }
+            .m-sidebarNavigation__composeButton--large {
+              display: block;
+              width: 100%;
+
+              ::ng-deep button {
+                width: 100%;
+              }
+            }
+          }
+
+          @media screen and (min-width: calc($layoutMax3ColWidth + 1px)) {
+            margin-right: $spacing6;
+          }
+
+          // conditional styling for small compose button.
+          @media screen and (max-width: $layoutMax3ColWidth) and (min-width: calc($layoutMax1ColWidth + 1px)) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .m-sidebarNavigation__composeButton--large {
+              display: none;
+            }
+            .m-sidebarNavigation__composeButton--small {
+              margin-right: unset;
+
+              ::ng-deep button {
+                width: 36px;
+                height: 36px;
+              }
+            }
+          }
+        }
+
+        a {
+          font-size: 19px;
+          min-width: 35px;
+          line-height: 24px;
+          width: 100%;
+          margin: 0;
+          cursor: pointer;
+
+          @media screen and (max-width: $layoutMax3ColWidth) {
+            padding: 0;
+          }
+
+          .m-sidebarNavigationItem__hoverArea {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            padding: 10px 24px 10px 16px;
+            box-sizing: border-box;
+            max-width: 100%;
+
+            @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMax1ColWidth) {
+              padding: 10px;
+            }
+
+            .m-sidebarNavigation__hashIcon {
+              width: 24px;
+              font-family: Roboto;
+              font-weight: 700;
+              font-size: 24px;
+              text-align: center;
+            }
+          }
+        }
+
+        &.m-sidebarNavigation__item--user img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+
+    ::ng-deep m-sidebarMore__trigger {
+      display: block;
+
+      popper-content {
+        position: static;
+      }
+
+      m-sidebarMore__trigger {
+        .m-sidebarNavigation__item {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+  }
+
+  .m-sidebarNavigation__overlay {
+    @include z-index(topbar);
+    @include m-theme() {
+      background-color: rgba(themed($m-black-always), 0.4);
+    }
+  }
+}
+
+.m-sidebarNavigation__item {
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 44px;
+
+    :host & {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      padding: 12px 0;
+      text-align: center;
+      justify-content: center;
+
+      .m-sidebarNavigation--slide & {
+        text-align: initial;
+        justify-content: initial;
+      }
+    }
+  }
+
+  &:hover > a,
+  &.m-sidebarNavigation__item--active {
+    .m-sidebarNavigationItem__hoverArea {
+      cursor: pointer;
+      border-radius: 100px;
+
+      :host & {
+        @include m-theme() {
+          background-color: themed($m-borderColor--primary);
+        }
+      }
+    }
+  }
+
+  &.m-sidebarNavigation__item--user {
+    img {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+    }
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .m-sidebarNavigationItem__text {
+    margin-left: 20px;
+
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      display: none;
+    }
+  }
+}

@@ -4,7 +4,11 @@ import { Router } from '@angular/router';
 import { GroupsService } from '../groups.service';
 
 import { Session } from '../../../services/session';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
@@ -23,7 +27,7 @@ export class GroupsCreator {
 
   inProgress: boolean = false;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   bannerAssetCssUrl: string;
   avatarAssetCssUrl: string;
 
@@ -35,12 +39,12 @@ export class GroupsCreator {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      name: new FormControl('', {
+    this.form = new UntypedFormGroup({
+      name: new UntypedFormControl('', {
         validators: [Validators.required],
       }),
-      description: new FormControl(''),
-      membership: new FormControl('2', {
+      description: new UntypedFormControl(''),
+      membership: new UntypedFormControl('2', {
         validators: [Validators.required],
       }),
     });

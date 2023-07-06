@@ -15,11 +15,10 @@ import {
 import { PLAYER_ANIMATIONS } from './player.animations';
 import { VideoPlayerService, VideoSource } from './player.service';
 import * as Plyr from 'plyr';
-import { PlyrComponent } from 'ngx-plyr';
+import { PlyrComponent } from '@mindsorg/ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
-import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
 import { map, take } from 'rxjs/operators';
 import { HlsjsPlyrDriver } from './hls-driver';
 
@@ -131,6 +130,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     muted: false,
     hideControls: true,
     storage: { enabled: false },
+    loop: { active: true },
   };
 
   /**
@@ -144,7 +144,6 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     public elementRef: ElementRef,
     private service: VideoPlayerService,
     private cd: ChangeDetectorRef,
-    public autoProgress: AutoProgressVideoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -177,8 +176,6 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.autoProgress.cancel(); // hide autoplay window
-
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
@@ -323,9 +320,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    * Fired when player video ends.
    * @returns { void }
    */
-  public onEnded(): void {
-    this.autoProgress.next();
-  }
+  public onEnded(): void {}
 
   /**
    * Fired on volume change.
@@ -343,15 +338,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    * Called on Plyr seek.
    * @returns { void }
    */
-  public onSeeking(): void {
-    this.subscriptions.push(
-      this.autoProgress.timer$.pipe(take(1)).subscribe(timer => {
-        if (timer > 0) {
-          this.autoProgress.cancel();
-        }
-      })
-    );
-  }
+  public onSeeking(): void {}
 
   /**
    * Fired on played event trigger.

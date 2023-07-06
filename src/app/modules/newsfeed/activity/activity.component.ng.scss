@@ -28,15 +28,6 @@
   }
 
   // *********************************
-  // ** COMPOSER - QUOTE **
-  // *********************************
-  m-composerpreview--quote & {
-    .m-activity__flagRow {
-      display: none;
-    }
-  }
-
-  // *********************************
   // ** FEED **
   // *********************************
 
@@ -78,10 +69,6 @@
         height: calc(100% - 68px);
       }
 
-      .m-activity__flagRow {
-        padding-bottom: 0;
-      }
-
       ::ng-deep {
         m-activity__nsfwConsent {
           flex: 1;
@@ -120,9 +107,6 @@
       padding-top: 0;
       padding-left: 0;
       padding-right: 0;
-    }
-    .m-activity__flagRow {
-      display: none;
     }
   }
 
@@ -188,6 +172,10 @@
     .m-activityTop__avatarColumn,
     ::ng-deep m-activity__quote .m-activityTop__avatarColumn {
       padding-right: $activityAvatarSpacingRight--single;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-right: $activityAvatarSpacingRight--single--mobile;
+      }
     }
   }
 
@@ -205,11 +193,6 @@
     padding-top: $spacing4;
   }
 
-  .m-activityTop__avatarColumn,
-  ::ng-deep m-activity__quote .m-activityTop__avatarColumn {
-    padding-right: $activityAvatarSpacingRight--feed;
-  }
-
   .m-activityTop__mainColumn,
   ::ng-deep m-activity__quote .m-activityTop__mainColumn {
     display: flex;
@@ -218,27 +201,15 @@
     min-width: 0; // See https://stackoverflow.com/a/66689926
   }
 
-  .m-activity__flagRow {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: $spacing3;
-    align-items: center;
+  .m-activityTop__avatarColumn,
+  ::ng-deep m-activity__quote .m-activityTop__avatarColumn {
+    padding-right: $activityAvatarSpacingRight--feed;
 
-    .m-activity__boostRotatorButtons {
-      ::ng-deep m-icon {
-        margin-right: $spacing1;
-        @include unselectable;
-        i {
-          cursor: pointer;
-          // @include heading2Regular;
-          @include unselectable;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
-        }
-      }
+    @media screen and (max-width: $max-mobile) {
+      padding-right: $activityAvatarSpacingRight--feed--mobile;
     }
   }
+
   // *********************************
   // ** COMMENTS **
   // *********************************
@@ -261,26 +232,8 @@
   }
 
   // *********************************
-  // ** AVATAR **
+  // ** FLAG ROW **
   // *********************************
-
-  .m-activity__avatar,
-  ::ng-deep m-activity__quote .m-activity__avatar {
-    padding-right: $activityAvatarSpacingRight--feed;
-
-    @media screen and (max-width: $max-mobile) {
-      padding-right: $activityAvatarSpacingRight--feed--mobile;
-    }
-
-    img {
-      border-radius: 50%;
-      width: $activityAvatarWidth;
-      height: $activityAvatarWidth;
-      object-fit: cover;
-      box-sizing: border-box;
-    }
-  }
-
   .m-activityLeftColumn__spacer {
     height: $spacing8;
   }

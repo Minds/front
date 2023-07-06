@@ -98,7 +98,7 @@ m-onboarding {
         z-index: -1;
       }
 
-      @media screen and(max-width: $m-grid-max-tablet) {
+      @media screen and (max-width: $m-grid-max-tablet) {
         padding: 50px 20px;
       }
 
@@ -247,30 +247,27 @@ m-onboarding {
           display: flex;
           flex-direction: row;
           flex-flow: row wrap;
-          //background-color: themed($m-bgColor--primary);
           max-width: 1280px;
           margin: auto;
 
           m-group__membershipButton {
-            &.m-groupsJoin--iconsOnly {
-              & > div {
-                height: 34px;
-                width: 34px;
-                border: 1px solid #ececec;
-                border-radius: 4px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+            & > div {
+              height: 34px;
+              width: 34px;
+              border: 1px solid #ececec;
+              border-radius: 4px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
 
+              & > i {
+                color: #a3a3a3;
+              }
+
+              &.m-groupsJoin__subscribed {
                 & > i {
-                  color: #a3a3a3;
-                }
-
-                &.m-groupsJoin__subscribed {
-                  & > i {
-                    @include m-theme() {
-                      color: themed($m-blue);
-                    }
+                  @include m-theme() {
+                    color: themed($m-blue);
                   }
                 }
               }

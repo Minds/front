@@ -22,7 +22,7 @@
         padding: 0 30px 0;
       }
 
-      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+      @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
         padding: 0 60px 60px;
         margin-left: 30px;
       }
@@ -42,7 +42,7 @@
         clip-path: polygon(0% 0%, 0% 100%, 100% 92%, 100% 0%);
         z-index: -1;
 
-        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
           transform: translate(0, -56px);
         }
 
@@ -101,27 +101,27 @@
     p.m-marketing__description {
       margin-bottom: 42px;
 
-      @media screen and(min-width: $m-grid-max-tablet) {
+      @media screen and (min-width: $m-grid-max-tablet) {
         padding-right: 200px;
       }
 
-      @media screen and(min-width: 900px) and (max-width: $m-grid-min-vp) {
+      @media screen and (min-width: 900px) and (max-width: $m-grid-min-vp) {
         padding-right: 100px;
       }
 
-      @media screen and(max-width: 900px) {
+      @media screen and (max-width: 900px) {
         padding-right: 0;
       }
 
       @include m-theme() {
-        color: themed($m-grey-300);
+        color: themed($m-textColor--primary);
       }
 
       @include m-on-theme(dark) {
         color: #ffffff;
       }
 
-      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+      @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
         font-size: 17px;
         line-height: 24px;
       }
@@ -145,7 +145,7 @@
         height: 547px;
         clip-path: polygon(0% 1%, 0% 97%, 100% 100%, 100% 0%);
 
-        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
           width: 338px;
           &.m-marketing__image--tall {
             width: 348px;
@@ -172,7 +172,7 @@
 
         // Deco
 
-        &::before {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::before {
           content: '';
           display: block;
           position: absolute;
@@ -191,7 +191,7 @@
           }
         }
 
-        &::after {
+        &:not(.m-marketing__imageSpan--noBackgroundEffects)::after {
           content: '';
           display: block;
           position: absolute;

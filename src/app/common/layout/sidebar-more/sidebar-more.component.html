@@ -6,25 +6,9 @@
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
-      <a [routerLink]="'/settings'" data-ref="sidebarmore-settings">
-        <i class="material-icons">settings</i>
-        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
-          >Settings</span
-        >
-      </a>
-    </li>
-    <!-- ------------------------------------------------------------ -->
-    <li
-      class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser()"
-      (click)="toggleSidebar()"
-    >
-      <a (click)="buyTokens()" data-ref="sidebarmore-buytokens-modal">
-        <m-icon from="custom" iconId="wallet"></m-icon>
-
-        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BUY_CRYPTO"
-          >Buy Crypto</span
-        >
+      <a (click)="onEarnClick()" data-ref="sidebarmore-earn-modal">
+        <i class="material-icons">attach_money</i>
+        <span i18n="@@COMMON__EARN">Earn</span>
       </a>
     </li>
     <!-- ------------------------------------------------------------ -->
@@ -46,9 +30,13 @@
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
-      <a (click)="openBoostModal()" data-ref="sidebarmore-boost-modal">
-        <i class="material-icons">trending_up</i>
-        <span i18n="@@COMMON__BOOST_CONSOLE">Boost</span>
+      <a [href]="chatUrl" data-ref="sidebarmore-chat">
+        <m-chatIcon m-tooltip--icon></m-chatIcon>
+        <span
+          class="m-sidebarNavigationItem__text m-legible"
+          i18n="@@COMMON__CHAT"
+          >Chat</span
+        >
       </a>
     </li>
     <!-- ------------------------------------------------------------ -->
@@ -57,20 +45,11 @@
       *ngIf="getCurrentUser()"
       (click)="toggleSidebar()"
     >
-      <a (click)="openEarnModal()" data-ref="sidebarmore-earn-modal">
-        <i class="material-icons">attach_money</i>
-        <span i18n="@@COMMON__EARN">Earn</span>
-      </a>
-    </li>
-    <!-- ------------------------------------------------------------ -->
-    <li
-      class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser() && shouldShowSupermindOption()"
-      (click)="toggleSidebar()"
-    >
-      <a (click)="openSupermindConsole()" data-ref="sidebarmore-supermind">
-        <i class="material-icons">tips_and_updates</i>
-        <span i18n="@@COMMON__SUPERMIND">Supermind</span>
+      <a [routerLink]="'/settings'" data-ref="sidebarmore-settings">
+        <i class="material-icons">settings</i>
+        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
+          >Settings</span
+        >
       </a>
     </li>
     <!--./././././././././././././././././././././././././././././././.-->
@@ -106,6 +85,7 @@
         <span i18n="@@COMMON__HELP">Help</span>
       </a>
     </li>
+
     <!--./././././././././././././././././././././././././././././././.-->
     <li
       class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer

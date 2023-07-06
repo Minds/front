@@ -16,13 +16,13 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   encodedRawUrl: string = '';
   referrerParam: string = '';
 
-  shareUrl: string = '';
-  encodedShareUrl: string = '';
-
   shareUrlFocused: boolean = false;
   embedInputFocused: boolean = false;
 
   embedCode: string;
+
+  commentUrn: string;
+  commentParam: string;
 
   includeReferrerParam: boolean = true; // Include referrer param in url by default
   flashing: boolean = false;
@@ -36,22 +36,30 @@ export class ShareModalComponent implements OnInit, OnDestroy {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
-  setModalData({ embedCode, url }: { embedCode?: string; url: string }) {
+  setModalData({
+    commentUrn,
+    embedCode,
+    url,
+  }: {
+    commentUrn?: string;
+    embedCode?: string;
+    url: string;
+  }) {
+    this.commentUrn = commentUrn;
     this.embedCode = embedCode;
     this.rawUrl = url;
-    this.encodedRawUrl = encodeURI(this.rawUrl);
   }
 
   ngOnInit() {
     if (this.session.getLoggedInUser()) {
       // Create custom referral param for current user
       this.referrerParam =
-        '?referrer=' + this.session.getLoggedInUser().username;
+        'referrer=' + this.session.getLoggedInUser().username;
     }
 
-    // Include referrerParam in url by default
-    this.shareUrl = this.rawUrl + this.referrerParam;
-    this.encodedShareUrl = encodeURIComponent(this.shareUrl);
+    if (this.commentUrn) {
+      this.commentParam = `focusedCommentUrn=${this.commentUrn}`;
+    }
   }
 
   // Only show Messenger/Whatsapp share buttons if mobile or tablet
@@ -111,12 +119,8 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   toggleReferrerParam() {
     if (!this.includeReferrerParam) {
       this.includeReferrerParam = true;
-      this.shareUrl = this.rawUrl + this.referrerParam;
-      this.encodedShareUrl = encodeURIComponent(this.shareUrl);
     } else {
       this.includeReferrerParam = false;
-      this.shareUrl = this.rawUrl;
-      this.encodedShareUrl = encodeURIComponent(this.shareUrl);
     }
 
     // Animate opacity of input text to indicate toggle occured
@@ -168,5 +172,24 @@ export class ShareModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearTimeout(this.flashTimeout);
+  }
+
+  get shareUrl(): string {
+    if (this.includeReferrerParam && this.commentParam) {
+      return `${this.rawUrl}?${this.referrerParam}&${this.commentParam}`;
+    }
+
+    if (this.includeReferrerParam) {
+      return `${this.rawUrl}?${this.referrerParam}`;
+    }
+
+    if (this.commentParam) {
+      return `${this.rawUrl}?${this.commentParam}`;
+    }
+    return this.rawUrl;
+  }
+
+  get encodedShareUrl(): string {
+    return encodeURIComponent(this.shareUrl);
   }
 }

@@ -201,6 +201,12 @@
       .m-activityContent__media--video--modal {
         width: 100%;
         height: 100%;
+        display: flex;
+        align-items: center;
+
+        @include m-theme() {
+          background: themed($m-black-always);
+        }
       }
     }
 
@@ -576,18 +582,18 @@
     }
 
     &.m-activityContentText__body--shortStatus {
-      @include heading2Medium;
+      @include body2Regular;
       ::ng-deep m-translate .message span,
       ::ng-deep m-readMore span {
-        @include heading2Medium;
+        @include body2Regular;
       }
     }
 
     &.m-activityContentText__body--mediumStatus {
-      @include heading4Medium;
+      @include body2Regular;
       ::ng-deep m-translate .message span,
       ::ng-deep m-readMore span {
-        @include heading4Medium;
+        @include body2Regular;
       }
     }
 
@@ -596,7 +602,7 @@
       line-height: inherit;
       font-weight: 500;
       @include m-theme() {
-        color: themed($m-blue);
+        color: themed($m-link-text);
       }
 
       text-decoration: none;

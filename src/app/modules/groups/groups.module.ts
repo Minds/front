@@ -7,7 +7,6 @@ import { CommonModule } from '../../common/common.module';
 import { ModalsModule } from '../modals/modals.module';
 import { VideoChatModule } from '../videochat/videochat.module';
 
-import { GroupMembershipButton } from './group-membership-button';
 import { GroupsProfileMembersInvite } from './profile/members/invite/invite';
 import { GroupsCard } from './card/card';
 import { GroupsCardUserActionsButton } from './profile/card-user-actions-button';
@@ -31,6 +30,10 @@ import { GroupsCreator } from './create/create';
 import { GroupsMembershipsComponent } from './memberships/memberships.component';
 import { GroupsSearchService } from './profile/feed/search.service';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { PathMatch } from '../../common/types/angular.types';
+import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
+import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { NoticesModule } from '../notices/notices.module';
 
 const routes: Routes = [
   {
@@ -38,7 +41,7 @@ const routes: Routes = [
     component: GroupsProfile,
     canDeactivate: [CanDeactivateGroupService],
     children: [
-      { path: '', redirectTo: 'feed', pathMatch: 'full' },
+      { path: '', redirectTo: 'feed', pathMatch: 'full' as PathMatch },
       { path: 'feed/review', component: GroupsProfileReviewComponent },
       { path: 'feed/:filter', component: GroupProfileFeedComponent },
       { path: 'feed', component: GroupProfileFeedComponent },
@@ -61,7 +64,11 @@ const routes: Routes = [
       title: 'Memberships',
     },
   },
-  { path: 'groups', redirectTo: '/groups/memberships', pathMatch: 'full' },
+  {
+    path: 'groups',
+    redirectTo: '/groups/memberships',
+    pathMatch: 'full' as PathMatch,
+  },
 ];
 
 @NgModule({
@@ -79,11 +86,13 @@ const routes: Routes = [
     NewsfeedModule,
     ComposerModule,
     ActivityModule,
+    SuggestionsModule,
+    NoticesModule,
+    FindGroupsButtonsComponent, // standalone
   ],
   declarations: [
     GroupsProfile,
     GroupsCreator,
-    GroupMembershipButton,
     GroupsProfileMembersInvite,
     GroupsCard,
     GroupsCardUserActionsButton,
@@ -101,13 +110,15 @@ const routes: Routes = [
   exports: [
     GroupsProfile,
     GroupsCreator,
-    GroupMembershipButton,
     GroupsProfileMembersInvite,
     GroupsCard,
     GroupsCardUserActionsButton,
     GroupsProfileMembers,
     GroupsProfileRequests,
     GroupsSettingsButton,
+    GroupsProfileReviewComponent,
+    GroupProfileFeedComponent,
+    GroupMemberPreviews,
   ],
   providers: [CanDeactivateGroupService, GroupsSearchService],
 })

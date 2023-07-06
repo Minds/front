@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { FeedsService } from '../../../common/services/feeds.service';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 
 @Component({
@@ -17,8 +16,7 @@ import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 export class DiscoveryBoostFeedComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
-    private feedsService: FeedsService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService
+    private feedsService: FeedsService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -56,28 +54,15 @@ export class DiscoveryBoostFeedComponent implements OnInit {
    */
   private async load(refresh: boolean = false): Promise<boolean> {
     try {
-      const dynamicBoostExperimentActive: boolean = this.dynamicBoostExperiment.isActive();
-
       if (refresh) {
         this.feedsService.clear();
       }
 
-      const params = dynamicBoostExperimentActive
-        ? {
-            location: BoostLocation.NEWSFEED,
-          }
-        : {
-            boostfeed: true,
-            force_boost_enabled: true,
-          };
-
-      const endpoint: string = dynamicBoostExperimentActive
-        ? 'api/v3/boosts/feed'
-        : 'api/v2/boost/feed';
-
       this.feedsService
-        .setEndpoint(endpoint)
-        .setParams(params)
+        .setEndpoint('api/v3/boosts/feed')
+        .setParams({
+          location: BoostLocation.NEWSFEED,
+        })
         .setLimit(12)
         .setOffset(0)
         .fetch();

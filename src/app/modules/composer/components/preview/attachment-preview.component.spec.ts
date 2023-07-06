@@ -1,4 +1,3 @@
-import { BoostRecommendationService } from './../../../../common/services/boost-recommendation.service';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockService } from '../../../../utils/mock';
 import { ConfigsService } from '../../../../common/services/configs.service';
@@ -18,7 +17,7 @@ import { Client } from '../../../../services/api';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { FeedNoticeService } from '../../../notices/services/feed-notice.service';
 import { DiscoveryTagsService } from '../../../discovery/tags/tags.service';
-import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
+import { VideoPoster } from '../../services/video-poster.service';
 
 describe('Composer Attachment Preview', () => {
   let comp: AttachmentPreviewComponent;
@@ -32,7 +31,6 @@ describe('Composer Attachment Preview', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
-        ComposerService,
         Session,
         Storage,
         RegexService,
@@ -47,10 +45,6 @@ describe('Composer Attachment Preview', () => {
         {
           provide: AttachmentApiService,
           useValue: MockService(ApiService, {}),
-        },
-        {
-          provide: BoostRecommendationService,
-          useValue: MockService(BoostRecommendationService, {}),
         },
         {
           provide: Client,
@@ -69,7 +63,16 @@ describe('Composer Attachment Preview', () => {
           useValue: MockService(DiscoveryTagsService, {}),
         },
       ],
-    }).compileComponents();
+    })
+      .overrideProvider(ComposerService, {
+        useValue: MockService(ComposerService, {
+          has: ['videoPoster$'],
+          props: {
+            videoPoster$: { get: () => new BehaviorSubject<VideoPoster>(null) },
+          },
+        }),
+      })
+      .compileComponents();
 
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(AttachmentPreviewComponent);

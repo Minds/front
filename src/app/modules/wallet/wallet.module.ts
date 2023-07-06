@@ -6,7 +6,6 @@ import { CommonModule } from '../../common/common.module';
 
 import { WalletDashboardComponent } from './components/dashboard.component';
 import { WalletBalanceTokensV2Component } from './components/tokens/balance/balance-tokens.component';
-import { WalletChartComponent } from './components/components/chart/chart.component';
 import { WalletTransactionsTableComponent } from './components/components/transactions-table/transactions-table.component';
 import { WalletRewardsPopupComponent } from './components/components/rewards-popup/rewards-popup.component';
 import { WalletSettingsTokensComponent } from './components/tokens/settings/settings-tokens.component';
@@ -36,11 +35,13 @@ import { OnchainTransferModalService } from './components/components/onchain-tra
 import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/dropdown-menu.component';
 import { WalletSharedModule } from './wallet-shared.module';
 import { WalletOnchainTransfersSummaryComponent } from './components/tokens/onchain-transfers/onchain-transfers.component';
+import { PathMatch } from '../../common/types/angular.types';
 
 export const WALLET_ROUTES: Routes = [
-  { path: 'canary', redirectTo: '..', pathMatch: 'full' },
+  { path: 'canary', redirectTo: '..', pathMatch: 'full' as PathMatch },
   {
     path: '',
+    pathMatch: 'prefix' as PathMatch,
     component: WalletDashboardComponent,
     data: {
       title: 'Wallet',
@@ -57,17 +58,12 @@ export const WALLET_ROUTES: Routes = [
           {
             path: '',
             redirectTo: 'rewards',
-            pathMatch: 'full',
+            pathMatch: 'full' as PathMatch,
           },
           {
             path: 'overview',
             redirectTo: 'balance',
-            pathMatch: 'full',
-          },
-          {
-            path: 'balance',
-            canActivate: [TabStorageGuard],
-            component: WalletChartComponent,
+            pathMatch: 'full' as PathMatch,
           },
           {
             path: 'rewards',
@@ -102,7 +98,7 @@ export const WALLET_ROUTES: Routes = [
           {
             path: '',
             redirectTo: 'earnings',
-            pathMatch: 'full',
+            pathMatch: 'full' as PathMatch,
           },
           {
             path: 'earnings',
@@ -123,6 +119,7 @@ export const WALLET_ROUTES: Routes = [
       {
         path: '**', // redirected by RouterRedirectGuard
         canActivate: [DefaultRedirectGuard],
+        children: [],
       },
     ],
   },
@@ -141,7 +138,6 @@ export const WALLET_ROUTES: Routes = [
   ],
   declarations: [
     WalletDashboardComponent,
-    WalletChartComponent,
     WalletRewardsPopupComponent,
     WalletTransactionsTableComponent,
     WalletSettingsTokensComponent,

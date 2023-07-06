@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { EnvironmentSelectorService } from './environment-selector.service';
 
 /**
@@ -15,15 +15,15 @@ export class EnvironmentSelectorComponent implements OnInit {
   inProgress = false;
 
   /** @type { FormGroup } - Radio button FormGroup */
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(private service: EnvironmentSelectorService) {}
 
   ngOnInit(): void {
     const currentEnv = this.service.getCurrentEnvironment();
 
-    this.form = new FormGroup({
-      environment: new FormControl(currentEnv),
+    this.form = new UntypedFormGroup({
+      environment: new UntypedFormControl(currentEnv),
     });
   }
 

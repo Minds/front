@@ -70,6 +70,7 @@ describe('ActivityModalCreatorService', () => {
         data: {
           entity,
           activeMultiImageIndex: 0,
+          isComment: false,
         },
         injector: null,
       }
@@ -97,6 +98,7 @@ describe('ActivityModalCreatorService', () => {
         data: {
           entity,
           activeMultiImageIndex: 0,
+          isComment: false,
         },
         injector: null,
       }
@@ -124,6 +126,7 @@ describe('ActivityModalCreatorService', () => {
         data: {
           entity,
           activeMultiImageIndex: 0,
+          isComment: false,
         },
         injector: null,
       }

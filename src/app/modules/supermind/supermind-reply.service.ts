@@ -78,7 +78,9 @@ export class SupermindReplyService implements OnDestroy {
 
     if (showConnectTwitterModal) {
       const modalRef = await this.connectTwitterModal.open({
-        bodyText: $localize`:@@CONNECT_TWITTER_MODAL__THIS_SUPER_MIND_OFFER_REQUIRES_TWITTER:This Supermind offer requires posting the reply to Twitter. Connect your Minds account with Twitter to proceed.`,
+        contextText: 'Supermind', // only appears in mobile widths
+        titleText: $localize`:@@CONNECT_TWITTER_MODAL__TWITTER_PERMISSION:Twitter Permission`,
+        bodyText: $localize`:@@CONNECT_TWITTER_MODAL__ACCEPT_SUPERMIND_OFFER_CONNECT_YOUR_TWITTER:To accept this Supermind offer, please connect your Twitter account. This will give Minds permission to repost your response on your behalf, but only when you consent.`,
         onConnect: () => {
           modalRef.close();
           // Try again after succesful connect

@@ -9,7 +9,7 @@ m-onboarding__noticeStep {
     }
   }
 
-  @media screen and(max-width: $m-grid-max-mobile) {
+  @media screen and (max-width: $m-grid-max-mobile) {
     .m-onboarding__actionButtons {
       flex-direction: column-reverse;
       justify-content: flex-start;

@@ -1,0 +1,36 @@
+<m-feedNotice icon="info" (dismissClick)="dismiss()" dataRefId="invite-friends">
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__INVITE_YOUR_FRIENDS__TITLE"
+    >Invite friends</span
+  >
+  <p
+    class="m-feedNotice__body"
+    i18n="@@FEED_NOTICE__INVITE_YOUR_FRIENDS__BETTER_WITH_FRIENDS"
+  >
+    Minds gets better with friends. Share your referral link to invite them to
+    join. If they earn money on Minds, you'll earn a 5% referral fee.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick()"
+    data-ref="feed-notice-invite-friends-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__INVITE_YOUR_FRIENDS__SHARE_INVITE">
+      Share invite
+    </ng-container>
+  </m-button>
+  <m-button
+    class="m-feedNotice__buttonSecondary"
+    size="small"
+    (onAction)="onSecondaryOptionClick()"
+    data-ref="feed-notice-invite-friends-secondary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__INVITE_YOUR_FRIENDS__LEARN_MORE">
+      Learn More
+    </ng-container>
+  </m-button>
+</m-feedNotice>

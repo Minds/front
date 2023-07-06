@@ -15,7 +15,7 @@ import { Session } from '../../../../../../../../services/session';
 import { ApiService } from '../../../../../../../../common/api/api.service';
 import { Subscription } from 'rxjs';
 import { ComposerService } from '../../../../../../services/composer.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { ComposerMonetizeV2Service } from '../monetize.service';
 
 /**
@@ -53,8 +53,8 @@ export class ComposerMonetizeV2MembershipsComponent
   ) {}
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      urn: new FormControl('none'),
+    this.form = new UntypedFormGroup({
+      urn: new UntypedFormControl('none'),
     });
 
     this.supportTiersSubscription = this.monetizeService.supportTiers$.subscribe(

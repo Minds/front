@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule as NgCommonModule } from '@angular/common';
+import {
+  CommonModule as NgCommonModule,
+  NgOptimizedImage,
+} from '@angular/common';
 import {
   FormsModule as NgFormsModule,
   ReactiveFormsModule,
@@ -36,16 +39,19 @@ import { ActivityBadgesComponent } from './badges/badges.component';
 import { ActivityPermalinkComponent } from './permalink/permalink.component';
 import { ActivityViewsComponent } from './views/views.component';
 import { ReadMoreModule } from '../../../common/read-more/v2/read-more.module';
-import { ActivityBoostedFlagComponent } from './flag/boosted-flag/boosted-flag.component';
 import { ActivityMultiImageComponent } from './content/images/multi-image.component';
 import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
 import { ActivitySupermindReplyLinkComponent } from './supermind-reply-link/supermind-reply-link.component';
 import { ComposerModule } from '../../composer/composer.module';
+import { ActivityFlagMutualSubscriptionsComponent } from './flag/mutual-subscriptions/mutual-subscriptions.component';
+import { ActivityBoostCtaComponent } from './boost-cta/boost-cta.component';
+import { ActivityAvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
   imports: [
     NgCommonModule,
     NgFormsModule,
+    NgOptimizedImage,
     ReactiveFormsModule,
     RouterModule,
     CommonModule,
@@ -78,18 +84,16 @@ import { ComposerModule } from '../../composer/composer.module';
     ActivityBoostButtonComponent,
     ActivityRelativeTimeSpanComponent,
     ActivityFlagComponent,
-    ActivityBoostedFlagComponent,
     ActivityBadgesComponent,
     ActivityPermalinkComponent,
     ActivityViewsComponent,
     ActivityMultiImageComponent,
     ActivitySupermindReplyLinkComponent,
+    ActivityFlagMutualSubscriptionsComponent,
+    ActivityBoostCtaComponent,
+    ActivityAvatarComponent,
   ],
   providers: [ActivityModalCreatorService],
-  exports: [
-    ActivityComponent,
-    ActivityRemindButtonComponent,
-    ActivityBoostedFlagComponent,
-  ],
+  exports: [ActivityComponent, ActivityRemindButtonComponent],
 })
 export class ActivityModule {}

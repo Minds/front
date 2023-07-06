@@ -61,6 +61,10 @@ import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
 import { DevToolsModule } from './modules/devtools/devtools.module';
 import { SupermindModule } from './modules/supermind/supermind.module';
+import { AffiliatesModule } from './modules/affiliates/affiliates.module';
+import { GroupModule } from './modules/groups/v2/group.module';
+import { ApolloModule } from 'apollo-angular';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   bootstrap: [Minds],
@@ -69,6 +73,8 @@ import { SupermindModule } from './modules/supermind/supermind.module';
     BrowserModule.withServerTransition({ appId: 'm-app' }),
     BrowserTransferStateModule,
     CookieModule.forRoot(),
+    ApolloModule,
+    MarkdownModule.forRoot(),
     // TransferHttpCacheModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -112,6 +118,8 @@ import { SupermindModule } from './modules/supermind/supermind.module';
     CompassModule,
     DevToolsModule,
     SupermindModule,
+    AffiliatesModule,
+    GroupModule,
     //last due to :username route
     AppRoutingModule,
   ],

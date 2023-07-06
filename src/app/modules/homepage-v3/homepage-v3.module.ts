@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule as NgCommonModule } from '@angular/common';
+import {
+  CommonModule as NgCommonModule,
+  NgOptimizedImage,
+} from '@angular/common';
 import {
   FormsModule as NgFormsModule,
   ReactiveFormsModule,
@@ -15,10 +18,13 @@ import { HomepageV3Component } from './homepage-v3.component';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { RouterModule } from '@angular/router';
 
+import { MarkdownModule } from 'ngx-markdown';
+
 @NgModule({
   imports: [
     NgCommonModule,
     NgFormsModule,
+    NgOptimizedImage,
     ReactiveFormsModule,
     CommonModule,
     ModalsModule,
@@ -28,6 +34,7 @@ import { RouterModule } from '@angular/router';
     CaptchaModule,
     RouterModule,
     MarketingModule,
+    MarkdownModule.forChild(),
   ],
   declarations: [HomepageV3Component],
   exports: [HomepageV3Component],

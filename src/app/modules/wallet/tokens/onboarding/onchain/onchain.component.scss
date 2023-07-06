@@ -2,7 +2,7 @@
   overflow: visible;
   margin-top: 32px;
 
-  @media screen and(max-width: $max-mobile) {
+  @media screen and (max-width: $max-mobile) {
     flex-wrap: wrap;
   }
 
@@ -42,9 +42,9 @@
         margin-right: 16px;
         padding: 6px 8px;
         border-radius: 4px;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Inter', sans-serif;
         font-size: 15px;
-        letter-spacing: 1px;
+        letter-spacing: -0.001em;
         font-weight: 300;
         @include m-theme() {
           border: 1px solid themed($m-borderColor--primary);

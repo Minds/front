@@ -15,6 +15,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
+import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
 
 /**
  * Outlet for feed notices - use this component to show a relevant
@@ -23,43 +24,8 @@ import {
  */
 @Component({
   selector: 'm-feedNotice__outlet',
+  templateUrl: './feed-notice-outlet.component.html',
   styleUrls: ['./feed-notice-outlet.component.ng.scss'],
-  template: `
-    <ng-container *ngIf="(notice$ | async) && !(notice$ | async).dismissed">
-      <ng-container [ngSwitch]="(notice$ | async)?.key">
-        <m-feedNotice--verifyEmail
-          *ngSwitchCase="'verify-email'"
-        ></m-feedNotice--verifyEmail>
-        <m-feedNotice--supermindPending
-          *ngSwitchCase="'supermind-pending'"
-        ></m-feedNotice--supermindPending>
-        <m-feedNotice--setupChannel
-          *ngSwitchCase="'setup-channel'"
-        ></m-feedNotice--setupChannel>
-        <m-feedNotice--verifyUniqueness
-          *ngSwitchCase="'verify-uniqueness'"
-        ></m-feedNotice--verifyUniqueness>
-        <m-feedNotice--connectWallet
-          *ngSwitchCase="'connect-wallet'"
-        ></m-feedNotice--connectWallet>
-        <m-feedNotice--buildYourAlgorithm
-          *ngSwitchCase="'build-your-algorithm'"
-        ></m-feedNotice--buildYourAlgorithm>
-        <m-feedNotice--enablePushNotifications
-          *ngSwitchCase="'enable-push-notifications'"
-        ></m-feedNotice--enablePushNotifications>
-        <m-feedNotice--updateTags
-          *ngSwitchCase="'update-tags'"
-        ></m-feedNotice--updateTags>
-        <m-feedNotice--plusUpgrade
-          *ngSwitchCase="'plus-upgrade'"
-        ></m-feedNotice--plusUpgrade>
-        <m-feedNotice--boostChannel
-          *ngSwitchCase="'boost-channel'"
-        ></m-feedNotice--boostChannel>
-      </ng-container>
-    </ng-container>
-  `,
 })
 export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
   // location of component - where should it show 'top' or 'inline' in the feed.
@@ -81,6 +47,9 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
   @Input()
   stickyTop: boolean;
 
+  @HostBinding('class.m-feedNoticeOutlet__container--topbarAlertShown')
+  topbarAlertShown: boolean;
+
   /**
    * If a notice is visible (helps us get rid of borders when no notice is shown).
    * @returns { boolean } - true if a notice is visible.
@@ -100,7 +69,10 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
     return this.location === 'top';
   }
 
-  constructor(private service: FeedNoticeService) {}
+  constructor(
+    private service: FeedNoticeService,
+    private topbarAlertService: TopbarAlertService
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -133,7 +105,12 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
             return EMPTY;
           })
         )
-        .subscribe()
+        .subscribe(),
+      this.topbarAlertService.shouldShow$
+        .pipe(distinctUntilChanged())
+        .subscribe((shouldShow: boolean) => {
+          this.topbarAlertShown = shouldShow;
+        })
     );
   }
 

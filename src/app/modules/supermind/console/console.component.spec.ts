@@ -12,7 +12,6 @@ import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../services/session-mock';
 import { MockComponent, MockService } from '../../../utils/mock';
-import { SupermindExperimentService } from '../../experiments/sub-services/supermind-experiment.service';
 import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleComponent } from './console.component';
@@ -72,10 +71,6 @@ describe('SupermindConsoleComponent', () => {
             }),
           },
           {
-            provide: SupermindExperimentService,
-            useValue: MockService(SupermindExperimentService),
-          },
-          {
             provide: SupermindOnboardingModalService,
             useValue: MockService(SupermindOnboardingModalService),
           },
@@ -96,7 +91,6 @@ describe('SupermindConsoleComponent', () => {
     fixture = TestBed.createComponent(SupermindConsoleComponent);
     comp = fixture.componentInstance;
 
-    (comp as any).supermindExperiment.isActive.and.returnValue(false);
     (comp as any).route.firstChild.url.next([{ path: 'inbox' }]);
 
     fixture.detectChanges();
@@ -133,12 +127,6 @@ describe('SupermindConsoleComponent', () => {
     tick();
     expect((comp as any).listType$.getValue()).toBe('inbox');
   }));
-
-  it('it should navigate to root domain if experiment is off', () => {
-    (comp as any).supermindExperiment.isActive.and.returnValue(true);
-    comp.ngOnInit();
-    expect((comp as any).router.navigate).toHaveBeenCalledWith(['/']);
-  });
 
   it('it should navigate to settings page on settings button click', () => {
     comp.onSettingsButtonClick(null);

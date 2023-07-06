@@ -1,7 +1,7 @@
 .m-overlayModal__share {
   overflow-y: visible;
   @include m-theme() {
-    color: themed($m-grey-800);
+    color: themed($m-bgColor--primary);
   }
 
   m-modal-share {
@@ -13,7 +13,7 @@
     font-weight: 600;
     margin: 0 32px 26px 0;
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
 
@@ -94,7 +94,7 @@
     label > span {
       font-size: 14px;
       @include m-theme() {
-        color: themed($m-grey-600);
+        color: themed($m-textColor--secondary);
       }
     }
 
@@ -106,7 +106,7 @@
         }
         &.m-share__newWindowIcon {
           @include m-theme() {
-            color: themed($m-blue-grey-300);
+            color: themed($m-bgColor--secondary);
           }
         }
       }
@@ -115,7 +115,7 @@
           text-decoration: none;
           font-weight: 400;
           @include m-theme() {
-            color: themed($m-blue-grey-300);
+            color: themed($m-grey-900);
           }
           &:hover {
             text-decoration: underline;
@@ -194,7 +194,7 @@
     .m-share__button--sms,
     .m-share__button--email {
       @include m-theme() {
-        background-color: themed($m-blue-grey-500);
+        background-color: themed($m-grey-500);
       }
     }
   }

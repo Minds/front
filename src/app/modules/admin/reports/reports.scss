@@ -20,6 +20,6 @@
 
 .m-report-meta {
   @include m-theme() {
-    color: themed($m-blue-grey-500);
+    color: themed($m-grey-500);
   }
 }

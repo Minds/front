@@ -1,4 +1,5 @@
 <m-body
+  [class.m-body__topbarAlert]="shouldShowTopbarAlert$ | async"
   [class.has-markers-sidebar]="hasMarkersSidebar()"
   [class.has-v3-navbar]="true"
   [class.is-pro-domain]="isProDomain"
@@ -9,10 +10,11 @@
       pageLayoutService.isFullWidth$ | async
     "
   >
-    <m-sidebar--navigation
-      m-pageLayout__pane="left"
-      *ngIf="!isProDomain"
-    ></m-sidebar--navigation>
+    <ng-container *ngIf="!isProDomain">
+      <m-sidebar__navigationV2
+        m-pageLayout__pane="left"
+      ></m-sidebar__navigationV2>
+    </ng-container>
     <div
       [m-pageLayout__pane]="
         (pageLayoutService.isFullWidth$ | async) ? null : 'main'
@@ -59,5 +61,5 @@
 
 <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
 <m-toaster></m-toaster>
-<m-joinBanner *ngIf="!isMobileOrTablet()"></m-joinBanner>
-<m-appPrompt *ngIf="isMobileOrTablet()"></m-appPrompt>
+<!-- <m-appPrompt *ngIf="isMobileOrTablet()"></m-appPrompt> -->
+<m-chatwootWidget *ngIf="isChatwootExperimentActive()"></m-chatwootWidget>

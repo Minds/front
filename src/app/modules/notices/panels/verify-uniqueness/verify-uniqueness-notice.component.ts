@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConnectWalletModalService } from '../../../blockchain/connect-wallet/connect-wallet-modal.service';
@@ -10,6 +10,7 @@ import { VerifyUniquenessModalLazyService } from '../../../verify-uniqueness/mod
 @Component({
   selector: 'm-feedNotice--verifyUniqueness',
   templateUrl: 'verify-uniqueness-notice.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerifyUniquenessNoticeComponent extends AbstractSubscriberComponent
   implements OnInit {
@@ -25,22 +26,23 @@ export class VerifyUniquenessNoticeComponent extends AbstractSubscriberComponent
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      /**
-       * Dismiss on phone verification - because connectWalletModal.joinRewards
-       * fires connect your wallet modal and then only after
-       * connection calls callback fn.
-       */
-
-      this.phoneVerification.phoneVerified$
-        .pipe(filter(Boolean))
-        .subscribe((isConnected: boolean) => {
-          this.dismiss();
-        })
-    );
+    if (!this.isInAppVerificationExperimentActive) {
+      this.subscriptions.push(
+        /**
+         * Dismiss on phone verification - because connectWalletModal.joinRewards
+         * fires connect your wallet modal and then only after
+         * connection calls callback fn.
+         */
+        this.phoneVerification.phoneVerified$
+          .pipe(filter(Boolean))
+          .subscribe((isConnected: boolean) => {
+            this.dismiss();
+          })
+      );
+    }
   }
 
-  public isInAppVerificationExperimentActive(): boolean {
+  get isInAppVerificationExperimentActive(): boolean {
     return this.inAppVerificationExperimentService.isActive();
   }
 
@@ -50,7 +52,7 @@ export class VerifyUniquenessNoticeComponent extends AbstractSubscriberComponent
    * @return { void }
    */
   public async onPrimaryOptionClick($event: MouseEvent): Promise<void> {
-    if (this.isInAppVerificationExperimentActive()) {
+    if (this.isInAppVerificationExperimentActive) {
       await this.verifyUniquenessModal.open();
       return;
     }

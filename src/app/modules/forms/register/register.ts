@@ -3,15 +3,15 @@ import {
   EventEmitter,
   Input,
   NgZone,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
-  NG_ASYNC_VALIDATORS,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -21,13 +21,13 @@ import { Session } from '../../../services/session';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { PopoverComponent } from '../popover-validation/popover.component';
 import { CaptchaComponent } from '../../captcha/captcha.component';
-import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
 import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { PasswordRiskValidator } from '../password-risk.validator';
 import { AnalyticsService } from './../../../services/analytics';
+import { debounceTime, Subscription } from 'rxjs';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -41,7 +41,7 @@ export type Source = 'auth-modal' | 'other' | null;
   templateUrl: 'register.html',
   styleUrls: ['./register.ng.scss'],
 })
-export class RegisterForm implements OnInit {
+export class RegisterForm implements OnInit, OnDestroy {
   @Input() referrer: string;
   @Input() parentId: string = '';
   @Input() showTitle: boolean = false;
@@ -67,18 +67,25 @@ export class RegisterForm implements OnInit {
 
   showFbForm: boolean = false;
 
-  form: FormGroup;
-  fbForm: FormGroup;
+  form: UntypedFormGroup;
+  fbForm: UntypedFormGroup;
 
   @ViewChild('popover') popover: PopoverComponent;
   @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;
 
+  private passwordInputHasFocus: boolean = false;
+
+  // subscriptions.
+  private passwordPopoverSubscription: Subscription;
+  private passwordRiskCheckStatusSubscription: Subscription;
+  private usernameTouchedSubscription: Subscription;
+
   constructor(
     public session: Session,
     public client: Client,
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     public zone: NgZone,
     private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService,
@@ -118,13 +125,50 @@ export class RegisterForm implements OnInit {
       { validators: [this.passwordsMatchValidator] }
     );
 
-    this.form.get('password').valueChanges.subscribe(str => {
-      this.popover.show();
-    });
+    this.passwordPopoverSubscription = this.form
+      .get('password')
+      .valueChanges.subscribe(str => {
+        if (str.length === 0) {
+          this.popover.hide();
+        } else {
+          setTimeout(() => {
+            // check length again after timeout and whether element still has focus.
+            if (this.passwordInputHasFocus && str.length > 0) {
+              this.popover.show();
+            }
+          }, 350);
+        }
+      });
 
-    this.form.get('password').statusChanges.subscribe((status: any) => {
-      this.passwordRiskCheckStatus = status;
-    });
+    this.passwordRiskCheckStatusSubscription = this.form
+      .get('password')
+      .statusChanges.subscribe((status: any) => {
+        this.passwordRiskCheckStatus = status;
+
+        if (status === 'VALID') {
+          this.popover.hideWithDelay();
+        }
+      });
+
+    this.usernameTouchedSubscription = this.form
+      .get('username')
+      .valueChanges.pipe(debounceTime(450))
+      .subscribe((username: string) => {
+        const usernameField: AbstractControl<string> = this.form.get(
+          'username'
+        );
+        if (!username) {
+          usernameField.markAsUntouched();
+          return;
+        }
+        usernameField.markAsTouched();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.passwordPopoverSubscription?.unsubscribe();
+    this.passwordRiskCheckStatusSubscription?.unsubscribe();
+    this.usernameTouchedSubscription?.unsubscribe();
   }
 
   // Confirm the two passwords match each other
@@ -159,9 +203,6 @@ export class RegisterForm implements OnInit {
 
     let opts = { ...this.form.value };
 
-    const friendlyCaptchaEnabled = this.isFriendlyCaptchaEnabled();
-    opts['friendly_captcha_enabled'] = friendlyCaptchaEnabled;
-
     this.client
       .post('api/v1/register', opts)
       .then((data: any) => {
@@ -175,9 +216,7 @@ export class RegisterForm implements OnInit {
         this.inProgress = false;
 
         // refresh CAPTCHA.
-        friendlyCaptchaEnabled
-          ? this.friendlyCaptchaEl.reset()
-          : this.captchaEl.refresh();
+        this.friendlyCaptchaEl.reset();
 
         if (e.status === 'failed') {
           // incorrect login details
@@ -203,15 +242,18 @@ export class RegisterForm implements OnInit {
   }
 
   onPasswordFocus() {
-    if (this.form.value.password.length > 0) {
+    this.passwordInputHasFocus = true;
+    if (
+      this.passwordRiskCheckStatus !== 'VALID' &&
+      this.form.value.password.length > 0
+    ) {
       this.popover.show();
     }
   }
 
   onPasswordBlur() {
-    if (!isMobileOrTablet()) {
-      this.popover.hide();
-    }
+    this.passwordInputHasFocus = false;
+    this.popover.hide();
   }
 
   onShowLoginFormClick() {
@@ -229,13 +271,6 @@ export class RegisterForm implements OnInit {
       this.form.get(field).touched &&
       this.form.get(field).dirty
     );
-  }
-
-  /**
-   * True if FriendlyCAPTCHA feat flag is enabled.
-   */
-  public isFriendlyCaptchaEnabled(): boolean {
-    return this.experiments.hasVariation('engine-2272-captcha', true);
   }
 
   get username() {

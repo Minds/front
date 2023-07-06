@@ -1,12 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding,
   ViewChild,
-  ChangeDetectionStrategy,
 } from '@angular/core';
-import { first, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client } from '../../../services/api';
@@ -14,26 +13,21 @@ import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
+import { ACTIVITY_V2_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
 import {
-  ACTIVITY_FIXED_HEIGHT_RATIO,
-  ACTIVITY_V2_FIXED_HEIGHT_RATIO,
-} from '../activity/activity.service';
-import {
-  trigger,
-  transition,
   animate,
   keyframes,
   style,
+  transition,
+  trigger,
 } from '@angular/animations';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { Subscription, Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
-import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 import { NgStyleValue } from '../../../common/types/angular.types';
+import { BoostFeedService } from '../services/boost-feed.service';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -100,6 +94,8 @@ export class NewsfeedBoostRotatorComponent {
 
   @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
 
+  private latestDataFetchDetails: object = null;
+
   constructor(
     public session: Session,
     public router: Router,
@@ -109,9 +105,7 @@ export class NewsfeedBoostRotatorComponent {
     public settingsService: SettingsV2Service,
     public element: ElementRef,
     private cd: ChangeDetectorRef,
-    protected featuresService: FeaturesService,
-    public feedsService: FeedsService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService,
+    public boostFeedService: BoostFeedService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
@@ -161,7 +155,7 @@ export class NewsfeedBoostRotatorComponent {
     this.paused = !user.boost_autorotate;
 
     this.subscriptions.push(
-      this.feedsService.feed.subscribe(async boosts => {
+      this.boostFeedService.feed$.subscribe(async boosts => {
         if (!boosts.length) return;
         this.boosts = [];
         for (const boost of boosts) {
@@ -170,8 +164,7 @@ export class NewsfeedBoostRotatorComponent {
         if (this.currentPosition >= this.boosts.length) {
           this.currentPosition = 0;
         }
-        // Recalculate height because it may have been empty
-        setTimeout(() => this.calculateHeight());
+
         // distinctuntilchange is now safe
         this.viewsCollector$.next(this.currentPosition);
 
@@ -181,41 +174,22 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.calculateHeight()); // will only run for new nav
+    this.calculateHeight();
   }
 
-  async load(): Promise<boolean> {
+  async load(refresh: boolean = false): Promise<boolean> {
     try {
-      const dynamicBoostExperimentActive: boolean = this.dynamicBoostExperiment.isActive();
-
-      let params = dynamicBoostExperimentActive
-        ? {
-            location: BoostLocation.NEWSFEED,
-          }
-        : {
-            rating: this.rating,
-            rotator: 1,
-          };
-
-      params['show_boosts_after_x'] = 604800; // 1 week
-
-      this.feedsService.clear(); // Fresh each time
-      const endpoint: string = dynamicBoostExperimentActive
-        ? 'api/v3/boosts/feed'
-        : 'api/v2/boost/feed';
-
-      await this.feedsService
-        .setEndpoint(endpoint)
-        .setParams(params)
-        .setLimit(12)
-        .setOffset(0)
-        .fetch();
+      this.inProgress = true;
 
       this.init = true;
+
+      await this.boostFeedService.init();
     } catch (e) {
       if (e && e.message) {
         console.warn(e);
       }
+
+      this.init = false;
 
       throw e;
     }
@@ -256,7 +230,7 @@ export class NewsfeedBoostRotatorComponent {
     if (this.bounds.top > 0) {
       if (!this.running) this.start();
     } else {
-      console.log('[rotator]: out of view', this.rotator);
+      // console.log('[rotator]: out of view', this.rotator);
       if (this.running) {
         this.running = false;
         window.clearInterval(this.rotator);
@@ -309,7 +283,7 @@ export class NewsfeedBoostRotatorComponent {
   async next(): Promise<void> {
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       try {
-        this.load();
+        this.boostFeedService.refreshFeed();
         this.currentPosition++;
       } catch (e) {
         this.currentPosition = 0;
@@ -325,7 +299,7 @@ export class NewsfeedBoostRotatorComponent {
     const lastBoostIndex = this.boosts.length - 1;
 
     const previousBoostIndex = index - 1 < 0 ? lastBoostIndex : index - 1;
-    const currentBoostIndex = index;
+    const currentBoostIndex = this.currentPosition;
     const nextBoostIndex = index + 1;
 
     // show the current boost and an additional boost
@@ -354,6 +328,8 @@ export class NewsfeedBoostRotatorComponent {
   ngOnDestroy() {
     if (this.rotator) window.clearInterval(this.rotator);
     this.scroll.unListen(this.scroll_listener);
+
+    this.boostFeedService.reset();
 
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
@@ -401,5 +377,9 @@ export class NewsfeedBoostRotatorComponent {
     return {
       'font-size': 20,
     };
+  }
+
+  trackByFn(i: number, boost): string {
+    return boost.guid;
   }
 }

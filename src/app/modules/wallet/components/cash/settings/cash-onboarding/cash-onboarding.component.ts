@@ -7,7 +7,11 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+} from '@angular/forms';
 import { requiredFor, optionalFor } from '../settings-cash.validators';
 import { WalletV2Service } from '../../../wallet-v2.service';
 import { Session } from '../../../../../../services/session';
@@ -35,7 +39,7 @@ export class WalletCashOnboardingComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     protected walletService: WalletV2Service,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     protected session: Session,
     private client: Client
   ) {}
@@ -104,7 +108,7 @@ export class WalletCashOnboardingComponent implements OnInit {
   }
 
   revalidateForm(): void {
-    Object.values(this.form.controls).forEach((control: FormControl) => {
+    Object.values(this.form.controls).forEach((control: UntypedFormControl) => {
       control.updateValueAndValidity();
     });
   }

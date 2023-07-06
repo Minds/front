@@ -20,21 +20,8 @@
 
     <m-feedNotice__outlet location="top"></m-feedNotice__outlet>
 
-    <m-feedHeader>
-      <span
-        title
-        i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
-        *ngIf="algorithm === 'top'"
-        >Top Posts</span
-      >
-      <span
-        title
-        i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
-        *ngIf="algorithm === 'latest'"
-        >Latest Posts</span
-      >
-      <m-feedTypePopover [type]="algorithm"></m-feedTypePopover>
-    </m-feedHeader>
+    <m-newsfeed__tabs></m-newsfeed__tabs>
+
     <div *ngIf="!persistentFeedExperimentActive" class="minds-list">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
@@ -54,20 +41,19 @@
       </ng-container>
 
       <!--boost rotator-->
-      <ng-container *mIfFeature="'boost-rotator'">
-        <ng-container *mIfBrowser>
-          <m-newsfeed--boost-rotator
-            *ngIf="showBoostRotator"
-            #feedViewChildren
-            #boostRotator
-          ></m-newsfeed--boost-rotator>
-        </ng-container>
+      <ng-container *mIfBrowser>
+        <m-newsfeed--boost-rotator
+          *ngIf="showBoostRotator"
+          #feedViewChildren
+          #boostRotator
+        ></m-newsfeed--boost-rotator>
       </ng-container>
 
-      <m-channelRecommendation
+      <m-publisherRecommendations
         location="newsfeed"
-        *ngIf="shouldShowChannelRecommendation('emptyState')"
-      ></m-channelRecommendation>
+        *ngIf="shouldShowPublisherRecommendations('emptyState')"
+        [publisherType]="recommendationsPublisherType"
+      ></m-publisherRecommendations>
 
       <!--actual feed-->
       <ng-container
@@ -103,14 +89,15 @@
           (deleted)="delete(activity)"
           #feedViewChildren
         ></m-activity>
-        <m-channelRecommendation
+        <m-publisherRecommendations
           location="newsfeed"
           [dismissible]="true"
+          [publisherType]="recommendationsPublisherType"
           *ngIf="
-            shouldShowChannelRecommendation('feed', i) &&
-            !(isChannelRecommendationDismissed$ | async)
+            shouldShowPublisherRecommendations('feed', i) &&
+            !(isPublisherRecommendationsDismissed$ | async)
           "
-        ></m-channelRecommendation>
+        ></m-publisherRecommendations>
       </ng-container>
 
       <infinite-scroll

@@ -32,7 +32,6 @@ import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
 import { TopHighlightsComponent } from './feeds/top-highlights/top-highlights.component';
-import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
 import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
 import { ActivityModule } from './activity/activity.module';
@@ -40,27 +39,39 @@ import { NewsfeedFeedItemComponent } from './feeds/feed-item.component';
 import { VirtualMinimapComponent } from './feed/virtual-minimap';
 import { FeedComponent } from './feed/feed.component';
 import { VirtualScrollerModule } from './feed/virtual-scroller';
+import { PathMatch } from '../../common/types/angular.types';
+import { NewsfeedTabsComponent } from './feeds/tabs/tabs.component';
+import { NewsfeedGqlComponent } from './feeds/newsfeed-gql.component';
+import { NewsfeedExperimentComponent } from './feeds/newsfeed-experiment.component';
 
 const routes: Routes = [
   {
     path: 'newsfeed',
     component: NewsfeedComponent,
     children: [
-      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
+      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' as PathMatch },
       { path: 'suggested', redirectTo: 'subscriptions' },
-      { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
-      { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
+      { path: 'top', redirectTo: 'global/top', pathMatch: 'full' as PathMatch },
+      {
+        path: 'global',
+        redirectTo: 'global/top',
+        pathMatch: 'full' as PathMatch,
+      },
       { path: 'global/:algorithm', redirectTo: 'subscriptions' },
-      { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
+      {
+        path: 'subscribed',
+        redirectTo: 'subscriptions',
+        pathMatch: 'full' as PathMatch,
+      },
       {
         path: 'subscriptions',
-        component: NewsfeedSubscribedComponent,
-        pathMatch: 'full',
+        component: NewsfeedExperimentComponent,
+        pathMatch: 'full' as PathMatch,
         canActivate: [FeedAlgorithmRedirectGuard],
       },
       {
         path: 'subscriptions/:algorithm',
-        component: NewsfeedSubscribedComponent,
+        component: NewsfeedExperimentComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
           title: 'Newsfeed',
@@ -109,10 +120,12 @@ const routes: Routes = [
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
     TopHighlightsComponent,
-    FeedTypePopoverComponent,
     NewsfeedFeedItemComponent,
     VirtualMinimapComponent,
     FeedComponent,
+    NewsfeedTabsComponent,
+    NewsfeedGqlComponent,
+    NewsfeedExperimentComponent,
   ],
   providers: [
     NewsfeedService,

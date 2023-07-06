@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -8,7 +14,6 @@ import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
-import { FeaturesService } from '../../../services/features.service';
 import {
   MetaService,
   MIN_METRIC_FOR_ROBOTS,
@@ -17,8 +22,9 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
-import { Location } from '@angular/common';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
+import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -48,6 +54,8 @@ export class NewsfeedSingleComponent {
 
   showBackButton: boolean = false;
 
+  boostModalDelayMs: number;
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -55,14 +63,15 @@ export class NewsfeedSingleComponent {
     public session: Session,
     public entitiesService: EntitiesService,
     protected client: Client,
-    protected featuresService: FeaturesService,
     private metaService: MetaService,
     configs: ConfigsService,
     private headersService: HeadersService,
     private authModal: AuthModalService,
     protected jsonLdService: JsonLdService,
     private location: Location,
-    private routerHistory: RouterHistoryService
+    private routerHistory: RouterHistoryService,
+    private boostModal: BoostModalV2LazyService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -134,74 +143,71 @@ export class NewsfeedSingleComponent {
 
     this.inProgress = true;
 
-    this.singleGuidSubscription = this.entitiesService
-      .singleCacheFirst(guid)
-      .pipe(switchMap(activitySubscription => activitySubscription))
-      .subscribe(
-        activity => {
-          if (!activity) {
-            return; // Not yet loaded
-          }
-
-          this.activity = activity;
-
-          switch (this.activity.subtype) {
-            case 'image':
-            case 'video':
-            case 'album':
-              break;
-            case 'blog':
-              break;
-          }
-
-          this.updateMeta();
-
-          if (this.activity.require_login) this.openLoginModal();
-
-          this.inProgress = false;
-
-          if (this.activity.ownerObj) {
-            this.context.set('activity', {
-              label: `@${this.activity.ownerObj.username} posts`,
-              nameLabel: `@${this.activity.ownerObj.username}`,
-              id: this.activity.ownerObj.guid,
-            });
-          } else if (this.activity.owner_guid) {
-            this.context.set('activity', {
-              label: `this user's posts`,
-              id: this.activity.owner_guid,
-            });
-          } else {
-            this.context.reset();
-          }
-        },
-        err => {
-          this.inProgress = false;
-
-          if (err.status === 0) {
-            this.error = 'Sorry, there was a timeout error.';
-          } else {
-            this.error = "Sorry, we couldn't load the activity";
-            this.headersService.setCode(404);
-          }
+    this.singleGuidSubscription = this.loadFromFeedsService(guid).subscribe(
+      activity => {
+        if (!activity) {
+          return; // Not yet loaded
         }
-      );
+
+        this.activity = activity;
+
+        // Open up the boost modal after a delay, if logged in
+        if (
+          this.session.getLoggedInUser() &&
+          isPlatformBrowser(this.platformId) &&
+          this.route.snapshot.queryParamMap.has('boostModalDelayMs')
+        ) {
+          const ms = Number(
+            this.route.snapshot.queryParamMap.get('boostModalDelayMs')
+          );
+          setTimeout(() => this.openBoostModal(), ms);
+        }
+
+        switch (this.activity.subtype) {
+          case 'image':
+          case 'video':
+          case 'album':
+            break;
+          case 'blog':
+            break;
+        }
+
+        this.updateMeta();
+
+        if (this.activity.require_login) this.openLoginModal();
+
+        this.inProgress = false;
+
+        if (this.activity.ownerObj) {
+          this.context.set('activity', {
+            label: `@${this.activity.ownerObj.username} posts`,
+            nameLabel: `@${this.activity.ownerObj.username}`,
+            id: this.activity.ownerObj.guid,
+          });
+        } else if (this.activity.owner_guid) {
+          this.context.set('activity', {
+            label: `this user's posts`,
+            id: this.activity.owner_guid,
+          });
+        } else {
+          this.context.reset();
+        }
+      },
+      err => {
+        this.inProgress = false;
+
+        if (err.status === 0) {
+          this.error = 'Sorry, there was a timeout error.';
+        } else {
+          this.error = "Sorry, we couldn't load the activity";
+          this.headersService.setCode(404);
+        }
+      }
+    );
   }
 
   loadFromFeedsService(guid: string) {
     return this.entitiesService.single(guid);
-  }
-
-  loadLegacy(guid: string) {
-    const fakeEmitter = new EventEmitter();
-
-    this.client
-      .get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
-      .then((response: any) => {
-        fakeEmitter.next(response.activity);
-      });
-
-    return fakeEmitter;
   }
 
   goToPreviousPage(): void {
@@ -290,7 +296,28 @@ export class NewsfeedSingleComponent {
     this.router.navigate(['/newsfeed']);
   }
 
+  async openBoostModal(): Promise<void> {
+    try {
+      await this.boostModal.open(this.activity);
+      return;
+    } catch (e) {
+      // do nothing.
+    }
+  }
+
   get showLegacyActivity(): boolean {
     return this.editing;
+  }
+
+  /**
+   * Whether sidebar Boost should be shown.
+   * @returns { boolean } true if sidebar Boost should be shown.
+   */
+  public shouldShowSidebarBoost(): boolean {
+    return (
+      this.session.isLoggedIn() &&
+      this.activity?.ownerObj?.guid &&
+      this.activity?.ownerObj?.guid !== this.session.getLoggedInUser().guid
+    );
   }
 }

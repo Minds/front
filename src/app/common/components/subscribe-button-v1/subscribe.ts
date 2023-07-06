@@ -22,7 +22,7 @@ export class SubscribeButton {
   _inprogress: boolean = false;
   _content: any;
   _listener: Function;
-  @Output('subscribed') onSubscribed: EventEmitter<any> = new EventEmitter();
+  @Output('subscribed') onSubscribed: EventEmitter<void> = new EventEmitter();
 
   @HostBinding('class.m-subscribeButton--iconsOnly')
   @Input()

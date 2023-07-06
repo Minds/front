@@ -1,17 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  merge,
-  Observable,
-  race,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   map,
-  mergeAll,
   pairwise,
   share,
   startWith,
@@ -29,7 +21,6 @@ import {
   AttachmentValidationPayload,
   AttachmentValidatorService,
 } from './attachment-validator.service';
-import { BoostRecommendationService } from '../../../common/services/boost-recommendation.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 import { UploaderService } from './uploader.service';
 import {
@@ -53,8 +44,13 @@ import {
   TagsSubjectValue,
   TitleSubjectValue,
 } from './composer-data-types';
-import { SupermindComposerPayloadType } from '../components/popup/supermind/superminds-creation.service';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { ClientMetaData } from '../../../common/services/client-meta.service';
+import {
+  ActivityContainer,
+  ComposerAudienceSelectorService,
+} from './audience.service';
+
 /**
  * Default values
  */
@@ -357,10 +353,8 @@ export class ComposerService implements OnDestroy {
    */
   protected readonly richEmbedExtractorSubscription: Subscription;
 
-  /**
-   * Container GUID for this instance
-   */
-  protected containerGuid: string | null = null;
+  /** Container for this instance */
+  protected container: ActivityContainer = null;
 
   /**
    * If we're editing, this holds a clone of the original activity
@@ -396,7 +390,7 @@ export class ComposerService implements OnDestroy {
     protected feedsUpdate: FeedsUpdateService,
     private hashtagsFromString: HashtagsFromStringService,
     private attachmentValidator: AttachmentValidatorService,
-    private boostRecommendationService: BoostRecommendationService,
+    private audienceSelectorService: ComposerAudienceSelectorService,
     private onboardingService: OnboardingV3Service,
     private uploaderService: UploaderService,
     private toasterService: ToasterService
@@ -420,7 +414,8 @@ export class ComposerService implements OnDestroy {
         PostToPermawebSubjectValue,
         RemindSubjectValue,
         SupermindRequestSubjectValue,
-        SupermindReplySubjectValue
+        SupermindReplySubjectValue,
+        ActivityContainer
       ]
     >([
       this.message$.pipe(distinctUntilChanged()),
@@ -436,10 +431,14 @@ export class ComposerService implements OnDestroy {
         distinctUntilChanged(),
         tap(accessId => {
           // This will trigger a warning about an illegal access ID operation
-          if (this.containerGuid && this.containerGuid !== accessId) {
+          if (
+            this.container &&
+            this.container.guid &&
+            this.container.guid !== accessId
+          ) {
             console.warn(
               "Access ID will be overriden by container's GUID",
-              this.containerGuid
+              this.container.guid
             );
           }
         })
@@ -505,6 +504,9 @@ export class ComposerService implements OnDestroy {
       this.remind$.pipe(distinctUntilChanged()),
       this.supermindRequest$.pipe(distinctUntilChanged()),
       this.supermindReply$.pipe(distinctUntilChanged()),
+      this.audienceSelectorService.selectedAudience$.pipe(
+        distinctUntilChanged()
+      ),
     ]).pipe(
       map(
         // Create an JSON object based on an array of Subject values
@@ -524,6 +526,7 @@ export class ComposerService implements OnDestroy {
           remind,
           supermindRequest,
           supermindReply,
+          container,
         ]) => ({
           message,
           title,
@@ -540,6 +543,7 @@ export class ComposerService implements OnDestroy {
           remind,
           supermindRequest,
           supermindReply,
+          container,
         })
       ),
       tap(values => {
@@ -732,22 +736,25 @@ export class ComposerService implements OnDestroy {
   }
 
   /**
-   * Sets the container GUID for this instance
-   * @param containerGuid
+   * Sets the container for this instance.
+   * @param { ActivityContainer } container - container to post to.
+   * @returns { this }
    */
-  setContainerGuid(containerGuid: string | null) {
-    this.containerGuid = containerGuid || null;
-    if (containerGuid) {
+  public setContainer(container: ActivityContainer | null): this {
+    this.audienceSelectorService.selectedAudience$.next(container);
+
+    if (container && container.guid) {
       this.isGroupPost$.next(true);
     }
     return this;
   }
 
   /**
-   * Gets the container GUID for this instance
+   * Gets the container GUID for this instance.
+   * @returns { string } container guid if one is set.
    */
-  getContainerGuid(): string | null {
-    return this.containerGuid || null;
+  public getContainerGuid(): string {
+    return this.container?.guid ?? null;
   }
 
   /**
@@ -790,6 +797,10 @@ export class ComposerService implements OnDestroy {
     // Reset supermind state
     this.supermindRequest$.next(null);
     this.supermindReply$.next(null);
+
+    // Reset audience
+    this.audienceSelectorService.selectedAudience$.next(null);
+    this.audienceSelectorService.shareToGroupMode$.next(false);
 
     // Reset original source
     this.entity = null;
@@ -879,7 +890,11 @@ export class ComposerService implements OnDestroy {
     // Define container
 
     if (typeof activity.container_guid !== 'undefined') {
-      this.setContainerGuid(activity.containerGuid);
+      this.setContainer({
+        guid: activity.containerGuid,
+        type: 'group',
+        name: '', // not available in this context.
+      });
       this.isGroupPost$.next(true);
     }
 
@@ -994,10 +1009,11 @@ export class ComposerService implements OnDestroy {
     remind,
     supermindRequest,
     supermindReply,
+    container,
   }: Data): any {
-    if (this.containerGuid) {
+    if (this.container && this.container.guid) {
       // Override accessId if there's a container set
-      accessId = this.containerGuid;
+      accessId = this.container.guid;
       this.isGroupPost$.next(true);
     }
 
@@ -1053,8 +1069,8 @@ export class ComposerService implements OnDestroy {
       }
     }
 
-    if (this.containerGuid) {
-      this.payload.container_guid = this.containerGuid;
+    if (container && container.guid) {
+      this.payload.container_guid = container.guid;
     }
 
     if (videoPoster && videoPoster.fileBase64) {
@@ -1076,7 +1092,7 @@ export class ComposerService implements OnDestroy {
   /**
    * Posts a new activity
    */
-  async post(): Promise<ActivityEntity> {
+  async post(clientMeta: ClientMetaData = null): Promise<ActivityEntity> {
     this.isPosting$.next(true);
     this.setProgress(true);
 
@@ -1084,6 +1100,10 @@ export class ComposerService implements OnDestroy {
 
     try {
       let activity;
+
+      if (clientMeta) {
+        this.payload['client_meta'] = clientMeta;
+      }
 
       if (editing) {
         activity = await this.api
@@ -1107,10 +1127,6 @@ export class ComposerService implements OnDestroy {
 
       this.reset();
       this.isPosting$.next(false);
-      setTimeout(
-        () => this.boostRecommendationService.recommendBoost(activity.guid),
-        1000
-      );
       this.setProgress(false);
 
       activity.boostToggle = true;

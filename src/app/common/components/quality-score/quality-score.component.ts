@@ -80,6 +80,10 @@ export class QualityScoreComponent implements OnInit {
    * @private
    */
   private async loadQualityScoreAsync(): Promise<void> {
+    if (!this.isAdmin()) {
+      return;
+    }
+
     this.inProgress = true;
     try {
       this.qualityScore = await this.qualityScoreService

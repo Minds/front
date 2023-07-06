@@ -27,7 +27,7 @@
     margin: 12px 0 4px;
 
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
 
@@ -46,7 +46,7 @@
       margin: 0 0 18px;
     }
 
-    @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+    @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
       font-size: 38px;
       line-height: 39px;
     }
@@ -71,23 +71,23 @@
     }
   }
 
-  p.m-marketing__description {
+  p {
     font-size: 18px;
     line-height: 27px;
     margin: 0 0 36px;
 
-    @media screen and(min-width: 700px) and (max-width: $m-grid-min-vp) {
+    @media screen and (min-width: 700px) and (max-width: $m-grid-min-vp) {
       font-size: 16px;
       line-height: 24px;
     }
 
-    @media screen and(min-width: $m-grid-max-mobile) and (max-width: 700px) {
+    @media screen and (min-width: $m-grid-max-mobile) and (max-width: 700px) {
       font-size: 15px;
       line-height: 22px;
     }
   }
 
-  ul.m-marketing__points {
+  ul {
     list-style: disc;
     margin: 0 0 45px;
     padding: 0 0 0 1em;
@@ -137,7 +137,7 @@
       font-weight: normal;
 
       @include m-theme() {
-        color: themed($m-grey-800);
+        color: themed($m-textColor--primary);
       }
     }
 
@@ -231,7 +231,7 @@
       bottom: 62px;
       left: -21px;
 
-      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+      @media screen and (min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
         bottom: -23%;
         left: 8.5%;
       }
@@ -249,7 +249,7 @@
       bottom: 8px;
       left: -45px;
 
-      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+      @media screen and (min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
         bottom: 0;
         right: 0;
         left: auto;
@@ -274,11 +274,11 @@
     align-items: flex-end;
     margin: 0 auto;
 
-    @media screen and(min-width: $m-grid-max-tablet) {
+    @media screen and (min-width: $m-grid-max-tablet) {
       width: 730px;
     }
 
-    @media screen and(max-width: $m-grid-max-tablet) {
+    @media screen and (max-width: $m-grid-max-tablet) {
       width: auto;
     }
 

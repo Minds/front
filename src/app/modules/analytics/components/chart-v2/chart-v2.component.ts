@@ -237,7 +237,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       paper_bgcolor: this.getColor('m-bgColor--primary'),
       plot_bgcolor: this.getColor('m-bgColor--primary'),
       font: {
-        family: 'Roboto',
+        family: 'Inter',
       },
       xaxis: {
         tickformat: this.xTickFormat,

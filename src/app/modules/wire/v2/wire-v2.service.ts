@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { map, tap, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
 import {
@@ -15,6 +15,8 @@ import { ProService } from '../../pro/pro.service';
 import { SupportTier } from './support-tiers.service';
 import { Session } from '../../../services/session';
 import { ToasterService } from '../../../common/services/toaster.service';
+import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import { isSafari } from '../../../helpers/is-safari';
 
 /**
  * Wire event types
@@ -180,6 +182,7 @@ interface Data {
   owner: MindsUser | null;
   usdPaymentMethodId: string;
   wallet: Wallet;
+  sourceEntityGuid: string;
 }
 
 /**
@@ -200,7 +203,8 @@ type DataArray = [
   boolean,
   MindsUser,
   string,
-  Wallet
+  Wallet,
+  string | null
 ];
 
 /**
@@ -223,6 +227,10 @@ export class WireV2Service implements OnDestroy {
   readonly entityGuid$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
   );
+
+  readonly sourceEntityGuid$: BehaviorSubject<string> = new BehaviorSubject<
+    string
+  >('');
 
   /**
    * Wire type subject
@@ -431,6 +439,7 @@ export class WireV2Service implements OnDestroy {
       ),
       this.usdPaymentMethodId$,
       this.wallet.wallet$,
+      this.sourceEntityGuid$,
     ]).pipe(
       map(
         ([
@@ -448,6 +457,7 @@ export class WireV2Service implements OnDestroy {
           owner,
           usdPaymentMethodId,
           wallet,
+          sourceEntityGuid,
         ]: DataArray): Data => ({
           entityGuid,
           type,
@@ -463,6 +473,7 @@ export class WireV2Service implements OnDestroy {
           owner,
           usdPaymentMethodId,
           wallet,
+          sourceEntityGuid,
         })
       )
     );
@@ -536,9 +547,11 @@ export class WireV2Service implements OnDestroy {
       this.upgradeType$,
       this.upgradeInterval$,
       this.type$,
+      this.isUpgrade$,
     ]).pipe(
-      map(([upgradeType, upgradeInterval, paymentType]) => {
+      map(([upgradeType, upgradeInterval, paymentType, isUpgrade]) => {
         return (
+          isUpgrade &&
           this.upgrades[upgradeType][upgradeInterval].can_have_trial &&
           paymentType === 'usd'
         );
@@ -591,6 +604,13 @@ export class WireV2Service implements OnDestroy {
     this.entityGuid$.next(guid);
     this.ownerResolver$.next(owner);
 
+    return this;
+  }
+
+  public setSourceEntity(sourceEntity: any): WireV2Service {
+    this.sourceEntityGuid$.next(
+      sourceEntity.guid ?? sourceEntity.entityGuid ?? ''
+    );
     return this;
   }
 
@@ -868,6 +888,20 @@ export class WireV2Service implements OnDestroy {
             );
           }
         } else {
+          if (isMobileOrTablet()) {
+            return invalid(
+              'Onchain payment is not currently possible on mobile devices',
+              true
+            );
+          }
+
+          if (isSafari()) {
+            return invalid(
+              'Onchain payment is not currently possible with Safari',
+              true
+            );
+          }
+
           // On-chain & Eth
           if (!data.owner || !data.owner.eth_wallet) {
             return invalid(
@@ -911,6 +945,7 @@ export class WireV2Service implements OnDestroy {
       recurring: Boolean(
         this.canRecur(data.type, data.tokenType) && data.recurring
       ),
+      sourceEntityGuid: data.sourceEntityGuid,
     };
 
     switch (data.type) {

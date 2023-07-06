@@ -1,4 +1,3 @@
-import { FeaturesService } from './../../services/features.service';
 import { APP_BASE_HREF, CommonModule, Location } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
@@ -37,7 +36,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     HttpClientModule,
     VideoModule,
     CookieModule.forRoot(),
-    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, {}),
   ],
   providers: [
     SiteService,
@@ -70,7 +69,6 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     Session,
     Storage,
     RecentService,
-    FeaturesService,
     AnalyticsService,
     {
       provide: BlockListService,

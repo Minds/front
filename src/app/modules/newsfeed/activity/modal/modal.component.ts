@@ -9,6 +9,7 @@ import {
   Self,
   ChangeDetectorRef,
   ViewChild,
+  HostBinding,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -19,7 +20,6 @@ import {
   ActivityEntity,
   ACTIVITY_SHORT_STATUS_MAX_LENGTH,
 } from '../../activity/activity.service';
-import { FeaturesService } from '../../../../services/features.service';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { AnalyticsService } from '../../../../services/analytics';
@@ -38,6 +38,7 @@ import { RelatedContentService } from '../../../../common/services/related-conte
 export type MediaModalParams = {
   entity: any;
   activeMultiImageIndex: number;
+  isComment: boolean;
 };
 
 // Constants of dimensions calculations
@@ -71,7 +72,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   entity: any;
   isMultiImage: boolean = false;
 
-  subscriptions: Subscription[];
+  subscriptions: Subscription[] = [];
 
   // Used for backdrop click detection hack
   isOpen: boolean = false;
@@ -97,6 +98,9 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   @ViewChild('scrollableArea')
   scrollableArea;
 
+  @HostBinding('class.m-activityModal--isComment')
+  isComment: boolean = false;
+
   constructor(
     @Self() public activityService: ActivityService,
     public client: Client,
@@ -111,7 +115,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     public attachment: AttachmentService,
     public service: ActivityModalService,
     private relatedContent: RelatedContentService,
-    private features: FeaturesService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -123,7 +126,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
     this.modalHeight = window.innerHeight - ACTIVITY_MODAL_PADDING;
 
-    this.subscriptions = [
+    this.subscriptions.push(
       this.activityService.entity$.subscribe((entity: ActivityEntity) => {
         if (!entity) {
           return;
@@ -140,27 +143,19 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         this.isContentReady = true;
         this.cd.detectChanges();
       }),
-    ];
 
-    this.subscriptions.push(
       this.activityService.activeMultiImageIndex$.subscribe(i => {
         this.activeMultiImageIndex = i;
-      })
-    );
+      }),
 
-    this.subscriptions.push(
       this.activityService.isQuote$.subscribe(is => {
         this.isQuote = is;
-      })
-    );
+      }),
 
-    this.subscriptions.push(
       this.activityService.isMultiImage$.subscribe(is => {
         this.isMultiImage = is;
-      })
-    );
+      }),
 
-    this.subscriptions.push(
       this.activityService.canonicalUrl$.subscribe(canonicalUrl => {
         if (!this.entity) return;
         /**
@@ -184,12 +179,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
          * (but don't actually redirect)
          */
         this.location.replaceState(canonicalUrl);
-      })
-    );
+      }),
 
-    // When user clicks a link from inside the modal
-    this.subscriptions.push(
       this.router.events.subscribe((event: Event) => {
+        // When user clicks a link from inside the modal
         if (event instanceof NavigationStart) {
           if (!this.navigatedAway) {
             this.navigatedAway = true;
@@ -366,5 +359,9 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     // Prepare pager
     this.relatedContent.setBaseEntity(params.entity);
     this.relatedContent.setParent('activityModal');
+
+    // Determine if modal is displaying media from a comment,
+    // so we can show appropriate toolbar buttons
+    this.isComment = params.isComment;
   }
 }

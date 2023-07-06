@@ -7,39 +7,31 @@
     *ngSwitchCase="BoostModalPanel.BUDGET"
     class="m-boostModalFooter__descriptionTextInnerContainer"
   >
-    <span
-      *ngIf="(entityType$ | async) === BoostSubject.POST"
-      i18n="@@BOOST_MODAL_V2_FOOTER__ESTIMATED_REACH_NEWSFEED"
-      >Estimated reach is approximate and your Boost will appear in newsfeeds
-      across the site. Actual reach for this Boost may vary and can’t be
-      guaranteed.</span
-    >
-    <span
-      *ngIf="(entityType$ | async) === BoostSubject.CHANNEL"
-      i18n="@@BOOST_MODAL_V2_FOOTER__ESTIMATED_REACH_SIDEBAR"
-      >Estimated reach is approximate and your Boost will appear in the sidebar
-      across the site. Actual reach for this Boost may vary and can’t be
-      guaranteed.</span
+    <span i18n="@@BOOST_MODAL_V2_FOOTER__ESTIMATED_REACH_DISCLAIMER"
+      >Estimated reach is approximate and can fluctuate based on network
+      demand.</span
     >
   </div>
   <div
     *ngSwitchCase="BoostModalPanel.REVIEW"
     class="m-boostModalFooter__descriptionTextInnerContainer"
   >
-    <span
-      *ngIf="(entityType$ | async) === BoostSubject.POST"
-      i18n="@@BOOST_MODAL_V2_FOOTER__ONCE_APPROVED"
-      >Once your Boost is approved, your post can not be edited or deleted until
-      the Boost duration is completed. Approved boosts cannot be refunded. By
-      clicking Boost post, you agree to Mind’s Terms.</span
-    >
-    <span
-      *ngIf="(entityType$ | async) === BoostSubject.CHANNEL"
-      i18n="@@BOOST_MODAL_V2_FOOTER__ONCE_APPROVED"
-      >Once your Boost is approved, your boost can not be edited or deleted
-      until the Boost duration is completed. Approved boosts cannot be refunded.
-      By clicking Boost channel, you agree to Mind’s Terms.</span
-    >
+    <ng-container *ngIf="(entityType$ | async) === BoostSubject.POST">
+      <ng-container
+        [ngTemplateOutlet]="reviewPanelFooter"
+        [ngTemplateOutletContext]="{
+          boostSubject: 'post'
+        }"
+      ></ng-container
+    ></ng-container>
+    <ng-container *ngIf="(entityType$ | async) === BoostSubject.CHANNEL">
+      <ng-container
+        [ngTemplateOutlet]="reviewPanelFooter"
+        [ngTemplateOutletContext]="{
+          boostSubject: 'channel'
+        }"
+      ></ng-container
+    ></ng-container>
   </div>
 </div>
 <div class="m-boostModalFooter__submitButtonContainer">
@@ -48,7 +40,7 @@
     color="blue"
     [solid]="true"
     [saving]="boostSubmissionInProgress$ | async"
-    [disabled]="boostSubmissionInProgress$ | async"
+    [disabled]="disableSubmitButton$ | async"
     (onAction)="onButtonClick($event)"
     data-ref="boost-modal-v2-footer-next-button"
   >
@@ -71,3 +63,14 @@
     </ng-container>
   </m-button>
 </div>
+
+<!-- ------------------------ -->
+<!-- FOOTER TEMPLATE  -->
+<!-- ------------------------ -->
+<ng-template #reviewPanelFooter let-boostSubject="boostSubject"
+  ><span i18n="@@BOOST_MODAL_V2_FOOTER__ONCE_APPROVED">
+    By clicking Boost {{ boostSubject }}, you agree to Minds'
+    <a href="/content-policy" target="_blank">Content Policy</a> and
+    <a href="/p/terms" target="_blank">Refund Policy</a>.</span
+  ></ng-template
+>

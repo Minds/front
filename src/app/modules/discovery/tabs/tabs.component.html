@@ -69,44 +69,31 @@
   <ng-template #plusTabs>
     <div class="m-tabs__tab">
       <a
-        *mIfFeature="'!plus-discovery-filter'"
         routerLink="/discovery/plus/overview"
         routerLinkActive="m-tabs__tab--selected"
         data-ref="discovery-tab-link-plus-overview"
-        i18n="@@DISCOVERY_TAGS__OVERVIEW"
-        >Overview</a
+        i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
+        >Just for you</a
       >
     </div>
-    <ng-container *mIfFeature="'plus-discovery-filter'">
-      <div class="m-tabs__tab">
-        <a
-          routerLink="/discovery/plus/overview"
-          routerLinkActive="m-tabs__tab--selected"
-          data-ref="discovery-tab-link-plus-overview"
-          i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
-          >Just for you</a
-        >
-      </div>
-      <div class="m-tabs__tab" *ngIf="session.getLoggedInUser()">
-        <a
-          routerLink="/discovery/plus/tags/your"
-          routerLinkActive="m-tabs__tab--selected"
-          data-ref="discovery-tab-link-tags"
-          i18n="@@DISCOVERY_TAGS__YOUR_TAGS"
-          >Your tags</a
-        >
-      </div>
-      <div class="m-tabs__tab" *ngIf="session.getLoggedInUser()">
-        <a
-          routerLink="/discovery/plus/tags/trending"
-          routerLinkActive="m-tabs__tab--selected"
-          data-ref="discovery-tab-link-trending"
-          i18n="@@DISCOVERY_TAGS__TRENDING"
-          >Trending</a
-        >
-      </div>
-    </ng-container>
-
+    <div class="m-tabs__tab" *ngIf="session.getLoggedInUser()">
+      <a
+        routerLink="/discovery/plus/tags/your"
+        routerLinkActive="m-tabs__tab--selected"
+        data-ref="discovery-tab-link-tags"
+        i18n="@@DISCOVERY_TAGS__YOUR_TAGS"
+        >Your tags</a
+      >
+    </div>
+    <div class="m-tabs__tab" *ngIf="session.getLoggedInUser()">
+      <a
+        routerLink="/discovery/plus/tags/trending"
+        routerLinkActive="m-tabs__tab--selected"
+        data-ref="discovery-tab-link-trending"
+        i18n="@@DISCOVERY_TAGS__TRENDING"
+        >Trending</a
+      >
+    </div>
     <div class="m-tabs__tab">
       <a
         routerLink="/discovery/plus/latest/feed"

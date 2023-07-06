@@ -7,16 +7,35 @@ export type Boost = {
   entity: any;
   target_location: number;
   target_suitability: number;
+  target_platform_web?: boolean;
+  target_platform_android?: boolean;
+  target_platform_ios?: boolean;
+  goal?: BoostGoal;
+  goal_button_text?: BoostGoalButtonText;
+  goal_button_url?: string;
   payment_method_id?: number;
   payment_method: number;
   payment_amount: number;
   daily_bid: number;
   duration_days: number;
   boost_status: number;
+  rejection_reason?: number;
   created_timestamp: number;
   updated_timestamp: number;
   approved_timestamp: number;
   payment_tx_id?: string;
+  summary?: {
+    views_delivered?: number;
+    total_clicks?: number;
+  };
+};
+
+/**
+ * Rejection reason
+ */
+export type RejectionReason = {
+  code: number; // numerical code for the reason
+  label: string; // text label for the reason
 };
 
 // BOOST GUID
@@ -72,7 +91,6 @@ export enum BoostSuitability {
 export type BoostConsoleSuitabilityFilter = 'safe' | 'controversial';
 
 ///////////////////////////////////////////////////////
-
 // BOOST LOCATION
 export enum BoostLocation {
   NEWSFEED = 1,
@@ -92,6 +110,7 @@ export type BoostConsoleGetParams = {
   status?: BoostState;
   audience?: BoostSuitability;
   payment_method?: BoostPaymentMethod;
+  remote_user_guid?: string; // user guid for admin lookup
 };
 
 // STATS FOR ADMIN BOOST CONSOLE
@@ -101,3 +120,27 @@ export type BoostConsoleAdminStatsResponse = {
     controversial_count: number;
   };
 };
+
+// SINGLE BOOST GET RESPONSE
+export type BoostConsoleSingleGetResponse = {
+  boost: Boost;
+};
+
+///////////////////////////////////////////////////////
+// BOOST GOALS
+export enum BoostGoal {
+  VIEWS = 1, // "expand reach"
+  ENGAGEMENT = 2, // "increase engagement"
+  SUBSCRIBERS = 3, // "grow your following"
+  CLICKS = 4, // "get more clicks"
+}
+
+export enum BoostGoalButtonText {
+  SUBSCRIBE_TO_MY_CHANNEL = 1,
+  GET_CONNECTED = 2,
+  STAY_IN_THE_LOOP = 3,
+  LEARN_MORE = 4,
+  GET_STARTED = 5,
+  SIGN_UP = 6,
+  TRY_FOR_FREE = 7,
+}

@@ -7,9 +7,9 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { By } from '@angular/platform-browser';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { BehaviorSubject, of } from 'rxjs';
-import { DiscoveryBoostExperimentService } from '../../experiments/sub-services/discovery-boost-experiment.service';
 import { DismissalService } from '../../../common/services/dismissal.service';
 import { FeedNoticeService } from '../../notices/services/feed-notice.service';
+import { Session } from '../../../services/session';
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
@@ -77,16 +77,16 @@ describe('DefaultFeedComponent', () => {
             useValue: MockService(ExperimentsService),
           },
           {
-            provide: DiscoveryBoostExperimentService,
-            useValue: MockService(DiscoveryBoostExperimentService),
-          },
-          {
             provide: FeedNoticeService,
             useValue: MockService(FeedNoticeService),
           },
           {
             provide: DismissalService,
             useValue: MockService(DismissalService),
+          },
+          {
+            provide: Session,
+            useValue: MockService(Session),
           },
         ],
       })
@@ -101,6 +101,9 @@ describe('DefaultFeedComponent', () => {
     fixture = TestBed.createComponent(DefaultFeedComponent);
 
     comp = fixture.componentInstance;
+
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -168,43 +171,35 @@ describe('DefaultFeedComponent', () => {
     expect(inlineElements.length).toBe(4); // pos 6, 12, 18, 24
   });
 
-  it('should determine whether boost should NOT be shown because discovery boost experiment is off', () => {
-    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(false);
-
-    expect(comp.shouldShowBoostInPosition(3)).toBe(false);
-    expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
-  });
-
-  it('should determine whether boost should be shown in position 3', () => {
-    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(true);
-
+  it('should determine have boost in position 3', () => {
     expect(comp.shouldShowBoostInPosition(3)).toBe(true);
-    expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
   });
 
   it('should determine whether boost should be shown in a non 0 position divisible by 5', () => {
-    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(true);
-
     expect(comp.shouldShowBoostInPosition(5)).toBe(true);
     expect(comp.shouldShowBoostInPosition(10)).toBe(true);
     expect(comp.shouldShowBoostInPosition(15)).toBe(true);
     expect(comp.shouldShowBoostInPosition(20)).toBe(true);
     expect(comp.shouldShowBoostInPosition(25)).toBe(true);
     expect(comp.shouldShowBoostInPosition(9995)).toBe(true);
-
-    expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
   });
 
   it('should determine whether boost should NOT be shown in a non 0 position that is NOT 3 OR divisible by 5', () => {
-    (comp as any).discoveryBoostExperiment.isActive.and.returnValue(true);
-
     expect(comp.shouldShowBoostInPosition(1)).toBe(false);
     expect(comp.shouldShowBoostInPosition(2)).toBe(false);
     expect(comp.shouldShowBoostInPosition(4)).toBe(false);
     expect(comp.shouldShowBoostInPosition(6)).toBe(false);
     expect(comp.shouldShowBoostInPosition(9994)).toBe(false);
     expect(comp.shouldShowBoostInPosition(9996)).toBe(false);
+  });
 
-    expect((comp as any).discoveryBoostExperiment.isActive).toHaveBeenCalled();
+  it('should report that a user is logged in', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+    expect(comp.isLoggedIn()).toBeTrue();
+  });
+
+  it('should report that a user is NOT logged in', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(false);
+    expect(comp.isLoggedIn()).toBeFalse();
   });
 });

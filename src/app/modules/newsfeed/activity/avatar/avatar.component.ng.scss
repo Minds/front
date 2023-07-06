@@ -1,0 +1,77 @@
+@import 'defaults.scss';
+
+:host {
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
+
+  &.m-activity__avatar--minimalMode {
+    ::ng-deep m-hovercard {
+      img {
+        height: 35px;
+        width: 35px;
+        @include border;
+      }
+    }
+  }
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+  position: relative;
+
+  [class*='m-activity__avatarContainer'] {
+    img {
+      border-radius: 50%;
+      object-fit: cover;
+      box-sizing: border-box;
+      @include border;
+      @include m-theme() {
+        background: themed($m-textColor--secondary);
+      }
+    }
+
+    &.m-activity__avatarContainer--primary {
+      img {
+        width: $activityAvatarWidth;
+        height: $activityAvatarWidth;
+      }
+    }
+
+    &.m-activity__avatarContainer--secondary {
+      position: absolute;
+      top: $spacing6;
+      left: $spacing5;
+
+      img {
+        width: $spacing6;
+        height: $spacing6;
+      }
+    }
+  }
+
+  .m-activityAvatar__remindIcon--minimalMode {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+    right: -6px;
+    border-radius: 50%;
+    height: 17px;
+    width: 17px;
+    @include m-theme() {
+      background-color: themed($m-action);
+    }
+    i {
+      font-weight: 700;
+      font-size: 11px;
+      @include m-theme() {
+        color: themed($m-bgColor--primary);
+      }
+    }
+  }
+}

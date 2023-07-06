@@ -8,7 +8,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ToasterService } from '../../../../common/services/toaster.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BoostModalV2FooterComponent } from './footer.component';
 import { BoostModalV2Service } from '../services/boost-modal-v2.service';
 import { BoostModalPanel, BoostSubject } from '../boost-modal-v2.types';
@@ -42,6 +42,7 @@ describe('BoostModalV2FooterComponent', () => {
                 'activePanel$',
                 'entityType$',
                 'boostSubmissionInProgress$',
+                'disableSubmitButton$',
               ],
               props: {
                 activePanel$: {
@@ -55,6 +56,9 @@ describe('BoostModalV2FooterComponent', () => {
                     new BehaviorSubject<BoostSubject>(BoostSubject.POST),
                 },
                 boostSubmissionInProgress$: {
+                  get: () => new BehaviorSubject<boolean>(false),
+                },
+                disableSubmitButton$: {
                   get: () => new BehaviorSubject<boolean>(false),
                 },
               },
@@ -120,7 +124,7 @@ describe('BoostModalV2FooterComponent', () => {
     fixture.detectChanges();
 
     expect(getDescriptionTextContent()).toContain(
-      'Estimated reach is approximate and your Boost will appear in newsfeeds across the site. Actual reach for this Boost may vary and can’t be guaranteed.'
+      'Estimated reach is approximate and can fluctuate based on network demand.'
     );
   });
 
@@ -130,20 +134,18 @@ describe('BoostModalV2FooterComponent', () => {
     fixture.detectChanges();
 
     expect(getDescriptionTextContent()).toContain(
-      'Estimated reach is approximate and your Boost will appear in the sidebar across the site. Actual reach for this Boost may vary and can’t be guaranteed.'
+      'Estimated reach is approximate and can fluctuate based on network demand.'
     );
   });
 
   // review panel
 
-  it('should show text for budget panel when subject is a post', () => {
+  it('should show text for review panel when subject is a post', () => {
     (comp as any).entityType$.next(BoostSubject.POST);
     comp.activePanel$.next(BoostModalPanel.REVIEW);
     fixture.detectChanges();
 
-    expect(getDescriptionTextContent()).toContain(
-      'Once your Boost is approved, your post can not be edited or deleted until the Boost duration is completed. Approved boosts cannot be refunded. By clicking Boost post, you agree to Mind’s Terms.'
-    );
+    expect(getDescriptionTextContent()).toContain('By clicking Boost');
   });
 
   it('should show text for review panel when subject is a channel', () => {
@@ -151,8 +153,6 @@ describe('BoostModalV2FooterComponent', () => {
     comp.activePanel$.next(BoostModalPanel.REVIEW);
     fixture.detectChanges();
 
-    expect(getDescriptionTextContent()).toContain(
-      'Once your Boost is approved, your boost can not be edited or deleted until the Boost duration is completed. Approved boosts cannot be refunded. By clicking Boost channel, you agree to Mind’s Terms.'
-    );
+    expect(getDescriptionTextContent()).toContain('By clicking Boost');
   });
 });

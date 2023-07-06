@@ -12,15 +12,14 @@ import {
 } from '../../activity/activity.service';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
-import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
-import { FeaturesService } from '../../../../services/features.service';
+import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { CounterChangeFadeIn } from '../../../../animations';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
-import { SupermindExperimentService } from '../../../experiments/sub-services/supermind-experiment.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -47,13 +46,12 @@ export class ActivityToolbarComponent {
     public session: Session,
     private router: Router,
     private modalService: ModalService,
-    private boostModal: BoostModalLazyService,
-    private features: FeaturesService,
+    private boostModal: BoostModalV2LazyService,
     private interactionsModalService: InteractionsModalService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
-    public supermindExperiment: SupermindExperimentService,
     public experimentsService: ExperimentsService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private toast: ToasterService
   ) {}
 
   ngOnInit() {
@@ -80,7 +78,21 @@ export class ActivityToolbarComponent {
     this.paywallBadgeSubscription.unsubscribe();
   }
 
-  toggleComments(): void {
+  /**
+   * Toggle showing of comments.
+   * @returns { void }
+   */
+  public toggleComments(): void {
+    // use snapshot of entity from activity service to ensure it is up to date.
+    const entitySnapshot: ActivityEntity = this.service.entity$.getValue();
+    if (!entitySnapshot.allow_comments) {
+      this.toast.warn('This user has disabled comments on their post');
+
+      if (!entitySnapshot['comments:count']) {
+        return;
+      }
+    }
+
     if (
       this.service.displayOptions.fixedHeight ||
       (this.service.displayOptions.isFeed &&
@@ -127,10 +139,11 @@ export class ActivityToolbarComponent {
    **/
   get showMetrics(): boolean {
     return (
-      this.entity['thumbs:up:count'] > 0 ||
-      this.entity['thumbs:down:count'] > 0 ||
-      this.entity?.reminds > 0 ||
-      this.entity?.quotes > 0
+      this.entity &&
+      (this.entity['thumbs:up:count'] > 0 ||
+        this.entity['thumbs:down:count'] > 0 ||
+        this.entity?.reminds > 0 ||
+        this.entity?.quotes > 0)
     );
   }
 }

@@ -1,4 +1,7 @@
-<h3 i18n="@@M_SHARE__HEADER">Share this post</h3>
+<h3 i18n="@@M_SHARE__HEADER" *ngIf="!commentParam">Share this post</h3>
+<h3 i18n="@@M_SHARE__SHARE_THIS_COMMENT" *ngIf="commentParam">
+  Share this comment
+</h3>
 <div class="m-share__input-container">
   <div class="m-share__label-container">
     <label [htmlFor]="shareInput">
@@ -23,14 +26,16 @@
         </span>
       </label>
       <m-tooltip anchor="right" icon="help">
-        <ng-container i18n="@@M_SHARE__REFERRAL_CODE_EXPLANATION">
-          Use your referral code to earn tokens for referring new users to
-          Minds. Learn more at the
-          <a [routerLink]="['/wallet/tokens/referrals']" target="_blank"
-            >Referrals Console</a
+        <ng-container i18n="@@M_SHARE__AFFILIATES_CODE_EXPLANATION">
+          Use your code to earn tokens for referring new users to Minds. Learn
+          more at the
+          <a [routerLink]="['/settings/affiliates-program']" target="_blank"
+            >Affiliates Program page&nbsp;<i
+              class="material-icons m-share__newWindowIcon"
+              >open_in_new</i
+            ></a
           >
         </ng-container>
-        <i class="material-icons m-share__newWindowIcon">open_in_new</i>
       </m-tooltip>
     </div>
   </div>

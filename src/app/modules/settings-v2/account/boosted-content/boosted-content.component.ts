@@ -1,6 +1,5 @@
 import {
   Component,
-  Input,
   OnInit,
   EventEmitter,
   Output,
@@ -10,7 +9,7 @@ import {
 import { Session } from '../../../../services/session';
 import { SettingsV2Service } from '../../settings-v2.service';
 import { Observable, Subscription } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { Storage } from '../../../../services/storage';
 
@@ -29,10 +28,11 @@ export class SettingsV2BoostedContentComponent implements OnInit {
   init: boolean = false;
   inProgress: boolean = false;
   user;
-  settingsSubscription: Subscription;
+
+  private subscriptions: Subscription[] = [];
 
   form;
-  initForm: any | null = null;
+  initForm: any | null;
   formChanged: boolean = false;
 
   constructor(
@@ -46,39 +46,47 @@ export class SettingsV2BoostedContentComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.session.getLoggedInUser();
 
-    this.form = new FormGroup({
-      disabled_boost: new FormControl(''),
-      boost_autorotate: new FormControl(''),
-      boost_rating: new FormControl(''),
-      liquidity_spot_opt_out: new FormControl(''),
-    });
+    this.setupFormGroup();
+    this.setupSubscriptions();
 
-    this.settingsSubscription = this.settingsService.settings$.subscribe(
-      (settings: any) => {
+    this.detectChanges();
+  }
+
+  private setupFormGroup(): void {
+    this.form = new UntypedFormGroup({
+      disabled_boost: new UntypedFormControl(''),
+      boost_autorotate: new UntypedFormControl(''),
+      boost_rating: new UntypedFormControl(''),
+      liquidity_spot_opt_out: new UntypedFormControl(''),
+      boost_partner_suitability: new UntypedFormControl(''),
+    });
+  }
+
+  private setupSubscriptions(): void {
+    this.subscriptions.push(
+      this.settingsService.settings$.subscribe((settings: any) => {
         this.disabled_boost.setValue(settings.disabled_boost);
         this.boost_autorotate.setValue(settings.boost_autorotate);
         this.boost_rating.setValue(settings.boost_rating);
         this.liquidity_spot_opt_out.setValue(settings.liquidity_spot_opt_out);
+        this.boost_partner_suitability.setValue(
+          settings.boost_partner_suitability
+        );
 
-        /**
-         * Check that the settings$ have actually been loaded
-         */
+        // Register the initial values so we can track changes
         if (!this.initForm && settings.guid) {
           this.initForm = JSON.parse(JSON.stringify(this.form.value));
         }
 
         this.init = true;
         this.detectChanges();
-      }
+      }),
+      this.form.valueChanges.subscribe(() => {
+        this.formChanged =
+          JSON.stringify(this.form.value) !== JSON.stringify(this.initForm);
+        this.detectChanges();
+      })
     );
-
-    this.form.valueChanges.subscribe(() => {
-      this.formChanged =
-        JSON.stringify(this.form.value) !== JSON.stringify(this.initForm);
-      this.detectChanges();
-    });
-
-    this.detectChanges();
   }
 
   async submit() {
@@ -100,7 +108,6 @@ export class SettingsV2BoostedContentComponent implements OnInit {
      * Enable/disable boost goes to a different endpoint
      * than the other settings
      */
-
     if (this.disabled_boost.value !== this.initForm.disabled_boost) {
       if (this.disabled_boost.value) {
         await this.settingsService.hideBoost();
@@ -112,10 +119,11 @@ export class SettingsV2BoostedContentComponent implements OnInit {
     }
 
     try {
-      const formValue = {
+      let formValue = {
         boost_autorotate: this.boost_autorotate.value,
         boost_rating: this.boost_rating.value,
         liquidity_spot_opt_out: this.liquidity_spot_opt_out.value,
+        boost_partner_suitability: this.boost_partner_suitability.value,
       };
 
       this.user.boost_autorotate = this.boost_autorotate.value;
@@ -131,7 +139,10 @@ export class SettingsV2BoostedContentComponent implements OnInit {
         this.initForm = null;
       }
     } catch (e) {
-      this.formSubmitted.emit({ formSubmitted: false, error: e });
+      this.formSubmitted.emit({
+        formSubmitted: false,
+        error: e,
+      });
     } finally {
       this.inProgress = false;
       this.detectChanges();
@@ -163,8 +174,8 @@ export class SettingsV2BoostedContentComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.settingsSubscription) {
-      this.settingsSubscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -182,6 +193,10 @@ export class SettingsV2BoostedContentComponent implements OnInit {
 
   get liquidity_spot_opt_out() {
     return this.form.get('liquidity_spot_opt_out');
+  }
+
+  get boost_partner_suitability() {
+    return this.form.get('boost_partner_suitability');
   }
 
   get plus(): boolean {

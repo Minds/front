@@ -7,10 +7,10 @@ import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 
 const SUM_AMOUNT = (arr, currencyType): number => {
-  return arr.reduce((acc, item) => {
+  return arr.reduce((acc: number, item) => {
     const amount =
       currencyType === 'usd' ? item.amount_usd : item.amount_tokens;
-    return acc + amount;
+    return acc + parseInt(amount);
   }, 0);
 };
 
@@ -46,6 +46,7 @@ export class WalletEarningsComponent {
 
   currencyType: 'usd' | 'tokens';
   expandedRow: string;
+  private _expandedRows: string[] = [''];
 
   constructor(
     private client: Client,
@@ -82,10 +83,10 @@ export class WalletEarningsComponent {
       this.route?.snapshot?.parent?.url[0]?.path === 'tokens'
         ? 'tokens'
         : 'usd';
-    this.loadTransactions();
+    this.loadTransactions(true);
   }
 
-  async loadTransactions(): Promise<void> {
+  async loadTransactions(isInit: boolean = false): Promise<void> {
     this.inProgress = true;
 
     try {
@@ -102,6 +103,12 @@ export class WalletEarningsComponent {
       );
       if (response.earnings) {
         this.earnings$.next(response.earnings);
+
+        if (isInit) {
+          this._expandedRows = response.earnings.map(value => {
+            return value.id;
+          });
+        }
       }
 
       if (response.payouts) {
@@ -126,6 +133,12 @@ export class WalletEarningsComponent {
         return 'Minds+ Content';
       case 'wire_referral':
         return 'Minds Pay Commissions';
+      case 'boost_partner':
+        return 'Boost Partners';
+      case 'affiliate':
+        return 'Affiliate';
+      case 'affiliate_referrer':
+        return 'Affiliate Referrer';
     }
 
     return id;
@@ -148,11 +161,13 @@ export class WalletEarningsComponent {
    * Toggle the expanded row
    */
   toggleRow(rowId: string): void {
-    if (this.expandedRow === rowId) {
-      this.expandedRow = null;
-      return;
-    }
-    this.expandedRow = rowId;
+    this._expandedRows.indexOf(rowId) === -1
+      ? this._expandedRows.push(rowId)
+      : delete this._expandedRows[this._expandedRows.indexOf(rowId)];
+  }
+
+  public shouldExpandRow(rowId: string): boolean {
+    return this._expandedRows.indexOf(rowId) !== -1;
   }
 
   /**

@@ -44,14 +44,19 @@
           >Content that is suitable if your kids or grandma saw it.</span
         >
       </div>
-      <input
-        class="m-boostAudienceSelector__radioButton"
-        type="radio"
-        [value]="BoostAudience.SAFE"
-        aria-describedby="safe-description"
-        formControlName="audience"
-        data-ref="boost-modal-v2-audience-selector-safe-radio-button"
-      />
+      <fieldset
+        [disabled]="isSafeOptionDisabled$ | async"
+        data-ref="boost-modal-v2-audience-selector-safe-field-set"
+      >
+        <input
+          class="m-boostAudienceSelector__radioButton"
+          type="radio"
+          [value]="BoostAudience.SAFE"
+          aria-describedby="safe-description"
+          formControlName="audience"
+          data-ref="boost-modal-v2-audience-selector-safe-radio-button"
+        />
+      </fieldset>
     </div>
     <div
       class="m-boostAudienceSelector__radioButtonRow"
@@ -76,14 +81,75 @@
           upsetting/controversial to a family-friendly audience.</span
         >
       </div>
-      <input
-        class="m-boostAudienceSelector__radioButton"
-        type="radio"
-        [value]="BoostAudience.CONTROVERSIAL"
-        aria-describedby="controversial-description"
-        formControlName="audience"
-        data-ref="boost-modal-v2-audience-selector-controversial-radio-button"
-      />
+      <fieldset>
+        <input
+          class="m-boostAudienceSelector__radioButton"
+          type="radio"
+          [value]="BoostAudience.CONTROVERSIAL"
+          aria-describedby="controversial-description"
+          formControlName="audience"
+          data-ref="boost-modal-v2-audience-selector-controversial-radio-button"
+        />
+      </fieldset>
+    </div>
+    <div
+      *ngIf="boostTargetExperiment.isActive()"
+      class="m-boostAudienceSelector__targetPlatformContainer"
+    >
+      <div
+        class="m-boostAudienceTargetPlatformContainer__header"
+        (click)="targetPlatformContainerOpen = !targetPlatformContainerOpen"
+        data-ref="boost-modal-v2-platform-selector-collapsible-container-toggle"
+      >
+        <span
+          i18n="@@BOOST_MODAL_V2_AUDIENCE__TARGET_PLATFORM_LABEL__PLACEMENTS"
+          >Placements</span
+        >
+        <m-icon
+          [iconId]="targetPlatformContainerOpen ? 'expand_less' : 'expand_more'"
+        ></m-icon>
+      </div>
+      <div class="m-boostAudienceTargetPlatformContainer__body">
+        <ng-container *ngIf="!targetPlatformContainerOpen">
+          <div
+            class="m-boostAudienceTargetPlatformContainer__summaryWrapper"
+            (click)="targetPlatformContainerOpen = !targetPlatformContainerOpen"
+          >
+            <span class="m-boostAudienceTargetPlatformContainer__label">{{
+              service.targetPlatformSummaryText$ | async
+            }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="targetPlatformContainerOpen">
+          <div class="m-boostAudienceTargetPlatformContainer__checkboxRow">
+            <span class="m-boostAudienceTargetPlatformContainer__label"
+              >Web</span
+            >
+            <m-formInput__checkbox
+              data-ref="boost-modal-v2-platform-selector-web"
+              formControlName="targetPlatformWeb"
+            ></m-formInput__checkbox>
+          </div>
+          <div class="m-boostAudienceTargetPlatformContainer__checkboxRow">
+            <span class="m-boostAudienceTargetPlatformContainer__label"
+              >Android</span
+            >
+            <m-formInput__checkbox
+              data-ref="boost-modal-v2-platform-selector-android"
+              formControlName="targetPlatformAndroid"
+            ></m-formInput__checkbox>
+          </div>
+          <div class="m-boostAudienceTargetPlatformContainer__checkboxRow">
+            <span class="m-boostAudienceTargetPlatformContainer__label"
+              >iOS</span
+            >
+            <m-formInput__checkbox
+              data-ref="boost-modal-v2-platform-selector-ios"
+              formControlName="targetPlatformIos"
+            ></m-formInput__checkbox>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </form>
 </div>

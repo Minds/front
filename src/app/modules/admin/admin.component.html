@@ -12,16 +12,8 @@
       </a>
       <a
         class="m-topbar--navigation--item"
-        routerLink="/admin/boosts-v1"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Boosts V1</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
         routerLink="/admin/boosts"
         routerLinkActive="m-topbar--navigation--item-active"
-        *ngIf="dynamicBoostExperiment.isActive()"
       >
         <span>Boosts</span>
       </a>
@@ -62,13 +54,6 @@
       </a>
       <a
         class="m-topbar--navigation--item"
-        routerLink="/admin/features"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Features</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
         routerLink="/admin/push-notifications"
         routerLinkActive="m-topbar--navigation--item-active"
       >
@@ -85,7 +70,6 @@
 <m-admin-withdrawals *ngIf="filter == 'withdrawals'"></m-admin-withdrawals>
 <minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
 <m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
-<m-admin--features *ngIf="filter == 'features'"></m-admin--features>
 <m-admin--pushNotifications
   *ngIf="filter == 'push-notifications'"
 ></m-admin--pushNotifications>

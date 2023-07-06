@@ -21,17 +21,15 @@ import { YoutubeMigrationMarketingComponent } from './youtube-migration/marketin
 import { TranslateModule } from '../translate/translate.module';
 
 const routes: Routes = [
-  { path: 'media/videos/:filter', redirectTo: '/newsfeed/global/top' },
+  { path: 'media/videos/:filter', redirectTo: 'newsfeed/global/top' },
   {
     path: 'media/videos',
-    redirectTo: '/newsfeed/global/top',
-    pathMatch: 'full',
+    redirectTo: 'newsfeed/global/top',
   },
-  { path: 'media/images/:filter', redirectTo: '/newsfeed/global/top' },
+  { path: 'media/images/:filter', redirectTo: 'newsfeed/global/top' },
   {
     path: 'media/images',
-    redirectTo: '/newsfeed/global/top',
-    pathMatch: 'full',
+    redirectTo: 'newsfeed/global/top',
   },
 
   { path: 'media/:container/:guid', redirectTo: 'newsfeed/:guid' },
@@ -41,12 +39,6 @@ const routes: Routes = [
     path: 'youtube-migration',
     component: YoutubeMigrationMarketingComponent,
     data: {
-      title: 'YouTube Migration',
-      description:
-        'Link your accounts so that every new upload to YouTube also posts to Minds. Import your full video library to protect your content from unfair censorship and demonetization.',
-      ogImage: '/assets/og-images/youtube-migration-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
       preventLayoutReset: true,
     },
   },

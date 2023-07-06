@@ -7,7 +7,11 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -44,8 +48,8 @@ export class SettingsV2ProPayoutsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.form = new FormGroup({
-      payout_method: new FormControl('usd'),
+    this.form = new UntypedFormGroup({
+      payout_method: new UntypedFormControl('usd'),
     });
 
     this.route.parent.params.subscribe(params => {

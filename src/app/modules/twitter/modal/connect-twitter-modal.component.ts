@@ -10,6 +10,12 @@ import { ConnectTwitterModalOpts } from './connect-twitter-modal.types';
   styleUrls: ['./connect-twitter-modal.component.ng.scss'],
 })
 export class ConnectTwitterModalComponent implements OnDestroy {
+  // context text - provides additional context in mobile widths
+  public contextText: string = '';
+
+  // title text - can be overridden via setModalData().
+  public titleText: string = $localize`:@@CONNECT_TWITTER_MODAL__HEADER:Connect to Twitter`;
+
   // body text - can be overridden via setModalData().
   public bodyText: string = $localize`:@@CONNECT_TWITTER_MODAL__CONNECT_YOUR_ACCOUNT_WITH_TWITTER:Connect your Minds account with Twitter.`;
 
@@ -24,6 +30,12 @@ export class ConnectTwitterModalComponent implements OnDestroy {
    * @returns { void }
    */
   public setModalData(opts: ConnectTwitterModalOpts): void {
+    if (opts.contextText) {
+      this.contextText = opts.contextText;
+    }
+    if (opts.titleText) {
+      this.titleText = opts.titleText;
+    }
     if (opts.bodyText) {
       this.bodyText = opts.bodyText;
     }

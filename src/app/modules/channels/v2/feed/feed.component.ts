@@ -15,10 +15,7 @@ import {
 import { FeedService } from './feed.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelsV2Service } from '../channels-v2.service';
-import {
-  FeedFilterDateRange,
-  FeedFilterType,
-} from '../../../../common/components/feed-filter/feed-filter.component';
+import { FeedFilterType } from '../../../../common/components/feed-filter/feed-filter.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
 import { Observable, of, Subscription, BehaviorSubject } from 'rxjs';
@@ -27,6 +24,9 @@ import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { catchError, take } from 'rxjs/operators';
+import { AnalyticsService } from '../../../../services/analytics';
+import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
+import { ComposerService } from '../../../composer/services/composer.service';
 
 /**
  * Container for channel feed, including filters and composer (if user is channel owner)
@@ -36,7 +36,7 @@ import { catchError, take } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
-  providers: [FeedService, FeedsService],
+  providers: [FeedService, FeedsService, ComposerService],
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
@@ -88,7 +88,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   feed: Object[] = [];
 
-  readonly channelRecommendationTitle = $localize`:@@M__CHANNEL_RECOMMENDATION__CONSIDER_SUBSCRIBING_TO:Consider subscribing to`;
+  readonly publisherRecommendationsTitle = $localize`:@@M__CHANNEL_RECOMMENDATION__CONSIDER_SUBSCRIBING_TO:Consider subscribing to`;
 
   /**
    * Constructor
@@ -107,6 +107,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ComposerModalService,
     private injector: Injector,
+    private analyticsService: AnalyticsService,
+    private clientMeta: ClientMetaDirective,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -145,9 +147,13 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
         this.feed = feed;
       }),
       this.feedsUpdate.postEmitter.subscribe(newPost => {
+        const currentChannelGuid: string = this.service.guid$.getValue();
+
         if (
-          this.feedService.guid$.getValue() ===
-          this.session.getLoggedInUser().guid
+          // if the current channel is owned by the logged in user.
+          currentChannelGuid === this.session.getLoggedInUser().guid &&
+          // if new activity is a post to the users channel.
+          currentChannelGuid === newPost?.container_guid
         ) {
           this.prepend(newPost);
         }
@@ -260,7 +266,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   }
 
   /**
-   * Determines whether the channel recommendations should be shown
+   * Determines whether the publisher recommendations should be shown
    * @returns { Observable<boolean> }
    */
   get channelRecommendationVisible$(): Observable<boolean> {
@@ -273,5 +279,19 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     }
 
     return this.shouldShowChannelRecommendation$;
+  }
+
+  /**
+   * Whether a boost should be shown in a given feed position.
+   * @param { number } position - index / position in feed.
+   * @returns { boolean } - true if a boost should be shown in given feed position
+   */
+  public shouldShowBoostInPosition(position: number): boolean {
+    return (
+      this.service.channel$.getValue()?.guid !==
+        this.session.getLoggedInUser()?.guid &&
+      // Displays in the 2nd slot and then every 6 posts
+      ((position > 4 && position % 5 === 0) || position === 0)
+    );
   }
 }

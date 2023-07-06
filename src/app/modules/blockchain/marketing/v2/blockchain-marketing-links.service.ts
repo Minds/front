@@ -3,10 +3,7 @@ import { Inject, Injectable, Injector } from '@angular/core';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { OnchainTransferModalService } from '../../../wallet/components/components/onchain-transfer/onchain-transfer.service';
-import { EarnModalService } from '../../earn/earn-modal.service';
-import { BuyTokensModalService } from '../../token-purchase/v2/buy-tokens-modal.service';
-import { UniswapModalService } from '../../token-purchase/v2/uniswap/uniswap-modal.service';
-import { Web3WalletService } from '../../web3-wallet.service';
+import { UniswapModalService } from '../../token-purchase/uniswap/uniswap-modal.service';
 
 /**
  * Manages the opening of various modals and links on blockchain marketing pages.
@@ -19,51 +16,12 @@ export class BlockchainMarketingLinksService {
   constructor(
     private composerModal: ComposerModalService,
     private injector: Injector,
-    private web3WalletService: Web3WalletService,
-    private buyTokensModalService: BuyTokensModalService,
-    private earnModalService: EarnModalService,
     private uniswapModal: UniswapModalService,
     private onchainTransferModal: OnchainTransferModalService,
     @Inject(DOCUMENT) private document: Document,
     configs: ConfigsService
   ) {
     this.siteUrl = configs.get('site_url');
-  }
-
-  /**
-   * Open buy tokens modal
-   * @returns { Promise<BlockchainMarketingLinksService> }
-   */
-  public async openBuyTokensModal(): Promise<BlockchainMarketingLinksService> {
-    if (!this.web3WalletService.checkDeviceIsSupported()) {
-      return this;
-    }
-    try {
-      await this.web3WalletService.getCurrentWallet(true);
-      await this.buyTokensModalService.open();
-    } catch (e) {
-      if (e === 'Dismissed modal') {
-        return this; // do nothing, intentionally thrown.
-      }
-      console.error(e); // do nothing
-    }
-    return this;
-  }
-
-  /**
-   * Open earn modal.
-   * @returns { Promise<BlockchainMarketingLinksService> }
-   */
-  public async openEarnModal(): Promise<BlockchainMarketingLinksService> {
-    try {
-      await this.earnModalService.open();
-    } catch (e) {
-      if (e === 'Dismissed modal') {
-        return this; // do nothing, intentionally thrown.
-      }
-      console.error(e);
-    }
-    return this;
   }
 
   /**
@@ -113,11 +71,11 @@ export class BlockchainMarketingLinksService {
   }
 
   /**
-   * Opens navigate to referrals modal.
+   * Opens navigate to affiliates modal.
    * @returns { BlockchainMarketingLinksService } - Chainable.
    */
-  public navigateToReferrals(): BlockchainMarketingLinksService {
-    this.openInNewWindow(`${this.siteUrl}settings/other/referrals`);
+  public navigateToAffiliates(): BlockchainMarketingLinksService {
+    this.openInNewWindow(`${this.siteUrl}settings/affiliates-program`);
     return this;
   }
 

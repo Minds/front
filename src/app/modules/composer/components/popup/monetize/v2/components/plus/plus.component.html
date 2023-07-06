@@ -15,9 +15,25 @@
         (ngModelChange)="onTermsChange($event)"
       >
         <span i18n="@@COMPOSER__PLUS__TERMS__CHECKBOX"
-          >I agree to the <a routerLink="/p/terms" target="_blank">Terms</a>
+          >I agree to the
+          <a routerLink="/p/monetization-terms" target="_blank"
+            >Minds monetization terms</a
+          >
           and have the rights to monetize this content.
         </span>
+        <ul>
+          <li i18n="@@COMPOSER__PLUS__TERMS__IS_ORIGINAL_CONTENT">
+            This content is my original content
+          </li>
+          <li i18n="@@COMPOSER__PLUS__TERMS__EXCLUSIVE_TO_MINDS_PLUS">
+            This content is exclusive to Minds+
+          </li>
+        </ul>
+        <span i18n="@@COMPOSER__PLUS__TERMS__VIOLATION_POLICY"
+          >I understand that violation of these requirements may result in
+          losing the ability to publish Premium Content for Minds+
+          members.</span
+        >
       </m-formInput__checkbox>
     </div>
     <div class="m-form__field--textboxToggle" hidden>
