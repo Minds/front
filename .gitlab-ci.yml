@@ -440,9 +440,9 @@ review:stop:
     - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
     - docker push $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
     # Update EKS role
-    - aws eks --region us-east-1 update-kubeconfig --name $AWS_EKS_CLUSTER_NAME --role-arn=$AWS_IAM_ROLE_ARN
-    # Update the image tags
-    - kubectl rollout restart deployment minds-front-$IMAGE_LABEL
+#    - aws eks --region us-east-1 update-kubeconfig --name $AWS_EKS_CLUSTER_NAME --role-arn=$AWS_IAM_ROLE_ARN
+#    # Update the image tags
+#    - kubectl rollout restart deployment minds-front-$IMAGE_LABEL
     # OKE Deploy
     - *oci_prepare
     - kubectl rollout restart deployment minds-front-$IMAGE_LABEL

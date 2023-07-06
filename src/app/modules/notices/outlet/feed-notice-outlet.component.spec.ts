@@ -18,7 +18,6 @@ describe('FeedNoticeOutletComponent', () => {
         declarations: [
           FeedNoticeOutletComponent,
           MockComponent({ selector: 'm-feedNotice--verifyEmail' }),
-          MockComponent({ selector: 'm-feedNotice--buildYourAlgorithm' }),
           MockComponent({ selector: 'm-feedNotice--enablePushNotifications' }),
           MockComponent({ selector: 'm-feedNotice--updateTags' }),
         ],

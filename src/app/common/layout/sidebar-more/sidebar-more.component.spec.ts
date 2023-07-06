@@ -8,7 +8,6 @@ import { ThemeService } from '../../services/theme.service';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { SidebarMoreComponent } from './sidebar-more.component';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
-import { SidebarV2ReorgExperimentService } from '../../../modules/experiments/sub-services/front-5924-sidebar-v2-reorg.service';
 import { ConfigsService } from '../../services/configs.service';
 import userMock from '../../../mocks/responses/user.mock';
 
@@ -51,10 +50,6 @@ describe('SidebarMoreComponent', () => {
           ]),
         },
         {
-          provide: SidebarV2ReorgExperimentService,
-          useValue: MockService(SidebarV2ReorgExperimentService),
-        },
-        {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
@@ -68,10 +63,6 @@ describe('SidebarMoreComponent', () => {
 
     (component as any).router.navigateByUrl.calls.reset();
     (component as any).session.getLoggedInUser.and.returnValue(userMock);
-    (component as any).sidebarV2ReorgExperiment.isReorgVariationActive.and.returnValue(
-      true
-    );
-    component.showReorgVariation = true;
 
     fixture.detectChanges();
   });
@@ -99,19 +90,5 @@ describe('SidebarMoreComponent', () => {
     expect((component as any).router.navigateByUrl).toHaveBeenCalledWith(
       '/info/blog/how-to-earn-on-minds-1486070032210333697'
     );
-  });
-
-  it('should determine whether reorg variation should be shown', () => {
-    (component as any).sidebarV2ReorgExperiment.isReorgVariationActive.and.returnValue(
-      true
-    );
-    expect(component.shouldShowReorgVariation()).toBeTrue();
-  });
-
-  it('should determine whether reorg variation should NOT be shown', () => {
-    (component as any).sidebarV2ReorgExperiment.isReorgVariationActive.and.returnValue(
-      false
-    );
-    expect(component.shouldShowReorgVariation()).toBeFalse();
   });
 });

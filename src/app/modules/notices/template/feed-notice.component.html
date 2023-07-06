@@ -4,9 +4,8 @@
 <div class="m-feedNotice__center">
   <ng-content></ng-content>
 </div>
-<div class="m-feedNotice__right">
+<div class="m-feedNotice__right" *ngIf="dismissible">
   <i
-    *ngIf="dismissible"
     class="material-icons m-feedNotice__closeButton"
     (click)="dismissClick.emit(true)"
     [attr.data-ref]="'feed-notice-dismiss-' + dataRefId"

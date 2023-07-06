@@ -1,71 +1,91 @@
 @import 'defaults.scss';
 :host {
+  $sidePadding: $spacing7;
+  $sidePadding--mobile: $spacing5;
+
   .m-pageLayout__pane--main {
     width: 100%;
   }
 
-  .m-groupsMemberships {
-    margin: 30px;
-    @media screen and (max-width: $max-mobile) {
-      margin: 24px;
-    }
-  }
   h2 {
-    font-size: 32px;
-    line-height: 43px;
+    padding: $sidePadding;
     margin: 0;
+    @include heading1Medium;
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
+    @media screen and (max-width: $max-mobile) {
+      @include heading3Bold;
+      padding: $sidePadding--mobile;
+    }
   }
-  .m-groupsMemberships__header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    flex-direction: column;
+
+  ::ng-deep m-findGroupsButtons {
+    &.m-groupsMembershipsHeader__findGroupsButtons {
+      padding-left: $sidePadding;
+      padding-right: $sidePadding;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $sidePadding--mobile;
+        padding-right: $sidePadding--mobile;
+      }
+    }
+  }
+
+  ::ng-deep m-feedNotice--noGroups {
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+    padding: $sidePadding;
 
     @media screen and (max-width: $max-mobile) {
-      flex-direction: row;
-      align-items: center;
+      padding: $sidePadding--mobile;
+    }
+
+    m-feedNotice {
+      padding: 0;
     }
   }
 
-  @media screen and (max-width: $max-mobile) {
-    .m-groupsMemberships__buttons {
-      display: none;
-    }
-    .m-groupsMemberships__menu {
+  ::ng-deep m-publisherRecommendations {
+    &.m-groupsMemberships__publisherRecommendations {
       display: block;
-    }
-  }
-  @media screen and (min-width: $max-mobile + 1) {
-    .m-groupsMemberships__buttons {
-      display: block;
-      margin: 20px 0 0 0;
-      ::ng-deep m-button {
-        margin-right: 10px;
+
+      article {
+        padding: $spacing4 $sidePadding $sidePadding;
+
+        @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary);
+        }
+
+        @media screen and (max-width: $max-mobile) {
+          padding: $spacing4 $sidePadding--mobile 0;
+          @include m-theme() {
+            border-top: 5px solid themed($m-borderColor--primary);
+          }
+        }
       }
     }
-    .m-groupsMemberships__menu {
-      display: none;
-    }
   }
 
-  .m-groupsMemberships__menu {
-    position: relative;
-    i {
-      font-size: 30px;
+  .m-groupsMemberships__list {
+    padding: $sidePadding;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding: $sidePadding--mobile;
       @include m-theme() {
-        color: themed($m-textColor--secondary);
+        border-top: 5px solid themed($m-borderColor--primary);
       }
     }
-  }
+    ::ng-deep .m-publisherCard {
+      display: block;
+      margin-bottom: $spacing4;
 
-  ::ng-deep .m-publisherCard {
-    margin-bottom: 15px;
-
-    .m-publisherCard__subs span {
-      padding-right: 2px !important;
+      .m-publisherCard__subs span {
+        padding-right: 2px !important;
+      }
     }
   }
 }

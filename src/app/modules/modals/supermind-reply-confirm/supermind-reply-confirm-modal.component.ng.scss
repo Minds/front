@@ -7,7 +7,7 @@
   @include z-index(body);
   @include m-theme() {
     color: themed($m-textColor--primary);
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-supermindReplyConfirmationModal__title {
@@ -16,7 +16,7 @@
   }
 
   .m-supermindReplyConfirmationModal__text {
-    @include body2Regular;
+    @include body1Regular;
     margin-bottom: $spacing6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeSpeed;

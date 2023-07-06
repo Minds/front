@@ -13,7 +13,6 @@ import { MindsUser } from '../../../interfaces/entities';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
 import { Router } from '@angular/router';
-import { SidebarV2ReorgExperimentService } from '../../../modules/experiments/sub-services/front-5924-sidebar-v2-reorg.service';
 import { ConfigsService } from '../../services/configs.service';
 
 @Component({
@@ -63,15 +62,12 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     private sidebarNavigationService: SidebarNavigationService,
     private helpdeskRedirectService: HelpdeskRedirectService,
     private router: Router,
-    private sidebarV2ReorgExperiment: SidebarV2ReorgExperimentService,
     private configs: ConfigsService
   ) {
     this.chatUrl = this.configs.get('matrix')?.chat_url;
   }
 
   ngOnInit(): void {
-    this.showReorgVariation = this.shouldShowReorgVariation();
-
     this.session.isLoggedIn(() => this.detectChanges());
 
     this.themeSubscription = this.themeService.isDark$.subscribe(
@@ -152,13 +148,5 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
-  }
-
-  /**
-   * Whether menu item reorganisation experiment is active.
-   * @returns { boolean } true if menu item reorganisation experiment is active.
-   */
-  public shouldShowReorgVariation(): boolean {
-    return this.sidebarV2ReorgExperiment.isReorgVariationActive();
   }
 }
