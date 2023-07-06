@@ -242,12 +242,20 @@ export class NewsfeedSingleComponent {
       description = activity.blurb || '';
     }
 
+    if (description) {
+      description += `. `;
+    }
+
     // Make a generic description intro for images
     // that don't have a description already
     const isImage = activity.custom_type && activity.custom_type === 'batch';
 
-    if (isImage && !description.length) {
-      description = `Image from @${activity.ownerObj.username}.`;
+    if (isImage) {
+      if (!description) {
+        description = `Image from @${activity.ownerObj.username}.`;
+      }
+    } else {
+      description += `Subscribe to @${activity.ownerObj.username} on Minds`;
     }
 
     // For images with AI captions, add the caption text to the description
