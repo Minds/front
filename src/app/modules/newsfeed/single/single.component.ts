@@ -25,6 +25,7 @@ import { JsonLdService } from '../../../common/services/jsonld.service';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
+import getMetaAutoCaption from '../../../helpers/meta-auto-caption';
 
 /**
  * Base component to display an activity on a standalone page
@@ -233,15 +234,39 @@ export class NewsfeedSingleComponent {
       `@${activity.ownerObj.username}'s post on Minds`;
 
     let description: string;
+
+    // Cut off the end of long titles and put them in the beginning of the description
     if (title.length > 60) {
       description = `...${title.substr(57)}`;
     } else {
       description = activity.blurb || '';
     }
-    if (description) {
-      description += `. `;
+
+    // Make a generic description intro for images
+    // that don't have a description already
+    const isImage = activity.custom_type && activity.custom_type === 'batch';
+
+    if (isImage && !description.length) {
+      description = `Image from @${activity.ownerObj.username}.`;
     }
-    description += `Subscribe to @${activity.ownerObj.username} on Minds`;
+
+    // For images with AI captions, add the caption text to the description
+    let caption = '';
+    if (isImage && activity.custom_data.length > 1) {
+      let multiCaptionArray = [];
+      for (let i = 0; i < activity.custom_data.length; i++) {
+        multiCaptionArray.push(getMetaAutoCaption(activity, i));
+      }
+      caption = multiCaptionArray.join('; ');
+    } else if (isImage) {
+      caption = getMetaAutoCaption(activity);
+    }
+
+    if (caption) {
+      caption = ` (AI caption: ${caption})`;
+      description = description.trim();
+      description += caption;
+    }
 
     this.metaService
       .setTitle(title)
@@ -256,6 +281,12 @@ export class NewsfeedSingleComponent {
       .setRobots(
         activity['thumbs:up:count'] >= MIN_METRIC_FOR_ROBOTS ? 'all' : 'noindex'
       );
+
+    const author = activity?.ownerObj?.username;
+    if (author) {
+      this.metaService.setAuthor(author);
+      this.metaService.setOgAuthor(author);
+    }
 
     if (activity.nsfw.length) {
       this.metaService.setNsfw(true);
