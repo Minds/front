@@ -1,0 +1,80 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%;
+  max-height: 100%;
+
+  .m-onboardingV5__stepContentContainer {
+    .m-onboardingV5TagSelector__tagsContainer {
+      display: flex;
+      flex-flow: row wrap;
+      gap: $spacing4 $spacing2;
+
+      .m-onboardingV5TagSelector__tags {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        box-sizing: border-box;
+        padding: $spacing3 $spacing5;
+        cursor: pointer;
+        border-radius: 100px;
+
+        @include body2Medium;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
+        }
+
+        &.m-onboardingV5TagSelector__tags--selected {
+          @include m-theme() {
+            background: themed($m-action);
+            border-color: themed($m-action);
+            color: themed($m-bgColor--primary);
+          }
+        }
+
+        &:hover {
+          @include m-theme() {
+            background: $yellow-300;
+            border-color: $yellow-300;
+            color: themed($m-bgColor--primary);
+          }
+        }
+      }
+    }
+
+    .m-onboardingV5TagSelector__customTagInputContainer {
+      margin-top: $spacing8;
+
+      .m-onboardingV5TagSelector__customTagInputLabel {
+        @include body1Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      .m-onboardingV5TagSelector__customTagInput {
+        width: 100%;
+        border-radius: 3px;
+        height: 44px;
+        box-sizing: border-box;
+        padding: $spacing2 $spacing4;
+        margin-top: $spacing1;
+        margin-bottom: $spacing1;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+          background-color: themed($m-bgColor--primary);
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}
