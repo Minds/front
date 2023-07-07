@@ -12,7 +12,8 @@ class RegisterPage {
   private readonly password2Selector: string = '#password2';
   private readonly acceptTosSelector: string =
     '[data-ref=minds-accept-tos-input] .m-formInputCheckbox__custom';
-  private readonly selectButtonSelector: string = '[type="submit"]';
+  private readonly selectButtonSelector: string =
+    'm-registerForm [type="submit"]';
 
   /**
    * Navigate to page by URL.
@@ -26,8 +27,19 @@ class RegisterPage {
    * Click join now button.
    * @return { void }
    */
-  public clickJoinNow() {
-    I.click(this.selectButtonSelector);
+  public clickJoinNow(): void {
+    I.clickAndWait(locate(this.selectButtonSelector), 'graphql', 200);
+  }
+
+  /**
+   * Setup cookies to bypass Captcha and rate limit
+   * on registration.
+   * @returns { void }
+   */
+  public setupRegistrationBypassCookies(): void {
+    I.setCaptchaBypassCookie();
+    I.setRateLimitBypassCookie();
+    I.refreshPage();
   }
 
   /**
@@ -38,10 +50,6 @@ class RegisterPage {
    * @return { void }
    */
   public fillForm(username: string, password: string, email: string): void {
-    I.setCaptchaBypassCookie();
-    I.setRateLimitBypassCookie();
-    I.refreshPage();
-
     this.inputUsername(username);
     this.inputEmail(email);
     this.inputPassword(password);
