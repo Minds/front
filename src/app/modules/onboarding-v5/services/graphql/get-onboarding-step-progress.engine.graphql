@@ -1,0 +1,8 @@
+query GetOnboardingStepProgress {
+  onboardingStepProgress {
+    userGuid
+    stepKey
+    stepType
+    completedAt
+  }
+}
