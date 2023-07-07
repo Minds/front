@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ToasterService } from '../../../common/services/toaster.service';
-import { BoostModalData, BoostModalPanel } from './boost-modal-v2.types';
+import {
+  BoostModalData,
+  BoostModalPanel,
+  BoostSubject,
+} from './boost-modal-v2.types';
 import { BoostModalV2Service } from './services/boost-modal-v2.service';
 
 /**
@@ -22,7 +26,7 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
     .activePanel$;
 
   // subscriptions.
-  private saveIntentSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private service: BoostModalV2Service,
@@ -30,15 +34,22 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.saveIntentSubscription = this.service.callSaveIntent$.subscribe(
-      onSaveIntent => {
+    this.subscriptions.push(
+      this.service.callSaveIntent$.subscribe(onSaveIntent => {
         this.onSaveIntent();
-      }
+      }),
+      this.service.firstPanel$.subscribe((firstPanel: BoostModalPanel) => {
+        if (firstPanel === BoostModalPanel.GOAL) {
+          this.activePanel$.next(BoostModalPanel.GOAL);
+        }
+      })
     );
   }
 
   ngOnDestroy(): void {
-    this.saveIntentSubscription?.unsubscribe();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -59,6 +70,7 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
     onDismissIntent,
     onSaveIntent,
     entity,
+    disabledSafeAudience,
   }: BoostModalData) {
     this.onDismissIntent = onDismissIntent ?? (() => {});
     this.onSaveIntent = onSaveIntent ?? (() => {});
@@ -68,6 +80,10 @@ export class BoostModalV2Component implements OnInit, OnDestroy {
       this.toast.error('NSFW content cannot be boosted.');
       this.onDismissIntent();
       return;
+    }
+
+    if (disabledSafeAudience) {
+      this.service.disabledSafeAudience$.next(disabledSafeAudience);
     }
 
     this.service.entity$.next(entity ?? null);

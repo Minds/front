@@ -2,34 +2,7 @@
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 <div class="m-walletBalance--cash" *ngIf="init && cashWallet">
-  <m-addBankPrompt *ngIf="cashOnboardV2"></m-addBankPrompt>
-
-  <div
-    class="m-walletBalance---cash__onboardingNotice"
-    *ngIf="
-      !cashOnboardV2 &&
-      childRoutePath !== 'settings' &&
-      (!hasAccount || !hasBank)
-    "
-  >
-    <p>
-      <a routerLink="settings" i18n="@@WALLET_V2__BALANCE_CASH__ADD_BANK_INFO"
-        >Add your bank information</a
-      >
-    </p>
-    <p>
-      <ng-container
-        *ngIf="!hasAccount"
-        i18n="@@WALLET_V2__BALANCE_CASH__START_RECEIVING_CASH_INFO"
-        >Start receiving cash payouts by adding your bank details.
-      </ng-container>
-      <ng-container
-        *ngIf="hasAccount"
-        i18n="@@WALLET_V2__BALANCE_CASH__FINISH_ADDING_DETAILS_INFO"
-        >Finish adding your bank details to start receiving cash payouts.
-      </ng-container>
-    </p>
-  </div>
+  <m-addBankPrompt></m-addBankPrompt>
 
   <div class="m-walletBalance--cash__colContainer">
     <!-- -------------------------------------------- -->
@@ -58,46 +31,6 @@
           >.{{ proEarnings.frac }}</span
         >
       </div>
-    </div>
-
-    <!-- -------------------------------------------- -->
-    <!--- PENDING BALANCE ------------------------------>
-    <!-- -------------------------------------------- -->
-    <div class="m-walletBalance--cash__col">
-      <div
-        class="m-walletBalance--cash__colTitle"
-        i18n="@@WALLET_V2__BALANCE_CASH__PENDING_BALANCE_INFO_JULY_2020"
-      >
-        Pending Transfers
-        <m-tooltip icon="help">
-          This is the balance you've been paid out that will be transferred to
-          your bank. Transfers may take up to 7 days.
-        </m-tooltip>
-      </div>
-      <div class="m-walletBalance--cash__colValWrapper" *ngIf="!hasAccount">
-        <span class="m-walletBalance--cash__colVal--int">$0</span>
-      </div>
-      <ng-container *ngIf="hasAccount">
-        <div class="m-walletBalance--cash__colValWrapper">
-          <span class="m-walletBalance--cash__colVal--int">{{
-            pendingBalance.int | currency: currency | slice: 0:-3
-          }}</span
-          ><span
-            class="m-walletBalance--cash__colVal--frac"
-            *ngIf="pendingBalance.frac"
-            >.{{ pendingBalance.frac }}</span
-          >
-        </div>
-        <!-- -------------------------------------------- -->
-        <!--- PAYOUT DATE----------------------------------->
-        <!-- -------------------------------------------- -->
-        <div *ngIf="hasBank" class="m-walletBalance--cash__colSubtitle">
-          <p i18n="@@WALLET_V2__BALANCE_CASH__ESTIMATED_PAYOUT">
-            Estimated
-          </p>
-          <p>{{ nextPayoutDate }}</p>
-        </div>
-      </ng-container>
     </div>
 
     <!-- -------------------------------------------- -->

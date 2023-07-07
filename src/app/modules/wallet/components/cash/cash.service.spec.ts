@@ -22,22 +22,16 @@ describe('CashWalletService', () => {
     this.post = jasmine.createSpy('post').and.returnValue(of(mockPostResponse));
   })();
 
-  let experimentsService = new (function() {
-    this.hasVariation = jasmine.createSpy('hasVariation').and.returnValue(true);
-  })();
-
   beforeEach(() => {
-    service = new CashWalletService(apiMock, experimentsService);
+    service = new CashWalletService(apiMock);
   });
 
   afterEach(() => {
     (service as any).api.get.calls.reset();
     (service as any).api.post.calls.reset();
-    (service as any).experimentsService.hasVariation.calls.reset();
 
     (service as any).api.get.and.returnValue(of(mockGetResponse));
     (service as any).api.post.and.returnValue(of(mockPostResponse));
-    (service as any).experimentsService.hasVariation.and.returnValue(true);
   });
 
   it('should be created', () => {
@@ -89,15 +83,5 @@ describe('CashWalletService', () => {
     expect((service as any).api.post).toHaveBeenCalledWith(
       'api/v3/payments/stripe/connect/account'
     );
-  });
-
-  it('should check if experiment is active', async () => {
-    (service as any).experimentsService.hasVariation.and.returnValue(true);
-    expect(service.isExperimentActive()).toBeTrue();
-  });
-
-  it('should check if experiment is NOT active', async () => {
-    (service as any).experimentsService.hasVariation.and.returnValue(false);
-    expect(service.isExperimentActive()).toBeFalse();
   });
 });

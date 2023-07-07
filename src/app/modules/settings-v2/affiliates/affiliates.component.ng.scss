@@ -1,0 +1,9 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  max-width: 620px;
+  > * {
+    display: block;
+  }
+}

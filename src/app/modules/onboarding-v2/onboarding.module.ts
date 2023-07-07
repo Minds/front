@@ -23,7 +23,6 @@ import { Session } from '../../services/session';
 import { PhoneVerificationComponent } from './steps/info/phone-input/input.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AvatarStepComponent } from './steps/avatar/avatar.component';
-import { FeaturesService } from '../../services/features.service';
 import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
@@ -95,7 +94,7 @@ const routes: Routes = [
   providers: [
     {
       provide: OnboardingV2Service,
-      deps: [FeaturesService, Client, Session],
+      deps: [Client, Session],
       useFactory: OnboardingV2Service._,
     },
   ],

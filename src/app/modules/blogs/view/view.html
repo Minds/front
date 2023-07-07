@@ -172,12 +172,12 @@
     style="max-width: 740px; padding-bottom: 50px"
     *ngIf="showComments && blog.guid && !blog.paywall"
   >
-    <m-comments__entityOutlet
+    <m-comments__entityOutletV2
       [entity]="blog"
       [canDelete]="canDelete"
       [showOnlyPoster]="false"
     >
-    </m-comments__entityOutlet>
+    </m-comments__entityOutletV2>
   </div>
 </ng-container>
 

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { ChannelEditService } from './edit.service';
 
@@ -27,12 +26,8 @@ export class ChannelEditComponent {
   /**
    * Constructor
    * @param service
-   * @param features
    */
-  constructor(
-    public service: ChannelEditService,
-    protected features: FeaturesService
-  ) {}
+  constructor(public service: ChannelEditService) {}
 
   /**
    * Modal options

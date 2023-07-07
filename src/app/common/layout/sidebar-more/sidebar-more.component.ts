@@ -9,16 +9,11 @@ import {
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
 import { Subscription } from 'rxjs';
-import { FeaturesService } from '../../../services/features.service';
 import { MindsUser } from '../../../interfaces/entities';
-import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
-import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
-import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
 import { Router } from '@angular/router';
-import { SupermindExperimentService } from '../../../modules/experiments/sub-services/supermind-experiment.service';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'm-sidebarMore',
@@ -41,8 +36,8 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Privacy', routerLink: ['/p/privacy'] },
     {
-      label: 'Referrals',
-      routerLink: ['/settings/other/referrals'],
+      label: 'Affiliates',
+      routerLink: ['/settings/affiliates-program'],
     },
     { label: 'Mobile App', routerLink: ['/mobile'] },
     { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
@@ -55,20 +50,22 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
   ];
   maxFooterLinks = 4;
 
+  /** Whether experiment controlling reorganization of menu items variation is active */
+  public showReorgVariation: boolean = false;
+
+  public readonly chatUrl: string;
+
   constructor(
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
-    protected featuresService: FeaturesService,
-    private web3WalletService: Web3WalletService,
-    private buyTokensModalService: BuyTokensModalService,
-    private earnModalService: EarnModalService,
-    private boostModalService: BoostModalLazyService,
     private sidebarNavigationService: SidebarNavigationService,
     private helpdeskRedirectService: HelpdeskRedirectService,
-    private supermindExperiment: SupermindExperimentService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private configs: ConfigsService
+  ) {
+    this.chatUrl = this.configs.get('matrix')?.chat_url;
+  }
 
   ngOnInit(): void {
     this.session.isLoggedIn(() => this.detectChanges());
@@ -77,10 +74,10 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
       isDark => (this.isDark = isDark)
     );
 
-    // For logged out users, remove referrals link
+    // For logged out users, remove affiliates link
     if (!this.getCurrentUser()) {
       this.footerLinks = this.footerLinks.filter(link => {
-        return link.label !== 'Referrals';
+        return link.label !== 'Affiliates';
       });
     }
   }
@@ -101,20 +98,22 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     return this.helpdeskRedirectService.getUrl();
   }
 
-  async buyTokens(): Promise<void> {
-    if (!this.web3WalletService.checkDeviceIsSupported()) {
-      return null;
-    }
-    await this.web3WalletService.getCurrentWallet(true);
-    await this.buyTokensModalService.open();
+  /**
+   * Called on earn modal click - navigates to earn blog.
+   * @returns { void }
+   */
+  public onEarnClick(): void {
+    this.router.navigateByUrl(
+      '/info/blog/how-to-earn-on-minds-1486070032210333697'
+    );
   }
 
-  async openEarnModal() {
-    await this.earnModalService.open();
-  }
-
-  async openBoostModal() {
-    await this.boostModalService.open(this.session.getLoggedInUser());
+  /**
+   * Open Boost console.
+   * @returns { void }
+   */
+  public openBoostConsole(): void {
+    this.router.navigate(['/boost/boost-console']);
   }
 
   /**
@@ -123,14 +122,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
    */
   public openSupermindConsole(): void {
     this.router.navigate(['/supermind/inbox']);
-  }
-
-  /**
-   * Whether Supermind option should be shown.
-   * @return { boolean }
-   */
-  public shouldShowSupermindOption(): boolean {
-    return this.supermindExperiment.isActive();
   }
 
   detectChanges(): void {

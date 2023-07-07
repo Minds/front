@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
 import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.service';
 import { SiteService } from '../../../common/services/site.service';
@@ -10,6 +9,9 @@ import { Storage } from '../../../services/storage';
 import { MessengerService } from '../../messenger/messenger.service';
 import { isPlatformBrowser } from '@angular/common';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import { TopbarAlertService } from '../../../common/components/topbar-alert/topbar-alert.service';
+import { Observable } from 'rxjs';
+import { ChatwootExperimentService } from '../../experiments/sub-services/chatwoot-experiment.service';
 
 @Component({
   selector: 'm-page',
@@ -21,9 +23,15 @@ export class PageComponent implements OnInit {
 
   isSidebarVisible: boolean = true;
 
+  /** Whether sidebar v2 should be shown */
+  public showSidebarV2: boolean = false;
+
+  /** Whether topbar alert should be shown. */
+  protected readonly shouldShowTopbarAlert$: Observable<boolean> = this
+    .topbarAlertService.shouldShow$;
+
   constructor(
     public session: Session,
-    public featuresService: FeaturesService,
     private navigationService: SidebarNavigationService,
     private onboardingService: ChannelOnboardingService,
     private site: SiteService,
@@ -31,6 +39,8 @@ export class PageComponent implements OnInit {
     private router: Router,
     private storage: Storage,
     private messengerService: MessengerService,
+    private topbarAlertService: TopbarAlertService,
+    private chatwootExperiment: ChatwootExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -68,5 +78,13 @@ export class PageComponent implements OnInit {
       return false;
     }
     return isMobileOrTablet();
+  }
+
+  /**
+   * Whether chatwoot experiment is active.
+   * @returns { boolean }
+   */
+  public isChatwootExperimentActive(): boolean {
+    return this.chatwootExperiment.isActive();
   }
 }

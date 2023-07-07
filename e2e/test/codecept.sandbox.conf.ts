@@ -28,9 +28,11 @@ export const config: CustomMainConfig = {
       keepCookies: true,
       keepBrowserState: true,
       waitForNavigation: 'domcontentloaded',
-      timeout: 10000,
-      waitForTimeout: 10000,
+      timeout: 30000,
+      waitForTimeout: 30000,
+      getPageTimeout: 30000,
       trace: true,
+      userAgent: 'mindsbot',
     },
     CookieHelper: {
       require: './helpers/cookie-helper.ts',
@@ -46,6 +48,7 @@ export const config: CustomMainConfig = {
     channelPage: './pages/channelPage.ts',
     commonPage: './pages/commonPage.ts',
     devtoolsPage: './pages/devtoolsPage.ts',
+    groupsMembershipPage: './pages/groupsMembershipPage.ts',
     loginPage: './pages/loginPage.ts',
     newsfeedPage: './pages/newsfeedPage.ts',
     registerPage: './pages/registerPage.ts',
@@ -72,11 +75,27 @@ export const config: CustomMainConfig = {
     topbarComponent: './fragments/topbarComponent.ts',
     feedNoticeComponent: './fragments/feedNoticeComponent.ts',
     boostModalComponent: './fragments/boostModalComponent.ts',
+    contentSettingsComponent: './fragments/contentSettingsComponent.ts',
+    multiFactorModalComponent: './fragments/multiFactorModalComponent.ts',
+    publisherRecommendationsModalComponent:
+      './fragments/publisherRecommendationsModalComponent.ts',
+    onboardingV5ModalComponent:
+      './fragments/onboardingV5/onboardingV5ModalComponent.ts',
+    onboardingV5VerifyEmailComponent:
+      './fragments/onboardingV5/onboardingV5VerifyEmailComponent.ts',
+    onboardingV5TagSelectorComponent:
+      './fragments/onboardingV5/onboardingV5TagSelectorComponent.ts',
+    onboardingV5SurveyComponent:
+      './fragments/onboardingV5/onboardingV5SurveyComponent.ts',
+    onboardingV5PublisherRecsComponent:
+      './fragments/onboardingV5/onboardingV5PublisherRecsComponent.ts',
+    onboardingV5CompletionPanelComponent:
+      './fragments/onboardingV5/onboardingV5CompletionPanelComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {
     features: './features/*.feature',
-    steps: './steps/*-steps.ts',
+    steps: './steps/**/*-steps.ts',
   },
   plugins: {
     pauseOnFail: {},

@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  margin-bottom: $spacing16;
+  .m-affiliatesEarnings {
+    &__title {
+      display: block;
+      @include heading2Bold;
+      line-height: 34px;
+      margin: 0;
+      padding: 0 0 $spacing4;
+
+      .m-affiliatesEarnings__error {
+        @include body2Regular;
+        line-height: 34px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+    &__description {
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      margin: 0;
+      padding: 0 0 $spacing4;
+    }
+    &__buttons {
+      display: flex;
+      flex-direction: row;
+      padding: 0 0 $spacing4;
+
+      @media screen and (max-width: $max-mobile) {
+        flex-flow: column nowrap;
+        ::ng-deep m-button {
+          width: 100%;
+          &:first-child {
+            margin: 0;
+            padding-bottom: $spacing4;
+          }
+          .m-button {
+            width: 100%;
+          }
+        }
+      }
+      ::ng-deep m-button {
+        display: block;
+        margin-right: 0;
+
+        &:first-child {
+          margin: 0 $spacing4 0 0;
+        }
+      }
+    }
+  }
+}

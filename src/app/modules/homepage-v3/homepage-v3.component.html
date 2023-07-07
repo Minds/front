@@ -1,643 +1,172 @@
-<div class="mf-jumpAnchor" #topAnchor></div>
+<ng-container *ngIf="!loading">
+  <div class="mf-jumpAnchor" #topAnchor></div>
 
-<section>
-  <img
-    alt
-    [src]="cdnAssetsUrl + 'assets/homepage/neural.png'"
-    class="m-homepage__v3__neuralBg"
-    [m-blurhash]="NEURAL_BACKGROUND_BLURHASH"
-    [m-blurhashFullscreen]="true"
-    loading="lazy"
-  />
+  <section>
+    <img
+      alt
+      class="m-homepage__v3__neuralBg"
+      ngSrc="./assets/homepage/neural.png"
+      priority
+      fill
+      [m-blurhash]="NEURAL_BACKGROUND_BLURHASH"
+      [m-blurhashFullscreen]="true"
+    />
 
-  <div class="m-homepage__v3__firstSection__container">
-    <div
-      style="display: flex; flex: 1; flex-direction: column; max-width: 1180px; padding: 0 32px; overflow: hidden"
-    >
-      <div class="m-homepage__v3__firstSection__actions">
-        <h2 class="m-homepage__v3__title" ngPreserveWhitespaces>
-          {{ headline }}
-        </h2>
+    <div class="m-homepage__v3__firstSection__container">
+      <div
+        style="display: flex; flex: 1; flex-direction: column; max-width: 1180px; padding: 0 32px; overflow: hidden"
+      >
+        <div class="m-homepage__v3__firstSection__actions">
+          <h2 class="m-homepage__v3__title" ngPreserveWhitespaces>
+            {{ data.attributes.hero.h1 }}
+          </h2>
 
-        <p class="m-homepage__v3__description">
-          {{ copyExperiment ? descriptionExperiment : description }}
-        </p>
+          <p class="m-homepage__v3__description">
+            {{ data.attributes.hero.body }}
+          </p>
 
-        <m-button
-          class="m-homepage__joinButton--blueOutline"
-          (click)="onRegister()"
-          i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
-          data-ref="data-minds-homepage-join-button-main"
-          color="blue"
-          size="large"
-          solid="true"
-        >
-          Join Minds Now
-        </m-button>
+          <m-button
+            class="m-homepage__joinButton--blueOutline"
+            (click)="onRegister()"
+            i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+            data-ref="data-minds-homepage-join-button-main"
+            color="blue"
+            size="large"
+            solid="true"
+          >
+            {{ data.attributes.hero.ctaText }}
+          </m-button>
+        </div>
+
+        <div class="m-homepage__v3__appButtons">
+          <a [href]="siteUrl + 'mobile'" target="_blank">
+            <img
+              alt="Download Android App"
+              ngSrc="./assets/homepage/android.png"
+              disableOptimizedSrcset
+              width="120"
+              height="40"
+            />
+          </a>
+          <a
+            href="https://itunes.apple.com/app/minds-com/id961771928"
+            target="_blank"
+          >
+            <img
+              alt="Download on the App Store"
+              ngSrc="./assets/homepage/app-store.png"
+              disableOptimizedSrcset
+              width="120"
+              height="40"
+            />
+          </a>
+        </div>
+
+        <section class="m-homepage__metrics m-grid__hide--mobile">
+          <div
+            class="m-homepage__metric"
+            *ngFor="let stat of data.attributes.hero.heroStats"
+          >
+            <span class="m-homepage__metric__title">{{ stat.number }}</span>
+            <span
+              class="m-homepage__metric__subtitle"
+              i18n="@@HOMEPAGE_V3__MEMBERS"
+              >{{ stat.label }}</span
+            >
+          </div>
+        </section>
+
+        <section class="m-homepage__metrics m-grid__only--mobile">
+          <div
+            class="m-homepage__metric"
+            *ngFor="let stat of data.attributes.hero.heroStats | slice: 0:2"
+          >
+            <span class="m-homepage__metric__title">{{ stat.number }}</span>
+            <span
+              class="m-homepage__metric__subtitle"
+              i18n="@@HOMEPAGE_V3__MEMBERS"
+              >{{ stat.label }}</span
+            >
+          </div>
+        </section>
       </div>
-
-      <div class="m-homepage__v3__appButtons">
-        <a [href]="siteUrl + 'mobile'" target="_blank">
-          <img
-            alt="Download Android App"
-            [src]="cdnAssetsUrl + 'assets/homepage/android.png'"
-          />
-        </a>
-        <a
-          href="https://itunes.apple.com/app/minds-com/id961771928"
-          target="_blank"
-        >
-          <img
-            alt="Download on the App Store"
-            [src]="cdnAssetsUrl + 'assets/homepage/app-store.png'"
-          />
-        </a>
-      </div>
-
-      <section class="m-homepage__metrics m-grid__hide--mobile">
-        <div class="m-homepage__metric">
-          <span class="m-homepage__metric__title">6M+</span>
-          <span
-            class="m-homepage__metric__subtitle"
-            i18n="@@HOMEPAGE_V3__MEMBERS"
-            >Members</span
-          >
-        </div>
-        <div class="m-homepage__metric">
-          <span class="m-homepage__metric__title">8M+</span>
-          <span
-            class="m-homepage__metric__subtitle"
-            i18n="@@HOMEPAGE_V3__CONVERSATIONS"
-            >Conversations</span
-          >
-        </div>
-        <div class="m-homepage__metric">
-          <span class="m-homepage__metric__title">5M+</span>
-          <span
-            class="m-homepage__metric__subtitle"
-            i18n="@@HOMEPAGE_V3__TOKENS_REWARDED"
-            >Tokens Rewarded</span
-          >
-        </div>
-        <div class="m-homepage__metric">
-          <span class="m-homepage__metric__title">2B+</span>
-          <span
-            class="m-homepage__metric__subtitle"
-            i18n="@@HOMEPAGE_V3__BOOSTED_VIEWS"
-            >Boosted Views</span
-          >
-        </div>
-      </section>
-
-      <section class="m-homepage__metrics m-grid__only--mobile">
-        <div class="m-homepage__metric">
-          <span class="m-homepage__metric__title">6M+</span>
-          <span
-            class="m-homepage__metric__subtitle"
-            i18n="@@HOMEPAGE_V3__TOKENS_REWARDED"
-            >Tokens Rewarded</span
-          >
-        </div>
-        <div class="m-homepage__metric">
-          <span class="m-homepage__metric__title">790K+</span>
-          <span
-            class="m-homepage__metric__subtitle"
-            i18n="@@HOMEPAGE_V3__HOLDERS"
-            >Holders</span
-          >
-        </div>
-      </section>
     </div>
-  </div>
 
-  <section class="m-homepage__asFeaturedIn">
-    <m-marketing__asFeaturedInV2></m-marketing__asFeaturedInV2>
+    <section class="m-homepage__asFeaturedIn">
+      <m-marketing__asFeaturedInV2></m-marketing__asFeaturedInV2>
+    </section>
   </section>
-</section>
 
-<section class="m-homepage__v3__body" *ngIf="!copyExperiment">
-  <div
-    class="m-homepage__v3__bridgeTheDivide m-marketing__section m-marketing__section--style-5"
-  >
-    <div class="m-grid m-marketing__wrapper">
-      <div
-        class="
-            m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile
-            m-marketing__body
-          "
-      >
-        <!-- ------------------------------------------------ -->
-        <!-- Section 2 -->
-        <!-- ------------------------------------------------ -->
-        <h3 i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__TITLE">
-          Bridge the divide
-        </h3>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__P1"
-        >
-          Big tech has abused its power and lost the trust of its community.
-          Their policies and behavior have caused polarization to reach all-time
-          highs across the globe.
-        </p>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__P2"
-        >
-          We are on a mission to elevate global discourse through Internet
-          freedom.
-        </p>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__P3"
-        >
-          Internet freedom means:
-        </p>
-
-        <ul>
-          <li i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__FREE_SPEECH">
-            Free speech
-          </li>
-          <li i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__PRIVACY">Privacy</li>
-          <li i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__OPEN_SOURCE">
-            Open source
-          </li>
-          <li i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__SELF_SOVEREIGNTY">
-            Self-sovereignty
-          </li>
-          <li i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__COMMUNITY_GOVERNANCE">
-            Community governance
-          </li>
-          <li i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__CRYPTO_ECONOMY">
-            Crypto economy
-          </li>
-        </ul>
-
-        <div class="m-marketing__actionButtons">
-          <a
-            class="m-marketing__link"
-            [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
-            target="_blank"
-            i18n
-          >
-            Read our Whitepaper
-          </a>
-        </div>
-      </div>
-      <div
-        class="
-            m-grid__column-5 m-grid__column-6--tablet m-grid__hide--mobile
-            m-marketing__image
-          "
-      >
-        <span>
-          <img
-            alt
-            [src]="cdnAssetsUrl + 'assets/homepage/bridge-the-divide.png'"
-          />
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ------------------------------------------------ -->
-  <!-- Section 3 -->
-  <!-- ------------------------------------------------ -->
-
-  <div
-    class="m-homepage__v3__makeSenseOfWorld m-marketing__section m-marketing__section--style-4"
-  >
-    <div class="m-grid m-marketing__wrapper">
-      <div
-        class="
-            m-grid__column-7
-            m-grid__column-6--tablet
-            m-grid__column-12--mobile
-            m-grid__order-1--mobile
-            m-marketing__body
-          "
-      >
-        <h3 i18n="@@HOMEPAGE_V3__MAKE_SENSE_OF_YOUR_WORLD">
-          Make sense of your world
-        </h3>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__MAKE_SENSE_OF_YOUR_WORLD__P1"
-        >
-          We hold ourselves to certain principles to ensure that you are
-          provided with unrestricted, real-time access to all information shared
-          on the network.
-        </p>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__MAKE_SENSE_OF_YOUR_WORLD__P2"
-        >
-          Our <a href="https://gitlab.com/minds" target="_blank">code</a> and
-          algorithms are free and open source for maximum transparency and
-          accountability. Our
-          <a routerLink="/content-policy">content policy</a> is based on the
-          First Amendment and governed by a community jury in order to minimize
-          bias and censorship.
-        </p>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__MAKE_SENSE_OF_YOUR_WORLD__P3"
-        >
-          We believe you can only
-          <a href="https://change.minds.com/" target="_blank"
-            >change someone's mind</a
-          >
-          if you provide them with a platform to speak it.
-        </p>
-      </div>
-      <div
-        class="
-            m-grid__column-5
-            m-grid__column-6--tablet
-            m-grid__column-12--mobile
-            m-grid__order-2--mobile
-            m-marketing__image
-          "
-      >
-        <span>
-          <img
-            alt
-            [src]="
-              cdnAssetsUrl + 'assets/homepage/make-sense-of-your-world.png'
+  <section class="m-homepage__v3__body">
+    <div
+      *ngFor="let section of data.attributes.sections"
+      class="m-marketing__section m-marketing__section--style-5"
+      [class.m-marketing__section--reversed]="!section.leftAligned"
+    >
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="
+              m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile
+              m-marketing__body
             "
-          />
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ------------------------------------------------ -->
-  <!-- Section 4 -->
-  <!-- ------------------------------------------------ -->
-
-  <div
-    class="m-homepage__v3__earnCrypto m-marketing__section m-marketing__section--style-4"
-  >
-    <div class="m-grid m-marketing__wrapper">
-      <div
-        class="
-          m-marketing__image
-          m-grid__column-4
-          m-grid__column-12--mobile
-          m-grid__order-2--mobile
-        "
-      >
-        <img alt [src]="cdnAssetsUrl + 'assets/homepage/earn-crypto.png'" />
-      </div>
-      <div
-        class="
-          m-marketing__body
-          m-grid__column-8
-          m-grid__column-12--mobile
-          m-grid__order-1--mobile
-        "
-      >
-        <h3 i18n="@@HOMEPAGE_V3__EARN_CRYPTO__TITLE">
-          Earn crypto and rev-share
-        </h3>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__EARN_CRYPTO__P1"
         >
-          The value in a social network lies in its community. You deserve to be
-          rewarded for your contribution to the success and growth of the
-          network.
-        </p>
+          <!-- ------------------------------------------------ -->
+          <!-- Section 2 -->
+          <!-- ------------------------------------------------ -->
+          <h3>
+            {{ section.title }}
+          </h3>
 
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__EARN_CRYPTO__P2"
-        >
-          Minds rewards you with MINDS Tokens (ERC-20) every day for creating
-          popular content, referring friends or providing liquidity. The tokens
-          can then be used to promote your content (1 token = 1,000 impressions)
-          or send tips to content creators to show your support and unlock
-          special perks.
-        </p>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__EARN_CRYPTO__P3"
-        >
-          Upgrade to Minds+ to access premium content and submit your own
-          content for a share of our revenue.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ------------------------------------------------ -->
-  <!-- Final section -->
-  <!-- ------------------------------------------------ -->
-
-  <div class="m-marketing__section m-marketing__section--tail">
-    <div class="m-grid m-marketing__wrapper">
-      <div class="m-grid__column-12 m-marketing__body">
-        <h3 class="m-marketingTitle__centered">
-          <ng-container i18n="@@ELEVATE_THE_GLOBAL_CONVERSATION"
-            >Elevate the global conversation</ng-container
-          >
-        </h3>
-
-        <div class="m-marketing__actionButtons">
-          <m-button
-            class="m-homepage__joinButton--blueOutline"
-            (click)="onRegister()"
-            i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
-            color="blue"
-            solid="true"
-          >
-            Join Minds Now
-          </m-button>
+          <markdown ngPreserveWhitespaces>{{ section.body }}</markdown>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- --------------------------------------------- -->
-<!-- Start experiment  -->
-<section class="m-homepage__v3__body" *ngIf="copyExperiment">
-  <div
-    class="m-homepage__v3__bridgeTheDivide m-marketing__section m-marketing__section--style-5"
-  >
-    <div class="m-grid m-marketing__wrapper">
-      <div
-        class="
-            m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile
-            m-marketing__body
-          "
-      >
-        <!-- ------------------------------------------------ -->
-        <!-- Section 2: experiment -->
-        <!-- ------------------------------------------------ -->
-        <h3 i18n="@@HOMEPAGE_V3__OUR_MISSION__TITLE">
-          Our mission
-        </h3>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__OUR_MISSION__P1"
-        >
-          Big tech has abused its power and lost the trust of the public. Their
-          policies and behavior have caused polarization to reach all-time highs
-          across the globe.
-        </p>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__OUR_MISSION__P2"
-        >
-          We are on a mission to
-          <span class="m-marketingDescription__emphasis"
-            >elevate global discourse through Internet freedom.</span
-          >
-        </p>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__OUR_MISSION__P3"
-        >
-          The future of social media depends on:
-        </p>
-
-        <ul>
-          <li i18n="@@HOMEPAGE_V3__OUR_MISSION__FREE_SPEECH">
-            Free speech
-          </li>
-          <li i18n="@@HOMEPAGE_V3__OUR_MISSION__CIVIL_DIALOG">Civil dialog</li>
-          <li i18n="@@HOMEPAGE_V3__OUR_MISSION__PRIVACY">
-            Privacy
-          </li>
-          <li i18n="@@HOMEPAGE_V3__OUR_MISSION__OPEN_SOURCE">
-            Open source
-          </li>
-          <li i18n="@@HOMEPAGE_V3__OUR_MISSION__SELF_SOVEREIGNTY">
-            Self-sovereignty
-          </li>
-          <li i18n="@@HOMEPAGE_V3__OUR_MISSION__COMMUNITY_GOVERNANCE">
-            Community governance
-          </li>
-          <li i18n="@@HOMEPAGE_V3__OUR_MISSION__CREATOR_MONETIZATION">
-            Creator monetization
-          </li>
-        </ul>
-
-        <div class="m-marketing__actionButtons">
-          <a
-            class="m-marketing__link"
-            href="https://cdn-assets.minds.com/The_Censorship_Effect.pdf"
-            target="_blank"
-            i18n
-          >
-            Read the Whitepaper
-          </a>
-        </div>
-      </div>
-      <div
-        class="
-            m-grid__column-5 m-grid__column-6--tablet m-grid__hide--mobile
-            m-marketing__image
-          "
-      >
-        <span>
-          <img
-            alt
-            [src]="cdnAssetsUrl + 'assets/homepage/bridge-the-divide.png'"
-          />
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ------------------------------------------------ -->
-  <!-- Section 3: experiment -->
-  <!-- ------------------------------------------------ -->
-
-  <div
-    class="m-homepage__v3__bridgeTheDivide m-homepage__v3__makeSenseOfWorld m-marketing__section m-marketing__section--style-4"
-  >
-    <div class="m-grid m-marketing__wrapper">
-      <div
-        class="
-            m-grid__column-7
-            m-grid__column-6--tablet
-            m-grid__column-12--mobile
-            m-grid__order-1--mobile
-            m-marketing__body
-          "
-      >
-        <h3 i18n="@@HOMEPAGE_V3__APP_WITH_EVERYTHING">
-          The social media app with everything
-        </h3>
-
-        <ul>
-          <li i18n="@@COMMON__NEWSFEED">
-            Newsfeed
-          </li>
-          <li i18n="@@HOMEPAGE_V3__BUILD_YOUR_ALGORITHM">
-            Build your algorithm
-          </li>
-          <li i18n="@@HOMEPAGE_V3__PHOTOS_AND_VIDEOS">Photos & Videos</li>
-          <li i18n="@@COMMON__BLOGS">Blogs</li>
-          <li i18n="@@COMMON__GROUPS">Groups</li>
-          <li i18n="@@HOMEPAGE_V3__ENCRYPTED_CHAT">Encrypted chat</li>
-          <li i18n="@@COMMON__BOOST">Boost</li>
-          <li i18n="@@HOMEPAGE_V3__CONTENT_MIGRATION">
-            Content migration (Twitter, YouTube)
-          </li>
-          <li i18n="@@COMMON__WALLET">Wallet</li>
-          <li i18n="@@COMMON__ANALYTICS">Analytics</li>
-          <li i18n="@@COMMON__EXPLORE">Explore</li>
-          <li i18n="@@HOMEPAGE_V3__COMMUNITY_JURY">Community jury</li>
-          <li i18n="@@HOMEPAGE_V3__GET_REPLIES">Get replies from creators</li>
-        </ul>
-      </div>
-      <div
-        class="
-            m-grid__column-5
-            m-grid__column-6--tablet
-            m-grid__column-12--mobile
-            m-grid__order-2--mobile
-            m-marketing__image
-          "
-      >
-        <span>
-          <img
-            alt
-            [src]="
-              cdnAssetsUrl + 'assets/homepage/make-sense-of-your-world.png'
+        <div
+          class="
+              m-grid__column-5 m-grid__column-6--tablet m-grid__hide--mobile
+              m-marketing__image
             "
-          />
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ------------------------------------------------ -->
-  <!-- Section 4: experiment -->
-  <!-- ------------------------------------------------ -->
-
-  <div
-    class="m-homepage__v3__earnCrypto m-marketing__section m-marketing__section--style-4"
-  >
-    <div class="m-grid m-marketing__wrapper">
-      <div
-        class="
-          m-marketing__image
-          m-grid__column-4
-          m-grid__column-12--mobile
-          m-grid__order-2--mobile
-        "
-      >
-        <img alt [src]="cdnAssetsUrl + 'assets/homepage/earn-crypto.png'" />
-      </div>
-      <div
-        class="
-          m-marketing__body
-          m-grid__column-8
-          m-grid__column-12--mobile
-          m-grid__order-1--mobile
-        "
-      >
-        <h3 i18n="@@HOMEPAGE_V3__WHERE_CREATORS_MONETIZE">
-          Where creators monetize
-        </h3>
-
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__WHERE_CREATORS_MONETIZE__P1"
         >
-          Minds is optimized to reward creators of all sizes. Grow an audience
-          with better connections, built-in monetization, and earn crypto
-          rewards just for being engaging.
-        </p>
-
-        <p
-          class="m-marketing__description m-marketing__descriptionHeader"
-          i18n="@@HOMEPAGE_V3__WHERE_CREATORS_MONETIZE__P2_HEADER"
-        >
-          Get paid for your content
-        </p>
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__WHERE_CREATORS_MONETIZE__P2"
-        >
-          Design your own membership tiers to sell exclusive content, or publish
-          into a premium content pool that pays cash for your engagement.
-        </p>
-
-        <p
-          class="m-marketing__description m-marketing__descriptionHeader"
-          i18n="@@HOMEPAGE_V3__WHERE_CREATORS_MONETIZE__P3_HEADER"
-        >
-          Collaborate with your fans
-        </p>
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__WHERE_CREATORS_MONETIZE__P3"
-        >
-          Supermind lets fans send creators questions or prompts with monetary
-          offers. Creators collect the offers by replying with text, photo, or
-          video posts.
-        </p>
-
-        <p
-          class="m-marketing__description m-marketing__descriptionHeader"
-          i18n="@@HOMEPAGE_V3__WHERE_CREATORS_MONETIZE__P4_HEADER"
-        >
-          Crypto rewards
-        </p>
-        <p
-          class="m-marketing__description"
-          i18n="@@HOMEPAGE_V3__WHERE_CREATORS_MONETIZE__P4"
-        >
-          Every day, Minds splits 4,000 crypto tokens among creators of all
-          sizes based on the engagement they generate.
-        </p>
-      </div>
-    </div>
-  </div>
-  <!-- ------------------------------------------------ -->
-  <!-- Final section: experiment -->
-  <!-- ------------------------------------------------ -->
-  <div class="m-marketing__section m-marketing__section--tail">
-    <div class="m-grid m-marketing__wrapper">
-      <div class="m-grid__column-12 m-marketing__body">
-        <h3 class="m-marketingTitle__centered">
-          <ng-container i18n="@@ELEVATE_THE_GLOBAL_CONVERSATION"
-            >Elevate the global conversation</ng-container
-          >
-        </h3>
-
-        <div class="m-marketing__actionButtons">
-          <m-button
-            class="m-homepage__joinButton--blueOutline"
-            (click)="onRegister()"
-            i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
-            color="blue"
-            solid="true"
-          >
-            Join Minds Now
-          </m-button>
+          <span>
+            <img
+              alt
+              class="m-marketing__imageElement--noPosition"
+              [ngSrc]="strapiUrl + section.image.data.attributes.url"
+              disableOptimizedSrcset
+              fill
+              loading="lazy"
+            />
+          </span>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- End experiment -->
-<!-- ------------------------------------------------ -->
-<!-- FOOTER  -->
-<!-- ------------------------------------------------ -->
-<m-marketing__footer [slogan]="headline"></m-marketing__footer>
+
+    <!-- ------------------------------------------------ -->
+    <!-- Final section -->
+    <!-- ------------------------------------------------ -->
+
+    <div class="m-marketing__section m-marketing__section--tail">
+      <div class="m-grid m-marketing__wrapper">
+        <div class="m-grid__column-12 m-marketing__body">
+          <h3 class="m-marketingTitle__centered">
+            <ng-container>{{ data.attributes.sectionTail.h3 }}</ng-container>
+          </h3>
+
+          <div class="m-marketing__actionButtons">
+            <m-button
+              class="m-homepage__joinButton--blueOutline"
+              (click)="onRegister()"
+              color="blue"
+              solid="true"
+            >
+              {{ data.attributes.sectionTail.ctaText }}
+            </m-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------ -->
+  <!-- FOOTER  -->
+  <!-- ------------------------------------------------ -->
+  <m-marketing__footer [slogan]="data.attributes.hero.h1"></m-marketing__footer>
+</ng-container>

@@ -13,6 +13,15 @@
     border-color: themed($m-borderColor--primary);
   }
 
+  @media screen and (max-width: $min-desktop) {
+    flex-flow: column;
+    align-items: start;
+
+    > * + * {
+      margin-top: $spacing4;
+    }
+  }
+
   .m-wireCreatorToolbar__message {
     flex: 1;
     font-size: 14px;
@@ -26,11 +35,24 @@
         color: themed($m-alert);
       }
     }
+
+    @media screen and (max-width: $min-desktop) {
+      text-align: left;
+
+      .m-wireCreatorToolbarMessage__error {
+        padding: unset;
+      }
+    }
   }
 
   m-button {
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $min-desktop) {
       min-width: initial;
+      width: 100%;
+
+      ::ng-deep button {
+        width: 100%;
+      }
     }
   }
 }

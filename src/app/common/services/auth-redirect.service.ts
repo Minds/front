@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import { DiscoveryRedirectExperimentService } from '../../modules/experiments/sub-services/discovery-redirect-experiment.service';
+import { Router } from '@angular/router';
 
 /**
- * Currently this service is used only as a way to communicate
- * with the 'discovery-redirect' experiment
+ * Currently this service provides the default redirect URL
  * but in future it should be used a centralized redirect service
  * for all logins and registrations
  */
 @Injectable()
 export class AuthRedirectService {
-  constructor(
-    public discoveryRedirectExperiment: DiscoveryRedirectExperimentService
-  ) {}
+  constructor(private router: Router) {}
 
-  getRedirectUrl(): string {
-    return this.discoveryRedirectExperiment.getRedirectUrl();
+  public redirect(): Promise<boolean> {
+    return this.router.navigate([this.getRedirectUrl()]);
+  }
+
+  /**
+   * Gets default redirect URL.
+   * @returns { string } redirect URL.
+   */
+  public getRedirectUrl(): string {
+    return '/newsfeed/subscriptions/for-you';
   }
 }

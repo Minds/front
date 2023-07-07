@@ -1,6 +1,10 @@
 @import 'defaults.scss';
 @import 'themes';
 
+$topbarAlertHeight--desktop: 36px;
+$topbarAlertHeight--mobile: 72px;
+$topbarHeight: 75px;
+
 m-body {
   margin-top: 52px;
   display: block;
@@ -15,7 +19,15 @@ m-body {
   }
 
   &.has-v3-navbar {
-    margin-top: 75px;
+    margin-top: $topbarHeight;
+  }
+
+  &.m-body__topbarAlert {
+    margin-top: calc($topbarHeight + $topbarAlertHeight--desktop);
+
+    @media screen and (max-width: $max-mobile) {
+      margin-top: calc($topbarHeight + $topbarAlertHeight--mobile);
+    }
   }
 
   &.is-pro-domain {
@@ -273,7 +285,7 @@ $layoutMin1ColWidth: 280px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   text-decoration: none;
-  font-family: 'Roboto', Helvetica, sans-serif;
+  font-family: 'Inter', Helvetica, sans-serif;
   padding: 12px 8px;
   //border-right: 1px solid themed($m-borderColor--primary);
 

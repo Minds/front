@@ -21,7 +21,7 @@ class ActivityComponent {
   public async deleteActivity(): Promise<void> {
     this.openActivityMenu();
     await Promise.all([
-      I.click(locate(this.optionSelector).withText('Delete Post')),
+      I.click(locate(this.optionSelector).withText('Delete post')),
       I.waitForResponse(resp => {
         return resp.url().includes('/api/v1/newsfeed') && resp.status() === 200;
       }, 30),

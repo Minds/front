@@ -206,8 +206,8 @@
         flex-direction: column;
         justify-content: center;
 
-        .m-marketing__description,
-        .m-marketing__description ul {
+        p,
+        ul {
           padding: 0;
           margin-bottom: 2rem;
 
@@ -232,40 +232,15 @@
             }
           }
         }
-      }
-    }
-
-    .m-homepage__v3__bridgeTheDivide {
-      img {
-        object-fit: contain;
-        width: 100%;
-      }
-
-      ul {
-        margin: 0;
-        padding: 0;
-        padding-left: $minds-padding * 2;
-        margin-bottom: 2rem;
-        @include body1Regular;
-
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
+        ul {
+          padding-left: $spacing6;
         }
       }
     }
 
-    .m-homepage__v3__makeSenseOfWorld {
-      img {
-        object-fit: contain;
-        width: 100%;
-      }
-    }
-
-    .m-homepage__v3__earnCrypto {
-      img {
-        object-fit: contain;
-        width: 100%;
-      }
+    img {
+      object-fit: contain;
+      width: 100%;
     }
   }
 
@@ -318,6 +293,18 @@
 
   .m-marketing__image span::after {
     display: none !important;
+  }
+
+  .m-marketing__imageElement--noPosition {
+    position: unset !important;
+  }
+
+  .m-marketing__section--reversed {
+    .m-marketing__image {
+      &.m-grid__column-5 {
+        grid-column-start: 8;
+      }
+    }
   }
 
   .m-marketing__section--style-4 {
@@ -495,12 +482,11 @@
 
   h1,
   h2,
-  h3:not(.m-marketingTitle__centered),
-  .m-marketing__description {
+  h3:not(.m-marketingTitle__centered) {
     text-align: left !important;
   }
 
-  .m-marketing__description {
+  .m-marketing__body {
     @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
       font-size: 17px !important;
       line-height: 24px !important;

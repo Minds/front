@@ -63,6 +63,10 @@ m-composer__popup {
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
+
+    @media screen and (max-width: $max-mobile) {
+      margin-right: $spacing6;
+    }
   }
 }
 
@@ -81,7 +85,7 @@ m-composer__popup {
     font-weight: inherit;
 
     @include m-theme() {
-      color: themed($m-blue);
+      color: themed($m-link-text);
     }
   }
 

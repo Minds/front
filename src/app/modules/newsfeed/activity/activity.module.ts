@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule as NgCommonModule } from '@angular/common';
+import {
+  CommonModule as NgCommonModule,
+  NgOptimizedImage,
+} from '@angular/common';
 import {
   FormsModule as NgFormsModule,
   ReactiveFormsModule,
@@ -40,11 +43,15 @@ import { ActivityMultiImageComponent } from './content/images/multi-image.compon
 import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
 import { ActivitySupermindReplyLinkComponent } from './supermind-reply-link/supermind-reply-link.component';
 import { ComposerModule } from '../../composer/composer.module';
+import { ActivityFlagMutualSubscriptionsComponent } from './flag/mutual-subscriptions/mutual-subscriptions.component';
+import { ActivityBoostCtaComponent } from './boost-cta/boost-cta.component';
+import { ActivityAvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
   imports: [
     NgCommonModule,
     NgFormsModule,
+    NgOptimizedImage,
     ReactiveFormsModule,
     RouterModule,
     CommonModule,
@@ -82,6 +89,9 @@ import { ComposerModule } from '../../composer/composer.module';
     ActivityViewsComponent,
     ActivityMultiImageComponent,
     ActivitySupermindReplyLinkComponent,
+    ActivityFlagMutualSubscriptionsComponent,
+    ActivityBoostCtaComponent,
+    ActivityAvatarComponent,
   ],
   providers: [ActivityModalCreatorService],
   exports: [ActivityComponent, ActivityRemindButtonComponent],

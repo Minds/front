@@ -1,0 +1,130 @@
+<div
+  style="transition: all 0.3s; overflow: hidden; flex: 1;"
+  [style.height.px]="!connection ? (containerHeight$ | async) : undefined"
+  *ngIf="visible"
+>
+  <article
+    (mResized)="onResized($event)"
+    *ngIf="(recommendations$ | async).length"
+    [ngClass]="{
+      'm-channelRecommendation__article--noOuterPadding': noOuterPadding
+    }"
+  >
+    <header *ngIf="!isOnboarding">
+      <h3
+        *ngIf="title; else defaultTitle"
+        data-ref="publisher-recommendations-title-custom"
+      >
+        {{ title }}
+      </h3>
+      <ng-template #defaultTitle>
+        <h3
+          *ngIf="publisherType === 'user'"
+          i18n="@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS"
+          data-ref="publisher-recommendations-title-channels"
+        >
+          Recommended Channels
+        </h3>
+        <h3
+          *ngIf="publisherType === 'group'"
+          i18n="@@M_DISCOVERY_CARD_CAROUSEL__RECOMMENDED_GROUPS"
+          data-ref="publisher-recommendations-title-groups"
+        >
+          Recommended Groups
+        </h3>
+      </ng-template>
+      <div>
+        <a
+          [routerLink]="['/', 'discovery', 'suggestions', publisherType]"
+          [queryParams]="channelId && { u: channelId }"
+          i18n="@@COMMON__SEE_MORE__ACTION"
+          >See more</a
+        >
+        <m-dropdownMenu
+          [menu]="dropdown"
+          [anchorPosition]="{ top: '0', right: '0' }"
+          *ngIf="dismissible"
+        >
+          <m-icon iconId="more_horiz" sizeFactor="1.5" rem="true"></m-icon>
+        </m-dropdownMenu>
+      </div>
+    </header>
+    <ul *ngIf="(recommendations$ | async).length" [@.disabled]="connection">
+      <li
+        @listAnimation
+        *ngFor="
+          let publisher of recommendations$
+            | async
+            | slice: 0:(listSize$ | async);
+          let i = index;
+          trackBy: trackByFn
+        "
+        (mViewed)="trackView(publisher, i + 1)"
+      >
+        <section>
+          <a
+            [routerLink]="getLink(publisher)"
+            class="m-publisherRecommendations__avatarContainer"
+          >
+            <m-hovercard [publisher]="publisher" [offset]="[0, 15]">
+              <minds-avatar
+                [object]="publisher"
+                [editMode]="false"
+              ></minds-avatar>
+            </m-hovercard>
+          </a>
+          <div class="m-publisherRecommendations__contentContainer">
+            <a
+              [routerLink]="getLink(publisher)"
+              class="m-publisherRecommendations__title"
+            >
+              <strong>{{ publisher.name }}</strong>
+              <m-channel--badges
+                class="m-channel--badges-activity m-activityOwnerBlockPrimaryName__badges"
+                [user]="publisher"
+                badges="[ 'admin', 'verified' ]"
+              ></m-channel--badges>
+            </a>
+            <span
+              class="m-publisherRecommendations__description"
+              [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags"
+            ></span>
+            <m-boostedFlag
+              *ngIf="publisher.boosted"
+              text="Boosted Channel"
+              size="small"
+            ></m-boostedFlag>
+          </div>
+          <div class="m-publisherRecommendations__subscribeContainer">
+            <m-subscribeButton
+              *ngIf="publisherType === 'user'"
+              [user]="publisher"
+              [enableRecheck]="false"
+              subscribedIcon="check"
+              sized="true"
+              iconOnly="true"
+              (subscribed)="onSubscribed($event)"
+              (unsubscribed)="onUnsubscribed($event)"
+            ></m-subscribeButton>
+            <m-group__membershipButton
+              *ngIf="publisherType === 'group'"
+              [group]="publisher"
+              iconOnly="true"
+              isMemberIcon="check"
+              color="blue"
+              (onMembershipChange)="onGroupMembershipChange($event, publisher)"
+            ></m-group__membershipButton>
+          </div>
+        </section>
+      </li>
+    </ul>
+  </article>
+</div>
+
+<ng-template #dropdown>
+  <ul>
+    <m-dropdownMenu__item (click)="dismiss()" icon="close">
+      <span i18n="@@COMMON__REMOVE_FROM_FEED">Remove from feed</span>
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>

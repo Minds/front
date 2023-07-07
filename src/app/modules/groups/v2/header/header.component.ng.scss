@@ -1,0 +1,134 @@
+@import 'defaults.scss';
+@import '../../../../common//layout//layout.scss';
+
+:host {
+  .m-groupHeader__banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    user-select: none;
+
+    @media screen and (max-width: $max-mobile) {
+      height: 176px;
+    }
+
+    ::ng-deep m-group__actions {
+      @media screen and (max-width: $max-mobile) {
+        .m-group__actions {
+          padding-top: $spacing4;
+        }
+        .m-groupActions__button--membership {
+          display: none;
+        }
+      }
+    }
+
+    .m-groupHeaderBanner__background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: none no-repeat center center;
+      background-size: cover;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+  }
+
+  .m-groupHeader__info {
+    position: relative;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+    @media screen and (max-width: $max-mobile) {
+      border-radius: $spacing4 $spacing4 0px 0px;
+      transform: translateY(-$spacing5);
+    }
+
+    ::ng-deep m-group__actions {
+      display: none;
+      @media screen and (max-width: $max-mobile) {
+        display: block;
+        .m-group__actions {
+          position: relative;
+          justify-content: flex-end;
+          padding-top: $spacing3;
+        }
+        .m-groupActions__button--settings {
+          display: none;
+        }
+      }
+    }
+
+    ::ng-deep minds-avatar.m-groupHeaderInfo__avatar {
+      position: absolute;
+      left: $spacing10;
+      top: -$spacing11;
+      transform: translateY(-50%);
+
+      @media screen and (max-width: $max-mobile) {
+        left: $spacing6;
+        top: -$spacing2;
+      }
+      .minds-avatar {
+        width: 132px;
+        height: 132px;
+        margin: 0;
+        background: none no-repeat center center transparent;
+        background-size: cover;
+        border: 3px solid;
+        border-radius: 50%;
+
+        @media screen and (max-width: $max-mobile) {
+          width: 90px;
+          height: 90px;
+        }
+
+        @include m-theme() {
+          background-color: themed($m-bgColor--primary);
+          border-color: themed($m-bgColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-groupHeaderInfo__name {
+    @include heading2Bold;
+    display: flex;
+    flex-direction: row;
+    padding: $spacing8 $spacing10 $spacing3;
+    margin: 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 $spacing5 $spacing3;
+      @include heading4Bold;
+    }
+
+    span {
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+
+      @media screen and (min-width: $layoutMin3ColWidth) {
+        margin-right: $spacing20;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-top: 12px;
+      }
+    }
+  }
+
+  .m-groupHeaderInfo__sidebar {
+    display: none;
+    @media screen and (max-width: $max-mobile) {
+      display: block;
+    }
+  }
+}

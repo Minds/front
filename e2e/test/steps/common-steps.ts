@@ -9,25 +9,31 @@ namespace CommonSteps {
     registerPage,
     channelPage,
     confirmationModalComponent,
+    onboardingV5ModalComponent,
   } = inject();
 
   /**
    * Create a new user.
    * @return { void }
    */
-  Given('I create a new user', (): void => {
-    const username = generateARandomString();
-    const email = 'noreply@minds.com';
-    const password = generateARandomString() + 'A1!';
+  Given(
+    'I create a new user',
+    async (): Promise<void> => {
+      const username = generateARandomString();
+      const email = 'noreply@minds.com';
+      const password = generateARandomString() + 'A1!';
 
-    I.clearCookie();
-    registerPage.navigateToByUrl();
-    registerPage.fillForm(username, password, email);
-    registerPage.clickJoinNow();
+      I.clearCookie();
+      registerPage.navigateToByUrl();
+      registerPage.setupRegistrationBypassCookies();
+      registerPage.fillForm(username, password, email);
+      registerPage.clickJoinNow();
 
-    I.waitForNavigation({ timeout: 30000 });
-    // TODO: Handle email code verification.
-  });
+      I.waitForNavigation({ timeout: 30000 });
+
+      await onboardingV5ModalComponent.completeOnboarding();
+    }
+  );
 
   /**
    * Note: this requires that the modal is using m-modalCloseButton
@@ -132,6 +138,10 @@ namespace CommonSteps {
     I.wait(seconds);
   });
 
+  Given('I navigate to {string}', (path: string) => {
+    I.amOnPage(path);
+  });
+
   //
 
   When('I click the cancel button on the confirmation modal', () => {
@@ -144,6 +154,10 @@ namespace CommonSteps {
 
   When('I cancel the system confirmation dialog', () => {
     I.cancelPopup();
+  });
+
+  When('I refresh the page', () => {
+    I.refreshPage();
   });
 
   //
@@ -167,5 +181,10 @@ namespace CommonSteps {
 
   Then('I see the {string} modal', (selector: string) => {
     modalComponent.isVisible(locate(selector));
+  });
+
+  // Debug helper
+  Then('I pause', () => {
+    pause();
   });
 }

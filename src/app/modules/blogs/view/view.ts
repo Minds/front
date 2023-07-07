@@ -24,7 +24,6 @@ import { optimizedResize } from '../../../utils/optimized-resize';
 import { ActivityService } from '../../newsfeed/activity/activity.service';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
-import { FeaturesService } from '../../../services/features.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
@@ -122,7 +121,6 @@ export class BlogView implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private modalService: ModalService,
     private clientMetaService: ClientMetaService,
-    public featuresService: FeaturesService,
     protected toasterService: ToasterService,
     @SkipSelf() injector: Injector,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,

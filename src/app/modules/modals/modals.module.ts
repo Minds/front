@@ -9,7 +9,6 @@ import { MindsFormsModule } from '../forms/forms.module';
 
 import { ConfirmModal } from './confirm/confirm';
 import { ShareModalComponent } from './share/share';
-import { SignupOnActionModal } from './signup/signup-on-action';
 import { ConfirmPasswordModalComponent } from './confirm-password/modal.component';
 import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
@@ -32,7 +31,6 @@ import { SupermindReplyConfirmModalComponent } from './supermind-reply-confirm/s
     ConfirmModal,
     PhotoBannerModalComponent,
     ShareModalComponent,
-    SignupOnActionModal,
     SignupModal,
     ConfirmPasswordModalComponent,
     TOSUpdatedModal,
@@ -41,7 +39,6 @@ import { SupermindReplyConfirmModalComponent } from './supermind-reply-confirm/s
   exports: [
     ConfirmModal,
     ShareModalComponent,
-    SignupOnActionModal,
     SignupModal,
     TOSUpdatedModal,
     PhotoBannerModalComponent,

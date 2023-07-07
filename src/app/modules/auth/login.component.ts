@@ -8,7 +8,6 @@ import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { CookieService } from '../../common/services/cookie.service';
-import { FeaturesService } from '../../services/features.service';
 import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
@@ -48,7 +47,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private config: ConfigsService,
     private loginReferrer: LoginReferrerService,
     private cookieService: CookieService,
-    private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private navigationService: SidebarNavigationService,
     private pageLayoutService: PageLayoutService

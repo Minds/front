@@ -12,6 +12,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
+import { BoostGoalButtonText } from '../../boost/boost.types';
 
 export interface Supermind {
   request_guid: string;
@@ -27,6 +28,7 @@ export type ActivityDisplayOptions = {
   showOnlyCommentsInput: boolean;
   showOnlyCommentsToggle: boolean;
   showToolbar: boolean;
+  showToolbarButtonsRow: boolean; // (Assuming showToolbar is true), set this to false if you only want to see boost CTA/supermind buttons
   showInteractions: boolean;
   showEditedTag: boolean;
   showVisibilityState: boolean;
@@ -45,6 +47,9 @@ export type ActivityDisplayOptions = {
   isFeed: boolean; // is the activity a part of a feed?
   isSingle: boolean; // is this the activity featured on a single post page?
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock (modals, single pages)
+  hasLoadingPriority: boolean; // whether to load image content eagerly - should usually be first 1 or 2 activities in a feed.
+  inSingleGroupFeed: boolean; // whether the activity is being presented in the feed of a single specific group page
+  isComposerPreview: boolean; // is the activity being presented in the composer as a preview (e.g. to display a quote post)
 };
 
 export type ActivityEntity = {
@@ -73,6 +78,7 @@ export type ActivityEntity = {
   owner_guid?: string;
   url?: string;
   urn?: string;
+  allow_comments?: boolean; // whether comments are allowed on the activity.
   boosted_guid?: string;
   activity_type?: string; // all blogs are rich-embeds
   content_type?: string; // blogs and rich-embeds are separate
@@ -88,6 +94,9 @@ export type ActivityEntity = {
   quotes?: number; // count of quotes
   blurhash?: string;
   supermind?: Supermind; // supermind details, if applicable
+  boosted?: boolean; // may be exported if activity is a boost
+  goal_button_text: BoostGoalButtonText; // may be exported if activity is a boost
+  goal_button_url: string; // may be exported if activity is a boost
 };
 
 // Constants of blocks
@@ -266,10 +275,11 @@ export class ActivityService implements OnDestroy {
     map(user => user !== null)
   );
 
-  /**
-   * TODO
-   */
-  isBoost$: Observable<boolean> = this.entity$.pipe();
+  isBoost$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return entity && entity?.boosted;
+    })
+  );
 
   /**
    * If the post is a quote this will emit true
@@ -319,7 +329,12 @@ export class ActivityService implements OnDestroy {
    */
   isSupermindRequest$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
-      return entity && entity.supermind && entity.supermind.is_reply;
+      return (
+        entity &&
+        entity.supermind &&
+        !entity.supermind.is_reply &&
+        !!entity.supermind.receiver_user
+      );
     })
   );
 
@@ -364,6 +379,35 @@ export class ActivityService implements OnDestroy {
    */
   onDelete$: Subject<boolean> = new Subject();
 
+  /**
+   * If this is a group post being displayed outside the group's feed,
+   * we need to provide additional context about the group
+   * in the owner block (e.g. avatar, group name)
+   */
+  showGroupContext$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  /**
+   * Whether to show a row at the top of the activity that informs
+   * whether the post was boosted, reminded, or is a supermind offer
+   */
+  readonly showFlagRow$: Observable<boolean> = combineLatest([
+    this.isSupermindRequest$,
+    this.isBoost$,
+    this.isRemind$,
+  ]).pipe(
+    map(([isSupermindRequest, isBoost, isRemind]) => {
+      // Don't show in boost rotator, minimal mode, etc.
+      const isInApprovedContext =
+        !this.displayOptions.minimalMode &&
+        !this.displayOptions.isComposerPreview &&
+        !this.displayOptions.boostRotatorMode;
+
+      const contentRequiresFlag = isSupermindRequest || isBoost || isRemind;
+
+      return !!isInApprovedContext && !!contentRequiresFlag;
+    })
+  );
+
   displayOptions: ActivityDisplayOptions = {
     autoplayVideo: true,
     showOwnerBlock: true,
@@ -371,6 +415,7 @@ export class ActivityService implements OnDestroy {
     showOnlyCommentsInput: true,
     showOnlyCommentsToggle: false,
     showToolbar: true,
+    showToolbarButtonsRow: true,
     showInteractions: false,
     showEditedTag: false,
     showVisibilityState: false,
@@ -389,6 +434,9 @@ export class ActivityService implements OnDestroy {
     isFeed: false,
     isSingle: false,
     permalinkBelowContent: false,
+    hasLoadingPriority: false,
+    inSingleGroupFeed: false,
+    isComposerPreview: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -425,6 +473,12 @@ export class ActivityService implements OnDestroy {
     }
     this.entity$.next(entity);
 
+    const showGroupContext =
+      entity.containerObj &&
+      entity.containerObj.type === 'group' &&
+      !this.displayOptions.inSingleGroupFeed;
+
+    this.showGroupContext$.next(showGroupContext);
     return this;
   }
 

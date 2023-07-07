@@ -1,0 +1,29 @@
+@import 'defaults.scss';
+
+:host {
+  markdown ::ng-deep p {
+    font-size: 16px;
+    line-height: 21px;
+
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+
+    @include m-on-theme(dark) {
+      color: #ffffff;
+    }
+
+    @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+      font-size: 17px;
+      line-height: 24px;
+    }
+
+    @media screen and (max-width: $m-grid-max-mobile) {
+      padding-right: 0;
+      margin-bottom: 30px;
+      font-size: 16px;
+      line-height: 23px;
+      text-align: center;
+    }
+  }
+}

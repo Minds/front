@@ -91,7 +91,41 @@
         cursor: pointer;
 
         @include m-theme() {
-          accent-color: themed($m-blue);
+          accent-color: themed($m-link-text);
+          background-color: themed($m-white-always);
+        }
+      }
+    }
+
+    .m-boostAudienceTargetPlatformContainer {
+      &__header {
+        cursor: pointer;
+        @include heading4Bold;
+        @include unselectable;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+      }
+      &__summaryWrapper {
+        margin-top: $spacing2;
+      }
+      &__label {
+        @include body3Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      &__checkboxRow {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: $spacing6;
+
+        ::ng-deep m-formInput__checkbox {
+          .m-formInputCheckbox__custom {
+            margin-right: 0;
+          }
         }
       }
     }

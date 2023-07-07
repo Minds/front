@@ -6,7 +6,6 @@ import {
 import { MessengerConversationDockpanesService } from '../../../messenger/dockpanes/dockpanes.service';
 import { MessengerConversationBuilderService } from '../../../messenger/dockpanes/conversation-builder.service';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { FeaturesService } from '../../../../services/features.service';
 import { ApiService } from '../../../../common/api/api.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
@@ -35,7 +34,6 @@ export class ChannelActionsMessageComponent {
     protected conversationBuilder: MessengerConversationBuilderService,
     protected api: ApiService,
     protected configs: ConfigsService,
-    protected features: FeaturesService,
     protected cd: ChangeDetectorRef,
     private toaster: ToasterService
   ) {}

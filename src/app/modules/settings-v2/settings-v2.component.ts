@@ -1,19 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NestedMenu } from '../../common/layout/nested-menu/nested-menu.component';
 import { Session } from '../../services/session';
-import {
-  Router,
-  ActivatedRoute,
-  NavigationEnd,
-  ParamMap,
-} from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SettingsV2Service } from './settings-v2.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
-import { FeaturesService } from '../../services/features.service';
 import { Subscription } from 'rxjs';
-import { SupermindExperimentService } from '../experiments/sub-services/supermind-experiment.service';
 
 /**
  * Container that determines what form/menu(s)
@@ -31,7 +24,10 @@ export class SettingsV2Component implements OnInit {
   routeData: any;
   user: string | null = null;
   onMainNav: boolean = false;
-  hasYoutubeFeature: boolean = false;
+
+  // True if there is no secondary menu for this item
+  // e.g. affiliates program
+  singleLevelMenuId: string;
 
   protected paramMap$: Subscription;
 
@@ -54,6 +50,10 @@ export class SettingsV2Component implements OnInit {
         {
           label: $localize`:@@SETTINGS__PAYMENTS__LABEL:Payments`,
           id: 'payments',
+        },
+        {
+          label: $localize`:@@SETTINGS__AFFILIATES_PROGRAM__LABEL:Affiliates Program`,
+          id: 'affiliates-program',
         },
         { label: $localize`:@@SETTINGS__OTHER__LABEL:Other`, id: 'other' },
       ],
@@ -188,6 +188,10 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__PAYMENTS__RECURRING__LABEL:Recurring Payments`,
             id: 'recurring-payments',
           },
+          {
+            label: $localize`:@@SETTINGS__SUPERMIND__HEADER__LABEL:Supermind`,
+            id: 'supermind',
+          },
         ],
       },
     ],
@@ -248,18 +252,6 @@ export class SettingsV2Component implements OnInit {
       },
     ],
     other: [
-      {
-        header: {
-          label: $localize`:@@SETTINGS__OTHER__REFERRALS__HEADER__LABEL:Referrals`,
-          id: 'referrals',
-        },
-        items: [
-          {
-            label: $localize`:@@SETTINGS__OTHER__REFERRALS__REFERRALS__LABEL:Referrals`,
-            id: 'referrals',
-          },
-        ],
-      },
       {
         header: {
           label: $localize`:@@SETTINGS__OTHER__PRIVACY__HEADER__LABEL:Privacy`,
@@ -341,12 +333,8 @@ export class SettingsV2Component implements OnInit {
     protected session: Session,
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
-    protected toasterService: ToasterService,
-    public featuresService: FeaturesService,
-    private supermindExperiment: SupermindExperimentService
-  ) {
-    this.hasYoutubeFeature = this.featuresService.has('yt-importer');
-  }
+    protected toasterService: ToasterService
+  ) {}
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
@@ -385,7 +373,6 @@ export class SettingsV2Component implements OnInit {
       });
 
     // Conditionally show feature flagged items
-    this.addSupermindSettings();
     this.setProRoutes();
     this.setSecondaryPane();
     this.loadSettings();
@@ -428,9 +415,15 @@ export class SettingsV2Component implements OnInit {
 
   setSecondaryPane(): void {
     this.secondaryPaneIsMenu = false;
+    this.singleLevelMenuId = null;
+
     let snapshot = this.route.snapshot;
-    if (snapshot.firstChild && snapshot.firstChild.data['title']) {
-      // Is not a menu
+
+    if (snapshot.data['singleLevelMenuId']) {
+      // It's a component that doens't have a secondary menu
+      this.singleLevelMenuId = snapshot.data['singleLevelMenuId'];
+    } else if (snapshot.firstChild && snapshot.firstChild.data['title']) {
+      // It's a component nested in a secondary menu
       snapshot = snapshot.firstChild;
 
       if ('standardHeader' in snapshot.data) {
@@ -438,12 +431,11 @@ export class SettingsV2Component implements OnInit {
       } else {
         this.standardHeader = true;
       }
-    } else {
-      // Is a menu
-      if (snapshot.data['isMenu']) {
-        this.secondaryPaneIsMenu = snapshot.data['isMenu'];
-      }
+    } else if (snapshot.data['isMenu']) {
+      // It's a secondary menu
+      this.secondaryPaneIsMenu = snapshot.data['isMenu'];
     }
+
     this.routeData = snapshot.data;
   }
 
@@ -490,14 +482,5 @@ export class SettingsV2Component implements OnInit {
 
   shouldShowPlusMenuItem(): boolean {
     return !this.session.getLoggedInUser().plus;
-  }
-
-  private addSupermindSettings(): void {
-    if (this.supermindExperiment.isActive()) {
-      this.secondaryMenus.payments[0].items.push({
-        label: 'Supermind',
-        id: 'supermind',
-      });
-    }
   }
 }

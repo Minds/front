@@ -1,4 +1,4 @@
-<div class="m-userAggregator__avatarContainer">
+<div class="m-userAggregator__avatarContainer" *ngIf="avatarAmount > 0">
   <ng-container *ngFor="let user of users; let i = index">
     <m-hovercard
       *ngIf="i < avatarAmount"

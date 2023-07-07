@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Component, Input } from '@angular/core';
+import { Component, DebugElement, Input, PLATFORM_ID } from '@angular/core';
 import { NewsfeedSingleComponent } from './single.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,7 +8,6 @@ import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
-import { sessionMock } from '../../../../tests/session-mock.spec';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { Upload } from '../../../services/api/upload';
 import { ContextService } from '../../../services/context.service';
@@ -17,14 +16,15 @@ import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { MockService, MockComponent, MockDirective } from '../../../utils/mock';
-import { FeaturesService } from '../../../services/features.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { LoadingSpinnerComponent } from '../../../common/components/loading-spinner/loading-spinner.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { JsonLdService } from '../../../common/services/jsonld.service';
+import { RouterHistoryService } from '../../../common/services/router-history.service';
+import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 
 @Component({
   selector: 'minds-activity',
@@ -74,10 +74,14 @@ describe('NewsfeedSingleComponent', () => {
             selector: 'ng-container',
             inputs: ['m-clientMeta'],
           }),
+          MockComponent({
+            selector: 'm-ads-boost',
+            inputs: ['limit'],
+          }),
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [
-          { provide: Session, useValue: sessionMock },
+          { provide: Session, useValue: MockService(Session) },
           { provide: Client, useValue: clientMock },
           { provide: Upload, useValue: uploadMock },
           { provide: ContextService, useValue: contextServiceMock },
@@ -93,7 +97,6 @@ describe('NewsfeedSingleComponent', () => {
           },
           { provide: MetaService, useValue: MockService(MetaService) },
           { provide: EntitiesService, useValue: MockService(EntitiesService) },
-          { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: ConfigsService, useValue: MockService(ConfigsService) },
           { provide: HeadersService, useValue: MockService(HeadersService) },
           {
@@ -103,6 +106,20 @@ describe('NewsfeedSingleComponent', () => {
           {
             provide: ExperimentsService,
             useValue: MockService(ExperimentsService),
+          },
+          { provide: JsonLdService, useValue: MockService(JsonLdService) },
+          { provide: Location, useValue: MockService(Location) },
+          {
+            provide: RouterHistoryService,
+            useValue: MockService(RouterHistoryService),
+          },
+          {
+            provide: BoostModalV2LazyService,
+            useValue: MockService(BoostModalV2LazyService),
+          },
+          {
+            provide: PLATFORM_ID,
+            useValue: 'browser',
           },
         ],
       }).compileComponents();
@@ -135,8 +152,13 @@ describe('NewsfeedSingleComponent', () => {
       require_login: false,
     };
 
-    sessionMock.user.admin = false;
-    sessionMock.user.hide_share_buttons = false;
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+    (comp as any).session.isAdmin.and.returnValue(false);
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: '123',
+      admin: false,
+      hide_share_buttons: false,
+    });
 
     fixture.detectChanges();
 
@@ -188,7 +210,14 @@ describe('NewsfeedSingleComponent', () => {
     comp.activity = {
       spam: true,
     };
-    sessionMock.user.admin = true;
+
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: '123',
+      admin: true,
+      hide_share_buttons: false,
+    });
+
+    (comp as any).session.isAdmin.and.returnValue(true);
 
     fixture.detectChanges();
 
@@ -207,7 +236,11 @@ describe('NewsfeedSingleComponent', () => {
 
     expect(socialIcons).not.toBeNull();
 
-    sessionMock.user.hide_share_buttons = true;
+    (comp as any).session.getLoggedInUser.and.returnValue({
+      guid: '123',
+      admin: false,
+      hide_share_buttons: true,
+    });
 
     fixture.detectChanges();
 
@@ -371,5 +404,59 @@ describe('NewsfeedSingleComponent', () => {
     );
 
     expect((comp as any).metaService.setRobots).toHaveBeenCalledWith('noindex');
+  });
+
+  it('should determine when to show sidebar boosts', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+    (comp as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
+    comp.activity = {
+      ownerObj: {
+        guid: '234',
+      },
+    };
+
+    fixture.detectChanges();
+
+    expect(comp.shouldShowSidebarBoost()).toBeTrue();
+    const sidebarBoosts: DebugElement = fixture.debugElement.query(
+      By.css('m-ads-boost')
+    );
+    expect(sidebarBoosts).toBeTruthy();
+  });
+
+  it('should determine when NOT to show sidebar boosts because user is not logged in', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(false);
+    (comp as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
+    comp.activity = {
+      ownerObj: {
+        guid: '234',
+      },
+    };
+
+    fixture.detectChanges();
+
+    expect(comp.shouldShowSidebarBoost()).toBeFalse();
+    const sidebarBoosts: DebugElement = fixture.debugElement.query(
+      By.css('m-ads-boost')
+    );
+    expect(sidebarBoosts).toBeNull();
+  });
+
+  it('should determine when NOT to show sidebar boosts because it is the session users entity', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+    (comp as any).session.getLoggedInUser.and.returnValue({ guid: '123' });
+    comp.activity = {
+      ownerObj: {
+        guid: '123',
+      },
+    };
+
+    fixture.detectChanges();
+
+    expect(comp.shouldShowSidebarBoost()).toBeFalse();
+    const sidebarBoosts: DebugElement = fixture.debugElement.query(
+      By.css('m-ads-boost')
+    );
+    expect(sidebarBoosts).toBeNull();
   });
 });

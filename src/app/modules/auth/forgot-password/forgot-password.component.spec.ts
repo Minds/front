@@ -26,6 +26,7 @@ import { RegexService } from '../../../common/services/regex.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 
 @Component({
   selector: '',
@@ -95,6 +96,10 @@ describe('ForgotPasswordComponent', () => {
             useValue: MockService(ToasterService),
           },
           PageLayoutService,
+          {
+            provide: ResetPasswordExperimentService,
+            useValue: MockService(ResetPasswordExperimentService),
+          },
         ],
       }).compileComponents();
     })

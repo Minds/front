@@ -1,0 +1,58 @@
+@import 'defaults.scss';
+@import './two-column-layout.ng.scss';
+
+:host {
+  .m-onboardingV5__stepContentContainer {
+    margin-top: $leftContainerPaddingY;
+    padding-left: $leftContainerPaddingX;
+    padding-right: $leftContainerPaddingX;
+    overflow-y: scroll;
+    @include vertical-scroll;
+
+    @include vertical-scroll(
+      $scrollbarContrastColor: '#{$m-bgColor--contrast}'
+    );
+
+    .m-onboardingV5__stepTitle {
+      margin-top: $spacing12;
+
+      @include heading3Bold;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-top: $spacing6;
+      }
+    }
+
+    .m-onboardingV5__stepDescription {
+      margin-top: $spacing8;
+
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-onboardingV5__footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    padding: $spacing6 $leftContainerPaddingX;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    m-button {
+      display: block;
+      width: 100%;
+
+      ::ng-deep button {
+        width: 100%;
+      }
+    }
+  }
+}

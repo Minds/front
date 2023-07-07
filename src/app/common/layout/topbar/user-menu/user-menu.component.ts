@@ -9,10 +9,9 @@ import {
 import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../services/theme.service';
 import { Subscription } from 'rxjs';
-import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
-import { DynamicBoostExperimentService } from '../../../../modules/experiments/sub-services/dynamic-boost-experiment.service';
+import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 
 /**
  * Menu that contains important links we want to be extra accessible to users
@@ -28,7 +27,6 @@ import { DynamicBoostExperimentService } from '../../../../modules/experiments/s
 export class UserMenuComponent implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;
 
-  boostConsoleLink: string = '/boost/console';
   isDark: boolean = false;
   themeSubscription: Subscription;
 
@@ -36,9 +34,8 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
-    protected featuresService: FeaturesService,
     private helpdeskRedirectService: HelpdeskRedirectService,
-    public dynamicBoostExperiment: DynamicBoostExperimentService
+    private boostModalLazyService: BoostModalV2LazyService
   ) {}
 
   ngOnInit(): void {
@@ -47,10 +44,6 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
-
-    if (this.dynamicBoostExperiment.isActive()) {
-      this.boostConsoleLink = '/boost/boost-console';
-    }
   }
 
   getCurrentUser(): MindsUser {
@@ -79,6 +72,14 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.themeSubscription.unsubscribe();
+    this.themeSubscription?.unsubscribe();
+  }
+
+  /**
+   * Opens boost modal for a boost on the sessions logged in channel.
+   * @returns { Promise<void> }
+   */
+  public async openBoostChannelModal(): Promise<void> {
+    await this.boostModalLazyService.open(this.session.getLoggedInUser());
   }
 }

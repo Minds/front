@@ -21,7 +21,6 @@ import { Session } from '../../../services/session';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { PopoverComponent } from '../popover-validation/popover.component';
 import { CaptchaComponent } from '../../captcha/captcha.component';
-import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
 import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
@@ -29,6 +28,8 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { PasswordRiskValidator } from '../password-risk.validator';
 import { AnalyticsService } from './../../../services/analytics';
 import { debounceTime, Subscription } from 'rxjs';
+import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
+import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -76,6 +77,8 @@ export class RegisterForm implements OnInit, OnDestroy {
   @ViewChild(FriendlyCaptchaComponent)
   friendlyCaptchaEl: FriendlyCaptchaComponent;
 
+  private passwordInputHasFocus: boolean = false;
+
   // subscriptions.
   private passwordPopoverSubscription: Subscription;
   private passwordRiskCheckStatusSubscription: Subscription;
@@ -90,7 +93,9 @@ export class RegisterForm implements OnInit, OnDestroy {
     private routerHistoryService: RouterHistoryService,
     private usernameValidator: UsernameValidator,
     private passwordRiskValidator: PasswordRiskValidator,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private onboardingV5Service: OnboardingV5Service,
+    private onboardingV5ExperimentService: OnboardingV5ExperimentService
   ) {}
 
   ngOnInit(): void {
@@ -127,13 +132,26 @@ export class RegisterForm implements OnInit, OnDestroy {
     this.passwordPopoverSubscription = this.form
       .get('password')
       .valueChanges.subscribe(str => {
-        this.popover.show();
+        if (str.length === 0) {
+          this.popover.hide();
+        } else {
+          setTimeout(() => {
+            // check length again after timeout and whether element still has focus.
+            if (this.passwordInputHasFocus && str.length > 0) {
+              this.popover.show();
+            }
+          }, 350);
+        }
       });
 
     this.passwordRiskCheckStatusSubscription = this.form
       .get('password')
       .statusChanges.subscribe((status: any) => {
         this.passwordRiskCheckStatus = status;
+
+        if (status === 'VALID') {
+          this.popover.hideWithDelay();
+        }
       });
 
     this.usernameTouchedSubscription = this.form
@@ -189,15 +207,30 @@ export class RegisterForm implements OnInit, OnDestroy {
 
     let opts = { ...this.form.value };
 
-    const friendlyCaptchaEnabled = this.isFriendlyCaptchaEnabled();
-    opts['friendly_captcha_enabled'] = friendlyCaptchaEnabled;
-
     this.client
       .post('api/v1/register', opts)
-      .then((data: any) => {
+      .then(async (data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
         this.inProgress = false;
+
+        // If onboarding v5 is globally enabled, and enrollment is enabled,
+        // set completed state to false. Modal showing is delegated to app component
+        // subscription to login state so that we do not call to open the modal twice.
+        if (
+          this.onboardingV5ExperimentService.isGlobalOnSwitchActive() &&
+          this.onboardingV5ExperimentService.isEnrollmentActive()
+        ) {
+          try {
+            await this.onboardingV5Service.setOnboardingCompletedState(
+              false,
+              data.user
+            );
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
         this.session.login(data.user);
         this.done.next(data.user);
       })
@@ -205,9 +238,7 @@ export class RegisterForm implements OnInit, OnDestroy {
         this.inProgress = false;
 
         // refresh CAPTCHA.
-        friendlyCaptchaEnabled
-          ? this.friendlyCaptchaEl.reset()
-          : this.captchaEl.refresh();
+        this.friendlyCaptchaEl.reset();
 
         if (e.status === 'failed') {
           // incorrect login details
@@ -233,15 +264,18 @@ export class RegisterForm implements OnInit, OnDestroy {
   }
 
   onPasswordFocus() {
-    if (this.form.value.password.length > 0) {
+    this.passwordInputHasFocus = true;
+    if (
+      this.passwordRiskCheckStatus !== 'VALID' &&
+      this.form.value.password.length > 0
+    ) {
       this.popover.show();
     }
   }
 
   onPasswordBlur() {
-    if (!isMobileOrTablet()) {
-      this.popover.hide();
-    }
+    this.passwordInputHasFocus = false;
+    this.popover.hide();
   }
 
   onShowLoginFormClick() {
@@ -259,13 +293,6 @@ export class RegisterForm implements OnInit, OnDestroy {
       this.form.get(field).touched &&
       this.form.get(field).dirty
     );
-  }
-
-  /**
-   * True if FriendlyCAPTCHA feat flag is enabled.
-   */
-  public isFriendlyCaptchaEnabled(): boolean {
-    return this.experiments.hasVariation('engine-2272-captcha', true);
   }
 
   get username() {

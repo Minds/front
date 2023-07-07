@@ -8,7 +8,6 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { FeaturesService } from '../../services/features.service';
 import { Subscription } from 'rxjs';
 
 @Component({

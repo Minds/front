@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BoostModalPanel, BoostSubject } from '../boost-modal-v2.types';
 import { BoostModalV2Service } from '../services/boost-modal-v2.service';
@@ -12,7 +12,7 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
     <div class="m-modalV2__header">
       <div class="m-boostModalV2__headerLeft">
         <m-icon
-          *ngIf="(activePanel$ | async) !== BoostModalPanel.AUDIENCE"
+          *ngIf="previousPanel$ | async"
           iconId="chevron_left"
           (click)="openPreviousPanel()"
         ></m-icon>
@@ -56,6 +56,10 @@ export class BoostModalV2HeaderComponent {
   // currently active panel.
   public readonly activePanel$: Observable<BoostModalPanel> = this.service
     .activePanel$;
+
+  // previous panel in the modal flow, if any.
+  public readonly previousPanel$: Observable<BoostModalPanel> = this.service
+    .previousPanel$;
 
   constructor(private service: BoostModalV2Service) {}
 

@@ -1,0 +1,40 @@
+<!-- Header -->
+<span class="m-affiliatesEarnings__title" i18n="@@AFFILIATES__EARNINGS__TITLE">
+  Total Earnings
+</span>
+<!--Total amount -->
+<p
+  class="m-affiliatesEarnings__description"
+  i18n="@@AFFILIATES__EARNINGS__DESCRIPTION"
+>
+  Your earnings on Minds through the Affiliate Program for both existing and new
+  Minds members.
+</p>
+<span class="m-affiliatesEarnings__title m-affiliatesEarnings__titleAmount">
+  <ng-container
+    *ngIf="metricsLoading$ | async; else totalEarningsLoadedTemplate"
+    >...</ng-container
+  >
+  <ng-template #totalEarningsLoadedTemplate>
+    <ng-container *ngIf="!(metricsError$ | async); else metricsErrorTemplate">
+      {{ totalEarnings$ | async | currency: 'USD' }}
+    </ng-container>
+    <ng-template #metricsErrorTemplate>
+      <span
+        class="m-affiliatesEarnings__error"
+        i18n="@@AFFILIATES__EARNINGS__CURRENTLY_UNABLE_TO_CALCULATE"
+        >Currently unable to calculate</span
+      >
+    </ng-template>
+  </ng-template>
+</span>
+<!-- Buttons -->
+<div class="m-affiliatesEarnings__buttons">
+  <a [routerLink]="['/wallet/cash/earnings']">
+    <m-button
+      ><ng-container i18n="@@AFFILIATES__EARNINGS__VIEW_BUTTON">
+        View earnings</ng-container
+      ></m-button
+    ></a
+  >
+</div>

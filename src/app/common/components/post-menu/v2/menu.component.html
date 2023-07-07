@@ -22,7 +22,7 @@
       *ngIf="shouldShowEdit()"
     >
       <span i18n="@@M__ACTION__EDIT_POST">
-        Edit Post
+        Edit post
       </span>
     </m-dropdownMenu__item>
 
@@ -35,12 +35,34 @@
       </span>
     </m-dropdownMenu__item>
 
+    <!-- Disable vs Allow Comments -->
+    <ng-container
+      *ngIf="service.entity.ownerObj.guid == session.getLoggedInUser().guid"
+    >
+      <ng-container
+        *ngIf="service.entity.allow_comments; else enableCommentsTemplate"
+      >
+        <m-dropdownMenu__item (click)="onSelectedOption('disable-comments')">
+          <span i18n="@@M__ACTION__DISABLE_COMMENTS">
+            Disable comments
+          </span>
+        </m-dropdownMenu__item>
+      </ng-container>
+      <ng-template #enableCommentsTemplate>
+        <m-dropdownMenu__item (click)="onSelectedOption('allow-comments')">
+          <span i18n="@@M__ACTION__ENABLE_COMMENTS">
+            Enable comments
+          </span>
+        </m-dropdownMenu__item>
+      </ng-template>
+    </ng-container>
+
     <m-dropdownMenu__item
       (click)="onSelectedOption('boost')"
       *ngIf="shouldShowBoost()"
     >
       <span i18n="@@M__ACTION__BOOST_POST">
-        Boost Post
+        Boost post
       </span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
@@ -87,7 +109,7 @@
         "
       >
         <span i18n="@@M__ACTION__REMOVE_PIN">
-          Remove Pin
+          Remove pin
         </span>
       </m-dropdownMenu__item>
     </ng-container>
@@ -122,7 +144,7 @@
         disabled
       >
         <span i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS">
-          Follow Post
+          Follow post
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
@@ -130,7 +152,7 @@
         *ngIf="(service.isFollowing$ | async) === true"
       >
         <span i18n="@@COMMON__POST_MENU__UNFOLLOW_NOTIFICATIONS">
-          Un-follow Post
+          Un-follow post
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
@@ -138,7 +160,7 @@
         *ngIf="(service.isFollowing$ | async) === false"
       >
         <span i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS">
-          Follow Post
+          Follow post
         </span>
       </m-dropdownMenu__item>
     </ng-container>
@@ -163,7 +185,7 @@
         *ngIf="(service.isBlocked$ | async) === false"
       >
         <span i18n="@@COMMON__POST_MENU__BLOCK">
-          Block User
+          Block user
         </span>
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
@@ -171,7 +193,7 @@
         *ngIf="(service.isBlocked$ | async) === true"
       >
         <span i18n="@@COMMON__POST_MENU__UNBLOCK">
-          Unblock User
+          Unblock user
         </span>
       </m-dropdownMenu__item>
     </ng-container>
@@ -189,7 +211,7 @@
     <ng-container *ngIf="session.isAdmin()">
       <m-dropdownMenu__item [externalLink]="getUserSupersetUrl()">
         <span>
-          View Superset Dashboard
+          View Superset dashboard
         </span>
       </m-dropdownMenu__item>
     </ng-container>
@@ -205,9 +227,10 @@
       *ngIf="shouldShowUndoRemind()"
     >
       <span i18n="@@M__ACTION__UNDO_REMIND">
-        Undo Remind
+        Undo remind
       </span>
     </m-dropdownMenu__item>
+
     <!-- REPORT -->
     <m-dropdownMenu__item
       (click)="onSelectedOption('report')"
@@ -218,7 +241,7 @@
       red="true"
     >
       <span i18n="Report as notify something@@M__ACTION__REPORT_POST">
-        Report Post
+        Report post
       </span>
     </m-dropdownMenu__item>
     <!-- DELETE -->
@@ -228,7 +251,7 @@
       red="true"
     >
       <span i18n="@@M__ACTION__DELETE_POST">
-        Delete Post
+        Delete post
       </span>
     </m-dropdownMenu__item>
   </ul>

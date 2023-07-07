@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ChangeDetectorRef, DebugElement, ElementRef } from '@angular/core';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator.component';
@@ -12,7 +11,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { By } from '@angular/platform-browser';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { Router } from '@angular/router';
 import { BoostFeedService } from '../services/boost-feed.service';
 
@@ -73,10 +71,6 @@ describe('NewsfeedBoostRotatorComponent', () => {
             useValue: MockService(ChangeDetectorRef),
           },
           {
-            provide: FeaturesService,
-            useValue: MockService(FeaturesService),
-          },
-          {
             provide: BoostFeedService,
             useValue: MockService(BoostFeedService, {
               has: ['feed$'],
@@ -88,10 +82,6 @@ describe('NewsfeedBoostRotatorComponent', () => {
                 init: async (): Promise<void> => {},
               },
             }),
-          },
-          {
-            provide: DynamicBoostExperimentService,
-            useValue: MockService(DynamicBoostExperimentService),
           },
           {
             provide: ConfigsService,

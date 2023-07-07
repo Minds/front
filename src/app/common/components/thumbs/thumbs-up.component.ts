@@ -117,7 +117,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     let data = {
       client_meta: this.clientMeta.build({
         campaign: this.object['urn'],
-        medium: this.object['boosted'] ? 'boost' : 'feed',
       }),
     };
 

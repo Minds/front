@@ -15,11 +15,11 @@ import {
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
-import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { Router } from '@angular/router';
 import { RegexService } from '../../../common/services/regex.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -62,10 +62,10 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     fb: UntypedFormBuilder,
     private zone: NgZone,
     private userAvatarService: UserAvatarService,
-    private featuresService: FeaturesService,
     private authModal: AuthModalService,
     private router: Router,
-    private regex: RegexService
+    private regex: RegexService,
+    private resetPasswordExperiment: ResetPasswordExperimentService
   ) {
     super();
     this.form = fb.group({
@@ -180,5 +180,11 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
    */
   public onForgotPasswordClick(): void {
     this.done.emit(true);
+
+    if (this.resetPasswordExperiment.isActive()) {
+      this.router.navigate(['/'], { queryParams: { resetPassword: true } });
+    } else {
+      this.router.navigate(['/forgot-password']);
+    }
   }
 }

@@ -1,0 +1,74 @@
+@import 'defaults';
+
+:host {
+  .m-publisherRecommendationsModal {
+    &__header {
+      position: relative;
+      text-align: center;
+
+      h4 {
+        margin: 0;
+        padding-bottom: 30px;
+        font-size: 24px;
+        font-weight: 500;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      .m-publisherRecommendationsModalHeader__subtitle {
+        margin: 0 0 1rem 0;
+        font-size: 16px;
+        font-weight: 400;
+        text-align: center;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      .m-publisherRecommendationsModalHeader__skipButton {
+        display: none;
+
+        @media screen and (max-width: $max-mobile) {
+          display: block;
+          position: absolute;
+          top: 36px;
+          right: 30px;
+          @include m-theme() {
+            color: themed($m-action);
+          }
+        }
+      }
+    }
+    &__footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: 25px 45px;
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-bottom: 1rem !important;
+        padding: 20px;
+        ::ng-deep m-button {
+          margin-right: 0;
+          width: 100%;
+          .m-button {
+            width: 100%;
+          }
+        }
+      }
+
+      .m-publisherRecommendationsModalFooter__skipButton {
+        margin-right: $spacing4;
+        @media screen and (max-width: $max-mobile) {
+          display: none;
+        }
+      }
+    }
+  }
+  .m-publisherRecommendationsModal__closeButton {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
+}

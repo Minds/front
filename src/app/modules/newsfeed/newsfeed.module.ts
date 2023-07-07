@@ -32,7 +32,6 @@ import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
 import { TopHighlightsComponent } from './feeds/top-highlights/top-highlights.component';
-import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
 import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
 import { ActivityModule } from './activity/activity.module';
@@ -41,6 +40,9 @@ import { VirtualMinimapComponent } from './feed/virtual-minimap';
 import { FeedComponent } from './feed/feed.component';
 import { VirtualScrollerModule } from './feed/virtual-scroller';
 import { PathMatch } from '../../common/types/angular.types';
+import { NewsfeedTabsComponent } from './feeds/tabs/tabs.component';
+import { NewsfeedGqlComponent } from './feeds/newsfeed-gql.component';
+import { NewsfeedExperimentComponent } from './feeds/newsfeed-experiment.component';
 
 const routes: Routes = [
   {
@@ -63,13 +65,13 @@ const routes: Routes = [
       },
       {
         path: 'subscriptions',
-        component: NewsfeedSubscribedComponent,
+        component: NewsfeedExperimentComponent,
         pathMatch: 'full' as PathMatch,
         canActivate: [FeedAlgorithmRedirectGuard],
       },
       {
         path: 'subscriptions/:algorithm',
-        component: NewsfeedSubscribedComponent,
+        component: NewsfeedExperimentComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
           title: 'Newsfeed',
@@ -118,10 +120,12 @@ const routes: Routes = [
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
     TopHighlightsComponent,
-    FeedTypePopoverComponent,
     NewsfeedFeedItemComponent,
     VirtualMinimapComponent,
     FeedComponent,
+    NewsfeedTabsComponent,
+    NewsfeedGqlComponent,
+    NewsfeedExperimentComponent,
   ],
   providers: [
     NewsfeedService,

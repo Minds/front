@@ -10,7 +10,6 @@ import {
 
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
-import { WalletService } from '../../../services/wallet';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { CounterChangeFadeIn } from '../../../animations';
 import { ToasterService } from '../../services/toaster.service';
@@ -62,7 +61,6 @@ export class ThumbsDownButton implements DoCheck {
     private cd: ChangeDetectorRef,
     public session: Session,
     public client: Client,
-    public wallet: WalletService,
     private authModal: AuthModalService,
     private toast: ToasterService
   ) {}

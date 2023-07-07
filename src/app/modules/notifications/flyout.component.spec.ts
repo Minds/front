@@ -14,7 +14,6 @@ import { NotificationsFlyoutComponent } from './flyout.component';
 import { MockComponent, MockDirective } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NavigationStart, Router } from '@angular/router';
-import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
 
 describe('NotificationsFlyoutComponent', () => {
   let comp: NotificationsFlyoutComponent;
@@ -44,7 +43,6 @@ describe('NotificationsFlyoutComponent', () => {
           ['onVisible']
         ),
         NotificationsFlyoutComponent,
-        IfFeatureDirective,
       ],
       imports: [RouterTestingModule],
       providers: [

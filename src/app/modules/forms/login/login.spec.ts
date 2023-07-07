@@ -17,14 +17,19 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockDirective, MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/multi-factor-auth-service';
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
-import { Router } from '@angular/router';
 import { RegexService } from '../../../common/services/regex.service';
+import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
+import { Router } from '@angular/router';
+
+export class RouterStub {
+  url = '';
+  navigate(commands: any[], extras?: any) {}
+}
 
 describe('LoginForm', () => {
   let comp: LoginForm;
@@ -104,7 +109,6 @@ describe('LoginForm', () => {
           { provide: Session, useValue: sessionMock },
           { provide: Client, useValue: clientMock },
           { provide: ConfigsService, useValue: MockService(ConfigsService) },
-          { provide: FeaturesService, useValue: MockService(FeaturesService) },
           {
             provide: AuthModalService,
             useValue: MockService(AuthModalService),
@@ -122,7 +126,13 @@ describe('LoginForm', () => {
               },
             }),
           },
+          { provide: Router, useClass: RouterStub },
           RegexService,
+          { provide: Router, useClass: RouterStub },
+          {
+            provide: ResetPasswordExperimentService,
+            useValue: MockService(ResetPasswordExperimentService),
+          },
         ],
       }).compileComponents(); // compile template and css
     })

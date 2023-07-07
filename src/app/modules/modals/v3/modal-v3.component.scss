@@ -9,6 +9,7 @@
   pointer-events: auto;
 
   @include m-theme() {
+    color: themed($m-textColor--primary);
     background-color: themed($m-bgColor--primary);
   }
   background-clip: unset;
@@ -41,6 +42,13 @@ body.modal-open {
   .modal-xl {
     max-width: 1440px !important;
   }
+}
+// ---------------------------------------------------
+// CUSTOM SIZES
+// ---------------------------------------------------
+// smd is in between small (sm) and medium (md)
+.modal-smd {
+  max-width: 400px;
 }
 
 // ---------------------------------------------------

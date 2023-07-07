@@ -34,7 +34,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'Roboto', Helvetica, sans-serif;
+  font-family: 'Inter', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -44,6 +44,12 @@ h1 {
 
 p {
   word-wrap: break-word;
+}
+
+a {
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
 }
 
 .m-noshadow {
@@ -141,7 +147,7 @@ minds-topbar {
 
 .mdl-tabs__tab.is-active {
   @include m-theme() {
-    border-bottom: 2px solid themed($m-amber);
+    border-bottom: 2px solid themed($m-action);
   }
 }
 

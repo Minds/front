@@ -24,7 +24,18 @@
       <div class="m-settingsV2__settingsView">
         <div class="m-settingsV2__viewWrapper">
           <div class="m-formWrapper" [hidden]="!init">
-            <router-outlet (activate)="onActivate($event)"></router-outlet>
+            <router-outlet
+              *ngIf="!singleLevelMenuId; else singleLevelComponentSwitch"
+              (activate)="onActivate($event)"
+            ></router-outlet>
+
+            <ng-template #singleLevelComponentSwitch>
+              <ng-container [ngSwitch]="singleLevelMenuId">
+                <m-settingsV2__affiliates
+                  *ngSwitchCase="'affiliates-program'"
+                ></m-settingsV2__affiliates>
+              </ng-container>
+            </ng-template>
           </div>
           <div class="m-formWrapper" [hidden]="init">
             <m-loadingSpinner [inProgress]="!init"></m-loadingSpinner>

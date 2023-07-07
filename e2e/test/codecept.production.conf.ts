@@ -68,6 +68,7 @@ export const config: CustomMainConfig = {
       video: true,
       browser: process.env.profile || 'chromium',
       restart: 'session',
+      userAgent: 'mindsbot',
       chromium: {
         browserWSEndpoint: {
           wsEndpoint: `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(
@@ -109,6 +110,7 @@ export const config: CustomMainConfig = {
     channelPage: './pages/channelPage.ts',
     commonPage: './pages/commonPage.ts',
     devtoolsPage: './pages/devtoolsPage.ts',
+    groupsMembershipPage: './pages/groupsMembershipPage.ts',
     loginPage: './pages/loginPage.ts',
     newsfeedPage: './pages/newsfeedPage.ts',
     registerPage: './pages/registerPage.ts',
@@ -135,11 +137,27 @@ export const config: CustomMainConfig = {
     topbarComponent: './fragments/topbarComponent.ts',
     feedNoticeComponent: './fragments/feedNoticeComponent.ts',
     boostModalComponent: './fragments/boostModalComponent.ts',
+    contentSettingsComponent: './fragments/contentSettingsComponent.ts',
+    multiFactorModalComponent: './fragments/multiFactorModalComponent.ts',
+    publisherRecommendationsModalComponent:
+      './fragments/publisherRecommendationsModalComponent.ts',
+    onboardingV5ModalComponent:
+      './fragments/onboardingV5/onboardingV5ModalComponent.ts',
+    onboardingV5VerifyEmailComponent:
+      './fragments/onboardingV5/onboardingV5VerifyEmailComponent.ts',
+    onboardingV5TagSelectorComponent:
+      './fragments/onboardingV5/onboardingV5TagSelectorComponent.ts',
+    onboardingV5SurveyComponent:
+      './fragments/onboardingV5/onboardingV5SurveyComponent.ts',
+    onboardingV5PublisherRecsComponent:
+      './fragments/onboardingV5/onboardingV5PublisherRecsComponent.ts',
+    onboardingV5CompletionPanelComponent:
+      './fragments/onboardingV5/onboardingV5CompletionPanelComponent.ts',
   },
   name: 'Minds Codecept E2E tests',
   gherkin: {
     features: './features/*.feature',
-    steps: './steps/*-steps.ts',
+    steps: './steps/**/*-steps.ts',
   },
   plugins: {
     pauseOnFail: {},

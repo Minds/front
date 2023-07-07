@@ -13,9 +13,9 @@ import {
 } from '@angular/core';
 import { FeaturedContentService } from './featured-content.service';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
-import { FeaturesService } from '../../../services/features.service';
-import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 import { isPlatformBrowser } from '@angular/common';
+import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
+import { BoostFeedOpts } from '../../../modules/newsfeed/services/boost-feed.service';
 
 /**
  * Use to insert activity boosts into a feed
@@ -33,6 +33,7 @@ export class FeaturedContentComponent implements OnInit {
   @Input() slot: number = -1;
   @Input() displayOptions = { isFeed: true };
   @Input() showHeader: boolean = false;
+  @Input() servedByGuid: string = null; // channel serving the boost.
 
   @ViewChild(DynamicHostDirective)
   dynamicHost: DynamicHostDirective;
@@ -41,13 +42,16 @@ export class FeaturedContentComponent implements OnInit {
     protected featuredContentService: FeaturedContentService,
     protected componentFactoryResolver: ComponentFactoryResolver,
     protected cd: ChangeDetectorRef,
-    protected featuresService: FeaturesService,
     protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async ngOnInit() {
-    await this.featuredContentService.onInit();
+    const opts: BoostFeedOpts = {};
+    if (this.servedByGuid) {
+      opts.servedByGuid = this.servedByGuid;
+    }
+    await this.featuredContentService.onInit(opts);
     if (isPlatformBrowser(this.platformId)) this.load();
   }
 

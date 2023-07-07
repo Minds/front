@@ -24,10 +24,9 @@ import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { catchError, take } from 'rxjs/operators';
-import { BoostPartnersExperimentService } from '../../../experiments/sub-services/boost-partners-experiment.service';
 import { AnalyticsService } from '../../../../services/analytics';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
-import { MindsUser } from '../../../../interfaces/entities';
+import { ComposerService } from '../../../composer/services/composer.service';
 
 /**
  * Container for channel feed, including filters and composer (if user is channel owner)
@@ -37,7 +36,7 @@ import { MindsUser } from '../../../../interfaces/entities';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.ng.scss'],
-  providers: [FeedService, FeedsService],
+  providers: [FeedService, FeedsService, ComposerService],
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
@@ -89,7 +88,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   feed: Object[] = [];
 
-  readonly channelRecommendationTitle = $localize`:@@M__CHANNEL_RECOMMENDATION__CONSIDER_SUBSCRIBING_TO:Consider subscribing to`;
+  readonly publisherRecommendationsTitle = $localize`:@@M__CHANNEL_RECOMMENDATION__CONSIDER_SUBSCRIBING_TO:Consider subscribing to`;
 
   /**
    * Constructor
@@ -108,7 +107,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ComposerModalService,
     private injector: Injector,
-    public boostPartnersExperiment: BoostPartnersExperimentService,
     private analyticsService: AnalyticsService,
     private clientMeta: ClientMetaDirective,
     @Inject(PLATFORM_ID) platformId: Object
@@ -149,9 +147,13 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
         this.feed = feed;
       }),
       this.feedsUpdate.postEmitter.subscribe(newPost => {
+        const currentChannelGuid: string = this.service.guid$.getValue();
+
         if (
-          this.feedService.guid$.getValue() ===
-          this.session.getLoggedInUser().guid
+          // if the current channel is owned by the logged in user.
+          currentChannelGuid === this.session.getLoggedInUser().guid &&
+          // if new activity is a post to the users channel.
+          currentChannelGuid === newPost?.container_guid
         ) {
           this.prepend(newPost);
         }
@@ -264,7 +266,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   }
 
   /**
-   * Determines whether the channel recommendations should be shown
+   * Determines whether the publisher recommendations should be shown
    * @returns { Observable<boolean> }
    */
   get channelRecommendationVisible$(): Observable<boolean> {
@@ -286,7 +288,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    */
   public shouldShowBoostInPosition(position: number): boolean {
     return (
-      this.boostPartnersExperiment.isActive() &&
+      this.service.channel$.getValue()?.guid !==
+        this.session.getLoggedInUser()?.guid &&
       // Displays in the 2nd slot and then every 6 posts
       ((position > 4 && position % 5 === 0) || position === 0)
     );

@@ -27,7 +27,6 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { CookieService } from '../../../common/services/cookie.service';
-import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { SiteService } from '../../../common/services/site.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
@@ -35,6 +34,9 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { GroupsSearchService } from './feed/search.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ModernGroupsExperimentService } from '../../experiments/sub-services/modern-groups-experiment.service';
+import { GroupMembershipChangeOuput } from '../../../common/components/group-membership-button/group-membership-button.component';
+import { GroupAccessType } from '../v2/group.types';
 
 /**
  * Base component for a group. Includes access (e.g. nsfw overlay),
@@ -66,7 +68,7 @@ export class GroupsProfile {
   error: string;
   paramsSubscription: Subscription;
   childParamsSubscription: Subscription;
-  queryParamsSubscripton: Subscription;
+  queryParamsSubscription: Subscription;
   groupsSearchQuerySubscription: Subscription;
 
   socketRoomName: string;
@@ -95,13 +97,13 @@ export class GroupsProfile {
     private updateMarkers: UpdateMarkersService,
     configs: ConfigsService,
     private cookieService: CookieService,
-    featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private pageLayoutService: PageLayoutService,
     protected toasterService: ToasterService,
     private injector: Injector,
     protected publisherSearchModal: PublisherSearchModalService,
-    protected groupsSearch: GroupsSearchService
+    protected groupsSearch: GroupsSearchService,
+    private modernGroupsExperiment: ModernGroupsExperimentService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -133,6 +135,21 @@ export class GroupsProfile {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
+        /**
+         * This is a temporary workaround to allow editing in modern groups.
+         * Users are redirected here to edit, and then navigate back to modern
+         * groups on save.
+         */
+        if (this.route.snapshot.queryParamMap.has('editing')) {
+          this.editing = !!this.route.snapshot.queryParamMap.get('editing');
+        }
+        // Redirect to modern groups, unless we're editing
+        if (this.modernGroupsExperiment.isActive() && !this.editing) {
+          this.router.navigate(['group', params['guid'], 'feed'], {
+            replaceUrl: true,
+          });
+        }
+
         let changed = params['guid'] !== this.guid;
 
         this.guid = params['guid'];
@@ -208,7 +225,8 @@ export class GroupsProfile {
     if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
     if (this.childParamsSubscription)
       this.childParamsSubscription.unsubscribe();
-    if (this.queryParamsSubscripton) this.queryParamsSubscripton.unsubscribe();
+    if (this.queryParamsSubscription)
+      this.queryParamsSubscription.unsubscribe();
 
     if (this.videoChatActiveSubscription)
       this.videoChatActiveSubscription.unsubscribe();
@@ -353,6 +371,14 @@ export class GroupsProfile {
 
     this.editing = false;
     this.editDone = true;
+
+    // Redirect back to modern groups after editing is complete
+    if (this.modernGroupsExperiment.isActive()) {
+      this.router.navigate(['group', this.group.guid, 'feed'], {
+        queryParams: { editing: false },
+      });
+    }
+
     this.detectChanges();
   }
 
@@ -385,11 +411,16 @@ export class GroupsProfile {
     );
   }
 
-  change_membership(membership: any) {
-    if (!membership.error || membership.error === 'already_a_member') {
+  /**
+   * If the user's isMember status changes, reload the page
+   * @param membership fired when membership changes
+   */
+  change_membership(membership: GroupMembershipChangeOuput) {
+    if (
+      this.group['is:member'] !== membership.isMember &&
+      this.group.membership !== GroupAccessType.PUBLIC
+    ) {
       this.load();
-    } else {
-      this.error = membership.error;
     }
   }
 
@@ -479,7 +510,9 @@ export class GroupsProfile {
 
   onOptionsChange(options) {
     this.editing = options.editing;
-    if (options.editing === false) this.save();
+    if (options.editing === false) {
+      this.save();
+    }
   }
 
   @HostListener('window:resize') detectWidth(force: boolean = false) {
@@ -530,4 +563,9 @@ export class GroupsProfile {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+  /**
+   * Go to modern group layout
+   */
+  navigateToModernGroup(): void {}
 }

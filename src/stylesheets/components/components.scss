@@ -44,7 +44,7 @@
       text-transform: uppercase;
       letter-spacing: 4px;
       font-size: 14px;
-      font-family: 'Roboto', Helvetica;
+      font-family: 'Inter', Helvetica;
     }
   }
   input[type='file'] {
@@ -196,13 +196,13 @@ m-channel--carousel {
     &.mdl-button {
       &:hover {
         @include m-theme() {
-          background-color: themed($m-blue-grey-700);
+          background-color: themed($m-grey-700);
         }
         cursor: pointer;
       }
       &:active {
         @include m-theme() {
-          background-color: themed($m-blue-grey-600);
+          background-color: themed($m-grey-600);
         }
       }
     }
@@ -546,7 +546,7 @@ svg.m-facebook-icon {
     color: inherit;
     font-size: 13px;
     font-weight: 400;
-    letter-spacing: 1px;
+    letter-spacing: -0.001em;
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
@@ -562,7 +562,7 @@ svg.m-facebook-icon {
 
   .m-tab-bar--active-tab {
     @include m-theme() {
-      color: themed($m-blue);
+      color: themed($m-link-text);
     }
   }
 }
@@ -577,7 +577,7 @@ svg.m-facebook-icon {
   &:after {
     content: 'M';
 
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     text-decoration: line-through;
     font-style: normal;
@@ -642,13 +642,13 @@ m-text-input--autocomplete-menu {
         white-space: nowrap;
         text-decoration: none;
         @include m-theme() {
-          color: themed($m-grey-900);
+          color: themed($m-textColor--primary);
         }
       }
       a:hover {
         @include m-theme() {
-          color: themed($m-grey-950);
-          background-color: themed($m-grey-50);
+          color: themed($m-textColor--primary);
+          background-color: themed($m-bgColor--secondary);
         }
       }
 

@@ -1,0 +1,56 @@
+@import 'defaults.scss';
+
+:host {
+  .m-group__about {
+    display: flex;
+    flex-flow: column nowrap;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column-reverse;
+    }
+  }
+  .m-groupAbout__section--memberPreviews {
+    display: block;
+    margin-top: 0;
+    margin-bottom: $spacing3;
+  }
+
+  .m-groupAbout__section--desc {
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    .m-groupAboutDesc__content {
+      white-space: pre-line;
+      word-break: break-word;
+      max-width: 100%;
+      max-height: 70vh;
+
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  .m-groupAbout__section--memberPreviews {
+    ::ng-deep m-userAggregator {
+      flex-flow: row nowrap;
+    }
+  }
+
+  m-group__header & {
+    .m-groupAbout__section {
+      padding: 0 $spacing5 $spacing2;
+
+      &.m-groupAbout__section--memberPreviews {
+        margin-top: $spacing4;
+        margin-bottom: 0;
+      }
+    }
+  }
+}

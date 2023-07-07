@@ -9,6 +9,8 @@ import {
   EstimatedReach,
 } from '../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../services/boost-modal-v2.service';
+import { BoostGoalsExperimentService } from '../../../../experiments/sub-services/boost-goals-experiment.service';
+import { BoostGoal } from '../../../boost.types';
 
 /**
  * Boost modal review section - allows users to see what they have opted into
@@ -23,6 +25,7 @@ export class BoostModalV2ReviewComponent {
   // enums.
   public BoostAudience: typeof BoostAudience = BoostAudience;
   public BoostModalPanel: typeof BoostModalPanel = BoostModalPanel;
+  public BoostGoal: typeof BoostGoal = BoostGoal;
 
   public form: UntypedFormGroup;
 
@@ -70,7 +73,17 @@ export class BoostModalV2ReviewComponent {
     })
   );
 
-  constructor(private service: BoostModalV2Service) {}
+  // selected boost goal
+  public readonly goal$: Observable<BoostGoal> = this.service.goal$;
+
+  // whether goal section should be shown.
+  public readonly showGoalSection$: Observable<boolean> = this.service
+    .canSetBoostGoal$;
+
+  constructor(
+    protected service: BoostModalV2Service,
+    protected boostGoalsExperiment: BoostGoalsExperimentService
+  ) {}
 
   /**
    * Change the active panel - allows back click behavior.

@@ -74,14 +74,12 @@
     </m-tooltip>
   </div>
   <!-- ---------------------------------------- -->
-  <!-- LEGACY BOOST CONSOLE LINK: DESKTOP -->
+  <!-- BOOST CHANNEL/LATEST POST NOTICE: DESKTOP -->
   <!-- ---------------------------------------- -->
-  <div
-    *ngIf="legacyService.hasLegacyBoosts$ | async"
-    class="m-boostConsole__legacyLinkWrapper--desktop"
-  >
-    <ng-container *ngTemplateOutlet="legacyLink"></ng-container>
+  <div class="m-boostConsole__boostLatestPostWrapper--desktop">
+    <ng-container *ngTemplateOutlet="boostLatestPostNotice"></ng-container>
   </div>
+
   <!-- ------------------------ -->
   <!-- DROPDOWN MENU FILTERS-->
   <!-- ------------------------ -->
@@ -168,13 +166,10 @@
   </div>
 </div>
 <!-- ---------------------------------------- -->
-<!-- LEGACY BOOST CONSOLE LINK: MOBILE -->
+<!-- BOOST CHANNEL/LATEST POST NOTICE: MOBILE -->
 <!-- ---------------------------------------- -->
-<div
-  *ngIf="legacyService.hasLegacyBoosts$ | async"
-  class="m-boostConsole__legacyLinkWrapper--mobile"
->
-  <ng-container *ngTemplateOutlet="legacyLink"></ng-container>
+<div class="m-boostConsole__boostLatestPostWrapper--mobile">
+  <ng-container *ngTemplateOutlet="boostLatestPostNotice"></ng-container>
 </div>
 <!-- -------------------------------------------- -->
 <!-- -------------------------------------------- -->
@@ -335,10 +330,13 @@
     >
   </span>
 </ng-template>
-<!-- ------------------------ -->
-<!-- TEMPLATE: LEGACY LINK -->
-<!-- ------------------------ -->
-<ng-template #legacyLink>
-  <p><a routerLink="/boost/console">View your legacy boosts</a></p>
-  <p>See posts you boosted in the retired legacy system.</p>
+<!-- ------------------------------------->
+<!-- TEMPLATE: BOOST LATEST POST NOTICE -->
+<!-- ------------------------------------->
+<ng-template #boostLatestPostNotice>
+  <m-feedNotice--boostLatestPost
+    *ngIf="!(service.adminContext$ | async)"
+    [isInFeed]="false"
+    [targetBoostLocation]="service.locationFilterValue$ | async"
+  ></m-feedNotice--boostLatestPost>
 </ng-template>

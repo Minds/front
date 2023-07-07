@@ -3,7 +3,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MINDS_PIPES } from './pipes/pipes';
-import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarWalletBalance } from './layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { QualityScoreComponent } from './components/quality-score/quality-score.component';
@@ -40,7 +39,6 @@ import { MindsCard } from './components/card/card.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from '../services/attachment';
-import { IfFeatureDirective } from './directives/if-feature.directive';
 import { IfBrowserDirective } from './directives/if-browser.directive';
 import { TreeComponent } from './components/tree/tree.component';
 import { AnnouncementComponent } from './components/announcements/announcement.component';
@@ -119,7 +117,6 @@ import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
-import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm.component';
 import { EnvironmentFlagComponent } from '../common/components/environment-flag/environment-flag.component';
@@ -137,7 +134,6 @@ import { DateRangeModalService } from './components/date-range-modal/date-range-
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
 import { FormInputSliderV2Component } from './components/slider/v2/slider.component';
@@ -173,10 +169,18 @@ import { SubscribeButton } from './components/subscribe-button-v1/subscribe';
 import { MindsBanner } from './components/banner/banner';
 import { SeeLatestButtonComponent } from './components/see-latest-button/see-latest-button.component';
 import { SupermindBadgeComponent } from './components/supermind-badge/supermind-badge.component';
-import { DynamicBoostExperimentService } from '../modules/experiments/sub-services/dynamic-boost-experiment.service';
 import { PathMatch } from './types/angular.types';
 import { BoostFeedService } from '../modules/newsfeed/services/boost-feed.service';
 import { BoostedFlagComponent } from './components/boosted-flag/boosted-flag.component';
+import { SidebarNavigationV2Component } from './layout/sidebar/navigation-v2/navigation-v2.component';
+import { SidebarNavigationNewContentDotComponent } from './layout/sidebar/new-content-dot/new-content-dot.component';
+import { TopbarAlertComponent } from './components/topbar-alert/topbar-alert.component';
+import { ChatwootWidgetComponent } from './components/chatwoot-widget/chatwoot-widget.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { FormErrorComponent } from './components/form-error/form-error.component';
+import { GroupMembershipButtonComponent } from './components/group-membership-button/group-membership-button.component';
+import { GroupMembershipService } from './services/group-membership.service';
+import { SelectableEntityCardComponent } from './components/selectable-entity-card/selectable-entity-card.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -216,6 +220,7 @@ const MINDS_COMMON_COMPONENTS = [
   FormInputSliderComponent,
   FormInputSliderV2Component,
   FriendlyCaptchaComponent,
+  GroupMembershipButtonComponent,
   HovercardComponent,
   IconComponent,
   InfiniteScroll,
@@ -251,7 +256,7 @@ const MINDS_COMMON_COMPONENTS = [
   SeeLatestButtonComponent,
   SidebarMoreComponent,
   SidebarMoreTriggerComponent,
-  SidebarNavigationComponent,
+  SidebarNavigationV2Component,
   SidebarWidgetComponent,
   SizeableLoadingSpinnerComponent,
   SocialIcons,
@@ -277,6 +282,11 @@ const MINDS_COMMON_COMPONENTS = [
   AddBankPromptComponent,
   ChipBadgeComponent,
   BoostedFlagComponent,
+  SidebarNavigationNewContentDotComponent,
+  TopbarAlertComponent,
+  ChatwootWidgetComponent,
+  FormErrorComponent,
+  SelectableEntityCardComponent,
 ];
 // ------------------------------------
 // ------------------------------------
@@ -293,9 +303,7 @@ const MINDS_DIRECTIVES = [
   GraphSVG,
   HotkeyScrollDirective,
   IfBrowserDirective,
-  IfFeatureDirective,
   InlineAutoGrow,
-  MarkedDirective,
   PageLayoutContainerDirective,
   PageLayoutPaneDirective,
   PreventDoubleClickDirective,
@@ -332,6 +340,7 @@ const routes: Routes = [
     NgxPopperjsModule,
     QRCodeModule,
     RouterModule.forChild(routes),
+    MarkdownModule.forChild(),
   ],
   declarations: [
     MINDS_COMMON_COMPONENTS,
@@ -370,11 +379,9 @@ const routes: Routes = [
     {
       provide: FeaturedContentService,
       useFactory: (
-        boostFeedService: BoostFeedService,
-        dynamicBoostExperiment: DynamicBoostExperimentService
-      ): FeaturedContentService =>
-        new FeaturedContentService(boostFeedService, dynamicBoostExperiment),
-      deps: [BoostFeedService, DynamicBoostExperimentService],
+        boostFeedService: BoostFeedService
+      ): FeaturedContentService => new FeaturedContentService(boostFeedService),
+      deps: [BoostFeedService],
     },
     MediaProxyService,
     SidebarNavigationService,
@@ -388,11 +395,11 @@ const routes: Routes = [
     PublisherSearchModalService,
     DateRangeModalService,
     JsonLdService,
-    BoostRecommendationService,
     AuthRedirectService,
     SubscriptionService,
     RecentSubscriptionsService,
     ReportService,
+    GroupMembershipService,
   ],
 })
 export class CommonModule {}

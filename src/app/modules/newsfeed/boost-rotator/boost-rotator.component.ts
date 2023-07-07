@@ -13,7 +13,6 @@ import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ACTIVITY_V2_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
 import {
@@ -27,7 +26,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Subject, Subscription } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
-import { DynamicBoostExperimentService } from '../../experiments/sub-services/dynamic-boost-experiment.service';
 import { NgStyleValue } from '../../../common/types/angular.types';
 import { BoostFeedService } from '../services/boost-feed.service';
 
@@ -107,9 +105,7 @@ export class NewsfeedBoostRotatorComponent {
     public settingsService: SettingsV2Service,
     public element: ElementRef,
     private cd: ChangeDetectorRef,
-    protected featuresService: FeaturesService,
     public boostFeedService: BoostFeedService,
-    private dynamicBoostExperiment: DynamicBoostExperimentService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
@@ -168,8 +164,7 @@ export class NewsfeedBoostRotatorComponent {
         if (this.currentPosition >= this.boosts.length) {
           this.currentPosition = 0;
         }
-        // Recalculate height because it may have been empty
-        setTimeout(() => this.calculateHeight());
+
         // distinctuntilchange is now safe
         this.viewsCollector$.next(this.currentPosition);
 
@@ -179,20 +174,22 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.calculateHeight()); // will only run for new nav
+    this.calculateHeight();
   }
 
   async load(refresh: boolean = false): Promise<boolean> {
     try {
       this.inProgress = true;
 
-      await this.boostFeedService.init();
-
       this.init = true;
+
+      await this.boostFeedService.init();
     } catch (e) {
       if (e && e.message) {
         console.warn(e);
       }
+
+      this.init = false;
 
       throw e;
     }
@@ -233,7 +230,7 @@ export class NewsfeedBoostRotatorComponent {
     if (this.bounds.top > 0) {
       if (!this.running) this.start();
     } else {
-      console.log('[rotator]: out of view', this.rotator);
+      // console.log('[rotator]: out of view', this.rotator);
       if (this.running) {
         this.running = false;
         window.clearInterval(this.rotator);
@@ -302,7 +299,7 @@ export class NewsfeedBoostRotatorComponent {
     const lastBoostIndex = this.boosts.length - 1;
 
     const previousBoostIndex = index - 1 < 0 ? lastBoostIndex : index - 1;
-    const currentBoostIndex = index;
+    const currentBoostIndex = this.currentPosition;
     const nextBoostIndex = index + 1;
 
     // show the current boost and an additional boost
@@ -380,5 +377,9 @@ export class NewsfeedBoostRotatorComponent {
     return {
       'font-size': 20,
     };
+  }
+
+  trackByFn(i: number, boost): string {
+    return boost.guid;
   }
 }

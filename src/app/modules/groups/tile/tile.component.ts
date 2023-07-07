@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { interval, Subscription } from 'rxjs';
+import { interval } from 'rxjs';
 import { Session } from '../../../services/session';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { map, startWith, throttle } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 
 /**
  * Used by `m-newsfeed__entity` component to display a preview of a group (e.g. pro site 'groups' filter)
+ * or group membership notifications (e.g. if you were invited to a group)
  */
 @Component({
   selector: 'm-groups--tile',
@@ -52,6 +53,12 @@ export class GroupsTileComponent {
           marker.entity_guid == this.entity.guid
       ).length;
     });
+  }
+
+  onMembershipChange($event) {
+    if ($event.isMember) {
+      this.entity['is:member'] = true;
+    }
   }
 
   ngOnDestroy() {

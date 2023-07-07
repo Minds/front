@@ -1,0 +1,17 @@
+<div class="m-group__actions">
+  <minds-groups-settings-button
+    class="m-groupActions__button--settings"
+    [group]="service.group$ | async"
+    v2=" true"
+    (change)="onSettingsChange($event)"
+  ></minds-groups-settings-button>
+
+  <m-group__membershipButton
+    class="m-groupActions__button--membership"
+    [group]="service.group$ | async"
+    buttonSize="xsmall"
+    overlay="true"
+    verbose="true"
+    (onMembershipChange)="onMembershipChange($event)"
+  ></m-group__membershipButton>
+</div>

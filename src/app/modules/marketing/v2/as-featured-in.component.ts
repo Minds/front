@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ConfigsService } from '../../../common/services/configs.service';
 
 /**
  * A collection of images related to news media outlets
@@ -13,10 +12,4 @@ import { ConfigsService } from '../../../common/services/configs.service';
 })
 export class MarketingAsFeaturedInV2Component {
   @Input() inThePress: boolean = false;
-
-  readonly cdnAssetsUrl: string;
-
-  constructor(private configs: ConfigsService) {
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-  }
 }

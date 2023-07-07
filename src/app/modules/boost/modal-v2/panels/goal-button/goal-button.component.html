@@ -1,0 +1,314 @@
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+<!-- Form when goal is SUBSCRIBERS -->
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+<ng-container *ngIf="(service.goal$ | async) === BoostGoal.SUBSCRIBERS">
+  <div
+    class="m-boostGoalButtonSelector__header"
+    data-ref="boost-modal-v2-goal-button-selector-header"
+  >
+    <h3
+      class="m-boostGoalButtonSelector__title"
+      i18n="@@BOOST_MODAL_V2_GOAL_BUTTON__ADD_A_BUTTON"
+    >
+      Add a button to your post
+    </h3>
+    <span
+      class="m-boostGoalButtonSelector__subtitle"
+      i18n="@@BOOST_MODAL_V2_GOAL_BUTTON__WHAT_DOES_BUTTON_SAY"
+      >What do you want your button to say?</span
+    >
+  </div>
+  <div class="m-boostGoalButtonSelector__body">
+    <form [formGroup]="form">
+      <!-- --------------------------------------- -->
+      <!-- SUBSCRIBE TO MY CHANNEL -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form.controls.goal_button_text.value ===
+            BoostGoalButtonText.SUBSCRIBE_TO_MY_CHANNEL
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.SUBSCRIBE_TO_MY_CHANNEL)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="subscribe"
+            id="subscribe-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__SUBSCRIBE_LABEL"
+            >Subscribe to my channel</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-subscribe-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.SUBSCRIBE_TO_MY_CHANNEL"
+            aria-describedby="subscribe-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-subscribe-radio-button"
+          />
+        </fieldset>
+      </div>
+      <!-- --------------------------------------- -->
+      <!-- GET CONNECTED -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form.controls.goal_button_text.value ===
+            BoostGoalButtonText.GET_CONNECTED
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.GET_CONNECTED)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="connect"
+            id="connect-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__CONNECT_LABEL"
+            >Get connected</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-connect-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.GET_CONNECTED"
+            aria-describedby="connect-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-connect-radio-button"
+          />
+        </fieldset>
+      </div>
+      <!-- --------------------------------------- -->
+      <!-- STAY IN THE LOOP -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form.controls.goal_button_text.value ===
+            BoostGoalButtonText.STAY_IN_THE_LOOP
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.STAY_IN_THE_LOOP)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="loop"
+            id="loop-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__LOOP_LABEL"
+            >Stay in the loop</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-loop-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.STAY_IN_THE_LOOP"
+            aria-describedby="loop-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-loop-radio-button"
+          />
+        </fieldset>
+      </div>
+    </form>
+  </div>
+</ng-container>
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+<!-- Form when goal is CLICKS -->
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+<ng-container *ngIf="(service.goal$ | async) === BoostGoal.CLICKS">
+  <div
+    class="m-boostGoalButtonSelector__header"
+    data-ref="boost-modal-v2-goal-button-selector-header"
+  >
+    <h3
+      class="m-boostGoalButtonSelector__title"
+      i18n="@@BOOST_MODAL_V2_GOAL_BUTTON__ADD_A_LINK_AND_BUTTON"
+    >
+      Add a link and button
+    </h3>
+    <span
+      class="m-boostGoalButtonSelector__subtitle"
+      i18n="@@BOOST_MODAL_V2_GOAL_BUTTON__INPUT_YOUR_LINK"
+      >Input your link and choose your button text.</span
+    >
+  </div>
+  <div class="m-boostGoalButtonSelector__body">
+    <form [formGroup]="form">
+      <!-- --------------------------------------- -->
+      <!-- URL -->
+      <!-- --------------------------------------- -->
+      <div class="m-boostGoalButtonSelector__textInputRow">
+        <label
+          class="m-boostGoalButtonSelector__textInputLabel"
+          for="url"
+          id="url-description"
+          i18n="@@BOOST_MODAL_V2_GOAL_BUTTON__URL_LABEL"
+          >URL</label
+        >
+        <m-formError
+          *ngIf="goalButtonFormControl && goalButtonFormControl.dirty"
+          [errors]="form.get('goal_button_url')?.errors"
+        >
+        </m-formError>
+        <input
+          class="m-boostGoalButtonSelector__textInput"
+          type="url"
+          placeholder="Add website link"
+          i18n-placeholder="@@BOOST_MODAL_V2_GOAL_BUTTON__URL_PLACEHOLDER"
+          aria-describedby="url-description"
+          formControlName="goal_button_url"
+          data-ref="boost-modal-v2-goal-button-url-text-input"
+        />
+      </div>
+      <!-- --------------------------------------- -->
+      <!-- LEARN MORE -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form?.controls.goal_button_text.value ===
+            BoostGoalButtonText.LEARN_MORE
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.LEARN_MORE)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="learn"
+            id="learn-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__LEARN_LABEL"
+            >Learn more</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-learn-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.LEARN_MORE"
+            aria-describedby="learn-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-learn-radio-button"
+          />
+        </fieldset>
+      </div>
+      <!-- --------------------------------------- -->
+      <!-- GET STARTED -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form?.controls.goal_button_text.value ===
+            BoostGoalButtonText.GET_STARTED
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.GET_STARTED)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="start"
+            id="start-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__START_LABEL"
+            >Get started</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-start-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.GET_STARTED"
+            aria-describedby="start-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-start-radio-button"
+          />
+        </fieldset>
+      </div>
+      <!-- --------------------------------------- -->
+      <!-- SIGN UP -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form?.controls.goal_button_text.value ===
+            BoostGoalButtonText.SIGN_UP
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.SIGN_UP)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="sign"
+            id="sign-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__SIGN_LABEL"
+            >Sign up</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-sign-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.SIGN_UP"
+            aria-describedby="sign-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-sign-radio-button"
+          />
+        </fieldset>
+      </div>
+      <!-- --------------------------------------- -->
+      <!-- TRY FOR FREE -->
+      <!-- --------------------------------------- -->
+      <div
+        class="m-boostGoalButtonSelector__radioButtonRow"
+        [ngClass]="{
+          'm-boostGoalButtonSelector__radioButtonRow--selected':
+            form?.controls.goal_button_text.value ===
+            BoostGoalButtonText.TRY_FOR_FREE
+        }"
+        (click)="selectRadioButton(BoostGoalButtonText.TRY_FOR_FREE)"
+      >
+        <div class="m-boostGoalButtonSelector__radioButtonLabels">
+          <label
+            class="m-boostGoalButtonSelector__radioButtonLabel"
+            for="try"
+            id="try-description"
+            i18n="@@BOOST_MODAL_V2_GOAL_BUTTON_TEXT__TRY_LABEL"
+            >Try for free</label
+          >
+        </div>
+        <fieldset
+          data-ref="boost-modal-v2-goal-button-text-selector-try-field-set"
+        >
+          <input
+            class="m-boostGoalButtonSelector__radioButton"
+            type="radio"
+            [value]="BoostGoalButtonText.TRY_FOR_FREE"
+            aria-describedby="try-description"
+            formControlName="goal_button_text"
+            data-ref="boost-modal-v2-goal-button-text-selector-try-radio-button"
+          />
+        </fieldset>
+      </div>
+    </form>
+  </div>
+</ng-container>

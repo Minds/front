@@ -103,7 +103,7 @@ m-newsfeed {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 400;
-    font-family: 'Roboto', Helvetica, Sans-serif;
+    font-family: 'Inter', Helvetica, Sans-serif;
     cursor: default;
   }
 
@@ -141,7 +141,7 @@ m-newsfeed {
 }
 
 .m-newsfeed__inner {
-  m-channelRecommendation {
+  m-publisherRecommendations {
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
     }

@@ -1,0 +1,12 @@
+<ng-container *ngIf="shouldShow$ | async">
+  <span
+    class="m-topbarAlert__message"
+    markdown
+    [data]="message$ | async"
+    [inline]="true"
+  ></span>
+
+  <i class="material-icons m-topbarAlert__dismissIcon" (click)="dismiss()"
+    >close</i
+  >
+</ng-container>

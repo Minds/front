@@ -3,8 +3,6 @@
 @import 'spacing';
 @import '../../../common/layout/layout.scss';
 
-$topbarHeight: 75px;
-
 :host {
   margin-bottom: 0;
 
@@ -28,5 +26,13 @@ $topbarHeight: 75px;
     position: sticky;
     top: $topbarHeight;
     @include z-index(messenger);
+
+    &.m-feedNoticeOutlet__container--topbarAlertShown {
+      top: calc($topbarHeight + $topbarAlertHeight--desktop);
+
+      @media screen and (max-width: $max-mobile) {
+        top: calc($topbarHeight + $topbarAlertHeight--mobile);
+      }
+    }
   }
 }

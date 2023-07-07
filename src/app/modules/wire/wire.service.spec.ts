@@ -49,6 +49,7 @@ describe('WireService', () => {
       payloadType: 'onchain',
       recurring: false,
       recurringInterval: 'once',
+      sourceEntityGuid: null,
     });
 
     tick();
@@ -70,6 +71,7 @@ describe('WireService', () => {
       method: 'onchain',
       recurring: false,
       recurring_interval: 'once',
+      source_entity_guid: null,
     });
   }));
 
@@ -108,6 +110,7 @@ describe('WireService', () => {
       payloadType: 'offchain',
       recurring: false,
       recurringInterval: 'once',
+      sourceEntityGuid: null,
     });
 
     tick();
@@ -120,6 +123,7 @@ describe('WireService', () => {
       method: 'offchain',
       recurring: false,
       recurring_interval: 'once',
+      source_entity_guid: null,
     });
   }));
 
@@ -131,6 +135,7 @@ describe('WireService', () => {
       payloadType: 'usd',
       recurring: false,
       recurringInterval: 'once',
+      sourceEntityGuid: null,
     });
 
     tick();
@@ -147,6 +152,7 @@ describe('WireService', () => {
       method: 'usd',
       recurring: false,
       recurring_interval: 'once',
+      source_entity_guid: null,
     });
   }));
 });

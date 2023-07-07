@@ -100,5 +100,6 @@
   [canDelete]="canDelete"
   [compact]="compact"
   (onHeightChange)="onHeightChange.emit($event)"
+  [readonly]="!entity.allow_comments"
 >
 </m-comments__tree>

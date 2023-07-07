@@ -46,7 +46,8 @@
   }
 
   ::ng-deep {
-    m-comments__entityOutlet {
+    m-comments__entityOutletv2 {
+      display: contents;
       .m-commentPoster {
         margin: 0 20px;
         width: 90%;
@@ -107,7 +108,7 @@
       padding: 0;
       margin: 0;
       width: 100%;
-      font-family: 'Roboto', Helvetica, sans-serif;
+      font-family: 'Inter', Helvetica, sans-serif;
 
       a {
         text-decoration: none;
@@ -117,7 +118,7 @@
         }
 
         @include m-theme() {
-          color: themed($m-blue);
+          color: themed($m-link-text);
         }
       }
 

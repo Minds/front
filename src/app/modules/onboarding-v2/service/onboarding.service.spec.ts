@@ -2,7 +2,6 @@ import { fakeAsync } from '@angular/core/testing';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { OnboardingV2Service } from './onboarding.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 
 describe('OnboardingV2Service', () => {
   let service: OnboardingV2Service;
@@ -10,11 +9,7 @@ describe('OnboardingV2Service', () => {
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    service = new OnboardingV2Service(
-      featuresServiceMock,
-      clientMock,
-      sessionMock
-    );
+    service = new OnboardingV2Service(clientMock, sessionMock);
     clientMock.response = {};
   });
 

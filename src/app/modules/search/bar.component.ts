@@ -18,7 +18,6 @@ import {
 import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
 import { Session } from '../../services/session';
-import { FeaturesService } from '../../services/features.service';
 import { RecentService } from '../../services/ux/recent';
 import { filter } from 'rxjs/operators';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
@@ -71,7 +70,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public session: Session,
     private context: ContextService,
-    private featureService: FeaturesService,
     private recentService: RecentService,
     private pageLayoutService: PageLayoutService
   ) {}

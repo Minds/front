@@ -27,7 +27,7 @@
     margin: 12px 0 4px;
 
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
 
@@ -71,7 +71,7 @@
     }
   }
 
-  p.m-marketing__description {
+  p {
     font-size: 18px;
     line-height: 27px;
     margin: 0 0 36px;
@@ -87,7 +87,7 @@
     }
   }
 
-  ul.m-marketing__points {
+  ul {
     list-style: disc;
     margin: 0 0 45px;
     padding: 0 0 0 1em;
@@ -137,7 +137,7 @@
       font-weight: normal;
 
       @include m-theme() {
-        color: themed($m-grey-800);
+        color: themed($m-textColor--primary);
       }
     }
 

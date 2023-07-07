@@ -138,7 +138,7 @@
       a {
         font-weight: 400;
         @include m-theme() {
-          color: themed($m-blue);
+          color: themed($m-link-text);
         }
       }
     }

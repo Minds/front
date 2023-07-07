@@ -20,6 +20,7 @@ import { MindsVideoPlayerComponent } from './player.component';
 import { ScrollService } from '../../../../services/ux/scroll';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
+import { VideoJsExperimentService } from '../../../experiments/sub-services/videojs-experiment.service';
 
 @Component({
   selector: 'm-videoPlayer--scrollaware',
@@ -31,8 +32,11 @@ export class ScrollAwareVideoPlayerComponent
   @Input() shouldPlayInModal: boolean;
   @Input() autoplay = true;
   @Input() isModal: boolean = false;
+  @Input() isLivestream: boolean = false;
+
   @Output() mediaModalRequested: EventEmitter<void> = new EventEmitter();
-  @ViewChild(MindsVideoPlayerComponent) player: MindsVideoPlayerComponent;
+  @ViewChild('player') player: MindsVideoPlayerComponent;
+
   hasMousedOver = false;
   isInViewport = false;
 
@@ -43,6 +47,7 @@ export class ScrollAwareVideoPlayerComponent
     private scrollService: ScrollService,
     private session: Session,
     private cd: ChangeDetectorRef,
+    private videoJsExperiment: VideoJsExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -120,6 +125,14 @@ export class ScrollAwareVideoPlayerComponent
     this.hasMousedOver = true;
     // TODO: should we unmute on mouseover?
     // this.player.play({ muted: false, hideControls: false });
+  }
+
+  /**
+   * Whether video.js player should be used site-wide, else will just be used for live streams.
+   * @returns { boolean } true if video.js player should be used.
+   */
+  public shouldUseVideoJSPlayer(): boolean {
+    return this.videoJsExperiment.isActive() || this.isLivestream;
   }
 
   detectChanges() {
