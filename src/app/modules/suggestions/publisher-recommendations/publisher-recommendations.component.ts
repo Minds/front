@@ -45,6 +45,7 @@ const listAnimation = trigger('listAnimation', [
  *
  * See it in the newsfeed and onboarding
  */
+
 @Component({
   selector: 'm-publisherRecommendations',
   templateUrl: './publisher-recommendations.component.html',
