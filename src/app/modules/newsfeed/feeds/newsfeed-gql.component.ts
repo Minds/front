@@ -93,9 +93,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   isTopHighlightsDismissed$ = this.dismissal.dismissed('top-highlights');
 
   /**
-   * Whether channel recommendation is dismissed
+   * Whether publisher recommendations is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
+  isPublisherRecommendationsDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
 
