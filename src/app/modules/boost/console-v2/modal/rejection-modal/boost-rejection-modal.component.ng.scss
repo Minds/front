@@ -40,6 +40,12 @@
       &.m-modalV2__toolbar {
         border-top: none;
       }
+
+      > * {
+        &:first-child {
+          margin-right: $spacing2;
+        }
+      }
     }
   }
 }

@@ -50,9 +50,15 @@ export class BoostRejectionModalComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Click reject emitter
+   */
+  onClickReject: () => void = () => {};
+
+  /**
    * Dismiss intent.
    */
   onDismissIntent: () => void = () => {};
+
   public onRejectIntent(): void {
     this.subscriptions.push(
       this.boostConsoleService
@@ -67,6 +73,7 @@ export class BoostRejectionModalComponent implements OnInit, OnDestroy {
             this.boost.boost_status = BoostState.REJECTED;
             this.boostConsoleService.decrementAdminStatCounter();
             this.toaster.success('Boost successfully rejected');
+            this.onClickReject();
             this.onDismissIntent();
           }),
           finalize(() => {
@@ -78,8 +85,9 @@ export class BoostRejectionModalComponent implements OnInit, OnDestroy {
     );
   }
 
-  setModalData({ onCloseIntent, boost }) {
+  setModalData({ onCloseIntent, onClickReject, boost }) {
     this.onDismissIntent = onCloseIntent || (() => {});
+    this.onClickReject = onClickReject || (() => {});
     this.boost = boost;
   }
 }

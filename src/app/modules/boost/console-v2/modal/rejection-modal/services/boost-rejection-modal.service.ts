@@ -6,6 +6,7 @@ import {
 import { BoostRejectionModalLazyModule } from '../boost-rejection-modal-lazy.module';
 import { BoostRejectionModalComponent } from '../boost-rejection-modal.component';
 import { Boost } from '../../../../boost.types';
+import { BehaviorSubject } from 'rxjs';
 
 type ModalComponent = typeof BoostRejectionModalComponent;
 
@@ -15,6 +16,10 @@ type ModalComponent = typeof BoostRejectionModalComponent;
 @Injectable({ providedIn: 'root' })
 export class BoostRejectionModalService {
   constructor(private modalService: ModalService, private injector: Injector) {}
+
+  public readonly rejected$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
 
   /**
    * Lazy load modules and open modal.
@@ -26,7 +31,12 @@ export class BoostRejectionModalService {
     const componentRef: ModalComponent = await this.getComponentRef();
     const modal = this.modalService.present<any>(componentRef, {
       data: {
-        onCloseIntent: () => modal.close(),
+        onCloseIntent: () => {
+          modal.close();
+        },
+        onClickReject: () => {
+          this.rejected$.next(true);
+        },
         boost: boost,
       },
     });

@@ -3,6 +3,7 @@ import { Session } from '../../../../../../services/session';
 import { Boost, BoostState } from '../../../../boost.types';
 import { BoostConsoleService } from '../../../services/console.service';
 import { BoostRejectionModalService } from '../../../modal/rejection-modal/services/boost-rejection-modal.service';
+import { Subscription } from 'rxjs';
 
 /**
  * Boost console list item action buttons
@@ -25,6 +26,8 @@ export class BoostConsoleActionButtonsComponent {
   approving: boolean = false;
   rejecting: boolean = false;
   cancelling: boolean = false;
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private session: Session,
@@ -61,19 +64,18 @@ export class BoostConsoleActionButtonsComponent {
     if (!this.session.isAdmin()) {
       return;
     }
-
-    // ojm old -----------------------
     this.rejecting = true;
-    const promise = this.service.reject(this.boost);
 
-    this.onActionEmitter.emit();
+    this.subscriptions.push(
+      this.boostRejectionModal.rejected$.subscribe(rejected => {
+        if (rejected) {
+          this.onActionEmitter.emit();
+          this.rejecting = false;
+        }
+      })
+    );
 
-    promise.then(() => {
-      this.rejecting = false;
-    });
-    // ojm new
     this.boostRejectionModal.open(this.boost);
-    // -----------------------
   }
 
   /**
