@@ -41,7 +41,7 @@ namespace CommonSteps {
     contentSettingsComponent.clickTagByIndex(3);
     contentSettingsComponent.clickContinue();
 
-    // skip publisher recommendations.
+    // skip channel recommendations and group recommendations modal.
     publisherRecommendationsModalComponent.skip();
     publisherRecommendationsModalComponent.skip();
   });
