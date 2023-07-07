@@ -4,8 +4,8 @@ type boostMarketingPage = typeof import('./pages/boostMarketingPage');
 type channelPage = typeof import('./pages/channelPage');
 type commonPage = typeof import('./pages/commonPage');
 type devtoolsPage = typeof import('./pages/devtoolsPage');
-type loginPage = typeof import('./pages/loginPage');
 type groupsMembershipPage = typeof import('./pages/groupsMembershipPage');
+type loginPage = typeof import('./pages/loginPage');
 type newsfeedPage = typeof import('./pages/newsfeedPage');
 type registerPage = typeof import('./pages/registerPage');
 type rewardsMarketingPage = typeof import('./pages/rewardsMarketingPage');
@@ -32,6 +32,12 @@ type boostModalComponent = typeof import('./fragments/boostModalComponent');
 type contentSettingsComponent = typeof import('./fragments/contentSettingsComponent');
 type multiFactorModalComponent = typeof import('./fragments/multiFactorModalComponent');
 type publisherRecommendationsModalComponent = typeof import('./fragments/publisherRecommendationsModalComponent');
+type onboardingV5ModalComponent = typeof import('./fragments/onboardingV5/onboardingV5ModalComponent');
+type onboardingV5VerifyEmailComponent = typeof import('./fragments/onboardingV5/onboardingV5VerifyEmailComponent');
+type onboardingV5TagSelectorComponent = typeof import('./fragments/onboardingV5/onboardingV5TagSelectorComponent');
+type onboardingV5SurveyComponent = typeof import('./fragments/onboardingV5/onboardingV5SurveyComponent');
+type onboardingV5PublisherRecsComponent = typeof import('./fragments/onboardingV5/onboardingV5PublisherRecsComponent');
+type onboardingV5CompletionPanelComponent = typeof import('./fragments/onboardingV5/onboardingV5CompletionPanelComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
 
@@ -72,6 +78,12 @@ declare namespace CodeceptJS {
     contentSettingsComponent: contentSettingsComponent;
     multiFactorModalComponent: multiFactorModalComponent;
     publisherRecommendationsModalComponent: publisherRecommendationsModalComponent;
+    onboardingV5ModalComponent: onboardingV5ModalComponent;
+    onboardingV5VerifyEmailComponent: onboardingV5VerifyEmailComponent;
+    onboardingV5TagSelectorComponent: onboardingV5TagSelectorComponent;
+    onboardingV5SurveyComponent: onboardingV5SurveyComponent;
+    onboardingV5PublisherRecsComponent: onboardingV5PublisherRecsComponent;
+    onboardingV5CompletionPanelComponent: onboardingV5CompletionPanelComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}

@@ -8,6 +8,7 @@
       color="blue"
       [attr.data-ref]="skipButton?.dataRef ?? ''"
       [saving]="saving || (completionInProgress$ | async)"
+      data-test="onboarding-v5-footer-skip-button"
       >{{ skipButton?.text }}
     </m-button>
   </ng-container>
@@ -20,6 +21,7 @@
       [attr.data-ref]="actionButton?.dataRef ?? ''"
       [disabled]="disabledActionButton"
       [saving]="saving || (completionInProgress$ | async)"
+      data-test="onboarding-v5-footer-action-button"
       >{{ actionButton?.text }}</m-button
     >
   </ng-template>
