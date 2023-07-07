@@ -35,38 +35,67 @@ export class MetaService {
     this.reset();
   }
 
-  setTitle(value: string, join = true): MetaService {
-    let title;
-    const defaultTitle = this.site.isProDomain
+  get defaultTitle(): string {
+    return this.site.isProDomain
       ? this.site.title + ' - ' + this.site.oneLineHeadline
       : DEFAULT_META_TITLE;
+  }
 
+  /**
+   * Set both the og:title and the page title
+   * with a given value
+   *
+   * If join is true,  append " | Minds" to the end
+   */
+  setTitle(value: string, join = true): MetaService {
     value = this.stripHtml(value);
+    this.setOgTitle(value, join);
+    this.setPageTitle(value, join);
+    this.applyTitle();
+    return this;
+  }
 
-    let ogTitle: string = value || defaultTitle;
+  setOgTitle(value: string, join = true): MetaService {
+    let ogTitle: string;
 
-    if (ogTitle.length > 250) {
-      ogTitle = ogTitle.substring(0, 247) + '...';
+    if (this.site.isProDomain || !value) {
+      ogTitle = this.defaultTitle;
+    } else {
+      ogTitle = value.trim();
+
+      // For extra long strings, replaee last 3 chars with ellipsis
+      const cutoffLength = join ? 242 : 250;
+      if (ogTitle.length > 242) {
+        ogTitle = ogTitle.substring(0, cutoffLength - 3) + '...';
+      }
+
+      if (join) {
+        // Add ' | Minds' to the end of every og:title
+        ogTitle = ogTitle + `${this.sep}${DEFAULT_META_TITLE}`;
+      }
     }
 
     this.ogTitle = ogTitle;
+    return this;
+  }
 
+  setPageTitle(value: string, join = true): MetaService {
+    let title;
     if (value.length > 60) {
       value = value.substring(0, 57) + '...';
     }
 
     if (value && join) {
-      title = [value, defaultTitle]
+      title = [value, this.defaultTitle]
         .filter(fragment => Boolean(fragment))
         .join(this.sep);
     } else if (value) {
       title = value;
     } else {
-      title = defaultTitle;
+      title = this.defaultTitle;
     }
 
     this.title = title;
-    this.applyTitle();
     return this;
   }
 
