@@ -95,6 +95,7 @@
 
           <ng-template ngSwitchCase="PublisherRecsEdge">
             <m-publisherRecommendations
+              *ngIf="!(isPublisherRecommendationsDismissed$ | async)"
               location="newsfeed"
               [dismissible]="true"
               [connection]="edge.node"
