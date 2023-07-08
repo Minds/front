@@ -147,6 +147,7 @@ describe('BoostRejectionModalComponent', () => {
 
     comp.setModalData({
       onCloseIntent: () => void 0,
+      onClickReject: () => void 0,
       boost: boost,
     });
 
