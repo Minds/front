@@ -1,0 +1,68 @@
+@import 'defaults.scss';
+
+$centerPanelWidth: 714px;
+$centerPanelHeight: 562px;
+$imageWidth: 128px;
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  @include m-theme() {
+    background-color: themed($m-action);
+  }
+
+  .m-onboardingV5CompletedSplash__centerPanel {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: $centerPanelWidth;
+    height: $centerPanelHeight;
+
+    @media screen and (max-width: $centerPanelWidth) {
+      height: 100%;
+      width: 100%;
+    }
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+
+    .m-onboardingV5CompletedSplash__image {
+      min-width: $imageWidth;
+      min-height: $imageWidth;
+      max-width: $imageWidth;
+      max-height: $imageWidth;
+    }
+
+    .m-onboardingV5CompletedSplash__fallbackIcon {
+      min-width: $imageWidth;
+      min-height: $imageWidth;
+      max-width: $imageWidth;
+      max-height: $imageWidth;
+      border-radius: 50%;
+      font-size: 64px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include unselectable;
+      @include m-theme() {
+        background-color: themed($m-action);
+        color: themed($m-bgColor--primary);
+      }
+    }
+
+    .m-onboardingV5CompletedSplash__message {
+      margin-top: $spacing24;
+      text-align: center;
+
+      @include heading3Bold;
+    }
+  }
+}

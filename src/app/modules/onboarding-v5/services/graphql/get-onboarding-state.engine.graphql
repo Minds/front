@@ -1,0 +1,7 @@
+query GetOnboardingState {
+  onboardingState {
+    userGuid
+    startedAt
+    completedAt
+  }
+}

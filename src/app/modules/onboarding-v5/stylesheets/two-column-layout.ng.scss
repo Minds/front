@@ -1,0 +1,55 @@
+@import 'defaults.scss';
+
+$minLeftContainerWidth: 400px;
+$minRightContainerWidth: 416px;
+$mobileCollapseWidth: $minLeftContainerWidth + $minRightContainerWidth;
+
+$leftContainerPaddingY: $spacing6;
+$leftContainerPaddingX: $spacing12;
+
+:host {
+  .m-twoColumnLayout {
+    display: flex;
+    flex-flow: row nowrap;
+    max-height: 100%;
+    min-height: 100%;
+    overflow-y: hidden;
+
+    .m-twoColumnLayout__leftContainer {
+      min-width: $minLeftContainerWidth;
+      max-width: 35%;
+      width: 35%;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--primary);
+      }
+
+      flex-grow: 1;
+      padding-top: $leftContainerPaddingY;
+      padding-bottom: $leftContainerPaddingY;
+
+      @media screen and (max-width: $mobileCollapseWidth) {
+        min-width: unset;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    .m-twoColumnLayout__rightContainer {
+      width: 65%;
+      min-width: $minRightContainerWidth;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include m-theme() {
+        background-color: themed($m-action);
+      }
+
+      @media screen and (max-width: $mobileCollapseWidth) {
+        display: none;
+      }
+    }
+  }
+}

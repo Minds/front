@@ -1,0 +1,63 @@
+@import 'defaults.scss';
+@import '../../stylesheets/two-column-layout.ng.scss';
+
+:host {
+  display: flex;
+  flex-flow: row-nowrap;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding-left: $leftContainerPaddingX;
+  padding-right: $leftContainerPaddingX;
+
+  .m-onboardingStepper__circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    cursor: not-allowed;
+    @include unselectable;
+
+    &.m-onboardingStepper__circle--active {
+      @include m-theme() {
+        border: 1px solid themed($m-action);
+      }
+    }
+
+    &.m-onboardingStepper__circle--completed {
+      @include m-theme() {
+        background-color: themed($m-action);
+      }
+    }
+
+    &:not(.m-onboardingStepper__circle--active, .m-onboardingStepper__circle--completed) {
+      visibility: hidden;
+      cursor: pointer;
+    }
+
+    .m-onboardingStepper__doneIcon {
+      font-size: 16px;
+
+      @include m-theme() {
+        color: themed($m-bgColor--primary);
+      }
+    }
+  }
+
+  .m-onboardingStepper__connectionLine {
+    height: 1px;
+    flex: 1;
+
+    @include m-theme() {
+      background: themed($m-action);
+    }
+
+    // hide when step is not completed.
+    &.m-onboardingStepper__connectionLine--hidden {
+      visibility: hidden;
+    }
+  }
+}

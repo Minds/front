@@ -30,6 +30,7 @@ export type Scalars = {
   DateTime: { input: any; output: any };
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any };
+  OnboardingV5VersionStepsDynamicZoneInput: { input: any; output: any };
   /** The `Upload` scalar type represents a file upload. */
   Upload: { input: any; output: any };
 };
@@ -308,6 +309,138 @@ export type ComponentMetadataGeneralPageMetadataInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ComponentOnboardingV5ActionButton = {
+  __typename?: 'ComponentOnboardingV5ActionButton';
+  dataRef?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+};
+
+export type ComponentOnboardingV5CarouselItem = {
+  __typename?: 'ComponentOnboardingV5CarouselItem';
+  id: Scalars['ID']['output'];
+  media: UploadFileEntityResponse;
+  title: Scalars['String']['output'];
+};
+
+export type ComponentOnboardingV5CarouselItemFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentOnboardingV5CarouselItemFiltersInput>>
+  >;
+  not?: InputMaybe<ComponentOnboardingV5CarouselItemFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentOnboardingV5CarouselItemFiltersInput>>
+  >;
+  title?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentOnboardingV5CompletionStep = {
+  __typename?: 'ComponentOnboardingV5CompletionStep';
+  id: Scalars['ID']['output'];
+  media?: Maybe<UploadFileEntityResponse>;
+  message: Scalars['String']['output'];
+};
+
+export type ComponentOnboardingV5CompletionStepFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentOnboardingV5CompletionStepFiltersInput>>
+  >;
+  message?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentOnboardingV5CompletionStepFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentOnboardingV5CompletionStepFiltersInput>>
+  >;
+};
+
+export type ComponentOnboardingV5CompletionStepInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  media?: InputMaybe<Scalars['ID']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentOnboardingV5GroupSelectorStep = {
+  __typename?: 'ComponentOnboardingV5GroupSelectorStep';
+  id: Scalars['ID']['output'];
+};
+
+export type ComponentOnboardingV5OnboardingStep = {
+  __typename?: 'ComponentOnboardingV5OnboardingStep';
+  actionButton?: Maybe<ComponentOnboardingV5ActionButton>;
+  carousel: Array<Maybe<ComponentOnboardingV5CarouselItem>>;
+  description: Scalars['String']['output'];
+  groupSelector?: Maybe<ComponentOnboardingV5GroupSelectorStep>;
+  id: Scalars['ID']['output'];
+  radioSurvey?: Maybe<Array<Maybe<ComponentOnboardingV5RadioOption>>>;
+  radioSurveyQuestion?: Maybe<Scalars['String']['output']>;
+  skipButton?: Maybe<ComponentOnboardingV5SkipButton>;
+  stepKey: Scalars['String']['output'];
+  stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
+  tagSelector?: Maybe<ComponentOnboardingV5TagSelectorStep>;
+  title: Scalars['String']['output'];
+  userSelector?: Maybe<ComponentOnboardingV5UserSelectorStep>;
+  verifyEmailForm?: Maybe<ComponentOnboardingV5VerifyEmailStep>;
+};
+
+export type ComponentOnboardingV5OnboardingStepCarouselArgs = {
+  filters?: InputMaybe<ComponentOnboardingV5CarouselItemFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentOnboardingV5OnboardingStepRadioSurveyArgs = {
+  filters?: InputMaybe<ComponentOnboardingV5RadioOptionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentOnboardingV5RadioOption = {
+  __typename?: 'ComponentOnboardingV5RadioOption';
+  id: Scalars['ID']['output'];
+  optionDescription: Scalars['String']['output'];
+  optionKey: Scalars['String']['output'];
+  optionTitle: Scalars['String']['output'];
+};
+
+export type ComponentOnboardingV5RadioOptionFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentOnboardingV5RadioOptionFiltersInput>>
+  >;
+  not?: InputMaybe<ComponentOnboardingV5RadioOptionFiltersInput>;
+  optionDescription?: InputMaybe<StringFilterInput>;
+  optionKey?: InputMaybe<StringFilterInput>;
+  optionTitle?: InputMaybe<StringFilterInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentOnboardingV5RadioOptionFiltersInput>>
+  >;
+};
+
+export type ComponentOnboardingV5SkipButton = {
+  __typename?: 'ComponentOnboardingV5SkipButton';
+  dataRef?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+};
+
+export type ComponentOnboardingV5TagSelectorStep = {
+  __typename?: 'ComponentOnboardingV5TagSelectorStep';
+  customTagInputText: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+};
+
+export type ComponentOnboardingV5UserSelectorStep = {
+  __typename?: 'ComponentOnboardingV5UserSelectorStep';
+  id: Scalars['ID']['output'];
+};
+
+export type ComponentOnboardingV5VerifyEmailStep = {
+  __typename?: 'ComponentOnboardingV5VerifyEmailStep';
+  id: Scalars['ID']['output'];
+  inputLabel: Scalars['String']['output'];
+  inputPlaceholder?: Maybe<Scalars['String']['output']>;
+  resendCodeActionText: Scalars['String']['output'];
+  resendCodeText: Scalars['String']['output'];
+};
+
 export type ComponentProductFooter = {
   __typename?: 'ComponentProductFooter';
   actionButton?: Maybe<ComponentCommonActionButton>;
@@ -464,6 +597,20 @@ export enum Enum_Componentcommonactionbutton_Action {
   ScrollToTop = 'scroll_to_top',
 }
 
+export enum Enum_Componentonboardingv5Onboardingstep_Steptype {
+  GroupSelector = 'group_selector',
+  Survey = 'survey',
+  TagSelector = 'tag_selector',
+  UserSelector = 'user_selector',
+  VerifyEmail = 'verify_email',
+}
+
+export type Error = {
+  __typename?: 'Error';
+  code: Scalars['String']['output'];
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']['input']>;
   caption?: InputMaybe<Scalars['String']['input']>;
@@ -503,12 +650,23 @@ export type GenericMorph =
   | ComponentMarketingComponentsSectionTail
   | ComponentMarketingComponentsStatsBarStat
   | ComponentMetadataGeneralPageMetadata
+  | ComponentOnboardingV5ActionButton
+  | ComponentOnboardingV5CarouselItem
+  | ComponentOnboardingV5CompletionStep
+  | ComponentOnboardingV5GroupSelectorStep
+  | ComponentOnboardingV5OnboardingStep
+  | ComponentOnboardingV5RadioOption
+  | ComponentOnboardingV5SkipButton
+  | ComponentOnboardingV5TagSelectorStep
+  | ComponentOnboardingV5UserSelectorStep
+  | ComponentOnboardingV5VerifyEmailStep
   | ComponentProductFooter
   | ComponentProductHero
   | ComponentProductOther
   | ComponentProductSection
   | Homepage
   | I18NLocale
+  | OnboardingV5Version
   | ProductPage
   | TopbarAlert
   | TwitterSyncTweetText
@@ -681,6 +839,7 @@ export type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createAuxPage?: Maybe<AuxPageEntityResponse>;
+  createOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   createProductPage?: Maybe<ProductPageEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -690,6 +849,7 @@ export type Mutation = {
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   deleteAuxPage?: Maybe<AuxPageEntityResponse>;
   deleteHomepage?: Maybe<HomepageEntityResponse>;
+  deleteOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   deleteProductPage?: Maybe<ProductPageEntityResponse>;
   deleteTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   deleteTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
@@ -713,6 +873,7 @@ export type Mutation = {
   updateAuxPage?: Maybe<AuxPageEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateHomepage?: Maybe<HomepageEntityResponse>;
+  updateOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   updateProductPage?: Maybe<ProductPageEntityResponse>;
   updateTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   updateTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
@@ -733,6 +894,10 @@ export type MutationChangePasswordArgs = {
 
 export type MutationCreateAuxPageArgs = {
   data: AuxPageInput;
+};
+
+export type MutationCreateOnboardingV5VersionArgs = {
+  data: OnboardingV5VersionInput;
 };
 
 export type MutationCreateProductPageArgs = {
@@ -756,6 +921,10 @@ export type MutationCreateUsersPermissionsUserArgs = {
 };
 
 export type MutationDeleteAuxPageArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteOnboardingV5VersionArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -826,6 +995,11 @@ export type MutationUpdateHomepageArgs = {
   data: HomepageInput;
 };
 
+export type MutationUpdateOnboardingV5VersionArgs = {
+  data: OnboardingV5VersionInput;
+  id: Scalars['ID']['input'];
+};
+
 export type MutationUpdateProductPageArgs = {
   data: ProductPageInput;
   id: Scalars['ID']['input'];
@@ -866,6 +1040,55 @@ export type MutationUploadArgs = {
   ref?: InputMaybe<Scalars['String']['input']>;
   refId?: InputMaybe<Scalars['ID']['input']>;
 };
+
+export type OnboardingV5Version = {
+  __typename?: 'OnboardingV5Version';
+  completionStep: ComponentOnboardingV5CompletionStep;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  steps: Array<Maybe<OnboardingV5VersionStepsDynamicZone>>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type OnboardingV5VersionEntity = {
+  __typename?: 'OnboardingV5VersionEntity';
+  attributes?: Maybe<OnboardingV5Version>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type OnboardingV5VersionEntityResponse = {
+  __typename?: 'OnboardingV5VersionEntityResponse';
+  data?: Maybe<OnboardingV5VersionEntity>;
+};
+
+export type OnboardingV5VersionEntityResponseCollection = {
+  __typename?: 'OnboardingV5VersionEntityResponseCollection';
+  data: Array<OnboardingV5VersionEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type OnboardingV5VersionFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<OnboardingV5VersionFiltersInput>>>;
+  completionStep?: InputMaybe<ComponentOnboardingV5CompletionStepFiltersInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<OnboardingV5VersionFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<OnboardingV5VersionFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type OnboardingV5VersionInput = {
+  completionStep?: InputMaybe<ComponentOnboardingV5CompletionStepInput>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  steps?: InputMaybe<
+    Array<Scalars['OnboardingV5VersionStepsDynamicZoneInput']['input']>
+  >;
+};
+
+export type OnboardingV5VersionStepsDynamicZone =
+  | ComponentOnboardingV5OnboardingStep
+  | Error;
 
 export type Pagination = {
   __typename?: 'Pagination';
@@ -957,6 +1180,8 @@ export type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  onboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
+  onboardingV5Versions?: Maybe<OnboardingV5VersionEntityResponseCollection>;
   productPage?: Maybe<ProductPageEntityResponse>;
   productPages?: Maybe<ProductPageEntityResponseCollection>;
   topbarAlert?: Maybe<TopbarAlertEntityResponse>;
@@ -993,6 +1218,17 @@ export type QueryI18NLocaleArgs = {
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryOnboardingV5VersionArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryOnboardingV5VersionsArgs = {
+  filters?: InputMaybe<OnboardingV5VersionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -1527,6 +1763,123 @@ export type TwitterSyncTweetMessageQuery = {
   } | null;
 };
 
+export type FetchOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type FetchOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              stepKey: string;
+              stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
+              radioSurveyQuestion?: string | null;
+              carousel: Array<{
+                __typename: 'ComponentOnboardingV5CarouselItem';
+                id: string;
+                title: string;
+                media: {
+                  __typename?: 'UploadFileEntityResponse';
+                  data?: {
+                    __typename?: 'UploadFileEntity';
+                    attributes?: {
+                      __typename?: 'UploadFile';
+                      url: string;
+                      height?: number | null;
+                      width?: number | null;
+                      alternativeText?: string | null;
+                      hash: string;
+                      mime: string;
+                      name: string;
+                      provider: string;
+                      size: number;
+                    } | null;
+                  } | null;
+                };
+              } | null>;
+              verifyEmailForm?: {
+                __typename: 'ComponentOnboardingV5VerifyEmailStep';
+                id: string;
+                inputLabel: string;
+                inputPlaceholder?: string | null;
+                resendCodeText: string;
+                resendCodeActionText: string;
+              } | null;
+              tagSelector?: {
+                __typename: 'ComponentOnboardingV5TagSelectorStep';
+                id: string;
+                customTagInputText: string;
+              } | null;
+              radioSurvey?: Array<{
+                __typename: 'ComponentOnboardingV5RadioOption';
+                id: string;
+                optionTitle: string;
+                optionDescription: string;
+                optionKey: string;
+              } | null> | null;
+              userSelector?: {
+                __typename: 'ComponentOnboardingV5UserSelectorStep';
+                id: string;
+              } | null;
+              groupSelector?: {
+                __typename: 'ComponentOnboardingV5GroupSelectorStep';
+                id: string;
+              } | null;
+              actionButton?: {
+                __typename: 'ComponentOnboardingV5ActionButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+              skipButton?: {
+                __typename: 'ComponentOnboardingV5SkipButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+            }
+          | { __typename: 'Error' }
+          | null
+        >;
+        completionStep: {
+          __typename: 'ComponentOnboardingV5CompletionStep';
+          id: string;
+          message: string;
+          media?: {
+            __typename?: 'UploadFileEntityResponse';
+            data?: {
+              __typename?: 'UploadFileEntity';
+              attributes?: {
+                __typename?: 'UploadFile';
+                url: string;
+                height?: number | null;
+                width?: number | null;
+                alternativeText?: string | null;
+                hash: string;
+                mime: string;
+                name: string;
+                provider: string;
+                size: number;
+              } | null;
+            } | null;
+          } | null;
+        };
+      } | null;
+    }>;
+  } | null;
+};
+
 export const TwitterSyncTweetMessageDocument = gql`
   query TwitterSyncTweetMessage {
     twitterSyncTweetText {
@@ -1547,6 +1900,122 @@ export class TwitterSyncTweetMessageGQL extends Apollo.Query<
   TwitterSyncTweetMessageQueryVariables
 > {
   document = TwitterSyncTweetMessageDocument;
+  client = 'strapi';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FetchOnboardingV5VersionsDocument = gql`
+  query FetchOnboardingV5Versions {
+    onboardingV5Versions {
+      data {
+        attributes {
+          publishedAt
+          steps {
+            __typename
+            ... on ComponentOnboardingV5OnboardingStep {
+              id
+              carousel {
+                id
+                __typename
+                title
+                media {
+                  data {
+                    attributes {
+                      url
+                      height
+                      width
+                      alternativeText
+                      hash
+                      mime
+                      name
+                      provider
+                      size
+                    }
+                  }
+                }
+              }
+              title
+              description
+              stepKey
+              stepType
+              verifyEmailForm {
+                id
+                __typename
+                inputLabel
+                inputPlaceholder
+                resendCodeText
+                resendCodeActionText
+              }
+              tagSelector {
+                id
+                __typename
+                customTagInputText
+              }
+              radioSurveyQuestion
+              radioSurvey {
+                id
+                __typename
+                optionTitle
+                optionDescription
+                optionKey
+              }
+              userSelector {
+                id
+                __typename
+              }
+              groupSelector {
+                id
+                __typename
+              }
+              actionButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+              skipButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+            }
+          }
+          completionStep {
+            id
+            __typename
+            message
+            media {
+              data {
+                attributes {
+                  url
+                  height
+                  width
+                  alternativeText
+                  hash
+                  mime
+                  name
+                  provider
+                  size
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchOnboardingV5VersionsGQL extends Apollo.Query<
+  FetchOnboardingV5VersionsQuery,
+  FetchOnboardingV5VersionsQueryVariables
+> {
+  document = FetchOnboardingV5VersionsDocument;
   client = 'strapi';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

@@ -1,0 +1,28 @@
+<div class="m-onboardingV5__footer">
+  <ng-container
+    *ngIf="skipButton && disabledActionButton; else actionButtonTemplate"
+  >
+    <m-button
+      class="m-onboardingV5Footer__skipButton"
+      (onAction)="onSkipButtonClick()"
+      color="blue"
+      [attr.data-ref]="skipButton?.dataRef ?? ''"
+      [saving]="saving || (completionInProgress$ | async)"
+      data-test="onboarding-v5-footer-skip-button"
+      >{{ skipButton?.text }}
+    </m-button>
+  </ng-container>
+  <ng-template #actionButtonTemplate>
+    <m-button
+      class="m-onboardingV5Footer__actionButton"
+      (onAction)="onActionButtonClick()"
+      color="blue"
+      [solid]="'true'"
+      [attr.data-ref]="actionButton?.dataRef ?? ''"
+      [disabled]="disabledActionButton"
+      [saving]="saving || (completionInProgress$ | async)"
+      data-test="onboarding-v5-footer-action-button"
+      >{{ actionButton?.text }}</m-button
+    >
+  </ng-template>
+</div>

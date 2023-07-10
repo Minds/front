@@ -33,6 +33,12 @@ type contentSettingsComponent = typeof import('./fragments/contentSettingsCompon
 type multiFactorModalComponent = typeof import('./fragments/multiFactorModalComponent');
 type publisherRecommendationsModalComponent = typeof import('./fragments/publisherRecommendationsModalComponent');
 type reportModalComponent = typeof import('./fragments/reportModalComponent');
+type onboardingV5ModalComponent = typeof import('./fragments/onboardingV5/onboardingV5ModalComponent');
+type onboardingV5VerifyEmailComponent = typeof import('./fragments/onboardingV5/onboardingV5VerifyEmailComponent');
+type onboardingV5TagSelectorComponent = typeof import('./fragments/onboardingV5/onboardingV5TagSelectorComponent');
+type onboardingV5SurveyComponent = typeof import('./fragments/onboardingV5/onboardingV5SurveyComponent');
+type onboardingV5PublisherRecsComponent = typeof import('./fragments/onboardingV5/onboardingV5PublisherRecsComponent');
+type onboardingV5CompletionPanelComponent = typeof import('./fragments/onboardingV5/onboardingV5CompletionPanelComponent');
 type CookieHelper = import('./helpers/cookie-helper');
 type CommonHelper = import('./helpers/common-helper');
 
@@ -74,6 +80,12 @@ declare namespace CodeceptJS {
     multiFactorModalComponent: multiFactorModalComponent;
     publisherRecommendationsModalComponent: publisherRecommendationsModalComponent;
     reportModalComponent: reportModalComponent;
+    onboardingV5ModalComponent: onboardingV5ModalComponent;
+    onboardingV5VerifyEmailComponent: onboardingV5VerifyEmailComponent;
+    onboardingV5TagSelectorComponent: onboardingV5TagSelectorComponent;
+    onboardingV5SurveyComponent: onboardingV5SurveyComponent;
+    onboardingV5PublisherRecsComponent: onboardingV5PublisherRecsComponent;
+    onboardingV5CompletionPanelComponent: onboardingV5CompletionPanelComponent;
   }
   interface Methods extends Playwright, CookieHelper, CommonHelper {}
   interface I extends WithTranslation<Methods> {}
