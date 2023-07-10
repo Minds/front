@@ -96,7 +96,7 @@ export class DismissalV2Service {
    */
   private getCachedDismissals(): Dismissal[] {
     try {
-      return JSON.parse(localStorage.getItem(CACHE_KEY));
+      return JSON.parse(localStorage.getItem(CACHE_KEY)) ?? [];
     } catch (e) {
       console.error(e);
       return [];
