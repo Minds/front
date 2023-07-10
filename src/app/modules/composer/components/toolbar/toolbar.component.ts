@@ -47,6 +47,8 @@ import {
 } from '../popup/supermind/superminds-creation.service';
 import { SupermindReplyConfirmModalComponent } from '../../../modals/supermind-reply-confirm/supermind-reply-confirm-modal.component';
 import { Supermind } from '../../../supermind/supermind.types';
+import { LiveStreamComponent } from '../livestream/livestream.component';
+import { LivestreamService } from '../../services/livestream.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -78,13 +80,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   @ViewChild('fileUploadComponent')
   fileUploadComponent: FileUploadComponent;
-
+  /**
+   * Livestream information
+   */
+  @ViewChild('LivestreamComponent')
+  livestreamComponent: LiveStreamComponent;
   /**
    * Toolbar main <div> element
    */
-  @ViewChild('toolbarWrapper', { static: true }) toolbarWrapper: ElementRef<
-    HTMLDivElement
-  >;
+  @ViewChild('toolbarWrapper', { static: true })
+  toolbarWrapper: ElementRef<HTMLDivElement>;
 
   /**
    * Show narrow style
@@ -160,6 +165,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected toaster: ToasterService,
     protected uploaderService: UploaderService,
+    protected livestreamService: LivestreamService,
     @Inject(PLATFORM_ID) protected platformId: Object,
     public modalService: ModalService,
     private injector: Injector
@@ -223,6 +229,14 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   @HostListener('window:resize') onWindowResize() {
     this.windowResize$.next();
+  }
+  async createLiveStream(): Promise<void> {
+    try {
+      const stream = await this.livestreamService.createLiveStream();
+      this.livestreamService.setStream(stream);
+    } catch (error) {
+      console.error('Error creating live stream:', error);
+    }
   }
 
   /**

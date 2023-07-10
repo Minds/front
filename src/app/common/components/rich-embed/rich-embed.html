@@ -3,7 +3,7 @@
 <!-- ----------------------------------- -->
 <div
   class="m-rich-embed-src"
-  *ngIf="src && type == 'src'"
+  *ngIf="src && type == 'src' && !isLivestream()"
   [ngClass]="{ 'm-has-inline-embed' : hasInlineContentLoaded(), 'm-richEmbedPreview--noThumbnail' : !src.thumbnail_src }"
 >
   <!-- ----------------------------------- -->
@@ -97,7 +97,7 @@
 <div
   class="m-rich-embed-preview"
   [ngClass]="{'m-richEmbedPreview--noThumbnail' : !preview.thumbnail}"
-  *ngIf="preview && type == 'preview'"
+  *ngIf="preview && type == 'preview' && !isLivestream()"
 >
   <a class="thumbnail" *ngIf="preview.thumbnail">
     <img *ngIf="!cropImage" src="{{preview.thumbnail}}" />
@@ -113,4 +113,8 @@
     </h2>
     <p>{{preview.url | domain}}</p>
   </a>
+</div>
+
+<div *ngIf="isLivestream()">
+  <div [outerHTML]="inlineEmbed.html"></div>
 </div>

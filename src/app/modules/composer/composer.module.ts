@@ -41,7 +41,7 @@ import { PaymentsModule } from '../payments/payments.module';
 import { ComposerAudienceSelectorButtonComponent } from './components/audience-selector-button/audience-selector-button.component';
 import { ComposerAudienceSelectorService } from './services/audience.service';
 import { ComposerAudienceSelectorPanelComponent } from './components/popup/audience-selector/audience-selector.component';
-
+import { LiveStreamComponent } from './components/livestream/livestream.component';
 /**
  * Exported components
  */
@@ -72,6 +72,7 @@ const INTERNAL_COMPONENTS = [
   ProgressComponent,
   ToolbarComponent,
   TitleBarComponent,
+  LiveStreamComponent,
   PopupComponent,
   TextAreaComponent,
   ComposerCoverPhotoSelectorComponent,

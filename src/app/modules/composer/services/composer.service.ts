@@ -50,6 +50,7 @@ import {
   ActivityContainer,
   ComposerAudienceSelectorService,
 } from './audience.service';
+import { LivestreamService } from './livestream.service';
 
 /**
  * Default values
@@ -393,7 +394,8 @@ export class ComposerService implements OnDestroy {
     private audienceSelectorService: ComposerAudienceSelectorService,
     private onboardingService: OnboardingV3Service,
     private uploaderService: UploaderService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private livestreamService: LivestreamService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -1111,6 +1113,19 @@ export class ComposerService implements OnDestroy {
           .toPromise();
       } else {
         // New activity
+        this.livestreamService.getCreatedStream().subscribe(stream => {
+          if (stream) {
+            this.payload.is_rich = true;
+            this.payload.url = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+            this.payload.title = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+            this.payload.description = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+            this.payload.thumbnail = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+            this.payload.message =
+              this.payload.message +
+              `\n https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+            this.livestreamService.toggleRecordLivestream(stream.id, true);
+          }
+        });
         activity = await this.api
           .put(`api/v3/newsfeed/activity`, this.payload)
           .toPromise();

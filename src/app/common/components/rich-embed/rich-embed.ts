@@ -381,12 +381,35 @@ export class MindsRichEmbed {
       }
     }
 
+    // Livepeer
+    const livepeer: RegExp = this.embedLinkWhitelist.getRegex('livepeer');
+    if ((matches = livepeer.exec(url)) !== null) {
+      if (matches[0]) {
+        this.mediaSource = 'livepeer';
+        return {
+          id: `video-livepeer-${matches[4]}`,
+          className:
+            'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
+          html: this.sanitizer.bypassSecurityTrustHtml(
+            '<iframe class="livepeer" width="640" height="360" src="' +
+              matches[0] +
+              '" frameborder="0" allowfullscreen></iframe>'
+          ),
+          playable: true,
+        };
+      }
+    }
+
     // No match
     return null;
   }
 
   get isFeaturedSource(): boolean {
     return this.mediaSource === 'youtube' || this.mediaSource === 'minds';
+  }
+
+  isLivestream() {
+    return this.mediaSource == 'livepeer';
   }
 
   hasInlineContentLoaded() {
