@@ -34,7 +34,7 @@
           <ng-container *ngIf="editing">Save</ng-container></span
         >
       </m-dropdownMenu__item>
-
+      <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="group.videoChatDisabled && !v2"
         (click)="toggleVideoChat(true)"
@@ -47,7 +47,7 @@
       >
         Disable gathering
       </m-dropdownMenu__item>
-
+      <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="group.moderated"
         (click)="toggleModeration(false)"
@@ -60,7 +60,20 @@
       >
         Enable moderation
       </m-dropdownMenu__item>
-
+      <!---------------------------->
+      <m-dropdownMenu__item
+        *ngIf="group.show_boosts"
+        (click)="toggleShowBoosts(false)"
+      >
+        Disable boosts
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item
+        *ngIf="!group.show_boosts"
+        (click)="toggleShowBoosts(true)"
+      >
+        Enable boosts
+      </m-dropdownMenu__item>
+      <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="!group.membership"
         (click)="togglePublic(true)"

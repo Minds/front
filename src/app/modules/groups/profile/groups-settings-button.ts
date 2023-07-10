@@ -228,6 +228,14 @@ export class GroupsSettingsButton implements OnInit, OnDestroy {
     this.groupChange.next(this.group);
   }
 
+  toggleShowBoosts(enabled: boolean) {
+    this.group.show_boosts = enabled ? 1 : 0;
+    this.client.post(`api/v1/groups/group/${this.group.guid}`, {
+      show_boosts: this.group.show_boosts,
+    });
+    this.groupChange.next(this.group);
+  }
+
   togglePublic(enabled: boolean) {
     this.group.membership = enabled ? 2 : 0;
     this.client.post(`api/v1/groups/group/${this.group.guid}`, {
@@ -237,7 +245,6 @@ export class GroupsSettingsButton implements OnInit, OnDestroy {
   }
 
   onNSFWSelected(reasons: Array<{ label; value; selected }>) {
-    console.log('group', this.group);
     const nsfw = reasons.map(reason => reason.value);
     this.client.post(`api/v2/admin/nsfw/${this.group.guid}`, { nsfw });
     this.group.nsfw = nsfw;

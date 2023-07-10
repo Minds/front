@@ -73,7 +73,7 @@
       <!-- BOOSTS  -->
       <!-- ----------------------------------------- -->
       <m-featured-content
-        *ngIf="shouldShowBoostInPosition(i)"
+        *ngIf="shouldShowBoostInPosition(i) && !!group.show_boosts"
         [slot]="i + 1"
         [displayOptions]="{
           showOnlyCommentsInput: true,
