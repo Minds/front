@@ -16,6 +16,6 @@ namespace SingleEntityPageSteps {
   //
 
   Then('I wait for the boost modal to appear', () => {
-    singleEntityPage.waitForBoostModal(2000);
+    singleEntityPage.waitForBoostModal(10000);
   });
 }

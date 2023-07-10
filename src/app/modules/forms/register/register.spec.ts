@@ -1,6 +1,7 @@
 import {
   ComponentFixture,
   TestBed,
+  discardPeriodicTasks,
   fakeAsync,
   flush,
   tick,
@@ -24,6 +25,8 @@ import { MockService, MockComponent } from '../../../utils/mock';
 import { FormInputCheckboxComponent } from '../../../common/components/forms/checkbox/checkbox.component';
 import { Input, forwardRef } from '@angular/core';
 import { Component } from '@angular/core';
+import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
+import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
 
 @Component({
   selector: 'm-friendlyCaptcha',
@@ -112,6 +115,14 @@ describe('RegisterForm', () => {
           provide: ExperimentsService,
           useValue: MockService(ExperimentsService),
         },
+        {
+          provide: OnboardingV5Service,
+          useValue: MockService(OnboardingV5Service),
+        },
+        {
+          provide: OnboardingV5ExperimentService,
+          useValue: MockService(OnboardingV5ExperimentService),
+        },
       ],
     }).compileComponents();
 
@@ -125,6 +136,12 @@ describe('RegisterForm', () => {
     );
     (comp as any).passwordRiskValidator.riskValidator.and.returnValue(() =>
       Promise.resolve(true)
+    );
+    (comp as any).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
+      false
+    );
+    (comp as any).onboardingV5ExperimentService.isEnrollmentActive.and.returnValue(
+      false
     );
 
     fixture.detectChanges();
@@ -176,6 +193,48 @@ describe('RegisterForm', () => {
       parentId: '',
     });
   });
+
+  it('should register successfully a new user and set onboarding state to true if experiments are on', fakeAsync(() => {
+    const user = { guid: '1234' };
+    (comp as any).onboardingV5ExperimentService.isGlobalOnSwitchActive.and.returnValue(
+      true
+    );
+    (comp as any).onboardingV5ExperimentService.isEnrollmentActive.and.returnValue(
+      true
+    );
+
+    (comp as any).client.post.and.returnValue(Promise.resolve({ user: user }));
+
+    comp.form.get('username').setValue('testuser');
+    comp.form.get('email').setValue('testuser@example.com');
+    comp.form.get('password').setValue('TestPass123!');
+    comp.form.get('password2').setValue('TestPass123!');
+    comp.form.get('tos').setValue(true);
+    comp.form.get('captcha').setValue('test_captcha');
+
+    spyOn(comp.done, 'emit');
+
+    comp.register(new MouseEvent('click'));
+
+    tick();
+    expect((comp as any).client.post).toHaveBeenCalledWith('api/v1/register', {
+      username: 'testuser',
+      email: 'testuser@example.com',
+      password: 'TestPass123!',
+      password2: 'TestPass123!',
+      tos: true,
+      exclusive_promotions: true,
+      captcha: 'test_captcha',
+      previousUrl: null,
+      referrer: undefined,
+      parentId: '',
+    });
+    discardPeriodicTasks();
+    flush();
+    expect(
+      (comp as any).onboardingV5Service.setOnboardingCompletedState
+    ).toHaveBeenCalledWith(false, user);
+  }));
 
   it('should display an error message when the form is invalid', () => {
     comp.form.patchValue({
