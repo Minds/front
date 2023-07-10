@@ -36,7 +36,6 @@ export class ExplainerScreenModalService {
       {
         data: {
           onDismissIntent: () => {
-            console.log('dismiss intent');
             modal.close();
           },
           explainerScreenData: explainerScreenData,
@@ -46,8 +45,8 @@ export class ExplainerScreenModalService {
       }
     );
 
-    // handle updating server and local state on modal close -
-    // this is here and NOT in dismiss as this will also catch
+    // handle updating server and local state on modal close.
+    // This is here and NOT in dismiss as this will also catch
     // the case where the user clicks outside the modal to dismiss.
     modal.result.then(async data => {
       await firstValueFrom(

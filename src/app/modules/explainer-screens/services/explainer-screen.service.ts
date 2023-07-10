@@ -24,8 +24,7 @@ import { AbstractSubscriberComponent } from '../../../common/components/abstract
  * Screens that show in a modal upon first navigation to a route.
  */
 @Injectable({ providedIn: 'root' })
-export class ExplainerScreensService extends AbstractSubscriberComponent
-  implements OnDestroy {
+export class ExplainerScreensService extends AbstractSubscriberComponent {
   constructor(
     private getExplainerScreensGQL: GetExplainerScreensGQL,
     private explainerScreenModal: ExplainerScreenModalService,
