@@ -10,6 +10,7 @@ export type NoticeKey =
   | 'plus-upgrade'
   | 'boost-channel'
   | 'invite-friends'
+  | 'boost-partners'
   | 'boost-latest-post'
   | 'no-groups';
 

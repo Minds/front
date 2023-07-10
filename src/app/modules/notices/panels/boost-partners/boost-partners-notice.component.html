@@ -1,0 +1,39 @@
+<m-feedNotice
+  icon="trending_up"
+  (dismissClick)="dismiss()"
+  dataRefId="boost-partners"
+>
+  <span class="m-feedNotice__title" i18n="@@FEED_NOTICE__BOOST_PARTNERS__TITLE"
+    >Welcome to the Boost Partners Program</span
+  >
+  <p
+    class="m-feedNotice__body"
+    i18n="@@FEED_NOTICE__BOOST_PARTNERS__YOU_ARE_ELIGIBLE"
+  >
+    You are now eligible to earn a 50/50 revenue-share for serving Boosts on
+    your channel and content pages. You may disable or change your settings any
+    time.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick()"
+    data-ref="feed-notice-boost_partners-primary-click"
+  >
+    <ng-container i18n="@@COMMON__READ_MORE">
+      Read more
+    </ng-container>
+  </m-button>
+  <m-button
+    class="m-feedNotice__buttonSecondary"
+    size="small"
+    (onAction)="onSecondaryOptionClick()"
+    data-ref="feed-notice-boost-partners-secondary-click"
+  >
+    <ng-container i18n="@@COMMON__SETTINGS">
+      Settings
+    </ng-container>
+  </m-button>
+</m-feedNotice>
