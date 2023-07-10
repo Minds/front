@@ -22,7 +22,9 @@ export default function getMetaAutoCaption(
 
   // Get rid of extraneous responses
   // (e.g. for other images in a multi-image post)
-  captionsArray.splice(startingIndex, startingIndex + 3);
+  if (captionsArray.length > responsesPerImage) {
+    captionsArray.splice(startingIndex, startingIndex + 3);
+  }
 
   // Remove the second ai prompt response
   if (captionsArray[1]) {
