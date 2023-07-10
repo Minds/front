@@ -1,0 +1,38 @@
+<div class="m-explainerScreenModal__bodyWrapper">
+  <h3 class="m-explainerScreenModal__header">
+    {{ explainerScreenData.title }}
+  </h3>
+  <h4 class="m-explainerScreenModal__subheader">
+    {{ explainerScreenData.subtitle }}
+  </h4>
+  <div class="m-explainerScreenModal__itemWrapper">
+    <div
+      class="m-explainerScreenModal__item"
+      *ngFor="let section of explainerScreenData.section"
+    >
+      <i class="m-explainerScreenModalItem__icon material-icons">{{
+        section.icon
+      }}</i>
+      <div class="m-explainerScreenModalItem__textWrapper">
+        <p class="m-explainerScreenModalItemText__header">
+          {{ section.title }}
+        </p>
+        <markdown class="m-explainerScreenModalItemText__body">
+          {{ section.description }}
+        </markdown>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="m-explainerScreenModal__toolbar">
+  <m-button
+    color="blue"
+    [solid]="true"
+    (onAction)="onActionButtonClick()"
+    [attr.data-ref]="explainerScreenData.continueButton?.dataRef ?? 'explainer-screen-modal-continue-button'"
+    >{{ explainerScreenData.continueButton.text }}
+  </m-button>
+</div>
+
+<m-modalCloseButton></m-modalCloseButton>
