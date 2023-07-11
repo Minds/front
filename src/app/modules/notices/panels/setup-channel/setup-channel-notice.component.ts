@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { filter, take } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { Session } from '../../../../services/session';
@@ -15,6 +15,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 })
 export class SetupChannelNoticeComponent extends AbstractSubscriberComponent
   implements OnInit {
+  @Input() public dismissible: boolean = true;
+
   constructor(
     private session: Session,
     private feedNotice: FeedNoticeService,
