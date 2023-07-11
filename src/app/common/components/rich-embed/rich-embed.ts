@@ -21,6 +21,7 @@ import {
   ClientMetaService,
 } from '../../services/client-meta.service';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
+import { LivestreamService } from '../../../modules/composer/services/livestream.service';
 
 interface InlineEmbed {
   id: string;
@@ -40,7 +41,10 @@ interface InlineEmbed {
 export class MindsRichEmbed {
   type: string = '';
   mediaSource: string = '';
+  playbackId?: string = '';
+  isOwner: boolean = false;
   src: any = {};
+  activeStream: any = null;
   preview: any = {};
   maxheight: number = 320;
   inlineEmbed: InlineEmbed = null;
@@ -95,6 +99,7 @@ export class MindsRichEmbed {
     private modalService: ModalService,
     private embedLinkWhitelist: EmbedLinkWhitelistService,
     private clientMetaService: ClientMetaService,
+    private livestreamService: LivestreamService,
     @SkipSelf() private parentClientMeta: ClientMetaDirective
   ) {}
 
@@ -118,6 +123,8 @@ export class MindsRichEmbed {
 
     const isOwner =
       this.src.ownerObj.guid === this.session.getLoggedInUser().guid;
+
+    this.isOwner = isOwner;
 
     this.isPaywalled =
       this.src.paywall && !this.src.paywall_unlocked && !isOwner;
@@ -177,6 +184,8 @@ export class MindsRichEmbed {
         this.renderHtml();
       }
     }
+
+    this.isLivestreamActive();
   }
 
   /**
@@ -386,6 +395,7 @@ export class MindsRichEmbed {
     if ((matches = livepeer.exec(url)) !== null) {
       if (matches[0]) {
         this.mediaSource = 'livepeer';
+        this.playbackId = matches[4];
         return {
           id: `video-livepeer-${matches[4]}`,
           className:
@@ -406,6 +416,32 @@ export class MindsRichEmbed {
 
   get isFeaturedSource(): boolean {
     return this.mediaSource === 'youtube' || this.mediaSource === 'minds';
+  }
+
+  async isLivestreamActive() {
+    const streamId = await this.livestreamService.getStreamFromPlayback(
+      this.playbackId
+    );
+    const stream = await this.livestreamService.getStream(streamId);
+    if (stream.isActive) {
+      this.activeStream = stream;
+    } else {
+      return;
+    }
+  }
+
+  async stopStream() {
+    await this.livestreamService.toggleRecordLivestream(
+      this.activeStream.id,
+      false
+    );
+    this.checkForRecording();
+  }
+
+  async checkForRecording() {
+    const recording = await this.livestreamService.getRecording(
+      this.activeStream.id
+    );
   }
 
   isLivestream() {

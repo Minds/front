@@ -93,4 +93,19 @@ export class LivestreamService {
       throw error;
     }
   }
+
+  async getRecording(streamId: string): Promise<any> {
+    const headers = this.createHeaders();
+    const link = `https://livepeer.studio/api/asset/${streamId}`;
+
+    try {
+      const response = await this.http
+        .get<any>(link, { headers })
+        .toPromise();
+      return response;
+    } catch (error) {
+      console.error('Error getting recording:', error);
+      throw error;
+    }
+  }
 }

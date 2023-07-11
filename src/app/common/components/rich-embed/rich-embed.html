@@ -117,4 +117,11 @@
 
 <div *ngIf="isLivestream()">
   <div [outerHTML]="inlineEmbed.html"></div>
+  <button
+    *ngIf="isOwner && activeStream != null"
+    (onclick)="stopStream()"
+    class="livestream__stop-button"
+  >
+    Stop stream
+  </button>
 </div>
