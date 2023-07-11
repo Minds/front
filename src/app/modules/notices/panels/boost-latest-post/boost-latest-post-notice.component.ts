@@ -27,7 +27,7 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
   /**
    * False if this is displayed in the boost console
    */
-  @Input() public isInFeed = true;
+  @Input() public isInFeed: boolean = true;
 
   /**
    * Determines whether clicking primary button should
