@@ -36,7 +36,7 @@ export class ComposerAudienceSelectorPanelComponent
   /** Whether panels groups section is expanded. */
   public readonly groupsExpanded$: BehaviorSubject<
     boolean
-  > = new BehaviorSubject<boolean>(false);
+  > = new BehaviorSubject<boolean>(true);
 
   /** List of groups held in local state. */
   public readonly groups$: BehaviorSubject<
