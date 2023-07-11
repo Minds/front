@@ -36,34 +36,35 @@ export type ActivityEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type ActivityNode = NodeInterface & {
-  __typename?: 'ActivityNode';
-  /** Relevant for images/video posts. A blurhash to be used for preloading the image. */
-  blurhash?: Maybe<Scalars['String']['output']>;
-  commentsCount: Scalars['Int']['output'];
-  guid: Scalars['String']['output'];
-  hasVotedDown: Scalars['Boolean']['output'];
-  hasVotedUp: Scalars['Boolean']['output'];
-  id: Scalars['ID']['output'];
-  impressionsCount: Scalars['Int']['output'];
-  /** The activity has comments enabled */
-  isCommentingEnabled: Scalars['Boolean']['output'];
-  legacy: Scalars['String']['output'];
-  message: Scalars['String']['output'];
-  nsfw: Array<Scalars['Int']['output']>;
-  nsfwLock: Array<Scalars['Int']['output']>;
-  owner: UserNode;
-  ownerGuid: Scalars['String']['output'];
-  /** Unix timestamp representation of time created */
-  timeCreated: Scalars['Int']['output'];
-  /** ISO 8601 timestamp representation of time created */
-  timeCreatedISO8601: Scalars['String']['output'];
-  /** Relevant for images/video posts */
-  title?: Maybe<Scalars['String']['output']>;
-  urn: Scalars['String']['output'];
-  votesDownCount: Scalars['Int']['output'];
-  votesUpCount: Scalars['Int']['output'];
-};
+export type ActivityNode = EntityNodeInterface &
+  NodeInterface & {
+    __typename?: 'ActivityNode';
+    /** Relevant for images/video posts. A blurhash to be used for preloading the image. */
+    blurhash?: Maybe<Scalars['String']['output']>;
+    commentsCount: Scalars['Int']['output'];
+    guid: Scalars['String']['output'];
+    hasVotedDown: Scalars['Boolean']['output'];
+    hasVotedUp: Scalars['Boolean']['output'];
+    id: Scalars['ID']['output'];
+    impressionsCount: Scalars['Int']['output'];
+    /** The activity has comments enabled */
+    isCommentingEnabled: Scalars['Boolean']['output'];
+    legacy: Scalars['String']['output'];
+    message: Scalars['String']['output'];
+    nsfw: Array<Scalars['Int']['output']>;
+    nsfwLock: Array<Scalars['Int']['output']>;
+    owner: UserNode;
+    ownerGuid: Scalars['String']['output'];
+    /** Unix timestamp representation of time created */
+    timeCreated: Scalars['Int']['output'];
+    /** ISO 8601 timestamp representation of time created */
+    timeCreatedISO8601: Scalars['String']['output'];
+    /** Relevant for images/video posts */
+    title?: Maybe<Scalars['String']['output']>;
+    urn: Scalars['String']['output'];
+    votesDownCount: Scalars['Int']['output'];
+    votesUpCount: Scalars['Int']['output'];
+  };
 
 export type BoostEdge = EdgeInterface & {
   __typename?: 'BoostEdge';
@@ -103,6 +104,34 @@ export type EdgeImpl = EdgeInterface & {
 export type EdgeInterface = {
   cursor: Scalars['String']['output'];
   node?: Maybe<NodeInterface>;
+};
+
+export type EntityNode = EntityNodeInterface &
+  NodeInterface & {
+    __typename?: 'EntityNode';
+    guid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    legacy: Scalars['String']['output'];
+    nsfw: Array<Scalars['Int']['output']>;
+    nsfwLock: Array<Scalars['Int']['output']>;
+    /** Unix timestamp representation of time created */
+    timeCreated: Scalars['Int']['output'];
+    /** ISO 8601 timestamp representation of time created */
+    timeCreatedISO8601: Scalars['String']['output'];
+    urn: Scalars['String']['output'];
+  };
+
+export type EntityNodeInterface = {
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
 };
 
 export type FeedHighlightsConnection = ConnectionInterface &
@@ -230,19 +259,20 @@ export type GroupEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type GroupNode = NodeInterface & {
-  __typename?: 'GroupNode';
-  guid: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  legacy: Scalars['String']['output'];
-  nsfw: Array<Scalars['Int']['output']>;
-  nsfwLock: Array<Scalars['Int']['output']>;
-  /** Unix timestamp representation of time created */
-  timeCreated: Scalars['Int']['output'];
-  /** ISO 8601 timestamp representation of time created */
-  timeCreatedISO8601: Scalars['String']['output'];
-  urn: Scalars['String']['output'];
-};
+export type GroupNode = EntityNodeInterface &
+  NodeInterface & {
+    __typename?: 'GroupNode';
+    guid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    legacy: Scalars['String']['output'];
+    nsfw: Array<Scalars['Int']['output']>;
+    nsfwLock: Array<Scalars['Int']['output']>;
+    /** Unix timestamp representation of time created */
+    timeCreated: Scalars['Int']['output'];
+    /** ISO 8601 timestamp representation of time created */
+    timeCreatedISO8601: Scalars['String']['output'];
+    urn: Scalars['String']['output'];
+  };
 
 export type KeyValuePairInput = {
   key: Scalars['String']['input'];
@@ -319,6 +349,13 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+export type PaymentMethod = {
+  __typename?: 'PaymentMethod';
+  balance?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
@@ -357,6 +394,8 @@ export type Query = {
   onboardingState?: Maybe<OnboardingState>;
   /** Get the currently logged in users onboarding step progress. */
   onboardingStepProgress: Array<OnboardingStepProgressState>;
+  /** Get a list of payment methods for the logged in user */
+  paymentMethods: Array<PaymentMethod>;
 };
 
 export type QueryActivityArgs = {
@@ -393,6 +432,10 @@ export type QueryNewsfeedArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type QueryPaymentMethodsArgs = {
+  productId?: InputMaybe<GiftCardProductIdEnum>;
+};
+
 export type UserEdge = EdgeInterface & {
   __typename?: 'UserEdge';
   cursor: Scalars['String']['output'];
@@ -401,42 +444,43 @@ export type UserEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type UserNode = NodeInterface & {
-  __typename?: 'UserNode';
-  briefDescription: Scalars['String']['output'];
-  /** The users public ETH address */
-  ethAddress?: Maybe<Scalars['String']['output']>;
-  guid: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  /** The number of views the users has received. Includes views from their posts */
-  impressionsCount: Scalars['Int']['output'];
-  /** The user is a founder (contributed to crowdfunding) */
-  isFounder: Scalars['Boolean']['output'];
-  /** The user is a member of Minds+ */
-  isPlus: Scalars['Boolean']['output'];
-  /** The user is a member of Minds Pro */
-  isPro: Scalars['Boolean']['output'];
-  /** You are subscribed to this user */
-  isSubscribed: Scalars['Boolean']['output'];
-  /** The user is subscribed to you */
-  isSubscriber: Scalars['Boolean']['output'];
-  /** The user is a verified */
-  isVerified: Scalars['Boolean']['output'];
-  legacy: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  nsfw: Array<Scalars['Int']['output']>;
-  nsfwLock: Array<Scalars['Int']['output']>;
-  /** The number of subscribers the user has */
-  subscribersCount: Scalars['Int']['output'];
-  /** The number of channels the user is subscribed to */
-  subscriptionsCount: Scalars['Int']['output'];
-  /** Unix timestamp representation of time created */
-  timeCreated: Scalars['Int']['output'];
-  /** ISO 8601 timestamp representation of time created */
-  timeCreatedISO8601: Scalars['String']['output'];
-  urn: Scalars['String']['output'];
-  username: Scalars['String']['output'];
-};
+export type UserNode = EntityNodeInterface &
+  NodeInterface & {
+    __typename?: 'UserNode';
+    briefDescription: Scalars['String']['output'];
+    /** The users public ETH address */
+    ethAddress?: Maybe<Scalars['String']['output']>;
+    guid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    /** The number of views the users has received. Includes views from their posts */
+    impressionsCount: Scalars['Int']['output'];
+    /** The user is a founder (contributed to crowdfunding) */
+    isFounder: Scalars['Boolean']['output'];
+    /** The user is a member of Minds+ */
+    isPlus: Scalars['Boolean']['output'];
+    /** The user is a member of Minds Pro */
+    isPro: Scalars['Boolean']['output'];
+    /** You are subscribed to this user */
+    isSubscribed: Scalars['Boolean']['output'];
+    /** The user is subscribed to you */
+    isSubscriber: Scalars['Boolean']['output'];
+    /** The user is a verified */
+    isVerified: Scalars['Boolean']['output'];
+    legacy: Scalars['String']['output'];
+    name: Scalars['String']['output'];
+    nsfw: Array<Scalars['Int']['output']>;
+    nsfwLock: Array<Scalars['Int']['output']>;
+    /** The number of subscribers the user has */
+    subscribersCount: Scalars['Int']['output'];
+    /** The number of channels the user is subscribed to */
+    subscriptionsCount: Scalars['Int']['output'];
+    /** Unix timestamp representation of time created */
+    timeCreated: Scalars['Int']['output'];
+    /** ISO 8601 timestamp representation of time created */
+    timeCreatedISO8601: Scalars['String']['output'];
+    urn: Scalars['String']['output'];
+    username: Scalars['String']['output'];
+  };
 
 export type FetchNewsfeedQueryVariables = Exact<{
   algorithm: Scalars['String']['input'];
@@ -480,6 +524,7 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'EntityNode'; id: string }
             | {
                 __typename?: 'FeedHighlightsConnection';
                 id: string;
@@ -537,6 +582,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'EntityNode'; id: string }
                         | {
                             __typename?: 'FeedHighlightsConnection';
                             id: string;
@@ -689,6 +735,7 @@ export type FetchNewsfeedQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'EntityNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
@@ -834,6 +881,20 @@ export type SetOnboardingStateMutation = {
     startedAt: number;
     completedAt?: number | null;
   };
+};
+
+export type FetchPaymentMethodsQueryVariables = Exact<{
+  giftCardProductId?: InputMaybe<GiftCardProductIdEnum>;
+}>;
+
+export type FetchPaymentMethodsQuery = {
+  __typename?: 'Query';
+  paymentMethods: Array<{
+    __typename?: 'PaymentMethod';
+    id: string;
+    name: string;
+    balance?: number | null;
+  }>;
 };
 
 export const PageInfoFragmentDoc = gql`
@@ -1023,6 +1084,29 @@ export class SetOnboardingStateGQL extends Apollo.Mutation<
   SetOnboardingStateMutationVariables
 > {
   document = SetOnboardingStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FetchPaymentMethodsDocument = gql`
+  query FetchPaymentMethods($giftCardProductId: GiftCardProductIdEnum) {
+    paymentMethods(productId: $giftCardProductId) {
+      id
+      name
+      balance
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchPaymentMethodsGQL extends Apollo.Query<
+  FetchPaymentMethodsQuery,
+  FetchPaymentMethodsQueryVariables
+> {
+  document = FetchPaymentMethodsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
