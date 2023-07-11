@@ -61,6 +61,15 @@ namespace ComposerSteps {
     composerModalComponent.createNewsfeedPost(textStorageKey);
   });
 
+  When(
+    'I create a post with response storage key {string}',
+    async responseStorageKey => {
+      await composerModalComponent.createNewsfeedPostAndStoreResponse(
+        responseStorageKey
+      );
+    }
+  );
+
   Then('I should see {int} previews of my selected imaged', num => {
     for (let i = 1; i <= num; i++) {
       I.seeElement(
