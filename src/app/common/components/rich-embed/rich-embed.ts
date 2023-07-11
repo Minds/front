@@ -44,7 +44,7 @@ export class MindsRichEmbed {
   playbackId?: string = '';
   isOwner: boolean = false;
   src: any = {};
-  activeStream: any = null;
+  streamRecording: any = null;
   preview: any = {};
   maxheight: number = 320;
   inlineEmbed: InlineEmbed = null;
@@ -185,7 +185,7 @@ export class MindsRichEmbed {
       }
     }
 
-    this.isLivestreamActive();
+    this.getLiveStreamInfo();
   }
 
   /**
@@ -418,30 +418,20 @@ export class MindsRichEmbed {
     return this.mediaSource === 'youtube' || this.mediaSource === 'minds';
   }
 
-  async isLivestreamActive() {
+  async getLiveStreamInfo() {
     const streamId = await this.livestreamService.getStreamFromPlayback(
       this.playbackId
     );
-    const stream = await this.livestreamService.getStream(streamId);
-    if (stream.isActive) {
-      this.activeStream = stream;
+    const recording = await this.livestreamService.getRecording(streamId);
+    if (streamId) {
+      this.streamRecording = recording;
     } else {
       return;
     }
   }
 
-  async stopStream() {
-    await this.livestreamService.toggleRecordLivestream(
-      this.activeStream.id,
-      false
-    );
-    this.checkForRecording();
-  }
-
-  async checkForRecording() {
-    const recording = await this.livestreamService.getRecording(
-      this.activeStream.id
-    );
+  downloadRecording() {
+    window.open(this.streamRecording.downloadUrl);
   }
 
   isLivestream() {

@@ -118,10 +118,10 @@
 <div *ngIf="isLivestream()">
   <div [outerHTML]="inlineEmbed.html"></div>
   <button
-    *ngIf="isOwner && activeStream != null"
-    (onclick)="stopStream()"
+    *ngIf="isOwner"
+    (click)="downloadRecording()"
     class="livestream__stop-button"
   >
-    Stop stream
+    Download recording
   </button>
 </div>
