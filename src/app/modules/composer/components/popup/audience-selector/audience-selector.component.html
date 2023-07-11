@@ -49,16 +49,20 @@
         (click)="toggleGroupsExpand()"
         data-ref="composer-audience-group-section"
       >
-        <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS">My groups</span>
+        <span
+          i18n="@@COMPOSER_AUDIENCE_SELECTOR__MY_GROUPS"
+          data-ref="composer-audience-selector-my-groups-subtitle"
+          >My groups</span
+        >
         <ng-container *ngIf="groupsExpanded$ | async; else collapsedTemplate">
-          <span class="material-icons" data-ref="composer-audience-group-expand"
+          <span
+            class="material-icons"
+            data-ref="composer-audience-group-collapse"
             >expand_more</span
           >
         </ng-container>
         <ng-template #collapsedTemplate>
-          <span
-            class="material-icons"
-            data-ref="composer-audience-group-collapse"
+          <span class="material-icons" data-ref="composer-audience-group-expand"
             >chevron_right</span
           >
         </ng-template>
