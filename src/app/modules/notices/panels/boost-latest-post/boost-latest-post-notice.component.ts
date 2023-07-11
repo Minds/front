@@ -115,7 +115,7 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
    * @return { void }
    */
   public onDismissClick(): void {
-    if (this.isInFeed || this.dismissible) {
+    if (this.dismissible) {
       this.feedNotice.dismiss('boost-latest-post');
     }
   }
