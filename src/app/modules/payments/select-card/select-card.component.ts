@@ -41,6 +41,7 @@ export class PaymentsSelectCard {
   inProgress = false;
   @Input('selected') paymentMethodId: string = '';
   @Input() paymentTotal: number = 0;
+  @Input() giftCardProductIdEnum: GiftCardProductIdEnum | null = null;
   paymentMethods: PaymentMethod[] = [];
 
   constructor(
@@ -69,7 +70,7 @@ export class PaymentsSelectCard {
   async loadCards() {
     this.inProgress = true;
     const paymentmethods = await firstValueFrom(
-      this.selectCardService.loadCards(GiftCardProductIdEnum.Boost)
+      this.selectCardService.loadCards(this.giftCardProductIdEnum)
     );
     this.paymentMethods = paymentmethods;
 

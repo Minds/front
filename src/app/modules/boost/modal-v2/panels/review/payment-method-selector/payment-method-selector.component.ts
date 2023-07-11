@@ -17,6 +17,7 @@ import {
   BoostPaymentMethodId,
 } from '../../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
+import { GiftCardProductIdEnum } from '../../../../../../../graphql/generated.engine';
 
 /**
  * Payment method selector component (offchain / onchain / cash etc).
@@ -50,6 +51,7 @@ import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
       [selected]="paymentMethodId$ | async"
       (selected)="onSelectCard($event)"
       [paymentTotal]="totalPaymentAmount$ | async"
+      [giftCardProductIdEnum]="GiftCardProductIdEnum.Boost"
       data-ref="boost-modal-v2-cash-payment-custom-selector"
     ></m-payments__selectCard>
   `,
@@ -151,4 +153,6 @@ export class BoostModalV2PaymentMethodSelectorComponent
     this.paymentMethod$.next(BoostPaymentMethod.CASH);
     this.paymentMethodId$.next(value);
   }
+
+  protected readonly GiftCardProductIdEnum = GiftCardProductIdEnum;
 }
