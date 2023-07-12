@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DiscoveryService } from '../discovery.service';
 import { Observable } from 'rxjs';
-import { SupermindGlobalFeedExperimentService } from '../../experiments/sub-services/supermind-global-feed-experiment.service';
 import { Session } from '../../../services/session';
 
 @Component({
@@ -23,7 +22,6 @@ export class DiscoveryTabsComponent {
     public route: ActivatedRoute,
     private router: Router,
     private service: DiscoveryService,
-    private supermindGlobalFeedExperimentService: SupermindGlobalFeedExperimentService,
     public session: Session
   ) {}
 
@@ -37,9 +35,5 @@ export class DiscoveryTabsComponent {
   public isLinkActive(url: string): boolean {
     const currentUrl = this.router.url;
     return url === currentUrl.split('?')[0];
-  }
-
-  public isSupermindFeedAvailable(): boolean {
-    return this.supermindGlobalFeedExperimentService.isActive();
   }
 }
