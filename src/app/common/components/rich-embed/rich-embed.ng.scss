@@ -1,6 +1,9 @@
 @import 'defaults.scss';
 
 :host {
+  .m-rich-embed-src {
+    margin-bottom: $spacing4;
+  }
   // ******************************************
   // ** FIXED HEIGHT **
   // ******************************************
