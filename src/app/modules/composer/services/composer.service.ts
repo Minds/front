@@ -690,8 +690,7 @@ export class ComposerService implements OnDestroy {
             (!richEmbed ||
               typeof richEmbed === 'string' ||
               !richEmbed.entityGuid) &&
-            !attachment &&
-            !remind
+            !attachment
           ) {
             if (!this.canEditMetadata()) {
               return;
@@ -704,7 +703,7 @@ export class ComposerService implements OnDestroy {
 
           // If there is an attachment already provided then reset the rich embed
           // as we can't have both values
-          if ((richEmbed && attachment) || (richEmbed && remind)) {
+          if (richEmbed && attachment) {
             this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
           }
         }
