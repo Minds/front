@@ -1,5 +1,9 @@
 // list types for console
-export type SupermindConsoleListType = 'inbox' | 'outbox' | SupermindGuid;
+export type SupermindConsoleListType =
+  | 'inbox'
+  | 'outbox'
+  | 'explore'
+  | SupermindGuid;
 
 // Supermind GUID type.
 export type SupermindGuid = string;
