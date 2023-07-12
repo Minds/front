@@ -28,6 +28,8 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { PasswordRiskValidator } from '../password-risk.validator';
 import { AnalyticsService } from './../../../services/analytics';
 import { debounceTime, Subscription } from 'rxjs';
+import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
+import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -91,7 +93,9 @@ export class RegisterForm implements OnInit, OnDestroy {
     private routerHistoryService: RouterHistoryService,
     private usernameValidator: UsernameValidator,
     private passwordRiskValidator: PasswordRiskValidator,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private onboardingV5Service: OnboardingV5Service,
+    private onboardingV5ExperimentService: OnboardingV5ExperimentService
   ) {}
 
   ngOnInit(): void {
@@ -205,10 +209,28 @@ export class RegisterForm implements OnInit, OnDestroy {
 
     this.client
       .post('api/v1/register', opts)
-      .then((data: any) => {
+      .then(async (data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
         this.inProgress = false;
+
+        // If onboarding v5 is globally enabled, and enrollment is enabled,
+        // set completed state to false. Modal showing is delegated to app component
+        // subscription to login state so that we do not call to open the modal twice.
+        if (
+          this.onboardingV5ExperimentService.isGlobalOnSwitchActive() &&
+          this.onboardingV5ExperimentService.isEnrollmentActive()
+        ) {
+          try {
+            await this.onboardingV5Service.setOnboardingCompletedState(
+              false,
+              data.user
+            );
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
         this.session.login(data.user);
         this.done.next(data.user);
       })

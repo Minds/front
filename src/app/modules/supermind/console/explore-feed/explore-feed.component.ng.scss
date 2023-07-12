@@ -1,0 +1,9 @@
+@import 'defaults.scss';
+
+:host {
+  m-loadingSpinner {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing10;
+  }
+}

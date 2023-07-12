@@ -45,6 +45,7 @@ const listAnimation = trigger('listAnimation', [
  *
  * See it in the newsfeed and onboarding
  */
+
 @Component({
   selector: 'm-publisherRecommendations',
   templateUrl: './publisher-recommendations.component.html',
@@ -114,6 +115,12 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
     this.initialListSize
   );
 
+  @Input('listSize') set _listSize(size: number) {
+    this.listSize$.next(size);
+  }
+
+  @Input() noOuterPadding: boolean = false;
+
   /**
    * Emit when user subscribes to a recommendation
    */
@@ -123,6 +130,8 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
    * Emit when user unsubscribes from a recommendation
    */
   @Output() unsubscribed: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() loaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   /**
    * New graphql way of loading data, if this value is inputted then no additional data calls will be made
@@ -204,6 +213,7 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
       })
       .toPromise()
       .then(result => {
+        this.loaded.emit(true);
         if (result) {
           this.recommendations$.next(result.entities.map(e => e.entity));
         }
@@ -220,6 +230,7 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
       })
       .toPromise()
       .then(result => {
+        this.loaded.emit(true);
         if (result) {
           this.recommendations$.next(result.suggestions.map(e => e.entity));
         }

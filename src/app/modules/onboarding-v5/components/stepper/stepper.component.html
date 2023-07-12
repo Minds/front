@@ -1,0 +1,23 @@
+<ng-container *ngFor="let step of steps$ | async; let i = index">
+  <div
+    class="m-onboardingStepper__circle"
+    [ngClass]="{
+      'm-onboardingStepper__circle--completed': step.completed,
+      'm-onboardingStepper__circle--active':
+        (activeStep$ | async)?.stepType === step.stepType
+    }"
+  >
+    <i
+      class="material-icons m-onboardingStepper__doneIcon"
+      *ngIf="step.completed"
+      >done</i
+    >
+  </div>
+  <div
+    class="m-onboardingStepper__connectionLine"
+    *ngIf="i !== (steps$ | async).length - 1"
+    [ngClass]="{
+      'm-onboardingStepper__connectionLine--hidden': !step.completed
+    }"
+  ></div>
+</ng-container>

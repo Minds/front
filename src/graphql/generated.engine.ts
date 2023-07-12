@@ -131,6 +131,8 @@ export type FeedNoticeEdge = EdgeInterface & {
 
 export type FeedNoticeNode = NodeInterface & {
   __typename?: 'FeedNoticeNode';
+  /** Whether the notice is dismissible */
+  dismissible: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   /** The key of the notice that the client should render */
   key: Scalars['String']['output'];
@@ -244,14 +246,29 @@ export type GroupNode = NodeInterface & {
   urn: Scalars['String']['output'];
 };
 
+export type KeyValuePairInput = {
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   claimGiftCard: GiftCardNode;
+  /** Mark an onboarding step for a user as completed. */
+  completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
+  /** Sets onboarding state for the currently logged in user. */
+  setOnboardingState: OnboardingState;
 };
 
 export type MutationClaimGiftCardArgs = {
   claimCode: Scalars['String']['input'];
+};
+
+export type MutationCompleteOnboardingStepArgs = {
+  additionalData?: InputMaybe<Array<KeyValuePairInput>>;
+  stepKey: Scalars['String']['input'];
+  stepType: Scalars['String']['input'];
 };
 
 export type MutationCreateGiftCardArgs = {
@@ -260,6 +277,10 @@ export type MutationCreateGiftCardArgs = {
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
   targetInput: GiftCardTargetInput;
+};
+
+export type MutationSetOnboardingStateArgs = {
+  completed: Scalars['Boolean']['input'];
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -275,6 +296,21 @@ export type NodeImpl = NodeInterface & {
 
 export type NodeInterface = {
   id: Scalars['ID']['output'];
+};
+
+export type OnboardingState = {
+  __typename?: 'OnboardingState';
+  completedAt?: Maybe<Scalars['Int']['output']>;
+  startedAt: Scalars['Int']['output'];
+  userGuid?: Maybe<Scalars['String']['output']>;
+};
+
+export type OnboardingStepProgressState = {
+  __typename?: 'OnboardingStepProgressState';
+  completedAt?: Maybe<Scalars['Int']['output']>;
+  stepKey: Scalars['String']['output'];
+  stepType: Scalars['String']['output'];
+  userGuid?: Maybe<Scalars['String']['output']>;
 };
 
 export type PageInfo = {
@@ -321,6 +357,10 @@ export type Query = {
   /** The available balances of each gift card types */
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   newsfeed: NewsfeedConnection;
+  /** Gets onboarding state for the currently logged in user. */
+  onboardingState?: Maybe<OnboardingState>;
+  /** Get the currently logged in users onboarding step progress. */
+  onboardingStepProgress: Array<OnboardingStepProgressState>;
 };
 
 export type QueryActivityArgs = {
@@ -792,6 +832,64 @@ export type PageInfoFragment = {
   endCursor?: string | null;
 };
 
+export type CompleteOnboardingStepMutationVariables = Exact<{
+  stepKey: Scalars['String']['input'];
+  stepType: Scalars['String']['input'];
+  additionalData?: InputMaybe<Array<KeyValuePairInput> | KeyValuePairInput>;
+}>;
+
+export type CompleteOnboardingStepMutation = {
+  __typename?: 'Mutation';
+  completeOnboardingStep: {
+    __typename?: 'OnboardingStepProgressState';
+    userGuid?: string | null;
+    stepKey: string;
+    stepType: string;
+    completedAt?: number | null;
+  };
+};
+
+export type GetOnboardingStateQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetOnboardingStateQuery = {
+  __typename?: 'Query';
+  onboardingState?: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  } | null;
+};
+
+export type GetOnboardingStepProgressQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetOnboardingStepProgressQuery = {
+  __typename?: 'Query';
+  onboardingStepProgress: Array<{
+    __typename?: 'OnboardingStepProgressState';
+    userGuid?: string | null;
+    stepKey: string;
+    stepType: string;
+    completedAt?: number | null;
+  }>;
+};
+
+export type SetOnboardingStateMutationVariables = Exact<{
+  completed: Scalars['Boolean']['input'];
+}>;
+
+export type SetOnboardingStateMutation = {
+  __typename?: 'Mutation';
+  setOnboardingState: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  };
+};
+
 export const PageInfoFragmentDoc = gql`
   fragment PageInfo on PageInfo {
     hasPreviousPage
@@ -952,6 +1050,108 @@ export class FetchNewsfeedGQL extends Apollo.Query<
   FetchNewsfeedQueryVariables
 > {
   document = FetchNewsfeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CompleteOnboardingStepDocument = gql`
+  mutation CompleteOnboardingStep(
+    $stepKey: String!
+    $stepType: String!
+    $additionalData: [KeyValuePairInput!]
+  ) {
+    completeOnboardingStep(
+      stepKey: $stepKey
+      stepType: $stepType
+      additionalData: $additionalData
+    ) {
+      userGuid
+      stepKey
+      stepType
+      completedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CompleteOnboardingStepGQL extends Apollo.Mutation<
+  CompleteOnboardingStepMutation,
+  CompleteOnboardingStepMutationVariables
+> {
+  document = CompleteOnboardingStepDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetOnboardingStateDocument = gql`
+  query GetOnboardingState {
+    onboardingState {
+      userGuid
+      startedAt
+      completedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetOnboardingStateGQL extends Apollo.Query<
+  GetOnboardingStateQuery,
+  GetOnboardingStateQueryVariables
+> {
+  document = GetOnboardingStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetOnboardingStepProgressDocument = gql`
+  query GetOnboardingStepProgress {
+    onboardingStepProgress {
+      userGuid
+      stepKey
+      stepType
+      completedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetOnboardingStepProgressGQL extends Apollo.Query<
+  GetOnboardingStepProgressQuery,
+  GetOnboardingStepProgressQueryVariables
+> {
+  document = GetOnboardingStepProgressDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetOnboardingStateDocument = gql`
+  mutation SetOnboardingState($completed: Boolean!) {
+    setOnboardingState(completed: $completed) {
+      userGuid
+      startedAt
+      completedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetOnboardingStateGQL extends Apollo.Mutation<
+  SetOnboardingStateMutation,
+  SetOnboardingStateMutationVariables
+> {
+  document = SetOnboardingStateDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
