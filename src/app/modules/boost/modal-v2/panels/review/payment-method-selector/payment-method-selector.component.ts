@@ -106,7 +106,7 @@ export class BoostModalV2PaymentMethodSelectorComponent
   private paymentMethodInitSubscription: Subscription;
   public totalPaymentAmount$: Observable<
     number
-  > = this.service.totalPaymentAmount$.pipe(shareReplay());
+  > = this.service.totalPaymentAmount$?.pipe(shareReplay());
 
   constructor(
     private service: BoostModalV2Service,
