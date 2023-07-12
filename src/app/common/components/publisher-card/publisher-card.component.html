@@ -16,7 +16,9 @@
       <!-- AVATAR -->
       <div
         class="minds-avatar"
-        [ngClass]="{ 'm-publisherCardAvatar--hasMarker': publisher.hasMarker }"
+        [ngClass]="{
+          'm-publisherCardAvatar--hasMarker': publisher.hasMarker
+        }"
       >
         <a [routerLink]="feedUrl">
           <div
@@ -29,7 +31,7 @@
       <div class="m-publisherCardOwnerRow__owner">
         <div>
           <a
-            class="m-publisherCardOwnerRowItem__name"
+            class="m-publisherCardOwnerRowItem__primary"
             [routerLink]="feedUrl"
             title="{{ publisher.name }}"
             >{{ publisher.name }}</a
@@ -48,11 +50,25 @@
         <div>
           <a
             *ngIf="type === 'user'"
-            class="m-publisherCardOwnerRowItem__username"
+            class="m-publisherCardOwnerRowItem__secondary m-legible"
             [routerLink]="['/', publisher.username]"
             title="@{{ publisher.username }}"
             >@{{ publisher.username }}</a
           >
+          <a
+            *ngIf="type === 'group'"
+            class="m-publisherCardOwnerRowItem__secondary m-legible"
+            [routerLink]="subscribersUrl"
+          >
+            <span class="m-publisherCardSubs__count">{{
+              publisher['members:count'] | abbr: 0
+            }}</span>
+            <span class="m-publisherCardSubs__header">
+              member<ng-container *ngIf="publisher['members:count'] > 1"
+                >s</ng-container
+              >
+            </span>
+          </a>
         </div>
       </div>
       <!-- SUBSCRIBE BUTTON -->
@@ -67,14 +83,19 @@
           [enableRecheck]="recheckSubscribed"
         ></m-subscribeButton>
         <!-- For groups -->
-        <m-group__membershipButton>
-          *ngIf="type === 'group'" [group]="publisher" [iconOnly]="btnIconOnly"
-          ></m-group__membershipButton
-        ></ng-container
-      >
+        <m-group__membershipButton
+          *ngIf="type === 'group'"
+          [group]="publisher"
+          [iconOnly]="btnIconOnly"
+          [size]="subscribeButtonSize"
+        ></m-group__membershipButton
+      ></ng-container>
     </div>
     <!-- - SUBS ---------------------------- -->
-    <div class="m-publisherCard__subs" *ngIf="shouldShowSubs">
+    <div
+      class="m-publisherCard__subs"
+      *ngIf="shouldShowSubs && type === 'user'"
+    >
       <a [routerLink]="subscribersUrl" class="m-legible">
         <ng-container *ngIf="type === 'user'"
           ><span class="m-publisherCardSubs__count">{{
@@ -82,17 +103,7 @@
           }}</span>
           <span class="m-publisherCardSubs__header">subscribers</span>
         </ng-container>
-        <ng-container *ngIf="type === 'group'"
-          ><span class="m-publisherCardSubs__count">{{
-            publisher['members:count'] | abbr: 0
-          }}</span>
-          <span class="m-publisherCardSubs__header">
-            member<ng-container *ngIf="publisher['members:count'] > 1"
-              >s</ng-container
-            >
-          </span></ng-container
-        ></a
-      >
+      </a>
 
       <ng-container *ngIf="type === 'user'">
         <span class="m-publisherCard__dot">·</span>
@@ -106,27 +117,14 @@
         ></ng-container
       >
     </div>
-    <!-- - TAGS (disabled) ---------------- -->
-    <!-- <div class="m-publisherCard__tags" *ngIf="showTags && publisher.tags.length">
-    <span *ngFor="let tag of publisher.tags" [innerHTML]="'#' + tag | tags"
-      >#{{ tag }}</span
-    >
-  </div> -->
     <!-- - DESC ---------------------------- -->
     <div
       class="m-publisherCard__desc"
       *ngIf="showDescription && publisher.briefdescription"
-      m-read-more
-      maxHeightAllowed="52"
     >
-      <p [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags">
+      <p [innerHtml]="publisher.briefdescription | tags">
         {{ publisher.briefdescription }}
       </p>
-      <m-read-more--button
-        v2="true"
-        showOnlyFadeout="true"
-        clickDisabled="true"
-      ></m-read-more--button>
     </div>
   </div>
 </div>
