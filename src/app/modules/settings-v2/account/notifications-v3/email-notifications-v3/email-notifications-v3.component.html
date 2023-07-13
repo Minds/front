@@ -80,7 +80,7 @@
       <m-toggle
         [mModel]="option.value"
         (mModelChange)="toggle(option)"
-        [leftValue]="getToggleValue(option, 'left')"
+        [offState]="getToggleValue(option, 'left')"
         [rightValue]="getToggleValue(option, 'right')"
       ></m-toggle>
       <div class="m-pushNotifSettings__optionContainerLabels">
