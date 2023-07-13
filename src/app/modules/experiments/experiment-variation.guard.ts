@@ -15,17 +15,11 @@ export function experimentVariationGuard(
   variation: string | number | boolean = true
 ): CanActivateFn {
   return (): boolean => {
-    const hasVariation: boolean = inject(ExperimentsService).hasVariation(
-      experimentId,
-      variation
-    );
-
-    if (!hasVariation) {
+    if (!inject(ExperimentsService).hasVariation(experimentId, variation)) {
       inject(ToasterService).warn('This feature is not currently enabled');
       inject(Router).navigate(['/']);
       return false;
     }
-
     return true;
   };
 }
