@@ -7,6 +7,7 @@ import { SettingsV2Service } from './settings-v2.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
 import { Subscription } from 'rxjs';
+import { TwitterSyncSettingsExperimentService } from '../experiments/sub-services/twitter-sync-settings-experiment.service';
 
 /**
  * Container that determines what form/menu(s)
@@ -299,10 +300,6 @@ export class SettingsV2Component implements OnInit {
         },
         items: [
           {
-            label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__TWITTER__LABEL:Twitter`,
-            id: 'twitter-sync',
-          },
-          {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__YOUTUBE__LABEL:Youtube`,
             id: 'youtube-migration',
           },
@@ -333,7 +330,8 @@ export class SettingsV2Component implements OnInit {
     protected session: Session,
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
-    protected toasterService: ToasterService
+    protected toasterService: ToasterService,
+    private twitterSyncSettingsExperiment: TwitterSyncSettingsExperimentService
   ) {}
 
   ngOnInit() {
@@ -372,7 +370,7 @@ export class SettingsV2Component implements OnInit {
         this.setSecondaryPane();
       });
 
-    // Conditionally show feature flagged items
+    this.injectExperimentItems();
     this.setProRoutes();
     this.setSecondaryPane();
     this.loadSettings();
@@ -482,5 +480,20 @@ export class SettingsV2Component implements OnInit {
 
   shouldShowPlusMenuItem(): boolean {
     return !this.session.getLoggedInUser().plus;
+  }
+
+  /**
+   * Inject experiment items.
+   * @returns { void }
+   */
+  private injectExperimentItems(): void {
+    if (this.twitterSyncSettingsExperiment.isActive()) {
+      this.secondaryMenus.other
+        .find(x => x.header.id === 'content-migration')
+        .items.push({
+          label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__TWITTER__LABEL:Twitter`,
+          id: 'twitter-sync',
+        });
+    }
   }
 }
