@@ -13,8 +13,8 @@ export class TwitterSyncSettingsExperimentService {
   constructor(private experiments: ExperimentsService) {}
 
   /**
-   * Returns true if the front-5408-videojs experiment is active.
-   * @returns { boolean } whether default front-5408-videojs experiment is active.
+   * Returns true if the experiment is active.
+   * @returns { boolean } whether experiment is active.
    */
   public isActive(): boolean {
     return this.experiments.hasVariation(this.experimentId, true);
