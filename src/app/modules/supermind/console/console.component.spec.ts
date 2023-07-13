@@ -44,11 +44,16 @@ describe('SupermindConsoleComponent', () => {
           {
             provide: ActivatedRoute,
             useValue: MockService(ActivatedRoute, {
-              has: ['firstChild'],
+              has: ['firstChild', 'snapshot'],
               props: {
                 firstChild: {
                   get: () => {
                     return { url: new BehaviorSubject([{ path: 'inbox' }]) };
+                  },
+                },
+                snapshot: {
+                  get: () => {
+                    return { firstChild: { url: [{ path: 'inbox' }] } };
                   },
                 },
               },
