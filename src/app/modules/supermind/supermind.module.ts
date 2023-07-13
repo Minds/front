@@ -11,13 +11,18 @@ import { SupermindConsoleFilterBarComponent } from './console/list/filter-bar/fi
 import { SupermindConsoleStateLabelComponent } from './console/list/list-item/state-label/state-label.component';
 import { SupermindConsoleActionButtonsComponent } from './console/list/list-item/action-bar/action-buttons.component';
 import { PathMatch } from '../../common/types/angular.types';
+import { SupermindConsoleExploreFeedComponent } from './console/explore-feed/explore-feed.component';
+import { LoggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
+import { NoticesModule } from '../notices/notices.module';
 
 const routes: Routes = [
   {
     path: 'supermind',
     component: SupermindConsoleComponent,
+    canActivate: [LoggedInRedirectGuard],
     children: [
-      { path: '', redirectTo: 'inbox', pathMatch: 'full' as PathMatch },
+      { path: '', redirectTo: 'explore', pathMatch: 'full' as PathMatch },
+      { path: 'explore', component: SupermindConsoleExploreFeedComponent },
       { path: ':listType', component: SupermindConsoleListComponent },
     ],
   },
@@ -31,6 +36,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     ActivityModule,
+    NoticesModule,
   ],
   declarations: [
     SupermindConsoleListComponent,
@@ -39,6 +45,7 @@ const routes: Routes = [
     SupermindConsoleFilterBarComponent,
     SupermindConsoleStateLabelComponent,
     SupermindConsoleActionButtonsComponent,
+    SupermindConsoleExploreFeedComponent,
   ],
 })
 export class SupermindModule {}
