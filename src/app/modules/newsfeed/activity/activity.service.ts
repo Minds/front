@@ -97,6 +97,7 @@ export type ActivityEntity = {
   boosted?: boolean; // may be exported if activity is a boost
   goal_button_text: BoostGoalButtonText; // may be exported if activity is a boost
   goal_button_url: string; // may be exported if activity is a boost
+  auto_caption?: string; // AI generated captions for images
 };
 
 // Constants of blocks
