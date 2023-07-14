@@ -58,6 +58,7 @@ export class SettingsV2PushNotificationsV3Component
     top_posts: "Get notifications for top posts you haven't yet seen",
     community_updates: 'Get notifications for updates from the Minds platform',
     supermind: 'Get notified about your Supermind offers',
+    affiliate_earnings: 'Get notified about your affiliate earnings',
     all: '',
   };
 
@@ -71,7 +72,7 @@ export class SettingsV2PushNotificationsV3Component
   ngOnInit(): void {
     this.subscriptions.push(
       this.service.pushSettings$.subscribe(response => {
-        for (let setting of response.settings) {
+        for (const setting of response.settings) {
           this.toggles.push({
             notificationGroup: setting.notification_group as PushNotificationGroup,
             state: setting.enabled ? 'on' : 'off',

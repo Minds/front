@@ -5,7 +5,7 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { loginReferrerServiceMock } from '../../../mocks/services/login-referrer-service-mock.spec';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
@@ -44,11 +44,16 @@ describe('SupermindConsoleComponent', () => {
           {
             provide: ActivatedRoute,
             useValue: MockService(ActivatedRoute, {
-              has: ['firstChild'],
+              has: ['firstChild', 'snapshot'],
               props: {
                 firstChild: {
                   get: () => {
                     return { url: new BehaviorSubject([{ path: 'inbox' }]) };
+                  },
+                },
+                snapshot: {
+                  get: () => {
+                    return { firstChild: { url: [{ path: 'inbox' }] } };
                   },
                 },
               },
@@ -56,7 +61,22 @@ describe('SupermindConsoleComponent', () => {
           },
           {
             provide: Router,
-            useValue: jasmine.createSpyObj('Router', ['navigate']),
+            useValue: MockService(Router, {
+              has: ['events'],
+              props: {
+                events: {
+                  get: () => {
+                    return new BehaviorSubject(
+                      new NavigationEnd(
+                        0,
+                        'https://example.minds.com/supermind/inbox',
+                        'https://example.minds.com/supermind/inbox'
+                      )
+                    );
+                  },
+                },
+              },
+            }),
           },
           {
             provide: SupermindConsoleService,
@@ -121,11 +141,18 @@ describe('SupermindConsoleComponent', () => {
     expect((comp as any).listType$.getValue()).toBe('inbox');
   }));
 
-  it("it should set list type to inbox on router change when subroute isn't recognised", fakeAsync(() => {
+  it('it should set list type on router change to explore', fakeAsync(() => {
+    (comp as any).listType$.next('outbox');
+    (comp as any).route.firstChild.url.next([{ path: 'explore' }]);
+    tick();
+    expect((comp as any).listType$.getValue()).toBe('explore');
+  }));
+
+  it("it should set list type to explore on router change when subroute isn't recognised", fakeAsync(() => {
     (comp as any).listType$.next('outbox');
     (comp as any).route.firstChild.url.next([{ path: 'unknown' }]);
     tick();
-    expect((comp as any).listType$.getValue()).toBe('inbox');
+    expect((comp as any).listType$.getValue()).toBe('explore');
   }));
 
   it('it should navigate to settings page on settings button click', () => {

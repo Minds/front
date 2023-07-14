@@ -1,0 +1,34 @@
+<div class="m-giftCardSuccess__headerWrapper">
+  <h2 class="m-giftCardSuccess__title">
+    <i class="material-icons m-giftCardSuccess__icon">task_alt</i>
+    Your {{ productCreditName$ | async }} have been applied to your account
+  </h2>
+</div>
+<h3 class="m-giftCardSuccess__subtitle">
+  Updated {{ productCreditName$ | async }} Balance:
+  <span class="m-giftCardSuccess__subtitle--amount">
+    <ng-container *ngIf="balance$ | async; else noBalanceTemplate">{{
+      balance$ | async | currency: 'USD'
+    }}</ng-container>
+    <ng-template #noBalanceTemplate>...</ng-template>
+  </span>
+</h3>
+<p class="m-giftCardSuccess__description">
+  You can <a [href]="getViewBalanceUrl()">view your balances</a> in your Wallet
+  in the Credits tab. It is not possible to transfer your credit balance to
+  other accounts, utilize it for purchasing gifts for others, or redeem it for
+  cash. When making eligible purchases, your credit balance will be
+  automatically chosen as the default payment method. However, if you prefer not
+  to use your credit balance for a specific purchase, you can unselect it as the
+  payment method.
+</p>
+<m-button
+  class="m-giftCardSuccess__actionButton"
+  [color]="'blue'"
+  (onAction)="onActionButtonClick()"
+  >{{ actionButtonText$ | async }}</m-button
+>
+
+<ng-template #loadingInProgressTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

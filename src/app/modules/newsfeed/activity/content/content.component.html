@@ -127,6 +127,7 @@ post content to trigger upgrade modal -->
       <img
         #imageEl
         [src]="!isMultiImage ? imageUrl : activeMultiImageUrl"
+        [alt]="imageAltTag"
         (error)="onImageError($event)"
         (click)="onModalRequested($event)"
         [m-blurhash]="service.entity$ | async"

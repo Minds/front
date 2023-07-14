@@ -62,6 +62,10 @@ export class ReportService {
         label = $localize`:@@REPORT__1.6:Trafficking`;
         description = $localize`:@@REPORT_DESCRIPTION__1.6:Illegal sales of sex or paraphernalia (e.g. escort services, drugs)`;
         break;
+      case '1.7':
+        label = $localize`:@@REPORT__1.7:Animal abuse`;
+        description = $localize`:@@REPORT_DESCRIPTION__1.7:Content that depicts conduct in which animals are purposely crushed, burned, drowned, suffocated, impaled, or otherwise subjected to serious bodily injury`;
+        break;
       case '2':
         label = $localize`:@@REPORT__2:NSFW (not safe for work)`;
         break;
