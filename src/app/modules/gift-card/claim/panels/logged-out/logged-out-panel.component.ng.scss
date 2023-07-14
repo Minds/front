@@ -1,0 +1,25 @@
+@import 'defaults.scss';
+
+:host {
+  .m-giftCardLoggedOut__title {
+    margin-bottom: $spacing4;
+    @include heading2Bold;
+  }
+
+  .m-giftCardLoggedOut__description {
+    margin-bottom: $spacing8;
+
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    .m-giftCardLoggedOut__joinNowLink {
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
+  }
+}

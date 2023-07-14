@@ -1,0 +1,11 @@
+mutation ClaimGiftCard($claimCode: String!) {
+  claimGiftCard(claimCode: $claimCode) {
+    guid
+    productId
+    amount
+    balance
+    expiresAt
+    claimedAt
+    claimedByGuid    
+  }
+}

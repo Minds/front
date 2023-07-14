@@ -65,6 +65,7 @@ import { AffiliatesModule } from './modules/affiliates/affiliates.module';
 import { GroupModule } from './modules/groups/v2/group.module';
 import { ApolloModule } from 'apollo-angular';
 import { MarkdownModule } from 'ngx-markdown';
+import { GiftCardModule } from './modules/gift-card/gift-card.module';
 
 @NgModule({
   bootstrap: [Minds],
@@ -120,6 +121,7 @@ import { MarkdownModule } from 'ngx-markdown';
     SupermindModule,
     AffiliatesModule,
     GroupModule,
+    GiftCardModule,
     //last due to :username route
     AppRoutingModule,
   ],
