@@ -9,7 +9,7 @@
     [disabled]="service.inProgress$ | async"
     [overlay]="overlay"
     [iconOnly]="iconOnly"
-    [size]="buttonSize"
+    [size]="size"
     [color]="color"
   >
     <!-- -----  -->
@@ -102,7 +102,7 @@
     [disabled]="service.inProgress$ | async"
     [overlay]="overlay"
     [iconOnly]="iconOnly"
-    [size]="buttonSize"
+    [size]="size"
     [color]="color"
   >
     <ng-container *ngIf="(buttonType$ | async) === 'invited'">
