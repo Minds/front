@@ -58,7 +58,12 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
    * the location in which this component appears
    */
   @Input()
-  location: 'newsfeed' | 'discovery-feed' | 'channel' | 'groups-memberships';
+  location:
+    | 'newsfeed'
+    | 'discovery-feed'
+    | 'channel'
+    | 'groups-memberships'
+    | 'search';
   /**
    * the channel id for which the recommendations should be contextualized.
    */

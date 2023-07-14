@@ -104,6 +104,7 @@ import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.c
     DiscoveryBuildYourAlgorithmComponent,
     DiscoveryTopComponent,
     DiscoverySupermindsFeedComponent,
+    DiscoverySettingsButtonComponent,
   ],
   providers: [
     DiscoveryTrendsService,

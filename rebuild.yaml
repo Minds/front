@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rebuildksgraph
+  namespace: vitess
+spec:
+  template:
+    spec:
+      containers:
+      - name: rebuildksgraph
+        image: debian:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          apt-get update && apt-get install -y wget
+          wget https://github.com/vitessio/vitess/releases/download/v14.0.4/vitess_14.0.4-7fafc94_amd64.deb
+          dpkg -i vitess_14.0.4-7fafc94_amd64.deb
+
+          export GLOBAL_TOPOLOGY="--topo_implementation zk2 --topo_global_server_address pulsar-zookeeper-lb.pulsar.svc.cluster.local:2181 --topo_global_root /vitess/minds/global"
+
+          vtctl --topo_implementation zk2 --topo_global_server_address pulsar-zookeeper-lb.pulsar.svc.cluster.local:2181 --topo_global_root /vitess/minds/global RebuildKeyspaceGraph minds
+          vtctl --topo_implementation zk2 --topo_global_server_address pulsar-zookeeper-lb.pulsar.svc.cluster.local:2181 --topo_global_root /vitess/minds/global RebuildVSchemaGraph
+      restartPolicy: Never
+  backoffLimit: 1

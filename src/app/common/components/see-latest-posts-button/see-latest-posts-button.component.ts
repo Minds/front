@@ -10,6 +10,7 @@ import {
   Component,
   EventEmitter,
   HostBinding,
+  HostListener,
   Inject,
   Input,
   OnDestroy,
@@ -17,7 +18,7 @@ import {
   Output,
   PLATFORM_ID,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, interval } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 
@@ -59,62 +60,46 @@ import { FeedsService } from '../../services/feeds.service';
   ],
 })
 export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
-  @Input()
-  feedService: FeedsService;
+  /**
+   * Specify the polling interval
+   */
+  @Input() pollingInterval: number = 30000; // 30 seconds by default
+
+  /**
+   * The count that the upstream can send
+   */
+  @Input() count: number = 0;
 
   @Output('click')
   onClickEmitter = new EventEmitter();
 
+  @Output('poll')
+  onPollEmitter = new EventEmitter();
+
   @HostBinding('class.m-seeLatestPostButton--visible')
   visible: boolean = false;
 
-  newPostsCountSubscription: Subscription;
-
   /**
-   * removes the watcher interval
+   * The polling subscription
    */
-  disposeWatcher?: () => void;
+  pollingSubscription: Subscription;
 
   constructor(@Inject(PLATFORM_ID) private platformId) {}
 
   ngOnInit(): void {
     this.startPolling();
-
-    this.newPostsCountSubscription = this.feedService.newPostsCount$.subscribe(
-      count => {
-        this.visible = count > 0;
-      }
-    );
   }
 
   ngOnDestroy(): void {
-    this.disposeWatcher?.();
-  }
-
-  /**
-   * new posts count
-   */
-  get newPostsCount$(): BehaviorSubject<number> {
-    return this.feedService.newPostsCount$;
-  }
-
-  /**
-   * loading indicator for new posts
-   */
-  get loadingNewPosts$(): BehaviorSubject<boolean> {
-    return this.feedService.countInProgress$;
+    this.pollingSubscription?.unsubscribe();
   }
 
   /**
    * returns the localized button title
    */
-  get title$(): Observable<string> {
-    return this.newPostsCount$.pipe(
-      map(count => {
-        return $localize`:@@MINDS__NEWSFEED__SEE_LATEST_TITLE: See
-    ${count > 99 ? '+99' : count}:count: latest posts`;
-      })
-    );
+  get title(): string {
+    return $localize`:@@MINDS__NEWSFEED__SEE_LATEST_TITLE: See
+      ${this.count > 99 ? '+99' : this.count}:count: latest posts`;
   }
 
   /**
@@ -122,7 +107,6 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
    */
   async onClick(): Promise<void> {
     this.onClickEmitter.emit();
-    await this.feedService.fetch(true);
   }
 
   /**
@@ -131,6 +115,31 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
   private startPolling(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    this.disposeWatcher = this.feedService.watchForNewPosts();
+    // Already polling
+    if (this.pollingSubscription) return;
+
+    this.pollingSubscription = interval(this.pollingInterval).subscribe(() => {
+      this.onPollEmitter.emit();
+    });
+  }
+
+  /**
+   * Stops the polling (removes subscription)
+   */
+  private stopPolling(): void {
+    this.pollingSubscription?.unsubscribe();
+  }
+
+  @HostListener('window:focus')
+  onWindowFocus(): void {
+    // Trigger re-poll when browser window back open
+    this.onPollEmitter.emit();
+
+    this.startPolling();
+  }
+
+  @HostListener('window:blur')
+  onWindowBlur(): void {
+    this.stopPolling();
   }
 }
