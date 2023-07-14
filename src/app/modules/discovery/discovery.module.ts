@@ -18,8 +18,6 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
 import { DiscoveryTopComponent } from './top/top.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
-import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.component';
-import { SupermindGlobalFeedExperimentGuard } from '../experiments/guards/supermind-global-feed-experiment.guard.ts/supermind-global-feed-experiment.guard';
 import { PathMatch } from '../../common/types/angular.types';
 
 @NgModule({
@@ -85,12 +83,9 @@ import { PathMatch } from '../../common/types/angular.types';
             },
           },
           {
+            // deprecated route.
             path: 'supermind',
-            component: DiscoverySupermindsFeedComponent,
-            canActivate: [SupermindGlobalFeedExperimentGuard],
-            data: {
-              title: 'Discovery / Supermind',
-            },
+            redirectTo: '/supermind/explore',
           },
           {
             path: 'memberships/feed',

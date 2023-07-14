@@ -313,6 +313,46 @@ class ComposerModalComponent {
   }
 
   /**
+   * Create a new newsfeed post and stores the response from post creation
+   * under the given key so that you can use it in future tests.
+   * @param { string } responseStorageKey - store response under this key.
+   * @returns { void }
+   */
+  public async createNewsfeedPostAndStoreResponse(
+    responseStorageKey: string
+  ): Promise<void> {
+    const postContent = generateARandomString();
+    I.seeElement('m-composer .m-composer__trigger');
+    I.click('m-composer .m-composer__trigger');
+    I.fillField(
+      'm-composer__modal > m-composer__base [data-ref="composer-textarea"]',
+      postContent
+    );
+    I.seeElement(
+      'm-composer__modal > m-composer__base [data-ref="post-button"] button'
+    );
+    const response = await I.clickAndWait(
+      locate(
+        'm-composer__modal > m-composer__base [data-ref="post-button"] button'
+      ),
+      '/api/v3/newsfeed',
+      200
+    );
+
+    storage.add(responseStorageKey, await response.json());
+
+    I.waitForElement(
+      locate('button')
+        .withText('trending_up')
+        .inside(
+          locate('m-activity').withDescendant(
+            locate('span').withText(postContent)
+          )
+        )
+    );
+  }
+
+  /**
    * Attach files.
    * @param { string[] } fileNames - file names.
    * @returns { Promise<void> }

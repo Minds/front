@@ -54,6 +54,9 @@ class SupermindConsolePage {
   private statusFilterLabel: CodeceptJS.Locator = locate(
     '.m-supermindConsole__filterLabel'
   );
+  private exploreFeedSelector: CodeceptJS.LocatorOrString =
+    'm-supermind__exploreFeed';
+  private exploreFeedActivitySelector: CodeceptJS.LocatorOrString = `${this.exploreFeedSelector} m-activity`;
 
   /**
    * Navigate to the supermind page by subpage.
@@ -72,7 +75,6 @@ class SupermindConsolePage {
    * @returns { Promise<void> }
    */
   public async navigateToViaSidebar(): Promise<void> {
-    sidebarComponent.expandSidebarMore();
     await Promise.all([
       sidebarComponent.openSupermindConsole(),
       I.waitForResponse(
@@ -267,6 +269,14 @@ class SupermindConsolePage {
     within(this.listItem.at(feedPosition), () => {
       this.stateLabel.withText(label);
     });
+  }
+  /**
+   * Check whether the Supermind Explore feed can be seen.
+   * @returns { void }
+   */
+  public hasSupermindExploreFeed(): void {
+    I.seeElement(this.exploreFeedSelector);
+    I.waitForElement(this.exploreFeedActivitySelector);
   }
 }
 

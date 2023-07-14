@@ -46,6 +46,7 @@ import { NoGroupsNoticeComponent } from './panels/no-groups/no-groups-notice.com
     FeedNoticeOutletComponent,
     FeedNoticeSwitchComponent,
     BoostLatestPostNoticeComponent,
+    SupermindPendingNoticeComponent,
     NoGroupsNoticeComponent,
   ],
 })
