@@ -3,23 +3,32 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { ConfigsService } from './configs.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JsonLdService {
   readonly scriptType: string = 'application/ld+json';
+  readonly siteUrl: string;
 
-  constructor(@Inject(DOCUMENT) private _document: Document) {}
+  constructor(
+    @Inject(DOCUMENT) private _document: Document,
+    configs: ConfigsService
+  ) {
+    this.siteUrl = configs.get('site_url');
+  }
 
   removeStructuredData(): void {
     const els = [];
     // An array in case we want to start adding add'l schemass
-    ['m-structuredData--video'].forEach(className => {
-      els.push(
-        ...Array.from(this._document.head.getElementsByClassName(className))
-      );
-    });
+    ['m-structuredData--video', 'm-structuredData--image'].forEach(
+      className => {
+        els.push(
+          ...Array.from(this._document.head.getElementsByClassName(className))
+        );
+      }
+    );
     els.forEach(el => this._document.head.removeChild(el));
   }
 
@@ -67,6 +76,39 @@ export class JsonLdService {
       uploadDate: this.getISODate(entity.time_created * 1000),
       contentUrl: entity.src['720.mp4'] ?? entity.src['360.mp4'],
     };
+  }
+
+  /**
+   *
+   * @param entity
+   * @param title the current value used for the og:title field
+   * @param description the current value used for the og:description field
+   */
+  getImageSchema(entity: any, title: string, description: string): any {
+    if (!entity || !entity.custom_type || entity.custom_type !== 'batch') {
+      return;
+    }
+
+    const parsedDesc = this.parseDescriptionText(description);
+
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'SocialMediaPosting',
+      headline: title,
+      'sharedContent:headline': title,
+      articleBody: parsedDesc,
+      image: entity.custom_data[0].src,
+      datePublished: this.getISODate(entity.time_created * 1000),
+      'author:@type': 'Person',
+      'author:name': entity.ownerObj.username,
+      'author:url': `${this.siteUrl}${entity.ownerObj.username}/`,
+      'sharedContent:@type': 'WebPage',
+      'sharedContent:url': `${this.siteUrl}newsfeed/${entity.guid}/`,
+      'mainEntityOfPage:type': 'WebPage',
+      'mainEntityOfPage:id': `${this.siteUrl}newsfeed/${entity.guid}/`,
+    };
+
+    return schema;
   }
 
   getISODate(ts): string {
