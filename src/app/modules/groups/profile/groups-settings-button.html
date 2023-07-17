@@ -62,17 +62,18 @@
       </m-dropdownMenu__item>
       <!---------------------------->
       <m-dropdownMenu__item
-        *ngIf="group.show_boosts"
+        *ngIf="group.show_boosts === undefined || group.show_boosts; else enableBoosts"
         (click)="toggleShowBoosts(false)"
       >
         Disable boosts
       </m-dropdownMenu__item>
-      <m-dropdownMenu__item
-        *ngIf="!group.show_boosts"
-        (click)="toggleShowBoosts(true)"
-      >
-        Enable boosts
-      </m-dropdownMenu__item>
+
+      <ng-template #enableBoosts>
+        <m-dropdownMenu__item (click)="toggleShowBoosts(true)">
+          Enable boosts
+        </m-dropdownMenu__item>
+      </ng-template>
+
       <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="!group.membership"
