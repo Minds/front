@@ -4,6 +4,15 @@
     <div class="m-tabs__container" *ngIf="!(isSingleSupermindPage$ | async)">
       <div class="m-tabs__tab">
         <a
+          [routerLink]="['/supermind/explore']"
+          [class.m-tabs__tab--selected]="(listType$ | async) === 'explore'"
+          data-ref="supermind-console-tab-explore"
+          i18n="@@SUPERMIND_CONSOLE__TAB_EXPLORE"
+          >Explore</a
+        >
+      </div>
+      <div class="m-tabs__tab">
+        <a
           [routerLink]="['/supermind/inbox']"
           [class.m-tabs__tab--selected]="(listType$ | async) === 'inbox'"
           data-ref="supermind-console-tab-inbound"

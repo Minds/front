@@ -1,0 +1,64 @@
+@import 'defaults.scss';
+
+$cardWidth: 552px;
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  max-width: 100%;
+  width: $cardWidth;
+  border-radius: 20px;
+  overflow: hidden;
+
+  .m-giftCard__top {
+    height: 232px;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    @include m-theme() {
+      background-color: themed($m-action);
+    }
+  }
+
+  .m-giftCard__bottom {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing7;
+    box-sizing: border-box;
+    min-height: 88px;
+
+    @include m-on-theme(dark) {
+      background-color: color-by-theme($m-white-always, 'dark');
+    }
+
+    @include m-on-theme(light) {
+      background-color: color-by-theme($m-grey-100, 'light');
+    }
+
+    .m-giftCard__cardText {
+      @include m-on-theme(dark) {
+        color: color-by-theme($m-grey-900, 'light');
+      }
+
+      @include m-on-theme(light) {
+        color: color-by-theme($m-textColor--primary, 'light');
+      }
+    }
+
+    .m-giftCard__cardText--left {
+      @include heading3Medium;
+    }
+
+    .m-giftCard__cardText--right {
+      @include heading3Bold;
+      margin-left: 12px;
+    }
+  }
+}

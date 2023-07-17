@@ -1,0 +1,43 @@
+@import 'defaults.scss';
+
+:host {
+  .m-giftCardSuccess__headerWrapper {
+    .m-giftCardSuccess__title {
+      @include heading2Bold;
+    }
+
+    .m-giftCardSuccess__icon {
+      font-size: 32px;
+      vertical-align: middle;
+      margin-right: $spacing2;
+    }
+  }
+
+  .m-giftCardSuccess__subtitle {
+    @include heading4Medium;
+
+    .m-giftCardSuccess__subtitle--amount {
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
+  }
+
+  .m-giftCardSuccess__description {
+    margin-bottom: $spacing10;
+
+    @include body2Regular;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    a {
+      text-decoration: none;
+
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
+  }
+}

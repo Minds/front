@@ -9,7 +9,8 @@
   <m-group__membershipButton
     class="m-groupActions__button--membership"
     [group]="service.group$ | async"
-    buttonSize="xsmall"
+    customColor="grey"
+    size="xsmall"
     overlay="true"
     verbose="true"
     (onMembershipChange)="onMembershipChange($event)"

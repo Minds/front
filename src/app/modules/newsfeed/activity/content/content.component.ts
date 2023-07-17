@@ -31,25 +31,15 @@ import {
 } from '../../activity/activity.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { RedirectService } from '../../../../common/services/redirect.service';
-import * as moment from 'moment';
 import { Session } from '../../../../services/session';
-import {
-  animate,
-  keyframes,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { ScrollAwareVideoPlayerComponent } from '../../../media/components/video-player/scrollaware-player.component';
-import {
-  ActivityModalComponent,
-  ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
-} from '../modal/modal.component';
+import { ACTIVITY_MODAL_MIN_STAGE_HEIGHT } from '../modal/modal.component';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 import { PaywallContextExperimentService } from '../../../experiments/sub-services/paywall-context-experiment.service';
+import getMetaAutoCaption from '../../../../helpers/meta-auto-caption';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -403,6 +393,16 @@ export class ActivityContentComponent
 
   get imageGuid(): string {
     return this.entity.entity_guid;
+  }
+
+  get imageAltTag(): string {
+    if (!this.isImage) return;
+
+    let caption = getMetaAutoCaption(this.entity);
+    if (caption) {
+      return `AI caption: ${caption}`;
+    }
+    return '';
   }
 
   get imageUrl(): string {

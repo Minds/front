@@ -79,6 +79,7 @@ export const config: CustomMainConfig = {
     multiFactorModalComponent: './fragments/multiFactorModalComponent.ts',
     publisherRecommendationsModalComponent:
       './fragments/publisherRecommendationsModalComponent.ts',
+    reportModalComponent: './fragments/reportModalComponent.ts',
     onboardingV5ModalComponent:
       './fragments/onboardingV5/onboardingV5ModalComponent.ts',
     onboardingV5VerifyEmailComponent:

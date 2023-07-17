@@ -32,6 +32,28 @@ class ComposerModalComponent {
   public supermindReplyConfirmButton: string =
     '[data-ref=data-minds-supermind-reply-confirmation-modal-confirm-button]';
 
+  // audience selector panel.
+  private audienceSelectorButtonSelector: string =
+    '[data-ref=composer-audience-selector-button]';
+  private audienceSelectorPanelSelector: string =
+    'm-composer__audienceSelectorPanel';
+  private audienceSelectorPanelChooseAudienceTitleSelector: string =
+    '[data-ref=composer-audience-selector-choose-audience-title]';
+  private audienceSelectorPanelShareToGroupTitleSelector: string =
+    '[data-ref=composer-audience-selector-share-to-group-title]';
+  private audienceSelectorPanelEntitySelector: string =
+    '[data-ref=composer-audience-selector-selectable-entity-card]';
+  private audienceSelectorPanelSubtitleSelector: string =
+    '[data-ref=composer-audience-selector-my-groups-subtitle]';
+  private audienceSelectorPanelGroupSectionSelector: string =
+    '[data-ref=composer-audience-group-section]';
+  private audienceSelectorPanelGroupExpandSelector: string =
+    '[data-ref=composer-audience-group-expand]';
+  private audienceSelectorPanelGroupCollapseSelector: string =
+    '[data-ref=composer-audience-group-collapse]';
+  private audienceSelectorPanelSaveButtonSelector: string =
+    '[data-ref=composer-audience-selector-save-button]';
+
   /**
    * Toolbar items
    */
@@ -291,6 +313,46 @@ class ComposerModalComponent {
   }
 
   /**
+   * Create a new newsfeed post and stores the response from post creation
+   * under the given key so that you can use it in future tests.
+   * @param { string } responseStorageKey - store response under this key.
+   * @returns { void }
+   */
+  public async createNewsfeedPostAndStoreResponse(
+    responseStorageKey: string
+  ): Promise<void> {
+    const postContent = generateARandomString();
+    I.seeElement('m-composer .m-composer__trigger');
+    I.click('m-composer .m-composer__trigger');
+    I.fillField(
+      'm-composer__modal > m-composer__base [data-ref="composer-textarea"]',
+      postContent
+    );
+    I.seeElement(
+      'm-composer__modal > m-composer__base [data-ref="post-button"] button'
+    );
+    const response = await I.clickAndWait(
+      locate(
+        'm-composer__modal > m-composer__base [data-ref="post-button"] button'
+      ),
+      '/api/v3/newsfeed',
+      200
+    );
+
+    storage.add(responseStorageKey, await response.json());
+
+    I.waitForElement(
+      locate('button')
+        .withText('trending_up')
+        .inside(
+          locate('m-activity').withDescendant(
+            locate('span').withText(postContent)
+          )
+        )
+    );
+  }
+
+  /**
    * Attach files.
    * @param { string[] } fileNames - file names.
    * @returns { Promise<void> }
@@ -307,6 +369,48 @@ class ComposerModalComponent {
         }, 30),
       ]);
     }
+  }
+
+  /**
+   * Click audience selector button.
+   * @returns { void }
+   */
+  public clickAudienceSelectorButton(): void {
+    I.click(this.audienceSelectorButtonSelector);
+  }
+
+  /**
+   * Click audience selector button.
+   * @returns { void }
+   */
+  public hasAudienceSelectorPopup(): void {
+    I.seeElement(this.audienceSelectorPanelSelector);
+    I.seeElement(this.audienceSelectorPanelSubtitleSelector);
+    I.seeElement(this.audienceSelectorPanelGroupSectionSelector);
+    I.seeElement(this.audienceSelectorPanelSaveButtonSelector);
+  }
+
+  /**
+   * Wait for audience selector panel entities to appear.
+   * @returns { void }
+   */
+  public waitForAudienceSelectorPopupEntities(): void {
+    I.waitForElement(this.audienceSelectorPanelEntitySelector);
+  }
+
+  /**
+   * Validates whether the audience selector group section is expanded or is not.
+   * @param { boolean } expanded - whether it is expanded or not.
+   * @returns { void }
+   */
+  public isAudienceSelectorGroupSectionExpanded(
+    expanded: boolean = true
+  ): void {
+    if (expanded) {
+      I.seeElement(this.audienceSelectorPanelGroupCollapseSelector);
+      return;
+    }
+    I.seeElement(this.audienceSelectorPanelGroupExpandSelector);
   }
 }
 
