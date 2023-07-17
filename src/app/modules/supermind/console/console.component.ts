@@ -1,9 +1,17 @@
-import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { LoginReferrerService } from '../../../services/login-referrer.service';
-import { Session } from '../../../services/session';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  UrlSegment,
+} from '@angular/router';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  filter,
+  switchMap,
+} from 'rxjs';
 import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleService } from './services/console.service';
@@ -29,49 +37,30 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
     .isSingleSupermindPage$;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
+    private route: ActivatedRoute,
     private service: SupermindConsoleService,
-    private supermindOnboardingModal: SupermindOnboardingModalService,
-    private session: Session,
-    private loginReferrer: LoginReferrerService,
-    private location: Location
+    private supermindOnboardingModal: SupermindOnboardingModalService
   ) {}
 
   ngOnInit(): void {
-    if (!this.session.isLoggedIn()) {
-      this.loginReferrer.register(this.location.path());
-      this.router.navigate(['/login']);
-    }
+    // listen to route changes and handle them.
+    this.routeSubscription = this.router.events
+      .pipe(
+        filter(e => e instanceof NavigationEnd),
+        // switchMap into the first child.
+        switchMap((_: unknown) => this.route.firstChild.url)
+      )
+      .subscribe((url: UrlSegment[]): void => {
+        this.handleRouteChange(url);
+      });
 
-    // on route change, set list type.
-    this.routeSubscription = this.route.firstChild.url.subscribe(segments => {
-      const param: string = segments[0].path;
-
-      if (param === 'inbox') {
-        // Launch onboarding modal (if user hasn't seen it yet)
-        this.supermindOnboardingModal.setContentType('reply');
-        if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
-          this.openSupermindOnboardingModal();
-        }
-      }
-
-      if (
-        param === 'inbox' ||
-        param === 'outbox' ||
-        this.service.isNumericListType(param)
-      ) {
-        this.listType$.next(param);
-        return;
-      }
-      this.listType$.next('inbox');
-    });
+    // on first init NavigationEnd is not fired, so we need to handle the route change manually.
+    this.handleRouteChange(this.route.snapshot.firstChild.url);
   }
 
   ngOnDestroy(): void {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
+    this.routeSubscription?.unsubscribe();
   }
 
   /**
@@ -93,5 +82,34 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
 
   async openSupermindOnboardingModal() {
     await this.supermindOnboardingModal.open();
+  }
+
+  /**
+   * Handle route change.
+   * @param { UrlSegment[] } url - url segments.
+   * @returns { void }
+   */
+  private handleRouteChange(url: UrlSegment[]): void {
+    const param = url[0].path ?? null;
+
+    if (param === 'inbox') {
+      // Launch onboarding modal (if user hasn't seen it yet)
+      this.supermindOnboardingModal.setContentType('reply');
+      if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
+        this.openSupermindOnboardingModal();
+      }
+    }
+
+    if (
+      param === 'inbox' ||
+      param === 'outbox' ||
+      param === 'explore' ||
+      this.service.isNumericListType(param)
+    ) {
+      this.listType$.next(param);
+      return;
+    }
+
+    this.listType$.next('explore');
   }
 }

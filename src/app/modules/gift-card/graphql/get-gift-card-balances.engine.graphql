@@ -1,0 +1,6 @@
+query GetGiftCardBalances {
+  giftCardsBalances {
+    productId
+    balance
+  }
+}

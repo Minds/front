@@ -15,6 +15,7 @@
     <a class="m-activityContentMedia__link">
       <img
         [src]="image.src"
+        [alt]="getAltTag(entity$ | async, i)"
         [m-blurhash]="image.blurhash"
         (click)="onClickImage($event, i)"
     /></a>

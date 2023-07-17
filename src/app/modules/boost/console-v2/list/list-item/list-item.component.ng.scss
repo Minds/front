@@ -101,7 +101,7 @@
 
         .m-publisherCard__ownerRow
           .m-publisherCardOwnerRow__owner
-          .m-publisherCardOwnerRowItem__name {
+          .m-publisherCardOwnerRowItem__primary {
           @include body1Bold;
           font-weight: 700 !important;
         }

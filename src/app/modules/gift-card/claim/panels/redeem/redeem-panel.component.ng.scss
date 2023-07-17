@@ -1,0 +1,27 @@
+@import 'defaults.scss';
+
+:host {
+  .m-giftCardRedeem__title {
+    margin-bottom: $spacing4;
+
+    @include heading2Bold;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-giftCardRedeem__description {
+    margin-bottom: $spacing10;
+
+    @include body2Regular;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  m-giftCard {
+    margin-bottom: $spacing11;
+  }
+}

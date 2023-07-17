@@ -1,0 +1,26 @@
+<ng-container *ngIf="!(loading$ | async); else loadingTemplate">
+  <m-feedNotice--supermindPending
+    *ngIf="showPendingSupermindNotice$ | async"
+  ></m-feedNotice--supermindPending>
+
+  <m-activity
+    *ngFor="let entity$ of feed$ | async; let i = index; trackBy: trackEntityBy"
+    [entity]="entity$ | async"
+    [displayOptions]="{
+      showOnlyCommentsInput: false,
+      isFeed: true,
+      hasLoadingPriority: i < 2
+    }"
+    class="m-defaultFeed__activity"
+  ></m-activity>
+
+  <infinite-scroll
+    (load)="loadNext()"
+    [moreData]="hasMore$ | async"
+    [inProgress]="inProgress$ | async"
+  >
+  </infinite-scroll>
+</ng-container>
+<ng-template #loadingTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

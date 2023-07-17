@@ -14,6 +14,7 @@ import { Observable, of } from 'rxjs';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
+import { ButtonColor, ButtonSize } from '../button/button.component';
 
 export type PublisherCardSize = 'small' | 'medium' | 'large';
 
@@ -36,10 +37,13 @@ export class PublisherCardComponent implements AfterViewInit {
   @Input() showSubs: boolean = true;
   @Input() showSubscribeButton: boolean = true;
 
+  // Only enabled for groups for now
+  @Input() subscribeButtonColor: ButtonColor = 'grey';
+  // Only enabled for groups for now
+  @Input() subscribeButtonSize: ButtonSize = 'xsmall';
+
   // disable subscription - allows for a user to preview their own card.
   @Input() disableSubscribe: boolean = false;
-
-  // @Input() showTags: boolean = false; // disabled
 
   // display a blue border
   @Input() featured: boolean = false;
@@ -73,6 +77,7 @@ export class PublisherCardComponent implements AfterViewInit {
     if (value) {
       this.showSubs = true;
       this.recheckSubscribed = true;
+      this.btnIconOnly = true;
     }
   }
 
@@ -136,7 +141,7 @@ export class PublisherCardComponent implements AfterViewInit {
   get subscribersUrl(): string {
     return this.type === 'user'
       ? `/${this.publisher.username}/subscribers`
-      : `/groups/profile/${this.publisher.guid}/members`;
+      : `/group/${this.publisher.guid}/members`;
   }
 
   get shouldShowSubs(): boolean {

@@ -361,6 +361,8 @@ export type Query = {
   dismissals: Array<Dismissal>;
   /** Returns an individual gift card */
   giftCard: GiftCardNode;
+  /** Returns an individual gift card by its claim code. */
+  giftCardByClaimCode: GiftCardNode;
   /** Returns a list of gift card transactions */
   giftCardTransactions: GiftCardTransactionsConnection;
   /** Returns a list of gift cards belonging to a user */
@@ -386,6 +388,10 @@ export type QueryDismissalByKeyArgs = {
 
 export type QueryGiftCardArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryGiftCardByClaimCodeArgs = {
+  claimCode: Scalars['String']['input'];
 };
 
 export type QueryGiftCardTransactionsArgs = {
@@ -497,6 +503,52 @@ export type GetDismissalsQuery = {
     key: string;
     dismissalTimestamp: number;
   }>;
+};
+
+export type ClaimGiftCardMutationVariables = Exact<{
+  claimCode: Scalars['String']['input'];
+}>;
+
+export type ClaimGiftCardMutation = {
+  __typename?: 'Mutation';
+  claimGiftCard: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+    claimedByGuid?: string | null;
+  };
+};
+
+export type GetGiftCardBalancesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGiftCardBalancesQuery = {
+  __typename?: 'Query';
+  giftCardsBalances: Array<{
+    __typename?: 'GiftCardBalanceByProductId';
+    productId: GiftCardProductIdEnum;
+    balance: number;
+  }>;
+};
+
+export type GetGiftCardByCodeQueryVariables = Exact<{
+  claimCode: Scalars['String']['input'];
+}>;
+
+export type GetGiftCardByCodeQuery = {
+  __typename?: 'Query';
+  giftCardByClaimCode: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+  };
 };
 
 export type FetchNewsfeedQueryVariables = Exact<{
@@ -969,6 +1021,81 @@ export class GetDismissalsGQL extends Apollo.Query<
   GetDismissalsQueryVariables
 > {
   document = GetDismissalsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ClaimGiftCardDocument = gql`
+  mutation ClaimGiftCard($claimCode: String!) {
+    claimGiftCard(claimCode: $claimCode) {
+      guid
+      productId
+      amount
+      balance
+      expiresAt
+      claimedAt
+      claimedByGuid
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ClaimGiftCardGQL extends Apollo.Mutation<
+  ClaimGiftCardMutation,
+  ClaimGiftCardMutationVariables
+> {
+  document = ClaimGiftCardDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardBalancesDocument = gql`
+  query GetGiftCardBalances {
+    giftCardsBalances {
+      productId
+      balance
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardBalancesGQL extends Apollo.Query<
+  GetGiftCardBalancesQuery,
+  GetGiftCardBalancesQueryVariables
+> {
+  document = GetGiftCardBalancesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardByCodeDocument = gql`
+  query GetGiftCardByCode($claimCode: String!) {
+    giftCardByClaimCode(claimCode: $claimCode) {
+      guid
+      productId
+      amount
+      balance
+      expiresAt
+      claimedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardByCodeGQL extends Apollo.Query<
+  GetGiftCardByCodeQuery,
+  GetGiftCardByCodeQueryVariables
+> {
+  document = GetGiftCardByCodeDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
