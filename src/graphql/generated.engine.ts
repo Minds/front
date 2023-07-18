@@ -31,6 +31,7 @@ export type Scalars = {
 export type ActivityEdge = EdgeInterface & {
   __typename?: 'ActivityEdge';
   cursor: Scalars['String']['output'];
+  explicitVotes: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   node: ActivityNode;
   type: Scalars['String']['output'];
@@ -344,6 +345,8 @@ export type Query = {
   activity: ActivityNode;
   /** Returns an individual gift card */
   giftCard: GiftCardNode;
+  /** Returns an individual gift card by its claim code. */
+  giftCardByClaimCode: GiftCardNode;
   /** Returns a list of gift card transactions */
   giftCardTransactions: GiftCardTransactionsConnection;
   /** Returns a list of gift cards belonging to a user */
@@ -365,6 +368,10 @@ export type QueryActivityArgs = {
 
 export type QueryGiftCardArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryGiftCardByClaimCodeArgs = {
+  claimCode: Scalars['String']['input'];
 };
 
 export type QueryGiftCardTransactionsArgs = {
@@ -454,6 +461,7 @@ export type FetchNewsfeedQuery = {
     edges: Array<
       | {
           __typename?: 'ActivityEdge';
+          explicitVotes: boolean;
           cursor: string;
           node: { __typename?: 'ActivityNode'; legacy: string; id: string };
         }
@@ -859,6 +867,9 @@ export const FetchNewsfeedDocument = gql`
     ) {
       edges {
         cursor
+        ... on ActivityEdge {
+          explicitVotes
+        }
         node {
           id
           ... on ActivityNode {

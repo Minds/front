@@ -12,6 +12,9 @@ query FetchNewsfeed(
   ) {
     edges {
       cursor
+      ... on ActivityEdge {
+        explicitVotes
+      }
       node {
         id
         ... on ActivityNode {

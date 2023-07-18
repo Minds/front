@@ -48,6 +48,11 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
   @Input() iconOnly = false;
 
   /**
+   * When true, display a bordered button with "see more of this" text
+   */
+  @Input() explicit = false;
+
+  /**
    * Call to let parent functions know a thumb up event has happened
    */
   @Output('thumbsUpChange') thumbsUpChange$: EventEmitter<
@@ -114,6 +119,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       const user = await this.authModal.open();
       if (!user) return;
     }
+
     let data = {
       client_meta: this.clientMeta.build({
         campaign: this.object['urn'],
@@ -141,6 +147,9 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
         this.session.getLoggedInUser().guid,
       ];
       this.object['thumbs:up:count']++;
+      this.toast.success(
+        'Thank you! We use this to improve your recommendations.'
+      );
     } else {
       for (let key in this.object['thumbs:up:user_guids']) {
         if (

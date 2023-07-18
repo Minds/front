@@ -40,6 +40,13 @@ const listAnimation = trigger('listAnimation', [
     animate('200ms ease-out', style({ height: 0, opacity: 0 }))
   ),
 ]);
+
+export type PublisherRecommendationsLocation =
+  | 'newsfeed'
+  | 'discovery-feed'
+  | 'channel'
+  | 'groups-memberships';
+
 /**
  * Displays channel/group recommendations
  *
@@ -58,7 +65,7 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
    * the location in which this component appears
    */
   @Input()
-  location: 'newsfeed' | 'discovery-feed' | 'channel' | 'groups-memberships';
+  location: PublisherRecommendationsLocation;
   /**
    * the channel id for which the recommendations should be contextualized.
    */

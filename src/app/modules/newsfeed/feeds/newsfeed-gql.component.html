@@ -78,7 +78,8 @@
               [entity]="edge.node.legacy"
               [displayOptions]="{
                 showOnlyCommentsInput: true,
-                isFeed: true
+                isFeed: true,
+                showExplicitVoteButtons: edge.explicitVotes
               }"
               [slot]="i + 1"
               (deleted)="delete(edge.node)"
