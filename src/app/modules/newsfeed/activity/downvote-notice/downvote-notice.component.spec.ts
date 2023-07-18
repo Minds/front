@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DownvoteNoticeComponent } from './downvote-notice.component';
+import { ActivityDownvoteNoticeComponent } from './downvote-notice.component';
 
 describe('DownvoteNoticeComponent', () => {
-  let component: DownvoteNoticeComponent;
-  let fixture: ComponentFixture<DownvoteNoticeComponent>;
+  let component: ActivityDownvoteNoticeComponent;
+  let fixture: ComponentFixture<ActivityDownvoteNoticeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DownvoteNoticeComponent],
+      declarations: [ActivityDownvoteNoticeComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DownvoteNoticeComponent);
+    fixture = TestBed.createComponent(ActivityDownvoteNoticeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
