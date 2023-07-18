@@ -16,11 +16,14 @@ import {
   COOKIE_OPTIONS,
   CookieModule,
 } from '@mindsorg/ngx-universal';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LivestreamService } from '../../modules/composer/services/livestream.service';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
   let fixture: ComponentFixture<ComposerComponent>;
   let cookieService: CookieService;
+  let service: LivestreamService;
 
   beforeEach(
     waitForAsync(() => {
@@ -36,7 +39,7 @@ describe('Composer', () => {
             outputs: ['onPost'],
           }),
         ],
-        imports: [CookieModule],
+        imports: [CookieModule, HttpClientTestingModule],
         providers: [
           {
             provide: ComposerModalService,
@@ -65,8 +68,10 @@ describe('Composer', () => {
             provide: COOKIE_OPTIONS,
             useValue: CookieOptionsProvider,
           },
+          LivestreamService,
         ],
       }).compileComponents();
+      service = TestBed.inject(LivestreamService);
     })
   );
 
@@ -86,7 +91,9 @@ describe('Composer', () => {
       });
     }
   });
-
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
   it('should render an embedded base composer', () => {
     comp.embedded = true;
     comp.detectChanges();
