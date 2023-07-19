@@ -744,7 +744,7 @@ export class ComposerService implements OnDestroy {
     // Unsubscribe from rich embed extractor
     this.richEmbedExtractorSubscription.unsubscribe();
 
-    this.livestreamSubscription.unsubscribe();
+    this.livestreamSubscription?.unsubscribe();
   }
 
   /**
@@ -1125,6 +1125,7 @@ export class ComposerService implements OnDestroy {
         // New activity
         this.livestreamSubscription = this.livestreamService
           .getCreatedStream()
+          .pipe(take(1))
           .subscribe(stream => {
             if (stream) {
               this.payload.is_rich = true;

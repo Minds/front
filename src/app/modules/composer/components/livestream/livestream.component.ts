@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { LivestreamService } from '../../services/livestream.service';
-import { interval, Subscription } from 'rxjs';
+import { interval, Subscription, take } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -32,6 +32,7 @@ export class LiveStreamComponent implements OnDestroy {
   ngOnInit(): void {
     this.livestreamSubscription = this.livestreamService
       .getCreatedStream()
+      .pipe(take(1))
       .subscribe(stream => {
         this.stream = stream;
         this.streamCreated = this.stream !== null;
@@ -45,7 +46,7 @@ export class LiveStreamComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubscribeStreamCheck();
-    this.livestreamSubscription.unsubscribe();
+    this.livestreamSubscription?.unsubscribe();
   }
 
   checkStreamStatus(): void {
