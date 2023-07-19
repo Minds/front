@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { ConfigsService } from '../../../common/services/configs.service';
 @Injectable({ providedIn: 'root' })
 export class LivestreamService {
-  private apiKey = process.env.LIVEPEER_STUDIO_KEY;
   private apiUrl = 'https://livepeer.studio/api/stream';
   private stream: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private mindsConfigService: ConfigsService
+  ) {}
 
   async createLiveStream(): Promise<any> {
     const timestamp = new Date().getTime();
@@ -32,7 +35,9 @@ export class LivestreamService {
   private createHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.apiKey}`,
+      Authorization: `Bearer ${this.mindsConfigService.get<string>(
+        'livepeer_api_key'
+      )}`,
     });
   }
 

@@ -232,8 +232,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   async createLiveStream(): Promise<void> {
     try {
-      const stream = await this.livestreamService.createLiveStream();
-      this.livestreamService.setStream(stream);
+      await this.livestreamService.createLiveStream();
     } catch (error) {
       console.error('Error creating live stream:', error);
     }

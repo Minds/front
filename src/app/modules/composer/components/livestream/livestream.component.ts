@@ -21,6 +21,7 @@ export class LiveStreamComponent implements OnDestroy {
   stream: any; // Define a property to hold the stream object
   streamCreated = false; // Flag to track if the stream is created
   private streamCheckSubscription: Subscription;
+  private livestreamSubscription: Subscription;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -29,19 +30,22 @@ export class LiveStreamComponent implements OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.livestreamService.getCreatedStream().subscribe(stream => {
-      this.stream = stream;
-      this.streamCreated = this.stream !== null;
-      if (this.streamCreated) {
-        this.checkStreamStatus(); // Start checking stream status
-      }
-      // Trigger change detection manually
-      this.cdRef.markForCheck();
-    });
+    this.livestreamSubscription = this.livestreamService
+      .getCreatedStream()
+      .subscribe(stream => {
+        this.stream = stream;
+        this.streamCreated = this.stream !== null;
+        if (this.streamCreated) {
+          this.checkStreamStatus(); // Start checking stream status
+        }
+        // Trigger change detection manually
+        this.cdRef.markForCheck();
+      });
   }
 
   ngOnDestroy(): void {
     this.unsubscribeStreamCheck();
+    this.livestreamSubscription.unsubscribe();
   }
 
   checkStreamStatus(): void {

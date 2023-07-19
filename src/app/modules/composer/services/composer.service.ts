@@ -1,5 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  Subscription,
+  take,
+} from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -375,6 +381,8 @@ export class ComposerService implements OnDestroy {
     end: number;
   }> = new BehaviorSubject({ start: 0, end: 0 });
 
+  private livestreamSubscription: Subscription;
+
   /**
    * Sets up data observable and its subscription
    *
@@ -735,6 +743,8 @@ export class ComposerService implements OnDestroy {
 
     // Unsubscribe from rich embed extractor
     this.richEmbedExtractorSubscription.unsubscribe();
+
+    this.livestreamSubscription.unsubscribe();
   }
 
   /**
@@ -1113,19 +1123,21 @@ export class ComposerService implements OnDestroy {
           .toPromise();
       } else {
         // New activity
-        this.livestreamService.getCreatedStream().subscribe(stream => {
-          if (stream) {
-            this.payload.is_rich = true;
-            this.payload.url = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-            this.payload.title = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-            this.payload.description = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-            this.payload.thumbnail = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-            this.payload.message =
-              this.payload.message +
-              `\n https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-            this.livestreamService.toggleRecordLivestream(stream.id, true);
-          }
-        });
+        this.livestreamSubscription = this.livestreamService
+          .getCreatedStream()
+          .subscribe(stream => {
+            if (stream) {
+              this.payload.is_rich = true;
+              this.payload.url = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.title = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.description = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.thumbnail = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.message =
+                this.payload.message +
+                `\n https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.livestreamService.toggleRecordLivestream(stream.id, true);
+            }
+          });
         activity = await this.api
           .put(`api/v3/newsfeed/activity`, this.payload)
           .toPromise();
