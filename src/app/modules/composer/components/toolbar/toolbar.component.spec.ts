@@ -136,7 +136,10 @@ describe('Composer Toolbar', () => {
             provide: UploaderService,
             useValue: uploaderServiceMock,
           },
-          LivestreamService,
+          {
+            provide: LivestreamService,
+            useValue: MockService(LivestreamService),
+          },
         ],
       }).compileComponents();
       service = TestBed.inject(LivestreamService);

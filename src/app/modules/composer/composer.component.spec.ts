@@ -68,7 +68,10 @@ describe('Composer', () => {
             provide: COOKIE_OPTIONS,
             useValue: CookieOptionsProvider,
           },
-          LivestreamService,
+          {
+            provide: LivestreamService,
+            useValue: MockService(LivestreamService),
+          },
         ],
       }).compileComponents();
       service = TestBed.inject(LivestreamService);
