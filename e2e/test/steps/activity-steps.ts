@@ -1,7 +1,14 @@
+import { fail } from 'assert';
 import { Storage } from '../utils/storage';
+import activityComponent from '../fragments/activityComponent';
 
 namespace ActivitySteps {
-  const { newsfeedPage, singleEntityPage, composerModalComponent } = inject();
+  const {
+    I,
+    newsfeedPage,
+    singleEntityPage,
+    composerModalComponent,
+  } = inject();
 
   const storage = Storage.getInstance();
 
@@ -21,6 +28,21 @@ namespace ActivitySteps {
       await composerModalComponent.clickPostAndAwait();
     }
   );
+
+  Given(
+    'I navigate to the post with the response storage key {string}',
+    (storageKey: string) => {
+      const storedResponse = storage.get(storageKey);
+      if (!storedResponse?.guid) {
+        fail('No response found in storage with key: ' + storageKey);
+      }
+      I.amOnPage(`/newsfeed/${storedResponse.guid}`);
+    }
+  );
+
+  Given('I open the report modal', () => {
+    activityComponent.openReportModal();
+  });
 
   When(
     'I click the parent media for the quote post in the {string} with storage text {string}',

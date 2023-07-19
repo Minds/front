@@ -48,6 +48,10 @@ namespace SupermindConsoleSteps {
     }
   );
 
+  Then('I see the Supermind explore feed', (): void => {
+    supermindConsolePage.hasSupermindExploreFeed();
+  });
+
   When('I make a supermind offer', () => {
     composerModalComponent.shouldHaveSupermindBadge(false);
     composerModalComponent.shouldHaveEllipsisMenu(true);
@@ -119,8 +123,7 @@ namespace SupermindConsoleSteps {
   });
 
   When('I navigate via sidebar to the supermind console', async () => {
-    supermindConsolePage.navigateTo();
-    supermindConsolePage.hasTabSelected('Inbound');
+    supermindConsolePage.navigateToViaSidebar();
   });
 
   When('I click {string} on latest Supermind', async (buttonType: string) => {

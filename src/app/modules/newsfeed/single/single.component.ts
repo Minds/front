@@ -228,10 +228,12 @@ export class NewsfeedSingleComponent {
   private updateMeta(): void {
     const activity = this.activity;
 
-    const title: string =
+    let title: string =
       activity.title ||
       activity.message ||
       `@${activity.ownerObj.username}'s post on Minds`;
+
+    title = title.trim();
 
     let description: string;
 
@@ -307,6 +309,15 @@ export class NewsfeedSingleComponent {
     ) {
       const videoSchema = this.jsonLdService.getVideoSchema(activity);
       this.jsonLdService.insertSchema(videoSchema);
+    }
+
+    if (isImage) {
+      const imageSchema = this.jsonLdService.getImageSchema(
+        activity,
+        this.metaService.getOgTitle(title),
+        description
+      );
+      this.jsonLdService.insertSchema(imageSchema, 'm-structuredData--image');
     }
 
     if (activity.custom_type === 'video') {

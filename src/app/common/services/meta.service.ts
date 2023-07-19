@@ -49,13 +49,13 @@ export class MetaService {
    */
   setTitle(value: string, join = true): MetaService {
     value = this.stripHtml(value);
-    this.setOgTitle(value, join);
+    this.ogTitle = this.getOgTitle(value, join);
     this.setPageTitle(value, join);
     this.applyTitle();
     return this;
   }
 
-  setOgTitle(value: string, join = true): MetaService {
+  public getOgTitle(value: string, join = true): string {
     let ogTitle: string;
 
     if (this.site.isProDomain || !value) {
@@ -75,8 +75,7 @@ export class MetaService {
       }
     }
 
-    this.ogTitle = ogTitle;
-    return this;
+    return ogTitle;
   }
 
   setPageTitle(value: string, join = true): MetaService {

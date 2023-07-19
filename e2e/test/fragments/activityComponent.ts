@@ -29,6 +29,15 @@ class ActivityComponent {
   }
 
   /**
+   * Open the report modal for the activity.
+   * @returns { void }
+   */
+  public openReportModal(): void {
+    this.openActivityMenu();
+    I.click(locate(this.optionSelector).withText('Report post'));
+  }
+
+  /**
    * Enter text in the comment poster input box
    * @returns { void }
    */

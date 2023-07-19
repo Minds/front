@@ -68,6 +68,13 @@
 
     .m-publisherCard__desc {
       p {
+        display: -webkit-box;
+        max-width: 100%;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-all;
+
         margin: 0;
         @include body2Regular;
 
@@ -135,8 +142,8 @@
         justify-content: flex-start;
       }
 
-      .m-publisherCardOwnerRowItem__name,
-      .m-publisherCardOwnerRowItem__username {
+      .m-publisherCardOwnerRowItem__primary,
+      .m-publisherCardOwnerRowItem__secondary {
         font-weight: 400;
         text-decoration: none;
         flex: auto 0 1;
@@ -144,7 +151,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .m-publisherCardOwnerRowItem__name {
+      .m-publisherCardOwnerRowItem__primary {
         font-weight: 500;
         line-height: 21px;
         @include m-theme() {
@@ -157,16 +164,20 @@
           }
         }
       }
-      .m-publisherCardOwnerRowItem__username {
-        font-size: 15px;
-        line-height: 20px;
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
+      .m-publisherCardOwnerRowItem__secondary {
+        a,
+        span {
+          font-size: 15px;
+          line-height: 20px;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
         }
       }
     }
     ::ng-deep {
-      m-subscribeButton {
+      m-subscribeButton,
+      m-group__membershipButton {
         flex: auto 1 0;
         display: flex;
         justify-content: flex-end;
@@ -243,7 +254,8 @@
       }
 
       ::ng-deep {
-        m-subscribeButton {
+        m-subscribeButton,
+        m-group__membershipButton {
           margin: 15px 0 5px;
         }
       }
