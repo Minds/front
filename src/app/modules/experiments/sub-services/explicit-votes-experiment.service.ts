@@ -13,8 +13,6 @@ export class ExplicitVotesExperimentService {
    * @returns { boolean } - true if experiment is active.
    */
   public isActive(): boolean {
-    // ojm remove!!!
-    return true;
     return this.experiments.hasVariation('minds-4175-explicit-votes', true);
   }
 }

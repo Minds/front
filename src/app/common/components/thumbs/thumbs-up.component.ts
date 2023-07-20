@@ -18,6 +18,7 @@ import { FriendlyCaptchaComponent } from '../../../modules/captcha/friendly-catp
 import { ToasterService } from '../../services/toaster.service';
 import { CounterChangeFadeIn } from '../../../animations';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
+import { ExplicitVotesExperimentService } from '../../../modules/experiments/sub-services/explicit-votes-experiment.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -70,7 +71,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     private authModal: AuthModalService,
     private cd: ChangeDetectorRef,
     private experiments: ExperimentsService,
-    private toast: ToasterService
+    private toast: ToasterService,
+    private explicitVotesExperiment: ExplicitVotesExperimentService
   ) {}
 
   set _object(value: any) {
@@ -147,9 +149,11 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
         this.session.getLoggedInUser().guid,
       ];
       this.object['thumbs:up:count']++;
-      this.toast.success(
-        'Thank you! We use this to improve your recommendations.'
-      );
+      if (this.explicitVotesExperiment.isActive()) {
+        this.toast.success(
+          'Thank you! We use this to improve your recommendations.'
+        );
+      }
     } else {
       for (let key in this.object['thumbs:up:user_guids']) {
         if (
