@@ -117,11 +117,14 @@
 
 <div *ngIf="isLivestream()">
   <div [outerHTML]="inlineEmbed.html"></div>
-  <button
-    *ngIf="isOwner"
+  <m-button
+    *ngIf="isOwner && streamRecording?.downloadUrl"
     (click)="downloadRecording()"
     class="livestream__stop-button"
+    [color]="'blue'"
+    [solid]="false"
+    [size]="'xsmall'"
   >
     Download recording
-  </button>
+  </m-button>
 </div>

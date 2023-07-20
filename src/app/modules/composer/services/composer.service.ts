@@ -1145,6 +1145,7 @@ export class ComposerService implements OnDestroy {
 
         this.feedsUpdate.postEmitter.emit(activity);
         this.onboardingService.forceCompletion('CreatePostStep');
+        this.livestreamService.setStream(null);
       }
 
       if (this.payload.supermind_reply_guid) {

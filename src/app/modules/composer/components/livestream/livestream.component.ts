@@ -32,7 +32,6 @@ export class LiveStreamComponent implements OnDestroy {
   ngOnInit(): void {
     this.livestreamSubscription = this.livestreamService
       .getCreatedStream()
-      .pipe(take(1))
       .subscribe(stream => {
         this.stream = stream;
         this.streamCreated = this.stream !== null;
