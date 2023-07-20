@@ -1,0 +1,93 @@
+<div class="m-walletCreditsHistory__topbarContainer">
+  <h3 class="m-walletCreditsHistory__header">Your gifts</h3>
+  <m-dropdownSelector
+    class="m-walletCreditsHistory__statusFilter"
+    [filter]="statusFilter"
+    [inlineLabel]="true"
+    (selectionMade)="onStatusFilterChanged($event)"
+  ></m-dropdownSelector>
+</div>
+<p class="m-walletCreditsHistory__description">
+  You can view all your gifts, as well as their remaining balances, expiration,
+  and transactions.
+</p>
+<ng-container *ngIf="!(loading$ | async); else loadingSpinnerTemplate">
+  <div class="m-walletCreditsHistory__list">
+    <div
+      *ngFor="
+        let giftCard of giftCards$ | async;
+        let i = index;
+        trackBy: trackByFn
+      "
+      class="m-walletCreditsHistory__item"
+    >
+      <div class="m-walletCreditsHistory__itemLeft">
+        <div
+          class="m-walletCreditsHistory__giftCard"
+          [ngClass]="{
+            'm-walletCreditsHistory__giftCard--greyedOut':
+              isExpired(giftCard) || giftCard.balance <= 0
+          }"
+          [routerLink]="['./' + giftCard.guid]"
+        >
+          <!-- We need to swap the logos on theme change, changing ngSrc does not do this -->
+          <ng-container
+            *ngIf="isDarkTheme$ | async; else lightThemeLogoTemplate"
+          >
+            <img
+              class="m-walletCreditsHistory__giftCardLogo"
+              ngSrc="./assets/logos/logo-monotone-light.png"
+              disableOptimizedSrcset
+              width="112"
+              height="44"
+            />
+          </ng-container>
+          <ng-template #lightThemeLogoTemplate>
+            <img
+              class="m-walletCreditsHistory__giftCardLogo"
+              ngSrc="./assets/logos/logo-monotone-dark.png"
+              disableOptimizedSrcset
+              width="112"
+              height="44"
+            />
+          </ng-template>
+        </div>
+      </div>
+      <div class="m-walletCreditsHistory__itemRight">
+        <div class="m-walletCreditsHistory__itemRight--topSection">
+          <h4 class="m-walletCreditsHistory__itemProductName">
+            {{ getProductNameByProductId(giftCard.productId) }}
+          </h4>
+          <p class="m-walletCreditsHistory__itemExpiryDate">
+            <span>{{ isExpired(giftCard) ? 'Expired' : 'Expires' }}&nbsp;</span>
+            <span class="m-walletCreditsHistory__text--noWrap">{{
+              giftCard.expiresAt * 1000 | date: 'MMM dd, y'
+            }}</span>
+          </p>
+        </div>
+        <div class="m-walletCreditsHistory__itemRight--bottomSection">
+          <a
+            class="m-walletCreditsHistory__viewTransactionsLink"
+            [routerLink]="['./' + giftCard.guid]"
+            >View Transactions</a
+          >
+          <p class="m-walletCreditsHistory__balance">
+            Balance:
+            <span class="m-walletCreditsHistory__text--noWrap">{{
+              giftCard.balance | currency: 'USD'
+            }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <infinite-scroll
+      *ngIf="hasNextPage$ | async as hasNextPage"
+      (load)="fetchMore()"
+      [moreData]="hasNextPage"
+      [inProgress]="fetchMoreInProgress$ | async"
+    ></infinite-scroll>
+  </div>
+</ng-container>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

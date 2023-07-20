@@ -1,0 +1,33 @@
+<div
+  class="m-walletCreditsSummary__productContainer"
+  *ngFor="
+    let giftCardBalance of giftCardBalances$ | async;
+    let i = index;
+    trackBy: trackByFn
+  "
+>
+  <h5 class="m-walletCreditsSummary__productHeader">
+    {{ getProductName(giftCardBalance) }}
+  </h5>
+  <p class="m-walletCreditsSummary__amount">
+    {{ giftCardBalance.balance | currency: 'USD' }}
+  </p>
+  <span
+    class="m-walletCreditsSummary__earliestExpiringContainer"
+    *ngIf="giftCardBalance.earliestExpiringGiftCard"
+  >
+    <span class="m-walletCreditsSummary__earliestExpiringAmount"
+      >{{
+        giftCardBalance.earliestExpiringGiftCard.balance | currency: 'USD'
+      }}
+      in {{ getProductName(giftCardBalance) }}</span
+    >
+    <span class="m-walletCreditsSummary__earliestExpiringTime"
+      >expires
+      {{
+        giftCardBalance.earliestExpiringGiftCard.expiresAt * 1000
+          | date: mediumDate
+      }}</span
+    >
+  </span>
+</div>

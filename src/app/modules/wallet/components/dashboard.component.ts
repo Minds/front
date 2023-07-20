@@ -128,6 +128,14 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
+  /**
+   * Whether to show the token price badge (if a user is on a wallet/tokens route).
+   * @returns { boolean } true if token price badge should be shown.
+   */
+  shouldShowTokenPriceBadge(): boolean {
+    return this.router.url.includes('/wallet/tokens');
+  }
+
   scrollToSettingsEl() {
     if (this.dashboardViewsEl && this.dashboardViewsEl.nativeElement)
       this.dashboardViewsEl.nativeElement.scrollIntoView({

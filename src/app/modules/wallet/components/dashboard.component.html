@@ -22,7 +22,14 @@
         >Cash</a
       >
     </div>
+    <div class="m-tabs__tab">
+      <a routerLink="/wallet/credits" routerLinkActive="m-tabs__tab--selected"
+        >Credits</a
+      >
+    </div>
     <div class="m-layout__spacer"></div>
-    <m-wallet__tokenPriceBadge></m-wallet__tokenPriceBadge>
+    <m-wallet__tokenPriceBadge
+      *ngIf="shouldShowTokenPriceBadge()"
+    ></m-wallet__tokenPriceBadge>
   </div>
 </ng-template>

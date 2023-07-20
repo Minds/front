@@ -1,0 +1,143 @@
+@import 'defaults.scss';
+@import '../../../../../common/layout/layout.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  // height: 100%;
+
+  .m-walletCreditsHistory__topbarContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing4;
+    margin: 0 0 $spacing4 0;
+    width: 100%;
+
+    .m-walletCreditsHistory__header {
+      margin: 0;
+
+      @include heading3Medium;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-walletCreditsHistory__statusFilter {
+      margin: 0;
+    }
+  }
+
+  .m-walletCreditsHistory__description {
+    margin-bottom: $spacing12;
+
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-walletCreditsHistory__list {
+    > * + * {
+      margin-top: $spacing10;
+    }
+
+    .m-walletCreditsHistory__item {
+      display: flex;
+      flex-flow: row nowrap;
+
+      .m-walletCreditsHistory__itemLeft {
+        margin-right: $spacing6;
+
+        @media screen and (max-width: $layoutMin3ColWidth) {
+          flex-basis: 50%;
+          flex-grow: 0;
+        }
+
+        @media screen and (max-width: $min-mobile) {
+          display: none;
+        }
+
+        .m-walletCreditsHistory__giftCard {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 284px;
+          max-width: 284px;
+          height: 176px;
+          max-height: 176px;
+          min-height: 100%;
+          border-radius: 20px;
+          cursor: pointer;
+
+          @media screen and (max-width: $layoutMin3ColWidth) {
+            width: unset;
+          }
+
+          @include m-theme() {
+            background-color: themed($m-action);
+          }
+
+          &:hover {
+            opacity: 0.5;
+          }
+
+          &:not(:hover).m-walletCreditsHistory__giftCard--greyedOut {
+            opacity: 0.25;
+          }
+
+          .m-walletCreditsHistory__giftCardLogo {
+            @include unselectable;
+
+            @media screen and (max-width: $layoutMin3ColWidth) {
+              width: 50%;
+              height: auto;
+              max-width: 112px;
+            }
+
+            @media screen and (max-width: $max-mobile) {
+              width: 75%;
+            }
+          }
+        }
+      }
+
+      .m-walletCreditsHistory__itemRight {
+        display: flex;
+        flex-flow: column nowrap;
+        flex-basis: 50%;
+        flex-grow: 0;
+        justify-content: space-between;
+
+        .m-walletCreditsHistory__itemRight--topSection {
+          .m-walletCreditsHistory__itemProductName {
+            @include heading4Bold;
+            margin-top: unset;
+            margin-bottom: $spacing2;
+          }
+
+          .m-walletCreditsHistory__itemExpiryDate {
+            @include body1Regular;
+          }
+        }
+
+        .m-walletCreditsHistory__itemRight--bottomSection {
+          .m-walletCreditsHistory__viewTransactionsLink {
+            @include body1Medium;
+          }
+
+          .m-walletCreditsHistory__balance {
+            @include heading4Bold;
+            margin-top: $spacing2;
+            margin-bottom: unset;
+          }
+        }
+      }
+    }
+  }
+
+  .m-walletCreditsHistory__text--noWrap {
+    white-space: nowrap;
+  }
+}
