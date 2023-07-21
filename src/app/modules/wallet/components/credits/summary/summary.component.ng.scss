@@ -4,7 +4,8 @@
   display: flex;
   flex-flow: row nowrap;
   padding: 0 $spacing8 $spacing8 $spacing8;
-  overflow-x: scroll;
+  overflow-x: auto;
+  @include horizontal-scroll;
 
   > * + * {
     margin-left: $spacing8;
