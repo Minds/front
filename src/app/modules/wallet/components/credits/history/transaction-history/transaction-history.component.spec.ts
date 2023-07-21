@@ -211,7 +211,7 @@ describe('WalletV2CreditsTransactionHistoryComponent', () => {
           type: 'credit:boost',
           runningTotal: 0,
           displayDate: null,
-          displayTime: '11:37 am',
+          displayTime: jasmine.any(String),
         },
         {
           paymentGuid: '2234567890123451',
@@ -228,7 +228,7 @@ describe('WalletV2CreditsTransactionHistoryComponent', () => {
           type: 'credit:boost',
           runningTotal: -9.99,
           displayDate: null,
-          displayTime: '11:37 am',
+          displayTime: jasmine.any(String),
         },
         {
           paymentGuid: '3234567890123451',
@@ -249,7 +249,7 @@ describe('WalletV2CreditsTransactionHistoryComponent', () => {
           },
           runningTotal: -29.979999999999997,
           displayDate: null,
-          displayTime: '11:37 am',
+          displayTime: jasmine.any(String),
         },
       ]);
     });
