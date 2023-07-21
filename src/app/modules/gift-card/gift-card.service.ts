@@ -69,7 +69,7 @@ export class GiftCardService {
    * @returns { Observable<GiftCardBalanceByProductId[]> } - gift card balances for each product.
    */
   public getGiftCardBalancesWithExpiryData(
-    queryOpts: QueryOptionsAlone
+    queryOpts: QueryOptionsAlone = null
   ): Observable<GiftCardBalanceByProductId[]> {
     return this.getGiftCardBalancesWithExpiryDataGQL
       .fetch(null, queryOpts)

@@ -10,7 +10,6 @@ import { MockService } from '../../../../../utils/mock';
 import {
   MockGiftCardBalanceByProductId,
   MockGiftCardBalanceByProductIdArray,
-  MockGiftCardNode,
 } from '../../../../../mocks/responses/gift-card.mock';
 import { WalletV2CreditsSummaryComponent } from './summary.component';
 
