@@ -23,7 +23,7 @@ export class WalletV2CreditsSummaryComponent implements OnInit, OnDestroy {
   constructor(private giftCardService: GiftCardService) {}
 
   ngOnInit(): void {
-    this.giftCardService
+    this.getBalancesSubscription = this.giftCardService
       .getGiftCardBalancesWithExpiryData()
       .pipe(take(1))
       .subscribe((result: GiftCardBalanceByProductId[]): void => {

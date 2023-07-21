@@ -58,7 +58,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   tabs: DataTab[] = [];
 
   /** Whether gift card experiment is active. */
-  private isGiftCardClaimExperimentActive: boolean = false;
+  public isGiftCardClaimExperimentActive: boolean = false;
 
   constructor(
     protected walletService: WalletV2Service,
