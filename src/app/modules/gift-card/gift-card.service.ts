@@ -14,6 +14,7 @@ import {
   GiftCardNode,
   GiftCardProductIdEnum,
 } from '../../../graphql/generated.engine';
+import { QueryOptionsAlone } from 'apollo-angular/types';
 
 /**
  * Service for the retrieval and claiming of gift cards.
@@ -67,19 +68,21 @@ export class GiftCardService {
    * Get the users gift card balances with data on the first expiring gift card for each product.
    * @returns { Observable<GiftCardBalanceByProductId[]> } - gift card balances for each product.
    */
-  public getGiftCardBalancesWithExpiryData(): Observable<
-    GiftCardBalanceByProductId[]
-  > {
-    return this.getGiftCardBalancesWithExpiryDataGQL.fetch().pipe(
-      map(
-        (
-          result: ApolloQueryResult<GetGiftCardBalancesWithExpiryDataQuery>
-        ): GiftCardBalanceByProductId[] => {
-          return result?.data
-            ?.giftCardsBalances as GiftCardBalanceByProductId[];
-        }
-      )
-    );
+  public getGiftCardBalancesWithExpiryData(
+    queryOpts: QueryOptionsAlone
+  ): Observable<GiftCardBalanceByProductId[]> {
+    return this.getGiftCardBalancesWithExpiryDataGQL
+      .fetch(null, queryOpts)
+      .pipe(
+        map(
+          (
+            result: ApolloQueryResult<GetGiftCardBalancesWithExpiryDataQuery>
+          ): GiftCardBalanceByProductId[] => {
+            return result?.data
+              ?.giftCardsBalances as GiftCardBalanceByProductId[];
+          }
+        )
+      );
   }
 
   /**

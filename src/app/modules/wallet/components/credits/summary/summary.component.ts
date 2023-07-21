@@ -24,7 +24,7 @@ export class WalletV2CreditsSummaryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getBalancesSubscription = this.giftCardService
-      .getGiftCardBalancesWithExpiryData()
+      .getGiftCardBalancesWithExpiryData({ fetchPolicy: 'no-cache' })
       .pipe(take(1))
       .subscribe((result: GiftCardBalanceByProductId[]): void => {
         // slice is used below to create a mutable copy of the array.
