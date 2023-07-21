@@ -6,6 +6,7 @@
     <i
       [routerLink]="['..']"
       class="material-icons m-walletCreditsTransactionHistory__backArrow"
+      data-ref="gift-card-transaction-history-back-button"
       >arrow_back</i
     >
     <div class="m-walletCreditsTransactionHistory__cardSummary">
@@ -19,7 +20,10 @@
     </div>
   </div>
 
-  <p class="m-walletCreditsHistory__description">
+  <p
+    class="m-walletCreditsHistory__description"
+    i18n="@@WALLET__GIFT_CARD_TX_HISTORY__VIEW_ALL_TXS_MADE"
+  >
     You can view all your transactions made with this gift.
   </p>
 

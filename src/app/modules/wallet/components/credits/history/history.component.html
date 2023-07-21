@@ -1,13 +1,22 @@
 <div class="m-walletCreditsHistory__topbarContainer">
-  <h3 class="m-walletCreditsHistory__header">Your gifts</h3>
+  <h3
+    class="m-walletCreditsHistory__header"
+    i18n="@@WALLET__GIFT_CARD_HISTORY__YOUR_GIFTS"
+  >
+    Your gifts
+  </h3>
   <m-dropdownSelector
     class="m-walletCreditsHistory__statusFilter"
     [filter]="statusFilter"
     [inlineLabel]="true"
     (selectionMade)="onStatusFilterChanged($event)"
+    data-ref="gift-card-history-status-filter-dropdown"
   ></m-dropdownSelector>
 </div>
-<p class="m-walletCreditsHistory__description">
+<p
+  class="m-walletCreditsHistory__description"
+  i18n="@@WALLET__GIFT_CARD_HISTORY__VIEW_GIFTS_AND_REMAINING_BALANCES"
+>
   You can view all your gifts, as well as their remaining balances, expiration,
   and transactions.
 </p>
@@ -29,6 +38,7 @@
               isExpired(giftCard) || giftCard.balance <= 0
           }"
           [routerLink]="['./' + giftCard.guid]"
+          data-ref="gift-card-history-gift-card"
         >
           <!-- We need to swap the logos on theme change, changing ngSrc does not do this -->
           <ng-container
@@ -69,6 +79,8 @@
           <a
             class="m-walletCreditsHistory__viewTransactionsLink"
             [routerLink]="['./' + giftCard.guid]"
+            i18n="@@WALLET__GIFT_CARD_HISTORY__VIEW_TRANSACTIONS"
+            data-ref="gift-card-history-view-transactions-link"
             >View Transactions</a
           >
           <p class="m-walletCreditsHistory__balance">
