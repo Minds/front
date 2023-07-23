@@ -9,6 +9,7 @@
     flex-direction: row;
     cursor: default;
     text-decoration: none;
+    transform: translateY(2px);
 
     @include m-theme() {
       fill: themed($m-textColor--secondary);

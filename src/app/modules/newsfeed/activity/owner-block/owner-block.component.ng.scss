@@ -16,24 +16,6 @@
     .m-activityOwnerBlock__avatar {
       padding-right: 0.75rem;
     }
-    .m-activityOwnerBlockColumn__displayNameWrapper {
-      margin-top: $spacing1;
-
-      .m-activityOwnerBlock__secondaryName {
-        display: inline-block;
-        margin-left: 0;
-
-        span {
-          @include body3Bold;
-        }
-      }
-      ::ng-deep .m-activityPermalink__wrapper .m-activityPermalink__text {
-        // body3Regular override
-        font-size: 0.75rem !important;
-        line-height: 1.063rem !important;
-        letter-spacing: 0.011em !important;
-      }
-    }
   }
   // *********************************
   // ** MINIMAL MODE **
@@ -94,7 +76,6 @@
   // *********************************
   // *********************************
   // *********************************
-
   .m-activity__ownerBlock {
     display: flex;
     align-items: center;
@@ -102,6 +83,8 @@
 
     width: 100%;
     padding-bottom: $spacing1;
+    margin-bottom: $spacing2;
+
     box-sizing: border-box;
 
     a {
@@ -110,6 +93,30 @@
         text-decoration: underline;
       }
     }
+  }
+
+  .m-activityOwnerBlockColumn__secondRowWrapper {
+    margin-top: $spacing1;
+
+    .m-activityOwnerBlock__secondaryName {
+      display: inline-block;
+      margin-left: 0;
+
+      span {
+        @include body3Bold;
+      }
+    }
+    ::ng-deep .m-activityPermalink__wrapper .m-activityPermalink__text {
+      // body3Regular override
+      font-size: 0.75rem !important;
+      line-height: 1.063rem !important;
+      letter-spacing: 0.011em !important;
+    }
+  }
+
+  .m-activityOwnerBlock__rightSide {
+    display: flex;
+    align-items: center;
   }
 
   ::ng-deep {
@@ -182,7 +189,7 @@
     display: flex;
     flex-direction: column;
 
-    .m-activityOwnerBlockColumn__displayNameWrapper {
+    .m-activityOwnerBlockColumn__secondRowWrapper {
       display: flex;
       align-items: center;
     }

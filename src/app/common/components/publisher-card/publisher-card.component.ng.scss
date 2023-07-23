@@ -73,7 +73,7 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        word-break: break-all;
+        word-break: break-word;
 
         margin: 0;
         @include body2Regular;

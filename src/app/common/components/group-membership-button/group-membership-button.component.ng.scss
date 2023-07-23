@@ -1,0 +1,20 @@
+@import 'defaults.scss';
+
+:host {
+  .m-groupMembershipButton__textOnlyLabel {
+    cursor: pointer;
+    @include body3Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &:active {
+      opacity: 0.6;
+    }
+    &.m-groupMembershipButton__textOnlyLabel--selected {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+  }
+}

@@ -34,6 +34,8 @@ import { ExperimentsService } from '../../../experiments/experiments.service';
 export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
+  isLoggedIn: boolean;
+
   entity: ActivityEntity;
 
   /** Is this activity the container of a reminded post? */
@@ -51,6 +53,33 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   @Input() wasQuoted: boolean = false;
 
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
+
+  isFeed: boolean;
+  isModal: boolean;
+  isSidebarBoost: boolean;
+  isSingle: boolean;
+
+  owner: MindsUser;
+  username: string;
+  displayName: string;
+  ownerGuid: string;
+
+  primaryName: string;
+  primaryUrl: string;
+  secondaryName: string;
+
+  showUsernameInSecondRow: boolean;
+  showAvatar: boolean;
+  showPermalink: boolean;
+  showSpacer: boolean;
+  /**
+   * Badges refers to icons and labels on the right side of the ownerblock,
+   * such as paywall icon, pin icon, "Supermind Offer", etc.
+   * (not channel badges)
+   */
+  showBadges: boolean;
+  showViews: boolean;
+  showMenu: boolean;
 
   constructor(
     public service: ActivityService,
@@ -71,6 +100,57 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
         this.showGroupContext = show;
       })
     );
+
+    this.isLoggedIn = this.session.getLoggedInUser();
+
+    // Activity details
+    this.owner = this.entity.ownerObj;
+    this.username = this.owner.username;
+    this.displayName = this.owner.name;
+    this.ownerGuid = this.owner.guid;
+
+    // Context
+    this.isFeed = this.service.displayOptions.isFeed;
+    this.isModal = this.service.displayOptions.isModal;
+    this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
+    this.isSingle = this.service.displayOptions.isSingle;
+
+    // Display logic
+    this.primaryName = this.showGroupContext
+      ? this.group.name
+      : this.displayName;
+
+    this.primaryUrl = this.showGroupContext
+      ? this.groupUrl
+      : `/${this.username}`;
+
+    this.secondaryName = this.showGroupContext
+      ? this.displayName
+      : this.owner.username;
+
+    this.showUsernameInSecondRow =
+      !(this.isMinimalMode || this.isSidebarBoost) || this.showGroupContext;
+
+    this.showAvatar = this.isModal || this.isMinimalMode || this.isSidebarBoost;
+
+    this.showPermalink = !(this.isSingle || this.isModal || this.isMinimalMode);
+
+    this.showSpacer = !(this.isMinimalMode || this.isSidebarBoost);
+
+    this.showBadges =
+      !this.isQuoteOrRemind &&
+      ((this.isFeed && !this.isMinimalMode) ||
+        (this.isSingle && !this.wasQuoted) ||
+        this.isModal);
+
+    this.showViews =
+      this.isFeed && !this.isMinimalMode && !this.isQuoteOrRemind;
+
+    this.showMenu =
+      this.isLoggedIn &&
+      ((this.isFeed && !this.isMinimalMode) || this.isSingle || this.isModal) &&
+      !this.wasQuoted &&
+      this.service.displayOptions.showPostMenu;
   }
 
   ngOnDestroy() {
@@ -82,59 +162,41 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   // Note: currently ownerBlocks are only visible in minimalMode for quotes/reminds
   // and sidebar suggestions stemming from group posts
   @HostBinding('class.m-activity__ownerBlock--minimalMode')
-  get minimalMode(): boolean {
+  get isMinimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
   }
 
   @HostBinding('class.m-activity__ownerBlock--quoteOrRemind')
-  get quoteOrRemind(): boolean {
+  get isQuoteOrRemind(): boolean {
     return this.wasQuoted || this.isRemind;
   }
 
+  /**
+   * Only show if user wasn't already a member
+   */
   get group(): MindsGroup | null {
     return this.entity.containerObj && this.entity.containerObj.type === 'group'
       ? this.entity.containerObj
       : null;
   }
 
-  get isFeed(): boolean {
-    return this.service.displayOptions.isFeed;
+  /**
+   * Only show if user wasn't already subscribed
+   */
+  get showSubscribeButton(): boolean {
+    return (
+      !this.showGroupContext &&
+      this.session.getLoggedInUser().guid !== this.ownerGuid &&
+      !this.owner.subscribed
+    );
   }
 
-  get isMinimalMode(): boolean {
-    return this.service.displayOptions.minimalMode;
-  }
-
-  get isModal(): boolean {
-    return this.service.displayOptions.isModal;
-  }
-
-  get isSidebarBoost(): boolean {
-    return this.service.displayOptions.isSidebarBoost;
-  }
-
-  get isSingle(): boolean {
-    return this.service.displayOptions.isSingle;
-  }
-
-  get showPostMenu(): boolean {
-    return this.service.displayOptions.showPostMenu;
-  }
-
-  get owner(): MindsUser {
-    return this.entity.ownerObj;
-  }
-
-  get username(): string {
-    return this.owner.username;
-  }
-
-  get displayName(): string {
-    return this.owner.name;
-  }
-
-  get ownerGuid(): string {
-    return this.owner.guid;
+  get showJoinButton(): boolean {
+    return (
+      this.showGroupContext &&
+      !this.group['is:member'] &&
+      !this.group['is:banned']
+    );
   }
 
   get groupUrl(): string {
