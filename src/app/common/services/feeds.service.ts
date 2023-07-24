@@ -33,6 +33,13 @@ export type InjectItem = {
   type: FeedItemType;
 };
 
+export enum FeedAlgorithm {
+  top = 'top',
+  latest = 'latest',
+  forYou = 'for-you',
+  groups = 'groups',
+}
+
 /**
  * Enables the grabbing of data through observable feeds.
  */
