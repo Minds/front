@@ -13,8 +13,8 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AttachmentService } from '../../../../../services/attachment';
-import { SiteService } from '../../../../../common/services/site.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
+import { CDN_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 
 declare var require: any;
 
@@ -46,8 +46,8 @@ export class BlogEditorComponent {
   constructor(
     @Inject(PLATFORM_ID) protected platformId: Object,
     private attachment: AttachmentService,
-    private site: SiteService,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    @Inject(CDN_URL) public cdnUrl: string
   ) {}
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class BlogEditorComponent {
       this.Editor.config = {
         uploadHandler: async file => {
           const response = this.attachment.upload(await file);
-          return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
+          return `${this.cdnUrl}fs/v1/thumbnail/${await response}/xlarge`;
         },
         isDark$: this.themeService.isDark$,
       };
