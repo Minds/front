@@ -30,7 +30,7 @@
         [routerLink]="['/', username]"
         class="m-activityOwnerBlock__secondaryName m-activityOwnerBlock__truncate"
       >
-        <span [title]="secondaryName">{{ secondaryName }}</span>
+        <span [title]="secondaryName">{{ secondaryName | titlecase }}</span>
         <ng-container [ngTemplateOutlet]="channelBadges"></ng-container>
       </a>
       <!-- Permalink -->
