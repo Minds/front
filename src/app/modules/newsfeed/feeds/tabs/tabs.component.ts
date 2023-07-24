@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FeedAlgorithm } from '../subscribed.component';
 import { ExperimentsService } from '../../../experiments/experiments.service';
+import { FeedAlgorithm } from '../../../../common/services/feeds.service';
 
 /*
  * Header tabs for newsfeed.
