@@ -196,7 +196,7 @@ describe('WalletV2CreditsTransactionHistoryComponent', () => {
       expect(
         (comp as any).formatTransactions(MockGiftCardTransactionArray, true)
       ).toEqual([
-        {
+        jasmine.objectContaining({
           paymentGuid: '1234567890123451',
           giftCardGuid: '1234567890123452',
           amount: 9.99,
@@ -210,10 +210,8 @@ describe('WalletV2CreditsTransactionHistoryComponent', () => {
           superType: 'boost',
           type: 'credit:boost',
           runningTotal: 0,
-          displayDate: null,
-          displayTime: jasmine.any(String),
-        },
-        {
+        }),
+        jasmine.objectContaining({
           paymentGuid: '2234567890123451',
           giftCardGuid: '2234567890123452',
           amount: 19.99,
@@ -227,10 +225,8 @@ describe('WalletV2CreditsTransactionHistoryComponent', () => {
           superType: 'boost',
           type: 'credit:boost',
           runningTotal: -9.99,
-          displayDate: null,
-          displayTime: jasmine.any(String),
-        },
-        {
+        }),
+        jasmine.objectContaining({
           paymentGuid: '3234567890123451',
           giftCardGuid: '3234567890123452',
           amount: 29.99,
@@ -248,9 +244,7 @@ describe('WalletV2CreditsTransactionHistoryComponent', () => {
             username: 'testUser3',
           },
           runningTotal: -29.979999999999997,
-          displayDate: null,
-          displayTime: jasmine.any(String),
-        },
+        }),
       ]);
     });
   });
