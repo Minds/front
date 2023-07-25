@@ -1,12 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  of,
-  shareReplay,
-  Subscription,
-  take,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { ConfigsService } from '../../../../../../common/services/configs.service';
 import { ThemeService } from '../../../../../../common/services/theme.service';
@@ -17,7 +10,6 @@ import {
   BoostPaymentMethodId,
 } from '../../../boost-modal-v2.types';
 import { BoostModalV2Service } from '../../../services/boost-modal-v2.service';
-import { GiftCardProductIdEnum } from '../../../../../../../graphql/generated.engine';
 
 /**
  * Payment method selector component (offchain / onchain / cash etc).
@@ -50,8 +42,6 @@ import { GiftCardProductIdEnum } from '../../../../../../../graphql/generated.en
       *ngIf="(paymentCategory$ | async) === BoostPaymentCategory.CASH"
       [selected]="paymentMethodId$ | async"
       (selected)="onSelectCard($event)"
-      [paymentTotal]="totalPaymentAmount$ | async"
-      [giftCardProductIdEnum]="GiftCardProductIdEnum.Boost"
       data-ref="boost-modal-v2-cash-payment-custom-selector"
     ></m-payments__selectCard>
   `,
@@ -69,9 +59,6 @@ export class BoostModalV2PaymentMethodSelectorComponent
   // Currently active tab.
   public paymentCategory$: BehaviorSubject<BoostPaymentCategory> = this.service
     .paymentCategory$;
-
-  public dailyBid$: BehaviorSubject<number> = this.service.dailyBudget$;
-  public bidDuration$: BehaviorSubject<number> = this.service.duration$;
 
   // Users onchain balance - must be fetched from service before it holds a value.
   public onchainBalance$: BehaviorSubject<number> = this.tokenBalance.onchain$;
@@ -104,9 +91,6 @@ export class BoostModalV2PaymentMethodSelectorComponent
   // subscription to load balance when active tab changes to tokens.
   private balanceLoadSubscription: Subscription;
   private paymentMethodInitSubscription: Subscription;
-  public totalPaymentAmount$: Observable<
-    number
-  > = this.service.totalPaymentAmount$?.pipe(shareReplay());
 
   constructor(
     private service: BoostModalV2Service,
@@ -153,6 +137,4 @@ export class BoostModalV2PaymentMethodSelectorComponent
     this.paymentMethod$.next(BoostPaymentMethod.CASH);
     this.paymentMethodId$.next(value);
   }
-
-  protected readonly GiftCardProductIdEnum = GiftCardProductIdEnum;
 }

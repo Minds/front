@@ -3,17 +3,13 @@
     [ngModel]="paymentMethodId"
     (ngModelChange)="paymentMethodId = $event; selected.next(paymentMethodId)"
   >
-    <option value="" *ngIf="paymentMethods?.length === 0 && !inProgress"
+    <option value="" *ngIf="paymentMethods.length === 0 && !inProgress"
       >No Cards</option
     >
     <option value="" *ngIf="inProgress">...</option>
     <option *ngFor="let card of paymentMethods" [value]="card.id">
-      {{ card.name | titlecase }}
-      {{
-        card.id === 'gift_card'
-          ? '(' + (card.balance | currency: 'USD':'symbol') + ' Credits)'
-          : ''
-      }}
+      {{ card.card_brand | titlecase }} ***{{ card.card_last4 }} -
+      {{ card.card_expires }}
     </option>
     <option value="new">Add a new card</option>
   </select>
