@@ -32,6 +32,14 @@
         }"
       ></ng-container
     ></ng-container>
+    <ng-container *ngIf="(entityType$ | async) === BoostSubject.GROUP">
+      <ng-container
+        [ngTemplateOutlet]="reviewPanelFooter"
+        [ngTemplateOutletContext]="{
+          boostSubject: 'group'
+        }"
+      ></ng-container
+    ></ng-container>
   </div>
 </div>
 <div class="m-boostModalFooter__submitButtonContainer">
@@ -55,6 +63,11 @@
           *ngIf="(entityType$ | async) === BoostSubject.CHANNEL"
           i18n="@@BOOST_MODAL_V2_FOOTER__BOOST_CHANNEL_ACTION"
           >Boost channel</ng-container
+        >
+        <ng-container
+          *ngIf="(entityType$ | async) === BoostSubject.GROUP"
+          i18n="@@BOOST_MODAL_V2_FOOTER__BOOST_GROUP_ACTION"
+          >Boost group</ng-container
         >
       </ng-container>
       <ng-container *ngSwitchDefault i18n="@@BOOST_MODAL_V2_FOOTER__NEXT_ACTION"

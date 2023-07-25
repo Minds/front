@@ -5,7 +5,7 @@
   <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
 </h3>
 <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
-  <ng-container *ngIf="entity.type && entity.type === 'user'; else notUser">
+  <ng-container *ngIf="['user', 'group'].includes(entity?.type); else notUser">
     <m-publisherCard [publisher]="entity"></m-publisherCard
   ></ng-container>
   <ng-template #notUser>

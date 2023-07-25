@@ -17,6 +17,8 @@ import { ToasterService } from '../../../common/services/toaster.service';
 import { ConfirmV2Component } from '../../modals/confirm-v2/confirm.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { Subscription } from 'rxjs';
+import { BoostGroupExperimentService } from '../../experiments/sub-services/boost-groups-experiment.service';
+import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 
 @Component({
   selector: 'minds-groups-settings-button',
@@ -55,6 +57,7 @@ export class GroupsSettingsButton implements OnInit, OnDestroy {
   featureModalOpen: boolean = false;
 
   subscriptions: Subscription[] = [];
+  public boostGroupsExperimentIsActive: boolean = false;
 
   constructor(
     public service: GroupsService,
@@ -64,10 +67,13 @@ export class GroupsSettingsButton implements OnInit, OnDestroy {
     public modalService: ModalService,
     public router: Router,
     protected route: ActivatedRoute,
-    protected toasterService: ToasterService
+    protected toasterService: ToasterService,
+    private boostModal: BoostModalV2LazyService,
+    private boostGroupsExperiment: BoostGroupExperimentService
   ) {}
 
   ngOnInit(): void {
+    this.boostGroupsExperimentIsActive = this.boostGroupsExperiment.isActive();
     this.subscriptions.push(
       // Hacky workaround for v2 groups so we can use v1 groups to do editing.
       // If we don't change this here, we won't be able to access the 'save' option
@@ -262,5 +268,17 @@ export class GroupsSettingsButton implements OnInit, OnDestroy {
       },
       injector: this.injector,
     });
+  }
+
+  /**
+   * On Boost group click, open, boost modal for group.
+   * @returns { Promise<void> }
+   */
+  public async onBoostGroupClick(): Promise<void> {
+    try {
+      await this.boostModal.open(this.group);
+    } catch (e) {
+      // do nothing.
+    }
   }
 }

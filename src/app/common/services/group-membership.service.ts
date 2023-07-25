@@ -134,6 +134,9 @@ export class GroupMembershipService implements OnDestroy {
                 this.isMember$.next(true);
               } else {
                 this.isAwaiting$.next(true);
+                this.toaster.success(
+                  'Your request to join this group has been sent.'
+                );
               }
               return;
             }

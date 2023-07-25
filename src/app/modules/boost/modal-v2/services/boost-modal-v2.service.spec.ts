@@ -119,7 +119,21 @@ describe('BoostModalV2Service', () => {
     });
   });
 
-  it('should get entity type for a non-user', (done: DoneFn) => {
+  it('should get entity type for a post', (done: DoneFn) => {
+    service.entity$.next({
+      guid: '123',
+      type: 'group',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+    service.entityType$.subscribe(val => {
+      expect(val).toBe(BoostSubject.GROUP);
+      done();
+    });
+  });
+
+  it('should get entity type for a post', (done: DoneFn) => {
     service.entity$.next({
       guid: '123',
       type: 'activity',
@@ -224,7 +238,7 @@ describe('BoostModalV2Service', () => {
     });
   });
 
-  it('should submit a boost when changing panel from the review panel for channel sidebar', () => {
+  it('should submit a boost when changing panel from the review panel for user in channel sidebar', () => {
     service.paymentMethod$.next(BoostPaymentMethod.CASH);
     service.paymentMethodId$.next('pay_123');
     service.duration$.next(30);
@@ -233,6 +247,35 @@ describe('BoostModalV2Service', () => {
     service.entity$.next({
       guid: '123',
       type: 'user',
+      subtype: '',
+      owner_guid: '234',
+      time_created: '99999999999',
+    });
+
+    service.activePanel$.next(BoostModalPanel.REVIEW);
+    service.changePanelFrom(BoostModalPanel.REVIEW);
+
+    expect((service as any).api.post).toHaveBeenCalledWith('api/v3/boosts', {
+      entity_guid: '123',
+      target_suitability: 1,
+      target_location: 2,
+      payment_method: 1,
+      payment_method_id: 'pay_123',
+      daily_bid: 15,
+      duration_days: 30,
+    });
+    expect((service as any).boostSubmissionInProgress$.getValue()).toBeFalse();
+  });
+
+  it('should submit a boost when changing panel from the review panel for group in channel sidebar', () => {
+    service.paymentMethod$.next(BoostPaymentMethod.CASH);
+    service.paymentMethodId$.next('pay_123');
+    service.duration$.next(30);
+    service.dailyBudget$.next(15);
+    service.audience$.next(BoostAudience.SAFE);
+    service.entity$.next({
+      guid: '123',
+      type: 'group',
       subtype: '',
       owner_guid: '234',
       time_created: '99999999999',
