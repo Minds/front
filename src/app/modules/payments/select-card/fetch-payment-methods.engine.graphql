@@ -1,9 +1,0 @@
-query FetchPaymentMethods(
-    $giftCardProductId: GiftCardProductIdEnum
-) {
-    paymentMethods(productId: $giftCardProductId) {
-        id
-        name
-        balance
-    }
-}
