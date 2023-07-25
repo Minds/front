@@ -3,6 +3,10 @@
 :host {
   .m-rich-embed-src {
     margin-bottom: $spacing4;
+
+    &.m-has-inline-embed {
+      border: none !important;
+    }
   }
   // ******************************************
   // ** FIXED HEIGHT **
@@ -110,6 +114,8 @@
         .m-url {
           @include body2Regular;
 
+          display: flex;
+          align-items: flex-start;
           padding: 0;
           margin: 0;
           @include m-theme() {
