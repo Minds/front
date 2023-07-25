@@ -124,13 +124,21 @@ export class DiscoverySearchComponent {
   }
 
   setSeo() {
-    this.metaService.setTitle(
-      this.q ? `${this.q} - Minds Search` : `Minds Search`
-    );
+    this.metaService.setTitle(this.getPageTitle());
     this.metaService.setDescription(`Discover ${this.q} posts on Minds.`);
     this.metaService.setCanonicalUrl(
       `/discovery/search?q=${this.q}&f=${this.filter}&t=${this.type$.value}`
     );
+  }
+
+  getPageTitle(): string {
+    let title;
+    if (this.exploreTabContext) {
+      title = 'Discovery / Trending';
+    } else {
+      title = this.q ? `${this.q} - Minds Search` : `Minds Search`;
+    }
+    return title;
   }
 
   ngOnDestroy() {

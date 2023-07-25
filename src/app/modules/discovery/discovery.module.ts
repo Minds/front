@@ -69,7 +69,7 @@ import { PathMatch } from '../../common/types/angular.types';
                 path: ':type',
                 component: DiscoveryTagsComponent,
                 data: {
-                  title: 'Discovery / Tags',
+                  title: 'Discovery / Trending Tags',
                 },
               },
             ],
