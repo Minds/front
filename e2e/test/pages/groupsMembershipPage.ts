@@ -5,6 +5,9 @@ const { I } = inject();
  */
 class GroupsMembershipPage {
   public groupsMembershipURI: string = '/groups/memberships';
+  private groupMembershipListSelector: string = '.m-groupsMemberships__list';
+  private groupPublisherCardSelector: string = 'm-publisherCard';
+  private groupAvatarSelector: string = '.m-publisherCardAvatarImg';
 
   /**
    * Navigate to newsfeed by URL.
@@ -52,6 +55,20 @@ class GroupsMembershipPage {
    */
   public hasRecommendedGroups(): void {
     I.seeElement(locate(this.recommendedGroupsTitle));
+  }
+
+  /**
+   * Open a group at a given position in the groups membership feed.
+   * @returns { Promise<void> }
+   */
+  public async openGroupAtPosition(position: number): Promise<void> {
+    const groupMembershipListItems: CodeceptJS.Locator = locate(
+      `${this.groupMembershipListSelector} ${this.groupPublisherCardSelector}`
+    );
+    I.waitForElement(groupMembershipListItems);
+    await within(locate(groupMembershipListItems).at(position), async () => {
+      I.click(this.groupAvatarSelector);
+    });
   }
 }
 

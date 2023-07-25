@@ -37,6 +37,8 @@ class CommonHelper extends Helper {
 
   /**
    * Set the value of a range input.
+   * Note this MAY NOT WORK LOCALLY - in some browsers it will set the slider position
+   * NOT the actual value held by the slider.
    * @param { string } selector - selector to set for.
    * @param { number } amount - amount value to set.
    * @returns { Promise<void> }
