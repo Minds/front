@@ -1,0 +1,50 @@
+@import 'defaults.scss';
+
+.m-composer__livestream {
+  display: block;
+  position: relative;
+  margin: 0 $spacing8;
+  margin-bottom: $spacing4;
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+  border-radius: $spacing3;
+
+  &__success {
+    border-radius: $spacing1;
+    padding: $spacing4;
+
+    &-text {
+      font-size: $spacing4;
+      margin-bottom: $spacing1;
+      font-weight: bold;
+    }
+  }
+
+  &__instructions {
+    margin-bottom: $spacing3;
+  }
+
+  &__details__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: -$spacing3;
+
+    &-label {
+      margin: 0;
+      margin-right: $spacing2;
+    }
+  }
+
+  &__player {
+    height: 19em;
+    border-radius: $spacing2;
+  }
+}
