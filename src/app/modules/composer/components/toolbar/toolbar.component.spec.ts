@@ -15,6 +15,7 @@ import { AttachmentApiService } from '../../../../common/api/attachment-api.serv
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
 import { LivestreamService } from '../../../../modules/composer/services/livestream.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -139,6 +140,10 @@ describe('Composer Toolbar', () => {
           {
             provide: LivestreamService,
             useValue: MockService(LivestreamService),
+          },
+          {
+            provide: ExperimentsService,
+            useValue: MockService(ExperimentsService),
           },
         ],
       }).compileComponents();
