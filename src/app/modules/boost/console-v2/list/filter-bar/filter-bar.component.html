@@ -13,8 +13,8 @@
             (service.locationFilterValue$ | async) === 'feed'
           "
           data-ref="boost-console-tab-location-feed"
-          i18n="@@BOOST_CONSOLE__TAB_FEED"
-          >Feed</a
+          i18n="@@BOOST_CONSOLE__TAB_POSTS"
+          >Posts</a
         >
       </div>
       <div class="m-tabs__tab" (click)="onLocationFilterChange('sidebar')">
@@ -23,9 +23,14 @@
             (service.locationFilterValue$ | async) === 'sidebar'
           "
           data-ref="boost-console-tab-location-sidebar"
-          i18n="@@BOOST_CONSOLE__TAB_SIDEBAR"
-          >Sidebar</a
+          i18n="@@BOOST_CONSOLE__TAB_CHANNEL_AND_GROUPS"
         >
+          <ng-container
+            *ngIf="boostGroupExperimentIsActive; else onlyChannelTextTemplate"
+            >Channel + groups</ng-container
+          >
+          <ng-template #onlyChannelTextTemplate>Channel</ng-template>
+        </a>
       </div>
     </ng-container>
     <!-- ---------------------------------------- -->

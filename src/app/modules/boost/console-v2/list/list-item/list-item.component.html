@@ -28,7 +28,9 @@
       class="m-boostConsole__listItem__middleBar"
     ></m-activity>
   </ng-container>
-  <ng-container *ngIf="boost.entity.type && boost.entity.type === 'user'">
+  <ng-container
+    *ngIf="boost.entity.type && ['user', 'group'].includes(boost.entity.type)"
+  >
     <m-publisherCard
       [publisher]="boost.entity"
       [showSubscribeButton]="false"

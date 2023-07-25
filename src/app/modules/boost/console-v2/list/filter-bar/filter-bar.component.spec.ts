@@ -5,6 +5,7 @@ import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostConsoleAdminStatsService } from '../../services/admin-stats.service';
 import { BoostConsoleService } from '../../services/console.service';
 import { BoostConsoleFilterBarComponent } from './filter-bar.component';
+import { BoostGroupExperimentService } from '../../../../experiments/sub-services/boost-groups-experiment.service';
 
 describe('BoostConsoleFilterBarComponent', () => {
   let comp: BoostConsoleFilterBarComponent;
@@ -18,6 +19,13 @@ describe('BoostConsoleFilterBarComponent', () => {
           MockComponent({
             selector: 'm-dropdownMenu',
             inputs: ['menu'],
+          }),
+          MockComponent({
+            selector: 'm-tooltip',
+          }),
+          MockComponent({
+            selector: 'm-feedNotice--boostLatestPost',
+            inputs: ['isInFeed', 'targetBoostLocation'],
           }),
         ],
         providers: [
@@ -46,6 +54,10 @@ describe('BoostConsoleFilterBarComponent', () => {
               },
             }),
           },
+          {
+            provide: BoostGroupExperimentService,
+            useValue: MockService(BoostGroupExperimentService),
+          },
           { provide: Router, useValue: MockService(Router) },
         ],
       }).compileComponents();
@@ -61,6 +73,8 @@ describe('BoostConsoleFilterBarComponent', () => {
     (comp as any).adminStats.pendingControversialCount$.next(0);
 
     (comp as any).service.adminContext$.next(false);
+
+    (comp as any).boostGroupExperiment.isActive.and.returnValue(true);
 
     if (fixture.isStable()) {
       done();
@@ -90,5 +104,19 @@ describe('BoostConsoleFilterBarComponent', () => {
       suitability: 'safe',
     });
     expect((comp as any).adminStats.fetch).toHaveBeenCalled();
+  });
+
+  describe('boostGroupExperimentIsActive', () => {
+    it('should return false when experiment is not active', () => {
+      (comp as any).boostGroupExperiment.isActive.and.returnValue(false);
+      comp.ngOnInit();
+      expect(comp.boostGroupExperimentIsActive).toBe(false);
+    });
+
+    it('should return true when experiment is active', () => {
+      (comp as any).boostGroupExperiment.isActive.and.returnValue(true);
+      comp.ngOnInit();
+      expect(comp.boostGroupExperimentIsActive).toBe(true);
+    });
   });
 });

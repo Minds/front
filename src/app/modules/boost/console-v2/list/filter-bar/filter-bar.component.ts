@@ -9,6 +9,7 @@ import {
 } from '../../../boost.types';
 import { BoostConsoleAdminStatsService } from '../../services/admin-stats.service';
 import { BoostConsoleService } from '../../services/console.service';
+import { BoostGroupExperimentService } from '../../../../experiments/sub-services/boost-groups-experiment.service';
 
 /**
  * Filter bar component for Boost console.
@@ -55,14 +56,23 @@ export class BoostConsoleFilterBarComponent implements OnInit {
   public readonly adminPendingControversialCount$: Observable<number> = this
     .adminStats.pendingControversialCount$;
 
+  /**
+   * Whether boosting group experiment is active. Note this is intended as
+   * a release gate. If switched back off post-release, the text on the
+   * "sidebar" tab will read "Channels" however groups may still be shown.
+   */
+  public boostGroupExperimentIsActive: boolean = false;
+
   constructor(
     public service: BoostConsoleService,
     private adminStats: BoostConsoleAdminStatsService,
+    private boostGroupExperiment: BoostGroupExperimentService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loadAdminStats();
+    this.boostGroupExperimentIsActive = this.boostGroupExperiment.isActive();
   }
 
   public onStateFilterChange(val: BoostConsoleStateFilter): void {
