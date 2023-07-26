@@ -4,6 +4,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EmailResendService } from '../../../../common/services/email-resend.service';
 import { EmailConfirmationService } from '../../../../common/components/email-confirmation/email-confirmation.service';
+import { FeedNoticeService } from '../../services/feed-notice.service';
 
 describe('VerifyEmailNoticeComponent', () => {
   let comp: VerifyEmailNoticeComponent;
@@ -25,11 +26,18 @@ describe('VerifyEmailNoticeComponent', () => {
             inputs: ['color', 'solid', 'size'],
             outputs: ['onAction'],
           }),
+          MockComponent({
+            selector: 'm-tooltip',
+          }),
         ],
         providers: [
           {
             provide: EmailResendService,
             useValue: MockService(EmailResendService),
+          },
+          {
+            provide: FeedNoticeService,
+            useValue: MockService(FeedNoticeService),
           },
           {
             provide: EmailConfirmationService,
@@ -63,5 +71,12 @@ describe('VerifyEmailNoticeComponent', () => {
     comp.onPrimaryOptionClick(null);
     expect((comp as any).emailResend.send).not.toHaveBeenCalled();
     expect((comp as any).emailConfirmation.confirm).toHaveBeenCalled();
+  });
+
+  it('should dismiss notice', () => {
+    comp.dismiss();
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
+      'verify-email'
+    );
   });
 });
