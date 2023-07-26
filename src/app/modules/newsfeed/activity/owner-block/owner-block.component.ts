@@ -68,8 +68,10 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   primaryUrl: string;
   secondaryName: string;
 
+  /**
+   * If the name is in the second row, display channel badges there
+   */
   showUsernameInSecondRow: boolean;
-  showAvatar: boolean;
   showPermalink: boolean;
   showSpacer: boolean;
   /**
@@ -128,10 +130,7 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
       ? this.displayName
       : this.owner.username;
 
-    this.showUsernameInSecondRow =
-      !(this.isMinimalMode || this.isSidebarBoost) || this.showGroupContext;
-
-    this.showAvatar = this.isModal || this.isMinimalMode || this.isSidebarBoost;
+    this.showUsernameInSecondRow = !this.isMinimalMode && !this.isSidebarBoost;
 
     this.showPermalink = !(this.isSingle || this.isModal || this.isMinimalMode);
 
@@ -171,6 +170,11 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
     return this.wasQuoted || this.isRemind;
   }
 
+  @HostBinding('class.m-activity__ownerBlock--hasAvatar')
+  get showAvatar(): boolean {
+    return this.isModal || this.isMinimalMode || this.isSidebarBoost;
+  }
+
   /**
    * Only show if user wasn't already a member
    */
@@ -195,7 +199,7 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
     return (
       this.showGroupContext &&
       !this.group['is:member'] &&
-      !this.group['is:banned']
+      this.group['is:banned'] !== false
     );
   }
 
@@ -224,5 +228,18 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
       '/medium/' +
       iconTime
     );
+  }
+
+  /**
+   * Whether we show a second row in the name column
+   */
+  get showSecondRow(): boolean {
+    const show =
+      this.showUsernameInSecondRow ||
+      this.showPermalink ||
+      this.showSubscribeButton ||
+      this.showJoinButton;
+
+    return show;
   }
 }

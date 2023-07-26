@@ -1,52 +1,106 @@
-<div class="m-activity__ownerBlock m-legible">
-  <!-- AVATAR  -->
-  <div
-    *ngIf="showAvatar"
-    class="m-activityOwnerBlock__avatar m-activityOwnerBlock m-activityOwnerBlock__fixedWidth"
-  >
-    <m-activity__avatar
-      [entity]="entity"
-      [wasQuoted]="wasQuoted"
-    ></m-activity__avatar>
-  </div>
-  <!-- NAME COLUMN-->
-  <div class="m-activityOwnerBlock__column m-activityOwnerBlock__truncate">
-    <!-- First row: Primary name -->
-    <a
-      class="m-activityOwnerBlock__primaryName m-activityOwnerBlock__truncate"
-      [routerLink]="primaryUrl"
+<div
+  *ngIf="showAvatar"
+  class="m-activityOwnerBlock__avatar m-activityOwnerBlock__fixedWidth"
+>
+  <m-activity__avatar
+    [entity]="entity"
+    [wasQuoted]="wasQuoted"
+  ></m-activity__avatar>
+</div>
+<div
+  class="m-activity__ownerBlock m-legible"
+  [ngClass]="{
+    'm-activity__ownerBlock--hasSecondRow': showSecondRow
+  }"
+>
+  <div class="m-activityOwnerBlock__topRow">
+    <!-- AVATAR  -->
+    <!-- LEFT SIDE: names, channel badges, permalink, btns -->
+    <div
+      class="m-activityOwnerBlockTopRow__leftSide m-activityOwnerBlock__truncate"
     >
-      <span [title]="primaryName">{{ primaryName }}</span>
-      <ng-container
-        *ngIf="!showUsernameInSecondRow"
-        [ngTemplateOutlet]="channelBadges"
-      ></ng-container>
-    </a>
-    <!-- Second row: -->
-    <div class="m-activityOwnerBlockColumn__secondRowWrapper">
-      <!-- Secondary name  -->
+      <!-- First row: Primary name -->
       <a
-        *ngIf="showUsernameInSecondRow"
-        [routerLink]="['/', username]"
-        class="m-activityOwnerBlock__secondaryName m-activityOwnerBlock__truncate"
+        class="m-activityOwnerBlock__primaryName m-activityOwnerBlock__truncate m-activityOwnerBlock__ellipsis"
+        [routerLink]="primaryUrl"
       >
-        <span [title]="secondaryName">{{ secondaryName | titlecase }}</span>
-        <ng-container [ngTemplateOutlet]="channelBadges"></ng-container>
+        <span [title]="primaryName | titlecase">{{
+          primaryName | titlecase
+        }}</span>
+        <!-- Channel badges -->
+        <ng-container
+          *ngIf="!showUsernameInSecondRow"
+          [ngTemplateOutlet]="channelBadges"
+        ></ng-container>
       </a>
-      <!-- Permalink -->
+    </div>
+
+    <!-- SPACER -->
+    <div *ngIf="showSpacer" class="m-activityOwnerBlock__spacer"></div>
+    <!-- RIGHT SIDE: anything after the spacer -->
+    <div class="m-activityOwnerBlockTopRow__rightSide">
+      <!-- BADGES -->
+      <m-activity__badges
+        *ngIf="showBadges"
+        class="m-activityOwnerBlock__fixedWidth"
+      ></m-activity__badges>
+      <!-- VIEWS -->
+      <m-activity__views
+        *ngIf="showViews"
+        class="m-activityOwnerBlock__fixedWidth"
+      ></m-activity__views>
+      <!-- MENU -->
+      <m-activity__menu
+        (deleted)="deleted.emit()"
+        *ngIf="showMenu"
+        class="m-activityOwnerBlock__fixedWidth"
+      ></m-activity__menu>
+    </div>
+  </div>
+  <!-- SECOND ROW  -->
+  <div
+    class="m-activityOwnerBlock__secondRow m-activityOwnerBlock__wrap"
+    *ngIf="showSecondRow"
+  >
+    <!-- Secondary name  -->
+    <div
+      *ngIf="showUsernameInSecondRow"
+      class="m-activityOwnerBlock__nameAndBadge m-activityOwnerBlock__truncate"
+    >
+      <a
+        [routerLink]="['/', username]"
+        class="m-activityOwnerBlock__secondaryName m-activityOwnerBlock__truncate m-activityOwnerBlock__ellipsis"
+      >
+        <span [title]="secondaryName | titlecase">{{
+          secondaryName | titlecase
+        }}</span>
+      </a>
+      <!-- Channel badges -->
+      <ng-container [ngTemplateOutlet]="channelBadges"></ng-container>
+      <!-- (dots should be on the preceding row, if wrapping occurs) -->
+      <ng-container
+        *ngIf="
+          showPermalink ||
+          ((showSubscribeButton || showJoinButton) && !isMinimalMode)
+        "
+        [ngTemplateOutlet]="dot"
+      ></ng-container>
+    </div>
+    <!-- Permalink -->
+    <div class="m-activityOwnerBlock__wrap">
       <ng-container *ngIf="showPermalink">
-        <ng-container *ngTemplateOutlet="dot"></ng-container>
         <m-activity__permalink
           class="m-activityOwnerBlock__fixedWidth"
           [wasQuoted]="wasQuoted"
         ></m-activity__permalink>
+        <!-- (dots should be on the preceding row, if wrapping occurs) -->
+        <ng-container
+          *ngIf="(showSubscribeButton || showJoinButton) && !isMinimalMode"
+          [ngTemplateOutlet]="dot"
+        ></ng-container>
       </ng-container>
       <!-- Subscribe button (for channels) -->
       <ng-container *ngIf="showSubscribeButton">
-        <ng-container
-          *ngIf="!isMinimalMode"
-          [ngTemplateOutlet]="dot"
-        ></ng-container>
         <m-subscribeButton
           [user]="owner"
           [sized]="true"
@@ -56,10 +110,6 @@
       </ng-container>
       <!-- Join button (for groups) -->
       <ng-container *ngIf="showJoinButton">
-        <ng-container
-          *ngIf="!isMinimalMode"
-          [ngTemplateOutlet]="dot"
-        ></ng-container>
         <m-group__membershipButton
           [group]="group"
           [displayAsButton]="false"
@@ -68,29 +118,7 @@
       </ng-container>
     </div>
   </div>
-  <!-- SPACER -->
-  <div *ngIf="showSpacer" class="m-activityOwnerBlock__spacer"></div>
-  <!-- RIGHT SIDE: anything after the spacer -->
-  <div class="m-activityOwnerBlock__rightSide">
-    <!-- BADGES -->
-    <m-activity__badges
-      *ngIf="showBadges"
-      class="m-activityOwnerBlock__fixedWidth"
-    ></m-activity__badges>
-    <!-- VIEWS -->
-    <m-activity__views
-      *ngIf="showViews"
-      class="m-activityOwnerBlock__fixedWidth"
-    ></m-activity__views>
-    <!-- MENU -->
-    <m-activity__menu
-      (deleted)="deleted.emit()"
-      *ngIf="showMenu"
-      class="m-activityOwnerBlock__fixedWidth"
-    ></m-activity__menu>
-  </div>
 </div>
-
 <!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
 <!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->
 <!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  -->

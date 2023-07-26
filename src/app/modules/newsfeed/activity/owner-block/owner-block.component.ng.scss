@@ -1,7 +1,21 @@
 @import 'defaults.scss';
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  &:not(.m-activity__ownerBlock--minimalMode) {
+    padding-bottom: $spacing3;
+  }
+
+  // *********************************
+  // ** HAS AVATAR **
+  // *********************************
+  &.m-activity__ownerBlock--hasAvatar {
+    align-items: center;
+    .m-activity__ownerBlock {
+      width: calc(100% - $spacing16);
+    }
+  }
 
   // *********************************
   // ** GROUP CONTEXT **
@@ -10,7 +24,6 @@
     &:not(.m-activity__ownerBlock--minimalMode) {
       .m-activity__ownerBlock {
         align-items: flex-start;
-        margin-bottom: $spacing2;
       }
     }
     .m-activityOwnerBlock__avatar {
@@ -27,15 +40,9 @@
     padding-top: $spacing2;
     padding-bottom: $spacing2;
 
-    .m-activityOwnerBlock__primaryName {
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-    }
-
     &.m-activity__ownerBlock--quoteOrRemind {
       // Use a bit more room when there is a remind icon overlaying avatar
-      .m-activityOwnerBlock__primaryName {
+      .m-activity__ownerBlock {
         margin-left: $spacing2;
       }
     }
@@ -45,9 +52,7 @@
   // ** MODAL **
   // *********************************
   m-activity__modal & {
-    .m-activity__ownerBlock {
-      padding: 20px $activitySpacing--modal 0;
-    }
+    padding: 20px $activitySpacing--modal 0;
 
     a.m-activityOwnerBlock__secondaryName {
       margin-left: 0;
@@ -57,9 +62,8 @@
   // ** SIDEBAR BOOST **
   // *********************************
   .m-activity--isSidebarBoost & {
-    .m-activity__ownerBlock {
-      padding: $activitySpacing--minimalMode;
-    }
+    padding: $activitySpacing--minimalMode;
+
     .m-activityOwnerBlockPermalink__text {
       padding: 0;
     }
@@ -79,13 +83,13 @@
   .m-activity__ownerBlock {
     display: flex;
     align-items: center;
-    flex-direction: row;
-
+    flex-direction: column;
     width: 100%;
-    padding-bottom: $spacing1;
-    margin-bottom: $spacing2;
-
     box-sizing: border-box;
+
+    &.m-activity__ownerBlock--hasSecondRow {
+      align-items: flex-start;
+    }
 
     a {
       text-decoration: none;
@@ -94,9 +98,54 @@
       }
     }
   }
+  .m-activityOwnerBlock__topRow {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+  }
 
-  .m-activityOwnerBlockColumn__secondRowWrapper {
+  .m-activityOwnerBlockTopRow__leftSide {
+    display: flex;
+    flex-direction: column;
+
+    a.m-activityOwnerBlock__primaryName {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      span {
+        @include body1Bold;
+      }
+
+      &:hover {
+        .m-activityOwnerBlock__remindIcon {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .m-activityOwnerBlockTopRow__rightSide {
+    display: flex;
+    align-items: center;
+
+    ::ng-deep m-activity__badges {
+      // Aligns icon badges with text badges
+      display: flex;
+    }
+
+    ::ng-deep m-paywallBadge .m-paywallBadge {
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+  }
+
+  .m-activityOwnerBlock__secondRow {
+    display: flex;
+    align-items: center;
     margin-top: $spacing1;
+    width: 100%;
 
     .m-activityOwnerBlock__secondaryName {
       display: inline-block;
@@ -104,6 +153,9 @@
 
       span {
         @include body3Bold;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
       }
     }
     ::ng-deep .m-activityPermalink__wrapper .m-activityPermalink__text {
@@ -114,45 +166,11 @@
     }
   }
 
-  .m-activityOwnerBlock__rightSide {
-    display: flex;
-    align-items: center;
-  }
-
   ::ng-deep {
     .m-activityOwnerBlock__avatar {
       align-self: center;
       padding-right: $spacing2;
       position: relative;
-    }
-  }
-
-  a.m-activityOwnerBlock__primaryName {
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-    }
-
-    span {
-      @include body1Bold;
-    }
-
-    &:hover {
-      .m-activityOwnerBlock__remindIcon {
-        text-decoration: none;
-      }
-    }
-  }
-
-  a.m-activityOwnerBlock__secondaryName {
-    margin-left: $spacing1;
-    @media screen and (max-width: $max-mobile) {
-      display: none;
-    }
-    span {
-      @include body2Regular;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
     }
   }
 
@@ -185,23 +203,18 @@
     flex: 1;
   }
 
-  .m-activityOwnerBlock__column {
+  .m-activityOwnerBlock__wrap {
     display: flex;
-    flex-direction: column;
-
-    .m-activityOwnerBlockColumn__secondRowWrapper {
-      display: flex;
-      align-items: center;
-    }
+    flex-wrap: wrap;
+    align-items: center;
   }
 
-  ::ng-deep .m-activityOwnerBlock__truncate {
-    &,
-    & > * {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  .m-activityOwnerBlock__truncate {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .m-activityOwnerBlock__ellipsis {
+    text-overflow: ellipsis;
   }
 
   ::ng-deep .m-activityOwnerBlock__fixedWidth {
@@ -210,5 +223,11 @@
     > div {
       display: inline-block;
     }
+  }
+
+  .m-activityOwnerBlock__nameAndBadge {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
   }
 }

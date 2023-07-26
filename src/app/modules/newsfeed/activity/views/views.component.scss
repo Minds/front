@@ -6,6 +6,9 @@
   // *********************************
   .m-activity--isFeed & {
     padding-left: $spacing1;
+    .m-activity__views {
+      @include body3Regular;
+    }
   }
 
   // *********************************
@@ -24,7 +27,7 @@
   // *********************************
   .m-activity__views {
     display: inline-block;
-    @include body3Regular;
+    @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

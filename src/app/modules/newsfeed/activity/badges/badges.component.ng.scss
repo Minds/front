@@ -9,7 +9,6 @@
     flex-direction: row;
     cursor: default;
     text-decoration: none;
-    transform: translateY(2px);
 
     @include m-theme() {
       fill: themed($m-textColor--secondary);
@@ -20,6 +19,7 @@
   i,
   ::ng-deep m-icon i {
     font-size: 1.25rem;
+
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

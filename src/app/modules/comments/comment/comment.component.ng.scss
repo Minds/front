@@ -27,7 +27,7 @@
             color: themed($m-textColor--secondary);
           }
           &.m-commentOwnerRowItem__name {
-            @include body2Medium;
+            @include body1Bold;
             @include m-theme() {
               color: themed($m-textColor--primary);
             }
