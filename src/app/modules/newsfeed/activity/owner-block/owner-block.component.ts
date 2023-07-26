@@ -130,7 +130,8 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
       ? this.displayName
       : this.owner.username;
 
-    this.showUsernameInSecondRow = !this.isMinimalMode && !this.isSidebarBoost;
+    this.showUsernameInSecondRow =
+      this.showGroupContext || (!this.isMinimalMode && !this.isSidebarBoost);
 
     this.showPermalink = !(this.isSingle || this.isModal || this.isMinimalMode);
 
