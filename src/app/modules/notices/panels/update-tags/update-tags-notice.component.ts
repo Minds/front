@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ContentSettingsModalService } from '../../../content-settings/content-settings-modal.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
@@ -12,6 +12,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   templateUrl: 'update-tags-notice.component.html',
 })
 export class UpdateTagsNoticeComponent extends AbstractSubscriberComponent {
+  @Input() public dismissible: boolean = true;
+
   constructor(
     private feedNotice: FeedNoticeService,
     private contentSettingsModal: ContentSettingsModalService

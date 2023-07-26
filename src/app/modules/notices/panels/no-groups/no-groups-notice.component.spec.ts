@@ -1,23 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MockComponent, MockService } from '../../../../utils/mock';
-import { RouterTestingModule } from '@angular/router/testing';
-import { SupermindPendingNoticeComponent } from './supermind-pending-notice.component';
-import { Router } from '@angular/router';
 import { FeedNoticeService } from '../../services/feed-notice.service';
+import { MockComponent, MockService } from '../../../../utils/mock';
+import { NoGroupsNoticeComponent } from './no-groups-notice.component';
 
-describe('SupermindPendingNoticeComponent', () => {
-  let comp: SupermindPendingNoticeComponent;
-  let fixture: ComponentFixture<SupermindPendingNoticeComponent>;
+describe('NoGroupsNoticeComponent', () => {
+  let comp: NoGroupsNoticeComponent;
+  let fixture: ComponentFixture<NoGroupsNoticeComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
         declarations: [
-          SupermindPendingNoticeComponent,
+          NoGroupsNoticeComponent,
           MockComponent({
             selector: 'm-feedNotice',
-            inputs: ['icon', 'dismissible'],
+            inputs: ['icon'],
             outputs: ['dismissClick'],
           }),
           MockComponent({
@@ -28,10 +25,6 @@ describe('SupermindPendingNoticeComponent', () => {
         ],
         providers: [
           {
-            provide: Router,
-            useValue: MockService(Router),
-          },
-          {
             provide: FeedNoticeService,
             useValue: MockService(FeedNoticeService),
           },
@@ -41,7 +34,7 @@ describe('SupermindPendingNoticeComponent', () => {
   );
 
   beforeEach(done => {
-    fixture = TestBed.createComponent(SupermindPendingNoticeComponent);
+    fixture = TestBed.createComponent(NoGroupsNoticeComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
 
@@ -59,17 +52,8 @@ describe('SupermindPendingNoticeComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should navigate on primary option click', () => {
-    comp.onPrimaryOptionClick(null);
-    expect((comp as any).router.navigate).toHaveBeenCalledWith([
-      '/supermind/inbox',
-    ]);
-  });
-
-  it('should dismiss notice', () => {
+  it('should dismiss notice on dismiss function call', () => {
     comp.dismiss();
-    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
-      'supermind-pending'
-    );
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith('no-groups');
   });
 });

@@ -25,7 +25,7 @@ describe('BoostConsoleFilterBarComponent', () => {
           }),
           MockComponent({
             selector: 'm-feedNotice--boostLatestPost',
-            inputs: ['isInFeed', 'targetBoostLocation'],
+            inputs: ['isInFeed', 'targetBoostLocation', 'dismissible'],
           }),
         ],
         providers: [

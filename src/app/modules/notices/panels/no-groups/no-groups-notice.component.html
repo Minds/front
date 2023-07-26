@@ -1,4 +1,9 @@
-<m-feedNotice icon="group" [dismissible]="false" dataRefId="no-groups">
+<m-feedNotice
+  icon="group"
+  [dismissible]="dismissible"
+  (dismissClick)="dismiss()"
+  dataRefId="no-groups"
+>
   <span
     class="m-feedNotice__title"
     data-ref="feed-notice-title-no-groups"

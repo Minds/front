@@ -25,6 +25,7 @@ query FetchNewsfeed(
         ... on FeedNoticeNode {
           location
           key
+          dismissible
         }
         ... on FeedHighlightsConnection {
           edges {

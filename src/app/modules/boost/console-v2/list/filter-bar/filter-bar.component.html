@@ -342,6 +342,7 @@
   <m-feedNotice--boostLatestPost
     *ngIf="!(service.adminContext$ | async)"
     [isInFeed]="false"
+    [dismissible]="false"
     [targetBoostLocation]="service.locationFilterValue$ | async"
   ></m-feedNotice--boostLatestPost>
 </ng-template>
