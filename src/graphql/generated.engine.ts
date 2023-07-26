@@ -131,6 +131,8 @@ export type FeedNoticeEdge = EdgeInterface & {
 
 export type FeedNoticeNode = NodeInterface & {
   __typename?: 'FeedNoticeNode';
+  /** Whether the notice is dismissible */
+  dismissible: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   /** The key of the notice that the client should render */
   key: Scalars['String']['output'];
@@ -555,6 +557,7 @@ export type FetchNewsfeedQuery = {
                 __typename?: 'FeedNoticeNode';
                 location: string;
                 key: string;
+                dismissible: boolean;
                 id: string;
               }
             | { __typename?: 'GiftCardNode'; id: string }
@@ -699,6 +702,7 @@ export type FetchNewsfeedQuery = {
             __typename?: 'FeedNoticeNode';
             location: string;
             key: string;
+            dismissible: boolean;
             id: string;
           };
         }
@@ -999,6 +1003,7 @@ export const FetchNewsfeedDocument = gql`
           ... on FeedNoticeNode {
             location
             key
+            dismissible
           }
           ... on FeedHighlightsConnection {
             edges {

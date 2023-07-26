@@ -1,4 +1,9 @@
-<m-feedNotice icon="info" (dismissClick)="dismiss()" dataRefId="invite-friends">
+<m-feedNotice
+  icon="info"
+  [dismissible]="dismissible"
+  (dismissClick)="dismiss()"
+  dataRefId="invite-friends"
+>
   <span
     class="m-feedNotice__title"
     i18n="@@FEED_NOTICE__INVITE_YOUR_FRIENDS__TITLE"
