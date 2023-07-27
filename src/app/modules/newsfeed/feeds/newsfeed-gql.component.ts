@@ -46,6 +46,7 @@ import {
 import { FeedAlgorithm } from './subscribed.component';
 import { BoostFeedService } from '../services/boost-feed.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { FeedNoticeDismissalService } from '../../notices/services/feed-notice-dismissal.service';
 
 const PAGE_SIZE = 12;
 
@@ -93,9 +94,9 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
   isTopHighlightsDismissed$ = this.dismissal.dismissed('top-highlights');
 
   /**
-   * Whether channel recommendation is dismissed
+   * Whether publisher recommendations is dismissed
    */
-  isChannelRecommendationDismissed$ = this.dismissal.dismissed(
+  isPublisherRecommendationsDismissed$ = this.dismissal.dismissed(
     'channel-recommendation:feed'
   );
 
@@ -159,6 +160,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     private toast: ToasterService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private dismissal: DismissalService,
+    private feedNoticeDismissalService: FeedNoticeDismissalService,
     public changeDetectorRef: ChangeDetectorRef,
     private fetchNewsfeed: FetchNewsfeedGQL,
     protected boostFeedService: BoostFeedService,
@@ -175,6 +177,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
       {
         algorithm: this.algorithm,
         limit: PAGE_SIZE,
+        inFeedNoticesDelivered: this.getDismissedFeedNoticeIds(),
       },
       {
         fetchPolicy: 'cache-and-network',
@@ -262,7 +265,13 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
         edges
           .filter(edge => edge.__typename === 'FeedNoticeEdge')
           .map(edge => (<FeedNoticeNode>edge.node).key)
-      )
+      ),
+      map(keys => {
+        // use a set to remove duplicates.
+        return [
+          ...new Set<string>([...keys, ...this.getDismissedFeedNoticeIds()]),
+        ];
+      })
     );
   }
 
@@ -499,5 +508,13 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   trackByFn(i: number, entry) {
     return entry.node.id;
+  }
+
+  /**
+   * Gets all dismissed feed notice ids.
+   * @returns { string[] } string array for of all dismissed feed notice IDs.
+   */
+  private getDismissedFeedNoticeIds(): string[] {
+    return this.feedNoticeDismissalService.getAllDismissedNoticeIds() ?? [];
   }
 }

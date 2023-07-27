@@ -1,5 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  Subscription,
+  take,
+} from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -50,6 +56,7 @@ import {
   ActivityContainer,
   ComposerAudienceSelectorService,
 } from './audience.service';
+import { LivestreamService } from './livestream.service';
 
 /**
  * Default values
@@ -374,6 +381,8 @@ export class ComposerService implements OnDestroy {
     end: number;
   }> = new BehaviorSubject({ start: 0, end: 0 });
 
+  private livestreamSubscription: Subscription;
+
   /**
    * Sets up data observable and its subscription
    *
@@ -393,7 +402,8 @@ export class ComposerService implements OnDestroy {
     private audienceSelectorService: ComposerAudienceSelectorService,
     private onboardingService: OnboardingV3Service,
     private uploaderService: UploaderService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private livestreamService: LivestreamService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -690,8 +700,7 @@ export class ComposerService implements OnDestroy {
             (!richEmbed ||
               typeof richEmbed === 'string' ||
               !richEmbed.entityGuid) &&
-            !attachment &&
-            !remind
+            !attachment
           ) {
             if (!this.canEditMetadata()) {
               return;
@@ -704,7 +713,7 @@ export class ComposerService implements OnDestroy {
 
           // If there is an attachment already provided then reset the rich embed
           // as we can't have both values
-          if ((richEmbed && attachment) || (richEmbed && remind)) {
+          if (richEmbed && attachment) {
             this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
           }
         }
@@ -733,6 +742,8 @@ export class ComposerService implements OnDestroy {
 
     // Unsubscribe from rich embed extractor
     this.richEmbedExtractorSubscription.unsubscribe();
+
+    this.livestreamSubscription?.unsubscribe();
   }
 
   /**
@@ -1111,12 +1122,29 @@ export class ComposerService implements OnDestroy {
           .toPromise();
       } else {
         // New activity
+        this.livestreamSubscription = this.livestreamService
+          .getCreatedStream()
+          .pipe(take(1))
+          .subscribe(stream => {
+            if (stream) {
+              this.payload.is_rich = true;
+              this.payload.url = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.title = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.description = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.thumbnail = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.payload.message =
+                this.payload.message +
+                `\n https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
+              this.livestreamService.toggleRecordLivestream(stream.id, true);
+            }
+          });
         activity = await this.api
           .put(`api/v3/newsfeed/activity`, this.payload)
           .toPromise();
 
         this.feedsUpdate.postEmitter.emit(activity);
         this.onboardingService.forceCompletion('CreatePostStep');
+        this.livestreamService.setStream(null);
       }
 
       if (this.payload.supermind_reply_guid) {

@@ -44,10 +44,10 @@ export class GroupMembershipButtonComponent implements OnDestroy {
     return this._group;
   }
   @Input() set group(group: MindsGroup) {
-    this._group = group;
     if (group) {
       this.service.setGroup(group);
     }
+    this._group = group;
   }
 
   /**
@@ -66,13 +66,14 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    * Customize button size
    */
   @Input()
-  buttonSize: ButtonSize = 'small';
+  size: ButtonSize = 'small';
 
   /**
    * Customize button color
+   * If not customized, it will be 'blue' when the button says 'join' and grey otherwise
    */
   @Input()
-  color: ButtonColor = 'grey';
+  customColor: ButtonColor;
 
   /**
    * If true, show "Join Group" instead of "Join", "Leave Group" instead of "Leave"
@@ -213,5 +214,16 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    */
   public async cancelRequest() {
     this.service.cancelRequest();
+  }
+
+  get color(): ButtonColor {
+    if (this.customColor) {
+      return this.customColor;
+    }
+    if (this.buttonType === 'join') {
+      return 'blue';
+    } else {
+      return 'grey';
+    }
   }
 }

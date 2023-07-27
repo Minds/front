@@ -1,4 +1,9 @@
-<m-feedNotice (dismissClick)="dismiss()" icon="info" dataRefId="connect-wallet">
+<m-feedNotice
+  icon="info"
+  [dismissible]="dismissible"
+  (dismissClick)="dismiss()"
+  dataRefId="connect-wallet"
+>
   <span
     class="m-feedNotice__title"
     i18n="@@FEED_NOTICE__CONNECT_WALLET__CONNECT_A_CRYPTO_WALLET"

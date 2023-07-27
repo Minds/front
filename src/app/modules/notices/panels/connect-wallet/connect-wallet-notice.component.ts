@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConnectWalletModalService } from '../../../blockchain/connect-wallet/connect-wallet-modal.service';
@@ -13,6 +13,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 })
 export class ConnectWalletNoticeComponent extends AbstractSubscriberComponent
   implements OnInit {
+  @Input() public dismissible: boolean = true;
+
   constructor(
     private feedNotice: FeedNoticeService,
     private connectWallet: ConnectWalletModalService

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ReferralUrlService } from '../../../../common/services/referral-url.service';
@@ -14,6 +14,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   templateUrl: 'invite-friends-notice.component.html',
 })
 export class InviteFriendsNoticeComponent extends AbstractSubscriberComponent {
+  @Input() public dismissible: boolean = true;
+
   constructor(
     private feedNotice: FeedNoticeService,
     private referralUrl: ReferralUrlService,

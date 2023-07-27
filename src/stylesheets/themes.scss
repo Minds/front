@@ -30,6 +30,17 @@
   @return map-get($theme-map, $color-name);
 }
 
+/**
+ * Get color for a specific given theme.
+ * e.g. `color: color-by-theme($m-action, "dark");`   
+ * @param color-name - variable of color.
+ * @param theme-name - string theme name.
+ * @returns requested color.
+ */
+@function color-by-theme($color-name, $theme-name) {
+  @return map-get($themes, $theme-name, $color-name);
+}
+
 // Dark theme lighten percentage
 $percent: 5%;
 

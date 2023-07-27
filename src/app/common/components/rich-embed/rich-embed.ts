@@ -21,6 +21,7 @@ import {
   ClientMetaService,
 } from '../../services/client-meta.service';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
+import { LivestreamService } from '../../../modules/composer/services/livestream.service';
 
 interface InlineEmbed {
   id: string;
@@ -40,7 +41,10 @@ interface InlineEmbed {
 export class MindsRichEmbed {
   type: string = '';
   mediaSource: string = '';
+  playbackId?: string = '';
+  isOwner: boolean = false;
   src: any = {};
+  streamRecording: any = null;
   preview: any = {};
   maxheight: number = 320;
   inlineEmbed: InlineEmbed = null;
@@ -95,6 +99,7 @@ export class MindsRichEmbed {
     private modalService: ModalService,
     private embedLinkWhitelist: EmbedLinkWhitelistService,
     private clientMetaService: ClientMetaService,
+    private livestreamService: LivestreamService,
     @SkipSelf() private parentClientMeta: ClientMetaDirective
   ) {}
 
@@ -118,6 +123,8 @@ export class MindsRichEmbed {
 
     const isOwner =
       this.src.ownerObj.guid === this.session.getLoggedInUser().guid;
+
+    this.isOwner = isOwner;
 
     this.isPaywalled =
       this.src.paywall && !this.src.paywall_unlocked && !isOwner;
@@ -177,6 +184,8 @@ export class MindsRichEmbed {
         this.renderHtml();
       }
     }
+
+    this.getLiveStreamInfo();
   }
 
   /**
@@ -241,9 +250,9 @@ export class MindsRichEmbed {
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-youtube',
           html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
-          src="https://www.youtube.com/embed/${matches[1]}?controls=1&modestbranding=1&origin=${origin}&rel=0&autoplay=1"
+          src="https://www.youtube.com/embed/${matches[1]}?controls=1&modestbranding=1&origin=${origin}&rel=0&autoplay=1&mute=1"
           frameborder="0"
-          allowfullscreen></iframe>`),
+          allowfullscreen ></iframe>`),
           playable: true,
         };
       }
@@ -381,12 +390,52 @@ export class MindsRichEmbed {
       }
     }
 
+    // Livepeer
+    const livepeer: RegExp = this.embedLinkWhitelist.getRegex('livepeer');
+    if ((matches = livepeer.exec(url)) !== null) {
+      if (matches[0]) {
+        this.mediaSource = 'livepeer';
+        this.playbackId = matches[4];
+        return {
+          id: `video-livepeer-${matches[4]}`,
+          className:
+            'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
+          html: this.sanitizer.bypassSecurityTrustHtml(
+            '<iframe class="livepeer" width="640" height="360" src="' +
+              matches[0] +
+              '" frameborder="0" allowfullscreen></iframe>'
+          ),
+          playable: true,
+        };
+      }
+    }
+
     // No match
     return null;
   }
 
   get isFeaturedSource(): boolean {
     return this.mediaSource === 'youtube' || this.mediaSource === 'minds';
+  }
+
+  async getLiveStreamInfo() {
+    const streamId = await this.livestreamService.getStreamFromPlayback(
+      this.playbackId
+    );
+    const recording = await this.livestreamService.getRecording(streamId);
+    if (streamId) {
+      this.streamRecording = recording;
+    } else {
+      return;
+    }
+  }
+
+  downloadRecording() {
+    window.open(this.streamRecording.downloadUrl);
+  }
+
+  isLivestream() {
+    return this.mediaSource == 'livepeer';
   }
 
   hasInlineContentLoaded() {

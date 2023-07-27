@@ -102,6 +102,10 @@ export class NotificationsV3NotificationComponent
       //
       case 'gift_card_recipient_notified':
         return;
+
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
+        return;
       default:
         this.typeError = true;
         console.error(
@@ -144,6 +148,8 @@ export class NotificationsV3NotificationComponent
       case 'boost_completed':
       case 'boost_rejected':
       case 'supermind_expiring_soon':
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
         return false;
       default:
         return true;
@@ -234,6 +240,9 @@ export class NotificationsV3NotificationComponent
         return "Don't forget to review";
       case 'gift_card_recipient_notified':
         return 'sent';
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
+        return `You earned $${this.data.amount_usd} from Minds Affiliate Program`;
     }
   }
 
@@ -264,6 +273,8 @@ export class NotificationsV3NotificationComponent
       case 'boost_accepted':
       case 'boost_rejected':
       case 'supermind_expiring_soon':
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
         return '';
       case 'gift_card_recipient_notified':
         return 'you';
@@ -288,6 +299,8 @@ export class NotificationsV3NotificationComponent
       case 'boost_completed':
       case 'boost_accepted':
       case 'boost_rejected':
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
         return '';
       case 'boost_peer_request':
       case 'boost_peer_accepted':
@@ -356,6 +369,9 @@ export class NotificationsV3NotificationComponent
           '/gift-cards/claim/',
           this.notification.data.gift_card.claimCode,
         ];
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
+        return ['/wallet/cash/earnings'];
     }
 
     switch (this.notification.entity?.type) {
@@ -515,6 +531,10 @@ export class NotificationsV3NotificationComponent
         return this.notification.entity.entity;
     }
     return this.notification.entity;
+  }
+
+  get data(): any | null {
+    return this.notification.data;
   }
 
   /**

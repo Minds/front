@@ -1,0 +1,25 @@
+<div class="m-onboardingV5__stepContentContainer">
+  <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
+  <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
+  <m-loadingSpinner
+    *ngIf="!(loaded$ | async)"
+    [inProgress]="!(loaded$ | async)"
+  ></m-loadingSpinner>
+  <m-publisherRecommendations
+    location="newsfeed"
+    isOnboarding="true"
+    noOuterPadding="true"
+    listSize="12"
+    [publisherType]="publisherType"
+    (subscribed)="onSubscribed()"
+    (unsubscribed)="onUnsubscribed()"
+    (loaded)="onLoaded($event)"
+  ></m-publisherRecommendations>
+</div>
+<m-onboardingV5__footer
+  [disabledActionButton]="!(hasCompletedStep$ | async)"
+  [actionButton]="data.actionButton ?? null"
+  [skipButton]="data.skipButton ?? null"
+  (actionButtonClick)="onActionButtonClick()"
+  (skipButtonClick)="onSkipButtonClick()"
+></m-onboardingV5__footer>

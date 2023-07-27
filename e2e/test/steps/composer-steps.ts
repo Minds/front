@@ -61,6 +61,20 @@ namespace ComposerSteps {
     composerModalComponent.createNewsfeedPost(textStorageKey);
   });
 
+  When('I click the composer Audience selector', () => {
+    composerModalComponent.clickAudienceSelectorButton();
+    composerModalComponent.hasAudienceSelectorPopup();
+  });
+
+  When(
+    'I create a post with response storage key {string}',
+    async responseStorageKey => {
+      await composerModalComponent.createNewsfeedPostAndStoreResponse(
+        responseStorageKey
+      );
+    }
+  );
+
   Then('I should see {int} previews of my selected imaged', num => {
     for (let i = 1; i <= num; i++) {
       I.seeElement(
@@ -110,4 +124,12 @@ namespace ComposerSteps {
   Then('the composer text area should be empty', () => {
     I.seeInField(composerModalComponent.textAreaSelector, '');
   });
+
+  Then(
+    'I see that the composer audience selector is expanded with entities',
+    () => {
+      composerModalComponent.isAudienceSelectorGroupSectionExpanded(true);
+      composerModalComponent.waitForAudienceSelectorPopupEntities();
+    }
+  );
 }

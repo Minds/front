@@ -50,6 +50,7 @@
             <m-feedNotice__switch
               [key]="edge.node.key"
               [location]="edge.node.location"
+              [dismissible]="edge.node.dismissible"
             ></m-feedNotice__switch>
           </ng-template>
 
@@ -95,6 +96,7 @@
 
           <ng-template ngSwitchCase="PublisherRecsEdge">
             <m-publisherRecommendations
+              *ngIf="!(isPublisherRecommendationsDismissed$ | async)"
               location="newsfeed"
               [dismissible]="true"
               [connection]="edge.node"

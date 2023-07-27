@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { PlusUpgradeNoticeExperimentService } from '../../../experiments/sub-services/plus-upgrade-notice-experiment.service';
 import { WireCreatorComponent } from '../../../wire/v2/creator/wire-creator.component';
@@ -13,6 +13,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   templateUrl: 'plus-upgrade-notice.component.html',
 })
 export class PlusUpgradeNoticeComponent implements OnInit {
+  @Input() public dismissible: boolean = true;
+
   // experiment that controls which text is shown in the body of the notice.
   public experimentVariation: number = 0;
 
