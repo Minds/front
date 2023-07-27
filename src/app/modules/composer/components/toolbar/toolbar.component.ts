@@ -47,6 +47,9 @@ import {
 } from '../popup/supermind/superminds-creation.service';
 import { SupermindReplyConfirmModalComponent } from '../../../modals/supermind-reply-confirm/supermind-reply-confirm-modal.component';
 import { Supermind } from '../../../supermind/supermind.types';
+import { LiveStreamComponent } from '../livestream/livestream.component';
+import { LivestreamService } from '../../services/livestream.service';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -78,13 +81,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   @ViewChild('fileUploadComponent')
   fileUploadComponent: FileUploadComponent;
-
+  /**
+   * Livestream information
+   */
+  @ViewChild('LivestreamComponent')
+  livestreamComponent: LiveStreamComponent;
   /**
    * Toolbar main <div> element
    */
-  @ViewChild('toolbarWrapper', { static: true }) toolbarWrapper: ElementRef<
-    HTMLDivElement
-  >;
+  @ViewChild('toolbarWrapper', { static: true })
+  toolbarWrapper: ElementRef<HTMLDivElement>;
 
   /**
    * Show narrow style
@@ -152,7 +158,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param service
    * @param popup
    * @param cd
+   * @param toaster
+   * @param uploaderService
+   * @param livestreamService
    * @param platformId
+   * @param modalService
+   * @param injector
+   * @param experimentService
    */
   constructor(
     protected service: ComposerService,
@@ -160,9 +172,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected toaster: ToasterService,
     protected uploaderService: UploaderService,
+    protected livestreamService: LivestreamService,
     @Inject(PLATFORM_ID) protected platformId: Object,
     public modalService: ModalService,
-    private injector: Injector
+    private injector: Injector,
+    private readonly experimentService: ExperimentsService
   ) {}
 
   /**
@@ -223,6 +237,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   @HostListener('window:resize') onWindowResize() {
     this.windowResize$.next();
+  }
+  async createLiveStream(): Promise<void> {
+    try {
+      await this.livestreamService.createLiveStream();
+    } catch (error) {
+      console.error('Error creating live stream:', error);
+    }
   }
 
   /**
@@ -307,6 +328,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   get canPost$() {
     return this.service.canPost$;
+  }
+
+  public get shouldShowLivestreamButton(): boolean {
+    return this.experimentService.hasVariation('minds-4157-livepeer');
   }
 
   /**

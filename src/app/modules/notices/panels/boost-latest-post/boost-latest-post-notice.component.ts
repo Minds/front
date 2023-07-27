@@ -22,10 +22,12 @@ import { Session } from '../../../../services/session';
   templateUrl: 'boost-latest-post-notice.component.html',
 })
 export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
+  @Input() public dismissible: boolean = true;
+
   /**
    * False if this is displayed in the boost console
    */
-  @Input() isInFeed = true;
+  @Input() public isInFeed: boolean = true;
 
   /**
    * Determines whether clicking primary button should
@@ -113,7 +115,7 @@ export class BoostLatestPostNoticeComponent implements OnInit, OnDestroy {
    * @return { void }
    */
   public onDismissClick(): void {
-    if (this.isInFeed) {
+    if (this.dismissible) {
       this.feedNotice.dismiss('boost-latest-post');
     }
   }

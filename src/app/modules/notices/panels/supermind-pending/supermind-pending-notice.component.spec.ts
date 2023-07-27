@@ -3,6 +3,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SupermindPendingNoticeComponent } from './supermind-pending-notice.component';
 import { Router } from '@angular/router';
+import { FeedNoticeService } from '../../services/feed-notice.service';
 
 describe('SupermindPendingNoticeComponent', () => {
   let comp: SupermindPendingNoticeComponent;
@@ -29,6 +30,10 @@ describe('SupermindPendingNoticeComponent', () => {
           {
             provide: Router,
             useValue: MockService(Router),
+          },
+          {
+            provide: FeedNoticeService,
+            useValue: MockService(FeedNoticeService),
           },
         ],
       }).compileComponents();
@@ -59,5 +64,12 @@ describe('SupermindPendingNoticeComponent', () => {
     expect((comp as any).router.navigate).toHaveBeenCalledWith([
       '/supermind/inbox',
     ]);
+  });
+
+  it('should dismiss notice', () => {
+    comp.dismiss();
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
+      'supermind-pending'
+    );
   });
 });
