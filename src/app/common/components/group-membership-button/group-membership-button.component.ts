@@ -4,11 +4,10 @@ import {
   Input,
   OnDestroy,
   Optional,
-  Output,
   SkipSelf,
+  Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Session } from './../../../services/session';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { MindsGroup } from '../../../modules/groups/v2/group.model';
@@ -29,8 +28,12 @@ export type GroupMembershipButtonType =
   | 'invited'
   | null;
 
-export type GroupMembershipChangeOuput = { isMember: boolean };
+export type GroupMembershipButtonLabelType =
+  | 'verboseAction'
+  | 'action'
+  | 'pastTense';
 
+export type GroupMembershipChangeOuput = { isMember: boolean };
 /**
  * Click this button to join/leave a group,
  * accept/decline a group invitation (2 buttons are displayed),
@@ -50,6 +53,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
   get group(): MindsGroup {
     return this._group;
   }
+
   @Input() set group(group: MindsGroup) {
     if (group) {
       this.service.setGroup(group);
@@ -59,6 +63,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
 
   /**
    * Whether the button overlay styling should be applied
+   * (only relevant when displayAsButton is true)
    */
   @Input()
   overlay: boolean = false;
@@ -70,29 +75,40 @@ export class GroupMembershipButtonComponent implements OnDestroy {
   iconOnly: boolean = false;
 
   /**
+   * The icon to show when user has joined the group
+   * (only relevant when iconOnly is true)
+   */
+  @Input() isMemberIcon = 'close';
+
+  /**
    * Customize button size
+   * (only relevant when displayAsButton is true)
    */
   @Input()
   size: ButtonSize = 'small';
 
   /**
    * Customize button color
+   * (only customizable when displayAsButton is true)
    * If not customized, it will be 'blue' when the button says 'join' and grey otherwise
    */
   @Input()
   customColor: ButtonColor;
 
   /**
-   * If true, show "Join Group" instead of "Join", "Leave Group" instead of "Leave"
+   * action - default. Buttons say "Join", "Leave", "Cancel Request", etc.
+   * verboseAction - buttons say "Join Group" instead of "Join", "Leave Group" instead of "Leave".
+   * pastTense - the buttons say what happened after you clicked "Join" (e.g. "Joined"/"Requested").
    */
   @Input()
-  verbose: boolean = false;
+  labelType: GroupMembershipButtonLabelType = 'action';
 
   /**
-   * The icon to show when user has joined the group
-   * (only relevant when iconOnly is true)
+   * If false, display as a string of text instead of an outlined button
+   * (see activity owner blocks for example)
    */
-  @Input() isMemberIcon = 'close';
+  @Input()
+  displayAsButton: boolean = true;
 
   @Output() onMembershipChange: EventEmitter<
     GroupMembershipChangeOuput
@@ -126,9 +142,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
       } else {
         this.buttonType = null;
       }
-
       this.initIsMemberSubscription();
-
       return this.buttonType;
     })
   );
@@ -172,13 +186,10 @@ export class GroupMembershipButtonComponent implements OnDestroy {
       return;
     }
     this.joinClickRecorded = true;
-
     const extraClientMetaData: Partial<ClientMetaData> = {};
-
     if (Boolean((this.group as any).boosted_guid)) {
       extraClientMetaData.campaign = this.group.urn;
     }
-
     this.clientMetaService.recordClick(
       this.group.guid,
       this.parentClientMeta,
@@ -192,6 +203,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    * Two buttons are displayed for 'invited' type: the primary one is 'acceptInvitation'
    */
   onPrimaryButtonClick($event) {
+    if (this.service.inProgress$.getValue()) return;
     switch (this.buttonType) {
       case 'join':
         this.join();
@@ -217,12 +229,10 @@ export class GroupMembershipButtonComponent implements OnDestroy {
       let endpoint = this.modernGroupsExperiment.isActive()
         ? `/group/${this.group.guid}?join=true`
         : `/groups/profile/${this.group.guid}/feed?join=true`;
-
       this.loginReferrer.register(endpoint);
       this.router.navigate(['/login']);
       return;
     }
-
     this.service.join();
   }
 
