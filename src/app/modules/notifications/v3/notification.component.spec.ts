@@ -105,6 +105,33 @@ describe('NotificationsV3NotificationComponent', () => {
     comp.notification = { type: 'boost_completed' };
     expect(comp.verb).toBe('Your Boost is complete');
   });
+
+  it('should get correct verb for group_queue_received', () => {
+    const groupName: string = 'My group with a long truncates name';
+    comp.notification = {
+      type: 'group_queue_received',
+      entity: {
+        name: groupName,
+      },
+    };
+
+    expect(comp.verb).toBe(
+      `There are posts pending approval in My group with a long trunca...`
+    );
+  });
+
+  it('should get correct verb for group_queue_received but truncate group names over 30 characters', () => {
+    const groupName: string = 'My Group';
+    comp.notification = {
+      type: 'group_queue_received',
+      entity: {
+        name: groupName,
+      },
+    };
+
+    expect(comp.verb).toBe(`There are posts pending approval in ${groupName}`);
+  });
+
   // pronoun
 
   it('should get correct pronoun for supermind_accepted', () => {
@@ -137,6 +164,11 @@ describe('NotificationsV3NotificationComponent', () => {
     expect(comp.pronoun).toBe('');
   });
 
+  it('should get correct pronoun for group_queue_received', () => {
+    comp.notification = { type: 'group_queue_received' };
+    expect(comp.pronoun).toBe('');
+  });
+
   // noun
 
   it('should get correct noun for supermind_accepted', () => {
@@ -166,6 +198,11 @@ describe('NotificationsV3NotificationComponent', () => {
 
   it('should get correct noun for boost_completed', () => {
     comp.notification = { type: 'boost_completed' };
+    expect(comp.noun).toBe('');
+  });
+
+  it('should get correct noun for group_queue_received', () => {
+    comp.notification = { type: 'group_queue_received' };
     expect(comp.noun).toBe('');
   });
 
@@ -220,6 +257,17 @@ describe('NotificationsV3NotificationComponent', () => {
       type: 'boost_rejected',
     };
     expect(comp.nounLink).toEqual(['/boost/boost-console']);
+  });
+
+  it('should get correct nounLink for group_queue_received', () => {
+    const guid: string = '1234567890123456';
+    comp.notification = {
+      type: 'group_queue_received',
+      entity: {
+        guid: guid,
+      },
+    };
+    expect(comp.nounLink).toEqual([`/group/${guid}/review`]);
   });
 
   // nounLinkParams
