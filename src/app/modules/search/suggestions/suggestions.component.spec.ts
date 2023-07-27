@@ -17,7 +17,8 @@ import { SearchBarSuggestionsComponent } from './suggestions.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
+import { SearchGqlExperimentService } from '../search-gql-experiment.service';
 
 /* tslint:disable */
 
@@ -68,6 +69,10 @@ describe('SearchBarSuggestionsComponent', () => {
           { provide: RecentService, useValue: recentServiceMock },
           { provide: ContextService, useValue: contextServiceMock },
           { provide: ConfigsService, useValue: { get: key => null } },
+          {
+            provide: SearchGqlExperimentService,
+            useValue: MockService(SearchGqlExperimentService),
+          },
         ],
       }).compileComponents();
     })

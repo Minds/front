@@ -4,7 +4,7 @@ import { TopbarWrapperComponent } from './topbar-wrapper/topbar.component';
 import { PageComponent } from './page/page.component';
 import { OnboardingV2Module } from '../onboarding-v2/onboarding.module';
 import { CommonModule } from '../../common/common.module';
-import { SearchModule } from '../search/search.module';
+import { SearchSharedModule } from '../search/search-shared.module';
 import { NotificationModule } from '../notifications/notification.module';
 import { ModalsModule } from '../modals/modals.module';
 import { ReportModule } from '../report/report.module';
@@ -19,7 +19,7 @@ import { AppPromptModule } from '../app-prompt/app-prompt.module';
     RouterModule,
     CommonModule,
     NgCommonModule,
-    SearchModule,
+    SearchSharedModule,
     NotificationModule,
     ModalsModule,
     OnboardingV2Module,
