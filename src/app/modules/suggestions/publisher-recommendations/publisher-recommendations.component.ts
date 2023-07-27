@@ -84,6 +84,9 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   /**
    * Should the widget recommend channels or groups?
    * (onboarding v4 uses this for suggested groups)
+   *
+   * If using gql recs, types may be mixed and
+   * this mostly determines where the 'See More' link goes
    */
   @Input()
   publisherType: PublisherType = 'user';
@@ -311,10 +314,10 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   }
 
   getLink(publisher): string[] {
-    if (this.publisherType === 'user') {
+    if (publisher.type === 'user') {
       return ['/', publisher.username];
     }
-    if (this.publisherType === 'group') {
+    if (publisher.type === 'group') {
       return ['/groups/profile', publisher.guid];
     }
   }
