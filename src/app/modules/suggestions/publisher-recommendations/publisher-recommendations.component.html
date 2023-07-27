@@ -19,18 +19,10 @@
       </h3>
       <ng-template #defaultTitle>
         <h3
-          *ngIf="publisherType === 'user'"
-          i18n="@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS"
-          data-ref="publisher-recommendations-title-channels"
+          i18n="@@M_DISCOVERY_CARD_CAROUSEL__RECOMMENDED_FOR_YOU"
+          data-ref="publisher-recommendations-title-recommended-for-you"
         >
-          Recommended Channels
-        </h3>
-        <h3
-          *ngIf="publisherType === 'group'"
-          i18n="@@M_DISCOVERY_CARD_CAROUSEL__RECOMMENDED_GROUPS"
-          data-ref="publisher-recommendations-title-groups"
-        >
-          Recommended Groups
+          Recommended for you
         </h3>
       </ng-template>
       <div>
@@ -91,7 +83,9 @@
             ></span>
             <m-boostedFlag
               *ngIf="publisher.boosted"
-              text="Boosted Channel"
+              [text]="
+                publisherType === 'user' ? 'Boosted Channel' : 'Boosted Group'
+              "
               size="small"
             ></m-boostedFlag>
           </div>
@@ -109,8 +103,6 @@
             <m-group__membershipButton
               *ngIf="publisherType === 'group'"
               [group]="publisher"
-              iconOnly="true"
-              isMemberIcon="check"
               color="blue"
               (onMembershipChange)="onGroupMembershipChange($event, publisher)"
             ></m-group__membershipButton>
