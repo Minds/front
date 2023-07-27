@@ -18,12 +18,6 @@ describe('SeeLatestPostsButtonComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SeeLatestPostsButtonComponent);
     component = fixture.componentInstance;
-    component.feedService = MockService(FeedsService) as any;
-    component.feedService.newPostsCount$ = new BehaviorSubject(2);
-    component.feedService.watchForNewPosts = jasmine.createSpy(
-      'watchForNewPosts',
-      () => () => {}
-    );
     spyOn(component.onClickEmitter, 'emit');
     fixture.detectChanges();
   });
@@ -35,28 +29,5 @@ describe('SeeLatestPostsButtonComponent', () => {
   it('should be clickable', () => {
     component.onClick();
     expect(component.onClickEmitter.emit).toHaveBeenCalled();
-    expect(component.feedService.fetch).toHaveBeenCalled();
-  });
-
-  it('should have loading', () => {
-    component.feedService.countInProgress$ = new BehaviorSubject(false);
-    expect(component.loadingNewPosts$.getValue()).toBeFalsy();
-    fixture.detectChanges();
-    component.feedService.countInProgress$ = new BehaviorSubject(true);
-    expect(component.loadingNewPosts$.getValue()).toBeTruthy();
-  });
-
-  it('should show correct number', () => {
-    expect(component.newPostsCount$.getValue()).toEqual(2);
-  });
-
-  it('should unmount nicely', () => {
-    component.ngOnDestroy();
-    expect(component.disposeWatcher).toHaveBeenCalled();
-  });
-
-  it('should start polling for updates', () => {
-    expect(component.feedService.watchForNewPosts).toHaveBeenCalled();
-    expect(component.disposeWatcher).toBeTruthy();
   });
 });

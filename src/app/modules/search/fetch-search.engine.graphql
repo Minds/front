@@ -1,0 +1,94 @@
+query FetchSearch(
+  $query: String!,
+  $filter: SearchFilterEnum!,
+  $mediaType: SearchMediaTypeEnum!,
+  $nsfw: [SearchNsfwEnum!],
+  $limit: Int!
+  $cursor: String
+) {
+  search(
+    query: $query
+    filter: $filter
+    mediaType: $mediaType
+    nsfw: $nsfw
+    first: $limit
+    after: $cursor
+  ) {
+    edges {
+      cursor
+      node {
+        id
+        ... on ActivityNode {
+          legacy
+        }
+        ... on UserNode {
+                legacy
+        }
+        ... on GroupNode {
+          legacy
+        }
+        ... on BoostNode {
+          goalButtonUrl
+          goalButtonText
+          legacy
+        }
+        ... on FeedNoticeNode {
+          location
+          key
+        }
+        ... on PublisherRecsConnection {
+          edges {
+            publisherNode: node {
+              id
+              ... on UserNode {
+                legacy
+              }
+              ... on BoostNode {
+                legacy
+              }
+              ... on GroupNode {
+                legacy
+              }
+            }
+          }
+          pageInfo {
+            ...PageInfo
+          }
+        }
+      }
+    }
+
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+
+query CountSearch(
+  $query: String!,
+  $filter: SearchFilterEnum!,
+  $mediaType: SearchMediaTypeEnum!,
+  $nsfw: [SearchNsfwEnum!],
+  $cursor: String
+) {
+  search(
+    query: $query
+    filter: $filter
+    mediaType: $mediaType
+    nsfw: $nsfw
+    before: $cursor
+  ) {
+    count
+ 
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+
+fragment PageInfo on PageInfo {
+  hasPreviousPage
+  hasNextPage
+  startCursor
+  endCursor
+}

@@ -7,6 +7,13 @@ export const cache = new InMemoryCache({
     Query: {
       fields: {
         newsfeed: relayStylePagination(['limit', 'algorithm']),
+        search: relayStylePagination([
+          'limit',
+          'query',
+          'filter',
+          'mediaType',
+          'nsfw',
+        ]),
       },
     },
   },
