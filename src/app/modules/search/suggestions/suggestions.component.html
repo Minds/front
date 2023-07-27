@@ -25,7 +25,7 @@
       <a
         class="m-searchBarSuggestions__suggestion m-searchBarSuggestions__suggestion--text"
         *ngIf="suggestion.type === 'text'"
-        [routerLink]="['/discovery/search']"
+        [routerLink]="[isSearchExpOn ? '/search' : '/discovery/search']"
         [queryParams]="{ q: suggestion.value, f: 'top', t: 'all' }"
       >
         <div><i class="material-icons">search</i></div>
@@ -64,7 +64,7 @@
           >We couldn't find any channels that match <b>{{ q }}</b></span
         >
         <a
-          [routerLink]="['/discovery/search']"
+          [routerLink]="[isSearchExpOn ? '/search' : '/discovery/search']"
           [queryParams]="{ q: q, f: 'top', t: 'all' }"
           >See discovery results instead</a
         >

@@ -14,19 +14,21 @@ namespace SearchSteps {
     await Promise.all([
       I.pressKey('Enter'),
       I.waitForResponse(
-        resp =>
-          resp.url().includes('/api/v3/discovery/search') &&
-          resp.status() === 200,
+        resp => resp.url().includes('/api/graphql') && resp.status() === 200,
         30
       ),
     ]);
   });
 
   Then('I see search results', () => {
-    I.seeElement(locate('m-discovery__search').withText('Top'));
-    I.seeElement(locate('m-discovery__search').withText('Latest'));
-    I.seeElement(locate('m-discovery__search').withText('Channels'));
-    I.seeElement(locate('m-discovery__search').withText('Groups'));
+    I.seeElement(locate('m-search').withText('Top'));
+    I.seeElement(locate('m-search').withText('Latest'));
+    I.seeElement(locate('m-search').withText('Channels'));
+    I.seeElement(locate('m-search').withText('Groups'));
     I.seeElement(searchPage.searchResults);
+  });
+
+  Then('I see suggested group results', () => {
+    I.seeElement(searchPage.publisherRecs);
   });
 }

@@ -1,13 +1,10 @@
-<div
-  *ngIf="(newPostsCount$ | async) > 0"
-  [@slideIn]="(newPostsCount$ | async) ? 'shown' : 'hidden'"
->
+<div *ngIf="count > 0" [@slideIn]="count ? 'shown' : 'hidden'">
   <m-button
     class="m-seeLatestPostsButton"
     size="xsmall"
     solid="true"
     color="blue"
     (onAction)="onClick()"
-    ><i class="material-icons">arrow_upward</i>{{ title$ | async }}</m-button
+    ><i class="material-icons">arrow_upward</i>{{ title }}</m-button
   >
 </div>
