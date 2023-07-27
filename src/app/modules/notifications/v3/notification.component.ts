@@ -176,11 +176,7 @@ export class NotificationsV3NotificationComponent
       case 'group_queue_add':
         return 'Your post is awaiting approval from the group administrators';
       case 'group_queue_received':
-        let groupName: string = this.notification?.entity?.name ?? 'your group';
-        if (groupName.length > 30) {
-          groupName = groupName.substring(0, 27) + '...';
-        }
-        return `There are posts pending approval in ${groupName}`;
+        return 'Post pending approval in';
       case 'group_queue_approve':
         return 'approved';
       case 'group_queue_reject':
@@ -292,7 +288,6 @@ export class NotificationsV3NotificationComponent
       case 'wire_received':
       case 'wire_payout':
       case 'group_queue_add':
-      case 'group_queue_received':
       case 'token_rewards_summary':
       case 'token_withdraw_accepted':
       case 'token_withdraw_rejected':
@@ -317,6 +312,12 @@ export class NotificationsV3NotificationComponent
           this.notification.entity?.entity?.ownerObj?.name +
           "'s Supermind offer"
         );
+      case 'group_queue_received':
+        let groupName: string = this.notification?.entity?.name ?? 'your group';
+        if (groupName.length > 30) {
+          groupName = groupName.substring(0, 27) + '...';
+        }
+        return groupName;
     }
     switch (this.notification.entity?.type) {
       case 'comment':

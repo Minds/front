@@ -107,29 +107,8 @@ describe('NotificationsV3NotificationComponent', () => {
   });
 
   it('should get correct verb for group_queue_received', () => {
-    const groupName: string = 'My group with a long truncates name';
-    comp.notification = {
-      type: 'group_queue_received',
-      entity: {
-        name: groupName,
-      },
-    };
-
-    expect(comp.verb).toBe(
-      `There are posts pending approval in My group with a long trunca...`
-    );
-  });
-
-  it('should get correct verb for group_queue_received but truncate group names over 30 characters', () => {
-    const groupName: string = 'My Group';
-    comp.notification = {
-      type: 'group_queue_received',
-      entity: {
-        name: groupName,
-      },
-    };
-
-    expect(comp.verb).toBe(`There are posts pending approval in ${groupName}`);
+    comp.notification = { type: 'group_queue_received' };
+    expect(comp.verb).toBe('Post pending approval in');
   });
 
   // pronoun
@@ -202,8 +181,15 @@ describe('NotificationsV3NotificationComponent', () => {
   });
 
   it('should get correct noun for group_queue_received', () => {
-    comp.notification = { type: 'group_queue_received' };
-    expect(comp.noun).toBe('');
+    const groupName: string = 'My group with a long truncated name';
+    comp.notification = {
+      type: 'group_queue_received',
+      entity: {
+        name: groupName,
+      },
+    };
+
+    expect(comp.noun).toBe('My group with a long trunca...');
   });
 
   // nounLink
