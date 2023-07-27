@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
 import { SearchBarComponent } from './bar.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { SearchBarComponent } from './bar.component';
     ReactiveFormsModule,
     CommonModule,
     SuggestionsModule,
+    RouterModule,
   ],
   declarations: [SearchBarComponent, SearchBarSuggestionsComponent],
   providers: [],
