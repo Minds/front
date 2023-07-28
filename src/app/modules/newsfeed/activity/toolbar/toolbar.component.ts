@@ -1,8 +1,8 @@
 import {
   ChangeDetectorRef,
   Component,
-  HostBinding,
-  Injector,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -40,6 +40,9 @@ export class ActivityToolbarComponent {
   entity: ActivityEntity;
   allowReminds: boolean = true;
   protected supermindButtonExperiment: boolean = false;
+
+  // Used to remove a downvoted item from the feed.
+  @Output() onExplicitDownvote: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     public service: ActivityService,
@@ -127,6 +130,18 @@ export class ActivityToolbarComponent {
         ? this.entity.entity_guid
         : this.entity.guid;
     await this.interactionsModalService.open(type, guid);
+  }
+
+  /**
+   * Remove item from the feed when
+   * it is explicitly downvoted
+   */
+  onThumbsDownChange($event): void {
+    if ($event && this.service.displayOptions.showExplicitVoteButtons) {
+      this.onExplicitDownvote.emit();
+    }
+
+    this.detectChanges();
   }
 
   detectChanges(): void {

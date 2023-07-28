@@ -37,4 +37,19 @@
     margin: 0;
     width: initial;
   }
+
+  ::ng-deep {
+    m-button {
+      .m-button {
+        .m-button__text--unsaved {
+          span {
+            font-weight: 400;
+          }
+          i {
+            margin-right: $spacing2 !important;
+          }
+        }
+      }
+    }
+  }
 }

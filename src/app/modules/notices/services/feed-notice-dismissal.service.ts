@@ -1,6 +1,5 @@
-import { EventEmitter, Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { FeedNoticeStorageArray, NoticeKey } from '../feed-notice.types';
-import { isPlatformServer } from '@angular/common';
+import { EventEmitter, Injectable } from '@angular/core';
+import { NoticeKey } from '../feed-notice.types';
 import * as moment from 'moment';
 import { ObjectLocalStorageService } from '../../../common/services/object-local-storage.service';
 
@@ -66,5 +65,13 @@ export class FeedNoticeDismissalService {
     const thresholdDate = moment().subtract(this.expirationDays, 'days');
 
     return dismissDate.isAfter(thresholdDate);
+  }
+
+  /**
+   * Gets all dismissed notice ids.
+   * @returns { string[] } string array for of all dismissed notice IDs.
+   */
+  public getAllDismissedNoticeIds(): string[] {
+    return Object.keys(this.objectStorage.getAll(this.storageKey) ?? []);
   }
 }

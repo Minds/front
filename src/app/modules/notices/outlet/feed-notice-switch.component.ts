@@ -28,6 +28,9 @@ export class FeedNoticeSwitchComponent implements OnInit, OnDestroy {
   // Location can either be inline or top. This is to be provided by the parent.
   @Input() location: NoticeLocation;
 
+  // Whether notice is to be dismissible.
+  @Input() dismissible: boolean = false;
+
   // Makes notice to stick to the top of the feed.
   @HostBinding('class.m-feedNoticeOutlet__container--sticky')
   stickyTop: boolean;

@@ -101,6 +101,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoverySidebarTagsComponent,
     DiscoveryBuildYourAlgorithmComponent,
     DiscoveryTopComponent,
+    DiscoverySettingsButtonComponent,
   ],
   providers: [
     DiscoveryTrendsService,

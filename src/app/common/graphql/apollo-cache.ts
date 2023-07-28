@@ -13,6 +13,13 @@ export const cache = new InMemoryCache({
           'ordering',
         ]),
         giftCardTransactionLedger: relayStylePagination(['giftCardGuid']),
+        search: relayStylePagination([
+          'limit',
+          'query',
+          'filter',
+          'mediaType',
+          'nsfw',
+        ]),
       },
     },
   },

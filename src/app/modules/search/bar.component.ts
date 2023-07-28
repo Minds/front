@@ -19,13 +19,14 @@ import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
 import { Session } from '../../services/session';
 import { RecentService } from '../../services/ux/recent';
-import { filter } from 'rxjs/operators';
+import { filter, startWith } from 'rxjs/operators';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import {
   DiscoveryFeedsContentType,
   DiscoveryFeedsContentFilter,
 } from '../discovery/feeds/feeds.service';
 import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
+import { SearchGqlExperimentService } from './search-gql-experiment.service';
 
 /**
  * Base component for the search bar used in the topbar
@@ -45,8 +46,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   type: DiscoveryFeedsContentType;
   id: string;
   routerSubscription: Subscription;
-  hasSearchContext: boolean = false;
-  searchContext: string | Promise<string> = '';
   placeholder: string;
 
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
@@ -69,9 +68,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public router: Router,
     private route: ActivatedRoute,
     public session: Session,
-    private context: ContextService,
     private recentService: RecentService,
-    private pageLayoutService: PageLayoutService
+    private pageLayoutService: PageLayoutService,
+    private searchExp: SearchGqlExperimentService
   ) {}
 
   ngOnInit() {
@@ -93,7 +92,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   listen() {
     this.routerSubscription = this.router.events
-      .pipe(filter(event => event instanceof ActivationEnd))
+      .pipe(
+        filter(event => event instanceof ActivationEnd),
+        startWith(this.route)
+      )
       .subscribe((event: ActivationEnd) => {
         try {
           const params = event.snapshot.queryParamMap;
@@ -112,25 +114,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   unListen() {
     if (this.routerSubscription) this.routerSubscription.unsubscribe();
-  }
-
-  handleUrl(url: string) {
-    if (url.indexOf('/') === 0) {
-      url = url.substr(1);
-    }
-
-    let fragments = url.replace(/\//g, ';').split(';');
-
-    if (fragments[0] === 'search') {
-      this.hasSearchContext = true;
-      this.suggestionsDisabled = true;
-      setTimeout(() => this.getActiveSearchContext(fragments), 5);
-    } else {
-      // this.q = '';
-      this.id = '';
-      this.hasSearchContext = false;
-      this.suggestionsDisabled = false;
-    }
   }
 
   focus() {
@@ -153,9 +136,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    this.router.navigate(['/discovery/search'], {
-      queryParams: { q: this.q, f: this.filter, t: this.type },
-    });
+    if (this.searchExp.isActive()) {
+      this.router.navigate(['/search'], {
+        queryParams: { q: this.q, f: this.filter, t: this.type },
+      });
+    } else {
+      this.router.navigate(['/discovery/search'], {
+        queryParams: { q: this.q, f: this.filter, t: this.type },
+      });
+    }
 
     this.recentService.storeSuggestion(
       'text',
@@ -186,32 +175,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   clean() {
     this.q = '';
-  }
-
-  protected getActiveSearchContext(fragments: string[]) {
-    this.searchContext = '';
-    this.id = '';
-
-    fragments.forEach((fragment: string) => {
-      let param = fragment.split('=');
-
-      if (param[0] === 'q') {
-        this.q = decodeURIComponent(param[1]);
-      }
-
-      if (param[0] === 'id') {
-        this.id = param[1];
-        this.searchContext = this.context.resolveLabel(
-          decodeURIComponent(param[1])
-        );
-      }
-
-      if (param[0] == 'type' && !this.searchContext) {
-        this.searchContext = this.context.resolveStaticLabel(
-          decodeURIComponent(param[1])
-        );
-      }
-    });
   }
 
   @HostListener('window:resize')
