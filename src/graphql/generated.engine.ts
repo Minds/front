@@ -94,6 +94,13 @@ export type ConnectionInterface = {
   pageInfo: PageInfo;
 };
 
+export type Dismissal = {
+  __typename?: 'Dismissal';
+  dismissalTimestamp: Scalars['Int']['output'];
+  key: Scalars['String']['output'];
+  userGuid: Scalars['String']['output'];
+};
+
 export type EdgeImpl = EdgeInterface & {
   __typename?: 'EdgeImpl';
   cursor: Scalars['String']['output'];
@@ -257,6 +264,8 @@ export type Mutation = {
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
+  /** Dismiss a notice by its key. */
+  dismiss: Dismissal;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
 };
@@ -277,6 +286,10 @@ export type MutationCreateGiftCardArgs = {
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
   targetInput: GiftCardTargetInput;
+};
+
+export type MutationDismissArgs = {
+  key: Scalars['String']['input'];
 };
 
 export type MutationSetOnboardingStateArgs = {
@@ -344,6 +357,10 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Get dismissal by key. */
+  dismissalByKey?: Maybe<Dismissal>;
+  /** Get all of a users dismissals. */
+  dismissals: Array<Dismissal>;
   /** Returns an individual gift card */
   giftCard: GiftCardNode;
   /** Returns an individual gift card by its claim code. */
@@ -366,6 +383,10 @@ export type Query = {
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryDismissalByKeyArgs = {
+  key: Scalars['String']['input'];
 };
 
 export type QueryGiftCardArgs = {
@@ -492,6 +513,46 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type DismissMutationVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type DismissMutation = {
+  __typename?: 'Mutation';
+  dismiss: {
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  };
+};
+
+export type GetDismissalByKeyQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type GetDismissalByKeyQuery = {
+  __typename?: 'Query';
+  dismissalByKey?: {
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  } | null;
+};
+
+export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetDismissalsQuery = {
+  __typename?: 'Query';
+  dismissals: Array<{
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  }>;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -1271,6 +1332,75 @@ export const PageInfoFragmentDoc = gql`
     endCursor
   }
 `;
+export const DismissDocument = gql`
+  mutation Dismiss($key: String!) {
+    dismiss(key: $key) {
+      userGuid
+      key
+      dismissalTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DismissGQL extends Apollo.Mutation<
+  DismissMutation,
+  DismissMutationVariables
+> {
+  document = DismissDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetDismissalByKeyDocument = gql`
+  query GetDismissalByKey($key: String!) {
+    dismissalByKey(key: $key) {
+      userGuid
+      key
+      dismissalTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetDismissalByKeyGQL extends Apollo.Query<
+  GetDismissalByKeyQuery,
+  GetDismissalByKeyQueryVariables
+> {
+  document = GetDismissalByKeyDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetDismissalsDocument = gql`
+  query GetDismissals {
+    dismissals {
+      userGuid
+      key
+      dismissalTimestamp
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetDismissalsGQL extends Apollo.Query<
+  GetDismissalsQuery,
+  GetDismissalsQueryVariables
+> {
+  document = GetDismissalsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const ClaimGiftCardDocument = gql`
   mutation ClaimGiftCard($claimCode: String!) {
     claimGiftCard(claimCode: $claimCode) {
