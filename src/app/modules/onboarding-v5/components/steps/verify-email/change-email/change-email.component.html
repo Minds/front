@@ -1,0 +1,40 @@
+<div class="m-onboardingV5__stepContentContainer">
+  <h2 class="m-onboardingV5__stepTitle">
+    <i
+      class="material-icons m-onboardingV5ChangeEmail__backIcon"
+      (click)="goBackClick.emit()"
+      (keyup.enter)="goBackClick.emit()"
+      tabindex="2"
+      >chevron_left</i
+    >{{ data.changeEmailTitle }}
+  </h2>
+  <p class="m-onboardingV5__stepDescription">
+    {{ data.changeEmailDescription }}
+  </p>
+
+  <form class="m-onboardingV5ChangeEmail__form" [formGroup]="formGroup">
+    <label for="newEmail" class="m-onboardingV5ChangeEmail__inputLabel">{{
+      data.changeEmailInputLabel
+    }}</label>
+    <input
+      #newEmailInput
+      formControlName="newEmail"
+      class="m-onboardingV5ChangeEmail__input"
+      type="email"
+      (keyup.enter)="onActionButtonClick()"
+      [placeholder]="data?.changeEmailInputPlaceholder ?? ''"
+      data-test="onboarding-v5-email-change-input"
+    />
+  </form>
+</div>
+
+<m-onboardingV5__footer
+  [disabledActionButton]="
+    !newEmailFormControl.valid && !(emailChangeInProgress$ | async)
+  "
+  [saving]="emailChangeInProgress$ | async"
+  [actionButton]="data.changeEmailActionButton"
+  [skipButton]="null"
+  (actionButtonClick)="onActionButtonClick()"
+  (skipButtonClick)="onSkipButtonClick()"
+></m-onboardingV5__footer>
