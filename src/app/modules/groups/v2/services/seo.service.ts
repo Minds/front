@@ -25,12 +25,11 @@ export class GroupSeoService {
    * @param user
    */
   set(group: MindsGroup): void {
-    if (typeof group === 'string') {
-      this.meta.setTitle(group);
-      return;
-    }
+    const avatarUrl = this.getAvatarUrl(group);
 
-    this.meta.setTitle(group.name).setOgImage(this.getAvatarUrl(group), {
+    this.meta.setTitle(group.name);
+
+    this.meta.setOgImage(avatarUrl, {
       height: 315,
       width: 600,
     });
