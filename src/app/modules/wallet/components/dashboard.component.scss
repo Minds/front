@@ -22,6 +22,12 @@ m-walletDashboard,
       .m-tabs__tab {
         white-space: nowrap;
       }
+
+      @media screen and (max-width: $min-tablet) {
+        m-wallet__tokenPriceBadge {
+          display: none;
+        }
+      }
     }
     .m-tabs__tab > a {
       @media screen and (max-width: $max-mobile) {

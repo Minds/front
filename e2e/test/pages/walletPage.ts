@@ -4,6 +4,7 @@ import { WalletSubPage } from '../types/wallet.types';
 const { I, sidebarComponent } = inject();
 class WalletPage {
   private readonly baseUrl: string = '/wallet';
+  private creditsTabSelector: string = '[data-ref=wallet-tab-credits]';
 
   private readonly joinRewardsButton: Locator = locate('m-button').withText(
     'Join Rewards'
@@ -28,6 +29,14 @@ class WalletPage {
 
   public clickJoinRewards(): void {
     I.click(this.joinRewardsButton);
+  }
+
+  /**
+   * Click the credits tab.
+   * @returns { void }
+   */
+  public clickCreditsTab(): void {
+    I.click(this.creditsTabSelector);
   }
 }
 

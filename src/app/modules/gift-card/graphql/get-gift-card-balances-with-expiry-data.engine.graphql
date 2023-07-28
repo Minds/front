@@ -1,0 +1,11 @@
+query GetGiftCardBalancesWithExpiryData {
+  giftCardsBalances {
+    productId
+    balance
+    earliestExpiringGiftCard {
+      guid
+      balance
+      expiresAt
+    }
+  }
+}

@@ -151,6 +151,8 @@ export type FeedNoticeNode = NodeInterface & {
 export type GiftCardBalanceByProductId = {
   __typename?: 'GiftCardBalanceByProductId';
   balance: Scalars['Float']['output'];
+  /** Returns the earliest expiring gift that contributes to this balance. */
+  earliestExpiringGiftCard?: Maybe<GiftCardNode>;
   productId: GiftCardProductIdEnum;
 };
 
@@ -200,6 +202,11 @@ export enum GiftCardProductIdEnum {
   Supermind = 'SUPERMIND',
 }
 
+export enum GiftCardStatusFilterEnum {
+  Active = 'ACTIVE',
+  Expired = 'EXPIRED',
+}
+
 export type GiftCardTargetInput = {
   targetEmail?: InputMaybe<Scalars['String']['input']>;
   targetUserGuid?: InputMaybe<Scalars['String']['input']>;
@@ -208,8 +215,11 @@ export type GiftCardTargetInput = {
 export type GiftCardTransaction = NodeInterface & {
   __typename?: 'GiftCardTransaction';
   amount: Scalars['Float']['output'];
+  boostGuid?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['Int']['output'];
   giftCardGuid?: Maybe<Scalars['String']['output']>;
+  giftCardIssuerGuid?: Maybe<Scalars['String']['output']>;
+  giftCardIssuerName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   paymentGuid?: Maybe<Scalars['String']['output']>;
   refundedAt?: Maybe<Scalars['Int']['output']>;
@@ -374,6 +384,13 @@ export type Query = {
   giftCard: GiftCardNode;
   /** Returns an individual gift card by its claim code. */
   giftCardByClaimCode: GiftCardNode;
+  /**
+   * Returns a list of gift card transactions for a ledger,
+   * containing more information than just getting transactions,
+   * including linked boost_guid's for Boost payments and injects
+   * a transaction for the initial deposit.
+   */
+  giftCardTransactionLedger: GiftCardTransactionsConnection;
   /** Returns a list of gift card transactions */
   giftCardTransactions: GiftCardTransactionsConnection;
   /** Returns a list of gift cards belonging to a user */
@@ -408,6 +425,14 @@ export type QueryGiftCardByClaimCodeArgs = {
   claimCode: Scalars['String']['input'];
 };
 
+export type QueryGiftCardTransactionLedgerArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  giftCardGuid: Scalars['String']['input'];
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type QueryGiftCardTransactionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -423,6 +448,7 @@ export type QueryGiftCardsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   ordering?: InputMaybe<GiftCardOrderingEnum>;
   productId?: InputMaybe<GiftCardProductIdEnum>;
+  statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -588,6 +614,25 @@ export type ClaimGiftCardMutation = {
   };
 };
 
+export type GetGiftCardBalancesWithExpiryDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetGiftCardBalancesWithExpiryDataQuery = {
+  __typename?: 'Query';
+  giftCardsBalances: Array<{
+    __typename?: 'GiftCardBalanceByProductId';
+    productId: GiftCardProductIdEnum;
+    balance: number;
+    earliestExpiringGiftCard?: {
+      __typename?: 'GiftCardNode';
+      guid?: string | null;
+      balance: number;
+      expiresAt: number;
+    } | null;
+  }>;
+};
+
 export type GetGiftCardBalancesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetGiftCardBalancesQuery = {
@@ -613,6 +658,87 @@ export type GetGiftCardByCodeQuery = {
     balance: number;
     expiresAt: number;
     claimedAt?: number | null;
+  };
+};
+
+export type GetGiftCardTransactionsLedgerQueryVariables = Exact<{
+  giftCardGuid: Scalars['String']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetGiftCardTransactionsLedgerQuery = {
+  __typename?: 'Query';
+  giftCardTransactionLedger: {
+    __typename?: 'GiftCardTransactionsConnection';
+    edges: Array<{
+      __typename?: 'GiftCardTransactionEdge';
+      node: {
+        __typename?: 'GiftCardTransaction';
+        paymentGuid?: string | null;
+        giftCardGuid?: string | null;
+        amount: number;
+        createdAt: number;
+        refundedAt?: number | null;
+        boostGuid?: string | null;
+        id: string;
+        giftCardIssuerGuid?: string | null;
+        giftCardIssuerName?: string | null;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+      startCursor?: string | null;
+    };
+  };
+};
+
+export type GetGiftCardQueryVariables = Exact<{
+  guid: Scalars['String']['input'];
+}>;
+
+export type GetGiftCardQuery = {
+  __typename?: 'Query';
+  giftCard: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+  };
+};
+
+export type GetGiftCardsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  ordering?: InputMaybe<GiftCardOrderingEnum>;
+  productId?: InputMaybe<GiftCardProductIdEnum>;
+  statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
+}>;
+
+export type GetGiftCardsQuery = {
+  __typename?: 'Query';
+  giftCards: {
+    __typename?: 'GiftCardsConnection';
+    edges: Array<{
+      __typename?: 'GiftCardEdge';
+      node: {
+        __typename?: 'GiftCardNode';
+        guid?: string | null;
+        productId: GiftCardProductIdEnum;
+        balance: number;
+        expiresAt: number;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+    };
   };
 };
 
@@ -1458,6 +1584,33 @@ export class ClaimGiftCardGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const GetGiftCardBalancesWithExpiryDataDocument = gql`
+  query GetGiftCardBalancesWithExpiryData {
+    giftCardsBalances {
+      productId
+      balance
+      earliestExpiringGiftCard {
+        guid
+        balance
+        expiresAt
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardBalancesWithExpiryDataGQL extends Apollo.Query<
+  GetGiftCardBalancesWithExpiryDataQuery,
+  GetGiftCardBalancesWithExpiryDataQueryVariables
+> {
+  document = GetGiftCardBalancesWithExpiryDataDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetGiftCardBalancesDocument = gql`
   query GetGiftCardBalances {
     giftCardsBalances {
@@ -1501,6 +1654,122 @@ export class GetGiftCardByCodeGQL extends Apollo.Query<
   GetGiftCardByCodeQueryVariables
 > {
   document = GetGiftCardByCodeDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardTransactionsLedgerDocument = gql`
+  query GetGiftCardTransactionsLedger(
+    $giftCardGuid: String!
+    $first: Int
+    $after: String
+  ) {
+    giftCardTransactionLedger(
+      giftCardGuid: $giftCardGuid
+      first: $first
+      after: $after
+    ) {
+      edges {
+        node {
+          paymentGuid
+          giftCardGuid
+          amount
+          createdAt
+          refundedAt
+          boostGuid
+          id
+          giftCardIssuerGuid
+          giftCardIssuerName
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+        startCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardTransactionsLedgerGQL extends Apollo.Query<
+  GetGiftCardTransactionsLedgerQuery,
+  GetGiftCardTransactionsLedgerQueryVariables
+> {
+  document = GetGiftCardTransactionsLedgerDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardDocument = gql`
+  query GetGiftCard($guid: String!) {
+    giftCard(guid: $guid) {
+      guid
+      productId
+      amount
+      balance
+      expiresAt
+      claimedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardGQL extends Apollo.Query<
+  GetGiftCardQuery,
+  GetGiftCardQueryVariables
+> {
+  document = GetGiftCardDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardsDocument = gql`
+  query GetGiftCards(
+    $first: Int
+    $after: String
+    $ordering: GiftCardOrderingEnum
+    $productId: GiftCardProductIdEnum
+    $statusFilter: GiftCardStatusFilterEnum
+  ) {
+    giftCards(
+      first: $first
+      after: $after
+      ordering: $ordering
+      productId: $productId
+      statusFilter: $statusFilter
+    ) {
+      edges {
+        node {
+          guid
+          productId
+          balance
+          expiresAt
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardsGQL extends Apollo.Query<
+  GetGiftCardsQuery,
+  GetGiftCardsQueryVariables
+> {
+  document = GetGiftCardsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
