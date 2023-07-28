@@ -11,51 +11,35 @@ import {
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { CounterChangeFadeIn } from '../../../animations';
 import { ToasterService } from '../../services/toaster.service';
 
 @Component({
   selector: 'minds-button-thumbs-down',
   inputs: ['_object: object'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <a
-      (click)="thumb()"
-      [ngClass]="{ selected: has() }"
-      data-ref="data-minds-thumbs-down-button"
-    >
-      <i
-        class="material-icons"
-        [class.inProgress]="session.getLoggedInUser() && inProgress"
-        >thumb_down</i
-      >
-      <span
-        class="minds-counter"
-        *ngIf="object['thumbs:down:count'] > 0 && !iconOnly"
-        [@counterChange]="object['thumbs:down:count']"
-        data-ref="data-minds-thumbs-down-counter"
-        >{{ object['thumbs:down:count'] | number }}</span
-      >
-    </a>
-  `,
+  templateUrl: 'thumbs-down.component.html',
   styleUrls: [`thumbs-up.component.ng.scss`],
-  animations: [CounterChangeFadeIn],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThumbsDownButton implements DoCheck {
   changesDetected: boolean = false;
   object;
 
-  @Input() iconOnly = false;
-
   /** @type { boolean } whether request is inProgress. */
   public inProgress: boolean = false;
 
   /**
-   * Call to let parent functions know a thumb down event has happened
+   * When true, display a bordered button with "see more of this" text
    */
-  @Output('thumbsDownChange') thumbsDownChange$: EventEmitter<
-    void
-  > = new EventEmitter();
+  @Input() explicit = false;
+
+  /**
+   * Call to let parent functions know a thumb down event has happened
+   * Emits true if a downvote was added
+   * and false if a downvote was removed
+   */
+  @Output('thumbsDownChange') thumbsDownChange: EventEmitter<
+    boolean
+  > = new EventEmitter<boolean>();
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -91,12 +75,14 @@ export class ThumbsDownButton implements DoCheck {
 
     this.inProgress = false;
 
-    if (!this.has()) {
-      //this.object['thumbs:down:user_guids'].push(this.session.getLoggedInUser().guid);
+    let downvoteAdded = false;
+
+    if (!this.userHasDownvoted()) {
       this.object['thumbs:down:user_guids'] = [
         this.session.getLoggedInUser().guid,
       ];
       this.object['thumbs:down:count']++;
+      downvoteAdded = true;
     } else {
       for (let key in this.object['thumbs:down:user_guids']) {
         if (
@@ -108,12 +94,12 @@ export class ThumbsDownButton implements DoCheck {
       this.object['thumbs:down:count']--;
     }
 
-    this.cd.detectChanges();
+    this.thumbsDownChange.emit(downvoteAdded);
 
-    this.thumbsDownChange$.next();
+    this.cd.detectChanges();
   }
 
-  has() {
+  userHasDownvoted() {
     for (var guid of this.object['thumbs:down:user_guids']) {
       if (guid === this.session.getLoggedInUser().guid) return true;
     }

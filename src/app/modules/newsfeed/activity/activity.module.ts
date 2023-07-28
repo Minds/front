@@ -46,6 +46,7 @@ import { ComposerModule } from '../../composer/composer.module';
 import { ActivityFlagMutualSubscriptionsComponent } from './flag/mutual-subscriptions/mutual-subscriptions.component';
 import { ActivityBoostCtaComponent } from './boost-cta/boost-cta.component';
 import { ActivityAvatarComponent } from './avatar/avatar.component';
+import { ActivityDownvoteNoticeComponent } from './downvote-notice/downvote-notice.component';
 
 @NgModule({
   imports: [
@@ -92,6 +93,7 @@ import { ActivityAvatarComponent } from './avatar/avatar.component';
     ActivityFlagMutualSubscriptionsComponent,
     ActivityBoostCtaComponent,
     ActivityAvatarComponent,
+    ActivityDownvoteNoticeComponent,
   ],
   providers: [ActivityModalCreatorService],
   exports: [ActivityComponent, ActivityRemindButtonComponent],

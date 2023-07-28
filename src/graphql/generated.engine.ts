@@ -31,6 +31,7 @@ export type Scalars = {
 export type ActivityEdge = EdgeInterface & {
   __typename?: 'ActivityEdge';
   cursor: Scalars['String']['output'];
+  explicitVotes: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   node: ActivityNode;
   type: Scalars['String']['output'];
@@ -617,6 +618,7 @@ export type FetchNewsfeedQuery = {
     edges: Array<
       | {
           __typename?: 'ActivityEdge';
+          explicitVotes: boolean;
           cursor: string;
           node: { __typename?: 'ActivityNode'; legacy: string; id: string };
         }
@@ -1491,6 +1493,9 @@ export const FetchNewsfeedDocument = gql`
     ) {
       edges {
         cursor
+        ... on ActivityEdge {
+          explicitVotes
+        }
         node {
           id
           ... on ActivityNode {
