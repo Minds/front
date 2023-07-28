@@ -13,6 +13,7 @@ import { SupermindPendingNoticeComponent } from './panels/supermind-pending/supe
 import { PlusUpgradeNoticeComponent } from './panels/plus-upgrade/plus-upgrade-notice.component';
 import { BoostChannelNoticeComponent } from './panels/boost-channel/boost-channel-notice.component';
 import { InviteFriendsNoticeComponent } from './panels/invite-friends/invite-friends-notice.component';
+import { BoostPartnersNoticeComponent } from './panels/boost-partners/boost-partners-notice.component';
 import { BoostLatestPostNoticeComponent } from './panels/boost-latest-post/boost-latest-post-notice.component';
 import { BoostLatestPostNoticeService } from './panels/boost-latest-post/boost-latest-post-notice.service';
 import { FeedNoticeSwitchComponent } from './outlet/feed-notice-switch.component';
@@ -34,6 +35,7 @@ import { NoGroupsNoticeComponent } from './panels/no-groups/no-groups-notice.com
     PlusUpgradeNoticeComponent,
     BoostChannelNoticeComponent,
     InviteFriendsNoticeComponent,
+    BoostPartnersNoticeComponent,
     BoostLatestPostNoticeComponent,
     NoGroupsNoticeComponent,
     FeedNoticeSwitchComponent,
@@ -44,6 +46,7 @@ import { NoGroupsNoticeComponent } from './panels/no-groups/no-groups-notice.com
     FeedNoticeOutletComponent,
     FeedNoticeSwitchComponent,
     BoostLatestPostNoticeComponent,
+    SupermindPendingNoticeComponent,
     NoGroupsNoticeComponent,
   ],
 })

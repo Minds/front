@@ -42,7 +42,6 @@ import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 import { LanguageModule } from '../language/language.module';
 import { AdsModule } from '../ads/ads.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
-import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.component';
 
 @NgModule({
   imports: [
@@ -86,7 +85,6 @@ import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.c
     DiscoveryCardCarouselComponent,
     DiscoveryBuildYourAlgorithmComponent,
     DiscoveryTopComponent,
-    DiscoverySupermindsFeedComponent,
   ],
   exports: [
     DiscoverySidebarTagsComponent,
@@ -103,7 +101,7 @@ import { DiscoverySupermindsFeedComponent } from './superminds/superminds-feed.c
     DiscoverySidebarTagsComponent,
     DiscoveryBuildYourAlgorithmComponent,
     DiscoveryTopComponent,
-    DiscoverySupermindsFeedComponent,
+    DiscoverySettingsButtonComponent,
   ],
   providers: [
     DiscoveryTrendsService,

@@ -135,6 +135,14 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   canShow = true;
 
+  /**
+   * Replace the activity with notice
+   * when an activity has been explicitly downvoted,
+   * and switch back if the 'undo' button on the
+   * notice is clicked
+   */
+  showDownvoteNotice: boolean = false;
+
   constructor(
     public service: ActivityService,
     private el: ElementRef,
@@ -289,6 +297,16 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     window.scrollTo({
       top: window.pageYOffset + (newHeight - oldHeight),
     });
+  }
+
+  /**
+   * Remove the downvote and show the activity
+   * instead of the downvote notice
+   */
+  onUndoExplicitDownvote($event): void {
+    this.service.undoDownvote();
+
+    this.showDownvoteNotice = false;
   }
 
   persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();

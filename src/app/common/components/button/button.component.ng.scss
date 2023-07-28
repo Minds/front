@@ -137,6 +137,8 @@
         }
       }
     }
+
+    // Everything but overlays
     &:not(.m-button--overlay) {
       @include m-theme() {
         color: themed($m-textColor--primary);
@@ -144,6 +146,11 @@
           @include m-theme() {
             color: themed($m-textColor--primary);
           }
+        }
+      }
+      &.m-button--highlightText {
+        @include m-theme() {
+          color: themed($m-blue);
         }
       }
     }

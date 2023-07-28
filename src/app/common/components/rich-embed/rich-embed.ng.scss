@@ -1,6 +1,13 @@
 @import 'defaults.scss';
 
 :host {
+  .m-rich-embed-src {
+    margin-bottom: $spacing4;
+
+    &.m-has-inline-embed {
+      border: none !important;
+    }
+  }
   // ******************************************
   // ** FIXED HEIGHT **
   // ******************************************
@@ -107,6 +114,8 @@
         .m-url {
           @include body2Regular;
 
+          display: flex;
+          align-items: flex-start;
           padding: 0;
           margin: 0;
           @include m-theme() {
@@ -176,5 +185,15 @@
       }
     }
     ////////////////////////////////////////////////
+  }
+
+  .livestream__stop-button {
+    border: 0;
+    width: 100%;
+    margin-top: $spacing4;
+    border-radius: $spacing4;
+    //padding: $spacing4;
+    display: flex;
+    flex-flow: column-reverse;
   }
 }

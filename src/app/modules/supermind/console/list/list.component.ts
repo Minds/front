@@ -130,7 +130,6 @@ export class SupermindConsoleListComponent extends AbstractSubscriberComponent
       ),
       tap((response: any) => {
         if (response && typeof response.redirect !== 'undefined') {
-          console.log(response);
           this.toaster.error(response.errorMessage);
           this.router.navigate(['supermind/inbox']);
           return;

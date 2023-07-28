@@ -1,0 +1,14 @@
+query GetGiftCardByCode(
+  $claimCode: String!
+) {
+  giftCardByClaimCode(
+    claimCode: $claimCode
+  ) {
+    guid
+    productId
+    amount
+    balance
+    expiresAt
+    claimedAt
+  }
+}

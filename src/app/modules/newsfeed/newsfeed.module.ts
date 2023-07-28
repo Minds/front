@@ -21,7 +21,7 @@ import { NewsfeedService } from './services/newsfeed.service';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedEntityComponent } from './feeds/entity.component';
-import { SearchModule } from '../search/search.module';
+import { SearchSharedModule } from '../search/search-shared.module';
 import { FeedGridComponent } from './feed-grid/feed-grid.component';
 import { ComposerModule } from '../composer/composer.module';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
@@ -100,7 +100,7 @@ const routes: Routes = [
     HashtagsModule,
     SuggestionsModule,
     NoticesModule,
-    SearchModule,
+    SearchSharedModule,
     ActivityModule,
     ComposerModule,
     DiscoverySharedModule,

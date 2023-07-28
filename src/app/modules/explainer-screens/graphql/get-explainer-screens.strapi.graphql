@@ -1,0 +1,21 @@
+query GetExplainerScreens {
+    explainerScreensWeb {
+      data {
+        attributes {
+          key
+          triggerRoute
+          title
+          subtitle
+          section {
+            icon
+            title
+            description
+          }
+          continueButton {
+            text
+            dataRef
+          }
+        }
+      }
+    }
+}

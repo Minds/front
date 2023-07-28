@@ -1,5 +1,5 @@
 .m-discovery__feedItem {
-  &.m-discovery__feedItem--user {
+  &.m-discovery__feedItem--publisher {
     padding-bottom: 0;
     @include m-theme() {
       border-bottom: none;
@@ -8,29 +8,7 @@
     @media screen and (max-width: $layoutMin3ColWidth) {
       padding-bottom: 0;
     }
-  }
 
-  &.m-discovery__feedItem--group {
-    a {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      text-decoration: none;
-    }
-    h4 > u {
-      text-decoration: none;
-    }
-    .m-discoveryFeedItem__avatar {
-      flex-shrink: 0;
-      border-radius: 50%;
-      background-size: cover;
-      @include m-theme() {
-        background-color: themed($m-textColor--secondary);
-      }
-    }
-  }
-  &.m-discovery__feedItem--user,
-  &.m-discovery__feedItem--group {
     .m-discoveryFeedItem__body {
       flex: 1;
       h4 {

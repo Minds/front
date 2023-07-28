@@ -59,7 +59,6 @@ export class NotificationsV3NotificationComponent
      */
     switch (this.notification.type) {
       case 'vote_up':
-      case 'vote_down':
       case 'comment':
       case 'tag':
       //
@@ -97,6 +96,10 @@ export class NotificationsV3NotificationComponent
         // case 'supermind_expired':
 
         //
+        return;
+
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
         return;
       default:
         this.typeError = true;
@@ -140,6 +143,8 @@ export class NotificationsV3NotificationComponent
       case 'boost_completed':
       case 'boost_rejected':
       case 'supermind_expiring_soon':
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
         return false;
       default:
         return true;
@@ -150,8 +155,6 @@ export class NotificationsV3NotificationComponent
     switch (this.notification.type) {
       case 'vote_up':
         return 'voted up';
-      case 'vote_down':
-        return 'voted down';
       case 'comment':
         if (this.notification.data.is_reply) {
           return 'replied to';
@@ -228,6 +231,9 @@ export class NotificationsV3NotificationComponent
         return ' has declined';
       case 'supermind_expiring_soon':
         return "Don't forget to review";
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
+        return `You earned $${this.data.amount_usd} from Minds Affiliate Program`;
     }
   }
 
@@ -258,6 +264,8 @@ export class NotificationsV3NotificationComponent
       case 'boost_accepted':
       case 'boost_rejected':
       case 'supermind_expiring_soon':
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
         return '';
     }
 
@@ -280,6 +288,8 @@ export class NotificationsV3NotificationComponent
       case 'boost_completed':
       case 'boost_accepted':
       case 'boost_rejected':
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
         return '';
       case 'boost_peer_request':
       case 'boost_peer_accepted':
@@ -339,6 +349,9 @@ export class NotificationsV3NotificationComponent
         return [`/supermind/${this.notification.entity?.guid}`];
       case 'supermind_accepted':
         return ['/newsfeed', this.notification.entity?.reply_activity_guid];
+      case 'affiliate_earnings_deposited':
+      case 'referrer_affiliate_earnings_deposited':
+        return ['/wallet/cash/earnings'];
     }
 
     switch (this.notification.entity?.type) {
@@ -399,10 +412,6 @@ export class NotificationsV3NotificationComponent
     switch (this.notification.type) {
       case 'vote_up':
         return 'thumb_up';
-      case 'vote_down':
-        return 'thumb_down';
-      case 'vote_down':
-        return 'thumb_down';
       case 'comment':
         return 'chat_bubble';
       case 'tag':
@@ -457,6 +466,10 @@ export class NotificationsV3NotificationComponent
         return this.notification.entity.entity;
     }
     return this.notification.entity;
+  }
+
+  get data(): any | null {
+    return this.notification.data;
   }
 
   /**

@@ -29,6 +29,7 @@ export type ActivityDisplayOptions = {
   showOnlyCommentsToggle: boolean;
   showToolbar: boolean;
   showToolbarButtonsRow: boolean; // (Assuming showToolbar is true), set this to false if you only want to see boost CTA/supermind buttons
+  showExplicitVoteButtons: boolean; // Display thumb buttons on own row with "see more/less of this" text
   showInteractions: boolean;
   showEditedTag: boolean;
   showVisibilityState: boolean;
@@ -97,6 +98,7 @@ export type ActivityEntity = {
   boosted?: boolean; // may be exported if activity is a boost
   goal_button_text: BoostGoalButtonText; // may be exported if activity is a boost
   goal_button_url: string; // may be exported if activity is a boost
+  auto_caption?: string; // AI generated captions for images
 };
 
 // Constants of blocks
@@ -416,6 +418,7 @@ export class ActivityService implements OnDestroy {
     showOnlyCommentsToggle: false,
     showToolbar: true,
     showToolbarButtonsRow: true,
+    showExplicitVoteButtons: false,
     showInteractions: false,
     showEditedTag: false,
     showVisibilityState: false,
@@ -614,5 +617,20 @@ export class ActivityService implements OnDestroy {
     } else {
       return this.entity$.getValue().guid;
     }
+  }
+
+  /**
+   * Removes user's downvote when it was removed from
+   * some place other than the downvote button
+   * (e.g. from the downvote notice)
+   */
+  public undoDownvote(): void {
+    let entity = this.entity$.getValue();
+
+    entity['thumbs:down:user_guids'] = entity['thumbs:down:user_guids'].filter(
+      guid => guid !== this.session.getLoggedInUser().guid
+    );
+
+    this.entity$.next(entity);
   }
 }

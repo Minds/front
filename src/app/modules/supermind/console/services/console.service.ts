@@ -41,6 +41,11 @@ export class SupermindConsoleService {
     return this.listType$.pipe(
       take(1),
       switchMap((listType: any) => {
+        if (listType === 'explore') {
+          console.error('Cannot get explore list type in this way.');
+          return of(null);
+        }
+
         let endpoint = `api/v3/supermind/${listType}`;
 
         let params: SupermindConsoleGetParams = {};
@@ -75,6 +80,11 @@ export class SupermindConsoleService {
       take(1),
       // switch stream to be the api request and call it with correct list type and status.
       switchMap((listType: any) => {
+        if (listType === 'explore') {
+          console.error('Cannot count explore list type.');
+          return of(null);
+        }
+
         let endpoint: string = `api/v3/supermind/${listType}/count`;
         let params: SupermindConsoleCountParams = {};
 
@@ -97,6 +107,44 @@ export class SupermindConsoleService {
       catchError(e => {
         console.error(e);
         return of(null);
+      })
+    );
+  }
+
+  /**
+   * Get a count of all Supermind requests for a given status type by list type.
+   * @param { SupermindConsoleListType } listType - list type to check for.
+   * @param { SupermindState } status - status to check (null will count ALL statuses).
+   * @returns { Observable<number> } observable of count.
+   */
+  public countByListType$(
+    listType: SupermindConsoleListType,
+    status: SupermindState = null
+  ): Observable<number> {
+    if (listType === 'explore') {
+      console.error('Cannot count explore list type.');
+      return of(null);
+    }
+
+    let endpoint: string = `api/v3/supermind/${listType}/count`;
+    let params: SupermindConsoleCountParams = {};
+
+    // If it's a single entity page, do not call endpoint, return 1.
+    if (this.isNumericListType(listType)) {
+      return of(1);
+    }
+
+    if (status) {
+      params.status = status;
+    }
+
+    return this.api.get(endpoint, params).pipe(
+      map((response: ApiResponse) => {
+        return response['count'] ?? 0;
+      }),
+      catchError((e: unknown) => {
+        console.error(e);
+        return of(0);
       })
     );
   }

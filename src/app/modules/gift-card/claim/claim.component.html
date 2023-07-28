@@ -1,0 +1,15 @@
+<div class="m-pageLayout__pane--main">
+  <ng-container [ngSwitch]="activePanel$ | async">
+    <m-giftCardClaimPanel__redeem
+      *ngSwitchCase="GiftCardClaimPanelEnum.Redeem"
+    ></m-giftCardClaimPanel__redeem>
+    <m-giftCardClaimPanel__success
+      *ngSwitchCase="GiftCardClaimPanelEnum.Success"
+    ></m-giftCardClaimPanel__success>
+    <m-giftCardClaimPanel__loggedOut
+      *ngSwitchCase="GiftCardClaimPanelEnum.LoggedOut"
+    ></m-giftCardClaimPanel__loggedOut>
+  </ng-container>
+</div>
+
+<div class="m-pageLayout__pane--right"><!-- Spacer --></div>

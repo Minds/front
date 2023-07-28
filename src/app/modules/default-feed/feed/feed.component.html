@@ -18,6 +18,7 @@
       }"
     ></m-featured-content>
     <m-activity
+      *ngIf="shouldShowActivity(activity$ | async)"
       [entity]="activity$ | async"
       [displayOptions]="{
         showComments: true,
