@@ -57,5 +57,17 @@
         }
       }
     }
+
+    .m-onboardingV5VerifyEmail__changeEmailActionText {
+      cursor: pointer;
+      white-space: nowrap;
+      padding-top: $spacing2;
+
+      @include body1Medium;
+      @include unselectable;
+      @include m-theme() {
+        color: themed($m-action);
+      }
+    }
   }
 }

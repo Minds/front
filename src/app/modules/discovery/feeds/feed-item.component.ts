@@ -10,6 +10,8 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 export class DiscoveryFeedItemComponent {
   @Input() entity; // TODO add type
 
+  @Input() slot: number = 0;
+
   @Input() openComments: boolean = false;
   readonly cdnUrl: string;
 

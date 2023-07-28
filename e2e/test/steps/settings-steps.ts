@@ -87,7 +87,6 @@ namespace SettingsSteps {
     I.seeElement(locate('a').withText('Reported Content'));
     I.seeElement(locate('a').withText('Blocked Channels'));
     I.seeElement(locate('a').withText('Subscription Tier Management'));
-    I.seeElement(locate('a').withText('Twitter'));
     I.seeElement(locate('a').withText('Youtube'));
     I.seeElement(locate('a').withText('Deactivate Account'));
     I.seeElement(locate('a').withText('Delete Account'));

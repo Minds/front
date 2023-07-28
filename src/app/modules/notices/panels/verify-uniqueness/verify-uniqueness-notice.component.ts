@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ConnectWalletModalService } from '../../../blockchain/connect-wallet/connect-wallet-modal.service';
@@ -14,9 +19,10 @@ import { VerifyUniquenessModalLazyService } from '../../../verify-uniqueness/mod
 })
 export class VerifyUniquenessNoticeComponent extends AbstractSubscriberComponent
   implements OnInit {
+  @Input() public dismissible: boolean = true;
+
   constructor(
     private feedNotice: FeedNoticeService,
-
     private verifyUniquenessModal: VerifyUniquenessModalLazyService,
     private connectWalletModal: ConnectWalletModalService,
     private phoneVerification: PhoneVerificationService,

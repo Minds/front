@@ -13,10 +13,14 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { UploaderService } from '../../services/uploader.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { ComposerSupermindComponent } from '../popup/supermind/supermind.component';
+import { LivestreamService } from '../../../../modules/composer/services/livestream.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
   let fixture: ComponentFixture<ToolbarComponent>;
+  let service: LivestreamService;
 
   const attachment$ = jasmine.createSpyObj('attachment$', {
     next: () => {},
@@ -94,6 +98,8 @@ describe('Composer Toolbar', () => {
       );
 
       TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule],
+
         declarations: [
           ToolbarComponent,
           ButtonComponent,
@@ -131,8 +137,17 @@ describe('Composer Toolbar', () => {
             provide: UploaderService,
             useValue: uploaderServiceMock,
           },
+          {
+            provide: LivestreamService,
+            useValue: MockService(LivestreamService),
+          },
+          {
+            provide: ExperimentsService,
+            useValue: MockService(ExperimentsService),
+          },
         ],
       }).compileComponents();
+      service = TestBed.inject(LivestreamService);
     })
   );
 
@@ -191,6 +206,10 @@ describe('Composer Toolbar', () => {
     comp.onNsfwClick();
     expect(popupServiceMock.create).toHaveBeenCalledWith(NsfwComponent);
     expect(popupServiceMock.present).toHaveBeenCalled();
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
   });
 
   it('should emit on monetize popup', () => {

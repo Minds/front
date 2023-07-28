@@ -1,4 +1,9 @@
-<m-feedNotice icon="info" [dismissible]="false" dataRefId="supermind-pending">
+<m-feedNotice
+  icon="info"
+  [dismissible]="dismissible"
+  (dismissClick)="dismiss()"
+  dataRefId="supermind-pending"
+>
   <span
     class="m-feedNotice__title"
     i18n="@@FEED_NOTICE__SUPERMIND_PENDING__YOU_HAVE_SUPERMIND_OFFERS"

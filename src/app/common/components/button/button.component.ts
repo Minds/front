@@ -57,6 +57,11 @@ export class ButtonComponent implements AfterViewChecked {
    * whether the button should have a solid background color or not
    */
   @Input() solid: boolean = false;
+  /**
+   * !Only works for standard 'grey' buttons at the moment
+   * make the button text colorful when true
+   */
+  @Input() highlightText: boolean = false;
 
   /**
    * Handles width for buttons that are not visible onInit

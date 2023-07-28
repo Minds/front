@@ -50,6 +50,7 @@
             <m-feedNotice__switch
               [key]="edge.node.key"
               [location]="edge.node.location"
+              [dismissible]="edge.node.dismissible"
             ></m-feedNotice__switch>
           </ng-template>
 
@@ -78,7 +79,8 @@
               [entity]="edge.node.legacy"
               [displayOptions]="{
                 showOnlyCommentsInput: true,
-                isFeed: true
+                isFeed: true,
+                showExplicitVoteButtons: edge.explicitVotes
               }"
               [slot]="i + 1"
               (deleted)="delete(edge.node)"

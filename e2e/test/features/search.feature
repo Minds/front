@@ -12,3 +12,13 @@ Feature: search
       | c                |
       | #art             |
     Then I see search results
+
+  Scenario: suggested groups with top search
+    Given I am logged in
+    And I am on the search page
+    When I type the search term
+      | searchTerm       | 
+      | minds            | 
+      | c                |
+      | group             |
+    Then I see suggested group results

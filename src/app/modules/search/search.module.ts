@@ -5,21 +5,33 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
-import { SearchBarComponent } from './bar.component';
+import { SearchComponent } from './search.component';
+import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
+import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { PathMatch } from '../../common/types/angular.types';
+import { SearchSharedModule } from './search-shared.module';
 
-const searchRoutes: Routes = [{ path: 'search', redirectTo: 'discovery' }];
+const searchRoutes: Routes = [
+  {
+    path: 'search',
+    component: SearchComponent,
+    pathMatch: 'full' as PathMatch,
+  },
+];
 
 @NgModule({
   imports: [
     NgCommonModule,
+    RouterModule.forChild(searchRoutes),
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(searchRoutes),
     CommonModule,
+    DiscoverySharedModule,
+    SuggestionsModule,
+    SearchSharedModule,
   ],
-  declarations: [SearchBarSuggestionsComponent, SearchBarComponent],
+  declarations: [SearchComponent],
   providers: [],
-  exports: [SearchBarSuggestionsComponent, SearchBarComponent],
+  exports: [],
 })
 export class SearchModule {}

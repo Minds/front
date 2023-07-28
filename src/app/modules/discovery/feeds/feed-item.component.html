@@ -19,6 +19,7 @@
           showOnlyCommentsInput: !openComments,
           isFeed: true
         }"
+        [slot]="slot"
         (deleted)="onDelete($event)"
       ></m-activity>
     </ng-template>
