@@ -71,9 +71,10 @@
         [routerLink]="['/', username]"
         class="m-activityOwnerBlock__secondaryName m-activityOwnerBlock__truncate m-activityOwnerBlock__ellipsis"
       >
-        <span [title]="secondaryName | titlecase">{{
-          secondaryName | titlecase
-        }}</span>
+        <span [title]="secondaryName | titlecase">
+          <ng-container *ngIf="!showGroupContext">@</ng-container
+          >{{ showGroupContext ? (secondaryName | titlecase) : secondaryName }}
+        </span>
       </a>
       <!-- Channel badges -->
       <ng-container [ngTemplateOutlet]="channelBadges"></ng-container>
