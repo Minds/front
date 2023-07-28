@@ -185,7 +185,9 @@ export class MindsRichEmbed {
       }
     }
 
-    this.getLiveStreamInfo();
+    if (this.mediaSource === 'livepeer') {
+      this.getLiveStreamInfo();
+    }
   }
 
   /**
