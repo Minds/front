@@ -212,6 +212,7 @@ export type GiftCardTransaction = NodeInterface & {
   giftCardGuid?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   paymentGuid?: Maybe<Scalars['String']['output']>;
+  refundedAt?: Maybe<Scalars['Int']['output']>;
 };
 
 export type GiftCardTransactionEdge = EdgeInterface & {
@@ -335,6 +336,13 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+export type PaymentMethod = {
+  __typename?: 'PaymentMethod';
+  balance?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
@@ -379,6 +387,8 @@ export type Query = {
   onboardingState?: Maybe<OnboardingState>;
   /** Get the currently logged in users onboarding step progress. */
   onboardingStepProgress: Array<OnboardingStepProgressState>;
+  /** Get a list of payment methods for the logged in user */
+  paymentMethods: Array<PaymentMethod>;
   search: SearchResultsConnection;
 };
 
@@ -422,6 +432,10 @@ export type QueryNewsfeedArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   inFeedNoticesDelivered?: InputMaybe<Array<Scalars['String']['input']>>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryPaymentMethodsArgs = {
+  productId?: InputMaybe<GiftCardProductIdEnum>;
 };
 
 export type QuerySearchArgs = {
@@ -1001,6 +1015,20 @@ export type SetOnboardingStateMutation = {
     startedAt: number;
     completedAt?: number | null;
   };
+};
+
+export type FetchPaymentMethodsQueryVariables = Exact<{
+  giftCardProductId?: InputMaybe<GiftCardProductIdEnum>;
+}>;
+
+export type FetchPaymentMethodsQuery = {
+  __typename?: 'Query';
+  paymentMethods: Array<{
+    __typename?: 'PaymentMethod';
+    id: string;
+    name: string;
+    balance?: number | null;
+  }>;
 };
 
 export type FetchSearchQueryVariables = Exact<{
@@ -1661,6 +1689,29 @@ export class SetOnboardingStateGQL extends Apollo.Mutation<
   SetOnboardingStateMutationVariables
 > {
   document = SetOnboardingStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FetchPaymentMethodsDocument = gql`
+  query FetchPaymentMethods($giftCardProductId: GiftCardProductIdEnum) {
+    paymentMethods(productId: $giftCardProductId) {
+      id
+      name
+      balance
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchPaymentMethodsGQL extends Apollo.Query<
+  FetchPaymentMethodsQuery,
+  FetchPaymentMethodsQueryVariables
+> {
+  document = FetchPaymentMethodsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
