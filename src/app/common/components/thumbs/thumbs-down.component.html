@@ -1,0 +1,32 @@
+<a
+  *ngIf="!explicit"
+  (click)="thumb()"
+  [ngClass]="{ selected: userHasDownvoted() }"
+  data-ref="data-minds-thumbs-down-button"
+>
+  <i
+    class="material-icons"
+    [class.inProgress]="session.getLoggedInUser() && inProgress"
+    >thumb_down</i
+  >
+</a>
+<!-- --------------------------------------------- -->
+<!-- EXPLICIT  -->
+<!-- --------------------------------------------- -->
+<m-button
+  *ngIf="explicit"
+  class="m-thumbButton--explicit"
+  (onAction)="thumb()"
+  [highlightText]="userHasDownvoted()"
+  size="xsmall"
+  data-ref="data-minds-explicit-thumbs-down-button"
+>
+  <i
+    class="material-icons"
+    [class.inProgress]="session.getLoggedInUser() && inProgress"
+    >thumb_down</i
+  >
+  <span i18n="@@THUMBS_DOWN_BUTTON__EXPLICIT__SEE_LESS_OF_THIS"
+    >See less of this</span
+  >
+</m-button>

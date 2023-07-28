@@ -171,6 +171,39 @@
   }
 
   // *********************************
+  // ** EXPLICIT VOTES ROW ENABLED **
+  // *********************************
+  .m-activityToolbar__explicitVotesRow {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10%;
+
+    padding-left: $activitySpacingLeft--feed;
+    padding-right: $activitySpacingRight--feed;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $activitySpacingLeft--feed--mobile;
+      padding-right: $activitySpacingRight--feed--mobile;
+    }
+
+    ::ng-deep > * {
+      flex-grow: 1;
+      margin-top: $spacing3;
+      margin-bottom: $spacing5;
+
+      &:last-child {
+        margin-bottom: $spacing8;
+      }
+    }
+    ::ng-deep m-button {
+      .m-button {
+        width: 100%;
+      }
+    }
+  }
+
+  // *********************************
   // *********************************
   // *********************************
   // ** DEFAULT **
@@ -195,6 +228,22 @@
 
   // ACTIONS
   .m-activityToolbar__actions {
+    &.m-activityToolbar__actions--centered {
+      // The icon buttons are centered when
+      // explicit votes row is enabled
+      ::ng-deep > * {
+        justify-content: center;
+
+        &:first-child {
+          justify-content: flex-start;
+          margin-left: $spacing8;
+        }
+        &:last-child {
+          justify-content: flex-end;
+          margin-right: $spacing8 !important;
+        }
+      }
+    }
     ::ng-deep > * {
       flex-grow: 1;
       display: flex;
