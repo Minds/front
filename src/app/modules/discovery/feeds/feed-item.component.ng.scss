@@ -7,26 +7,5 @@
     @include m-theme() {
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
-
-    &.m-discovery__feedItem--group {
-      padding-top: $spacing4;
-      padding-bottom: $spacing6;
-      padding-left: $activityAvatarSpacingLeft--feed;
-      padding-right: $activitySpacingRight--feed;
-
-      @media screen and (max-width: $max-mobile) {
-        padding-left: $activityAvatarSpacingLeft--feed--mobile;
-        padding-right: $activitySpacingRight--feed--mobile;
-      }
-
-      .m-discoveryFeedItem__avatar {
-        width: $activityAvatarWidth;
-        height: $activityAvatarWidth;
-        margin-right: $activityAvatarSpacingRight--feed;
-        @media screen and (max-width: $max-mobile) {
-          margin-right: $activityAvatarSpacingRight--feed--mobile;
-        }
-      }
-    }
   }
 }

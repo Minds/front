@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ToasterService } from '../../../../common/services/toaster.service';
@@ -13,6 +13,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   templateUrl: 'enable-push-notifications-notice.component.html',
 })
 export class EnablePushNotificationsNoticeComponent extends AbstractSubscriberComponent {
+  @Input() public dismissible: boolean = true;
+
   constructor(
     private router: Router,
     private toast: ToasterService,

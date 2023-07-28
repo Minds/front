@@ -1,0 +1,127 @@
+<div class="m-pageLayout__container" m-pageLayout__container>
+  <div
+    class="m-pageLayout__pane--main"
+    m-pageLayout__pane="main"
+    style="position: relative;"
+  >
+    <ng-container
+      [m-clientMeta]="{ source: 'feed/discovery/search', medium: 'feed' }"
+    >
+      <div class="m-tabs__container">
+        <div class="m-tabs__tab">
+          <a
+            routerLink="./"
+            routerLinkActive="m-tabs__tab--selected"
+            [queryParams]="{ q: query, f: 'top', t: mediaType }"
+            i18n="@@DISCOVERY_SEARCH__TOP"
+            >Top</a
+          >
+        </div>
+        <div class="m-tabs__tab">
+          <a
+            routerLink="./"
+            routerLinkActive="m-tabs__tab--selected"
+            [queryParams]="{ q: query, f: 'latest', t: mediaType }"
+            i18n="@@DISCOVERY_SEARCH__LATEST"
+            >Latest</a
+          >
+        </div>
+        <div class="m-tabs__tab">
+          <a
+            routerLink="./"
+            routerLinkActive="m-tabs__tab--selected"
+            [queryParams]="{ q: query, f: 'channels', t: mediaType }"
+            i18n="@@DISCOVERY__SEARCH__CHANNELS"
+            >Channels</a
+          >
+        </div>
+        <div class="m-tabs__tab">
+          <a
+            routerLink="./"
+            routerLinkActive="m-tabs__tab--selected"
+            [queryParams]="{ q: query, f: 'groups', t: mediaType }"
+            i18n="@@DISCOVERY_SEARCH__GROUPS"
+            >Groups</a
+          >
+        </div>
+        <div class="m-layout__spacer"></div>
+        <m-discovery__settingsButton
+          modalType="feed"
+        ></m-discovery__settingsButton>
+      </div>
+
+      <ng-container *mIfBrowser>
+        <ng-container *ngIf="filter === 'latest'">
+          <m-seeLatestPostsButton
+            [count]="newResultsCount"
+            (poll)="fetchNewResultsCount()"
+            (click)="refreshResults()"
+          ></m-seeLatestPostsButton>
+        </ng-container>
+      </ng-container>
+
+      <m-discovery__tagWidget></m-discovery__tagWidget>
+
+      <div class="m-discoveryFeeds__feed">
+        <ng-container
+          *ngFor="let edge of edges$ | async; let i = index; trackBy: trackByFn"
+        >
+          <!-- ---------------------- -->
+          <!-- SEARCH RESULTS -->
+          <!-- ---------------------- -->
+          <ng-container
+            *ngIf="
+              ['ActivityEdge', 'UserEdge', 'GroupEdge'].includes(
+                edge.__typename
+              )
+            "
+          >
+            <m-discovery__feedItem
+              *ngIf="edge.node"
+              [entity]="edge.node.legacy"
+            ></m-discovery__feedItem>
+          </ng-container>
+
+          <ng-container [ngSwitch]="edge.__typename">
+            <!----------------
+              Boosts
+            ----------------->
+            <ng-template ngSwitchCase="BoostEdge">
+              <m-discovery__feedItem
+                *ngIf="edge.node"
+                [entity]="edge.node.legacy"
+                [slot]="i + 1"
+              ></m-discovery__feedItem>
+            </ng-template>
+            <!----------------
+              PublisherRecsEdge
+            ----------------->
+            <ng-template ngSwitchCase="PublisherRecsEdge">
+              <m-publisherRecommendations
+                title="Groups"
+                location="search"
+                [dismissible]="false"
+                [connection]="edge.node"
+              ></m-publisherRecommendations>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+        <infinite-scroll
+          (load)="fetchMore()"
+          [moreData]="canShowMoreEdges$ | async"
+          [inProgress]="inProgress"
+        >
+        </infinite-scroll>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="m-discovery__sidebar" m-pageLayout__pane="right">
+    <div class="m-pageLayoutPane__inner">
+      <div class="m-pageLayoutPane__sticky" m-stickySidebar>
+        <!-- SIDEBAR ------------------------------------->
+        <m-discovery__sidebarTags></m-discovery__sidebarTags>
+      </div>
+    </div>
+  </div>
+</div>

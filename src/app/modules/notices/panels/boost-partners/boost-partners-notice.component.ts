@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 
@@ -11,6 +11,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   templateUrl: 'boost-partners-notice.component.html',
 })
 export class BoostPartnersNoticeComponent {
+  @Input() public dismissible: boolean = true;
+
   constructor(private feedNotice: FeedNoticeService, private router: Router) {}
 
   /**

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
@@ -9,4 +9,16 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   templateUrl: './no-groups-notice.component.html',
   styleUrls: ['./no-groups-notice.component.ng.scss'],
 })
-export class NoGroupsNoticeComponent {}
+export class NoGroupsNoticeComponent {
+  @Input() public dismissible: boolean = false;
+
+  constructor(private feedNotice: FeedNoticeService) {}
+
+  /**
+   * Dismiss notice.
+   * @return { void }
+   */
+  public dismiss(): void {
+    this.feedNotice.dismiss('no-groups');
+  }
+}

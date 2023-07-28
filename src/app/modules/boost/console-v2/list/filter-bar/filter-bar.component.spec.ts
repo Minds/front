@@ -19,6 +19,10 @@ describe('BoostConsoleFilterBarComponent', () => {
             selector: 'm-dropdownMenu',
             inputs: ['menu'],
           }),
+          MockComponent({
+            selector: 'm-feedNotice--boostLatestPost',
+            inputs: ['isInFeed', 'dismissible', 'targetBoostLocation'],
+          }),
         ],
         providers: [
           {

@@ -169,12 +169,3 @@
     </ng-container>
   </ng-container>
 </div>
-
-<ng-container *ngIf="algorithm === 'latest'">
-  <ng-container *mIfBrowser>
-    <m-seeLatestPostsButton
-      [feedService]="feedService"
-      (click)="scrollToUnderBoostRotator()"
-    ></m-seeLatestPostsButton>
-  </ng-container>
-</ng-container>

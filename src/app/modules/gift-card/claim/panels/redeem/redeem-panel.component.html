@@ -1,0 +1,37 @@
+<ng-container *ngIf="giftCardLoaded$ | async; else loadingInProgressTemplate">
+  <h2
+    class="m-giftCardRedeem__title"
+    i18n="@@GIFT_CARD_PANEL_REDEEM_PANEL__CLAIM_YOUR_GIFT"
+  >
+    Claim your gift
+  </h2>
+  <p class="m-giftCardRedeem__description">{{ description$ | async }}</p>
+  <m-giftCard [giftCardNode]="giftCardNode$ | async"></m-giftCard>
+  <ng-container
+    *ngIf="!(isAlreadyClaimed$ | async); else alreadyClaimedButtonTemplate"
+  >
+    <m-button
+      class="m-giftCardRedeem__actionButton"
+      [color]="'blue'"
+      [saving]="giftCardClaimInProgress$ | async"
+      [disabled]="giftCardClaimInProgress$ | async"
+      (onAction)="onRedeemClick()"
+      i18n="@@GIFT_CARD_PANEL_REDEEM_PANEL__APPLY_TO_YOUR_ACCOUNT"
+      >Apply to your account</m-button
+    >
+  </ng-container>
+  <ng-template #alreadyClaimedButtonTemplate>
+    <m-button
+      class="m-giftCardRedeem__actionButton"
+      [color]="'blue'"
+      [disabled]="true"
+      ><ng-container i18n="@@GIFT_CARD_PANEL_REDEEM_PANEL__GIFT_ALREADY_CLAIMED"
+        >Gift already claimed</ng-container
+      ></m-button
+    >
+  </ng-template>
+</ng-container>
+
+<ng-template #loadingInProgressTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

@@ -61,6 +61,10 @@ Feature: Composer
     Then I should see 1 previews of my selected imaged
     When I click the post button
     Then I am able to create the post
-    
 
-
+Scenario: audience selector should display expanded with groups by default
+    Given I am logged in
+    And I am on the newsfeed
+    And I have clicked on the sidebar composer button
+    When I click the composer Audience selector 
+    Then I see that the composer audience selector is expanded with entities

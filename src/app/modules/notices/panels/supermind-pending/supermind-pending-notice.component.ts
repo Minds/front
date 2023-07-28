@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { FeedNoticeService } from '../../services/feed-notice.service';
 
 @Component({
   selector: 'm-feedNotice--supermindPending',
   templateUrl: 'supermind-pending-notice.component.html',
 })
 export class SupermindPendingNoticeComponent {
-  constructor(private router: Router) {}
+  @Input() public dismissible: boolean = false;
+
+  constructor(private router: Router, private feedNotice: FeedNoticeService) {}
 
   /**
    * Called on primary option click.
@@ -15,5 +18,13 @@ export class SupermindPendingNoticeComponent {
    */
   public async onPrimaryOptionClick($event: MouseEvent): Promise<void> {
     this.router.navigate(['/supermind/inbox']);
+  }
+
+  /**
+   * Dismiss notice.
+   * @return { void }
+   */
+  public dismiss(): void {
+    this.feedNotice.dismiss('supermind-pending');
   }
 }

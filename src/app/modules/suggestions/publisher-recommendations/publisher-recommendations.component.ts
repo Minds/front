@@ -45,7 +45,8 @@ export type PublisherRecommendationsLocation =
   | 'newsfeed'
   | 'discovery-feed'
   | 'channel'
-  | 'groups-memberships';
+  | 'groups-memberships'
+  | 'search';
 
 /**
  * Displays channel/group recommendations
