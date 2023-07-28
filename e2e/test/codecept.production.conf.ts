@@ -122,6 +122,7 @@ export const config: CustomMainConfig = {
     supermindConsolePage: './pages/supermindConsolePage.ts',
     supermindSettingsPage: './pages/supermindSettingsPage.ts',
     walletPage: './pages/walletPage.ts',
+    walletCreditsPage: './pages/walletCreditsPage.ts',
     tokenMarketingPage: './pages/tokenMarketingPage.ts',
     // fragments
     composerModalComponent: './fragments/composerModalComponent.ts',
