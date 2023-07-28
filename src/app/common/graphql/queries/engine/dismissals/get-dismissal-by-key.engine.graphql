@@ -1,0 +1,7 @@
+query GetDismissalByKey($key: String!) {
+  dismissalByKey(key: $key) {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}
