@@ -31,6 +31,14 @@ describe('GroupSeoService', () => {
 
     service.set(group);
 
+    expect((service as any).meta.setTitle).toHaveBeenCalledWith(
+      'Mocked Test Group'
+    );
+
+    expect((service as any).meta.setDescription).toHaveBeenCalledWith(
+      'group description'
+    );
+
     expect((service as any).meta.setOgImage).toHaveBeenCalledWith(
       `${cdnUrl}fs/v1/avatars/${group.guid}/large/${group.icontime}`,
       {
