@@ -434,6 +434,12 @@ export type ComponentOnboardingV5UserSelectorStep = {
 
 export type ComponentOnboardingV5VerifyEmailStep = {
   __typename?: 'ComponentOnboardingV5VerifyEmailStep';
+  changeEmailActionButton: ComponentOnboardingV5ActionButton;
+  changeEmailActionText: Scalars['String']['output'];
+  changeEmailDescription: Scalars['String']['output'];
+  changeEmailInputLabel: Scalars['String']['output'];
+  changeEmailInputPlaceholder?: Maybe<Scalars['String']['output']>;
+  changeEmailTitle: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   inputLabel: Scalars['String']['output'];
   inputPlaceholder?: Maybe<Scalars['String']['output']>;
@@ -1815,6 +1821,17 @@ export type FetchOnboardingV5VersionsQuery = {
                 inputPlaceholder?: string | null;
                 resendCodeText: string;
                 resendCodeActionText: string;
+                changeEmailActionText: string;
+                changeEmailTitle: string;
+                changeEmailDescription: string;
+                changeEmailInputLabel: string;
+                changeEmailInputPlaceholder?: string | null;
+                changeEmailActionButton: {
+                  __typename: 'ComponentOnboardingV5ActionButton';
+                  id: string;
+                  text: string;
+                  dataRef?: string | null;
+                };
               } | null;
               tagSelector?: {
                 __typename: 'ComponentOnboardingV5TagSelectorStep';
@@ -1946,6 +1963,17 @@ export const FetchOnboardingV5VersionsDocument = gql`
                 inputPlaceholder
                 resendCodeText
                 resendCodeActionText
+                changeEmailActionText
+                changeEmailTitle
+                changeEmailDescription
+                changeEmailInputLabel
+                changeEmailInputPlaceholder
+                changeEmailActionButton {
+                  id
+                  __typename
+                  text
+                  dataRef
+                }
               }
               tagSelector {
                 id
