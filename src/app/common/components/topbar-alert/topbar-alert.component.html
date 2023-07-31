@@ -4,9 +4,13 @@
     markdown
     [data]="message$ | async"
     [inline]="true"
+    (click)="onMarkdownTextClick($event)"
   ></span>
 
-  <i class="material-icons m-topbarAlert__dismissIcon" (click)="dismiss()"
+  <i
+    class="material-icons m-topbarAlert__dismissIcon"
+    (click)="dismiss()"
+    [attr.data-ref]="'topbar-alert-' + (identifier$ | async) + '-dismiss'"
     >close</i
   >
 </ng-container>
