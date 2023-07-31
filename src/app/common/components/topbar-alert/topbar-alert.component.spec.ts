@@ -11,6 +11,7 @@ import { TopbarAlertComponent } from './topbar-alert.component';
 import { TopbarAlertService } from './topbar-alert.service';
 import { MockService } from '../../../utils/mock';
 import { MarkdownModule } from 'ngx-markdown';
+import { AnalyticsService } from '../../../services/analytics';
 
 describe('TopbarAlertComponent', () => {
   let comp: TopbarAlertComponent;
@@ -35,6 +36,10 @@ describe('TopbarAlertComponent', () => {
                 },
               },
             }),
+          },
+          {
+            provide: AnalyticsService,
+            useValue: MockService(AnalyticsService),
           },
         ],
       }).compileComponents();
@@ -79,5 +84,41 @@ describe('TopbarAlertComponent', () => {
       By.css('.m-topbarAlert__message')
     ).nativeElement;
     expect(messageEl.innerHTML).toContain(message);
+  });
+
+  describe('onMarkdownTextClick', () => {
+    it('should call to record click on markdown text click for an anchor tag', fakeAsync(() => {
+      (comp as any).service.copyData$.next({
+        attributes: { message: 'hello', identifier: 'test-notice' },
+      });
+
+      const mockEvent: MouseEvent = {
+        type: 'click',
+        target: {
+          tagName: 'A',
+        },
+      } as any;
+
+      comp.onMarkdownTextClick(mockEvent);
+      tick();
+
+      expect((comp as any).analyticsService.trackClick).toHaveBeenCalledWith(
+        'topbar-alert-test-notice-link'
+      );
+    }));
+
+    it('should NOT call to record click on markdown text click for a NON anchor tag', fakeAsync(() => {
+      const mockEvent: MouseEvent = {
+        type: 'click',
+        target: {
+          tagName: 'span',
+        },
+      } as any;
+
+      comp.onMarkdownTextClick(mockEvent);
+      tick();
+
+      expect((comp as any).analyticsService.trackClick).not.toHaveBeenCalled();
+    }));
   });
 });
