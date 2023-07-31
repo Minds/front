@@ -16,7 +16,6 @@ import { NoticesModule } from '../notices/notices.module';
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator/boost-rotator.component';
-import { NewsfeedSubscribedComponent } from './feeds/subscribed.component';
 import { NewsfeedService } from './services/newsfeed.service';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
@@ -42,7 +41,6 @@ import { VirtualScrollerModule } from './feed/virtual-scroller';
 import { PathMatch } from '../../common/types/angular.types';
 import { NewsfeedTabsComponent } from './feeds/tabs/tabs.component';
 import { NewsfeedGqlComponent } from './feeds/newsfeed-gql.component';
-import { NewsfeedExperimentComponent } from './feeds/newsfeed-experiment.component';
 
 const routes: Routes = [
   {
@@ -65,13 +63,13 @@ const routes: Routes = [
       },
       {
         path: 'subscriptions',
-        component: NewsfeedExperimentComponent,
+        component: NewsfeedGqlComponent,
         pathMatch: 'full' as PathMatch,
         canActivate: [FeedAlgorithmRedirectGuard],
       },
       {
         path: 'subscriptions/:algorithm',
-        component: NewsfeedExperimentComponent,
+        component: NewsfeedGqlComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
           title: 'Newsfeed',
@@ -115,7 +113,6 @@ const routes: Routes = [
     NewsfeedComponent,
     NewsfeedSingleComponent,
     NewsfeedBoostRotatorComponent,
-    NewsfeedSubscribedComponent,
     NewsfeedEntityComponent,
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
@@ -125,7 +122,6 @@ const routes: Routes = [
     FeedComponent,
     NewsfeedTabsComponent,
     NewsfeedGqlComponent,
-    NewsfeedExperimentComponent,
   ],
   providers: [
     NewsfeedService,
