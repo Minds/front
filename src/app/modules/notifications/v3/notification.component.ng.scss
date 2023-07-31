@@ -85,6 +85,12 @@
     margin-left: 20px;
   }
 
+  .m-notificationsNotification__actionButton {
+    display: flex;
+    flex-flow: column-reverse;
+    padding: $spacing4 0 0 0;
+  }
+
   .m-notificationsNotification__readIndicator {
     width: 10px;
     height: 10px;
