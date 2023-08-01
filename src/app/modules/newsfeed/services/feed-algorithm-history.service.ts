@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '../../../services/storage';
-import { FeedAlgorithm } from '../feeds/subscribed.component';
+import { FeedAlgorithm } from '../../../common/services/feeds.service';
 
 const FEED_ALGORITHM_STORAGE_KEY = 'feed:algorithm';
 
