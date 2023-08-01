@@ -10,7 +10,6 @@ import { AnalyticsFiltersComponent } from './v2/components/filters/filters.compo
 import { AnalyticsChartComponent } from './v2/components/chart/chart.component';
 import { AnalyticsTableComponent } from './v2/components/table/table.component';
 import { AnalyticsDashboardService } from './v2/dashboard.service';
-import { SearchModule } from '../search/search.module';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsBenchmarkComponent } from './v2/components/benchmark/benchmark.component';
 import { ChartV2Module } from './components/chart-v2/chart-v2.module';
@@ -56,7 +55,6 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ChartV2Module,
-    SearchModule,
     FormsModule,
     WalletSharedModule,
   ],

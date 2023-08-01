@@ -2,8 +2,9 @@
   *ngIf="!isInAppVerificationExperimentActive; else in_app_verify_uniqueness"
 >
   <m-feedNotice
-    (dismissClick)="dismiss()"
     icon="info"
+    [dismissible]="dismissible"
+    (dismissClick)="dismiss()"
     dataRefId="legacy-verify-uniqueness"
   >
     <span
@@ -32,8 +33,9 @@
 
 <ng-template #in_app_verify_uniqueness>
   <m-feedNotice
-    (dismissClick)="dismiss()"
     icon="info"
+    [dismissible]="dismissible"
+    (dismissClick)="dismiss()"
     dataRefId="in-app-verify-uniqueness"
   >
     <span

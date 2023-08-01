@@ -12,6 +12,9 @@ query FetchNewsfeed(
   ) {
     edges {
       cursor
+      ... on ActivityEdge {
+        explicitVotes
+      }
       node {
         id
         ... on ActivityNode {
@@ -25,6 +28,7 @@ query FetchNewsfeed(
         ... on FeedNoticeNode {
           location
           key
+          dismissible
         }
         ... on FeedHighlightsConnection {
           edges {

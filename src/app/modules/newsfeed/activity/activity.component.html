@@ -1,5 +1,10 @@
 <div class="m-activity__wrapper" *ngIf="canShow">
-  <ng-container m-clientMeta>
+  <m-activity__downvoteNotice
+    *ngIf="showDownvoteNotice"
+    [entity]="entity$ | async"
+    (onUndo)="onUndoExplicitDownvote($event)"
+  ></m-activity__downvoteNotice>
+  <ng-container m-clientMeta *ngIf="!showDownvoteNotice">
     <div class="m-activity__top">
       <div
         *ngIf="
@@ -41,6 +46,7 @@
 
     <m-activity__toolbar
       *ngIf="service.displayOptions.showToolbar"
+      (onExplicitDownvote)="showDownvoteNotice = true"
     ></m-activity__toolbar>
 
     <m-activity__supermindReplyLink

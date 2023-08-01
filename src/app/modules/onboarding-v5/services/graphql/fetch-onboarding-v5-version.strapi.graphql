@@ -38,6 +38,17 @@ query FetchOnboardingV5Versions {
               inputPlaceholder
               resendCodeText
               resendCodeActionText
+              changeEmailActionText
+              changeEmailTitle
+              changeEmailDescription
+              changeEmailInputLabel
+              changeEmailInputPlaceholder
+              changeEmailActionButton {
+                id
+                __typename
+                text
+                dataRef
+              }
             }
             tagSelector {
               id

@@ -14,8 +14,10 @@
         (click)="onClick($event)"
       >
         <div class="m-notificationsNotification__avatar">
-          <a [routerLink]="['/', notification.from.username]">
-            <img [src]="avatarUrl" />
+          <a
+            [routerLink]="['/', getNotificationSenderDetails().get('username')]"
+          >
+            <img [src]="getNotificationSenderDetails().get('avatarUrl')" />
           </a>
           <div
             *ngIf="typeBubbleTag"
@@ -27,9 +29,12 @@
         <div class="m-notificationsNotification__body">
           <ng-container *ngIf="showFrom">
             <a
-              [routerLink]="['/', notification.from.username]"
+              [routerLink]="[
+                '/',
+                getNotificationSenderDetails().get('username')
+              ]"
               class="m-notificationsNotificationBody__label--from"
-              >{{ notification.from.name }}</a
+              >{{ getNotificationSenderDetails().get('name') }}</a
             >
 
             <!-- Merged froms -->
@@ -67,6 +72,20 @@
           class="m-notificationsNotification__readIndicator"
           *ngIf="!notification.read"
         ></span>
+      </div>
+
+      <div class="m-notificationsNotification__actionButton">
+        <m-button
+          *ngIf="notification.type === 'gift_card_recipient_notified'"
+          [size]="'xsmall'"
+          [color]="'blue'"
+          [solid]="false"
+          [type]="'button'"
+          style="display: inline-flex; flex: 1; flex-flow: column-reverse;"
+          [routerLink]="['gift-cards/claim/']"
+        >
+          Claim Gift
+        </m-button>
       </div>
 
       <div

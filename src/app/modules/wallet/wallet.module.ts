@@ -1,5 +1,8 @@
 import { NgModule, PLATFORM_ID } from '@angular/core';
-import { CommonModule as NgCommonModule } from '@angular/common';
+import {
+  CommonModule as NgCommonModule,
+  NgOptimizedImage,
+} from '@angular/common';
 import { RouterModule, Routes, RouterOutlet } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
@@ -36,6 +39,11 @@ import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/drop
 import { WalletSharedModule } from './wallet-shared.module';
 import { WalletOnchainTransfersSummaryComponent } from './components/tokens/onchain-transfers/onchain-transfers.component';
 import { PathMatch } from '../../common/types/angular.types';
+import { WalletV2CreditsComponent } from './components/credits/credits.component';
+import { WalletV2CreditsSummaryComponent } from './components/credits/summary/summary.component';
+import { WalletV2CreditsHistoryComponent } from './components/credits/history/history.component';
+import { WalletV2CreditsTransactionHistoryComponent } from './components/credits/history/transaction-history/transaction-history.component';
+import { GiftCardClaimExperimentGuard } from '../experiments/guards/gift-card-claim-experiment.guard';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' as PathMatch },
@@ -117,6 +125,27 @@ export const WALLET_ROUTES: Routes = [
         ],
       },
       {
+        path: 'credits',
+        component: WalletV2CreditsComponent,
+        canActivate: [GiftCardClaimExperimentGuard],
+        children: [
+          {
+            path: '',
+            redirectTo: 'history',
+            pathMatch: 'full' as PathMatch,
+          },
+          {
+            path: 'history/:giftCardGuid',
+            component: WalletV2CreditsTransactionHistoryComponent,
+          },
+          {
+            path: 'history',
+            component: WalletV2CreditsHistoryComponent,
+            canActivate: [TabStorageGuard],
+          },
+        ],
+      },
+      {
         path: '**', // redirected by RouterRedirectGuard
         canActivate: [DefaultRedirectGuard],
         children: [],
@@ -135,6 +164,7 @@ export const WALLET_ROUTES: Routes = [
     RouterModule.forChild(WALLET_ROUTES),
     ChartV2Module,
     WalletSharedModule,
+    NgOptimizedImage,
   ],
   declarations: [
     WalletDashboardComponent,
@@ -162,6 +192,11 @@ export const WALLET_ROUTES: Routes = [
     WalletTokenRewardsComponent,
     WalletEarningsComponent,
     WalletTokensDropdownMenu,
+    // Credits
+    WalletV2CreditsComponent,
+    WalletV2CreditsSummaryComponent,
+    WalletV2CreditsHistoryComponent,
+    WalletV2CreditsTransactionHistoryComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [

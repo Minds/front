@@ -1,0 +1,37 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing8 $spacing4 $spacing8 $spacing7;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: $spacing4;
+    flex-direction: column;
+  }
+
+  span {
+    max-width: 250px;
+    flex-grow: 1;
+    display: inline-block;
+    margin-right: $spacing4;
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      text-align: center;
+      margin-bottom: $spacing5;
+    }
+  }
+  @media screen and (max-width: $max-mobile) {
+    ::ng-deep m-button {
+      width: 100%;
+      .m-button {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
@@ -12,6 +12,8 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
   templateUrl: 'boost-channel-notice.component.html',
 })
 export class BoostChannelNoticeComponent implements OnInit, OnDestroy {
+  @Input() public dismissible: boolean = true;
+
   private boostModalCompletionSubscription: Subscription;
 
   constructor(

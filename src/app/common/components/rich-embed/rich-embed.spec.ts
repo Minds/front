@@ -18,16 +18,20 @@ import { ConfigsService } from '../../services/configs.service';
 import { MediaProxyService } from '../../services/media-proxy.service';
 import { SiteService } from '../../services/site.service';
 import { MindsRichEmbed } from './rich-embed';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LivestreamService } from '../../../modules/composer/services/livestream.service';
 
 describe('MindsRichEmbed', () => {
   let comp: MindsRichEmbed;
   let fixture: ComponentFixture<MindsRichEmbed>;
+  let service: LivestreamService;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [],
+        imports: [HttpClientTestingModule],
         declarations: [MindsRichEmbed],
+
         providers: [
           { provide: DomSanitizer, useValue: MockService(DomSanitizer) },
           { provide: Session, useValue: MockService(Session) },
@@ -58,8 +62,10 @@ describe('MindsRichEmbed', () => {
             provide: ClientMetaDirective,
             useValue: MockService(ClientMetaDirective),
           },
+          LivestreamService,
         ],
       }).compileComponents();
+      service = TestBed.inject(LivestreamService);
     })
   );
 
@@ -70,6 +76,10 @@ describe('MindsRichEmbed', () => {
     (comp as any).clickRecorded = false;
 
     fixture.detectChanges();
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
   });
 
   it('should init', () => {

@@ -3,6 +3,7 @@ import { GiftCardService } from './gift-card.service';
 import {
   ClaimGiftCardGQL,
   GetGiftCardBalancesGQL,
+  GetGiftCardBalancesWithExpiryDataGQL,
   GetGiftCardByCodeGQL,
   GiftCardBalanceByProductId,
   GiftCardNode,
@@ -61,6 +62,12 @@ describe('GiftCardService', () => {
         {
           provide: GetGiftCardBalancesGQL,
           useValue: jasmine.createSpyObj<GetGiftCardBalancesGQL>(['fetch']),
+        },
+        {
+          provide: GetGiftCardBalancesWithExpiryDataGQL,
+          useValue: jasmine.createSpyObj<GetGiftCardBalancesWithExpiryDataGQL>([
+            'fetch',
+          ]),
         },
         {
           provide: ClaimGiftCardGQL,
@@ -158,6 +165,44 @@ describe('GiftCardService', () => {
     });
   });
 
+  describe('getGiftCardBalancesWithExpiryData', () => {
+    it('should get gift card balances with additional expiry data', (done: DoneFn) => {
+      (service as any).getGiftCardBalancesWithExpiryDataGQL.fetch.and.returnValue(
+        of({
+          data: {
+            giftCardsBalances: mockGiftCardBalances,
+          },
+        })
+      );
+
+      service
+        .getGiftCardBalancesWithExpiryData()
+        .pipe(take(1))
+        .subscribe((giftCardBalances: GiftCardBalanceByProductId[]) => {
+          expect(giftCardBalances).toEqual(mockGiftCardBalances);
+          done();
+        });
+    });
+
+    it('should return null when no gift card balances with additional expiry data are found', (done: DoneFn) => {
+      (service as any).getGiftCardBalancesWithExpiryDataGQL.fetch.and.returnValue(
+        of({
+          data: {
+            giftCardsBalances: null,
+          },
+        })
+      );
+
+      service
+        .getGiftCardBalancesWithExpiryData()
+        .pipe(take(1))
+        .subscribe((giftCardBalances: GiftCardBalanceByProductId[]) => {
+          expect(giftCardBalances).toBeNull();
+          done();
+        });
+    });
+  });
+
   describe('claimGiftCard', () => {
     it('should claim gift card', (done: DoneFn) => {
       (service as any).claimGiftCardGQL.mutate.and.returnValue(
@@ -195,6 +240,74 @@ describe('GiftCardService', () => {
           expect(giftCardNode).toBeNull();
           done();
         });
+    });
+  });
+
+  describe('getProductNameByProductId', () => {
+    it('should get product name as plural for Boost', () => {
+      expect(
+        service.getProductNameByProductId(GiftCardProductIdEnum.Boost)
+      ).toBe('Boost Credits');
+    });
+
+    it('should get product name as non-plural for Boost', () => {
+      expect(
+        service.getProductNameByProductId(GiftCardProductIdEnum.Boost, false)
+      ).toBe('Boost Credit');
+    });
+
+    it('should get product name as plural for Plus', () => {
+      expect(
+        service.getProductNameByProductId(GiftCardProductIdEnum.Plus)
+      ).toBe('Minds+ Credits');
+    });
+
+    it('should get product name as non-plural for Plus', () => {
+      expect(
+        service.getProductNameByProductId(GiftCardProductIdEnum.Plus, false)
+      ).toBe('Minds+ Credit');
+    });
+
+    it('should get product name as plural for Pro', () => {
+      expect(service.getProductNameByProductId(GiftCardProductIdEnum.Pro)).toBe(
+        'Pro Credits'
+      );
+    });
+
+    it('should get product name as non-plural for Pro', () => {
+      expect(
+        service.getProductNameByProductId(GiftCardProductIdEnum.Pro, false)
+      ).toBe('Pro Credit');
+    });
+
+    it('should get product name as plural for Supermind', () => {
+      expect(
+        service.getProductNameByProductId(GiftCardProductIdEnum.Supermind)
+      ).toBe('Supermind Credits');
+    });
+
+    it('should get product name as non-plural for Supermind', () => {
+      expect(
+        service.getProductNameByProductId(
+          GiftCardProductIdEnum.Supermind,
+          false
+        )
+      ).toBe('Supermind Credit');
+    });
+
+    it('should get product name as plural for unknown credits', () => {
+      expect(
+        service.getProductNameByProductId('unknown' as GiftCardProductIdEnum)
+      ).toBe('Other Credits');
+    });
+
+    it('should get product name as non-plural for unknown credits', () => {
+      expect(
+        service.getProductNameByProductId(
+          'unknown' as GiftCardProductIdEnum,
+          false
+        )
+      ).toBe('Other Credit');
     });
   });
 });
