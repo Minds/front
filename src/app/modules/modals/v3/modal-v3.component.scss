@@ -87,8 +87,10 @@ body.modal-open {
       align-items: flex-end;
       height: 100px;
 
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-borderColor--primary);
+      &:not(.m-modalV2__mobileTopBar--noBorder) {
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
       }
 
       h4 {

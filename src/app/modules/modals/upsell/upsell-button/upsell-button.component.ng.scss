@@ -1,0 +1,50 @@
+@import 'defaults.scss';
+
+:host {
+  .m-upsellButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing2;
+    padding: $spacing6;
+    border-radius: $spacing1;
+
+    :hover {
+      cursor: pointer;
+    }
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      color: themed($m-textColor--primary);
+    }
+
+    @include m-theme() {
+      &.m-upsellButton--pro {
+        background-color: themed($m-blue);
+        color: themed($m-bgColor--primary);
+      }
+    }
+
+    .m-upsellButton__icon--branding {
+      padding: 6px;
+      font-size: 32px;
+    }
+    .m-upsellButton__textWrapper {
+      display: flex;
+      gap: $spacing2;
+      margin: 0 $spacing5;
+      flex-direction: column;
+      align-items: flex-start;
+      .m-upsellButtonText__title {
+        @include body1Bold;
+      }
+      .m-upsellButtonText__description {
+        @include body2Regular;
+      }
+    }
+    .m-upsellButton__icon--chevron {
+      font-size: 24px;
+    }
+  }
+}
