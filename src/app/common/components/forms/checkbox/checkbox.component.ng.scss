@@ -59,6 +59,12 @@
 
     .m-formInputCheckbox__customLabel {
       margin-top: 2px;
+
+      &.m-formInputCheckbox__customLabel--disabled {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
     }
 
     // The input itself is invisible

@@ -1,6 +1,5 @@
 import { Injectable, Injector, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
-import { first, last, map, take, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, firstValueFrom, Subscription } from 'rxjs';
 import { ApiService } from '../../common/api/api.service';
 import { ToasterService } from '../../common/services/toaster.service';
 import { ComposerModalService } from '../composer/components/modal/modal.service';
@@ -8,7 +7,13 @@ import { ComposerService } from '../composer/services/composer.service';
 import { ConnectTwitterModalExperimentService } from '../experiments/sub-services/connect-twitter-modal-experiment.service';
 import { ConnectTwitterModalService } from '../twitter/modal/connect-twitter-modal.service';
 import { TwitterConnectionService } from '../twitter/services/twitter-connection.service';
-import { Supermind, SupermindState } from './supermind.types';
+import {
+  Supermind,
+  SupermindReplyType,
+  SupermindState,
+} from './supermind.types';
+import { ModalService } from '../../services/ux/modal.service';
+import { ConfirmV2Component } from '../modals/confirm-v2/confirm.component';
 
 /**
  * Service relating to actions of the supermind receiver (replies)
@@ -41,6 +46,7 @@ export class SupermindReplyService implements OnDestroy {
     private twitterConnection: TwitterConnectionService,
     private connectTwitterModal: ConnectTwitterModalService,
     private connectTwitterExperiment: ConnectTwitterModalExperimentService,
+    private modalService: ModalService,
     private parentInjector: Injector,
     private apiService: ApiService,
     private toasterService: ToasterService
@@ -105,6 +111,66 @@ export class SupermindReplyService implements OnDestroy {
         })
         .present();
     } catch (err) {
+    } finally {
+      this.inProgress$$.next(false);
+    }
+  }
+
+  /**
+   * Starts the flow for accepting a live supermind - will show a confirmation modal
+   * that a user must accept before the flow continues to actually attempt to accept
+   * a supermind.
+   * @param { Supermind } supermindEntity - supermind to accept.
+   * @returns { void }
+   */
+  public startAcceptingLiveSupermind(supermindEntity: Supermind): void {
+    if (supermindEntity.reply_type !== SupermindReplyType.LIVE) {
+      this.toasterService.error(
+        'Invalid reply type to accept a live Supermind.'
+      );
+      return;
+    }
+
+    const modalResult = this.modalService.present(ConfirmV2Component, {
+      data: {
+        title: 'Live reply',
+        body:
+          "This Supermind is requesting a live reply. You won't need to create a post to accept this offer, just respond on your live stream, podcast, or other preferred medium.",
+        confirmButtonColor: 'blue',
+        confirmButtonSolid: true,
+        onConfirm: () => {
+          this.acceptLiveSupermind(supermindEntity);
+          modalResult.dismiss();
+        },
+      },
+      injector: this.injector,
+    });
+  }
+
+  /**
+   * Accept a live Supermind.
+   * @param { Supermind } supermindEntity - supermind to accept.
+   * @returns { Promise<void> }
+   */
+  private async acceptLiveSupermind(supermindEntity: Supermind): Promise<void> {
+    this.inProgress$$.next(true);
+
+    try {
+      await firstValueFrom(
+        this.apiService.post(
+          'api/v3/supermind/' + supermindEntity.guid + '/accept-live'
+        )
+      );
+      supermindEntity.status = SupermindState.ACCEPTED;
+    } catch (e) {
+      console.error(e);
+      if (e?.error?.errors?.length && e.error.errors[0]?.message) {
+        this.toasterService.error(e.error.errors[0]?.message);
+      } else {
+        this.toasterService.error(
+          e?.error.message ?? 'An unknown error has occurred'
+        );
+      }
     } finally {
       this.inProgress$$.next(false);
     }
