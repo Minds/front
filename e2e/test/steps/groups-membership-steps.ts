@@ -5,6 +5,13 @@ namespace GroupsMembershipSteps {
     groupsMembershipPage.navigateToByUrl();
   });
 
+  Given(
+    'I open the group membership feed item at position {string}',
+    async (position: number) => {
+      await groupsMembershipPage.openGroupAtPosition(position);
+    }
+  );
+
   // -----------------------------------------------
 
   When('I click the create group button', () => {

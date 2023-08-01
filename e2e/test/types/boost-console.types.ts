@@ -1,5 +1,5 @@
 // console tab type.
-export type BoostConsoleLocationTab = 'Feed' | 'Sidebar';
+export type BoostConsoleLocationTab = 'Posts' | 'Channel + groups';
 
 export type BoostConsoleStateFilterValue =
   | 'All'

@@ -19,6 +19,7 @@ export type BoostModalData = {
 export enum BoostSubject {
   CHANNEL = 1,
   POST = 2,
+  GROUP = 3,
 }
 
 // Payment category. Maps to which pool the user wants to be in.

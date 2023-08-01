@@ -114,12 +114,12 @@ class BoostConsolePage {
     I.seeElement(this.chipBadge);
     I.seeElement(this.stateLabel);
 
-    if (tab === 'Feed') {
+    if (tab === 'Posts') {
       I.seeElement(this.activity);
       I.dontSeeElement(this.publisherCard);
     }
 
-    if (tab === 'Sidebar') {
+    if (tab === 'Channel + groups') {
       I.seeElement(this.publisherCard);
       I.dontSeeElement(this.activity);
     }
