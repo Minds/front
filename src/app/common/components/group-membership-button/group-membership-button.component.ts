@@ -3,17 +3,24 @@ import {
   EventEmitter,
   Input,
   OnDestroy,
+  Optional,
   Output,
+  SkipSelf,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Session } from './../../../services/session';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { MindsGroup } from '../../../modules/groups/v2/group.model';
-import { Observable, Subscription, combineLatest, map } from 'rxjs';
+import { Observable, Subscription, combineLatest, map, skip } from 'rxjs';
 import { GroupMembershipService } from '../../services/group-membership.service';
 import { ModernGroupsExperimentService } from '../../../modules/experiments/sub-services/modern-groups-experiment.service';
 import { ButtonColor, ButtonSize } from '../button/button.component';
+import {
+  ClientMetaData,
+  ClientMetaService,
+} from '../../services/client-meta.service';
+import { ClientMetaDirective } from '../../directives/client-meta.directive';
 
 export type GroupMembershipButtonType =
   | 'join'
@@ -93,6 +100,9 @@ export class GroupMembershipButtonComponent implements OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  /** Whether a "join" click has already been recorded. */
+  private joinClickRecorded: boolean = false;
+
   /**
    * Determine which button to show (if any)
    */
@@ -128,7 +138,9 @@ export class GroupMembershipButtonComponent implements OnDestroy {
     public session: Session,
     private router: Router,
     private loginReferrer: LoginReferrerService,
-    private modernGroupsExperiment: ModernGroupsExperimentService
+    private modernGroupsExperiment: ModernGroupsExperimentService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective
   ) {}
 
   ngOnDestroy(): void {
@@ -142,9 +154,35 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    */
   initIsMemberSubscription(): void {
     this.subscriptions.push(
-      this.service.isMember$.subscribe(is => {
+      this.service.isMember$.pipe(skip(1)).subscribe(is => {
+        if (is) {
+          this.recordClick();
+        }
         this.onMembershipChange.emit({ isMember: is });
       })
+    );
+  }
+
+  /**
+   * Records a click on the group membership button.
+   * @returns { void }
+   */
+  public recordClick(): void {
+    if (this.joinClickRecorded) {
+      return;
+    }
+    this.joinClickRecorded = true;
+
+    const extraClientMetaData: Partial<ClientMetaData> = {};
+
+    if (Boolean((this.group as any).boosted_guid)) {
+      extraClientMetaData.campaign = this.group.urn;
+    }
+
+    this.clientMetaService.recordClick(
+      this.group.guid,
+      this.parentClientMeta,
+      extraClientMetaData
     );
   }
 

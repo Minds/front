@@ -27,6 +27,11 @@ import { BoostModalV2Service } from '../services/boost-modal-v2.service';
             >Boost Post</ng-container
           >
           <ng-container
+            *ngSwitchCase="BoostSubject.GROUP"
+            i18n="@@BOOST_MODAL_V2__TITLE__BOOST_GROUP"
+            >Boost Group</ng-container
+          >
+          <ng-container
             *ngSwitchCase="BoostSubject.CHANNEL"
             i18n="@@BOOST_MODAL_V2__TITLE__BOOST_CHANNEL"
             >Boost Channel</ng-container
