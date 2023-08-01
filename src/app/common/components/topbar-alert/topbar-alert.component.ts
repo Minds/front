@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { map } from 'rxjs';
+import { Observable, firstValueFrom, map } from 'rxjs';
 import { TopbarAlertService } from './topbar-alert.service';
+import { AnalyticsService } from '../../../services/analytics';
 
 /**
  * Topbar alert component - intended to show above normal site topbar
@@ -14,12 +15,40 @@ import { TopbarAlertService } from './topbar-alert.service';
   styleUrls: ['./topbar-alert.component.ng.scss'],
 })
 export class TopbarAlertComponent {
-  protected message$ = this.service.copyData$.pipe(
+  /** Markdown text to display in alert. */
+  protected message$: Observable<string> = this.service.copyData$.pipe(
     map(copyData => copyData.attributes.message)
   );
+
+  /** Alert identifier. */
+  protected identifier$: Observable<string> = this.service.copyData$.pipe(
+    map(copyData => copyData?.attributes?.identifier)
+  );
+
+  /** Whether alert should show. */
   protected shouldShow$ = this.service.shouldShow$;
 
-  constructor(private service: TopbarAlertService) {}
+  constructor(
+    private service: TopbarAlertService,
+    private analyticsService: AnalyticsService
+  ) {}
+
+  /**
+   * On markdown text click, track the click event if the target is an
+   * anchor tag. We have to do it this way as we cannot supply a
+   * custom attribute for a data-ref via ngx-markdown.
+   * @param { MouseEvent } $event - mouse event.
+   * @returns { Promise<void> }
+   */
+  public async onMarkdownTextClick($event: MouseEvent): Promise<void> {
+    if (($event.target as HTMLElement).tagName === 'A') {
+      const identifier: any = await firstValueFrom(this.identifier$);
+
+      this.analyticsService.trackClick(
+        `topbar-alert-${identifier ?? 'unknown'}-link`
+      );
+    }
+  }
 
   /**
    * Called on dismiss click. Dismisses currently active alert.

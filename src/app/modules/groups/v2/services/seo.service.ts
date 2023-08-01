@@ -24,36 +24,23 @@ export class GroupSeoService {
    * Sets SEO meta headers
    * @param user
    */
-  set(group: MindsGroup | string): void {
-    if (typeof group === 'string') {
-      this.meta.setTitle(group);
-      return;
-    }
+  set(group: MindsGroup): void {
+    const avatarUrl = this.getAvatarUrl(group);
 
-    this.meta.setOgImage(this.getAvatarUrl(group), {
+    this.meta.setTitle(group.name);
+
+    this.meta.setOgImage(avatarUrl, {
       height: 315,
       width: 600,
     });
 
-    // TODO
-    // if (group.not_found || !group.avatar_url) {
-    //   return;
-    // }
+    if (group.briefdescription) {
+      this.meta.setDescription(group.briefdescription);
+    }
 
-    // const url = `/${user.username.toLowerCase()}/`;
-    // this.meta
-    //   .setTitle(`${user.name} (@${user.username})`)
-    //   .setDescription(user.briefdescription || `Subscribe to @${user.username}`)
-    //   .setOgUrl(url)
-    //   .setCanonicalUrl(url)
-    //   .setOgType('profile')
-    //   .setRobots(
-    //     user['subscribers_count'] < MIN_METRIC_FOR_ROBOTS ? 'noindex' : 'all'
-    //   );
-
-    // if (user.is_mature || user.nsfw.length) {
-    //   this.meta.setNsfw(true);
-    // }
+    if (group.mature || group.nsfw.length) {
+      this.meta.setNsfw(true);
+    }
   }
 
   /**

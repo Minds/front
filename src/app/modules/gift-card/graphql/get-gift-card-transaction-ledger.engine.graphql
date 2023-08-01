@@ -1,0 +1,30 @@
+query GetGiftCardTransactionsLedger(
+  $giftCardGuid: String!,
+  $first: Int,
+  $after: String,
+) {
+  giftCardTransactionLedger(
+    giftCardGuid: $giftCardGuid
+    first: $first,
+    after: $after
+  ) {
+    edges {
+      node {
+        paymentGuid
+        giftCardGuid
+        amount
+        createdAt
+        refundedAt
+        boostGuid
+        id
+        giftCardIssuerGuid
+        giftCardIssuerName
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+      startCursor
+    }
+  }
+}

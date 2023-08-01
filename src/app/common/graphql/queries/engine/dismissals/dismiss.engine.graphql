@@ -1,0 +1,7 @@
+mutation Dismiss($key: String!) {
+  dismiss(key: $key) {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}

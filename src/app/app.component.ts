@@ -42,6 +42,7 @@ import { OnboardingV4Service } from './modules/onboarding-v4/onboarding-v4.servi
 import { OnboardingV5ModalLazyService } from './modules/onboarding-v5/services/onboarding-v5-modal-lazy.service';
 import { OnboardingV5Service } from './modules/onboarding-v5/services/onboarding-v5.service';
 import { OnboardingV5ExperimentService } from './modules/experiments/sub-services/onboarding-v5-experiment.service';
+import { ExplainerScreensService } from './modules/explainer-screens/services/explainer-screen.service';
 
 @Component({
   selector: 'm-app',
@@ -97,7 +98,8 @@ export class Minds implements OnInit, OnDestroy {
     private onboardingV4Service: OnboardingV4Service, // force init.
     private onboardingV5Service: OnboardingV5Service,
     private onboardingV5ModalService: OnboardingV5ModalLazyService,
-    private onboardingV5ExperimentService: OnboardingV5ExperimentService
+    private onboardingV5ExperimentService: OnboardingV5ExperimentService,
+    private explainerScreenService: ExplainerScreensService
   ) {
     this.name = 'Minds';
 
@@ -132,6 +134,10 @@ export class Minds implements OnInit, OnDestroy {
       )
       .subscribe(data => {
         this.metaService.reset(data);
+        // check route to see if we need to show an explainer screen.
+        this.explainerScreenService.handleRouteChange(
+          this.router.url.split('?')[0]
+        );
       });
 
     try {

@@ -43,9 +43,9 @@ import {
   FetchNewsfeedQueryVariables,
   PageInfo,
 } from '../../../../graphql/generated.engine';
-import { FeedAlgorithm } from './subscribed.component';
 import { BoostFeedService } from '../services/boost-feed.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { FeedAlgorithm } from '../../../common/services/feeds.service';
 import { FeedNoticeDismissalService } from '../../notices/services/feed-notice-dismissal.service';
 
 const PAGE_SIZE = 12;

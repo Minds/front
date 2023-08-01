@@ -21,6 +21,7 @@ import { Session } from '../../../services/session';
 import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 import { InteractionsModalService } from '../../newsfeed/interactions-modal/interactions-modal.service';
 import { NotificationsV3Service } from './notifications-v3.service';
+import { getGiftCardProductLabelEnum } from './enums/gift-card-product-label.enum';
 
 @Component({
   selector: 'm-notifications__notification',
@@ -39,6 +40,8 @@ export class NotificationsV3NotificationComponent
 
   /** show a warning error if the notification type is not recognised */
   typeError: boolean = false;
+
+  private senderDetails: Map<string, any> = null;
 
   constructor(
     public session: Session,
@@ -59,7 +62,6 @@ export class NotificationsV3NotificationComponent
      */
     switch (this.notification.type) {
       case 'vote_up':
-      case 'vote_down':
       case 'comment':
       case 'tag':
       //
@@ -95,9 +97,10 @@ export class NotificationsV3NotificationComponent
       case 'supermind_rejected':
       case 'supermind_accepted':
       case 'supermind_expiring_soon':
-        // case 'supermind_expired':
+      // case 'supermind_expired':
 
-        //
+      //
+      case 'gift_card_recipient_notified':
         return;
 
       case 'affiliate_earnings_deposited':
@@ -158,8 +161,6 @@ export class NotificationsV3NotificationComponent
     switch (this.notification.type) {
       case 'vote_up':
         return 'voted up';
-      case 'vote_down':
-        return 'voted down';
       case 'comment':
         if (this.notification.data.is_reply) {
           return 'replied to';
@@ -238,6 +239,8 @@ export class NotificationsV3NotificationComponent
         return ' has declined';
       case 'supermind_expiring_soon':
         return "Don't forget to review";
+      case 'gift_card_recipient_notified':
+        return 'sent';
       case 'affiliate_earnings_deposited':
       case 'referrer_affiliate_earnings_deposited':
         return `You earned $${this.data.amount_usd} from Minds Affiliate Program`;
@@ -275,6 +278,8 @@ export class NotificationsV3NotificationComponent
       case 'affiliate_earnings_deposited':
       case 'referrer_affiliate_earnings_deposited':
         return '';
+      case 'gift_card_recipient_notified':
+        return 'you';
     }
 
     return this.notification.entity?.owner_guid ==
@@ -318,6 +323,10 @@ export class NotificationsV3NotificationComponent
           groupName = groupName.substring(0, 27) + '...';
         }
         return groupName;
+      case 'gift_card_recipient_notified':
+        return `a gift for ${getGiftCardProductLabelEnum(
+          this.notification.data.gift_card.productId
+        )}`;
     }
     switch (this.notification.entity?.type) {
       case 'comment':
@@ -365,6 +374,11 @@ export class NotificationsV3NotificationComponent
         return [`/supermind/${this.notification.entity?.guid}`];
       case 'supermind_accepted':
         return ['/newsfeed', this.notification.entity?.reply_activity_guid];
+      case 'gift_card_recipient_notified':
+        return [
+          '/gift-cards/claim/',
+          this.notification.data.gift_card.claimCode,
+        ];
       case 'affiliate_earnings_deposited':
       case 'referrer_affiliate_earnings_deposited':
         return ['/wallet/cash/earnings'];
@@ -410,15 +424,54 @@ export class NotificationsV3NotificationComponent
    * @return string
    */
   get avatarUrl(): string {
-    const currentUser = this.session.getLoggedInUser();
-    const fromGuid: string = this.notification.from.guid;
-    const iconTime: number =
-      currentUser && currentUser.guid === fromGuid
-        ? currentUser.icontime
-        : this.notification.from.icontime;
-    return (
-      this.configs.get('cdn_url') + 'icon/' + fromGuid + '/medium/' + iconTime
-    );
+    switch (this.notification.type) {
+      case 'gift_card_recipient_notified':
+        return (
+          this.configs.get('cdn_url') +
+          'icon/' +
+          this.notification.data.sender.guid +
+          '/medium/' +
+          this.notification.data.sender.icontime
+        );
+      default:
+        const currentUser = this.session.getLoggedInUser();
+        const fromGuid: string = this.notification.from.guid;
+        const iconTime: number =
+          currentUser && currentUser.guid === fromGuid
+            ? currentUser.icontime
+            : this.notification.from.icontime;
+        return (
+          this.configs.get('cdn_url') +
+          'icon/' +
+          fromGuid +
+          '/medium/' +
+          iconTime
+        );
+    }
+  }
+
+  public getNotificationSenderDetails(): Map<string, any> {
+    if (this.senderDetails) {
+      return this.senderDetails;
+    }
+
+    this.senderDetails = new Map<string, any>();
+    switch (this.notification.type) {
+      case 'gift_card_recipient_notified':
+        this.senderDetails.set(
+          'username',
+          this.notification.data.sender.username
+        );
+        this.senderDetails.set('name', this.notification.data.sender.name);
+        break;
+      default:
+        this.senderDetails.set('username', this.notification.from.username);
+        this.senderDetails.set('name', this.notification.from.name);
+    }
+
+    this.senderDetails.set('avatarUrl', this.avatarUrl);
+
+    return this.senderDetails;
   }
 
   /**
@@ -428,10 +481,6 @@ export class NotificationsV3NotificationComponent
     switch (this.notification.type) {
       case 'vote_up':
         return 'thumb_up';
-      case 'vote_down':
-        return 'thumb_down';
-      case 'vote_down':
-        return 'thumb_down';
       case 'comment':
         return 'chat_bubble';
       case 'tag':
@@ -466,6 +515,8 @@ export class NotificationsV3NotificationComponent
       case 'supermind_expired':
       case 'supermind_expiring_soon':
         return 'tips_and_updates';
+      case 'gift_card_recipient_notified':
+        return 'redeem';
       default:
         return null;
     }
