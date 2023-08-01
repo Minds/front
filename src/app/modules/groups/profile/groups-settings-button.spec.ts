@@ -20,6 +20,8 @@ import { GroupsService } from '../groups.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
+import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
+import { BoostGroupExperimentService } from '../../experiments/sub-services/boost-groups-experiment.service';
 
 let groupConfig = {
   countMembers: Promise.resolve(1),
@@ -91,6 +93,14 @@ describe('GroupsSettingsButton', () => {
           {
             provide: ToasterService,
             useValue: MockService(ToasterService),
+          },
+          {
+            provide: BoostModalV2LazyService,
+            useValue: MockService(BoostModalV2LazyService),
+          },
+          {
+            provide: BoostGroupExperimentService,
+            useValue: MockService(BoostGroupExperimentService),
           },
         ],
       }).compileComponents();
@@ -268,5 +278,20 @@ describe('GroupsSettingsButton', () => {
     );
     comp.setExplicit(true);
     expect((comp as any).service.setExplicit).toHaveBeenCalled();
+  });
+
+  describe('onBoostGroupClick', () => {
+    it('should open the boost modal on open boost modal click', () => {
+      comp.group = {
+        guid: '1234',
+        type: 'group',
+        'is:muted': false,
+        'is:creator': true,
+      };
+
+      comp.onBoostGroupClick();
+
+      expect((comp as any).boostModal.open).toHaveBeenCalledWith(comp.group);
+    });
   });
 });

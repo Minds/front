@@ -4,6 +4,7 @@ type boostMarketingPage = typeof import('./pages/boostMarketingPage');
 type channelPage = typeof import('./pages/channelPage');
 type commonPage = typeof import('./pages/commonPage');
 type devtoolsPage = typeof import('./pages/devtoolsPage');
+type groupPage = typeof import('./pages/groupPage');
 type groupsMembershipPage = typeof import('./pages/groupsMembershipPage');
 type loginPage = typeof import('./pages/loginPage');
 type newsfeedPage = typeof import('./pages/newsfeedPage');
@@ -52,6 +53,7 @@ declare namespace CodeceptJS {
     channelPage: channelPage;
     commonPage: commonPage;
     devtoolsPage: devtoolsPage;
+    groupPage: groupPage;
     groupsMembershipPage: groupsMembershipPage;
     loginPage: loginPage;
     newsfeedPage: newsfeedPage;
