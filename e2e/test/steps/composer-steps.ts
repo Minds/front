@@ -21,6 +21,53 @@ namespace ComposerSteps {
     composerModalComponent.clickPost();
   });
 
+  // supermind given steps.
+
+  Given('I click the composer supermind icon', () => {
+    composerModalComponent.clickSupermindIcon();
+  });
+
+  Given(
+    'I click the composer supermind popup tab for {string}',
+    (tab: string) => {
+      composerModalComponent.clickSupermindPanelTab(tab);
+    }
+  );
+
+  Given(
+    'I add a composer supermind target of {string}',
+    (targetUsername: string) => {
+      composerModalComponent.addSupermindTarget(targetUsername);
+    }
+  );
+
+  Given('I enter a composer supermind amount of {int}', (amount: number) => {
+    composerModalComponent.enterSupermindAmount(amount);
+  });
+
+  Given(
+    'I select a composer supermind response type of {string}',
+    (responseType: string) => {
+      composerModalComponent.selectResponseType(responseType);
+    }
+  );
+
+  Given('I accept the composer supermind terms', () => {
+    composerModalComponent.acceptSupermindTerms();
+  });
+
+  Given('I accept the composer supermind refund policy', () => {
+    composerModalComponent.acceptSupermindRefundPolicy();
+  });
+
+  Given('I click the composer supermind save button', () => {
+    composerModalComponent.clickSupermindSave();
+  });
+
+  Given('I click the composer supermind confirm reply button', () => {
+    composerModalComponent.clickConfirmReplyButton();
+  });
+
   //
   When('I click on the sidebar composer button', () => {
     sidebarComponent.openSidebarComposer();
@@ -55,6 +102,14 @@ namespace ComposerSteps {
 
   When('I click the post button', () => {
     composerModalComponent.clickPost();
+  });
+
+  When('I click the post button and wait for success', () => {
+    composerModalComponent.clickPostAndAwait();
+  });
+
+  When('I post my supermind request and wait for success', () => {
+    composerModalComponent.clickToPostSupermindAndAwait();
   });
 
   When('I create a post with text storage key {string}', textStorageKey => {
