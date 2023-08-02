@@ -13,6 +13,7 @@ import { ComposerSupermindComponent } from '../supermind/supermind.component';
 import { EntityResolverService } from '../../../../../common/services/entity-resolver.service';
 import { of } from 'rxjs';
 import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
+import { TwitterSupermindExperimentService } from '../../../../experiments/sub-services/twitter-supermind-experiment.service';
 
 describe('Composer Supermind Popup', () => {
   let comp: ComposerSupermindComponent;
@@ -96,6 +97,10 @@ describe('Composer Supermind Popup', () => {
           {
             provide: SupermindNonStripeOffersExperimentService,
             useValue: MockService(SupermindNonStripeOffersExperimentService),
+          },
+          {
+            provide: TwitterSupermindExperimentService,
+            useValue: MockService(TwitterSupermindExperimentService),
           },
         ],
       }).compileComponents();
