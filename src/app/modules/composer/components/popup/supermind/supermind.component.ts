@@ -34,6 +34,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 import { SupermindSettings } from '../../../../settings-v2/payments/supermind/supermind.types';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
+import { TwitterSupermindExperimentService } from '../../../../experiments/sub-services/twitter-supermind-experiment.service';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -116,6 +117,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
 
   private targetUser?: MindsUser;
 
+  public twitterSupermindExperimentIsActive: boolean = false;
+
   /**
    * Constructor
    * @param service
@@ -128,7 +131,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     private mindsConfig: ConfigsService,
     private entityResolverService: EntityResolverService,
     private changeDetector: ChangeDetectorRef,
-    private supermindNonStripeOfferExperimentService: SupermindNonStripeOffersExperimentService
+    private supermindNonStripeOfferExperimentService: SupermindNonStripeOffersExperimentService,
+    private twitterSupermindExperimentService: TwitterSupermindExperimentService
   ) {}
 
   /**
@@ -155,6 +159,10 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
       paymentMethod: [SUPERMIND_DEFAULT_PAYMENT_METHOD],
       cardId: [''], // Card
     });
+
+    if (this.twitterSupermindExperimentService.isActive()) {
+      this.twitterSupermindExperimentIsActive = true;
+    }
 
     this.targetUsernameSubscription = this.formGroup.controls.username.valueChanges
       .pipe(
@@ -233,9 +241,11 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           supermindRequest.refund_policy_agreed
         );
 
-        this.formGroup.controls.twitterRequired.setValue(
-          supermindRequest.twitter_required
-        );
+        if (this.twitterSupermindExperimentIsActive) {
+          this.formGroup.controls.twitterRequired.setValue(
+            supermindRequest.twitter_required
+          );
+        }
 
         this.setMinimumPaymentAmountFromUser(supermindRequest.receiver_user);
 

@@ -232,6 +232,7 @@
       <div
         class="m-composerPopup__checkbox"
         data-ref="supermind-twitter-required-checkbox"
+        *ngIf="twitterSupermindExperimentIsActive"
       >
         <m-formInput__checkbox formControlName="twitterRequired">
           <span i18n="@@COMPOSER__SUPERMIND__REFUND__CHECKBOX"
