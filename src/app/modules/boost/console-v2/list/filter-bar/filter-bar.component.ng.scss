@@ -5,24 +5,19 @@
   // ** VIEW: BOOST FEED **
   // *********************************
   m-boostConsole__feed & {
-    [class*='m-boostConsole__boostLatestPostWrapper'] {
-      > * {
-        @include m-theme() {
-          border-bottom: 1px solid transparent;
-        }
-      }
-    }
+    // ojm
+    // [class*='m-boostConsole__boostLatestPostWrapper'] {
+    //   > * {
+    //     @include m-theme() {
+    //       border-bottom: 1px solid transparent;
+    //     }
+    //   }
+    // }
     // .m-boostConsole__filterBar {
     //   @include m-theme() {
     //     border-bottom: 1px solid transparent;
     //   }
     // }
-    ::ng-deep m-activity {
-      @include m-theme() {
-        border-top: 1px solid transparent;
-        border-bottom: 1px solid themed($m-borderColor--primary);
-      }
-    }
   }
   // *********************************
   // *********************************
@@ -38,10 +33,6 @@
     @media screen and (max-width: $max-mobile) {
       flex-direction: row;
       justify-content: space-between;
-    }
-
-    @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
 
@@ -91,9 +82,17 @@
     flex-flow: row nowrap;
     max-width: 100%;
 
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
     @media screen and (max-width: $max-mobile) {
       padding-top: 0px;
       padding-bottom: $spacing1;
+
+      @include m-theme() {
+        border-bottom: none;
+      }
     }
     ::ng-deep m-dropdownMenu {
       margin-right: $spacing5;
