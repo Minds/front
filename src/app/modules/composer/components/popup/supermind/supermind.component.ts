@@ -34,13 +34,7 @@ import {
 import { MindsUser } from '../../../../../interfaces/entities';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { SupermindSettings } from '../../../../settings-v2/payments/supermind/supermind.types';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.component';
@@ -252,6 +246,10 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
         this.formGroup.controls.twitterRequired.setValue(
           supermindRequest.twitter_required
         );
+
+        if (supermindRequest.reply_type === SUPERMIND_RESPONSE_TYPES.LIVE) {
+          this.formGroup.get('twitterRequired').disable();
+        }
 
         this.setMinimumPaymentAmountFromUser(supermindRequest.receiver_user);
 
