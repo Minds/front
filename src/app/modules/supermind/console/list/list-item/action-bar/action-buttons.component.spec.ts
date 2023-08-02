@@ -99,6 +99,8 @@ describe('SupermindConsoleActionButtonsComponent', () => {
   });
 
   it('it should call reply service to start reply on accept of a non-live supermind', fakeAsync(() => {
+    comp.supermind.reply_type = SupermindReplyType.TEXT;
+
     comp.onAccept(null);
     tick();
     expect((comp as any).supermindReplyService.startReply).toHaveBeenCalledWith(
