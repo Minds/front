@@ -84,7 +84,27 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
    * @returns { void }
    */
   public setupSubscription(): void {
-    this.subscriptions.push(this.load$().subscribe());
+    this.subscriptions.push(
+      this.load$().subscribe(),
+      /**
+       * Reload admin until boosts appear
+       * (So they don't need to manually reload
+       * when response is full of deleted boosts)
+       */
+      this.list$.subscribe(list => {
+        if (this.adminContext$.getValue()) {
+          let boostHasEntity = false;
+          for (let boost of list) {
+            if (boost.entity) {
+              boostHasEntity = true;
+            }
+          }
+          if (!boostHasEntity) {
+            this.loadNext();
+          }
+        }
+      })
+    );
   }
 
   /**
@@ -148,12 +168,13 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
         .subscribe((response: any) => {
           if (response && response.boosts && response.boosts.length) {
             let currentList = this.list$.getValue();
+            this.inProgress$.next(false);
             this.list$.next([...currentList, ...response.boosts]);
             this.moreData$.next(response.has_more);
           } else {
+            this.inProgress$.next(false);
             this.moreData$.next(false);
           }
-          this.inProgress$.next(false);
         })
     );
   }

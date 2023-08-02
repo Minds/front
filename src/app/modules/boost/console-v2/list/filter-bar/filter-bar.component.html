@@ -7,16 +7,6 @@
     <!-- TABS: USER CONTEXT --------------------- -->
     <!-- ---------------------------------------- -->
     <ng-container *ngIf="!(service.adminContext$ | async)">
-      <div class="m-tabs__tab" (click)="onClickExploreTab($event)">
-        <a
-          [class.m-tabs__tab--selected]="
-            (service.view$ | async) === 'boostFeed'
-          "
-          data-ref="boost-console-tab-explore"
-          i18n="@@COMMON__EXPLORE"
-          >Explore</a
-        >
-      </div>
       <div class="m-tabs__tab" (click)="onClickFeedTab($event)">
         <a
           [class.m-tabs__tab--selected]="
@@ -43,6 +33,16 @@
           >
           <ng-template #onlyChannelTextTemplate>Channel</ng-template>
         </a>
+      </div>
+      <div class="m-tabs__tab" (click)="onClickExploreTab($event)">
+        <a
+          [class.m-tabs__tab--selected]="
+            (service.view$ | async) === 'boostFeed'
+          "
+          data-ref="boost-console-tab-explore"
+          i18n="@@COMMON__EXPLORE"
+          >Explore</a
+        >
       </div>
     </ng-container>
     <!-- ---------------------------------------- -->

@@ -34,7 +34,7 @@ export class BoostConsoleService {
    */
   public readonly view$: BehaviorSubject<
     BoostConsoleView
-  > = new BehaviorSubject<BoostConsoleView>('boostFeed');
+  > = new BehaviorSubject<BoostConsoleView>('list');
 
   // Subject containing whether or not we are viewing
   // the boost console in the context of the admin console

@@ -77,8 +77,7 @@ export class BoostConsoleV2Component implements OnInit {
       this.route.queryParams.subscribe(params => {
         // BOOST FEED ONLY
         const showBoostFeed = params.explore || null;
-        const noParams = !this.adminContext && !params.location;
-        if (showBoostFeed || noParams) {
+        if (showBoostFeed) {
           this.service.view$.next('boostFeed');
           return;
         }

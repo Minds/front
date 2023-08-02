@@ -2,24 +2,6 @@
 
 :host {
   // *********************************
-  // ** VIEW: BOOST FEED **
-  // *********************************
-  m-boostConsole__feed & {
-    // ojm
-    // [class*='m-boostConsole__boostLatestPostWrapper'] {
-    //   > * {
-    //     @include m-theme() {
-    //       border-bottom: 1px solid transparent;
-    //     }
-    //   }
-    // }
-    // .m-boostConsole__filterBar {
-    //   @include m-theme() {
-    //     border-bottom: 1px solid transparent;
-    //   }
-    // }
-  }
-  // *********************************
   // *********************************
   // *********************************
   // ** DEFAULT **
@@ -33,6 +15,9 @@
     @media screen and (max-width: $max-mobile) {
       flex-direction: row;
       justify-content: space-between;
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
     }
   }
 
@@ -64,11 +49,8 @@
       }
     }
 
-    > * {
+    > :first-child {
       display: block;
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-borderColor--primary);
-      }
 
       ::ng-deep .m-feedNotice__title {
         @include body1Bold;
@@ -83,7 +65,7 @@
     max-width: 100%;
 
     @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--primary);
+      border-top: 1px solid themed($m-borderColor--primary);
     }
 
     @media screen and (max-width: $max-mobile) {
@@ -91,7 +73,7 @@
       padding-bottom: $spacing1;
 
       @include m-theme() {
-        border-bottom: none;
+        border-top: none;
       }
     }
     ::ng-deep m-dropdownMenu {
