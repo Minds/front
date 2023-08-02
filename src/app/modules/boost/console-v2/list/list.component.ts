@@ -71,7 +71,7 @@ export class BoostConsoleListComponent extends AbstractSubscriberComponent
   // Number of boosts to request from API.
   private readonly requestLimit: number = 12;
 
-  constructor(private service: BoostConsoleService) {
+  constructor(protected service: BoostConsoleService) {
     super();
   }
 

@@ -1,6 +1,36 @@
 @import 'defaults.scss';
 
 :host {
+  // *********************************
+  // ** VIEW: BOOST FEED **
+  // *********************************
+  m-boostConsole__feed & {
+    [class*='m-boostConsole__boostLatestPostWrapper'] {
+      > * {
+        @include m-theme() {
+          border-bottom: 1px solid transparent;
+        }
+      }
+    }
+    // .m-boostConsole__filterBar {
+    //   @include m-theme() {
+    //     border-bottom: 1px solid transparent;
+    //   }
+    // }
+    ::ng-deep m-activity {
+      @include m-theme() {
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
   .m-boostConsole__filterBar {
     display: flex;
     flex-direction: column;

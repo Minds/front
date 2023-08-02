@@ -12,7 +12,6 @@ import { DiscoveryFeedsComponent } from './feeds/feeds.component';
 import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { LanguageModule } from '../language/language.module';
-import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
@@ -77,10 +76,7 @@ import { PathMatch } from '../../common/types/angular.types';
           },
           {
             path: 'boost/feed',
-            component: DiscoveryBoostFeedComponent,
-            data: {
-              title: 'Discovery / Boosted',
-            },
+            redirectTo: '/boost/boost-console/explore',
           },
           {
             // deprecated route.

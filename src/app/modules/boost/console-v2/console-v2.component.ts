@@ -13,15 +13,16 @@ import {
 import { BoostConsoleService } from './services/console.service';
 import { BoostModalV2LazyService } from '../modal-v2/boost-modal-v2-lazy.service';
 
+/**
+ * Container component for boost console
+ * Controls routing for the console via queryParams
+ * */
 @Component({
   selector: 'm-boostConsole',
   templateUrl: './console-v2.component.html',
   styleUrls: ['./console-v2.component.ng.scss'],
 })
 export class BoostConsoleV2Component implements OnInit {
-  /** Guid, if this is a single boost view page */
-  singleBoostGuid: string = '';
-
   private subscriptions: Array<Subscription> = [];
 
   /** @type { BehaviorSubject<boolean> } are we viewing the boost console in the context of the admin console? */
@@ -53,7 +54,7 @@ export class BoostConsoleV2Component implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: BoostConsoleService,
+    protected service: BoostConsoleService,
     private session: Session,
     private loginReferrer: LoginReferrerService,
     private location: Location,
@@ -67,21 +68,32 @@ export class BoostConsoleV2Component implements OnInit {
     }
 
     /**
-     * On route change, set filters
+     * On route change, set view and/or filters
      *
      * This is where the filter value subjects are actually changed.
      * (The filters/tabs just change the queryParams, which are processed here)
      */
     this.subscriptions.push(
       this.route.queryParams.subscribe(params => {
+        // BOOST FEED ONLY
+        const showBoostFeed = params.explore || null;
+        const noParams = !this.adminContext && !params.location;
+        if (showBoostFeed || noParams) {
+          this.service.view$.next('boostFeed');
+          return;
+        }
+
         // SINGLE BOOST PAGE ONLY
-        this.singleBoostGuid = params.boostGuid || null;
-        if (this.singleBoostGuid) {
-          this.service.singleBoostGuid$.next(this.singleBoostGuid);
+        const singleBoostGuid = params.boostGuid || null;
+        if (singleBoostGuid) {
+          this.service.view$.next('single');
+          this.service.singleBoostGuid$.next(singleBoostGuid);
           return;
         }
 
         // LIST PAGE ONLY
+        this.service.view$.next('list');
+
         const stateFilter: BoostConsoleStateFilter = params.state || null;
         const locationFilter: BoostConsoleLocationFilter =
           params.location || null;
