@@ -76,7 +76,7 @@ import { PathMatch } from '../../common/types/angular.types';
           },
           {
             path: 'boost/feed',
-            redirectTo: '/boost/boost-console/explore',
+            redirectTo: '/boost/boost-console',
           },
           {
             // deprecated route.
