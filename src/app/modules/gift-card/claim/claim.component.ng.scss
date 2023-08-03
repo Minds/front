@@ -1,6 +1,10 @@
 @import 'defaults.scss';
 
 :host {
-  display: block;
-  margin: $spacing10;
+  &.m-pageLayout__container {
+    display: block;
+    margin: $spacing10;
+    width: auto;
+    min-width: unset;
+  }
 }

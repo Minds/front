@@ -31,6 +31,8 @@ describe('GroupSeoService', () => {
 
     service.set(group);
 
+    expect((service as any).meta.setTitle).toHaveBeenCalledWith(group.name);
+
     expect((service as any).meta.setOgImage).toHaveBeenCalledWith(
       `${cdnUrl}fs/v1/avatars/${group.guid}/large/${group.icontime}`,
       {
@@ -38,5 +40,11 @@ describe('GroupSeoService', () => {
         width: 600,
       }
     );
+
+    expect((service as any).meta.setDescription).toHaveBeenCalledWith(
+      group.briefdescription
+    );
+
+    expect((service as any).meta.setNsfw).not.toHaveBeenCalled();
   });
 });

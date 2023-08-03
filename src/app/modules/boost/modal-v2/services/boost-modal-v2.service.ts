@@ -147,7 +147,14 @@ export class BoostModalV2Service implements OnDestroy {
   // derived entity type from entity selected for boosting.
   public entityType$: Observable<BoostSubject> = this.entity$.pipe(
     map(entity => {
-      return entity?.type === 'user' ? BoostSubject.CHANNEL : BoostSubject.POST;
+      switch (entity?.type) {
+        case 'user':
+          return BoostSubject.CHANNEL;
+        case 'group':
+          return BoostSubject.GROUP;
+        default:
+          return BoostSubject.POST;
+      }
     })
   );
 
@@ -427,10 +434,11 @@ export class BoostModalV2Service implements OnDestroy {
         let payload: BoostSubmissionPayload = {
           entity_guid: entity?.guid,
           target_suitability: audience,
-          target_location:
-            entityType === BoostSubject.CHANNEL
-              ? BoostLocation.SIDEBAR
-              : BoostLocation.NEWSFEED,
+          target_location: [BoostSubject.CHANNEL, BoostSubject.GROUP].includes(
+            entityType
+          )
+            ? BoostLocation.SIDEBAR
+            : BoostLocation.NEWSFEED,
           payment_method: Number(paymentMethod),
           payment_method_id: paymentMethodId,
           daily_bid: dailyBudget,

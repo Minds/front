@@ -38,6 +38,14 @@ export class DiscoverySearchComponent {
   subscriptions: Subscription[] = [];
   readonly cdnUrl: string;
 
+  /**
+   * When viewed from the discovery/explore tabs,
+   * (e.g. via the "Trending" tab)
+   * don't show the back button or search tabs
+   * and DO show the discovery/explore tabs
+   */
+  exploreTabContext: boolean = false;
+
   showSuggestedChannels$: Observable<boolean> = combineLatest([
     this.inProgress$,
     this.cardCarouselInProgress$,
@@ -76,6 +84,8 @@ export class DiscoverySearchComponent {
             <DiscoveryFeedsContentType>params.get('t') || 'all'
           );
           this.setSeo();
+
+          this.exploreTabContext = Boolean(params.get('explore'));
         }),
       combineLatest(
         this.service.nsfw$,
@@ -114,11 +124,21 @@ export class DiscoverySearchComponent {
   }
 
   setSeo() {
-    this.metaService.setTitle(`${this.q} - Minds Search`);
+    this.metaService.setTitle(this.getPageTitle());
     this.metaService.setDescription(`Discover ${this.q} posts on Minds.`);
     this.metaService.setCanonicalUrl(
       `/discovery/search?q=${this.q}&f=${this.filter}&t=${this.type$.value}`
     );
+  }
+
+  getPageTitle(): string {
+    let title;
+    if (this.exploreTabContext) {
+      title = 'Discovery / Trending';
+    } else {
+      title = this.q ? `${this.q} - Minds Search` : `Minds Search`;
+    }
+    return title;
   }
 
   ngOnDestroy() {

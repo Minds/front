@@ -36,6 +36,20 @@
       </m-dropdownMenu__item>
       <!---------------------------->
       <m-dropdownMenu__item
+        *ngIf="boostGroupsExperimentIsActive"
+        (click)="onBoostGroupClick()"
+        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__BOOST_GROUP"
+        >Boost group</m-dropdownMenu__item
+      >
+
+      <m-dropdownMenu__item
+        *ngIf="boostGroupsExperimentIsActive"
+        (click)="onBoostGroupClick()"
+        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__BOOST_GROUP"
+        >Boost group</m-dropdownMenu__item
+      >
+
+      <m-dropdownMenu__item
         *ngIf="group.videoChatDisabled && !v2"
         (click)="toggleVideoChat(true)"
       >

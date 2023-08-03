@@ -34,6 +34,13 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
 
+  /**
+   * When viewed from the discovery/explore tabs,
+   * don't show the back button or suggestion tabs
+   * and DO show the discovery/explore tabs
+   */
+  exploreTabContext: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private service: SuggestionsService,
@@ -66,6 +73,8 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
           this.type = segments[0].path;
           // hide tabs to only show user recommendations for the contextual user
           this.hideTabs = Boolean(contextualUser);
+
+          this.exploreTabContext = Boolean(queryParamMap.get('explore'));
 
           this.service.load({
             limit: this.limit,

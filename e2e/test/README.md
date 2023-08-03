@@ -35,7 +35,7 @@ Playwright end-to-end test automation with CodeceptJS (Gherkin) and Browserstack
 | SUPERMIND_FILTER_TEST_USERNAME | Password of a dedicated user for testing Supermind Console filters |
 | PLAYWRIGHT_EXISTING_ACTIVITY_GUID | Guid for an activity that we know to exist (i.e. has a working SEP) |
 | PLAYWRIGHT_USER_WRONG_AUDIENCE_REJECTED_BOOST_GUID | GUID of a boost rejected for wrong audience owned by the main test user |
-
+| PLAYWRIGHT_USER_OWNED_GROUP_GUID | Guid of a group owner by main test user |
 
 ## Run Command
 
@@ -75,6 +75,7 @@ To create a new suite of tests:
 - If necessary, create a Steps file (to define individual Steps - Given/When/Then).
 - If necessary, create a Page file (to define common functions and variables).
 - Ensure that Pages and Fragments are references in ALL Codeceptjs config files in the include section.
+- If creating new pages and fragments, run `npm run def` after adding them to your config files to generate your types.
 
 ## Helpful Links
 - How to write tests in CodeceptJs + Gherkin click [here](https://codecept.io/bdd/)

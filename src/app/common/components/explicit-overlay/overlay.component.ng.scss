@@ -1,0 +1,47 @@
+@import 'defaults.scss';
+@import '../../../common/layout/layout.scss';
+
+$topMargin: 12%;
+
+:host {
+  .m-nsfwOverlay__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    @include z-index(announcement);
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      background-color: themed($m-bgColor--primary);
+    }
+
+    .m-nsfwOverlay__content {
+      position: sticky;
+      top: $topMargin;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+
+      .m-nsfwOverlay__icon {
+        font-size: 42px;
+      }
+
+      .m-nsfwOverlay__primaryText {
+        @include heading4Medium;
+      }
+    }
+  }
+
+  // adjust position for topbar alert.
+  &.m-nsfwOverlay--topbarAlertShown .m-nsfwOverlay__content {
+    top: calc($topMargin + $topbarAlertHeight--desktop) !important;
+
+    @media screen and (max-width: $max-mobile) {
+      top: calc($topMargin + $topbarAlertHeight--mobile) !important;
+    }
+  }
+}

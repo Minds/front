@@ -71,6 +71,7 @@ export class NotificationsV3NotificationComponent
       case 'subscribe':
       //
       case 'group_queue_add':
+      case 'group_queue_received':
       case 'group_queue_approve':
       case 'group_queue_reject':
       case 'group_invite':
@@ -138,6 +139,7 @@ export class NotificationsV3NotificationComponent
   get showFrom(): boolean {
     switch (this.notification.type) {
       case 'group_queue_add':
+      case 'group_queue_received':
       case 'token_rewards_summary':
       case 'token_withdraw_accepted':
       case 'token_withdraw_rejected':
@@ -174,6 +176,8 @@ export class NotificationsV3NotificationComponent
         return 'subscribed to you';
       case 'group_queue_add':
         return 'Your post is awaiting approval from the group administrators';
+      case 'group_queue_received':
+        return 'Post pending approval in';
       case 'group_queue_approve':
         return 'approved';
       case 'group_queue_reject':
@@ -261,6 +265,7 @@ export class NotificationsV3NotificationComponent
       case 'wire_payout':
       case 'subscribe':
       case 'group_queue_add':
+      case 'group_queue_received':
       case 'group_invite':
       case 'token_rewards_summary':
       case 'token_withdraw_accepted':
@@ -312,6 +317,12 @@ export class NotificationsV3NotificationComponent
           this.notification.entity?.entity?.ownerObj?.name +
           "'s Supermind offer"
         );
+      case 'group_queue_received':
+        let groupName: string = this.notification?.entity?.name ?? 'your group';
+        if (groupName.length > 30) {
+          groupName = groupName.substring(0, 27) + '...';
+        }
+        return groupName;
       case 'gift_card_recipient_notified':
         return `a gift for ${getGiftCardProductLabelEnum(
           this.notification.data.gift_card.productId
@@ -351,6 +362,8 @@ export class NotificationsV3NotificationComponent
       case 'group_invite':
       case 'group_queue_reject':
         return ['/groups/profile/' + this.notification.entity.guid];
+      case 'group_queue_received':
+        return [`/group/${this.notification.entity.guid}/review`];
       case 'wire_received':
       case 'wire_payout':
         return [`/wallet/${this.notification.data.method}/transactions`];
@@ -479,6 +492,7 @@ export class NotificationsV3NotificationComponent
       case 'subscribe':
         return 'person';
       case 'group_queue_add':
+      case 'group_queue_received':
       case 'group_queue_approve':
       case 'group_queue_reject':
       case 'group_invite':
@@ -547,7 +561,8 @@ export class NotificationsV3NotificationComponent
       this.notification.type !== 'supermind_expiring_soon' &&
       this.notification.type !== 'boost_accepted' &&
       this.notification.type !== 'boost_rejected' &&
-      this.notification.type !== 'boost_completed'
+      this.notification.type !== 'boost_completed' &&
+      this.notification.type !== 'group_queue_received'
     );
   }
 
