@@ -9,7 +9,7 @@ import { SocketsService } from '../../services/sockets';
  * or you will not get any outputted values.
  */
 @Injectable({ providedIn: 'root' })
-export class NotificationCountService implements OnDestroy {
+export class NotificationCountSocketsService implements OnDestroy {
   /** Used within this class internally to set new values for notification count. */
   private readonly countSubject$: Subject<number> = new Subject<number>();
 
@@ -65,6 +65,7 @@ export class NotificationCountService implements OnDestroy {
     for (const room of this.joinedRooms) {
       this.sockets.leave(room);
     }
+    this.joinedRooms = [];
     this.destroySubscriptions();
     return this;
   }

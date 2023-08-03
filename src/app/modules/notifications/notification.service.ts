@@ -12,7 +12,7 @@ import { Session } from '../../services/session';
 import { MetaService } from '../../common/services/meta.service';
 import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
-import { NotificationCountService } from './notification-count.service';
+import { NotificationCountSocketsService } from './notification-count-sockets.service';
 import { NotificationCountSocketsExperimentService } from '../experiments/sub-services/notification-count-sockets-experiment.service';
 
 /**
@@ -41,7 +41,7 @@ export class NotificationService implements OnDestroy {
     public client: Client,
     public sockets: SocketsService,
     public metaService: MetaService,
-    private notificationCount: NotificationCountService,
+    private notificationCountSockets: NotificationCountSocketsService,
     private notificationCountExperiment: NotificationCountSocketsExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object,
     protected site: SiteService
@@ -66,8 +66,8 @@ export class NotificationService implements OnDestroy {
       return;
     }
 
-    this.notificationCount.listen(this.session.getLoggedInUser().guid);
-    this.notificationCountSocketSubscription = this.notificationCount.count$.subscribe(
+    this.notificationCountSockets.listen(this.session.getLoggedInUser().guid);
+    this.notificationCountSocketSubscription = this.notificationCountSockets.count$.subscribe(
       (count: number): void => {
         this.count = count;
         this.syncCount();
@@ -85,7 +85,7 @@ export class NotificationService implements OnDestroy {
       this.notificationCountExperiment.isActive() &&
       isPlatformBrowser(this.platformId)
     ) {
-      this.notificationCount.leaveAll();
+      this.notificationCountSockets.leaveAll();
       this.notificationCountSocketSubscription?.unsubscribe();
     }
   }
