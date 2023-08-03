@@ -65,11 +65,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       if (params['ts']) {
         this.notifications = [];
         this.load(true);
-        this.notificationService.clear();
+        this.notificationService.clearCount();
       }
     });
 
-    this.notificationService.clear();
+    this.notificationService.clearCount();
     if (!this.loadOnDemand) {
       this.load(true);
     }
@@ -123,7 +123,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         if (!data['load-next']) this.moreData = false;
         this.offset = data['load-next'];
         this.inProgress = false;
-        this.notificationService.clear();
+        this.notificationService.clearCount();
       });
   }
 

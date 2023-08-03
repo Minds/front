@@ -54,7 +54,7 @@ describe('NotificationService', () => {
     service.listen();
     jasmine.clock().tick(10);
     expect(socketMock.subscribe).toHaveBeenCalled();
-    service.increment(4);
+    service.incrementCount(4);
 
     expect(service.count).toBe(4);
   }));

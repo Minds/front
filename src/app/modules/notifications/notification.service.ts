@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   EventEmitter,
   Inject,
   Injectable,
@@ -11,86 +10,142 @@ import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
 import { MetaService } from '../../common/services/meta.service';
-import { BehaviorSubject, Subject, Subscription, timer } from 'rxjs';
+import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
+import { NotificationCountService } from './notification-count.service';
+import { NotificationCountSocketsExperimentService } from '../experiments/sub-services/notification-count-sockets-experiment.service';
 
+/**
+ * Service handling the getting and updating of notification counts.
+ * With `notificationCountExperiment` ON we use sockets to update the count.
+ * Else count will be polled for every 60 seconds.
+ */
 @Injectable()
 export class NotificationService implements OnDestroy {
-  socketSubscriptions: any = {
-    notification: null,
-  };
-  onReceive: EventEmitter<any> = new EventEmitter();
-  notificationPollTimer;
-  count: number = 0;
+  /** @deprecated - not in use. */
+  public onReceive: EventEmitter<any> = new EventEmitter();
 
-  // used in V3 notifications
-  public count$: Subject<number> = new Subject();
+  /** Count of notifications */
+  public count: number = 0;
 
-  private updateNotificationCountSubscription: Subscription;
+  /** Observable count of notifications - used in V3 notifications */
+  public count$: Subject<number> = new Subject<number>();
+
+  // subscriptions.
+  private notificationPollTimer: Observable<number>;
+  private notificationCountSocketSubscription: Subscription;
+  private notificationPollTimerSubscription: Subscription;
 
   constructor(
     public session: Session,
     public client: Client,
     public sockets: SocketsService,
     public metaService: MetaService,
+    private notificationCount: NotificationCountService,
+    private notificationCountExperiment: NotificationCountSocketsExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object,
     protected site: SiteService
-  ) {
-    if (!this.site.isProDomain) {
-      this.listen();
-    }
+  ) {}
+
+  ngOnDestroy() {
+    this.notificationPollTimerSubscription?.unsubscribe();
+    this.notificationCountSocketSubscription?.unsubscribe();
   }
 
   /**
-   * Listen to socket events
+   * Listen to socket events for count updates.
+   * No-op if notificationCountExperiment is not active.
+   * @returns { void }
    */
-  listen() {
-    this.socketSubscriptions.notification = this.sockets.subscribe(
-      'notification',
-      guid => {
-        this.increment();
+  public listen(): void {
+    if (
+      !this.session.getLoggedInUser() ||
+      !this.notificationCountExperiment.isActive() ||
+      !isPlatformBrowser(this.platformId)
+    ) {
+      return;
+    }
 
-        this.client
-          .get(`api/v1/notifications/single/${guid}`)
-          .then((response: any) => {
-            if (response.notification) {
-              this.onReceive.next(response.notification);
-            }
-          });
+    this.notificationCount.listen(this.session.getLoggedInUser().guid);
+    this.notificationCountSocketSubscription = this.notificationCount.count$.subscribe(
+      (count: number): void => {
+        this.count = count;
+        this.syncCount();
       }
     );
   }
 
   /**
-   * Increment the notifications counter
+   * Unlisten to all joined notification count rooms.
+   * No-op if notificationCountExperiment is not active.
+   * @returns { void }
    */
-  increment(notifications: number = 1) {
-    this.count = this.count + notifications;
-    this.sync();
+  public unlisten(): void {
+    if (
+      this.notificationCountExperiment.isActive() &&
+      isPlatformBrowser(this.platformId)
+    ) {
+      this.notificationCount.leaveAll();
+      this.notificationCountSocketSubscription?.unsubscribe();
+    }
   }
 
   /**
-   * Clear the notifications. For notification controller
+   * Fetch the notification count. If notificationCountExperiment
+   * is active, also sets up a polling subscription to check for
+   * future updates - else this is handled via sockets.
+   * @returns { void }
    */
-  clear() {
-    this.count = 0;
-    this.sync();
-  }
+  public updateNotificationCount(): void {
+    if (this.notificationCountExperiment.isActive()) {
+      this.fetchNotificationCountFromServer(); // run once - rest of updates come through sockets.
+      return;
+    }
 
-  /**
-   * Return the notifications
-   */
-  getNotifications() {
-    const pollIntervalSeconds = 60;
+    const pollIntervalSeconds: number = 60;
     if (isPlatformBrowser(this.platformId)) {
       this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
-      this.updateNotificationCountSubscription = this.notificationPollTimer.subscribe(
-        () => this.updateNotificationCount()
+      this.notificationPollTimerSubscription = this.notificationPollTimer.subscribe(
+        () => this.fetchNotificationCountFromServer()
       );
     }
   }
 
-  updateNotificationCount() {
+  /**
+   * Increment the notifications count.
+   * @param { number } incrementBy - number to increment by - defaults to 1.
+   * @returns { void }
+   */
+  public incrementCount(incrementBy: number = 1): void {
+    this.count = this.count + incrementBy;
+    this.syncCount();
+  }
+
+  /**
+   * Clear the notifications count.
+   * @returns { void }
+   */
+  public clearCount(): void {
+    this.count = 0;
+    this.syncCount();
+  }
+
+  /**
+   * Sync count of notifications to class state and meta service
+   * for meta title counter.
+   * @returns { void }
+   */
+  private syncCount(): void {
+    this.count$.next(this.count);
+    this.metaService.setCounter(this.count);
+  }
+
+  /**
+   * Make a request for notification count from the server directly,
+   * and update class state accordingly.
+   * @returns { void }
+   */
+  private fetchNotificationCountFromServer(): void {
     if (!this.session.isLoggedIn()) {
       return;
     }
@@ -99,20 +154,7 @@ export class NotificationService implements OnDestroy {
       .get('api/v3/notifications/unread-count', {})
       .then((response: any) => {
         this.count = response.count;
-        this.sync();
+        this.syncCount();
       });
-  }
-
-  /**
-   * Sync Notifications to the topbar Counter
-   */
-  sync() {
-    this.count$.next(this.count);
-    this.metaService.setCounter(this.count);
-  }
-
-  ngOnDestroy() {
-    if (this.updateNotificationCountSubscription)
-      this.updateNotificationCountSubscription.unsubscribe();
   }
 }
