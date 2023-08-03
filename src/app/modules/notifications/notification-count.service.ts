@@ -51,12 +51,7 @@ export class NotificationCountService implements OnDestroy {
     this.countSubscription = this.sockets.subscribe(
       `notification:count:${userGuid}`,
       (count: number): void => {
-        try {
-          this.countSubject$.next(count);
-        } catch (e) {
-          console.error(e, count);
-          return;
-        }
+        this.countSubject$.next(count);
       }
     );
     return this;
