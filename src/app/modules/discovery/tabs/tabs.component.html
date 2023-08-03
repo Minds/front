@@ -3,56 +3,41 @@
     <div class="m-tabs__tab">
       <a
         routerLink="/discovery/top"
-        [class.m-tabs__tab--selected]="isLinkActive('/discovery/top')"
-        data-ref="discovery-tab-link-top"
-        i18n="@@DISCOVERY_TAGS__TOP"
-        >Top</a
-      >
-    </div>
-    <div class="m-tabs__tab">
-      <a
-        routerLink="/discovery/overview"
-        [class.m-tabs__tab--selected]="isLinkActive('/discovery/overview')"
-        [queryParams]="{ reload: false }"
-        data-ref="discovery-tab-link-overview"
-        i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
-        >Just for you</a
-      >
-    </div>
-    <div class="m-tabs__tab">
-      <a
-        routerLink="/discovery/tags/your"
-        routerLinkActive="m-tabs__tab--selected"
-        data-ref="discovery-tab-link-tags"
-        i18n="@@DISCOVERY_TAGS__YOUR_TAGS"
-        >Your tags</a
+        [class.m-tabs__tab--selected]="
+          isLinkActive('/discovery/search?t=all&f=top&explore=true', true)
+        "
+        data-ref="discovery-tab-link-trending"
+        i18n="@@DISCOVERY_TAGS__TRENDING"
+        >Trending</a
       >
     </div>
     <div class="m-tabs__tab">
       <a
         routerLink="/discovery/tags/trending"
         routerLinkActive="m-tabs__tab--selected"
-        data-ref="discovery-tab-link-trending"
-        i18n="@@DISCOVERY_TAGS__TRENDING"
-        >Trending</a
+        data-ref="discovery-tab-link-trending-tags"
+        i18n="@@DISCOVERY_TAGS__TRENDING_TAGS"
+        >Trending tags</a
       >
     </div>
-    <!-- <div class="m-tabs__tab">
+    <div class="m-tabs__tab" *ngIf="session.getLoggedInUser()">
       <a
-        routerLink="/discovery/memberships/feed"
+        routerLink="/discovery/suggestions/user"
+        [queryParams]="{ explore: true }"
         routerLinkActive="m-tabs__tab--selected"
-        data-ref="discovery-tab-link-memberships"
-        i18n="@@DISCOVERY_TAGS__MEMBERSHIPS"
-        >Memberships</a
+        data-ref="discovery-tab-link-channels"
+        i18n="@@DISCOVERY_TABS__CHANNELS"
+        >Channels</a
       >
-    </div> -->
-    <div class="m-tabs__tab">
+    </div>
+    <div class="m-tabs__tab" *ngIf="session.getLoggedInUser()">
       <a
-        routerLink="/discovery/boost/feed"
+        routerLink="/discovery/suggestions/group"
+        [queryParams]="{ explore: true }"
         routerLinkActive="m-tabs__tab--selected"
-        data-ref="discovery-tab-link-boosted"
-        i18n="@@DISCOVERY_TAGS__BOOSTED"
-        >Boost</a
+        data-ref="discovery-tab-link-groups"
+        i18n="@@DISCOVERY_TABS__GROUPS"
+        >Groups</a
       >
     </div>
   </ng-container>

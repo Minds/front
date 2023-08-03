@@ -3,18 +3,23 @@ import {
   EventEmitter,
   Input,
   OnDestroy,
-  OnInit,
+  Optional,
   Output,
+  SkipSelf,
 } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Session } from './../../../services/session';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { MindsGroup } from '../../../modules/groups/v2/group.model';
-import { Observable, Subscription, combineLatest, map } from 'rxjs';
+import { Observable, Subscription, combineLatest, map, skip } from 'rxjs';
 import { GroupMembershipService } from '../../services/group-membership.service';
 import { ModernGroupsExperimentService } from '../../../modules/experiments/sub-services/modern-groups-experiment.service';
 import { ButtonColor, ButtonSize } from '../button/button.component';
+import {
+  ClientMetaData,
+  ClientMetaService,
+} from '../../services/client-meta.service';
+import { ClientMetaDirective } from '../../directives/client-meta.directive';
 
 export type GroupMembershipButtonType =
   | 'join'
@@ -29,7 +34,6 @@ export type GroupMembershipButtonLabelType =
   | 'pastTense';
 
 export type GroupMembershipChangeOuput = { isMember: boolean };
-
 /**
  * Click this button to join/leave a group,
  * accept/decline a group invitation (2 buttons are displayed),
@@ -49,6 +53,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
   get group(): MindsGroup {
     return this._group;
   }
+
   @Input() set group(group: MindsGroup) {
     if (group) {
       this.service.setGroup(group);
@@ -111,6 +116,9 @@ export class GroupMembershipButtonComponent implements OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  /** Whether a "join" click has already been recorded. */
+  private joinClickRecorded: boolean = false;
+
   /**
    * Determine which button to show (if any)
    */
@@ -134,9 +142,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
       } else {
         this.buttonType = null;
       }
-
       this.initIsMemberSubscription();
-
       return this.buttonType;
     })
   );
@@ -146,7 +152,9 @@ export class GroupMembershipButtonComponent implements OnDestroy {
     public session: Session,
     private router: Router,
     private loginReferrer: LoginReferrerService,
-    private modernGroupsExperiment: ModernGroupsExperimentService
+    private modernGroupsExperiment: ModernGroupsExperimentService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective
   ) {}
 
   ngOnDestroy(): void {
@@ -160,9 +168,35 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    */
   initIsMemberSubscription(): void {
     this.subscriptions.push(
-      this.service.isMember$.subscribe(is => {
+      this.service.isMember$.pipe(skip(1)).subscribe(is => {
+        if (is) {
+          this.recordClick();
+        }
         this.onMembershipChange.emit({ isMember: is });
       })
+    );
+  }
+
+  /**
+   * Records a click on the group membership button.
+   * @returns { void }
+   */
+  public recordClick(): void {
+    if (this.joinClickRecorded) {
+      return;
+    }
+    this.joinClickRecorded = true;
+
+    const extraClientMetaData: Partial<ClientMetaData> = {};
+
+    if (Boolean((this.group as any).boosted_guid)) {
+      extraClientMetaData.campaign = this.group.urn;
+    }
+
+    this.clientMetaService.recordClick(
+      this.group.guid,
+      this.parentClientMeta,
+      extraClientMetaData
     );
   }
 
@@ -173,7 +207,6 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    */
   onPrimaryButtonClick($event) {
     if (this.service.inProgress$.getValue()) return;
-
     switch (this.buttonType) {
       case 'join':
         this.join();
@@ -199,12 +232,10 @@ export class GroupMembershipButtonComponent implements OnDestroy {
       let endpoint = this.modernGroupsExperiment.isActive()
         ? `/group/${this.group.guid}?join=true`
         : `/groups/profile/${this.group.guid}/feed?join=true`;
-
       this.loginReferrer.register(endpoint);
       this.router.navigate(['/login']);
       return;
     }
-
     this.service.join();
   }
 

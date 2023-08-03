@@ -14,7 +14,7 @@ namespace BoostConsoleSteps {
   );
 
   Given(
-    'I am on the Boost Console {string} location tab',
+    'I am on the Boost Console with location query string param {string}',
     (tab: BoostConsoleLocationTab): void => {
       boostConsolePage.navigateToViaUrl(`location=${tab}`);
     }
@@ -62,7 +62,7 @@ namespace BoostConsoleSteps {
 
   When('I navigate via user menu to the boost console', async () => {
     await boostConsolePage.navigateToViaUserMenu();
-    boostConsolePage.hasTabSelected('Feed');
+    boostConsolePage.hasTabSelected('Posts');
   });
 
   When('I click {string} on latest Boost', async (buttonType: string) => {

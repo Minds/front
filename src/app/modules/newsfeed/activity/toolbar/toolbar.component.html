@@ -27,21 +27,15 @@
   class="m-activityToolbar__actions"
   [ngClass]="{
     'm-activityToolbar__actions--noMetrics': !showMetrics,
-    'm-activityToolbar__actions--hasComments': entity['comments:count'] > 0
+    'm-activityToolbar__actions--hasComments': entity['comments:count'] > 0,
+    'm-activityToolbar__actions--centered':
+      service.displayOptions.showExplicitVoteButtons
   }"
   *ngIf="service.displayOptions.showToolbarButtonsRow"
 >
-  <minds-button-thumbs-up
-    [object]="entity"
-    [iconOnly]="service.displayOptions.showInteractions"
-    (thumbsUpChange)="detectChanges()"
-  ></minds-button-thumbs-up>
-  <minds-button-thumbs-down
-    [object]="entity"
-    [iconOnly]="service.displayOptions.showInteractions"
-    (thumbsDownChange)="detectChanges()"
-  ></minds-button-thumbs-down>
-
+  <ng-container *ngIf="!service.displayOptions.showExplicitVoteButtons">
+    <ng-container *ngTemplateOutlet="thumbs"></ng-container>
+  </ng-container>
   <m-activity__remindButton *ngIf="allowReminds"> </m-activity__remindButton>
 
   <minds-button-comment
@@ -70,6 +64,15 @@
       (click)="openBoostModal($event)"
     ></m-activity__boostButton>
   </ng-container>
+</div>
+<!-- ---------------------------------------------------  -->
+<!-- EXPLICIT VOTE BUTTONS  -->
+<!-- ---------------------------------------------------  -->
+<div
+  class="m-activityToolbar__explicitVotesRow"
+  *ngIf="service.displayOptions.showExplicitVoteButtons"
+>
+  <ng-container *ngTemplateOutlet="thumbs"></ng-container>
 </div>
 <!-- ---------------------------------------------------  -->
 <!-- METRICS  -->
@@ -139,3 +142,19 @@
   "
   [entity]="entity"
 ></m-activity__boostCta>
+<!-- ---------------------------------------------------  -->
+<!-- TEMPLATE: THUMBS -->
+<!-- ---------------------------------------------------  -->
+<ng-template #thumbs>
+  <minds-button-thumbs-up
+    [object]="entity"
+    [iconOnly]="service.displayOptions.showInteractions"
+    [explicit]="service.displayOptions.showExplicitVoteButtons"
+    (thumbsUpChange)="detectChanges()"
+  ></minds-button-thumbs-up>
+  <minds-button-thumbs-down
+    [object]="entity"
+    [explicit]="service.displayOptions.showExplicitVoteButtons"
+    (thumbsDownChange)="onThumbsDownChange($event)"
+  ></minds-button-thumbs-down>
+</ng-template>

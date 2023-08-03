@@ -1,0 +1,7 @@
+query GetDismissals {
+  dismissals {
+    userGuid
+    key
+    dismissalTimestamp
+  }
+}

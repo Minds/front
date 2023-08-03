@@ -20,8 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { RecentService } from '../../services/ux/recent';
 import { recentServiceMock } from '../../mocks/services/ux/recent-mock.spec';
-import { MockDirective } from '../../utils/mock';
+import { MockDirective, MockService } from '../../utils/mock';
 import { SharedModule } from '../../common/shared.module';
+import { SearchGqlExperimentService } from './search-gql-experiment.service';
 
 // Mocks
 
@@ -70,6 +71,10 @@ describe('SearchBarComponent', () => {
           { provide: Session, useValue: sessionMock },
           { provide: ContextService, useValue: contextServiceMock },
           { provide: RecentService, useValue: recentServiceMock },
+          {
+            provide: SearchGqlExperimentService,
+            useValue: MockService(SearchGqlExperimentService),
+          },
         ],
       }).compileComponents();
     })
@@ -100,24 +105,6 @@ describe('SearchBarComponent', () => {
 
   // Tests
 
-  it(`should handle the current url that's not /search`, fakeAsync(() => {
-    comp.handleUrl('/newsfeed');
-    _tickWaitFor(100);
-
-    expect(comp.q).toBeFalsy();
-    expect(comp.id).toBeFalsy();
-    expect(comp.hasSearchContext).toBe(false);
-    expect(comp.suggestionsDisabled).toBe(false);
-
-    comp.handleUrl('/something/search');
-    _tickWaitFor(100);
-
-    expect(comp.q).toBeFalsy();
-    expect(comp.id).toBeFalsy();
-    expect(comp.hasSearchContext).toBe(false);
-    expect(comp.suggestionsDisabled).toBe(false);
-  }));
-
   it('should set active when focus is called', () => {
     comp.active = false;
     comp.focus();
@@ -143,8 +130,8 @@ describe('SearchBarComponent', () => {
     expect(comp.router.navigate).toHaveBeenCalledWith(['/discovery/search'], {
       queryParams: {
         q: 'test',
-        f: undefined,
-        t: undefined,
+        f: 'top',
+        t: 'all',
       },
     });
   }));
@@ -160,8 +147,8 @@ describe('SearchBarComponent', () => {
     expect(comp.router.navigate).toHaveBeenCalledWith(['/discovery/search'], {
       queryParams: {
         q: 'test',
-        f: undefined,
-        t: undefined,
+        f: 'top',
+        t: 'all',
       },
     });
   }));

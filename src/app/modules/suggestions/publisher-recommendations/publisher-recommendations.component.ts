@@ -40,6 +40,14 @@ const listAnimation = trigger('listAnimation', [
     animate('200ms ease-out', style({ height: 0, opacity: 0 }))
   ),
 ]);
+
+export type PublisherRecommendationsLocation =
+  | 'newsfeed'
+  | 'discovery-feed'
+  | 'channel'
+  | 'groups-memberships'
+  | 'search';
+
 /**
  * Displays channel/group recommendations
  *
@@ -58,7 +66,7 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
    * the location in which this component appears
    */
   @Input()
-  location: 'newsfeed' | 'discovery-feed' | 'channel' | 'groups-memberships';
+  location: PublisherRecommendationsLocation;
   /**
    * the channel id for which the recommendations should be contextualized.
    */
@@ -84,6 +92,9 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   /**
    * Should the widget recommend channels or groups?
    * (onboarding v4 uses this for suggested groups)
+   *
+   * If using gql recs, types may be mixed and
+   * this mostly determines where the 'See More' link goes
    */
   @Input()
   publisherType: PublisherType = 'user';
@@ -311,10 +322,10 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   }
 
   getLink(publisher): string[] {
-    if (this.publisherType === 'user') {
+    if (publisher.type === 'user') {
       return ['/', publisher.username];
     }
-    if (this.publisherType === 'group') {
+    if (publisher.type === 'group') {
       return ['/groups/profile', publisher.guid];
     }
   }

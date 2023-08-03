@@ -1,4 +1,5 @@
 <a
+  *ngIf="!explicit"
   (click)="onClick($event)"
   [ngClass]="{ selected: has() }"
   data-ref="data-minds-thumbs-up-button"
@@ -17,7 +18,28 @@
     >{{ object['thumbs:up:count'] | number }}</span
   >
 </a>
-
+<!-- --------------------------------------------- -->
+<!-- EXPLICIT  -->
+<!-- --------------------------------------------- -->
+<m-button
+  *ngIf="explicit"
+  class="m-thumbButton--explicit"
+  (onAction)="onClick($event)"
+  [highlightText]="has()"
+  size="xsmall"
+  data-ref="data-minds-explicit-thumbs-up-button"
+  m-clientMeta
+>
+  <i
+    class="material-icons"
+    [class.inProgress]="session.getLoggedInUser() && inProgress"
+    >thumb_up</i
+  >
+  <span i18n="@@THUMBS_UP_BUTTON__EXPLICIT__SEE_MORE_OF_THIS"
+    >See more of this</span
+  >
+</m-button>
+<!-- --------------------------------------------- -->
 <ng-container *ngIf="showFriendlyCaptcha">
   <m-friendlyCaptcha
     (done)="onFriendlyCaptchaComplete($event)"

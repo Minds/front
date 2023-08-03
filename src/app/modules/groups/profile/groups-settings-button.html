@@ -34,6 +34,20 @@
           <ng-container *ngIf="editing">Save</ng-container></span
         >
       </m-dropdownMenu__item>
+      <!---------------------------->
+      <m-dropdownMenu__item
+        *ngIf="boostGroupsExperimentIsActive"
+        (click)="onBoostGroupClick()"
+        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__BOOST_GROUP"
+        >Boost group</m-dropdownMenu__item
+      >
+
+      <m-dropdownMenu__item
+        *ngIf="boostGroupsExperimentIsActive"
+        (click)="onBoostGroupClick()"
+        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__BOOST_GROUP"
+        >Boost group</m-dropdownMenu__item
+      >
 
       <m-dropdownMenu__item
         *ngIf="group.videoChatDisabled && !v2"
@@ -47,7 +61,7 @@
       >
         Disable gathering
       </m-dropdownMenu__item>
-
+      <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="group.moderated"
         (click)="toggleModeration(false)"
@@ -60,7 +74,21 @@
       >
         Enable moderation
       </m-dropdownMenu__item>
+      <!---------------------------->
+      <m-dropdownMenu__item
+        *ngIf="group.show_boosts === undefined || group.show_boosts; else enableBoosts"
+        (click)="toggleShowBoosts(false)"
+      >
+        Disable boosts
+      </m-dropdownMenu__item>
 
+      <ng-template #enableBoosts>
+        <m-dropdownMenu__item (click)="toggleShowBoosts(true)">
+          Enable boosts
+        </m-dropdownMenu__item>
+      </ng-template>
+
+      <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="!group.membership"
         (click)="togglePublic(true)"

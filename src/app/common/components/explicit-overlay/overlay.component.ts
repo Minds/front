@@ -1,68 +1,80 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Session } from '../../../services/session';
-import { Router } from '@angular/router';
-import { Storage } from '../../../services/storage';
-import { ConfigsService } from '../../services/configs.service';
+import { TopbarAlertService } from '../topbar-alert/topbar-alert.service';
+import { Subscription, distinctUntilChanged } from 'rxjs';
+import { MindsUser } from '../../../interfaces/entities';
 
+/**
+ * Overlay to cover NSFW entities pending a user
+ * confirming they wish to view it and are over 18
+ * years old.
+ */
 @Component({
   selector: 'm-explicit-overlay',
   templateUrl: 'overlay.component.html',
+  styleUrls: ['./overlay.component.ng.scss'],
 })
-export class ExplicitOverlayComponent {
-  readonly siteUrl: string;
+export class ExplicitOverlayComponent implements OnInit, OnDestroy {
   public hidden = true;
-  public _entity: any;
   public type: string;
+  private _entity: any;
+  private topbarAlertShownSubscription: Subscription;
 
   @Input() set entity(value: any) {
     if (value) {
-      // change wording for entity label
-      this.type = value.type === 'user' ? 'channel' : value.type;
-
+      // change wording for entity label.
+      this.type = value.type === 'user' ? 'channel' : value?.type;
       this._entity = value;
-      this.showOverlay();
+      this.initialize();
     }
   }
 
-  @Input() message: string;
+  @HostBinding('class.m-nsfwOverlay--topbarAlertShown')
+  private topbarAlertShown: boolean;
 
   constructor(
     public session: Session,
-    public storage: Storage,
-    public router: Router,
-    configs: ConfigsService
-  ) {
-    this.siteUrl = configs.get('site_url');
+    private topbarAlertService: TopbarAlertService
+  ) {}
+
+  ngOnInit(): void {
+    this.topbarAlertShownSubscription = this.topbarAlertService.shouldShow$
+      .pipe(distinctUntilChanged())
+      .subscribe((shouldShow: boolean): void => {
+        this.topbarAlertShown = shouldShow;
+      });
   }
 
-  login() {
-    // TODO: Support redirect for other entity types.
-    if (this.type === 'channel') {
-      this.storage.set('redirect', this.siteUrl + this._entity.username);
-      this.router.navigate(['/login']);
-    }
+  ngOnDestroy(): void {
+    this.topbarAlertShownSubscription?.unsubscribe();
   }
 
   /**
-   * Disables overlay screen, revealing channel.
+   * Hides overlay screen.
+   * @returns { void }
    */
-  protected disableFilter(): void {
-    this._entity.mature_visibility = true;
+  public close(): void {
     this.hidden = true;
   }
 
   /**
-   * Determines whether the channel overlay should be shown
-   * over the a channel.
+   * Handles the showing of the nsfw overlay if appropriate.
+   * @returns { void }
    */
-  public showOverlay(): void {
-    if (!this._entity) {
+  private initialize(): void {
+    const loggedInUser: MindsUser = this.session.getLoggedInUser();
+    if (!this._entity || (loggedInUser && loggedInUser.mature)) {
+      this.hidden = true;
       return;
     }
 
-    if (this._entity.mature_visibility) {
-      this.hidden = true;
-    } else if (this._entity.is_mature) {
+    if (this._entity.is_mature) {
       this.hidden = false;
     } else if (this._entity.nsfw && this._entity.nsfw.length > 0) {
       this.hidden = false;

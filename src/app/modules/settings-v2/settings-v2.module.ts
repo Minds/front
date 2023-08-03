@@ -72,6 +72,7 @@ import { SettingsV2PaymentHistoryComponent } from './payments/payment-history/pa
 import { PathMatch } from '../../common/types/angular.types';
 import { AffiliatesModule } from '../affiliates/affiliates.module';
 import { SettingsV2AffiliatesComponent } from './affiliates/affiliates.component';
+import { experimentVariationGuard } from '../experiments/experiment-variation.guard';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -485,6 +486,9 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
           {
             path: 'twitter-sync',
+            canActivate: [
+              experimentVariationGuard('front-6032-twitter-sync-settings'),
+            ],
             loadChildren: () =>
               import('../newsfeed/twitter-sync/twitter-sync.module').then(
                 m => m.TwitterSyncModule

@@ -52,3 +52,4 @@ cypress/videos
 cypress-tests
 e2e/test/error-screenshots
 e2e/test/.env
+graphql.config.yml

@@ -1,0 +1,34 @@
+<div class="m-composer__livestream" *ngIf="streamCreated">
+  <div
+    class="m-composer__livestream__success"
+    *ngIf="streamCreated && !stream.isActive"
+  >
+    <p class="m-composer__livestream__success-text">
+      Live Stream Created Successfully
+    </p>
+    <p class="m-composer__livestream__instructions">
+      Use the below details to broadcast the video:
+    </p>
+    <div class="m-composer__livestream__details__container">
+      <div class="m-composer__livestream__details">
+        <p class="m-composer__livestream__details-label">Stream Key:</p>
+        <pre class="m-composer__livestream__details-value">{{
+          stream.streamKey
+        }}</pre>
+      </div>
+      <div class="m-composer__livestream__details">
+        <p class="m-composer__livestream__details-label">RTMP Link:</p>
+        <pre class="m-composer__livestream__details-value">
+ rtmp://rtmp.livepeer.com/live</pre
+        >
+      </div>
+    </div>
+  </div>
+  <iframe
+    class="m-composer__livestream__player"
+    *ngIf="streamCreated && stream.isActive"
+    [src]="safeStreamUrl"
+    frameborder="0"
+    allowfullscreen
+  ></iframe>
+</div>

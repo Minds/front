@@ -7,7 +7,6 @@
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
-
     &:active {
       opacity: 0.6;
     }

@@ -1,0 +1,43 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .m-walletCreditsTransactionHistory__header {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-bottom: $spacing6;
+
+    .m-walletCreditsTransactionHistory__backArrow {
+      margin-right: $spacing3;
+      padding: $spacing1;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .m-walletCreditsTransactionHistory__cardSummary {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-walletCreditsHistory__summaryProductName {
+        margin-bottom: $spacing3;
+        @include heading4Bold;
+      }
+
+      .m-walletCreditsHistory__summaryExpiryDate {
+        margin-bottom: unset;
+        @include body2Regular;
+      }
+    }
+  }
+
+  .m-walletCreditsHistory__description {
+    margin-bottom: $spacing8;
+
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

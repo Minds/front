@@ -26,14 +26,16 @@ export class SubscribeButtonComponent implements OnInit {
   _user: Partial<MindsUser> = {
     subscribed: false,
   };
+
   _content: any;
   _listener: Function;
-
   subscribed: boolean = false;
   inProgress: boolean = false;
+
   @Output('subscribed') onSubscribed: EventEmitter<
     Partial<MindsUser>
   > = new EventEmitter();
+
   @Output('unsubscribed') onUnsubscribed: EventEmitter<
     Partial<MindsUser>
   > = new EventEmitter();

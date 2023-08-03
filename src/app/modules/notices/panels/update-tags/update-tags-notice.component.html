@@ -1,4 +1,9 @@
-<m-feedNotice icon="info" (dismissClick)="dismiss()" dataRefId="update-tags">
+<m-feedNotice
+  icon="info"
+  [dismissible]="dismissible"
+  (dismissClick)="dismiss()"
+  dataRefId="update-tags"
+>
   <span
     class="m-feedNotice__title"
     i18n="@@FEED_NOTICE__UPDATE_TAG_PREFERENCES__TITLE"

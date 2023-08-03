@@ -1,5 +1,4 @@
 import { DismissalService } from './../../../../common/services/dismissal.service';
-import { TopFeedService } from '../subscribed.component';
 import {
   Component,
   EventEmitter,
@@ -12,6 +11,7 @@ import {
   ActivityEdge,
   FeedHighlightsConnection,
 } from '../../../../../graphql/generated.engine';
+import { TopFeedService } from '../../../../common/services/top-feeds.service';
 
 @Component({
   selector: 'm-topHighlights',

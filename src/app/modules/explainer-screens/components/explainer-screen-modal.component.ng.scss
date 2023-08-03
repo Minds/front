@@ -1,0 +1,101 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+
+  .m-explainerScreenModal__bodyWrapper {
+    padding: $spacing11 $spacing8 $spacing6 $spacing11;
+
+    .m-explainerScreenModal__header {
+      margin: 0 0 $spacing8 0;
+      @include heading3Bold;
+    }
+
+    .m-explainerScreenModal__subheader {
+      margin: 0 0 $spacing6 0;
+      @include body1Bold;
+    }
+
+    .m-explainerScreenModal__itemWrapper {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-explainerScreenModal__item {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: $spacing4 0;
+
+        .m-explainerScreenModalItem__icon {
+          font-size: 20px;
+          padding: $spacing1 $spacing2;
+          margin-right: $spacing2;
+        }
+
+        .m-explainerScreenModalItem__textWrapper {
+          display: flex;
+          flex-flow: column nowrap;
+
+          .m-explainerScreenModalItemText__header {
+            margin-bottom: $spacing2;
+            @include body1Bold;
+          }
+
+          .m-explainerScreenModalItemText__body {
+            margin-right: $spacing8;
+
+            @media screen and (min-width: $min-desktop) {
+              margin-right: $spacing24;
+            }
+
+            @include body2Regular;
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+
+            ::ng-deep a {
+              text-decoration: unset;
+
+              @include m-theme() {
+                color: themed($m-action);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-explainerScreenModal__toolbar {
+    display: flex;
+    justify-content: flex-end;
+
+    padding: $spacing6 $spacing8;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    ::ng-deep m-button {
+      width: 180px;
+
+      @media screen and (max-width: $min-tablet) {
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  m-modalCloseButton {
+    ::ng-deep a {
+      margin: 8px;
+    }
+  }
+}

@@ -1,4 +1,9 @@
-<m-feedNotice (dismissClick)="dismiss()" icon="info" dataRefId="setup-channel">
+<m-feedNotice
+  icon="info"
+  [dismissible]="dismissible"
+  (dismissClick)="dismiss()"
+  dataRefId="setup-channel"
+>
   <span class="m-feedNotice__title">{{ headerText }}</span>
   <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__SETUP_CHANNEL__BODY">
     Let the Minds community know who you are by decking out your channel page.

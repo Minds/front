@@ -33,10 +33,41 @@
                 "
               >
                 <div class="m-walletTransactionsTable__typeWrapper--boost">
-                  <i class="material-icons">trending_up</i
-                  ><span>{{ getTypeLabel(tx.type) }}ed Content</span>
-                </div></ng-container
-              >
+                  <i class="material-icons">trending_up</i>
+                  <ng-container
+                    *ngIf="currency !== 'credits'; else creditTextTemplate"
+                  >
+                    <span>{{ getTypeLabel(tx.type) }}ed Content</span>
+                  </ng-container>
+                  <ng-template #creditTextTemplate>
+                    <ng-container [ngSwitch]="tx.type">
+                      <span *ngSwitchCase="'credit:boost'"
+                        >Credit towards
+                        <ng-container
+                          *ngIf="tx.boostGuid; else noBoostLinkTemplate"
+                        >
+                          <a
+                            [routerLink]="['/boost/boost-console']"
+                            [queryParams]="{ boostGuid: tx.boostGuid }"
+                            target="_blank"
+                            >Boosted Content</a
+                          >
+                        </ng-container>
+                        <ng-template #noBoostLinkTemplate
+                          >Boosted Content</ng-template
+                        >
+                        <ng-container *ngIf="tx.refundedAt"
+                          >&nbsp;(refunded)</ng-container
+                        >
+                      </span>
+                      <span *ngSwitchDefault
+                        >Credit towards {{ getTypeLabel(tx.type) }}ed
+                        Content</span
+                      >
+                    </ng-container>
+                  </ng-template>
+                  <span></span></div
+              ></ng-container>
 
               <ng-template #boostOfferTemplate>
                 <div
@@ -167,6 +198,35 @@
               </div>
             </ng-template>
 
+            <ng-template ngSwitchCase="credit:deposit">
+              <div class="m-walletTransactionsTable__typeWrapper--default">
+                <ng-container
+                  *ngIf="tx.otherUser; else noGiftCardIssuerGuidTemplate"
+                >
+                  <img
+                    class="m-walletTransactionsTable__avatar"
+                    [routerLink]="['/', tx.otherUser.username]"
+                    [src]="tx.otherUser.avatar"
+                    alt="Gift Card issuer avatar"
+                  />
+                </ng-container>
+                <ng-template #noGiftCardIssuerGuidTemplate>
+                  <i
+                    class="material-icons m-walletTransactionsTable__icon--arrow"
+                    >redeem</i
+                  >
+                </ng-template>
+                <span
+                  >Boost Credit<span *ngIf="tx.otherUser.username"
+                    >&nbsp;from
+                    <a [routerLink]="['/', tx.otherUser.username]"
+                      >@{{ tx.otherUser.username }}</a
+                    ></span
+                  ></span
+                >
+              </div>
+            </ng-template>
+
             <!-- Default -->
             <ng-template ngSwitchDefault
               ><div class="m-walletTransactionsTable__typeWrapper--default">
@@ -187,7 +247,7 @@
           >
           <span *ngIf="currency === 'tokens'">{{ tx.amount }}</span>
           <span *ngIf="currency !== 'tokens'">{{
-            tx.amount | currency: currency
+            tx.amount | currency: 'USD'
           }}</span>
         </td>
         <td

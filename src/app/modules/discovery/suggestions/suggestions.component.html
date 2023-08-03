@@ -1,4 +1,7 @@
-<div *ngIf="!hideTabs" class="m-tabs__container">
+<div *ngIf="exploreTabContext">
+  <m-discovery__tabs></m-discovery__tabs>
+</div>
+<div *ngIf="!hideTabs && !exploreTabContext" class="m-tabs__container">
   <div class="m-tabs__tab">
     <a
       routerLink="../user"
@@ -17,7 +20,7 @@
   </div>
 </div>
 
-<div class="m-goBack">
+<div class="m-goBack" *ngIf="!exploreTabContext">
   <a
     href="#"
     (click)="$event.preventDefault(); $event.stopPropagation(); location.back()"

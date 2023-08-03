@@ -1,0 +1,55 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%;
+  max-height: 100%;
+
+  .m-onboardingV5__stepContentContainer {
+    .m-onboardingV5__stepTitle {
+      display: flex;
+      align-items: center;
+
+      .m-onboardingV5ChangeEmail__backIcon {
+        margin-right: $spacing3;
+        cursor: pointer;
+        @include unselectable;
+      }
+    }
+
+    .m-onboardingV5ChangeEmail__form {
+      display: flex;
+      flex-flow: column nowrap;
+      margin-top: $spacing8;
+
+      .m-onboardingV5ChangeEmail__inputLabel {
+        margin-bottom: $spacing1;
+
+        @include body1Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      .m-onboardingV5ChangeEmail__input {
+        border-radius: 3px;
+        height: 44px;
+        box-sizing: border-box;
+        padding: $spacing2 $spacing4;
+        margin-top: $spacing1;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+          background-color: themed($m-bgColor--primary);
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}

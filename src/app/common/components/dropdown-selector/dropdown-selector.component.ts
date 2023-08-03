@@ -3,6 +3,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Session } from '../../../services/session';
 import { Filter, Option } from '../../../interfaces/dashboard';
 
+export type DropdownSelectorSelection = {
+  option: Option;
+  filterId: string;
+};
+
 /**
  * A specialized dropdown menu whose trigger component displays the currently selected item
  *
@@ -17,7 +22,9 @@ export class DropdownSelectorComponent implements OnInit {
   @Input() dropUp: boolean = false;
   @Input() showLabel: boolean = true;
   @Input() inlineLabel = false;
-  @Output() selectionMade: EventEmitter<any> = new EventEmitter();
+  @Output() selectionMade: EventEmitter<
+    DropdownSelectorSelection
+  > = new EventEmitter<DropdownSelectorSelection>();
 
   expanded = false;
 

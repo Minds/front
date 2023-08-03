@@ -5,6 +5,9 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { FeedNoticeService } from '../../notices/services/feed-notice.service';
 import { Session } from '../../../services/session';
 import { PublisherType } from '../../../common/components/publisher-search-modal/publisher-search-modal.component';
+import { PublisherRecommendationsLocation } from '../../suggestions/publisher-recommendations/publisher-recommendations.component';
+import { ActivityEntity } from '../../newsfeed/activity/activity.service';
+import { ExplicitVotesExperimentService } from '../../experiments/sub-services/explicit-votes-experiment.service';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -22,7 +25,7 @@ export class DefaultFeedComponent implements OnInit {
    * recommendations widget
    */
   @Input()
-  location: string;
+  location: PublisherRecommendationsLocation;
 
   /**
    * Whether the header of the feed should be visible
@@ -47,7 +50,8 @@ export class DefaultFeedComponent implements OnInit {
     public experiments: ExperimentsService,
     private feedNoticeService: FeedNoticeService,
     private dismissal: DismissalService,
-    private session: Session
+    private session: Session,
+    private explicitVotesExperiment: ExplicitVotesExperimentService
   ) {}
 
   public ngOnInit(): void {
@@ -137,10 +141,27 @@ export class DefaultFeedComponent implements OnInit {
   }
 
   /**
-   * Whether a git couser is logged in.
+   * Whether a user is logged in.
    * @returns { boolean } true if a user is logged in.
    */
   public isLoggedIn(): boolean {
     return this.session.isLoggedIn();
+  }
+
+  protected shouldShowActivity(activity: ActivityEntity): boolean {
+    return !this.isExplicitlyDownvotedDiscoveryPost(activity);
+  }
+
+  private isExplicitlyDownvotedDiscoveryPost(
+    activity: ActivityEntity
+  ): boolean {
+    return (
+      this.location === 'discovery-feed' &&
+      this.explicitVotesExperiment.isActive() &&
+      this.isLoggedIn() &&
+      activity['thumbs:down:user_guids'].includes(
+        this.session.getLoggedInUser().guid
+      )
+    );
   }
 }

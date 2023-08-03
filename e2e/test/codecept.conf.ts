@@ -50,6 +50,7 @@ export const config: CustomMainConfig = {
     channelPage: './pages/channelPage.ts',
     commonPage: './pages/commonPage.ts',
     devtoolsPage: './pages/devtoolsPage.ts',
+    groupPage: './pages/groupPage.ts',
     groupsMembershipPage: './pages/groupsMembershipPage.ts',
     loginPage: './pages/loginPage.ts',
     newsfeedPage: './pages/newsfeedPage.ts',
@@ -62,6 +63,7 @@ export const config: CustomMainConfig = {
     supermindConsolePage: './pages/supermindConsolePage.ts',
     supermindSettingsPage: './pages/supermindSettingsPage.ts',
     walletPage: './pages/walletPage.ts',
+    walletCreditsPage: './pages/walletCreditsPage.ts',
     tokenMarketingPage: './pages/tokenMarketingPage.ts',
     // fragments
     composerModalComponent: './fragments/composerModalComponent.ts',
