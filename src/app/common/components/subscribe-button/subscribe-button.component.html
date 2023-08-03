@@ -1,53 +1,100 @@
 <ng-container *ngIf="sized">
-  <m-button
-    *ngIf="!subscribed"
-    (onAction)="subscribe($event)"
-    [size]="size"
-    color="blue"
-    [iconOnly]="iconOnly"
-    title="Subscribe"
-    [saving]="inProgress && !iconOnly"
-    [disabled]="inProgress || disableSubscribe"
+  <!-- ----------------------------------- -->
+  <!-- DISPLAY AS TEXT  -->
+  <!-- ----------------------------------- -->
+  <span
+    *ngIf="!displayAsButton"
+    [attr.data-ref]="
+      'subscribe-button-action-text-only-' + subscribed
+        ? 'unsubscribe'
+        : 'subscribe'
+    "
+    [title]="subscribed ? 'Subscribed' : 'Subscribe'"
+    class="m-subscribeButton__textOnlyLabel"
+    [ngClass]="{
+      'm-subscribeButton__textOnlyLabel--selected': !subscribed
+    }"
+    (click)="subscribed ? unsubscribe($event) : subscribe($event)"
   >
-    <div class="m-subscribeButtonText--projected">
-      <ng-content select="[subscribeButtonText]"></ng-content>
-    </div>
-    <!-- The default text is not displayed if there is ng-content present - see scss -->
-    <div class="m-subscribeButtonText--default">
-      <i *ngIf="showIcons" class="material-icons">
-        add
-      </i>
-      <span *ngIf="!iconOnly">
-        <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
-      </span>
-    </div>
-  </m-button>
-  <m-button
-    *ngIf="subscribed"
-    (onAction)="unsubscribe($event)"
-    [size]="size"
-    [iconOnly]="iconOnly"
-    [title]="disableAfterSubscribe ? 'Subscribed' : 'Unsubscribe'"
-    [saving]="inProgress && !iconOnly"
-    [disabled]="inProgress || disableSubscribe || disableAfterSubscribe"
-  >
-    <div class="m-subscribeButtonText--projected">
-      <ng-content></ng-content>
-    </div>
-    <div class="m-subscribeButtonText--default">
-      <i *ngIf="showIcons && !disableAfterSubscribe" class="material-icons">
-        {{ subscribedIcon }}
-      </i>
-      <span *ngIf="!iconOnly">
-        <ng-container
-          *ngIf="!disableAfterSubscribe; else disableAfterSubscribeTemplate"
-          i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL"
-          >Unsubscribe</ng-container
-        >
-        <ng-template #disableAfterSubscribeTemplate i18n="@@COMMON__SUBSCRIBED"
-          >Subscribed</ng-template
-        >
-      </span>
-    </div>
-  </m-button>
+    <ng-container
+      *ngTemplateOutlet="subscribed ? unsubscribeLabel : subscribeLabel"
+    ></ng-container>
+  </span>
+  <!-- ----------------------------------- -->
+  <!-- DISPLAY AS BUTTON  -->
+  <!-- ----------------------------------- -->
+  <ng-container *ngIf="displayAsButton">
+    <m-button
+      *ngIf="!subscribed"
+      (onAction)="subscribe($event)"
+      [size]="size"
+      color="blue"
+      [iconOnly]="iconOnly"
+      title="Subscribe"
+      [saving]="inProgress && !iconOnly"
+      [disabled]="inProgress || disableSubscribe"
+      attr.data-ref="subscribe-button-action-subscribe"
+    >
+      <div class="m-subscribeButtonText--projected">
+        <ng-content select="[subscribeButtonText]"></ng-content>
+      </div>
+      <!-- Default text is not displayed if projected ng-content is present (see scss) -->
+      <div class="m-subscribeButtonText--default">
+        <ng-container *ngTemplateOutlet="subscribeLabel"></ng-container>
+      </div>
+    </m-button>
+    <m-button
+      *ngIf="subscribed"
+      (onAction)="unsubscribe($event)"
+      [size]="size"
+      [iconOnly]="iconOnly"
+      [title]="disableAfterSubscribe ? 'Subscribed' : 'Unsubscribe'"
+      [saving]="inProgress && !iconOnly"
+      [disabled]="inProgress || disableSubscribe || disableAfterSubscribe"
+      attr.data-ref="subscribe-button-action-unsubscribe"
+    >
+      <div class="m-subscribeButtonText--projected">
+        <ng-content></ng-content>
+      </div>
+      <!-- Default text is not displayed if projected ng-content is present (see scss) -->
+      <div class="m-subscribeButtonText--default">
+        <ng-container *ngTemplateOutlet="unsubscribeLabel"></ng-container>
+      </div>
+    </m-button>
+  </ng-container>
 </ng-container>
+<!-- ------------------------------------->
+<!-- TEMPLATES --------------------------->
+<!-- ------------------------------------->
+<ng-template #subscribeLabel>
+  <i *ngIf="showIcons && displayAsButton" class="material-icons">
+    add
+  </i>
+  <span *ngIf="!iconOnly">
+    <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
+  </span>
+</ng-template>
+<!-- ------------------------------------->
+<ng-template #unsubscribeLabel>
+  <i
+    *ngIf="showIcons && !disableAfterSubscribe && displayAsButton"
+    class="material-icons"
+  >
+    {{ subscribedIcon }}
+  </i>
+  <span *ngIf="!iconOnly">
+    <ng-container
+      *ngIf="
+        disableAfterSubscribe || labelType === 'pastTense';
+        else actionTemplate
+      "
+      i18n="@@COMMON__SUBSCRIBED"
+      >Subscribed</ng-container
+    >
+    <ng-template
+      #actionTemplate
+      i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL"
+      >Unsubscribe</ng-template
+    >
+  </span>
+</ng-template>

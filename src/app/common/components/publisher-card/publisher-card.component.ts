@@ -15,6 +15,7 @@ import { Session } from '../../../services/session';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import { ButtonColor, ButtonSize } from '../button/button.component';
+import { GroupMembershipButtonLabelType } from '../group-membership-button/group-membership-button.component';
 
 export type PublisherCardSize = 'small' | 'medium' | 'large';
 
@@ -42,6 +43,9 @@ export class PublisherCardComponent implements AfterViewInit {
   // Only enabled for groups for now
   @Input() subscribeButtonSize: ButtonSize = 'xsmall';
 
+  // Determines what text we see after we click 'join'
+  @Input() joinButtonLabelType: GroupMembershipButtonLabelType = 'pastTense';
+
   // disable subscription - allows for a user to preview their own card.
   @Input() disableSubscribe: boolean = false;
 
@@ -52,7 +56,9 @@ export class PublisherCardComponent implements AfterViewInit {
   @Input() sizeOverride: PublisherCardSize;
 
   readonly cdnUrl: string;
+
   btnIconOnly: boolean = false;
+
   size: PublisherCardSize = 'medium';
 
   // Don't show subscribe button until the card size has been determined

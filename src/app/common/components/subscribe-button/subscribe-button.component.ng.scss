@@ -1,3 +1,4 @@
+@import 'defaults.scss';
 :host {
   .m-subscribeButtonText--projected:not(:empty)
     + .m-subscribeButtonText--default {
@@ -5,5 +6,17 @@
   }
   .m-subscribeButtonText--default {
     display: flex;
+  }
+  .m-subscribeButton__textOnlyLabel {
+    cursor: pointer;
+    @include body3Medium;
+    &:active {
+      opacity: 0.7;
+    }
+    &.m-subscribeButton__textOnlyLabel--selected {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
   }
 }
