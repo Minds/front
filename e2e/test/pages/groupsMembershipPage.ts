@@ -29,7 +29,7 @@ class GroupsMembershipPage {
   }
 
   get recommendedGroupsTitle(): string {
-    return 'm-publisherRecommendations [data-ref=publisher-recommendations-title-groups]';
+    return 'm-publisherRecommendations [data-ref=publisher-recommendations-title-recommended-for-you]';
   }
 
   clickCreateGroupButton() {

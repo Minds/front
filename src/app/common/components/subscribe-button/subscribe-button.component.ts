@@ -14,6 +14,8 @@ import { SubscriptionService } from '../../services/subscription.service';
 import { MindsUser } from './../../../interfaces/entities';
 import { ButtonSize } from '../button/button.component';
 
+export type SubscribeButtonLabelType = 'action' | 'pastTense';
+
 @Component({
   selector: 'm-subscribeButton',
   templateUrl: './subscribe-button.component.html',
@@ -24,14 +26,16 @@ export class SubscribeButtonComponent implements OnInit {
   _user: Partial<MindsUser> = {
     subscribed: false,
   };
+
   _content: any;
   _listener: Function;
-
   subscribed: boolean = false;
   inProgress: boolean = false;
+
   @Output('subscribed') onSubscribed: EventEmitter<
     Partial<MindsUser>
   > = new EventEmitter();
+
   @Output('unsubscribed') onUnsubscribed: EventEmitter<
     Partial<MindsUser>
   > = new EventEmitter();
@@ -61,6 +65,20 @@ export class SubscribeButtonComponent implements OnInit {
    * the icon to show when user is subscribed to this channel
    */
   @Input() subscribedIcon = 'close';
+
+  /**
+   * If false, display as a string of text instead of an outlined button
+   * (see activity owner blocks for example)
+   */
+  @Input()
+  displayAsButton: boolean = true;
+
+  /**
+   * action - Buttons say "Subscribe" & "Unsubscribe"
+   * pastTense - Buttons say "Subscribe" & "Subscribed"
+   */
+  @Input()
+  labelType: SubscribeButtonLabelType = 'action';
 
   constructor(
     public session: Session,
