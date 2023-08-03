@@ -5,6 +5,8 @@ import { UpsellModalComponent } from './upsell-modal.component';
 import { MockService } from '../../../../utils/mock';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { WirePaymentHandlersService } from '../../../wire/wire-payment-handlers.service';
+import { WireModalService } from '../../../wire/wire-modal.service';
 
 describe('UpsellModalComponent', () => {
   let component: UpsellModalComponent;
@@ -15,8 +17,11 @@ describe('UpsellModalComponent', () => {
       declarations: [UpsellModalComponent],
       imports: [RouterTestingModule],
       providers: [
-        { provide: Injector, useValue: MockService(Injector) },
-        { provide: ModalService, useValue: MockService(ModalService) },
+        {
+          provide: WirePaymentHandlersService,
+          useValue: MockService(WirePaymentHandlersService),
+        },
+        { provide: WireModalService, useValue: MockService(WireModalService) },
       ],
     }).compileComponents();
 
