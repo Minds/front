@@ -13,6 +13,7 @@ import { OnboardingV5RadioSurveyContentComponent } from './components/steps/radi
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { OnboardingV5ChannelRecommendationsContentComponent } from './components/steps/channel-recommendations/channel-recommendations.component';
 import { OnboardingV5CompletedSplashComponent } from './components/completed-splash/completed-splash.component';
+import { OnboardingV5ChangeEmailContentComponent } from './components/steps/verify-email/change-email/change-email.component';
 
 /**
  * Lazy loaded module.
@@ -32,6 +33,7 @@ import { OnboardingV5CompletedSplashComponent } from './components/completed-spl
     FeatureCarouselComponent,
     OnboardingV5FooterComponent,
     OnboardingV5VerifyEmailContentComponent,
+    OnboardingV5ChangeEmailContentComponent,
     OnboardingV5TagSelectorContentComponent,
     OnboardingV5RadioSurveyContentComponent,
     OnboardingV5ChannelRecommendationsContentComponent,

@@ -1,32 +1,61 @@
-<div class="m-onboardingV5__stepContentContainer">
-  <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
-  <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
-  <form class="m-onboardingV5VerifyEmail__codeForm" [formGroup]="formGroup">
-    <label for="code" class="m-onboardingV5VerifyEmail__inputLabel">{{
-      data.verifyEmailForm?.inputLabel
-    }}</label>
-    <input
-      formControlName="code"
-      class="m-onboardingV5VerifyEmail__input"
-      (keydown.enter)="onActionButtonClick()"
-      (paste)="onPaste($event)"
-      [placeholder]="data?.verifyEmailForm?.inputPlaceholder ?? ''"
-      data-test="onboarding-v5-verify-email-input"
-    />
-  </form>
-  <p
-    (click)="onResendCodeTextClick($event)"
-    class="m-onboardingV5VerifyEmail__resendCodeText"
-    [innerHtml]="resendCodeString"
-  ></p>
-</div>
-<m-onboardingV5__footer
-  [disabledActionButton]="
-    !codeInputFormControl.valid && !(codeSubmissionInProgress$ | async)
-  "
-  [saving]="codeSubmissionInProgress$ | async"
-  [actionButton]="data.actionButton ?? null"
-  [skipButton]="data.skipButton ?? null"
-  (actionButtonClick)="onActionButtonClick()"
-  (skipButtonClick)="onSkipButtonClick()"
-></m-onboardingV5__footer>
+<ng-container [ngSwitch]="activeSubPanel$ | async">
+  <!-- Change email sub-panel -->
+  <m-onboardingV5__changeEmailContent
+    *ngSwitchCase="OnboardingV5VerifyEmailSubPanel.CHANGE_EMAIL"
+    [data]="data.verifyEmailForm"
+    (goBackClick)="onChangeEmailBackNavigation()"
+    (emailChanged)="onEmailChanged()"
+  ></m-onboardingV5__changeEmailContent>
+
+  <!-- Code input sub-panel -->
+  <ng-container *ngSwitchDefault>
+    <div class="m-onboardingV5__stepContentContainer">
+      <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
+      <p class="m-onboardingV5__stepDescription">{{ description$ | async }}</p>
+      <form class="m-onboardingV5VerifyEmail__codeForm" [formGroup]="formGroup">
+        <label for="code" class="m-onboardingV5VerifyEmail__inputLabel">{{
+          data.verifyEmailForm?.inputLabel
+        }}</label>
+        <input
+          #codeInput
+          formControlName="code"
+          class="m-onboardingV5VerifyEmail__input"
+          type="text"
+          autocomplete="off"
+          tabindex="0"
+          (keydown.enter)="onActionButtonClick()"
+          (paste)="onPaste($event)"
+          [placeholder]="data?.verifyEmailForm?.inputPlaceholder ?? ''"
+          data-test="onboarding-v5-verify-email-input"
+        />
+      </form>
+      <p
+        (click)="onResendCodeTextClick($event)"
+        (keyup.enter)="onResendCodeTextClick($event)"
+        class="m-onboardingV5VerifyEmail__resendCodeText"
+        [innerHtml]="resendCodeString"
+      ></p>
+      <p
+        *ngIf="data?.verifyEmailForm?.changeEmailActionText"
+        class="m-onboardingV5VerifyEmail__changeEmailActionText"
+        tabindex="3"
+        (keyup.enter)="onChangeEmailAddressClick()"
+        (click)="onChangeEmailAddressClick()"
+        data-test="onboarding-v5-email-change-action-text"
+      >
+        {{ data.verifyEmailForm.changeEmailActionText }}
+      </p>
+    </div>
+
+    <m-onboardingV5__footer
+      [disabledActionButton]="
+        !codeInputFormControl.valid && !(codeSubmissionInProgress$ | async)
+      "
+      [saving]="codeSubmissionInProgress$ | async"
+      [actionButton]="data.actionButton ?? null"
+      [skipButton]="data.skipButton ?? null"
+      (actionButtonClick)="onActionButtonClick()"
+      (skipButtonClick)="onSkipButtonClick()"
+    ></m-onboardingV5__footer>
+  </ng-container>
+</ng-container>

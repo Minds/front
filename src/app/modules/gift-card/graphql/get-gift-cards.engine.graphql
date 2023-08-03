@@ -1,0 +1,28 @@
+query GetGiftCards(
+  $first: Int,
+  $after: String,
+  $ordering: GiftCardOrderingEnum,
+  $productId: GiftCardProductIdEnum,
+  $statusFilter: GiftCardStatusFilterEnum,
+) {
+  giftCards(
+    first: $first,
+    after: $after,
+    ordering: $ordering,
+    productId: $productId,
+    statusFilter: $statusFilter
+  ) {
+    edges {
+      node {
+        guid
+        productId
+        balance
+        expiresAt
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

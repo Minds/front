@@ -27,8 +27,17 @@
       </ng-template>
       <div>
         <a
-          [routerLink]="['/', 'discovery', 'suggestions', publisherType]"
-          [queryParams]="channelId && { u: channelId }"
+          [routerLink]="
+            location === 'search'
+              ? ['/search']
+              : ['/', 'discovery', 'suggestions', publisherType]
+          "
+          [queryParams]="
+            location === 'search'
+              ? { f: 'groups' }
+              : channelId && { u: channelId }
+          "
+          [queryParamsHandling]="location === 'search' ? 'merge' : ''"
           i18n="@@COMMON__SEE_MORE__ACTION"
           >See more</a
         >

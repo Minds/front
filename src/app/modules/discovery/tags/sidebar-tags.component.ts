@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryTagsService } from './tags.service';
+import { SearchGqlExperimentService } from '../../search/search-gql-experiment.service';
 
 /**
  * Display tags 'for you', trending Minds+, or related to an activity post
@@ -36,9 +37,16 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
   isPlusPage: boolean = false;
 
-  constructor(public tagsService: DiscoveryTagsService) {}
+  constructor(
+    public tagsService: DiscoveryTagsService,
+    private searchExp: SearchGqlExperimentService
+  ) {}
 
   ngOnInit() {
+    if (this.searchExp.isActive()) {
+      this.parentPath = '/';
+    }
+
     if (!this._context) {
       this._context = 'user';
     }

@@ -27,13 +27,16 @@ export class DiscoveryTabsComponent {
 
   /**
    * Checks whether passed URL is the active URL
-   * Disregards querystring.
    *
    * @param { string } url - url to be checked against
+   * @param { boolean } paramsIncluded - whether params are included in the url to be tested
    * @returns { boolean } - true if link matches.
    */
-  public isLinkActive(url: string): boolean {
-    const currentUrl = this.router.url;
-    return url === currentUrl.split('?')[0];
+  public isLinkActive(url: string, paramsIncluded: boolean = false): boolean {
+    const currentUrl = paramsIncluded
+      ? this.router.url
+      : this.router.url.split('?')[0];
+
+    return url === currentUrl;
   }
 }

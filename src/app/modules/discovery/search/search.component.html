@@ -1,7 +1,10 @@
 <ng-container
   [m-clientMeta]="{ source: 'feed/discovery/search', medium: 'feed' }"
 >
-  <div class="m-tabs__container">
+  <div *ngIf="exploreTabContext">
+    <m-discovery__tabs></m-discovery__tabs>
+  </div>
+  <div class="m-tabs__container" *ngIf="!exploreTabContext">
     <div class="m-tabs__tab">
       <a
         routerLink="./"
@@ -51,7 +54,7 @@
     </ng-container>
   </ng-container>
 
-  <div class="m-goBack">
+  <div class="m-goBack" *ngIf="!exploreTabContext">
     <a [routerLink]="getBackNavigationPath()" [queryParams]="{ reload: false }">
       <i class="material-icons">arrow_back</i
       ><span i18n="@@DISCOVERY_SEARCH__BACK">Back</span>

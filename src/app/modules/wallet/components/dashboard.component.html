@@ -13,16 +13,32 @@
 <ng-template #tabsTemplate>
   <div class="m-tabs__container">
     <div class="m-tabs__tab">
-      <a routerLink="/wallet/tokens" routerLinkActive="m-tabs__tab--selected"
+      <a
+        routerLink="/wallet/tokens"
+        routerLinkActive="m-tabs__tab--selected"
+        data-ref="wallet-tab-tokens"
         >Tokens</a
       >
     </div>
     <div class="m-tabs__tab">
-      <a routerLink="/wallet/cash" routerLinkActive="m-tabs__tab--selected"
+      <a
+        routerLink="/wallet/cash"
+        routerLinkActive="m-tabs__tab--selected"
+        data-ref="wallet-tab-cash"
         >Cash</a
       >
     </div>
+    <div class="m-tabs__tab" *ngIf="isGiftCardClaimExperimentActive">
+      <a
+        routerLink="/wallet/credits"
+        routerLinkActive="m-tabs__tab--selected"
+        data-ref="wallet-tab-credits"
+        >Credits</a
+      >
+    </div>
     <div class="m-layout__spacer"></div>
-    <m-wallet__tokenPriceBadge></m-wallet__tokenPriceBadge>
+    <m-wallet__tokenPriceBadge
+      *ngIf="shouldShowTokenPriceBadge()"
+    ></m-wallet__tokenPriceBadge>
   </div>
 </ng-template>

@@ -4,8 +4,8 @@ import {
   Input,
   OnDestroy,
   Optional,
-  SkipSelf,
   Output,
+  SkipSelf,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Session } from './../../../services/session';
@@ -186,10 +186,13 @@ export class GroupMembershipButtonComponent implements OnDestroy {
       return;
     }
     this.joinClickRecorded = true;
+
     const extraClientMetaData: Partial<ClientMetaData> = {};
+
     if (Boolean((this.group as any).boosted_guid)) {
       extraClientMetaData.campaign = this.group.urn;
     }
+
     this.clientMetaService.recordClick(
       this.group.guid,
       this.parentClientMeta,

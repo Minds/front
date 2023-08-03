@@ -7,6 +7,19 @@ export const cache = new InMemoryCache({
     Query: {
       fields: {
         newsfeed: relayStylePagination(['limit', 'algorithm']),
+        giftCards: relayStylePagination([
+          // Immutable fields used to derive a common cache key.
+          'first',
+          'ordering',
+        ]),
+        giftCardTransactionLedger: relayStylePagination(['giftCardGuid']),
+        search: relayStylePagination([
+          'limit',
+          'query',
+          'filter',
+          'mediaType',
+          'nsfw',
+        ]),
       },
     },
   },
