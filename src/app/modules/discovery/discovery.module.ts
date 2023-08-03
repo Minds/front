@@ -42,13 +42,7 @@ import { PathMatch } from '../../common/types/angular.types';
           },
           {
             path: 'overview',
-            component: DiscoveryTrendsComponent,
-            data: {
-              title: 'Discovery / Overview',
-              ogImage: '/assets/og-images/discovery-v3.png',
-              ogImageWidth: 1200,
-              ogImageHeight: 1200,
-            },
+            redirectTo: '/newsfeed/subscriptions/for-you',
           },
           {
             path: 'trend/:guid',
@@ -63,14 +57,19 @@ import { PathMatch } from '../../common/types/angular.types';
             children: [
               {
                 path: '',
-                redirectTo: 'your',
+                redirectTo: 'trending',
+                pathMatch: 'full' as PathMatch,
+              },
+              {
+                path: 'your',
+                redirectTo: '/newsfeed/subscriptions/for-you',
                 pathMatch: 'full' as PathMatch,
               },
               {
                 path: ':type',
                 component: DiscoveryTagsComponent,
                 data: {
-                  title: 'Discovery / Tags',
+                  title: 'Discovery / Trending Tags',
                 },
               },
             ],
