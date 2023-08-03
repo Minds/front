@@ -9,10 +9,10 @@ import {
 import { clientMock } from '../../tests/client-mock.spec';
 import { sessionMock } from '../../tests/session-mock.spec';
 import { SiteService } from '../common/services/site.service';
-import { siteServiceMock } from '../modules/notifications/notification.service.spec';
 import { AnalyticsService, SnowplowContext } from './analytics';
 import { Client } from './api';
 import { Session } from './session';
+import { siteServiceMock } from '../mocks/services/site-service-mock.spec';
 
 describe('AnalyticsService', () => {
   let service: AnalyticsService;

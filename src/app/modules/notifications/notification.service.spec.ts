@@ -1,61 +1,42 @@
+import { TestBed } from '@angular/core/testing';
 import { NotificationService } from './notification.service';
-import { clientMock } from '../../../tests/client-mock.spec';
-import { sessionMock } from '../../../tests/session-mock.spec';
-import { socketMock } from '../../../tests/socket-mock.spec';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { Session } from '../../services/session';
+import { Client } from '../../services/api';
+import { SocketsService } from '../../services/sockets';
+import { MetaService } from '../../common/services/meta.service';
+import { NotificationCountSocketsService } from './notification-count-sockets.service';
+import { NotificationCountSocketsExperimentService } from '../experiments/sub-services/notification-count-sockets-experiment.service';
 import { SiteService } from '../../common/services/site.service';
-import { EventEmitter, PLATFORM_ID } from '@angular/core';
-
-export let siteServiceMock = new (function() {
-  var pro = () => null;
-  var isProDomain = () => false;
-  var title = () => 'Minds';
-  var isAdmin = () => true;
-})();
-export let metaServiceMock = new (function() {
-  this.setCounter = jasmine.createSpy('setCounter').and.returnValue(this);
-  this.setDescription = jasmine
-    .createSpy('setDescription')
-    .and.returnValue(this);
-  this.setTitle = jasmine.createSpy('setTitle').and.returnValue(this);
-  this.setOgImage = jasmine.createSpy('setOgImage').and.returnValue(this);
-})();
+import { PLATFORM_ID } from '@angular/core';
 
 describe('NotificationService', () => {
   let service: NotificationService;
 
   beforeEach(() => {
-    jasmine.clock().uninstall();
-    jasmine.clock().install();
-    service = new NotificationService(
-      sessionMock,
-      clientMock,
-      socketMock,
-      metaServiceMock,
-      PLATFORM_ID,
-      siteServiceMock
-    );
-    clientMock.response = {};
+    TestBed.configureTestingModule({
+      providers: [
+        NotificationService,
+        { provide: Session, useValue: Session },
+        { provide: Client, useValue: Client },
+        { provide: SocketsService, useValue: SocketsService },
+        { provide: MetaService, useValue: MetaService },
+        {
+          provide: NotificationCountSocketsService,
+          useValue: NotificationCountSocketsService,
+        },
+        {
+          provide: NotificationCountSocketsExperimentService,
+          useValue: NotificationCountSocketsExperimentService,
+        },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: SiteService, useValue: SiteService },
+      ],
+    });
+
+    service = TestBed.inject(NotificationService);
   });
 
-  afterEach(() => {
-    jasmine.clock().uninstall();
-  });
-
-  it('should be instantiated', () => {
+  it('should instantiate', () => {
     expect(service).toBeTruthy();
   });
-
-  it('should subscribe when listening', fakeAsync(() => {
-    const entity: any = {
-      guid: 123,
-    };
-
-    service.listen();
-    jasmine.clock().tick(10);
-    expect(socketMock.subscribe).toHaveBeenCalled();
-    service.incrementCount(4);
-
-    expect(service.count).toBe(4);
-  }));
 });

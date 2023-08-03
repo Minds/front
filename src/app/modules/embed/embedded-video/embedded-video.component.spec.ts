@@ -35,12 +35,12 @@ import { RelatedContentService } from '../../../common/services/related-content.
 import { Client } from '../../../services/api/client';
 import { MockService } from '../../../utils/mock';
 import { HlsjsPlyrDriver } from '../../media/components/video-player/hls-driver';
-import { siteServiceMock } from '../../notifications/notification.service.spec';
 import { EmbedModule } from '../embed.module';
 import * as Sentry from '@sentry/browser';
 import { EmbeddedVideoComponent } from './embedded-video.component';
 import { By } from '@angular/platform-browser';
 import { AnalyticsService } from '../../../services/analytics';
+import { siteServiceMock } from '../../../mocks/services/site-service-mock.spec';
 
 const GUID = '1155576347020644352';
 const OWNER_GUID = '1153095520021913602';
