@@ -1,0 +1,72 @@
+<div
+  class="m-groupEdit__imagery"
+  [ngStyle]="{ backgroundImage: bannerAssetCssUrl$ | async }"
+>
+  <label
+    for="group-v2-edit-banner"
+    class="m-groupEditImagery__uploadTrigger m-groupEditImagery__uploadBanner"
+  >
+    <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+    <input
+      id="group-v2-edit-banner"
+      type="file"
+      accept="image/*"
+      (change)="uploadBanner(bannerFile)"
+      data-ref="data-minds-group-banner-upload"
+      #bannerFile
+    />
+  </label>
+
+  <div
+    class="m-groupEditImagery__avatar"
+    [ngStyle]="{ backgroundImage: avatarAssetCssUrl$ | async }"
+  >
+    <label
+      for="group-v2-edit-avatar"
+      class="m-groupEditImagery__uploadTrigger m-groupEditImagery__uploadAvatar"
+    >
+      <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+      <input
+        id="group-v2-edit-avatar"
+        type="file"
+        accept="image/*"
+        (change)="uploadAvatar(avatarFile)"
+        data-ref="data-minds-group-avatar-upload"
+        #avatarFile
+      />
+    </label>
+  </div>
+</div>
+<div class="m-form__fieldsContainer">
+  <div class="m-form__row--label">
+    <label i18n="@@GROUP_EDIT_INFO__DISPLAY_NAME">Name</label>
+  </div>
+
+  <div class="m-form__row--input">
+    <input
+      type="text"
+      class="form-control"
+      name="displayName"
+      [maxlength]="maxNameLength"
+      [ngModel]="service.displayName$ | async"
+      (ngModelChange)="service.displayName$.next($event)"
+      data-ref="data-minds-group-display-name"
+    />
+  </div>
+</div>
+
+<div class="m-form__fieldsContainer">
+  <div class="m-form__row--label">
+    <label i18n="@@GROUP_EDIT__DESCRIPTION">Description</label>
+  </div>
+
+  <div class="m-form__row--input m-groupEdit__descriptionInput">
+    <textarea
+      class="form-control"
+      name="description"
+      [ngModel]="service.description$ | async"
+      (ngModelChange)="service.description$.next($event)"
+      data-ref="data-minds-group-description-textarea"
+    ></textarea>
+  </div>
+</div>

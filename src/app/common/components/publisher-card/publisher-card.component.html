@@ -79,7 +79,11 @@
           [user]="publisher"
           [sized]="sized"
           [iconOnly]="btnIconOnly"
-          [disableSubscribe]="disableSubscribe"
+          [disableSubscribe]="
+            disableSubscribe ||
+            publisher.guid === session.getLoggedInUser().guid
+          "
+          ojmremoveexternaldisablesubscribes
           [enableRecheck]="recheckSubscribed"
         ></m-subscribeButton>
         <!-- For groups -->
@@ -90,6 +94,7 @@
           [size]="subscribeButtonSize"
         ></m-group__membershipButton
       ></ng-container>
+      <ng-content select=".m-publisherCard__actionsButton"></ng-content>
     </div>
     <!-- - SUBS ---------------------------- -->
     <div

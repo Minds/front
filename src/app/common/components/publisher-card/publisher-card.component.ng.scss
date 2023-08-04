@@ -152,6 +152,7 @@
         text-overflow: ellipsis;
       }
       .m-publisherCardOwnerRowItem__primary {
+        font-size: 16px;
         font-weight: 500;
         line-height: 21px;
         @include m-theme() {
@@ -164,14 +165,12 @@
           }
         }
       }
-      .m-publisherCardOwnerRowItem__secondary {
-        a,
-        span {
-          font-size: 15px;
-          line-height: 20px;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
+      a.m-publisherCardOwnerRowItem__secondary,
+      .m-publisherCardOwnerRowItem__secondary span {
+        font-size: 15px;
+        line-height: 20px;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
         }
       }
     }

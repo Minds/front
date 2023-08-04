@@ -1,34 +1,31 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { BehaviorSubject, combineLatest, EMPTY, Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { Session } from '../../../services/session';
-import {
-  catchError,
-  distinctUntilChanged,
-  map,
-  shareReplay,
-  switchAll,
-  tap,
-} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
-import {
-  DEFAULT_GROUP_FEED_FILTER,
-  DEFAULT_GROUP_VIEW,
-  GroupFeedFilter,
-  GroupView,
-} from './group.types';
+import { DEFAULT_GROUP_VIEW, GroupView } from './group.types';
 
 /**
  * Service that holds group information using Observables
  */
 @Injectable()
 export class GroupService {
+  private baseEndpoint: string = 'api/v1/groups/';
+
   /**
    * Group GUID
    */
   readonly guid$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+  /**
+   * The group
+   */
+  readonly group$: BehaviorSubject<MindsGroup> = new BehaviorSubject<
+    MindsGroup
+  >(null);
 
   /**
    * Whether to show the Requests tab
@@ -135,18 +132,11 @@ export class GroupService {
   );
 
   /**
-   * Whether a user is editing the channel profile
-   *
-   * Editing occurs in v1 groups profile page
-   */
-  readonly editing$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-
-  /**
    * Constructor
    * @param api
    * @param session
+   * @param route
+   * @param v1Service
    */
   constructor(
     protected api: ApiService,
@@ -179,51 +169,61 @@ export class GroupService {
   }
 
   /**
-   * Performs the API response. Depends on guid$ value
+   * Loads a new group
+   * @param group the group or its guid
    */
-  apiResponse$: Observable<any> = this.guid$.pipe(
-    distinctUntilChanged(),
-    tap(guid => {
-      // Initialize group for legacy components that are using GroupsService
-      this.v1Service.load(guid);
-      this.inProgress$.next(true);
-    }),
-    map(guid => {
-      return this.api.get(`api/v1/groups/group/${guid}`).pipe(
-        catchError(e => {
-          return EMPTY;
-        })
-      );
-    }),
-    switchAll(),
-    shareReplay({ bufferSize: 1, refCount: true }),
-    tap(() => {
-      this.inProgress$.next(false);
-    })
-  );
+  load(group: MindsGroup | string): void {
+    console.log('ojm SVC load()', group);
+
+    if (typeof group === 'object') {
+      console.log('ojm SVC group is an object', group);
+
+      this.guid$.next(group.guid);
+      this.setGroup(group);
+      this.syncLegacyService(group);
+    } else {
+      console.log('ojm SVC group is an object', group);
+      this.guid$.next(group);
+      this.sync();
+    }
+  }
 
   /**
-   * The group that gets returned in the apiResponse$
+   * Re-sync current group from server
    */
-  group$: Observable<MindsGroup> = this.apiResponse$.pipe(
-    distinctUntilChanged(),
-    map(apiResponse => {
-      const group = apiResponse?.group || null;
+  sync(): void {
+    const guid = this.guid$.getValue();
+    this.inProgress$.next(true);
 
-      this.moderated$.next(group ? !!group.moderated : false);
-      this.memberCount$.next(group ? group['members:count'] : 0);
-      this.requestCount$.next(group ? group['requests:count'] : 0);
-      this.reviewCount$.next(group ? group['adminqueue:count'] : 0);
+    this.api.get(`${this.baseEndpoint}group/${guid}`).subscribe(response => {
+      this.setGroup(response.group);
+      this.syncLegacyService(response.group);
+    });
+  }
 
-      this.isOwner$.next(group ? group['is:owner'] : false);
-      this.isCreator$.next(group ? group['is:creator'] : false);
-      this.isMember$.next(group ? group['is:member'] : false);
-      this.isModerator$.next(group ? group['is:creator'] : false);
-      this.isAwaiting$.next(group ? group['is:creator'] : false);
-      this.isMuted$.next(group ? group['is:creator'] : false);
+  /**
+   * Sets the state based on a group
+   */
+  setGroup(group: MindsGroup | null): void {
+    console.log('ojm setGroup', group);
+    this.group$.next(group ? group : null);
+    this.moderated$.next(group ? !!group.moderated : false);
+    this.memberCount$.next(group ? group['members:count'] : 0);
+    this.requestCount$.next(group ? group['requests:count'] : 0);
+    this.reviewCount$.next(group ? group['adminqueue:count'] : 0);
 
-      return group;
-    }),
-    shareReplay({ bufferSize: 1, refCount: true })
-  );
+    this.isOwner$.next(group ? group['is:owner'] : false);
+    this.isCreator$.next(group ? group['is:creator'] : false);
+    this.isMember$.next(group ? group['is:member'] : false);
+    this.isModerator$.next(group ? group['is:creator'] : false);
+    this.isAwaiting$.next(group ? group['is:creator'] : false);
+    this.isMuted$.next(group ? group['is:creator'] : false);
+  }
+
+  /**
+   * Sync group for legacy components that are using GroupsService
+   */
+  public syncLegacyService(group: MindsGroup): void {
+    this.v1Service.load(group);
+  }
 }

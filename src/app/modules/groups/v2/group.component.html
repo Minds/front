@@ -14,6 +14,7 @@
           [routerLink]="['/', 'group', service.guid$ | async, 'feed']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'feed'"
           i18n="@@GROUP__TAB_LABEL__DISCUSSION"
+          data-ref="m-groupToolbarTab--discussion"
           >Discussion</a
         >
       </div>
@@ -23,28 +24,38 @@
           [routerLink]="['/', 'group', service.guid$ | async, 'members']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'members'"
           i18n="@@GROUP__TAB_LABEL__MEMBERS"
+          data-ref="m-groupToolbarTab--members"
           >Members</a
         >
       </div>
-
-      <!-- <div class="m-tabs__tab" *ngIf="service.showRequestsTab$ | async">
-        <a
-          [routerLink]="['/', 'group', service.guid$ | async, 'requests']"
-          [class.m-tabs__tab--selected]="(service.view$ | async) === 'requests'"
-          ><ng-container i18n="@@GROUP__TAB_LABEL__REQUESTS"
-            >Requests</ng-container
-          >({{ service.requestCount$ | async }})</a
-        >
-      </div>
-
+      <!-- ojm todo -->
       <div class="m-tabs__tab" *ngIf="service.showReviewTab$ | async">
         <a
           [routerLink]="['/', 'group', service.guid$ | async, 'review']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'review'"
-          ><ng-container i18n="@@GROUP__TAB_LABEL__REVIEW">Review</ng-container
-          >({{ service.reviewCount$ | async }})</a
-        >
-      </div> -->
+          data-ref="m-groupToolbarTab--review"
+          ><ng-container i18n="@@GROUP__TAB_LABEL__REVIEW"
+            >Review
+            <div
+              *ngIf="(service.reviewCount$ | async) > 0"
+              class="m-groupToolbarTab__statusDot"
+            ></div></ng-container
+        ></a>
+      </div>
+      <!-- ojm todo... don't need this whole tab?? put requests in Review? -->
+      <div class="m-tabs__tab" *ngIf="service.showRequestsTab$ | async">
+        <a
+          [routerLink]="['/', 'group', service.guid$ | async, 'requests']"
+          [class.m-tabs__tab--selected]="(service.view$ | async) === 'requests'"
+          data-ref="m-groupToolbarTab--requests"
+          ><ng-container i18n="@@GROUP__TAB_LABEL__REQUESTS"
+            >Requests
+            <div
+              *ngIf="(service.requestCount$ | async) > 0"
+              class="m-groupToolbarTab__statusDot"
+            ></div></ng-container
+        ></a>
+      </div>
     </div>
     <div
       class="m-group__searchBtnWrapper"
@@ -59,21 +70,20 @@
   <!-- VIEWS  -->
   <!-- ----------------------------------  -->
   <ng-container [ngSwitch]="service.view$ | async">
-    <minds-groups-profile-members
+    <m-group__members
       class="m-group__view--members"
       *ngSwitchCase="'members'"
-      v2="true"
       [group]="service.group$ | async"
-    ></minds-groups-profile-members>
+    ></m-group__members>
     <minds-groups-profile-requests
       class="m-group__view--requests"
       *ngSwitchCase="'requests'"
       [group]="service.group$ | async"
     ></minds-groups-profile-requests>
-    <m-groups-profile__review
+    <m-group__review
       class="m-group__view--review"
       *ngSwitchCase="'review'"
-    ></m-groups-profile__review>
+    ></m-group__review>
     <m-group__feed
       class="m-group__view--feed"
       [view]="view$ | async"

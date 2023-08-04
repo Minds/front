@@ -35,8 +35,6 @@ export class GroupActionsComponent {
    * Fired when option is selected from actions menu
    */
   onSettingsChange($event): void {
-    if ($event.editing) {
-      this.service.editing$.next($event.editing);
-    }
+    // ojm remove this?
   }
 }

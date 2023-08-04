@@ -18,6 +18,16 @@ import { GroupsModule } from '../groups.module';
 import { GroupFeedComponent } from './feed/feed.component';
 import { GroupAboutComponent } from './about/about.component';
 import { GroupMemberPreviewsComponent } from './member-previews/member-previews.component';
+import { GroupMembersListComponent } from './members/list/list.component';
+import { GroupMembersComponent } from './members/members.component';
+import { GroupMembersService } from './members/services/members.service';
+import { GroupMemberActionsComponent } from './members/member-actions/member-actions.component';
+import { GroupSettingsButton } from './settings-button/settings-button.component';
+import { GroupEditModalService } from './edit/edit.modal.service';
+import { GroupEditService } from './edit/edit.service';
+import { GroupEditProfileComponent } from './edit/panes/profile/profile.component';
+import { GroupEditComponent } from './edit/edit.component';
+import { GroupReviewComponent } from './review/review.component';
 
 const routes: Routes = [
   {
@@ -45,6 +55,13 @@ const INTERNAL_COMPONENTS = [
   GroupFeedComponent,
   GroupAboutComponent,
   GroupMemberPreviewsComponent,
+  GroupMembersComponent,
+  GroupMembersListComponent,
+  GroupMemberActionsComponent,
+  GroupSettingsButton,
+  GroupEditComponent,
+  GroupEditProfileComponent,
+  GroupReviewComponent,
 ];
 
 /**
@@ -67,6 +84,7 @@ const INTERNAL_COMPONENTS = [
     GroupsModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
+  providers: [GroupMembersService, GroupEditService, GroupEditModalService],
   exports: COMPONENTS,
 })
 export class GroupModule {}

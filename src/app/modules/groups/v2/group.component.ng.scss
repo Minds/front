@@ -24,26 +24,40 @@
     }
   }
 
-  .m-group__tabs {
-    @media screen and (max-width: $max-mobile) {
-      padding: 0 20px;
-
-      .m-tabs__tab > a:first-child {
-        margin-left: 0;
-      }
-    }
-  }
-
   .m-group__toolbar {
     display: flex;
     justify-content: space-between;
     @include m-theme() {
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
+  }
 
-    .m-tabs__container {
+  .m-group__tabs {
+    @include m-theme() {
+      border-bottom: none;
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 20px;
+    }
+
+    .m-tabs__tab {
+      position: relative;
+      @media screen and (max-width: $max-mobile) {
+        & > a:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+    .m-groupToolbarTab__statusDot {
+      position: absolute;
+      top: 8px;
+      right: 18px;
+      height: $spacing2;
+      width: $spacing2;
+
       @include m-theme() {
-        border-bottom: none;
+        background: themed($m-blue);
+        border-radius: 50%;
       }
     }
   }
@@ -64,7 +78,6 @@
     }
   }
 
-  .m-group__view--members,
   .m-group__view--requests {
     display: block;
     padding: $spacing5;

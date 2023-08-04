@@ -59,18 +59,13 @@ export class GroupComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
         // Get group guid, view and filter from url
         if (params['guid'] && params['guid'] !== this.currentGroup?.guid) {
-          this.service.guid$.next(params['guid']);
+          this.service.load(params['guid']);
         }
         if (params['view']) {
           this.service.view$.next(params['view']);
         }
       }),
       this.route.queryParamMap.subscribe((params: ParamMap) => {
-        if (params.has('editing')) {
-          // Reset editing$ subject after we're done editing
-          this.service.editing$.next(params['editing']);
-        }
-
         // Handle search query param when provided via url
         let query = '';
         if (params.has('query')) {
@@ -99,16 +94,6 @@ export class GroupComponent implements OnInit, OnDestroy {
         if (group) {
           this.currentGroup = group;
           this.seo.set(group);
-        }
-      }),
-
-      this.service.editing$.subscribe(editing => {
-        // Go back to v1 groups for editing until we make a new design
-        if (editing) {
-          this.router.navigate(
-            ['groups', 'profile', this.currentGroup?.guid, 'feed'],
-            { queryParams: { editing: true } }
-          );
         }
       })
     );

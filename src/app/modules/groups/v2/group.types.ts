@@ -26,3 +26,30 @@ export enum GroupAccessType {
   // UNKNOWN = 1,
   PUBLIC = 2,
 }
+
+export enum GroupMembershipLevel {
+  // The user has been banned from the group
+  BANNED = -1,
+
+  // The user has requested to join the group, but is not currently a member
+  REQUESTED = 0,
+
+  // A regular member
+  MEMBER = 1,
+
+  // A moderator, can approve posts etc
+  MODERATOR = 2,
+
+  // The group owner (admin)
+  OWNER = 3,
+}
+
+///////////////////////////////////////////////////////
+
+// GROUP MEMBERSHIP GET PARAMS
+export type GroupMembershipGetParams = {
+  limit?: number;
+  offset?: number;
+  q?: string;
+  // ojm todo add membership level
+};

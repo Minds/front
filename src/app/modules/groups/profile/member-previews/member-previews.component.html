@@ -7,8 +7,8 @@
       <m-userAggregator
         [users]="members"
         [totalCount]="totalCount"
-        usernameAmount="2"
-        avatarAmount="2"
+        [usernameAmount]="maxMembersCount - 1"
+        [avatarAmount]="maxMembersCount - 1"
         clickable="true"
         (onClick)="onAggregatorClick($event)"
       >

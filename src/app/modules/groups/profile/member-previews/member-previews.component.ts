@@ -28,9 +28,6 @@ export class GroupMemberPreviews {
   @Input() group;
   members: Array<any> = [];
 
-  // v2 only. Count of members to display on user aggregator
-  membersCount: number = 3;
-
   count: Number = 0;
   totalCount: Number = 0;
   inProgress: boolean = false;
@@ -40,6 +37,12 @@ export class GroupMemberPreviews {
    * Whether this is being displayed in modern groups
    */
   @Input() v2: boolean = false;
+
+  /**
+   * v2 only. Count of members to display on user aggregator + 1.
+   * Had to +1 b/c the user aggregator is a bit buggy
+   */
+  protected readonly maxMembersCount: number = 3;
 
   // Get guid in case we need to reroute
   private groupGuid: string;
@@ -105,10 +108,16 @@ export class GroupMemberPreviews {
             return member.guid !== this.session.getLoggedInUser().guid;
           });
         }
+
         // Make sure we only pass as many members
         // as we want to display in the userAggregator
         if (this.members.length > 0) {
-          this.members = this.members.slice(0, this.membersCount);
+          this.members = this.members.slice(0, this.maxMembersCount);
+        }
+        if (this.members.length === this.maxMembersCount - 2) {
+          // Failsafe for not showing plural language
+          // if only you and one other person are members
+          this.totalCount = this.maxMembersCount - 2;
         }
       }
 

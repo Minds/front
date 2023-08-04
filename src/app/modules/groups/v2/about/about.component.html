@@ -2,6 +2,22 @@
   <m-group__memberPreviews
     class="m-groupAbout__section--memberPreviews m-groupAbout__section"
   ></m-group__memberPreviews>
+
+  <div class="m-groupAbout__section m-groupAbout__section--restrictions">
+    <div *ngIf="group.membership" class="m-groupAbout__restriction ">
+      <i class="material-icons">lock</i
+      ><span i18n="@@GROUP_ABOUT__PRIVATE_GROUP">Private</span>
+    </div>
+
+    <div
+      *ngIf="group.moderated"
+      class="m-groupAbout__restriction m-groupAbout__restriction--moderated"
+    >
+      <i class="material-icons">local_police</i
+      ><span i18n="@@GROUP_ABOUT__MODERATED_GROUP">Moderated</span>
+    </div>
+  </div>
+
   <div
     *ngIf="group.briefdescription"
     class="m-groupAbout__section--desc m-groupAbout__section"
@@ -11,7 +27,7 @@
     <div
       class="m-groupAboutDesc__content"
       [innerHtml]="group.briefdescription | slice: 0:5000 | tags"
-      data-ref="data-minds-group-bio"
+      data-ref="data-minds-group-description"
     ></div>
 
     <m-read-more--button [v2]="true" showOnlyFadeout="true">

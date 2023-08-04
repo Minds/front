@@ -105,9 +105,14 @@
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
+
+    @media screen and (max-width: $layoutMax2ColWidth) {
+      padding-left: $spacing5;
+    }
+
     @media screen and (max-width: $max-mobile) {
       padding: 0 $spacing5 $spacing3;
-      @include heading4Bold;
+      @include heading3Bold;
     }
 
     span {
@@ -127,8 +132,12 @@
 
   .m-groupHeaderInfo__sidebar {
     display: none;
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $layoutMax2ColWidth) {
       display: block;
+      padding: 0 $spacing5 $spacing3;
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding: 0;
     }
   }
 }

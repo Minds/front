@@ -1,0 +1,39 @@
+<div class="m-groupMembersList__searchWrapper" *ngIf="showSearch">
+  <i class="material-icons">search</i>
+  <input
+    type="text"
+    placeholder="Filter..."
+    [(ngModel)]="query"
+    (keyup)="search()"
+    i18n-placeholder="@@COMMON__CHANNEL_LIST__FILTER_ELLIPSIS"
+  />
+</div>
+
+<ng-container *ngIf="(list$ | async) && (list$ | async).length > 0">
+  <m-publisherCard
+    *ngFor="let member of list$ | async"
+    [publisher]="member"
+    [showDescription]="false"
+    sizeOverride="medium"
+    ><m-group__memberActions
+      class="m-publisherCard__actionsButton"
+      [group]="group"
+      [user]="member"
+    ></m-group__memberActions
+  ></m-publisherCard>
+</ng-container>
+
+<infinite-scroll
+  *ngIf="!(shouldShowNoMembersText$ | async)"
+  (load)="loadNext()"
+  [moreData]="moreData$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>
+
+<span
+  *ngIf="shouldShowNoMembersText$ | async"
+  class="m-groupMembersList__noMembersSpan"
+  i18n="@@GROUP_MEMBERS_LIST__NO_MEMBERS"
+  >No members
+</span>

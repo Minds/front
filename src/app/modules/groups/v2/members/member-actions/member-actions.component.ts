@@ -1,19 +1,21 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MindsGroup } from '../../../../../interfaces/entities';
+import { GroupsService } from '../../../groups.service';
 
-import { GroupsService } from '../groups.service';
-
-// ojm delete this component
 /**
- * The settings cog on a user in a group members list,
+ * The meatball menu on a user in a group members list,
  * visible to those with access (admins and moderators?).
  * Contains a list of actions that relate to the user's place in the group
+ *
+ * (This is an old component that was moved to groups v2 with v minor changes)
  */
 @Component({
-  selector: 'minds-groups-card-user-actions-button',
+  selector: 'm-group__memberActions',
   inputs: ['group', 'user'],
-  templateUrl: 'card-user-actions-button.html',
+  templateUrl: './member-actions.component.html',
+  styleUrls: ['./member-actions.component.ng.scss'],
 })
-export class GroupsCardUserActionsButton {
+export class GroupMemberActionsComponent {
   group: any = {};
   user: any = {
     'is:member': false,
@@ -30,7 +32,9 @@ export class GroupsCardUserActionsButton {
 
   @Output('onKick') onKick: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(public service: GroupsService) {}
+  // ojm this is the old groups service
+  // ojm move these fxs to new groups service?
+  constructor(public v1Service: GroupsService) {}
 
   removePrompt() {
     this.kickPrompt = true;
@@ -47,9 +51,9 @@ export class GroupsCardUserActionsButton {
     this.kickPrompt = false;
 
     if (ban) {
-      kicked = await this.service.ban(this.group, this.user.guid);
+      kicked = await this.v1Service.ban(this.group, this.user.guid);
     } else {
-      kicked = await this.service.kick(this.group, this.user.guid);
+      kicked = await this.v1Service.kick(this.group, this.user.guid);
     }
 
     this.user['is:member'] = !kicked;
@@ -62,7 +66,7 @@ export class GroupsCardUserActionsButton {
   }
 
   reInvite() {
-    this.service
+    this.v1Service
       .invite(this.group, this.user.username)
       .then(() => {
         this.wasReInvited = true;
@@ -75,7 +79,7 @@ export class GroupsCardUserActionsButton {
   grantOwnership() {
     this.user['is:owner'] = true;
 
-    this.service
+    this.v1Service
       .grantOwnership({ guid: this.group.guid }, this.user.guid)
       .then((isOwner: boolean) => {
         this.user['is:owner'] = isOwner;
@@ -85,7 +89,7 @@ export class GroupsCardUserActionsButton {
   revokeOwnership() {
     this.user['is:owner'] = false;
 
-    this.service
+    this.v1Service
       .revokeOwnership({ guid: this.group.guid }, this.user.guid)
       .then((isOwner: boolean) => {
         this.user['is:owner'] = isOwner;
@@ -98,7 +102,7 @@ export class GroupsCardUserActionsButton {
   grantModerator() {
     this.user['is:moderator'] = true;
 
-    this.service
+    this.v1Service
       .grantModerator({ guid: this.group.guid }, this.user.guid)
       .then((isModerator: boolean) => {
         this.user['is:moderator'] = isModerator;
@@ -111,7 +115,7 @@ export class GroupsCardUserActionsButton {
   revokeModerator() {
     this.user['is:moderator'] = false;
 
-    this.service
+    this.v1Service
       .revokeModerator({ guid: this.group.guid }, this.user.guid)
       .then((isModerator: boolean) => {
         this.user['is:moderator'] = isModerator;

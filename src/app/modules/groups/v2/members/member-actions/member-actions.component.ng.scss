@@ -1,0 +1,15 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  margin-left: $spacing3;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    // Extra width in mobile to prevent fat thumb unsubscribe errors
+    margin-left: $spacing4;
+  }
+}
