@@ -1,11 +1,11 @@
-<div class="m-channel--explicit-overlay--container" *ngIf="!hidden">
-  <div class="m-channel--explicit-overlay--content">
-    <h3>{{ message }}</h3>
-    <div
-      class="m-btn m-btn--slim m-btn--action m-channel--explicit-overlay--action"
-      (click)="disableFilter()"
+<div class="m-nsfwOverlay__container" *ngIf="!hidden">
+  <div class="m-nsfwOverlay__content">
+    <i class="m-nsfwOverlay__icon material-icons">error_outline</i>
+    <h3 class="m-nsfwOverlay__primaryText" i18n="@@NSFW__OVERLAY_TEXT">
+      This {{ type }} is NSFW
+    </h3>
+    <m-button (onAction)="close()" i18n="@@NSFW_OVERLAY__I_AM_OVER_18"
+      >I am 18 or over</m-button
     >
-      View
-    </div>
   </div>
 </div>

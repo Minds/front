@@ -1,9 +1,5 @@
 <div *ngIf="service.group$ | async" class="m-group">
-  <m-explicit-overlay
-    [entity]="service.group$ | async"
-    message="This group contains content that is NSFW"
-    i18n-message="@@GROUPS__THIS_GROUP_CONTAINS_NSFW"
-  ></m-explicit-overlay>
+  <m-explicit-overlay [entity]="service.group$ | async"></m-explicit-overlay>
 
   <m-group__header></m-group__header>
 

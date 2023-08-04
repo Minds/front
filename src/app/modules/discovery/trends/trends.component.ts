@@ -27,6 +27,10 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
 import { Session } from '../../../services/session';
 
+/**
+ * Discovery "Just for you" feed
+ * Used only for Minds+
+ */
 @Component({
   selector: 'm-discovery__trends',
   templateUrl: './trends.component.html',
