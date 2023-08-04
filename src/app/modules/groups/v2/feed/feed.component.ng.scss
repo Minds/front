@@ -224,4 +224,24 @@
   ::ng-deep .m-comments__startConversation {
     display: none !important;
   }
+
+  .m-groupFeed__privateFeedNotice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: $spacing20;
+    @include heading4Medium;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      margin: $spacing15;
+    }
+
+    span {
+      text-align: center;
+    }
+  }
 }

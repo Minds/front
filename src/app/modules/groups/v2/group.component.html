@@ -19,7 +19,7 @@
         >
       </div>
 
-      <div class="m-tabs__tab">
+      <div class="m-tabs__tab" *ngIf="service.userHasAccess$ | async">
         <a
           [routerLink]="['/', 'group', service.guid$ | async, 'members']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'members'"
@@ -59,7 +59,9 @@
     </div>
     <div
       class="m-group__searchBtnWrapper"
-      *ngIf="(service.view$ | async) === 'feed'"
+      *ngIf="
+        (service.view$ | async) === 'feed' && (service.userHasAccess$ | async)
+      "
     >
       <a class="m-groupSearchBtn" (click)="openSearchModal($event)"
         ><i class="material-icons">search</i></a
@@ -70,11 +72,13 @@
   <!-- VIEWS  -->
   <!-- ----------------------------------  -->
   <ng-container [ngSwitch]="service.view$ | async">
-    <m-group__members
-      class="m-group__view--members"
-      *ngSwitchCase="'members'"
-      [group]="service.group$ | async"
-    ></m-group__members>
+    <ng-container *ngSwitchCase="'members'">
+      <m-group__members
+        class="m-group__view--members"
+        *ngIf="service.userHasAccess$ | async"
+        [group]="service.group$ | async"
+      ></m-group__members
+    ></ng-container>
     <minds-groups-profile-requests
       class="m-group__view--requests"
       *ngSwitchCase="'requests'"

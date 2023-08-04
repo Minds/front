@@ -28,6 +28,7 @@
   }
 
   .m-groupAbout__section--restrictions {
+    @include unselectable;
     padding-bottom: 0;
     display: flex;
     gap: $spacing2;

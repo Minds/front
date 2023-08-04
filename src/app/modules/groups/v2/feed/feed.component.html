@@ -4,7 +4,18 @@
     <!-- FEED  -->
     <!-- ----------------------------------------- -->
     <div class="m-groupFeed__list">
-      <m-group-profile__feed v2="true"></m-group-profile__feed>
+      <m-group-profile__feed
+        *ngIf="service.userHasAccess$ | async; else privateFeedNotice"
+        v2="true"
+      ></m-group-profile__feed>
+      <ng-template #privateFeedNotice>
+        <div class="m-groupFeed__privateFeedNotice">
+          <span i18n="@@GROUP_FEED__PRIVATE_FEED_NOTICE"
+            >This discussion is private and only available to group
+            members.</span
+          >
+        </div>
+      </ng-template>
     </div>
   </div>
   <!-- ----------------------------------------- -->

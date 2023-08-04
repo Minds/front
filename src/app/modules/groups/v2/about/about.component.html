@@ -1,10 +1,14 @@
 <div *ngIf="service.group$ | async as group" class="m-group__about">
   <m-group__memberPreviews
+    *ngIf="service.userHasAccess$ | async"
     class="m-groupAbout__section--memberPreviews m-groupAbout__section"
   ></m-group__memberPreviews>
 
   <div class="m-groupAbout__section m-groupAbout__section--restrictions">
-    <div *ngIf="group.membership" class="m-groupAbout__restriction ">
+    <div
+      *ngIf="group.membership === groupAccessType.PRIVATE"
+      class="m-groupAbout__restriction "
+    >
       <i class="material-icons">lock</i
       ><span i18n="@@GROUP_ABOUT__PRIVATE_GROUP">Private</span>
     </div>

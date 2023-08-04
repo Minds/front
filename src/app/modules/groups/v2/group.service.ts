@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
-import { DEFAULT_GROUP_VIEW, GroupView } from './group.types';
+import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
 
 /**
  * Service that holds group information using Observables
@@ -38,6 +38,11 @@ export class GroupService {
   readonly showReviewTab$: Observable<boolean>;
 
   /**
+   * Whether user has access to group contents (feed, members list, etc.)
+   */
+  readonly userHasAccess$: Observable<boolean>;
+
+  /**
    * Admin status
    */
   // readonly isAdmin$: Observable<boolean>;
@@ -61,6 +66,13 @@ export class GroupService {
    */
   readonly reviewCount$: BehaviorSubject<number> = new BehaviorSubject<number>(
     0
+  );
+
+  /**
+   * Whether group is private
+   */
+  readonly private$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
   );
 
   /**
@@ -144,6 +156,7 @@ export class GroupService {
     protected route: ActivatedRoute,
     protected v1Service: GroupsService
   ) {
+    // ojm no need for tab
     // Set showRequestsTab observable
     this.showRequestsTab$ = combineLatest([
       this.isOwner$,
@@ -166,6 +179,10 @@ export class GroupService {
           (isOwner || isModerator) && reviewCount > 0
       )
     );
+    // Set userHasAccess observable
+    this.userHasAccess$ = combineLatest([this.private$, this.isMember$]).pipe(
+      map(([isPrivate, isMember]) => !isPrivate || (isPrivate && isMember))
+    );
   }
 
   /**
@@ -176,13 +193,10 @@ export class GroupService {
     console.log('ojm SVC load()', group);
 
     if (typeof group === 'object') {
-      console.log('ojm SVC group is an object', group);
-
       this.guid$.next(group.guid);
       this.setGroup(group);
       this.syncLegacyService(group);
     } else {
-      console.log('ojm SVC group is an object', group);
       this.guid$.next(group);
       this.sync();
     }
@@ -208,6 +222,9 @@ export class GroupService {
     console.log('ojm setGroup', group);
     this.group$.next(group ? group : null);
     this.moderated$.next(group ? !!group.moderated : false);
+    this.private$.next(
+      group && group.membership === GroupAccessType.PRIVATE ? true : false
+    );
     this.memberCount$.next(group ? group['members:count'] : 0);
     this.requestCount$.next(group ? group['requests:count'] : 0);
     this.reviewCount$.next(group ? group['adminqueue:count'] : 0);
