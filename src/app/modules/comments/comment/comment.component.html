@@ -48,8 +48,8 @@
             <a
               class="m-commentOwnerRowItem__name"
               [routerLink]="['/', comment.ownerObj.username]"
-              [title]="comment.ownerObj.name"
-              >{{ comment.ownerObj.name | truncate: 20
+              [title]="comment.ownerObj.name | titlecase"
+              >{{ comment.ownerObj.name | truncate: 20 | titlecase
               }}<ng-container [ngTemplateOutlet]="badges"></ng-container
             ></a>
           </ng-template>

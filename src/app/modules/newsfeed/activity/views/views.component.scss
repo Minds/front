@@ -6,6 +6,9 @@
   // *********************************
   .m-activity--isFeed & {
     padding-left: $spacing1;
+    .m-activity__views {
+      @include body3Regular;
+    }
   }
 
   // *********************************

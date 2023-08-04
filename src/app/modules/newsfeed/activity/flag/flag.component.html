@@ -14,8 +14,11 @@
       <i class="material-icons">repeat</i>
       <span>Reminded by </span>
       <ng-container *ngFor="let reminder of entity.remind_users; let i = index">
-        <a [routerLink]="['/', reminder.username]" [title]="reminder.name">
-          {{ reminder.name }}
+        <a
+          [routerLink]="['/', reminder.username]"
+          [title]="reminder.name | titlecase"
+        >
+          {{ reminder.name | titlecase }}
         </a>
       </ng-container>
     </div>
@@ -31,9 +34,9 @@
       <span>Supermind to </span>
       <a
         [routerLink]="['/', entity.supermind.receiver_user.username]"
-        [title]="entity.supermind.receiver_user.name"
+        [title]="entity.supermind.receiver_user.name | titlecase"
       >
-        {{ entity.supermind.receiver_user.name }}
+        {{ entity.supermind.receiver_user.name | titlecase }}
       </a>
     </div>
 
