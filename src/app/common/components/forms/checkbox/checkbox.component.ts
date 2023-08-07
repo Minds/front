@@ -24,7 +24,8 @@ export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
   providers: [FORM_INPUT_CHECKBOX_VALUE_ACCESSOR],
 })
 export class FormInputCheckboxComponent implements ControlValueAccessor {
-  readonly id: string;
+  @Input() readonly id: string;
+
   value: boolean = false;
 
   @Input() disabled: boolean = false;
@@ -39,11 +40,13 @@ export class FormInputCheckboxComponent implements ControlValueAccessor {
   propagateChange = (_: any) => {};
 
   constructor(private fb: UntypedFormBuilder) {
-    this.id =
-      `checkbox` +
-      Math.random()
-        .toString(36)
-        .substring(2); // Confirm duplicates not possible?
+    if (!this.id) {
+      this.id =
+        `checkbox-` +
+        Math.random()
+          .toString(36)
+          .substring(2); // Confirm duplicates not possible?
+    }
   }
 
   writeValue(value: any): void {

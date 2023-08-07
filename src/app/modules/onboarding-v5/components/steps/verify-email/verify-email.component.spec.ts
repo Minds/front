@@ -163,7 +163,7 @@ describe('OnboardingV5VerifyEmailContentComponent', () => {
     comp.data.verifyEmailForm.resendCodeActionText = 'resend';
 
     expect(comp.resendCodeString).toContain(
-      'click to <a class="m-onboardingV5VerifyEmail__resendCodeAction" tabindex="2">resend</a>'
+      'click to <a class="m-onboardingV5VerifyEmail__resendCodeAction" tabindex="0">resend</a>'
     );
   });
 
