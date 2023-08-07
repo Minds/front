@@ -253,8 +253,20 @@ export class SearchComponent {
         .pipe(distinctUntilChanged())
         .subscribe((params: ParamMap) => {
           this.query = params.get('q');
-          this.filter = <DiscoveryFeedsContentFilter>params.get('f');
-          this.mediaType = <DiscoveryFeedsContentType>params.get('t');
+
+          const filterParam: DiscoveryFeedsContentFilter = <
+            DiscoveryFeedsContentFilter
+          >params.get('f');
+          if (filter) {
+            this.filter = filterParam;
+          }
+
+          const mediaTypeParam: DiscoveryFeedsContentType = <
+            DiscoveryFeedsContentType
+          >params.get('t');
+          if (mediaTypeParam) {
+            this.mediaType = mediaTypeParam;
+          }
 
           // Fix for legeacy media type selector
           this.legacyDiscoveryFeedsService.type$.next(this.mediaType);

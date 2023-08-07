@@ -12,7 +12,7 @@
     <li class="m-discoveryTrends__trend" *ngFor="let tag of tags$ | async">
       <a
         [routerLink]="parentPath + '/search'"
-        [queryParams]="{ q: '#' + tag.value, f: 'top' }"
+        [queryParams]="{ q: '#' + tag.value, f: 'top', t: 'all' }"
       >
         <div>
           <h4>#{{ tag.value }}</h4>
@@ -46,7 +46,7 @@
     <li class="m-discoveryTrends__trend" *ngFor="let tag of trending$ | async">
       <a
         [routerLink]="parentPath + '/search'"
-        [queryParams]="{ q: '#' + tag.value, f: 'top' }"
+        [queryParams]="{ q: '#' + tag.value, f: 'top', t: 'all' }"
       >
         <div>
           <h4>#{{ tag.value }}</h4>
