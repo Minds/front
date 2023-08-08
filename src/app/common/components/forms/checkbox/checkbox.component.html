@@ -13,7 +13,10 @@
         'm-formInputCheckbox__custom--disabled': disabled
       }"
     ></span>
-    <span class="m-formInputCheckbox__customLabel">
+    <span
+      class="m-formInputCheckbox__customLabel"
+      [ngClass]="{ 'm-formInputCheckbox__customLabel--disabled': disabled }"
+    >
       <ng-content></ng-content
     ></span>
   </div>
