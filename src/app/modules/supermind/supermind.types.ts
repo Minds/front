@@ -56,6 +56,7 @@ export enum SupermindReplyType {
   TEXT,
   IMAGE,
   VIDEO,
+  LIVE,
 }
 
 // Supermind reply type mapping.
@@ -63,6 +64,7 @@ export const SUPERMIND_REPLY_TYPE_MAP: { [key: number]: SupermindReplyType } = {
   0: SupermindReplyType.TEXT,
   1: SupermindReplyType.IMAGE,
   2: SupermindReplyType.VIDEO,
+  3: SupermindReplyType.LIVE,
 };
 
 // Supermind state enum.

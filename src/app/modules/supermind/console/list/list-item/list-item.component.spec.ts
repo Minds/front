@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from '../../../../../utils/mock';
 import { Supermind } from '../../../supermind.types';
 import { SupermindConsoleListItemComponent } from './list-item.component';
-import { Session } from '../../../../../services/session';
 
 describe('SupermindConsoleListItemComponent', () => {
   let comp: SupermindConsoleListItemComponent;
@@ -124,6 +123,13 @@ describe('SupermindConsoleListItemComponent', () => {
     comp.supermind.twitter_required = false;
 
     expect(comp.requirementsText).toBe('Video Reply');
+  });
+
+  it('should get requirements text when reply type is live', () => {
+    comp.supermind.reply_type = 3;
+    comp.supermind.twitter_required = false;
+
+    expect(comp.requirementsText).toBe('Live Reply');
   });
 
   it('should get requirements text when reply type is text when twitter is required', () => {

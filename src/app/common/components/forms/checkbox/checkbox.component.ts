@@ -55,4 +55,14 @@ export class FormInputCheckboxComponent implements ControlValueAccessor {
   }
 
   registerOnTouched(fn: any): void {}
+
+  /**
+   * From ControlValueAccessor - sets disabled state. Allows disabled value
+   * to be set from parent by calling .enable() and .disable() on form-control.
+   * @param { boolean } isDisabled - state we setting to.
+   * @returns { void }
+   */
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
 }

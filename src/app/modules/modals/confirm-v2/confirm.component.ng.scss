@@ -20,9 +20,11 @@
     }
 
     .m-confirmationModal__text {
-      @include body1Regular;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeSpeed;
+      ::ng-deep p {
+        @include body1Regular;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeSpeed;
+      }
     }
   }
 

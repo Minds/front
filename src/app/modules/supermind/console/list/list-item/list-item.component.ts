@@ -65,6 +65,9 @@ export class SupermindConsoleListItemComponent {
       case SupermindReplyType.TEXT:
         requirementsText += 'Text Reply';
         break;
+      case SupermindReplyType.LIVE:
+        requirementsText += 'Live Reply';
+        break;
     }
 
     if (this.supermind.twitter_required) {
