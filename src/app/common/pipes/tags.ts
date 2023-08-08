@@ -113,10 +113,10 @@ export class TagsPipe implements PipeTransform {
 
     // Order is important. Url and Mail first, then smaller matches (hash and at).
     this.parseUrls(value);
-    this.parse('mail', value);
     this.parse('hash', value);
     this.parse('cash', value);
     this.parse('at', value);
+    this.parse('mail', value);
 
     if (this.results.length === 0) {
       return value;

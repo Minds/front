@@ -30,7 +30,7 @@ export class RegexService {
       ].join(''),
       'gim' // Global, Case insensitive, Multiline
     ), //
-    at: /(^|\W|\s)@([a-z0-9_\-\.]+[a-z0-9_])/gim,
+    at: /(^|\W|\s)@([a-z0-9_\-\.]+[a-z0-9_](?:@([a-z0-9_\-]+\.[a-z]{2,}(\.[a-z]{2,})?))?)\b/gim,
   };
 
   /**
