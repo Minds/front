@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { GroupService } from '../group.service';
+import { GroupMembershipLevel, GroupReviewView } from '../group.types';
 
 /**
  * Container component for the group review tab
@@ -8,4 +11,15 @@ import { Component } from '@angular/core';
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.ng.scss'],
 })
-export class GroupReviewComponent {}
+export class GroupReviewComponent {
+  constructor(protected service: GroupService) {}
+
+  // Allows us to use enum in template
+  public groupMembershipLevel: typeof GroupMembershipLevel = GroupMembershipLevel;
+  /**
+   * Which review tab is active
+   */
+  readonly view$: BehaviorSubject<GroupReviewView> = new BehaviorSubject<
+    GroupReviewView
+  >('feed');
+}

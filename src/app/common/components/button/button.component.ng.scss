@@ -19,6 +19,10 @@
       background-color: rgba(themed($m-black-always), 0);
     }
 
+    &.m-button--stretch {
+      width: 100%;
+    }
+
     &.m-button--iconOnly {
       display: flex;
       align-items: center;

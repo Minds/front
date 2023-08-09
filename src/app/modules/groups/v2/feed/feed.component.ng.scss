@@ -27,8 +27,7 @@
 
     [class*='m-pageLayout__pane'] {
       .m-groupFeed__list,
-      .m-groupFeed__toolbar,
-      &.m-groupFeed__sidebar {
+      .m-groupFeed__toolbar {
         padding-left: $spacing8;
         padding-right: $spacing8;
 

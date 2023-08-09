@@ -1,18 +1,30 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  BehaviorSubject,
+  combineLatest,
+  lastValueFrom,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { Session } from '../../../services/session';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
-import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
+import {
+  DEFAULT_GROUP_VIEW,
+  GroupAccessType,
+  GroupMembershipLevel,
+  GroupView,
+} from './group.types';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
  * Service that holds group information using Observables
  */
 @Injectable()
-export class GroupService {
+export class GroupService implements OnDestroy {
   private baseEndpoint: string = 'api/v1/groups/';
 
   /**
@@ -28,24 +40,19 @@ export class GroupService {
   >(null);
 
   /**
-   * Whether to show the Requests tab
-   */
-  readonly showRequestsTab$: Observable<boolean>;
-
-  /**
    * Whether to show the Review tab
    */
-  readonly showReviewTab$: Observable<boolean>;
+  readonly canReview$: Observable<boolean>;
 
   /**
    * Whether user has access to group contents (feed, members list, etc.)
    */
-  readonly userHasAccess$: Observable<boolean>;
+  readonly canAccess$: Observable<boolean>;
 
   /**
-   * Admin status
+   * Whether user can send an invitation to join the group
    */
-  // readonly isAdmin$: Observable<boolean>;
+  readonly canInvite$: Observable<boolean>;
 
   /**
    * Member count
@@ -79,6 +86,13 @@ export class GroupService {
    * Whether group is moderated
    */
   readonly moderated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
+   * Whether group is nsfw
+   */
+  readonly mature$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
 
@@ -125,6 +139,13 @@ export class GroupService {
   );
 
   /**
+   * Whether boosts should be shown in the feed
+   */
+  readonly showBoosts$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
+
+  /**
    * Search query
    */
   readonly query$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -143,6 +164,7 @@ export class GroupService {
     DEFAULT_GROUP_VIEW
   );
 
+  subscriptions: Subscription[] = [];
   /**
    * Constructor
    * @param api
@@ -154,35 +176,36 @@ export class GroupService {
     protected api: ApiService,
     protected session: Session,
     protected route: ActivatedRoute,
-    protected v1Service: GroupsService
+    protected v1Service: GroupsService,
+    protected toaster: ToasterService,
+    protected router: Router
   ) {
-    // ojm no need for tab
-    // Set showRequestsTab observable
-    this.showRequestsTab$ = combineLatest([
-      this.isOwner$,
-      this.isModerator$,
-      this.requestCount$,
-    ]).pipe(
-      map(
-        ([isOwner, isModerator, requestCount]) =>
-          (isOwner || isModerator) && requestCount > 0
-      )
+    // Set canReview observable
+    this.canReview$ = combineLatest([this.isOwner$, this.isModerator$]).pipe(
+      map(([isOwner, isModerator]) => isOwner || isModerator)
     );
-    // Set showReviewTab observable
-    this.showReviewTab$ = combineLatest([
-      this.isOwner$,
-      this.isModerator$,
-      this.reviewCount$,
-    ]).pipe(
-      map(
-        ([isOwner, isModerator, reviewCount]) =>
-          (isOwner || isModerator) && reviewCount > 0
-      )
-    );
-    // Set userHasAccess observable
-    this.userHasAccess$ = combineLatest([this.private$, this.isMember$]).pipe(
+
+    // Set canAccess observable
+    this.canAccess$ = combineLatest([this.private$, this.isMember$]).pipe(
       map(([isPrivate, isMember]) => !isPrivate || (isPrivate && isMember))
     );
+
+    // Set canInvite observable
+    this.canInvite$ = combineLatest([
+      this.private$,
+      this.isMember$,
+      this.isOwner$,
+    ]).pipe(
+      map(
+        ([isPrivate, isMember, isOwner]) => isOwner || (!isPrivate && isMember)
+      )
+    );
+  }
+
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -190,8 +213,6 @@ export class GroupService {
    * @param group the group or its guid
    */
   load(group: MindsGroup | string): void {
-    console.log('ojm SVC load()', group);
-
     if (typeof group === 'object') {
       this.guid$.next(group.guid);
       this.setGroup(group);
@@ -219,22 +240,27 @@ export class GroupService {
    * Sets the state based on a group
    */
   setGroup(group: MindsGroup | null): void {
-    console.log('ojm setGroup', group);
     this.group$.next(group ? group : null);
+
     this.moderated$.next(group ? !!group.moderated : false);
     this.private$.next(
       group && group.membership === GroupAccessType.PRIVATE ? true : false
     );
+    this.mature$.next(group ? group['mature'] : false);
     this.memberCount$.next(group ? group['members:count'] : 0);
     this.requestCount$.next(group ? group['requests:count'] : 0);
     this.reviewCount$.next(group ? group['adminqueue:count'] : 0);
+    this.showBoosts$.next(
+      group ? group.show_boosts === undefined || group.show_boosts : true
+    );
 
+    // Note the subjects preceded by "is" relate to the user
     this.isOwner$.next(group ? group['is:owner'] : false);
     this.isCreator$.next(group ? group['is:creator'] : false);
     this.isMember$.next(group ? group['is:member'] : false);
-    this.isModerator$.next(group ? group['is:creator'] : false);
-    this.isAwaiting$.next(group ? group['is:creator'] : false);
-    this.isMuted$.next(group ? group['is:creator'] : false);
+    this.isModerator$.next(group ? group['is:moderator'] : false);
+    this.isAwaiting$.next(group ? group['is:awaiting'] : false);
+    this.isMuted$.next(group ? group['is:muted'] : false);
   }
 
   /**
@@ -242,5 +268,241 @@ export class GroupService {
    */
   public syncLegacyService(group: MindsGroup): void {
     this.v1Service.load(group);
+  }
+
+  //----------------------------------------------------------
+  // GROUP SETTINGS & ACTIONS
+  //----------------------------------------------------------
+  /**
+   * Mute/unmute notifications
+   * @param { boolean } mute whether or not they should be muted
+   * @returns { Promise<void> }
+   */
+  async toggleNotifications(enable: boolean): Promise<void> {
+    let endpoint = `${this.baseEndpoint}notifications/${this.guid$.getValue()}`;
+    if (enable) {
+      endpoint = `${endpoint}/unmute`;
+    } else {
+      endpoint = `${endpoint}/mute`;
+    }
+    try {
+      await lastValueFrom(this.api.post(endpoint));
+      this.isMuted$.next(!enable);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Enable/disable boosts in the feed
+   * @param { boolean } enable
+   * @returns { Promise<void> }
+   */
+  async toggleShowBoosts(enable: boolean): Promise<void> {
+    let endpoint = `${this.baseEndpoint}group/${this.guid$.getValue()}`;
+
+    const params = {
+      show_boosts: enable ? 1 : 0,
+    };
+
+    try {
+      await lastValueFrom(this.api.post(endpoint, params));
+      this.showBoosts$.next(enable);
+
+      // Reload the feed
+      let group = this.group$.getValue();
+      group['show_boosts'] = enable;
+      this.syncLegacyService(group);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Toggle whether the group is moderated
+   * @param { boolean } enable
+   * @returns { Promise<void> }
+   */
+  async toggleModeration(enable: boolean): Promise<void> {
+    let endpoint = `${this.baseEndpoint}group/${this.guid$.getValue()}`;
+
+    const params = {
+      moderated: enable ? 1 : 0,
+    };
+
+    try {
+      await lastValueFrom(this.api.post(endpoint, params));
+      this.moderated$.next(enable);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Toggle whether the group is private/public
+   * @param { boolean } enable
+   * @returns { Promise<void> }
+   */
+  async togglePrivate(enable: boolean): Promise<void> {
+    let endpoint = `${this.baseEndpoint}group/${this.guid$.getValue()}`;
+
+    const params = {
+      private: enable ? GroupAccessType.PRIVATE : GroupAccessType.PUBLIC,
+    };
+
+    try {
+      await lastValueFrom(this.api.post(endpoint, params));
+      this.private$.next(enable);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Toggle whether the group is nsfw
+   * (used by Minds admins only)
+   * @param { boolean } enable
+   * @returns { Promise<void> }
+   */
+  async toggleExplicit(enable: boolean): Promise<void> {
+    try {
+      await lastValueFrom(
+        this.api.post(`api/v1/entities/explicit/${this.guid$.getValue()}`, {
+          value: enable ? '1' : '0',
+        })
+      );
+      this.mature$.next(enable);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Delete the group
+   * @returns { Promise<void> }
+   */
+  async delete(): Promise<void> {
+    let endpoint = `${this.baseEndpoint}group/${this.guid$.getValue()}`;
+
+    try {
+      await lastValueFrom(this.api.delete(endpoint));
+      this.toaster.success('Your group has been successfully deleted');
+      this.router.navigate(['/']);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  //----------------------------------------------------------
+  // MEMBER ACTIONS
+  //----------------------------------------------------------
+  /**
+   * Kick a member out of a group
+   * @param { string } userGuid
+   * @returns { Promise<void> }
+   */
+  async kick(userGuid: string): Promise<void> {
+    let endpoint = `${
+      this.baseEndpoint
+    }membership/${this.guid$.getValue()}/kick`;
+
+    const params = {
+      user: userGuid,
+    };
+
+    try {
+      await lastValueFrom(this.api.post(endpoint, params));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Ban a member from the group
+   * @param { string } userGuid
+   * @returns { Promise<void> }
+   */
+  async ban(userGuid: string): Promise<void> {
+    let endpoint = `${
+      this.baseEndpoint
+    }membership/${this.guid$.getValue()}/ban`;
+
+    const params = {
+      user: userGuid,
+    };
+
+    try {
+      await lastValueFrom(this.api.post(endpoint, params));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Grant a member ownership
+   * @param { string } userGuid
+   * @returns { Promise<void> }
+   */
+  async grantOwnership(userGuid: string): Promise<void> {
+    let endpoint = `${
+      this.baseEndpoint
+    }management/${this.guid$.getValue()}/${userGuid}`;
+
+    try {
+      await lastValueFrom(this.api.put(endpoint));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Revoke a member's ownership
+   * @param { string } userGuid
+   * @returns { Promise<void> }
+   */
+  async revokeOwnership(userGuid: string): Promise<void> {
+    let endpoint = `${
+      this.baseEndpoint
+    }management/${this.guid$.getValue()}/${userGuid}`;
+
+    try {
+      await lastValueFrom(this.api.delete(endpoint));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Make a member a moderator
+   * @param { string } userGuid
+   * @returns { Promise<void> }
+   */
+  async grantModerator(userGuid: string): Promise<void> {
+    let endpoint = `${
+      this.baseEndpoint
+    }management/${this.guid$.getValue()}/${userGuid}/moderator`;
+
+    try {
+      await lastValueFrom(this.api.put(endpoint));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Remove a member's moderation status
+   * @param { string } userGuid
+   * @returns { Promise<void> }
+   */
+  async revokeModerator(userGuid: string): Promise<void> {
+    let endpoint = `${
+      this.baseEndpoint
+    }management/${this.guid$.getValue()}/${userGuid}/moderator`;
+
+    try {
+      await lastValueFrom(this.api.delete(endpoint));
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

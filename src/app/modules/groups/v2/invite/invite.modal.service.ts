@@ -1,31 +1,31 @@
 import { Injectable, Injector } from '@angular/core';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { MindsGroup } from '../group.model';
-import { GroupEditComponent } from './edit.component';
+import { GroupInviteComponent } from './invite.component';
 
 /**
- * Service to present Edit modal and handle its response
+ * Service to present invite modal and handle its response
  */
 @Injectable()
-export class GroupEditModalService {
+export class GroupInviteModalService {
   constructor(
     protected modalService: ModalService,
     private injector: Injector
   ) {}
 
   /**
-   * Presents the group edit modal with a custom injector tree
+   * Presents the group invite modal with a custom injector tree
    */
   async present(group: MindsGroup): Promise<MindsGroup | null> {
-    const modal = this.modalService.present(GroupEditComponent, {
+    const modal = this.modalService.present(GroupInviteComponent, {
       data: {
         group,
-        onSave: editedGroup => {
-          modal.close(editedGroup);
+        onSave: () => {
+          modal.dismiss();
         },
       },
-      size: 'lg',
       injector: this.injector,
+      windowClass: 'm-modalV2__mobileFullCover',
     });
 
     return modal.result;

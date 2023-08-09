@@ -1,73 +1,35 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  Injector,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
-import { GroupsService } from '../../groups.service';
+import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
 import { ReportCreatorComponent } from '../../../report/creator/creator.component';
-import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
-import { ToasterService } from '../../../../common/services/toaster.service';
 import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component';
 import { ModalService } from '../../../../services/ux/modal.service';
-import { Subscription } from 'rxjs';
 import { BoostGroupExperimentService } from '../../../experiments/sub-services/boost-groups-experiment.service';
 import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
 import { GroupEditModalService } from '../edit/edit.modal.service';
 import { GroupService } from '../group.service';
+import { Subscription } from 'rxjs';
 
 /**
- * This is mostly a copy of a groups v1 component
- * with changes around editing functionality
+ * Dropdown menu with options to change various group behaviors.
+ * Options are tailored to roles/permissions of the user.
  */
 @Component({
   selector: 'm-group__settingsButton',
   templateUrl: './settings-button.component.html',
   styleUrls: ['./settings-button.component.ng.scss'],
 })
-export class GroupSettingsButton implements OnInit {
-  group: any = {
-    'is:muted': false,
-    deleted: false,
-  };
-
-  @Input('group') set _group(value: any) {
-    if (!value) return;
-    this.group = value;
-    this.featured = value.featured_id || value.featured === true;
-  }
-
-  @Output() groupChange: EventEmitter<any> = new EventEmitter();
-  @Output() change: EventEmitter<any> = new EventEmitter();
-
-  editing: boolean = false;
-  showMenu: boolean = false;
-
-  categories: Array<any> = [];
-  category: string = 'not-selected';
-
-  featured: boolean = false;
-
-  featureModalOpen: boolean = false;
+export class GroupSettingsButton implements OnInit, OnDestroy {
+  group;
 
   public boostGroupsExperimentIsActive: boolean = false;
 
+  private subscriptions: Subscription[] = [];
+
   constructor(
     public service: GroupService,
-    public v1Service: GroupsService,
-    public client: Client,
     public session: Session,
     private injector: Injector,
     public modalService: ModalService,
-    public router: Router,
-    protected route: ActivatedRoute,
-    protected toasterService: ToasterService,
     private boostModal: BoostModalV2LazyService,
     private boostGroupsExperiment: BoostGroupExperimentService,
     private editModal: GroupEditModalService
@@ -75,73 +37,70 @@ export class GroupSettingsButton implements OnInit {
 
   ngOnInit(): void {
     this.boostGroupsExperimentIsActive = this.boostGroupsExperiment.isActive();
+
+    this.subscriptions.push(
+      this.service.group$.subscribe(group => {
+        this.group = group;
+      })
+    );
   }
 
-  async mute() {
-    this.group['is:muted'] = true;
-
-    try {
-      const isMuted: boolean = await this.v1Service.muteNotifications(
-        this.group
-      );
-      this.group['is:muted'] = isMuted;
-    } catch (e) {
-      this.group['is:muted'] = false;
-    }
-
-    this.showMenu = false;
-  }
-
-  async unmute() {
-    this.group['is:muted'] = false;
-
-    try {
-      const isMuted: boolean = await this.v1Service.unmuteNotifications(
-        this.group
-      );
-      this.group['is:muted'] = isMuted;
-    } catch (e) {
-      this.group['is:muted'] = true;
-    }
-
-    this.showMenu = false;
-  }
-
-  openFeatureModal() {
-    this.featureModalOpen = true;
-  }
-
-  async feature() {
-    this.featured = true;
-    this.group.featured = true;
-
-    try {
-      await this.client.put(
-        `api/v1/admin/feature/${this.group.guid}/${this.category}`,
-        {}
-      );
-      this.featureModalOpen = false;
-    } catch (e) {
-      this.featured = false;
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
-  async unfeature() {
-    this.featured = false;
-    this.group.featured = false;
+  /**
+   * Enable/disable notifications
+   */
+  async toggleNotifications(enable: boolean) {
+    this.service.toggleNotifications(enable);
+  }
 
-    try {
-      await this.client.delete(`api/v1/admin/feature/${this.group.guid}`);
-    } catch (e) {
-      this.featured = true;
+  /**
+   * Enable/disable whether the group is moderated
+   */
+  async toggleModeration(enable: boolean) {
+    this.service.toggleModeration(enable);
+  }
+
+  /**
+   * Enable/disable whether the group is private/public
+   */
+  async togglePrivate(enable: boolean) {
+    this.service.togglePrivate(enable);
+  }
+
+  /**
+   * Enable/disable showing boosts in the feed
+   */
+  async toggleShowBoosts(enable: boolean) {
+    this.service.toggleShowBoosts(enable);
+  }
+
+  /**
+   * Whether the group is nsfw
+   */
+  async toggleExplicit(enable: boolean) {
+    this.service.toggleExplicit(enable);
+  }
+
+  /**
+   * Opens the edit modal
+   */
+  async openEditModal(): Promise<void> {
+    const editedGroup = await this.editModal.present(this.group);
+
+    if (editedGroup) {
+      this.service.load(editedGroup);
     }
   }
 
-  onFeatureModalClose(e) {
-    this.featureModalOpen = false;
-  }
-
-  report() {
+  /**
+   * Opens the report modal to report a group
+   */
+  openReportModal() {
     return this.modalService.present(ReportCreatorComponent, {
       data: {
         entity: this.group,
@@ -149,111 +108,12 @@ export class GroupSettingsButton implements OnInit {
     });
   }
 
-  async toggleConversation(enabled: boolean) {
-    try {
-      this.group.conversationDisabled = !enabled;
-      await this.v1Service.toggleConversation(this.group.guid, enabled);
-    } catch (e) {
-      this.group.conversationDisabled = enabled;
-    }
-  }
-
-  /**
-   * deletePrompt
-   * Displays the delete prompt if deletion is possible
-   */
-  async deletePrompt() {
-    this.openConfirmationModal();
-  }
-
-  setExplicit(value) {
-    this.v1Service.setExplicit(this.group.guid, value).then(result => {
-      if (result) {
-        this.group.mature = value;
-      }
-    });
-  }
-
-  delete() {
-    this.group.deleted = true;
-
-    this.v1Service.deleteGroup(this.group).then(deleted => {
-      this.group.deleted = deleted;
-
-      if (deleted) {
-        this.toasterService.success('Your group has been successfully deleted');
-        this.router.navigate(['/']);
-      }
-    });
-
-    this.showMenu = false;
-  }
-
-  toggleMenu(e) {
-    e.stopPropagation();
-    if (this.showMenu) {
-      this.showMenu = false;
-
-      return;
-    }
-    this.showMenu = true;
-  }
-
-  async openEditModal(): Promise<void> {
-    const editedGroup = await this.editModal.present(this.group);
-
-    if (editedGroup) {
-      console.log('ojm editedGroup', editedGroup);
-      this.service.load(editedGroup);
-      // this.service.sync();
-    }
-  }
-
-  toggleVideoChat(enabled: boolean) {
-    this.group.videoChatDisabled = enabled ? 0 : 1;
-    this.client.post(`api/v1/groups/group/${this.group.guid}`, {
-      videoChatDisabled: this.group.videoChatDisabled,
-    });
-    this.groupChange.next(this.group);
-  }
-
-  toggleModeration(enabled: boolean) {
-    this.group.moderated = enabled ? 1 : 0;
-    this.client.post(`api/v1/groups/group/${this.group.guid}`, {
-      moderated: this.group.moderated,
-    });
-    this.groupChange.next(this.group);
-  }
-
-  toggleShowBoosts(enabled: boolean) {
-    this.group.show_boosts = enabled ? 1 : 0;
-    this.client.post(`api/v1/groups/group/${this.group.guid}`, {
-      show_boosts: this.group.show_boosts,
-    });
-    this.groupChange.next(this.group);
-    // ojm reload group
-    // ojm this.service.syncLegacyService(this.group)?
-  }
-
-  togglePublic(enabled: boolean) {
-    this.group.membership = enabled ? 2 : 0;
-    this.client.post(`api/v1/groups/group/${this.group.guid}`, {
-      membership: this.group.membership,
-    });
-    this.groupChange.next(this.group);
-  }
-
-  onNSFWSelected(reasons: Array<{ label; value; selected }>) {
-    const nsfw = reasons.map(reason => reason.value);
-    this.client.post(`api/v2/admin/nsfw/${this.group.guid}`, { nsfw });
-    this.group.nsfw = nsfw;
-  }
-
   /**
    * Opens confirmation of deletion modal
+   * if deletion is possible
    * @returns { void }
    */
-  public openConfirmationModal(): void {
+  public openDeleteConfirmationModal(): void {
     const modal = this.modalService.present(ConfirmV2Component, {
       data: {
         title: 'Delete Group',
@@ -261,9 +121,8 @@ export class GroupSettingsButton implements OnInit {
           'Are you sure you want to delete this? This action cannot be undone.',
         confirmButtonColor: 'red',
         onConfirm: () => {
-          this.delete();
-          this.router.navigate(['/']);
           modal.dismiss();
+          this.service.delete();
         },
       },
       injector: this.injector,

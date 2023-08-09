@@ -13,7 +13,7 @@
       class="m-groupList__item"
       *ngFor="let entity of entities; let i = index"
     >
-      <a [routerLink]="['/groups/profile', entity.guid]" target="_blank">
+      <a [routerLink]="['/group/', entity.guid]" target="_blank">
         <div
           class="m-groupListItem__avatar"
           [style.background-image]="

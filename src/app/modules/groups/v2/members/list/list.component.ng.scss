@@ -4,6 +4,11 @@
   display: flex;
   flex-flow: column nowrap;
 
+  h3.m-groupMembersList__title {
+    margin: $spacing2 0;
+    @include body1Bold;
+  }
+
   .m-groupMembersList__searchWrapper {
     display: flex;
     align-items: center;
@@ -75,6 +80,53 @@
     @include heading4Bold;
     @include m-theme() {
       color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-groupMembersList__compactMember {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+    margin-top: $spacing2;
+
+    .m-groupMembersListCompactMember__ownerBadge {
+      i {
+        font-size: $spacing4;
+        margin-left: 6px;
+      }
+    }
+
+    .m-groupMembersListCompactMember__name {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+
+      width: calc(100% - $spacing9);
+
+      a {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: none;
+        font-size: 15px;
+        line-height: 20px;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+  .m-groupMembersList__seeMore {
+    cursor: pointer;
+    display: inline-block;
+    text-align: right;
+    margin-top: $spacing4;
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
     }
   }
 }

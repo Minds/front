@@ -1,18 +1,49 @@
-<!-- <ng-container *ngIf="group" ojm> -->
-<div class="m-pageLayout__container m-group__members">
-  <div class="m-groupMembers__body" m-pageLayout__pane="main">
+<div class="m-group__review">
+  <div class="m-groupReview__body">
     <!-- ----------------------------------------- -->
-    <!-- REVIEW QUEUE -->
+    <!-- TABS -->
     <!-- ----------------------------------------- -->
-    <m-groups-profile__review></m-groups-profile__review>
-  </div>
-  <!-- ----------------------------------------- -->
-  <!-- SIDEBAR  -->
-  <!-- ----------------------------------------- -->
-  <div class="m-groupFeed__sidebar" m-pageLayout__pane="right">
-    <div class="m-pageLayoutPane__inner">
-      OJM TODO: add list of moderators here??
+    <div class="m-tabs__container">
+      <div class="m-tabs__tab" (click)="view$.next('feed')">
+        <a
+          i18n="@@GROUP_REVIEW__TAB__POSTS"
+          [class.m-tabs__tab--selected]="(view$ | async) === 'feed'"
+          >Posts
+          <span
+            *ngIf="(service.reviewCount$ | async) > 0"
+            class="m-groupTab__statusDot"
+          ></span
+        ></a>
+      </div>
+      <div class="m-tabs__tab" (click)="view$.next('requests')">
+        <a
+          i18n="@@GROUP_REVIEW__TAB__REQUESTS"
+          [class.m-tabs__tab--selected]="(view$ | async) === 'requests'"
+          >Requests
+          <span
+            *ngIf="(service.requestCount$ | async) > 0"
+            class="m-groupTab__statusDot"
+          ></span
+        ></a>
+      </div>
     </div>
+
+    <!-- ----------------------------------  -->
+    <!-- VIEWS  -->
+    <!-- ----------------------------------  -->
+    <ng-container [ngSwitch]="view$ | async">
+      <ng-container *ngSwitchCase="'feed'">
+        <m-groups-profile__review
+          (newReviewCount)="service.reviewCount$.next($event)"
+        ></m-groups-profile__review>
+      </ng-container>
+      <ng-container *ngSwitchCase="'requests'">
+        <minds-groups-profile-requests
+          [group]="service.group$ | async"
+          (newRequestCount)="service.requestCount$.next($event)"
+          (newMemberCount)="service.memberCount$.next($event)"
+        ></minds-groups-profile-requests>
+      </ng-container>
+    </ng-container>
   </div>
 </div>
-<!-- </ng-container> -->

@@ -1,3 +1,10 @@
+<h3
+  *ngIf="title && (list$ | async).length > 0"
+  class="m-groupMembersList__title"
+>
+  {{ title }}
+</h3>
+<!-- ----------------------------------- -->
 <div class="m-groupMembersList__searchWrapper" *ngIf="showSearch">
   <i class="material-icons">search</i>
   <input
@@ -10,30 +17,64 @@
 </div>
 
 <ng-container *ngIf="(list$ | async) && (list$ | async).length > 0">
-  <m-publisherCard
-    *ngFor="let member of list$ | async"
-    [publisher]="member"
-    [showDescription]="false"
-    sizeOverride="medium"
-    ><m-group__memberActions
-      class="m-publisherCard__actionsButton"
-      [group]="group"
-      [user]="member"
-    ></m-group__memberActions
-  ></m-publisherCard>
+  <!-- ----------------------------------- -->
+  <ng-container *ngIf="!compactView">
+    <m-publisherCard
+      *ngFor="let member of list$ | async"
+      [publisher]="member"
+      [showDescription]="false"
+      sizeOverride="medium"
+      ><m-group__memberActions
+        class="m-publisherCard__actionsButton"
+        [group]="group"
+        [user]="member"
+        (onKick)="onKick(member)"
+      ></m-group__memberActions> </m-publisherCard
+  ></ng-container>
+  <!-- ----------------------------------- -->
+  <ng-container *ngIf="compactView">
+    <div
+      class="m-groupMembersList__compactMember"
+      *ngFor="let member of list$ | async"
+    >
+      <div class="m-groupMembersListCompactMember__name">
+        <a [routerLink]="['/', member.username]"> @{{ member.username }} </a>
+        <m-tooltip
+          *ngIf="showOwnerBadges && member['is:owner']"
+          class="m-groupMembersListCompactMember__ownerBadge"
+        >
+          <i m-tooltip--anchor class="material-icons">local_police</i>
+          <span i18n="@@GROUP_MEMBERS_LIST__OWNER">Owner</span>
+        </m-tooltip>
+      </div>
+      <m-group__memberActions
+        class="m-publisherCard__actionsButton"
+        [group]="group"
+        [user]="member"
+        (onKick)="onKick(member)"
+      ></m-group__memberActions>
+    </div>
+  </ng-container>
+  <!-- ----------------------------------- -->
+
+  <infinite-scroll
+    *ngIf="!(shouldShowNoMembersText$ | async) && !compactView"
+    (load)="loadNext()"
+    [moreData]="moreData$ | async"
+    [inProgress]="inProgress$ | async"
+  >
+  </infinite-scroll>
+
+  <span
+    *ngIf="compactView && (moreData$ | async)"
+    class="m-groupMembersList__seeMore"
+    (click)="loadNext()"
+    >See more</span
+  >
+  <span
+    *ngIf="shouldShowNoMembersText$ | async"
+    class="m-groupMembersList__noMembersSpan"
+    i18n="@@GROUP_MEMBERS_LIST__NO_MEMBERS"
+    >No members
+  </span>
 </ng-container>
-
-<infinite-scroll
-  *ngIf="!(shouldShowNoMembersText$ | async)"
-  (load)="loadNext()"
-  [moreData]="moreData$ | async"
-  [inProgress]="inProgress$ | async"
->
-</infinite-scroll>
-
-<span
-  *ngIf="shouldShowNoMembersText$ | async"
-  class="m-groupMembersList__noMembersSpan"
-  i18n="@@GROUP_MEMBERS_LIST__NO_MEMBERS"
-  >No members
-</span>

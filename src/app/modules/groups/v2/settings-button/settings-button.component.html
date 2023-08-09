@@ -1,4 +1,3 @@
-<!-- ojm todo  -->
 <m-dropdownMenu
   [menu]="settingsMenu"
   [anchorPosition]="{ top: '100%', right: '0' }"
@@ -18,94 +17,108 @@
     <!-- ----------------------------- -->
     <!-- OWNER FUNCTIONS -->
     <!-- ----------------------------- -->
-    <ng-container *ngIf="group['is:owner']">
+    <ng-container *ngIf="service.isOwner$ | async">
       <m-dropdownMenu__item (click)="openEditModal()">
-        <span i18n="@@COMMON__EDIT">Edit</span>
+        <span i18n="@@COMMON__EDIT">Edit group</span>
       </m-dropdownMenu__item>
       <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="boostGroupsExperimentIsActive"
         (click)="onBoostGroupClick()"
-        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__BOOST_GROUP"
+        i18n="@@GROUP_SETTINGS__BOOST_GROUP"
         >Boost group</m-dropdownMenu__item
       >
       <!---------------------------->
       <m-dropdownMenu__item
-        *ngIf="group.moderated"
-        (click)="toggleModeration(false)"
-      >
-        Disable moderation
-      </m-dropdownMenu__item>
-      <m-dropdownMenu__item
-        *ngIf="!group.moderated"
-        (click)="toggleModeration(true)"
-      >
-        Enable moderation
-      </m-dropdownMenu__item>
-      <!---------------------------->
-      <m-dropdownMenu__item
-        *ngIf="
-          group.show_boosts === undefined || group.show_boosts;
-          else enableBoosts
-        "
+        *ngIf="service.showBoosts$ | async; else enableBoosts"
         (click)="toggleShowBoosts(false)"
       >
-        Disable boosts
+        <ng-container i18n="@@GROUP_SETTINGS__DISABLE_BOOSTS"
+          >Disable boosts</ng-container
+        >
       </m-dropdownMenu__item>
 
       <ng-template #enableBoosts>
         <m-dropdownMenu__item (click)="toggleShowBoosts(true)">
-          Enable boosts
+          <ng-container i18n="@@GROUP_SETTINGS__ENABLE_BOOSTS"
+            >Enable boosts</ng-container
+          >
         </m-dropdownMenu__item>
       </ng-template>
 
       <!---------------------------->
       <m-dropdownMenu__item
-        *ngIf="!group.membership"
-        (click)="togglePublic(true)"
+        *ngIf="service.moderated$ | async; else enableModeration"
+        (click)="toggleModeration(false)"
       >
-        Make public
+        <ng-container i18n="@@GROUP_SETTINGS__DISABLE_MODERATION"
+          >Disable moderation</ng-container
+        >
       </m-dropdownMenu__item>
+
+      <ng-template #enableModeration>
+        <m-dropdownMenu__item (click)="toggleModeration(true)">
+          <ng-container i18n="@@GROUP_SETTINGS__ENABLE_MODERATION"
+            >Enable moderation</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-template>
+
+      <!---------------------------->
       <m-dropdownMenu__item
-        *ngIf="group.membership"
-        (click)="togglePublic(false)"
+        *ngIf="service.private$ | async; else enablePrivate"
+        (click)="togglePrivate(false)"
       >
-        Make closed
+        <ng-container i18n="@@GROUP_SETTINGS__MAKE_PUBLIC"
+          >Make public</ng-container
+        >
       </m-dropdownMenu__item>
+
+      <ng-template #enablePrivate>
+        <m-dropdownMenu__item (click)="togglePrivate(true)">
+          <ng-container i18n="@@GROUP_SETTINGS__MAKE_CLOSED"
+            >Make closed</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-template>
     </ng-container>
 
     <!-- ----------------------------- -->
     <!-- MEMBER FUNCTIONS -->
     <!-- ----------------------------- -->
-    <ng-container *ngIf="group['is:member']">
+    <ng-container *ngIf="service.isMember$ | async">
       <m-dropdownMenu__item
-        [hidden]="group['is:muted']"
-        (click)="mute()"
-        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
+        *ngIf="service.isMuted$ | async; else disableNotifications"
+        (click)="toggleNotifications(true)"
       >
-        Disable notifications
+        <ng-container
+          i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
+          >Enable notifications</ng-container
+        >
       </m-dropdownMenu__item>
-      <m-dropdownMenu__item
-        [hidden]="!group['is:muted']"
-        (click)="unmute()"
-        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
-      >
-        Enable notifications
-      </m-dropdownMenu__item>
+
+      <ng-template #disableNotifications>
+        <m-dropdownMenu__item (click)="toggleNotifications(false)">
+          <ng-container
+            i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
+            >Disable notifications</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-template>
     </ng-container>
 
     <!-- ----------------------------- -->
     <!-- REPORT (shown to everyone)-->
     <!-- ----------------------------- -->
     <m-dropdownMenu__item
+      red="true"
       class="m-groups-settings-dropdown__item--report"
-      (click)="report(); showMenu = false"
+      (click)="openReportModal()"
     >
-      <ng-container i18n="@@M__ACTION__REPORT">Report</ng-container>
+      <ng-container i18n="@@M__ACTION__REPORT_GROUP">Report group</ng-container>
     </m-dropdownMenu__item>
-
     <!-- ----------------------------- -->
-    <!-- ADMIN FUNCTIONS -->
+    <!-- MINDS ADMIN FUNCTIONS -->
     <!-- ----------------------------- -->
     <ng-container *ngIf="session.isAdmin()">
       <m-dropdownMenu__item
@@ -133,11 +146,11 @@
     <!-- ----------------------------- -->
     <!-- CREATOR FUNCTIONS -->
     <!-- ----------------------------- -->
-
     <m-dropdownMenu__item
-      *ngIf="group['is:creator'] && !group.deleted"
+      *ngIf="service.isCreator$ | async"
+      red="true"
       class="m-groups-settings-dropdown__item--deleteGroup"
-      (click)="deletePrompt()"
+      (click)="openDeleteConfirmationModal()"
       i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP"
       data-ref="data-minds-group-dropdown-delete"
     >
@@ -145,24 +158,3 @@
     </m-dropdownMenu__item>
   </ul>
 </ng-template>
-<!-- --------------------- -->
-<m-modal [open]="featureModalOpen" (closed)="onFeatureModalClose($event)">
-  <div class="m-button-feature-modal">
-    <select [(ngModel)]="category">
-      <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY">
-        -- SELECT A CATEGORY --
-      </option>
-      <option *ngFor="let category of categories" [value]="category.id">
-        {{ category.label }}
-      </option>
-    </select>
-
-    <button
-      class="mdl-button mdl-button--colored"
-      (click)="feature()"
-      i18n="@@M__ACTION__FEATURE"
-    >
-      Feature
-    </button>
-  </div>
-</m-modal>

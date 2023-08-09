@@ -11,7 +11,7 @@ import {
   take,
   tap,
 } from 'rxjs';
-import { GroupMembersService } from '../services/members.service';
+import { GroupMembersListService } from './list.service';
 import { ApiResponse } from '../../../../../common/api/api.service';
 import { GroupMembershipLevel } from '../../group.types';
 import { MindsGroup } from '../../group.model';
@@ -48,6 +48,10 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
     GroupMembershipLevel
   > = this.service.groupMembershipLevel$;
 
+  /** Value from service - whether to show all levels above the specified level as well */
+  public readonly membershipLevelGte$: BehaviorSubject<boolean> = this.service
+    .membershipLevelGte$;
+
   /** Value from service - search for a specific user */
   public readonly searchQuery$: BehaviorSubject<string> = this.service
     .searchQuery$;
@@ -72,17 +76,38 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
    */
   @Input() membershipLevel: GroupMembershipLevel = GroupMembershipLevel.MEMBER;
 
+  @Input() membershipLevelGte: boolean = false;
+
   /**
    * Whether to show the search bar
-   * ojm this is completely broken
    */
   @Input() showSearch: boolean = false;
 
-  constructor(private service: GroupMembersService) {}
+  /**
+   * Show list in compact format
+   * (e.g. for moderators list)
+   */
+  @Input() compactView: boolean = false;
+
+  /**
+   * Show badges next to owners names
+   * (only relevant for compact view)
+   */
+  @Input() showOwnerBadges: boolean = true;
+
+  /**
+   * Optional title
+   */
+  @Input() title: string;
+
+  constructor(private service: GroupMembersListService) {}
 
   ngOnInit(): void {
-    // check that this user can even request it
+    this.service.group$.next(this.group);
+
     this.service.groupMembershipLevel$.next(this.membershipLevel);
+    this.service.membershipLevelGte$.next(this.membershipLevelGte);
+
     this.setupSubscriptions();
   }
 
@@ -109,6 +134,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
     return combineLatest([
       this.group$,
       this.groupMembershipLevel$,
+      this.membershipLevelGte$,
       this.searchQuery$,
     ]).pipe(
       distinctUntilChanged(),
@@ -116,11 +142,11 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         this.inProgress$.next(true);
         this.list$.next([]);
       }),
-      // debounceTime(100),
       switchMap(
-        ([group, groupMembershipLevel, searchQuery]: [
+        ([group, groupMembershipLevel, membershipLevelGte, searchQuery]: [
           MindsGroup,
           GroupMembershipLevel,
+          boolean,
           string
         ]): Observable<
           ApiResponse | { redirect: boolean; errorMessage: any }
@@ -129,8 +155,6 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         }
       ),
       tap((response: any) => {
-        if (!response) return; // ojm remove
-        console.log('ojm response', response);
         this.moreData$.next(response['load-next']);
         this.inProgress$.next(false);
         this.list$.next(response.members);
@@ -156,6 +180,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
           if (response && response.members && response.members.length) {
             let currentList = this.list$.getValue();
             this.list$.next([...currentList, ...response.members]);
+
             this.moreData$.next(response['load-next']);
           } else {
             this.moreData$.next(false);
@@ -177,7 +202,11 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
    * @param member
    */
   onKick(member) {
-    this.service.onKick(member);
+    const prunedList = this.list$
+      .getValue()
+      .filter(e => e.guid !== member.guid);
+
+    this.list$.next(prunedList);
   }
 
   /**

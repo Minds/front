@@ -79,11 +79,6 @@
           [user]="publisher"
           [sized]="sized"
           [iconOnly]="btnIconOnly"
-          [disableSubscribe]="
-            disableSubscribe ||
-            publisher.guid === session.getLoggedInUser().guid
-          "
-          ojmremoveexternaldisablesubscribes
           [enableRecheck]="recheckSubscribed"
         ></m-subscribeButton>
         <!-- For groups -->

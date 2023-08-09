@@ -4,7 +4,6 @@
 export type GroupView =
   | 'feed' // a.k.a. 'discussion'
   | 'members'
-  | 'requests'
   | 'review';
 
 /**
@@ -17,6 +16,11 @@ export type GroupFeedFilter =
 
 export const DEFAULT_GROUP_VIEW: GroupView = 'feed';
 export const DEFAULT_GROUP_FEED_FILTER: GroupFeedFilter = 'activities';
+
+/**
+ * Tabs in the group moderator console
+ */
+export type GroupReviewView = 'feed' | 'requests';
 
 /**
  * Is the group public or private?
@@ -51,5 +55,16 @@ export type GroupMembershipGetParams = {
   limit?: number;
   offset?: number;
   q?: string;
-  // ojm todo add membership level
+  membership_level?: GroupMembershipLevel;
+};
+
+// GROUP INVITE PUT PARAMS
+export type GroupInvitePutParams = {
+  guid: string;
+};
+
+// GROUP INVITE PUT RESPONSE
+export type GroupInvitePutResponse = {
+  done: boolean;
+  status: string;
 };

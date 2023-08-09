@@ -6,6 +6,7 @@ import {
   combineLatest,
   debounceTime,
   of,
+  shareReplay,
   switchMap,
   take,
 } from 'rxjs';
@@ -19,13 +20,9 @@ import { MindsGroup } from '../../group.model';
 /**
  * Perform tasks related to the list of a group's members
  */
-// ojm rename this to members list service?? too confusing with membershipService
 @Injectable()
-export class GroupMembersService {
-  constructor(
-    // private groupService: GroupService // ojm maybe don't need this)
-    private api: ApiService
-  ) {}
+export class GroupMembersListService {
+  constructor(private api: ApiService) {}
 
   // The group
   public readonly group$: BehaviorSubject<MindsGroup> = new BehaviorSubject<
@@ -33,17 +30,20 @@ export class GroupMembersService {
   >(null);
 
   // Which membership level do we want to present?
-  // OJM NOTE this isn't implemented yet
   public readonly groupMembershipLevel$: BehaviorSubject<
     GroupMembershipLevel
   > = new BehaviorSubject<GroupMembershipLevel>(GroupMembershipLevel.MEMBER);
+
+  // Show all members above the specified level
+  public readonly membershipLevelGte$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
 
   // Search for a member
   public readonly searchQuery$: BehaviorSubject<string> = new BehaviorSubject<
     string
   >('');
 
-  // ojm need to handle search query Q here
   /**
    * Get list of members from API
    * @param { number } limit - limit to request from API.
@@ -57,12 +57,17 @@ export class GroupMembersService {
     return combineLatest([
       this.group$,
       this.groupMembershipLevel$,
+      this.membershipLevelGte$,
       this.searchQuery$.pipe(debounceTime(300)),
     ]).pipe(
       take(1),
       switchMap(
-        ([group, level, q]: [MindsGroup, GroupMembershipLevel, string]) => {
-          console.log('ojm SVC getList$ 1', group, level, q);
+        ([group, level, membershipLevelGte, q]: [
+          MindsGroup,
+          GroupMembershipLevel,
+          boolean,
+          string
+        ]) => {
           let endpoint = `api/v1/groups/membership/${group.guid}`;
 
           let params: GroupMembershipGetParams = {
@@ -70,29 +75,25 @@ export class GroupMembersService {
             offset: offset,
           };
 
+          if (level && membershipLevelGte) {
+            params['membership_level'] = level;
+            params['membership_level_gte'] = membershipLevelGte;
+          } else if (level) {
+            params['level'] = level;
+          }
+
           if (q) {
             endpoint = `${endpoint}/search`;
             params.q = q;
           }
-          console.log('ojm SVC getList$ 2', endpoint, params);
 
-          // -------------------------------------------
           return this.api.get<ApiResponse>(endpoint, params);
         }
       ),
       catchError(e => {
         return of(null);
-      })
+      }),
+      shareReplay()
     );
-  }
-
-  // ojm todo
-  onKick(member) {
-    // const index: number = this.members.findIndex(user => {
-    //   return user.guid === $event.userGuid;
-    // });
-    // if (index > -1) {
-    //   this.members.splice(index, 1);
-    // }
   }
 }

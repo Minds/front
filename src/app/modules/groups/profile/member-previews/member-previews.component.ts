@@ -28,21 +28,15 @@ export class GroupMemberPreviews {
   @Input() group;
   members: Array<any> = [];
 
-  count: Number = 0;
-  totalCount: Number = 0;
+  count: number = 0;
+  totalCount: number = 0;
   inProgress: boolean = false;
   gatheringParticipantTimer;
 
   /**
-   * Whether this is being displayed in modern groups
+   * The max number of member avatars/usernames to show
    */
-  @Input() v2: boolean = false;
-
-  /**
-   * v2 only. Count of members to display on user aggregator + 1.
-   * Had to +1 b/c the user aggregator is a bit buggy
-   */
-  protected readonly maxMembersCount: number = 3;
+  protected readonly maxMembersCount: number = 2;
 
   // Get guid in case we need to reroute
   private groupGuid: string;
@@ -99,26 +93,27 @@ export class GroupMemberPreviews {
 
       this.members = response.members;
       this.totalCount = response.total;
+      let userIsMember = false;
 
-      if (this.v2) {
-        if (this.session.getLoggedInUser()) {
-          // Remove this user from the previews.
-          // They already know if they're in the group.
-          this.members = this.members.filter(member => {
-            return member.guid !== this.session.getLoggedInUser().guid;
-          });
-        }
+      if (this.session.getLoggedInUser()) {
+        // Remove this user from the previews.
+        // They already know if they're in the group.
+        this.members = this.members.filter(member => {
+          return member.guid !== this.session.getLoggedInUser().guid;
+        });
 
-        // Make sure we only pass as many members
-        // as we want to display in the userAggregator
-        if (this.members.length > 0) {
-          this.members = this.members.slice(0, this.maxMembersCount);
-        }
-        if (this.members.length === this.maxMembersCount - 2) {
-          // Failsafe for not showing plural language
-          // if only you and one other person are members
-          this.totalCount = this.maxMembersCount - 2;
-        }
+        userIsMember = this.members.length !== this.totalCount;
+      }
+
+      // Make sure we only pass as many members
+      // as we want to display in the userAggregator
+      if (this.members.length > 0) {
+        this.members = this.members.slice(0, this.maxMembersCount);
+      }
+      if (userIsMember && this.members.length === this.maxMembersCount - 1) {
+        // If only you and one other person are members,
+        // just show the other person
+        this.totalCount = this.totalCount - 1;
       }
 
       this.inProgress = false;
@@ -183,7 +178,7 @@ export class GroupMemberPreviews {
    * @param $event
    */
   onAggregatorClick($event): void {
-    if (this.v2 && this.groupGuid) {
+    if (this.groupGuid) {
       this.router.navigate(['group', this.groupGuid, 'members']);
     }
   }

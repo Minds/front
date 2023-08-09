@@ -1,7 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injector } from '@angular/core';
 import { GroupService } from '../group.service';
 import { Subscription } from 'rxjs';
 import { GroupMembershipChangeOuput } from '../../../../common/components/group-membership-button/group-membership-button.component';
+import { ComposerService } from '../../../composer/services/composer.service';
+import { ComposerModalService } from '../../../composer/components/modal/modal.service';
+import { ActivityContainer } from '../../../composer/services/audience.service';
 
 /**
  * Toolbar at top of group banner, with options that change
@@ -20,21 +23,21 @@ export class GroupActionsComponent {
    * Constructor
    * @param service
    */
-  constructor(public service: GroupService) {}
+  constructor(public service: GroupService, private injector: Injector) {}
 
   /**
    * Fires when membership changes as result of
    * clicking the membership button
-   *
    */
   onMembershipChange($event: GroupMembershipChangeOuput): void {
+    if ($event.isMember === this.service.isMember$.getValue()) {
+      return;
+    }
     this.service.isMember$.next($event.isMember);
-  }
 
-  /**
-   * Fired when option is selected from actions menu
-   */
-  onSettingsChange($event): void {
-    // ojm remove this?
+    // Ensure the composer shows up on top of the feed on join
+    const group = this.service.group$.getValue();
+    group['is:member'] = $event.isMember;
+    this.service.syncLegacyService(group);
   }
 }

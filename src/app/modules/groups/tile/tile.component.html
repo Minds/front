@@ -19,10 +19,7 @@
     <div class="minds-banner-overlay"></div>
   </div>
 
-  <a
-    [routerLink]="['/groups/profile', entity.guid]"
-    class="m-groups--tile-block"
-  >
+  <a [routerLink]="['/group', entity.guid]" class="m-groups--tile-block">
     <div class="m-groups--tile__avatar">
       <div
         class="m-groups--tile__avatarImg"
@@ -51,7 +48,7 @@
 
     <ng-template #isMember>
       <m-button color="blue" i18n="@@GROUPS__TILE__OPEN_ACTION"
-        ><a [routerLink]="['/groups/profile', entity.guid]"> Open</a>
+        ><a [routerLink]="['/group', entity.guid]"> Open</a>
       </m-button>
     </ng-template>
 

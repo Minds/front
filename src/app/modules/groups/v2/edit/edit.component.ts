@@ -50,7 +50,6 @@ export class GroupEditComponent {
 
     if (group) {
       this.onSave(group);
-      console.log('ojm EDIT onsave');
     }
   }
 }

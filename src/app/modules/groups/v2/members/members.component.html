@@ -1,4 +1,4 @@
-<ng-container *ngIf="group">
+<ng-container *ngIf="service.group$ | async">
   <div class="m-pageLayout__container m-group__members">
     <div class="m-groupMembers__body" m-pageLayout__pane="main">
       <!-- ----------------------------------------- -->
@@ -6,15 +6,28 @@
       <!-- ----------------------------------------- -->
       <m-group__membersList
         [membershipLevel]="groupMembershipLevel.MEMBER"
-        [group]="group"
+        [group]="service.group$ | async"
       ></m-group__membersList>
     </div>
     <!-- ----------------------------------------- -->
     <!-- SIDEBAR  -->
     <!-- ----------------------------------------- -->
-    <div class="m-groupFeed__sidebar" m-pageLayout__pane="right">
+    <div class="m-group__sidebar" m-pageLayout__pane="right">
       <div class="m-pageLayoutPane__inner">
-        OJM TODO: add invites/requests here
+        <m-group__inviteButton
+          *ngIf="service.canInvite$ | async"
+          [group]="service.group$ | async"
+          class="m-groupMembers__inviteButton m-groupMembersSidebar__section"
+        ></m-group__inviteButton>
+
+        <m-group__membersList
+          class="m-groupMembers__modsList"
+          title="Moderators"
+          [group]="service.group$ | async"
+          compactView="true"
+          [membershipLevel]="groupMembershipLevel.MODERATOR"
+          membershipLevelGte="true"
+        ></m-group__membersList>
       </div>
     </div>
   </div>

@@ -12,7 +12,6 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { GroupMembershipService } from '../../services/group-membership.service';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../../mocks/services/login-referrer-service-mock.spec';
-import { ModernGroupsExperimentService } from '../../../modules/experiments/sub-services/modern-groups-experiment.service';
 import { BehaviorSubject } from 'rxjs';
 import { ClientMetaService } from '../../services/client-meta.service';
 import { groupMock } from '../../../mocks/responses/group.mock';
@@ -72,10 +71,6 @@ describe('GroupMembershipButtonComponent', () => {
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-          {
-            provide: ModernGroupsExperimentService,
-            useValue: MockService(ModernGroupsExperimentService),
-          },
           {
             provide: ClientMetaService,
             useValue: MockService(ClientMetaService),

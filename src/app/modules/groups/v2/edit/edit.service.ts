@@ -28,7 +28,7 @@ export class GroupEditService {
   readonly avatar$: BehaviorSubject<File> = new BehaviorSubject<File>(null);
 
   /**
-   * Description subject -- ojm change to description
+   * Description subject
    */
   readonly description$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''

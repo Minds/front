@@ -6,7 +6,6 @@
         *ngFor="let entity of entities; let i = index"
       >
         <m-activity
-          [entity]="entity"
           [canDelete]="group['is:owner'] || group['is:moderator']"
           (deleted)="delete(entity)"
           [attr.data-minds-activity-guid]="entity.guid"
@@ -17,6 +16,7 @@
             autoplayVideo: false,
             inSingleGroupFeed: true
           }"
+          [entity]="entity"
         >
         </m-activity>
 
