@@ -9,7 +9,11 @@ import { Router } from '@angular/router';
 import { Session } from '../../../../../../services/session';
 import { MockComponent, MockService } from '../../../../../../utils/mock';
 import { SupermindReplyService } from '../../../../supermind-reply.service';
-import { Supermind, SupermindState } from '../../../../supermind.types';
+import {
+  Supermind,
+  SupermindReplyType,
+  SupermindState,
+} from '../../../../supermind.types';
 import { SupermindConsoleExpirationService } from '../../../services/supermind-expiration.service';
 import { SupermindConsoleActionButtonsComponent } from './action-buttons.component';
 
@@ -73,6 +77,7 @@ describe('SupermindConsoleActionButtonsComponent', () => {
     comp.supermind = mockSupermind;
 
     (comp as any).supermindReplyService.startReply.calls.reset();
+    (comp as any).supermindReplyService.startAcceptingLiveSupermind.calls.reset();
     (comp as any).supermindReplyService.decline.calls.reset();
     (comp as any).supermindReplyService.cancel.calls.reset();
     (comp as any).router.navigate.calls.reset();
@@ -93,12 +98,25 @@ describe('SupermindConsoleActionButtonsComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('it should call reply service to start reply on accept', fakeAsync(() => {
+  it('it should call reply service to start reply on accept of a non-live supermind', fakeAsync(() => {
+    comp.supermind.reply_type = SupermindReplyType.TEXT;
+
     comp.onAccept(null);
     tick();
     expect((comp as any).supermindReplyService.startReply).toHaveBeenCalledWith(
       comp.supermind
     );
+  }));
+
+  it('it should call reply service to start reply on accept of a live supermind', fakeAsync(() => {
+    comp.supermind.reply_type = SupermindReplyType.LIVE;
+
+    comp.onAccept(null);
+    tick();
+
+    expect(
+      (comp as any).supermindReplyService.startAcceptingLiveSupermind
+    ).toHaveBeenCalledWith(comp.supermind);
   }));
 
   it('it should call reply service to decline on decline', () => {

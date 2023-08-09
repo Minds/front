@@ -1,7 +1,7 @@
 import { Storage } from '../utils/storage';
 import { generateARandomString } from '../utils/utils';
 
-const { I } = inject();
+const { I, confirmationModalComponent } = inject();
 const storage: Storage = Storage.getInstance();
 
 class ComposerModalComponent {
@@ -53,6 +53,7 @@ class ComposerModalComponent {
     '[data-ref=composer-audience-group-collapse]';
   private audienceSelectorPanelSaveButtonSelector: string =
     '[data-ref=composer-audience-selector-save-button]';
+  private responseTypeSelector: string = 'label[for=response_type_live]';
 
   /**
    * Toolbar items
@@ -100,6 +101,24 @@ class ComposerModalComponent {
   public async clickPostAndAwait(): Promise<void> {
     await Promise.all([
       I.click(this.postButtonSelector),
+      I.waitForResponse(resp => {
+        return (
+          resp.url().includes('/api/v3/newsfeed/activity') &&
+          resp.status() === 200
+        );
+      }, 30),
+    ]);
+  }
+
+  /**
+   * Click post button for a Supermind, then accept and confirmation modal and await.
+   * @return { Promise<void> }
+   */
+  public async clickToPostSupermindAndAwait(): Promise<void> {
+    I.click(this.postButtonSelector);
+
+    await Promise.all([
+      I.click(confirmationModalComponent.confirmButtonSelector),
       I.waitForResponse(resp => {
         return (
           resp.url().includes('/api/v3/newsfeed/activity') &&
@@ -191,6 +210,10 @@ class ComposerModalComponent {
    */
   public enterSupermindAmount(amount: number = 1): void {
     I.fillField(this.supermindAmountSelector, amount);
+  }
+
+  public selectResponseType(responseTypeLabelText: string): void {
+    I.click(locate(this.responseTypeSelector).withText(responseTypeLabelText));
   }
 
   /**

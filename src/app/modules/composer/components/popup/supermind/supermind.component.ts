@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  Injector,
   OnDestroy,
   OnInit,
   Output,
@@ -20,6 +21,7 @@ import {
   SUPERMIND_DEFAULT_PAYMENT_METHOD,
   SUPERMIND_DEFAULT_RESPONSE_TYPE,
   SUPERMIND_PAYMENT_METHODS,
+  SUPERMIND_RESPONSE_TYPES,
   SupermindComposerPayloadType,
   SupermindComposerPaymentOptionsType,
 } from './superminds-creation.service';
@@ -35,6 +37,9 @@ import { SupermindSettings } from '../../../../settings-v2/payments/supermind/su
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
 import { TwitterSupermindExperimentService } from '../../../../experiments/sub-services/twitter-supermind-experiment.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
+import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.component';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -58,6 +63,8 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   supermindRequestDataSubscription: Subscription;
 
   private targetUsernameSubscription: Subscription;
+
+  private responseTypeSubscription: Subscription;
 
   /**
    * Form group which holds all our data
@@ -132,7 +139,10 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     private entityResolverService: EntityResolverService,
     private changeDetector: ChangeDetectorRef,
     private supermindNonStripeOfferExperimentService: SupermindNonStripeOffersExperimentService,
-    private twitterSupermindExperimentService: TwitterSupermindExperimentService
+    private twitterSupermindExperimentService: TwitterSupermindExperimentService,
+    private toast: ToasterService,
+    private modalService: ModalService,
+    private injector: Injector
   ) {}
 
   /**
@@ -247,12 +257,40 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
           );
         }
 
+        if (supermindRequest.reply_type === SUPERMIND_RESPONSE_TYPES.LIVE) {
+          this.formGroup.get('twitterRequired').disable();
+        }
+
         this.setMinimumPaymentAmountFromUser(supermindRequest.receiver_user);
 
         // Will ensure clear button is displayed
         this.formGroup.markAsDirty();
       }
     );
+
+    if (this.twitterSupermindExperimentIsActive) {
+      this.responseTypeSubscription = this.formGroup
+        .get('responseType')
+        .valueChanges.subscribe(
+          (responseType: SUPERMIND_RESPONSE_TYPES): void => {
+            const twitterRequiredFormControl: AbstractControl<boolean> = this.formGroup.get(
+              'twitterRequired'
+            );
+
+            if (Number(responseType) === SUPERMIND_RESPONSE_TYPES.LIVE) {
+              if (twitterRequiredFormControl.value) {
+                this.toast.warn(
+                  'Live responses cannot require Twitter replies.'
+                );
+                twitterRequiredFormControl.setValue(false);
+              }
+              twitterRequiredFormControl.disable();
+            } else if (twitterRequiredFormControl.disabled) {
+              twitterRequiredFormControl.enable();
+            }
+          }
+        );
+    }
 
     /**
      * Launch onboarding modal (if user hasn't seen it yet)
@@ -267,8 +305,9 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
    * @inheritDoc
    */
   ngOnDestroy() {
-    this.supermindRequestDataSubscription.unsubscribe();
-    this.targetUsernameSubscription.unsubscribe();
+    this.supermindRequestDataSubscription?.unsubscribe();
+    this.targetUsernameSubscription?.unsubscribe();
+    this.responseTypeSubscription?.unsubscribe();
   }
 
   /**
@@ -293,9 +332,40 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Emits the internal state to the composer service, stores to MRU cache and attempts to dismiss the modal
+   * Called on save - for live replies, shows a modal explaining
+   * the nature of a live reply, then continues with save flow, else
+   * just continues with save flow.
+   * @returns { void }
    */
-  onSave(): void {
+  public onSave(): void {
+    if (
+      Number(this.formGroup.get('responseType').value) ===
+      SUPERMIND_RESPONSE_TYPES.LIVE
+    ) {
+      const modalResult = this.modalService.present(ConfirmV2Component, {
+        data: {
+          title: 'Live reply',
+          body:
+            "This Supermind is requesting a live reply. The recipient will respond on a live stream, podcast, or other media platform, which means that **you won't get a Minds activity post reply when they accept the offer**.",
+          confirmButtonColor: 'blue',
+          confirmButtonSolid: true,
+          onConfirm: () => {
+            this.save();
+            modalResult.dismiss();
+          },
+        },
+        injector: this.injector,
+      });
+      return;
+    }
+    this.save();
+  }
+
+  /**
+   * Emits the internal state to the composer service, stores to MRU cache and attempts to dismiss the modal
+   * @returns { void }
+   */
+  private save(): void {
     let paymentOptions: SupermindComposerPaymentOptionsType = {
       amount:
         this.paymentMethod === SUPERMIND_PAYMENT_METHODS.CASH

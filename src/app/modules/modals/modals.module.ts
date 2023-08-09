@@ -15,12 +15,14 @@ import { TOSUpdatedModal } from './tos-updated/tos.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { PhotoBannerModalComponent } from './photo-banner/photo-banner-modal.component';
 import { SupermindReplyConfirmModalComponent } from './supermind-reply-confirm/supermind-reply-confirm-modal.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   imports: [
     NgCommonModule,
     CommonModule,
     RouterModule.forChild([]),
+    MarkdownModule.forRoot(),
     FormsModule,
     NgbModalModule,
     ReactiveFormsModule,
