@@ -145,6 +145,10 @@ describe('Composer Supermind Popup', () => {
 
     fixture.detectChanges();
 
+    (comp as any).twitterSupermindExperimentService.isActive.and.returnValue(
+      false
+    );
+
     const twitterRequiredFormControl: AbstractControl =
       comp.formGroup.controls.twitterRequired;
     const responseTypeControl: AbstractControl =
@@ -220,6 +224,11 @@ describe('Composer Supermind Popup', () => {
 
   describe('responseTypeSubscription', () => {
     it('should disable and wipe twitter reply required value on selecting a live reply type', () => {
+      (comp as any).twitterSupermindExperimentService.isActive.and.returnValue(
+        true
+      );
+      comp.ngOnInit();
+
       const twitterRequiredFormControl: AbstractControl =
         comp.formGroup.controls.twitterRequired;
       const responseTypeControl: AbstractControl =
@@ -235,6 +244,11 @@ describe('Composer Supermind Popup', () => {
     });
 
     it('should enable twitter reply required control on selecting a NON live reply type', () => {
+      (comp as any).twitterSupermindExperimentService.isActive.and.returnValue(
+        true
+      );
+      comp.ngOnInit();
+
       const twitterRequiredFormControl: AbstractControl =
         comp.formGroup.controls.twitterRequired;
       const responseTypeControl: AbstractControl =
