@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostConsoleListItemComponent } from './list-item.component';
-import { Boost } from '../../../boost.types';
+import { Boost, BoostPaymentMethod } from '../../../boost.types';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { Session } from '../../../../../services/session';
 
 describe('BoostConsoleListItemComponent', () => {
   let comp: BoostConsoleListItemComponent;
@@ -66,6 +67,10 @@ describe('BoostConsoleListItemComponent', () => {
         ],
         providers: [
           {
+            provide: Session,
+            useValue: MockService(Session),
+          },
+          {
             provide: ConfigsService,
             useValue: MockService(ConfigsService),
           },
@@ -95,19 +100,53 @@ describe('BoostConsoleListItemComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should get badge text when payment type is cash', () => {
-    comp.boost.payment_method = 1;
-    comp.boost.payment_amount = 10;
-    comp.boost.duration_days = 3;
+  describe('amountBadgeText', () => {
+    it('should get badge text when payment type is cash and user is not an admin', () => {
+      comp.boost.payment_method = BoostPaymentMethod.CASH;
+      comp.boost.payment_amount = 10;
+      comp.boost.duration_days = 3;
+      comp.boost.payment_tx_id = 'pm_123';
+      expect(comp.amountBadgeText).toBe(`\$10 over 3 days`);
+    });
 
-    expect(comp.amountBadgeText).toBe(`\$10 over 3 days`);
-  });
+    it('should get badge text when payment type is gift card cash and user is not an admin', () => {
+      (comp as any).session.isAdmin.and.returnValue(false);
+      comp.boost.payment_method = BoostPaymentMethod.CASH;
+      comp.boost.payment_amount = 10;
+      comp.boost.duration_days = 3;
+      comp.boost.payment_tx_id = 'gift_card';
 
-  it('should get badge text when payment type is offchain tokens', () => {
-    comp.boost.payment_method = 2;
-    comp.boost.payment_amount = 10;
-    comp.boost.duration_days = 3;
+      expect(comp.amountBadgeText).toBe(`\$10 over 3 days`);
+      expect((comp as any).session.isAdmin).toHaveBeenCalled();
+    });
 
-    expect(comp.amountBadgeText).toBe(`10 tokens over 3 days`);
+    it('should get badge text when payment type is cash and user is an admin', () => {
+      (comp as any).session.isAdmin.and.returnValue(true);
+      comp.boost.payment_method = BoostPaymentMethod.CASH;
+      comp.boost.payment_amount = 10;
+      comp.boost.duration_days = 3;
+      comp.boost.payment_tx_id = 'pm_123';
+
+      expect(comp.amountBadgeText).toBe(`\$10 over 3 days`);
+    });
+
+    it('should get badge text when payment type is gift card cash and an admin', () => {
+      (comp as any).session.isAdmin.and.returnValue(true);
+      comp.boost.payment_method = BoostPaymentMethod.CASH;
+      comp.boost.payment_amount = 10;
+      comp.boost.duration_days = 3;
+      comp.boost.payment_tx_id = 'gift_card';
+
+      expect(comp.amountBadgeText).toBe(`\$10 over 3 days (Gift Card)`);
+      expect((comp as any).session.isAdmin).toHaveBeenCalled();
+    });
+
+    it('should get badge text when payment type is offchain tokens', () => {
+      comp.boost.payment_method = BoostPaymentMethod.OFFCHAIN_TOKENS;
+      comp.boost.payment_amount = 10;
+      comp.boost.duration_days = 3;
+
+      expect(comp.amountBadgeText).toBe(`10 tokens over 3 days`);
+    });
   });
 });
