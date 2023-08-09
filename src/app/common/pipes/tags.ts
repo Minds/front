@@ -116,7 +116,7 @@ export class TagsPipe implements PipeTransform {
     this.parse('hash', value);
     this.parse('cash', value);
     this.parse('at', value);
-    this.parse('mail', value);
+    // this.parse('mail', value); // commented out due to clashes with ActivityPub @ tags.
 
     if (this.results.length === 0) {
       return value;
