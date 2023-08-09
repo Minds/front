@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ApiService } from '../../../../../common/api/api.service';
 import { CommonModule } from '../../../../../common/common.module';
@@ -13,6 +17,10 @@ import { ComposerSupermindComponent } from '../supermind/supermind.component';
 import { EntityResolverService } from '../../../../../common/services/entity-resolver.service';
 import { of } from 'rxjs';
 import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
+import { ToasterService } from '../../../../../common/services/toaster.service';
+import { ModalService } from '../../../../../services/ux/modal.service';
+import { Injector } from '@angular/core';
+import { SUPERMIND_RESPONSE_TYPES } from './superminds-creation.service';
 
 describe('Composer Supermind Popup', () => {
   let comp: ComposerSupermindComponent;
@@ -73,10 +81,6 @@ describe('Composer Supermind Popup', () => {
             provide: ApiService,
             useValue: apiMock,
           },
-          //   {
-          //     provide: Client,
-          //     useValue: MockService(Client)
-          //   },
           {
             provide: ConfigsService,
             useValue: MockService(ConfigsService),
@@ -85,10 +89,6 @@ describe('Composer Supermind Popup', () => {
             provide: SupermindOnboardingModalService,
             useValue: MockService(SupermindOnboardingModalService),
           },
-          //   {
-          //     provide: Session,
-          //     useValue: MockService(Session),
-          //   },
           {
             provide: EntityResolverService,
             useValue: MockService(EntityResolverService),
@@ -96,6 +96,18 @@ describe('Composer Supermind Popup', () => {
           {
             provide: SupermindNonStripeOffersExperimentService,
             useValue: MockService(SupermindNonStripeOffersExperimentService),
+          },
+          {
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
+          },
+          {
+            provide: ModalService,
+            useValue: MockService(ModalService),
+          },
+          {
+            provide: Injector,
+            useValue: MockService(Injector),
           },
         ],
       }).compileComponents();
@@ -125,6 +137,17 @@ describe('Composer Supermind Popup', () => {
 
     apiMock.get.calls.reset();
     apiMock.get.and.returnValue([]);
+
+    fixture.detectChanges();
+
+    const twitterRequiredFormControl: AbstractControl =
+      comp.formGroup.controls.twitterRequired;
+    const responseTypeControl: AbstractControl =
+      comp.formGroup.controls.responseType;
+
+    twitterRequiredFormControl.setValue(false);
+    twitterRequiredFormControl.enable();
+    responseTypeControl.setValue(SUPERMIND_RESPONSE_TYPES.TEXT);
 
     fixture.detectChanges();
 
@@ -165,17 +188,58 @@ describe('Composer Supermind Popup', () => {
     expect(getSaveBtn().disabled).toBeFalse();
   });
 
-  it('should update composer supermindRequest$ service on save', () => {
-    comp.formGroup.controls.termsAccepted.setValue(true);
-    comp.formGroup.controls.refundPolicyAccepted.setValue(true);
-    comp.formGroup.controls.username.setValue('minds');
-    // comp.formGroup.controls.username.markAsTouched({ onlySelf: true });
-    fixture.detectChanges();
+  describe('onSave', () => {
+    it('should update composer supermindRequest$ service on save', () => {
+      comp.formGroup.controls.termsAccepted.setValue(true);
+      comp.formGroup.controls.refundPolicyAccepted.setValue(true);
+      comp.formGroup.controls.username.setValue('minds');
+      fixture.detectChanges();
 
-    getSaveBtn().onAction.next(new MouseEvent('click'));
+      getSaveBtn().onAction.next(new MouseEvent('click'));
 
-    expect(getSaveBtn().disabled).toBeFalse();
+      expect(getSaveBtn().disabled).toBeFalse();
 
-    expect(superMindsRequestMock$.next).toHaveBeenCalled();
+      expect(superMindsRequestMock$.next).toHaveBeenCalled();
+    });
+
+    it('should show modal to explain live reply type on save when live reply type is selected', () => {
+      const responseTypeControl: AbstractControl =
+        comp.formGroup.controls.responseType;
+      responseTypeControl.setValue(SUPERMIND_RESPONSE_TYPES.LIVE);
+
+      comp.onSave();
+
+      expect((comp as any).modalService.present).toHaveBeenCalled();
+    });
+  });
+
+  describe('responseTypeSubscription', () => {
+    it('should disable and wipe twitter reply required value on selecting a live reply type', () => {
+      const twitterRequiredFormControl: AbstractControl =
+        comp.formGroup.controls.twitterRequired;
+      const responseTypeControl: AbstractControl =
+        comp.formGroup.controls.responseType;
+      twitterRequiredFormControl.enable();
+      twitterRequiredFormControl.setValue(true);
+
+      responseTypeControl.setValue(SUPERMIND_RESPONSE_TYPES.LIVE);
+      fixture.detectChanges();
+
+      expect(twitterRequiredFormControl.disabled).toBeTrue();
+      expect(twitterRequiredFormControl.value).toBeFalse();
+    });
+
+    it('should enable twitter reply required control on selecting a NON live reply type', () => {
+      const twitterRequiredFormControl: AbstractControl =
+        comp.formGroup.controls.twitterRequired;
+      const responseTypeControl: AbstractControl =
+        comp.formGroup.controls.responseType;
+      twitterRequiredFormControl.disable();
+
+      responseTypeControl.setValue(SUPERMIND_RESPONSE_TYPES.TEXT);
+      fixture.detectChanges();
+
+      expect(twitterRequiredFormControl.disabled).toBeFalse();
+    });
   });
 });

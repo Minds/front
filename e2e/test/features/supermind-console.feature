@@ -97,6 +97,47 @@ Feature: Supermind Console
     And I click "decline" on latest Supermind
     Then the latest supermind offer should be "declined"
 
+  Scenario: A live supermind is created and declined
+    Given I log in as "supermind_sender"
+    And I have clicked on the sidebar composer button
+    And I click the composer supermind icon
+    And I click the composer supermind popup tab for "Tokens"
+    And I add a composer supermind target of "playwright_tests_user"
+    And I enter a composer supermind amount of 10
+    And I select a composer supermind response type of "Live"
+    And I accept the composer supermind terms
+    And I accept the composer supermind refund policy
+    And I click the composer supermind save button
+    And I click to accept the confirmation modal
+    And I enter "test supermind" in the composer text area
+    And I post my supermind request and wait for success
+    When I log in as "playwright_tests_user"
+    And I navigate via sidebar to the supermind console
+    And I click to change tabs to "Inbound"
+    And I click "decline" on latest Supermind
+    Then the latest supermind offer should be "declined"
+
+  Scenario: A live supermind is created and accepted
+    Given I log in as "supermind_sender"
+    And I have clicked on the sidebar composer button
+    And I click the composer supermind icon
+    And I click the composer supermind popup tab for "Tokens"
+    And I add a composer supermind target of "playwright_tests_user"
+    And I enter a composer supermind amount of 10
+    And I select a composer supermind response type of "Live"
+    And I accept the composer supermind terms
+    And I accept the composer supermind refund policy
+    And I click the composer supermind save button
+    And I click to accept the confirmation modal
+    And I enter "test supermind" in the composer text area
+    And I post my supermind request and wait for success
+    When I log in as "playwright_tests_user"
+    And I navigate via sidebar to the supermind console
+    And I click to change tabs to "Inbound"
+    And I click "accept" on latest Supermind
+    And I click to accept the confirmation modal
+    Then the latest supermind offer should be "accepted"
+
   Scenario: A supermind is created and accepted
     Given I log in as "supermind_sender"
     And I have clicked on the sidebar composer button

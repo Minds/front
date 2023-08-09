@@ -5,12 +5,12 @@
   >
     {{ title }}
   </h2>
-  <p
+  <markdown
     class="m-confirmationModal__text"
+    ngPreserveWhitespaces
+    [data]="body"
     data-ref="data-minds-confirmation-modal-body"
-  >
-    {{ body }}
-  </p>
+  ></markdown>
 </div>
 <div class="m-confirmationModal__buttonWrapper">
   <m-button

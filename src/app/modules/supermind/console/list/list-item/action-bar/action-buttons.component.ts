@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Session } from '../../../../../../services/session';
 import { SupermindReplyService } from '../../../../supermind-reply.service';
-import { Supermind, SupermindState } from '../../../../supermind.types';
+import {
+  Supermind,
+  SupermindReplyType,
+  SupermindState,
+} from '../../../../supermind.types';
 import { SupermindConsoleExpirationService } from '../../../services/supermind-expiration.service';
 
 /**
@@ -38,6 +42,10 @@ export class SupermindConsoleActionButtonsComponent {
    * @returns { Promise<void> }
    */
   async onAccept(e: MouseEvent): Promise<void> {
+    if (this.supermind.reply_type === SupermindReplyType.LIVE) {
+      this.supermindReplyService.startAcceptingLiveSupermind(this.supermind);
+      return;
+    }
     this.supermindReplyService.startReply(this.supermind);
   }
 
