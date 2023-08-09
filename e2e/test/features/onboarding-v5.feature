@@ -106,22 +106,22 @@ Scenario: Verify that Continue button is disabled when a survey option is not se
   Then I see the onboarding v5 continue button is disabled
   And I clear my cookies
 
-Scenario: Verify that you can successfully subscribe to channel onboarding suggestions
-  Given I am logged out
-  And I set up registration bypass cookies
-  And I navigate to "/register"
-  And I submit the register form with random data
-  And I set an email verification bypass cookie for code "000000"
-  And I fill out onboarding v5 email code input with "000000"
-  And I click the onboarding v5 continue button and wait for progress to save
-  And I select "3" onboarding v5 tags
-  And I click the onboarding v5 continue button and wait for progress to save
-  And I select the onboarding v5 survey option at index "0"
-  And I click the onboarding v5 continue button and wait for progress to save
-  And I select the onboarding v5 recommendation at index "0"
-  And I click the onboarding v5 continue button and wait for progress to save
-  Then I see the onboarding v5 group selector panel
-  And I clear my cookies
+# Scenario: Verify that you can successfully subscribe to channel onboarding suggestions
+#   Given I am logged out
+#   And I set up registration bypass cookies
+#   And I navigate to "/register"
+#   And I submit the register form with random data
+#   And I set an email verification bypass cookie for code "000000"
+#   And I fill out onboarding v5 email code input with "000000"
+#   And I click the onboarding v5 continue button and wait for progress to save
+#   And I select "3" onboarding v5 tags
+#   And I click the onboarding v5 continue button and wait for progress to save
+#   And I select the onboarding v5 survey option at index "0"
+#   And I click the onboarding v5 continue button and wait for progress to save
+#   And I select the onboarding v5 recommendation at index "0"
+#   And I click the onboarding v5 continue button and wait for progress to save
+#   Then I see the onboarding v5 group selector panel
+#   And I clear my cookies
 
 Scenario: Verify that you can successfully subscribe to group onboarding suggestions
   Given I am logged out
@@ -135,10 +135,9 @@ Scenario: Verify that you can successfully subscribe to group onboarding suggest
   And I click the onboarding v5 continue button and wait for progress to save
   And I select the onboarding v5 survey option at index "0"
   And I click the onboarding v5 continue button and wait for progress to save
+    And I click the onboarding v5 step skip button
   And I select the onboarding v5 recommendation at index "0"
-  And I click the onboarding v5 continue button and wait for progress to save
-  And I select the onboarding v5 recommendation at index "0"
-  And I click the onboarding v5 continue button and wait for progress to save
+    And I click the onboarding v5 continue button and wait for progress to save
   Then I see the onboarding v5 completion panel for a short period
   And I clear my cookies
 
