@@ -17,12 +17,14 @@ import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../services/session-mock';
 import { ModalService } from '../../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../../tests/modal-service-mock.spec';
+import { BehaviorSubject } from 'rxjs';
 
-let groupConfig = {
-  countMembers: Promise.resolve(1),
-};
-
-let groupServiceMock: any = MockService(GroupService, groupConfig);
+let groupServiceMock: any = MockService(GroupService, {
+  has: ['group$'],
+  props: {
+    group$: { get: () => new BehaviorSubject<string>('') },
+  },
+});
 
 describe('GroupSettingsButton', () => {
   let comp: GroupSettingsButton;

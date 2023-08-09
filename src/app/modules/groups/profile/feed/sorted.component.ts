@@ -35,18 +35,17 @@ import { FeedsUpdateService } from '../../../../common/services/feeds-update.ser
 export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   group: any;
 
-  // @Input('group') set _group(group: any) {
-  //   if (group === this.group) {
+  @Input('group') set _group(group: any) {
+    if (group === this.group) {
+      return;
+    }
 
-  //     return;
-  //   }
+    this.group = group;
 
-  //   this.group = group;
-
-  //   if (this.initialized) {
-  //     this.load(true);
-  //   }
-  // }
+    if (this.initialized) {
+      this.load(true);
+    }
+  }
 
   type: string = 'activities';
 
@@ -117,16 +116,6 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
       newPost => {
         this.prepend(newPost);
       }
-    );
-
-    this.subscriptions.push(
-      this.service.$group.subscribe(group => {
-        this.group = group;
-
-        if (this.initialized) {
-          this.load(true);
-        }
-      })
     );
   }
 

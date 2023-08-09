@@ -101,7 +101,10 @@ describe('GroupProfileFeedSortedComponent', () => {
         ],
         imports: [RouterTestingModule],
         providers: [
-          { provide: GroupsService, useValue: MockService(GroupsService) },
+          {
+            provide: GroupsService,
+            useValue: MockService(GroupsService),
+          },
           { provide: Session, useValue: sessionMock },
           { provide: Router, useValue: MockService(Router) },
           { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },

@@ -16,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ClientMetaService } from '../../services/client-meta.service';
 import { groupMock } from '../../../mocks/responses/group.mock';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
+import { ToasterService } from '../../services/toaster.service';
 
 describe('GroupMembershipButtonComponent', () => {
   let fixture: ComponentFixture<GroupMembershipButtonComponent>;
@@ -78,6 +79,10 @@ describe('GroupMembershipButtonComponent', () => {
           {
             provide: ClientMetaDirective,
             useValue: MockService(ClientMetaDirective),
+          },
+          {
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
           },
         ],
       })
