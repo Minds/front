@@ -1,0 +1,35 @@
+<div
+  *ngIf="upgradeType"
+  class="m-upsellButton"
+  [ngClass]="{
+    'm-upsellButton--plus': isPlus,
+    'm-upsellButton--pro': !isPlus
+  }"
+  [attr.data-ref]="'m-upsellButton--' + upgradeType"
+  (click)="onClick.emit($event)"
+>
+  <m-icon
+    class="m-upsellButton__icon--branding"
+    [from]="isPlus ? 'md' : 'custom'"
+    [iconId]="isPlus ? 'add_to_queue' : 'pro'"
+    rem="true"
+    sizeFactor="1.5"
+  ></m-icon>
+  <div class="m-upsellButton__textWrapper">
+    <span class="m-upsellButtonText__title">
+      <ng-container i18n="@@UPSELL_BUTTON__TITLE__UPGRADE_TO_MINDS"
+        >Upgrade to Minds</ng-container
+      >{{ isPlus ? '+' : '&nbsp;Pro' }}
+    </span>
+    <span
+      class="m-upsellButtonText__description"
+      i18n="@@UPSELL_BUTTON__DESCRIPTION"
+    >
+      Get
+      <span class="m-keepTogether">${{ monthlyBoostCredits }} / month</span> or
+      <span class="m-keepTogether">${{ yearlyBoostCredits }} / year</span>
+      in Boost credits
+    </span>
+  </div>
+  <i class="m-upsellButton__icon--chevron material-icons">chevron_right</i>
+</div>

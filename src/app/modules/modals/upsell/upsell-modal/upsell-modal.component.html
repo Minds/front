@@ -1,0 +1,27 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__mobileTopBar m-modalV2__mobileTopBar--noBorder"></div>
+  <div class="m-modalV2__header">
+    <h4 class="m-upsellModal__title" i18n="@@UPSELL_MODAL__TITLE">
+      Get your next boost FREE
+    </h4>
+    <span class="m-upsellModal__description" i18n="@@UPSELL_MODAL__DESCRIPTION"
+      >Minds+ and Pro subscribers get Boost credits every period their
+      subscription renews. Support Minds and join today for channel
+      verification, exclusive earning opportunities, and even more reach.</span
+    >
+  </div>
+  <div class="m-modalV2__body">
+    <div class="m-upsellModal__buttonsContainer">
+      <m-upsellButton
+        upgradeType="plus"
+        (onClick)="onClick('plus')"
+      ></m-upsellButton>
+      <m-upsellButton
+        upgradeType="pro"
+        (onClick)="onClick('pro')"
+      ></m-upsellButton>
+    </div>
+  </div>
+</div>
+
+<m-modalCloseButton data-ref="m-upsellModal__closeButton"></m-modalCloseButton>
