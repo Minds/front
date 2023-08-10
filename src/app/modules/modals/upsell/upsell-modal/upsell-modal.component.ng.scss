@@ -1,0 +1,37 @@
+@import 'defaults.scss';
+
+:host {
+  .m-upsellModal__title {
+    @include heading3Bold;
+    margin: 0 0 $spacing4;
+  }
+  .m-upsellModal__description {
+    display: inline-block;
+    margin-bottom: $spacing10;
+
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+  .m-upsellModal__buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing6;
+    margin-bottom: $spacing10;
+
+    @media screen and (max-width: $max-mobile) {
+      gap: $spacing10;
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    .m-modalV2__inner {
+      padding-left: $spacing4;
+    }
+
+    .m-modalV2__header {
+      padding-top: 0;
+    }
+  }
+}

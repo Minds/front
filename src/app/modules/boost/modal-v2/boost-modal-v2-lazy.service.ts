@@ -1,9 +1,18 @@
-import { createNgModule, Injectable, Injector } from '@angular/core';
+import {
+  createNgModule,
+  Inject,
+  Injectable,
+  Injector,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { ModalRef, ModalService } from '../../../services/ux/modal.service';
 import { BoostModalV2LazyModule } from './boost-modal-v2-lazy.module';
 import { BoostModalV2Component } from './boost-modal-v2.component';
 import { BoostableEntity, BoostModalExtraOpts } from './boost-modal-v2.types';
+import { UpsellModalService } from '../../modals/upsell/upsell-modal.service';
+import { isPlatformBrowser } from '@angular/common';
+import { Session } from '../../../services/session';
 
 type PresentableBoostModalComponent = typeof BoostModalV2Component;
 
@@ -15,7 +24,13 @@ export class BoostModalV2LazyService {
   // emitted to on boost completion.
   public onComplete$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private modalService: ModalService, private injector: Injector) {}
+  constructor(
+    private modalService: ModalService,
+    private injector: Injector,
+    private upsellModal: UpsellModalService,
+    private session: Session,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {}
 
   /**
    * Lazy load modules and open modal.
@@ -33,11 +48,13 @@ export class BoostModalV2LazyService {
         onSaveIntent: () => {
           this.onComplete$.next(true);
           modal.close();
+          this.openUpsellModal();
         },
         ...extraOpts,
       },
       size: 'md',
     });
+
     return modal;
   }
 
@@ -50,5 +67,22 @@ export class BoostModalV2LazyService {
       (await import('./boost-modal-v2-lazy.module')).BoostModalV2LazyModule,
       this.injector
     ).instance.resolveComponent();
+  }
+
+  /**
+   * Present upsell modal to users
+   * who just boosted but haven't upgraded yet
+   */
+  private async openUpsellModal() {
+    if (
+      !(
+        this.session.getLoggedInUser().plus ||
+        this.session.getLoggedInUser().pro
+      )
+    ) {
+      if (isPlatformBrowser(this.platformId)) {
+        setTimeout(() => this.upsellModal.open(), 400);
+      }
+    }
   }
 }
