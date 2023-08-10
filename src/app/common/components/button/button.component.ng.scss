@@ -64,6 +64,14 @@
           background-color: themed($m-borderColor--primary);
           color: themed($m-textColor--primary);
         }
+        .m-button__text--saving {
+          span {
+            @include m-theme() {
+              // Color of the animated circles
+              background-color: themed($m-textColor--primary);
+            }
+          }
+        }
       }
     }
     &.m-button--primary {
@@ -108,7 +116,7 @@
           span {
             @include m-theme() {
               // Color of the animated circles
-              background-color: themed($m-white-always);
+              background-color: themed($m-action-text);
             }
           }
         }
