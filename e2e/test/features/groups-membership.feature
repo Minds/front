@@ -6,6 +6,7 @@ Feature: Groups Membership
     Given I create a new user
     And I am on the groups membership page
     Then I should see the no groups notice
+    And I clear my cookies
 
   Scenario: Seeing group recommendations
     Given I am logged in
