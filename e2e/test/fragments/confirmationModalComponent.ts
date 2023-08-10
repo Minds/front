@@ -8,7 +8,7 @@ class ConfirmationModalComponent {
     '[data-ref=data-minds-confirmation-modal-body]';
   private cancelButtonSelector: string =
     '[data-ref=data-minds-confirmation-modal-cancel-button]';
-  private confirmButtonSelector: string =
+  public confirmButtonSelector: string =
     '[data-ref=data-minds-confirmation-modal-confirm-button]';
 
   /**

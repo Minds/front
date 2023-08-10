@@ -31,7 +31,7 @@ export enum SUPERMIND_RESPONSE_TYPES {
   TEXT,
   IMAGE,
   VIDEO,
-  REMIND,
+  LIVE,
 }
 
 /**
