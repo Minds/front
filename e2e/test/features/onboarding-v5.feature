@@ -135,9 +135,9 @@ Scenario: Verify that you can successfully subscribe to group onboarding suggest
   And I click the onboarding v5 continue button and wait for progress to save
   And I select the onboarding v5 survey option at index "0"
   And I click the onboarding v5 continue button and wait for progress to save
-    And I click the onboarding v5 step skip button
+  And I click the onboarding v5 step skip button
   And I select the onboarding v5 recommendation at index "0"
-    And I click the onboarding v5 continue button and wait for progress to save
+  And I click the onboarding v5 continue button and wait for progress to save
   Then I see the onboarding v5 completion panel for a short period
   And I clear my cookies
 
