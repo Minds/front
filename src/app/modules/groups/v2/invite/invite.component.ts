@@ -19,7 +19,7 @@ import {
   EntityResolverService,
   EntityResolverServiceOptions,
 } from '../../../../common/services/entity-resolver.service';
-import { Subscription, distinctUntilChanged, filter, switchMap } from 'rxjs';
+import { Subscription, distinctUntilChanged, switchMap } from 'rxjs';
 
 /**
  * Invite modal component
@@ -87,7 +87,9 @@ export class GroupInviteComponent implements OnInit, OnDestroy {
           distinctUntilChanged(),
           switchMap((username: string) => {
             if (username === '') {
-              this.formGroup.get('username').setErrors(null);
+              this.invitee = null;
+              this.refreshEligibilityValidator();
+              return;
             } else {
               this.inProgress = true;
               let options = new EntityResolverServiceOptions();
@@ -100,14 +102,8 @@ export class GroupInviteComponent implements OnInit, OnDestroy {
         )
         .subscribe(user => {
           this.inProgress = false;
-
-          if (user) {
-            this.invitee = user;
-            this.refreshEligibilityValidator();
-          } else {
-            this.invitee = null;
-            this.removeEligibilityValidator();
-          }
+          this.invitee = user;
+          this.refreshEligibilityValidator();
         })
     );
   }
@@ -132,7 +128,7 @@ export class GroupInviteComponent implements OnInit, OnDestroy {
   }
 
   get canSubmit(): boolean {
-    return this.inProgress || this.formGroup.valid;
+    return !this.inProgress && this.formGroup.valid && this.formGroup.dirty;
   }
 
   /**
@@ -152,6 +148,7 @@ export class GroupInviteComponent implements OnInit, OnDestroy {
       }
     );
     this.formGroup.get('username').setErrors(null);
+    this.formGroup.markAsPristine();
     this.changeDetector.detectChanges();
   }
 
@@ -171,21 +168,18 @@ export class GroupInviteComponent implements OnInit, OnDestroy {
   private latestEligibilityValidator: ValidatorFn = null;
 
   private refreshEligibilityValidator(): void {
-    // Make sure there's no leftovers
-    if (this.latestEligibilityValidator !== null) {
-      this.removeEligibilityValidator();
-    }
-    // Before resetting the validator
+    this.removeEligibilityValidator();
+
     this.latestEligibilityValidator = this.eligibilityValidator();
     this.formGroup.controls.username?.addValidators(
       this.latestEligibilityValidator
     );
-    console.log(this.formGroup.controls.username.errors);
 
     this.formGroup.controls.username?.updateValueAndValidity({
-      onlySelf: true,
+      emitEvent: false,
     });
-    this.formGroup.controls.username?.markAsDirty({ onlySelf: true });
+
+    this.formGroup.controls.username?.markAsDirty();
 
     this.changeDetector.detectChanges();
   }

@@ -5,7 +5,7 @@
   flex-flow: column nowrap;
 
   h3.m-groupMembersList__title {
-    margin: $spacing2 0;
+    margin: $spacing2 0 $spacing1;
     @include body1Bold;
   }
 
@@ -89,7 +89,7 @@
     align-items: center;
     justify-content: space-between;
     max-width: 100%;
-    margin-top: $spacing2;
+    margin-top: $spacing3;
 
     .m-groupMembersListCompactMember__ownerBadge {
       i {
@@ -113,6 +113,7 @@
         text-decoration: none;
         font-size: 15px;
         line-height: 20px;
+        font-weight: 400;
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
