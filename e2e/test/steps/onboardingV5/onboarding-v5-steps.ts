@@ -46,6 +46,10 @@ namespace OnboardingV5Steps {
     }
   );
 
+  Given('I click the onboarding v5 step skip button', (): void => {
+    onboardingV5ModalComponent.clickSkip(true);
+  });
+
   Then('I see the onboarding v5 modal', (): void => {
     onboardingV5ModalComponent.isVisible();
   });
