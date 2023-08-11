@@ -19,6 +19,7 @@ Feature: Boost Creation
     And I see my total is "$50.00"
     And I click to submit boost
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
+    And I refresh the page
     # And I can revoke a newsfeed boo 
 
   Scenario: boosting a controversial post with tokens
@@ -39,6 +40,7 @@ Feature: Boost Creation
     And I see my total is "50 tokens"
     And I click to submit boost
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
+    And I refresh the page
     # And I can revoke a newsfeed boo 
 
   Scenario: revoking a channel with cash
@@ -56,6 +58,7 @@ Feature: Boost Creation
     And I see my total is "$50.00"
     And I click to submit boost
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
+    And I refresh the page
 
   Scenario: boosting a channel with tokens
     Given I am logged in
@@ -73,6 +76,7 @@ Feature: Boost Creation
     And I see my total is "50 tokens"
     And I click to submit boost
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
+    And I refresh the page
     # And I can revoke a newsfeed boost
 
   Scenario: boosting a group
@@ -91,4 +95,5 @@ Feature: Boost Creation
     And I see my total is "50 tokens"
     And I click to submit boost
     Then I should see an "success" toaster saying "Success! Your boost request is being processed."
+    And I refresh the page
     # And I can revoke a newsfeed boost
