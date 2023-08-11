@@ -122,6 +122,6 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
    * Resets the topbar counter
    */
   protected resetCounter(): void {
-    this.v1Service.clear();
+    this.v1Service.clearCount();
   }
 }
