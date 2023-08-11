@@ -813,6 +813,8 @@ export class ComposerService implements OnDestroy {
     this.audienceSelectorService.selectedAudience$.next(null);
     this.audienceSelectorService.shareToGroupMode$.next(false);
 
+    this.livestreamService.setStream(null);
+
     // Reset original source
     this.entity = null;
   }
