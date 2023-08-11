@@ -31,13 +31,13 @@ import { activityServiceMock as commentsActivityServiceMock } from '../../../../
 import { ActivityService } from '../../newsfeed/activity/activity.service';
 import { By } from '@angular/platform-browser';
 import { MetaService } from '../../../common/services/meta.service';
-import { metaServiceMock } from '../../notifications/notification.service.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
+import { metaServiceMock } from '../../../mocks/services/meta-service-mock.spec';
 
 xdescribe('Blog view component', () => {
   let comp: BlogView;

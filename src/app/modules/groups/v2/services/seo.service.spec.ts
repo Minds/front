@@ -27,7 +27,9 @@ describe('GroupSeoService', () => {
   });
 
   it('should apply metadata', () => {
-    const group: MindsGroup = groupMock;
+    let group: MindsGroup = groupMock;
+    group.nsfw = [];
+    group.mature = false;
 
     service.set(group);
 
