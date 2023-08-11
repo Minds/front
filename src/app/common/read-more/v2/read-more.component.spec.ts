@@ -8,13 +8,13 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
 import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
-import { siteServiceMock } from '../../../modules/notifications/notification.service.spec';
 import { MockService } from '../../../utils/mock';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { ClientMetaService } from '../../services/client-meta.service';
 import { SiteService } from '../../services/site.service';
 import { ReadMoreComponent } from './read-more.component';
 import { ReadMoreModule } from './read-more.module';
+import { siteServiceMock } from '../../../mocks/services/site-service-mock.spec';
 
 describe('ReadMoreComponent', () => {
   let comp: ReadMoreComponent;

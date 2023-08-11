@@ -201,7 +201,8 @@ export class Minds implements OnInit, OnDestroy {
     if (this.site.isProDomain) {
       this.site.listen();
     } else {
-      this.notificationService.getNotifications();
+      this.notificationService.listen();
+      this.notificationService.updateNotificationCount();
     }
 
     this.session.isLoggedIn(async is => {
@@ -221,6 +222,11 @@ export class Minds implements OnInit, OnDestroy {
           // We should be able to remove when OnboardingV5 is fully released.
           this.checkEmailConfirmation();
         }
+
+        this.notificationService.listen();
+        this.notificationService.updateNotificationCount();
+      } else {
+        this.notificationService.unlisten();
       }
     });
 

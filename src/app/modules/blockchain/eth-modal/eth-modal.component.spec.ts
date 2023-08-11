@@ -7,10 +7,10 @@ import { SendWyreService } from '../sendwyre/sendwyre.service';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { SiteService } from '../../../common/services/site.service';
 import { Session } from '../../../services/session';
-import { siteServiceMock } from '../../notifications/notification.service.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { siteServiceMock } from '../../../mocks/services/site-service-mock.spec';
 
 describe('BlockchainEthModalComponent', () => {
   let comp: BlockchainEthModalComponent;
