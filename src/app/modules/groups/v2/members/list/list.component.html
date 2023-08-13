@@ -31,7 +31,7 @@
         [group]="group"
         [user]="member"
         (onKick)="onKick(member)"
-        (membersChanged)="membersChanged.emit()"
+        (memberChanged)="memberChanged.emit($event)"
       ></m-group__memberActions></m-publisherCard
   ></ng-container>
   <!-- ----------------------------------- -->
@@ -56,7 +56,7 @@
         [group]="group"
         [user]="member"
         (onKick)="onKick(member)"
-        (membersChanged)="membersChanged.emit()"
+        (memberChanged)="memberChanged.emit($event)"
       ></m-group__memberActions>
     </div>
   </ng-container>

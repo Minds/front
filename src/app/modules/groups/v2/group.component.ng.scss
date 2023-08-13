@@ -15,15 +15,6 @@
     border-color: themed($m-borderColor--primary);
   }
 
-  .m-group__narrowBrief {
-    display: none;
-    padding: 20px 20px 0;
-
-    @media screen and (max-width: $layoutMin3ColWidth) {
-      display: block;
-    }
-  }
-
   .m-group__toolbar {
     display: flex;
     justify-content: space-between;
@@ -89,6 +80,11 @@
         @media screen and (max-width: $layoutMin3ColWidth) {
           padding: $spacing4;
         }
+      }
+    }
+    .m-pageLayout__pane--main {
+      @media screen and (max-width: $layoutMax2ColFixedWidth) {
+        width: 100% !important;
       }
     }
   }

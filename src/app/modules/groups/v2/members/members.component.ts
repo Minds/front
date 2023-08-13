@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { GroupMembershipLevel } from '../group.types';
 import { GroupService } from '../group.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 export type MembersViewListType = 'members' | 'moderators';
 /**
@@ -13,29 +13,15 @@ export type MembersViewListType = 'members' | 'moderators';
   styleUrls: ['./members.component.ng.scss'],
 })
 export class GroupMembersComponent {
-  syncMembersList: boolean = false;
-  syncModeratorsList: boolean = false;
+  syncMembersList: any = null;
+  syncModeratorsList: any = null;
 
-  subscriptions: Subscription[] = [];
+  membersListChanged$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  moderatorsListChanged$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(protected service: GroupService) {}
 
   // Allows us to use enum in template
   public groupMembershipLevel: typeof GroupMembershipLevel = GroupMembershipLevel;
-
-  // When one list changes, reload the other one
-  protected syncList(type: MembersViewListType) {
-    if (type === 'members') {
-      this.syncMembersList = true;
-    } else if (type === 'moderators') {
-      this.syncModeratorsList = true;
-    }
-
-    this.refreshSyncStatus();
-  }
-
-  private refreshSyncStatus(): void {
-    this.syncMembersList = false;
-    this.syncModeratorsList = false;
-  }
 }

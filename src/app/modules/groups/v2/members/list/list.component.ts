@@ -110,10 +110,10 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
   @Input() listTitle: string;
 
   /**
-   * Optional title
+   * Reload the list if member changed elsewhere
    */
-  @Input() set sync(value: boolean) {
-    if (value) {
+  @Input() set sync(member: any) {
+    if (member) {
       this.loadSubscription?.unsubscribe();
       this.loadSubscription = this.load$().subscribe();
     }
@@ -122,7 +122,13 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
   /**
    * Emit when members and/or their roles have changed
    */
-  @Output() membersChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() memberChanged: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Emit when list has been loaded. Used to sync the members
+   * list with the moderators list and vice versa
+   */
+  @Output() loaded: EventEmitter<any> = new EventEmitter<any>();
 
   private loadSubscription: Subscription;
 
@@ -189,6 +195,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         this.moreData$.next(response['load-next']);
         this.inProgress$.next(false);
         this.list$.next(response.members);
+        this.loaded.emit();
       }),
       shareReplay()
     );

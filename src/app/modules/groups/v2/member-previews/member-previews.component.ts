@@ -69,16 +69,13 @@ export class GroupMemberPreviewsComponent implements OnInit, OnDestroy {
    */
   protected maxMembersCount: number = 2;
 
-  /** Value from service - what group are we talking about */
-  public readonly group$: BehaviorSubject<MindsGroup> = this.service.group$;
-
   subscriptions: Subscription[] = [];
 
   /**
    * Load members list.
    * @returns { Observable<any[]>}
    */
-  loadMembers$: Observable<any[]> = this.group$.pipe(
+  loadMembers$: Observable<any[]> = this.service.group$.pipe(
     take(1),
     switchMap(group => {
       this.inProgress = true;
@@ -163,7 +160,11 @@ export class GroupMemberPreviewsComponent implements OnInit, OnDestroy {
    * @param $event
    */
   onAggregatorClick($event): void {
-    this.router.navigate(['group', this.group$.getValue().guid, 'members']);
+    this.router.navigate([
+      'group',
+      this.service.group$.getValue().guid,
+      'members',
+    ]);
   }
 
   /**

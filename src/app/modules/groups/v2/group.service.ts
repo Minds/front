@@ -40,14 +40,14 @@ export class GroupService implements OnDestroy {
   >(null);
 
   /**
-   * Whether to show the Review tab
-   */
-  readonly canReview$: Observable<boolean>;
-
-  /**
    * Whether user has access to group contents (feed, members list, etc.)
    */
   readonly canAccess$: Observable<boolean>;
+
+  /**
+   * Whether to show the Review tab
+   */
+  readonly canReview$: Observable<boolean>;
 
   /**
    * Whether user can send an invitation to join the group

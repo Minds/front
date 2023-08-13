@@ -64,7 +64,7 @@
     <textarea
       class="form-control"
       name="description"
-      [ngModel]="service.description$ | async"
+      [ngModel]="service.description$ | async | decodeHtmlString"
       (ngModelChange)="service.description$.next($event)"
       data-ref="data-minds-group-description-textarea"
     ></textarea>

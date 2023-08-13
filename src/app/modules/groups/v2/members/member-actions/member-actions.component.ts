@@ -40,7 +40,7 @@ export class GroupMemberActionsComponent {
    * Emit when members and/or their roles have changed
    * Used to sync sidebar mods list and main members list
    */
-  @Output() membersChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() memberChanged: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     public service: GroupService,
@@ -75,19 +75,19 @@ export class GroupMemberActionsComponent {
     this.service.memberCount$.next(this.service.memberCount$.getValue() - 1);
 
     this.onKick.emit({ userGuid: this.user.guid });
-    this.membersChanged.emit();
+    this.memberChanged.emit(this.user);
   }
 
   async reInvite() {
     await this.inviteService.invite(this.user);
     this.wasReInvited = true;
-    this.membersChanged.emit();
+    this.memberChanged.emit(this.user);
   }
 
   async grantOwnership() {
     await this.service.grantOwnership(this.user.guid);
     this.user['is:owner'] = true;
-    this.membersChanged.emit();
+    this.memberChanged.emit(this.user);
   }
 
   async revokeOwnership() {
@@ -97,18 +97,18 @@ export class GroupMemberActionsComponent {
       // Refresh permissions everywhere if you've revoked your own ownership
       this.service.sync();
     }
-    this.membersChanged.emit();
+    this.memberChanged.emit(this.user);
   }
 
   async grantModerator() {
     await this.service.grantModerator(this.user.guid);
     this.user['is:moderator'] = true;
-    this.membersChanged.emit();
+    this.memberChanged.emit(this.user);
   }
 
   async revokeModerator() {
     await this.service.revokeModerator(this.user.guid);
     this.user['is:moderator'] = false;
-    this.membersChanged.emit();
+    this.memberChanged.emit(this.user);
   }
 }

@@ -7,6 +7,7 @@ import { ApiService } from '../../../../common/api/api.service';
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BehaviorSubject } from 'rxjs';
 
 describe('GroupMemberPreviewsComponent', () => {
   let component: GroupMemberPreviewsComponent;
@@ -17,7 +18,20 @@ describe('GroupMemberPreviewsComponent', () => {
       declarations: [GroupMemberPreviewsComponent],
       imports: [RouterTestingModule],
       providers: [
-        { provide: GroupService, useValue: MockService(GroupService) },
+        {
+          provide: GroupService,
+          useValue: MockService(GroupService, {
+            has: ['group$', 'memberCount$'],
+            props: {
+              group$: {
+                get: () => new BehaviorSubject<any>(null),
+              },
+              memberCount$: {
+                get: () => new BehaviorSubject<number>(1),
+              },
+            },
+          }),
+        },
         { provide: ApiService, useValue: MockService(ApiService) },
         { provide: Session, useValue: MockService(Session) },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
