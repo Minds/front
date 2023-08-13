@@ -149,11 +149,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
         this.session.getLoggedInUser().guid,
       ];
       this.object['thumbs:up:count']++;
-      if (this.explicitVotesExperiment.isActive()) {
-        this.toast.success(
-          'Thank you! We use this to improve your recommendations.'
-        );
-      }
+      this.showImproveRecsToast();
     } else {
       for (let key in this.object['thumbs:up:user_guids']) {
         if (
@@ -199,6 +195,26 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
 
     if (this.changesDetected) {
       this.cd.detectChanges();
+    }
+  }
+
+  /**
+   * Show improve recommendations toast message if appropriate.
+   * @returns { void }
+   */
+  private showImproveRecsToast(): void {
+    if (
+      // don't show for comments.
+      this.object['type'] !== 'comment' &&
+      // only show if experiment is active.
+      this.explicitVotesExperiment.isActive() &&
+      // only show if has not already been shown this session.
+      !Boolean(localStorage.getItem('improve_recs_toast_shown'))
+    ) {
+      this.toast.success(
+        'Thank you! We use this to improve your recommendations.'
+      );
+      localStorage.setItem('improve_recs_toast_shown', '1');
     }
   }
 }

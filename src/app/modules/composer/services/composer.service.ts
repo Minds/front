@@ -813,6 +813,8 @@ export class ComposerService implements OnDestroy {
     this.audienceSelectorService.selectedAudience$.next(null);
     this.audienceSelectorService.shareToGroupMode$.next(false);
 
+    this.livestreamService.setStream(null);
+
     // Reset original source
     this.entity = null;
   }
@@ -1132,9 +1134,6 @@ export class ComposerService implements OnDestroy {
               this.payload.title = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
               this.payload.description = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
               this.payload.thumbnail = `https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
-              this.payload.message =
-                this.payload.message +
-                `\n https://minds-player.withlivepeer.com?v=${stream.playbackId}`;
               this.livestreamService.toggleRecordLivestream(stream.id, true);
             }
           });

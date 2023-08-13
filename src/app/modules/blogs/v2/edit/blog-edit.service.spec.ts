@@ -2,9 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { BlogsEditService } from './blog-edit.service';
 import { uploadMock } from '../../../../../tests/upload-mock.spec';
 import { clientMock } from '../../../../../tests/client-mock.spec';
-import { siteServiceMock } from '../../../notifications/notification.service.spec';
 import { composerMockService } from '../../../../mocks/modules/composer/services/composer.service.mock';
 import { BehaviorSubject } from 'rxjs';
+import { siteServiceMock } from '../../../../mocks/services/site-service-mock.spec';
 
 let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');

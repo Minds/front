@@ -17,6 +17,7 @@ import { ComposerSupermindComponent } from '../supermind/supermind.component';
 import { EntityResolverService } from '../../../../../common/services/entity-resolver.service';
 import { of } from 'rxjs';
 import { SupermindNonStripeOffersExperimentService } from '../../../../experiments/sub-services/supermind-non-stripe-offers-experiment.service';
+import { TwitterSupermindExperimentService } from '../../../../experiments/sub-services/twitter-supermind-experiment.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ModalService } from '../../../../../services/ux/modal.service';
 import { Injector } from '@angular/core';
@@ -98,6 +99,10 @@ describe('Composer Supermind Popup', () => {
             useValue: MockService(SupermindNonStripeOffersExperimentService),
           },
           {
+            provide: TwitterSupermindExperimentService,
+            useValue: MockService(TwitterSupermindExperimentService),
+          },
+          {
             provide: ToasterService,
             useValue: MockService(ToasterService),
           },
@@ -139,6 +144,10 @@ describe('Composer Supermind Popup', () => {
     apiMock.get.and.returnValue([]);
 
     fixture.detectChanges();
+
+    (comp as any).twitterSupermindExperimentService.isActive.and.returnValue(
+      false
+    );
 
     const twitterRequiredFormControl: AbstractControl =
       comp.formGroup.controls.twitterRequired;
@@ -215,6 +224,11 @@ describe('Composer Supermind Popup', () => {
 
   describe('responseTypeSubscription', () => {
     it('should disable and wipe twitter reply required value on selecting a live reply type', () => {
+      (comp as any).twitterSupermindExperimentService.isActive.and.returnValue(
+        true
+      );
+      comp.ngOnInit();
+
       const twitterRequiredFormControl: AbstractControl =
         comp.formGroup.controls.twitterRequired;
       const responseTypeControl: AbstractControl =
@@ -230,6 +244,11 @@ describe('Composer Supermind Popup', () => {
     });
 
     it('should enable twitter reply required control on selecting a NON live reply type', () => {
+      (comp as any).twitterSupermindExperimentService.isActive.and.returnValue(
+        true
+      );
+      comp.ngOnInit();
+
       const twitterRequiredFormControl: AbstractControl =
         comp.formGroup.controls.twitterRequired;
       const responseTypeControl: AbstractControl =
