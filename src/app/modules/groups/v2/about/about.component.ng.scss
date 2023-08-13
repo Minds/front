@@ -18,11 +18,14 @@
     }
   }
 
-  .m-groupAbout__section {
+  ::ng-deep .m-groupAbout__section {
     &:not(:last-child) {
-      padding-bottom: $spacing4;
-      @media screen and (max-width: $max-mobile) {
-        padding-bottom: $spacing3;
+      & > :first-child {
+        display: block;
+        padding-bottom: $spacing4;
+        @media screen and (max-width: $max-mobile) {
+          padding-bottom: $spacing3;
+        }
       }
     }
   }

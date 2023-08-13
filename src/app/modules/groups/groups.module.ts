@@ -12,7 +12,6 @@ import { GroupsProfileRequests } from './profile/requests/requests';
 import { GroupsTileComponent } from './tile/tile.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
-import { GroupMemberPreviews } from './profile/member-previews/member-previews.component';
 import { GroupProfileFeedComponent } from './profile/feed/feed.component';
 import { GroupProfileFeedSortedComponent } from './profile/feed/sorted.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
@@ -103,7 +102,6 @@ const routes: Routes = [
     GroupProfileFeedSortedComponent,
     GroupsProfileRequests,
     GroupsTileComponent,
-    GroupMemberPreviews,
     GroupsProfileReviewComponent,
     GroupsKickModalComponent,
     GroupsMembershipsComponent,
@@ -114,7 +112,6 @@ const routes: Routes = [
     GroupsProfileRequests,
     GroupsProfileReviewComponent,
     GroupProfileFeedComponent,
-    GroupMemberPreviews,
   ],
   providers: [GroupsSearchService],
 })

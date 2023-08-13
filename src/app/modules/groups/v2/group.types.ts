@@ -50,20 +50,25 @@ export enum GroupMembershipLevel {
 
 ///////////////////////////////////////////////////////
 
-// GROUP MEMBERSHIP GET PARAMS
 export type GroupMembershipGetParams = {
   limit?: number;
   offset?: number;
   q?: string;
   membership_level?: GroupMembershipLevel;
+  membership_level_gte?: boolean;
 };
 
-// GROUP INVITE PUT PARAMS
+export type GroupMembershipGetResponse = {
+  status: string;
+  members?: any[];
+  total?: number;
+  'load-next'?: number;
+};
+
 export type GroupInvitePutParams = {
   guid: string;
 };
 
-// GROUP INVITE PUT RESPONSE
 export type GroupInvitePutResponse = {
   done: boolean;
   status: string;

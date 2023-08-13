@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
@@ -7,6 +14,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   map,
+  shareReplay,
   switchMap,
   take,
   tap,
@@ -15,6 +23,7 @@ import { GroupMembersListService } from './list.service';
 import { ApiResponse } from '../../../../../common/api/api.service';
 import { GroupMembershipLevel } from '../../group.types';
 import { MindsGroup } from '../../group.model';
+import { Session } from '../../../../../services/session';
 
 /**
  * Presents a list of group members
@@ -98,9 +107,29 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
   /**
    * Optional title
    */
-  @Input() title: string;
+  @Input() listTitle: string;
 
-  constructor(private service: GroupMembersListService) {}
+  /**
+   * Optional title
+   */
+  @Input() set sync(value: boolean) {
+    if (value) {
+      this.loadSubscription?.unsubscribe();
+      this.loadSubscription = this.load$().subscribe();
+    }
+  }
+
+  /**
+   * Emit when members and/or their roles have changed
+   */
+  @Output() membersChanged: EventEmitter<any> = new EventEmitter<any>();
+
+  private loadSubscription: Subscription;
+
+  constructor(
+    private service: GroupMembersListService,
+    protected session: Session
+  ) {}
 
   ngOnInit(): void {
     this.service.group$.next(this.group);
@@ -115,13 +144,15 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+
+    this.loadSubscription?.unsubscribe();
   }
   /**
    * Init sub to fire on tab or filter change that will load / reload feed.
    * @returns { void }
    */
   public setupSubscriptions(): void {
-    this.subscriptions.push(this.load$().subscribe());
+    this.loadSubscription = this.load$().subscribe();
   }
 
   /**
@@ -158,7 +189,8 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         this.moreData$.next(response['load-next']);
         this.inProgress$.next(false);
         this.list$.next(response.members);
-      })
+      }),
+      shareReplay()
     );
   }
 

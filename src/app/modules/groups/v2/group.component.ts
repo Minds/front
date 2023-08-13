@@ -89,7 +89,6 @@ export class GroupComponent implements OnInit, OnDestroy {
         // Allows legacy feed service to search with a query param
         this.v1SearchService.query$.next(query);
       }),
-
       this.service.group$.subscribe(group => {
         if (group) {
           this.currentGroup = group;

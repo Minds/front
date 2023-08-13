@@ -4,6 +4,7 @@ import { GroupMemberActionsComponent } from './member-actions.component';
 import { GroupService } from '../../group.service';
 import { MockService } from '../../../../../utils/mock';
 import { GroupInviteService } from '../../invite/invite.service';
+import { Session } from '../../../../../services/session';
 
 describe('GroupMemberActionsComponent', () => {
   let component: GroupMemberActionsComponent;
@@ -17,6 +18,10 @@ describe('GroupMemberActionsComponent', () => {
         {
           provide: GroupInviteService,
           useValue: MockService(GroupInviteService),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
         },
       ],
     }).compileComponents();

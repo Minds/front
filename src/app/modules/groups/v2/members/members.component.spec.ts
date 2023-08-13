@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupMembersComponent } from './members.component';
 import { GroupService } from '../group.service';
 import { MockService } from '../../../../utils/mock';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GroupMembersComponent', () => {
   let component: GroupMembersComponent;

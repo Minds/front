@@ -36,10 +36,6 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   group: any;
 
   @Input('group') set _group(group: any) {
-    if (group === this.group) {
-      return;
-    }
-
     this.group = group;
 
     if (this.initialized) {

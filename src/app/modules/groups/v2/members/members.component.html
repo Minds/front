@@ -7,6 +7,8 @@
       <m-group__membersList
         [membershipLevel]="groupMembershipLevel.MEMBER"
         [group]="service.group$ | async"
+        (membersChanged)="syncList('moderators')"
+        [sync]="syncMembersList"
       ></m-group__membersList>
     </div>
     <!-- ----------------------------------------- -->
@@ -22,11 +24,13 @@
 
         <m-group__membersList
           class="m-groupMembers__modsList"
-          title="Moderators"
+          listTitle="Moderators"
           [group]="service.group$ | async"
           compactView="true"
           [membershipLevel]="groupMembershipLevel.MODERATOR"
           membershipLevelGte="true"
+          (membersChanged)="syncList('members')"
+          [sync]="syncModeratorsList"
         ></m-group__membersList>
       </div>
     </div>

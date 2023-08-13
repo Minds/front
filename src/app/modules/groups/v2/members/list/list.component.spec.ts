@@ -4,6 +4,7 @@ import { GroupMembersListComponent } from './list.component';
 import { GroupMembersListService } from './list.service';
 import { MockService } from '../../../../../utils/mock';
 import { BehaviorSubject } from 'rxjs';
+import { Session } from '../../../../../services/session';
 
 describe('GroupMembersListComponent', () => {
   let component: GroupMembersListComponent;
@@ -27,6 +28,10 @@ describe('GroupMembersListComponent', () => {
               membershipLevelGte$: { get: () => new BehaviorSubject<any>('') },
             },
           }),
+        },
+        {
+          provide: Session,
+          useValue: MockService(Session),
         },
       ],
     }).compileComponents();

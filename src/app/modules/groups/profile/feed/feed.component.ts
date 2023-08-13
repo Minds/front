@@ -27,7 +27,7 @@ export class GroupProfileFeedComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(
       this.service.$group.subscribe(group => {
-        this.group = group;
+        this.group = { ...group };
       }),
 
       this.route.queryParams.subscribe(params => {

@@ -1,8 +1,8 @@
 <h3
-  *ngIf="title && (list$ | async).length > 0"
+  *ngIf="listTitle && (list$ | async) && (list$ | async).length > 0"
   class="m-groupMembersList__title"
 >
-  {{ title }}
+  {{ listTitle }}
 </h3>
 <!-- ----------------------------------- -->
 <div class="m-groupMembersList__searchWrapper" *ngIf="showSearch">
@@ -24,12 +24,15 @@
       [publisher]="member"
       [showDescription]="false"
       sizeOverride="medium"
+      [showSubscribeButton]="member.guid !== session.getLoggedInUser().guid"
       ><m-group__memberActions
+        *ngIf="member.guid !== session.getLoggedInUser().guid"
         class="m-publisherCard__actionsButton"
         [group]="group"
         [user]="member"
         (onKick)="onKick(member)"
-      ></m-group__memberActions> </m-publisherCard
+        (membersChanged)="membersChanged.emit()"
+      ></m-group__memberActions></m-publisherCard
   ></ng-container>
   <!-- ----------------------------------- -->
   <ng-container *ngIf="compactView">
@@ -48,33 +51,38 @@
         </m-tooltip>
       </div>
       <m-group__memberActions
+        *ngIf="member.guid !== session.getLoggedInUser().guid"
         class="m-publisherCard__actionsButton"
         [group]="group"
         [user]="member"
         (onKick)="onKick(member)"
+        (membersChanged)="membersChanged.emit()"
       ></m-group__memberActions>
     </div>
   </ng-container>
-  <!-- ----------------------------------- -->
-
-  <infinite-scroll
-    *ngIf="!(shouldShowNoMembersText$ | async) && !compactView"
-    (load)="loadNext()"
-    [moreData]="moreData$ | async"
-    [inProgress]="inProgress$ | async"
-  >
-  </infinite-scroll>
 
   <span
-    *ngIf="compactView && (moreData$ | async)"
+    *ngIf="compactView && (moreData$ | async) && !(inProgress$ | async)"
     class="m-groupMembersList__seeMore"
     (click)="loadNext()"
     >See more</span
   >
-  <span
-    *ngIf="shouldShowNoMembersText$ | async"
-    class="m-groupMembersList__noMembersSpan"
-    i18n="@@GROUP_MEMBERS_LIST__NO_MEMBERS"
-    >No members
-  </span>
 </ng-container>
+<!-- ----------------------------------- -->
+<m-loadingSpinner
+  [inProgress]="compactView && (inProgress$ | async)"
+></m-loadingSpinner>
+<infinite-scroll
+  *ngIf="!(shouldShowNoMembersText$ | async) && !compactView"
+  (load)="loadNext()"
+  [moreData]="moreData$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>
+
+<span
+  *ngIf="shouldShowNoMembersText$ | async"
+  class="m-groupMembersList__noMembersSpan"
+  i18n="@@GROUP_MEMBERS_LIST__NO_MEMBERS"
+  >No members
+</span>

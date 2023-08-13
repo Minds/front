@@ -122,26 +122,21 @@
     <!-- ----------------------------- -->
     <ng-container *ngIf="session.isAdmin()">
       <m-dropdownMenu__item
-        *ngIf="!group.mature"
-        (click)="setExplicit(true)"
+        *ngIf="!(service.mature$ | async)"
+        red="true"
+        (click)="toggleExplicit(true)"
         i18n="@@M__ACTION__SET_EXPLICIT"
       >
         Set explicit
       </m-dropdownMenu__item>
       <m-dropdownMenu__item
-        *ngIf="group.mature"
-        (click)="setExplicit(false)"
+        *ngIf="service.mature$ | async"
+        red="true"
+        (click)="toggleExplicit(false)"
         i18n="@@M__ACTION__REMOVE_EXPLICIT"
       >
         Remove explicit
       </m-dropdownMenu__item>
-
-      <!-- NSFW  -->
-      <m-nsfw-selector
-        service="editing"
-        [selected]="group.nsfw"
-        (selectedChange)="setNSFWSelected($event)"
-      ></m-nsfw-selector>
     </ng-container>
     <!-- ----------------------------- -->
     <!-- CREATOR FUNCTIONS -->

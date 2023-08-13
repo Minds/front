@@ -82,7 +82,7 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
   /**
    * Whether the group is nsfw
    */
-  async toggleExplicit(enable: boolean) {
+  async toggleExplicit(enable) {
     this.service.toggleExplicit(enable);
   }
 

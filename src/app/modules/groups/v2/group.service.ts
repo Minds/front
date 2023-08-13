@@ -347,7 +347,7 @@ export class GroupService implements OnDestroy {
     let endpoint = `${this.baseEndpoint}group/${this.guid$.getValue()}`;
 
     const params = {
-      private: enable ? GroupAccessType.PRIVATE : GroupAccessType.PUBLIC,
+      membership: enable ? GroupAccessType.PRIVATE : GroupAccessType.PUBLIC,
     };
 
     try {

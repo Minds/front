@@ -12,8 +12,6 @@ import { GroupMembershipLevel, GroupReviewView } from '../group.types';
   styleUrls: ['./review.component.ng.scss'],
 })
 export class GroupReviewComponent {
-  constructor(protected service: GroupService) {}
-
   // Allows us to use enum in template
   public groupMembershipLevel: typeof GroupMembershipLevel = GroupMembershipLevel;
   /**
@@ -22,4 +20,6 @@ export class GroupReviewComponent {
   readonly view$: BehaviorSubject<GroupReviewView> = new BehaviorSubject<
     GroupReviewView
   >('feed');
+
+  constructor(protected service: GroupService) {}
 }

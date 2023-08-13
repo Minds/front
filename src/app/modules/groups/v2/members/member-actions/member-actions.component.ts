@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MindsGroup } from '../../../../../interfaces/entities';
 import { GroupInviteService } from '../../invite/invite.service';
 import { GroupService } from '../../group.service';
+import { Session } from '../../../../../services/session';
 
 /**
  * The meatball menu on a user in a group members list,
  * visible to those with access (admins and moderators?).
  * Contains a list of actions that relate to the user's place in the group
  *
- * (This is mostly an old component that was moved to groups v2 with minor changes)
+ * This an old component copied from groups v1 with minor changes
  */
 @Component({
   selector: 'm-group__memberActions',
@@ -17,8 +17,8 @@ import { GroupService } from '../../group.service';
   styleUrls: ['./member-actions.component.ng.scss'],
 })
 export class GroupMemberActionsComponent {
-  group: any = {};
-  user: any = {
+  @Input() group: any = {};
+  @Input() user: any = {
     'is:member': false,
     'is:moderator': false,
     'is:owner': false,
@@ -31,11 +31,21 @@ export class GroupMemberActionsComponent {
 
   wasReInvited: boolean = false;
 
-  @Output('onKick') onKick: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Emit when a user has been removed from the group
+   */
+  @Output() onKick: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Emit when members and/or their roles have changed
+   * Used to sync sidebar mods list and main members list
+   */
+  @Output() membersChanged: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     public service: GroupService,
-    private inviteService: GroupInviteService
+    private inviteService: GroupInviteService,
+    private session: Session
   ) {}
 
   removePrompt() {
@@ -62,45 +72,43 @@ export class GroupMemberActionsComponent {
     this.user['is:banned'] = kicked && ban;
 
     this.kickPrompt = !kicked;
-    this.changeCounter('members:count', -1);
+    this.service.memberCount$.next(this.service.memberCount$.getValue() - 1);
 
     this.onKick.emit({ userGuid: this.user.guid });
+    this.membersChanged.emit();
   }
 
   async reInvite() {
     await this.inviteService.invite(this.user);
     this.wasReInvited = true;
+    this.membersChanged.emit();
   }
 
   async grantOwnership() {
     await this.service.grantOwnership(this.user.guid);
     this.user['is:owner'] = true;
+    this.membersChanged.emit();
   }
 
   async revokeOwnership() {
     await this.service.revokeOwnership(this.user.guid);
     this.user['is:owner'] = false;
+    if (this.user.guid === this.session.getLoggedInUser().guid) {
+      // Refresh permissions everywhere if you've revoked your own ownership
+      this.service.sync();
+    }
+    this.membersChanged.emit();
   }
 
-  /**
-   * Grant moderation
-   */
   async grantModerator() {
     await this.service.grantModerator(this.user.guid);
     this.user['is:moderator'] = true;
+    this.membersChanged.emit();
   }
 
-  /**
-   * Revoke moderation
-   */
   async revokeModerator() {
     await this.service.revokeModerator(this.user.guid);
     this.user['is:moderator'] = false;
-  }
-
-  private changeCounter(counter: string, val = 0) {
-    if (typeof this.group[counter] !== 'undefined') {
-      this.group[counter] = parseInt(this.group[counter], 10) + val;
-    }
+    this.membersChanged.emit();
   }
 }
