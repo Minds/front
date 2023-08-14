@@ -75,6 +75,7 @@ describe('ActivityComponent', () => {
                 isFeed: false,
                 isSingle: false,
                 permalinkBelowContent: false,
+                hideTopBorder: false,
               },
             },
           }),

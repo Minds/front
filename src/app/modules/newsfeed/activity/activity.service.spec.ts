@@ -284,4 +284,41 @@ describe('ActivityService', () => {
       done();
     });
   });
+
+  describe('displayOptions', () => {
+    it('should have correctly defaulted displayOptions', () => {
+      expect((service as any).displayOptions).toEqual({
+        autoplayVideo: true,
+        showOwnerBlock: true,
+        showComments: true,
+        showOnlyCommentsInput: true,
+        showOnlyCommentsToggle: false,
+        showToolbar: true,
+        showToolbarButtonsRow: true,
+        showExplicitVoteButtons: false,
+        showInteractions: false,
+        showEditedTag: false,
+        showVisibilityState: false,
+        showTranslation: false,
+        showPostMenu: true,
+        showPinnedBadge: true,
+        showMetrics: true,
+        fixedHeight: false,
+        fixedHeightContainer: false,
+        isModal: false,
+        minimalMode: false,
+        bypassMediaModal: false,
+        sidebarMode: false,
+        boostRotatorMode: false,
+        isSidebarBoost: false,
+        isFeed: false,
+        isSingle: false,
+        permalinkBelowContent: false,
+        hasLoadingPriority: false,
+        inSingleGroupFeed: false,
+        isComposerPreview: false,
+        hideTopBorder: false,
+      });
+    });
+  });
 });

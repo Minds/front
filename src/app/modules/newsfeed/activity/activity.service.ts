@@ -51,6 +51,7 @@ export type ActivityDisplayOptions = {
   hasLoadingPriority: boolean; // whether to load image content eagerly - should usually be first 1 or 2 activities in a feed.
   inSingleGroupFeed: boolean; // whether the activity is being presented in the feed of a single specific group page
   isComposerPreview: boolean; // is the activity being presented in the composer as a preview (e.g. to display a quote post)
+  hideTopBorder: boolean; // hides the top border of an activity.
 };
 
 export type ActivityEntity = {
@@ -440,6 +441,7 @@ export class ActivityService implements OnDestroy {
     hasLoadingPriority: false,
     inSingleGroupFeed: false,
     isComposerPreview: false,
+    hideTopBorder: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();

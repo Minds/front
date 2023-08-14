@@ -1,0 +1,21 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-inlineFeedHeader__text {
+    @include heading3Bold;
+
+    margin: $spacing6 $spacing3 $activityAvatarSpacingLeft--feed
+      $activitySpacingRight--feed;
+
+    @media screen and (max-width: $max-mobile) {
+      margin-left: $activityAvatarSpacingLeft--feed--mobile;
+      margin-right: $activitySpacingRight--feed--mobile;
+    }
+  }
+}

@@ -37,35 +37,34 @@ export type ActivityEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type ActivityNode = EntityNodeInterface &
-  NodeInterface & {
-    __typename?: 'ActivityNode';
-    /** Relevant for images/video posts. A blurhash to be used for preloading the image. */
-    blurhash?: Maybe<Scalars['String']['output']>;
-    commentsCount: Scalars['Int']['output'];
-    guid: Scalars['String']['output'];
-    hasVotedDown: Scalars['Boolean']['output'];
-    hasVotedUp: Scalars['Boolean']['output'];
-    id: Scalars['ID']['output'];
-    impressionsCount: Scalars['Int']['output'];
-    /** The activity has comments enabled */
-    isCommentingEnabled: Scalars['Boolean']['output'];
-    legacy: Scalars['String']['output'];
-    message: Scalars['String']['output'];
-    nsfw: Array<Scalars['Int']['output']>;
-    nsfwLock: Array<Scalars['Int']['output']>;
-    owner: UserNode;
-    ownerGuid: Scalars['String']['output'];
-    /** Unix timestamp representation of time created */
-    timeCreated: Scalars['Int']['output'];
-    /** ISO 8601 timestamp representation of time created */
-    timeCreatedISO8601: Scalars['String']['output'];
-    /** Relevant for images/video posts */
-    title?: Maybe<Scalars['String']['output']>;
-    urn: Scalars['String']['output'];
-    votesDownCount: Scalars['Int']['output'];
-    votesUpCount: Scalars['Int']['output'];
-  };
+export type ActivityNode = NodeInterface & {
+  __typename?: 'ActivityNode';
+  /** Relevant for images/video posts. A blurhash to be used for preloading the image. */
+  blurhash?: Maybe<Scalars['String']['output']>;
+  commentsCount: Scalars['Int']['output'];
+  guid: Scalars['String']['output'];
+  hasVotedDown: Scalars['Boolean']['output'];
+  hasVotedUp: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  impressionsCount: Scalars['Int']['output'];
+  /** The activity has comments enabled */
+  isCommentingEnabled: Scalars['Boolean']['output'];
+  legacy: Scalars['String']['output'];
+  message: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  owner: UserNode;
+  ownerGuid: Scalars['String']['output'];
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  /** Relevant for images/video posts */
+  title?: Maybe<Scalars['String']['output']>;
+  urn: Scalars['String']['output'];
+  votesDownCount: Scalars['Int']['output'];
+  votesUpCount: Scalars['Int']['output'];
+};
 
 export type BoostEdge = EdgeInterface & {
   __typename?: 'BoostEdge';
@@ -114,32 +113,32 @@ export type EdgeInterface = {
   node?: Maybe<NodeInterface>;
 };
 
-export type EntityNode = EntityNodeInterface &
-  NodeInterface & {
-    __typename?: 'EntityNode';
-    guid: Scalars['String']['output'];
-    id: Scalars['ID']['output'];
-    legacy: Scalars['String']['output'];
-    nsfw: Array<Scalars['Int']['output']>;
-    nsfwLock: Array<Scalars['Int']['output']>;
-    /** Unix timestamp representation of time created */
-    timeCreated: Scalars['Int']['output'];
-    /** ISO 8601 timestamp representation of time created */
-    timeCreatedISO8601: Scalars['String']['output'];
-    urn: Scalars['String']['output'];
-  };
-
-export type EntityNodeInterface = {
-  guid: Scalars['String']['output'];
+export type FeedExploreTagEdge = EdgeInterface & {
+  __typename?: 'FeedExploreTagEdge';
+  cursor: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  legacy: Scalars['String']['output'];
-  nsfw: Array<Scalars['Int']['output']>;
-  nsfwLock: Array<Scalars['Int']['output']>;
-  /** Unix timestamp representation of time created */
-  timeCreated: Scalars['Int']['output'];
-  /** ISO 8601 timestamp representation of time created */
-  timeCreatedISO8601: Scalars['String']['output'];
-  urn: Scalars['String']['output'];
+  node: FeedExploreTagNode;
+  type: Scalars['String']['output'];
+};
+
+export type FeedExploreTagNode = NodeInterface & {
+  __typename?: 'FeedExploreTagNode';
+  id: Scalars['ID']['output'];
+  tag: Scalars['String']['output'];
+};
+
+export type FeedHeaderEdge = EdgeInterface & {
+  __typename?: 'FeedHeaderEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: FeedHeaderNode;
+  type: Scalars['String']['output'];
+};
+
+export type FeedHeaderNode = NodeInterface & {
+  __typename?: 'FeedHeaderNode';
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
 };
 
 export type FeedHighlightsConnection = ConnectionInterface &
@@ -280,20 +279,19 @@ export type GroupEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type GroupNode = EntityNodeInterface &
-  NodeInterface & {
-    __typename?: 'GroupNode';
-    guid: Scalars['String']['output'];
-    id: Scalars['ID']['output'];
-    legacy: Scalars['String']['output'];
-    nsfw: Array<Scalars['Int']['output']>;
-    nsfwLock: Array<Scalars['Int']['output']>;
-    /** Unix timestamp representation of time created */
-    timeCreated: Scalars['Int']['output'];
-    /** ISO 8601 timestamp representation of time created */
-    timeCreatedISO8601: Scalars['String']['output'];
-    urn: Scalars['String']['output'];
-  };
+export type GroupNode = NodeInterface & {
+  __typename?: 'GroupNode';
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
+};
 
 export type KeyValuePairInput = {
   key: Scalars['String']['input'];
@@ -386,6 +384,7 @@ export type PaymentMethod = {
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
+    dismissible: Scalars['Boolean']['output'];
     /**
      * TODO: clean this up to help with typing. Union types wont work due to the following error being outputted
      * `Error: ConnectionInterface.edges expects type "[EdgeInterface!]!" but PublisherRecsConnection.edges provides type "[UnionUserEdgeBoostEdge!]!".`
@@ -549,43 +548,42 @@ export type UserEdge = EdgeInterface & {
   type: Scalars['String']['output'];
 };
 
-export type UserNode = EntityNodeInterface &
-  NodeInterface & {
-    __typename?: 'UserNode';
-    briefDescription: Scalars['String']['output'];
-    /** The users public ETH address */
-    ethAddress?: Maybe<Scalars['String']['output']>;
-    guid: Scalars['String']['output'];
-    id: Scalars['ID']['output'];
-    /** The number of views the users has received. Includes views from their posts */
-    impressionsCount: Scalars['Int']['output'];
-    /** The user is a founder (contributed to crowdfunding) */
-    isFounder: Scalars['Boolean']['output'];
-    /** The user is a member of Minds+ */
-    isPlus: Scalars['Boolean']['output'];
-    /** The user is a member of Minds Pro */
-    isPro: Scalars['Boolean']['output'];
-    /** You are subscribed to this user */
-    isSubscribed: Scalars['Boolean']['output'];
-    /** The user is subscribed to you */
-    isSubscriber: Scalars['Boolean']['output'];
-    /** The user is a verified */
-    isVerified: Scalars['Boolean']['output'];
-    legacy: Scalars['String']['output'];
-    name: Scalars['String']['output'];
-    nsfw: Array<Scalars['Int']['output']>;
-    nsfwLock: Array<Scalars['Int']['output']>;
-    /** The number of subscribers the user has */
-    subscribersCount: Scalars['Int']['output'];
-    /** The number of channels the user is subscribed to */
-    subscriptionsCount: Scalars['Int']['output'];
-    /** Unix timestamp representation of time created */
-    timeCreated: Scalars['Int']['output'];
-    /** ISO 8601 timestamp representation of time created */
-    timeCreatedISO8601: Scalars['String']['output'];
-    urn: Scalars['String']['output'];
-    username: Scalars['String']['output'];
-  };
+export type UserNode = NodeInterface & {
+  __typename?: 'UserNode';
+  briefDescription: Scalars['String']['output'];
+  /** The users public ETH address */
+  ethAddress?: Maybe<Scalars['String']['output']>;
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  /** The number of views the users has received. Includes views from their posts */
+  impressionsCount: Scalars['Int']['output'];
+  /** The user is a founder (contributed to crowdfunding) */
+  isFounder: Scalars['Boolean']['output'];
+  /** The user is a member of Minds+ */
+  isPlus: Scalars['Boolean']['output'];
+  /** The user is a member of Minds Pro */
+  isPro: Scalars['Boolean']['output'];
+  /** You are subscribed to this user */
+  isSubscribed: Scalars['Boolean']['output'];
+  /** The user is subscribed to you */
+  isSubscriber: Scalars['Boolean']['output'];
+  /** The user is a verified */
+  isVerified: Scalars['Boolean']['output'];
+  legacy: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** The number of subscribers the user has */
+  subscribersCount: Scalars['Int']['output'];
+  /** The number of channels the user is subscribed to */
+  subscriptionsCount: Scalars['Int']['output'];
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
 
 export type DismissMutationVariables = Exact<{
   key: Scalars['String']['input'];
@@ -816,7 +814,8 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
-            | { __typename?: 'EntityNode'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; tag: string; id: string }
+            | { __typename?: 'FeedHeaderNode'; text: string; id: string }
             | {
                 __typename?: 'FeedHighlightsConnection';
                 id: string;
@@ -849,6 +848,7 @@ export type FetchNewsfeedQuery = {
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
+                dismissible: boolean;
                 id: string;
                 edges: Array<
                   | {
@@ -875,7 +875,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'EntityNode'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
                         | {
                             __typename?: 'FeedHighlightsConnection';
                             id: string;
@@ -896,6 +897,20 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
@@ -961,6 +976,16 @@ export type FetchNewsfeedQuery = {
             | null;
         }
       | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; tag: string; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; text: string; id: string };
+        }
+      | {
           __typename?: 'FeedHighlightsEdge';
           cursor: string;
           node: {
@@ -1010,6 +1035,7 @@ export type FetchNewsfeedQuery = {
           cursor: string;
           node: {
             __typename?: 'PublisherRecsConnection';
+            dismissible: boolean;
             id: string;
             edges: Array<
               | {
@@ -1029,7 +1055,8 @@ export type FetchNewsfeedQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
-                    | { __typename?: 'EntityNode'; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
@@ -1039,6 +1066,17 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
+                }
+              | {
+                  __typename?: 'FeedExploreTagEdge';
+                  publisherNode: {
+                    __typename?: 'FeedExploreTagNode';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedHeaderEdge';
+                  publisherNode: { __typename?: 'FeedHeaderNode'; id: string };
                 }
               | {
                   __typename?: 'FeedHighlightsEdge';
@@ -1233,6 +1271,8 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
             | { __typename?: 'FeedHighlightsConnection'; id: string }
             | {
                 __typename?: 'FeedNoticeNode';
@@ -1272,6 +1312,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
                         | {
                             __typename?: 'FeedHighlightsConnection';
                             id: string;
@@ -1292,6 +1334,20 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
@@ -1357,6 +1413,16 @@ export type FetchSearchQuery = {
             | null;
         }
       | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; id: string };
+        }
+      | {
           __typename?: 'FeedHighlightsEdge';
           cursor: string;
           node: { __typename?: 'FeedHighlightsConnection'; id: string };
@@ -1410,6 +1476,8 @@ export type FetchSearchQuery = {
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
                     | { __typename?: 'FeedNoticeNode'; id: string }
                     | { __typename?: 'GiftCardNode'; id: string }
@@ -1419,6 +1487,17 @@ export type FetchSearchQuery = {
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
+                }
+              | {
+                  __typename?: 'FeedExploreTagEdge';
+                  publisherNode: {
+                    __typename?: 'FeedExploreTagNode';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedHeaderEdge';
+                  publisherNode: { __typename?: 'FeedHeaderNode'; id: string };
                 }
               | {
                   __typename?: 'FeedHighlightsEdge';
@@ -1854,6 +1933,7 @@ export const FetchNewsfeedDocument = gql`
             }
           }
           ... on PublisherRecsConnection {
+            dismissible
             edges {
               publisherNode: node {
                 id
@@ -1871,6 +1951,12 @@ export const FetchNewsfeedDocument = gql`
             pageInfo {
               ...PageInfo
             }
+          }
+          ... on FeedHeaderNode {
+            text
+          }
+          ... on FeedExploreTagNode {
+            tag
           }
         }
       }
