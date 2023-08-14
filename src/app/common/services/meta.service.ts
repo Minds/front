@@ -108,6 +108,24 @@ export class MetaService {
     return this;
   }
 
+  /**
+   * Set thumbnail metatag.
+   * @param { string } value - value to set to - will default to match the default og image.
+   * @returns { MetaService }
+   */
+  public setThumbnail(value: string = ''): MetaService {
+    if (!value || value?.length < 1) {
+      value = DEFAULT_OG_IMAGE;
+    }
+
+    if (value.indexOf('/') === 0) {
+      value = this.configs.get('cdn_assets_url') + value.substr(1);
+    }
+
+    this.metaService.updateTag({ name: 'thumbnail', content: value });
+    return this;
+  }
+
   setCounter(value: number): MetaService {
     this.counter = value;
     this.applyTitle();
@@ -349,6 +367,7 @@ export class MetaService {
             : null
           : { width: DEFAULT_OG_IMAGE_WIDTH, height: DEFAULT_OG_IMAGE_HEIGHT }
       )
+      .setThumbnail(data.ogImage ?? DEFAULT_OG_IMAGE)
       .setAuthor(data.author || DEFAULT_META_AUTHOR)
       .setOgAuthor(data.ogAuthor || DEFAULT_META_AUTHOR)
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required

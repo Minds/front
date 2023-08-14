@@ -26,6 +26,7 @@ import { isPlatformBrowser, Location } from '@angular/common';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 import getMetaAutoCaption from '../../../helpers/meta-auto-caption';
+import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -72,6 +73,7 @@ export class NewsfeedSingleComponent {
     private location: Location,
     private routerHistory: RouterHistoryService,
     private boostModal: BoostModalV2LazyService,
+    private embedLinkWhitelist: EmbedLinkWhitelistService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.siteUrl = configs.get('site_url');
@@ -228,36 +230,49 @@ export class NewsfeedSingleComponent {
   private updateMeta(): void {
     const activity = this.activity;
 
-    let title: string =
-      activity.title ||
-      activity.message ||
-      `@${activity.ownerObj.username}'s post on Minds`;
+    let title: string = '';
+    let description: string = '';
+    let addTitleSuffix: boolean = true;
+    let thumbnailSrc: string = ''; // will default to Minds logo if left empty.
 
-    title = title.trim();
-
-    let description: string;
-
-    // Cut off the end of long titles and put them in the beginning of the description
-    if (title.length > 60) {
-      description = `...${title.substr(57)}`;
-    } else {
-      description = activity.blurb || '';
-    }
-
-    if (description) {
-      description += `. `;
-    }
-
-    // Make a generic description intro for images
-    // that don't have a description already
     const isImage = activity.custom_type && activity.custom_type === 'batch';
 
-    if (isImage) {
-      if (!description) {
-        description = `Image from @${activity.ownerObj.username}.`;
-      }
+    if (this.isLivestream(activity)) {
+      title = `${activity.ownerObj.username} is streaming live on Minds`;
+      addTitleSuffix = false;
+      description = `Subscribe to @${activity.ownerObj.username} on Minds`;
     } else {
-      description += `Subscribe to @${activity.ownerObj.username} on Minds`;
+      title =
+        activity.title ||
+        activity.message ||
+        `@${activity.ownerObj.username}'s post on Minds`;
+      title = title.trim();
+
+      // Cut off the end of long titles and put them in the beginning of the description
+      if (title.length > 60) {
+        description = `...${title.substr(57)}`;
+      } else {
+        description = activity.blurb || '';
+      }
+
+      if (description) {
+        description += `. `;
+      }
+
+      thumbnailSrc =
+        activity.custom_type === 'batch'
+          ? activity.custom_data[0]['src']
+          : activity.thumbnail_src;
+
+      // Make a generic description intro for images
+      // that don't have a description already
+      if (isImage) {
+        if (!description) {
+          description = `Image from @${activity.ownerObj.username}.`;
+        }
+      } else {
+        description += `Subscribe to @${activity.ownerObj.username} on Minds`;
+      }
     }
 
     // For images with AI captions, add the caption text to the description
@@ -279,14 +294,10 @@ export class NewsfeedSingleComponent {
     }
 
     this.metaService
-      .setTitle(title)
+      .setTitle(title, addTitleSuffix)
       .setDescription(description)
-      .setOgImage(
-        activity.custom_type === 'batch'
-          ? activity.custom_data[0]['src']
-          : activity.thumbnail_src,
-        { width: 2000, height: 1000 }
-      )
+      .setOgImage(thumbnailSrc, { width: 2000, height: 1000 })
+      .setThumbnail(thumbnailSrc)
       .setCanonicalUrl(`/newsfeed/${activity.guid}`)
       .setRobots(
         activity['thumbs:up:count'] >= MIN_METRIC_FOR_ROBOTS ? 'all' : 'noindex'
@@ -369,5 +380,16 @@ export class NewsfeedSingleComponent {
       this.activity?.ownerObj?.guid &&
       this.activity?.ownerObj?.guid !== this.session.getLoggedInUser().guid
     );
+  }
+
+  /**
+   * Whether an activity is a livestream.
+   * @param {{ perma_url?: string }} activity - activity with optional perma_url.
+   * @returns { boolean } true if activity is a livestream.
+   */
+  private isLivestream(activity: { perma_url?: string }): boolean {
+    return Boolean(activity?.perma_url)
+      ? this.embedLinkWhitelist.getRegex('livepeer').test(activity.perma_url)
+      : false;
   }
 }
