@@ -32,6 +32,7 @@ import { Session } from '../../../../../services/session';
   selector: 'm-group__membersList',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.ng.scss'],
+  providers: [GroupMembersListService],
 })
 export class GroupMembersListComponent implements OnInit, OnDestroy {
   // Whether request is in progress.
@@ -139,9 +140,8 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.service.group$.next(this.group);
-
-    this.service.groupMembershipLevel$.next(this.membershipLevel);
     this.service.membershipLevelGte$.next(this.membershipLevelGte);
+    this.service.groupMembershipLevel$.next(this.membershipLevel);
 
     this.setupSubscriptions();
   }
