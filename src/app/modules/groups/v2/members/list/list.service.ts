@@ -58,15 +58,15 @@ export class GroupMembersListService {
       this.group$,
       this.groupMembershipLevel$,
       this.membershipLevelGte$,
-      this.searchQuery$.pipe(debounceTime(300)),
+      // this.searchQuery$.pipe(debounceTime(300)),
     ]).pipe(
       take(1),
       switchMap(
-        ([group, level, membershipLevelGte, q]: [
+        ([group, level, membershipLevelGte]: [
           MindsGroup,
           GroupMembershipLevel,
-          boolean,
-          string
+          boolean
+          // string
         ]) => {
           let endpoint = `api/v1/groups/membership/${group.guid}`;
 
@@ -82,10 +82,10 @@ export class GroupMembersListService {
             params['level'] = level;
           }
 
-          if (q) {
-            endpoint = `${endpoint}/search`;
-            params.q = q;
-          }
+          // if (q) {
+          //   endpoint = `${endpoint}/search`;
+          //   params.q = q;
+          // }
 
           return this.api.get<ApiResponse>(endpoint, params);
         }
