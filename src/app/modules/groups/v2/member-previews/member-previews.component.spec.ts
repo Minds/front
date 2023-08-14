@@ -24,7 +24,7 @@ describe('GroupMemberPreviewsComponent', () => {
             has: ['group$', 'memberCount$'],
             props: {
               group$: {
-                get: () => new BehaviorSubject<any>(null),
+                get: () => new BehaviorSubject<any>(''),
               },
               memberCount$: {
                 get: () => new BehaviorSubject<number>(1),
