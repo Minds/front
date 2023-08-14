@@ -82,7 +82,6 @@ describe('BoostFeedService', () => {
     );
     expect((service as any).feedsService.setParams).toHaveBeenCalledWith({
       location: 1,
-      show_boosts_after_x: 604800,
     });
     expect((service as any).feedsService.setLimit).toHaveBeenCalledWith(12);
     expect((service as any).feedsService.setOffset).toHaveBeenCalledWith(0);
@@ -100,7 +99,6 @@ describe('BoostFeedService', () => {
     );
     expect((service as any).feedsService.setParams).toHaveBeenCalledWith({
       location: 1,
-      show_boosts_after_x: 604800,
       served_by_guid: servedByGuid,
     });
     expect((service as any).feedsService.setLimit).toHaveBeenCalledWith(12);
