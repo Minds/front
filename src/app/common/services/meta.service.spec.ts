@@ -10,6 +10,7 @@ import { MockService } from '../../utils/mock';
 describe('MetaService', () => {
   let service: MetaService;
   let mockDocument: Document = document;
+  const cdnAssetsUrl: string = 'https://example.minds.com/';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,6 +34,9 @@ describe('MetaService', () => {
 
     service = TestBed.inject(MetaService);
 
+    (service as any).configs.get
+      .withArgs('cdn_assets_url')
+      .and.returnValue(cdnAssetsUrl);
     (service as any).titleService.setTitle.calls.reset();
     (service as any).metaService.updateTag.calls.reset();
   });
@@ -51,6 +55,53 @@ describe('MetaService', () => {
     expect((service as any).metaService.updateTag).toHaveBeenCalledWith({
       property: 'og:title',
       content: title.substring(0, 247) + '...',
+    });
+  });
+
+  describe('setThumbnail', () => {
+    it('should set thumbnail to og:image default when a relative url is passed', () => {
+      service.setThumbnail('/path/my-image.png');
+
+      expect((service as any).metaService.updateTag).toHaveBeenCalledWith({
+        name: 'thumbnail',
+        content: cdnAssetsUrl + 'path/my-image.png',
+      });
+    });
+
+    it('should set thumbnail to og:image default when an absolute url is passed', () => {
+      service.setThumbnail('https://example.minds.com/path/my-image.png');
+
+      expect((service as any).metaService.updateTag).toHaveBeenCalledWith({
+        name: 'thumbnail',
+        content: 'https://example.minds.com/path/my-image.png',
+      });
+    });
+
+    it('should set thumbnail to og:image default when empty string is passed', () => {
+      service.setThumbnail('');
+
+      expect((service as any).metaService.updateTag).toHaveBeenCalledWith({
+        name: 'thumbnail',
+        content: cdnAssetsUrl + 'assets/og-images/default-v3.png',
+      });
+    });
+
+    it('should set thumbnail to og:image default when null is passed', () => {
+      service.setThumbnail(null);
+
+      expect((service as any).metaService.updateTag).toHaveBeenCalledWith({
+        name: 'thumbnail',
+        content: cdnAssetsUrl + 'assets/og-images/default-v3.png',
+      });
+    });
+
+    it('should set thumbnail to og:image default when no argument is passed', () => {
+      service.setThumbnail();
+
+      expect((service as any).metaService.updateTag).toHaveBeenCalledWith({
+        name: 'thumbnail',
+        content: cdnAssetsUrl + 'assets/og-images/default-v3.png',
+      });
     });
   });
 });

@@ -258,6 +258,9 @@ describe('NewsfeedSingleComponent', () => {
     (comp as any).metaService.setOgImage.and.returnValue(
       (comp as any).metaService
     );
+    (comp as any).metaService.setThumbnail.and.returnValue(
+      (comp as any).metaService
+    );
     (comp as any).metaService.setCanonicalUrl.and.returnValue(
       (comp as any).metaService
     );
@@ -292,13 +295,21 @@ describe('NewsfeedSingleComponent', () => {
 
     (comp as any).updateMeta();
 
-    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(title);
+    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(
+      title,
+      true
+    );
     expect((comp as any).metaService.setDescription).toHaveBeenCalledWith(
       `${blurb}. Subscribe to @${ownerUsername} on Minds`
     );
     expect(
       (comp as any).metaService.setOgImage
     ).toHaveBeenCalledWith(thumbnailSrc, { width: 2000, height: 1000 });
+
+    expect((comp as any).metaService.setThumbnail).toHaveBeenCalledWith(
+      thumbnailSrc
+    );
+
     expect((comp as any).metaService.setCanonicalUrl).toHaveBeenCalledWith(
       `/newsfeed/${guid}`
     );
@@ -313,6 +324,9 @@ describe('NewsfeedSingleComponent', () => {
       (comp as any).metaService
     );
     (comp as any).metaService.setOgImage.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setThumbnail.and.returnValue(
       (comp as any).metaService
     );
     (comp as any).metaService.setCanonicalUrl.and.returnValue(
@@ -373,7 +387,10 @@ describe('NewsfeedSingleComponent', () => {
 
     (comp as any).updateMeta();
 
-    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(title);
+    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(
+      title,
+      true
+    );
     expect((comp as any).metaService.setTitle).not.toHaveBeenCalledWith(
       remindTitle
     );
@@ -388,6 +405,11 @@ describe('NewsfeedSingleComponent', () => {
     expect(
       (comp as any).metaService.setOgImage
     ).toHaveBeenCalledWith(thumbnailSrc, { width: 2000, height: 1000 });
+
+    expect((comp as any).metaService.setThumbnail).toHaveBeenCalledWith(
+      thumbnailSrc
+    );
+
     expect((comp as any).metaService.setOgImage).not.toHaveBeenCalledWith(
       remindThumbnailSrc,
       {
@@ -403,6 +425,73 @@ describe('NewsfeedSingleComponent', () => {
       `/newsfeed/${remindGuid}`
     );
 
+    expect((comp as any).metaService.setRobots).toHaveBeenCalledWith('noindex');
+  });
+
+  it('should update meta for a livestream embed activity', () => {
+    (comp as any).metaService.setTitle.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setDescription.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setOgImage.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setThumbnail.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setCanonicalUrl.and.returnValue(
+      (comp as any).metaService
+    );
+    (comp as any).metaService.setRobots.and.returnValue(
+      (comp as any).metaService
+    );
+
+    const title = 'title';
+    const message = 'message';
+    const blurb = 'blurb';
+    const thumbnailSrc = 'thumbnailSrc';
+    const guid = '123';
+    const thumbsUpCount = 1;
+    const ownerUsername = 'ownerUsername';
+    const subtype = 'activity';
+    const perma_url: string = 'https://minds-player.withlivepeer.com?v=123456';
+
+    comp.activity = {
+      guid: guid,
+      title: title,
+      message: message,
+      ownerObj: {
+        username: ownerUsername,
+      },
+      nsfw: [],
+      subtype: subtype,
+      custom_type: 'customType',
+      content_type: 'contentType',
+      thumbnail_src: thumbnailSrc,
+      blurb: blurb,
+      'thumbs:up:count': thumbsUpCount,
+      perma_url: 'https://minds-player.withlivepeer.com?v=123456',
+    };
+
+    (comp as any).updateMeta();
+
+    expect((comp as any).metaService.setTitle).toHaveBeenCalledWith(
+      'ownerUsername is streaming live on Minds',
+      false
+    );
+    expect((comp as any).metaService.setDescription).toHaveBeenCalledWith(
+      `Subscribe to @${ownerUsername} on Minds`
+    );
+    expect((comp as any).metaService.setOgImage).toHaveBeenCalledWith('', {
+      width: 2000,
+      height: 1000,
+    });
+    expect((comp as any).metaService.setThumbnail).toHaveBeenCalledWith('');
+    expect((comp as any).metaService.setCanonicalUrl).toHaveBeenCalledWith(
+      `/newsfeed/${guid}`
+    );
     expect((comp as any).metaService.setRobots).toHaveBeenCalledWith('noindex');
   });
 
