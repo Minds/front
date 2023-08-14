@@ -25,7 +25,9 @@ import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-to
           >done</i
         >
       </ng-template>
-      <h3 class="m-onboardingV5CompletedSplash__message">{{ message }}</h3>
+      <h3 class="m-onboardingV5CompletedSplash__message" aria-live="polite">
+        {{ message }}
+      </h3>
     </div>
   `,
   styleUrls: ['completed-splash.component.ng.scss'],

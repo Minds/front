@@ -133,7 +133,7 @@ export class OnboardingV5VerifyEmailContentComponent
   get resendCodeString(): string {
     return this.data?.verifyEmailForm?.resendCodeText?.replace(
       '{action}',
-      '<a class="m-onboardingV5VerifyEmail__resendCodeAction" tabindex="2">' +
+      '<a class="m-onboardingV5VerifyEmail__resendCodeAction" tabindex="0">' +
         (this.data?.verifyEmailForm?.resendCodeActionText ?? 'resend code') +
         '</a>'
     );
