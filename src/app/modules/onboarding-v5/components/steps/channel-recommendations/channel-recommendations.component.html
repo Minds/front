@@ -1,6 +1,8 @@
 <div class="m-onboardingV5__stepContentContainer">
   <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
-  <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
+  <p class="m-onboardingV5__stepDescription" aria-live="polite">
+    {{ data.description }}
+  </p>
   <m-loadingSpinner
     *ngIf="!(loaded$ | async)"
     [inProgress]="!(loaded$ | async)"
