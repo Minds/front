@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupMembersListComponent } from './list.component';
 import { GroupMembersListService } from './list.service';
@@ -10,12 +10,18 @@ describe('GroupMembersListComponent', () => {
   let component: GroupMembersListComponent;
   let fixture: ComponentFixture<GroupMembersListComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [GroupMembersListComponent],
-      providers: [
-        {
-          provide: GroupMembersListService,
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [GroupMembersListComponent],
+        providers: [
+          {
+            provide: Session,
+            useValue: MockService(Session),
+          },
+        ],
+      })
+        .overrideProvider(GroupMembersListService, {
           useValue: MockService(GroupMembersListService, {
             has: ['group$', 'groupMembershipLevel$', 'membershipLevelGte$'],
             props: {
@@ -28,17 +34,25 @@ describe('GroupMembersListComponent', () => {
               membershipLevelGte$: { get: () => new BehaviorSubject<any>('') },
             },
           }),
-        },
-        {
-          provide: Session,
-          useValue: MockService(Session),
-        },
-      ],
-    }).compileComponents();
+        })
+        .compileComponents();
+    })
+  );
 
+  beforeEach(done => {
     fixture = TestBed.createComponent(GroupMembersListComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
+    }
   });
 
   it('should create', () => {
