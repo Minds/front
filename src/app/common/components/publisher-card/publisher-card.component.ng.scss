@@ -1,5 +1,21 @@
 @import 'defaults.scss';
 
+/**
+* The amount of space we leave for all buttons in medium/large sizes.
+* Used in published recs that can be either iconOnly user buttons OR text membership buttons. Setting all button containers to this width allows any group membership button to be in "Requested" state w/o compromising overall cohesion of a recs list.
+*/
+$buttonWidth--mixed: 104px;
+
+/**
+* Buttons are always icononly in small/medium sizes
+*/
+$buttonWidth--iconOnly: 30px;
+
+/**
+* Margin of the button container used in medium/large sizes
+*/
+$buttonContainerMargin--mediumLarge: 4px;
+
 :host {
   .m-publisherCard {
     font-size: 14px;
@@ -72,16 +88,38 @@
       }
     }
 
-    .m-publisherCard__primaryRow {
-      display: block;
-      margin: 0;
+    .m-publisherCard__namesContainer {
+      max-width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      margin-right: $spacing3;
+    }
+    .m-publisherCard__nameRow {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: row;
+    }
+
+    .m-publisherCard__name--primary,
+    .m-publisherCard__name--secondary {
+      flex: auto 0 1;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .m-publisherCard__name--primary {
+      display: flex;
+      align-items: center;
       @include body1Bold;
 
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
 
-      strong {
+      > span {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -101,9 +139,9 @@
       }
     }
 
-    .m-publisherCard__secondaryRow {
+    .m-publisherCard__name--secondary {
       margin-top: $spacing1;
-      text-decoration: none;
+      @include body2Regular;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
@@ -139,36 +177,159 @@
     }
 
     .m-publisherCard__buttonContainer {
-      margin-left: $spacing1;
+      margin-left: $buttonContainerMargin--mediumLarge;
       display: flex;
       justify-content: flex-end;
+      flex: auto 1 0;
 
-      // Accommodate 'Requested' in join button
-      // without compromising overall cohesion
-      min-width: 105px;
+      min-width: $buttonWidth--mixed;
+
+      ::ng-deep m-button {
+        .m-button i {
+          font-size: 16px !important;
+        }
+      }
 
       &.m-publisherCard__buttonContainer--iconOnly {
-        min-width: 60px;
+        min-width: $buttonWidth--iconOnly;
       }
     }
-
+    //---------------------------------------
     // STRUCTURAL CLASSES
-    .m-publisherCard__flexRow {
+    //---------------------------------------
+    .m-publisherCard__flexRow--top {
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-start;
-      align-items: flex-start;
       overflow: hidden;
+      align-items: flex-start;
     }
+    .m-publisherCard__flexRow--center {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      overflow: hidden;
+      align-items: center;
+    }
+
     .m-publisherCard__flexColumn {
       display: flex;
       flex-flow: column nowrap;
       justify-content: flex-start;
       overflow: hidden;
+      width: 100%;
     }
 
     .m-publisherCard__stretch {
       flex-grow: 2;
+    }
+  }
+
+  //---------------------------------------
+  // SIZE-SPECIFIC ADJUSTMENTS
+  //---------------------------------------
+
+  .m-publisherCard--large {
+    .m-publisherCard__middleColumn--mediumLarge {
+      width: calc(
+        100% - #{$activityAvatarWidth} - #{$activityAvatarSpacingRight--feed} -
+          #{$buttonWidth--mixed} - #{$spacing3}
+      );
+
+      @media screen and (max-width: $max-mobile) {
+        width: calc(
+          100% - #{$activityAvatarWidth} - #{$activityAvatarSpacingRight--feed--mobile} -
+            #{$buttonWidth--mixed} - #{$spacing3}
+        );
+      }
+    }
+    .m-publisherCard__buttonContainer {
+      min-width: $buttonWidth--mixed;
+    }
+  }
+
+  .m-publisherCard--medium {
+    .m-publisherCard__middleColumn--mediumLarge {
+      width: calc(
+        100% - #{$activityAvatarWidth} - #{$activityAvatarSpacingRight--feed} -
+          #{$buttonWidth--iconOnly} - #{$spacing4}
+      );
+
+      @media screen and (max-width: $max-mobile) {
+        width: calc(
+          100% - #{$activityAvatarWidth} - #{$activityAvatarSpacingRight--feed--mobile} -
+            #{$buttonWidth--iconOnly} - #{$spacing4}
+        );
+      }
+    }
+    .m-publisherCard__buttonContainer {
+      min-width: $buttonWidth--iconOnly;
+    }
+  }
+
+  // (Used for sidebar boosts)
+  .m-publisherCard--small {
+    .m-publisherCard__namesContainer {
+      width: calc(
+        100% - #{$activityAvatarWidth} - #{$activityAvatarSpacingRight--feed} -
+          #{$buttonWidth--iconOnly} - #{$spacing3}
+      );
+
+      @media screen and (max-width: $max-mobile) {
+        width: calc(
+          100% - #{$activityAvatarWidth} - #{$activityAvatarSpacingRight--feed--mobile} -
+            #{$buttonWidth--iconOnly} - #{$spacing3}
+        );
+      }
+    }
+    .m-publisherCard__name--primary {
+      @include body2Medium;
+    }
+    .m-publisherCard__name--secondary {
+      margin-top: 0;
+    }
+    .m-publisherCard__description {
+      margin-top: $spacing3;
+      line-height: 20px;
+    }
+  }
+
+  .m-publisherCard--xsmall {
+    .m-publisherCard__flexColumn {
+      align-items: center;
+    }
+    .m-publisherCard__namesContainer {
+      width: 100%;
+      margin-right: 0;
+      .m-publisherCard__nameRow {
+        justify-content: center;
+      }
+    }
+    .m-publisherCard__avatarContainer {
+      margin-right: 0;
+    }
+
+    ::ng-deep {
+      .minds-avatar {
+        margin: 0 0 10px 0 !important;
+        min-width: 48px;
+        min-height: 48px;
+        img {
+          width: 46px;
+          height: 46px;
+        }
+      }
+
+      m-button {
+        .m-button {
+          margin-top: $spacing3;
+          margin-left: 0;
+        }
+      }
+
+      m-channel--badges i {
+        font-size: 20px;
+      }
     }
   }
 }

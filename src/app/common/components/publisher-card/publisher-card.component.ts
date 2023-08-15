@@ -81,6 +81,12 @@ export class PublisherCardComponent implements AfterViewInit {
   @Input() isMemberIcon: string = 'check';
 
   /**
+   * Only show the secondary name row if it is a count (members/subscribers),
+   * not if it is a username
+   */
+  @Input() secondaryRowCountsOnly: boolean = false;
+
+  /**
    * Show only an icon for the subscribe button, regardless of card size
    */
   @Input() subscribeButtonIconOnly: boolean = false;

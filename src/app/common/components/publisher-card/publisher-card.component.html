@@ -6,19 +6,21 @@
     'm-publisherCard--large': size === 'large',
     'm-publisherCard--medium': size === 'medium',
     'm-publisherCard--small': size === 'small',
+    'm-publisherCard--xsmall': size === 'xsmall',
     'm-publisherCard--featured': featured,
     'm-publisherCard--hovercard': _isHovercard,
     'm-publisherCard--noBorder': noBorder,
     'm-publisherCard--noPadding': noPadding
   }"
 >
-  <section class="m-publisherCard__inner m-publisherCard__flexRow">
+  <section class="m-publisherCard__inner m-publisherCard__flexRow--top">
     <ng-container *ngIf="size === 'medium' || size === 'large'">
       <ng-container *ngTemplateOutlet="avatar"></ng-container>
 
-      <div class="m-publisherCard__flexColumn m-publisherCard__stretch">
-        <ng-container *ngTemplateOutlet="primaryRow"></ng-container>
-        <ng-container *ngTemplateOutlet="secondaryRow"></ng-container>
+      <div
+        class="m-publisherCard__flexColumn m-publisherCard__middleColumn--mediumLarge"
+      >
+        <ng-container *ngTemplateOutlet="names"></ng-container>
         <ng-container *ngTemplateOutlet="description"></ng-container>
         <ng-container *ngTemplateOutlet="boostedFlag"></ng-container>
       </div>
@@ -35,12 +37,9 @@
     <!-- ------------------------------------------------- -->
     <ng-container *ngIf="size === 'small'">
       <div class="m-publisherCard__flexColumn">
-        <div class="m-publisherCard__flexRow">
+        <div class="m-publisherCard__flexRow--center">
           <ng-container *ngTemplateOutlet="avatar"></ng-container>
-          <div class="m-publisherCard__flexColumn m-publisherCard__stretch">
-            <ng-container *ngTemplateOutlet="primaryRow"></ng-container>
-            <ng-container *ngTemplateOutlet="secondaryRow"></ng-container>
-          </div>
+          <ng-container *ngTemplateOutlet="names"></ng-container>
           <ng-container [ngTemplateOutlet]="button"></ng-container>
         </div>
         <ng-container *ngTemplateOutlet="description"></ng-container>
@@ -51,8 +50,7 @@
     <ng-container *ngIf="size === 'xsmall'">
       <div class="m-publisherCard__flexColumn">
         <ng-container *ngTemplateOutlet="avatar"></ng-container>
-        <ng-container *ngTemplateOutlet="primaryRow"></ng-container>
-        <ng-container *ngTemplateOutlet="secondaryRow"></ng-container>
+        <ng-container *ngTemplateOutlet="names"></ng-container>
         <div class="m-publisherCard__flexColumn"></div>
         <ng-container [ngTemplateOutlet]="button"></ng-container>
       </div>
@@ -83,69 +81,75 @@
 </ng-template>
 
 <!------------------------------>
-<!-- PRIMARY ROW: NAME  -->
+<!-- NAMES -->
+<!-- and membership/subscriber counts -->
 <!------------------------------>
-<ng-template #primaryRow>
-  <a [routerLink]="feedUrl" class="m-publisherCard__primaryRow">
-    <span>{{ publisher.name }}</span>
-    <m-accountQualityScore [targetUser]="publisher"></m-accountQualityScore>
-    <m-channel--badges
-      *ngIf="type === 'user'"
-      class="m-channel--badges-activity m-activityOwnerBlockPrimaryName__badges"
-      [user]="publisher"
-      [badges]="['admin', 'verified', 'plus', 'pro']"
-    ></m-channel--badges>
-  </a>
-</ng-template>
-
-<!---------------------------------------------->
-<!-- SECONDARY ROW -->
-<!-- Groups: member count -->
-<!-- Users: if not subscriber count, username -->
-<!---------------------------------------------->
-<ng-template #secondaryRow>
-  <!-- GROUPS- MEMBER COUNT -->
-  <a
-    *ngIf="type === 'group'"
-    class="m-publisherCard__secondaryRow m-legible"
-    [routerLink]="subscribersUrl"
-  >
-    <span class="m-publisherCard__subscribersCount">{{
-      publisher['members:count'] | abbr: 0
-    }}</span>
-    <span>
-      member<ng-container *ngIf="publisher['members:count'] > 1"
-        >s</ng-container
-      >
-    </span>
-  </a>
-  <!-- USERS - SUBSCRIBER COUNT -->
-  <ng-container *ngIf="type === 'user'">
-    <ng-container *ngIf="publisher.subscribers_count">
+<ng-template #names>
+  <div class="m-publisherCard__namesContainer">
+    <!-- PRIMARY ROW -->
+    <div class="m-publisherCard__nameRow">
       <a
-        class="m-publisherCard__secondaryRow m-legible"
+        [routerLink]="feedUrl"
+        class="m-publisherCard__name--primary m-legible"
+      >
+        <span>{{ publisher.name }}</span>
+        <m-accountQualityScore [targetUser]="publisher"></m-accountQualityScore>
+        <m-channel--badges
+          *ngIf="type === 'user'"
+          class="m-channel--badges-activity"
+          [user]="publisher"
+          [badges]="['admin', 'verified', 'plus', 'pro']"
+        ></m-channel--badges>
+      </a>
+    </div>
+    <!-- SECONDARY ROW -->
+    <div class="m-publisherCard__nameRow">
+      <!-- GROUPS- MEMBER COUNT -->
+      <a
+        *ngIf="type === 'group'"
+        class="m-publisherCard__name--secondary m-legible"
         [routerLink]="subscribersUrl"
       >
         <span class="m-publisherCard__subscribersCount">{{
-          publisher.subscribers_count | abbr: 0
+          publisher['members:count'] | abbr: 0
         }}</span>
         <span>
-          subscriber<ng-container *ngIf="publisher.subscribers_count > 1"
+          member<ng-container *ngIf="publisher['members:count'] > 1"
             >s</ng-container
           >
         </span>
       </a>
-    </ng-container>
-    <!-- USERS - @USERNAME -->
-    <ng-container *ngIf="!publisher.subscribers_count">
-      <a
-        class="m-publisherCard__secondaryRow m-legible"
-        [routerLink]="['/', publisher.username]"
-      >
-        <span>@{{ publisher.username }}</span>
-      </a>
-    </ng-container>
-  </ng-container>
+      <!-- USERS - SUBSCRIBER COUNT -->
+      <ng-container *ngIf="type === 'user'">
+        <ng-container *ngIf="publisher.subscribers_count">
+          <a
+            class="m-publisherCard__name--secondary m-legible"
+            [routerLink]="subscribersUrl"
+          >
+            <span class="m-publisherCard__subscribersCount">{{
+              publisher.subscribers_count | abbr: 0
+            }}</span>
+            <span>
+              subscriber<ng-container *ngIf="publisher.subscribers_count > 1"
+                >s</ng-container
+              >
+            </span>
+          </a>
+        </ng-container>
+        <!-- USERS - @USERNAME -->
+        <ng-container
+          *ngIf="!publisher.subscribers_count && !secondaryRowCountsOnly"
+        >
+          <a
+            class="m-publisherCard__name--secondary m-legible"
+            [routerLink]="['/', publisher.username]"
+          >
+            <span>@{{ publisher.username }}</span>
+          </a>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </ng-template>
 
 <!------------------------------>
@@ -153,7 +157,8 @@
 <!------------------------------>
 <ng-template #description>
   <span
-    class="m-publisherCard__description"
+    *ngIf="publisher.briefdescription"
+    class="m-publisherCard__description m-legible"
     [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags"
   ></span>
 </ng-template>
@@ -179,6 +184,7 @@
       [user]="publisher"
       [sized]="sized"
       [iconOnly]="buttonIconOnly || subscribeButtonIconOnly"
+      [showIconWithText]="false"
       [subscribedIcon]="
         buttonIconOnly || subscribeButtonIconOnly ? subscribedIcon : null
       "
