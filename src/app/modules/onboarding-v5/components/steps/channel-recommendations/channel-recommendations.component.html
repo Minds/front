@@ -7,8 +7,8 @@
   ></m-loadingSpinner>
   <m-publisherRecommendations
     location="newsfeed"
-    showTitle="false"
-    noOuterPadding="true"
+    [showTitle]="false"
+    [noOuterPadding]="true"
     listSize="12"
     [publisherType]="publisherType"
     (subscribed)="onSubscribed()"
