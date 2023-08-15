@@ -18,6 +18,7 @@ import { GroupsModule } from '../groups.module';
 import { GroupFeedComponent } from './feed/feed.component';
 import { GroupAboutComponent } from './about/about.component';
 import { GroupMemberPreviewsComponent } from './member-previews/member-previews.component';
+import { GroupsMembershipsListService } from '../memberships/list/list.service';
 
 const routes: Routes = [
   {
@@ -68,5 +69,6 @@ const INTERNAL_COMPONENTS = [
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
+  providers: [GroupsMembershipsListService],
 })
 export class GroupModule {}

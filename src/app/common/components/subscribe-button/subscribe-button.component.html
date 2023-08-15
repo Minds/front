@@ -80,7 +80,7 @@
     *ngIf="showIcons && !disableAfterSubscribe && displayAsButton"
     class="material-icons"
   >
-    {{ subscribedIcon }}
+    {{ subscribedIcon ? subscribedIcon : 'close' }}
   </i>
   <span *ngIf="!iconOnly">
     <ng-container
