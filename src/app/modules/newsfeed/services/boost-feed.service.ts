@@ -9,6 +9,7 @@ import { Session } from '../../../services/session';
  */
 export type BoostFeedOpts = {
   servedByGuid?: string;
+  force_boost_enabled?: boolean;
 };
 
 @Injectable({ providedIn: 'root' })
@@ -40,7 +41,6 @@ export class BoostFeedService {
 
     let params: Object = {
       location: BoostLocation.NEWSFEED,
-      show_boosts_after_x: 604800,
     };
 
     if (opts.servedByGuid) {

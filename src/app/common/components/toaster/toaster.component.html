@@ -21,7 +21,7 @@
           <ng-container *ngIf="toast.type === 'warning'">warning</ng-container>
         </i>
       </div>
-      <p>{{ toast.message }}</p>
+      <p aria-live="polite">{{ toast.message }}</p>
       <div class="m-toaster__iconWrapper--close">
         <i class="material-icons" (click)="dismiss(i)">clear</i>
       </div>

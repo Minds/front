@@ -1,9 +1,9 @@
-<label class="m-formInput__checkbox" [for]="id">
+<label class="m-formInput__checkbox" [for]="customId">
   <input
     type="checkbox"
     [ngModel]="value"
     (ngModelChange)="updateValue($event)"
-    [id]="id"
+    [id]="customId"
     [disabled]="disabled"
   />
   <div class="m-formInputCheckbox__visibleWrapper">

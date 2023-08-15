@@ -62,6 +62,7 @@ export class DiscoveryBoostFeedComponent implements OnInit {
         .setEndpoint('api/v3/boosts/feed')
         .setParams({
           location: BoostLocation.NEWSFEED,
+          force_boost_enabled: true,
         })
         .setLimit(12)
         .setOffset(0)

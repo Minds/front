@@ -11,7 +11,9 @@
   <ng-container *ngSwitchDefault>
     <div class="m-onboardingV5__stepContentContainer">
       <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
-      <p class="m-onboardingV5__stepDescription">{{ description$ | async }}</p>
+      <p class="m-onboardingV5__stepDescription" aria-live="polite">
+        {{ description$ | async }}
+      </p>
       <form class="m-onboardingV5VerifyEmail__codeForm" [formGroup]="formGroup">
         <label for="code" class="m-onboardingV5VerifyEmail__inputLabel">{{
           data.verifyEmailForm?.inputLabel
@@ -19,6 +21,7 @@
         <input
           #codeInput
           formControlName="code"
+          id="code"
           class="m-onboardingV5VerifyEmail__input"
           type="text"
           autocomplete="off"
@@ -38,10 +41,11 @@
       <p
         *ngIf="data?.verifyEmailForm?.changeEmailActionText"
         class="m-onboardingV5VerifyEmail__changeEmailActionText"
-        tabindex="3"
         (keyup.enter)="onChangeEmailAddressClick()"
         (click)="onChangeEmailAddressClick()"
         data-test="onboarding-v5-email-change-action-text"
+        role="link"
+        tabindex="0"
       >
         {{ data.verifyEmailForm.changeEmailActionText }}
       </p>

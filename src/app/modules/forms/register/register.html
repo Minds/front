@@ -10,7 +10,10 @@
   style="min-height: 0"
   [hidden]="showInlineErrors || !errorMessage"
 >
-  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+  <div
+    class="mdl-card__supporting-text mdl-color-text--blue-grey-50"
+    aria-live="polite"
+  >
     <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
   </div>
 </div>
@@ -52,6 +55,7 @@
         <div
           class="m-register__error m-register__error--multiLine"
           [style.visibility]="showError('username') ? 'visible' : 'hidden'"
+          aria-live="polite"
         >
           <ng-container
             *ngIf="this.form.get('username').errors?.minlength"
@@ -110,6 +114,7 @@
         <div
           class="m-register__error"
           [style.visibility]="showError('email') ? 'visible' : 'hidden'"
+          aria-live="polite"
         >
           <ng-container
             *ngIf="this.form.get('email').errors?.email"
@@ -145,6 +150,7 @@
         <div
           class="m-register__error"
           [style.visibility]="showError('password') ? 'visible' : 'hidden'"
+          aria-live="polite"
         >
           <ng-container
             *ngIf="this.form.get('password').errors?.invalidPassword"
@@ -203,6 +209,7 @@
         <div
           class="m-register__error"
           [style.visibility]="this.form.get('password2').touched && this.form.get('password2').dirty ? 'visible' : 'hidden'"
+          aria-live="polite"
         >
           <ng-container
             *ngIf="this.form.errors?.passwordsMatch"
@@ -249,6 +256,7 @@
   <div
     class="m-register__formError"
     [style.visibility]="showInlineErrors && showBigButton && errorMessage ? 'visible' : 'hidden'"
+    aria-live="polite"
   >
     <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
   </div>
@@ -258,13 +266,17 @@
     <!-- CHECKBOXES -->
     <!-- ------------------------------- -->
     <div class="m-register__checkboxes">
-      <m-formInput__checkbox formControlName="exclusive_promotions">
+      <m-formInput__checkbox
+        formControlName="exclusive_promotions"
+        customId="receive_exclusive_promotions"
+      >
         Receive exclusive token rewards and info
       </m-formInput__checkbox>
 
       <m-formInput__checkbox
         formControlName="tos"
         data-ref="minds-accept-tos-input"
+        customId="accept_terms_of_service"
       >
         I accept the
         <a routerLink="/p/terms" target="_blank"> Terms & Conditions </a>
