@@ -11,16 +11,17 @@
     <m-icon iconId="push_pin" [sizeFactor]="1" rem="true"></m-icon>
   </span>
   <!------------------------->
-  <!-- Private  ------------>
+  <!-- UNLISTED  ------------>
   <!------------------------->
   <span
     *ngIf="
-      service.displayOptions.showVisibilityState && (service.isPrivate$ | async)
+      service.displayOptions.showVisibilityState &&
+      (service.isUnlisted$ | async)
     "
     class="m-activity__badge"
-    data-ref="m-activity__privateFlag"
-    title="Private"
-    i18n-title="@@OWNER_BLOCK__PRIVATE"
+    data-ref="m-activity__unlistedFlag"
+    title="Unlisted"
+    i18n-title="@@OWNER_BLOCK__UNLISTED"
   >
     <m-icon iconId="visibility_off" [sizeFactor]="1" rem="true"></m-icon>
   </span>
