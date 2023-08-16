@@ -28,8 +28,8 @@ class GroupsMembershipPage {
     return 'm-feedNotice [data-ref=feed-notice-title-no-groups]';
   }
 
-  get recommendedGroups(): string {
-    return 'm-publisherRecommendations';
+  get recommendedGroupsTitle(): string {
+    return 'm-publisherRecommendations [data-ref=publisher-recommendations-title-recommended-for-you]';
   }
 
   clickCreateGroupButton() {
@@ -54,7 +54,7 @@ class GroupsMembershipPage {
    * @returns { void }
    */
   public hasRecommendedGroups(): void {
-    I.seeElement(locate(this.recommendedGroups));
+    I.seeElement(locate(this.recommendedGroupsTitle));
   }
 
   /**
