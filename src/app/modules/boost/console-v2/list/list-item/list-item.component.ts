@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Boost, BoostPaymentMethod } from '../../../boost.types';
 import { ActivityEntity } from '../../../../newsfeed/activity/activity.service';
+import { Session } from '../../../../../services/session';
 
 /**
  * Boost console list item - a single boost entity
@@ -27,7 +28,7 @@ export class BoostConsoleListItemComponent {
     isInset: true,
   };
 
-  constructor(configs: ConfigsService) {
+  constructor(private session: Session, configs: ConfigsService) {
     this.siteUrl = configs.get('site_url');
   }
   /**
@@ -62,7 +63,16 @@ export class BoostConsoleListItemComponent {
 
     switch (this.boost.payment_method) {
       case BoostPaymentMethod.CASH:
-        return `\$${this.boost.payment_amount} over ${this.boost.duration_days} ${duration}`;
+        let text: string = `\$${this.boost.payment_amount} over ${this.boost.duration_days} ${duration}`;
+
+        if (
+          this.boost.payment_tx_id === 'gift_card' &&
+          this.session.isAdmin()
+        ) {
+          text += ' (Gift Card)';
+        }
+
+        return text;
       case BoostPaymentMethod.OFFCHAIN_TOKENS:
         let currency = 'tokens';
         if (this.boost.payment_amount === 1) {
