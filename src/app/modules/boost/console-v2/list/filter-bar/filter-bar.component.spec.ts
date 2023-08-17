@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BoostConsoleAdminStatsService } from '../../services/admin-stats.service';
 import { BoostConsoleService } from '../../services/console.service';
 import { BoostConsoleFilterBarComponent } from './filter-bar.component';
 import { BoostGroupExperimentService } from '../../../../experiments/sub-services/boost-groups-experiment.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('BoostConsoleFilterBarComponent', () => {
   let comp: BoostConsoleFilterBarComponent;
@@ -14,6 +15,7 @@ describe('BoostConsoleFilterBarComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
+        imports: [RouterTestingModule],
         declarations: [
           BoostConsoleFilterBarComponent,
           MockComponent({
@@ -59,6 +61,7 @@ describe('BoostConsoleFilterBarComponent', () => {
             useValue: MockService(BoostGroupExperimentService),
           },
           { provide: Router, useValue: MockService(Router) },
+          { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
         ],
       }).compileComponents();
     })
