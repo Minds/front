@@ -1,0 +1,19 @@
+query GetValuePropCards {
+  valuePropCards(sort: "order") {
+    data {
+      id
+      attributes {
+        title
+        media {
+          data {
+            attributes {
+              url
+              mime
+              alternativeText
+            }
+          }
+        }
+      }
+    }
+  }
+}

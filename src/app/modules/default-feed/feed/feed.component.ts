@@ -45,6 +45,8 @@ export class DefaultFeedComponent implements OnInit {
    */
   recommendationsPublisherType: PublisherType;
 
+  protected currentValuePropCardIndex: number = 0;
+
   constructor(
     public feedsService: FeedsService,
     public experiments: ExperimentsService,
@@ -93,12 +95,13 @@ export class DefaultFeedComponent implements OnInit {
 
   /**
    * Loads the feed.
-   * @returns { void }
+   * @returns { void }d
    * @param refresh
    */
   private load(refresh: boolean = false): void {
     if (refresh) {
       this.feedsService.clear(true);
+      this.currentValuePropCardIndex = 0;
     }
 
     try {
@@ -138,6 +141,15 @@ export class DefaultFeedComponent implements OnInit {
 
     // show after the 3rd post
     return index === 2;
+  }
+
+  shouldShowValuePropCard(index: number): boolean {
+    if (!this.isLoggedIn() && index >= 0 && index % 2 !== 0) {
+      this.currentValuePropCardIndex++;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**

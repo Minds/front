@@ -27,6 +27,10 @@
       }"
       class="m-defaultFeed__activity"
     ></m-activity>
+    <m-valueProp__card
+      *ngIf="shouldShowValuePropCard(i)"
+      index="currentValuePropCardIndex"
+    ></m-valueProp__card>
     <m-publisherRecommendations
       [location]="location"
       [dismissible]="true"

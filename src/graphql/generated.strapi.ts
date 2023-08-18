@@ -28,6 +28,8 @@ export type Scalars = {
   Float: { input: number; output: number };
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: { input: any; output: any };
+  /** A string used to identify an i18n locale */
+  I18NLocaleCode: { input: any; output: any };
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any };
   OnboardingV5VersionStepsDynamicZoneInput: { input: any; output: any };
@@ -862,7 +864,8 @@ export type GenericMorph =
   | UploadFolder
   | UsersPermissionsPermission
   | UsersPermissionsRole
-  | UsersPermissionsUser;
+  | UsersPermissionsUser
+  | ValuePropCard;
 
 export type Homepage = {
   __typename?: 'Homepage';
@@ -1037,6 +1040,8 @@ export type Mutation = {
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  createValuePropCard?: Maybe<ValuePropCardEntityResponse>;
+  createValuePropCardLocalization?: Maybe<ValuePropCardEntityResponse>;
   deleteAuxPage?: Maybe<AuxPageEntityResponse>;
   deleteExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   deleteExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
@@ -1051,6 +1056,7 @@ export type Mutation = {
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Delete an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteValuePropCard?: Maybe<ValuePropCardEntityResponse>;
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
   /** Request a reset password token */
@@ -1077,6 +1083,7 @@ export type Mutation = {
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  updateValuePropCard?: Maybe<ValuePropCardEntityResponse>;
   upload: UploadFileEntityResponse;
 };
 
@@ -1122,6 +1129,17 @@ export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
 };
 
+export type MutationCreateValuePropCardArgs = {
+  data: ValuePropCardInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+export type MutationCreateValuePropCardLocalizationArgs = {
+  data?: InputMaybe<ValuePropCardInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
 export type MutationDeleteAuxPageArgs = {
   id: Scalars['ID']['input'];
 };
@@ -1156,6 +1174,11 @@ export type MutationDeleteUsersPermissionsRoleArgs = {
 
 export type MutationDeleteUsersPermissionsUserArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteValuePropCardArgs = {
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationEmailConfirmationArgs = {
@@ -1251,6 +1274,12 @@ export type MutationUpdateUsersPermissionsRoleArgs = {
 export type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateValuePropCardArgs = {
+  data: ValuePropCardInput;
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationUploadArgs = {
@@ -1418,6 +1447,8 @@ export type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
+  valuePropCard?: Maybe<ValuePropCardEntityResponse>;
+  valuePropCards?: Maybe<ValuePropCardEntityResponseCollection>;
 };
 
 export type QueryAuxPageArgs = {
@@ -1534,6 +1565,19 @@ export type QueryUsersPermissionsUserArgs = {
 export type QueryUsersPermissionsUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryValuePropCardArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+export type QueryValuePropCardsArgs = {
+  filters?: InputMaybe<ValuePropCardFiltersInput>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -1991,6 +2035,68 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type ValuePropCard = {
+  __typename?: 'ValuePropCard';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  locale?: Maybe<Scalars['String']['output']>;
+  localizations?: Maybe<ValuePropCardRelationResponseCollection>;
+  media: UploadFileEntityResponse;
+  order?: Maybe<Scalars['Float']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ValuePropCardLocalizationsArgs = {
+  filters?: InputMaybe<ValuePropCardFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ValuePropCardEntity = {
+  __typename?: 'ValuePropCardEntity';
+  attributes?: Maybe<ValuePropCard>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ValuePropCardEntityResponse = {
+  __typename?: 'ValuePropCardEntityResponse';
+  data?: Maybe<ValuePropCardEntity>;
+};
+
+export type ValuePropCardEntityResponseCollection = {
+  __typename?: 'ValuePropCardEntityResponseCollection';
+  data: Array<ValuePropCardEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ValuePropCardFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ValuePropCardFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
+  localizations?: InputMaybe<ValuePropCardFiltersInput>;
+  not?: InputMaybe<ValuePropCardFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ValuePropCardFiltersInput>>>;
+  order?: InputMaybe<FloatFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ValuePropCardInput = {
+  media?: InputMaybe<Scalars['ID']['input']>;
+  order?: InputMaybe<Scalars['Float']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ValuePropCardRelationResponseCollection = {
+  __typename?: 'ValuePropCardRelationResponseCollection';
+  data: Array<ValuePropCardEntity>;
+};
+
 export type GetExplainerScreensQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetExplainerScreensQuery = {
@@ -2159,6 +2265,35 @@ export type FetchOnboardingV5VersionsQuery = {
                 provider: string;
                 size: number;
               } | null;
+            } | null;
+          } | null;
+        };
+      } | null;
+    }>;
+  } | null;
+};
+
+export type GetValuePropCardsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetValuePropCardsQuery = {
+  __typename?: 'Query';
+  valuePropCards?: {
+    __typename?: 'ValuePropCardEntityResponseCollection';
+    data: Array<{
+      __typename?: 'ValuePropCardEntity';
+      id?: string | null;
+      attributes?: {
+        __typename?: 'ValuePropCard';
+        title: string;
+        media: {
+          __typename?: 'UploadFileEntityResponse';
+          data?: {
+            __typename?: 'UploadFileEntity';
+            attributes?: {
+              __typename?: 'UploadFile';
+              url: string;
+              mime: string;
+              alternativeText?: string | null;
             } | null;
           } | null;
         };
@@ -2351,6 +2486,41 @@ export class FetchOnboardingV5VersionsGQL extends Apollo.Query<
   FetchOnboardingV5VersionsQueryVariables
 > {
   document = FetchOnboardingV5VersionsDocument;
+  client = 'strapi';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetValuePropCardsDocument = gql`
+  query GetValuePropCards {
+    valuePropCards(sort: "order") {
+      data {
+        id
+        attributes {
+          title
+          media {
+            data {
+              attributes {
+                url
+                mime
+                alternativeText
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetValuePropCardsGQL extends Apollo.Query<
+  GetValuePropCardsQuery,
+  GetValuePropCardsQueryVariables
+> {
+  document = GetValuePropCardsDocument;
   client = 'strapi';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

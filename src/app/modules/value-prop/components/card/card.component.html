@@ -1,0 +1,11 @@
+<ng-container *ngIf="card$ | async as card">
+  <div class="m-valueProp__card">
+    <p class="m-valuePropCard__title">{{ card.title }}</p>
+    <div class="m-valuePropCard__imageWrapper">
+      <img
+        class="m-valuePropCard__image"
+        [alt]="card.altText"
+        [src]="card.imageUrl"
+      />
+    </div></div
+></ng-container>
