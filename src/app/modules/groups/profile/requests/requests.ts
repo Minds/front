@@ -5,6 +5,7 @@ import { GroupsService } from '../../groups.service';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
   selector: 'minds-groups-profile-requests',
@@ -25,6 +26,7 @@ export class GroupsProfileRequests {
     public session: Session,
     public client: Client,
     public service: GroupsService,
+    private toast: ToasterService,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -70,18 +72,32 @@ export class GroupsProfileRequests {
   }
 
   accept(user: any, index: number) {
-    this.service.acceptRequest(this.group, user.guid).then(() => {
-      this.users.splice(index, 1);
-      this.changeCounter('members:count', +1);
-      this.changeCounter('requests:count', -1);
-    });
+    this.service
+      .acceptRequest(this.group, user.guid)
+      .then(() => {
+        this.users.splice(index, 1);
+        this.changeCounter('members:count', +1);
+        this.changeCounter('requests:count', -1);
+      })
+      .catch(e => {
+        this.toast.error(
+          e?.error?.message ?? e?.message ?? 'An unknown error has occurred'
+        );
+      });
   }
 
   reject(user: any, index: number) {
-    this.service.rejectRequest(this.group, user.guid).then(() => {
-      this.users.splice(index, 1);
-      this.changeCounter('requests:count', -1);
-    });
+    this.service
+      .rejectRequest(this.group, user.guid)
+      .then(() => {
+        this.users.splice(index, 1);
+        this.changeCounter('requests:count', -1);
+      })
+      .catch(e => {
+        this.toast.error(
+          e?.error?.message ?? e?.message ?? 'An unknown error has occurred'
+        );
+      });
   }
 
   private changeCounter(counter: string, val = 0) {
