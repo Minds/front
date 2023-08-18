@@ -20,7 +20,6 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { BoostConsoleSingleComponent } from './console-v2/single/single.component';
 import { NoticesModule } from '../notices/notices.module';
 import { MarkdownModule } from 'ngx-markdown';
-import { ValuePropModule } from '../value-prop/value-prop.module';
 
 const boostRoutes: Routes = [
   {
