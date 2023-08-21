@@ -38,7 +38,8 @@
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
 
-    .m-license-info {
+    .m-license-info,
+    .m-visibility-info {
       @include m-theme() {
         color: themed($m-textColor--tertiary);
       }

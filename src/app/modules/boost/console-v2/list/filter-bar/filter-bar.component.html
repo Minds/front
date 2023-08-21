@@ -7,20 +7,22 @@
     <!-- TABS: USER CONTEXT --------------------- -->
     <!-- ---------------------------------------- -->
     <ng-container *ngIf="!(service.adminContext$ | async)">
-      <div class="m-tabs__tab" (click)="onLocationFilterChange('feed')">
+      <div class="m-tabs__tab" (click)="onClickFeedTab($event)">
         <a
           [class.m-tabs__tab--selected]="
-            (service.locationFilterValue$ | async) === 'feed'
+            (service.locationFilterValue$ | async) === 'feed' &&
+            (service.view$ | async) === 'list'
           "
           data-ref="boost-console-tab-location-feed"
           i18n="@@BOOST_CONSOLE__TAB_POSTS"
           >Posts</a
         >
       </div>
-      <div class="m-tabs__tab" (click)="onLocationFilterChange('sidebar')">
+      <div class="m-tabs__tab" (click)="onClickSidebarTab($event)">
         <a
           [class.m-tabs__tab--selected]="
-            (service.locationFilterValue$ | async) === 'sidebar'
+            (service.locationFilterValue$ | async) === 'sidebar' &&
+            (service.view$ | async) === 'list'
           "
           data-ref="boost-console-tab-location-sidebar"
           i18n="@@BOOST_CONSOLE__TAB_CHANNEL_AND_GROUPS"
@@ -31,6 +33,16 @@
           >
           <ng-template #onlyChannelTextTemplate>Channel</ng-template>
         </a>
+      </div>
+      <div class="m-tabs__tab" (click)="onClickExploreTab($event)">
+        <a
+          [class.m-tabs__tab--selected]="
+            (service.view$ | async) === 'boostFeed'
+          "
+          data-ref="boost-console-tab-explore"
+          i18n="@@COMMON__EXPLORE"
+          >Explore</a
+        >
       </div>
     </ng-container>
     <!-- ---------------------------------------- -->
@@ -71,7 +83,7 @@
       icon="settings"
       iconClass="m-boostConsole__settingsButtonIcon"
       data-ref="boost-console-settings-button"
-      (click)="onSettingsButtonClick($event)"
+      (click)="onClickSettingsButton($event)"
     >
       <ng-container i18n="@@COMMON__SETTINGS">
         Settings
@@ -88,7 +100,7 @@
   <!-- ------------------------ -->
   <!-- DROPDOWN MENU FILTERS-->
   <!-- ------------------------ -->
-  <div class="m-boostConsole__filtersWrapper">
+  <div class="m-boostConsole__filtersWrapper" *ngIf="showDropdownFilters">
     <!-- ------------------------ -->
     <!-- STATE FILTER DROPDOWN TRIGGER -->
     <!-- ------------------------ -->
@@ -340,9 +352,9 @@
 <!-- ------------------------------------->
 <ng-template #boostLatestPostNotice>
   <m-feedNotice--boostLatestPost
-    *ngIf="!(service.adminContext$ | async)"
+    *ngIf="!(service.adminContext$ | async) && boostLatestNoticeType"
     [isInFeed]="false"
     [dismissible]="false"
-    [targetBoostLocation]="service.locationFilterValue$ | async"
+    [targetBoostLocation]="boostLatestNoticeType"
   ></m-feedNotice--boostLatestPost>
 </ng-template>
