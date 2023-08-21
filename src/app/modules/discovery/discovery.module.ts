@@ -19,6 +19,7 @@ import { ContentSettingsModule } from '../content-settings/content-settings.modu
 import { DiscoveryTopComponent } from './top/top.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
+import { SearchComponent } from '../search/search.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,11 @@ import { PathMatch } from '../../common/types/angular.types';
         component: DiscoveryComponent,
         pathMatch: 'prefix' as PathMatch,
         children: [
-          { path: '', redirectTo: 'top', pathMatch: 'full' as PathMatch },
+          {
+            path: '',
+            redirectTo: 'trending',
+            pathMatch: 'full' as PathMatch,
+          },
           {
             path: 'top',
             component: DiscoveryTopComponent,
@@ -47,6 +52,11 @@ import { PathMatch } from '../../common/types/angular.types';
           {
             path: 'trend/:guid',
             redirectTo: '/newsfeed/:guid',
+          },
+          {
+            path: 'trending',
+            component: SearchComponent,
+            data: { explore: true },
           },
           {
             path: 'search',

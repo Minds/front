@@ -133,6 +133,11 @@ export class SearchComponent {
 
   readonly cdnUrl: string;
 
+  /**
+   * When in an explore tab context, explore tabs are shown instead of search tabs.
+   */
+  public exploreTabContext: boolean = false;
+
   constructor(
     private fetchSearch: FetchSearchGQL,
     private countSearch: CountSearchGQL,
@@ -246,6 +251,10 @@ export class SearchComponent {
         return pageInfo.hasNextPage;
       })
     );
+
+    if (this.route.snapshot.data['explore']) {
+      this.exploreTabContext = true;
+    }
 
     this.subscriptions = [
       // Setup the filters from query params

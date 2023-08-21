@@ -95,6 +95,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoveryComponent,
     DiscoveryTrendsComponent,
     DiscoverySearchComponent,
+    DiscoveryTabsComponent,
     DiscoveryTagsComponent,
     DiscoveryBoostFeedComponent,
     DiscoveryFeedsComponent,
