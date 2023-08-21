@@ -23,7 +23,6 @@ import { DiscoveryDisclaimerModule } from './disclaimer/disclaimer.module';
 import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
 import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prompt.component';
 import { DiscoveryPlusUpgradeComponent } from './plus-upgrade/plus-upgrade.component';
-import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
@@ -79,7 +78,6 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoverySuggestionsComponent,
     DiscoveryNoTagsPromptComponent,
     DiscoveryPlusUpgradeComponent,
-    DiscoveryBoostFeedComponent,
     DiscoveryTabsComponent,
     DiscoveryLatestFeedComponent,
     DiscoveryCardCarouselComponent,
@@ -96,7 +94,6 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoveryTrendsComponent,
     DiscoverySearchComponent,
     DiscoveryTagsComponent,
-    DiscoveryBoostFeedComponent,
     DiscoveryFeedsComponent,
     DiscoverySidebarTagsComponent,
     DiscoveryBuildYourAlgorithmComponent,

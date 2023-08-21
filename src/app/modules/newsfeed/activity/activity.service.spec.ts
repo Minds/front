@@ -1,6 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../mocks/responses/user.mock';
 import { ActivityService } from './activity.service';
+import { AccessId } from '../../../common/enums/access-id.enum';
 
 describe('ActivityService', () => {
   let service: ActivityService;
@@ -318,6 +319,41 @@ describe('ActivityService', () => {
         inSingleGroupFeed: false,
         isComposerPreview: false,
         hideTopBorder: false,
+      });
+    });
+  });
+
+  describe('isPrivate$', () => {
+    it('should return that entity is private if it is private', (done: DoneFn) => {
+      service.entity$.next({
+        access_id: AccessId.Private,
+      });
+
+      service.isPrivate$.subscribe((isPrivate: boolean) => {
+        expect(isPrivate).toBe(true);
+        done();
+      });
+    });
+
+    it('should return that entity is NOT private if it is logged-in only', (done: DoneFn) => {
+      service.entity$.next({
+        access_id: AccessId.LoggedIn,
+      });
+
+      service.isPrivate$.subscribe((isPrivate: boolean) => {
+        expect(isPrivate).toBe(false);
+        done();
+      });
+    });
+
+    it('should return that entity is NOT private if it is public', (done: DoneFn) => {
+      service.entity$.next({
+        access_id: AccessId.Public,
+      });
+
+      service.isPrivate$.subscribe((isPrivate: boolean) => {
+        expect(isPrivate).toBe(false);
+        done();
       });
     });
   });

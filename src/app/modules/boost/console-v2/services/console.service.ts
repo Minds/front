@@ -14,6 +14,7 @@ import {
   BoostConsolePaymentMethodFilter,
   BoostConsoleStateFilter,
   BoostConsoleSuitabilityFilter,
+  BoostConsoleView,
   BoostLocation,
   BoostPaymentMethod,
   BoostState,
@@ -27,6 +28,14 @@ import {
 export class BoostConsoleService {
   endpoint: string = 'api/v3/boosts';
 
+  /**
+   * Whether we're looking at a list of boosts, a single boost,
+   * or the sitewide boost feed
+   */
+  public readonly view$: BehaviorSubject<
+    BoostConsoleView
+  > = new BehaviorSubject<BoostConsoleView>('list');
+
   // Subject containing whether or not we are viewing
   // the boost console in the context of the admin console
   // (as opposed to user context)
@@ -38,7 +47,7 @@ export class BoostConsoleService {
   // (e.g. feed or sidebar)
   public readonly locationFilterValue$: BehaviorSubject<
     BoostConsoleLocationFilter
-  > = new BehaviorSubject<BoostConsoleLocationFilter>('sidebar');
+  > = new BehaviorSubject<BoostConsoleLocationFilter>('feed');
 
   // Subject containing status filter for console to display.
   // (Used in user boost context only)
