@@ -54,7 +54,7 @@ class GroupsMembershipPage {
    * @returns { void }
    */
   public hasRecommendedGroups(): void {
-    I.seeElement(locate(this.recommendedGroupsTitle));
+    I.waitForElement(locate(this.recommendedGroupsTitle));
   }
 
   /**
