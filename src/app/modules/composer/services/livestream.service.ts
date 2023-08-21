@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { Session } from '../../../services/session';
 @Injectable({ providedIn: 'root' })
 export class LivestreamService {
   private apiUrl = 'https://livepeer.studio/api/stream';
@@ -9,21 +10,23 @@ export class LivestreamService {
 
   constructor(
     private http: HttpClient,
+    private session: Session,
     private mindsConfigService: ConfigsService
   ) {}
 
   async createLiveStream(): Promise<any> {
     const timestamp = new Date().getTime();
     const streamData = {
-      name: `web_${timestamp}`,
+      name: `web_${timestamp}_${this.session.getLoggedInUser().guid}`,
+      record: true,
     };
 
     const headers = this.createHeaders();
 
     try {
-      const response = await this.http
-        .post<any>(this.apiUrl, streamData, { headers })
-        .toPromise();
+      const response = await firstValueFrom(
+        this.http.post<any>(this.apiUrl, streamData, { headers })
+      );
       this.setStream(response);
       return response;
     } catch (error) {

@@ -20,6 +20,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { BoostConsoleSingleComponent } from './console-v2/single/single.component';
 import { NoticesModule } from '../notices/notices.module';
 import { MarkdownModule } from 'ngx-markdown';
+import { BoostConsoleFeedComponent } from './console-v2/feed/feed.component';
 
 const boostRoutes: Routes = [
   {
@@ -63,6 +64,7 @@ const boostRoutes: Routes = [
     BoostConsoleActionButtonsComponent,
     BoostConsoleStatsBarComponent,
     BoostConsoleSingleComponent,
+    BoostConsoleFeedComponent,
   ],
   exports: [BoostConsoleV2Component],
   providers: [BoostConsoleService],

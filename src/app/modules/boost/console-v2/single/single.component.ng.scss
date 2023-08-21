@@ -15,7 +15,6 @@
 
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
-      border-bottom: 1px solid themed($m-borderColor--primary);
 
       &:hover {
         background-color: themed($m-bgColor--primaryAlt);
