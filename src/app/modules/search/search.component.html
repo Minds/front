@@ -7,48 +7,53 @@
     <ng-container
       [m-clientMeta]="{ source: 'feed/discovery/search', medium: 'feed' }"
     >
-      <div class="m-tabs__container">
-        <div class="m-tabs__tab">
-          <a
-            routerLink="./"
-            routerLinkActive="m-tabs__tab--selected"
-            [queryParams]="{ q: query, f: 'top', t: mediaType }"
-            i18n="@@DISCOVERY_SEARCH__TOP"
-            >Top</a
-          >
-        </div>
-        <div class="m-tabs__tab">
-          <a
-            routerLink="./"
-            routerLinkActive="m-tabs__tab--selected"
-            [queryParams]="{ q: query, f: 'latest', t: mediaType }"
-            i18n="@@DISCOVERY_SEARCH__LATEST"
-            >Latest</a
-          >
-        </div>
-        <div class="m-tabs__tab">
-          <a
-            routerLink="./"
-            routerLinkActive="m-tabs__tab--selected"
-            [queryParams]="{ q: query, f: 'channels', t: mediaType }"
-            i18n="@@DISCOVERY__SEARCH__CHANNELS"
-            >Channels</a
-          >
-        </div>
-        <div class="m-tabs__tab">
-          <a
-            routerLink="./"
-            routerLinkActive="m-tabs__tab--selected"
-            [queryParams]="{ q: query, f: 'groups', t: mediaType }"
-            i18n="@@DISCOVERY_SEARCH__GROUPS"
-            >Groups</a
-          >
-        </div>
-        <div class="m-layout__spacer"></div>
-        <m-discovery__settingsButton
-          modalType="feed"
-        ></m-discovery__settingsButton>
+      <div *ngIf="exploreTabContext; else searchTabTemplate">
+        <m-discovery__tabs></m-discovery__tabs>
       </div>
+      <ng-template #searchTabTemplate>
+        <div class="m-tabs__container">
+          <div class="m-tabs__tab">
+            <a
+              routerLink="./"
+              routerLinkActive="m-tabs__tab--selected"
+              [queryParams]="{ q: query, f: 'top', t: mediaType }"
+              i18n="@@DISCOVERY_SEARCH__TOP"
+              >Top</a
+            >
+          </div>
+          <div class="m-tabs__tab">
+            <a
+              routerLink="./"
+              routerLinkActive="m-tabs__tab--selected"
+              [queryParams]="{ q: query, f: 'latest', t: mediaType }"
+              i18n="@@DISCOVERY_SEARCH__LATEST"
+              >Latest</a
+            >
+          </div>
+          <div class="m-tabs__tab">
+            <a
+              routerLink="./"
+              routerLinkActive="m-tabs__tab--selected"
+              [queryParams]="{ q: query, f: 'channels', t: mediaType }"
+              i18n="@@DISCOVERY__SEARCH__CHANNELS"
+              >Channels</a
+            >
+          </div>
+          <div class="m-tabs__tab">
+            <a
+              routerLink="./"
+              routerLinkActive="m-tabs__tab--selected"
+              [queryParams]="{ q: query, f: 'groups', t: mediaType }"
+              i18n="@@DISCOVERY_SEARCH__GROUPS"
+              >Groups</a
+            >
+          </div>
+          <div class="m-layout__spacer"></div>
+          <m-discovery__settingsButton
+            modalType="feed"
+          ></m-discovery__settingsButton>
+        </div>
+      </ng-template>
 
       <ng-container *mIfBrowser>
         <ng-container *ngIf="filter === 'latest'">
