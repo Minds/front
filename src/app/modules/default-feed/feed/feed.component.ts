@@ -93,7 +93,7 @@ export class DefaultFeedComponent implements OnInit {
 
   /**
    * Loads the feed.
-   * @returns { void }d
+   * @returns { void }
    * @param refresh
    */
   private load(refresh: boolean = false): void {
