@@ -15,22 +15,28 @@ const LOGGED_IN_DISMISSIBLE_ID = 'discovery-disclaimer-2020';
   templateUrl: './disclaimer.component.html',
   styleUrls: ['./disclaimer.component.ng.scss'],
 })
-export class DiscoveryDisclaimerComponent implements OnDestroy {
+export class DiscoveryDisclaimerComponent implements OnInit, OnDestroy {
   protected dismissibleId: string | null = null;
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private session: Session) {
+  constructor(private session: Session) {}
+
+  ngOnInit(): void {
+    this.dismissibleId = this.session.isLoggedIn()
+      ? LOGGED_IN_DISMISSIBLE_ID
+      : null;
+
     this.subscriptions.push(
-      this.session.loggedinEmitter?.subscribe(() => {
-        this.dismissibleId = LOGGED_IN_DISMISSIBLE_ID;
+      this.session.loggedinEmitter?.subscribe((isLoggedIn: boolean): void => {
+        this.dismissibleId = isLoggedIn ? LOGGED_IN_DISMISSIBLE_ID : null;
       })
     );
   }
 
   ngOnDestroy(): void {
     for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
+      subscription?.unsubscribe();
     }
   }
 }
