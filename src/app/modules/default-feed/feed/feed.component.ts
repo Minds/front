@@ -45,8 +45,6 @@ export class DefaultFeedComponent implements OnInit {
    */
   recommendationsPublisherType: PublisherType;
 
-  protected currentValuePropCardIndex: number = 0;
-
   constructor(
     public feedsService: FeedsService,
     public experiments: ExperimentsService,
@@ -101,7 +99,6 @@ export class DefaultFeedComponent implements OnInit {
   private load(refresh: boolean = false): void {
     if (refresh) {
       this.feedsService.clear(true);
-      this.currentValuePropCardIndex = 0;
     }
 
     try {
@@ -143,15 +140,6 @@ export class DefaultFeedComponent implements OnInit {
     return index === 2;
   }
 
-  shouldShowValuePropCard(index: number): boolean {
-    if (!this.isLoggedIn() && index >= 0 && index % 2 !== 0) {
-      this.currentValuePropCardIndex++;
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   /**
    * Whether a user is logged in.
    * @returns { boolean } true if a user is logged in.
@@ -175,5 +163,14 @@ export class DefaultFeedComponent implements OnInit {
         this.session.getLoggedInUser().guid
       )
     );
+  }
+
+  /**
+   * Whether a value prop card can be shown.
+   * @param { number } index - index in feed.
+   * @returns { boolean } true if value prop card can be shown in this position.
+   */
+  public canShowValuePropCard(index: number): boolean {
+    return !this.isLoggedIn() && index % 2 === 0;
   }
 }

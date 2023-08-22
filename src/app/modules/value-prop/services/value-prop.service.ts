@@ -1,17 +1,10 @@
-import { Inject, Injectable, OnInit } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   ValuePropCard,
   GetValuePropCardsGQL,
   GetValuePropCardsQuery,
 } from '../../../../graphql/generated.strapi';
-import {
-  Observable,
-  Subscription,
-  catchError,
-  map,
-  of,
-  shareReplay,
-} from 'rxjs';
+import { Observable, catchError, map, of, shareReplay, take } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 import { STRAPI_URL } from '../../../common/injection-tokens/url-injection-tokens';
 import { PresentableValuePropCard } from '../value-prop.types';
@@ -21,21 +14,19 @@ import { PresentableValuePropCard } from '../value-prop.types';
  * Cards are inserted into the guest mode feed
  */
 @Injectable({ providedIn: 'root' })
-export class ValuePropService implements OnInit {
-  private subscriptions: Subscription[] = [];
+export class ValuePropService {
+  // reference to cards that have already been shown.
+  private shownCards: number[] = [];
 
   constructor(
     private getValuePropCardsGQL: GetValuePropCardsGQL,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {}
 
-  ngOnInit(): void {
-    this.subscriptions.push(this.getRawValuePropCards$.subscribe());
-  }
   /**
    * Get raw value prop cards from server.
    */
-  public getRawValuePropCards$: Observable<
+  private getRawValuePropCards$: Observable<
     ValuePropCard[]
   > = this.getValuePropCardsGQL.fetch().pipe(
     map(
@@ -54,7 +45,10 @@ export class ValuePropService implements OnInit {
     )
   );
 
-  public valuePropCards$: Observable<
+  /**
+   * Value prop cards cast into an easier to digest format.
+   */
+  private valuePropCards$: Observable<
     PresentableValuePropCard[]
   > = this.getRawValuePropCards$.pipe(
     map((rawCards: ValuePropCard[]): PresentableValuePropCard[] => {
@@ -71,14 +65,61 @@ export class ValuePropService implements OnInit {
     )
   );
 
+  /**
+   * Gets the next card that has not been shown. Will be null if there are no cards left to show.
+   */
+  public readonly nextUnshownCard$: Observable<
+    PresentableValuePropCard
+  > = this.valuePropCards$.pipe(
+    take(1),
+    map(
+      (cards: PresentableValuePropCard[]): PresentableValuePropCard => {
+        return (
+          cards.filter((card: PresentableValuePropCard) => {
+            return !this.hasCardBeenShown(card);
+          })?.[0] ?? null
+        );
+      }
+    )
+  );
+
+  /**
+   * Sets a card as shown in local state.
+   * @param { PresentableValuePropCard } card - card to flag as shown.
+   * @returns { void }
+   */
+  public setCardAsShown(card: PresentableValuePropCard): void {
+    this.shownCards.push(card.order);
+  }
+
+  /**
+   * Check whether a card has been shown.
+   * @param { PresentableValuePropCard } card - card to check.
+   * @returns { boolean } true if card has been shown.
+   */
+  private hasCardBeenShown(card: PresentableValuePropCard): boolean {
+    return this.shownCards.includes(card.order);
+  }
+
+  /**
+   * Converts a raw ValuePropCard into an easier to consume format.
+   * @param { ValuePropCard } rawCard - raw card to convert.
+   * @returns { PresentableValuePropCard } - presentable format.
+   */
   private getPresentableCard(rawCard: ValuePropCard): PresentableValuePropCard {
     return {
       title: rawCard.title,
       imageUrl: this.getImageUrl(rawCard),
       altText: this.getAltText(rawCard),
+      order: rawCard.order,
     };
   }
 
+  /**
+   * Gets image URL from raw value prop card from Strapi.
+   * @param { ValuePropCard } rawCard - card to get image from.
+   * @returns { string } url for image.
+   */
   private getImageUrl(rawCard: ValuePropCard): string {
     const media = rawCard?.media?.data?.attributes;
     if (!media?.mime.includes('image')) {
@@ -88,114 +129,12 @@ export class ValuePropService implements OnInit {
     return this.strapiUrl + media?.url;
   }
 
+  /**
+   * Get alt text for image of raw value prop card from Strapi.
+   * @param { ValuePropCard } rawCard - card to get alt text from.
+   * @returns { string } alt text for card image.
+   */
   private getAltText(rawCard: ValuePropCard): string {
     return rawCard?.media?.data?.attributes?.alternativeText ?? rawCard?.title;
   }
-
-  // public readonly valuePropCards$: Observable<
-  //   PresentableValuePropCard[]
-  // > = this.getValuePropCards$.pipe(
-  //   distinctUntilChanged(),
-  //   map((rawValuePropCards: ValuePropCard[]) => {
-  //     if (!rawValuePropCards.length) {
-  //       return [];
-  //     }
-  //     return stepData?.data?.carousel.map(
-  //       (carouselItem: ComponentOnboardingV5CarouselItem): CarouselItem => {
-  //         return {
-  //           title: carouselItem.title,
-  //           media: {
-  //             fullUrl:
-  //               this.strapiUrl + carouselItem?.media?.data?.attributes?.url,
-  //             altText:
-  //               carouselItem?.media?.data?.attributes?.alternativeText ??
-  //               'Onboarding carousel image',
-  //           },
-  //         };
-  //       }
-  //     );
-  //   })
-  // );
-
-  //   /**
-  //    * Trigger routes from server.
-  //    */
-  //   public triggerRoutes$: Observable<string[]> = this.getExplainerScreens$.pipe(
-  //     map((explainerScreens: ExplainerScreenWeb[]) => {
-  //       return explainerScreens.map(
-  //         (explainerScreen: ExplainerScreenWeb) => explainerScreen.triggerRoute
-  //       );
-  //     })
-  //   );
-
-  //   /**
-  //    * Handles route change.
-  //    * @param { string } route - route that was changed to.
-  //    * @returns { void }
-  //    */
-  //   public handleRouteChange(route: string): void {
-  //     this.subscriptions.push(
-  //       this.triggerRoutes$
-  //         .pipe(take(1))
-  //         .subscribe((triggerRoutes: string[]): void => {
-  //           // Find matched route taking into account wildcards.
-  //           const matchedRoute: string = triggerRoutes.filter(
-  //             (triggerRoute: string) =>
-  //               new RegExp('^' + triggerRoute.replace('*', '.*') + '$').test(
-  //                 route
-  //               )
-  //           )?.[0];
-
-  //           if (matchedRoute) {
-  //             this.handleMatchingTriggerRoute(matchedRoute);
-  //           }
-  //         })
-  //     );
-  //   }
-
-  //   /**
-  //    * Handles a matching trigger route, checking whether it has already been dismissed
-  //    * and opening the explainer screen if it has not.
-  //    * @param { string } route - route that was matched.
-  //    * @returns { void }
-  //    */
-  //   private handleMatchingTriggerRoute(route: string): void {
-  //     this.subscriptions.push(
-  //       // get both in parallel.
-  //       forkJoin([
-  //         this.getExplainerScreens$,
-  //         this.dismissalV2Service.getDismissals(),
-  //       ]).subscribe(
-  //         ([explainerScreens, dismissals]: [
-  //           ExplainerScreenWeb[],
-  //           Dismissal[]
-  //         ]): void => {
-  //           // get matching explainer screen for passed route
-  //           const explainerScreen: ExplainerScreenWeb = explainerScreens.filter(
-  //             (explainerScreen: ExplainerScreenWeb) => {
-  //               return explainerScreen.triggerRoute === route;
-  //             }
-  //           )?.[0];
-
-  //           if (!explainerScreen) {
-  //             console.error(`No explainer screen found for route: ${route}`);
-  //             return;
-  //           }
-
-  //           // check if explainer screen has already been dismissed.
-  //           if (
-  //             dismissals.some(
-  //               (dismissal: Dismissal): boolean =>
-  //                 dismissal.key === explainerScreen.key
-  //             )
-  //           ) {
-  //             return;
-  //           }
-
-  //           // open explainer screen modal.
-  //           this.explainerScreenModal.open(explainerScreen);
-  //         }
-  //       )
-  //     );
-  //   }
 }

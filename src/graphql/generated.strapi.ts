@@ -2285,6 +2285,7 @@ export type GetValuePropCardsQuery = {
       attributes?: {
         __typename?: 'ValuePropCard';
         title: string;
+        order?: number | null;
         media: {
           __typename?: 'UploadFileEntityResponse';
           data?: {
@@ -2498,6 +2499,7 @@ export const GetValuePropCardsDocument = gql`
         id
         attributes {
           title
+          order
           media {
             data {
               attributes {

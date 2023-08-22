@@ -3,7 +3,10 @@
 :host {
   .m-valueProp__card {
     padding: $spacing10 $spacing3 $spacing8;
-    @include borderBottom;
+
+    &.m-valueProp__card--borderTop {
+      @include borderTop;
+    }
   }
   .m-valuePropCard__title {
     @include heading3Bold;

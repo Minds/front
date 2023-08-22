@@ -1,41 +1,24 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ValuePropService } from '../../services/value-prop.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { PresentableValuePropCard } from '../../value-prop.types';
+import { Component, Input } from '@angular/core';
 
+/**
+ * Value proposition card that is shown in different feed positions
+ * to explain to new users what Minds is about.
+ */
 @Component({
   selector: 'm-valueProp__card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.ng.scss'],
 })
-export class ValuePropCardComponent implements OnInit, OnDestroy {
-  /**
-   * Which card do we want to show
-   */
-  @Input() index: number;
+export class ValuePropCardComponent {
+  /** Title of card. */
+  @Input() public title: string;
 
-  /**
-   * This card
-   */
-  protected card$: BehaviorSubject<
-    PresentableValuePropCard
-  > = new BehaviorSubject<PresentableValuePropCard>(null);
+  /** Image url. */
+  @Input() public imageUrl: string;
 
-  private subscriptions: Subscription[] = [];
+  /** Alt text of image. */
+  @Input() public altText: string;
 
-  constructor(protected service: ValuePropService) {}
-
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.service.valuePropCards$.subscribe(cards => {
-        this.card$.next(cards[this.index]);
-      })
-    );
-  }
-
-  ngOnDestroy(): void {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
-  }
+  /** Whether a top border should be shown. */
+  @Input() public showBorderTop: boolean = false;
 }

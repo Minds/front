@@ -5,6 +5,10 @@
   <ng-container
     *ngFor="let activity$ of feedsService.feed | async; let i = index"
   >
+    <m-valueProp__cardOutlet
+      *ngIf="canShowValuePropCard(i)"
+      [showBorderTop]="i > 0"
+    ></m-valueProp__cardOutlet>
     <m-feedNotice__outlet
       *ngIf="isLoggedIn() && i > 0 && i % 6 === 0"
       location="inline"
@@ -27,10 +31,6 @@
       }"
       class="m-defaultFeed__activity"
     ></m-activity>
-    <m-valueProp__card
-      *ngIf="shouldShowValuePropCard(i)"
-      index="currentValuePropCardIndex"
-    ></m-valueProp__card>
     <m-publisherRecommendations
       [location]="location"
       [dismissible]="true"

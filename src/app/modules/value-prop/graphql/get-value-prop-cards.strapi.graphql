@@ -4,6 +4,7 @@ query GetValuePropCards {
       id
       attributes {
         title
+        order
         media {
           data {
             attributes {
