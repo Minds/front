@@ -21,11 +21,13 @@ import { BoostConsoleSingleComponent } from './console-v2/single/single.componen
 import { NoticesModule } from '../notices/notices.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { BoostConsoleFeedComponent } from './console-v2/feed/feed.component';
+import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
 
 const boostRoutes: Routes = [
   {
     path: 'boost/boost-console',
     component: BoostConsoleV2Component,
+    canActivate: [loggedOutExplainerScreenGuard()],
     data: {
       title: 'Boost Console',
       description: 'Manage and monitor your boosts',
