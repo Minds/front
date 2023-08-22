@@ -7,12 +7,6 @@
     <m-discovery__plusUpgrade *ngIf="isPlusPage"></m-discovery__plusUpgrade>
     <router-outlet></router-outlet>
     <ng-content></ng-content>
-
-    <!-- We place an additional disclaimer here for popover -->
-    <m-discovery__disclaimer
-      class="m-discovery__disclaimer--popover"
-      *mExperiment="'discovery-homepage'; variation: false"
-    ></m-discovery__disclaimer>
   </div>
   <div class="m-discovery__sidebar" m-pageLayout__pane="right">
     <div class="m-pageLayoutPane__inner">

@@ -219,5 +219,13 @@ describe('DiscoveryDisclaimerComponent', () => {
         'https://developers.minds.com/'
       );
     });
+
+    it('should NOT set a top border when showBorderTop is false', () => {
+      expect(
+        fixture.debugElement.query(
+          By.css('m-sidebarWidget .m-sidebarWidget__border--primary')
+        )
+      ).toBeTruthy();
+    });
   });
 });
