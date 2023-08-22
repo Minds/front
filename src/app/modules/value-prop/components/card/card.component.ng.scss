@@ -21,5 +21,9 @@
   .m-valuePropCard__image {
     max-height: 380px;
     max-width: calc(100% - $spacing8);
+
+    @media screen and (max-width: $max-mobile) {
+      max-height: 250px;
+    }
   }
 }
