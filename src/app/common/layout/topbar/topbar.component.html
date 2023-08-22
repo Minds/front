@@ -117,9 +117,7 @@
               [overlay]="
                 !(pageLayoutService.hasTopbarBackground$ | async) && onHomepage
               "
-              [solid]="
-                onHomepage && pageLayoutService.hasTopbarBackground$ | async
-              "
+              [solid]="pageLayoutService.hasTopbarBackground$ | async"
             >
               Join Now
             </m-button>
