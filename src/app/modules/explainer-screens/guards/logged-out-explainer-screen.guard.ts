@@ -8,8 +8,9 @@ import { Session } from '../../../services/session';
 import { ExplainerScreensService } from '../services/explainer-screen.service';
 
 /**
- * Guard to prevent access to logged in routes, BUT show explainer screens
- * if one is available for the route a user is trying to navigate to.
+ * Guard to prevent access to logged in routes when logged out, BUT still
+ * show explainer screens if one is available for the route a user is
+ * trying to navigate to.
  * @returns { CanActivateFn } - guard function.
  */
 export function loggedOutExplainerScreenGuard(): CanActivateFn {
