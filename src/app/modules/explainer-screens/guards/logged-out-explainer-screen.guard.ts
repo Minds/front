@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivateFn,
+  Router,
   RouterStateSnapshot,
 } from '@angular/router';
 import { Session } from '../../../services/session';
@@ -27,6 +28,16 @@ export function loggedOutExplainerScreenGuard(): CanActivateFn {
       ExplainerScreensService
     );
     explainerScreenService.handleRouteChange(state.url);
+
+    // if there is NO previous navigation (meaning the user landed directly at this route)
+    // redirect them to login page, rather than showing them a blank screen behind the modal.
+    const router: Router = inject(Router);
+    if (
+      !router.getCurrentNavigation().previousNavigation?.finalUrl?.toString()
+    ) {
+      router.navigate(['/login']);
+    }
+
     return false;
   };
 }
