@@ -7,17 +7,11 @@ import { CommonModule } from '../../common/common.module';
 import { ModalsModule } from '../modals/modals.module';
 import { VideoChatModule } from '../videochat/videochat.module';
 
-import { GroupsProfileMembersInvite } from './profile/members/invite/invite';
 import { GroupsCard } from './card/card';
-import { GroupsCardUserActionsButton } from './profile/card-user-actions-button';
-import { GroupsSettingsButton } from './profile/groups-settings-button';
-import { GroupsProfileMembers } from './profile/members/members';
 import { GroupsProfileRequests } from './profile/requests/requests';
 import { GroupsTileComponent } from './tile/tile.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
-import { GroupMemberPreviews } from './profile/member-previews/member-previews.component';
-import { CanDeactivateGroupService } from './profile/can-deactivate/can-deactivate-group.service';
 import { GroupProfileFeedComponent } from './profile/feed/feed.component';
 import { GroupProfileFeedSortedComponent } from './profile/feed/sorted.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
@@ -25,7 +19,6 @@ import { GroupsProfileReviewComponent } from './profile/review/review.component'
 import { GroupsKickModalComponent } from './kick-modal/kick-modal.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { ComposerModule } from '../composer/composer.module';
-import { GroupsProfile } from './profile/profile';
 import { GroupsCreator } from './create/create';
 import { GroupsMembershipsComponent } from './memberships/memberships.component';
 import { GroupsSearchService } from './profile/feed/search.service';
@@ -38,17 +31,29 @@ import { NoticesModule } from '../notices/notices.module';
 const routes: Routes = [
   {
     path: 'groups/profile/:guid',
-    component: GroupsProfile,
-    canDeactivate: [CanDeactivateGroupService],
-    children: [
-      { path: '', redirectTo: 'feed', pathMatch: 'full' as PathMatch },
-      { path: 'feed/review', component: GroupsProfileReviewComponent },
-      { path: 'feed/:filter', component: GroupProfileFeedComponent },
-      { path: 'feed', component: GroupProfileFeedComponent },
-      { path: 'activity', redirectTo: 'feed' },
-      { path: 'members', component: GroupsProfileMembers },
-      { path: 'requests', component: GroupsProfileRequests },
-    ],
+    redirectTo: 'group/:guid',
+  },
+  {
+    path: 'groups/profile/:guid/feed',
+    redirectTo: 'group/:guid/feed',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'groups/profile/:guid/activity',
+    redirectTo: 'group/:guid/feed',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'groups/profile/:guid/feed/review',
+    redirectTo: 'group/:guid/review',
+  },
+  {
+    path: 'groups/profile/:guid/members',
+    redirectTo: 'group/:guid/members',
+  },
+  {
+    path: 'groups/profile/:guid/requests',
+    redirectTo: 'group/:guid/review',
   },
   {
     path: 'groups/create',
@@ -91,35 +96,23 @@ const routes: Routes = [
     FindGroupsButtonsComponent, // standalone
   ],
   declarations: [
-    GroupsProfile,
     GroupsCreator,
-    GroupsProfileMembersInvite,
     GroupsCard,
-    GroupsCardUserActionsButton,
-    GroupsProfileMembers,
     GroupProfileFeedComponent,
     GroupProfileFeedSortedComponent,
     GroupsProfileRequests,
-    GroupsSettingsButton,
     GroupsTileComponent,
-    GroupMemberPreviews,
     GroupsProfileReviewComponent,
     GroupsKickModalComponent,
     GroupsMembershipsComponent,
   ],
   exports: [
-    GroupsProfile,
     GroupsCreator,
-    GroupsProfileMembersInvite,
     GroupsCard,
-    GroupsCardUserActionsButton,
-    GroupsProfileMembers,
     GroupsProfileRequests,
-    GroupsSettingsButton,
     GroupsProfileReviewComponent,
     GroupProfileFeedComponent,
-    GroupMemberPreviews,
   ],
-  providers: [CanDeactivateGroupService, GroupsSearchService],
+  providers: [GroupsSearchService],
 })
 export class GroupsModule {}

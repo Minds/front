@@ -1,0 +1,9 @@
+@import 'defaults.scss';
+
+:host {
+  .m-groupMembersSidebar__section {
+    display: block;
+    width: 100%;
+    margin-bottom: $spacing8;
+  }
+}

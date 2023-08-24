@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 
 import { GroupsService } from '../../groups.service';
 
@@ -21,6 +21,12 @@ export class GroupsProfileRequests {
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
+
+  /**
+   * Event emitters when a decision is made
+   */
+  @Output() newRequestCount: EventEmitter<number> = new EventEmitter<number>();
+  @Output() newMemberCount: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
     public session: Session,
@@ -78,6 +84,8 @@ export class GroupsProfileRequests {
         this.users.splice(index, 1);
         this.changeCounter('members:count', +1);
         this.changeCounter('requests:count', -1);
+        this.newMemberCount.emit(this.group['members:count']);
+        this.newRequestCount.emit(this.group['requests:count']);
       })
       .catch(e => {
         this.toast.error(
@@ -92,6 +100,8 @@ export class GroupsProfileRequests {
       .then(() => {
         this.users.splice(index, 1);
         this.changeCounter('requests:count', -1);
+        this.newMemberCount.emit(this.group['members:count']);
+        this.newRequestCount.emit(this.group['requests:count']);
       })
       .catch(e => {
         this.toast.error(

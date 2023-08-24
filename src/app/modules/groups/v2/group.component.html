@@ -1,50 +1,66 @@
-<div *ngIf="service.group$ | async" class="m-group">
+<div *ngIf="service.group$ | async">
   <m-explicit-overlay [entity]="service.group$ | async"></m-explicit-overlay>
-
   <m-group__header></m-group__header>
-
   <div class="m-group__toolbar">
+    <!-- ----------------------------------  -->
+    <!-- TABS  -->
+    <!-- ----------------------------------  -->
     <div *ngIf="service.guid$ | async" class="m-group__tabs m-tabs__container">
       <div class="m-tabs__tab">
         <a
           [routerLink]="['/', 'group', service.guid$ | async, 'feed']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'feed'"
           i18n="@@GROUP__TAB_LABEL__DISCUSSION"
+          data-ref="m-groupToolbarTab--discussion"
           >Discussion</a
         >
       </div>
 
-      <div class="m-tabs__tab">
+      <div class="m-tabs__tab" *ngIf="service.canAccess$ | async">
         <a
           [routerLink]="['/', 'group', service.guid$ | async, 'members']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'members'"
           i18n="@@GROUP__TAB_LABEL__MEMBERS"
+          data-ref="m-groupToolbarTab--members"
           >Members</a
         >
       </div>
-
-      <!-- <div class="m-tabs__tab" *ngIf="service.showRequestsTab$ | async">
-        <a
-          [routerLink]="['/', 'group', service.guid$ | async, 'requests']"
-          [class.m-tabs__tab--selected]="(service.view$ | async) === 'requests'"
-          ><ng-container i18n="@@GROUP__TAB_LABEL__REQUESTS"
-            >Requests</ng-container
-          >({{ service.requestCount$ | async }})</a
-        >
-      </div>
-
-      <div class="m-tabs__tab" *ngIf="service.showReviewTab$ | async">
+      <div class="m-tabs__tab" *ngIf="service.canReview$ | async">
         <a
           [routerLink]="['/', 'group', service.guid$ | async, 'review']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'review'"
-          ><ng-container i18n="@@GROUP__TAB_LABEL__REVIEW">Review</ng-container
-          >({{ service.reviewCount$ | async }})</a
-        >
-      </div> -->
+          data-ref="m-groupToolbarTab--review"
+          ><ng-container i18n="@@GROUP__TAB_LABEL__REVIEW"
+            >Review
+            <span
+              *ngIf="
+                (service.reviewCount$ | async) > 0 ||
+                (service.requestCount$ | async) > 0
+              "
+              class="m-groupTab__statusDot"
+            ></span></ng-container
+        ></a>
+      </div>
+      <div class="m-tabs__tab" *ngIf="service.showRequestsTab$ | async">
+        <a
+          [routerLink]="['/', 'group', service.guid$ | async, 'requests']"
+          [class.m-tabs__tab--selected]="(service.view$ | async) === 'requests'"
+          data-ref="m-groupToolbarTab--requests"
+          ><ng-container i18n="@@GROUP__TAB_LABEL__REQUESTS"
+            >Requests
+            <span
+              *ngIf="(service.requestCount$ | async) > 0"
+              class="m-groupTab__statusDot"
+            ></span></ng-container
+        ></a>
+      </div>
     </div>
+    <!-- ----------------------------------  -->
+    <!-- SEARCH ICON  -->
+    <!-- ----------------------------------  -->
     <div
       class="m-group__searchBtnWrapper"
-      *ngIf="(service.view$ | async) === 'feed'"
+      *ngIf="(service.view$ | async) === 'feed' && (service.canAccess$ | async)"
     >
       <a class="m-groupSearchBtn" (click)="openSearchModal($event)"
         ><i class="material-icons">search</i></a
@@ -55,25 +71,16 @@
   <!-- VIEWS  -->
   <!-- ----------------------------------  -->
   <ng-container [ngSwitch]="service.view$ | async">
-    <minds-groups-profile-members
-      class="m-group__view--members"
-      *ngSwitchCase="'members'"
-      v2="true"
-      [group]="service.group$ | async"
-    ></minds-groups-profile-members>
-    <minds-groups-profile-requests
-      class="m-group__view--requests"
-      *ngSwitchCase="'requests'"
-      [group]="service.group$ | async"
-    ></minds-groups-profile-requests>
-    <m-groups-profile__review
-      class="m-group__view--review"
-      *ngSwitchCase="'review'"
-    ></m-groups-profile__review>
-    <m-group__feed
-      class="m-group__view--feed"
-      [view]="view$ | async"
-      *ngSwitchCase="'feed'"
-    ></m-group__feed>
+    <!-- ----------------------------------  -->
+    <ng-container *ngSwitchCase="'members'">
+      <m-group__members *ngIf="service.canAccess$ | async"></m-group__members
+    ></ng-container>
+    <!-- ----------------------------------  -->
+    <ng-container *ngSwitchCase="'review'">
+      <m-group__review></m-group__review
+    ></ng-container>
+    <!-- ----------------------------------  -->
+    <m-group__feed *ngSwitchCase="'feed'"></m-group__feed>
+    <!-- ----------------------------------  -->
   </ng-container>
 </div>

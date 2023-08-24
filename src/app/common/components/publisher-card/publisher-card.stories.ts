@@ -33,10 +33,6 @@ export default {
       defaultValue: true,
       control: 'boolean',
     },
-    disableSubscribe: {
-      defaultValue: false,
-      control: 'boolean',
-    },
     featured: {
       defaultValue: false,
       control: 'boolean',

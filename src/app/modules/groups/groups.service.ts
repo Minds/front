@@ -2,6 +2,7 @@ import { Inject } from '@angular/core';
 import { Client, Upload } from '../../services/api';
 import { UpdateMarkersService } from '../../common/services/update-markers.service';
 import { BehaviorSubject } from 'rxjs';
+import { MindsGroup } from './v2/group.model';
 
 export interface MembershipUpdate {
   show: boolean;
@@ -12,7 +13,7 @@ export interface MembershipUpdate {
  * Service for groups.
  */
 export class GroupsService {
-  private base: string = 'api/v1/groups/';
+  private baseEndpoint: string = 'api/v1/groups/';
 
   private infiniteInProgress: boolean = false;
   private infiniteOffset: any;
@@ -39,26 +40,33 @@ export class GroupsService {
   constructor(
     @Inject(Client) public clientService: Client,
     @Inject(Upload) public uploadService: Upload,
-    @Inject(UpdateMarkersService) private updateMarkers: UpdateMarkersService
+    @Inject(UpdateMarkersService)
+    private updateMarkers: UpdateMarkersService
   ) {}
 
   // Group
+  load(group: MindsGroup | string) {
+    if (typeof group === 'object') {
+      this.group.next(group);
+      return group;
+    } else {
+      const guid = group;
+      return this.clientService
+        .get(`${this.baseEndpoint}group/${guid}`)
+        .then((response: any) => {
+          if (response.group) {
+            this.group.next(response.group);
+            return response.group;
+          }
 
-  load(guid: string) {
-    return this.clientService
-      .get(`${this.base}group/${guid}`)
-      .then((response: any) => {
-        if (response.group) {
-          this.group.next(response.group);
-          return response.group;
-        }
-
-        throw 'E_LOADING';
-      });
+          throw 'E_LOADING';
+        });
+    }
   }
 
+  /** when creating or editing a group */
   save(group: any) {
-    let endpoint = `${this.base}group`;
+    let endpoint = `${this.baseEndpoint}group`;
 
     if (group.guid) {
       endpoint += `/${group.guid}`;
@@ -75,13 +83,14 @@ export class GroupsService {
     });
   }
 
+  /** when uploading group banner/avatar image(s) */
   upload(group: any, files: any) {
     let uploads = [];
 
     if (files.banner) {
       uploads.push(
         this.uploadService.post(
-          `${this.base}group/${group.guid}/banner`,
+          `${this.baseEndpoint}group/${group.guid}/banner`,
           [files.banner],
           {
             banner_position: group.banner_position,
@@ -92,18 +101,20 @@ export class GroupsService {
 
     if (files.avatar) {
       uploads.push(
-        this.uploadService.post(`${this.base}group/${group.guid}/avatar`, [
-          files.avatar,
-        ])
+        this.uploadService.post(
+          `${this.baseEndpoint}group/${group.guid}/avatar`,
+          [files.avatar]
+        )
       );
     }
 
     return Promise.all(uploads);
   }
 
+  /**When deleting a group */
   deleteGroup(group: any) {
     return this.clientService
-      .delete(`${this.base}group/${group.guid}`)
+      .delete(`${this.baseEndpoint}group/${group.guid}`)
       .then((response: any) => {
         this.updateMembership(false, group.guid);
         return !!response.done;
@@ -128,7 +139,7 @@ export class GroupsService {
   // Membership
 
   join(group: any, target: string = null) {
-    let endpoint = `${this.base}membership/${group.guid}`;
+    let endpoint = `${this.baseEndpoint}membership/${group.guid}`;
 
     if (target) {
       endpoint += `/${target}`;
@@ -145,7 +156,7 @@ export class GroupsService {
   }
 
   leave(group: any, target: string = null) {
-    let endpoint = `${this.base}membership/${group.guid}`;
+    let endpoint = `${this.baseEndpoint}membership/${group.guid}`;
 
     if (target) {
       endpoint += `/${target}`;
@@ -171,9 +182,12 @@ export class GroupsService {
     return this.leave(group, target);
   }
 
+  /** When kicking a user out of the group */
   async kick(group: any, user: string): Promise<boolean> {
     return this.clientService
-      .post(`${this.base}membership/${group.guid}/kick`, { user })
+      .post(`${this.baseEndpoint}membership/${group.guid}/kick`, {
+        user,
+      })
       .then((response: any) => {
         return !!response.done;
       })
@@ -182,9 +196,12 @@ export class GroupsService {
       });
   }
 
+  /**
+   * When banning a user from the group
+   */
   async ban(group: any, user: string): Promise<boolean> {
     return this.clientService
-      .post(`${this.base}membership/${group.guid}/ban`, { user })
+      .post(`${this.baseEndpoint}membership/${group.guid}/ban`, { user })
       .then((response: any) => {
         return !!response.done;
       })
@@ -195,7 +212,7 @@ export class GroupsService {
 
   cancelRequest(group: any) {
     return this.clientService
-      .post(`${this.base}membership/${group.guid}/cancel`)
+      .post(`${this.baseEndpoint}membership/${group.guid}/cancel`)
       .then((response: any) => {
         return !!response.done;
       })
@@ -209,7 +226,7 @@ export class GroupsService {
   muteNotifications(group: any) {
     this.updateMarkers.mute(group.guid);
     return this.clientService
-      .post(`${this.base}notifications/${group.guid}/mute`)
+      .post(`${this.baseEndpoint}notifications/${group.guid}/mute`)
       .then((response: any) => {
         return !!response['is:muted'];
       })
@@ -221,7 +238,7 @@ export class GroupsService {
   unmuteNotifications(group: any) {
     this.updateMarkers.unmute(group.guid);
     return this.clientService
-      .post(`${this.base}notifications/${group.guid}/unmute`)
+      .post(`${this.baseEndpoint}notifications/${group.guid}/unmute`)
       .then((response: any) => {
         return !!response['is:muted'];
       })
@@ -234,7 +251,7 @@ export class GroupsService {
 
   grantOwnership(group: any, user: string) {
     return this.clientService
-      .put(`${this.base}management/${group.guid}/${user}`)
+      .put(`${this.baseEndpoint}management/${group.guid}/${user}`)
       .then((response: any) => {
         return !!response.done;
       })
@@ -245,7 +262,7 @@ export class GroupsService {
 
   revokeOwnership(group: any, user: string) {
     return this.clientService
-      .delete(`${this.base}management/${group.guid}/${user}`)
+      .delete(`${this.baseEndpoint}management/${group.guid}/${user}`)
       .then((response: any) => {
         return !response.done;
       })
@@ -258,7 +275,7 @@ export class GroupsService {
 
   grantModerator(group: any, user: string) {
     return this.clientService
-      .put(`${this.base}management/${group.guid}/${user}/moderator`)
+      .put(`${this.baseEndpoint}management/${group.guid}/${user}/moderator`)
       .then((response: any) => {
         return !!response.done;
       })
@@ -269,7 +286,7 @@ export class GroupsService {
 
   revokeModerator(group: any, user: string) {
     return this.clientService
-      .delete(`${this.base}management/${group.guid}/${user}/moderator`)
+      .delete(`${this.baseEndpoint}management/${group.guid}/${user}/moderator`)
       .then((response: any) => {
         return !response.done;
       })
@@ -282,7 +299,7 @@ export class GroupsService {
 
   canInvite(user: string) {
     return this.clientService
-      .post(`${this.base}invitations/check`, { user })
+      .post(`${this.baseEndpoint}invitations/check`, { user })
       .then((response: any) => {
         if (response.done) {
           return user;
@@ -294,7 +311,9 @@ export class GroupsService {
 
   invite(group: any, invitee: any) {
     return this.clientService
-      .put(`${this.base}invitations/${group.guid}`, { guid: invitee.guid })
+      .put(`${this.baseEndpoint}invitations/${group.guid}`, {
+        guid: invitee.guid,
+      })
       .then((response: any) => {
         if (response.done) {
           return true;
@@ -309,7 +328,7 @@ export class GroupsService {
 
   acceptInvitation(group: any) {
     return this.clientService
-      .post(`${this.base}invitations/${group.guid}/accept`)
+      .post(`${this.baseEndpoint}invitations/${group.guid}/accept`)
       .then((response: any) => {
         return !!response.done;
       })
@@ -320,7 +339,7 @@ export class GroupsService {
 
   declineInvitation(group: any) {
     return this.clientService
-      .post(`${this.base}invitations/${group.guid}/decline`)
+      .post(`${this.baseEndpoint}invitations/${group.guid}/decline`)
       .then((response: any) => {
         return !!response.done;
       })
@@ -331,7 +350,7 @@ export class GroupsService {
 
   getReviewCount(guid: any): Promise<number> {
     return this.clientService
-      .get(`${this.base}review/${guid}/count`)
+      .get(`${this.baseEndpoint}review/${guid}/count`)
       .then((response: any) => {
         if (typeof response['adminqueue:count'] !== 'undefined') {
           return parseInt(response['adminqueue:count'], 10);
@@ -351,7 +370,7 @@ export class GroupsService {
 
   async toggleConversation(guid: any, enabled: boolean) {
     const response: any = await this.clientService.post(
-      `${this.base}group/${guid}`,
+      `${this.baseEndpoint}group/${guid}`,
       { conversationDisabled: !enabled }
     );
     return !!response.done;

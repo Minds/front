@@ -46,9 +46,6 @@ export class PublisherCardComponent implements AfterViewInit {
   // Determines what text we see after we click 'join'
   @Input() joinButtonLabelType: GroupMembershipButtonLabelType = 'pastTense';
 
-  // disable subscription - allows for a user to preview their own card.
-  @Input() disableSubscribe: boolean = false;
-
   // display a blue border
   @Input() featured: boolean = false;
 
@@ -141,7 +138,7 @@ export class PublisherCardComponent implements AfterViewInit {
   get feedUrl(): string {
     return this.type === 'user'
       ? `/${this.publisher.username}`
-      : `/groups/profile/${this.publisher.guid}/feed`;
+      : `/group/${this.publisher.guid}/members`;
   }
 
   get subscribersUrl(): string {

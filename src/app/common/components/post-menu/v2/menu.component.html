@@ -201,11 +201,11 @@
     <!-- ADMIN EDIT FLAGS -->
     <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && canEdit">
       <m-dropdownMenu__item class="m-postMenu__item--nsfw">
-        <m-nsfw-selector
+        <m-nsfwSelector
           (selectedChange)="setNSFWSelected($event)"
           [selected]="entity.nsfw"
           service="editing"
-        ></m-nsfw-selector>
+        ></m-nsfwSelector>
       </m-dropdownMenu__item>
     </ng-container>
     <ng-container *ngIf="session.isAdmin()">
