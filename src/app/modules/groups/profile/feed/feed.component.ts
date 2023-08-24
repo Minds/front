@@ -19,11 +19,6 @@ export class GroupProfileFeedComponent implements OnInit, OnDestroy {
   group$: Subscription;
   param$: Subscription;
 
-  /**
-   * Whether this is being displayed in modern groups
-   */
-  @Input() v2: boolean = false;
-
   constructor(
     protected service: GroupsService,
     protected route: ActivatedRoute
@@ -32,19 +27,11 @@ export class GroupProfileFeedComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(
       this.service.$group.subscribe(group => {
-        this.group = group;
-      }),
-
-      this.route.params.subscribe(params => {
-        if (!this.v2) {
-          this.type = params['filter'] || 'activities';
-        }
+        this.group = { ...group };
       }),
 
       this.route.queryParams.subscribe(params => {
-        if (this.v2) {
-          this.type = params['filter'] || 'activities';
-        }
+        this.type = params['filter'] || 'activities';
       })
     );
   }

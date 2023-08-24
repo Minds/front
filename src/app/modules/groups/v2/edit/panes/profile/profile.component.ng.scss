@@ -1,0 +1,85 @@
+@import 'defaults.scss';
+
+:host {
+  .m-groupEdit__imagery {
+    position: relative;
+    height: 148px;
+    margin: 0 -50px;
+    background: none no-repeat center center rgba(0, 0, 0, 0.1);
+    background-size: cover;
+
+    @media screen and (max-width: $max-mobile) {
+      margin: 0 -20px;
+    }
+  }
+
+  .m-groupEditImagery__avatar {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translate(0, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: none no-repeat center center rgba(0, 0, 0, 0.1);
+    background-size: cover;
+
+    @media screen and (max-width: $max-mobile) {
+      left: 20px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .m-groupEditImagery__uploadTrigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      background-color: rgba(themed($m-bgColor--primary), 0.6);
+    }
+
+    > m-icon {
+      font-size: 17px;
+    }
+
+    > input[type='file'] {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 1px;
+      height: 1px;
+      opacity: 0.01;
+    }
+  }
+
+  .m-groupEditImagery__uploadBanner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .m-groupEditImagery__uploadAvatar {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+
+    @media screen and (max-width: $max-mobile) {
+      bottom: 35px;
+      left: 35px;
+    }
+  }
+
+  .m-groupEdit__descriptionInput {
+    width: 100%;
+  }
+}

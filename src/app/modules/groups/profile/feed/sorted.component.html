@@ -1,13 +1,12 @@
-<ng-container *ngIf="v2">
-  <div class="m-mindsList__tools m-border">
-    <ng-container *ngTemplateOutlet="sortSelector"></ng-container>
-  </div>
-</ng-container>
-<m-composer *ngIf="isMember()" [container]="group" #composer></m-composer>
+<div class="m-mindsList__tools m-border">
+  <ng-container *ngTemplateOutlet="sortSelector"></ng-container>
+</div>
+
+<m-composer *ngIf="isMember" [container]="group" #composer></m-composer>
 
 <div class="minds-list">
   <div>
-    <div *ngIf="!v2" class="m-mindsList__tools m-border">
+    <!-- <div class="m-mindsList__tools m-border">
       <div
         *ngIf="isMember()"
         class="m-mindsListTools__scheduled"
@@ -18,7 +17,7 @@
         <span class="m-legible">Scheduled: {{ scheduledCount }}</span>
       </div>
       <ng-container *ngTemplateOutlet="sortSelector"></ng-container>
-    </div>
+    </div> -->
     <!-- ----------------------------------------- -->
     <!-- SEARCH QUERY DISPLAY -->
     <!-- ----------------------------------------- -->
@@ -37,25 +36,6 @@
       >
     </div>
     <!-- ----------------------------------------- -->
-    <ng-container
-      *ngIf="
-        isActivityFeed() &&
-        (group['is:owner'] || group['is:moderator']) &&
-        group['adminqueue:count']
-      "
-    >
-      <a
-        class="m-groupSorted__reviewQueue"
-        (click)="onReviewNoticeClick($event)"
-        routerLink="review"
-        draggable="false"
-      >
-        {{ group['adminqueue:count'] }} new
-        {{ group['adminqueue:count'] === 1 ? 'post' : 'posts' }} in the review
-        queue
-      </a>
-    </ng-container>
-
     <ng-container *ngFor="let entity$ of feed$ | async; let i = index">
       <m-activity
         *ngIf="entity$ | async as entity"
@@ -108,7 +88,7 @@
     [allowedPeriods]="false"
     [allowedCustomTypes]="['activities', 'images', 'videos']"
     [customType]="type"
-    [v2]="v2"
+    [v2]="true"
     (onChange)="setFilter($event.customType)"
   ></m-sort-selector>
 </ng-template>

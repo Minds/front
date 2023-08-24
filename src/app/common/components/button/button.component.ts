@@ -64,6 +64,11 @@ export class ButtonComponent implements AfterViewChecked {
   @Input() highlightText: boolean = false;
 
   /**
+   * Make the button stretch to 100% width of its container
+   */
+  @Input() stretch: boolean = false;
+
+  /**
    * Handles width for buttons that are not visible onInit
    */
   _saving: boolean = false;

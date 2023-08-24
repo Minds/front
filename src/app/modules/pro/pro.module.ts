@@ -120,7 +120,7 @@ export const PRO_DOMAIN_ROUTES: Routes = [
         component: ProChannelListComponent,
       },
       {
-        path: 'groups/profile/:guid',
+        path: 'group/:guid',
         component: ProRedirectComponent,
       },
     ],

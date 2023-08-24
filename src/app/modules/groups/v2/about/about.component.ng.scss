@@ -1,18 +1,76 @@
 @import 'defaults.scss';
+@import '../../../../common/layout/layout.scss';
 
 :host {
   .m-group__about {
     display: flex;
     flex-flow: column nowrap;
 
+    @media screen and (min-width: $layoutMax3ColWidth) {
+      padding-top: $spacing4;
+    }
+    @media screen and (max-width: $layoutMax2ColWidth) {
+      padding: 0 $spacing5 $spacing3;
+    }
+
     @media screen and (max-width: $max-mobile) {
-      flex-direction: column-reverse;
+      padding-top: $spacing2;
     }
   }
+
+  ::ng-deep .m-groupAbout__section {
+    &:not(:last-child) {
+      & > :first-child {
+        display: block;
+        padding-bottom: $spacing4;
+        @media screen and (max-width: $max-mobile) {
+          padding-bottom: $spacing3;
+        }
+      }
+    }
+  }
+
   .m-groupAbout__section--memberPreviews {
     display: block;
-    margin-top: 0;
-    margin-bottom: $spacing3;
+
+    ::ng-deep m-userAggregator {
+      flex-flow: row nowrap;
+    }
+  }
+
+  .m-groupAbout__section--restrictions {
+    @include unselectable;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing4;
+
+    .m-groupAbout__restriction {
+      span:first-child {
+        display: flex;
+        align-items: center;
+
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        i {
+          width: $spacing5;
+          font-size: 20px;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+            padding-right: 6px;
+          }
+        }
+
+        // Yes this is OCD
+        &.m-groupAbout__restriction--moderated {
+          i {
+            font-size: 19px;
+          }
+        }
+      }
+    }
   }
 
   .m-groupAbout__section--desc {
@@ -33,23 +91,6 @@
 
       &::-webkit-scrollbar {
         display: none;
-      }
-    }
-  }
-
-  .m-groupAbout__section--memberPreviews {
-    ::ng-deep m-userAggregator {
-      flex-flow: row nowrap;
-    }
-  }
-
-  m-group__header & {
-    .m-groupAbout__section {
-      padding: 0 $spacing5 $spacing2;
-
-      &.m-groupAbout__section--memberPreviews {
-        margin-top: $spacing4;
-        margin-bottom: 0;
       }
     }
   }

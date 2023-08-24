@@ -1,0 +1,88 @@
+<h3
+  *ngIf="listTitle && (list$ | async) && (list$ | async).length > 0"
+  class="m-groupMembersList__title"
+>
+  {{ listTitle }}
+</h3>
+<!-- ----------------------------------- -->
+<div class="m-groupMembersList__searchWrapper" *ngIf="showSearch">
+  <i class="material-icons">search</i>
+  <input
+    type="text"
+    placeholder="Filter..."
+    [(ngModel)]="query"
+    (keyup)="search()"
+    i18n-placeholder="@@COMMON__CHANNEL_LIST__FILTER_ELLIPSIS"
+  />
+</div>
+
+<ng-container *ngIf="(list$ | async) && (list$ | async).length > 0">
+  <!-- ----------------------------------- -->
+  <ng-container *ngIf="!compactView">
+    <m-publisherCard
+      *ngFor="let member of list$ | async"
+      [publisher]="member"
+      [showDescription]="false"
+      sizeOverride="medium"
+      [showSubscribeButton]="member.guid !== session.getLoggedInUser().guid"
+      ><m-group__memberActions
+        *ngIf="member.guid !== session.getLoggedInUser().guid"
+        class="m-publisherCard__actionsButton"
+        [group]="group"
+        [user]="member"
+        (onKick)="onKick(member)"
+        (memberChanged)="memberChanged.emit($event)"
+      ></m-group__memberActions></m-publisherCard
+  ></ng-container>
+  <!-- ----------------------------------- -->
+  <ng-container *ngIf="compactView">
+    <div
+      class="m-groupMembersList__compactMember"
+      *ngFor="let member of list$ | async"
+    >
+      <div class="m-groupMembersListCompactMember__name">
+        <a [routerLink]="['/', member.username]"> @{{ member.username }} </a>
+        <m-tooltip
+          *ngIf="showOwnerBadges && member['is:owner']"
+          class="m-groupMembersListCompactMember__ownerBadge"
+        >
+          <i m-tooltip--anchor class="material-icons">local_police</i>
+          <span i18n="@@GROUP_MEMBERS_LIST__OWNER">Owner</span>
+        </m-tooltip>
+      </div>
+      <m-group__memberActions
+        *ngIf="member.guid !== session.getLoggedInUser().guid"
+        class="m-publisherCard__actionsButton"
+        [group]="group"
+        [user]="member"
+        (onKick)="onKick(member)"
+        (memberChanged)="memberChanged.emit($event)"
+      ></m-group__memberActions>
+    </div>
+  </ng-container>
+
+  <span
+    *ngIf="compactView && (moreData$ | async) && !(inProgress$ | async)"
+    class="m-groupMembersList__seeMore"
+    (click)="loadNext()"
+    >See more</span
+  >
+</ng-container>
+<!-- ----------------------------------- -->
+<m-loadingSpinner
+  [inProgress]="compactView && (inProgress$ | async)"
+></m-loadingSpinner>
+<infinite-scroll
+  *ngIf="!(shouldShowNoMembersText$ | async) && !compactView"
+  (load)="loadNext()"
+  [moreData]="moreData$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>
+
+<span
+  *ngIf="shouldShowNoMembersText$ | async"
+  class="m-groupMembersList__noMembersSpan"
+  i18n="@@GROUP_MEMBERS_LIST__NO_MEMBERS"
+  >No members
+</span>

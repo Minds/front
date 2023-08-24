@@ -70,35 +70,6 @@
     }
   }
 
-  .m-groupSorted__reviewQueue {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    padding: $spacing4 0;
-
-    @include unselectable;
-    @include m-theme() {
-      background: themed($m-bgColor--secondary);
-      color: themed($m-textColor--primary);
-      border-top: 1px solid themed($m-borderColor--primary);
-      border-bottom: 1px solid themed($m-borderColor--primary);
-
-      // hover
-      &:hover {
-        background: darken(themed($m-bgColor--secondary), 2%);
-        color: darken(themed($m-textColor--primary), 2%);
-      }
-
-      // mousedown
-      &:active:hover {
-        background: darken(themed($m-bgColor--secondary), 6%);
-        color: darken(themed($m-textColor--primary), 6%);
-      }
-    }
-  }
-
   ::ng-deep m-composer {
     margin-bottom: 0;
     margin-top: $spacing4;

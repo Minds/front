@@ -1,10 +1,7 @@
 <div class="m-group__actions">
-  <minds-groups-settings-button
+  <m-group__settingsButton
     class="m-groupActions__button--settings"
-    [group]="service.group$ | async"
-    v2=" true"
-    (change)="onSettingsChange($event)"
-  ></minds-groups-settings-button>
+  ></m-group__settingsButton>
 
   <m-group__membershipButton
     class="m-groupActions__button--membership"

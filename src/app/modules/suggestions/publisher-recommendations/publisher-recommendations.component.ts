@@ -326,7 +326,7 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
       return ['/', publisher.username];
     }
     if (publisher.type === 'group') {
-      return ['/groups/profile', publisher.guid];
+      return ['/group', publisher.guid];
     }
   }
 
