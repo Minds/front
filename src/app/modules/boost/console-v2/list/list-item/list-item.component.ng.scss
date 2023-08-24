@@ -8,7 +8,7 @@
   padding-bottom: $spacing4;
 
   @include m-theme() {
-    border-bottom: 1px solid themed($m-borderColor--primary);
+    border-top: 1px solid themed($m-borderColor--primary);
   }
 
   .m-boostConsole__listItem__topBar,

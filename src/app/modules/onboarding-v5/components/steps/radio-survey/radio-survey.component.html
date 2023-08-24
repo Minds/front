@@ -1,5 +1,5 @@
 <div class="m-onboardingV5__stepContentContainer">
-  <h2 class="m-onboardingV5__stepTitle">{{ data.title }}</h2>
+  <h2 class="m-onboardingV5__stepTitle" aria-live="polite">{{ data.title }}</h2>
   <p class="m-onboardingV5__stepDescription">{{ data.description }}</p>
   <p class="m-onboardingV5RadioSurvey__title">
     {{ data?.radioSurveyQuestion }}
@@ -9,6 +9,8 @@
       *ngFor="let radioOption of data?.radioSurvey; let i = index"
       class="m-onboardingV5RadioSurvey__radioOptionContainer"
       (click)="onOptionContainerClick(radioOption.optionKey, i)"
+      (keyup.enter)="onOptionContainerClick(radioOption.optionKey, i)"
+      (keyup.space)="onOptionContainerClick(radioOption.optionKey, i)"
     >
       <div class="m-onboardingV5RadioSurvey__radioOptionLeft">
         <input
@@ -17,14 +19,13 @@
           type="radio"
           formControlName="selectedKey"
           [value]="radioOption.optionKey"
+          tabindex="-1"
         />
-        <label
-          [for]="radioOption.optionKey"
-          class="m-onboardingV5RadioSurvey__radioInputLabel"
+        <label class="m-onboardingV5RadioSurvey__radioInputLabel"
           ><!--Icon positioning element--></label
         >
       </div>
-      <div class="m-onboardingV5RadioSurvey__radioOptionRight">
+      <div class="m-onboardingV5RadioSurvey__radioOptionRight" tabindex="0">
         <label
           [for]="radioOption.optionKey"
           class="m-onboardingV5RadioSurvey__radioOptionTitle"

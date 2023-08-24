@@ -1,21 +1,23 @@
-/**
- * Boost feed for discovery module.
- * Plugs into feeds service.
- */
 import { Component, OnInit } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { FeedsService } from '../../../common/services/feeds.service';
-import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
+import { FeedsService } from '../../../../common/services/feeds.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { BoostLocation } from '../../../boost/modal-v2/boost-modal-v2.types';
+import { BoostConsoleService } from '../services/console.service';
 
+/**
+ * Presents a feed of boosts
+ * under the "explore" tab
+ * in the boost console
+ */
 @Component({
-  selector: 'm-discovery__boostFeed',
-  templateUrl: './boost-feed.component.html',
+  selector: 'm-boostConsole__feed',
+  templateUrl: './feed.component.html',
+  styleUrls: ['./feed.component.ng.scss'],
   providers: [FeedsService],
 })
-export class DiscoveryBoostFeedComponent implements OnInit {
+export class BoostConsoleFeedComponent implements OnInit {
   constructor(
-    public route: ActivatedRoute,
+    public service: BoostConsoleService,
     private feedsService: FeedsService
   ) {}
 
@@ -62,6 +64,7 @@ export class DiscoveryBoostFeedComponent implements OnInit {
         .setEndpoint('api/v3/boosts/feed')
         .setParams({
           location: BoostLocation.NEWSFEED,
+          force_boost_enabled: true,
         })
         .setLimit(12)
         .setOffset(0)
@@ -86,5 +89,15 @@ export class DiscoveryBoostFeedComponent implements OnInit {
       this.feedsService.fetch(); // load the next 150 in the background
     }
     this.feedsService.loadMore();
+  }
+
+  /**
+   * Remove posts from feed when deleted
+   * @param entity
+   */
+  delete(entity) {
+    this.feedsService.deleteItem(entity, (item, obj) => {
+      return item.guid === obj.guid;
+    });
   }
 }

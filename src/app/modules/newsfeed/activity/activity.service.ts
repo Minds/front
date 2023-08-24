@@ -13,6 +13,7 @@ import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 import { BoostGoalButtonText } from '../../boost/boost.types';
+import { AccessId } from '../../../common/enums/access-id.enum';
 
 export interface Supermind {
   request_guid: string;
@@ -365,9 +366,13 @@ export class ActivityService implements OnDestroy {
   );
 
   /**
-   * TODO
+   * Whether entity has an access id indicating that it is private.
    */
-  isUnlisted$: Observable<boolean> = this.entity$.pipe();
+  public readonly isPrivate$: Observable<boolean> = this.entity$.pipe(
+    map(
+      (entity: any): boolean => Number(entity?.access_id) === AccessId.Private
+    )
+  );
 
   /**
    * The height of the activity post may be dynamic

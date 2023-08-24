@@ -15,12 +15,17 @@
         </ng-container>
       </m-tooltip>
     </div>
-    <ng-container *ngIf="!singleBoostGuid">
+    <ng-container *ngIf="(service.view$ | async) === 'list'">
       <m-boostConsole__list></m-boostConsole__list>
     </ng-container>
-    <ng-container *ngIf="singleBoostGuid">
+    <ng-container *ngIf="(service.view$ | async) === 'single'">
       <m-boostConsole__single></m-boostConsole__single>
     </ng-container>
+    <ng-container *ngIf="(service.view$ | async) === 'boostFeed'">
+      <m-boostConsole__feed></m-boostConsole__feed>
+    </ng-container>
+    <!-- Appears when view is 'feed' -->
+    <router-outlet></router-outlet>
   </div>
   <div class="m-pageLayout__pane--right"><!-- Spacer --></div>
 </div>

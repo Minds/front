@@ -1,6 +1,13 @@
 @import 'defaults.scss';
 
 :host {
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
   .m-boostConsole__filterBar {
     display: flex;
     flex-direction: column;
@@ -8,10 +15,9 @@
     @media screen and (max-width: $max-mobile) {
       flex-direction: row;
       justify-content: space-between;
-    }
-
-    @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--primary);
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
     }
   }
 
@@ -43,11 +49,8 @@
       }
     }
 
-    > * {
+    > :first-child {
       display: block;
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-borderColor--primary);
-      }
 
       ::ng-deep .m-feedNotice__title {
         @include body1Bold;
@@ -61,9 +64,17 @@
     flex-flow: row nowrap;
     max-width: 100%;
 
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
     @media screen and (max-width: $max-mobile) {
       padding-top: 0px;
       padding-bottom: $spacing1;
+
+      @include m-theme() {
+        border-top: none;
+      }
     }
     ::ng-deep m-dropdownMenu {
       margin-right: $spacing5;

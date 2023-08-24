@@ -12,13 +12,13 @@ import { DiscoveryFeedsComponent } from './feeds/feeds.component';
 import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { LanguageModule } from '../language/language.module';
-import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
 import { DiscoveryTopComponent } from './top/top.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
+import { SearchComponent } from '../search/search.component';
 
 @NgModule({
   imports: [
@@ -28,7 +28,11 @@ import { PathMatch } from '../../common/types/angular.types';
         component: DiscoveryComponent,
         pathMatch: 'prefix' as PathMatch,
         children: [
-          { path: '', redirectTo: 'top', pathMatch: 'full' as PathMatch },
+          {
+            path: '',
+            redirectTo: 'trending',
+            pathMatch: 'full' as PathMatch,
+          },
           {
             path: 'top',
             component: DiscoveryTopComponent,
@@ -47,6 +51,11 @@ import { PathMatch } from '../../common/types/angular.types';
           {
             path: 'trend/:guid',
             redirectTo: '/newsfeed/:guid',
+          },
+          {
+            path: 'trending',
+            component: SearchComponent,
+            data: { explore: true },
           },
           {
             path: 'search',
@@ -76,10 +85,7 @@ import { PathMatch } from '../../common/types/angular.types';
           },
           {
             path: 'boost/feed',
-            component: DiscoveryBoostFeedComponent,
-            data: {
-              title: 'Discovery / Boosted',
-            },
+            redirectTo: '/boost/boost-console',
           },
           {
             // deprecated route.
