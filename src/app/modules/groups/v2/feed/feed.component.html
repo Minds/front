@@ -4,13 +4,22 @@
     <!-- FEED  -->
     <!-- ----------------------------------------- -->
     <div class="m-groupFeed__list">
-      <m-group-profile__feed v2="true"></m-group-profile__feed>
+      <m-group-profile__feed
+        *ngIf="service.canAccess$ | async; else privateFeedNotice"
+      ></m-group-profile__feed>
+      <ng-template #privateFeedNotice>
+        <div class="m-groupFeed__privateFeedNotice">
+          <span i18n="@@GROUP_FEED__PRIVATE_FEED_NOTICE"
+            >This discussion is only available to group members.</span
+          >
+        </div>
+      </ng-template>
     </div>
   </div>
   <!-- ----------------------------------------- -->
   <!-- SIDEBAR  -->
   <!-- ----------------------------------------- -->
-  <div class="m-groupFeed__sidebar" m-pageLayout__pane="right">
+  <div class="m-group__sidebar" m-pageLayout__pane="right">
     <div class="m-pageLayoutPane__inner">
       <m-group__about></m-group__about>
     </div>

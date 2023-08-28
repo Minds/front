@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GroupService } from '../group.service';
 import { Subscription } from 'rxjs';
 /**
@@ -9,4 +9,6 @@ import { Subscription } from 'rxjs';
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.ng.scss'],
 })
-export class GroupFeedComponent {}
+export class GroupFeedComponent {
+  constructor(protected service: GroupService) {}
+}

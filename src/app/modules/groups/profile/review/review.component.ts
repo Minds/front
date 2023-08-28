@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 import { GroupsService } from '../../groups.service';
 import { Session } from '../../../../services/session';
@@ -32,6 +34,11 @@ export class GroupsProfileReviewComponent implements OnInit {
   initialized: boolean = false;
 
   kicking: any;
+
+  /**
+   * Event emitter when a decision is made
+   */
+  @Output() newReviewCount: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
     protected service: GroupsService,
@@ -138,6 +145,7 @@ export class GroupsProfileReviewComponent implements OnInit {
       );
 
       this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
+      this.newReviewCount.emit(this.group['adminqueue:count']);
     } catch (e) {
       this.toasterService.error((e && e.message) || 'Internal server error');
     }
@@ -156,6 +164,7 @@ export class GroupsProfileReviewComponent implements OnInit {
       );
 
       this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
+      this.newReviewCount.emit(this.group['adminqueue:count']);
     } catch (e) {
       this.toasterService.error((e && e.message) || 'Internal server error');
     }

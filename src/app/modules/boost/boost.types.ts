@@ -42,6 +42,15 @@ export type RejectionReason = {
 export type BoostGuid = string;
 
 ///////////////////////////////////////////////////////
+// BOOST CONSOLE VIEW
+/**
+ * list is for your boosts (or the boost queue, for admins).
+ * single is a single boost.
+ * boostFeed is the sitewide boost feed.
+ * */
+export type BoostConsoleView = 'list' | 'single' | 'boostFeed';
+
+///////////////////////////////////////////////////////
 
 // BOOST STATE
 export enum BoostState {

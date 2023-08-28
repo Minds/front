@@ -4,7 +4,6 @@
 export type GroupView =
   | 'feed' // a.k.a. 'discussion'
   | 'members'
-  | 'requests'
   | 'review';
 
 /**
@@ -17,6 +16,11 @@ export type GroupFeedFilter =
 
 export const DEFAULT_GROUP_VIEW: GroupView = 'feed';
 export const DEFAULT_GROUP_FEED_FILTER: GroupFeedFilter = 'activities';
+
+/**
+ * Tabs in the group moderator console
+ */
+export type GroupReviewView = 'feed' | 'requests';
 
 /**
  * Is the group public or private?
@@ -43,3 +47,29 @@ export enum GroupMembershipLevel {
   // The group owner (admin)
   OWNER = 3,
 }
+
+///////////////////////////////////////////////////////
+
+export type GroupMembershipGetParams = {
+  limit?: number;
+  offset?: number;
+  q?: string;
+  membership_level?: GroupMembershipLevel;
+  membership_level_gte?: boolean;
+};
+
+export type GroupMembershipGetResponse = {
+  status: string;
+  members?: any[];
+  total?: number;
+  'load-next'?: number;
+};
+
+export type GroupInvitePutParams = {
+  guid: string;
+};
+
+export type GroupInvitePutResponse = {
+  done: boolean;
+  status: string;
+};

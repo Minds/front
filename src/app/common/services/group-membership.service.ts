@@ -9,6 +9,7 @@ import {
   of,
   switchMap,
   take,
+  tap,
   throttleTime,
 } from 'rxjs';
 import { ToasterService } from './toaster.service';
@@ -19,6 +20,7 @@ import { GroupAccessType } from '../../modules/groups/v2/group.types';
 export type GroupMembershipResponse = {
   done: boolean;
   status: string;
+  message?: string;
 };
 /**
  * Service that handles group membership changes
@@ -48,6 +50,20 @@ export class GroupMembershipService implements OnDestroy {
    * Whether the current user is a member of the group
    */
   public readonly isMember$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
+   * Whether the current user is the owner of the group
+   */
+  public readonly isOwner$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
+   * Whether the current user is the creator of the group
+   */
+  public readonly isCreator$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
 
@@ -90,6 +106,8 @@ export class GroupMembershipService implements OnDestroy {
     this.isAwaiting$.next(group['is:awaiting']);
     this.isInvited$.next(group['is:invited']);
     this.isBanned$.next(group['is:banned']);
+    this.isOwner$.next(group['is:owner']);
+    this.isCreator$.next(group['is:creator']);
   }
 
   /**
@@ -116,6 +134,11 @@ export class GroupMembershipService implements OnDestroy {
           return this.api.put(endpoint);
         }
       ),
+      tap((response: GroupMembershipResponse): void => {
+        if (!response.done) {
+          throw new Error(response?.message ?? 'An unknown error has occurred');
+        }
+      }),
       catchError(e => {
         this.inProgress$.next(false);
         this.handleRequestError(e, true);
@@ -172,6 +195,13 @@ export class GroupMembershipService implements OnDestroy {
               return this.api.delete(endpoint);
             }
           ),
+          tap((response: GroupMembershipResponse): void => {
+            if (!response.done) {
+              throw new Error(
+                response?.message ?? 'An unknown error has occurred'
+              );
+            }
+          }),
           catchError(e => {
             this.handleRequestError(e, true);
             return of(null);
@@ -208,6 +238,13 @@ export class GroupMembershipService implements OnDestroy {
               );
             }
           ),
+          tap((response: GroupMembershipResponse): void => {
+            if (!response.done) {
+              throw new Error(
+                response?.message ?? 'An unknown error has occurred'
+              );
+            }
+          }),
           catchError(e => {
             this.handleRequestError(e, true);
             return of(null);
@@ -246,6 +283,13 @@ export class GroupMembershipService implements OnDestroy {
               );
             }
           ),
+          tap((response: GroupMembershipResponse): void => {
+            if (!response.done) {
+              throw new Error(
+                response?.message ?? 'An unknown error has occurred'
+              );
+            }
+          }),
           catchError(e => {
             this.handleRequestError(e, true);
             return of(null);
@@ -282,6 +326,13 @@ export class GroupMembershipService implements OnDestroy {
               );
             }
           ),
+          tap((response: GroupMembershipResponse): void => {
+            if (!response.done) {
+              throw new Error(
+                response?.message ?? 'An unknown error has occurred'
+              );
+            }
+          }),
           catchError(e => {
             this.handleRequestError(e, true);
             return of(null);
@@ -322,7 +373,9 @@ export class GroupMembershipService implements OnDestroy {
     this.inProgress$.next(false);
 
     if (toast) {
-      this.toaster.error(e.error ?? 'An unknown error has occurred');
+      this.toaster.error(
+        e?.error?.message ?? e?.message ?? 'An unknown error has occurred'
+      );
     }
     console.error(e);
     return of(null);

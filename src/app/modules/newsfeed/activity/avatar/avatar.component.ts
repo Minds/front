@@ -79,12 +79,7 @@ export class ActivityAvatarComponent implements OnInit, OnDestroy {
             group.guid
           }/medium/${group.icontime}`;
 
-          this.groupUrl = this.experimentsService.hasVariation(
-            'epic-318-modern-groups',
-            true
-          )
-            ? `/group/${group.guid}`
-            : `/groups/profile/${group.guid}`;
+          this.groupUrl = `/group/${group.guid}`;
         }
       }),
       this.service.isRemind$.subscribe((is: boolean) => {

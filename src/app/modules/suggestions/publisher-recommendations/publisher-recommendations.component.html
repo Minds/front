@@ -70,6 +70,8 @@
           subscribeButtonIconOnly="true"
           membershipButtonColor="blue"
           secondaryRowCountsOnly="true"
+          (subscribed)="onSubscribed($event)"
+          (unsubscribed)="onUnsubscribed($event)"
         ></m-publisherCard>
       </li>
     </ul>

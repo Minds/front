@@ -39,7 +39,7 @@
       <a
         class="m-searchBarSuggestions__suggestion m-searchBarSuggestions__suggestion--publisher"
         *ngIf="suggestion.type === 'group'"
-        [routerLink]="['/groups/profile/', suggestion.guid]"
+        [routerLink]="['/group', suggestion.guid]"
       >
         <img src="{{ cdnUrl }}fs/v1/avatars/{{ suggestion.guid }}/small" />
         <span>{{ suggestion.name }}</span>

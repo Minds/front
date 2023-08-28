@@ -1,12 +1,4 @@
 <ng-container *ngIf="group">
-  <div class="m-groupReview__topBar">
-    <a class="m-groupReview__topBarBackButton" routerLink="..">
-      <i class="material-icons">arrow_back</i>
-    </a>
-    <h5 class="m-groupReview__topBarTitle" i18n="@@GROUPS_REVIEW__REVIEW_QUEUE">
-      Review Queue
-    </h5>
-  </div>
   <div class="minds-list">
     <div>
       <div
@@ -14,7 +6,6 @@
         *ngFor="let entity of entities; let i = index"
       >
         <m-activity
-          [entity]="entity"
           [canDelete]="group['is:owner'] || group['is:moderator']"
           (deleted)="delete(entity)"
           [attr.data-minds-activity-guid]="entity.guid"
@@ -22,8 +13,10 @@
             isFeed: true,
             showComments: false,
             showToolbar: false,
-            autoplayVideo: false
+            autoplayVideo: false,
+            inSingleGroupFeed: true
           }"
+          [entity]="entity"
         >
         </m-activity>
 

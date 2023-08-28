@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
   BoostConsoleLocationFilter,
@@ -63,11 +63,20 @@ export class BoostConsoleFilterBarComponent implements OnInit {
    */
   public boostGroupExperimentIsActive: boolean = false;
 
+  /**
+   * What kind of boost latest post notice
+   * should we show - post or channel?
+   */
+  @Input() boostLatestNoticeType: BoostConsoleLocationFilter;
+
+  @Input() showDropdownFilters: boolean = true;
+
   constructor(
     public service: BoostConsoleService,
     private adminStats: BoostConsoleAdminStatsService,
     private boostGroupExperiment: BoostGroupExperimentService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +88,12 @@ export class BoostConsoleFilterBarComponent implements OnInit {
     this.service.updateQueryParams({ state: val });
   }
 
+  /**
+   * Set location filter value
+   *
+   * @param val
+   * @param triggeredFromTopTabRow as opposed to from a dropdown filter
+   */
   public onLocationFilterChange(val: BoostConsoleLocationFilter): void {
     this.service.updateQueryParams({ location: val });
   }
@@ -104,12 +119,31 @@ export class BoostConsoleFilterBarComponent implements OnInit {
     }
   }
 
+  protected onClickExploreTab($event): void {
+    this.changeQuery({ explore: true });
+  }
+
+  protected onClickFeedTab($event): void {
+    this.changeQuery({ location: 'feed' });
+  }
+
+  protected onClickSidebarTab($event): void {
+    this.changeQuery({ location: 'sidebar' });
+  }
+
+  changeQuery(params: any): void {
+    this.router.navigate(['.'], {
+      relativeTo: this.route,
+      queryParams: params,
+    });
+  }
+
   /**
    * Called on settings button click - navigates to settings page.
    * @param { MouseEvent } $event - click event.
    * @returns { void }
    */
-  public onSettingsButtonClick($event: MouseEvent): void {
+  public onClickSettingsButton($event: MouseEvent): void {
     this.router.navigate(['/settings/account/boosted-content']);
   }
 }

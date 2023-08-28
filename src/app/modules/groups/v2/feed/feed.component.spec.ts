@@ -12,6 +12,9 @@ describe('GroupFeedComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GroupFeedComponent],
+      providers: [
+        { provide: GroupService, useValue: MockService(GroupService) },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GroupFeedComponent);

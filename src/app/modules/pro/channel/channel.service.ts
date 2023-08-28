@@ -232,10 +232,7 @@ export class ProChannelService implements OnDestroy {
   open(entity) {
     switch (this.getEntityTaxonomy(entity)) {
       case 'group':
-        window.open(
-          `${this.site.baseUrl}groups/profile/${entity.guid}`,
-          '_blank'
-        );
+        window.open(`${this.site.baseUrl}group/${entity.guid}`, '_blank');
         break;
     }
   }

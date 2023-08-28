@@ -2,10 +2,8 @@
   <ng-container *ngIf="(isPlusPage$ | async) === false; else plusTabs">
     <div class="m-tabs__tab">
       <a
-        routerLink="/discovery/top"
-        [class.m-tabs__tab--selected]="
-          isLinkActive('/discovery/search?t=all&f=top&explore=true', true)
-        "
+        routerLink="/discovery/trending"
+        routerLinkActive="m-tabs__tab--selected"
         data-ref="discovery-tab-link-trending"
         i18n="@@DISCOVERY_TAGS__TRENDING"
         >Trending</a

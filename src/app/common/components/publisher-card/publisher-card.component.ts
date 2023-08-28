@@ -95,9 +95,6 @@ export class PublisherCardComponent implements AfterViewInit {
 
   @Input() membershipButtonColor: ButtonColor = 'grey';
 
-  // disable subscription - allows for a user to preview their own card.
-  @Input() disableSubscribe: boolean = false;
-
   readonly cdnUrl: string;
 
   buttonIconOnly: boolean = false;

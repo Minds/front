@@ -361,7 +361,7 @@ export class NotificationsV3NotificationComponent
         return ['/' + this.notification.from.username];
       case 'group_invite':
       case 'group_queue_reject':
-        return ['/groups/profile/' + this.notification.entity.guid];
+        return ['/group/' + this.notification.entity.guid];
       case 'group_queue_received':
         return [`/group/${this.notification.entity.guid}/review`];
       case 'wire_received':
