@@ -170,6 +170,10 @@ $buttonContainerMargin--mediumLarge: 4px;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
+
+      > a {
+        font-weight: inherit;
+      }
     }
 
     ::ng-deep m-boostedFlag {
