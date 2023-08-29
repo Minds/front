@@ -66,6 +66,7 @@ import { GroupModule } from './modules/groups/v2/group.module';
 import { ApolloModule } from 'apollo-angular';
 import { MarkdownModule } from 'ngx-markdown';
 import { GiftCardModule } from './modules/gift-card/gift-card.module';
+import { ValuePropModule } from './modules/value-prop/value-prop.module';
 
 @NgModule({
   bootstrap: [Minds],
@@ -122,6 +123,7 @@ import { GiftCardModule } from './modules/gift-card/gift-card.module';
     AffiliatesModule,
     GroupModule,
     GiftCardModule,
+    ValuePropModule,
     //last due to :username route
     AppRoutingModule,
   ],

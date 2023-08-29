@@ -164,4 +164,13 @@ export class DefaultFeedComponent implements OnInit {
       )
     );
   }
+
+  /**
+   * Whether a value prop card can be shown.
+   * @param { number } index - index in feed.
+   * @returns { boolean } true if value prop card can be shown in this position.
+   */
+  public canShowValuePropCard(index: number): boolean {
+    return !this.isLoggedIn() && index % 2 === 0;
+  }
 }

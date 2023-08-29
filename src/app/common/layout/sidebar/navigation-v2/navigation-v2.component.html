@@ -84,7 +84,6 @@
       <li
         class="m-sidebarNavigation__item m-sidebarNavigation__item--boost"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        *ngIf="user"
       >
         <a
           [routerLink]="['/boost/boost-console']"
@@ -172,7 +171,6 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        *ngIf="user"
       >
         <a
           [routerLink]="['/settings/affiliates-program']"
@@ -191,7 +189,7 @@
       </li>
 
       <!-- Groups -->
-      <ng-container *ngIf="user">
+      <ng-container>
         <li
           class="m-sidebarNavigation__item m-sidebarNavigation__item--groups"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
@@ -264,7 +262,6 @@
         class="m-sidebarNavigation__item m-sidebarNavigation__item--compose"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         [routerLinkActiveOptions]="{ exact: true }"
-        *ngIf="user"
       >
         <!-- Which shows here is determined by media queries -->
         <m-button
@@ -274,7 +271,7 @@
           size="medium"
           (onAction)="openComposeModal()"
           data-ref="sidenav-composer"
-          >Compose</m-button
+          >Create</m-button
         >
         <m-button
           class="m-sidebarNavigation__composeButton--small"

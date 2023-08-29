@@ -8,6 +8,7 @@ import {
 } from '../../../graphql/generated.engine';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
+import { Session } from '../../services/session';
 
 export const CACHE_KEY = 'dismissals-v2';
 
@@ -20,7 +21,8 @@ export const CACHE_KEY = 'dismissals-v2';
 export class DismissalV2Service {
   constructor(
     private getDismissalsGQL: GetDismissalsGQL,
-    private dismissGQL: DismissGQL
+    private dismissGQL: DismissGQL,
+    private session: Session
   ) {}
 
   /**
@@ -35,6 +37,10 @@ export class DismissalV2Service {
       if (cachedDismissals?.length) {
         return of(cachedDismissals);
       }
+    }
+
+    if (!this.session.isLoggedIn()) {
+      return of([]);
     }
 
     return this.getDismissalsGQL.fetch().pipe(
@@ -74,6 +80,10 @@ export class DismissalV2Service {
    * @returns { Observable<Dismissal> } - dismissed item on success.
    */
   public dismiss(key: string): Observable<Dismissal> {
+    if (!this.session.isLoggedIn()) {
+      return of(null);
+    }
+
     return this.dismissGQL.mutate({ key }).pipe(
       map(
         (result: ApolloQueryResult<DismissMutation>): Dismissal => {
