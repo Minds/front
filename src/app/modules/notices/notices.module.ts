@@ -19,6 +19,7 @@ import { BoostLatestPostNoticeService } from './panels/boost-latest-post/boost-l
 import { FeedNoticeSwitchComponent } from './outlet/feed-notice-switch.component';
 import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
 import { NoGroupsNoticeComponent } from './panels/no-groups/no-groups-notice.component';
+import { ProUpgradeNoticeComponent } from './panels/pro-upgrade/pro-upgrade-notice.component';
 
 @NgModule({
   imports: [CommonModule, NgCommonModule, FindGroupsButtonsComponent],
@@ -33,6 +34,7 @@ import { NoGroupsNoticeComponent } from './panels/no-groups/no-groups-notice.com
     UpdateTagsNoticeComponent,
     SupermindPendingNoticeComponent,
     PlusUpgradeNoticeComponent,
+    ProUpgradeNoticeComponent,
     BoostChannelNoticeComponent,
     InviteFriendsNoticeComponent,
     BoostPartnersNoticeComponent,
