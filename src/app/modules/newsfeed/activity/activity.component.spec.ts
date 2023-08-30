@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
+import { IntersectionObserverService } from '../../../common/services/intersection-observer.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import { NewsfeedService } from '../services/newsfeed.service';
@@ -109,20 +109,20 @@ describe('ActivityComponent', () => {
 
   it('should setup interception observer subscription', () => {
     (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(true);
-    (comp as any).interceptionObserver.createAndObserve.and.returnValue(
+    (comp as any).intersectionObserver.createAndObserve.and.returnValue(
       of(true)
     );
-    comp.setupInterceptionObserver();
+    comp.setupIntersectionObserver();
 
     expect((comp as any).service.setupMetricsSocketListener).toHaveBeenCalled();
   });
 
   it('should teardown interception observer subscription', () => {
     (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(true);
-    (comp as any).interceptionObserver.createAndObserve.and.returnValue(
+    (comp as any).intersectionObserver.createAndObserve.and.returnValue(
       of(false)
     );
-    comp.setupInterceptionObserver();
+    comp.setupIntersectionObserver();
 
     expect(
       (comp as any).service.teardownMetricsSocketListener
@@ -132,7 +132,7 @@ describe('ActivityComponent', () => {
   it('should NOT setup interception observer subscription if experiment is off', () => {
     (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(false);
 
-    comp.setupInterceptionObserver();
+    comp.setupIntersectionObserver();
 
     expect(
       (comp as any).service.setupMetricsSocketListener
@@ -142,7 +142,7 @@ describe('ActivityComponent', () => {
   it('should NOT teardown interception observer subscription if experiment is off', () => {
     (comp as any).entityMetricSocketsExperiment.isActive.and.returnValue(false);
 
-    comp.setupInterceptionObserver();
+    comp.setupIntersectionObserver();
 
     expect(
       (comp as any).service.teardownMetricsSocketListener

@@ -135,6 +135,7 @@ export class ActivityToolbarComponent {
   /**
    * Remove item from the feed when
    * it is explicitly downvoted
+   * @param $event - true if a downvote was added, false if it was removed
    */
   onThumbsDownChange($event): void {
     if ($event && this.service.displayOptions.showExplicitVoteButtons) {
