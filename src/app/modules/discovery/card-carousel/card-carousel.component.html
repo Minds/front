@@ -16,8 +16,7 @@
           *ngFor="let card of cards"
           class="m-discoveryCardCarousel__card m-carousel__item"
           [publisher]="card.entity"
-          [showSubs]="false"
-          [showDescription]="false"
+          sizeOverride="xsmall"
         ></m-publisherCard>
       </div>
     </m-carousel>

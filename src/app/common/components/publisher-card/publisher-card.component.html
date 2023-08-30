@@ -1,131 +1,207 @@
 <div
+  *ngIf="publisher"
   class="m-publisherCard"
+  #publisherCard
   [ngClass]="{
     'm-publisherCard--large': size === 'large',
     'm-publisherCard--medium': size === 'medium',
     'm-publisherCard--small': size === 'small',
+    'm-publisherCard--xsmall': size === 'xsmall',
     'm-publisherCard--featured': featured,
-    'm-publisherCard--hovercard': _isHovercard
+    'm-publisherCard--hovercard': _isHovercard,
+    'm-publisherCard--noBorder': noBorder,
+    'm-publisherCard--noPadding': noPadding
   }"
-  *ngIf="publisher"
-  #publisherCard
 >
-  <div class="m-publisherCard__inner">
-    <!-- --OWNER ROW ----------------------------- -->
-    <div class="m-publisherCard__ownerRow m-legible">
-      <!-- AVATAR -->
+  <section class="m-publisherCard__inner m-publisherCard__flexRow--top">
+    <ng-container *ngIf="size === 'medium' || size === 'large'">
+      <ng-container *ngTemplateOutlet="avatar"></ng-container>
+
       <div
-        class="minds-avatar"
+        class="m-publisherCard__flexColumn m-publisherCard__middleColumn--mediumLarge"
+      >
+        <ng-container *ngTemplateOutlet="names"></ng-container>
+        <ng-container *ngTemplateOutlet="description"></ng-container>
+        <ng-container *ngTemplateOutlet="boostedFlag"></ng-container>
+      </div>
+      <div
+        *ngIf="showButton"
+        class="m-publisherCard__buttonContainer"
         [ngClass]="{
-          'm-publisherCardAvatar--hasMarker': publisher.hasMarker
+          'm-publisherCard__buttonContainer--iconOnly': buttonIconOnly
         }"
       >
-        <a [routerLink]="feedUrl">
-          <div
-            class="m-publisherCardAvatarImg m-border"
-            [style.background-image]="'url(' + (getAvatarSrc() | async) + ')'"
-          ></div>
-        </a>
+        <ng-container *ngTemplateOutlet="button"></ng-container>
       </div>
-      <!-- NAMES -->
-      <div class="m-publisherCardOwnerRow__owner">
-        <div>
-          <a
-            class="m-publisherCardOwnerRowItem__primary"
-            [routerLink]="feedUrl"
-            title="{{ publisher.name }}"
-            >{{ publisher.name }}</a
-          >
-          <m-accountQualityScore
-            [targetUser]="publisher"
-          ></m-accountQualityScore>
-          <m-channel--badges
-            *ngIf="type === 'user'"
-            class="m-channel--badges-activity"
-            [user]="publisher"
-            [badges]="['admin', 'verified', 'plus', 'pro']"
-            [showMidDot]="true"
-          ></m-channel--badges>
+    </ng-container>
+    <!-- ------------------------------------------------- -->
+    <ng-container *ngIf="size === 'small'">
+      <div class="m-publisherCard__flexColumn">
+        <div class="m-publisherCard__flexRow--center">
+          <ng-container *ngTemplateOutlet="avatar"></ng-container>
+          <ng-container *ngTemplateOutlet="names"></ng-container>
+          <ng-container [ngTemplateOutlet]="button"></ng-container>
         </div>
-        <div>
-          <a
-            *ngIf="type === 'user'"
-            class="m-publisherCardOwnerRowItem__secondary m-legible"
-            [routerLink]="['/', publisher.username]"
-            title="@{{ publisher.username }}"
-            >@{{ publisher.username }}</a
+        <ng-container *ngTemplateOutlet="description"></ng-container>
+        <ng-container *ngTemplateOutlet="boostedFlag"></ng-container>
+      </div>
+    </ng-container>
+    <!-- ------------------------------------------------- -->
+    <ng-container *ngIf="size === 'xsmall'">
+      <div class="m-publisherCard__flexColumn">
+        <ng-container *ngTemplateOutlet="avatar"></ng-container>
+        <ng-container *ngTemplateOutlet="names"></ng-container>
+        <div class="m-publisherCard__flexColumn"></div>
+        <ng-container [ngTemplateOutlet]="button"></ng-container>
+      </div>
+    </ng-container>
+  </section>
+</div>
+<!------------------------------>
+<!--\/\/\/\/\/\/\/\/\/\/\/\/\/-->
+<!-- TEMPLATES  -->
+<!--\/\/\/\/\/\/\/\/\/\/\/\/\/-->
+<!------------------------------>
+
+<!------------------------------>
+<!-- AVATAR  -->
+<!------------------------------>
+<ng-template #avatar>
+  <a
+    [routerLink]="feedUrl"
+    class="m-publisherCard__avatarContainer"
+    [ngClass]="{
+      'm-publisherCardAvatar--hasMarker': publisher.hasMarker
+    }"
+  >
+    <m-hovercard [publisher]="publisher" [offset]="[0, 15]">
+      <minds-avatar [object]="publisher" [editMode]="false"></minds-avatar>
+    </m-hovercard>
+  </a>
+</ng-template>
+
+<!------------------------------>
+<!-- NAMES -->
+<!-- and membership/subscriber counts -->
+<!------------------------------>
+<ng-template #names>
+  <div class="m-publisherCard__namesContainer">
+    <!-- PRIMARY ROW -->
+    <div class="m-publisherCard__nameRow">
+      <a
+        [routerLink]="feedUrl"
+        class="m-publisherCard__name--primary m-legible"
+      >
+        <span>{{ publisher.name }}</span>
+        <m-accountQualityScore [targetUser]="publisher"></m-accountQualityScore>
+        <m-channel--badges
+          *ngIf="type === 'user'"
+          class="m-channel--badges-activity"
+          [user]="publisher"
+          [badges]="['admin', 'verified', 'plus', 'pro']"
+        ></m-channel--badges>
+      </a>
+    </div>
+    <!-- SECONDARY ROW -->
+    <div class="m-publisherCard__nameRow">
+      <!-- GROUPS- MEMBER COUNT -->
+      <a
+        *ngIf="type === 'group'"
+        class="m-publisherCard__name--secondary m-legible"
+        [routerLink]="subscribersUrl"
+      >
+        <span class="m-publisherCard__subscribersCount">{{
+          publisher['members:count'] | abbr: 0
+        }}</span>
+        <span>
+          member<ng-container *ngIf="publisher['members:count'] > 1"
+            >s</ng-container
           >
+        </span>
+      </a>
+      <!-- USERS - SUBSCRIBER COUNT -->
+      <ng-container *ngIf="type === 'user'">
+        <ng-container *ngIf="publisher.subscribers_count">
           <a
-            *ngIf="type === 'group'"
-            class="m-publisherCardOwnerRowItem__secondary m-legible"
+            class="m-publisherCard__name--secondary m-legible"
             [routerLink]="subscribersUrl"
           >
-            <span class="m-publisherCardSubs__count">{{
-              publisher['members:count'] | abbr: 0
+            <span class="m-publisherCard__subscribersCount">{{
+              publisher.subscribers_count | abbr: 0
             }}</span>
-            <span class="m-publisherCardSubs__header">
-              member<ng-container *ngIf="publisher['members:count'] > 1"
+            <span>
+              subscriber<ng-container *ngIf="publisher.subscribers_count > 1"
                 >s</ng-container
               >
             </span>
           </a>
-        </div>
-      </div>
-      <!-- SUBSCRIBE BUTTON -->
-      <ng-container *ngIf="showSubscribeButton">
-        <!-- For channels -->
-        <m-subscribeButton
-          *ngIf="type === 'user'"
-          [user]="publisher"
-          [sized]="sized"
-          [iconOnly]="btnIconOnly"
-          [enableRecheck]="recheckSubscribed"
-        ></m-subscribeButton>
-        <!-- For groups -->
-        <m-group__membershipButton
-          *ngIf="type === 'group'"
-          [group]="publisher"
-          [iconOnly]="btnIconOnly"
-          [size]="subscribeButtonSize"
-          [labelType]="joinButtonLabelType"
-        ></m-group__membershipButton
-      ></ng-container>
-      <ng-content select=".m-publisherCard__actionsButton"></ng-content>
-    </div>
-    <!-- - SUBS ---------------------------- -->
-    <div
-      class="m-publisherCard__subs"
-      *ngIf="shouldShowSubs && type === 'user'"
-    >
-      <a [routerLink]="subscribersUrl" class="m-legible">
-        <ng-container *ngIf="type === 'user'"
-          ><span class="m-publisherCardSubs__count">{{
-            publisher.subscribers_count | abbr: 0
-          }}</span>
-          <span class="m-publisherCardSubs__header">subscribers</span>
         </ng-container>
-      </a>
-
-      <ng-container *ngIf="type === 'user'">
-        <span class="m-publisherCard__dot">·</span>
-        <a
-          [routerLink]="['/', publisher.username, 'subscriptions']"
-          class="m-legible"
-          ><span class="m-publisherCardSubs__count">{{
-            publisher.subscriptions_count | abbr: 0
-          }}</span>
-          <span class="m-publisherCardSubs__header">subscriptions</span></a
-        ></ng-container
-      >
-    </div>
-    <!-- - DESC ---------------------------- -->
-    <div
-      class="m-publisherCard__desc"
-      *ngIf="showDescription && publisher.briefdescription"
-    >
-      <p [innerHtml]="publisher.briefdescription | tags">
-        {{ publisher.briefdescription }}
-      </p>
+        <!-- USERS - @USERNAME -->
+        <ng-container
+          *ngIf="!publisher.subscribers_count && !secondaryRowCountsOnly"
+        >
+          <a
+            class="m-publisherCard__name--secondary m-legible"
+            [routerLink]="['/', publisher.username]"
+          >
+            <span>@{{ publisher.username }}</span>
+          </a>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
-</div>
+</ng-template>
+
+<!------------------------------>
+<!-- DESCRIPTION  -->
+<!------------------------------>
+<ng-template #description>
+  <span
+    *ngIf="publisher.briefdescription"
+    class="m-publisherCard__description m-legible"
+    [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags"
+  ></span>
+</ng-template>
+
+<!------------------------------>
+<!-- BOOSTED FLAG  -->
+<!------------------------------>
+<ng-template #boostedFlag>
+  <m-boostedFlag
+    *ngIf="showBoostedFlag && publisher.boosted"
+    [text]="publisher.type === 'user' ? 'Boosted Channel' : 'Boosted Group'"
+    size="small"
+  ></m-boostedFlag
+></ng-template>
+
+<!------------------------------>
+<!-- BUTTON  -->
+<!------------------------------>
+<ng-template #button>
+  <ng-container *ngIf="showButton">
+    <m-subscribeButton
+      *ngIf="publisher.type === 'user'"
+      [user]="publisher"
+      [sized]="sized"
+      [iconOnly]="buttonIconOnly || subscribeButtonIconOnly"
+      [showIconWithText]="false"
+      [subscribedIcon]="
+        buttonIconOnly || subscribeButtonIconOnly ? subscribedIcon : null
+      "
+      [disableSubscribe]="disableSubscribe"
+      [enableRecheck]="recheckSubscribed"
+      (subscribed)="onSubscribed($event)"
+      (unsubscribed)="onUnsubscribed($event)"
+    ></m-subscribeButton>
+    <m-group__membershipButton
+      *ngIf="publisher.type === 'group'"
+      [group]="publisher"
+      [iconOnly]="buttonIconOnly"
+      [color]="membershipButtonColor"
+      [size]="membershipButtonSize"
+      [isMemberIcon]="isMemberIcon"
+      labelType="pastTense"
+      (onMembershipChange)="onGroupMembershipChange($event, publisher)"
+    ></m-group__membershipButton>
+  </ng-container>
+</ng-template>
