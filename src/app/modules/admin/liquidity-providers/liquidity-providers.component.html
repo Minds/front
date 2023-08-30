@@ -1,9 +1,6 @@
 <div class="m-adminLiquidityPosition__list">
   <div class="m-adminLiquidityPositionList__item" *ngFor="let user of users">
-    <m-publisherCard
-      [publisher]="user"
-      [showSubscribeButton]="false"
-    ></m-publisherCard>
+    <m-publisherCard [publisher]="user" [showButton]="false"></m-publisherCard>
 
     <div class="m-adminLiquidityPositionListItem__info">
       <div>

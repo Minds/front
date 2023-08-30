@@ -91,7 +91,6 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
 
   /**
    * Should the widget recommend channels or groups?
-   * (onboarding v4 uses this for suggested groups)
    *
    * If using gql recs, types may be mixed and
    * this mostly determines where the 'See More' link goes
@@ -99,9 +98,9 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   @Input()
   publisherType: PublisherType = 'user';
 
-  /** @type { boolean } whether this is being shown as a modal during onboarding */
+  /** @type { boolean } whether to show a title on top */
   @Input()
-  isOnboarding: boolean = false;
+  showTitle: boolean = true;
 
   /**
    * How many recommendations to show at a time when
@@ -301,7 +300,7 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
   /**
    * When a recommendation is subscribed, remove it from the list——unless the list length is small
    */
-  onSubscribed(user): void {
+  onSubscribed(publisher): void {
     this.subscribed.emit();
 
     if (this.listSize$.getValue() === this.initialListSize) {
@@ -313,21 +312,12 @@ export class PublisherRecommendationsComponent implements OnInit, OnDestroy {
     }
 
     this.recommendations$.next(
-      this.recommendations$.getValue().filter(u => u.guid !== user.guid)
+      this.recommendations$.getValue().filter(p => p.guid !== publisher.guid)
     );
   }
 
-  onUnsubscribed(user): void {
+  onUnsubscribed(publisher): void {
     this.unsubscribed.emit();
-  }
-
-  getLink(publisher): string[] {
-    if (publisher.type === 'user') {
-      return ['/', publisher.username];
-    }
-    if (publisher.type === 'group') {
-      return ['/group', publisher.guid];
-    }
   }
 
   onGroupMembershipChange(

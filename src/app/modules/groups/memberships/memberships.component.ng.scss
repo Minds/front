@@ -25,7 +25,7 @@
       padding-left: $sidePadding;
       padding-right: $sidePadding;
 
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $min-tablet) {
         padding-left: $sidePadding--mobile;
         padding-right: $sidePadding--mobile;
       }

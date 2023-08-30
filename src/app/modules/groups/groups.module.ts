@@ -27,6 +27,7 @@ import { PathMatch } from '../../common/types/angular.types';
 import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
+import { GroupsMembershipsListComponent } from './memberships/list/list.component';
 
 const routes: Routes = [
   {
@@ -105,6 +106,7 @@ const routes: Routes = [
     GroupsProfileReviewComponent,
     GroupsKickModalComponent,
     GroupsMembershipsComponent,
+    GroupsMembershipsListComponent,
   ],
   exports: [
     GroupsCreator,

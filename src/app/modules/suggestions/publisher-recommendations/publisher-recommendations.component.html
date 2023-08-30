@@ -7,10 +7,10 @@
     (mResized)="onResized($event)"
     *ngIf="(recommendations$ | async).length"
     [ngClass]="{
-      'm-channelRecommendation__article--noOuterPadding': noOuterPadding
+      'm-publisherRecommendations__article--noOuterPadding': noOuterPadding
     }"
   >
-    <header *ngIf="!isOnboarding">
+    <header *ngIf="showTitle">
       <h3
         *ngIf="title; else defaultTitle"
         data-ref="publisher-recommendations-title-custom"
@@ -62,98 +62,17 @@
         "
         (mViewed)="trackView(publisher, i + 1)"
       >
-        <section>
-          <a
-            [routerLink]="getLink(publisher)"
-            class="m-publisherRecommendations__avatarContainer"
-          >
-            <m-hovercard [publisher]="publisher" [offset]="[0, 15]">
-              <minds-avatar
-                [object]="publisher"
-                [editMode]="false"
-              ></minds-avatar>
-            </m-hovercard>
-          </a>
-          <div class="m-publisherRecommendations__contentContainer">
-            <!-- Name -->
-            <a
-              [routerLink]="getLink(publisher)"
-              class="m-publisherRecommendations__title"
-            >
-              <strong>{{ publisher.name }}</strong>
-              <m-channel--badges
-                *ngIf="publisher.type === 'user'"
-                class="m-channel--badges-activity m-activityOwnerBlockPrimaryName__badges"
-                [user]="publisher"
-                badges="[ 'admin', 'verified' ]"
-              ></m-channel--badges>
-            </a>
-            <!-- MEMBER COUNT (GROUPS) -->
-            <a
-              *ngIf="publisher.type === 'group'"
-              class="m-publisherRecommendations__subscribers m-legible"
-              [routerLink]="['/group', publisher.guid, 'members']"
-            >
-              <span class="m-publisherRecommendationsSubscribers__count">{{
-                publisher['members:count'] | abbr: 0
-              }}</span>
-              <span>
-                member<ng-container *ngIf="publisher['members:count'] > 1"
-                  >s</ng-container
-                >
-              </span>
-            </a>
-            <!-- SUBSCRIBER COUNT (USERS)-->
-            <a
-              *ngIf="publisher.type === 'user' && publisher.subscribers_count"
-              class="m-publisherRecommendations__subscribers m-legible"
-              [routerLink]="['/', publisher.username, 'subscribers']"
-            >
-              <span class="m-publisherRecommendationsSubscribers__count">{{
-                publisher.subscribers_count | abbr: 0
-              }}</span>
-              <span>
-                subscriber<ng-container *ngIf="publisher.subscribers_count > 1"
-                  >s</ng-container
-                >
-              </span>
-            </a>
-            <!-- DESC -->
-            <span
-              class="m-publisherRecommendations__description"
-              [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags"
-            ></span>
-            <!-- BOOSTED FLAG -->
-            <m-boostedFlag
-              *ngIf="publisher.boosted"
-              [text]="
-                publisher.type === 'user' ? 'Boosted Channel' : 'Boosted Group'
-              "
-              size="small"
-            ></m-boostedFlag>
-          </div>
-          <!-- BUTTONS -->
-          <div class="m-publisherRecommendations__buttonContainer">
-            <m-subscribeButton
-              *ngIf="publisher.type === 'user'"
-              [user]="publisher"
-              [enableRecheck]="false"
-              subscribedIcon="check"
-              sized="true"
-              iconOnly="true"
-              (subscribed)="onSubscribed($event)"
-              (unsubscribed)="onUnsubscribed($event)"
-            ></m-subscribeButton>
-            <m-group__membershipButton
-              *ngIf="publisher.type === 'group'"
-              [group]="publisher"
-              color="blue"
-              labelType="pastTense"
-              size="xsmall"
-              (onMembershipChange)="onGroupMembershipChange($event, publisher)"
-            ></m-group__membershipButton>
-          </div>
-        </section>
+        <m-publisherCard
+          [publisher]="publisher"
+          noPadding="true"
+          noBorder="true"
+          showBoostedFlag="true"
+          subscribeButtonIconOnly="true"
+          membershipButtonColor="blue"
+          secondaryRowCountsOnly="true"
+          (subscribed)="onSubscribed($event)"
+          (unsubscribed)="onUnsubscribed($event)"
+        ></m-publisherCard>
       </li>
     </ul>
   </article>
