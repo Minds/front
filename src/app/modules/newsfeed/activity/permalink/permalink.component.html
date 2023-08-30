@@ -48,7 +48,7 @@
   <!-- VIEW COUNT  -->
   <!-- ------------------------------------------ -->
   <m-activity__views
-    *ngIf="entity.time_created && !service.displayOptions.isFeed"
+    *ngIf="entity.time_created && !service.displayOptions.isFeed && !wasQuoted"
     class="m-activityPermalink__wrapper"
   ></m-activity__views>
 </div>
