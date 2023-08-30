@@ -18,6 +18,7 @@ import { MaxPipe } from './max';
 import { ReplacePipe } from './replace';
 import { FriendlyTimePipe } from './friendlytime.pipe';
 import { ParseJson } from './parse-json';
+import { FederationPipe } from './federation.pipe';
 
 export const MINDS_PIPES = [
   AbbrPipe,
@@ -42,4 +43,5 @@ export const MINDS_PIPES = [
   ReplacePipe,
   FriendlyTimePipe,
   ParseJson,
+  FederationPipe,
 ];

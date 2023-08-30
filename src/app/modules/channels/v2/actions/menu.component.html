@@ -19,6 +19,16 @@
       </ng-template>
     </ng-container>
 
+    <m-dropdownMenu__item
+      *ngIf="(service.channel$ | async).canonical_url"
+      [externalLink]="(service.channel$ | async).canonical_url"
+      ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_FEDERATED_PROFILE">
+        View on
+        {{
+          (service.channel$ | async).username | federation | truncate: 20
+        }}</span
+      >
+    </m-dropdownMenu__item>
     <!-- ******** admin ******************** -->
     <ng-container *ngIf="service.isAdmin$ | async">
       <m-dropdownMenu__item (click)="unBan()" *ngIf="service.isBanned$ | async"
@@ -88,7 +98,6 @@
     </ng-container>
 
     <!-- ******** end admin ******************** -->
-
     <m-dropdownMenu__item
       (click)="unblock()"
       *ngIf="service.isBlocked$ | async; else blockOption"

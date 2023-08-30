@@ -298,7 +298,7 @@ export class NewsfeedSingleComponent {
       .setDescription(description)
       .setOgImage(thumbnailSrc, { width: 2000, height: 1000 })
       .setThumbnail(thumbnailSrc)
-      .setCanonicalUrl(`/newsfeed/${activity.guid}`)
+      .setCanonicalUrl(activity?.canonical_url ?? `/newsfeed/${activity.guid}`)
       .setRobots(
         activity['thumbs:up:count'] >= MIN_METRIC_FOR_ROBOTS ? 'all' : 'noindex'
       );
