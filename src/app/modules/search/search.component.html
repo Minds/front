@@ -121,7 +121,11 @@
     </ng-container>
   </div>
 
-  <div class="m-discovery__sidebar" m-pageLayout__pane="right">
+  <div
+    *ngIf="!exploreTabContext"
+    class="m-discovery__sidebar"
+    m-pageLayout__pane="right"
+  >
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
         <!-- SIDEBAR ------------------------------------->

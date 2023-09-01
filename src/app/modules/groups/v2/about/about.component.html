@@ -1,7 +1,35 @@
 <div *ngIf="service.group$ | async as group" class="m-group__about">
   <m-group__memberPreviews
+    *ngIf="service.canAccess$ | async"
     class="m-groupAbout__section--memberPreviews m-groupAbout__section"
   ></m-group__memberPreviews>
+  <div class="m-groupAbout__section m-groupAbout__section--restrictions">
+    <m-tooltip
+      *ngIf="service.private$ | async"
+      class="m-groupAbout__restriction"
+      ><span m-tooltip--anchor
+        ><i class="material-icons">lock</i
+        ><span i18n="@@GROUP_ABOUT__PRIVATE_GROUP">Closed</span></span
+      >
+      <ng-container i18n="@@GROUP_ABOUT__PRIVATE_TOOLTIP"
+        >Only members can see the discussion and members list. Group moderators
+        must approve requests to join.</ng-container
+      >
+    </m-tooltip>
+    <m-tooltip
+      *ngIf="service.moderated$ | async"
+      class="m-groupAbout__restriction m-groupAbout__restriction--moderated"
+      ><span m-tooltip--anchor
+        ><i class="material-icons">local_police</i
+        ><span i18n="@@GROUP_ABOUT__MODERATED_GROUP">Moderated</span></span
+      >
+      <ng-container i18n="@@GROUP_ABOUT__MODERATED_TOOLTIP"
+        >Moderators review and approve all posts in the
+        discussion.</ng-container
+      >
+    </m-tooltip>
+  </div>
+
   <div
     *ngIf="group.briefdescription"
     class="m-groupAbout__section--desc m-groupAbout__section"
@@ -11,7 +39,7 @@
     <div
       class="m-groupAboutDesc__content"
       [innerHtml]="group.briefdescription | slice: 0:5000 | tags"
-      data-ref="data-minds-group-bio"
+      data-ref="data-minds-group-description"
     ></div>
 
     <m-read-more--button [v2]="true" showOnlyFadeout="true">

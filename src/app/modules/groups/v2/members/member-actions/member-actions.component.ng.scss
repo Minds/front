@@ -1,0 +1,98 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  margin-left: $spacing3;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    // Extra width in mobile to prevent fat thumb unsubscribe errors
+    margin-left: $spacing4;
+  }
+
+  ::ng-deep m-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .m-modal-container {
+      max-width: 540px;
+      min-width: 0;
+      height: auto;
+      min-height: 0;
+      margin: 0 auto;
+      text-transform: none;
+      text-align: left;
+
+      @media screen and (max-width: $max-mobile) {
+        width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        padding: 0;
+        left: 0;
+        top: 0;
+        transform: none;
+        border-radius: 0;
+      }
+    }
+
+    .mdl-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .m-groupMemberActionsModal__textWrapper {
+      padding: $spacing10 $spacing10 $spacing6 $spacing8;
+
+      @media screen and (max-width: $max-mobile) {
+        padding: $spacing16 $spacing12 $spacing10 $spacing8;
+      }
+      p {
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        &:first-child {
+          @include body1Regular;
+          margin-bottom: $spacing8;
+        }
+      }
+    }
+
+    .m-groupMemberActionsModal__buttonsWrapper {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: $spacing4;
+      justify-content: flex-end;
+      padding: $spacing5 $spacing8;
+      @include borderTop;
+
+      ::ng-deep m-button {
+        &:first-child {
+          margin-right: $spacing2;
+        }
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        flex-flow: column nowrap;
+        ::ng-deep m-button {
+          &:first-child {
+            margin-right: 0;
+            margin-bottom: $spacing4;
+          }
+          .m-button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

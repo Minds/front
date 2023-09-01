@@ -16,7 +16,6 @@ import {
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
-import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /**
  * A row dedicated to information about the owner of the post, among other things.
@@ -86,8 +85,7 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityService,
     public session: Session,
-    private configs: ConfigsService,
-    private experimentsService: ExperimentsService
+    private configs: ConfigsService
   ) {}
 
   ngOnInit() {
@@ -133,7 +131,11 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
     this.showUsernameInSecondRow =
       this.showGroupContext || (!this.isMinimalMode && !this.isSidebarBoost);
 
-    this.showPermalink = !(this.isSingle || this.isModal || this.isMinimalMode);
+    this.showPermalink = !(
+      (this.isSingle && !this.wasQuoted) ||
+      this.isModal ||
+      this.isMinimalMode
+    );
 
     this.showSpacer = !(this.isMinimalMode || this.isSidebarBoost);
 
@@ -206,9 +208,7 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
 
   get groupUrl(): string {
     const guid = this.entity.containerObj.guid;
-    return this.experimentsService.hasVariation('epic-318-modern-groups', true)
-      ? `/group/${guid}`
-      : `/groups/profile/${guid}`;
+    return `/group/${guid}`;
   }
 
   /**

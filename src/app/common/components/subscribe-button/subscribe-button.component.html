@@ -32,7 +32,7 @@
       [iconOnly]="iconOnly"
       title="Subscribe"
       [saving]="inProgress && !iconOnly"
-      [disabled]="inProgress || disableSubscribe"
+      [disabled]="inProgress || isOwnChannel"
       attr.data-ref="subscribe-button-action-subscribe"
     >
       <div class="m-subscribeButtonText--projected">
@@ -50,7 +50,7 @@
       [iconOnly]="iconOnly"
       [title]="disableAfterSubscribe ? 'Subscribed' : 'Unsubscribe'"
       [saving]="inProgress && !iconOnly"
-      [disabled]="inProgress || disableSubscribe || disableAfterSubscribe"
+      [disabled]="inProgress || isOwnChannel || disableAfterSubscribe"
       attr.data-ref="subscribe-button-action-unsubscribe"
     >
       <div class="m-subscribeButtonText--projected">
@@ -67,7 +67,10 @@
 <!-- TEMPLATES --------------------------->
 <!-- ------------------------------------->
 <ng-template #subscribeLabel>
-  <i *ngIf="showIcons && displayAsButton" class="material-icons">
+  <i
+    *ngIf="(iconOnly || showIconWithText) && displayAsButton"
+    class="material-icons"
+  >
     add
   </i>
   <span *ngIf="!iconOnly">
@@ -77,10 +80,14 @@
 <!-- ------------------------------------->
 <ng-template #unsubscribeLabel>
   <i
-    *ngIf="showIcons && !disableAfterSubscribe && displayAsButton"
+    *ngIf="
+      (iconOnly || showIconWithText) &&
+      !disableAfterSubscribe &&
+      displayAsButton
+    "
     class="material-icons"
   >
-    {{ subscribedIcon }}
+    {{ subscribedIcon ? subscribedIcon : 'close' }}
   </i>
   <span *ngIf="!iconOnly">
     <ng-container

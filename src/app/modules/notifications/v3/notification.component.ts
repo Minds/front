@@ -62,6 +62,7 @@ export class NotificationsV3NotificationComponent
      */
     switch (this.notification.type) {
       case 'vote_up':
+      case 'vote_down':
       case 'comment':
       case 'tag':
       //
@@ -161,6 +162,8 @@ export class NotificationsV3NotificationComponent
     switch (this.notification.type) {
       case 'vote_up':
         return 'voted up';
+      case 'vote_down':
+        return 'voted down';
       case 'comment':
         if (this.notification.data.is_reply) {
           return 'replied to';
@@ -361,7 +364,7 @@ export class NotificationsV3NotificationComponent
         return ['/' + this.notification.from.username];
       case 'group_invite':
       case 'group_queue_reject':
-        return ['/groups/profile/' + this.notification.entity.guid];
+        return ['/group/' + this.notification.entity.guid];
       case 'group_queue_received':
         return [`/group/${this.notification.entity.guid}/review`];
       case 'wire_received':
@@ -481,6 +484,8 @@ export class NotificationsV3NotificationComponent
     switch (this.notification.type) {
       case 'vote_up':
         return 'thumb_up';
+      case 'vote_down':
+        return 'thumb_down';
       case 'comment':
         return 'chat_bubble';
       case 'tag':

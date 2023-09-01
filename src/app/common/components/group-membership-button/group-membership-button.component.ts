@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnDestroy,
+  OnInit,
   Optional,
   Output,
   SkipSelf,
@@ -11,15 +12,23 @@ import { Router } from '@angular/router';
 import { Session } from './../../../services/session';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { MindsGroup } from '../../../modules/groups/v2/group.model';
-import { Observable, Subscription, combineLatest, map, skip } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  shareReplay,
+  skip,
+} from 'rxjs';
 import { GroupMembershipService } from '../../services/group-membership.service';
-import { ModernGroupsExperimentService } from '../../../modules/experiments/sub-services/modern-groups-experiment.service';
 import { ButtonColor, ButtonSize } from '../button/button.component';
 import {
   ClientMetaData,
   ClientMetaService,
 } from '../../services/client-meta.service';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
+import { ToasterService } from '../../services/toaster.service';
 
 export type GroupMembershipButtonType =
   | 'join'
@@ -144,7 +153,8 @@ export class GroupMembershipButtonComponent implements OnDestroy {
       }
       this.initIsMemberSubscription();
       return this.buttonType;
-    })
+    }),
+    shareReplay()
   );
 
   constructor(
@@ -152,8 +162,8 @@ export class GroupMembershipButtonComponent implements OnDestroy {
     public session: Session,
     private router: Router,
     private loginReferrer: LoginReferrerService,
-    private modernGroupsExperiment: ModernGroupsExperimentService,
     private clientMetaService: ClientMetaService,
+    private toaster: ToasterService,
     @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective
   ) {}
 
@@ -168,12 +178,14 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    */
   initIsMemberSubscription(): void {
     this.subscriptions.push(
-      this.service.isMember$.pipe(skip(1)).subscribe(is => {
-        if (is) {
-          this.recordClick();
-        }
-        this.onMembershipChange.emit({ isMember: is });
-      })
+      this.service.isMember$
+        .pipe(skip(1), distinctUntilChanged())
+        .subscribe(is => {
+          if (is) {
+            this.recordClick();
+          }
+          this.onMembershipChange.emit({ isMember: is });
+        })
     );
   }
 
@@ -229,9 +241,7 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    */
   public async join(): Promise<void> {
     if (!this.session.isLoggedIn()) {
-      let endpoint = this.modernGroupsExperiment.isActive()
-        ? `/group/${this.group.guid}?join=true`
-        : `/groups/profile/${this.group.guid}/feed?join=true`;
+      let endpoint = `/group/${this.group.guid}?join=true`;
       this.loginReferrer.register(endpoint);
       this.router.navigate(['/login']);
       return;
@@ -243,6 +253,10 @@ export class GroupMembershipButtonComponent implements OnDestroy {
    * Leave a group
    */
   public async leave() {
+    if (this.service.isOwner$.getValue()) {
+      this.toaster.error("You can't leave a group that you own");
+      return;
+    }
     this.service.leave();
   }
 

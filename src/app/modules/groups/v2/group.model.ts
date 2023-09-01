@@ -40,4 +40,5 @@ export interface MindsGroup {
   'thumbs:up:user_guids': Array<any>;
   'thumbs:down:user_guids': Array<any>;
   'comments:count': number;
+  show_boosts?: boolean;
 }

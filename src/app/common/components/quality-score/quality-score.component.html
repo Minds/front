@@ -1,9 +1,6 @@
 <ng-container *ngIf="isAdmin()">
   <ul class="m-accountQualityScore__container p-0 m-0">
-    <li class="px-1">
-      &middot;
-    </li>
-    <li class="px-1">
+    <li>
       <m-sizeableLoadingSpinner
         [spinnerWidth]="'1rem'"
         [spinnerHeight]="'1rem'"
@@ -11,7 +8,7 @@
       >
       </m-sizeableLoadingSpinner>
       <div
-        class="m-accountQualityScore__badge text-base base-line-height px-1 py-0_25"
+        class="m-accountQualityScore__badge px-1 py-0_25"
         [style.--score-color]="color"
         *ngIf="!inProgress"
       >

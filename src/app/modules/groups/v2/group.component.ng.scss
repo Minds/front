@@ -15,35 +15,44 @@
     border-color: themed($m-borderColor--primary);
   }
 
-  .m-group__narrowBrief {
-    display: none;
-    padding: 20px 20px 0;
-
-    @media screen and (max-width: $layoutMin3ColWidth) {
-      display: block;
-    }
-  }
-
-  .m-group__tabs {
-    @media screen and (max-width: $max-mobile) {
-      padding: 0 20px;
-
-      .m-tabs__tab > a:first-child {
-        margin-left: 0;
-      }
-    }
-  }
-
   .m-group__toolbar {
     display: flex;
     justify-content: space-between;
     @include m-theme() {
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
+  }
 
-    .m-tabs__container {
+  .m-group__tabs {
+    @include m-theme() {
+      border-bottom: none;
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 20px;
+    }
+  }
+
+  .m-tabs__container,
+  ::ng-deep m-group__review .m-tabs__container {
+    .m-tabs__tab {
+      position: relative;
+      @media screen and (max-width: $max-mobile) {
+        & > a:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+    .m-groupTab__statusDot {
+      display: inline-block;
+      position: absolute;
+      top: 8px;
+      right: 18px;
+      height: $spacing2;
+      width: $spacing2;
+
       @include m-theme() {
-        border-bottom: none;
+        background: themed($m-blue);
+        border-radius: 50%;
       }
     }
   }
@@ -63,11 +72,21 @@
       }
     }
   }
+  ::ng-deep {
+    [class*='m-pageLayout__pane'] {
+      &.m-group__sidebar {
+        padding: $spacing8;
 
-  .m-group__view--members,
-  .m-group__view--requests {
-    display: block;
-    padding: $spacing5;
+        @media screen and (max-width: $layoutMin3ColWidth) {
+          padding: $spacing4;
+        }
+      }
+    }
+    .m-pageLayout__pane--main {
+      @media screen and (max-width: $layoutMax2ColFixedWidth) {
+        width: 100% !important;
+      }
+    }
   }
 
   ::ng-deep m-explicit-overlay {
