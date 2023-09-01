@@ -28,6 +28,7 @@ import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
+import { GroupsMembershipsListComponent } from './memberships/list/list.component';
 
 const routes: Routes = [
   {
@@ -107,6 +108,7 @@ const routes: Routes = [
     GroupsProfileReviewComponent,
     GroupsKickModalComponent,
     GroupsMembershipsComponent,
+    GroupsMembershipsListComponent,
   ],
   exports: [
     GroupsCreator,

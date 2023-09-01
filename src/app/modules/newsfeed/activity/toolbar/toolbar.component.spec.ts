@@ -206,4 +206,18 @@ describe('ActivityToolbarComponent', () => {
       false
     );
   }));
+
+  describe('onThumbsDownChange', () => {
+    it('should emit on thumbs down', () => {
+      spyOn((comp as any).onDownvote, 'emit');
+      comp.onThumbsDownChange(true);
+      expect((comp as any).onDownvote.emit).toHaveBeenCalledTimes(1);
+    });
+
+    it('should NOT emit on thumbs down cancellation', () => {
+      spyOn((comp as any).onDownvote, 'emit');
+      comp.onThumbsDownChange(false);
+      expect((comp as any).onDownvote.emit).not.toHaveBeenCalled();
+    });
+  });
 });

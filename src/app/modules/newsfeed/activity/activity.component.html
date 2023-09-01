@@ -46,7 +46,7 @@
 
     <m-activity__toolbar
       *ngIf="service.displayOptions.showToolbar"
-      (onExplicitDownvote)="showDownvoteNotice = true"
+      (onDownvote)="onDownvote()"
     ></m-activity__toolbar>
 
     <m-activity__supermindReplyLink

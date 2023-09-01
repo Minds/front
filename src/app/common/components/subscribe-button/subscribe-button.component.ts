@@ -45,8 +45,8 @@ export class SubscribeButtonComponent implements OnInit {
   // only show the icons, no text
   @Input() iconOnly: boolean = false;
 
-  // show the icons next to the text
-  @Input() showIcons: boolean = true;
+  // show the add/close icons next to the text.
+  @Input() showIconWithText: boolean = true;
 
   // the size of the m-button
   @Input() size: ButtonSize = 'xsmall';

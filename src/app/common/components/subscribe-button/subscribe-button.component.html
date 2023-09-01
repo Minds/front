@@ -67,7 +67,10 @@
 <!-- TEMPLATES --------------------------->
 <!-- ------------------------------------->
 <ng-template #subscribeLabel>
-  <i *ngIf="showIcons && displayAsButton" class="material-icons">
+  <i
+    *ngIf="(iconOnly || showIconWithText) && displayAsButton"
+    class="material-icons"
+  >
     add
   </i>
   <span *ngIf="!iconOnly">
@@ -77,10 +80,14 @@
 <!-- ------------------------------------->
 <ng-template #unsubscribeLabel>
   <i
-    *ngIf="showIcons && !disableAfterSubscribe && displayAsButton"
+    *ngIf="
+      (iconOnly || showIconWithText) &&
+      !disableAfterSubscribe &&
+      displayAsButton
+    "
     class="material-icons"
   >
-    {{ subscribedIcon }}
+    {{ subscribedIcon ? subscribedIcon : 'close' }}
   </i>
   <span *ngIf="!iconOnly">
     <ng-container

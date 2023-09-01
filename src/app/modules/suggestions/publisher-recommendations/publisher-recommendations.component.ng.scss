@@ -28,7 +28,7 @@
       margin: 0;
     }
 
-    &.m-channelRecommendation__article--noOuterPadding {
+    &.m-publisherRecommendations__article--noOuterPadding {
       padding: unset;
     }
 
@@ -41,10 +41,8 @@
 
       h3 {
         flex: 1;
-        font-size: 1.25rem;
-        margin: 0.75rem 0;
-        font-weight: bold;
-        line-height: 1.5rem;
+        @include heading4Bold;
+        margin: $spacing3 0;
       }
 
       div {
@@ -82,122 +80,12 @@
       padding: 0 0 $spacing3;
       list-style: none;
 
-      // all but last child
+      // all but first child
       > * + * {
-        section {
-          padding-top: $spacing6;
-        }
-      }
-
-      li section {
-        display: flex;
-        flex-direction: row;
-
-        .m-publisherRecommendations__avatarContainer {
-          margin-right: $activityAvatarSpacingRight--feed;
-
-          @media screen and (max-width: $max-mobile) {
-            margin-right: $activityAvatarSpacingRight--feed--mobile;
+        ::ng-deep m-publisherCard {
+          .m-publisherCard {
+            padding-top: $spacing6;
           }
-
-          ::ng-deep minds-avatar {
-            .minds-avatar {
-              border-radius: 50%;
-              height: $activityAvatarWidth;
-              width: $activityAvatarWidth;
-              background-size: cover;
-              margin: 0;
-
-              @include m-theme() {
-                border: 1px solid themed($m-borderColor--primary);
-              }
-            }
-          }
-        }
-        .m-publisherRecommendations__contentContainer {
-          flex: 1;
-          display: flex;
-          justify-content: center;
-          flex-direction: column;
-          align-items: flex-start;
-          overflow: hidden;
-
-          .m-publisherRecommendations__title {
-            display: block;
-            font-size: 16px;
-            line-height: 24px;
-            font-weight: bold;
-            margin: 0;
-
-            @include m-theme() {
-              color: themed($m-textColor--primary);
-            }
-
-            strong {
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            }
-
-            > * {
-              display: inline-block;
-              vertical-align: middle;
-              max-width: 100%;
-              text-overflow: ellipsis;
-            }
-
-            &:hover {
-              @include m-theme() {
-                color: themed($m-textColor--primary);
-              }
-            }
-          }
-
-          .m-publisherRecommendations__subscribers {
-            margin-top: $spacing1;
-            text-decoration: none;
-            @include m-theme() {
-              color: themed($m-textColor--secondary);
-            }
-            .m-publisherRecommendationsSubscribers__count {
-              @include m-theme() {
-                color: themed($m-textColor--primary);
-              }
-            }
-          }
-
-          .m-publisherRecommendations__description {
-            margin-top: $spacing1;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-
-            @supports (-webkit-line-clamp: 2) {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: initial;
-              display: -webkit-box;
-              -webkit-line-clamp: 2;
-              -webkit-box-orient: vertical;
-            }
-
-            @include m-theme() {
-              color: themed($m-textColor--secondary);
-            }
-          }
-
-          m-boostedFlag {
-            margin-top: 4px;
-          }
-        }
-        .m-publisherRecommendations__buttonContainer {
-          margin-left: $spacing1;
-          display: flex;
-          justify-content: flex-end;
-
-          // Accommodate 'Requested' in join button
-          // without compromising overall cohesion
-          min-width: 105px;
         }
       }
     }

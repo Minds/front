@@ -300,6 +300,17 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Called when a downvote event is received.
+   * Handles showing of downvote notice.
+   * @returns { void }
+   */
+  public onDownvote(): void {
+    if (!this.isSingle) {
+      this.showDownvoteNotice = true;
+    }
+  }
+
+  /**
    * Remove the downvote and show the activity
    * instead of the downvote notice
    */
