@@ -3,11 +3,10 @@
 
 :host {
   ::ng-deep .m-sidebarWidget__title {
-    margin-bottom: 5px;
-    font-size: 17px;
-    padding-right: 50px;
-    padding-top: 15px;
-    font-weight: 700;
+    @include heading4Bold;
+    margin-bottom: $spacing1;
+    padding-right: $spacing7;
+    padding-top: $spacing4;
   }
 
   ::ng-deep .m-sidebarWidget__dismiss {
@@ -31,17 +30,14 @@
   }
 
   .m-sidebarWidget__body {
-    padding-top: 15px;
-
-    @include m-theme() {
-      border-top: 1px solid themed($m-borderColor--primary);
-    }
-
     .m-discoveryDisclaimer__list {
       margin: 0;
       padding: 0;
       list-style: none;
-      line-height: 2.1;
+
+      > * + * {
+        padding-top: $spacing4;
+      }
 
       .m-discoveryDisclaimer__listItem {
         @include m-theme() {
@@ -50,37 +46,18 @@
 
         a {
           text-decoration: none;
-          font-weight: 400;
+          @include body2Regular;
 
           &:hover {
-            font-weight: 500;
             text-decoration: underline;
 
+            @include body2Medium;
             @include m-theme() {
               color: themed($m-textColor--primary);
             }
           }
         }
       }
-    }
-  }
-
-  &.m-discovery__disclaimer--popover m-sidebarWidget {
-    display: none;
-
-    @media screen and (max-width: $layoutMin3ColWidth) {
-      display: block;
-      position: fixed;
-      bottom: 20px;
-      left: 20vw;
-      right: 20vw;
-      @include z-index(toast);
-      box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
-    }
-
-    @media screen and (max-width: $layoutMax2ColFixedWidth) {
-      left: 20px;
-      right: 20px;
     }
   }
 }

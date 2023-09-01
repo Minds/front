@@ -11,6 +11,9 @@ import {
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Session } from '../../services/session';
+import { MockService } from '../../utils/mock';
+import userMock from '../../mocks/responses/user.mock';
 
 describe('DismissalV2Service', () => {
   let service: DismissalV2Service;
@@ -35,11 +38,16 @@ describe('DismissalV2Service', () => {
         HttpClientTestingModule,
         ApolloTestingModule.withClients(['strapi']),
       ],
-      providers: [DismissalV2Service],
+      providers: [
+        DismissalV2Service,
+        { provide: Session, useValue: MockService(Session) },
+      ],
     });
 
     service = TestBed.inject(DismissalV2Service);
     controller = TestBed.inject(ApolloTestingController);
+    (service as any).session.getLoggedInUser.and.returnValue(userMock);
+    (service as any).session.isLoggedIn.and.returnValue(userMock);
   });
 
   afterEach(() => {
@@ -58,6 +66,14 @@ describe('DismissalV2Service', () => {
       expect(await firstValueFrom(service.getDismissals())).toEqual(
         mockDismissals
       );
+    });
+
+    it('should get NOT dismissals when user is not logged in', async () => {
+      spyOn(localStorage.__proto__, 'getItem').and.returnValue(
+        JSON.stringify([])
+      );
+      (service as any).session.isLoggedIn.and.returnValue(false);
+      expect(await firstValueFrom(service.getDismissals())).toEqual([]);
     });
 
     it('should get dismissals from server when cache is empty', (done: DoneFn) => {
