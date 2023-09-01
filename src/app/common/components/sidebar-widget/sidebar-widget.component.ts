@@ -2,6 +2,8 @@ import { Component, Input, HostBinding } from '@angular/core';
 import { Session } from '../../../services/session';
 import { Client } from '../../api/client.service';
 
+export type SidebarWidgetBorderColor = 'default' | 'primary';
+
 @Component({
   selector: 'm-sidebarWidget',
   templateUrl: './sidebar-widget.component.html',
@@ -10,6 +12,10 @@ export class SidebarWidgetComponent {
   @Input() title: string;
   @Input() headerLevel = 2; // whether title should be h1 or h2 - defaults to h2
   @Input() dismissibleId: string;
+
+  /** Border color for widget. */
+  @Input() public borderColor: SidebarWidgetBorderColor = 'default';
+
   @HostBinding('hidden') hidden: boolean = false;
 
   constructor(private session: Session, private client: Client) {}

@@ -1,4 +1,9 @@
-<div class="m-sidebarWidget">
+<div
+  class="m-sidebarWidget"
+  [ngClass]="{
+    'm-sidebarWidget__border--primary': borderColor === 'primary'
+  }"
+>
   <ng-container [ngSwitch]="headerLevel">
     <h1 *ngSwitchCase="1" class="m-sidebarWidget__title">{{ title }}</h1>
     <h2 *ngSwitchDefault class="m-sidebarWidget__title">{{ title }}</h2>
