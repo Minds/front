@@ -89,7 +89,9 @@ describe('ActivityComponent', () => {
   beforeEach(done => {
     fixture = TestBed.createComponent(ActivityComponent);
     comp = fixture.componentInstance;
+
     comp.canRecordAnalytics = false;
+    comp.isSingle = false;
 
     fixture.detectChanges();
 
@@ -147,5 +149,25 @@ describe('ActivityComponent', () => {
     expect(
       (comp as any).service.teardownMetricsSocketListener
     ).not.toHaveBeenCalled();
+  });
+
+  describe('onDownvote', () => {
+    it('should show downvote notice when NOT in single entity view', () => {
+      comp.showDownvoteNotice = false;
+      comp.isSingle = false;
+
+      comp.onDownvote();
+
+      expect(comp.showDownvoteNotice).toBeTrue();
+    });
+
+    it('should NOT show downvote notice when in single entity view', () => {
+      comp.showDownvoteNotice = false;
+      comp.isSingle = true;
+
+      comp.onDownvote();
+
+      expect(comp.showDownvoteNotice).toBeFalse();
+    });
   });
 });
