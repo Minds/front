@@ -1,0 +1,62 @@
+@import 'defaults.scss';
+
+:host {
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+
+  .m-appDownloadModal__header,
+  .m-appDownloadModal__subheader,
+  .m-appDownloadModal__body {
+    padding: 0 $spacing10;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 $spacing5;
+    }
+  }
+
+  .m-appDownloadModal__header {
+    @include heading3Bold;
+    padding-top: $spacing10;
+    padding-bottom: $spacing9;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-top: $spacing6;
+      padding-bottom: $spacing6;
+    }
+  }
+
+  .m-appDownloadModal__subheader {
+    @include body2Bold;
+    padding-bottom: $spacing6;
+  }
+
+  .m-appDownloadModal__body {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: $spacing9;
+    @media screen and (max-width: $max-mobile) {
+      padding-bottom: $spacing6;
+    }
+
+    ::ng-deep m-qr-code {
+      display: flex;
+      justify-content: center;
+    }
+
+    p {
+      margin: 0;
+      padding-top: $spacing4;
+
+      a {
+        @include body2Regular;
+        display: flex;
+        justify-content: center;
+        text-decoration: underline;
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+    }
+  }
+}
