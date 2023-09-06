@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ExplainerScreenWeb } from '../../../../graphql/generated.strapi';
 import { MarkdownService } from 'ngx-markdown';
+import { Session } from '../../../services/session';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 /**
  * Modal that shows explainers for various parts of the site.
@@ -15,7 +17,11 @@ export class ExplainerScreenModalComponent {
   // data from CMS.
   public explainerScreenData: ExplainerScreenWeb;
 
-  constructor(private markdownService: MarkdownService) {
+  constructor(
+    private markdownService: MarkdownService,
+    private session: Session,
+    private authModal: AuthModalService
+  ) {
     this.formatMarkdown();
   }
 
@@ -59,6 +65,17 @@ export class ExplainerScreenModalComponent {
    * @returns { void }
    */
   public onActionButtonClick(): void {
+    if (!this.isLoggedIn()) {
+      this.authModal.open();
+    }
     this.onDismissIntent?.();
+  }
+
+  /**
+   * Whether a user is logged in.
+   * @returns { boolean } true if a user is logged in.
+   */
+  public isLoggedIn(): boolean {
+    return this.session.isLoggedIn();
   }
 }

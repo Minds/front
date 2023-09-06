@@ -86,4 +86,13 @@
       >Boosted OnChain in the last 7 days</m-tooltip
     >
   </li>
+  <!-- ---------------- -->
+  <!-- FEDERATION -->
+  <!-- aka activity pub profiles -->
+  <!-- ---------------- -->
+  <li *ngIf="showFederationBadge()">
+    <m-tooltip icon="language" i18n="@@BADGES__FEDERATION_PROFILE"
+      >{{ user.username | federation }} profile</m-tooltip
+    >
+  </li>
 </ul>

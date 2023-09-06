@@ -13,11 +13,9 @@
       <ng-container *ngIf="!inProgress">
         <m-findGroupsButtons
           class="m-groupsMembershipsHeader__findGroupsButtons"
-          *ngIf="groups?.length"
+          *ngIf="hasGroups"
         ></m-findGroupsButtons>
-        <m-feedNotice--noGroups
-          *ngIf="!groups?.length"
-        ></m-feedNotice--noGroups>
+        <m-feedNotice--noGroups *ngIf="!hasGroups"></m-feedNotice--noGroups>
       </ng-container>
       <!-- ---------------  -->
       <!-- BODY -->
@@ -28,23 +26,22 @@
         location="groups-memberships"
         [dismissible]="false"
         publisherType="group"
+        title="Recommended groups"
         [initialListSize]="recommendationsListSize"
       ></m-publisherRecommendations>
-      <!-- </div> -->
-      <div class="m-groupsMemberships__list" *ngIf="groups && groups.length">
-        <m-publisherCard
-          *ngFor="let group of groups"
-          [publisher]="group"
-          [showSubscribeButton]="true"
-        >
-        </m-publisherCard>
-        <infinite-scroll
-          (load)="load()"
-          [moreData]="this.moreData"
-          [inProgress]="this.inProgress"
-        ></infinite-scroll>
-      </div>
-
+      <m-groupsMemberships__list
+        listTitle="Groups you manage"
+        [requestLimit]="managedGroupsLoaded ? 12 : 2"
+        [useInfiniteScroll]="false"
+        [membershipLevel]="groupMembershipLevel.MODERATOR"
+        membershipLevelGte="true"
+        (loaded)="managedGroupsLoaded = $event"
+      ></m-groupsMemberships__list>
+      <m-groupsMemberships__list
+        listTitle="Groups you've joined"
+        (hasGroups)="handleHasGroups($event)"
+        (inProgress)="inProgress = $event"
+      ></m-groupsMemberships__list>
       <!-- ---------------  -->
     </div>
   </div>

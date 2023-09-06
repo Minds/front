@@ -41,6 +41,7 @@ export class ChannelBadgesComponent {
     'founder',
     'admin',
     'onchain_booster',
+    'federation',
   ];
 
   /**
@@ -114,6 +115,10 @@ export class ChannelBadgesComponent {
     );
   }
 
+  showFederationBadge() {
+    return this.badges.includes('federation') && this.user?.canonical_url;
+  }
+
   badgeVisible(): boolean {
     return (
       this.showVerifiedBadge() ||
@@ -121,7 +126,8 @@ export class ChannelBadgesComponent {
       this.showPlusBadge() ||
       this.showProBadge() ||
       this.showFounderBadge() ||
-      this.showOnchainBadge()
+      this.showOnchainBadge() ||
+      this.showFederationBadge()
     );
   }
 

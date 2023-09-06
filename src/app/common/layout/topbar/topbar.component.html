@@ -101,6 +101,7 @@
               i18n-title="@@COMMON__LOGIN"
               data-ref="topnav-login"
               size="small"
+              [color]="'blue'"
               [borderless]="onHomepage"
             >
               Login
@@ -117,9 +118,7 @@
               [overlay]="
                 !(pageLayoutService.hasTopbarBackground$ | async) && onHomepage
               "
-              [solid]="
-                onHomepage && pageLayoutService.hasTopbarBackground$ | async
-              "
+              [solid]="pageLayoutService.hasTopbarBackground$ | async"
             >
               Join Now
             </m-button>

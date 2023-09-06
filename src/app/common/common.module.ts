@@ -181,6 +181,7 @@ import { FormErrorComponent } from './components/form-error/form-error.component
 import { GroupMembershipButtonComponent } from './components/group-membership-button/group-membership-button.component';
 import { GroupMembershipService } from './services/group-membership.service';
 import { SelectableEntityCardComponent } from './components/selectable-entity-card/selectable-entity-card.component';
+import { ExploreFeedItemComponent } from './components/explore-feed-item/explore-feed-item.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -212,6 +213,7 @@ const MINDS_COMMON_COMPONENTS = [
   EnvironmentFlagComponent,
   ErrorSplashComponent,
   ExplicitOverlayComponent,
+  ExploreFeedItemComponent,
   FeaturedContentComponent,
   FeedFilterComponent,
   FileUploadComponent,

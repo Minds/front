@@ -8,6 +8,8 @@ import { Renderer } from 'marked';
 import { ExplainerScreenWeb } from '../../../../graphql/generated.strapi';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { Session } from '../../../services/session';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 const mockScreenData: ExplainerScreenWeb = {
   __typename: 'ExplainerScreenWeb',
@@ -71,6 +73,8 @@ describe('ExplainerScreenModalComponent', () => {
             },
           }),
         },
+        { provide: Session, useValue: MockService(Session) },
+        { provide: AuthModalService, useValue: MockService(AuthModalService) },
       ],
     }).compileComponents();
   });
@@ -80,6 +84,8 @@ describe('ExplainerScreenModalComponent', () => {
     comp = fixture.componentInstance;
 
     comp.explainerScreenData = mockScreenData;
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+
     fixture.detectChanges();
   });
 
@@ -87,9 +93,23 @@ describe('ExplainerScreenModalComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should handle action button click', () => {
+  it('should handle action button click when logged in', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(true);
     spyOn(comp, 'onDismissIntent');
+
     comp.onActionButtonClick();
+
+    expect((comp as any).authModal.open).not.toHaveBeenCalled();
+    expect(comp.onDismissIntent).toHaveBeenCalled();
+  });
+
+  it('should handle action button click when logged out', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(false);
+    spyOn(comp, 'onDismissIntent');
+
+    comp.onActionButtonClick();
+
+    expect((comp as any).authModal.open).toHaveBeenCalled();
     expect(comp.onDismissIntent).toHaveBeenCalled();
   });
 
@@ -133,5 +153,17 @@ describe('ExplainerScreenModalComponent', () => {
     expect(titles[1].nativeElement.innerText.trim()).toBe(
       mockScreenData.section[1].title
     );
+  });
+
+  describe('isLoggedIn', () => {
+    it('should determine if a user is logged in', () => {
+      (comp as any).session.isLoggedIn.and.returnValue(true);
+      expect(comp.isLoggedIn()).toBe(true);
+    });
+
+    it('should determine if a user is NOT logged in', () => {
+      (comp as any).session.isLoggedIn.and.returnValue(false);
+      expect(comp.isLoggedIn()).toBe(false);
+    });
   });
 });

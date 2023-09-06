@@ -18,6 +18,7 @@ import { GroupsModule } from '../groups.module';
 import { GroupFeedComponent } from './feed/feed.component';
 import { GroupAboutComponent } from './about/about.component';
 import { GroupMemberPreviewsComponent } from './member-previews/member-previews.component';
+import { GroupsMembershipsListService } from '../memberships/list/list.service';
 import { GroupMembersListComponent } from './members/list/list.component';
 import { GroupMembersComponent } from './members/members.component';
 import { GroupMemberActionsComponent } from './members/member-actions/member-actions.component';
@@ -92,13 +93,14 @@ const INTERNAL_COMPONENTS = [
     ComposerModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
+  exports: COMPONENTS,
   providers: [
     GroupMembersListService,
     GroupEditService,
     GroupEditModalService,
     GroupInviteService,
     GroupInviteModalService,
+    GroupsMembershipsListService,
   ],
-  exports: COMPONENTS,
 })
 export class GroupModule {}

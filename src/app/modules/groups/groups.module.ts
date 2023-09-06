@@ -27,6 +27,8 @@ import { PathMatch } from '../../common/types/angular.types';
 import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
+import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
+import { GroupsMembershipsListComponent } from './memberships/list/list.component';
 
 const routes: Routes = [
   {
@@ -64,6 +66,7 @@ const routes: Routes = [
   },
   {
     path: 'groups/memberships',
+    canActivate: [loggedOutExplainerScreenGuard()],
     component: GroupsMembershipsComponent,
     data: {
       title: 'Memberships',
@@ -105,6 +108,7 @@ const routes: Routes = [
     GroupsProfileReviewComponent,
     GroupsKickModalComponent,
     GroupsMembershipsComponent,
+    GroupsMembershipsListComponent,
   ],
   exports: [
     GroupsCreator,

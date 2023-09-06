@@ -35,7 +35,8 @@ type Option =
   | 'allow-comments'
   | 'disable-comments'
   | 'download'
-  | 'boost';
+  | 'boost'
+  | 'view-federated';
 
 @Component({
   selector: 'm-postMenu--v2',

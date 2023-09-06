@@ -1,0 +1,39 @@
+<m-feedNotice
+  icon="add_to_queue"
+  dataRefId="pro-upgrade"
+  [dismissible]="dismissible"
+  (dismissClick)="onDismissClick()"
+>
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__PRO_UPGRADE__UPGRADE_TO_PRO"
+    >Upgrade to Minds Pro</span
+  >
+  <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__PRO_UPGRADE__CONTENT">
+    Get even more reach, more earnings, and your own website.
+    <br />
+    Your Pro subscription supports Minds.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick()"
+    data-ref="feed-notice-pro-upgrade-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__PRO_UPGRADE__UPGRADE">
+      Upgrade now
+    </ng-container>
+  </m-button>
+  <m-button
+    class="m-feedNotice__buttonSecondary"
+    size="small"
+    (onAction)="onSecondaryOptionClick()"
+    data-ref="feed-notice-pro-upgrade-secondary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__PRO_UPGRADE__LEARN_MORE">
+      Learn More
+    </ng-container>
+  </m-button>
+</m-feedNotice>
