@@ -318,7 +318,10 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   public onDownvote(): void {
     if (!this.isSingle) {
-      this.showDownvoteNotice = true;
+      if (!this.topOfPostIsVisible()) {
+        this.scrollToTopOfPost();
+      }
+      this.toggleDownvoteNotice(true);
     }
   }
 
@@ -330,13 +333,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.service.undoDownvote();
 
     this.toggleDownvoteNotice(false);
-  }
-
-  onExplicitDownvote($event): void {
-    if (!this.topOfPostIsVisible()) {
-      this.scrollToTopOfPost();
-    }
-    this.toggleDownvoteNotice(true);
   }
 
   /**
