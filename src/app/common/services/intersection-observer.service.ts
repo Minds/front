@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 
 /**
- * Wrapper for interception observer.
+ * Wrapper for intersection observer.
  * Minor adaptions made to Piotr Sobuś @ https://stackoverflow.com/a/67273415/7396007
  */
 @Injectable({
