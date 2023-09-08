@@ -1,0 +1,11 @@
+<ng-container *ngIf="titleText">
+  <div class="m-exploreFeedItem--left">
+    <i class="material-icons m-exploreFeedItem__icon">{{ iconId }}</i>
+    <h3 class="m-exploreFeedItem__text">
+      {{ titleText }}
+    </h3>
+  </div>
+  <div class="m-exploreFeedItem--right">
+    <ng-content select="[explore-feed-item-button]"></ng-content>
+  </div>
+</ng-container>

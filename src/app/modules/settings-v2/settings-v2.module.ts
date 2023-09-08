@@ -73,6 +73,7 @@ import { PathMatch } from '../../common/types/angular.types';
 import { AffiliatesModule } from '../affiliates/affiliates.module';
 import { SettingsV2AffiliatesComponent } from './affiliates/affiliates.component';
 import { experimentVariationGuard } from '../experiments/experiment-variation.guard';
+import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -397,6 +398,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       {
         path: 'affiliates-program',
         component: SettingsV2Component,
+        canActivate: [loggedOutExplainerScreenGuard()],
         data: {
           isMenu: false,
           singleLevelMenuId: 'affiliates-program',

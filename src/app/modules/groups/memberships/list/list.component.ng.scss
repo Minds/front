@@ -1,0 +1,37 @@
+@import 'defaults.scss';
+:host {
+  .m-groupsMembershipsList {
+    @include borderTop;
+    display: flex;
+    flex-flow: column nowrap;
+
+    padding: $spacing4 $spacing7 $spacing7;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: $spacing5 $activitySpacingRight--feed--mobile $spacing5
+        $activityAvatarSpacingLeft--feed--mobile;
+    }
+  }
+
+  h3.m-groupsMembershipsList__title {
+    @include heading4Bold;
+    margin: $spacing3 0;
+    padding-bottom: $spacing4;
+
+    @media screen and (max-width: $max-mobile) {
+      margin-top: 0;
+    }
+  }
+
+  ::ng-deep m-publisherCard {
+    &:not(:first-of-type) {
+      .m-publisherCard {
+        padding-top: $spacing6;
+      }
+    }
+  }
+
+  .m-groupsMembershipsList__seeMore {
+    margin-top: $spacing6;
+  }
+}

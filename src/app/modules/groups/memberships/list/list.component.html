@@ -1,0 +1,32 @@
+<div
+  class="m-groupsMembershipsList"
+  *ngIf="(list$ | async) && (list$ | async).length > 0"
+>
+  <h3 *ngIf="listTitle" class="m-groupsMembershipsList__title">
+    {{ listTitle }}
+  </h3>
+  <!-- ----------------------------------- -->
+  <m-publisherCard
+    *ngFor="let group of list$ | async"
+    [publisher]="group"
+    noBorder="true"
+    noPadding="true"
+  ></m-publisherCard>
+  <m-button
+    *ngIf="!useInfiniteScroll && (moreData$ | async)"
+    class="m-groupsMembershipsList__seeMore"
+    solid="true"
+    stretch="true"
+    [saving]="inProgress$ | async"
+    (onAction)="loadNext()"
+    >See more</m-button
+  >
+</div>
+<!-- ----------------------------------- -->
+<infinite-scroll
+  *ngIf="(!(listIsEmpty$ | async) || (moreData$ | async)) && useInfiniteScroll"
+  (load)="loadNext()"
+  [moreData]="moreData$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>
