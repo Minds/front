@@ -14,6 +14,7 @@ import { WireCreatorUpgradeBlockComponent } from './creator/upgrade-block/upgrad
 import { WireCreatorSupportTierConfirmationComponent } from './creator/support-tier-confirmation/support-tier-confirmation.component';
 import { WireCreatorCurrencyToggleComponent } from './creator/currency-toggle/currency-toggle.component';
 import { WireCreatorTermsComponent } from './creator/terms/terms.component';
+import { WireCreatorGiftRecipientInputComponent } from './creator/form/gift-recipient/gift-recipient-input.component';
 
 const COMPONENTS = [WireCreatorComponent];
 
@@ -26,6 +27,7 @@ const INTERNAL_COMPONENTS = [
   WireCreatorSupportTierConfirmationComponent,
   WireCreatorCurrencyToggleComponent,
   WireCreatorTermsComponent,
+  WireCreatorGiftRecipientInputComponent,
 ];
 
 const PROVIDERS = [

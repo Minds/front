@@ -1,6 +1,21 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  firstValueFrom,
+  Observable,
+  of,
+  Subscription,
+} from 'rxjs';
+import {
+  catchError,
+  distinctUntilChanged,
+  finalize,
+  map,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
 import {
@@ -17,6 +32,8 @@ import { Session } from '../../../services/session';
 import { ToasterService } from '../../../common/services/toaster.service';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { isSafari } from '../../../helpers/is-safari';
+import { GiftCardService } from '../../gift-card/gift-card.service';
+import { GiftCardProductIdEnum } from '../../../../graphql/generated.engine';
 
 /**
  * Wire event types
@@ -183,6 +200,9 @@ interface Data {
   usdPaymentMethodId: string;
   wallet: Wallet;
   sourceEntityGuid: string;
+  isGift?: boolean;
+  isSelfGift?: boolean;
+  giftRecipientUsername?: string;
 }
 
 /**
@@ -204,6 +224,9 @@ type DataArray = [
   MindsUser,
   string,
   Wallet,
+  string | null,
+  boolean | null,
+  boolean | null,
   string | null
 ];
 
@@ -256,6 +279,27 @@ export class WireV2Service implements OnDestroy {
   readonly isUpgrade$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     DEFAULT_IS_UPGRADE_VALUE
   );
+
+  /**
+   * True if wire modal is in gift giving mode.
+   */
+  public readonly isGift$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
+   * Gift recipient username.
+   */
+  public readonly giftRecipientUsername$: BehaviorSubject<
+    string
+  > = new BehaviorSubject<string>(null);
+
+  /**
+   * True if self gifting (allowing the user to give the code out themselves).
+   */
+  public readonly isSelfGift$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   /**
    * Wire upgrade interval subject
@@ -380,6 +424,11 @@ export class WireV2Service implements OnDestroy {
   protected ownerResolverSubscription: Subscription;
 
   /**
+   * Subscription to creating a gift card.
+   */
+  private createGiftCardSubscription: Subscription;
+
+  /**
    * Prices for upgrades to Pro/Plus
    */
   upgrades: any; // readonly removed as component reydrates post authModal login
@@ -403,7 +452,8 @@ export class WireV2Service implements OnDestroy {
     private proService: ProService,
     private session: Session,
     configs: ConfigsService,
-    private toasterSevice: ToasterService
+    private toasterService: ToasterService,
+    private giftCardService: GiftCardService
   ) {
     this.upgrades = configs.get('upgrades');
     this.handlers = configs.get('handlers');
@@ -440,6 +490,9 @@ export class WireV2Service implements OnDestroy {
       this.usdPaymentMethodId$,
       this.wallet.wallet$,
       this.sourceEntityGuid$,
+      this.isGift$,
+      this.isSelfGift$,
+      this.giftRecipientUsername$,
     ]).pipe(
       map(
         ([
@@ -458,6 +511,9 @@ export class WireV2Service implements OnDestroy {
           usdPaymentMethodId,
           wallet,
           sourceEntityGuid,
+          isGift,
+          isSelfGift,
+          giftRecipientUsername,
         ]: DataArray): Data => ({
           entityGuid,
           type,
@@ -474,6 +530,9 @@ export class WireV2Service implements OnDestroy {
           usdPaymentMethodId,
           wallet,
           sourceEntityGuid,
+          isGift,
+          isSelfGift,
+          giftRecipientUsername,
         })
       )
     );
@@ -575,6 +634,8 @@ export class WireV2Service implements OnDestroy {
     if (this.ownerResolverSubscription) {
       this.ownerResolverSubscription.unsubscribe();
     }
+
+    this.createGiftCardSubscription?.unsubscribe();
   }
 
   /**
@@ -764,6 +825,42 @@ export class WireV2Service implements OnDestroy {
   }
 
   /**
+   * Sets gifting mode.
+   * @param { boolean } isGift true if this transaction is to be a gift.
+   * @returns { WireV2Service }
+   */
+  setIsGift(isGift: boolean): WireV2Service {
+    this.isGift$.next(isGift);
+    return this;
+  }
+
+  /**
+   * Sets whether a gift is a self gift.
+   * @param { boolean } isSelfGift whether this is a self gift.
+   * @returns { WireV2Service }
+   */
+  setIsSelfGift(isSelfGift: boolean): WireV2Service {
+    if (isSelfGift) {
+      this.setGiftRecipientUsername(null);
+    }
+    this.isSelfGift$.next(isSelfGift);
+    return this;
+  }
+
+  /**
+   * Sets username of a gift recipient.
+   * @param { string } giftRecipientUsername - username of a gift recipient.
+   * @returns { WireV2Service }
+   */
+  setGiftRecipientUsername(giftRecipientUsername: string): WireV2Service {
+    if (giftRecipientUsername?.length) {
+      this.setIsSelfGift(false);
+    }
+    this.giftRecipientUsername$.next(giftRecipientUsername);
+    return this;
+  }
+
+  /**
    * Sets the refund policy agreed flag
    * @param refundPolicyAgreed
    */
@@ -800,7 +897,9 @@ export class WireV2Service implements OnDestroy {
     this.setAmount(DEFAULT_AMOUNT_VALUE);
     this.setRecurring(DEFAULT_RECURRING_VALUE);
     this.setRefundPolicyAgreed(DEFAULT_REFUND_POLICY_ACCEPTED_VALUE);
-
+    this.setIsGift(false);
+    this.setGiftRecipientUsername(null);
+    this.setIsSelfGift(false);
     // State
     this.setInProgress(false);
 
@@ -834,12 +933,37 @@ export class WireV2Service implements OnDestroy {
       return invalid();
     }
 
-    if (this.isUpgrade$.getValue()) {
+    if (this.isUpgrade$.getValue() && !this.isGift$.getValue()) {
       if (this.upgradeType$.getValue() === 'pro' && this.userIsPro) {
         return invalid('You are already a Pro member', true);
       }
       if (this.upgradeType$.getValue() === 'plus' && this.userIsPlus) {
         return invalid('You are already a Minds+ member', true);
+      }
+    }
+
+    if (data.isGift) {
+      if (!data.giftRecipientUsername && !data.isSelfGift) {
+        return invalid(
+          'You must select a gift recipient for non-self gifts',
+          false
+        );
+      }
+
+      if (data.isSelfGift && data.giftRecipientUsername) {
+        return invalid('Self gifts cannot have recipient usernames', false);
+      }
+
+      if (!data.isUpgrade) {
+        return invalid('Only upgrades can be gifted', true);
+      }
+
+      if (data.type !== 'usd') {
+        return invalid('Gifts can only be paid for with cash', true);
+      }
+
+      if (data.recurring) {
+        return invalid('Gifts cannot be recurring', true);
       }
     }
 
@@ -1000,6 +1124,10 @@ export class WireV2Service implements OnDestroy {
       throw new Error(`There's nothing to send`);
     }
 
+    if (this.isGift$.getValue()) {
+      return firstValueFrom(this.sendGiftCard());
+    }
+
     this.inProgress$.next(true);
 
     try {
@@ -1012,5 +1140,79 @@ export class WireV2Service implements OnDestroy {
       // Re-throw
       throw e;
     }
+  }
+
+  /**
+   * Send a gift card.
+   * @returns { Observable<boolean> } true on success.
+   */
+  private sendGiftCard(): Observable<boolean> {
+    this.inProgress$.next(true);
+
+    return combineLatest([this.upgradeType$, this.giftRecipientUsername$]).pipe(
+      take(1),
+      switchMap(
+        ([upgradeType, giftRecipientUsername]: [
+          WireUpgradeType,
+          string
+        ]): Observable<string> => {
+          let productId: GiftCardProductIdEnum;
+          switch (upgradeType) {
+            case 'plus':
+              productId = GiftCardProductIdEnum.Plus;
+              break;
+            case 'pro':
+              productId = GiftCardProductIdEnum.Pro;
+              break;
+          }
+
+          return this.giftCardService.createGiftCard(
+            productId,
+            Number(this.wirePayload.amount),
+            this.wirePayload.payload.paymentMethodId,
+            { targetUsername: giftRecipientUsername }
+          );
+        }
+      ),
+      map((result: string): boolean => Boolean(result)),
+      tap((result: boolean): void => {
+        if (result) {
+          const upgradeInterval: UpgradeOptionInterval = this.upgradeInterval$.getValue();
+          switch (this.upgradeType$.getValue()) {
+            case 'pro':
+              if (upgradeInterval === 'yearly') {
+                this.toasterService.success(
+                  'Payment Successful! You have gifted 1 year of Minds Pro'
+                );
+                break;
+              }
+              this.toasterService.success(
+                'Payment Successful! You have gifted 1 month of Minds Pro'
+              );
+              break;
+            case 'plus':
+              if (upgradeInterval === 'yearly') {
+                this.toasterService.success(
+                  'Payment Successful! You have gifted 1 year of Minds+'
+                );
+                break;
+              }
+              this.toasterService.success(
+                'Payment Successful! You have gifted 1 month of Minds+'
+              );
+              break;
+          }
+        }
+      }),
+      catchError(
+        (e: any): Observable<boolean> => {
+          this.toasterService.error(e?.message);
+          return of(false);
+        }
+      ),
+      finalize(() => {
+        this.inProgress$.next(false);
+      })
+    );
   }
 }

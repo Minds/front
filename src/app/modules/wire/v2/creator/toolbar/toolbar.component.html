@@ -53,17 +53,31 @@
       i18n="@@WIRE_CREATOR_TOOLBAR__SUBMIT_UPGRADE"
     >
       <ng-container
-        *ngIf="!(service.upgradeCanHaveTrial$ | async); else startTrialTxt"
+        *ngIf="!(service.isGift$ | async); else giftButtonTextTemplate"
       >
-        Upgrade to Minds<ng-container
-          *ngIf="(service.upgradeType$ | async) === 'plus'"
-          >+</ng-container
+        <ng-container
+          *ngIf="!(service.upgradeCanHaveTrial$ | async); else startTrialTxt"
         >
-        <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
-          Pro</ng-container
-        >
+          Upgrade to Minds<ng-container
+            *ngIf="(service.upgradeType$ | async) === 'plus'"
+            >+</ng-container
+          >
+          <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
+            Pro</ng-container
+          >
+        </ng-container>
+        <ng-template #startTrialTxt> Start free trial </ng-template>
       </ng-container>
-      <ng-template #startTrialTxt> Start free trial </ng-template>
+      <ng-template #giftButtonTextTemplate>
+        <ng-container
+          *ngIf="
+            (service.upgradeType$ | async) === 'plus';
+            else proGiftButtonTemplate
+          "
+          >Gift Minds+</ng-container
+        >
+        <ng-template #proGiftButtonTemplate>Gift Minds Pro</ng-template>
+      </ng-template>
     </ng-container>
 
     <ng-container

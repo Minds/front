@@ -84,6 +84,7 @@ export class WireCreatorComponent implements OnDestroy {
     entity,
     supportTier,
     sourceEntity,
+    isGift,
   }: {
     onComplete;
     onDismissIntent;
@@ -91,6 +92,7 @@ export class WireCreatorComponent implements OnDestroy {
     entity;
     supportTier?;
     sourceEntity?;
+    isGift?: boolean;
   }) {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
@@ -108,6 +110,11 @@ export class WireCreatorComponent implements OnDestroy {
       this.service.setType('usd');
       this.service.setRecurring(true);
       this.service.setAmount(supportTier.usd);
+    }
+
+    if (isGift) {
+      this.service.setIsGift(true);
+      this.service.setType('usd');
     }
 
     if (defaultValues) {
@@ -129,6 +136,9 @@ export class WireCreatorComponent implements OnDestroy {
         this.service.setUpgradeInterval(
           defaultValues.upgradeInterval || 'yearly'
         );
+        if (isGift) {
+          this.service.setRecurring(false);
+        }
         return;
       }
       this.service.setAmount(parseFloat(defaultValues.min || '0'));

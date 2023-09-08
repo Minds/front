@@ -1,7 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { GiftCardBalanceByProductId } from '../../../../../../graphql/generated.engine';
+import {
+  GiftCardBalanceByProductId,
+  GiftCardProductIdEnum,
+} from '../../../../../../graphql/generated.engine';
 import { GiftCardService } from '../../../../gift-card/gift-card.service';
 import { BehaviorSubject, Subscription, take } from 'rxjs';
+
+const PRODUCT_DISPLAY_ORDER: GiftCardProductIdEnum[] = [
+  GiftCardProductIdEnum.Boost,
+  GiftCardProductIdEnum.Plus,
+  GiftCardProductIdEnum.Pro,
+  GiftCardProductIdEnum.Supermind,
+];
 
 /**
  * Wallet section for summary of Gift Card credits - shows at the top of tab.
@@ -27,10 +37,16 @@ export class WalletV2CreditsSummaryComponent implements OnInit, OnDestroy {
       .getGiftCardBalancesWithExpiryData({ fetchPolicy: 'no-cache' })
       .pipe(take(1))
       .subscribe((result: GiftCardBalanceByProductId[]): void => {
-        // slice is used below to create a mutable copy of the array.
-        this.giftCardBalances$.next(
-          result.slice().sort((a, b) => b.balance - a.balance)
-        );
+        // Order results by predefined fixed order.
+        const orderedResult: GiftCardBalanceByProductId[] = PRODUCT_DISPLAY_ORDER.map(
+          (productId: GiftCardProductIdEnum): GiftCardBalanceByProductId =>
+            result.find(
+              (res: GiftCardBalanceByProductId): boolean =>
+                res?.productId === productId
+            )
+        ).filter(Boolean);
+
+        this.giftCardBalances$.next(orderedResult);
       });
   }
 

@@ -4,6 +4,8 @@ import { ApolloQueryResult } from '@apollo/client';
 import {
   ClaimGiftCardGQL,
   ClaimGiftCardMutation,
+  CreateGiftCardGQL,
+  CreateGiftCardMutation,
   GetGiftCardBalancesGQL,
   GetGiftCardBalancesQuery,
   GetGiftCardBalancesWithExpiryDataGQL,
@@ -13,6 +15,7 @@ import {
   GiftCardBalanceByProductId,
   GiftCardNode,
   GiftCardProductIdEnum,
+  GiftCardTargetInput,
 } from '../../../graphql/generated.engine';
 import { QueryOptionsAlone } from 'apollo-angular/types';
 
@@ -25,7 +28,8 @@ export class GiftCardService {
     private getGiftCardByCodeGQL: GetGiftCardByCodeGQL,
     private getGiftCardBalancesGQL: GetGiftCardBalancesGQL,
     private getGiftCardBalancesWithExpiryDataGQL: GetGiftCardBalancesWithExpiryDataGQL,
-    private claimGiftCardGQL: ClaimGiftCardGQL
+    private claimGiftCardGQL: ClaimGiftCardGQL,
+    private createGiftCardGQL: CreateGiftCardGQL
   ) {}
 
   /**
@@ -103,6 +107,53 @@ export class GiftCardService {
         }
       )
     );
+  }
+
+  /**
+   * Create a gift card.
+   * @param { GiftCardProductIdEnum } productIdEnumValue  - product id.
+   * @param { number } amount - amount to credit.
+   * @param { string } stripePaymentMethodId  - stripe payment method id.
+   * @param { GiftCardTargetInput } targetInput - gift card target recipient.
+   * @returns { Observable<string> } guid of the newly created gift card.
+   */
+  public createGiftCard(
+    productIdEnumValue: GiftCardProductIdEnum,
+    amount: number,
+    stripePaymentMethodId: string,
+    targetInput: GiftCardTargetInput
+  ): Observable<string> {
+    let productId: number;
+
+    switch (productIdEnumValue) {
+      case GiftCardProductIdEnum.Boost:
+        productId = 0;
+        break;
+      case GiftCardProductIdEnum.Plus:
+        productId = 1;
+        break;
+      case GiftCardProductIdEnum.Pro:
+        productId = 2;
+        break;
+      case GiftCardProductIdEnum.Supermind:
+        productId = 3;
+        break;
+      default:
+        throw new Error('Unsupported productId for: ' + productIdEnumValue);
+    }
+
+    return this.createGiftCardGQL
+      .mutate({
+        productIdEnum: productId,
+        amount: amount,
+        stripePaymentMethodId: stripePaymentMethodId,
+        targetInput: targetInput,
+      })
+      .pipe(
+        map((result: ApolloQueryResult<CreateGiftCardMutation>): string => {
+          return result?.data?.createGiftCard?.guid;
+        })
+      );
   }
 
   /**

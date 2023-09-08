@@ -5,7 +5,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { WireV2Service, WireUpgradeType } from '../../wire-v2.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 /**
  * Displayed at the top of the tip modal when a user is making a payment to upgrade to pro/plus
@@ -19,6 +19,10 @@ import { Subscription } from 'rxjs';
 export class WireCreatorUpgradeBlockComponent implements OnInit, OnDestroy {
   upgradeTypeSubscription: Subscription;
   upgradeType: WireUpgradeType;
+
+  /** Whether the wire modal is presenting a gift purchasing option. */
+  public readonly isGift$: Observable<boolean> = this.service.isGift$;
+
   /**
    * Constructor. Retrieves CDN URL.
    * @param service

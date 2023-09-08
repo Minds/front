@@ -50,7 +50,10 @@
     <!-- ---------------------------------- -->
     <!-- CURRENCY TOGGLE (UPGRADES) -->
     <!-- ---------------------------------- -->
-    <div class="m-wireCreatorForm__fields" *ngIf="service.isUpgrade$ | async">
+    <div
+      class="m-wireCreatorForm__fields"
+      *ngIf="(service.isUpgrade$ | async) && (!service.isGift$ | async)"
+    >
       <div class="m-wireCreatorForm__field">
         <div class="m-wireCreatorForm__field">
           <div class="m-wireCreatorForm__toggleContainer">
@@ -99,90 +102,127 @@
         <div class="m-wireCreatorForm__intervalToggleContainer">
           <ng-container
             *ngIf="
-              (service.type$ | async) !== 'tokens';
-              else tokenLifetimeUpgrade
+              !(service.isGift$ | async);
+              else giftIntervalContainerTemplate
             "
           >
+            <ng-container
+              *ngIf="
+                (service.type$ | async) !== 'tokens';
+                else tokenLifetimeUpgrade
+              "
+            >
+              <div
+                class="m-wireCreatorForm__intervalOption"
+                [class.m-wireCreatorForm__intervalOption--selected]="
+                  (service.upgradeInterval$ | async) === 'yearly'
+                "
+                (click)="service.setUpgradeInterval('yearly')"
+              >
+                <div i18n="@@COMMON__ANNUALLY" class="m-legible">Annually</div>
+                <div class="m-wireCreatorFormIntervalOption__pricing">
+                  <ng-container *ngIf="(service.type$ | async) === 'usd'"
+                    >$</ng-container
+                  ><span>{{
+                    (service.upgradePricingOptions$ | async)?.yearly / 12
+                  }}</span>
+                  <span>
+                    /
+                    <ng-container i18n="@@COMMON__MONTH"
+                      >month</ng-container
+                    ></span
+                  >
+                </div>
+                <div class="m-wireCreatorFormIntervalOption__desc">
+                  Billed annually at ${{
+                    (service.upgradePricingOptions$ | async)?.yearly
+                  }}
+                </div>
+              </div>
+              <div
+                class="m-wireCreatorForm__intervalOption"
+                (click)="service.setUpgradeInterval('monthly')"
+                [class.m-wireCreatorForm__intervalOption--selected]="
+                  (service.upgradeInterval$ | async) === 'monthly'
+                "
+                *ngIf="(service.type$ | async) === 'usd'"
+              >
+                <div class="m-legible">
+                  <ng-container i18n="@@COMMON__MONTHLY__TITLECASE"
+                    >Monthly</ng-container
+                  >
+                </div>
+                <div class="m-wireCreatorFormIntervalOption__pricing">
+                  <ng-container *ngIf="(service.type$ | async) === 'usd'"
+                    >$</ng-container
+                  >
+                  <span>{{
+                    (service.upgradePricingOptions$ | async)?.monthly
+                  }}</span
+                  ><span>
+                    /
+                    <ng-container i18n="@@COMMON__MONTH"
+                      >month</ng-container
+                    ></span
+                  >
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #tokenLifetimeUpgrade>
+              <div
+                class="
+                  m-wireCreatorForm__intervalOption
+                  m-wireCreatorForm__intervalOption--selected
+                "
+                (click)="service.setUpgradeInterval('once')"
+              >
+                <div
+                  i18n="@@WIRE_CREATOR_FORM__LIFETIME_MEMBERSHIP"
+                  class="m-legible"
+                >
+                  Lifetime membership
+                </div>
+                <div class="m-wireCreatorFormIntervalOption__pricing">
+                  <span>{{
+                    (service.upgradePricingOptions$ | async)?.lifetime | number
+                  }}</span
+                  ><span>
+                    <ng-container *ngIf="(service.type$ | async) === 'tokens'">
+                      MINDS</ng-container
+                    >
+                  </span>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+          <ng-template #giftIntervalContainerTemplate>
             <div
-              class="m-wireCreatorForm__intervalOption"
+              class="m-wireCreatorForm__intervalOption m-wireCreatorForm__intervalOption--gift"
               [class.m-wireCreatorForm__intervalOption--selected]="
                 (service.upgradeInterval$ | async) === 'yearly'
               "
               (click)="service.setUpgradeInterval('yearly')"
             >
-              <div i18n="@@COMMON__ANNUALLY" class="m-legible">Annually</div>
-              <div class="m-wireCreatorFormIntervalOption__pricing">
-                <ng-container *ngIf="(service.type$ | async) === 'usd'"
-                  >$</ng-container
-                ><span>{{
-                  (service.upgradePricingOptions$ | async)?.yearly / 12
-                }}</span>
-                <span>
-                  /
-                  <ng-container i18n="@@COMMON__MONTH"
-                    >month</ng-container
-                  ></span
-                >
+              <div i18n="@@WIRE_CREATOR_FORM__GIFT_FOR_ONE_YEAR">
+                Gift for one year
               </div>
-              <div class="m-wireCreatorFormIntervalOption__desc">
-                Billed annually at ${{
-                  (service.upgradePricingOptions$ | async)?.yearly
-                }}
-              </div>
+              <span class="m-wireCreatorFormIntervalOption__pricing">
+                ${{ (service.upgradePricingOptions$ | async)?.yearly }}
+              </span>
             </div>
             <div
-              class="m-wireCreatorForm__intervalOption"
+              class="m-wireCreatorForm__intervalOption m-wireCreatorForm__intervalOption--gift"
               (click)="service.setUpgradeInterval('monthly')"
               [class.m-wireCreatorForm__intervalOption--selected]="
                 (service.upgradeInterval$ | async) === 'monthly'
               "
-              *ngIf="(service.type$ | async) === 'usd'"
             >
-              <div class="m-legible">
-                <ng-container i18n="@@COMMON__MONTHLY__TITLECASE"
-                  >Monthly</ng-container
-                >
+              <div i18n="@@WIRE_CREATOR_FORM__GIFT_FOR_ONE_MONTH">
+                Gift for one month
               </div>
-              <div class="m-wireCreatorFormIntervalOption__pricing">
-                <ng-container *ngIf="(service.type$ | async) === 'usd'"
-                  >$</ng-container
-                >
-                <span>{{
-                  (service.upgradePricingOptions$ | async)?.monthly
-                }}</span
-                ><span>
-                  /
-                  <ng-container i18n="@@COMMON__MONTH"
-                    >month</ng-container
-                  ></span
-                >
-              </div>
-            </div>
-          </ng-container>
-          <ng-template #tokenLifetimeUpgrade>
-            <div
-              class="
-                m-wireCreatorForm__intervalOption
-                m-wireCreatorForm__intervalOption--selected
-              "
-              (click)="service.setUpgradeInterval('once')"
-            >
-              <div
-                i18n="@@WIRE_CREATOR_FORM__LIFETIME_MEMBERSHIP"
-                class="m-legible"
-              >
-                Lifetime membership
-              </div>
-              <div class="m-wireCreatorFormIntervalOption__pricing">
-                <span>{{
-                  (service.upgradePricingOptions$ | async)?.lifetime | number
-                }}</span
-                ><span>
-                  <ng-container *ngIf="(service.type$ | async) === 'tokens'">
-                    MINDS</ng-container
-                  >
-                </span>
-              </div>
+              <span class="m-wireCreatorFormIntervalOption__pricing">
+                ${{ (service.upgradePricingOptions$ | async)?.monthly }}
+              </span>
             </div>
           </ng-template>
         </div>
@@ -227,6 +267,19 @@
         />
       </div>
     </div>
+
+    <!-- GIFT RECIPIENT INPUT FIELD -->
+    <div *ngIf="service.isGift$ | async" class="m-wireCreatorForm__fields">
+      <div class="m-wireCreatorForm__field">
+        <span
+          class="m-wireCreatorForm__label m-wireCreatorForm__label--giftRecipient"
+          i18n="WIRE_CREATOR_FORM__RECIPIENT_OF_GIFT"
+          >Recipient:</span
+        >
+        <m-wireCreator__giftRecipientInput></m-wireCreator__giftRecipientInput>
+      </div>
+    </div>
+
     <div class="m-wireCreatorForm__fields">
       <!--------------------------->
       <!--IF CURRENCY : TOKENS-->
@@ -312,7 +365,9 @@
         <!--------------------------->
         <!--SELECT BANK ACCOUNT/CARD-->
         <!--------------------------->
-        <div class="m-wireCreatorForm__field m-wireCreatorForm__field--card">
+        <div
+          class="m-wireCreatorForm__field m-wireCreatorForm__field--card m-wireCreatorForm__field--smallBottomMargin"
+        >
           <div class="m-wireCreatorForm__label">
             <ng-container i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD"
               >Payment Method</ng-container
