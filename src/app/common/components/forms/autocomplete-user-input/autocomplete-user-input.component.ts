@@ -28,8 +28,6 @@ import { ConfigsService } from '../../../services/configs.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { FastFadeAnimation } from '../../../../animations';
-import videojs from 'video.js';
-import log = videojs.log;
 
 /**
  * Type-ahead search response from server.
@@ -119,7 +117,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
     this.inProgress$$,
     this.isFocused$$,
   ]).pipe(
-    //take(1),
+    // take(1),
     // map new value of observable.
     map(([users, inProgress, isFocused]) => {
       return isFocused && (users.length > 0 || inProgress);
@@ -157,7 +155,6 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
     /**
      * This subscription emits out the username to the form parent
      */
-    console.log('allowEmpty', this.allowEmpty);
     this.usernameSubscription = this.username$$
       .pipe(filter(username => this.allowEmpty || !!username))
       .subscribe(username => this.propagateChange(username));
