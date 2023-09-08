@@ -12,7 +12,7 @@
       Gift balance
     </a>
   </li>
-  <li class="m-tabs__tab">
+  <li class="m-tabs__tab" *ngIf="isPurchaseFeatureActive">
     <a
       routerLink="send"
       routerLinkActive="selected"
