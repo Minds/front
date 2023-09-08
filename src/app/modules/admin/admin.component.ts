@@ -17,6 +17,7 @@ export type Filter =
   | 'verify'
   | 'features'
   | 'push-notifications'
+  | 'accounts'
   | 'liquidity-providers';
 
 @Component({

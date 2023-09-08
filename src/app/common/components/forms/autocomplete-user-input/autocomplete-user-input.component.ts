@@ -56,6 +56,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
    * Placeholder of the input (optional)
    */
   @Input() placeholder: string;
+  @Input() allowEmpty: boolean = false;
 
   /**
    * The username, current value of input
@@ -116,7 +117,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
     this.inProgress$$,
     this.isFocused$$,
   ]).pipe(
-    //take(1),
+    // take(1),
     // map new value of observable.
     map(([users, inProgress, isFocused]) => {
       return isFocused && (users.length > 0 || inProgress);
@@ -155,7 +156,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
      * This subscription emits out the username to the form parent
      */
     this.usernameSubscription = this.username$$
-      .pipe(filter(username => !!username))
+      .pipe(filter(username => this.allowEmpty || !!username))
       .subscribe(username => this.propagateChange(username));
   }
 
