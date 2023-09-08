@@ -1,11 +1,29 @@
-<span
-  *ngFor="let socialLink of socialLinks"
-  [ngClass]="[
-    'm-channelSocialLinks__link',
-    'm-channelSocialLinksLink--' + socialLink.key
-  ]"
->
-  <a [href]="socialLink.value" rel="noopener nofollow ugc" target="_blank"
-    ><i [ngClass]="buildSocialLinkNgClass(socialLink)"></i
-  ></a>
-</span>
+<ng-container *ngFor="let socialLink of socialLinks; let i = index">
+  <a
+    *ngIf="i < 5 || showAll"
+    class="m-channelSocialLinks__link"
+    [ngClass]="{
+      'm-channelSocialLinks__link--verified': socialLink.verified
+    }"
+    [href]="socialLink.value"
+    rel="me noopener nofollow ugc"
+    target="_blank"
+    ><i
+      *ngIf="!socialLink.customIcon"
+      [ngClass]="buildSocialLinkNgClass(socialLink)"
+      class="m-channelSocialLinksLink__icon"
+    ></i>
+    <div
+      *ngIf="socialLink.customIcon"
+      class="m-channelSocialLinksLink__icon m-channelSocialLinksLink__icon--custom"
+      [ngStyle]="getCustomIconCss(socialLink.icon)"
+    ></div>
+    <span>{{ socialLink.shortLink }} </span
+    ><i
+      *ngIf="socialLink.verified"
+      title="verified"
+      class="material-icons m-channelSocialLinksLink__icon m-channelSocialLinksLinkIcon--verified"
+      >check</i
+    >
+  </a>
+</ng-container>

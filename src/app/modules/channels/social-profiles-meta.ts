@@ -3,202 +3,263 @@ import { KeyVal } from '../../interfaces/entities';
 export interface SocialProfileMeta {
   key: string;
   label: string;
-  link: string;
+  linkFormat: string;
   icon: string;
-  customIcon?: boolean;
   domain: string;
+  customIcon?: boolean;
+  verified?: boolean;
 }
 
 export const socialProfileMeta: SocialProfileMeta[] = [
   {
     key: 'deviantart',
-    label: 'Deviantart User',
-    link: 'https://:value.deviantart.com/',
+    label: 'Deviantart',
+    linkFormat: 'https://:value.deviantart.com/',
     icon: 'deviantart',
     domain: 'deviantart.com',
   },
   {
     key: 'discord',
-    label: 'Discord Server',
-    link: 'https://discord.me/:value',
+    label: 'Discord',
+    linkFormat: 'https://discord.me/:value',
     icon: 'discord',
     domain: 'discord.me',
   },
   {
     key: 'facebook',
     label: 'Facebook',
-    link: 'https://www.facebook.com/:value',
+    linkFormat: 'https://www.facebook.com/:value',
     icon: 'facebook-official',
     domain: 'facebook.com',
   },
   {
     key: 'flickr',
-    label: 'Flickr Profile',
-    link: 'https://www.flickr.com/photos/:value/',
+    label: 'Flickr',
+    linkFormat: 'https://www.flickr.com/photos/:value/',
     icon: 'flickr',
     domain: 'flickr.com',
   },
   {
     key: 'flipboard',
-    label: 'Flipboard Profile',
-    link: 'https://www.flipboard.com/:value',
+    label: 'Flipboard',
+    linkFormat: 'https://www.flipboard.com/:value',
     icon: 'flipboard',
     domain: 'flipboard.com',
   },
   {
     key: 'github',
     label: 'Github',
-    link: 'https://github.com/:value',
+    linkFormat: 'https://github.com/:value',
     icon: 'github',
     domain: 'github.com',
+    customIcon: true,
   },
   {
     key: 'gitlab',
-    label: 'Gitlab Profile',
-    link: 'https://www.gitlab.com/:value',
+    label: 'Gitlab',
+    linkFormat: 'https://www.gitlab.com/:value',
     icon: 'gitlab',
     domain: 'gitlab.com',
   },
   {
     key: 'gitter',
-    label: 'Gitter Profile',
-    link: 'https://gitter.im/:value',
+    label: 'Gitter',
+    linkFormat: 'https://gitter.im/:value',
     icon: 'gitter',
     domain: 'gitter.im',
   },
   {
     key: 'goodreads',
-    label: 'Goodreads Profile',
-    link: 'https://www.goodreads.com/user/show/:value',
+    label: 'Goodreads',
+    linkFormat: 'https://www.goodreads.com/user/show/:value',
     icon: 'goodreads',
     domain: 'goodreads.com',
   },
   {
     key: 'google_plus',
-    label: 'Google Plus Profile',
-    link: 'https://plus.google.com/:value',
+    label: 'Google Plus',
+    linkFormat: 'https://plus.google.com/:value',
     icon: 'google-plus',
     domain: 'google.com',
   },
   {
     key: 'instagram',
     label: 'Instagram',
-    link: 'https://www.instagram.com/:value',
+    linkFormat: 'https://www.instagram.com/:value',
     icon: 'instagram',
     domain: 'instagram.com',
+    customIcon: true,
   },
   {
     key: 'imdb_user',
-    label: 'IMDb User',
-    link: 'https://www.imdb.com/name/:value',
+    label: 'IMDb',
+    linkFormat: 'https://www.imdb.com/name/:value',
     icon: 'imdb',
     domain: 'imdb.com',
   },
   {
     key: 'linkedin',
     label: 'LinkedIn',
-    link: 'https://linkedin.com/in/:value',
+    linkFormat: 'https://linkedin.com/in/:value',
     icon: 'linkedin',
     domain: 'linkedin.com',
   },
   {
     key: 'mastodon',
-    label: 'Mastodon Profile',
-    link: 'https://mastodon.social/:value',
+    label: 'Mastodon',
+    linkFormat: 'https://mastodon.social/:value',
     icon: 'mastodon',
     domain: 'mastodon.social',
+    customIcon: true,
   },
   {
     key: 'medium',
-    label: 'Medium Profile',
-    link: 'https://medium.com/:value',
+    label: 'Medium',
+    linkFormat: 'https://medium.com/:value',
     icon: 'medium',
     domain: 'medium.com',
   },
   {
     key: 'minds',
     label: 'Minds',
-    link: 'https://www.minds.com/:value',
-    icon: 'minds',
-    customIcon: true,
+    linkFormat: 'https://www.minds.com/:value',
+    icon: 'bulb',
     domain: 'minds.com',
+    customIcon: true,
+  },
+  {
+    key: 'odysee',
+    label: 'Odysee',
+    linkFormat: 'https://odysee.com/@:value',
+    icon: 'odysee',
+    domain: 'odysee.com',
+    customIcon: true,
   },
   {
     key: 'patreon',
-    label: 'Patreon Profile',
-    link: 'https://www.patreon.com/:value',
+    label: 'Patreon',
+    linkFormat: 'https://www.patreon.com/:value',
     icon: 'patreon',
     domain: 'patreon.com',
   },
   {
     key: 'reddit',
     label: 'Reddit',
-    link: 'https://www.reddit.com/u/:value',
+    linkFormat: 'https://www.reddit.com/u/:value',
     icon: 'reddit',
     domain: 'reddit.com',
   },
   {
+    key: 'rumble',
+    label: 'Rumble',
+    linkFormat: 'https://rumble.com/c/:value',
+    icon: 'rumble',
+    domain: 'reddit.com',
+    customIcon: true,
+  },
+  {
     key: 'slack',
-    label: 'Slack Channel',
-    link: 'https://:value.slack.com',
+    label: 'Slack',
+    linkFormat: 'https://:value.slack.com',
     icon: 'slack',
     domain: 'slack.com',
   },
   {
+    key: 'snapchat',
+    label: 'Snapchat',
+    linkFormat: 'https://snapchat.com/add/:value',
+    icon: 'snapchat',
+    domain: 'snapchat.com',
+  },
+  {
     key: 'soundcloud',
     label: 'SoundCloud',
-    link: 'https://soundcloud.com/:value',
+    linkFormat: 'https://soundcloud.com/:value',
     icon: 'soundcloud',
     domain: 'soundcloud.com',
   },
   {
+    key: 'spotify',
+    label: 'Spotify',
+    linkFormat: 'https://open.spotify.com/user/:value',
+    icon: 'spotify',
+    domain: 'open.spotify.com',
+  },
+  {
     key: 'steam',
-    label: 'Steam Profile',
-    link: 'https://steamcommunity.com/id/:value/',
+    label: 'Steam',
+    linkFormat: 'https://steamcommunity.com/id/:value/',
     icon: 'steam',
     domain: 'steamcommunity.com',
   },
   {
+    key: 'threads',
+    label: 'Threads',
+    linkFormat: 'https://threads.net/@:value',
+    icon: 'threads',
+    domain: 'threads.net',
+    customIcon: true,
+  },
+  {
+    key: 'tiktok',
+    label: 'TikTok',
+    linkFormat: 'https://tiktok.com/@:value',
+    icon: 'tiktok',
+    domain: 'tiktok.com',
+    customIcon: true,
+  },
+  {
     key: 'tumblr',
     label: 'Tumblr Site',
-    link: 'https://:value.tumblr.com',
+    linkFormat: 'https://:value.tumblr.com',
     icon: 'tumblr',
     domain: 'tumblr.com',
   },
   {
     key: 'twitter',
     label: 'Twitter',
-    link: 'https://twitter.com/:value',
-    icon: 'twitter',
+    linkFormat: 'https://twitter.com/:value',
+    icon: 'x-twitter',
     domain: 'twitter.com',
+    customIcon: true,
   },
   {
     key: 'twitch',
     label: 'Twitch',
-    link: 'https://www.twitch.tv/:value',
+    linkFormat: 'https://www.twitch.tv/:value',
     icon: 'twitch',
     domain: 'twitch.tv',
   },
   {
     key: 'wikipedia_user',
-    label: 'Wikipedia User',
-    link: 'https://wikipedia.org/wiki/:value',
+    label: 'Wikipedia',
+    linkFormat: 'https://wikipedia.org/wiki/:value',
     icon: 'wikipedia-w',
     domain: 'wikipedia.com',
   },
   {
+    key: 'x',
+    label: 'X',
+    linkFormat: 'https://x.com/:value',
+    icon: 'x-twitter',
+    domain: 'x.com',
+    customIcon: true,
+  },
+  {
     key: 'youtube_channel',
-    label: 'YouTube Channel',
-    link: 'https://www.youtube.com/channel/:value',
+    label: 'YouTube',
+    linkFormat: 'https://www.youtube.com/channel/:value',
     icon: 'youtube',
     domain: 'youtube.com',
+    customIcon: true,
   },
   {
     key: 'other',
     label: 'Other',
-    link: '',
+    linkFormat: '',
     icon: 'link',
     domain: '',
+    customIcon: true,
   },
 ];
 
@@ -206,9 +267,10 @@ export function getSocialProfileMeta(key: string): SocialProfileMeta {
   let defaultMeta: SocialProfileMeta = {
     key: '',
     label: '',
-    link: '#',
+    linkFormat: '#',
     icon: 'link',
     domain: '',
+    customIcon: true,
   };
 
   if (!key) {
@@ -233,10 +295,9 @@ export function buildFromV1ChannelProfile(
 ): Array<KeyVal> {
   for (let i = 0; i < profiles.length; i++) {
     if (profiles[i].key != 'other' && !profiles[i].value.includes('/')) {
-      profiles[i].value = getSocialProfileMeta(profiles[i].key).link.replace(
-        ':value',
-        profiles[i].value
-      );
+      profiles[i].value = getSocialProfileMeta(
+        profiles[i].key
+      ).linkFormat.replace(':value', profiles[i].value);
     }
   }
 

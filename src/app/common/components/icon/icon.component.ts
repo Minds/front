@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
 import { CUSTOM_ICONS } from './custom-icons';
 
-export type IconSource = 'md' | 'ion' | 'assets-file' | 'text';
+export type IconSource = 'md' | 'ion' | 'assets-file' | 'text' | 'custom';
 
 /**
  * Normalized icon component

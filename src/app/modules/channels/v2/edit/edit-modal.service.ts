@@ -30,6 +30,7 @@ export class ChannelEditModalService {
    */
   async present(
     channel: MindsUser,
+    initialPane: number,
     injector: Injector
   ): Promise<MindsUser | null> {
     if (channel.guid !== this.session.getLoggedInUser().guid) {
@@ -40,6 +41,7 @@ export class ChannelEditModalService {
     const modal = this.modalService.present(ChannelEditComponent, {
       data: {
         channel,
+        initialPane,
         onSave: response => modal.close(response),
       },
       size: 'lg',

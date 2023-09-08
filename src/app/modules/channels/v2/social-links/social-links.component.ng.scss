@@ -1,0 +1,99 @@
+@import 'defaults.scss';
+@import '../../../../common/layout/layout.scss';
+
+:host {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  max-width: 100%;
+
+  &.m-channel__socialLinks--sidebar {
+    grid-template-columns: 100%;
+  }
+
+  @media screen and (max-width: $layoutMax2ColFixedWidth) {
+    grid-template-columns: 100%;
+  }
+
+  .m-channelSocialLinks__link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: $spacing8;
+
+    font-size: 20px;
+    text-decoration: none;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &.m-channelSocialLinks__link--verified {
+      span {
+        max-width: calc(100% - $spacing17);
+        @include m-theme() {
+          color: themed($m-green);
+        }
+      }
+      i.m-channelSocialLinksLinkIcon--verified {
+        padding-left: $spacing2;
+        font-size: 20px;
+      }
+
+      .m-channelSocialLinksLink__icon {
+        @include m-theme() {
+          color: themed($m-green);
+        }
+
+        &.m-channelSocialLinksLink__icon--custom {
+          @include m-theme() {
+            background-color: themed($m-green);
+          }
+        }
+      }
+    }
+
+    .m-channelSocialLinksLink__icon {
+      height: 20px;
+      width: 20px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      &.fa {
+        font-size: 22px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &.m-channelSocialLinksLink__icon--custom {
+        @include m-theme() {
+          background-color: themed($m-textColor--secondary);
+        }
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        mask-position: center;
+      }
+    }
+
+    i {
+      font-size: 24px;
+    }
+
+    span {
+      display: inline-block;
+      align-items: center;
+      padding-left: 10px;
+      max-width: calc(100% - $spacing12);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      @include body2Medium;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}
