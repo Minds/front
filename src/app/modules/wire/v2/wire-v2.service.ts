@@ -302,6 +302,13 @@ export class WireV2Service implements OnDestroy {
   >(false);
 
   /**
+   * True if the modal is in gift receipt mode.
+   */
+  public readonly isReceivingGift$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
+  /**
    * Wire upgrade interval subject
    */
   readonly upgradeInterval$: BehaviorSubject<
@@ -607,14 +614,24 @@ export class WireV2Service implements OnDestroy {
       this.upgradeInterval$,
       this.type$,
       this.isUpgrade$,
+      this.isReceivingGift$,
     ]).pipe(
-      map(([upgradeType, upgradeInterval, paymentType, isUpgrade]) => {
-        return (
-          isUpgrade &&
-          this.upgrades[upgradeType][upgradeInterval].can_have_trial &&
-          paymentType === 'usd'
-        );
-      })
+      map(
+        ([
+          upgradeType,
+          upgradeInterval,
+          paymentType,
+          isUpgrade,
+          isReceivingGift,
+        ]) => {
+          return (
+            !isReceivingGift &&
+            isUpgrade &&
+            this.upgrades[upgradeType][upgradeInterval].can_have_trial &&
+            paymentType === 'usd'
+          );
+        }
+      )
     );
 
     // Sync balances
@@ -848,6 +865,16 @@ export class WireV2Service implements OnDestroy {
   }
 
   /**
+   * Sets whether the modal is in gift receipt mode.
+   * @param { boolean } isReceivingGift whether the modal is in gift receipt mode.
+   * @returns { WireV2Service }
+   */
+  setIsReceivingGift(isReceivingGift: boolean): WireV2Service {
+    this.isReceivingGift$.next(isReceivingGift);
+    return this;
+  }
+
+  /**
    * Sets username of a gift recipient.
    * @param { string } giftRecipientUsername - username of a gift recipient.
    * @returns { WireV2Service }
@@ -898,8 +925,10 @@ export class WireV2Service implements OnDestroy {
     this.setRecurring(DEFAULT_RECURRING_VALUE);
     this.setRefundPolicyAgreed(DEFAULT_REFUND_POLICY_ACCEPTED_VALUE);
     this.setIsGift(false);
-    this.setGiftRecipientUsername(null);
     this.setIsSelfGift(false);
+    this.setIsReceivingGift(false);
+    this.setGiftRecipientUsername(null);
+
     // State
     this.setInProgress(false);
 

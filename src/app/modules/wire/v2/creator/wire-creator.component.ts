@@ -85,6 +85,7 @@ export class WireCreatorComponent implements OnDestroy {
     supportTier,
     sourceEntity,
     isGift,
+    isReceivingGift,
   }: {
     onComplete;
     onDismissIntent;
@@ -93,6 +94,7 @@ export class WireCreatorComponent implements OnDestroy {
     supportTier?;
     sourceEntity?;
     isGift?: boolean;
+    isReceivingGift?: boolean;
   }) {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
@@ -115,6 +117,10 @@ export class WireCreatorComponent implements OnDestroy {
     if (isGift) {
       this.service.setIsGift(true);
       this.service.setType('usd');
+    }
+
+    if (isReceivingGift) {
+      this.service.setIsReceivingGift(true);
     }
 
     if (defaultValues) {

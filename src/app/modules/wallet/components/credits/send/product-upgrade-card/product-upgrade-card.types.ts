@@ -34,7 +34,7 @@ export type ProductUpgradeCardPricingTier = {
 };
 
 /** Config from engine for upgrade card consumption. */
-export type ProductUpgradeCardUpgradesConfig = {
+export type GiftCardUpgradesConfig = {
   plus: {
     monthly: {
       usd: number;

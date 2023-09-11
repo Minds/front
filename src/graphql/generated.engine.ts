@@ -173,6 +173,7 @@ export type GiftCardNode = NodeInterface & {
   id: Scalars['ID']['output'];
   issuedAt: Scalars['Int']['output'];
   issuedByGuid?: Maybe<Scalars['String']['output']>;
+  issuedByUsername?: Maybe<Scalars['String']['output']>;
   productId: GiftCardProductIdEnum;
   /**
    * Returns transactions relating to the gift card
@@ -671,6 +672,7 @@ export type GetGiftCardByCodeQuery = {
     balance: number;
     expiresAt: number;
     claimedAt?: number | null;
+    issuedByUsername?: string | null;
   };
 };
 
@@ -1686,6 +1688,7 @@ export const GetGiftCardByCodeDocument = gql`
       balance
       expiresAt
       claimedAt
+      issuedByUsername
     }
   }
 `;

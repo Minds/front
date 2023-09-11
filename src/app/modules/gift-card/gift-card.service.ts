@@ -18,6 +18,9 @@ import {
   GiftCardTargetInput,
 } from '../../../graphql/generated.engine';
 import { QueryOptionsAlone } from 'apollo-angular/types';
+import { GiftRecipientGiftDuration } from '../wire/v2/creator/form/gift-recipient/gift-recipient-modal/gift-recipient-modal.types';
+import { ConfigsService } from '../../common/services/configs.service';
+import { GiftCardUpgradesConfig } from '../wallet/components/credits/send/product-upgrade-card/product-upgrade-card.types';
 
 /**
  * Service for the retrieval and claiming of gift cards.
@@ -29,7 +32,8 @@ export class GiftCardService {
     private getGiftCardBalancesGQL: GetGiftCardBalancesGQL,
     private getGiftCardBalancesWithExpiryDataGQL: GetGiftCardBalancesWithExpiryDataGQL,
     private claimGiftCardGQL: ClaimGiftCardGQL,
-    private createGiftCardGQL: CreateGiftCardGQL
+    private createGiftCardGQL: CreateGiftCardGQL,
+    private config: ConfigsService
   ) {}
 
   /**
@@ -193,6 +197,41 @@ export class GiftCardService {
           return $localize`:@@GIFT_CARD__OTHER_CREDITS_TEXT:Other Credits`;
         }
         return $localize`:@@GIFT_CARD__OTHER_CREDIT_TEXT:Other Credit`;
+    }
+  }
+
+  /**
+   * Gets the largest purchasable upgrade duration for a given product and gift card amount.
+   * @param { GiftCardProductIdEnum } productId - id of the product.
+   * @param { number } amount - amount of the gift card.
+   * @returns { GiftCardProductIdEnum } - largest purchasable duration.
+   */
+  public getLargestPurchasableUpgradeDuration(
+    productId: GiftCardProductIdEnum,
+    amount: number
+  ): GiftRecipientGiftDuration {
+    const upgradesConfig: GiftCardUpgradesConfig = this.config.get<
+      GiftCardUpgradesConfig
+    >('upgrades');
+    switch (productId) {
+      case GiftCardProductIdEnum.Plus:
+        if (amount >= upgradesConfig.plus.yearly.usd) {
+          return GiftRecipientGiftDuration.YEAR;
+        }
+        if (amount >= upgradesConfig.plus.monthly.usd) {
+          return GiftRecipientGiftDuration.MONTH;
+        }
+        return null;
+      case GiftCardProductIdEnum.Pro:
+        if (amount >= upgradesConfig.pro.yearly.usd) {
+          return GiftRecipientGiftDuration.YEAR;
+        }
+        if (amount >= upgradesConfig.pro.monthly.usd) {
+          return GiftRecipientGiftDuration.MONTH;
+        }
+        return null;
+      default:
+        return null;
     }
   }
 }

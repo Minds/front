@@ -52,7 +52,11 @@
     <!-- ---------------------------------- -->
     <div
       class="m-wireCreatorForm__fields"
-      *ngIf="(service.isUpgrade$ | async) && (!service.isGift$ | async)"
+      *ngIf="
+        (service.isUpgrade$ | async) &&
+        !(service.isGift$ | async) &&
+        !(service.isReceivingGift$ | async)
+      "
     >
       <div class="m-wireCreatorForm__field">
         <div class="m-wireCreatorForm__field">

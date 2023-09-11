@@ -6,7 +6,7 @@ import {
   ProductUpgradeCardPricingTiers,
   ProductUpgradeCardProductBenefit,
   ProductUpgradeCardProductBenefits,
-  ProductUpgradeCardUpgradesConfig,
+  GiftCardUpgradesConfig,
 } from './product-upgrade-card.types';
 import { WireCreatorComponent } from '../../../../../wire/v2/creator/wire-creator.component';
 import { ModalService } from '../../../../../../services/ux/modal.service';
@@ -81,8 +81,8 @@ export class WalletV2CreditsProductUpgradeCardComponent {
     readonly config: ConfigsService,
     @Inject(CDN_ASSETS_URL) public readonly cdnAssetsUrl
   ) {
-    const upgradesConfig: ProductUpgradeCardUpgradesConfig = config.get<
-      ProductUpgradeCardUpgradesConfig
+    const upgradesConfig: GiftCardUpgradesConfig = config.get<
+      GiftCardUpgradesConfig
     >('upgrades');
 
     this.pricingTiers = {
