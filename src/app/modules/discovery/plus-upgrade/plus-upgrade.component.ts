@@ -50,7 +50,6 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
     }
   }
 
-  // ojm
   async openComposerWithPlus(): Promise<void> {
     const plusSupportTierUrn: string =
       this.configs.get('plus').support_tier_urn || 'urn:support-tier:plus';
