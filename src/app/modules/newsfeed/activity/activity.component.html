@@ -1,4 +1,4 @@
-<div class="m-activity__wrapper" *ngIf="canShow">
+<div class="m-activity__wrapper" #activityWrapper *ngIf="canShow">
   <m-activity__downvoteNotice
     *ngIf="showDownvoteNotice"
     [entity]="entity$ | async"

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
-import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
+import { IntersectionObserverService } from '../../../common/services/intersection-observer.service';
 import { AnalyticsService } from '../../../services/analytics';
 
 /**
@@ -36,7 +36,7 @@ export class FeedNoticeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.setupInterceptionObserver();
+    this.setupIntersectionObserver();
   }
 
   ngOnDestroy(): void {
@@ -62,14 +62,14 @@ export class FeedNoticeComponent implements OnInit, OnDestroy {
   );
 
   /**
-   * Setup InterceptionObserver to watch for feed notice entering
+   * Setup IntersectionObserver to watch for feed notice entering
    * and leaving the viewport - once one has entered for more than a
    * second, calls to log a view event in analytics.
    * @returns { void }
    */
-  private setupInterceptionObserver(): void {
+  private setupIntersectionObserver(): void {
     if (this.intersectionObserverSubscription) {
-      console.warn('Attempted to re-register FeedNotice InterceptionObserver');
+      console.warn('Attempted to re-register FeedNotice IntersectionObserver');
       return;
     }
 

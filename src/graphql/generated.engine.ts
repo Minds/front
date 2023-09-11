@@ -282,6 +282,7 @@ export type Mutation = {
   dismiss: Dismissal;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  updateAccount: Array<Scalars['String']['output']>;
 };
 
 export type MutationClaimGiftCardArgs = {
@@ -308,6 +309,13 @@ export type MutationDismissArgs = {
 
 export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
+};
+
+export type MutationUpdateAccountArgs = {
+  currentUsername: Scalars['String']['input'];
+  newEmail?: InputMaybe<Scalars['String']['input']>;
+  newUsername?: InputMaybe<Scalars['String']['input']>;
+  resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -596,6 +604,18 @@ export type GetDismissalsQuery = {
     key: string;
     dismissalTimestamp: number;
   }>;
+};
+
+export type AdminUpdateAccountMutationVariables = Exact<{
+  currentUsername: Scalars['String']['input'];
+  newUsername?: InputMaybe<Scalars['String']['input']>;
+  newEmail?: InputMaybe<Scalars['String']['input']>;
+  resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+export type AdminUpdateAccountMutation = {
+  __typename?: 'Mutation';
+  updateAccount: Array<string>;
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -1567,6 +1587,35 @@ export class GetDismissalsGQL extends Apollo.Query<
   GetDismissalsQueryVariables
 > {
   document = GetDismissalsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const AdminUpdateAccountDocument = gql`
+  mutation AdminUpdateAccount(
+    $currentUsername: String!
+    $newUsername: String
+    $newEmail: String
+    $resetMFA: Boolean
+  ) {
+    updateAccount(
+      currentUsername: $currentUsername
+      newUsername: $newUsername
+      newEmail: $newEmail
+      resetMFA: $resetMFA
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminUpdateAccountGQL extends Apollo.Mutation<
+  AdminUpdateAccountMutation,
+  AdminUpdateAccountMutationVariables
+> {
+  document = AdminUpdateAccountDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

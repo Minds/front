@@ -22,6 +22,8 @@ import { AdminPushNotificationsHistoryComponent } from './push-notifications/his
 import { NotificationHistoryCardComponent } from './push-notifications/history/card/notification-history-card.component';
 import { AdminPushNotificationsComponent } from './push-notifications/admin-push-notifications.component';
 import { BoostModule } from '../boost/boost.module';
+import { AdminAccountsComponent } from './accounts/admin-accounts.component';
+import { AdminAccountsFormComponent } from './accounts/form/admin-accounts-form.component';
 
 const routes: Routes = [
   {
@@ -55,6 +57,8 @@ const routes: Routes = [
     AdminWithdrawals,
     AdminTransactionExplorersComponent,
     AdminLiquidityProvidersComponent,
+    AdminAccountsComponent,
+    AdminAccountsFormComponent,
     AdminPushNotificationsComponent,
     AdminPushNotificationsFormComponent,
     AdminPushNotificationsHistoryComponent,

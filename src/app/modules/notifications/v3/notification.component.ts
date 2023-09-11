@@ -36,7 +36,7 @@ export class NotificationsV3NotificationComponent
 
   @ViewChild('notificationWrapper') notificationWrapper: ElementRef;
 
-  interceptionObserver: IntersectionObserver;
+  intersectionObserver: IntersectionObserver;
 
   /** show a warning error if the notification type is not recognised */
   typeError: boolean = false;
@@ -121,8 +121,8 @@ export class NotificationsV3NotificationComponent
   }
 
   ngOnDestroy(): void {
-    if (this.interceptionObserver) {
-      this.interceptionObserver.disconnect();
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
     }
   }
 
@@ -584,7 +584,7 @@ export class NotificationsV3NotificationComponent
       threshold: 0,
     };
 
-    this.interceptionObserver = new IntersectionObserver(
+    this.intersectionObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -595,7 +595,7 @@ export class NotificationsV3NotificationComponent
       options
     );
 
-    this.interceptionObserver.observe(this.notificationWrapper.nativeElement);
+    this.intersectionObserver.observe(this.notificationWrapper.nativeElement);
   }
 
   formatWireAmount(notification): string | null {
