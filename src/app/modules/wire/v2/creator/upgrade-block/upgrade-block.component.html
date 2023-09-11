@@ -11,7 +11,7 @@
     <div class="m-wireCreatorUpgradeBlock__title">
       <ng-container *ngIf="isPlus">
         <span
-          *ngIf="!(isGift$ | async); else plusGiftTitleTemplate"
+          *ngIf="!(isSendingGift$ | async); else plusGiftTitleTemplate"
           i18n="@@WIRE_CREATOR_MARKETING__GET_PLUS_EXPERIENCE"
           >Get the complete Minds+ experience</span
         >
@@ -23,7 +23,7 @@
       </ng-container>
       <ng-container *ngIf="isPro">
         <span
-          *ngIf="!(isGift$ | async); else proGiftTitleTemplate"
+          *ngIf="!(isSendingGift$ | async); else proGiftTitleTemplate"
           i18n="@@WIRE_CREATOR_MARKETING__NEXT_LEVEL_PRO"
           >Take your experience to the next level with Minds Pro</span
         >
@@ -38,7 +38,7 @@
     <div class="m-wireCreatorUpgradeBlock__desc">
       <ng-container *ngIf="isPlus">
         <span
-          *ngIf="isGift$ | async; else notGiftPlusDescriptionTemplate"
+          *ngIf="isSendingGift$ | async; else notGiftPlusDescriptionTemplate"
           i18n="@@WIRE_CREATOR_MARKETING__PLUS_SELF_DESC"
           >Minds+ is the upgrade designed for creators. Help your friends get
           more reach, earning opportunities, and additional perks for supporting
@@ -54,7 +54,7 @@
       </ng-container>
       <ng-container *ngIf="isPro">
         <span
-          *ngIf="isGift$ | async; else notGiftProDescriptionTemplate"
+          *ngIf="isSendingGift$ | async; else notGiftProDescriptionTemplate"
           i18n="@@WIRE_CREATOR_MARKETING__PRO_GIFT_DESC"
           >Help a friend take their channel to the next level with even more
           Boost credits, and access exclusive channel customizations to

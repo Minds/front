@@ -21,7 +21,8 @@ export class WireCreatorUpgradeBlockComponent implements OnInit, OnDestroy {
   upgradeType: WireUpgradeType;
 
   /** Whether the wire modal is presenting a gift purchasing option. */
-  public readonly isGift$: Observable<boolean> = this.service.isGift$;
+  public readonly isSendingGift$: Observable<boolean> = this.service
+    .isSendingGift$;
 
   /**
    * Constructor. Retrieves CDN URL.

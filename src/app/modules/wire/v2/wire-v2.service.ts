@@ -283,23 +283,9 @@ export class WireV2Service implements OnDestroy {
   /**
    * True if wire modal is in gift giving mode.
    */
-  public readonly isGift$: BehaviorSubject<boolean> = new BehaviorSubject<
+  public readonly isSendingGift$: BehaviorSubject<
     boolean
-  >(false);
-
-  /**
-   * Gift recipient username.
-   */
-  public readonly giftRecipientUsername$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>(null);
-
-  /**
-   * True if self gifting (allowing the user to give the code out themselves).
-   */
-  public readonly isSelfGift$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  > = new BehaviorSubject<boolean>(false);
 
   /**
    * True if the modal is in gift receipt mode.
@@ -307,6 +293,20 @@ export class WireV2Service implements OnDestroy {
   public readonly isReceivingGift$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);
+
+  /**
+   * Gift recipient username for when sending a gift.
+   */
+  public readonly giftRecipientUsername$: BehaviorSubject<
+    string
+  > = new BehaviorSubject<string>(null);
+
+  /**
+   * True if sending a self gift (allowing the user to give the code out themselves).
+   */
+  public readonly isSelfGift$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   /**
    * Wire upgrade interval subject
@@ -497,7 +497,7 @@ export class WireV2Service implements OnDestroy {
       this.usdPaymentMethodId$,
       this.wallet.wallet$,
       this.sourceEntityGuid$,
-      this.isGift$,
+      this.isSendingGift$,
       this.isSelfGift$,
       this.giftRecipientUsername$,
     ]).pipe(
@@ -614,6 +614,7 @@ export class WireV2Service implements OnDestroy {
       this.upgradeInterval$,
       this.type$,
       this.isUpgrade$,
+      this.isSendingGift$,
       this.isReceivingGift$,
     ]).pipe(
       map(
@@ -622,10 +623,12 @@ export class WireV2Service implements OnDestroy {
           upgradeInterval,
           paymentType,
           isUpgrade,
+          isSendingGift,
           isReceivingGift,
         ]) => {
           return (
             !isReceivingGift &&
+            !isSendingGift &&
             isUpgrade &&
             this.upgrades[upgradeType][upgradeInterval].can_have_trial &&
             paymentType === 'usd'
@@ -843,11 +846,11 @@ export class WireV2Service implements OnDestroy {
 
   /**
    * Sets gifting mode.
-   * @param { boolean } isGift true if this transaction is to be a gift.
+   * @param { boolean } isGift - true if this transaction is to be a gift.
    * @returns { WireV2Service }
    */
-  setIsGift(isGift: boolean): WireV2Service {
-    this.isGift$.next(isGift);
+  setIsSendingGift(isSendingGift: boolean): WireV2Service {
+    this.isSendingGift$.next(isSendingGift);
     return this;
   }
 
@@ -924,9 +927,9 @@ export class WireV2Service implements OnDestroy {
     this.setAmount(DEFAULT_AMOUNT_VALUE);
     this.setRecurring(DEFAULT_RECURRING_VALUE);
     this.setRefundPolicyAgreed(DEFAULT_REFUND_POLICY_ACCEPTED_VALUE);
-    this.setIsGift(false);
-    this.setIsSelfGift(false);
     this.setIsReceivingGift(false);
+    this.setIsSendingGift(false);
+    this.setIsSelfGift(false);
     this.setGiftRecipientUsername(null);
 
     // State
@@ -962,7 +965,7 @@ export class WireV2Service implements OnDestroy {
       return invalid();
     }
 
-    if (this.isUpgrade$.getValue() && !this.isGift$.getValue()) {
+    if (this.isUpgrade$.getValue() && !this.isSendingGift$.getValue()) {
       if (this.upgradeType$.getValue() === 'pro' && this.userIsPro) {
         return invalid('You are already a Pro member', true);
       }
@@ -1153,7 +1156,7 @@ export class WireV2Service implements OnDestroy {
       throw new Error(`There's nothing to send`);
     }
 
-    if (this.isGift$.getValue()) {
+    if (this.isSendingGift$.getValue()) {
       return firstValueFrom(this.sendGiftCard());
     }
 
@@ -1243,5 +1246,21 @@ export class WireV2Service implements OnDestroy {
         this.inProgress$.next(false);
       })
     );
+  }
+
+  /**
+   * Gets gift card product ID applicable to the current upgrade type.
+   * If no matching upgrade type is found, will return null.
+   * @returns { GiftCardProductIdEnum } applicable gift card product id.
+   */
+  public getApplicableGiftCardProductId(): GiftCardProductIdEnum {
+    switch (this.upgradeType$.getValue()) {
+      case 'plus':
+        return GiftCardProductIdEnum.Plus;
+      case 'pro':
+        return GiftCardProductIdEnum.Pro;
+      default:
+        null;
+    }
   }
 }

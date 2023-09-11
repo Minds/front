@@ -54,7 +54,7 @@
       class="m-wireCreatorForm__fields"
       *ngIf="
         (service.isUpgrade$ | async) &&
-        !(service.isGift$ | async) &&
+        !(service.isSendingGift$ | async) &&
         !(service.isReceivingGift$ | async)
       "
     >
@@ -106,7 +106,7 @@
         <div class="m-wireCreatorForm__intervalToggleContainer">
           <ng-container
             *ngIf="
-              !(service.isGift$ | async);
+              !(service.isSendingGift$ | async);
               else giftIntervalContainerTemplate
             "
           >
@@ -273,7 +273,10 @@
     </div>
 
     <!-- GIFT RECIPIENT INPUT FIELD -->
-    <div *ngIf="service.isGift$ | async" class="m-wireCreatorForm__fields">
+    <div
+      *ngIf="service.isSendingGift$ | async"
+      class="m-wireCreatorForm__fields"
+    >
       <div class="m-wireCreatorForm__field">
         <span
           class="m-wireCreatorForm__label m-wireCreatorForm__label--giftRecipient"
@@ -380,6 +383,7 @@
 
           <m-payments__selectCard
             (selected)="service.setUsdPaymentMethodId($event)"
+            [giftCardProductIdEnum]="getApplicableGiftCardProductId()"
           ></m-payments__selectCard>
         </div>
       </ng-container>

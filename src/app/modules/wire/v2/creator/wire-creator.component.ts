@@ -115,7 +115,7 @@ export class WireCreatorComponent implements OnDestroy {
     }
 
     if (isGift) {
-      this.service.setIsGift(true);
+      this.service.setIsSendingGift(true);
       this.service.setType('usd');
     }
 
