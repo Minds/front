@@ -12,6 +12,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm-discovery__plusUpgrade',
   templateUrl: './plus-upgrade.component.html',
   styleUrls: ['./plus-upgrade.component.ng.scss'],
+  providers: [ComposerService],
 })
 export class DiscoveryPlusUpgradeComponent implements OnInit {
   isPlus: boolean = false;
@@ -49,6 +50,7 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
     }
   }
 
+  // ojm
   async openComposerWithPlus(): Promise<void> {
     const plusSupportTierUrn: string =
       this.configs.get('plus').support_tier_urn || 'urn:support-tier:plus';
@@ -67,7 +69,7 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
 
     await this.composerModal.setInjector(this.injector).present();
 
-    // Resest on close
+    // Reset on close
     this.composerService.reset();
   }
 }
