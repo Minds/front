@@ -7,4 +7,13 @@
     vertical-align: middle;
     letter-spacing: normal;
   }
+
+  /**
+   * Context for when showing large on SEPs
+   */
+  .m-activityToolbar__largeActions & {
+    ::ng-deep m-button .m-button {
+      width: 100%;
+    }
+  }
 }
