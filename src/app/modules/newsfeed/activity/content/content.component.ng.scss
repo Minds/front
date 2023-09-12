@@ -135,10 +135,6 @@
       padding-left: $activitySpacing--minimalMode !important;
       padding-right: $activitySpacing--minimalMode !important;
       padding-bottom: $spacing4;
-
-      span {
-        max-width: 50%;
-      }
     }
 
     // MINIMAL MEDIA
@@ -273,6 +269,9 @@
             }
           }
         }
+      }
+      .m-activityContent__secondaryTagsWrapper {
+        padding: 0 0 $spacing3 0;
       }
     }
   }
