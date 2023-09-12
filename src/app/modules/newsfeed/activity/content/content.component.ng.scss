@@ -131,6 +131,16 @@
       }
     }
 
+    .m-activityContent__secondaryTagsWrapper {
+      padding-left: $activitySpacing--minimalMode !important;
+      padding-right: $activitySpacing--minimalMode !important;
+      padding-bottom: $spacing4;
+
+      span {
+        max-width: 50%;
+      }
+    }
+
     // MINIMAL MEDIA
     .m-activityContent__media {
       img {
@@ -324,7 +334,8 @@
   // *********************************
 
   .m-activity--isSidebarBoost & {
-    .m-activityContent__textWrapper {
+    .m-activityContent__textWrapper,
+    .m-activityContent__secondaryTagsWrapper {
       padding: 0 $activitySpacing--minimalMode;
     }
 
@@ -644,6 +655,30 @@
     }
   }
 
+  // *********************************
+  // ** SECONDARY TAGS (FORMERLY HIDDEN) **
+  // *********************************
+  .m-activityContent__secondaryTagsWrapper {
+    padding: $spacing3 0 0;
+    display: flex;
+    flex-flow: row wrap;
+
+    span {
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: $spacing1 $spacing4 0 0;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      @include body3Regular;
+
+      ::ng-deep a {
+        text-decoration: none;
+      }
+    }
+  }
   // *********************************
   // ** TRANSLATIONS **
   // *********************************
