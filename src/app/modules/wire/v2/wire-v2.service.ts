@@ -200,7 +200,7 @@ interface Data {
   usdPaymentMethodId: string;
   wallet: Wallet;
   sourceEntityGuid: string;
-  isGift?: boolean;
+  isSendingGift?: boolean;
   isSelfGift?: boolean;
   giftRecipientUsername?: string;
 }
@@ -518,7 +518,7 @@ export class WireV2Service implements OnDestroy {
           usdPaymentMethodId,
           wallet,
           sourceEntityGuid,
-          isGift,
+          isSendingGift,
           isSelfGift,
           giftRecipientUsername,
         ]: DataArray): Data => ({
@@ -537,7 +537,7 @@ export class WireV2Service implements OnDestroy {
           usdPaymentMethodId,
           wallet,
           sourceEntityGuid,
-          isGift,
+          isSendingGift,
           isSelfGift,
           giftRecipientUsername,
         })
@@ -846,7 +846,7 @@ export class WireV2Service implements OnDestroy {
 
   /**
    * Sets gifting mode.
-   * @param { boolean } isGift - true if this transaction is to be a gift.
+   * @param { boolean } isSendingGift - true if this transaction is to be a gift.
    * @returns { WireV2Service }
    */
   setIsSendingGift(isSendingGift: boolean): WireV2Service {
@@ -974,7 +974,7 @@ export class WireV2Service implements OnDestroy {
       }
     }
 
-    if (data.isGift) {
+    if (data.isSendingGift) {
       if (!data.giftRecipientUsername && !data.isSelfGift) {
         return invalid(
           'You must select a gift recipient for non-self gifts',

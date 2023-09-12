@@ -193,7 +193,7 @@ export class WalletV2CreditsProductUpgradeCardComponent {
     const modal = this.modalService.present(WireCreatorComponent, {
       size: 'lg',
       data: {
-        isGift: true,
+        isSendingGift: true,
         entity: entity,
         default: {
           type: 'money',
