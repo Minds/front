@@ -616,6 +616,7 @@ export class WireV2Service implements OnDestroy {
       this.isUpgrade$,
       this.isSendingGift$,
       this.isReceivingGift$,
+      this.usdPaymentMethodId$,
     ]).pipe(
       map(
         ([
@@ -625,10 +626,12 @@ export class WireV2Service implements OnDestroy {
           isUpgrade,
           isSendingGift,
           isReceivingGift,
+          usdPaymentMethodId,
         ]) => {
           return (
             !isReceivingGift &&
             !isSendingGift &&
+            usdPaymentMethodId !== 'gift_card' &&
             isUpgrade &&
             this.upgrades[upgradeType][upgradeInterval].can_have_trial &&
             paymentType === 'usd'
@@ -1161,6 +1164,13 @@ export class WireV2Service implements OnDestroy {
     }
 
     this.inProgress$.next(true);
+
+    console.log(this.usdPaymentMethodId$.getValue());
+
+    // Gift cards currently cannot be recurring payments.
+    if (this.usdPaymentMethodId$.getValue() === 'gift_card') {
+      this.wirePayload.recurring = false;
+    }
 
     try {
       const response = await this.v1Wire.submitWire(this.wirePayload);
