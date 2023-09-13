@@ -103,8 +103,9 @@ export class GiftCardClaimSuccessPanelComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   public onActionButtonClick(): void {
-    this.actionButtonClickSubscription = this.giftCardPanel.productId$.subscribe(
-      (productId: GiftCardProductIdEnum): void => {
+    this.actionButtonClickSubscription = this.giftCardPanel.productId$
+      .pipe(take(1))
+      .subscribe((productId: GiftCardProductIdEnum): void => {
         switch (productId) {
           case GiftCardProductIdEnum.Boost:
             this.router.navigate(['/boost/boost-console']);
@@ -116,8 +117,7 @@ export class GiftCardClaimSuccessPanelComponent implements OnInit, OnDestroy {
           default:
             this.router.navigate([this.getViewBalanceUrl()]);
         }
-      }
-    );
+      });
   }
 
   /**

@@ -861,19 +861,9 @@ export class WireV2Service implements OnDestroy {
    */
   setIsSelfGift(isSelfGift: boolean): WireV2Service {
     if (isSelfGift) {
-      this.setGiftRecipientUsername(null);
+      this.giftRecipientUsername$.next(null);
     }
     this.isSelfGift$.next(isSelfGift);
-    return this;
-  }
-
-  /**
-   * Sets whether the modal is in gift receipt mode.
-   * @param { boolean } isReceivingGift whether the modal is in gift receipt mode.
-   * @returns { WireV2Service }
-   */
-  setIsReceivingGift(isReceivingGift: boolean): WireV2Service {
-    this.isReceivingGift$.next(isReceivingGift);
     return this;
   }
 
@@ -884,9 +874,19 @@ export class WireV2Service implements OnDestroy {
    */
   setGiftRecipientUsername(giftRecipientUsername: string): WireV2Service {
     if (giftRecipientUsername?.length) {
-      this.setIsSelfGift(false);
+      this.isSelfGift$.next(false);
     }
     this.giftRecipientUsername$.next(giftRecipientUsername);
+    return this;
+  }
+
+  /**
+   * Sets whether the modal is in gift receipt mode.
+   * @param { boolean } isReceivingGift whether the modal is in gift receipt mode.
+   * @returns { WireV2Service }
+   */
+  setIsReceivingGift(isReceivingGift: boolean): WireV2Service {
+    this.isReceivingGift$.next(isReceivingGift);
     return this;
   }
 
@@ -965,7 +965,7 @@ export class WireV2Service implements OnDestroy {
       return invalid();
     }
 
-    if (this.isUpgrade$.getValue() && !this.isSendingGift$.getValue()) {
+    if (this.isUpgrade$.getValue() && !data.isSendingGift) {
       if (this.upgradeType$.getValue() === 'pro' && this.userIsPro) {
         return invalid('You are already a Pro member', true);
       }
@@ -1238,6 +1238,7 @@ export class WireV2Service implements OnDestroy {
       }),
       catchError(
         (e: any): Observable<boolean> => {
+          console.error(e);
           this.toasterService.error(e?.message);
           return of(false);
         }

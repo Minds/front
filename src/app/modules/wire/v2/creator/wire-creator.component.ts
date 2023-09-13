@@ -184,7 +184,7 @@ export class WireCreatorComponent implements OnDestroy {
     if (this.ownerSubscription) {
       this.ownerSubscription.unsubscribe();
     }
-    this.supportTierSubscription.unsubscribe();
+    this.supportTierSubscription?.unsubscribe();
   }
 
   /**

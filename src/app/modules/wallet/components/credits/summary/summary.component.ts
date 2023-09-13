@@ -6,7 +6,7 @@ import {
 import { GiftCardService } from '../../../../gift-card/gift-card.service';
 import { BehaviorSubject, Subscription, take } from 'rxjs';
 
-const PRODUCT_DISPLAY_ORDER: GiftCardProductIdEnum[] = [
+export const PRODUCT_DISPLAY_ORDER: GiftCardProductIdEnum[] = [
   GiftCardProductIdEnum.Boost,
   GiftCardProductIdEnum.Plus,
   GiftCardProductIdEnum.Pro,

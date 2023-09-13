@@ -48,6 +48,7 @@ export class GiftRecipientModalLazyService {
   ): Promise<ModalRef<GiftRecipientModalComponent>> {
     const componentRef: typeof GiftRecipientModalComponent = await this.getComponentRef();
     const modal = this.modalService.present(componentRef, {
+      size: 'md',
       data: {
         product: product,
         duration: duration,
@@ -62,7 +63,6 @@ export class GiftRecipientModalLazyService {
           modal.close();
         },
       },
-      size: 'md',
     });
 
     return modal;
