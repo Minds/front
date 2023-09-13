@@ -5,6 +5,6 @@ import { ChannelsV2Service } from '../../channels-v2.service';
   selector: 'm-channelActions__supermind',
   templateUrl: './supermind-button.component.html',
 })
-export class ChannelActionsSuperminButtonComponent {
+export class ChannelActionsSupermindButtonComponent {
   constructor(public service: ChannelsV2Service) {}
 }

@@ -9,6 +9,7 @@ import { ChannelEditService } from './edit.service';
   selector: 'm-channelEdit__socialLinks',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'social-links.component.html',
+  styleUrls: ['social-links.component.ng.scss'],
 })
 export class ChannelEditSocialLinksComponent {
   /**

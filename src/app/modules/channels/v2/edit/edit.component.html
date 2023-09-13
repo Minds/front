@@ -18,7 +18,10 @@
     class="m-channelEdit__content m-formWrapper"
     (keydown.enter)="$event.preventDefault()"
   >
-    <m-accordion class="m-accordionV2 m-formLayout--buttonRight">
+    <m-accordion
+      class="m-accordionV2 m-formLayout--buttonRight"
+      [opened]="initialPane ? initialPane : 0"
+    >
       <m-accordion__pane
         class="m-accordion__pane--noTopPadding"
         headerTitle="Bio &amp; Imagery"

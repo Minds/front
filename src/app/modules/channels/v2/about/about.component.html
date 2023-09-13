@@ -6,7 +6,7 @@
     <div class="m-channelAbout__container">
       <div
         *ngIf="channel.briefdescription"
-        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth m-channelAbout__field--hideOnNarrow"
       >
         <div class="m-channelAboutField__label" i18n="@@CHANNEL_ABOUT__BIO">
           Bio
@@ -22,7 +22,7 @@
 
       <div
         *ngIf="channel?.tags?.length"
-        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth m-channelAbout__field--hideOnNarrow"
       >
         <div class="m-channelAboutField__label">
           <ng-container i18n="@@COMMON__HASHTAGS">Hashtags</ng-container>
@@ -38,7 +38,7 @@
       </div>
 
       <div
-        *ngIf="channel?.social_profiles?.length"
+        *ngIf="channel?.social_profiles?.length; else addLinks"
         class="m-channelAbout__field m-channelAbout__field--fullWidth"
       >
         <div
@@ -53,6 +53,12 @@
           ></m-channel__socialLinks>
         </div>
       </div>
+      <ng-template #addLinks>
+        <m-channel__addLinksTrigger
+          class="m-channelAbout__field m-channelAbout__field--fullWidth"
+          *ngIf="service.isOwner$ | async"
+        ></m-channel__addLinksTrigger>
+      </ng-template>
 
       <div
         *ngIf="channel?.did"

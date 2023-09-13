@@ -30,12 +30,11 @@
     class="m-channelEditSocialLinkList__item"
   >
     <span>{{ socialLink.value }}</span>
-    <m-icon
-      class="m-channelEditSocialLinkListItem__remove"
-      iconId="close"
-      [sizeFactor]="-20"
+    <i
+      class="material-icons m-channelEditSocialLinkListItem__remove"
       (click)="service.removeSocialLink(i)"
       data-ref="data-minds-social-link-remove-button"
-    ></m-icon>
+      >close</i
+    >
   </li>
 </ul>
