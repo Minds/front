@@ -8,7 +8,6 @@ import {
   map,
   shareReplay,
   switchAll,
-  switchMap,
 } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 

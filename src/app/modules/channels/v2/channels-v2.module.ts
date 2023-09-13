@@ -42,8 +42,9 @@ import { ChannelAdminConfirmationComponent } from './actions/admin-confirmation/
 import { ExperimentsModule } from '../../experiments/experiments.module';
 import { ContentSettingsModule } from '../../content-settings/content-settings.module';
 import { MutualSubscriptionsComponent } from './mutual-subscriptions/mutual-subscriptions.component';
-import { ChannelActionsSuperminButtonComponent } from './actions/supermind/supermind-button.component';
+import { ChannelActionsSupermindButtonComponent } from './actions/supermind/supermind-button.component';
 import { SupermindSharedModule } from '../../supermind/supermind-shared.module';
+import { ChannelAddLinksTriggerComponent } from './about/add-links-trigger/add-links-trigger.component';
 
 /**
  * Generally available components
@@ -83,9 +84,11 @@ const INTERNAL_COMPONENTS = [
   ChannelListConnectionsComponent,
   ChannelListGroupsComponent,
   ChannelShopLazyComponent,
+  ChannelAddLinksTriggerComponent,
+
   //
   MutualSubscriptionsComponent,
-  ChannelActionsSuperminButtonComponent,
+  ChannelActionsSupermindButtonComponent,
 ];
 
 /**
