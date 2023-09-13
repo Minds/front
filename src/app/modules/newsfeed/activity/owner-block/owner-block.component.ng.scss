@@ -152,7 +152,7 @@
       margin-left: 0;
 
       span {
-        @include body3Bold;
+        @include body3Medium;
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
