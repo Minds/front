@@ -10,6 +10,7 @@
         (memberChanged)="membersListChanged$.next($event)"
         (loaded)="moderatorsListChanged$.next(null)"
         [sync]="moderatorsListChanged$ | async"
+        [showSearch]="true"
       ></m-group__membersList>
     </div>
     <!-- ----------------------------------------- -->
