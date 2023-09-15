@@ -32,8 +32,7 @@ export class CommentButton implements OnInit, OnDestroy {
 
   set _object(value: any) {
     this.object = value;
-    this.activityService.allowComment$.next(
-      this.object?.allow_comments ?? true
-    );
+
+    this.activityService.allowComment$.next(this.object.allow_comments);
   }
 }
