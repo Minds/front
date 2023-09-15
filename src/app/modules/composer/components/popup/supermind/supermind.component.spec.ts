@@ -10,7 +10,6 @@ import { CommonModule } from '../../../../../common/common.module';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { MockComponent, MockService } from '../../../../../utils/mock';
-import { SupermindOnboardingModalService } from '../../../../supermind/onboarding-modal/onboarding-modal.service';
 import { ComposerService } from '../../../services/composer.service';
 import { PopupService } from '../popup.service';
 import { ComposerSupermindComponent } from '../supermind/supermind.component';
@@ -22,6 +21,7 @@ import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ModalService } from '../../../../../services/ux/modal.service';
 import { Injector } from '@angular/core';
 import { SUPERMIND_RESPONSE_TYPES } from './superminds-creation.service';
+import { ExplainerScreensService } from '../../../../explainer-screens/services/explainer-screen.service';
 
 describe('Composer Supermind Popup', () => {
   let comp: ComposerSupermindComponent;
@@ -83,12 +83,12 @@ describe('Composer Supermind Popup', () => {
             useValue: apiMock,
           },
           {
-            provide: ConfigsService,
-            useValue: MockService(ConfigsService),
+            provide: ExplainerScreensService,
+            useValue: MockService(ExplainerScreensService),
           },
           {
-            provide: SupermindOnboardingModalService,
-            useValue: MockService(SupermindOnboardingModalService),
+            provide: ConfigsService,
+            useValue: MockService(ConfigsService),
           },
           {
             provide: EntityResolverService,
@@ -260,5 +260,13 @@ describe('Composer Supermind Popup', () => {
 
       expect(twitterRequiredFormControl.disabled).toBeFalse();
     });
+  });
+
+  it('should call to handle a manual explainer screen trigger', () => {
+    (comp as any).explainerScreenService.handleManualTriggerByKey.calls.reset();
+    comp.ngOnInit();
+    expect(
+      (comp as any).explainerScreenService.handleManualTriggerByKey
+    ).toHaveBeenCalledOnceWith('supermind_request');
   });
 });
