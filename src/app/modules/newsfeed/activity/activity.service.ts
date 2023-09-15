@@ -513,7 +513,8 @@ export class ActivityService implements OnDestroy {
     // use the entity guid for media quotes and images
     if (
       (entity.remind_object && entity.entity_guid) ||
-      entity.custom_type === 'batch'
+      entity.custom_type === 'batch' ||
+      entity.custom_type === 'video'
     ) {
       guid = entity.guid;
     }
