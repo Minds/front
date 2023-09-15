@@ -88,7 +88,7 @@ export class ActivityToolbarComponent {
   public toggleComments(): void {
     // use snapshot of entity from activity service to ensure it is up to date.
     const entitySnapshot: ActivityEntity = this.service.entity$.getValue();
-    if (!entitySnapshot.allow_comments) {
+    if (entitySnapshot?.allow_comments === false) {
       this.toast.warn('This user has disabled comments on their post');
 
       if (!entitySnapshot['comments:count']) {
