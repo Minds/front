@@ -2,22 +2,23 @@
   [showDropdownFilters]="false"
   boostLatestNoticeType="feed"
 ></m-boostConsole__filterBar>
-<ng-container *ngFor="let entity$ of feed$ | async">
+
+<ng-container *ngFor="let boost of boosts$ | async; trackBy: trackBy">
   <m-activity
-    *ngIf="entity$ | async as entity"
+    *ngIf="boost.activity as activity"
     [m-clientMeta]="{ source: 'feed/boosts', medium: 'feed' }"
-    [entity]="entity$ | async"
+    [entity]="activity"
     [displayOptions]="{
       isFeed: true
     }"
-    (deleted)="delete(entity$)"
     class="m-boostConsoleFeed__activity"
   ></m-activity>
 </ng-container>
 
 <infinite-scroll
-  (load)="loadNext()"
-  [moreData]="hasMore$ | async"
+  *ngIf="hasNextPage$ | async as hasNextPage"
+  (load)="fetchMore()"
+  [moreData]="hasNextPage"
   [inProgress]="inProgress$ | async"
->
-</infinite-scroll>
+  [hideManual]="true"
+></infinite-scroll>

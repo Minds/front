@@ -1,103 +1,175 @@
-import { Component, OnInit } from '@angular/core';
-import { FeedsService } from '../../../../common/services/feeds.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { BoostLocation } from '../../../boost/modal-v2/boost-modal-v2.types';
-import { BoostConsoleService } from '../services/console.service';
+import {
+  BoostEdge,
+  GetBoostFeedGQL,
+  GetBoostFeedQuery,
+  GetBoostFeedQueryVariables,
+} from '../../../../../graphql/generated.engine';
+import { QueryRef } from 'apollo-angular';
+import { ApolloQueryResult } from '@apollo/client';
 
 /**
- * Presents a feed of boosts
- * under the "explore" tab
- * in the boost console
+ * Object holding displayable Boosts. We use a new object for this so that we can
+ * parse the legacy activity JSON before we start trying to render the linked template.
+ */
+export type DisplayableBoost = {
+  guid: string;
+  activity: Object;
+};
+
+/**
+ * Presents a feed of boosts under the "explore" tab in the boost console.
  */
 @Component({
   selector: 'm-boostConsole__feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.ng.scss'],
-  providers: [FeedsService],
 })
-export class BoostConsoleFeedComponent implements OnInit {
-  constructor(
-    public service: BoostConsoleService,
-    private feedsService: FeedsService
-  ) {}
+export class BoostConsoleFeedComponent implements OnInit, OnDestroy {
+  /** Page size */
+  private readonly pageSize: number = 12;
 
-  async ngOnInit(): Promise<void> {
-    await this.load();
+  /** Query reference for boost feed query. */
+  private getBoostFeedQuery: QueryRef<
+    GetBoostFeedQuery,
+    GetBoostFeedQueryVariables
+  >;
+
+  /** Whether fetching more is currently in progress. */
+  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(true);
+
+  /** Displayable Boosts */
+  public readonly boosts$: BehaviorSubject<
+    DisplayableBoost[]
+  > = new BehaviorSubject<DisplayableBoost[]>([]);
+
+  /** Cursor for pagination. */
+  public readonly hasNextPage$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(true);
+
+  /** Cursor for pagination. */
+  private endCursor: number = 0;
+
+  /** Subscription to Boost feed value changes. */
+  private boostFeedValueChangeSubscription: Subscription;
+
+  constructor(private getBoostFeedGQL: GetBoostFeedGQL) {}
+
+  ngOnInit(): void {
+    this.load();
   }
 
-  /**
-   * Displayed feed of boosts.
-   * @returns { Observable<BehaviorSubject<Object>[]> } - feed to be async piped.
-   */
-  public get feed$(): Observable<BehaviorSubject<Object>[]> {
-    return this.feedsService.feed;
-  }
-
-  /**
-   * Whether the service has more boosts to display.
-   * @returns { Observable<boolean> } - true if more boosts can be retrieved.
-   */
-  public get hasMore$(): Observable<boolean> {
-    return this.feedsService.hasMore;
-  }
-
-  /**
-   * True if currently in progress.
-   * @returns { Observable<boolean> } - true if service is currently in progress.
-   */
-  public get inProgress$(): Observable<boolean> {
-    return this.feedsService.inProgress;
-  }
-
-  /**
-   * Dispatched get request for feed through feedsService.
-   * @param { boolean } refresh - true if feed is being refreshed.
-   * @return { Promise<boolean> } true if load request completes without errors.
-   */
-  private async load(refresh: boolean = false): Promise<boolean> {
-    try {
-      if (refresh) {
-        this.feedsService.clear();
-      }
-
-      this.feedsService
-        .setEndpoint('api/v3/boosts/feed')
-        .setParams({
-          location: BoostLocation.NEWSFEED,
-          force_boost_enabled: true,
-        })
-        .setLimit(12)
-        .setOffset(0)
-        .fetch();
-
-      return true;
-    } catch (e) {
-      return false;
-    }
+  ngOnDestroy(): void {
+    this.boostFeedValueChangeSubscription?.unsubscribe();
   }
 
   /**
    * Loads next elements in feed.
-   * @returns { Promise<void> } - awaitable.
+   * @returns { void }
    */
-  public async loadNext(): Promise<void> {
-    if (
-      this.feedsService.canFetchMore &&
-      !this.feedsService.inProgress.getValue() &&
-      this.feedsService.offset.getValue()
-    ) {
-      this.feedsService.fetch(); // load the next 150 in the background
-    }
-    this.feedsService.loadMore();
+  public fetchMore(): void {
+    this.inProgress$.next(true);
+
+    this.getBoostFeedQuery.fetchMore({
+      variables: {
+        after: this.endCursor,
+      },
+    });
   }
 
   /**
-   * Remove posts from feed when deleted
-   * @param entity
+   * Provide trackBy function for feeds for loop.
+   * @param { DisplayableBoost } boost - boost to get track by key for.
+   * @returns { string } Unique track by key.
    */
-  delete(entity) {
-    this.feedsService.deleteItem(entity, (item, obj) => {
-      return item.guid === obj.guid;
-    });
+  public trackBy(boost: DisplayableBoost): string {
+    return boost.guid;
+  }
+
+  /**
+   * Load feed and init subscription to value changes.
+   */
+  private load(): void {
+    this.getBoostFeedQuery = this.getBoostFeedGQL.watch(
+      {
+        first: this.pageSize,
+        after: 0,
+        targetLocation: BoostLocation.NEWSFEED,
+        source: 'feed/boosts',
+      },
+      {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+        notifyOnNetworkStatusChange: false,
+        errorPolicy: 'all',
+        useInitialLoading: true,
+      }
+    );
+
+    this.boostFeedValueChangeSubscription = this.getBoostFeedQuery.valueChanges.subscribe(
+      (result: ApolloQueryResult<GetBoostFeedQuery>): void => {
+        if (result.loading) {
+          return;
+        }
+
+        this.handleQueryResult(result);
+        this.inProgress$.next(false);
+      }
+    );
+  }
+
+  /**
+   * Handles receipt of a new query response.
+   * @param { ApolloQueryResult<GetBoostFeedQuery> } result - query result.
+   * @returns { void }
+   */
+  private handleQueryResult(
+    result: ApolloQueryResult<GetBoostFeedQuery>
+  ): void {
+    try {
+      this.boosts$.next(
+        result.data.boosts.edges.map(
+          (edge: BoostEdge): DisplayableBoost => {
+            return {
+              guid: edge.node.guid,
+              activity: this.formatLegacyActivity(edge.node.activity.legacy),
+            };
+          }
+        )
+      );
+      this.hasNextPage$.next(
+        result?.data?.boosts?.pageInfo?.hasNextPage ?? false
+      );
+      this.endCursor = Number(
+        result?.data?.boosts?.pageInfo?.endCursor ?? null
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Parse legacy activity JSON string into an object.
+   * @param { string } legacyActivityJson - json representation of activity.
+   * @returns { Object } parsed activity object or null if not parsable.
+   */
+  private formatLegacyActivity(legacyActivityJson: string): Object {
+    try {
+      const activity = JSON.parse(legacyActivityJson) ?? null;
+
+      if (activity) {
+        activity.boosted = true;
+      }
+
+      return activity;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
   }
 }
