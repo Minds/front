@@ -11,7 +11,7 @@ import { MockService } from '../../../utils/mock';
 import { ElementRef } from '@angular/core';
 import { AnalyticsService } from '../../../services/analytics';
 import { Subject } from 'rxjs';
-import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
+import { IntersectionObserverService } from '../../../common/services/intersection-observer.service';
 
 let intersectionObserverServiceMock = new (function() {
   this.subject$ = new Subject<boolean>();

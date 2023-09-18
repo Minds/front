@@ -52,7 +52,12 @@ describe('GroupMembersListComponent', () => {
       })
         .overrideProvider(GroupMembersListService, {
           useValue: MockService(GroupMembersListService, {
-            has: ['group$', 'groupMembershipLevel$', 'membershipLevelGte$'],
+            has: [
+              'group$',
+              'groupMembershipLevel$',
+              'membershipLevelGte$',
+              'searchQuery$',
+            ],
             props: {
               group$: {
                 get: () => new BehaviorSubject<any>(groupMock),
@@ -63,6 +68,9 @@ describe('GroupMembersListComponent', () => {
               },
               membershipLevelGte$: {
                 get: () => new BehaviorSubject<any>(false),
+              },
+              searchQuery$: {
+                get: () => new BehaviorSubject<string>(''),
               },
             },
           }),

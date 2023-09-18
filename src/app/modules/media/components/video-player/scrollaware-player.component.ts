@@ -85,7 +85,11 @@ export class ScrollAwareVideoPlayerComponent
   onEnterViewport(): void {
     const user = this.session.getLoggedInUser();
     this.isInViewport = true;
-    if (this.autoplay && !user.disable_autoplay_videos) {
+    if (
+      user && // Must be logged in
+      this.autoplay &&
+      !user.disable_autoplay_videos
+    ) {
       this.player.play({
         muted: true,
         hideControls: true,

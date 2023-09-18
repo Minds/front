@@ -75,14 +75,22 @@
 
   <div class="m-channelAboutBrief__spacer"></div>
 
-  <!-- <div
-    *ngIf="channel.social_profiles?.length"
-    class="m-channelAboutBrief__socialLinks"
-  >
-    <m-channel__socialLinks
-      [socialLinks]="channel.social_profiles"
-    ></m-channel__socialLinks>
-  </div>
-
-  <div class="m-channelAboutBrief__spacer"></div> -->
+  <ng-container *ngIf="location === 'sidebar'">
+    <div
+      *ngIf="channel.social_profiles?.length; else addLinks"
+      class="m-channelAboutBrief__socialLinks"
+    >
+      <m-channel__socialLinks
+        [socialLinks]="channel.social_profiles"
+        [isSidebar]="true"
+        [showAll]="false"
+      ></m-channel__socialLinks>
+    </div>
+    <ng-template #addLinks>
+      <m-channel__addLinksTrigger
+        *ngIf="service.isOwner$ | async"
+      ></m-channel__addLinksTrigger>
+    </ng-template>
+    <div class="m-channelAboutBrief__spacer"></div>
+  </ng-container>
 </div>

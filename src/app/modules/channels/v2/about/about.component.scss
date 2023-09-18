@@ -17,6 +17,13 @@
     }
   }
 
+  .m-channelAbout__field--hideOnNarrow {
+    display: none;
+    @media screen and (min-width: $layoutMin3ColWidth + 1) {
+      display: block;
+    }
+  }
+
   .m-channelAbout__container {
     display: flex;
     flex-direction: row;
@@ -36,7 +43,7 @@
     .m-channelAboutField__label {
       font-size: 15px;
       line-height: 20px;
-      margin: 0 0 2px;
+      margin: 0 0 $spacing1;
 
       @include m-theme() {
         color: themed($m-textColor--secondary);

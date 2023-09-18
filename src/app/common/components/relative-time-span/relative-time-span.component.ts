@@ -69,7 +69,7 @@ export class RelativeTimeSpanComponent {
   > = new BehaviorSubject<boolean>(false);
 
   // intersection observer to monitor intersection with viewport.
-  private interceptionObserver: IntersectionObserver;
+  private intersectionObserver: IntersectionObserver;
 
   constructor(
     public datePipe: FriendlyDateDiffPipe,
@@ -78,7 +78,7 @@ export class RelativeTimeSpanComponent {
 
   ngAfterViewInit(): void {
     try {
-      this.setupInterceptionObserver();
+      this.setupIntersectionObserver();
       this.setupPauseableRelativeTime();
     } catch (e) {
       // do nothing.
@@ -106,7 +106,7 @@ export class RelativeTimeSpanComponent {
    * isIntersecting$ state accordingly.
    * @returns { void }
    */
-  setupInterceptionObserver(): void {
+  setupIntersectionObserver(): void {
     // Will not work on SSR
     if (isPlatformServer(this.platformId)) {
       return;
@@ -118,7 +118,7 @@ export class RelativeTimeSpanComponent {
       threshold: 1.0,
     };
 
-    this.interceptionObserver = new IntersectionObserver(
+    this.intersectionObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach(entry => {
           this.isIntersecting$.next(entry.isIntersecting);
@@ -127,12 +127,12 @@ export class RelativeTimeSpanComponent {
       options
     );
 
-    this.interceptionObserver.observe(this.relativeTimeSpan.nativeElement);
+    this.intersectionObserver.observe(this.relativeTimeSpan.nativeElement);
   }
 
   ngOnDestroy(): void {
-    if (this.interceptionObserver) {
-      this.interceptionObserver.disconnect();
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
     }
   }
 }

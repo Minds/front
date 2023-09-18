@@ -87,6 +87,11 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   showPlyr = false;
 
   /**
+   * When the player firsts starts to play, we mark as ready
+   */
+  ready = false;
+
+  /**
    * True if player is muted when ready event fires.
    * Allows us to track initial unmute event.
    */
@@ -346,7 +351,9 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   public onPlayed(): void {}
 
-  onPlay(): void {}
+  onPlay(): void {
+    this.ready = true;
+  }
 
   removeSources() {
     const sources = this.elementRef.nativeElement.getElementsByTagName(

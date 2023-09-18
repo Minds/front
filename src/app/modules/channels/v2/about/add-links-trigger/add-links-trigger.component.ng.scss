@@ -1,0 +1,42 @@
+@import 'defaults.scss';
+
+:host {
+  .m-channel__addLinksTrigger {
+    cursor: pointer;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    max-width: 120px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    .m-channelAddLinksTrigger__icon {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 18px;
+      width: 18px;
+      padding: $spacing2;
+      position: relative;
+      @include m-theme() {
+        background-color: rgba(themed($m-blue), 0.3);
+      }
+      ::ng-deep m-icon {
+        svg,
+        svg path {
+          @include m-theme() {
+            color: themed($m-blue);
+            fill: themed($m-blue);
+          }
+        }
+      }
+    }
+    span {
+      display: inline-block;
+      margin-left: $spacing3;
+      @include body2Medium;
+    }
+  }
+}

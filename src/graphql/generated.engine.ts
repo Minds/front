@@ -86,6 +86,7 @@ export type BoostNode = NodeInterface & {
 
 export type BoostsConnection = ConnectionInterface & {
   __typename?: 'BoostsConnection';
+  /** Gets Boost edges in connection. */
   edges: Array<BoostEdge>;
   pageInfo: PageInfo;
 };
@@ -390,6 +391,7 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Gets Boosts. */
   boosts: BoostsConnection;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
@@ -620,6 +622,18 @@ export type GetDismissalsQuery = {
     key: string;
     dismissalTimestamp: number;
   }>;
+};
+
+export type AdminUpdateAccountMutationVariables = Exact<{
+  currentUsername: Scalars['String']['input'];
+  newUsername?: InputMaybe<Scalars['String']['input']>;
+  newEmail?: InputMaybe<Scalars['String']['input']>;
+  resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+export type AdminUpdateAccountMutation = {
+  __typename?: 'Mutation';
+  updateAccount: Array<string>;
 };
 
 export type GetBoostFeedQueryVariables = Exact<{
@@ -1606,6 +1620,35 @@ export class GetDismissalsGQL extends Apollo.Query<
   GetDismissalsQueryVariables
 > {
   document = GetDismissalsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const AdminUpdateAccountDocument = gql`
+  mutation AdminUpdateAccount(
+    $currentUsername: String!
+    $newUsername: String
+    $newEmail: String
+    $resetMFA: Boolean
+  ) {
+    updateAccount(
+      currentUsername: $currentUsername
+      newUsername: $newUsername
+      newEmail: $newEmail
+      resetMFA: $resetMFA
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminUpdateAccountGQL extends Apollo.Mutation<
+  AdminUpdateAccountMutation,
+  AdminUpdateAccountMutationVariables
+> {
+  document = AdminUpdateAccountDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

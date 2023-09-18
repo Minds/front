@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '../../../services/storage';
 import { FeedAlgorithm } from '../../../common/services/feeds.service';
+import * as _ from 'lodash';
 
 const FEED_ALGORITHM_STORAGE_KEY = 'feed:algorithm';
 
@@ -16,7 +17,9 @@ export class FeedAlgorithmHistoryService {
    * @returns { string } - feed type a user last accessed.
    */
   get lastAlgorithm(): FeedAlgorithm | undefined {
-    const algo = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
+    let algo = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
+    // Converts for-you to forYou
+    algo = _.camelCase(algo);
     return FeedAlgorithm[algo];
   }
 

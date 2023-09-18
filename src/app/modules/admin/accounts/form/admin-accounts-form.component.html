@@ -1,0 +1,96 @@
+<form
+  [formGroup]="accountsForm"
+  (submit)="$event.preventDefault()"
+  class="m-form m-formWrapper"
+>
+  <h3>Update Account Details</h3>
+  <div class="m-layout--spacer"></div>
+  <div class="m-form__field--text stretchedField">
+    <div class="m-form__input--details">
+      <div class="m-form__row--label">
+        <label for="currentUsername">
+          Select Account
+        </label>
+      </div>
+    </div>
+    <div class="m-form__row--input">
+      <m-formInput__autocompleteUserInput
+        id="currentUsername"
+        formControlName="currentUsername"
+        placeholder="@username"
+        allowEmpty="true"
+      ></m-formInput__autocompleteUserInput>
+    </div>
+  </div>
+  <div class="m-layout--spacer"></div>
+  <!-- CURRENT USER DETAILS  -->
+  <div *ngIf="targetUser$ | async as targetUser">
+    <ul>
+      <li>Username: {{ targetUser?.username }}</li>
+      <li>Display Name: {{ targetUser?.name }}</li>
+      <li>Guid: {{ targetUser?.guid }}</li>
+      <li>Email: {{ targetUser?.email }}</li>
+      <li>
+        Has Confirmed Email: {{ targetUser?.email_confirmed ? 'Yes' : 'No' }}
+      </li>
+      <li>Marked as NSFW: {{ targetUser?.nsfw.length ? 'Yes' : 'No' }}</li>
+    </ul>
+  </div>
+  <div class="m-layout--spacer"></div>
+  <div class="m-form__field--text stretchedField">
+    <div class="m-form__input--details">
+      <div class="m-form__row--label">
+        <label for="newUsername">
+          New Username -
+          <span style="color: red; font-weight: bold;"
+            >WARNING: Get approval from exec team before changing a
+            username!</span
+          >
+        </label>
+      </div>
+    </div>
+    <div class="m-form__row--input">
+      <m-formInput__autocompleteUserInput
+        id="newUsername"
+        formControlName="newUsername"
+        placeholder="@username"
+      ></m-formInput__autocompleteUserInput>
+    </div>
+  </div>
+  <div class="m-form__field--text stretchedField">
+    <div class="m-form__input--details">
+      <div class="m-form__row--label">
+        <label for="newEmail">
+          New Email
+        </label>
+      </div>
+    </div>
+    <div class="m-form__row--input">
+      <input type="email" id="newEmail" formControlName="newEmail" />
+    </div>
+  </div>
+  <div class="m-form__field--checkbox">
+    <div class="m-form__row--input">
+      <m-formInput__checkbox formControlName="resetMFA">
+        <span i18n="@@ADMIN_ACCOUNTS_RESET_MFA_CHECKBOX">
+          Reset MFA
+        </span>
+      </m-formInput__checkbox>
+    </div>
+  </div>
+  <div class="m-layout--spacer"></div>
+  <div class="m-form__row--actions">
+    <m-button
+      [disabled]="
+        !accountsForm.valid || this.inProgress || (targetUser$ | async) === null
+      "
+      color="blue"
+      [solid]="
+        accountsForm.valid && !this.inProgress && (targetUser$ | async) !== null
+      "
+      (onAction)="onSave($event)"
+    >
+      Send Now
+    </m-button>
+  </div>
+</form>

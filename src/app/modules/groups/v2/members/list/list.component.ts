@@ -172,7 +172,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
       this.group$,
       this.groupMembershipLevel$,
       this.membershipLevelGte$,
-      // this.searchQuery$,
+      this.searchQuery$,
     ]).pipe(
       distinctUntilChanged(),
       tap(_ => {
@@ -180,14 +180,15 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         this.list$.next([]);
       }),
       switchMap(
-        ([group, groupMembershipLevel, membershipLevelGte]: [
+        ([group, groupMembershipLevel, membershipLevelGte, q]: [
           MindsGroup,
           GroupMembershipLevel,
-          boolean
-          // string
+          boolean,
+          string
         ]): Observable<
           ApiResponse | { redirect: boolean; errorMessage: any }
         > => {
+          //this.service.searchQuery$.next(q);
           return this.service.getList$(this.requestLimit, 0);
         }
       ),

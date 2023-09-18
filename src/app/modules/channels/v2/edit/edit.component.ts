@@ -24,6 +24,11 @@ export class ChannelEditComponent {
   onDismissIntent: () => void = () => {};
 
   /**
+   * Which pane index to open the modal on
+   */
+  initialPane: number = 0;
+
+  /**
    * Constructor
    * @param service
    */
@@ -36,10 +41,11 @@ export class ChannelEditComponent {
    * @param onDismissIntent
    * @param channel
    */
-  setModalData({ onSave, onDismissIntent, channel }) {
+  setModalData({ onSave, onDismissIntent, channel, initialPane }) {
     this.onSave = onSave || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
     this.service.setChannel(channel);
+    this.initialPane = initialPane;
   }
 
   /**
