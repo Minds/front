@@ -24,6 +24,7 @@ import { ApiResponse } from '../../../../../common/api/api.service';
 import { GroupMembershipLevel } from '../../group.types';
 import { MindsGroup } from '../../group.model';
 import { Session } from '../../../../../services/session';
+import { MindsUser } from '../../../../../interfaces/entities';
 
 /**
  * Presents a list of group members
@@ -258,6 +259,17 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
       map(([list, inProgress]) => {
         return !inProgress && (!list || !list.length);
       })
+    );
+  }
+
+  /**
+   * Whether group member actions should be shown.
+   * @returns { boolean } - true if group member actions should be shown.
+   */
+  public shouldShowGroupMemberActions(member: MindsUser): boolean {
+    return (
+      member.guid !== this.session.getLoggedInUser()?.guid &&
+      (this.group['is:owner'] || this.group['is:moderator'])
     );
   }
 }
