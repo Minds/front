@@ -131,17 +131,26 @@ export class BoostConsoleFeedComponent implements OnInit, OnDestroy {
   private handleQueryResult(
     result: ApolloQueryResult<GetBoostFeedQuery>
   ): void {
+    const boosts: DisplayableBoost[] = this.boosts$.getValue();
+    const edges: BoostEdge[] = (result.data.boosts.edges as BoostEdge[]) ?? [];
+
     try {
-      this.boosts$.next(
-        result.data.boosts.edges.map(
-          (edge: BoostEdge): DisplayableBoost => {
-            return {
-              guid: edge.node.guid,
-              activity: this.formatLegacyActivity(edge.node.activity.legacy),
-            };
-          }
-        )
-      );
+      for (let edge of edges) {
+        // If we've already got this activity, no need to reparse and add it again.
+        // this will result in deduplication if the engine supplies duplicate Boosts.
+        if (boosts.some(boost => boost.guid === edge.node.guid)) {
+          continue;
+        }
+        boosts.push({
+          guid: edge.node.guid,
+          activity: this.formatLegacyActivity(
+            edge?.node?.activity?.legacy ?? null
+          ),
+        });
+      }
+
+      this.boosts$.next(boosts);
+
       this.hasNextPage$.next(
         result?.data?.boosts?.pageInfo?.hasNextPage ?? false
       );
