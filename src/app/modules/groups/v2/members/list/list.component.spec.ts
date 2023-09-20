@@ -155,8 +155,8 @@ describe('GroupMembersListComponent', () => {
 
       component.group = {
         ...groupMock,
-        'is:owner': true,
-        'is:moderator': false,
+        'is:owner': false,
+        'is:moderator': true,
       };
 
       expect(component.shouldShowGroupMemberActions(member)).toBeFalse();
