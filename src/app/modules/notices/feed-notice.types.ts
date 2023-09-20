@@ -11,7 +11,6 @@ export type NoticeKey =
   | 'pro-upgrade'
   | 'boost-channel'
   | 'invite-friends'
-  | 'boost-partners'
   | 'boost-latest-post'
   | 'no-groups';
 
