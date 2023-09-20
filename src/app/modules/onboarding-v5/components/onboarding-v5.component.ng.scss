@@ -12,4 +12,10 @@
     justify-content: center;
     align-items: center;
   }
+
+  &.m-onboardingV5--isIosMobile {
+    .m-onboardingV5__stepContainer {
+      height: calc(100% - 50px);
+    }
+  }
 }

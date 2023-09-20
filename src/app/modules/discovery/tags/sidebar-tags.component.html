@@ -33,7 +33,11 @@
     <a
       class="m-sidebarWidget__seeMore"
       (click)="seeMore()"
-      *ngIf="limit === 5 && !(inProgress$ | async) && !entityGuid"
+      *ngIf="
+        limit === DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT &&
+        !(inProgress$ | async) &&
+        !entityGuid
+      "
       i18n="@@DISCOVERY_SIDEBAR_TAGS__SEE_MORE"
       data-ref="sidebar-tags-more"
       >See more</a
