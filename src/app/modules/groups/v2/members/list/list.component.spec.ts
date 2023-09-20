@@ -6,7 +6,6 @@ import { BehaviorSubject, of } from 'rxjs';
 import { Session } from '../../../../../services/session';
 import { groupMock } from '../../../../../mocks/responses/group.mock';
 import { GroupMembershipLevel } from '../../group.types';
-import { MindsUser } from '../../../../../interfaces/entities';
 
 describe('GroupMembersListComponent', () => {
   let component: GroupMembersListComponent;
@@ -112,58 +111,89 @@ describe('GroupMembersListComponent', () => {
   });
 
   describe('shouldShowGroupMemberActions', () => {
-    it('should determine whether to show group member actions', () => {
-      const loggedInUserGuid: string = '123';
+    it('should determine whether to show group member actions because the user is the owner', () => {
       const memberGuid: string = '234';
-      const member = { guid: memberGuid };
-      (component as any).session.getLoggedInUser.and.returnValue({
-        guid: loggedInUserGuid,
-      });
+      const member = {
+        guid: memberGuid,
+        'is:owner': true,
+        'is:moderator': false,
+      };
+
       component.group = {
         ...groupMock,
         'is:owner': true,
         'is:moderator': false,
       };
 
-      expect(
-        component.shouldShowGroupMemberActions(member as MindsUser)
-      ).toBeTrue();
+      expect(component.shouldShowGroupMemberActions(member)).toBeTrue();
     });
 
-    it('should determine whether to NOT show group member actions because member IS logged in user', () => {
-      const loggedInUserGuid: string = '123';
-      const memberGuid: string = '123';
-      const member = { guid: memberGuid };
-      (component as any).session.getLoggedInUser.and.returnValue({
-        guid: loggedInUserGuid,
-      });
+    it('should determine whether to show group member actions because the user is a moderator and the member is not the owner or a moderator', () => {
+      const memberGuid: string = '234';
+      const member = {
+        guid: memberGuid,
+        'is:owner': false,
+        'is:moderator': false,
+      };
+
       component.group = {
         ...groupMock,
         'is:owner': true,
         'is:moderator': false,
       };
 
-      expect(
-        component.shouldShowGroupMemberActions(member as MindsUser)
-      ).toBeFalse();
+      expect(component.shouldShowGroupMemberActions(member)).toBeTrue();
+    });
+
+    it('should determine whether NOT to show group member actions because the actioning user is a moderator and the member is an owner', () => {
+      const memberGuid: string = '234';
+      const member = {
+        guid: memberGuid,
+        'is:owner': false,
+        'is:moderator': true,
+      };
+
+      component.group = {
+        ...groupMock,
+        'is:owner': true,
+        'is:moderator': false,
+      };
+
+      expect(component.shouldShowGroupMemberActions(member)).toBeFalse();
+    });
+
+    it('should determine whether NOT to show group member actions because the actioning user is a moderator and the member is a moderator', () => {
+      const memberGuid: string = '234';
+      const member = {
+        guid: memberGuid,
+        'is:owner': false,
+        'is:moderator': true,
+      };
+
+      component.group = {
+        ...groupMock,
+        'is:owner': false,
+        'is:moderator': true,
+      };
+
+      expect(component.shouldShowGroupMemberActions(member)).toBeFalse();
     });
 
     it('should determine whether NOT to show group member actions because not owner or moderator', () => {
-      const loggedInUserGuid: string = '123';
       const memberGuid: string = '234';
-      const member = { guid: memberGuid };
-      (component as any).session.getLoggedInUser.and.returnValue({
-        guid: loggedInUserGuid,
-      });
+      const member = {
+        guid: memberGuid,
+        'is:owner': false,
+        'is:moderator': false,
+      };
+
       component.group = {
         ...groupMock,
         'is:owner': false,
         'is:moderator': false,
       };
 
-      expect(
-        component.shouldShowGroupMemberActions(member as MindsUser)
-      ).toBeFalse();
+      expect(component.shouldShowGroupMemberActions(member)).toBeFalse();
     });
   });
 });

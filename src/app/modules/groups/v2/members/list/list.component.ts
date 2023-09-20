@@ -11,7 +11,6 @@ import {
   Observable,
   Subscription,
   combineLatest,
-  debounceTime,
   distinctUntilChanged,
   map,
   shareReplay,
@@ -24,7 +23,6 @@ import { ApiResponse } from '../../../../../common/api/api.service';
 import { GroupMembershipLevel } from '../../group.types';
 import { MindsGroup } from '../../group.model';
 import { Session } from '../../../../../services/session';
-import { MindsUser } from '../../../../../interfaces/entities';
 
 /**
  * Presents a list of group members
@@ -264,9 +262,10 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
 
   /**
    * Whether group member actions should be shown.
+   * @param { unknown } member - member to check.
    * @returns { boolean } - true if group member actions should be shown.
    */
-  public shouldShowGroupMemberActions(member: MindsUser): boolean {
+  public shouldShowGroupMemberActions(member: unknown): boolean {
     return (
       this.group['is:owner'] ||
       (this.group['is:moderator'] &&
