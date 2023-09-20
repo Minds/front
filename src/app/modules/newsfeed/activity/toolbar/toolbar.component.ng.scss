@@ -119,7 +119,8 @@
     .m-activityToolbar__largeActions {
       ::ng-deep {
         m-supermind__banner,
-        m-supermind__button {
+        m-supermind__button,
+        m-activity__boostButton {
           display: none;
         }
       }
