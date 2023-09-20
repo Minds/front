@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryTagsService } from './tags.service';
 import { SearchGqlExperimentService } from '../../search/search-gql-experiment.service';
+import { Session } from '../../../services/session';
 
 /**
  * Display tags 'for you', trending Minds+, or related to an activity post
@@ -23,8 +24,10 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
   public _context: DiscoverySidebarTagsContext;
 
+  readonly DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT: number = 5;
+  limit: number = this.DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT;
+
   visible = true;
-  limit = 5;
   trending$: Observable<any> = this.tagsService.trending$;
   foryou$: Observable<any> = this.tagsService.foryou$;
   activityRelated$: Observable<any> = this.tagsService.activityRelated$;
@@ -34,12 +37,14 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   parentPath: string = '/discovery';
 
   activityRelatedTagsSubscription: Subscription;
+  isLoggedInSubscription: Subscription;
 
   isPlusPage: boolean = false;
 
   constructor(
     public tagsService: DiscoveryTagsService,
-    private searchExp: SearchGqlExperimentService
+    private searchExp: SearchGqlExperimentService,
+    private session: Session
   ) {}
 
   ngOnInit() {
@@ -66,12 +71,23 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
         }
       }
     );
+
+    if (!this.session.isLoggedIn()) {
+      this.limit = 12;
+    }
+
+    this.isLoggedInSubscription = this.session.loggedinEmitter.subscribe(is => {
+      if (is) {
+        this.limit = this.DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT;
+      }
+    });
   }
 
   ngOnDestroy() {
     if (this.activityRelatedTagsSubscription) {
       this.activityRelatedTagsSubscription.unsubscribe();
     }
+    this.isLoggedInSubscription?.unsubscribe();
   }
 
   seeMore() {
@@ -85,7 +101,6 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
       case 'activity':
         return 'Related tags';
       default:
-        // return 'Tags for you';
         return 'Trending tags';
     }
   }
