@@ -16,18 +16,21 @@
           [title]="activeStep.data?.title"
           [description]="activeStep.data?.description"
           [data]="activeStep.data"
+          class="m-onboardingV5__stepContainer"
         ></m-onboardingV5__verifyEmailContent>
         <m-onboardingV5__tagSelectorContent
           *ngSwitchCase="'tag_selector'"
           [title]="activeStep.data?.title"
           [description]="activeStep.data?.description"
           [data]="activeStep.data"
+          class="m-onboardingV5__stepContainer"
         ></m-onboardingV5__tagSelectorContent>
         <m-onboardingV5__radioSurveyContent
           *ngSwitchCase="'survey'"
           [title]="activeStep.data?.title"
           [description]="activeStep.data?.description"
           [data]="activeStep.data"
+          class="m-onboardingV5__stepContainer"
         ></m-onboardingV5__radioSurveyContent>
         <m-onboardingV5__channelRecommendationsContent
           *ngSwitchCase="'user_selector'"
@@ -35,6 +38,7 @@
           [title]="activeStep.data?.title"
           [description]="activeStep.data?.description"
           [data]="activeStep.data"
+          class="m-onboardingV5__stepContainer"
         ></m-onboardingV5__channelRecommendationsContent>
         <m-onboardingV5__channelRecommendationsContent
           *ngSwitchCase="'group_selector'"
@@ -42,6 +46,7 @@
           [title]="activeStep.data?.title"
           [description]="activeStep.data?.description"
           [data]="activeStep.data"
+          class="m-onboardingV5__stepContainer"
         ></m-onboardingV5__channelRecommendationsContent>
       </ng-container>
     </div>

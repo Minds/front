@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { OnboardingV5Service } from '../services/onboarding-v5.service';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { CarouselItem } from '../../../common/components/feature-carousel/feature-carousel.component';
 import { OnboardingStep } from '../types/onboarding-v5.types';
+import { isIos } from '../../../helpers/is-mobile-or-tablet';
+import isMobile from '../../../helpers/is-mobile';
 
 /**
  * Onboarding V5 component. Acts as a root container that handles the layout and internal
@@ -39,9 +41,13 @@ export class OnboardingV5Component implements OnInit, OnDestroy {
   /** Subscription to popstate. */
   private popStateSubscription: Subscription;
 
+  @HostBinding('class.m-onboardingV5--isIosMobile')
+  isIosMobile: boolean = false;
+
   constructor(private service: OnboardingV5Service) {}
 
   ngOnInit(): void {
+    this.isIosMobile = isIos() && isMobile();
     this.service.start();
     this.disableBackNavigation();
   }
