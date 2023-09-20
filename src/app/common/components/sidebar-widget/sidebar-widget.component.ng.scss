@@ -13,8 +13,8 @@ $sidebarSpacing: $spacing4;
     border-radius: $m-borderRadius--curvy;
 
     @include m-theme() {
-      background-color: rgba(themed($m-bgColor--secondary), 0.5);
-      border: 1px solid rgba(themed($m-bgColor--secondary), 0.5);
+      background-color: rgba(themed($m-bgColor--secondary), 0.7);
+      border: 1px solid rgba(themed($m-bgColor--secondary), 0.7);
     }
 
     &.m-sidebarWidget__border--primary {
@@ -22,12 +22,30 @@ $sidebarSpacing: $spacing4;
         border: 1px solid themed($m-action);
       }
     }
+
+    &.m-sidebarWidget__border--none {
+      @include m-theme() {
+        border: none;
+      }
+    }
+
+    &.m-sidebarWidget__border--noBackgroundFill {
+      @include m-theme() {
+        background-color: transparent;
+      }
+
+      .m-sidebarWidget__title {
+        @media screen and (min-width: $max-mobile + 1) {
+          padding-left: 0;
+        }
+      }
+    }
   }
 
   .m-sidebarWidget__title {
-    padding: $sidebarSpacing;
-    padding-bottom: $sidebarSpacing * 0.5;
-    padding-right: 40px; // Allow for dimiss
+    padding: $sidebarSpacing $spacing10 $sidebarSpacing * 0.5 $sidebarSpacing;
+    // padding-bottom: $sidebarSpacing * 0.5;
+    // padding-right: 40px; // Allow for dimiss
     margin: 0;
 
     @include heading4Bold;

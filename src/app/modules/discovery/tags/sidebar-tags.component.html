@@ -1,5 +1,5 @@
 <ng-container *ngIf="visible">
-  <m-sidebarWidget [title]="title">
+  <m-sidebarWidget [titleText]="title">
     <div class="m-sidebarWidget__body">
       <m-loadingSpinner
         *ngIf="!entityGuid"
@@ -30,13 +30,16 @@
         </ng-template>
       </ul>
     </div>
-    <a
+    <m-button
       class="m-sidebarWidget__seeMore"
-      (click)="seeMore()"
+      (onAction)="seeMore()"
+      size="small"
+      stretch="true"
+      [solid]="true"
       *ngIf="limit === 5 && !(inProgress$ | async) && !entityGuid"
-      i18n="@@DISCOVERY_SIDEBAR_TAGS__SEE_MORE"
+      i18n="@@COMMON__SEE_MORE__ACTION"
       data-ref="sidebar-tags-more"
-      >See more</a
+      >See more</m-button
     >
   </m-sidebarWidget>
 

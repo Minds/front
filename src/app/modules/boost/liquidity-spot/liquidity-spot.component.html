@@ -1,5 +1,10 @@
 <ng-container *ngIf="entity$ | async as entity">
-  <m-publisherCard [publisher]="entity" featured="true"></m-publisherCard>
+  <m-publisherCard
+    [publisher]="entity"
+    featured="true"
+    curvyBorder="true"
+    backgroundFill="true"
+  ></m-publisherCard>
 
   <div class="m-liquiditySpot__disclaimer" (click)="onClick($event)">
     <m-tooltip icon="info" anchor="bottom">
