@@ -15,7 +15,6 @@ import { LanguageModule } from '../language/language.module';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
-import { DiscoveryTopComponent } from './top/top.component';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
 import { SearchComponent } from '../search/search.component';
@@ -32,17 +31,6 @@ import { SearchComponent } from '../search/search.component';
             path: '',
             redirectTo: 'trending',
             pathMatch: 'full' as PathMatch,
-          },
-          {
-            path: 'top',
-            component: DiscoveryTopComponent,
-            pathMatch: 'full' as PathMatch,
-            data: {
-              title: 'Discovery / Top',
-              ogImage: '/assets/og-images/discovery-v3.png',
-              ogImageWidth: 1200,
-              ogImageHeight: 1200,
-            },
           },
           {
             path: 'overview',
