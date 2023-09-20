@@ -268,8 +268,9 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
    */
   public shouldShowGroupMemberActions(member: MindsUser): boolean {
     return (
-      member.guid !== this.session.getLoggedInUser()?.guid &&
-      (this.group['is:owner'] || this.group['is:moderator'])
+      this.group['is:owner'] ||
+      (this.group['is:moderator'] &&
+        !(member['is:owner'] || member['is:moderator']))
     );
   }
 }
