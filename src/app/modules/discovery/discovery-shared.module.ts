@@ -33,8 +33,6 @@ import { WirePaymentHandlersService } from '../wire/wire-payment-handlers.servic
 import { DiscoveryTrendsService } from './trends/trends.service';
 import { DiscoveryBuildYourAlgorithmComponent } from './build-your-algorithm/build-your-algorithm.component';
 import { ExperimentsModule } from '../experiments/experiments.module';
-import { DiscoveryTopComponent } from './top/top.component';
-import { DefaultFeedModule } from '../default-feed/default-feed.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
 import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
@@ -52,7 +50,6 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     ActivityModule,
     ExperimentsModule,
     DiscoveryDisclaimerModule,
-    DefaultFeedModule,
     SuggestionsModule,
     OnboardingV3Module,
     LiquiditySpotModule,
@@ -82,7 +79,6 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoveryLatestFeedComponent,
     DiscoveryCardCarouselComponent,
     DiscoveryBuildYourAlgorithmComponent,
-    DiscoveryTopComponent,
   ],
   exports: [
     DiscoverySidebarTagsComponent,
@@ -93,11 +89,11 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoveryComponent,
     DiscoveryTrendsComponent,
     DiscoverySearchComponent,
+    DiscoveryTabsComponent,
     DiscoveryTagsComponent,
     DiscoveryFeedsComponent,
     DiscoverySidebarTagsComponent,
     DiscoveryBuildYourAlgorithmComponent,
-    DiscoveryTopComponent,
     DiscoverySettingsButtonComponent,
   ],
   providers: [

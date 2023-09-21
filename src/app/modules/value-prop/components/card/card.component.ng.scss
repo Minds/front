@@ -1,0 +1,29 @@
+@import 'defaults.scss';
+
+:host {
+  .m-valueProp__card {
+    padding: $spacing10 $spacing3 $spacing8;
+
+    &.m-valueProp__card--borderTop {
+      @include borderTop;
+    }
+  }
+  .m-valuePropCard__title {
+    @include heading3Bold;
+    margin: 0 $spacing10 $spacing12;
+    text-align: center;
+  }
+  .m-valuePropCard__imageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .m-valuePropCard__image {
+    max-height: 380px;
+    max-width: calc(100% - $spacing8);
+
+    @media screen and (max-width: $max-mobile) {
+      max-height: 250px;
+    }
+  }
+}

@@ -54,6 +54,20 @@ export class GroupMembershipService implements OnDestroy {
   >(false);
 
   /**
+   * Whether the current user is the owner of the group
+   */
+  public readonly isOwner$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
+   * Whether the current user is the creator of the group
+   */
+  public readonly isCreator$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
    * Whether the current user is waiting to hear whether their request to join a closed group was accepteed
    */
   public readonly isAwaiting$: BehaviorSubject<boolean> = new BehaviorSubject<
@@ -92,6 +106,8 @@ export class GroupMembershipService implements OnDestroy {
     this.isAwaiting$.next(group['is:awaiting']);
     this.isInvited$.next(group['is:invited']);
     this.isBanned$.next(group['is:banned']);
+    this.isOwner$.next(group['is:owner']);
+    this.isCreator$.next(group['is:creator']);
   }
 
   /**

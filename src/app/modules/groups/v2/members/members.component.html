@@ -1,0 +1,41 @@
+<ng-container *ngIf="service.group$ | async">
+  <div class="m-pageLayout__container m-group__members">
+    <div class="m-groupMembers__body" m-pageLayout__pane="main">
+      <!-- ----------------------------------------- -->
+      <!-- LIST  -->
+      <!-- ----------------------------------------- -->
+      <m-group__membersList
+        [membershipLevel]="groupMembershipLevel.MEMBER"
+        [group]="service.group$ | async"
+        (memberChanged)="membersListChanged$.next($event)"
+        (loaded)="moderatorsListChanged$.next(null)"
+        [sync]="moderatorsListChanged$ | async"
+        [showSearch]="true"
+      ></m-group__membersList>
+    </div>
+    <!-- ----------------------------------------- -->
+    <!-- SIDEBAR  -->
+    <!-- ----------------------------------------- -->
+    <div class="m-group__sidebar" m-pageLayout__pane="right">
+      <div class="m-pageLayoutPane__inner">
+        <m-group__inviteButton
+          *ngIf="service.canInvite$ | async"
+          [group]="service.group$ | async"
+          class="m-groupMembers__inviteButton m-groupMembersSidebar__section"
+        ></m-group__inviteButton>
+
+        <m-group__membersList
+          class="m-groupMembers__modsList"
+          listTitle="Moderators"
+          [group]="service.group$ | async"
+          compactView="true"
+          [membershipLevel]="groupMembershipLevel.MODERATOR"
+          membershipLevelGte="true"
+          (memberChanged)="moderatorsListChanged$.next($event)"
+          (loaded)="membersListChanged$.next(null)"
+          [sync]="membersListChanged$ | async"
+        ></m-group__membersList>
+      </div>
+    </div>
+  </div>
+</ng-container>

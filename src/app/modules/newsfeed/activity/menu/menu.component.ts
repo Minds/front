@@ -88,6 +88,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         'download',
         'wire',
         'hide-post',
+        'view-federated',
       ];
     } else {
       return [
@@ -103,6 +104,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         'rating',
         'allow-comments',
         'download',
+        'view-federated',
       ];
     }
   }

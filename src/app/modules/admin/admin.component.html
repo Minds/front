@@ -59,6 +59,13 @@
       >
         <span>Push Notifications</span>
       </a>
+      <a
+        class="m-topbar--navigation--item"
+        routerLink="/admin/accounts"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span>Accounts</span>
+      </a>
     </div>
   </div>
 </div>
@@ -73,6 +80,7 @@
 <m-admin--pushNotifications
   *ngIf="filter == 'push-notifications'"
 ></m-admin--pushNotifications>
+<m-admin--accounts *ngIf="filter == 'accounts'"></m-admin--accounts>
 <m-admin__liquidityProviders
   *ngIf="filter === 'liquidity-providers'"
 ></m-admin__liquidityProviders>

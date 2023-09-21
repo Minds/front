@@ -7,7 +7,8 @@ import {
   ViewChild,
   Inject,
   PLATFORM_ID,
-  HostBinding,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, of } from 'rxjs';
@@ -15,9 +16,14 @@ import { Session } from '../../../services/session';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import { ButtonColor, ButtonSize } from '../button/button.component';
-import { GroupMembershipButtonLabelType } from '../group-membership-button/group-membership-button.component';
+import { MindsGroup } from '../../../modules/groups/v2/group.model';
+import { GroupMembershipChangeOuput } from '../group-membership-button/group-membership-button.component';
 
-export type PublisherCardSize = 'small' | 'medium' | 'large';
+/**
+ * xsmall has no subs or descriptions
+ * small removes the standalone avatar column
+ */
+export type PublisherCardSize = 'xsmall' | 'small' | 'medium' | 'large';
 
 /**
  * Reusable card to display info about users/groups
@@ -34,39 +40,87 @@ export type PublisherCardSize = 'small' | 'medium' | 'large';
 export class PublisherCardComponent implements AfterViewInit {
   @Input() publisher: any;
 
-  @Input() showDescription: boolean = true;
-  @Input() showSubs: boolean = true;
-  @Input() showSubscribeButton: boolean = true;
+  /**
+   *  Specify card size instead of using automatic calculations
+   */
+  @Input() sizeOverride: PublisherCardSize;
 
-  // Only enabled for groups for now
-  @Input() subscribeButtonColor: ButtonColor = 'grey';
-  // Only enabled for groups for now
-  @Input() subscribeButtonSize: ButtonSize = 'xsmall';
+  /**
+   * Don't add padding around the edge of the card
+   */
+  @Input() noPadding: boolean = false;
 
-  // Determines what text we see after we click 'join'
-  @Input() joinButtonLabelType: GroupMembershipButtonLabelType = 'pastTense';
+  /**
+   * Don't add a border around the edge of the card
+   */
+  @Input() noBorder: boolean = false;
 
-  // disable subscription - allows for a user to preview their own card.
-  @Input() disableSubscribe: boolean = false;
-
-  // display a blue border
+  /**
+   * display a blue border
+   */
   @Input() featured: boolean = false;
 
-  // Specify size
-  @Input() sizeOverride: PublisherCardSize;
+  /**
+   * Show the boosted flag
+   */
+  @Input() showBoostedFlag: boolean = false;
+
+  /**
+   * Whether to show the subscribe or membership button
+   */
+  @Input() showButton: boolean = true;
+
+  /**
+   * Show this custom icon for the subscribe button after subscribing (instead of default 'close' icon)
+   */
+  @Input() subscribedIcon: string = 'check';
+
+  /**
+   * Show this custom icon for the membership button after joining (instead of default 'close' icon)
+   */
+  @Input() isMemberIcon: string = 'check';
+
+  /**
+   * Only show the secondary name row if it is a count (members/subscribers),
+   * not if it is a username
+   */
+  @Input() secondaryRowCountsOnly: boolean = false;
+
+  /**
+   * Show only an icon for the subscribe button, regardless of card size
+   */
+  @Input() subscribeButtonIconOnly: boolean = false;
+
+  @Input() membershipButtonSize: ButtonSize = 'xsmall';
+
+  @Input() membershipButtonColor: ButtonColor = 'grey';
 
   readonly cdnUrl: string;
 
-  btnIconOnly: boolean = false;
+  buttonIconOnly: boolean = false;
 
   size: PublisherCardSize = 'medium';
 
-  // Don't show subscribe button until the card size has been determined
-  // to prevent flashing on resize
+  /**
+   * Don't show subscribe button until the card size has been determined
+   * to prevent flashing on resize
+   */
   sized: boolean = false;
 
-  // use channel api to double check that the subscription status is correct
+  /**
+   * use channel api to double check that the subscription status is correct
+   */
   recheckSubscribed: boolean = false;
+
+  /**
+   * Emit when user subscribes to a recommendation
+   */
+  @Output() subscribed: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Emit when user unsubscribes from a recommendation
+   */
+  @Output() unsubscribed: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     protected userAvatar: UserAvatarService,
@@ -81,9 +135,9 @@ export class PublisherCardComponent implements AfterViewInit {
   @Input() set isHovercard(value: boolean) {
     this._isHovercard = value;
     if (value) {
-      this.showSubs = true;
       this.recheckSubscribed = true;
-      this.btnIconOnly = true;
+      this.buttonIconOnly = true;
+      this.noBorder = true;
     }
   }
 
@@ -104,17 +158,38 @@ export class PublisherCardComponent implements AfterViewInit {
     if (this.sizeOverride) {
       this.size = this.sizeOverride;
     } else if (publisherCardWidth <= 350) {
-      if (publisherCardWidth > 250) {
+      if (publisherCardWidth > 280) {
         this.size = 'medium';
-      } else {
+      } else if (publisherCardWidth > 250) {
         this.size = 'small';
+      } else {
+        this.size = 'xsmall';
       }
     } else {
       this.size = 'large';
     }
 
-    this.btnIconOnly = this.size === 'medium';
+    this.buttonIconOnly = this.size === 'medium' || this.size === 'small';
     this.sized = true;
+  }
+
+  onSubscribed(publisher): void {
+    this.subscribed.emit();
+  }
+
+  onUnsubscribed(publisher): void {
+    this.unsubscribed.emit();
+  }
+
+  onGroupMembershipChange(
+    $event: GroupMembershipChangeOuput,
+    group: MindsGroup
+  ) {
+    if ($event.isMember) {
+      this.onSubscribed(group);
+    } else {
+      this.onUnsubscribed(group);
+    }
   }
 
   public getAvatarSrc(): Observable<string> {
@@ -141,23 +216,12 @@ export class PublisherCardComponent implements AfterViewInit {
   get feedUrl(): string {
     return this.type === 'user'
       ? `/${this.publisher.username}`
-      : `/groups/profile/${this.publisher.guid}/feed`;
+      : `/group/${this.publisher.guid}/feed`;
   }
 
   get subscribersUrl(): string {
     return this.type === 'user'
       ? `/${this.publisher.username}/subscribers`
       : `/group/${this.publisher.guid}/members`;
-  }
-
-  get shouldShowSubs(): boolean {
-    return (
-      this.showSubs &&
-      this.size !== 'small' &&
-      ((this.type === 'user' &&
-        (this.publisher.subscribers_count ||
-          this.publisher.subscriptions_count)) ||
-        (this.type === 'group' && this.publisher['members:count']))
-    );
   }
 }

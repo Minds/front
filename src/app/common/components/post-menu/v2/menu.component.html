@@ -66,6 +66,16 @@
       </span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
+      *ngIf="options.includes('view-federated') && entity?.canonical_url"
+      [externalLink]="entity.canonical_url"
+    >
+      <span>
+        <ng-container i18n="@@M__ACTION__VIEW_ON">View on</ng-container>&nbsp;{{
+          entity.ownerObj.username | federation
+        }}
+      </span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
       (click)="onSelectedOption('share')"
       *ngIf="options.indexOf('share') !== -1"
     >
@@ -201,11 +211,11 @@
     <!-- ADMIN EDIT FLAGS -->
     <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && canEdit">
       <m-dropdownMenu__item class="m-postMenu__item--nsfw">
-        <m-nsfw-selector
+        <m-nsfwSelector
           (selectedChange)="setNSFWSelected($event)"
           [selected]="entity.nsfw"
           service="editing"
-        ></m-nsfw-selector>
+        ></m-nsfwSelector>
       </m-dropdownMenu__item>
     </ng-container>
     <ng-container *ngIf="session.isAdmin()">

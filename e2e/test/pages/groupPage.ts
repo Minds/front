@@ -4,7 +4,7 @@ const { I } = inject();
  * Page Object for a groups page.
  */
 class GroupPage {
-  private groupSettingsButtonSelector: string = 'minds-groups-settings-button';
+  private groupSettingsButtonSelector: string = 'm-group__settingsButton';
 
   /**
    * Navigate to a group by guid.

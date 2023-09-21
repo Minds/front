@@ -1,5 +1,4 @@
 @import 'defaults';
-@import 'font-size';
 @import 'padding';
 @import 'margin';
 
@@ -11,11 +10,17 @@
     align-items: center;
     cursor: pointer;
 
+    > li {
+      padding-left: $spacing2;
+    }
+
     .m-accountQualityScore__badge {
       color: var(--score-color);
       border: 1px solid var(--score-color);
       border-radius: 3px;
       box-sizing: border-box;
+      font-size: 13px;
+      line-height: $spacing4;
     }
   }
 }

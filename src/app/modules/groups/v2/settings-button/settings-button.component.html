@@ -1,0 +1,155 @@
+<m-dropdownMenu
+  [menu]="settingsMenu"
+  [anchorPosition]="{ top: '100%', right: '0' }"
+  class="m-groupsSettingsButton__triggerContainer"
+>
+  <m-button
+    class="m-button-v2 m-button-v2--iconOnly"
+    overlay="true"
+    iconOnly="true"
+  >
+    <m-icon iconId="more_horiz" [sizeFactor]="0"></m-icon>
+  </m-button>
+</m-dropdownMenu>
+
+<ng-template #settingsMenu>
+  <ul>
+    <!-- ----------------------------- -->
+    <!-- OWNER FUNCTIONS -->
+    <!-- ----------------------------- -->
+    <ng-container *ngIf="service.isOwner$ | async">
+      <m-dropdownMenu__item (click)="openEditModal()">
+        <span i18n="@@COMMON__EDIT">Edit group</span>
+      </m-dropdownMenu__item>
+      <!---------------------------->
+      <m-dropdownMenu__item
+        *ngIf="boostGroupsExperimentIsActive"
+        (click)="onBoostGroupClick()"
+        i18n="@@GROUP_SETTINGS__BOOST_GROUP"
+        >Boost group</m-dropdownMenu__item
+      >
+      <!---------------------------->
+      <m-dropdownMenu__item
+        *ngIf="service.showBoosts$ | async; else enableBoosts"
+        (click)="toggleShowBoosts(false)"
+      >
+        <ng-container i18n="@@GROUP_SETTINGS__DISABLE_BOOSTS"
+          >Disable boosts</ng-container
+        >
+      </m-dropdownMenu__item>
+
+      <ng-template #enableBoosts>
+        <m-dropdownMenu__item (click)="toggleShowBoosts(true)">
+          <ng-container i18n="@@GROUP_SETTINGS__ENABLE_BOOSTS"
+            >Enable boosts</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-template>
+
+      <!---------------------------->
+      <m-dropdownMenu__item
+        *ngIf="service.moderated$ | async; else enableModeration"
+        (click)="toggleModeration(false)"
+      >
+        <ng-container i18n="@@GROUP_SETTINGS__DISABLE_MODERATION"
+          >Disable moderation</ng-container
+        >
+      </m-dropdownMenu__item>
+
+      <ng-template #enableModeration>
+        <m-dropdownMenu__item (click)="toggleModeration(true)">
+          <ng-container i18n="@@GROUP_SETTINGS__ENABLE_MODERATION"
+            >Enable moderation</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-template>
+
+      <!---------------------------->
+      <m-dropdownMenu__item
+        *ngIf="service.private$ | async; else enablePrivate"
+        (click)="togglePrivate(false)"
+      >
+        <ng-container i18n="@@GROUP_SETTINGS__MAKE_PUBLIC"
+          >Make public</ng-container
+        >
+      </m-dropdownMenu__item>
+
+      <ng-template #enablePrivate>
+        <m-dropdownMenu__item (click)="togglePrivate(true)">
+          <ng-container i18n="@@GROUP_SETTINGS__MAKE_CLOSED"
+            >Make closed</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-template>
+    </ng-container>
+
+    <!-- ----------------------------- -->
+    <!-- MEMBER FUNCTIONS -->
+    <!-- ----------------------------- -->
+    <ng-container *ngIf="service.isMember$ | async">
+      <m-dropdownMenu__item
+        *ngIf="service.isMuted$ | async; else disableNotifications"
+        (click)="toggleNotifications(true)"
+      >
+        <ng-container
+          i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
+          >Enable notifications</ng-container
+        >
+      </m-dropdownMenu__item>
+
+      <ng-template #disableNotifications>
+        <m-dropdownMenu__item (click)="toggleNotifications(false)">
+          <ng-container
+            i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
+            >Disable notifications</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-template>
+    </ng-container>
+
+    <!-- ----------------------------- -->
+    <!-- REPORT (shown to everyone)-->
+    <!-- ----------------------------- -->
+    <m-dropdownMenu__item
+      red="true"
+      class="m-groups-settings-dropdown__item--report"
+      (click)="openReportModal()"
+    >
+      <ng-container i18n="@@M__ACTION__REPORT_GROUP">Report group</ng-container>
+    </m-dropdownMenu__item>
+    <!-- ----------------------------- -->
+    <!-- MINDS ADMIN FUNCTIONS -->
+    <!-- ----------------------------- -->
+    <ng-container *ngIf="session.isAdmin()">
+      <m-dropdownMenu__item
+        *ngIf="!(service.mature$ | async)"
+        red="true"
+        (click)="toggleExplicit(true)"
+        i18n="@@M__ACTION__SET_EXPLICIT"
+      >
+        Set explicit
+      </m-dropdownMenu__item>
+      <m-dropdownMenu__item
+        *ngIf="service.mature$ | async"
+        red="true"
+        (click)="toggleExplicit(false)"
+        i18n="@@M__ACTION__REMOVE_EXPLICIT"
+      >
+        Remove explicit
+      </m-dropdownMenu__item>
+    </ng-container>
+    <!-- ----------------------------- -->
+    <!-- CREATOR FUNCTIONS -->
+    <!-- ----------------------------- -->
+    <m-dropdownMenu__item
+      *ngIf="service.isCreator$ | async"
+      red="true"
+      class="m-groups-settings-dropdown__item--deleteGroup"
+      (click)="openDeleteConfirmationModal()"
+      i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP"
+      data-ref="data-minds-group-dropdown-delete"
+    >
+      Delete group
+    </m-dropdownMenu__item>
+  </ul>
+</ng-template>

@@ -39,10 +39,11 @@ export class ActivityToolbarComponent {
 
   entity: ActivityEntity;
   allowReminds: boolean = true;
+  protected isOwner: boolean = false;
   protected supermindButtonExperiment: boolean = false;
 
   // Used to remove a downvoted item from the feed.
-  @Output() onExplicitDownvote: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDownvote: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     public service: ActivityService,
@@ -61,6 +62,10 @@ export class ActivityToolbarComponent {
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
+
+        this.isOwner =
+          this.session.getLoggedInUser() &&
+          this.session.getLoggedInUser().guid === this.entity.ownerObj.guid;
       }
     );
 
@@ -133,14 +138,14 @@ export class ActivityToolbarComponent {
   }
 
   /**
-   * Remove item from the feed when
-   * it is explicitly downvoted
+   * Remove item from the feed.
+   * @param { boolean } $event - true if was downvoted.
+   * @returns { void }
    */
-  onThumbsDownChange($event): void {
-    if ($event && this.service.displayOptions.showExplicitVoteButtons) {
-      this.onExplicitDownvote.emit();
+  public onThumbsDownChange($event: boolean): void {
+    if ($event) {
+      this.onDownvote.emit();
     }
-
     this.detectChanges();
   }
 

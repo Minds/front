@@ -35,16 +35,7 @@ import { FeedsUpdateService } from '../../../../common/services/feeds-update.ser
 export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   group: any;
 
-  // Whether this is displayed in modern groups
-  @Input('v2')
-  @HostBinding('class.m-group-profile-feed__sorted--v2')
-  v2: boolean = false;
-
   @Input('group') set _group(group: any) {
-    if (group === this.group) {
-      return;
-    }
-
     this.group = group;
 
     if (this.initialized) {
@@ -91,6 +82,8 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
 
   query: string = '';
 
+  private subscriptions: Subscription[] = [];
+
   constructor(
     protected service: GroupsService,
     public feedsService: FeedsService,
@@ -127,6 +120,10 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
       this.groupsSearchQuerySubscription.unsubscribe();
     }
     this.feedsUpdatedSubscription?.unsubscribe();
+
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   async load(refresh: boolean = false) {
@@ -190,26 +187,16 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   }
 
   setFilter(type: string) {
-    if (!this.v2) {
-      const route = ['/groups/profile', this.group.guid, 'feed'];
-
-      if (type !== 'activities') {
-        route.push(type);
-      }
-
-      this.router.navigate(route);
-    } else {
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: {
-          filter: type,
-        },
-        queryParamsHandling: 'merge',
-      });
-    }
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        filter: type,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 
-  isMember() {
+  get isMember(): boolean {
     return this.session.isLoggedIn() && this.group['is:member'];
   }
 
@@ -324,11 +311,7 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
    * Reroute to the correct endpoint for the version of groups we're using
    */
   onReviewNoticeClick($event): void {
-    if (this.v2) {
-      this.router.navigate(['group', this.group.guid, 'review']);
-    } else {
-      this.router.navigate(['groups', this.group.guid, 'feed', 'review']);
-    }
+    this.router.navigate(['group', this.group.guid, 'review']);
   }
 
   /**

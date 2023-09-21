@@ -45,14 +45,11 @@ export class SubscribeButtonComponent implements OnInit {
   // only show the icons, no text
   @Input() iconOnly: boolean = false;
 
-  // show the icons next to the text
-  @Input() showIcons: boolean = true;
+  // show the add/close icons next to the text.
+  @Input() showIconWithText: boolean = true;
 
   // the size of the m-button
   @Input() size: ButtonSize = 'xsmall';
-
-  // disable subscription - allows for a user to preview their own card.
-  @Input() disableSubscribe: boolean = false;
 
   // disable the button after the user subscribes
   @Input() disableAfterSubscribe: boolean = false;
@@ -80,6 +77,11 @@ export class SubscribeButtonComponent implements OnInit {
   @Input()
   labelType: SubscribeButtonLabelType = 'action';
 
+  /**
+   * Disables button so a user can't subscribe to themself
+   */
+  isOwnChannel: boolean = false;
+
   constructor(
     public session: Session,
     public authModal: AuthModalService,
@@ -96,6 +98,11 @@ export class SubscribeButtonComponent implements OnInit {
   ngOnInit(): void {
     if (!this._user || !this._user.guid) {
       return;
+    }
+
+    if (this.session.getLoggedInUser()) {
+      this.isOwnChannel =
+        this._user.guid === this.session.getLoggedInUser().guid;
     }
 
     if (this.enableRecheck) {

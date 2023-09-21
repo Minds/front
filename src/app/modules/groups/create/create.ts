@@ -98,7 +98,7 @@ export class GroupsCreator {
       );
 
       this.service.updateMembership(true, guid);
-      this.router.navigate(['/groups/profile', guid]);
+      this.router.navigate(['/group', guid]);
     } catch (e) {
       this.inProgress = false;
       this.toasterService.error(e.message);

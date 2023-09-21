@@ -24,6 +24,8 @@ import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boos
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
 import { ThemeService } from '../../../services/theme.service';
 import { ComposerService } from '../../../../modules/composer/services/composer.service';
+import { AuthModalService } from '../../../../modules/auth/modal/auth-modal.service';
+import { ExperimentsService } from '../../../../modules/experiments/experiments.service';
 
 /**
  * V2 version of sidebar component.
@@ -105,7 +107,9 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private themeService: ThemeService,
-    private sidebarNavigationService: SidebarNavigationService
+    private sidebarNavigationService: SidebarNavigationService,
+    private authModal: AuthModalService,
+    private experiments: ExperimentsService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -193,6 +197,11 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   public async openComposeModal(): Promise<void> {
+    if (!this.session.isLoggedIn()) {
+      this.authModal.open();
+      return;
+    }
+
     this.toggle();
     // required so that the sidebar doesn't get stuck in the context
     // of another instantiated composer, for example within a group,
@@ -246,5 +255,16 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   public onSidebarMoreToggle($event): void {
     this.sidebarMoreOpened = $event;
+  }
+
+  /**
+   * Only show the upgrade link when the user isn't pro and the flag is on
+   */
+  get showUpgradeLink(): boolean {
+    return (
+      this.user &&
+      !this.user.pro &&
+      this.experiments.hasVariation('front-6084-sidenav-upgrade-link')
+    );
   }
 }

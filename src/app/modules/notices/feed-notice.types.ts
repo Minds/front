@@ -8,9 +8,9 @@ export type NoticeKey =
   | 'enable-push-notifications'
   | 'update-tags'
   | 'plus-upgrade'
+  | 'pro-upgrade'
   | 'boost-channel'
   | 'invite-friends'
-  | 'boost-partners'
   | 'boost-latest-post'
   | 'no-groups';
 

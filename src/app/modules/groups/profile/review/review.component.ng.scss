@@ -40,6 +40,12 @@
 
   .minds-list {
     .m-groupReview__item {
+      &:first-of-type {
+        ::ng-deep m-activity {
+          border-top: none !important;
+        }
+      }
+
       &:last-of-type {
         @include m-theme() {
           border-bottom: 1px solid themed($m-borderColor--primary);

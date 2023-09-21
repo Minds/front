@@ -11,6 +11,8 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { NoticesModule } from '../notices/notices.module';
 import { DefaultFeedHeaderComponent } from './feed/default-feed-header/default-feed-header.component';
+import { ValuePropModule } from '../value-prop/value-prop.module';
+import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 
 @NgModule({
   imports: [
@@ -22,6 +24,8 @@ import { DefaultFeedHeaderComponent } from './feed/default-feed-header/default-f
     SuggestionsModule,
     ExperimentsModule,
     NoticesModule,
+    ValuePropModule,
+    DiscoverySharedModule,
   ],
   declarations: [
     DefaultFeedComponent,

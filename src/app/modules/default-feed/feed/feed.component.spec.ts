@@ -68,6 +68,18 @@ describe('DefaultFeedComponent', () => {
             selector: 'm-feedNotice__outlet',
             inputs: ['location'],
           }),
+          MockComponent({
+            selector: 'm-publisherRecommendations',
+            inputs: ['location', 'dismissible', 'publisherType'],
+          }),
+          MockComponent({
+            selector: 'm-valueProp__cardOutlet',
+            inputs: ['showBorderTop'],
+          }),
+          MockComponent({
+            selector: 'm-featured-content',
+            inputs: ['slot', 'displayOptions'],
+          }),
           DefaultFeedComponent,
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
@@ -201,5 +213,25 @@ describe('DefaultFeedComponent', () => {
   it('should report that a user is NOT logged in', () => {
     (comp as any).session.isLoggedIn.and.returnValue(false);
     expect(comp.isLoggedIn()).toBeFalse();
+  });
+
+  describe('canShowValuePropCard', () => {
+    it('should determine that value prop card cannot be shown because a user is logged in', () => {
+      (comp as any).session.isLoggedIn.and.returnValue(true);
+      expect(comp.canShowValuePropCard(0)).toBeFalse();
+      expect(comp.canShowValuePropCard(1)).toBeFalse();
+      expect(comp.canShowValuePropCard(2)).toBeFalse();
+      expect(comp.canShowValuePropCard(3)).toBeFalse();
+      expect(comp.canShowValuePropCard(4)).toBeFalse();
+    });
+
+    it('should determine when value prop cards can be shown', () => {
+      (comp as any).session.isLoggedIn.and.returnValue(false);
+      expect(comp.canShowValuePropCard(0)).toBeTrue();
+      expect(comp.canShowValuePropCard(1)).toBeFalse();
+      expect(comp.canShowValuePropCard(2)).toBeTrue();
+      expect(comp.canShowValuePropCard(3)).toBeFalse();
+      expect(comp.canShowValuePropCard(4)).toBeTrue();
+    });
   });
 });

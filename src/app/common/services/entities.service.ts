@@ -94,9 +94,6 @@ export class EntitiesService {
           return;
         }
         const entity = response.entities[0];
-        entity.require_login = response.require_login
-          ? response.require_login
-          : false;
 
         if (entity && entity.urn !== urn) {
           // urns may differn so fix this
@@ -191,6 +188,9 @@ export class EntitiesService {
       }
 
       for (const entity of response.entities) {
+        entity.require_login = response.require_login
+          ? response.require_login
+          : false;
         this.addEntity(entity);
       }
 

@@ -183,6 +183,7 @@ import { GroupMembershipService } from './services/group-membership.service';
 import { SelectableEntityCardComponent } from './components/selectable-entity-card/selectable-entity-card.component';
 import { InlineFeedHeaderComponent } from './components/inline-feed-header/inline-feed-header.component';
 import { ExploreTagFeedItemComponent } from './components/explore-tag-feed-item/explore-tag-feed-item.component';
+import { ExploreFeedItemComponent } from './components/explore-feed-item/explore-feed-item.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -214,6 +215,7 @@ const MINDS_COMMON_COMPONENTS = [
   EnvironmentFlagComponent,
   ErrorSplashComponent,
   ExplicitOverlayComponent,
+  ExploreFeedItemComponent,
   FeaturedContentComponent,
   FeedFilterComponent,
   FileUploadComponent,

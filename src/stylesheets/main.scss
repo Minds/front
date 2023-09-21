@@ -333,6 +333,12 @@ body.m-theme-in-transition *:after {
   }
 }
 
+.m-hideOnTablet {
+  @media screen and (max-width: $min-tablet) {
+    display: none;
+  }
+}
+
 // Don't allow this phrase to be broken
 // into multiple lines
 .m-keepTogether {

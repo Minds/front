@@ -8,6 +8,7 @@ import { PublisherType } from '../../../common/components/publisher-search-modal
 import { PublisherRecommendationsLocation } from '../../suggestions/publisher-recommendations/publisher-recommendations.component';
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { ExplicitVotesExperimentService } from '../../experiments/sub-services/explicit-votes-experiment.service';
+import { AppDownloadModalLazyService } from '../../modals/app-download/app-download.service';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -51,7 +52,8 @@ export class DefaultFeedComponent implements OnInit {
     private feedNoticeService: FeedNoticeService,
     private dismissal: DismissalService,
     private session: Session,
-    private explicitVotesExperiment: ExplicitVotesExperimentService
+    private explicitVotesExperiment: ExplicitVotesExperimentService,
+    private appDownloadModal: AppDownloadModalLazyService
   ) {}
 
   public ngOnInit(): void {
@@ -163,5 +165,22 @@ export class DefaultFeedComponent implements OnInit {
         this.session.getLoggedInUser().guid
       )
     );
+  }
+
+  /**
+   * Whether a value prop card can be shown.
+   * @param { number } index - index in feed.
+   * @returns { boolean } true if value prop card can be shown in this position.
+   */
+  public canShowValuePropCard(index: number): boolean {
+    return !this.isLoggedIn() && index % 2 === 0;
+  }
+
+  /**
+   * Opens a modal with a qr code that leads to the moobile app page
+   */
+  protected async openAppDownloadModal($event) {
+    await this.appDownloadModal.open();
+    return;
   }
 }

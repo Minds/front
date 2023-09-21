@@ -1,0 +1,43 @@
+<div
+  class="m-modalV2__inner m-group__edit"
+  *ngIf="service.group$ | async as group"
+>
+  <div class="m-modalV2__header m-groupEdit__header">
+    <h2 class="m-modalV2Header__title" i18n="@@GROUP_EDIT__EDIT_GROUP">
+      Edit Group
+    </h2>
+  </div>
+
+  <form
+    class="m-groupEdit__content m-formWrapper"
+    (keydown.enter)="$event.preventDefault()"
+  >
+    <m-accordion class="m-accordionV2 m-formLayout--buttonRight">
+      <m-accordion__pane
+        class="m-accordion__pane--noTopPadding"
+        headerTitle="Profile"
+        i18n-headerTitle="@@GROUP_EDIT__PROFILE"
+      >
+        <m-groupEdit__profile
+          class="m-accordionPane__innerContentContainer"
+        ></m-groupEdit__profile>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+    </m-accordion>
+
+    <ng-template #saveButton>
+      <div class="m-form__buttonsContainer m-groupEdit__buttonsContainer">
+        <m-button
+          type="button"
+          [disabled]="false"
+          [saving]="service.inProgress$ | async"
+          (onAction)="onSubmit()"
+          i18n="@@COMMON__SAVE"
+          >Save</m-button
+        >
+      </div>
+    </ng-template>
+  </form>
+</div>
+<m-modalCloseButton></m-modalCloseButton>

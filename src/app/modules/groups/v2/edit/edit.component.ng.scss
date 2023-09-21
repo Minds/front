@@ -1,0 +1,93 @@
+@import 'defaults.scss';
+
+:host {
+  @media screen and (max-width: $max-mobile) {
+    width: 100%;
+  }
+
+  .m-modalV2__inner.m-group__edit {
+    @media screen and (max-width: $max-mobile) {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      border-radius: 0;
+    }
+  }
+
+  .m-group__edit {
+    padding: 0 0 80px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 0 20px;
+    }
+
+    .m-groupEdit__header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 50px 30px;
+
+      @media screen and (max-width: $max-mobile) {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 20px;
+      }
+
+      a {
+        font-size: 15px;
+        line-height: 20px;
+        text-decoration: none;
+        margin-right: 20px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        span {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+
+    .m-groupEdit__content {
+      flex: 1;
+    }
+
+    ::ng-deep {
+      .m-accordionPane__content > * + *,
+      .m-accordionPane__innerContentContainer > * + * {
+        margin-top: 20px;
+      }
+
+      .m-groupEdit__innerField {
+        margin-top: 15px;
+      }
+
+      .m-groupEdit__buttonsContainer {
+        margin-bottom: 0 !important;
+      }
+
+      .m-form__row--input {
+        width: 65%;
+
+        @media screen and (max-width: $max-mobile) {
+          width: 100%;
+        }
+
+        input[type='text'],
+        input[type='number'],
+        input[type='password'],
+        input[type='email'],
+        textarea,
+        select {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

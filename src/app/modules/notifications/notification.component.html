@@ -84,7 +84,7 @@
 
   <!-- group inivite -->
   <ng-template ngSwitchCase="group_invite">
-    <a [routerLink]="['/groups/profile', notification.params.group.guid]">
+    <a [routerLink]="['/group', notification.params.group.guid]">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__GROUP_INVITE">
         {{ notification.params.user }} invited you to join
         <span class="pseudo-link mdl-color-text--blue-grey-400">{{
@@ -96,7 +96,7 @@
 
   <!-- group kick -->
   <ng-template ngSwitchCase="group_kick">
-    <a [routerLink]="['/groups/profile', notification.params.group.guid]">
+    <a [routerLink]="['/group', notification.params.group.guid]">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__GROUP_KICK">
         You were kicked off from
         <span class="pseudo-link mdl-color-text--blue-grey-400">{{
@@ -299,7 +299,7 @@
       <div *ngIf="notification.entityObj.type == 'group'">
         <div>
           <a
-            [routerLink]="['/groups/profile', notification.entityObj.guid]"
+            [routerLink]="['/group', notification.entityObj.guid]"
             [queryParams]="{
               focusedCommentUrn: notification.params?.focusedCommentUrn
             }"
@@ -422,7 +422,7 @@
         </a>
 
         <a
-          [routerLink]="['/groups/profile', notification.entityObj.entity_guid]"
+          [routerLink]="['/group', notification.entityObj.entity_guid]"
           [queryParams]="{
             focusedCommentUrn: notification.params?.focusedCommentUrn
           }"
@@ -536,7 +536,7 @@
 
         <a
           [routerLink]="[
-            '/groups/profile',
+            '/group',
             notification.entityObj.entity_guid,
             'conversation'
           ]"
@@ -698,11 +698,7 @@
         </a>
 
         <a
-          [routerLink]="[
-            '/groups/profile',
-            notification.params?.parent?.guid,
-            'feed'
-          ]"
+          [routerLink]="['/group', notification.params?.parent?.guid, 'feed']"
           [queryParams]="{
             focusedCommentUrn: notification.params?.focusedCommentUrn
           }"

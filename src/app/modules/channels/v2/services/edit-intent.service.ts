@@ -39,13 +39,14 @@ export class ChannelEditIntentService implements OnDestroy {
   /**
    * Opens edit modal
    */
-  async edit(): Promise<void> {
+  async edit(initialPane: number = 0): Promise<void> {
     if (this.modalSubscription) {
       this.modalSubscription.unsubscribe();
     }
 
     const editedChannel = await this.editModal.present(
       this.service.channel$.getValue(),
+      initialPane,
       this.injector
     );
 

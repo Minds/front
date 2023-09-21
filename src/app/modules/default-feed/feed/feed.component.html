@@ -5,6 +5,23 @@
   <ng-container
     *ngFor="let activity$ of feedsService.feed | async; let i = index"
   >
+    <m-valueProp__cardOutlet
+      *ngIf="canShowValuePropCard(i)"
+      [showBorderTop]="i > 0"
+    ></m-valueProp__cardOutlet>
+    <m-exploreFeedItem
+      *ngIf="!isLoggedIn() && i === 0"
+      titleText="Minds Mobile"
+    >
+      <m-button
+        explore-feed-item-button
+        size="small"
+        (onAction)="openAppDownloadModal($event)"
+        ><ng-container i18n="@@DEFAULT_FEED__GET_APP"
+          >Get app</ng-container
+        ></m-button
+      >
+    </m-exploreFeedItem>
     <m-feedNotice__outlet
       *ngIf="isLoggedIn() && i > 0 && i % 6 === 0"
       location="inline"

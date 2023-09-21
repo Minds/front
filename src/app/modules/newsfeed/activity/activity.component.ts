@@ -30,12 +30,14 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { IntersectionObserverService } from '../../../common/services/interception-observer.service';
+import { IntersectionObserverService } from '../../../common/services/intersection-observer.service';
 import { debounceTime } from 'rxjs/operators';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
+
+const TOPBAR_HEIGHT: number = 75;
 
 /**
  * Base component for activity posts (excluding activities displayed in a modal).
@@ -126,7 +128,13 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
-  private interceptionObserverSubscription: Subscription;
+  private intersectionObserverSubscription: Subscription;
+
+  /**
+   * Activity wrapper DOM element
+   */
+  @ViewChild('activityWrapper')
+  activityWrapper: ElementRef<HTMLElement>;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -146,6 +154,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   showDownvoteNotice: boolean = false;
 
+  persistentFeedExperimentActive: boolean = false;
+
   constructor(
     public service: ActivityService,
     private el: ElementRef,
@@ -154,13 +164,15 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private newsfeedService: NewsfeedService,
     public session: Session,
     private configs: ConfigsService,
-    private interceptionObserver: IntersectionObserverService,
+    private intersectionObserver: IntersectionObserverService,
     private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
+    this.persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
+
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
     this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
@@ -199,9 +211,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.guestModeSubscription.unsubscribe();
     if (
       this.entityMetricSocketsExperiment.isActive() &&
-      this.interceptionObserverSubscription
+      this.intersectionObserverSubscription
     ) {
-      this.interceptionObserverSubscription.unsubscribe();
+      this.intersectionObserverSubscription.unsubscribe();
     }
   }
 
@@ -231,7 +243,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Only needed when metrics toolbar is visible.
       if (this.service.displayOptions.showToolbar) {
-        this.setupInterceptionObserver();
+        this.setupIntersectionObserver();
       }
     }
   }
@@ -241,9 +253,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
    * update local isIntersecting$ state accordingly.
    * @returns { void }
    */
-  public setupInterceptionObserver(): void {
-    if (this.interceptionObserverSubscription) {
-      console.error('Already registered InterceptionObserver');
+  public setupIntersectionObserver(): void {
+    if (this.intersectionObserverSubscription) {
+      console.error('Already registered IntersectionObserver');
       return;
     }
 
@@ -254,7 +266,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.interceptionObserverSubscription = this.interceptionObserver
+    this.intersectionObserverSubscription = this.intersectionObserver
       .createAndObserve(this.el)
       .pipe(debounceTime(2000))
       .subscribe((isVisible: boolean) => {
@@ -304,14 +316,57 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Called when a downvote event is received.
+   * Handles showing of downvote notice.
+   * @returns { void }
+   */
+  public onDownvote(): void {
+    if (!this.isSingle) {
+      if (!this.topOfPostIsVisible()) {
+        this.scrollToTopOfPost();
+      }
+      this.toggleDownvoteNotice(true);
+    }
+  }
+
+  /**
    * Remove the downvote and show the activity
    * instead of the downvote notice
    */
   onUndoExplicitDownvote($event): void {
     this.service.undoDownvote();
 
-    this.showDownvoteNotice = false;
+    this.toggleDownvoteNotice(false);
   }
 
-  persistentFeedExperimentActive = this.persistentFeedExperiment.isActive();
+  /**
+   * @returns whether the top of the post is visible right now
+   */
+  topOfPostIsVisible(): boolean {
+    const top = this.bounds.top - TOPBAR_HEIGHT;
+
+    return top >= 0;
+  }
+
+  /**
+   * If you explicitly downvoted when the top of the post was out of view,
+   * scroll to the top of the post to ensure the downvote notice is visible
+   */
+  scrollToTopOfPost(): void {
+    const offsetPosition = this.bounds.top + window.scrollY - TOPBAR_HEIGHT;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth',
+    });
+  }
+
+  toggleDownvoteNotice(show: boolean): void {
+    this.showDownvoteNotice = show;
+    this.cd.detectChanges();
+  }
+
+  get bounds() {
+    return this.activityWrapper.nativeElement.getBoundingClientRect();
+  }
 }

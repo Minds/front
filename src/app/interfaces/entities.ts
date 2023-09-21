@@ -141,6 +141,7 @@ export interface MindsUser {
   boosted?: boolean;
   boosted_guid?: string;
   urn?: string;
+  canonical_url?: string; // for activity pub users
 }
 
 export interface MindsGroup {

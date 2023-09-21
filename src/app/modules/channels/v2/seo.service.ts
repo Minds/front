@@ -35,7 +35,7 @@ export class SeoService {
       .setTitle(`${user.name} (@${user.username})`)
       .setDescription(user.briefdescription || `Subscribe to @${user.username}`)
       .setOgUrl(url)
-      .setCanonicalUrl(url)
+      .setCanonicalUrl(user?.canonical_url ?? url)
       .setOgImage(user.avatar_url.master, {
         width: 2000,
         height: 1000,
