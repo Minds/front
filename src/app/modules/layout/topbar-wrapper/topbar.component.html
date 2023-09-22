@@ -5,10 +5,9 @@
 
   <ng-container icons *ngIf="session.isLoggedIn()">
     <m-topbar__walletBalance></m-topbar__walletBalance>
-    <m-tooltip>
+    <m-tooltip *ngIf="giftCardPurchaseExperimentIsActive">
       <m-icon
         m-tooltip--anchor
-        *ngIf="giftCardPurchaseExperimentIsActive"
         class="m-topbarWrapper__giftIcon"
         from="custom"
         iconId="gift"
