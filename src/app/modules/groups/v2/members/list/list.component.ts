@@ -11,7 +11,6 @@ import {
   Observable,
   Subscription,
   combineLatest,
-  debounceTime,
   distinctUntilChanged,
   map,
   shareReplay,
@@ -172,7 +171,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
       this.group$,
       this.groupMembershipLevel$,
       this.membershipLevelGte$,
-      // this.searchQuery$,
+      this.searchQuery$,
     ]).pipe(
       distinctUntilChanged(),
       tap(_ => {
@@ -180,14 +179,15 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         this.list$.next([]);
       }),
       switchMap(
-        ([group, groupMembershipLevel, membershipLevelGte]: [
+        ([group, groupMembershipLevel, membershipLevelGte, q]: [
           MindsGroup,
           GroupMembershipLevel,
-          boolean
-          // string
+          boolean,
+          string
         ]): Observable<
           ApiResponse | { redirect: boolean; errorMessage: any }
         > => {
+          //this.service.searchQuery$.next(q);
           return this.service.getList$(this.requestLimit, 0);
         }
       ),
@@ -257,6 +257,19 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
       map(([list, inProgress]) => {
         return !inProgress && (!list || !list.length);
       })
+    );
+  }
+
+  /**
+   * Whether group member actions should be shown.
+   * @param { unknown } member - member to check.
+   * @returns { boolean } - true if group member actions should be shown.
+   */
+  public shouldShowGroupMemberActions(member: unknown): boolean {
+    return (
+      this.group['is:owner'] ||
+      (this.group['is:moderator'] &&
+        !(member['is:owner'] || member['is:moderator']))
     );
   }
 }

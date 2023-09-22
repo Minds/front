@@ -72,4 +72,5 @@ export type GroupInvitePutParams = {
 export type GroupInvitePutResponse = {
   done: boolean;
   status: string;
+  error?: string;
 };

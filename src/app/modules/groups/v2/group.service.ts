@@ -132,6 +132,13 @@ export class GroupService implements OnDestroy {
   );
 
   /**
+   * Whether current user is banned from the group
+   */
+  readonly isBanned$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
    * Whether current user has muted notifications for this group
    */
   readonly isMuted$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -180,6 +187,7 @@ export class GroupService implements OnDestroy {
     protected toaster: ToasterService,
     protected router: Router
   ) {
+    this.listenForLogin(); //0jm
     // Set canReview observable
     this.canReview$ = combineLatest([this.isOwner$, this.isModerator$]).pipe(
       map(([isOwner, isModerator]) => isOwner || isModerator)
@@ -199,6 +207,17 @@ export class GroupService implements OnDestroy {
       map(
         ([isPrivate, isMember, isOwner]) => isOwner || (!isPrivate && isMember)
       )
+    );
+  }
+
+  /**
+   * Refresh when user logs in
+   */
+  listenForLogin() {
+    this.subscriptions.push(
+      this.session.loggedinEmitter.subscribe(() => {
+        this.sync();
+      })
     );
   }
 
@@ -260,6 +279,7 @@ export class GroupService implements OnDestroy {
     this.isMember$.next(group ? group['is:member'] : false);
     this.isModerator$.next(group ? group['is:moderator'] : false);
     this.isAwaiting$.next(group ? group['is:awaiting'] : false);
+    this.isBanned$.next(group ? group['is:banned'] : false);
     this.isMuted$.next(group ? group['is:muted'] : false);
   }
 

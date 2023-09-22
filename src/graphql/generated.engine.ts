@@ -84,6 +84,13 @@ export type BoostNode = NodeInterface & {
   legacy: Scalars['String']['output'];
 };
 
+export type BoostsConnection = ConnectionInterface & {
+  __typename?: 'BoostsConnection';
+  /** Gets Boost edges in connection. */
+  edges: Array<BoostEdge>;
+  pageInfo: PageInfo;
+};
+
 export type Connection = ConnectionInterface & {
   __typename?: 'Connection';
   edges: Array<EdgeInterface>;
@@ -386,6 +393,8 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Gets Boosts. */
+  boosts: BoostsConnection;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -421,6 +430,17 @@ export type Query = {
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryBoostsArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  servedByGuid?: InputMaybe<Scalars['String']['input']>;
+  source?: InputMaybe<Scalars['String']['input']>;
+  targetAudience?: InputMaybe<Scalars['Int']['input']>;
+  targetLocation?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryDismissalByKeyArgs = {
@@ -616,6 +636,34 @@ export type AdminUpdateAccountMutationVariables = Exact<{
 export type AdminUpdateAccountMutation = {
   __typename?: 'Mutation';
   updateAccount: Array<string>;
+};
+
+export type GetBoostFeedQueryVariables = Exact<{
+  targetLocation?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after: Scalars['Int']['input'];
+  source: Scalars['String']['input'];
+}>;
+
+export type GetBoostFeedQuery = {
+  __typename?: 'Query';
+  boosts: {
+    __typename?: 'BoostsConnection';
+    edges: Array<{
+      __typename?: 'BoostEdge';
+      node: {
+        __typename?: 'BoostNode';
+        guid: string;
+        activity: { __typename?: 'ActivityNode'; legacy: string };
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+      startCursor?: string | null;
+    };
+  };
 };
 
 export type ClaimGiftCardMutationVariables = Exact<{
@@ -1616,6 +1664,49 @@ export class AdminUpdateAccountGQL extends Apollo.Mutation<
   AdminUpdateAccountMutationVariables
 > {
   document = AdminUpdateAccountDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetBoostFeedDocument = gql`
+  query GetBoostFeed(
+    $targetLocation: Int
+    $first: Int
+    $after: Int!
+    $source: String!
+  ) {
+    boosts(
+      targetLocation: $targetLocation
+      first: $first
+      after: $after
+      source: $source
+    ) {
+      edges {
+        node {
+          guid
+          activity {
+            legacy
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+        startCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetBoostFeedGQL extends Apollo.Query<
+  GetBoostFeedQuery,
+  GetBoostFeedQueryVariables
+> {
+  document = GetBoostFeedDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

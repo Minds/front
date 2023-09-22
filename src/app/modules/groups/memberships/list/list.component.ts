@@ -43,6 +43,11 @@ export class GroupsMembershipsListComponent implements OnInit, OnDestroy {
     boolean
   >(false);
 
+  // The next offset to load from
+  public readonly offset$: BehaviorSubject<number> = new BehaviorSubject<
+    number
+  >(0);
+
   // Whether there is more data that could be added to the list.
   public readonly moreData$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
@@ -161,6 +166,9 @@ export class GroupsMembershipsListComponent implements OnInit, OnDestroy {
       ),
       tap((response: any) => {
         this.moreData$.next(response['load-next']);
+        if (response['load-next']) {
+          this.offset$.next(response['load-next']);
+        }
         this.inProgress$.next(false);
         this.list$.next(response.groups);
         if (response.groups && response.groups.length) {
@@ -187,7 +195,7 @@ export class GroupsMembershipsListComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.service
-        .getList$(this.requestLimit, this.list$.getValue().length ?? null)
+        .getList$(this.requestLimit, this.offset$.getValue())
         .pipe(take(1))
         .subscribe((response: any) => {
           if (response && response.groups && response.groups.length) {
@@ -195,6 +203,9 @@ export class GroupsMembershipsListComponent implements OnInit, OnDestroy {
             this.list$.next([...currentList, ...response.groups]);
 
             this.moreData$.next(response['load-next']);
+            if (response['load-next']) {
+              this.offset$.next(response['load-next']);
+            }
           } else {
             this.moreData$.next(false);
           }
