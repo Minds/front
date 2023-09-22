@@ -109,4 +109,91 @@ describe('GroupMembersListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('shouldShowGroupMemberActions', () => {
+    it('should determine whether to show group member actions because the user is the owner', () => {
+      const memberGuid: string = '234';
+      const member = {
+        guid: memberGuid,
+        'is:owner': true,
+        'is:moderator': false,
+      };
+
+      component.group = {
+        ...groupMock,
+        'is:owner': true,
+        'is:moderator': false,
+      };
+
+      expect(component.shouldShowGroupMemberActions(member)).toBeTrue();
+    });
+
+    it('should determine whether to show group member actions because the user is a moderator and the member is not the owner or a moderator', () => {
+      const memberGuid: string = '234';
+      const member = {
+        guid: memberGuid,
+        'is:owner': false,
+        'is:moderator': false,
+      };
+
+      component.group = {
+        ...groupMock,
+        'is:owner': true,
+        'is:moderator': false,
+      };
+
+      expect(component.shouldShowGroupMemberActions(member)).toBeTrue();
+    });
+
+    it('should determine whether NOT to show group member actions because the actioning user is a moderator and the member is an owner', () => {
+      const memberGuid: string = '234';
+      const member = {
+        guid: memberGuid,
+        'is:owner': false,
+        'is:moderator': true,
+      };
+
+      component.group = {
+        ...groupMock,
+        'is:owner': false,
+        'is:moderator': true,
+      };
+
+      expect(component.shouldShowGroupMemberActions(member)).toBeFalse();
+    });
+
+    it('should determine whether NOT to show group member actions because the actioning user is a moderator and the member is a moderator', () => {
+      const memberGuid: string = '234';
+      const member = {
+        guid: memberGuid,
+        'is:owner': false,
+        'is:moderator': true,
+      };
+
+      component.group = {
+        ...groupMock,
+        'is:owner': false,
+        'is:moderator': true,
+      };
+
+      expect(component.shouldShowGroupMemberActions(member)).toBeFalse();
+    });
+
+    it('should determine whether NOT to show group member actions because not owner or moderator', () => {
+      const memberGuid: string = '234';
+      const member = {
+        guid: memberGuid,
+        'is:owner': false,
+        'is:moderator': false,
+      };
+
+      component.group = {
+        ...groupMock,
+        'is:owner': false,
+        'is:moderator': false,
+      };
+
+      expect(component.shouldShowGroupMemberActions(member)).toBeFalse();
+    });
+  });
 });
