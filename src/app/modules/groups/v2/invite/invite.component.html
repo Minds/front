@@ -47,7 +47,7 @@
           </p>
         </div>
       </div>
-      <p class="m-groupInvite__note">
+      <p class="m-groupInvite__note" *ngIf="isModerator(group)">
         Note: If the user was previously banned from the group, inviting them
         will lift the ban.
       </p>

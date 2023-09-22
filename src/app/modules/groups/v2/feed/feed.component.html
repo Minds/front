@@ -9,8 +9,15 @@
       ></m-group-profile__feed>
       <ng-template #privateFeedNotice>
         <div class="m-groupFeed__privateFeedNotice">
-          <span i18n="@@GROUP_FEED__PRIVATE_FEED_NOTICE"
+          <span
+            *ngIf="!(service.isBanned$ | async)"
+            i18n="@@GROUP_FEED__PRIVATE_FEED_NOTICE__MEMBERS_ONLY"
             >This discussion is only available to group members.</span
+          >
+          <span
+            *ngIf="service.isBanned$ | async"
+            i18n="@@GROUP_FEED__PRIVATE_FEED_NOTICE__BANNED"
+            >You have been banned from this group.</span
           >
         </div>
       </ng-template>

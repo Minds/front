@@ -31,12 +31,16 @@
       </ul>
     </div>
     <m-button
+      *ngIf="
+        limit === DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT &&
+        !(inProgress$ | async) &&
+        !entityGuid
+      "
       class="m-sidebarWidget__seeMore"
       (onAction)="seeMore()"
       size="small"
       stretch="true"
       [solid]="true"
-      *ngIf="limit === 5 && !(inProgress$ | async) && !entityGuid"
       i18n="@@COMMON__SEE_MORE__ACTION"
       data-ref="sidebar-tags-more"
       >See more</m-button

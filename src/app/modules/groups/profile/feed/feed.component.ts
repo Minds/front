@@ -2,7 +2,6 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { GroupsService } from '../../groups.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { EventEmitter } from 'stream';
 
 /**
  * Container for <m-group-profile-feed__sorted> component

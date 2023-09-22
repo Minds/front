@@ -39,6 +39,7 @@ export class ActivityToolbarComponent {
 
   entity: ActivityEntity;
   allowReminds: boolean = true;
+  protected isOwner: boolean = false;
   protected supermindButtonExperiment: boolean = false;
 
   // Used to remove a downvoted item from the feed.
@@ -61,6 +62,10 @@ export class ActivityToolbarComponent {
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
+
+        this.isOwner =
+          this.session.getLoggedInUser() &&
+          this.session.getLoggedInUser().guid === this.entity.ownerObj.guid;
       }
     );
 

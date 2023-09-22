@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 /**
  * Boost button used in activity toolbar.
@@ -10,4 +10,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./boost-button.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ActivityBoostButtonComponent {}
+export class ActivityBoostButtonComponent {
+  @Input() iconOnly = true;
+}

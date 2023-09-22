@@ -35,6 +35,7 @@
       >
         <ng-container *ngTemplateOutlet="button"></ng-container>
       </div>
+      <ng-content select="[additionalActions]"></ng-content>
     </ng-container>
     <!-- ------------------------------------------------- -->
     <ng-container *ngIf="size === 'small'">
