@@ -99,10 +99,15 @@ export class GroupInviteService implements OnDestroy {
           map(response => {
             this.inProgress$.next(false);
 
+            if (response.error) {
+              this.toaster.error(response.error);
+              return;
+            }
+
             if (response.done) {
               this.toaster.success(`@${invitee.name} has been invited to join`);
+              return;
             }
-            return;
           })
         )
         .subscribe()
@@ -119,7 +124,13 @@ export class GroupInviteService implements OnDestroy {
     this.inProgress$.next(false);
 
     if (toast) {
-      this.toaster.error(e.error ?? 'An unknown error has occurred');
+      let errorMessage: string = 'An unknown error has occurred';
+      if (typeof e.error === 'string') {
+        errorMessage = e.error;
+      } else if (typeof e.error?.message === 'string') {
+        errorMessage = e.error.message;
+      }
+      this.toaster.error(errorMessage);
     }
     console.error(e);
     return of(null);
