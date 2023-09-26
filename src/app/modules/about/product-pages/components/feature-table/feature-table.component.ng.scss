@@ -25,55 +25,57 @@
 
   .m-productPageFeatTable__table {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     width: 100%;
     max-width: 1200px;
 
-    .m-productPageFeatTable__column {
+    .m-productPageFeatTable__row {
       flex: 1;
+      display: flex;
+      width: 100%;
       flex-flow: row nowrap;
 
-      .m-productPageFeatTable__headerBox,
-      .m-productPageFeatTable__headerBoxSpacer {
-        height: 200px;
-        margin: $spacing2;
-        box-sizing: border-box;
-      }
+      .m-productPageFeatTable__column {
+        flex: 1;
 
-      .m-productPageFeatTable__headerBox {
-        display: flex;
-        flex-flow: column nowrap;
-        border-radius: 8px;
-        padding: $spacing6 $spacing4 $spacing4 $spacing4;
-        text-align: left;
-
-        @include m-theme() {
-          border: 1px solid color-by-theme($m-borderColor--primary, 'light');
+        .m-productPageFeatTable__headerBox,
+        .m-productPageFeatTable__headerBoxSpacer {
+          height: 200px;
+          margin: $spacing2;
+          box-sizing: border-box;
         }
 
-        .m-productPageFeatTable__headerBoxTitle {
-          margin-top: 0;
-          @include heading4Bold;
+        .m-productPageFeatTable__headerBox {
+          display: flex;
+          flex-flow: column nowrap;
+          border-radius: 8px;
+          padding: $spacing6 $spacing4 $spacing4 $spacing4;
+          text-align: left;
 
           @include m-theme() {
-            color: color-by-theme($m-bgColor--primary, 'dark');
+            border: 1px solid color-by-theme($m-borderColor--primary, 'light');
+          }
+
+          .m-productPageFeatTable__headerBoxTitle {
+            margin-top: 0;
+            @include heading4Bold;
+
+            @include m-theme() {
+              color: color-by-theme($m-bgColor--primary, 'dark');
+            }
+          }
+
+          .m-productPageFeatTable__headerBoxAmount {
+            margin-bottom: $spacing6;
+            @include body3Regular;
+
+            strong {
+              @include heading2Bold;
+            }
           }
         }
-
-        .m-productPageFeatTable__headerBoxAmount {
-          margin-bottom: $spacing6;
-          @include body3Regular;
-
-          strong {
-            @include heading2Bold;
-          }
-        }
-      }
-
-      .m-productPageFeatTable__sections {
         .m-productPageFeatTable__tableCell {
           padding: $spacing4;
-          height: 60px;
           box-sizing: border-box;
           text-align: center;
           @include body1Medium;
