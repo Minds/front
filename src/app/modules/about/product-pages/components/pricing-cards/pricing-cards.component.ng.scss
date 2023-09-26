@@ -1,0 +1,168 @@
+@import 'defaults.scss';
+
+$maxPricingCardWidth: 278px;
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  text-align: center;
+  padding: 0 $spacing30;
+  margin-bottom: $spacing12;
+
+  .m-productPagePricingCards__periodSelector {
+    width: fit-content;
+    padding: $spacing3 $spacing1;
+    margin-bottom: $spacing24;
+    border-radius: 100px;
+    cursor: pointer;
+
+    @include m-theme() {
+      border: 1px solid color-by-theme($m-borderColor--primary, 'light');
+    }
+
+    .m-productPagePricingCards__period {
+      padding: $spacing2 $spacing4;
+      border-radius: 100px;
+      @include unselectable;
+
+      @include m-theme() {
+        color: color-by-theme($m-textColor--secondary, 'light');
+      }
+
+      &--selected {
+        @include m-theme() {
+          color: color-by-theme($m-white, 'light');
+          background: color-by-theme($m-bgColor--primaryInverted, 'light');
+        }
+      }
+    }
+  }
+
+  .m-productPagePricingCards__cards {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: $spacing4;
+    width: 100%;
+
+    .m-productPagePricingCards__cardContainer {
+      border-radius: 8px;
+      flex: 1;
+      max-width: $maxPricingCardWidth;
+      flex-grow: 0;
+      flex-shrink: 0;
+      flex-basis: 25%;
+
+      @media screen and (max-width: $min-huge) {
+        max-width: calc(50% - $spacing4);
+        flex-basis: 50%;
+      }
+
+      @media screen and (max-width: $min-tablet) {
+        max-width: unset;
+        flex-basis: 100%;
+      }
+
+      @include m-theme() {
+        border: 1px solid color-by-theme($m-borderColor--primary, 'light');
+      }
+
+      &.m-productPagePricingCards__cardContainer--mostPopular {
+        @include m-theme() {
+          border: 1px solid color-by-theme($m-bgColor--primary, 'dark');
+        }
+      }
+
+      &:not(.m-productPagePricingCards__cardContainer--mostPopular) {
+        margin-top: $spacing7;
+      }
+
+      .m-productPagePricingCards__mostPopularHeader {
+        height: $spacing7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px 8px 0 0;
+        @include body2Bold;
+
+        @include m-theme() {
+          border: 1px solid color-by-theme($m-bgColor--primary, 'dark');
+          color: color-by-theme($m-textColor--primary, 'dark');
+          background-color: color-by-theme($m-bgColor--primary, 'dark');
+        }
+
+        span {
+          margin-right: $spacing2;
+        }
+
+        m-icon {
+          margin-bottom: $spacing1;
+        }
+      }
+
+      .m-productPagePricingCards__cardBody {
+        padding: $spacing6 $spacing4;
+        text-align: left;
+
+        .m-productPagePricingCards__cardTitle {
+          margin: $spacing1 0 0 0;
+          @include heading4Bold;
+        }
+
+        .m-productPagePricingCards__cardSubtitle {
+          margin-bottom: $spacing3;
+          @include body2Regular;
+        }
+
+        .m-productPagePricingCards__priceStartingAt {
+          margin: unset;
+          font-family: Inter;
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 115%;
+
+          &.m-productPagePricingCards__priceStartingAt--hidden {
+            visibility: hidden;
+          }
+        }
+
+        .m-productPagePricingCards__cardPricing {
+          margin-bottom: $spacing7;
+          @include body3Regular;
+
+          strong {
+            @include heading2Bold;
+          }
+        }
+
+        .m-productPagePricingCards__cardPerks {
+          display: flex;
+          flex-flow: column nowrap;
+
+          .m-productPagePricingCards__cardPerkTitle {
+            @include body1Bold;
+          }
+
+          .m-productPagePricingCards__cardPerk {
+            display: flex;
+            align-items: center;
+
+            & + * {
+              margin-top: $spacing4;
+            }
+
+            .m-productPagePricingCards__cardPerkIcon {
+              margin-right: $spacing4;
+            }
+
+            .m-productPagePricingCards__cardPerkText {
+              @include body2Regular;
+            }
+          }
+        }
+      }
+    }
+  }
+}

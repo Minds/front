@@ -1,0 +1,147 @@
+query GetV2ProductPageBySlug($slug: String!) {
+  v2ProductPages(filters: { slug: { eq: $slug } }) {
+    data {
+      attributes {
+        slug
+        productPage {
+          __typename
+          ... on ComponentDynamicProductPageHero {
+            id
+            text
+          }
+          ... on ComponentDynamicProductPagePricingCards {
+            id
+            savingsText
+            productPlans {
+              data {
+                attributes {
+                  tier
+                  title
+                  subtitle
+                  mostPopular
+                  priceStartingAt
+                  upgradeButton {
+                    text
+                    action
+                    solid
+                    dataRef
+                  }
+                  perksTitle
+                  perks {
+                    text
+                  }
+                }
+              }
+            }
+          }
+          ... on ComponentDynamicProductPageFeatureTable {
+            id
+            title
+            subtitle
+            columns {
+              data {
+                attributes {
+                  tier
+                  featTableHeader {
+                    title
+                  	button {
+                      text
+                      action
+                      dataRef
+                  	}
+                  }
+                  sections {
+                    data {
+                      attributes {
+                        headerText
+                        items {
+                          data {
+                            attributes {
+                              checkbox
+                              columnText
+                              productFeature {
+                                data {
+                                  attributes {
+                                    featureName
+                                    explainerText
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ... on ComponentDynamicProductPageFeatureShowcase {
+            id
+            item {
+              image {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                    alternativeText
+                  }
+                }
+              }
+              title
+              body
+            }
+          }
+          ... on ComponentDynamicProductPageBasicExplainer {
+            id
+            title
+            body
+            button {
+              text
+              dataRef
+              navigationUrl
+              action
+            }
+          }
+          ... on ComponentDynamicProductPageFeatureHighlight {
+            id
+            backgroundColor
+            theme
+            title
+            body
+            image {
+              data {
+                attributes {
+                  url
+                  height
+                  width
+                  alternativeText
+                }
+              }
+            }
+            alignImage
+            button {
+              text
+              dataRef
+              navigationUrl
+              action
+            }
+          }
+          ... on ComponentDynamicProductPageClosingCta {
+            id
+            title
+            body
+            button {
+              text
+              dataRef
+              navigationUrl
+              action
+            }
+          }
+        }
+      }
+    }
+  }
+}

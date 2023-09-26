@@ -1,0 +1,23 @@
+<ng-container *ngFor="let component of components$ | async; trackByFn">
+  <ng-container [ngSwitch]="component.__typename">
+    <m-productPage__hero
+      *ngSwitchCase="'ComponentDynamicProductPageHero'"
+      [text]="component.text"
+    ></m-productPage__hero>
+    <m-productPage__pricingCards
+      *ngSwitchCase="'ComponentDynamicProductPagePricingCards'"
+      [savingsText]="component.savingsText"
+      [productPlans]="component.productPlans?.data"
+    ></m-productPage__pricingCards>
+    <m-productPage__featureTable
+      *ngSwitchCase="'ComponentDynamicProductPageFeatureTable'"
+      [title]="component.title"
+      [subtitle]="component.subtitle"
+      [columns]="component.columns.data"
+    ></m-productPage__featureTable>
+    <!--<ng-container *ngSwitchCase="'ComponentDynamicProductPageFeatureHighlight'">Feature Highlight</ng-container>
+    <ng-container *ngSwitchCase="'ComponentDynamicProductPageBasicExplainer'">Basic Explainer</ng-container>
+    <ng-container *ngSwitchCase="'ComponentDynamicProductPageFeatureShowcase'">Feature Showcase</ng-container>
+    <ng-container *ngSwitchCase="'ComponentDynamicProductPageClosingCta'">Closing CTA</ng-container> -->
+  </ng-container>
+</ng-container>

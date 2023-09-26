@@ -1,0 +1,56 @@
+@import 'defaults.scss';
+
+:host {
+  margin: $spacing24 0 $spacing20 0;
+  display: flex;
+  justify-content: center;
+
+  markdown {
+    max-width: 1100px;
+    margin: 0 $spacing6;
+
+    ::ng-deep {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-family: Inter;
+        text-align: center;
+
+        @include m-theme() {
+          color: color-by-theme($m-bgColor--primary, 'dark');
+        }
+      }
+
+      h1 {
+        font-size: 54px;
+        font-weight: 900;
+        line-height: 58.8px;
+      }
+
+      h2 {
+        font-size: 40px;
+        font-weight: 500;
+        line-height: 48px;
+        letter-spacing: -0.16px;
+      }
+
+      h3 {
+        font-size: 36px;
+        font-weight: 500;
+        line-height: 48px;
+        letter-spacing: -0.16px;
+      }
+
+      h4 {
+        @include heading4Regular;
+      }
+
+      h5,
+      p {
+        @include body1Regular;
+      }
+    }
+  }
+}

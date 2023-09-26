@@ -1,0 +1,106 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  text-align: center;
+  padding: 0 $spacing30;
+  margin-top: $spacing25;
+  // margin-bottom: $spacing12;
+
+  .m-productPageFeatTable__title {
+    text-align: center;
+    font-family: Inter;
+    font-size: 54px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 58.8px;
+  }
+
+  .m-productPageFeatTable__subtitle {
+    margin: $spacing5 0 $spacing12 0;
+    @include heading4Regular;
+  }
+
+  .m-productPageFeatTable__table {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    max-width: 1200px;
+
+    .m-productPageFeatTable__column {
+      flex: 1;
+      flex-flow: row nowrap;
+
+      .m-productPageFeatTable__headerBox,
+      .m-productPageFeatTable__headerBoxSpacer {
+        height: 200px;
+        margin: $spacing2;
+        box-sizing: border-box;
+      }
+
+      .m-productPageFeatTable__headerBox {
+        display: flex;
+        flex-flow: column nowrap;
+        border-radius: 8px;
+        padding: $spacing6 $spacing4 $spacing4 $spacing4;
+        text-align: left;
+
+        @include m-theme() {
+          border: 1px solid color-by-theme($m-borderColor--primary, 'light');
+        }
+
+        .m-productPageFeatTable__headerBoxTitle {
+          margin-top: 0;
+          @include heading4Bold;
+
+          @include m-theme() {
+            color: color-by-theme($m-bgColor--primary, 'dark');
+          }
+        }
+
+        .m-productPageFeatTable__headerBoxAmount {
+          margin-bottom: $spacing6;
+          @include body3Regular;
+
+          strong {
+            @include heading2Bold;
+          }
+        }
+      }
+
+      .m-productPageFeatTable__sections {
+        .m-productPageFeatTable__tableCell {
+          padding: $spacing4;
+          height: 60px;
+          box-sizing: border-box;
+          text-align: center;
+          @include body1Medium;
+
+          &--leftAlign {
+            text-align: left;
+          }
+        }
+
+        .m-productPageFeatTable__headerCell {
+          padding: $spacing4 $spacing3;
+          @include heading4Bold;
+
+          @include m-theme() {
+            color: color-by-theme($m-bgColor--primary, 'dark');
+            background-color: color-by-theme($m-grey-100, 'light');
+          }
+
+          &--roundedLeft {
+            border-radius: 8px 0 0 8px;
+          }
+
+          &--roundedRight {
+            border-radius: 0 8px 8px 0;
+          }
+        }
+      }
+    }
+  }
+}

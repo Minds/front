@@ -1,0 +1,75 @@
+<h1 class="m-productPageFeatTable__title">{{ title }}</h1>
+<h3 class="m-productPageFeatTable__subtitle">{{ subtitle }}</h3>
+
+<div class="m-productPageFeatTable__table">
+  <div class="m-productPageFeatTable__column">
+    <div class="m-productPageFeatTable__headerBoxSpacer"></div>
+    <div
+      *ngFor="let section of columns[0].attributes.sections.data"
+      class="m-productPageFeatTable__sections"
+    >
+      <div
+        class="m-productPageFeatTable__tableCell m-productPageFeatTable__headerCell m-productPageFeatTable__headerCell--roundedLeft m-productPageFeatTable__tableCell--leftAlign"
+      >
+        {{ section.attributes.headerText }}
+      </div>
+      <div
+        *ngFor="let item of section.attributes.items.data"
+        class="m-productPageFeatTable__tableCell m-productPageFeatTable__tableCell--leftAlign"
+      >
+        {{ item.attributes.productFeature.data.attributes.featureName }}
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngFor="let column of columns; let i = index"
+    class="m-productPageFeatTable__column"
+  >
+    <!-- Table header -->
+    <div
+      *ngIf="column.attributes.featTableHeader as featTableHeader"
+      class="m-productPageFeatTable__headerBox"
+    >
+      <h5 class="m-productPageFeatTable__headerBoxTitle">
+        {{ featTableHeader.title }}
+      </h5>
+      <span class="m-productPageFeatTable__headerBoxAmount"
+        ><strong>$0</strong> / month</span
+      >
+      <button
+        class="m-productPage__cardButton"
+        (click)="handleButtonClick(featTableHeader.button.action)"
+      >
+        <span>{{ featTableHeader.button.text }}</span>
+      </button>
+    </div>
+
+    <!-- Sections -->
+    <div
+      *ngFor="let section of column.attributes.sections.data"
+      class="m-productPageFeatTable__sections"
+    >
+      <div
+        class="m-productPageFeatTable__tableCell m-productPageFeatTable__headerCell"
+        [ngClass]="{
+          'm-productPageFeatTable__headerCell--roundedRight':
+            i === columns.length - 1
+        }"
+      >
+        &nbsp;
+      </div>
+      <div
+        *ngFor="let item of section.attributes.items.data"
+        class="m-productPageFeatTable__tableCell"
+      >
+        <i *ngIf="item.attributes.checkbox" class="material-icons"
+          >check_circle</i
+        >
+        <span *ngIf="item.attributes.columnText">{{
+          item.attributes.columnText
+        }}</span>
+      </div>
+    </div>
+  </div>
+</div>

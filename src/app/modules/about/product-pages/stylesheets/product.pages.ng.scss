@@ -1,0 +1,53 @@
+@import 'defaults.scss';
+
+$maxPricingCardWidth: 278px;
+
+:host {
+  .m-productPage__cardButton {
+    width: 100%;
+    padding: $spacing3 $spacing5;
+    margin-bottom: $spacing10;
+    border-radius: 4px;
+    line-height: 0;
+    cursor: pointer;
+    @include body1Bold;
+
+    @include m-theme() {
+      background-color: color-by-theme($m-bgColor--primary, 'dark');
+      color: color-by-theme($m-textColor--primary, 'dark');
+      border: 1px solid color-by-theme($m-bgColor--primary, 'dark');
+    }
+
+    &:not(.m-productPage__cardButton--outline):hover {
+      background-color: unset;
+      color: color-by-theme($m-bgColor--primary, 'dark');
+    }
+
+    &:hover {
+      @include m-theme() {
+        background-color: unset;
+        color: color-by-theme($m-bgColor--primary, 'dark');
+      }
+    }
+
+    &.m-productPage__cardButton--outline {
+      @include m-theme() {
+        background-color: unset;
+        color: color-by-theme($m-bgColor--primary, 'dark');
+      }
+
+      &:hover {
+        @include m-theme() {
+          background-color: color-by-theme($m-bgColor--primary, 'dark');
+          color: color-by-theme($m-textColor--primary, 'dark');
+        }
+      }
+    }
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
