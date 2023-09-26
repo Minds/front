@@ -12,7 +12,6 @@ import {
   filter,
   switchMap,
 } from 'rxjs';
-import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleService } from './services/console.service';
 
@@ -39,8 +38,7 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private service: SupermindConsoleService,
-    private supermindOnboardingModal: SupermindOnboardingModalService
+    private service: SupermindConsoleService
   ) {}
 
   ngOnInit(): void {
@@ -80,10 +78,6 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
     this.router.navigate(['/supermind/inbox']);
   }
 
-  async openSupermindOnboardingModal() {
-    await this.supermindOnboardingModal.open();
-  }
-
   /**
    * Handle route change.
    * @param { UrlSegment[] } url - url segments.
@@ -91,14 +85,6 @@ export class SupermindConsoleComponent implements OnInit, OnDestroy {
    */
   private handleRouteChange(url: UrlSegment[]): void {
     const param = url[0].path ?? null;
-
-    if (param === 'inbox') {
-      // Launch onboarding modal (if user hasn't seen it yet)
-      this.supermindOnboardingModal.setContentType('reply');
-      if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
-        this.openSupermindOnboardingModal();
-      }
-    }
 
     if (
       param === 'inbox' ||
