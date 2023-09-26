@@ -8,7 +8,6 @@ import { TransactionOverlayService } from '../modules/blockchain/transaction-ove
 import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../modules/blockchain/token-purchase/uniswap/uniswap-modal.service';
 import { ToasterService } from './services/toaster.service';
-import { SupermindOnboardingModalService } from '../modules/supermind/onboarding-modal/onboarding-modal.service';
 import { ResetPasswordModalService } from '../modules/auth/reset-password-modal/reset-password-modal.service';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { ResetPasswordModalService } from '../modules/auth/reset-password-modal/
     UniswapModalService,
     AuthModalService,
     ResetPasswordModalService,
-    SupermindOnboardingModalService,
     {
       provide: Web3ModalService,
       useFactory: () => {

@@ -12,14 +12,14 @@ import { SupermindConsoleStateLabelComponent } from './console/list/list-item/st
 import { SupermindConsoleActionButtonsComponent } from './console/list/list-item/action-bar/action-buttons.component';
 import { PathMatch } from '../../common/types/angular.types';
 import { SupermindConsoleExploreFeedComponent } from './console/explore-feed/explore-feed.component';
-import { LoggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 import { NoticesModule } from '../notices/notices.module';
+import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
 
 const routes: Routes = [
   {
     path: 'supermind',
     component: SupermindConsoleComponent,
-    canActivate: [LoggedInRedirectGuard],
+    canActivate: [loggedOutExplainerScreenGuard()],
     children: [
       { path: '', redirectTo: 'explore', pathMatch: 'full' as PathMatch },
       { path: 'explore', component: SupermindConsoleExploreFeedComponent },

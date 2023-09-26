@@ -27,7 +27,7 @@ type confirmationModalComponent = typeof import('./fragments/confirmationModalCo
 type modalComponent = typeof import('./fragments/modalComponent');
 type notificationsComponent = typeof import('./fragments/notificationsComponent');
 type sidebarComponent = typeof import('./fragments/sidebarComponent');
-type supermindOnboardingModalComponent = typeof import('./fragments/supermindOnboardingModalComponent');
+type explainerScreenModalComponent = typeof import('./fragments/explainerScreenModalComponent');
 type topbarComponent = typeof import('./fragments/topbarComponent');
 type feedNoticeComponent = typeof import('./fragments/feedNoticeComponent');
 type boostModalComponent = typeof import('./fragments/boostModalComponent');
@@ -76,7 +76,7 @@ declare namespace CodeceptJS {
     modalComponent: modalComponent;
     notificationsComponent: notificationsComponent;
     sidebarComponent: sidebarComponent;
-    supermindOnboardingModalComponent: supermindOnboardingModalComponent;
+    explainerScreenModalComponent: explainerScreenModalComponent;
     topbarComponent: topbarComponent;
     feedNoticeComponent: feedNoticeComponent;
     boostModalComponent: boostModalComponent;
