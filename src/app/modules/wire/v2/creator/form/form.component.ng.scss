@@ -33,7 +33,7 @@
 
     > .m-wireCreatorForm__field {
       flex: 1;
-      margin: 0 0 27px;
+      margin: 0 0 $spacing6;
 
       @media screen and (max-width: $max-mobile) {
         margin: 0 0 35px;
@@ -54,6 +54,10 @@
         @media screen and (max-width: $max-mobile) {
           margin-right: 0;
         }
+      }
+
+      &.m-wireCreatorForm__field--smallBottomMargin {
+        margin-bottom: $spacing4;
       }
     }
 
@@ -149,6 +153,16 @@
         color: themed($m-link-text);
       }
     }
+
+    &.m-wireCreatorForm__label--giftRecipient {
+      display: block;
+      margin-bottom: $spacing4;
+
+      @include body2Bold;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
   }
 
   .m-wireCreatorForm__toggleContainer {
@@ -183,7 +197,7 @@
     display: flex;
     flex-direction: row;
     font-size: 21px;
-    margin-bottom: 15px;
+
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
@@ -198,6 +212,9 @@
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
         box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      }
+      &.m-wireCreatorForm__intervalOption--gift {
+        padding-bottom: $spacing9;
       }
       &.m-wireCreatorForm__intervalOption--selected {
         @include m-theme() {

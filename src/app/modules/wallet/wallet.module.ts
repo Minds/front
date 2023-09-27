@@ -44,6 +44,8 @@ import { WalletV2CreditsSummaryComponent } from './components/credits/summary/su
 import { WalletV2CreditsHistoryComponent } from './components/credits/history/history.component';
 import { WalletV2CreditsTransactionHistoryComponent } from './components/credits/history/transaction-history/transaction-history.component';
 import { GiftCardClaimExperimentGuard } from '../experiments/guards/gift-card-claim-experiment.guard';
+import { WalletV2CreditsSendComponent } from './components/credits/send/send.component';
+import { WalletV2CreditsProductUpgradeCardComponent } from './components/credits/send/product-upgrade-card/product-upgrade-card.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' as PathMatch },
@@ -143,6 +145,11 @@ export const WALLET_ROUTES: Routes = [
             component: WalletV2CreditsHistoryComponent,
             canActivate: [TabStorageGuard],
           },
+          {
+            path: 'send',
+            component: WalletV2CreditsSendComponent,
+            canActivate: [TabStorageGuard],
+          },
         ],
       },
       {
@@ -197,6 +204,8 @@ export const WALLET_ROUTES: Routes = [
     WalletV2CreditsSummaryComponent,
     WalletV2CreditsHistoryComponent,
     WalletV2CreditsTransactionHistoryComponent,
+    WalletV2CreditsSendComponent,
+    WalletV2CreditsProductUpgradeCardComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [
