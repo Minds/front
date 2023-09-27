@@ -83,7 +83,7 @@ Feature: Supermind Console
   #   Given I create a new user
   #   When I navigate via sidebar to the supermind console
   #   And I see the supermind reply onboarding modal
-  #   And I click the action button in the Supermind onboarding modal
+  #   And I see an explainer screen modal
   #   Then I should see my Supermind Console "inbox"
   #   And I clear my cookies
 

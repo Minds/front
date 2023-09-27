@@ -12,7 +12,6 @@ import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../services/session-mock';
 import { MockComponent, MockService } from '../../../utils/mock';
-import { SupermindOnboardingModalService } from '../onboarding-modal/onboarding-modal.service';
 import { SupermindConsoleListType } from '../supermind.types';
 import { SupermindConsoleComponent } from './console.component';
 import { SupermindConsoleService } from './services/console.service';
@@ -89,10 +88,6 @@ describe('SupermindConsoleComponent', () => {
                 },
               },
             }),
-          },
-          {
-            provide: SupermindOnboardingModalService,
-            useValue: MockService(SupermindOnboardingModalService),
           },
           {
             provide: Session,

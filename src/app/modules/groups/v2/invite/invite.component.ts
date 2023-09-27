@@ -20,6 +20,7 @@ import {
   EntityResolverServiceOptions,
 } from '../../../../common/services/entity-resolver.service';
 import { Subscription, distinctUntilChanged, switchMap } from 'rxjs';
+import { MindsGroup } from '../group.model';
 
 /**
  * Invite modal component
@@ -150,6 +151,15 @@ export class GroupInviteComponent implements OnInit, OnDestroy {
     this.formGroup.get('username').setErrors(null);
     this.formGroup.markAsPristine();
     this.changeDetector.detectChanges();
+  }
+
+  /**
+   * Returns true if user is a moderator, or an owner, which encompasses being a moderator.
+   * @param { MindsGroup } group - group to check.
+   * @returns { boolean } true if user is a moderator.
+   */
+  public isModerator(group: MindsGroup): boolean {
+    return group['is:owner'] || group['is:moderator'];
   }
 
   /**

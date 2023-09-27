@@ -10,6 +10,7 @@ namespace CommonSteps {
     channelPage,
     confirmationModalComponent,
     onboardingV5ModalComponent,
+    explainerScreenModalComponent,
   } = inject();
 
   /**
@@ -144,6 +145,14 @@ namespace CommonSteps {
 
   //
 
+  When('I see an explainer screen modal', () => {
+    explainerScreenModalComponent.shouldBeVisible(true);
+  });
+
+  When('I click the action button in the explainer screen modal', () => {
+    explainerScreenModalComponent.clickContinue();
+  });
+
   When('I click the cancel button on the confirmation modal', () => {
     confirmationModalComponent.clickCancel();
   });
@@ -181,6 +190,10 @@ namespace CommonSteps {
 
   Then('I see the {string} modal', (selector: string) => {
     modalComponent.isVisible(locate(selector));
+  });
+
+  Then('I should see an explainer screen modal', num => {
+    explainerScreenModalComponent.shouldBeVisible(true);
   });
 
   // Debug helper
