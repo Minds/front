@@ -17,6 +17,7 @@ import {
 import { GiftCardService } from '../../../gift-card.service';
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { GiftCardClaimPanelEnum } from '../claim-panel.enum';
+import { GiftRecipientGiftDuration } from '../../../../wire/v2/creator/form/gift-recipient/gift-recipient-modal/gift-recipient-modal.types';
 
 /**
  * Panel for the redemption / claiming of a gift card.
@@ -149,5 +150,51 @@ export class GiftCardClaimRedeemPanelComponent implements OnInit, OnDestroy {
           this.router.navigate(['/']);
         }
       });
+  }
+
+  /**
+   * Gets title for page, which varies based on product and amount to give text
+   * indicating the user can buy the largest upgrade their subscription will allow.
+   * @returns { string } title text.
+   */
+  public getTitle(): string {
+    const giftCardNode: GiftCardNode = this.giftCardNode$.getValue();
+    const productId: GiftCardProductIdEnum = giftCardNode?.productId;
+    const amount: number = giftCardNode?.amount;
+
+    // Only Plus and Pro need custom text.
+    if (
+      ![GiftCardProductIdEnum.Plus, GiftCardProductIdEnum.Pro].includes(
+        productId
+      )
+    ) {
+      return $localize`:@@GIFT_RECIPIENT_MODAL__CLAIM_YOUR_GIFT:Claim your gift`;
+    }
+
+    const largestPurchasableDuration: GiftRecipientGiftDuration = this.service.getLargestPurchasableUpgradeDuration(
+      productId,
+      amount
+    );
+
+    switch (productId) {
+      case GiftCardProductIdEnum.Plus:
+        if (largestPurchasableDuration === GiftRecipientGiftDuration.YEAR) {
+          return $localize`:@@GIFT_CARD_PANEL_REDEEM_PANEL__CLAIM_1_YEAR_PLUS:Claim your 1 year of Minds+ credits`;
+        }
+        if (largestPurchasableDuration === GiftRecipientGiftDuration.MONTH) {
+          return $localize`:@@GIFT_RECIPIENT_MODAL__CLAIM_1_MONTH_PLUS:Claim your 1 month of Minds+ credits`;
+        }
+        return $localize`:@@GIFT_RECIPIENT_MODAL__CLAIM_YOUR_GIFT:Claim your gift`;
+      case GiftCardProductIdEnum.Pro:
+        if (largestPurchasableDuration === GiftRecipientGiftDuration.YEAR) {
+          return $localize`:@@GIFT_CARD_PANEL_REDEEM_PANEL__CLAIM_1_YEAR_PRO:Claim your 1 year of Minds Pro credits`;
+        }
+        if (largestPurchasableDuration === GiftRecipientGiftDuration.MONTH) {
+          return $localize`:@@GIFT_RECIPIENT_MODAL__CLAIM_1_MONTH_PRO:Claim your 1 month of Minds Pro credits`;
+        }
+        return $localize`:@@GIFT_RECIPIENT_MODAL__CLAIM_YOUR_GIFT:Claim your gift`;
+      default:
+        throw new Error('Unsupported product type: ' + productId);
+    }
   }
 }

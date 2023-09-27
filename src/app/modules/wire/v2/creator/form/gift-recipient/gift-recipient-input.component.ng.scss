@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  width: fit-content;
+  border-radius: 99px;
+  padding: $spacing2 $spacing3;
+  cursor: pointer;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+    background: themed($m-bgColor--primary);
+
+    // hover
+    &:hover {
+      background: darken(themed($m-bgColor--primary), 2%);
+    }
+
+    // mousedown
+    &:active:hover {
+      background: darken(themed($m-bgColor--primary), 4%);
+    }
+  }
+
+  span {
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+}

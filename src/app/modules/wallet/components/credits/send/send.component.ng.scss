@@ -1,0 +1,52 @@
+@import 'defaults.scss';
+@import '../../../../../common/layout/layout.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .m-walletCreditsSend__topbarContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing4;
+    margin: $spacing2 0 $spacing4 0;
+    width: 100%;
+
+    .m-walletCreditsSend__header {
+      margin: 0;
+
+      @include heading3Medium;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-walletCreditsSend__description {
+    margin-bottom: $spacing12;
+
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-walletCreditsSend__productUpgradeCardContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing16;
+    margin-right: $spacing15;
+
+    > * {
+      flex: 1;
+    }
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      flex-flow: column nowrap;
+      margin-right: unset;
+      gap: $spacing8;
+    }
+  }
+}

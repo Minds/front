@@ -86,6 +86,36 @@
             opacity: 0.25;
           }
 
+          &.m-walletCreditsHistory__giftCard--boost {
+            @include m-theme() {
+              background: linear-gradient(
+                190deg,
+                color-by-theme($m-green, 'dark') 0%,
+                color-by-theme($m-grey-900, 'dark') 85%
+              );
+            }
+          }
+
+          &.m-walletCreditsHistory__giftCard--pro {
+            @include m-theme() {
+              background: linear-gradient(
+                190deg,
+                color-by-theme($m-action, 'dark') 0%,
+                color-by-theme($m-grey-900, 'dark') 85%
+              );
+            }
+          }
+
+          &.m-walletCreditsHistory__giftCard--plus {
+            @include m-theme() {
+              background: linear-gradient(
+                190deg,
+                color-by-theme($m-grey-500, 'dark') 0%,
+                color-by-theme($m-grey-900, 'dark') 85%
+              );
+            }
+          }
+
           .m-walletCreditsHistory__giftCardLogo {
             @include unselectable;
 

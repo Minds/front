@@ -5,11 +5,22 @@
 <div class="m-tabs__container">
   <li class="m-tabs__tab">
     <a
+      class="m-walletCreditsTab__balanceTab"
       routerLink="history"
       routerLinkActive="selected"
       i18n="@@WALLET_V2__GIFT_CREDITS__GIFT_BALANCE"
     >
-      Gift Balance
+      Gift balance
+    </a>
+  </li>
+  <li class="m-tabs__tab" *ngIf="isPurchaseFeatureActive">
+    <a
+      class="m-walletCreditsTab__sendTab"
+      routerLink="send"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__GIFT_CREDITS__SEND_A_GIFT"
+    >
+      Send a gift
     </a>
   </li>
 </div>

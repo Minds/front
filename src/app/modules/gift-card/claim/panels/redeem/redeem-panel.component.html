@@ -1,10 +1,5 @@
 <ng-container *ngIf="giftCardLoaded$ | async; else loadingInProgressTemplate">
-  <h2
-    class="m-giftCardRedeem__title"
-    i18n="@@GIFT_CARD_PANEL_REDEEM_PANEL__CLAIM_YOUR_GIFT"
-  >
-    Claim your gift
-  </h2>
+  <h2 class="m-giftCardRedeem__title">{{ getTitle() }}</h2>
   <p class="m-giftCardRedeem__description">{{ description$ | async }}</p>
   <m-giftCard [giftCardNode]="giftCardNode$ | async"></m-giftCard>
   <ng-container

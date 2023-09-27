@@ -180,6 +180,7 @@ export type GiftCardNode = NodeInterface & {
   id: Scalars['ID']['output'];
   issuedAt: Scalars['Int']['output'];
   issuedByGuid?: Maybe<Scalars['String']['output']>;
+  issuedByUsername?: Maybe<Scalars['String']['output']>;
   productId: GiftCardProductIdEnum;
   /**
    * Returns transactions relating to the gift card
@@ -217,6 +218,7 @@ export enum GiftCardStatusFilterEnum {
 export type GiftCardTargetInput = {
   targetEmail?: InputMaybe<Scalars['String']['input']>;
   targetUserGuid?: InputMaybe<Scalars['String']['input']>;
+  targetUsername?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GiftCardTransaction = NodeInterface & {
@@ -682,6 +684,18 @@ export type ClaimGiftCardMutation = {
   };
 };
 
+export type CreateGiftCardMutationVariables = Exact<{
+  productIdEnum: Scalars['Int']['input'];
+  amount: Scalars['Float']['input'];
+  stripePaymentMethodId: Scalars['String']['input'];
+  targetInput: GiftCardTargetInput;
+}>;
+
+export type CreateGiftCardMutation = {
+  __typename?: 'Mutation';
+  createGiftCard: { __typename?: 'GiftCardNode'; guid?: string | null };
+};
+
 export type GetGiftCardBalancesWithExpiryDataQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -726,6 +740,7 @@ export type GetGiftCardByCodeQuery = {
     balance: number;
     expiresAt: number;
     claimedAt?: number | null;
+    issuedByUsername?: string | null;
   };
 };
 
@@ -1724,6 +1739,37 @@ export class ClaimGiftCardGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const CreateGiftCardDocument = gql`
+  mutation CreateGiftCard(
+    $productIdEnum: Int!
+    $amount: Float!
+    $stripePaymentMethodId: String!
+    $targetInput: GiftCardTargetInput!
+  ) {
+    createGiftCard(
+      productIdEnum: $productIdEnum
+      amount: $amount
+      stripePaymentMethodId: $stripePaymentMethodId
+      targetInput: $targetInput
+    ) {
+      guid
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateGiftCardGQL extends Apollo.Mutation<
+  CreateGiftCardMutation,
+  CreateGiftCardMutationVariables
+> {
+  document = CreateGiftCardDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetGiftCardBalancesWithExpiryDataDocument = gql`
   query GetGiftCardBalancesWithExpiryData {
     giftCardsBalances {
@@ -1782,6 +1828,7 @@ export const GetGiftCardByCodeDocument = gql`
       balance
       expiresAt
       claimedAt
+      issuedByUsername
     }
   }
 `;

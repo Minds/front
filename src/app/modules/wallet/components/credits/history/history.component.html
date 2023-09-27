@@ -35,32 +35,24 @@
           class="m-walletCreditsHistory__giftCard"
           [ngClass]="{
             'm-walletCreditsHistory__giftCard--greyedOut':
-              isExpired(giftCard) || giftCard.balance <= 0
+              isExpired(giftCard) || giftCard.balance <= 0,
+            'm-walletCreditsHistory__giftCard--boost':
+              giftCard.productId === GiftCardProductIdEnum.Boost,
+            'm-walletCreditsHistory__giftCard--pro':
+              giftCard.productId === GiftCardProductIdEnum.Pro,
+            'm-walletCreditsHistory__giftCard--plus':
+              giftCard.productId === GiftCardProductIdEnum.Plus
           }"
           [routerLink]="['./' + giftCard.guid]"
           data-ref="gift-card-history-gift-card"
         >
-          <!-- We need to swap the logos on theme change, changing ngSrc does not do this -->
-          <ng-container
-            *ngIf="isDarkTheme$ | async; else lightThemeLogoTemplate"
-          >
-            <img
-              class="m-walletCreditsHistory__giftCardLogo"
-              ngSrc="./assets/logos/logo-monotone-light.png"
-              disableOptimizedSrcset
-              width="112"
-              height="44"
-            />
-          </ng-container>
-          <ng-template #lightThemeLogoTemplate>
-            <img
-              class="m-walletCreditsHistory__giftCardLogo"
-              ngSrc="./assets/logos/logo-monotone-dark.png"
-              disableOptimizedSrcset
-              width="112"
-              height="44"
-            />
-          </ng-template>
+          <img
+            class="m-walletCreditsHistory__giftCardLogo"
+            ngSrc="./assets/logos/logo-monotone-dark.png"
+            disableOptimizedSrcset
+            width="112"
+            height="44"
+          />
         </div>
       </div>
       <div class="m-walletCreditsHistory__itemRight">
