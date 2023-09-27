@@ -1,163 +1,127 @@
-// import { Injectable } from '@angular/core';
-// import {
-//   BehaviorSubject,
-//   combineLatest,
-//   EMPTY,
-//   Observable,
-//   Subscription,
-// } from 'rxjs';
-// import {
-//   FeedFilterDateRange,
-//   FeedFilterSort,
-//   FeedFilterType,
-// } from '../../../../common/components/feed-filter/feed-filter.component';
-// import {
-//   distinctUntilChanged,
-//   map,
-//   switchAll,
-//   filter,
-//   catchError,
-//   debounceTime,
-// } from 'rxjs/operators';
-// import { FeedsService } from '../../../../common/services/feeds.service';
-// import { ApiService } from '../../../../common/api/api.service';
-// import { Router } from '@angular/router';
-// import { ToasterService } from '../../../../common/services/toaster.service';
-// import { GroupService } from '../group.service';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+import { FeedsService } from '../../../../common/services/feeds.service';
+import { ApiService } from '../../../../common/api/api.service';
+import { Router } from '@angular/router';
+import { GroupService } from '../group.service';
+import {
+  DEFAULT_GROUP_FEED_ALGORITHM,
+  DEFAULT_GROUP_FEED_TYPE_FILTER,
+  GroupFeedAlgorithm,
+  GroupFeedTypeFilter,
+  isOfTypeGroupFeedAlgorithm,
+} from '../group.types';
 
-// ojm TODO
-// // Compare objs
-// const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
+// Compare objs
+const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
-// /**
-//  * Channel feed component service, handles filtering and pagination
-//  */
-// @Injectable()
-// export class FeedService {
-//   /**
-//    * Channel GUID state
-//    */
-//   readonly guid$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+/**
+ * Group feed component service, handles filtering and pagination
+ */
+@Injectable()
+export class GroupFeedService implements OnDestroy {
+  private subscriptions: Subscription[] = [];
 
-//   /**
-//    * Algorithm
-//    */
-//   readonly sort$: BehaviorSubject<FeedFilterSort> = new BehaviorSubject<
-//     FeedFilterSort
-//   >('latest');
+  /**
+   * Filter type state
+   */
+  readonly type$: BehaviorSubject<GroupFeedTypeFilter> = new BehaviorSubject<
+    GroupFeedTypeFilter
+  >(DEFAULT_GROUP_FEED_TYPE_FILTER);
 
-//   /**
-//    * Filter type state
-//    */
-//   readonly type$: BehaviorSubject<FeedFilterType> = new BehaviorSubject<
-//     FeedFilterType
-//   >('activities');
+  /**
+   * Filter change subscription
+   */
+  protected filterChangeSubscription: Subscription;
 
-//   /**
-//    * Scheduled count observable
-//    */
-//   readonly scheduledCount$: Observable<number>;
+  /**
+   * Sorting algorithm
+   */
+  sort$: Observable<GroupFeedAlgorithm> = this.groupService.view$.pipe(
+    map(view => {
+      if (isOfTypeGroupFeedAlgorithm(view)) {
+        return view;
+      } else {
+        return DEFAULT_GROUP_FEED_ALGORITHM;
+      }
+    })
+  );
 
-//   /**
-//    * Filter change subscription
-//    */
-//   protected filterChangeSubscription: Subscription;
+  constructor(
+    public service: FeedsService,
+    protected api: ApiService,
+    protected router: Router,
+    protected groupService: GroupService
+  ) {
+    // Fetch when group or filter changes
+    this.filterChangeSubscription = combineLatest([
+      this.groupService.group$,
+      this.sort$,
+      this.type$,
+      this.groupService.query$,
+    ])
+      .pipe(distinctUntilChanged(deepDiff))
+      .subscribe(([group, sort, type, query]) => {
+        this.service.clear();
 
-//   /**
-//    * Constructor. Sets the main observable subscription.
-//    * @param service
-//    * @param api
-//    */
-//   constructor(
-//     public service: FeedsService,
-//     protected api: ApiService,
-//     protected router: Router,
-//     private toast: ToasterService,
-//     protected groupService: GroupService
-//   ) {
-//     // Fetch when GUID or filter change
-//     this.filterChangeSubscription = combineLatest([
-//       this.guid$,
-//       this.sort$,
-//       this.type$,
-//       this.channelsService.query$,
-//       this.dateRange$,
-//     ])
-//       .pipe(distinctUntilChanged(deepDiff))
-//       .subscribe(values => {
-//         this.service.clear();
-//         if (!values[0] || !values[1] || !values[2]) {
-//           return;
-//         }
+        const endpoint = `api/v2/feeds/container`;
 
-//         const endpoint = `api/v2/feeds`;
-//         const guid = values[0];
-//         let sort = values[1] === 'scheduled' ? 'scheduled' : 'container';
-//         const type = values[2];
-//         const query = values[3];
-//         const dateRange = values[4];
+        const params: any = {
+          query: query ? query : '',
+        };
 
-//         const dateRangeEnabled = !!dateRange.fromDate && !!dateRange.toDate;
+        if (query) {
+          params['all'] = 1;
+          params['period'] = 'all';
+          params['sync'] = 1;
+          params['force_public'] = 1;
+        } else {
+          // Ignore sort algorithm for search query posts
+          params['algorithm'] = sort === 'top' ? 'groupTop' : sort;
+        }
 
-//         const params: any = {
-//           query: query ? query : '',
-//         };
+        this.service.setParams(params);
 
-//         if (dateRangeEnabled) {
-//           // Reversed from<->to because feeds are displayed
-//           // in reverse chronological order
-//           this.service.setFromTimestamp(dateRange.toDate);
-//           params['to_timestamp'] = dateRange.fromDate;
-//         } else {
-//           this.service.setFromTimestamp('');
-//         }
+        this.service
+          .setEndpoint(`${endpoint}/${group.guid}/${type}`)
+          .setLimit(12)
+          .fetch();
+      });
+  }
 
-//         // Don't allow using search or date filters for scheduled posts
-//         if (query || dateRangeEnabled) {
-//           params['all'] = 1;
-//           params['period'] = 'all';
-//           sort = 'container';
-//         }
+  ngOnDestroy() {
+    if (this.filterChangeSubscription) {
+      this.filterChangeSubscription.unsubscribe();
+    }
 
-//         this.service.setParams(params);
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 
-//         this.service
-//           .setEndpoint(`${endpoint}/${sort}/${guid}/${type}`)
-//           .setLimit(12)
-//           .fetch();
-//       });
+  /**
+   * Load next batch of entities
+   */
+  loadNext() {
+    if (
+      this.service.canFetchMore &&
+      !this.service.inProgress.getValue() &&
+      this.service.offset.getValue()
+    ) {
+      this.service.fetch(); // load the next 150 in the background
+    }
+    this.service.loadMore();
+  }
 
-//   /**
-//    * Service cleanup
-//    */
-//   ngOnDestroy() {
-//     if (this.filterChangeSubscription) {
-//       this.filterChangeSubscription.unsubscribe();
-//     }
-//   }
+  /**
+   * Handles activity deletion
+   */
+  onDelete(entity: any) {
+    if (!entity || !entity.guid) {
+      return;
+    }
 
-//   /**
-//    * Load next batch of entities
-//    */
-//   loadNext() {
-//     if (
-//       this.service.canFetchMore &&
-//       !this.service.inProgress.getValue() &&
-//       this.service.offset.getValue()
-//     ) {
-//       this.service.fetch(); // load the next 150 in the background
-//     }
-//     this.service.loadMore();
-//   }
-
-//   /**
-//    * Handles activity deletion
-//    */
-//   onDelete(entity: any) {
-//     if (!entity || !entity.guid) {
-//       return;
-//     }
-
-//     this.service.deleteItem(entity, (item, entity) => item.urn === entity.urn);
-//   }
-// }
+    this.service.deleteItem(entity, (item, entity) => item.urn === entity.urn);
+  }
+}

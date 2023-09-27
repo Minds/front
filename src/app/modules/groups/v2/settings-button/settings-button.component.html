@@ -18,9 +18,6 @@
     <!-- OWNER FUNCTIONS -->
     <!-- ----------------------------- -->
     <ng-container *ngIf="service.isOwner$ | async">
-      <m-dropdownMenu__item (click)="openEditModal()">
-        <span i18n="@@COMMON__EDIT">Edit group</span>
-      </m-dropdownMenu__item>
       <!---------------------------->
       <m-dropdownMenu__item
         *ngIf="boostGroupsExperimentIsActive"

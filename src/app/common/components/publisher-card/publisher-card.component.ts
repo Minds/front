@@ -216,7 +216,7 @@ export class PublisherCardComponent implements AfterViewInit {
   get feedUrl(): string {
     return this.type === 'user'
       ? `/${this.publisher.username}`
-      : `/group/${this.publisher.guid}/feed`;
+      : `/group/${this.publisher.guid}`;
   }
 
   get subscribersUrl(): string {

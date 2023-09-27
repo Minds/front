@@ -12,12 +12,7 @@ import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
-import {
-  DEFAULT_GROUP_VIEW,
-  GroupAccessType,
-  GroupMembershipLevel,
-  GroupView,
-} from './group.types';
+import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
 import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
@@ -40,7 +35,7 @@ export class GroupService implements OnDestroy {
   >(null);
 
   /**
-   * Whether user has access to group contents (feed, members list, etc.)
+   * Whether user has access to group contents (feeds, members list, etc.)
    */
   readonly canAccess$: Observable<boolean>;
 
@@ -146,7 +141,7 @@ export class GroupService implements OnDestroy {
   );
 
   /**
-   * Search query
+   * Feed search query
    */
   readonly query$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
@@ -159,6 +154,7 @@ export class GroupService implements OnDestroy {
 
   /**
    * The active view that is visible on the group page
+   * (i.e. the currently selected top level tab)
    */
   readonly view$: BehaviorSubject<GroupView> = new BehaviorSubject<GroupView>(
     DEFAULT_GROUP_VIEW
@@ -310,9 +306,7 @@ export class GroupService implements OnDestroy {
       this.showBoosts$.next(enable);
 
       // Reload the feed
-      let group = this.group$.getValue();
-      group['show_boosts'] = enable;
-      this.syncLegacyService(group);
+      this.sync();
     } catch (e) {
       console.error(e);
     }

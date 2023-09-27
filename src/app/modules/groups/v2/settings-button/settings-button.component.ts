@@ -5,7 +5,6 @@ import { ConfirmV2Component } from '../../../modals/confirm-v2/confirm.component
 import { ModalService } from '../../../../services/ux/modal.service';
 import { BoostGroupExperimentService } from '../../../experiments/sub-services/boost-groups-experiment.service';
 import { BoostModalV2LazyService } from '../../../boost/modal-v2/boost-modal-v2-lazy.service';
-import { GroupEditModalService } from '../edit/edit.modal.service';
 import { GroupService } from '../group.service';
 import { Subscription } from 'rxjs';
 
@@ -31,8 +30,7 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
     private injector: Injector,
     public modalService: ModalService,
     private boostModal: BoostModalV2LazyService,
-    private boostGroupsExperiment: BoostGroupExperimentService,
-    private editModal: GroupEditModalService
+    private boostGroupsExperiment: BoostGroupExperimentService
   ) {}
 
   ngOnInit(): void {
@@ -84,17 +82,6 @@ export class GroupSettingsButton implements OnInit, OnDestroy {
    */
   async toggleExplicit(enable) {
     this.service.toggleExplicit(enable);
-  }
-
-  /**
-   * Opens the edit modal
-   */
-  async openEditModal(): Promise<void> {
-    const editedGroup = await this.editModal.present(this.group);
-
-    if (editedGroup) {
-      this.service.load(editedGroup);
-    }
   }
 
   /**

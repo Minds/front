@@ -8,10 +8,11 @@
 
   <ng-container *ngSwitchDefault>
     <m-activity
-      [entity]="entity"
       [displayOptions]="displayOptions"
+      [entity]="entity"
       (deleted)="delete($event)"
       [slot]="slot"
+      [canDelete]="canDelete"
     >
     </m-activity>
   </ng-container>
