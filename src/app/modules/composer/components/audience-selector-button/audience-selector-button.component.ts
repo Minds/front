@@ -1,5 +1,11 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, combineLatest, firstValueFrom } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  combineLatest,
+  firstValueFrom,
+  map,
+} from 'rxjs';
 import { ComposerAudienceSelectorService } from '../../services/audience.service';
 import { PopupService } from '../popup/popup.service';
 import { ComposerAudienceSelectorPanelComponent } from '../popup/audience-selector/audience-selector.component';
@@ -23,9 +29,22 @@ export class ComposerAudienceSelectorButtonComponent
   @HostBinding('class.m-composerAudienceSelector__host--disabled')
   disabled: boolean = false;
 
-  /** Audience display name from service */
   public readonly audienceDisplayName$: Observable<string> = this
     .audienceSelectorService.audienceDisplayName$;
+
+  /** Display name */
+  public readonly selectedAudienceDisplayName$: Observable<
+    string
+  > = combineLatest([
+    this.composerService.pendingMonetization$,
+    this.audienceSelectorService.audienceDisplayName$,
+  ]).pipe(
+    map(([monetization, audienceName]) => {
+      if (monetization && monetization.name) {
+        return monetization.name;
+      } else return audienceName;
+    })
+  );
 
   /** subscription to variables that change disabled state */
   private disableStateSubscription: Subscription;

@@ -356,6 +356,11 @@ export class ComposerService implements OnDestroy {
   protected readonly pendingMonetizationSubscription: Subscription;
 
   /**
+   * Subscription to selected audience observable
+   */
+  protected readonly selectedAudienceSubscription: Subscription;
+
+  /**
    * Subscription to a rich embed extractor observable
    */
   protected readonly richEmbedExtractorSubscription: Subscription;
@@ -658,6 +663,16 @@ export class ComposerService implements OnDestroy {
       return this.buildPayload(data);
     });
 
+    // Subscribe to selected audience
+    this.selectedAudienceSubscription = this.audienceSelectorService.selectedAudience$.subscribe(
+      audience => {
+        if (audience) {
+          // Can't have monetization when audience is selected
+          this.pendingMonetization$.next(null);
+        }
+      }
+    );
+
     // Subscribe to pending monetization and format monetization$
     this.pendingMonetizationSubscription = this.pendingMonetization$.subscribe(
       pendingMonetization => {
@@ -665,6 +680,9 @@ export class ComposerService implements OnDestroy {
           this.monetization$.next({
             support_tier: pendingMonetization.support_tier,
           });
+
+          // Revert to default audience (i.e. my channel)when monetization is selected
+          this.audienceSelectorService.selectedAudience$.next(null);
         } else {
           this.monetization$.next(null);
         }

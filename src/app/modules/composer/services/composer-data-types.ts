@@ -71,6 +71,7 @@ export type MonetizationSubjectValue = {
  */
 export type PendingMonetizationSubjectValue = {
   type: 'plus' | 'membership' | 'custom';
+  name?: string;
   support_tier: {
     urn: string;
     expires?: number;

@@ -204,21 +204,20 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       this.service.supermindReply$.subscribe(details => {
         this.supermindReply = details;
+      }),
+      this.service.monetization$.subscribe(monetized => {
+        /**
+         * Don't show the monetize button if a post has a
+         * legacy paywall because of potential
+         * multi-currency complications.
+         */
+        const paywall = monetized;
+
+        if (paywall && !paywall.hasOwnProperty('support_tier')) {
+          this.legacyPaywallEnabled = true;
+        }
       })
     );
-
-    /**
-     * Don't show the monetize button if a post has a
-     * legacy paywall because of potential
-     * multi-currency complications.
-     */
-    if (this.service.monetization$.getValue()) {
-      const paywall = this.service.monetization$.getValue();
-
-      if (paywall && !paywall.hasOwnProperty('support_tier')) {
-        this.legacyPaywallEnabled = true;
-      }
-    }
   }
 
   /**
