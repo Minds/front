@@ -29,7 +29,7 @@ describe('SelectableEntityCardComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should initialize avatarSrc, title, and subtext on init', () => {
+  it('should initialize avatarSrc, and title on entity init', () => {
     const entity: SelectableEntity = {
       guid: '123',
       name: 'Test User',
