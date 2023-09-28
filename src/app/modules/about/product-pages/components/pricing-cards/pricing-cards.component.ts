@@ -1,24 +1,18 @@
 import { Component, Input } from '@angular/core';
 import {
-  Enum_Componentdynamicproductpageproductplan_Tier as ProductPlanTier,
+  Enum_Productplan_Tier as ProductPlanTier,
   ProductPlanEntity,
   Enum_Componentcommonactionbutton_Action as StrapiAction,
 } from '../../../../../../graphql/generated.strapi';
-import {
-  ProductPageUpgradeTimePeriod,
-  ProductPageUpgradesConfig,
-} from '../../product-pages.types';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { ConfigsService } from '../../../../../common/services/configs.service';
+import { ProductPageUpgradeTimePeriod } from '../../product-pages.types';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { StrapiActionResolverService } from '../../../../../common/services/strapi/strapi-action-resolver.service';
+import { ProductPagePricingService } from '../../services/product-page-pricing.service';
 
 @Component({
   selector: 'm-productPage__pricingCards',
   templateUrl: 'pricing-cards.component.html',
-  styleUrls: [
-    'pricing-cards.component.ng.scss',
-    '../../stylesheets/product.pages.ng.scss',
-  ],
+  styleUrls: ['pricing-cards.component.ng.scss'],
 })
 export class ProductPagePricingCardsComponent {
   @Input() public savingsText: string;
@@ -28,49 +22,23 @@ export class ProductPagePricingCardsComponent {
 
   public readonly selectedTimePeriod$: BehaviorSubject<
     ProductPageUpgradeTimePeriod
-  > = new BehaviorSubject<ProductPageUpgradeTimePeriod>(
-    ProductPageUpgradeTimePeriod.Annually
-  );
-
-  private readonly upgradesConfig: ProductPageUpgradesConfig;
+  > = this.pricingService.selectedTimePeriod$;
 
   constructor(
-    private strapiActionResolver: StrapiActionResolverService,
-    configs: ConfigsService
-  ) {
-    this.upgradesConfig = configs.get<ProductPageUpgradesConfig>('upgrades');
+    private pricingService: ProductPagePricingService,
+    private strapiActionResolver: StrapiActionResolverService
+  ) {}
+
+  public trackByFn(productPlan: ProductPlanEntity): string {
+    return productPlan.attributes.tier + productPlan.id;
   }
 
   public toggleTimePeriod(timePeriod: ProductPageUpgradeTimePeriod): void {
     this.selectedTimePeriod$.next(timePeriod);
   }
 
-  public trackByFn(productPlan: ProductPlanEntity): string {
-    return productPlan.attributes.tier + productPlan.id;
-  }
-
   public getMonthlyPrice(tier: ProductPlanTier): Observable<number> {
-    return this.selectedTimePeriod$.pipe(
-      map((timePeriod: ProductPageUpgradeTimePeriod): number => {
-        switch (tier) {
-          case 'free':
-            return 0;
-          case 'plus':
-            if (timePeriod === ProductPageUpgradeTimePeriod.Annually) {
-              return this.upgradesConfig.plus.yearly.usd / 12;
-            }
-            return this.upgradesConfig.plus.monthly.usd;
-          case 'pro':
-            if (timePeriod === ProductPageUpgradeTimePeriod.Annually) {
-              return this.upgradesConfig.pro.yearly.usd / 12;
-            }
-            return this.upgradesConfig.pro.monthly.usd;
-          case 'servers':
-            // TODO: Get from config on release of servers.
-            return 48;
-        }
-      })
-    );
+    return this.pricingService.getMonthlyPrice(tier);
   }
 
   public handleButtonClick(action: StrapiAction): void {
@@ -81,7 +49,7 @@ export class ProductPagePricingCardsComponent {
       action === StrapiAction.OpenProUpgradeModal
     ) {
       extraData.upgradeInterval =
-        this.selectedTimePeriod$.getValue() ===
+        this.pricingService.selectedTimePeriod$.getValue() ===
         ProductPageUpgradeTimePeriod.Annually
           ? 'yearly'
           : 'monthly';

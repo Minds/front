@@ -1,0 +1,19 @@
+<div class="m-productPageFeatHighlight__bodyContainer">
+  <div class="m-productPageFeatHighlight__bodyContent">
+    <h1>{{ title }}</h1>
+    <markdown ngPreserveWhitespaces [data]="body"></markdown>
+    <m-productPage__button
+      *ngIf="button"
+      [data]="button"
+      [colorScheme]="colorScheme"
+      (onAction)="handleButtonClick($event)"
+    ></m-productPage__button>
+  </div>
+</div>
+<div class="m-productPageFeatHighlight__imageContainer">
+  <img
+    [src]="strapiUrl + image.data.attributes.url"
+    class="m-productPageFeatHighlight__image"
+    alt="item.image.data.attributes.alternativeText"
+  />
+</div>

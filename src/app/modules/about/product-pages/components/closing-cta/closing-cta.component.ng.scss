@@ -1,0 +1,92 @@
+@import 'defaults.scss';
+@import '../../stylesheets/product.pages.ng.scss';
+
+$legendImageHeight--desktop: 160px;
+$legendImageHeight--mobile: 58px;
+
+$horizontalPadding--full: 190px;
+$horizontalPadding--mid: $spacing20;
+$horizontalPadding--mobile: $spacing5;
+
+$bottomMargin--desktop: calc($spacing20 + ($legendImageHeight--desktop / 2));
+$bottomMargin--mobile: calc($spacing10 + ($legendImageHeight--mobile / 2));
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: $spacing20 $spacing30 $bottomMargin--desktop $spacing30;
+
+  @media screen and (max-width: $min-tablet) {
+    margin: $spacing10 $spacing7 $bottomMargin--mobile $spacing7;
+  }
+
+  .m-productClosingCta__container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 765px;
+    padding: $spacing10 $horizontalPadding--full $spacing16
+      $horizontalPadding--full;
+
+    @media screen and (max-width: $min-desktop) {
+      padding: $spacing10 $horizontalPadding--mid $spacing16
+        $horizontalPadding--mid;
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      padding: $spacing10 $horizontalPadding--mobile $spacing16
+        $horizontalPadding--mobile;
+    }
+
+    @include m-theme() {
+      background-color: color-by-theme($m-bgColor--secondary, 'light');
+      border: 3px solid color-by-theme($m-black-always, 'light');
+    }
+
+    &--noLegend {
+      padding-top: $spacing16;
+    }
+
+    legend {
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+
+      .m-productClosingCta__bulb {
+        height: $legendImageHeight--desktop;
+        align-self: center;
+
+        @media screen and (max-width: $min-tablet) {
+          height: $legendImageHeight--mobile;
+        }
+      }
+    }
+
+    .m-productClosingCta__title {
+      @include heading1Bold;
+      font-weight: 900;
+      margin-bottom: $spacing4;
+    }
+
+    ::ng-deep markdown {
+      *:last-child {
+        margin-bottom: 0;
+      }
+
+      p {
+        @media screen and (max-width: $min-tablet) {
+          @include body1Regular;
+        }
+      }
+    }
+
+    m-productPage__button {
+      width: fit-content;
+      margin-top: $spacing10;
+    }
+  }
+}

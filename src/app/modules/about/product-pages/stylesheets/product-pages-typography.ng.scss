@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+@mixin productPageH1Black {
+  font-family: Inter;
+  font-size: 54px;
+  font-weight: 900;
+  line-height: 58.8px;
+}
+
+@mixin productPageH2Medium {
+  font-family: Inter;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: -0.16px;
+}
+
+@mixin productPageH3Medium {
+  font-family: Inter;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: -0.16px;
+}

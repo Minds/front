@@ -7,8 +7,17 @@ $maxPricingCardWidth: 278px;
   flex-flow: column nowrap;
   align-items: center;
   text-align: center;
-  padding: 0 $spacing30;
-  margin-bottom: $spacing12;
+  margin: $spacing10 $spacing30 $spacing11 $spacing30;
+
+  @media screen and (max-width: $min-tablet) {
+    margin: 0 $spacing7;
+  }
+
+  markdown ::ng-deep a {
+    @include m-theme() {
+      color: color-by-theme($m-bgColor--primary, 'dark');
+    }
+  }
 
   .m-productPagePricingCards__periodSelector {
     width: fit-content;
@@ -16,6 +25,10 @@ $maxPricingCardWidth: 278px;
     margin-bottom: $spacing24;
     border-radius: 100px;
     cursor: pointer;
+
+    @media screen and (max-width: $min-tablet) {
+      margin-bottom: $spacing12;
+    }
 
     @include m-theme() {
       border: 1px solid color-by-theme($m-borderColor--primary, 'light');
@@ -74,8 +87,10 @@ $maxPricingCardWidth: 278px;
         }
       }
 
-      &:not(.m-productPagePricingCards__cardContainer--mostPopular) {
-        margin-top: $spacing7;
+      @media screen and (min-width: calc($min-tablet + 1px)) {
+        &:not(.m-productPagePricingCards__cardContainer--mostPopular) {
+          margin-top: $spacing7;
+        }
       }
 
       .m-productPagePricingCards__mostPopularHeader {
@@ -135,6 +150,11 @@ $maxPricingCardWidth: 278px;
           strong {
             @include heading2Bold;
           }
+        }
+
+        m-productPage__button {
+          display: block;
+          margin-bottom: $spacing10;
         }
 
         .m-productPagePricingCards__cardPerks {

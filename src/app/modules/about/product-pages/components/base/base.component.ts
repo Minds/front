@@ -1,11 +1,12 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { ProductPageService } from '../../services/product-page.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { V2ProductPageProductPageDynamicZone } from '../../../../../../graphql/generated.strapi';
+import { V2ProductPage } from '../../../../../../graphql/generated.strapi';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductPageDynamicComponent } from '../../product-pages.types';
 import { SidebarNavigationService } from '../../../../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../../../../common/layout/page-layout.service';
+import { StrapiMetaService } from '../../../../../common/services/strapi-meta.service';
 
 @Component({
   selector: 'm-productPage__base',
@@ -31,6 +32,7 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
     private service: ProductPageService,
     private navigationService: SidebarNavigationService,
     private pageLayoutService: PageLayoutService,
+    private strapiMetaService: StrapiMetaService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -47,16 +49,23 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
 
     this.dataGetSubscription = this.service
       .getProductPageBySlug(slug)
-      .subscribe((result: V2ProductPageProductPageDynamicZone[]): void => {
-        if (!result || !result.length) {
+      .subscribe((result: V2ProductPage): void => {
+        if (!result || !result.productPage || !result.productPage.length) {
           return this.handleLoadFailure(slug);
         }
-        this.components$.next(result as ProductPageDynamicComponent[]);
+        this.components$.next(
+          result.productPage as ProductPageDynamicComponent[]
+        );
+
+        if (result.metadata) {
+          this.strapiMetaService.apply(result.metadata);
+        }
       });
   }
 
   ngOnDestroy(): void {
     this.navigationService.setVisible(true);
+    this.pageLayoutService.cancelFullWidth();
     this.dataGetSubscription?.unsubscribe();
   }
 

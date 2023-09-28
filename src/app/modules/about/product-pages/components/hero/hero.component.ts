@@ -5,7 +5,10 @@ import { Component, Input } from '@angular/core';
   template: `
     <markdown ngPreserveWhitespaces [data]="text"></markdown>
   `,
-  styleUrls: ['hero.component.ng.scss'],
+  styleUrls: [
+    'hero.component.ng.scss',
+    '../../stylesheets/product.pages.ng.scss',
+  ],
 })
 export class ProductPageHeroComponent {
   @Input() public readonly text: string;

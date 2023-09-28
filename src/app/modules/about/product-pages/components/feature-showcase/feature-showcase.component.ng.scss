@@ -1,0 +1,53 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: $spacing20 $spacing30 $spacing20 $spacing30;
+  gap: $spacing3;
+
+  @media screen and (max-width: $min-tablet) {
+    margin: $spacing10 $spacing7 0 $spacing7;
+  }
+
+  .m-featureShowcase__card {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    border-radius: 15px;
+    padding: $spacing10;
+    box-sizing: border-box;
+    max-width: 380px;
+    min-width: 380px;
+
+    @media screen and (max-width: $max-mobile) {
+      max-width: 100%;
+      min-width: 100%;
+    }
+
+    @include m-theme() {
+      background: color-by-theme($m-grey-100, 'light');
+    }
+
+    .m-featureShowcase__image {
+      max-width: 100%;
+      max-height: 220px;
+    }
+
+    .m-featureShowcase__title {
+      @include heading4Bold;
+      font-weight: 700;
+      text-align: center;
+      margin: $spacing9 0 $spacing2 0;
+      word-break: break-word;
+    }
+
+    .m-featureShowcase__body {
+      @include body3Regular;
+      text-align: center;
+      word-break: break-word;
+    }
+  }
+}

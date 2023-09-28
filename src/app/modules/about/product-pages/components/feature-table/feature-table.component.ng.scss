@@ -1,4 +1,5 @@
 @import 'defaults.scss';
+@import '../../stylesheets/product-pages-typography.ng.scss';
 
 :host {
   display: flex;
@@ -7,20 +8,30 @@
   text-align: center;
   padding: 0 $spacing30;
   margin-top: $spacing25;
-  // margin-bottom: $spacing12;
+  margin-bottom: $spacing8;
+
+  @media screen and (max-width: $min-desktop) {
+    padding: 0 $spacing5;
+    margin-top: $spacing9;
+  }
 
   .m-productPageFeatTable__title {
     text-align: center;
-    font-family: Inter;
-    font-size: 54px;
-    font-style: normal;
-    font-weight: 900;
-    line-height: 58.8px;
+    @include productPageH1Black;
+
+    @media screen and (max-width: $min-tablet) {
+      @include heading3Bold;
+      font-weight: 900;
+    }
   }
 
   .m-productPageFeatTable__subtitle {
     margin: $spacing5 0 $spacing12 0;
     @include heading4Regular;
+
+    @media screen and (max-width: $min-tablet) {
+      @include body1Regular;
+    }
   }
 
   .m-productPageFeatTable__table {
@@ -28,6 +39,40 @@
     flex-flow: column nowrap;
     width: 100%;
     max-width: 1200px;
+
+    &.m-productPageFeatTable__table--mobile {
+      @media screen and (min-width: $min-tablet) {
+        display: none;
+      }
+    }
+
+    &.m-productPageFeatTable__table--web {
+      @media screen and (max-width: $min-tablet) {
+        display: none;
+      }
+    }
+
+    .m-productPageFeatTable__row--featureRow {
+      @include m-theme() {
+        border-bottom: 1px solid
+          color-by-theme($m-borderColor--primary, 'light');
+      }
+    }
+
+    .m-productPageFeatTable__section {
+      .m-productPageFeatTable__row--featureRow:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .m-productPageFeatTable__section:last-of-type {
+      .m-productPageFeatTable__row--featureRow:last-child {
+        @include m-theme() {
+          border-bottom: 1px solid
+            color-by-theme($m-borderColor--primary, 'light');
+        }
+      }
+    }
 
     .m-productPageFeatTable__row {
       flex: 1;
@@ -37,12 +82,17 @@
 
       .m-productPageFeatTable__column {
         flex: 1;
+        align-self: center;
 
         .m-productPageFeatTable__headerBox,
         .m-productPageFeatTable__headerBoxSpacer {
-          height: 200px;
           margin: $spacing2;
           box-sizing: border-box;
+          height: calc(100% - $spacing4);
+
+          @media screen and (max-width: $min-tablet) {
+            margin: 0 0 $spacing6 0;
+          }
         }
 
         .m-productPageFeatTable__headerBox {
@@ -83,23 +133,74 @@
           &--leftAlign {
             text-align: left;
           }
+
+          &--verticalCenter {
+            display: flex;
+            align-items: center;
+          }
+
+          m-tooltip {
+            margin-left: $spacing1;
+
+            ::ng-deep i {
+              font-size: 20px;
+
+              @include m-theme() {
+                color: color-by-theme($m-borderColor--primary, 'light');
+              }
+            }
+          }
         }
 
         .m-productPageFeatTable__headerCell {
           padding: $spacing4 $spacing3;
+          border-radius: 8px;
+
           @include heading4Bold;
 
           @include m-theme() {
             color: color-by-theme($m-bgColor--primary, 'dark');
             background-color: color-by-theme($m-grey-100, 'light');
           }
+        }
+      }
+    }
+  }
 
-          &--roundedLeft {
-            border-radius: 8px 0 0 8px;
-          }
+  .m-productPageFeatTable__mobileTabContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing4;
+    margin-bottom: $spacing4;
 
-          &--roundedRight {
-            border-radius: 0 8px 8px 0;
+    .m-productPageFeatTable__mobileTab {
+      border-radius: 8px;
+      padding: $spacing2;
+      width: 100%;
+      cursor: pointer;
+      @include body1Bold;
+
+      @include m-theme() {
+        color: color-by-theme($m-textColor--secondary, 'dark');
+      }
+
+      &:hover {
+        @include m-theme() {
+          background-color: darken(themed($m-bgColor--primary), 6%);
+          color: darken(color-by-theme($m-textColor--secondary, 'dark'), 6%);
+        }
+      }
+
+      &--active {
+        @include m-theme() {
+          background-color: themed($m-grey-100);
+          color: color-by-theme($m-bgColor--primary, 'dark');
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: darken(themed($m-grey-300), 4%);
+            color: color-by-theme($m-bgColor--primary, 'dark');
           }
         }
       }

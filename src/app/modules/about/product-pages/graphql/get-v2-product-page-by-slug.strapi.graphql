@@ -3,6 +3,25 @@ query GetV2ProductPageBySlug($slug: String!) {
     data {
       attributes {
         slug
+        metadata {
+          title
+          description
+          canonicalUrl
+          robots
+          author
+          ogUrl
+          ogType
+          ogAuthor
+          ogImage {
+            data {
+              attributes {
+                url
+                height
+                width
+              }
+            }
+          }
+        }
         productPage {
           __typename
           ... on ComponentDynamicProductPageHero {
@@ -20,11 +39,13 @@ query GetV2ProductPageBySlug($slug: String!) {
                   subtitle
                   mostPopular
                   priceStartingAt
-                  upgradeButton {
+                  button {
                     text
-                    action
-                    solid
                     dataRef
+                    solid
+                    rounded
+                    navigationUrl
+                    action
                   }
                   perksTitle
                   perks {
@@ -46,8 +67,11 @@ query GetV2ProductPageBySlug($slug: String!) {
                     title
                   	button {
                       text
-                      action
                       dataRef
+                      solid
+                      rounded
+                      navigationUrl
+                      action
                   	}
                   }
                   sections {
@@ -79,7 +103,7 @@ query GetV2ProductPageBySlug($slug: String!) {
           }
           ... on ComponentDynamicProductPageFeatureShowcase {
             id
-            item {
+            items {
               image {
                 data {
                   attributes {
@@ -101,6 +125,8 @@ query GetV2ProductPageBySlug($slug: String!) {
             button {
               text
               dataRef
+              solid
+              rounded
               navigationUrl
               action
             }
@@ -108,7 +134,7 @@ query GetV2ProductPageBySlug($slug: String!) {
           ... on ComponentDynamicProductPageFeatureHighlight {
             id
             backgroundColor
-            theme
+            colorScheme
             title
             body
             image {
@@ -125,6 +151,8 @@ query GetV2ProductPageBySlug($slug: String!) {
             button {
               text
               dataRef
+              solid
+              rounded
               navigationUrl
               action
             }
@@ -133,9 +161,21 @@ query GetV2ProductPageBySlug($slug: String!) {
             id
             title
             body
+            borderImage {
+              data {
+                attributes {
+                  url
+                  height
+                  width
+                  alternativeText
+                }
+              }
+            }
             button {
               text
               dataRef
+              solid
+              rounded
               navigationUrl
               action
             }

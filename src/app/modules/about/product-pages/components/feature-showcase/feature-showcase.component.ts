@@ -1,0 +1,15 @@
+import { Component, Inject, Input } from '@angular/core';
+import { ComponentDynamicProductPageFeatureShowcase } from '../../../../../../graphql/generated.strapi';
+import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
+
+@Component({
+  selector: 'm-productPage__featureShowcase',
+  templateUrl: 'feature-showcase.component.html',
+  styleUrls: ['feature-showcase.component.ng.scss'],
+})
+export class ProductPageFeatureShowcaseComponent {
+  @Input()
+  public readonly featureShowcase: ComponentDynamicProductPageFeatureShowcase;
+
+  constructor(@Inject(STRAPI_URL) public strapiUrl: string) {}
+}

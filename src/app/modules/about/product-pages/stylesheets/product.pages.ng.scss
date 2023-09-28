@@ -1,53 +1,67 @@
 @import 'defaults.scss';
-
-$maxPricingCardWidth: 278px;
+@import './product-pages-typography.ng.scss';
 
 :host {
-  .m-productPage__cardButton {
-    width: 100%;
-    padding: $spacing3 $spacing5;
-    margin-bottom: $spacing10;
-    border-radius: 4px;
-    line-height: 0;
-    cursor: pointer;
-    @include body1Bold;
-
-    @include m-theme() {
-      background-color: color-by-theme($m-bgColor--primary, 'dark');
-      color: color-by-theme($m-textColor--primary, 'dark');
-      border: 1px solid color-by-theme($m-bgColor--primary, 'dark');
-    }
-
-    &:not(.m-productPage__cardButton--outline):hover {
-      background-color: unset;
-      color: color-by-theme($m-bgColor--primary, 'dark');
-    }
-
-    &:hover {
-      @include m-theme() {
-        background-color: unset;
-        color: color-by-theme($m-bgColor--primary, 'dark');
-      }
-    }
-
-    &.m-productPage__cardButton--outline {
-      @include m-theme() {
-        background-color: unset;
-        color: color-by-theme($m-bgColor--primary, 'dark');
-      }
-
-      &:hover {
+  markdown {
+    ::ng-deep {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      p,
+      a {
         @include m-theme() {
-          background-color: color-by-theme($m-bgColor--primary, 'dark');
-          color: color-by-theme($m-textColor--primary, 'dark');
+          color: color-by-theme($m-bgColor--primary, 'dark');
         }
       }
-    }
 
-    span {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      h1 {
+        @include productPageH1Black;
+
+        @media screen and (max-width: $min-tablet) {
+          @include heading3Bold;
+          font-weight: 900;
+          margin-bottom: $spacing3;
+        }
+      }
+
+      h2 {
+        @include productPageH2Medium;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body1Medium;
+          margin-bottom: $spacing3;
+        }
+      }
+
+      h3 {
+        @include productPageH3Medium;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body2Regular;
+          margin-bottom: $spacing3;
+        }
+      }
+
+      h4 {
+        @include heading4Regular;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body2Regular;
+          margin-bottom: $spacing3;
+        }
+      }
+
+      h5,
+      p {
+        @include body1Regular;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body3Regular;
+          margin-bottom: $spacing3;
+        }
+      }
     }
   }
 }

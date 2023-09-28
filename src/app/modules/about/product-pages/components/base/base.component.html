@@ -15,9 +15,32 @@
       [subtitle]="component.subtitle"
       [columns]="component.columns.data"
     ></m-productPage__featureTable>
-    <!--<ng-container *ngSwitchCase="'ComponentDynamicProductPageFeatureHighlight'">Feature Highlight</ng-container>
-    <ng-container *ngSwitchCase="'ComponentDynamicProductPageBasicExplainer'">Basic Explainer</ng-container>
-    <ng-container *ngSwitchCase="'ComponentDynamicProductPageFeatureShowcase'">Feature Showcase</ng-container>
-    <ng-container *ngSwitchCase="'ComponentDynamicProductPageClosingCta'">Closing CTA</ng-container> -->
+    <m-productPage__featureShowcase
+      *ngSwitchCase="'ComponentDynamicProductPageFeatureShowcase'"
+      [featureShowcase]="component"
+    ></m-productPage__featureShowcase>
+    <m-productPage__basicExplainer
+      *ngSwitchCase="'ComponentDynamicProductPageBasicExplainer'"
+      [title]="component.title"
+      [body]="component.body"
+      [button]="component.button"
+    ></m-productPage__basicExplainer>
+    <m-productPage__featureHighlight
+      *ngSwitchCase="'ComponentDynamicProductPageFeatureHighlight'"
+      [title]="component.title"
+      [body]="component.body"
+      [button]="component.button"
+      [colorScheme]="component.colorScheme"
+      [image]="component.image"
+      [backgroundColor]="component.backgroundColor"
+      [alignImage]="component.alignImage"
+    ></m-productPage__featureHighlight>
+    <m-productPage__closingCta
+      *ngSwitchCase="'ComponentDynamicProductPageClosingCta'"
+      [title]="component.title"
+      [body]="component.body"
+      [button]="component.button"
+      [borderImage]="component.borderImage?.data?.attributes"
+    ></m-productPage__closingCta>
   </ng-container>
 </ng-container>
