@@ -2,14 +2,39 @@ import { TestBed } from '@angular/core/testing';
 import { GiftCardService } from './gift-card.service';
 import {
   ClaimGiftCardGQL,
+  CreateGiftCardGQL,
   GetGiftCardBalancesGQL,
   GetGiftCardBalancesWithExpiryDataGQL,
   GetGiftCardByCodeGQL,
   GiftCardBalanceByProductId,
   GiftCardNode,
   GiftCardProductIdEnum,
+  GiftCardTargetInput,
 } from '../../../graphql/generated.engine';
 import { of, take } from 'rxjs';
+import { ConfigsService } from '../../common/services/configs.service';
+import { MockService } from '../../utils/mock';
+import { GiftCardUpgradesConfig } from '../wallet/components/credits/send/product-upgrade-card/product-upgrade-card.types';
+import { GiftRecipientGiftDuration } from '../wire/v2/creator/form/gift-recipient/gift-recipient-modal/gift-recipient-modal.types';
+
+export const mockUpgradesConfig: GiftCardUpgradesConfig = {
+  plus: {
+    yearly: {
+      usd: 60,
+    },
+    monthly: {
+      usd: 7,
+    },
+  },
+  pro: {
+    yearly: {
+      usd: 480,
+    },
+    monthly: {
+      usd: 60,
+    },
+  },
+};
 
 describe('GiftCardService', () => {
   let service: GiftCardService;
@@ -72,6 +97,14 @@ describe('GiftCardService', () => {
         {
           provide: ClaimGiftCardGQL,
           useValue: jasmine.createSpyObj<ClaimGiftCardGQL>(['mutate']),
+        },
+        {
+          provide: CreateGiftCardGQL,
+          useValue: jasmine.createSpyObj<CreateGiftCardGQL>(['mutate']),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
     });
@@ -243,6 +276,129 @@ describe('GiftCardService', () => {
     });
   });
 
+  describe('createGiftCard', () => {
+    it('should create a Boost gift card', (done: DoneFn) => {
+      const productIdEnum: GiftCardProductIdEnum = GiftCardProductIdEnum.Boost;
+      const amount: number = 10;
+      const stripePaymentMethodId: string = 'sk_123';
+      const targetInput: GiftCardTargetInput = {
+        targetUsername: 'testAccount',
+      };
+
+      (service as any).createGiftCardGQL.mutate.and.returnValue(
+        of({
+          data: {
+            createGiftCard: mockGiftCardNode,
+          },
+        })
+      );
+
+      service
+        .createGiftCard(
+          productIdEnum,
+          amount,
+          stripePaymentMethodId,
+          targetInput
+        )
+        .pipe(take(1))
+        .subscribe((guid: string) => {
+          expect(guid).toBe(mockGiftCardNode.guid);
+          done();
+        });
+    });
+
+    it('should create a Plus gift card', (done: DoneFn) => {
+      const productIdEnum: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const amount: number = 10;
+      const stripePaymentMethodId: string = 'sk_123';
+      const targetInput: GiftCardTargetInput = {
+        targetUsername: 'testAccount',
+      };
+
+      (service as any).createGiftCardGQL.mutate.and.returnValue(
+        of({
+          data: {
+            createGiftCard: mockGiftCardNode,
+          },
+        })
+      );
+
+      service
+        .createGiftCard(
+          productIdEnum,
+          amount,
+          stripePaymentMethodId,
+          targetInput
+        )
+        .pipe(take(1))
+        .subscribe((guid: string) => {
+          expect(guid).toBe(mockGiftCardNode.guid);
+          done();
+        });
+    });
+
+    it('should create a Pro gift card', (done: DoneFn) => {
+      const productIdEnum: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const amount: number = 10;
+      const stripePaymentMethodId: string = 'sk_123';
+      const targetInput: GiftCardTargetInput = {
+        targetUsername: 'testAccount',
+      };
+
+      (service as any).createGiftCardGQL.mutate.and.returnValue(
+        of({
+          data: {
+            createGiftCard: mockGiftCardNode,
+          },
+        })
+      );
+
+      service
+        .createGiftCard(
+          productIdEnum,
+          amount,
+          stripePaymentMethodId,
+          targetInput
+        )
+        .pipe(take(1))
+        .subscribe((guid: string) => {
+          expect(guid).toBe(mockGiftCardNode.guid);
+          done();
+        });
+    });
+
+    it('should create a Supermind gift card', (done: DoneFn) => {
+      const productIdEnum: GiftCardProductIdEnum =
+        GiftCardProductIdEnum.Supermind;
+      const amount: number = 10;
+      const stripePaymentMethodId: string = 'sk_123';
+      const targetInput: GiftCardTargetInput = {
+        targetUsername: 'testAccount',
+      };
+
+      (service as any).createGiftCardGQL.mutate.and.returnValue(
+        of({
+          data: {
+            createGiftCard: mockGiftCardNode,
+          },
+        })
+      );
+
+      service
+        .createGiftCard(
+          productIdEnum,
+          amount,
+          stripePaymentMethodId,
+          targetInput
+        )
+        .pipe(take(1))
+        .subscribe((guid: string) => {
+          expect(guid).toBe(mockGiftCardNode.guid);
+          done();
+        });
+    });
+  });
+
   describe('getProductNameByProductId', () => {
     it('should get product name as plural for Boost', () => {
       expect(
@@ -308,6 +464,122 @@ describe('GiftCardService', () => {
           false
         )
       ).toBe('Other Credit');
+    });
+  });
+
+  describe('getLargestPurchasableUpgradeDuration', () => {
+    beforeEach(() => {
+      (service as any).config.get
+        .withArgs('upgrades')
+        .and.returnValue(mockUpgradesConfig);
+    });
+
+    it('should return a yearly duration when user can purchase exactly a year of Plus', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const amount: number = mockUpgradesConfig.plus.yearly.usd;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(GiftRecipientGiftDuration.YEAR);
+    });
+
+    it('should return a yearly duration when user can purchase more than a year of Plus', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const amount: number = mockUpgradesConfig.plus.yearly.usd * 2;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(GiftRecipientGiftDuration.YEAR);
+    });
+
+    it('should return a monthly duration when user can purchase just less than a year of Plus', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const amount: number = mockUpgradesConfig.plus.yearly.usd - 1;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(GiftRecipientGiftDuration.MONTH);
+    });
+
+    it('should return a monthly duration when a user can purchase exactly a month of Plus', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const amount: number = mockUpgradesConfig.plus.monthly.usd;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(GiftRecipientGiftDuration.MONTH);
+    });
+
+    it('should return null when user cannot purchase a minimum of a month of Plus', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const amount: number = mockUpgradesConfig.plus.monthly.usd - 1;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(null);
+    });
+
+    it('should return a yearly duration when user can purchase exactly a year of Pro', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const amount: number = mockUpgradesConfig.pro.yearly.usd;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(GiftRecipientGiftDuration.YEAR);
+    });
+
+    it('should return a yearly duration when user can purchase more than a year  of Pro', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const amount: number = mockUpgradesConfig.pro.yearly.usd * 2;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(GiftRecipientGiftDuration.YEAR);
+    });
+
+    it('should return a monthly duration when user can purchase just less than a year of Pro', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const amount: number = mockUpgradesConfig.pro.yearly.usd - 1;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(GiftRecipientGiftDuration.MONTH);
+    });
+
+    it('should return a monthly duration when a user can purchase exactly a month of Pro', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const amount: number = mockUpgradesConfig.pro.monthly.usd;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(GiftRecipientGiftDuration.MONTH);
+    });
+
+    it('should return null when user cannot purchase a minimum of a month of Pro    ', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const amount: number = mockUpgradesConfig.pro.monthly.usd - 1;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(null);
+    });
+
+    it('should return null when product id is Boost', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Boost;
+      const amount: number = 999;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(null);
+    });
+
+    it('should return null when product id is Supermind', () => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Supermind;
+      const amount: number = 999;
+
+      expect(
+        service.getLargestPurchasableUpgradeDuration(productId, amount)
+      ).toBe(null);
     });
   });
 });

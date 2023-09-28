@@ -1,0 +1,24 @@
+<!-- If no recipient is selected. -->
+<ng-container
+  *ngIf="!(recipientUsername$ | async); else selectedRecipientTemplate"
+>
+  <!-- If it is not a self gift, the user needs to either select a recipient or select to self gift -->
+  <ng-container *ngIf="!(isSelfGift$ | async); else selfGiftTextTemplate">
+    <span
+      ><span i18n="WIRE_CREATOR__GIFT_RECIPIENT_INPUT__SELECT_RECIPIENT"
+        >Select recipient</span
+      ><span>&nbsp;+</span></span
+    >
+  </ng-container>
+  <!-- If it is a self gift -->
+  <ng-template #selfGiftTextTemplate
+    ><span i18n="WIRE_CREATOR__GIFT_RECIPIENT_INPUT__SHAREABLE_LINK"
+      >Shareable link</span
+    ></ng-template
+  >
+</ng-container>
+
+<!-- If recipient is selected. -->
+<ng-template #selectedRecipientTemplate>
+  <span>@{{ recipientUsername$ | async }}</span>
+</ng-template>

@@ -11,7 +11,14 @@ import {
   MockGiftCardBalanceByProductId,
   MockGiftCardBalanceByProductIdArray,
 } from '../../../../../mocks/responses/gift-card.mock';
-import { WalletV2CreditsSummaryComponent } from './summary.component';
+import {
+  PRODUCT_DISPLAY_ORDER,
+  WalletV2CreditsSummaryComponent,
+} from './summary.component';
+import {
+  GiftCardBalanceByProductId,
+  GiftCardProductIdEnum,
+} from '../../../../../../graphql/generated.engine';
 
 describe('WalletV2CreditsSummaryComponent', () => {
   let fixture: ComponentFixture<WalletV2CreditsSummaryComponent>;
@@ -47,9 +54,13 @@ describe('WalletV2CreditsSummaryComponent', () => {
       tick();
 
       expect(comp.giftCardBalances$.getValue()).toEqual(
-        MockGiftCardBalanceByProductIdArray.slice().sort(
-          (a, b) => b.balance - a.balance
-        )
+        PRODUCT_DISPLAY_ORDER.map(
+          (productId: GiftCardProductIdEnum): GiftCardBalanceByProductId =>
+            MockGiftCardBalanceByProductIdArray.find(
+              (res: GiftCardBalanceByProductId): boolean =>
+                res?.productId === productId
+            )
+        ).filter(Boolean)
       );
       expect((comp as any).getBalancesSubscription).toBeDefined();
     }));
