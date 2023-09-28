@@ -1,0 +1,92 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h3
+      class="m-giftRecipientModal__title"
+      i18n="@@GIFT_RECIPIENT_MODAL__GIFT_READY_FOR_DELIVERY"
+    >
+      Gift ready for delivery
+    </h3>
+    <p class="m-giftRecipientModal__subtitle">{{ this.getSubtitle() }}</p>
+  </div>
+  <div class="m-modalV2__body" [formGroup]="formGroup">
+    <div
+      class="m-giftRecipientModal__giftRecipientInputContainer"
+      *ngIf="!(sendShareableLink$ | async)"
+      [@growShrink]="sendShareableLink$ | async"
+    >
+      <label
+        class="m-giftRecipientModal__giftRecipientLabel"
+        i18n="@@GIFT_RECIPIENT_MODAL__GIFT_RECIPIENT"
+        >Gift Recipient</label
+      >
+      <m-formInput__autocompleteUserInput
+        class="m-giftRecipientModal__giftRecipientInput"
+        id="username"
+        formControlName="username"
+        placeholder="@username"
+      ></m-formInput__autocompleteUserInput>
+    </div>
+
+    <div class="m-giftRecipientModal__sendShareableLinkContainer">
+      <label
+        class="m-giftRecipientModal__sendShareableLinkLabel"
+        i18n="@@GIFT_RECIPIENT_MODAL__SEND_SHAREABLE_LINK"
+        >Just send me a shareable link</label
+      >
+      <m-toggle
+        class="m-giftRecipientModal__sendShareableLinkToggle"
+        [mModel]="sendShareableLink$ | async"
+        (mModelChange)="onShareableLinkToggleChange($event)"
+        [leftValue]="false"
+        [rightValue]="true"
+        [offState]="false"
+      ></m-toggle>
+    </div>
+
+    <div class="m-modalV2__footer">
+      <ng-container
+        *ngIf="!(sendShareableLink$ | async); else shareableLinkFooterTemplate"
+      >
+        <p
+          class="m-giftRecipientModal__footerText"
+          i18n="@@GIFT_RECIPIENT_MODAL__USER_WILL_RECEIVE_THIS_GIFT"
+        >
+          The user will receive this gift on Minds. We'll also send you a
+          shareable gift link in your confirmation email
+        </p>
+      </ng-container>
+      <ng-template #shareableLinkFooterTemplate>
+        <p
+          class="m-giftRecipientModal__footerText"
+          i18n="@@GIFT_RECIPIENT_MODAL__ONLY_SHARE_WITH_INTENDED_RECIPIENT"
+        >
+          Be sure to only share your link with the intended recipient. This gift
+          link is included in your confirmation email after you confirm the gift
+          link.
+        </p>
+      </ng-template>
+      <m-button
+        class="m-giftRecipientModal__confirmRecipientButton"
+        solid="true"
+        color="blue"
+        size="large"
+        stretch="true"
+        (onAction)="onConfirmRecipientClick()"
+      >
+        <ng-container
+          *ngIf="
+            !(sendShareableLink$ | async);
+            else shareableLinkButtonTextTemplate
+          "
+        >
+          <span i18n="@@GIFT_RECIPIENT_MODAL__CONFIRM_RECIPIENT"
+            >Confirm recipient</span
+          >
+        </ng-container>
+        <ng-template #shareableLinkButtonTextTemplate>
+          <span i18n="@@GIFT_RECIPIENT_MODAL__CONFIRM">Confirm</span>
+        </ng-template>
+      </m-button>
+    </div>
+  </div>
+</div>

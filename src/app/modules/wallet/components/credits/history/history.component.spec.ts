@@ -75,17 +75,6 @@ describe('WalletV2CreditsHistoryComponent', () => {
           },
         },
         { provide: Router, useValue: MockService(Router) },
-        {
-          provide: ThemeService,
-          useValue: MockService(ThemeService, {
-            has: ['isDark$'],
-            props: {
-              isDark$: {
-                get: () => new BehaviorSubject<boolean>(false),
-              },
-            },
-          }),
-        },
       ],
     });
 

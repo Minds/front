@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { WireType, WireV2Service } from '../../wire-v2.service';
+import { GiftCardProductIdEnum } from '../../../../../../graphql/generated.engine';
 
 /**
  * Used in the tip modal to collect information about a payment
@@ -55,5 +56,17 @@ export class WireCreatorFormComponent {
       this.service.amount$.next(1);
     }
     this.service.setType(type);
+  }
+
+  /**
+   * Gets gift card product ID applicable to the current upgrade type.
+   * If no matching upgrade type is found, will return null.
+   * @returns { GiftCardProductIdEnum } applicable gift card product id.
+   */
+  public getApplicableGiftCardProductId(): GiftCardProductIdEnum {
+    // We don't want to show a gift card for gift card purchases.
+    return !this.service.isSendingGift$.getValue()
+      ? this.service.getApplicableGiftCardProductId()
+      : null;
   }
 }
