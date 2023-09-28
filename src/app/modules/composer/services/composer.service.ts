@@ -794,6 +794,7 @@ export class ComposerService implements OnDestroy {
     this.message$.next(DEFAULT_MESSAGE_VALUE);
     this.title$.next(DEFAULT_TITLE_VALUE);
     this.nsfw$.next(DEFAULT_NSFW_VALUE);
+    this.pendingMonetization$.next(DEFAULT_PENDING_MONETIZATION_VALUE);
     this.monetization$.next(DEFAULT_MONETIZATION_VALUE);
     this.tags$.next(DEFAULT_TAGS_VALUE);
     this.schedule$.next(DEFAULT_SCHEDULE_VALUE);

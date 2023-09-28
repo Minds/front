@@ -34,7 +34,6 @@ export class SelectableEntityCardComponent implements OnInit {
   // other template bound variables.
   public avatarSrc: string = null;
   public title: string = null;
-  public subtext: string = null;
 
   constructor(@Inject(CDN_URL) private cdnUrl: string) {}
 

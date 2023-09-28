@@ -101,14 +101,6 @@ export class ComposerAudienceSelectorPanelComponent
   public readonly membershipsLoaded$: Observable<boolean> = this.monetizeService
     .loaded$;
 
-  public readonly hasMemberships$: Observable<
-    boolean
-  > = this.monetizeService.supportTiers$.pipe(
-    map(supportTiers => {
-      return supportTiers.length > 0;
-    })
-  );
-
   /** List of memberships */
   public readonly memberships$: Observable<SupportTier[]> = this.monetizeService
     .supportTiers$;

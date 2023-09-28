@@ -56,10 +56,10 @@
         ></m-selectableEntityCard>
       </div>
 
+      <!-- ---------------------------- -->
+      <!-- MEMBERSHIPS HEADER - EXPANDABLE -->
+      <!-- ---------------------------- -->
       <ng-container *ngIf="!(shareToGroupMode$ | async)">
-        <!-- ---------------------------- -->
-        <!-- MEMBERSHIPS HEADER - EXPANDABLE -->
-        <!-- ---------------------------- -->
         <h4
           class="m-composerPopup__subtitle"
           (click)="toggleMembershipsExpand()"
@@ -91,11 +91,11 @@
         <!-- LIST OF MEMBERSHIPS -->
         <!-- ---------------------------- -->
         <ng-container *ngIf="membershipsExpanded$ | async">
-          <ng-container *ngIf="!(hasMemberships$ | async)">
+          <ng-container *ngIf="(memberships$ | async).length < 1">
             <div
               class="m-composerAudience__emptyListNoticeContainer"
               *ngIf="
-                !(membershipsLoaded$ | async);
+                membershipsLoaded$ | async;
                 else membershipsLoadingSpinnerTemplate
               "
             >
@@ -220,16 +220,16 @@
         </div>
       </ng-container>
     </div>
+  </div>
 
-    <div class="m-composerPopup__action">
-      <m-button
-        class="m-composerPopup__save"
-        (onAction)="save()"
-        color="blue"
-        data-ref="composer-audience-selector-save-button"
-        i18n="@@COMMON__SAVE"
-        >Save</m-button
-      >
-    </div>
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      (onAction)="save()"
+      color="blue"
+      data-ref="composer-audience-selector-save-button"
+      i18n="@@COMMON__SAVE"
+      >Save</m-button
+    >
   </div>
 </div>

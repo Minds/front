@@ -40,7 +40,6 @@ describe('SelectableEntityCardComponent', () => {
     comp.ngOnInit();
     expect(comp.avatarSrc).toBeDefined();
     expect(comp.title).toBeDefined();
-    expect(comp.subtext).toBeDefined();
   });
 
   it('should return the correct avatar source for user', () => {
@@ -65,22 +64,5 @@ describe('SelectableEntityCardComponent', () => {
     comp.entity = { guid: '123', name: 'Test Group', type: 'group' };
     const title = comp.getTitle();
     expect(title).toBe('Test Group');
-  });
-
-  it('should return the correct subtext for an entity with a members count', () => {
-    comp.entity = {
-      guid: '123',
-      name: 'Test User',
-      type: 'group',
-      'members:count': 5,
-    };
-    const subtext = comp.getSubtext();
-    expect(subtext).toBe('5 Members');
-  });
-
-  it('should return the no subtext for an entity without a members count', () => {
-    comp.entity = { guid: '123', name: 'Test User', type: 'group' };
-    const subtext = comp.getSubtext();
-    expect(subtext).toBeUndefined();
   });
 });
