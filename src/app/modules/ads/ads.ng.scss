@@ -2,23 +2,14 @@
 
 :host {
   ::ng-deep {
-    minds-card {
-      overflow: visible;
-      border-radius: 0;
-    }
-
-    m-activity {
-      border-top: none !important;
+    m-publisherCard {
+      display: block;
+      padding-top: $spacing5;
     }
   }
 
-  .m-adsBoost__header {
-    margin: 0;
-    padding-bottom: $spacing6;
-
-    @include body1Medium;
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-    }
+  .m-adsBoost__boostChannelButton {
+    display: block;
+    padding-top: $spacing8;
   }
 }
