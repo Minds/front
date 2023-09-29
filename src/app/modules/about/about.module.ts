@@ -18,6 +18,7 @@ import { ProductPageBasicExplainerComponent } from './product-pages/components/b
 import { ProductPageFeatureHighlightComponent } from './product-pages/components/feature-highlight/feature-highlight.component';
 import { ProductPageClosingCtaComponent } from './product-pages/components/closing-cta/closing-cta.component';
 import { NoRouteReuseStrategy } from '../../common/routerReuseStrategies/no-route-reuse.strategy';
+import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
   {
@@ -34,6 +35,16 @@ const routes: Routes = [
         'Free your mind and get paid for creating content, driving traffic and referring friends. A place to have open conversations and bring people together.',
       canonicalUrl: '/about',
     },
+  },
+  {
+    path: 'upgrades',
+    redirectTo: '/about/upgrades',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'upgrade',
+    redirectTo: '/about/upgrades',
+    pathMatch: 'full' as PathMatch,
   },
 ];
 
