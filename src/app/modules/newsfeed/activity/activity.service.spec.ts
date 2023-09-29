@@ -58,7 +58,6 @@ describe('ActivityService', () => {
     service.setupMetricsSocketListener();
 
     (service as any).entityMetricsSocket.thumbsUpCount$.next(5);
-    (service as any).entityMetricsSocket.thumbsDownCount$.next(4);
 
     expect((service as any).entityMetricsSocket.listen).toHaveBeenCalledWith(
       '321'
@@ -67,7 +66,6 @@ describe('ActivityService', () => {
     service.entity$
       .subscribe(entity => {
         expect(entity['thumbs:up:count']).toBe(5);
-        expect(entity['thumbs:down:count']).toBe(4);
       })
       .unsubscribe();
   });
@@ -77,7 +75,6 @@ describe('ActivityService', () => {
     service.setupMetricsSocketListener();
 
     (service as any).entityMetricsSocket.thumbsUpCount$.next(2);
-    (service as any).entityMetricsSocket.thumbsDownCount$.next(3);
 
     expect((service as any).entityMetricsSocket.listen).toHaveBeenCalledWith(
       '123'
@@ -86,7 +83,6 @@ describe('ActivityService', () => {
     service.entity$
       .subscribe(entity => {
         expect(entity['thumbs:up:count']).toBe(2);
-        expect(entity['thumbs:down:count']).toBe(3);
       })
       .unsubscribe();
   });

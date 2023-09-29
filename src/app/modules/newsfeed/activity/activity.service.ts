@@ -454,7 +454,6 @@ export class ActivityService implements OnDestroy {
 
   // subscriptions for metric events.
   private thumbsUpMetricSubscription: Subscription;
-  private thumbsDownMetricSubscription: Subscription;
 
   constructor(
     private configs: ConfigsService,
@@ -581,36 +580,20 @@ export class ActivityService implements OnDestroy {
       )
       .subscribe();
 
-    this.thumbsDownMetricSubscription = this.entityMetricsSocket.thumbsDownCount$
-      .pipe(
-        skip(1),
-        withLatestFrom(this.entity$),
-        tap(([thumbsDownCount, entity]) => {
-          entity['thumbs:down:count'] = thumbsDownCount;
-          this.entity$.next(entity);
-        })
-      )
-      .subscribe();
-
     this.entityMetricsSocket.listen(this.getMetricSubscriptionGuid());
     return this;
   }
 
   /**
    * Teardown listener for metrics socket for this activity.
-   * @param { MetricsSubscribableEntity } subscribableEntity - entity to teardown listeners for.
    * @returns { this }
    */
   public teardownMetricsSocketListener(): this {
     if (!this.entityMetricsSocket) {
       return;
     }
-    if (this.thumbsUpMetricSubscription) {
-      this.thumbsUpMetricSubscription.unsubscribe();
-    }
-    if (this.thumbsDownMetricSubscription) {
-      this.thumbsDownMetricSubscription.unsubscribe();
-    }
+
+    this.thumbsUpMetricSubscription?.unsubscribe();
     this.entityMetricsSocket.leave(this.getMetricSubscriptionGuid());
     return this;
   }
