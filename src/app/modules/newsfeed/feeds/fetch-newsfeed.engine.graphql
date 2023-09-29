@@ -42,6 +42,7 @@ query FetchNewsfeed(
           }
         }
         ... on PublisherRecsConnection {
+          dismissible
           edges {
             publisherNode: node {
               id
@@ -59,6 +60,12 @@ query FetchNewsfeed(
           pageInfo {
             ...PageInfo
           }
+        }
+        ... on FeedHeaderNode {
+          text
+        }
+        ... on FeedExploreTagNode {
+          tag
         }
       }
     }

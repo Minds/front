@@ -181,6 +181,8 @@ import { FormErrorComponent } from './components/form-error/form-error.component
 import { GroupMembershipButtonComponent } from './components/group-membership-button/group-membership-button.component';
 import { GroupMembershipService } from './services/group-membership.service';
 import { SelectableEntityCardComponent } from './components/selectable-entity-card/selectable-entity-card.component';
+import { InlineFeedHeaderComponent } from './components/inline-feed-header/inline-feed-header.component';
+import { ExploreTagFeedItemComponent } from './components/explore-tag-feed-item/explore-tag-feed-item.component';
 import { ExploreFeedItemComponent } from './components/explore-feed-item/explore-feed-item.component';
 
 const MINDS_COMMON_COMPONENTS = [
@@ -289,6 +291,8 @@ const MINDS_COMMON_COMPONENTS = [
   ChatwootWidgetComponent,
   FormErrorComponent,
   SelectableEntityCardComponent,
+  InlineFeedHeaderComponent,
+  ExploreTagFeedItemComponent,
 ];
 // ------------------------------------
 // ------------------------------------
