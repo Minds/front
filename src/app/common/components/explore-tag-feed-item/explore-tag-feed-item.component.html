@@ -1,0 +1,27 @@
+<ng-container *ngIf="tag">
+  <div class="m-exploreTagFeedItem--left">
+    <i class="material-icons m-exploreTagFeedItem__icon">explore</i>
+    <h3 class="m-exploreTagFeedItem__text">
+      #{{ tag }}
+      <ng-container i18n="a trending hashtag|@@EXPLORE_TAG_FEED_ITEM__TRENDING"
+        >trending</ng-container
+      >
+    </h3>
+  </div>
+  <div class="m-exploreTagFeedItem--right">
+    <a
+      [routerLink]="['/search']"
+      [queryParams]="{
+        q: '#' + tag,
+        f: 'top',
+        t: 'all'
+      }"
+    >
+      <m-button class="m-exploreTagFeedItem__exploreButton" size="small"
+        ><ng-container i18n="@@EXPLORE_TAG_FEED_ITEM__EXPLORE"
+          >Explore</ng-container
+        ></m-button
+      >
+    </a>
+  </div>
+</ng-container>

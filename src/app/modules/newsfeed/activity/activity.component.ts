@@ -123,6 +123,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--modal')
   isModal: boolean = false;
 
+  @HostBinding('class.m-activity--hideTopBorder')
+  hideTopBorder: boolean = false;
+
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
   private intersectionObserverSubscription: Subscription;
@@ -178,6 +181,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
     this.isModal = this.service.displayOptions.isModal;
     this.isSingle = this.service.displayOptions.isSingle;
+    this.hideTopBorder = this.service.displayOptions.hideTopBorder;
 
     // if this is a supermind request with a reply AND on the feed, then
     // we don't want to show the View comments link
