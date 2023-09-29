@@ -61,6 +61,11 @@ export class PublisherCardComponent implements AfterViewInit {
   @Input() featured: boolean = false;
 
   /**
+   * Show description
+   */
+  @Input() showDescription: boolean = true;
+
+  /**
    * Show the boosted flag
    */
   @Input() showBoostedFlag: boolean = false;
@@ -94,6 +99,16 @@ export class PublisherCardComponent implements AfterViewInit {
   @Input() membershipButtonSize: ButtonSize = 'xsmall';
 
   @Input() membershipButtonColor: ButtonColor = 'grey';
+
+  /**
+   * Show extra rounded border radius
+   */
+  @Input() curvyBorder: boolean = false;
+
+  /**
+   * Fills card with the background color of sidebar components
+   */
+  @Input() backgroundFill: boolean = false;
 
   readonly cdnUrl: string;
 

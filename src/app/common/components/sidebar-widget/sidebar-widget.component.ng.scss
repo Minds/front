@@ -1,0 +1,89 @@
+@import 'defaults.scss';
+
+$sidebarSpacing: $spacing4;
+
+:host {
+  display: block;
+
+  .m-sidebarWidget {
+    position: relative;
+    box-sizing: border-box;
+    padding: 0;
+    padding-bottom: $sidebarSpacing;
+    border-radius: $m-borderRadius--curvy;
+
+    @include m-theme() {
+      background-color: rgba(themed($m-bgColor--secondary), 0.7);
+      border: 1px solid rgba(themed($m-bgColor--secondary), 0.7);
+    }
+
+    &.m-sidebarWidget__border--primary {
+      @include m-theme() {
+        border: 1px solid themed($m-action);
+      }
+    }
+
+    &.m-sidebarWidget__border--none {
+      @include m-theme() {
+        border: none;
+      }
+    }
+
+    &.m-sidebarWidget__border--noBackgroundFill {
+      @include m-theme() {
+        background-color: transparent;
+      }
+
+      .m-sidebarWidget__title {
+        @media screen and (min-width: $max-mobile + 1) {
+          padding-left: 0;
+        }
+      }
+    }
+  }
+
+  .m-sidebarWidget__title {
+    padding: $sidebarSpacing $spacing10 $sidebarSpacing * 0.5 $sidebarSpacing;
+    // padding-bottom: $sidebarSpacing * 0.5;
+    // padding-right: 40px; // Allow for dimiss
+    margin: 0;
+
+    @include heading4Bold;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-sidebarWidget__dismiss {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    > i {
+      font-size: 18px;
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+
+  .m-sidebarWidget__body {
+    padding: 0 $sidebarSpacing;
+    &.m-sidebarWidget__body--noPadding {
+      padding: 0;
+    }
+  }
+
+  .m-sidebarWidget__seeMore {
+    padding: $sidebarSpacing $sidebarSpacing 0;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+}
