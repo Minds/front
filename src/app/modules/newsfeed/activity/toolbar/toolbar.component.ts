@@ -161,7 +161,6 @@ export class ActivityToolbarComponent {
     return (
       this.entity &&
       (this.entity['thumbs:up:count'] > 0 ||
-        this.entity['thumbs:down:count'] > 0 ||
         this.entity?.reminds > 0 ||
         this.entity?.quotes > 0)
     );

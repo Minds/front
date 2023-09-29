@@ -6,7 +6,6 @@ import { SocketsService } from '../../services/sockets';
 // Parsed metrics changed event.
 type MetricsChangedEvent = {
   'thumbs:up:count'?: number;
-  'thumbs:down:count'?: number;
 };
 
 /**
@@ -24,19 +23,6 @@ export class EntityMetricsSocketService implements OnDestroy {
   public readonly thumbsUpCount$: Observable<
     number
   > = this.thumbsUpCountSubject$.pipe(
-    distinctUntilChanged(),
-    debounceTime(500)
-  );
-
-  /** @type { BehaviorSubject<number> } - used within this instance to set new values for thumbs down count */
-  private readonly thumbsDownCountSubject$: BehaviorSubject<
-    number
-  > = new BehaviorSubject<number>(null);
-
-  /** @type { Observable<number> } - observable of thumbs down count changes - distinct until changed, and debounced */
-  public readonly thumbsDownCount$: Observable<
-    number
-  > = this.thumbsDownCountSubject$.pipe(
     distinctUntilChanged(),
     debounceTime(500)
   );
@@ -112,9 +98,6 @@ export class EntityMetricsSocketService implements OnDestroy {
   private updateInstanceSubjects(metricsEvent: MetricsChangedEvent): this {
     if (!isNaN(metricsEvent['thumbs:up:count'])) {
       this.thumbsUpCountSubject$.next(metricsEvent['thumbs:up:count']);
-    }
-    if (!isNaN(metricsEvent['thumbs:down:count'])) {
-      this.thumbsDownCountSubject$.next(metricsEvent['thumbs:down:count']);
     }
     return this;
   }

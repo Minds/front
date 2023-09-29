@@ -2,11 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
-  concat,
-  merge,
   Observable,
-  of,
-  race,
   ReplaySubject,
   Subject,
 } from 'rxjs';
@@ -23,7 +19,6 @@ import { ApiResponse, ApiService } from '../../../common/api/api.service';
 
 export type InteractionType =
   | 'votes-up'
-  | 'votes-down'
   | 'reminds'
   | 'quotes'
   | 'subscribers'
@@ -99,12 +94,11 @@ export class InteractionsModalDataService {
     const limit = 24;
     switch (type) {
       case 'votes-up':
-      case 'votes-down':
         return this.api
           .get('api/v3/votes/list/' + entityGuid, {
             limit,
             'next-page': pagingToken,
-            direction: type === 'votes-up' ? 'up' : 'down',
+            direction: 'up',
           })
           .pipe(
             map(response => {
