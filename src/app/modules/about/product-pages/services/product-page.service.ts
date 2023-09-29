@@ -25,7 +25,7 @@ export class ProductPageService {
         (
           result: ApolloQueryResult<GetV2ProductPageBySlugQuery>
         ): V2ProductPage => {
-          return result.data.v2ProductPages?.data?.[0]
+          return result?.data?.v2ProductPages?.data?.[0]
             ?.attributes as V2ProductPage;
         }
       ),

@@ -17,7 +17,7 @@
     ></m-productPage__featureTable>
     <m-productPage__featureShowcase
       *ngSwitchCase="'ComponentDynamicProductPageFeatureShowcase'"
-      [featureShowcase]="component"
+      [featureShowcase]="component.items"
     ></m-productPage__featureShowcase>
     <m-productPage__basicExplainer
       *ngSwitchCase="'ComponentDynamicProductPageBasicExplainer'"
@@ -31,7 +31,7 @@
       [body]="component.body"
       [button]="component.button"
       [colorScheme]="component.colorScheme"
-      [image]="component.image"
+      [image]="component.image?.data?.attributes"
       [backgroundColor]="component.backgroundColor"
       [alignImage]="component.alignImage"
     ></m-productPage__featureHighlight>

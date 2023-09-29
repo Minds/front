@@ -7,6 +7,7 @@ import { WirePaymentHandlersService } from '../../../modules/wire/wire-payment-h
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { WireCreatorComponent } from '../../../modules/wire/v2/creator/wire-creator.component';
+import { ToasterService } from '../toaster.service';
 
 export const STRAPI_ACTION_BUTTON_ATTRIBUTES = `
   text
@@ -67,6 +68,7 @@ export class StrapiActionResolverService {
     private links: BlockchainMarketingLinksService,
     private modalService: ModalService,
     private wirePaymentHandlers: WirePaymentHandlersService,
+    private toaster: ToasterService,
     private router: Router
   ) {}
 
@@ -96,6 +98,10 @@ export class StrapiActionResolverService {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         break;
       case 'open_register_modal':
+        if (this.session.isLoggedIn()) {
+          this.toaster.warn('You are already logged in.');
+          return;
+        }
         this.authModal.open({ formDisplay: 'register' });
         break;
       case 'open_plus_upgrade_modal':

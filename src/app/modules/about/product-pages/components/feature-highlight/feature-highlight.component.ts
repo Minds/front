@@ -3,7 +3,7 @@ import {
   ComponentDynamicProductPageActionButton as ActionButton,
   Enum_Componentdynamicproductpagefeaturehighlight_Alignimage as AlignImage,
   Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme as ColorScheme,
-  UploadFileEntityResponse,
+  UploadFile,
 } from '../../../../../../graphql/generated.strapi';
 import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 
@@ -33,7 +33,7 @@ export class ProductPageFeatureHighlightComponent implements OnInit {
   @Input() public readonly colorScheme: ColorScheme;
 
   /** Image to be shown on feature highlight card. */
-  @Input() public readonly image: UploadFileEntityResponse;
+  @Input() public readonly image: UploadFile;
 
   /** Whether image should be on the left or right side. */
   @Input() public readonly alignImage: AlignImage;

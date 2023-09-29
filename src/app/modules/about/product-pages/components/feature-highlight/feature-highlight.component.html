@@ -11,8 +11,8 @@
 </div>
 <div class="m-productPageFeatHighlight__imageContainer">
   <img
-    [src]="strapiUrl + image.data.attributes.url"
+    [src]="strapiUrl + image.url"
     class="m-productPageFeatHighlight__image"
-    alt="item.image.data.attributes.alternativeText ?? 'Feature image'"
+    [alt]="image.alternativeText ?? 'Feature image'"
   />
 </div>
