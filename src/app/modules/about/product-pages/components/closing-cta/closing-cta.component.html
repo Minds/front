@@ -13,9 +13,5 @@
   </legend>
   <h1 class="m-productClosingCta__title">{{ title }}</h1>
   <markdown ngPreserveWhitespaces [data]="body"></markdown>
-  <m-productPage__button
-    *ngIf="button"
-    [data]="button"
-    (onAction)="handleButtonClick($event)"
-  ></m-productPage__button>
+  <m-productPage__button *ngIf="button" [data]="button"></m-productPage__button>
 </fieldset>

@@ -34,3 +34,9 @@ export type ProductPageUpgradesConfig = {
     };
   };
 };
+
+/** Mobile tab data. */
+export type ProductPageFeatTableMobileTab = {
+  title: string;
+  index: number;
+};

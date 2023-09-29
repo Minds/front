@@ -1,9 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { ComponentCommonActionButton } from '../../../../../../graphql/generated.strapi';
-import {
-  StrapiAction,
-  StrapiActionResolverService,
-} from '../../../../../common/services/strapi/strapi-action-resolver.service';
 
 /**
  * Product page basic explainer component. Contains simple title
@@ -23,15 +19,4 @@ export class ProductPageBasicExplainerComponent {
 
   /** Optional action button for the component. */
   @Input() public readonly button: ComponentCommonActionButton;
-
-  constructor(private strapiActionResolver: StrapiActionResolverService) {}
-
-  /**
-   * Handles button click event.
-   * @param { StrapiAction } $event - action.
-   * @returns { void }
-   */
-  public handleButtonClick($event: StrapiAction): void {
-    this.strapiActionResolver.resolve($event);
-  }
 }

@@ -1,18 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
   FeatTableColumnEntity,
-  Enum_Componentcommonactionbutton_Action as StrapiAction,
   Enum_Productplan_Tier as ProductPlanTier,
 } from '../../../../../../graphql/generated.strapi';
-import { StrapiActionResolverService } from '../../../../../common/services/strapi/strapi-action-resolver.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductPagePricingService } from '../../services/product-page-pricing.service';
-
-/** Mobile tab data. */
-type MobileTab = {
-  title: string;
-  index: number;
-};
+import { ProductPageFeatTableMobileTab } from '../../product-pages.types';
 
 @Component({
   selector: 'm-productPage__featureTable',
@@ -33,38 +26,17 @@ export class ProductPageFeatureTableComponent implements OnInit {
   @Input() public readonly columns: FeatTableColumnEntity[];
 
   /** Mobile tabs. */
-  public mobileTabs: MobileTab[];
+  public mobileTabs: ProductPageFeatTableMobileTab[];
 
   /** Index of the selected mobile tab. */
   public readonly selectedMobileTabIndex$: BehaviorSubject<
     number
   > = new BehaviorSubject<number>(0);
 
-  constructor(
-    private strapiActionResolver: StrapiActionResolverService,
-    private pricingService: ProductPagePricingService
-  ) {}
+  constructor(private pricingService: ProductPagePricingService) {}
 
   ngOnInit(): void {
     this.mobileTabs = this.getMobileTabs();
-  }
-
-  /**
-   * Handle button click.
-   * @param { StrapiAction } action - button action.
-   * @returns { void }
-   */
-  public handleButtonClick(action: StrapiAction) {
-    let extraData: any = {};
-
-    if (
-      action === StrapiAction.OpenPlusUpgradeModal ||
-      action === StrapiAction.OpenProUpgradeModal
-    ) {
-      extraData.upgradeInterval = 'yearly';
-    }
-
-    this.strapiActionResolver.resolve(action, extraData);
   }
 
   /**
@@ -80,9 +52,12 @@ export class ProductPageFeatureTableComponent implements OnInit {
    * Gets mobile tabs from columns.
    * @returns { MobileTab[] } mobile tabs array.
    */
-  public getMobileTabs(): MobileTab[] {
+  public getMobileTabs(): ProductPageFeatTableMobileTab[] {
     return this.columns.map(
-      (column: FeatTableColumnEntity, index: number): MobileTab => {
+      (
+        column: FeatTableColumnEntity,
+        index: number
+      ): ProductPageFeatTableMobileTab => {
         return {
           title: column.attributes.featTableHeader.title,
           index: index,

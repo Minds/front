@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   ComponentDynamicProductPageActionButton,
   Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme as ColorScheme,
+  Enum_Componentdynamicproductpageactionbutton_Action as StrapiAction,
 } from '../../../../../../../graphql/generated.strapi';
-import { StrapiAction } from '../../../../../../common/services/strapi/strapi-action-resolver.service';
+import { StrapiActionResolverService } from '../../../../../../common/services/strapi/strapi-action-resolver.service';
+import { ProductPageUpgradeTimePeriod } from '../../../product-pages.types';
 import { Session } from '../../../../../../services/session';
 import { Router } from '@angular/router';
+import { ProductPagePricingService } from '../../../services/product-page-pricing.service';
 
 /**
  * Common product page button component, with various configurable states.
@@ -40,18 +43,18 @@ export class ProductPageButtonComponent {
    */
   @Input() public readonly colorScheme: ColorScheme = ColorScheme.Light;
 
-  /** Fires on click. Named onAction to avoid conflicts with native click event. */
-  @Output() public readonly onAction: EventEmitter<
-    StrapiAction
-  > = new EventEmitter<StrapiAction>();
-
   /** Enum for use in template. */
   public readonly ColorScheme: typeof ColorScheme = ColorScheme;
 
-  constructor(private session: Session, private router: Router) {}
+  constructor(
+    private session: Session,
+    private router: Router,
+    private pricingService: ProductPagePricingService,
+    private strapiActionResolver: StrapiActionResolverService
+  ) {}
 
   /**
-   * On button click.
+   * Handles button click events.
    * @returns { void }
    */
   public onClick(): void {
@@ -60,12 +63,26 @@ export class ProductPageButtonComponent {
       this.router.navigate([this.data.navigationUrl]);
       return;
     }
-    // else, if there is an action, emit it.
-    if (this.data.action) {
-      this.onAction.emit(this.data.action);
+    // else, if there is an action, handle it.
+    if (!this.data.action) {
+      console.error('Button clicked with no navigationUrl or action');
       return;
     }
-    console.error('Button clicked with no navigationUrl or action');
+
+    let extraData: any = {};
+
+    if (
+      this.data.action === StrapiAction.OpenPlusUpgradeModal ||
+      this.data.action === StrapiAction.OpenProUpgradeModal
+    ) {
+      extraData.upgradeInterval =
+        this.pricingService.selectedTimePeriod$.getValue() ===
+        ProductPageUpgradeTimePeriod.Annually
+          ? 'yearly'
+          : 'monthly';
+    }
+
+    this.strapiActionResolver.resolve(this.data.action, extraData);
   }
 
   /**

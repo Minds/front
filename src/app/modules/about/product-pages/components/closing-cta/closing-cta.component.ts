@@ -4,10 +4,6 @@ import {
   UploadFile,
 } from '../../../../../../graphql/generated.strapi';
 import {
-  StrapiAction,
-  StrapiActionResolverService,
-} from '../../../../../common/services/strapi/strapi-action-resolver.service';
-import {
   CDN_ASSETS_URL,
   STRAPI_URL,
 } from '../../../../../common/injection-tokens/url-injection-tokens';
@@ -35,17 +31,7 @@ export class ProductPageClosingCtaComponent {
   @Input() public readonly borderImage: UploadFile;
 
   constructor(
-    private strapiActionResolver: StrapiActionResolverService,
     @Inject(CDN_ASSETS_URL) public readonly cdnAssetsUrl: string,
     @Inject(STRAPI_URL) public readonly strapiUrl: string
   ) {}
-
-  /**
-   * Handles button click event.
-   * @param { StrapiAction } $event - action.
-   * @returns { void }
-   */
-  public handleButtonClick($event: StrapiAction): void {
-    this.strapiActionResolver.resolve($event);
-  }
 }
