@@ -66,6 +66,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   entity$: Observable<ActivityEntity> = this.service.entity$;
 
   @Input() set canDelete(value: boolean) {
+    if (value == null) {
+      return;
+    }
     this.service.canDeleteOverride$.next(value);
   }
 
