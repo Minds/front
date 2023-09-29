@@ -18,7 +18,7 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { ToasterService } from '../../../common/services/toaster.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { MindsGroup } from './group.model';
-import { GroupsSearchService } from '../profile/feed/search.service';
+import { DEFAULT_GROUP_VIEW } from './group.types';
 
 /**
  * Base container for all groupV2 page components
@@ -47,8 +47,7 @@ export class GroupComponent implements OnInit, OnDestroy {
     protected clientMetaService: ClientMetaService,
     protected toasterService: ToasterService,
     protected injector: Injector,
-    protected publisherSearchModal: PublisherSearchModalService,
-    protected v1SearchService: GroupsSearchService
+    protected publisherSearchModal: PublisherSearchModalService
   ) {}
 
   /**
@@ -63,10 +62,11 @@ export class GroupComponent implements OnInit, OnDestroy {
         }
         if (params['view']) {
           this.service.view$.next(params['view']);
+        } else {
+          this.service.view$.next(DEFAULT_GROUP_VIEW);
         }
       }),
       this.route.queryParamMap.subscribe((params: ParamMap) => {
-        // Handle search query param when provided via url
         let query = '';
         if (params.has('query')) {
           query = decodeURIComponent(params.get('query'));
@@ -85,9 +85,6 @@ export class GroupComponent implements OnInit, OnDestroy {
           },
           queryParamsHandling: 'merge',
         });
-
-        // Allows legacy feed service to search with a query param
-        this.v1SearchService.query$.next(query);
       }),
       this.service.group$.subscribe(group => {
         if (group) {

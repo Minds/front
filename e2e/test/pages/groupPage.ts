@@ -12,7 +12,7 @@ class GroupPage {
    * @returns { void }
    */
   public navigateToByGuid(guid: string): void {
-    I.amOnPage(`/group/${guid}/feed`);
+    I.amOnPage(`/group/${guid}/latest`);
   }
 
   /**
