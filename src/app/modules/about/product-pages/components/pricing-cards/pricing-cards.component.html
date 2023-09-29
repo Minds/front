@@ -31,7 +31,7 @@
   >
     <div
       class="m-productPagePricingCards__mostPopularHeader"
-      *ngIf="productPlan.attributes.mostPopular"
+      *ngIf="productPlan.attributes?.mostPopular"
     >
       <span>Most Popular</span>
       <m-icon from="custom" iconId="sparkles" [sizeFactor]="25"></m-icon>
@@ -47,7 +47,7 @@
         class="m-productPagePricingCards__priceStartingAt"
         [ngClass]="{
           'm-productPagePricingCards__priceStartingAt--hidden': !productPlan
-            .attributes.priceStartingAt
+            .attributes?.priceStartingAt
         }"
       >
         Starting at

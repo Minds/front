@@ -8,6 +8,7 @@ import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection
   styleUrls: ['feature-showcase.component.ng.scss'],
 })
 export class ProductPageFeatureShowcaseComponent {
+  /** Input containing data for feature showcase. */
   @Input()
   public readonly featureShowcase: ComponentDynamicProductPageFeatureShowcase;
 

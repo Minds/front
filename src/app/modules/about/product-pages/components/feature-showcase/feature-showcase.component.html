@@ -1,8 +1,11 @@
-<div class="m-featureShowcase__card" *ngFor="let item of featureShowcase.items">
+<div
+  class="m-featureShowcase__card"
+  *ngFor="let item of featureShowcase?.items"
+>
   <img
     [src]="strapiUrl + item.image.data.attributes.url"
     class="m-featureShowcase__image"
-    alt="item.image.data.attributes.alternativeText"
+    alt="item.image.data.attributes.alternativeText ?? 'Feature image'"
   />
   <h4 class="m-featureShowcase__title">{{ item.title }}</h4>
   <p class="m-featureShowcase__body">{{ item.body }}</p>

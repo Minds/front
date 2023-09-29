@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 
+/**
+ * Hero component.
+ */
 @Component({
   selector: 'm-productPage__hero',
   template: `
@@ -11,5 +14,6 @@ import { Component, Input } from '@angular/core';
   ],
 })
 export class ProductPageHeroComponent {
+  /** Markdown text for hero. */
   @Input() public readonly text: string;
 }

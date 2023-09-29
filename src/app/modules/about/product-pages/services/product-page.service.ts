@@ -7,10 +7,18 @@ import {
 import { Observable, catchError, map, of } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 
+/**
+ * Service for product pages - contains call to get a product page by a given URL slug.
+ */
 @Injectable({ providedIn: 'root' })
 export class ProductPageService {
   constructor(private getV2ProductPageBySlugGQL: GetV2ProductPageBySlugGQL) {}
 
+  /**
+   * Gets a product page by a given URL slug.
+   * @param { string } slug - URL slug.
+   * @returns { Observable<V2ProductPage> } - product page - null if no matching page was found.
+   */
   public getProductPageBySlug(slug: string): Observable<V2ProductPage> {
     return this.getV2ProductPageBySlugGQL.fetch({ slug: slug }).pipe(
       map(

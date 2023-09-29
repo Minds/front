@@ -110,6 +110,12 @@ export class StrapiActionResolverService {
     }
   }
 
+  /**
+   * Opens Wire upgrade modal.
+   * @param { 'plus' | 'pro' } upgradeType - type of the upgrade.
+   * @param { any } extraData - extra data to pass - may contain an `upgradeInterval`.
+   * @returns { Promise<void> }
+   */
   private async openWireUpgradeModal(
     upgradeType: 'plus' | 'pro',
     extraData: any = {}
