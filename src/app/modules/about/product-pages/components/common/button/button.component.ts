@@ -51,7 +51,6 @@ export class ProductPageButtonComponent {
     console.error('Button clicked with no navigationUrl or action');
   }
 
-  // TODO: Test hard
   get disabled(): boolean {
     switch (this.data.action) {
       case 'open_plus_upgrade_modal':
