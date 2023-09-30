@@ -95,7 +95,7 @@
             <div
               class="m-composerAudience__emptyListNoticeContainer"
               *ngIf="
-                membershipsLoaded$ | async;
+                monetizeService.loaded$ | async;
                 else membershipsLoadingSpinnerTemplate
               "
             >
@@ -111,7 +111,7 @@
             </div>
             <ng-template #membershipsLoadingSpinnerTemplate>
               <m-loadingSpinner
-                [inProgress]="!(membershipsLoaded$ | async)"
+                [inProgress]="!(monetizeService.loaded$ | async)"
               ></m-loadingSpinner>
             </ng-template>
           </ng-container>

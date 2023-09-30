@@ -96,11 +96,6 @@ export class ComposerAudienceSelectorPanelComponent
     boolean
   > = new BehaviorSubject<boolean>(false);
 
-  /** Whether memberships have been loaded yet.
-   */
-  public readonly membershipsLoaded$: Observable<boolean> = this.monetizeService
-    .loaded$;
-
   /** List of memberships */
   public readonly memberships$: Observable<SupportTier[]> = this.monetizeService
     .supportTiers$;
@@ -129,7 +124,7 @@ export class ComposerAudienceSelectorPanelComponent
           }
         }
       ),
-      this.membershipsLoaded$.subscribe(loaded => {
+      this.monetizeService.loaded$.subscribe(loaded => {
         if (!loaded) {
           this.monetizeService.loadSupportTiers(this.loggedInUser.guid);
         }
@@ -181,7 +176,7 @@ export class ComposerAudienceSelectorPanelComponent
   public toggleMembershipsExpand(): void {
     this.membershipsExpanded$.next(!this.membershipsExpanded$.getValue());
     this.subscriptions.push(
-      this.membershipsLoaded$.subscribe(loaded => {
+      this.monetizeService.loaded$.subscribe(loaded => {
         if (!loaded) {
           this.monetizeService.loadSupportTiers(this.loggedInUser.guid);
         }
