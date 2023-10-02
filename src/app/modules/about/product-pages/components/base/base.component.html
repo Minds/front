@@ -1,32 +1,32 @@
 <ng-container *ngFor="let component of components$ | async; trackByFn">
   <ng-container [ngSwitch]="component.__typename">
     <m-productPage__hero
-      *ngSwitchCase="'ComponentDynamicProductPageHero'"
+      *ngSwitchCase="'ComponentV2ProductHero'"
       [text]="component.text"
     ></m-productPage__hero>
     <m-productPage__pricingCards
-      *ngSwitchCase="'ComponentDynamicProductPagePricingCards'"
+      *ngSwitchCase="'ComponentV2ProductPricingCards'"
       [savingsText]="component.savingsText"
       [productPlans]="component.productPlans?.data"
     ></m-productPage__pricingCards>
     <m-productPage__featureTable
-      *ngSwitchCase="'ComponentDynamicProductPageFeatureTable'"
+      *ngSwitchCase="'ComponentV2ProductFeatureTable'"
       [title]="component.title"
       [subtitle]="component.subtitle"
       [columns]="component.columns.data"
     ></m-productPage__featureTable>
     <m-productPage__featureShowcase
-      *ngSwitchCase="'ComponentDynamicProductPageFeatureShowcase'"
+      *ngSwitchCase="'ComponentV2ProductFeatureShowcase'"
       [featureShowcase]="component.items"
     ></m-productPage__featureShowcase>
     <m-productPage__basicExplainer
-      *ngSwitchCase="'ComponentDynamicProductPageBasicExplainer'"
+      *ngSwitchCase="'ComponentV2ProductBasicExplainer'"
       [title]="component.title"
       [body]="component.body"
       [button]="component.button"
     ></m-productPage__basicExplainer>
     <m-productPage__featureHighlight
-      *ngSwitchCase="'ComponentDynamicProductPageFeatureHighlight'"
+      *ngSwitchCase="'ComponentV2ProductFeatureHighlight'"
       [title]="component.title"
       [body]="component.body"
       [button]="component.button"
@@ -36,7 +36,7 @@
       [alignImage]="component.alignImage"
     ></m-productPage__featureHighlight>
     <m-productPage__closingCta
-      *ngSwitchCase="'ComponentDynamicProductPageClosingCta'"
+      *ngSwitchCase="'ComponentV2ProductClosingCta'"
       [title]="component.title"
       [body]="component.body"
       [button]="component.button"

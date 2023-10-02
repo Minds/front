@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { ComponentDynamicProductPageFeatureShowcaseItem } from '../../../../../../graphql/generated.strapi';
+import { ComponentV2ProductFeatureShowcaseItem } from '../../../../../../graphql/generated.strapi';
 import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 
 /**
@@ -14,7 +14,7 @@ import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection
 export class ProductPageFeatureShowcaseComponent {
   /** Input containing data for feature showcase. */
   @Input()
-  public readonly featureShowcase: ComponentDynamicProductPageFeatureShowcaseItem[];
+  public readonly featureShowcase: ComponentV2ProductFeatureShowcaseItem[];
 
   constructor(@Inject(STRAPI_URL) public strapiUrl: string) {}
 }

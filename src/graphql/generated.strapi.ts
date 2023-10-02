@@ -142,192 +142,6 @@ export type ComponentCommonActionButtonInput = {
   text?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ComponentDynamicProductPageActionButton = {
-  __typename?: 'ComponentDynamicProductPageActionButton';
-  action?: Maybe<Enum_Componentdynamicproductpageactionbutton_Action>;
-  dataRef?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  navigationUrl?: Maybe<Scalars['String']['output']>;
-  rounded?: Maybe<Scalars['Boolean']['output']>;
-  solid?: Maybe<Scalars['Boolean']['output']>;
-  text: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPageActionButtonFiltersInput = {
-  action?: InputMaybe<StringFilterInput>;
-  and?: InputMaybe<
-    Array<InputMaybe<ComponentDynamicProductPageActionButtonFiltersInput>>
-  >;
-  dataRef?: InputMaybe<StringFilterInput>;
-  navigationUrl?: InputMaybe<StringFilterInput>;
-  not?: InputMaybe<ComponentDynamicProductPageActionButtonFiltersInput>;
-  or?: InputMaybe<
-    Array<InputMaybe<ComponentDynamicProductPageActionButtonFiltersInput>>
-  >;
-  rounded?: InputMaybe<BooleanFilterInput>;
-  solid?: InputMaybe<BooleanFilterInput>;
-  text?: InputMaybe<StringFilterInput>;
-};
-
-export type ComponentDynamicProductPageActionButtonInput = {
-  action?: InputMaybe<Enum_Componentdynamicproductpageactionbutton_Action>;
-  dataRef?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  navigationUrl?: InputMaybe<Scalars['String']['input']>;
-  rounded?: InputMaybe<Scalars['Boolean']['input']>;
-  solid?: InputMaybe<Scalars['Boolean']['input']>;
-  text?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ComponentDynamicProductPageBasicExplainer = {
-  __typename?: 'ComponentDynamicProductPageBasicExplainer';
-  body: Scalars['String']['output'];
-  button?: Maybe<ComponentDynamicProductPageActionButton>;
-  id: Scalars['ID']['output'];
-  title: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPageClosingCta = {
-  __typename?: 'ComponentDynamicProductPageClosingCta';
-  body: Scalars['String']['output'];
-  borderImage?: Maybe<UploadFileEntityResponse>;
-  button?: Maybe<ComponentDynamicProductPageActionButton>;
-  id: Scalars['ID']['output'];
-  title: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPageFeatureHighlight = {
-  __typename?: 'ComponentDynamicProductPageFeatureHighlight';
-  alignImage: Enum_Componentdynamicproductpagefeaturehighlight_Alignimage;
-  backgroundColor: Scalars['String']['output'];
-  body: Scalars['String']['output'];
-  button?: Maybe<ComponentDynamicProductPageActionButton>;
-  colorScheme: Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme;
-  id: Scalars['ID']['output'];
-  image: UploadFileEntityResponse;
-  title: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPageFeatureShowcase = {
-  __typename?: 'ComponentDynamicProductPageFeatureShowcase';
-  id: Scalars['ID']['output'];
-  items: Array<Maybe<ComponentDynamicProductPageFeatureShowcaseItem>>;
-};
-
-export type ComponentDynamicProductPageFeatureShowcaseItemsArgs = {
-  filters?: InputMaybe<
-    ComponentDynamicProductPageFeatureShowcaseItemFiltersInput
-  >;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type ComponentDynamicProductPageFeatureShowcaseItem = {
-  __typename?: 'ComponentDynamicProductPageFeatureShowcaseItem';
-  body: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  image: UploadFileEntityResponse;
-  title: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPageFeatureShowcaseItemFiltersInput = {
-  and?: InputMaybe<
-    Array<
-      InputMaybe<ComponentDynamicProductPageFeatureShowcaseItemFiltersInput>
-    >
-  >;
-  body?: InputMaybe<StringFilterInput>;
-  not?: InputMaybe<ComponentDynamicProductPageFeatureShowcaseItemFiltersInput>;
-  or?: InputMaybe<
-    Array<
-      InputMaybe<ComponentDynamicProductPageFeatureShowcaseItemFiltersInput>
-    >
-  >;
-  title?: InputMaybe<StringFilterInput>;
-};
-
-export type ComponentDynamicProductPageFeatureTable = {
-  __typename?: 'ComponentDynamicProductPageFeatureTable';
-  columns?: Maybe<FeatTableColumnRelationResponseCollection>;
-  id: Scalars['ID']['output'];
-  subtitle: Scalars['String']['output'];
-  title: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPageFeatureTableColumnsArgs = {
-  filters?: InputMaybe<FeatTableColumnFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type ComponentDynamicProductPageFeatureTableHeader = {
-  __typename?: 'ComponentDynamicProductPageFeatureTableHeader';
-  button: ComponentDynamicProductPageActionButton;
-  id: Scalars['ID']['output'];
-  title: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPageFeatureTableHeaderFiltersInput = {
-  and?: InputMaybe<
-    Array<InputMaybe<ComponentDynamicProductPageFeatureTableHeaderFiltersInput>>
-  >;
-  button?: InputMaybe<ComponentDynamicProductPageActionButtonFiltersInput>;
-  not?: InputMaybe<ComponentDynamicProductPageFeatureTableHeaderFiltersInput>;
-  or?: InputMaybe<
-    Array<InputMaybe<ComponentDynamicProductPageFeatureTableHeaderFiltersInput>>
-  >;
-  title?: InputMaybe<StringFilterInput>;
-};
-
-export type ComponentDynamicProductPageFeatureTableHeaderInput = {
-  button?: InputMaybe<ComponentDynamicProductPageActionButtonInput>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ComponentDynamicProductPageHero = {
-  __typename?: 'ComponentDynamicProductPageHero';
-  id: Scalars['ID']['output'];
-  text: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPagePerk = {
-  __typename?: 'ComponentDynamicProductPagePerk';
-  id: Scalars['ID']['output'];
-  text?: Maybe<Scalars['String']['output']>;
-};
-
-export type ComponentDynamicProductPagePerkFiltersInput = {
-  and?: InputMaybe<
-    Array<InputMaybe<ComponentDynamicProductPagePerkFiltersInput>>
-  >;
-  not?: InputMaybe<ComponentDynamicProductPagePerkFiltersInput>;
-  or?: InputMaybe<
-    Array<InputMaybe<ComponentDynamicProductPagePerkFiltersInput>>
-  >;
-  text?: InputMaybe<StringFilterInput>;
-};
-
-export type ComponentDynamicProductPagePerkInput = {
-  id?: InputMaybe<Scalars['ID']['input']>;
-  text?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ComponentDynamicProductPagePricingCards = {
-  __typename?: 'ComponentDynamicProductPagePricingCards';
-  id: Scalars['ID']['output'];
-  productPlans?: Maybe<ProductPlanRelationResponseCollection>;
-  savingsText: Scalars['String']['output'];
-};
-
-export type ComponentDynamicProductPagePricingCardsProductPlansArgs = {
-  filters?: InputMaybe<ProductPlanFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
 export type ComponentExplainerScreenContinueButton = {
   __typename?: 'ComponentExplainerScreenContinueButton';
   dataRef: Scalars['String']['output'];
@@ -817,6 +631,182 @@ export type ComponentProductSectionInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ComponentV2ProductActionButton = {
+  __typename?: 'ComponentV2ProductActionButton';
+  action?: Maybe<Enum_Componentv2Productactionbutton_Action>;
+  dataRef?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  navigationUrl?: Maybe<Scalars['String']['output']>;
+  rounded?: Maybe<Scalars['Boolean']['output']>;
+  solid?: Maybe<Scalars['Boolean']['output']>;
+  text: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductActionButtonFiltersInput = {
+  action?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductActionButtonFiltersInput>>
+  >;
+  dataRef?: InputMaybe<StringFilterInput>;
+  navigationUrl?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductActionButtonFiltersInput>>
+  >;
+  rounded?: InputMaybe<BooleanFilterInput>;
+  solid?: InputMaybe<BooleanFilterInput>;
+  text?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentV2ProductActionButtonInput = {
+  action?: InputMaybe<Enum_Componentv2Productactionbutton_Action>;
+  dataRef?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  navigationUrl?: InputMaybe<Scalars['String']['input']>;
+  rounded?: InputMaybe<Scalars['Boolean']['input']>;
+  solid?: InputMaybe<Scalars['Boolean']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentV2ProductBasicExplainer = {
+  __typename?: 'ComponentV2ProductBasicExplainer';
+  body: Scalars['String']['output'];
+  button?: Maybe<ComponentV2ProductActionButton>;
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductClosingCta = {
+  __typename?: 'ComponentV2ProductClosingCta';
+  body: Scalars['String']['output'];
+  borderImage?: Maybe<UploadFileEntityResponse>;
+  button?: Maybe<ComponentV2ProductActionButton>;
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureHighlight = {
+  __typename?: 'ComponentV2ProductFeatureHighlight';
+  alignImage: Enum_Componentv2Productfeaturehighlight_Alignimage;
+  backgroundColor: Scalars['String']['output'];
+  body: Scalars['String']['output'];
+  button?: Maybe<ComponentV2ProductActionButton>;
+  colorScheme: Enum_Componentv2Productfeaturehighlight_Colorscheme;
+  id: Scalars['ID']['output'];
+  image: UploadFileEntityResponse;
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureShowcase = {
+  __typename?: 'ComponentV2ProductFeatureShowcase';
+  id: Scalars['ID']['output'];
+  items: Array<Maybe<ComponentV2ProductFeatureShowcaseItem>>;
+};
+
+export type ComponentV2ProductFeatureShowcaseItemsArgs = {
+  filters?: InputMaybe<ComponentV2ProductFeatureShowcaseItemFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentV2ProductFeatureShowcaseItem = {
+  __typename?: 'ComponentV2ProductFeatureShowcaseItem';
+  body: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  image: UploadFileEntityResponse;
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureShowcaseItemFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductFeatureShowcaseItemFiltersInput>>
+  >;
+  body?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentV2ProductFeatureShowcaseItemFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductFeatureShowcaseItemFiltersInput>>
+  >;
+  title?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentV2ProductFeatureTable = {
+  __typename?: 'ComponentV2ProductFeatureTable';
+  columns?: Maybe<FeatTableColumnRelationResponseCollection>;
+  id: Scalars['ID']['output'];
+  subtitle: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureTableColumnsArgs = {
+  filters?: InputMaybe<FeatTableColumnFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentV2ProductFeatureTableHeader = {
+  __typename?: 'ComponentV2ProductFeatureTableHeader';
+  button: ComponentV2ProductActionButton;
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductFeatureTableHeaderFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
+  >;
+  button?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
+  not?: InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>;
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
+  >;
+  title?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentV2ProductFeatureTableHeaderInput = {
+  button?: InputMaybe<ComponentV2ProductActionButtonInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentV2ProductHero = {
+  __typename?: 'ComponentV2ProductHero';
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductPerk = {
+  __typename?: 'ComponentV2ProductPerk';
+  id: Scalars['ID']['output'];
+  text?: Maybe<Scalars['String']['output']>;
+};
+
+export type ComponentV2ProductPerkFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkFiltersInput>>>;
+  not?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkFiltersInput>>>;
+  text?: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentV2ProductPerkInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentV2ProductPricingCards = {
+  __typename?: 'ComponentV2ProductPricingCards';
+  id: Scalars['ID']['output'];
+  productPlans?: Maybe<ProductPlanRelationResponseCollection>;
+  savingsText: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductPricingCardsProductPlansArgs = {
+  filters?: InputMaybe<ProductPlanFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type DateTimeFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
@@ -851,7 +841,15 @@ export enum Enum_Componentcommonactionbutton_Action {
   ScrollToTop = 'scroll_to_top',
 }
 
-export enum Enum_Componentdynamicproductpageactionbutton_Action {
+export enum Enum_Componentonboardingv5Onboardingstep_Steptype {
+  GroupSelector = 'group_selector',
+  Survey = 'survey',
+  TagSelector = 'tag_selector',
+  UserSelector = 'user_selector',
+  VerifyEmail = 'verify_email',
+}
+
+export enum Enum_Componentv2Productactionbutton_Action {
   OpenComposer = 'open_composer',
   OpenOnchainTransferModal = 'open_onchain_transfer_modal',
   OpenPlusUpgradeModal = 'open_plus_upgrade_modal',
@@ -861,22 +859,14 @@ export enum Enum_Componentdynamicproductpageactionbutton_Action {
   ScrollToTop = 'scroll_to_top',
 }
 
-export enum Enum_Componentdynamicproductpagefeaturehighlight_Alignimage {
+export enum Enum_Componentv2Productfeaturehighlight_Alignimage {
   Left = 'left',
   Right = 'right',
 }
 
-export enum Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme {
+export enum Enum_Componentv2Productfeaturehighlight_Colorscheme {
   Dark = 'dark',
   Light = 'light',
-}
-
-export enum Enum_Componentonboardingv5Onboardingstep_Steptype {
-  GroupSelector = 'group_selector',
-  Survey = 'survey',
-  TagSelector = 'tag_selector',
-  UserSelector = 'user_selector',
-  VerifyEmail = 'verify_email',
 }
 
 export enum Enum_Feattablecolumn_Tier {
@@ -1027,7 +1017,7 @@ export type ExplainerScreenWebInput = {
 export type FeatTableColumn = {
   __typename?: 'FeatTableColumn';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  featTableHeader?: Maybe<ComponentDynamicProductPageFeatureTableHeader>;
+  featTableHeader?: Maybe<ComponentV2ProductFeatureTableHeader>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   sections?: Maybe<FeatTableSectionRelationResponseCollection>;
   tier?: Maybe<Enum_Feattablecolumn_Tier>;
@@ -1062,7 +1052,7 @@ export type FeatTableColumnFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<FeatTableColumnFiltersInput>>>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   featTableHeader?: InputMaybe<
-    ComponentDynamicProductPageFeatureTableHeaderFiltersInput
+    ComponentV2ProductFeatureTableHeaderFiltersInput
   >;
   id?: InputMaybe<IdFilterInput>;
   not?: InputMaybe<FeatTableColumnFiltersInput>;
@@ -1074,9 +1064,7 @@ export type FeatTableColumnFiltersInput = {
 };
 
 export type FeatTableColumnInput = {
-  featTableHeader?: InputMaybe<
-    ComponentDynamicProductPageFeatureTableHeaderInput
-  >;
+  featTableHeader?: InputMaybe<ComponentV2ProductFeatureTableHeaderInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   sections?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   tier?: InputMaybe<Enum_Feattablecolumn_Tier>;
@@ -1232,17 +1220,6 @@ export type FloatFilterInput = {
 export type GenericMorph =
   | AuxPage
   | ComponentCommonActionButton
-  | ComponentDynamicProductPageActionButton
-  | ComponentDynamicProductPageBasicExplainer
-  | ComponentDynamicProductPageClosingCta
-  | ComponentDynamicProductPageFeatureHighlight
-  | ComponentDynamicProductPageFeatureShowcase
-  | ComponentDynamicProductPageFeatureShowcaseItem
-  | ComponentDynamicProductPageFeatureTable
-  | ComponentDynamicProductPageFeatureTableHeader
-  | ComponentDynamicProductPageHero
-  | ComponentDynamicProductPagePerk
-  | ComponentDynamicProductPagePricingCards
   | ComponentExplainerScreenContinueButton
   | ComponentExplainerScreenSection
   | ComponentMarketingComponentsAsFeaturedIn
@@ -1265,6 +1242,17 @@ export type GenericMorph =
   | ComponentProductHero
   | ComponentProductOther
   | ComponentProductSection
+  | ComponentV2ProductActionButton
+  | ComponentV2ProductBasicExplainer
+  | ComponentV2ProductClosingCta
+  | ComponentV2ProductFeatureHighlight
+  | ComponentV2ProductFeatureShowcase
+  | ComponentV2ProductFeatureShowcaseItem
+  | ComponentV2ProductFeatureTable
+  | ComponentV2ProductFeatureTableHeader
+  | ComponentV2ProductHero
+  | ComponentV2ProductPerk
+  | ComponentV2ProductPricingCards
   | ExplainerScreenMobile
   | ExplainerScreenWeb
   | FeatTableColumn
@@ -1977,10 +1965,10 @@ export type ProductPageInput = {
 
 export type ProductPlan = {
   __typename?: 'ProductPlan';
-  button: ComponentDynamicProductPageActionButton;
+  button: ComponentV2ProductActionButton;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   mostPopular?: Maybe<Scalars['Boolean']['output']>;
-  perks?: Maybe<Array<Maybe<ComponentDynamicProductPagePerk>>>;
+  perks?: Maybe<Array<Maybe<ComponentV2ProductPerk>>>;
   perksTitle: Scalars['String']['output'];
   priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1991,7 +1979,7 @@ export type ProductPlan = {
 };
 
 export type ProductPlanPerksArgs = {
-  filters?: InputMaybe<ComponentDynamicProductPagePerkFiltersInput>;
+  filters?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -2015,13 +2003,13 @@ export type ProductPlanEntityResponseCollection = {
 
 export type ProductPlanFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<ProductPlanFiltersInput>>>;
-  button?: InputMaybe<ComponentDynamicProductPageActionButtonFiltersInput>;
+  button?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   id?: InputMaybe<IdFilterInput>;
   mostPopular?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<ProductPlanFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ProductPlanFiltersInput>>>;
-  perks?: InputMaybe<ComponentDynamicProductPagePerkFiltersInput>;
+  perks?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
   perksTitle?: InputMaybe<StringFilterInput>;
   priceStartingAt?: InputMaybe<BooleanFilterInput>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
@@ -2032,9 +2020,9 @@ export type ProductPlanFiltersInput = {
 };
 
 export type ProductPlanInput = {
-  button?: InputMaybe<ComponentDynamicProductPageActionButtonInput>;
+  button?: InputMaybe<ComponentV2ProductActionButtonInput>;
   mostPopular?: InputMaybe<Scalars['Boolean']['input']>;
-  perks?: InputMaybe<Array<InputMaybe<ComponentDynamicProductPagePerkInput>>>;
+  perks?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkInput>>>;
   perksTitle?: InputMaybe<Scalars['String']['input']>;
   priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2794,13 +2782,13 @@ export type V2ProductPageInput = {
 };
 
 export type V2ProductPageProductPageDynamicZone =
-  | ComponentDynamicProductPageBasicExplainer
-  | ComponentDynamicProductPageClosingCta
-  | ComponentDynamicProductPageFeatureHighlight
-  | ComponentDynamicProductPageFeatureShowcase
-  | ComponentDynamicProductPageFeatureTable
-  | ComponentDynamicProductPageHero
-  | ComponentDynamicProductPagePricingCards
+  | ComponentV2ProductBasicExplainer
+  | ComponentV2ProductClosingCta
+  | ComponentV2ProductFeatureHighlight
+  | ComponentV2ProductFeatureShowcase
+  | ComponentV2ProductFeatureTable
+  | ComponentV2ProductHero
+  | ComponentV2ProductPricingCards
   | Error;
 
 export type ValuePropCard = {
@@ -2903,22 +2891,22 @@ export type GetV2ProductPageBySlugQuery = {
         } | null;
         productPage?: Array<
           | {
-              __typename: 'ComponentDynamicProductPageBasicExplainer';
+              __typename: 'ComponentV2ProductBasicExplainer';
               id: string;
               title: string;
               body: string;
               button?: {
-                __typename?: 'ComponentDynamicProductPageActionButton';
+                __typename?: 'ComponentV2ProductActionButton';
                 text: string;
                 dataRef?: string | null;
                 solid?: boolean | null;
                 rounded?: boolean | null;
                 navigationUrl?: string | null;
-                action?: Enum_Componentdynamicproductpageactionbutton_Action | null;
+                action?: Enum_Componentv2Productactionbutton_Action | null;
               } | null;
             }
           | {
-              __typename: 'ComponentDynamicProductPageClosingCta';
+              __typename: 'ComponentV2ProductClosingCta';
               id: string;
               title: string;
               body: string;
@@ -2936,23 +2924,23 @@ export type GetV2ProductPageBySlugQuery = {
                 } | null;
               } | null;
               button?: {
-                __typename?: 'ComponentDynamicProductPageActionButton';
+                __typename?: 'ComponentV2ProductActionButton';
                 text: string;
                 dataRef?: string | null;
                 solid?: boolean | null;
                 rounded?: boolean | null;
                 navigationUrl?: string | null;
-                action?: Enum_Componentdynamicproductpageactionbutton_Action | null;
+                action?: Enum_Componentv2Productactionbutton_Action | null;
               } | null;
             }
           | {
-              __typename: 'ComponentDynamicProductPageFeatureHighlight';
+              __typename: 'ComponentV2ProductFeatureHighlight';
               id: string;
               backgroundColor: string;
-              colorScheme: Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme;
+              colorScheme: Enum_Componentv2Productfeaturehighlight_Colorscheme;
               title: string;
               body: string;
-              alignImage: Enum_Componentdynamicproductpagefeaturehighlight_Alignimage;
+              alignImage: Enum_Componentv2Productfeaturehighlight_Alignimage;
               image: {
                 __typename?: 'UploadFileEntityResponse';
                 data?: {
@@ -2967,20 +2955,20 @@ export type GetV2ProductPageBySlugQuery = {
                 } | null;
               };
               button?: {
-                __typename?: 'ComponentDynamicProductPageActionButton';
+                __typename?: 'ComponentV2ProductActionButton';
                 text: string;
                 dataRef?: string | null;
                 solid?: boolean | null;
                 rounded?: boolean | null;
                 navigationUrl?: string | null;
-                action?: Enum_Componentdynamicproductpageactionbutton_Action | null;
+                action?: Enum_Componentv2Productactionbutton_Action | null;
               } | null;
             }
           | {
-              __typename: 'ComponentDynamicProductPageFeatureShowcase';
+              __typename: 'ComponentV2ProductFeatureShowcase';
               id: string;
               items: Array<{
-                __typename?: 'ComponentDynamicProductPageFeatureShowcaseItem';
+                __typename?: 'ComponentV2ProductFeatureShowcaseItem';
                 title: string;
                 body: string;
                 image: {
@@ -2999,7 +2987,7 @@ export type GetV2ProductPageBySlugQuery = {
               } | null>;
             }
           | {
-              __typename: 'ComponentDynamicProductPageFeatureTable';
+              __typename: 'ComponentV2ProductFeatureTable';
               id: string;
               title: string;
               subtitle: string;
@@ -3011,16 +2999,16 @@ export type GetV2ProductPageBySlugQuery = {
                     __typename?: 'FeatTableColumn';
                     tier?: Enum_Feattablecolumn_Tier | null;
                     featTableHeader?: {
-                      __typename?: 'ComponentDynamicProductPageFeatureTableHeader';
+                      __typename?: 'ComponentV2ProductFeatureTableHeader';
                       title: string;
                       button: {
-                        __typename?: 'ComponentDynamicProductPageActionButton';
+                        __typename?: 'ComponentV2ProductActionButton';
                         text: string;
                         dataRef?: string | null;
                         solid?: boolean | null;
                         rounded?: boolean | null;
                         navigationUrl?: string | null;
-                        action?: Enum_Componentdynamicproductpageactionbutton_Action | null;
+                        action?: Enum_Componentv2Productactionbutton_Action | null;
                       };
                     } | null;
                     sections?: {
@@ -3059,13 +3047,9 @@ export type GetV2ProductPageBySlugQuery = {
                 }>;
               } | null;
             }
+          | { __typename: 'ComponentV2ProductHero'; id: string; text: string }
           | {
-              __typename: 'ComponentDynamicProductPageHero';
-              id: string;
-              text: string;
-            }
-          | {
-              __typename: 'ComponentDynamicProductPagePricingCards';
+              __typename: 'ComponentV2ProductPricingCards';
               id: string;
               savingsText: string;
               productPlans?: {
@@ -3081,16 +3065,16 @@ export type GetV2ProductPageBySlugQuery = {
                     priceStartingAt?: boolean | null;
                     perksTitle: string;
                     button: {
-                      __typename?: 'ComponentDynamicProductPageActionButton';
+                      __typename?: 'ComponentV2ProductActionButton';
                       text: string;
                       dataRef?: string | null;
                       solid?: boolean | null;
                       rounded?: boolean | null;
                       navigationUrl?: string | null;
-                      action?: Enum_Componentdynamicproductpageactionbutton_Action | null;
+                      action?: Enum_Componentv2Productactionbutton_Action | null;
                     };
                     perks?: Array<{
-                      __typename?: 'ComponentDynamicProductPagePerk';
+                      __typename?: 'ComponentV2ProductPerk';
                       text?: string | null;
                     } | null> | null;
                   } | null;
@@ -3338,11 +3322,11 @@ export const GetV2ProductPageBySlugDocument = gql`
           }
           productPage {
             __typename
-            ... on ComponentDynamicProductPageHero {
+            ... on ComponentV2ProductHero {
               id
               text
             }
-            ... on ComponentDynamicProductPagePricingCards {
+            ... on ComponentV2ProductPricingCards {
               id
               savingsText
               productPlans {
@@ -3369,7 +3353,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 }
               }
             }
-            ... on ComponentDynamicProductPageFeatureTable {
+            ... on ComponentV2ProductFeatureTable {
               id
               title
               subtitle
@@ -3415,7 +3399,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 }
               }
             }
-            ... on ComponentDynamicProductPageFeatureShowcase {
+            ... on ComponentV2ProductFeatureShowcase {
               id
               items {
                 image {
@@ -3432,7 +3416,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 body
               }
             }
-            ... on ComponentDynamicProductPageBasicExplainer {
+            ... on ComponentV2ProductBasicExplainer {
               id
               title
               body
@@ -3445,7 +3429,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 action
               }
             }
-            ... on ComponentDynamicProductPageFeatureHighlight {
+            ... on ComponentV2ProductFeatureHighlight {
               id
               backgroundColor
               colorScheme
@@ -3471,7 +3455,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 action
               }
             }
-            ... on ComponentDynamicProductPageClosingCta {
+            ... on ComponentV2ProductClosingCta {
               id
               title
               body

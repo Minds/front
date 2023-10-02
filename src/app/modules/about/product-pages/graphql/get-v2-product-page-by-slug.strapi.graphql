@@ -24,11 +24,11 @@ query GetV2ProductPageBySlug($slug: String!) {
         }
         productPage {
           __typename
-          ... on ComponentDynamicProductPageHero {
+          ... on ComponentV2ProductHero {
             id
             text
           }
-          ... on ComponentDynamicProductPagePricingCards {
+          ... on ComponentV2ProductPricingCards {
             id
             savingsText
             productPlans {
@@ -55,7 +55,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               }
             }
           }
-          ... on ComponentDynamicProductPageFeatureTable {
+          ... on ComponentV2ProductFeatureTable {
             id
             title
             subtitle
@@ -101,7 +101,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               }
             }
           }
-          ... on ComponentDynamicProductPageFeatureShowcase {
+          ... on ComponentV2ProductFeatureShowcase {
             id
             items {
               image {
@@ -118,7 +118,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               body
             }
           }
-          ... on ComponentDynamicProductPageBasicExplainer {
+          ... on ComponentV2ProductBasicExplainer {
             id
             title
             body
@@ -131,7 +131,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               action
             }
           }
-          ... on ComponentDynamicProductPageFeatureHighlight {
+          ... on ComponentV2ProductFeatureHighlight {
             id
             backgroundColor
             colorScheme
@@ -157,7 +157,7 @@ query GetV2ProductPageBySlug($slug: String!) {
               action
             }
           }
-          ... on ComponentDynamicProductPageClosingCta {
+          ... on ComponentV2ProductClosingCta {
             id
             title
             body

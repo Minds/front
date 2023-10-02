@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import {
-  ComponentDynamicProductPageActionButton,
-  Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme as ColorScheme,
-  Enum_Componentdynamicproductpageactionbutton_Action as StrapiAction,
+  ComponentV2ProductActionButton,
+  Enum_Componentv2Productfeaturehighlight_Colorscheme as ColorScheme,
+  Enum_Componentv2Productactionbutton_Action as StrapiAction,
 } from '../../../../../../../graphql/generated.strapi';
 import { StrapiActionResolverService } from '../../../../../../common/services/strapi/strapi-action-resolver.service';
 import { ProductPageUpgradeTimePeriod } from '../../../product-pages.types';
@@ -35,7 +35,7 @@ import { ProductPagePricingService } from '../../../services/product-page-pricin
 })
 export class ProductPageButtonComponent {
   /** Button data */
-  @Input() public readonly data: ComponentDynamicProductPageActionButton;
+  @Input() public readonly data: ComponentV2ProductActionButton;
 
   /**
    * Color scheme that the button resides in - a light color scheme will provide
