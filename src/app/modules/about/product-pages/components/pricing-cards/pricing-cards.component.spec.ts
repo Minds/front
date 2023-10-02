@@ -24,7 +24,7 @@ describe('ProductPagePricingCardsComponent', () => {
         __typename: 'ProductPlan',
         button: {
           id: '0',
-          __typename: 'ComponentDynamicProductPageActionButton',
+          __typename: 'ComponentV2ProductActionButton',
           action: null,
           dataRef: 'dataRef',
           navigationUrl: '',
@@ -48,7 +48,7 @@ describe('ProductPagePricingCardsComponent', () => {
         __typename: 'ProductPlan',
         button: {
           id: '1',
-          __typename: 'ComponentDynamicProductPageActionButton',
+          __typename: 'ComponentV2ProductActionButton',
           action: null,
           dataRef: 'dataRef',
           navigationUrl: '',
@@ -72,7 +72,7 @@ describe('ProductPagePricingCardsComponent', () => {
         __typename: 'ProductPlan',
         button: {
           id: '2',
-          __typename: 'ComponentDynamicProductPageActionButton',
+          __typename: 'ComponentV2ProductActionButton',
           action: null,
           dataRef: 'dataRef',
           navigationUrl: '',

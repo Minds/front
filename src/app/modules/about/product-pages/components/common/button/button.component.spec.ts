@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
 import { ProductPagePricingService } from '../../../services/product-page-pricing.service';
 import { StrapiActionResolverService } from '../../../../../../common/services/strapi/strapi-action-resolver.service';
 import {
-  ComponentDynamicProductPageActionButton,
-  Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme as ColorScheme,
-  Enum_Componentdynamicproductpageactionbutton_Action as StrapiAction,
+  ComponentV2ProductActionButton,
+  Enum_Componentv2Productfeaturehighlight_Colorscheme as ColorScheme,
+  Enum_Componentv2Productactionbutton_Action as StrapiAction,
 } from '../../../../../../../graphql/generated.strapi';
 import userMock from '../../../../../../mocks/responses/user.mock';
 import { ProductPageUpgradeTimePeriod } from '../../../product-pages.types';
@@ -19,9 +19,9 @@ describe('ProductPageButtonComponent', () => {
   let comp: ProductPageButtonComponent;
   let fixture: ComponentFixture<ProductPageButtonComponent>;
 
-  const mockData: ComponentDynamicProductPageActionButton = {
+  const mockData: ComponentV2ProductActionButton = {
     id: '0',
-    __typename: 'ComponentDynamicProductPageActionButton',
+    __typename: 'ComponentV2ProductActionButton',
     action: null,
     dataRef: 'dataRef',
     navigationUrl: '',

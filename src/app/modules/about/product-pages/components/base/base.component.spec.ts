@@ -8,8 +8,8 @@ import { StrapiMetaService } from '../../../../../common/services/strapi-meta.se
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import {
-  Enum_Componentdynamicproductpagefeaturehighlight_Alignimage,
-  Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme,
+  Enum_Componentv2Productfeaturehighlight_Alignimage,
+  Enum_Componentv2Productfeaturehighlight_Colorscheme,
   V2ProductPage,
 } from '../../../../../../graphql/generated.strapi';
 import { ProductPageDynamicComponent } from '../../product-pages.types';
@@ -29,50 +29,48 @@ describe('ProductPageBaseComponent', () => {
     productPage: [
       {
         id: '0',
-        __typename: 'ComponentDynamicProductPageHero',
+        __typename: 'ComponentV2ProductHero',
         text: 'text',
       },
       {
         id: '1',
-        __typename: 'ComponentDynamicProductPagePricingCards',
+        __typename: 'ComponentV2ProductPricingCards',
         savingsText: 'text',
         productPlans: { data: [] },
       },
       {
         id: '2',
-        __typename: 'ComponentDynamicProductPageFeatureTable',
+        __typename: 'ComponentV2ProductFeatureTable',
         title: 'text',
         subtitle: 'text',
         columns: { data: [] },
       },
       {
         id: '3',
-        __typename: 'ComponentDynamicProductPageFeatureShowcase',
+        __typename: 'ComponentV2ProductFeatureShowcase',
         items: [],
       },
       {
         id: '4',
-        __typename: 'ComponentDynamicProductPageBasicExplainer',
+        __typename: 'ComponentV2ProductBasicExplainer',
         title: 'title',
         body: 'body',
         button: null,
       },
       {
         id: '5',
-        __typename: 'ComponentDynamicProductPageFeatureHighlight',
+        __typename: 'ComponentV2ProductFeatureHighlight',
         title: 'title',
         body: 'body',
         button: null,
-        colorScheme:
-          Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme.Light,
+        colorScheme: Enum_Componentv2Productfeaturehighlight_Colorscheme.Light,
         image: null,
         backgroundColor: '#000',
-        alignImage:
-          Enum_Componentdynamicproductpagefeaturehighlight_Alignimage.Left,
+        alignImage: Enum_Componentv2Productfeaturehighlight_Alignimage.Left,
       },
       {
         id: '6',
-        __typename: 'ComponentDynamicProductPageClosingCta',
+        __typename: 'ComponentV2ProductClosingCta',
         title: 'title',
         body: 'body',
         button: null,
@@ -225,7 +223,7 @@ describe('ProductPageBaseComponent', () => {
       comp.trackByFn(
         mockProductPage.productPage[0] as ProductPageDynamicComponent
       )
-    ).toBe('ComponentDynamicProductPageHero0');
+    ).toBe('ComponentV2ProductHero0');
   });
 
   it('should handle load failure', () => {

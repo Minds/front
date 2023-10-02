@@ -22,10 +22,10 @@ describe('ProductPageFeatureShowcaseComponent', () => {
       attributes: {
         featTableHeader: {
           id: '0',
-          __typename: 'ComponentDynamicProductPageFeatureTableHeader',
+          __typename: 'ComponentV2ProductFeatureTableHeader',
           button: {
             id: '0',
-            __typename: 'ComponentDynamicProductPageActionButton',
+            __typename: 'ComponentV2ProductActionButton',
             action: null,
             dataRef: 'dataRef',
             navigationUrl: '',
@@ -71,10 +71,10 @@ describe('ProductPageFeatureShowcaseComponent', () => {
       attributes: {
         featTableHeader: {
           id: '1',
-          __typename: 'ComponentDynamicProductPageFeatureTableHeader',
+          __typename: 'ComponentV2ProductFeatureTableHeader',
           button: {
             id: '1',
-            __typename: 'ComponentDynamicProductPageActionButton',
+            __typename: 'ComponentV2ProductActionButton',
             action: null,
             dataRef: 'dataRef',
             navigationUrl: '',

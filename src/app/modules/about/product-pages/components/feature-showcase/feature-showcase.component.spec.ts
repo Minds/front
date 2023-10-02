@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ProductPageFeatureShowcaseComponent } from './feature-showcase.component';
 import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 import {
-  ComponentDynamicProductPageFeatureShowcaseItem,
+  ComponentV2ProductFeatureShowcaseItem,
   UploadFile,
 } from '../../../../../../graphql/generated.strapi';
 import { DebugElement } from '@angular/core';
@@ -13,9 +13,9 @@ describe('ProductPageFeatureShowcaseComponent', () => {
   let fixture: ComponentFixture<ProductPageFeatureShowcaseComponent>;
 
   const mockStrapiUrl: string = 'https://example-strapi.minds.com';
-  const defaultFeatureShowcase: ComponentDynamicProductPageFeatureShowcaseItem[] = [
+  const defaultFeatureShowcase: ComponentV2ProductFeatureShowcaseItem[] = [
     {
-      __typename: 'ComponentDynamicProductPageFeatureShowcaseItem',
+      __typename: 'ComponentV2ProductFeatureShowcaseItem',
       body: 'body0',
       id: '0',
       image: {
@@ -30,7 +30,7 @@ describe('ProductPageFeatureShowcaseComponent', () => {
       title: 'title0',
     },
     {
-      __typename: 'ComponentDynamicProductPageFeatureShowcaseItem',
+      __typename: 'ComponentV2ProductFeatureShowcaseItem',
       body: 'body1',
       id: '1',
       image: {
@@ -45,7 +45,7 @@ describe('ProductPageFeatureShowcaseComponent', () => {
       title: 'title1',
     },
     {
-      __typename: 'ComponentDynamicProductPageFeatureShowcaseItem',
+      __typename: 'ComponentV2ProductFeatureShowcaseItem',
       body: 'body2',
       id: '2',
       image: {

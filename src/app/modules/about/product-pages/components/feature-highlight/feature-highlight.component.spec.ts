@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ProductPageFeatureHighlightComponent } from './feature-highlight.component';
 import {
-  ComponentDynamicProductPageActionButton as ActionButton,
-  Enum_Componentdynamicproductpagefeaturehighlight_Alignimage as AlignImage,
-  Enum_Componentdynamicproductpagefeaturehighlight_Colorscheme as ColorScheme,
+  ComponentV2ProductActionButton as ActionButton,
+  Enum_Componentv2Productfeaturehighlight_Alignimage as AlignImage,
+  Enum_Componentv2Productfeaturehighlight_Colorscheme as ColorScheme,
   UploadFile,
 } from '../../../../../../graphql/generated.strapi';
 import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
@@ -19,7 +19,7 @@ describe('ProductPageFeatureHighlightComponent', () => {
   const defaultBody: string = 'body';
   const defaultButton: ActionButton = {
     id: '0',
-    __typename: 'ComponentDynamicProductPageActionButton',
+    __typename: 'ComponentV2ProductActionButton',
     action: null,
     dataRef: 'dataRef',
     navigationUrl: '',
