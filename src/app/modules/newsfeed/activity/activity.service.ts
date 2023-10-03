@@ -700,6 +700,10 @@ export class ActivityService implements OnDestroy {
               return null;
             }
 
+            if (!this.session.getLoggedInUser()) {
+              return null;
+            }
+
             try {
               // Check if the original post has been reminded by this user
               return this.api.get(
