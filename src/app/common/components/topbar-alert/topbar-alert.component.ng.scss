@@ -7,11 +7,14 @@
   align-items: center;
   justify-content: center;
   height: $topbarAlertHeight--desktop;
+  padding: 0 $spacing3 0 $spacing4;
+  box-sizing: border-box;
+  overflow-y: hidden;
 
   @media screen and (max-width: $max-mobile) {
     height: $topbarAlertHeight--mobile;
     padding: 0 $spacing7 0 $spacing4;
-    max-width: fit-content;
+    justify-content: space-between;
   }
 
   @include m-on-theme(dark) {
