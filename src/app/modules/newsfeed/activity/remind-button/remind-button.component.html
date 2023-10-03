@@ -1,7 +1,8 @@
 <m-dropdownMenu [menu]="dropdownMenu" m-clientMeta>
   <button
+    (click)="getHasReminded($event)"
     class="m-activityRemindButton__icon"
-    [class.has-reminded]="hasReminded"
+    [class.selected]="service.isUsersRemind$ | async"
   >
     <i class="material-icons">repeat</i>
     <span
@@ -14,30 +15,34 @@
 
 <ng-template #dropdownMenu>
   <ul>
-    <ng-container *ngIf="hasReminded; else remindOptions">
-      <m-dropdownMenu__item (click)="onUndoRemind($event)" icon="repeat">
-        <span>Undo Remind</span>
-      </m-dropdownMenu__item>
-    </ng-container>
-    <ng-template #remindOptions>
-      <m-dropdownMenu__item (click)="onRemindClick($event)" icon="repeat">
-        <span>Remind</span>
-      </m-dropdownMenu__item>
-      <m-dropdownMenu__item
-        (click)="onQuotePostClick($event)"
-        icon="create"
-        [m-clientMeta]="getClientMetaDetails(service.entity$.getValue())"
-      >
-        <span>Quote post</span>
-      </m-dropdownMenu__item>
-      <m-dropdownMenu__item
-        (click)="onGroupShareClick($event)"
-        icon="group"
-        data-ref="remind-button-group-share"
-        [m-clientMeta]="getClientMetaDetails(service.entity$.getValue())"
-      >
-        <span i18n="@@REMIND_BUTTON__GROUP_SHARE">Group share</span>
-      </m-dropdownMenu__item>
-    </ng-template>
+    <m-dropdownMenu__item
+      *ngIf="!(service.userHasReminded$ | async)"
+      (click)="onRemindClick($event)"
+      icon="repeat"
+    >
+      <span>Remind</span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      *ngIf="service.userHasReminded$ | async"
+      (click)="onUndoRemind($event)"
+      icon="repeat"
+    >
+      <span>Undo Remind</span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      (click)="onQuotePostClick($event)"
+      icon="create"
+      [m-clientMeta]="getClientMetaDetails(service.entity$.getValue())"
+    >
+      <span>Quote post</span>
+    </m-dropdownMenu__item>
+    <m-dropdownMenu__item
+      (click)="onGroupShareClick($event)"
+      icon="group"
+      data-ref="remind-button-group-share"
+      [m-clientMeta]="getClientMetaDetails(service.entity$.getValue())"
+    >
+      <span i18n="@@REMIND_BUTTON__GROUP_SHARE">Group share</span>
+    </m-dropdownMenu__item>
   </ul>
 </ng-template>

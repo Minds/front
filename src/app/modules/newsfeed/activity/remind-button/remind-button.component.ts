@@ -5,7 +5,6 @@ import { ComposerModalService } from '../../../composer/components/modal/modal.s
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ActivityService } from '../../activity/activity.service';
 import { Session } from '../../../../services/session';
-import { Client } from '../../../../services/api';
 import { map } from 'rxjs/operators';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
@@ -13,9 +12,8 @@ import { ClientMetaData } from '../../../../common/services/client-meta.service'
 import { ComposerAudienceSelectorService } from '../../../composer/services/audience.service';
 
 /**
- * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating a remind or a quote post.
+ * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating/undoing a remind, creating a quote post or creating a group share.
  *
- * If the post is already reminded, the dropdown menu provides an option to delete the remind.
  */
 @Component({
   selector: 'm-activity__remindButton',
@@ -38,36 +36,15 @@ export class ActivityRemindButtonComponent {
     private composerModalService: ComposerModalService,
     private toasterService: ToasterService,
     private session: Session,
-    private authModal: AuthModalService,
-    private client: Client
+    private authModal: AuthModalService
   ) {}
 
-  get hasReminded(): boolean {
-    const entity = this.service.entity$.getValue();
-    if (!entity) {
-      return false;
-    }
-    return (
-      entity.remind_users &&
-      entity.remind_users.filter(
-        user => user.guid === this.session.getLoggedInUser().guid
-      ).length > 0
-    );
+  async getHasReminded(e: MouseEvent): Promise<void> {
+    this.service.getHasReminded();
   }
 
   async onUndoRemind(e: MouseEvent): Promise<void> {
-    try {
-      await this.client.delete(
-        `api/v3/newsfeed/${this.service.entity$.getValue().urn}`
-      );
-      this.service.onDelete$.next(true);
-      this.toasterService.success('Remind has been removed');
-    } catch (e) {
-      this.toasterService.error(
-        e.message ||
-          'Sorry, there was an error removing this Remind. Please try again later.'
-      );
-    }
+    await this.service.undoRemind();
   }
 
   async onRemindClick(e: MouseEvent): Promise<void> {
