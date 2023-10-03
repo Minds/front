@@ -152,6 +152,38 @@ describe('ExplainerScreensService', () => {
       triggerRoute: '/settings/affiliates',
       updatedAt: 1688988709,
     },
+    {
+      __typename: 'ExplainerScreenWeb',
+      continueButton: {
+        __typename: 'ComponentExplainerScreenContinueButton',
+        id: 'id',
+        text: 'Continue',
+        dataRef: 'data-ref-supermind-request-continue',
+      },
+      createdAt: 1688988709,
+      key: 'supermind_request',
+      publishedAt: 1688988709,
+      section: [
+        {
+          __typename: 'ComponentExplainerScreenSection',
+          id: '1',
+          title: 'Supermind request section title 1',
+          description: 'Affiliate section description 1',
+          icon: 'icon1',
+        },
+        {
+          __typename: 'ComponentExplainerScreenSection',
+          id: '2',
+          title: 'Supermind request section title 2',
+          description: 'Affiliate section description 2',
+          icon: 'icon2',
+        },
+      ],
+      subtitle: 'Supermind request Subtitle',
+      title: 'Supermind request title',
+      triggerRoute: null,
+      updatedAt: 1688988709,
+    },
   ];
 
   beforeEach(() => {
@@ -315,6 +347,38 @@ describe('ExplainerScreensService', () => {
       (service as any).getExplainerScreens$ = of(mockExplainerScreens);
 
       service.handleRouteChange('/boost/boost-console');
+      tick();
+
+      expect((service as any).explainerScreenModal.open).not.toHaveBeenCalled();
+    }));
+  });
+
+  describe('handleManualTriggerByKey', () => {
+    beforeEach(() => {
+      (service as any).dismissalV2Service.getDismissals.and.returnValue(of([]));
+      (service as any).getExplainerScreens$ = of(mockExplainerScreens);
+    });
+
+    it('should handle matching trigger by key', fakeAsync(() => {
+      service.handleManualTriggerByKey('supermind_request');
+      tick();
+
+      expect((service as any).explainerScreenModal.open).toHaveBeenCalled();
+    }));
+
+    it('should handle a non-matching trigger by key', fakeAsync(() => {
+      service.handleManualTriggerByKey('unknown_key');
+      tick();
+
+      expect((service as any).explainerScreenModal.open).not.toHaveBeenCalled();
+    }));
+
+    it('should handle a matching trigger by key that has already been dismissed', fakeAsync(() => {
+      (service as any).dismissalV2Service.getDismissals.and.returnValue(
+        of([{ key: 'supermind_request' }])
+      );
+
+      service.handleManualTriggerByKey('supermind_request');
       tick();
 
       expect((service as any).explainerScreenModal.open).not.toHaveBeenCalled();

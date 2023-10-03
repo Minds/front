@@ -8,11 +8,20 @@
     <div *ngIf="service.guid$ | async" class="m-group__tabs m-tabs__container">
       <div class="m-tabs__tab">
         <a
-          [routerLink]="['/', 'group', service.guid$ | async, 'feed']"
-          [class.m-tabs__tab--selected]="(service.view$ | async) === 'feed'"
+          [routerLink]="['/', 'group', service.guid$ | async, 'latest']"
+          [class.m-tabs__tab--selected]="(service.view$ | async) === 'latest'"
           i18n="@@GROUP__TAB_LABEL__DISCUSSION"
           data-ref="m-groupToolbarTab--discussion"
           >Discussion</a
+        >
+      </div>
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/', 'group', service.guid$ | async, 'top']"
+          [class.m-tabs__tab--selected]="(service.view$ | async) === 'top'"
+          i18n="@@GROUP__TAB_LABEL__DISCUSSION"
+          data-ref="m-groupToolbarTab--discussion"
+          >Top</a
         >
       </div>
 
@@ -60,7 +69,11 @@
     <!-- ----------------------------------  -->
     <div
       class="m-group__searchBtnWrapper"
-      *ngIf="(service.view$ | async) === 'feed' && (service.canAccess$ | async)"
+      *ngIf="
+        ((service.view$ | async) === 'latest' ||
+          (service.view$ | async) === 'top') &&
+        (service.canAccess$ | async)
+      "
     >
       <a class="m-groupSearchBtn" (click)="openSearchModal($event)"
         ><i class="material-icons">search</i></a
@@ -70,17 +83,21 @@
   <!-- ----------------------------------  -->
   <!-- VIEWS  -->
   <!-- ----------------------------------  -->
-  <ng-container [ngSwitch]="service.view$ | async">
-    <!-- ----------------------------------  -->
-    <ng-container *ngSwitchCase="'members'">
-      <m-group__members *ngIf="service.canAccess$ | async"></m-group__members
-    ></ng-container>
-    <!-- ----------------------------------  -->
-    <ng-container *ngSwitchCase="'review'">
-      <m-group__review></m-group__review
-    ></ng-container>
-    <!-- ----------------------------------  -->
-    <m-group__feed *ngSwitchCase="'feed'"></m-group__feed>
-    <!-- ----------------------------------  -->
-  </ng-container>
+  <!-- MEMBERS  -->
+  <ng-container *ngIf="(service.view$ | async) === 'members'">
+    <m-group__members *ngIf="service.canAccess$ | async"></m-group__members
+  ></ng-container>
+  <!-- ----------------------------------  -->
+  <!-- REVIEW -->
+  <ng-container *ngIf="(service.view$ | async) === 'review'">
+    <m-group__review></m-group__review
+  ></ng-container>
+  <!-- ----------------------------------  -->
+  <!-- FEEDS: LATEST / TOP  -->
+  <m-group__feed
+    *ngIf="
+      (service.view$ | async) === 'top' || (service.view$ | async) === 'latest'
+    "
+  ></m-group__feed>
+  <!-- ----------------------------------  -->
 </div>

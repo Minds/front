@@ -237,4 +237,8 @@
   .m-activityLeftColumn__spacer {
     height: $spacing8;
   }
+
+  &.m-activity--hideTopBorder {
+    border-top: none !important;
+  }
 }

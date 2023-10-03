@@ -35,12 +35,22 @@ $buttonContainerMargin--mediumLarge: 4px;
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
       }
+
+      &.m-publisherCard--curvyBorder {
+        border-radius: $m-borderRadius--curvy;
+      }
     }
 
     &.m-publisherCard--featured {
       border-radius: $m-borderRadius;
       @include m-theme() {
         border: 1px solid themed($m-blue);
+      }
+    }
+
+    &.m-publisherCard--backgroundFill {
+      @include m-theme() {
+        background-color: rgba(themed($m-bgColor--secondary), 0.5);
       }
     }
 
@@ -171,7 +181,7 @@ $buttonContainerMargin--mediumLarge: 4px;
         color: themed($m-textColor--secondary);
       }
 
-      > a {
+      ::ng-deep > a {
         font-weight: inherit;
       }
     }

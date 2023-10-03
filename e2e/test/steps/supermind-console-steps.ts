@@ -8,7 +8,6 @@ namespace SupermindConsoleSteps {
     supermindConsolePage,
     composerModalComponent,
     confirmationModalComponent,
-    supermindOnboardingModalComponent,
   } = inject();
 
   Given(
@@ -138,14 +137,6 @@ namespace SupermindConsoleSteps {
         supermindConsolePage.clickAccept();
         break;
     }
-  });
-
-  When('I see the supermind reply onboarding modal', () => {
-    supermindOnboardingModalComponent.replyModalShouldBeVisible(true);
-  });
-
-  When('I click the action button in the Supermind onboarding modal', () => {
-    supermindOnboardingModalComponent.clickContinue();
   });
 
   //

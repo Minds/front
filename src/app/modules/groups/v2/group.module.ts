@@ -33,11 +33,18 @@ import { GroupInviteModalService } from './invite/invite.modal.service';
 import { GroupInviteComponent } from './invite/invite.component';
 import { GroupInviteButtonComponent } from './invite/invite-button.component';
 import { GroupMembersListService } from './members/list/list.service';
+import { GroupEditButton } from './edit-button/edit-button.component';
+import { GroupFeedService } from './feed/feed.service';
 
 const routes: Routes = [
   {
     path: 'group/:guid',
-    redirectTo: 'group/:guid/feed',
+    redirectTo: 'group/:guid/latest',
+    pathMatch: 'full',
+  },
+  {
+    path: 'group/:guid/feed',
+    redirectTo: 'group/:guid/latest',
     pathMatch: 'full',
   },
   {
@@ -64,6 +71,7 @@ const INTERNAL_COMPONENTS = [
   GroupMembersListComponent,
   GroupMemberActionsComponent,
   GroupSettingsButton,
+  GroupEditButton,
   GroupEditComponent,
   GroupEditProfileComponent,
   GroupReviewComponent,
@@ -101,6 +109,7 @@ const INTERNAL_COMPONENTS = [
     GroupInviteService,
     GroupInviteModalService,
     GroupsMembershipsListService,
+    GroupFeedService,
   ],
 })
 export class GroupModule {}

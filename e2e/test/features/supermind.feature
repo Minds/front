@@ -23,8 +23,7 @@ Feature: supermind
   #   And I am on the newsfeed
   #   And I have clicked on the sidebar composer button
   #   When I click the supermind icon on the composer toolbar
-  #   And I see the supermind request onboarding modal
-  #   And I click the action button in the Supermind onboarding modal
+  #   And I see an explainer screen modal
   #   Then I should see the supermind popout screen
   #   And I clear my cookies
 
