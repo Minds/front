@@ -15,7 +15,7 @@ class OnboardingV5TagSelectorComponent {
    * @returns { void }
    */
   public isVisible(): void {
-    I.seeElement(this.rootSelector);
+    I.waitForElement(this.rootSelector);
   }
 
   /**
