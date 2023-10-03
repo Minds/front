@@ -23,6 +23,8 @@ m-discovery__tagSettings {
     padding: 8px 12px;
 
     @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      color: themed($m-textColor--primary);
       border: 1px solid themed($m-borderColor--primary);
     }
   }

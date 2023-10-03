@@ -13,6 +13,7 @@ import { isPlatformServer } from '@angular/common';
 import { BoostLocation } from '../boost/modal-v2/boost-modal-v2.types';
 import { ClientMetaData } from '../../common/services/client-meta.service';
 import { ClientMetaDirective } from '../../common/directives/client-meta.directive';
+import { BoostModalV2LazyService } from '../boost/modal-v2/boost-modal-v2-lazy.service';
 
 /**
  * @describe params for getting boost ads from the feed endpoint.
@@ -28,9 +29,6 @@ type BoostFeedAdsParams = {
   selector: 'm-ads-boost',
   templateUrl: 'ads.html',
   styleUrls: ['ads.ng.scss'],
-  host: {
-    class: 'm-ad-block m-ad-block-boosts',
-  },
 })
 export class BoostAds implements OnInit {
   @Input() handler: string = 'content';
@@ -43,6 +41,7 @@ export class BoostAds implements OnInit {
   constructor(
     public client: Client,
     public session: Session,
+    private boostModal: BoostModalV2LazyService,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @SkipSelf() private parentClientMeta: ClientMetaDirective
   ) {}
@@ -77,5 +76,13 @@ export class BoostAds implements OnInit {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  /**
+   * Opens boost modal for a boost on the session's logged in channel.
+   * @returns { Promise<void> }
+   */
+  public async openBoostChannelModal(): Promise<void> {
+    await this.boostModal.open(this.session.getLoggedInUser());
   }
 }

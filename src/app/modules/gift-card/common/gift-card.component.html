@@ -1,27 +1,36 @@
-<div class="m-giftCard__top">
-  <!-- We need to swap the logos on theme change, changing ngSrc does not do this -->
-  <ng-container *ngIf="isDarkTheme$ | async; else lightThemeLogoTemplate">
-    <img
-      ngSrc="./assets/logos/logo-monotone-light.png"
-      disableOptimizedSrcset
-      width="204"
-      height="80"
-    />
-  </ng-container>
-  <ng-template #lightThemeLogoTemplate>
-    <img
-      ngSrc="./assets/logos/logo-monotone-dark.png"
-      disableOptimizedSrcset
-      width="204"
-      height="80"
-    />
-  </ng-template>
+<div
+  class="m-giftCard__top"
+  [ngClass]="{
+    'm-giftCard__top--boost':
+      giftCardNode.productId === GiftCardProductIdEnum.Boost,
+    'm-giftCard__top--pro':
+      giftCardNode.productId === GiftCardProductIdEnum.Pro,
+    'm-giftCard__top--plus':
+      giftCardNode.productId === GiftCardProductIdEnum.Plus
+  }"
+>
+  <img
+    ngSrc="./assets/logos/logo-monotone-dark.png"
+    disableOptimizedSrcset
+    width="204"
+    height="80"
+  />
 </div>
 <div class="m-giftCard__bottom">
-  <span class="m-giftCard__cardText m-giftCard__cardText--left">{{
-    cardText
-  }}</span>
-  <span class="m-giftCard__cardText m-giftCard__cardText--right">{{
-    giftCardNode.amount | currency: 'USD'
-  }}</span>
+  <span class="m-giftCard__cardText m-giftCard__cardText--left">
+    <span class="m-giftCard__cardText--heading4Medium">{{ cardText }}</span>
+    <span
+      class="m-giftCard__cardText--smallTopMargin"
+      *ngIf="giftCardNode?.issuedByUsername"
+    >
+      <span class="m-giftCard__cardText--body3Regular">Gifted by</span>
+      <span class="m-giftCard__cardText--body3Medium"
+        >&nbsp;@{{ giftCardNode.issuedByUsername }}</span
+      >
+    </span>
+  </span>
+  <span
+    class="m-giftCard__cardText m-giftCard__cardText--heading3Bold m-giftCard__cardText--right"
+    >{{ giftCardNode.amount | currency: 'USD' }}</span
+  >
 </div>

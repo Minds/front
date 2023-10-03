@@ -26,7 +26,6 @@ describe('ActivityToolbarComponent', () => {
     guid: 213,
     allow_comments: true,
     'thumbs:up:count': 3,
-    'thumbs:down:count': 1,
   };
 
   let mockDisplayOptions: any = {
@@ -218,6 +217,48 @@ describe('ActivityToolbarComponent', () => {
       spyOn((comp as any).onDownvote, 'emit');
       comp.onThumbsDownChange(false);
       expect((comp as any).onDownvote.emit).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('showMetrics', () => {
+    it('should determine whether NOT to show metrics', () => {
+      comp.entity = {
+        ...mockEntity,
+        'thumbs:up:count': 0,
+        reminds: 0,
+        quotes: 0,
+      };
+      expect(comp.showMetrics).toBeFalse();
+    });
+
+    it('should determine whether to show metrics because thumbs:up:count is greater than 0', () => {
+      comp.entity = {
+        ...mockEntity,
+        'thumbs:up:count': 1,
+        reminds: 0,
+        quotes: 0,
+      };
+      expect(comp.showMetrics).toBeTrue();
+    });
+
+    it('should determine whether to show metrics because reminds count is greater than 0', () => {
+      comp.entity = {
+        ...mockEntity,
+        'thumbs:up:count': 0,
+        reminds: 1,
+        quotes: 0,
+      };
+      expect(comp.showMetrics).toBeTrue();
+    });
+
+    it('should determine whether to show metrics because quotes count is greater than 0', () => {
+      comp.entity = {
+        ...mockEntity,
+        'thumbs:up:count': 0,
+        reminds: 0,
+        quotes: 1,
+      };
+      expect(comp.showMetrics).toBeTrue();
     });
   });
 });

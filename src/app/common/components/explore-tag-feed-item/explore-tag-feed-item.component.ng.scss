@@ -1,0 +1,46 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+
+  padding-left: $activityAvatarSpacingLeft--feed;
+  padding-right: $activitySpacingRight--feed;
+
+  @media screen and (max-width: $max-mobile) {
+    padding-left: $activityAvatarSpacingLeft--feed--mobile;
+    padding-right: $activitySpacingRight--feed--mobile;
+  }
+
+  .m-exploreTagFeedItem--left {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    .m-exploreTagFeedItem__icon {
+      border-radius: 50%;
+      padding: $spacing1;
+      font-size: 14px;
+      margin-right: $spacing2;
+      @include unselectable;
+
+      @include m-theme() {
+        background: themed($m-action);
+        color: themed($m-white);
+      }
+    }
+    .m-exploreTagFeedItem__text {
+      @include heading4Bold;
+      margin-top: $spacing6;
+      margin-bottom: $spacing6;
+      margin-right: $spacing2;
+      word-wrap: anywhere;
+    }
+  }
+}

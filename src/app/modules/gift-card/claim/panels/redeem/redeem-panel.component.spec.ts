@@ -16,6 +16,7 @@ import {
   GiftCardProductIdEnum,
 } from '../../../../../../graphql/generated.engine';
 import { GiftCardClaimPanelEnum } from '../claim-panel.enum';
+import { GiftRecipientGiftDuration } from '../../../../wire/v2/creator/form/gift-recipient/gift-recipient-modal/gift-recipient-modal.types';
 
 describe('GiftCardClaimRedeemPanelComponent', () => {
   let comp: GiftCardClaimRedeemPanelComponent;
@@ -329,5 +330,133 @@ describe('GiftCardClaimRedeemPanelComponent', () => {
         GiftCardClaimPanelEnum.Redeem
       );
     }));
+  });
+
+  describe('getTitle', () => {
+    it('should get the default title for Supermind', () => {
+      const largestPurchasableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.MONTH;
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Supermind;
+      const amount: number = 10;
+
+      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+        largestPurchasableDuration
+      );
+
+      let giftCardNode: GiftCardNode = {
+        ...mockGiftCardNode,
+        productId: productId,
+        amount: amount,
+      };
+
+      comp.giftCardNode$.next(giftCardNode);
+
+      expect(comp.getTitle()).toBe('Claim your gift');
+    });
+
+    it('should get the default title for Boost', () => {
+      const largestPurchasableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.MONTH;
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Boost;
+      const amount: number = 10;
+
+      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+        largestPurchasableDuration
+      );
+
+      let giftCardNode: GiftCardNode = {
+        ...mockGiftCardNode,
+        productId: productId,
+        amount: amount,
+      };
+
+      comp.giftCardNode$.next(giftCardNode);
+
+      expect(comp.getTitle()).toBe('Claim your gift');
+    });
+
+    it('should get year of Plus when the largest duration is a year', () => {
+      const largestPurchasableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.YEAR;
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const amount: number = 10;
+
+      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+        largestPurchasableDuration
+      );
+
+      let giftCardNode: GiftCardNode = {
+        ...mockGiftCardNode,
+        productId: productId,
+        amount: amount,
+      };
+
+      comp.giftCardNode$.next(giftCardNode);
+
+      expect(comp.getTitle()).toBe('Claim your 1 year of Minds+ credits');
+    });
+
+    it('should get month of Plus when the largest duration is a month', () => {
+      const largestPurchasableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.MONTH;
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const amount: number = 10;
+
+      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+        largestPurchasableDuration
+      );
+
+      let giftCardNode: GiftCardNode = {
+        ...mockGiftCardNode,
+        productId: productId,
+        amount: amount,
+      };
+
+      comp.giftCardNode$.next(giftCardNode);
+
+      expect(comp.getTitle()).toBe('Claim your 1 month of Minds+ credits');
+    });
+
+    it('should get year of Pro when the largest duration is a year', () => {
+      const largestPurchasableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.YEAR;
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const amount: number = 10;
+
+      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+        largestPurchasableDuration
+      );
+
+      let giftCardNode: GiftCardNode = {
+        ...mockGiftCardNode,
+        productId: productId,
+        amount: amount,
+      };
+
+      comp.giftCardNode$.next(giftCardNode);
+
+      expect(comp.getTitle()).toBe('Claim your 1 year of Minds Pro credits');
+    });
+
+    it('should get month of Pro when the largest duration is a month', () => {
+      const largestPurchasableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.MONTH;
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const amount: number = 10;
+
+      (comp as any).service.getLargestPurchasableUpgradeDuration.and.returnValue(
+        largestPurchasableDuration
+      );
+
+      let giftCardNode: GiftCardNode = {
+        ...mockGiftCardNode,
+        productId: productId,
+        amount: amount,
+      };
+
+      comp.giftCardNode$.next(giftCardNode);
+
+      expect(comp.getTitle()).toBe('Claim your 1 month of Minds Pro credits');
+    });
   });
 });

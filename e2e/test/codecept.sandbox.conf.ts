@@ -72,8 +72,8 @@ export const config: CustomMainConfig = {
     modalComponent: './fragments/modalComponent.ts',
     notificationsComponent: './fragments/notificationsComponent.ts',
     sidebarComponent: './fragments/sidebarComponent.ts',
-    supermindOnboardingModalComponent:
-      './fragments/supermindOnboardingModalComponent.ts',
+    explainerScreenModalComponent:
+      './fragments/explainerScreenModalComponent.ts',
     topbarComponent: './fragments/topbarComponent.ts',
     feedNoticeComponent: './fragments/feedNoticeComponent.ts',
     boostModalComponent: './fragments/boostModalComponent.ts',

@@ -1,6 +1,19 @@
 <button
+  *ngIf="iconOnly"
   class="m-btn m-btn--slim m-boostButton"
   data-ref="data-minds-activity-boost-button"
 >
   <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
 </button>
+<!---------------------------->
+<m-button
+  *ngIf="!iconOnly"
+  [solid]="true"
+  [borderless]="true"
+  color="blue"
+  size="large"
+>
+  <ng-container i18n="@@M__ACTION__BOOST_POST">
+    Boost post
+  </ng-container>
+</m-button>

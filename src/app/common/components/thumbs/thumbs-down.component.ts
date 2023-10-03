@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DoCheck,
   EventEmitter,
   Input,
   Output,
@@ -20,7 +19,7 @@ import { ToasterService } from '../../services/toaster.service';
   styleUrls: [`thumbs-up.component.ng.scss`],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThumbsDownButton implements DoCheck {
+export class ThumbsDownButton {
   changesDetected: boolean = false;
   object;
 
@@ -81,7 +80,6 @@ export class ThumbsDownButton implements DoCheck {
       this.object['thumbs:down:user_guids'] = [
         this.session.getLoggedInUser().guid,
       ];
-      this.object['thumbs:down:count']++;
       downvoteAdded = true;
     } else {
       for (let key in this.object['thumbs:down:user_guids']) {
@@ -91,7 +89,6 @@ export class ThumbsDownButton implements DoCheck {
         )
           delete this.object['thumbs:down:user_guids'][key];
       }
-      this.object['thumbs:down:count']--;
     }
 
     this.thumbsDownChange.emit(downvoteAdded);
@@ -104,19 +101,5 @@ export class ThumbsDownButton implements DoCheck {
       if (guid === this.session.getLoggedInUser().guid) return true;
     }
     return false;
-  }
-
-  ngOnChanges(changes) {}
-
-  ngDoCheck() {
-    this.changesDetected = false;
-    if (this.object['thumbs:down:count'] != this.object['thumbs:up:down:old']) {
-      this.object['thumbs:down:count:old'] = this.object['thumbs:down:count'];
-      this.changesDetected = true;
-    }
-
-    if (this.changesDetected) {
-      this.cd.detectChanges();
-    }
   }
 }

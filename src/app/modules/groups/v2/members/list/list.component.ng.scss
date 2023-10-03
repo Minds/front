@@ -44,6 +44,10 @@
         padding: $spacing4 0;
       }
 
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
       &::placeholder {
         @include m-theme() {
           color: themed($m-textColor--secondary);
@@ -129,5 +133,10 @@
     @include m-theme() {
       color: themed($m-textColor--tertiary);
     }
+  }
+
+  ::ng-deep m-publisherCard m-group__memberActions {
+    // bypassing spacing variables as none will get this perfectly in line.
+    margin-top: 3px;
   }
 }

@@ -15,6 +15,11 @@ import {
   GiftCardProductIdEnum,
 } from '../../../../../../graphql/generated.engine';
 import { GiftCardClaimSuccessPanelComponent } from './success-panel.component';
+import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
+import { ModalService } from '../../../../../services/ux/modal.service';
+import userMock from '../../../../../mocks/responses/user.mock';
+import { WireCreatorComponent } from '../../../../wire/v2/creator/wire-creator.component';
+import { GiftRecipientGiftDuration } from '../../../../wire/v2/creator/form/gift-recipient/gift-recipient-modal/gift-recipient-modal.types';
 
 describe('GiftCardClaimSuccessPanelComponent', () => {
   let comp: GiftCardClaimSuccessPanelComponent;
@@ -67,6 +72,14 @@ describe('GiftCardClaimSuccessPanelComponent', () => {
           provide: ToasterService,
           useValue: MockService(ToasterService),
         },
+        {
+          provide: ModalService,
+          useValue: MockService(ModalService),
+        },
+        {
+          provide: WirePaymentHandlersService,
+          useValue: MockService(WirePaymentHandlersService),
+        },
       ],
     });
 
@@ -92,8 +105,32 @@ describe('GiftCardClaimSuccessPanelComponent', () => {
         });
     });
 
-    it('should get product credit name for not yet implemented product', (done: DoneFn) => {
+    it('should get product credit name for Plus product', (done: DoneFn) => {
       (comp as any).giftCardPanel.productId$.next(GiftCardProductIdEnum.Plus);
+
+      (comp as any).productCreditName$
+        .pipe(take(1))
+        .subscribe((productCreditName: string) => {
+          expect(productCreditName).toBe('Minds+ Credits');
+          done();
+        });
+    });
+
+    it('should get product credit name for Pro product', (done: DoneFn) => {
+      (comp as any).giftCardPanel.productId$.next(GiftCardProductIdEnum.Pro);
+
+      (comp as any).productCreditName$
+        .pipe(take(1))
+        .subscribe((productCreditName: string) => {
+          expect(productCreditName).toBe('Minds Pro Credits');
+          done();
+        });
+    });
+
+    it('should get product credit name for not yet implemented product', (done: DoneFn) => {
+      (comp as any).giftCardPanel.productId$.next(
+        GiftCardProductIdEnum.Supermind
+      );
 
       (comp as any).productCreditName$
         .pipe(take(1))
@@ -127,8 +164,32 @@ describe('GiftCardClaimSuccessPanelComponent', () => {
         });
     });
 
-    it('should get actionButtonText for not yet implemented product', (done: DoneFn) => {
+    it('should get actionButtonText for Plus product', (done: DoneFn) => {
       (comp as any).giftCardPanel.productId$.next(GiftCardProductIdEnum.Plus);
+
+      (comp as any).actionButtonText$
+        .pipe(take(1))
+        .subscribe((actionButtonText: string) => {
+          expect(actionButtonText).toBe('Redeem credits now');
+          done();
+        });
+    });
+
+    it('should get actionButtonText for Pro product', (done: DoneFn) => {
+      (comp as any).giftCardPanel.productId$.next(GiftCardProductIdEnum.Pro);
+
+      (comp as any).actionButtonText$
+        .pipe(take(1))
+        .subscribe((actionButtonText: string) => {
+          expect(actionButtonText).toBe('Redeem credits now');
+          done();
+        });
+    });
+
+    it('should get actionButtonText for not yet implemented product', (done: DoneFn) => {
+      (comp as any).giftCardPanel.productId$.next(
+        GiftCardProductIdEnum.Supermind
+      );
 
       (comp as any).actionButtonText$
         .pipe(take(1))
@@ -223,8 +284,146 @@ describe('GiftCardClaimSuccessPanelComponent', () => {
       ]);
     });
 
+    it('should handle action button click when product is Plus and the max duration purchasable is a month', fakeAsync(() => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const largestPurchaseableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.MONTH;
+
+      (comp as any).giftCardPanel.productId$.next(productId);
+      (comp as any).wirePaymentHandlers.get
+        .withArgs('plus')
+        .and.returnValue(userMock);
+      (comp as any).service.getLargestPurchasableUpgradeDuration
+        .withArgs(productId, comp.balance$.getValue())
+        .and.returnValue(largestPurchaseableDuration);
+
+      comp.onActionButtonClick();
+      tick();
+
+      expect((comp as any).modalService.present).toHaveBeenCalledWith(
+        WireCreatorComponent,
+        jasmine.objectContaining({
+          size: 'lg',
+          data: {
+            isReceivingGift: true,
+            entity: userMock,
+            default: {
+              type: 'money',
+              upgradeType: 'plus',
+              upgradeInterval: 'monthly',
+            },
+            onComplete: jasmine.any(Function),
+          },
+        })
+      );
+    }));
+
+    it('should handle action button click when product is Plus and the max duration purchasable is a year', fakeAsync(() => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Plus;
+      const largestPurchaseableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.YEAR;
+
+      (comp as any).giftCardPanel.productId$.next(productId);
+      (comp as any).wirePaymentHandlers.get
+        .withArgs('plus')
+        .and.returnValue(userMock);
+      (comp as any).service.getLargestPurchasableUpgradeDuration
+        .withArgs(productId, comp.balance$.getValue())
+        .and.returnValue(largestPurchaseableDuration);
+
+      comp.onActionButtonClick();
+      tick();
+
+      expect((comp as any).modalService.present).toHaveBeenCalledWith(
+        WireCreatorComponent,
+        jasmine.objectContaining({
+          size: 'lg',
+          data: {
+            isReceivingGift: true,
+            entity: userMock,
+            default: {
+              type: 'money',
+              upgradeType: 'plus',
+              upgradeInterval: 'yearly',
+            },
+            onComplete: jasmine.any(Function),
+          },
+        })
+      );
+    }));
+
+    it('should handle action button click when product is Pro and the max duration purchasable is a month', fakeAsync(() => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const largestPurchaseableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.MONTH;
+
+      (comp as any).giftCardPanel.productId$.next(productId);
+      (comp as any).wirePaymentHandlers.get
+        .withArgs('pro')
+        .and.returnValue(userMock);
+      (comp as any).service.getLargestPurchasableUpgradeDuration
+        .withArgs(productId, comp.balance$.getValue())
+        .and.returnValue(largestPurchaseableDuration);
+
+      comp.onActionButtonClick();
+      tick();
+
+      expect((comp as any).modalService.present).toHaveBeenCalledWith(
+        WireCreatorComponent,
+        jasmine.objectContaining({
+          size: 'lg',
+          data: {
+            isReceivingGift: true,
+            entity: userMock,
+            default: {
+              type: 'money',
+              upgradeType: 'pro',
+              upgradeInterval: 'monthly',
+            },
+            onComplete: jasmine.any(Function),
+          },
+        })
+      );
+    }));
+
+    it('should handle action button click when product is Pro and the max duration purchasable is a year', fakeAsync(() => {
+      const productId: GiftCardProductIdEnum = GiftCardProductIdEnum.Pro;
+      const largestPurchaseableDuration: GiftRecipientGiftDuration =
+        GiftRecipientGiftDuration.YEAR;
+
+      (comp as any).giftCardPanel.productId$.next(productId);
+      (comp as any).wirePaymentHandlers.get
+        .withArgs('pro')
+        .and.returnValue(userMock);
+      (comp as any).service.getLargestPurchasableUpgradeDuration
+        .withArgs(productId, comp.balance$.getValue())
+        .and.returnValue(largestPurchaseableDuration);
+
+      comp.onActionButtonClick();
+      tick();
+
+      expect((comp as any).modalService.present).toHaveBeenCalledWith(
+        WireCreatorComponent,
+        jasmine.objectContaining({
+          size: 'lg',
+          data: {
+            isReceivingGift: true,
+            entity: userMock,
+            default: {
+              type: 'money',
+              upgradeType: 'pro',
+              upgradeInterval: 'yearly',
+            },
+            onComplete: jasmine.any(Function),
+          },
+        })
+      );
+    }));
+
     it('should handle action button click when product is not yet supported', () => {
-      (comp as any).giftCardPanel.productId$.next(GiftCardProductIdEnum.Plus);
+      (comp as any).giftCardPanel.productId$.next(
+        GiftCardProductIdEnum.Supermind
+      );
       comp.onActionButtonClick();
 
       expect((comp as any).router.navigate).toHaveBeenCalledWith(['/wallet']);

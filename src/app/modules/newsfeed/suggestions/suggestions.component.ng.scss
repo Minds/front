@@ -4,9 +4,6 @@
   ::ng-deep m-sidebarWidget {
     .m-sidebarWidget {
       padding: 0;
-      @include m-theme() {
-        border: none !important;
-      }
     }
     .m-sidebarWidget__title {
       padding: 0;
@@ -16,10 +13,14 @@
     }
 
     .m-newsfeedActivitySuggestion__item {
-      margin-top: 20px;
+      margin-top: $spacing5;
 
       @media screen and (max-width: $max-mobile) {
         margin-top: 0;
+      }
+
+      &:first-child {
+        margin-top: $spacing3;
       }
 
       & > a {

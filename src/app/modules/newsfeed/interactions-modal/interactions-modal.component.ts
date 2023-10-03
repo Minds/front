@@ -56,8 +56,6 @@ export class InteractionsModalComponent {
     switch (this.type) {
       case 'votes-up':
         return 'Upvotes';
-      case 'votes-down':
-        return 'Downvotes';
       case 'reminds':
         return 'Reminds';
       case 'quotes':

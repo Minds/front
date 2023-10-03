@@ -60,7 +60,6 @@ describe('EntityMetricsSocketService', () => {
   it('should update instance subjects based on parsed event', () => {
     const metricsChangedEvent = {
       'thumbs:up:count': 1,
-      'thumbs:down:count': 2,
     };
 
     (service as any).updateInstanceSubjects(metricsChangedEvent);
@@ -68,12 +67,6 @@ describe('EntityMetricsSocketService', () => {
     (service as any).thumbsUpCount$
       .subscribe(val => {
         expect(val).toBe(1);
-      })
-      .unsubscribe();
-
-    (service as any).thumbsDownCount$
-      .subscribe(val => {
-        expect(val).toBe(2);
       })
       .unsubscribe();
   });

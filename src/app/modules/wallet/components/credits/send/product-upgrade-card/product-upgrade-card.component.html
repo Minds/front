@@ -1,0 +1,62 @@
+<div class="m-productUpgradeCard__topbarContainer">
+  <h4 class="m-productUpgradeCard__topbarTitle">{{ getTitle() }}</h4>
+  <ng-container [ngSwitch]="giftType">
+    <i
+      *ngSwitchCase="GiftCardProductIdEnum.Plus"
+      class="material-icons m-productUpgradeCard__topbarIcon"
+      >add_to_queue</i
+    >
+    <span
+      *ngSwitchCase="GiftCardProductIdEnum.Pro"
+      class="m-productUpgradeCard__topbarbadgeText"
+      >PRO</span
+    >
+  </ng-container>
+</div>
+
+<div class="m-productUpgradeCard__pricingTierContainer">
+  <p
+    class="m-productUpgradeCard__pricingTier"
+    *ngFor="let pricingTier of getPricingTiers()"
+  >
+    <span class="m-productUpgradeCard__pricingTier--bold">{{
+      pricingTier.amountText
+    }}</span>
+    / {{ pricingTier.period }}
+  </p>
+</div>
+
+<div
+  *ngFor="let benefit of getBenefits()"
+  class="m-productUpgradeCard__benefit"
+>
+  <div class="m-productUpgradeCard__benefitIconContainer">
+    <ng-container *ngIf="benefit.iconName; else imagePathIconTemplate">
+      <i class="material-icons m-productUpgradeCard__benefitIcon">{{
+        benefit.iconName
+      }}</i>
+    </ng-container>
+    <ng-template #imagePathIconTemplate>
+      <img
+        *ngIf="benefit.iconPath"
+        class="m-productUpgradeCard__benefitIcon"
+        [src]="cdnAssetsUrl + benefit.iconPath"
+      />
+    </ng-template>
+  </div>
+  <span class="m-productUpgradeCard__benefitText">{{ benefit.text }}</span>
+</div>
+
+<div
+  class="m-productUpgradeCard__footer m-theme--wrapper m-theme--wrapper__dark"
+>
+  <m-button
+    class="m-productUpgradeCard__footerButton"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onActionButtonClick()"
+  >
+    {{ getButtonText() }}
+  </m-button>
+</div>

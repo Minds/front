@@ -1,47 +1,76 @@
-<div
-  class="m-wireCreator__upgradeBlock"
-  *ngIf="upgradeType"
-  [ngClass]="{ isPlus: isPlus, isPro: isPro }"
->
+<div class="m-wireCreator__upgradeBlock" *ngIf="upgradeType">
   <div class="m-wireCreatorUpgradeBlock__copy">
-    <div
-      class="m-wireCreatorUpgradeBlock__label"
-      [ngClass]="{
-        badgeOnly: isPlus,
-        isPro: isPro
-      }"
-    >
-      <span *ngIf="isPro" i18n>Minds</span>
-      <div class="m-wireCreatorUpgradeBlock__badge">
-        <span>
-          <ng-container *ngIf="isPlus">MINDS+</ng-container>
-          <ng-container *ngIf="isPro" i18n>Pro</ng-container></span
-        >
-      </div>
+    <div class="m-wireCreatorUpgradeBlock__badge">
+      <span class="m-wireCreatorUpgradeBlock__badgeText" *ngIf="isPlus"
+        >MINDS+</span
+      >
+      <span class="m-wireCreatorUpgradeBlock__badgeText" *ngIf="isPro"
+        >PRO</span
+      >
     </div>
     <div class="m-wireCreatorUpgradeBlock__title">
-      <span i18n="@@WIRE_CREATOR_MARKETING__UNLOCK_POWER"
-        >Unlock the power of Minds</span
-      >
+      <ng-container *ngIf="isPlus">
+        <span
+          *ngIf="!(isSendingGift$ | async); else plusGiftTitleTemplate"
+          i18n="@@WIRE_CREATOR_MARKETING__GET_PLUS_EXPERIENCE"
+          >Get the complete Minds+ experience</span
+        >
+        <ng-template #plusGiftTitleTemplate
+          ><span i18n="@@WIRE_CREATOR_MARKETING__GIFT_PLUS_EXPERIENCE"
+            >Gift your friend the complete Minds+ experience</span
+          ></ng-template
+        >
+      </ng-container>
+      <ng-container *ngIf="isPro">
+        <span
+          *ngIf="!(isSendingGift$ | async); else proGiftTitleTemplate"
+          i18n="@@WIRE_CREATOR_MARKETING__NEXT_LEVEL_PRO"
+          >Take your experience to the next level with Minds Pro</span
+        >
+        <ng-template #proGiftTitleTemplate
+          ><span i18n="@@WIRE_CREATOR_MARKETING__GIFT_NEXT_LEVEL_PRO"
+            >Help take your friends to the next level with Minds Pro</span
+          ></ng-template
+        >
+      </ng-container>
     </div>
 
     <div class="m-wireCreatorUpgradeBlock__desc">
-      <ng-container *ngIf="isPlus" i18n="@@WIRE_CREATOR_MARKETING__PLUS_DESC"
-        >Support Minds and unlock features such as earning revenue for your
-        content, hiding ads, accessing exclusive content, receiving a badge and
-        verifying your channel.</ng-container
-      >
-      <ng-container *ngIf="isPro" i18n="@@WIRE_CREATOR_MARKETING__PRO_DESC"
-        >Get paid for your traffic and referrals, launch your own website,
-        receive multi-currency tips and subscription payments from fans and much
-        more.</ng-container
-      >
-      If you pay for your membership in tokens, you are only eligible to be paid
-      out in tokens. If you pay in cash, you are eligible to be paid out in
-      cash, Bitcoin, Ether or tokens.
+      <ng-container *ngIf="isPlus">
+        <span
+          *ngIf="isSendingGift$ | async; else notGiftPlusDescriptionTemplate"
+          i18n="@@WIRE_CREATOR_MARKETING__PLUS_SELF_DESC"
+          >Minds+ is the upgrade designed for creators. Help your friends get
+          more reach, earning opportunities, and additional perks for supporting
+          Minds and its community.</span
+        >
+        <ng-template #notGiftPlusDescriptionTemplate>
+          <span i18n="@@WIRE_CREATOR_MARKETING__PLUS_GIFT_DESC"
+            >Minds+ is the upgrade designed for creators. Get more reach,
+            earning opportunities, and additional perks for supporting Minds and
+            its community.</span
+          >
+        </ng-template>
+      </ng-container>
+      <ng-container *ngIf="isPro">
+        <span
+          *ngIf="isSendingGift$ | async; else notGiftProDescriptionTemplate"
+          i18n="@@WIRE_CREATOR_MARKETING__PRO_GIFT_DESC"
+          >Help a friend take their channel to the next level with even more
+          Boost credits, and access exclusive channel customizations to
+          personalize your presence on Minds.</span
+        >
+        <ng-template #notGiftProDescriptionTemplate>
+          <span i18n="@@WIRE_CREATOR_MARKETING__PRO_SELF_DESC"
+            >Take your channel to the next level with even more Boost credits,
+            and access exclusive channel customizations to personalize your
+            presence on Minds.</span
+          >
+        </ng-template>
+      </ng-container>
     </div>
     <div class="m-wireCreatorUpgradeBlock__learnMore">
-      <a [routerLink]="['/', this.upgradeType]">
+      <a [routerLink]="['/', this.upgradeType]" target="_blank">
         <span i18n="@@WIRE_CREATOR_MARKETING__LEARN_MORE"
           >Learn More about Minds<ng-container *ngIf="isPlus">+</ng-container>
           <ng-container *ngIf="isPro"> Pro</ng-container>

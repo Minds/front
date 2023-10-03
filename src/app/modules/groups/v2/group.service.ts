@@ -12,12 +12,7 @@ import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
-import {
-  DEFAULT_GROUP_VIEW,
-  GroupAccessType,
-  GroupMembershipLevel,
-  GroupView,
-} from './group.types';
+import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
 import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
@@ -40,7 +35,7 @@ export class GroupService implements OnDestroy {
   >(null);
 
   /**
-   * Whether user has access to group contents (feed, members list, etc.)
+   * Whether user has access to group contents (feeds, members list, etc.)
    */
   readonly canAccess$: Observable<boolean>;
 
@@ -132,6 +127,13 @@ export class GroupService implements OnDestroy {
   );
 
   /**
+   * Whether current user is banned from the group
+   */
+  readonly isBanned$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
    * Whether current user has muted notifications for this group
    */
   readonly isMuted$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -146,7 +148,7 @@ export class GroupService implements OnDestroy {
   );
 
   /**
-   * Search query
+   * Feed search query
    */
   readonly query$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
@@ -159,6 +161,7 @@ export class GroupService implements OnDestroy {
 
   /**
    * The active view that is visible on the group page
+   * (i.e. the currently selected top level tab)
    */
   readonly view$: BehaviorSubject<GroupView> = new BehaviorSubject<GroupView>(
     DEFAULT_GROUP_VIEW
@@ -180,6 +183,7 @@ export class GroupService implements OnDestroy {
     protected toaster: ToasterService,
     protected router: Router
   ) {
+    this.listenForLogin(); //0jm
     // Set canReview observable
     this.canReview$ = combineLatest([this.isOwner$, this.isModerator$]).pipe(
       map(([isOwner, isModerator]) => isOwner || isModerator)
@@ -199,6 +203,17 @@ export class GroupService implements OnDestroy {
       map(
         ([isPrivate, isMember, isOwner]) => isOwner || (!isPrivate && isMember)
       )
+    );
+  }
+
+  /**
+   * Refresh when user logs in
+   */
+  listenForLogin() {
+    this.subscriptions.push(
+      this.session.loggedinEmitter.subscribe(() => {
+        this.sync();
+      })
     );
   }
 
@@ -260,6 +275,7 @@ export class GroupService implements OnDestroy {
     this.isMember$.next(group ? group['is:member'] : false);
     this.isModerator$.next(group ? group['is:moderator'] : false);
     this.isAwaiting$.next(group ? group['is:awaiting'] : false);
+    this.isBanned$.next(group ? group['is:banned'] : false);
     this.isMuted$.next(group ? group['is:muted'] : false);
   }
 
@@ -310,9 +326,7 @@ export class GroupService implements OnDestroy {
       this.showBoosts$.next(enable);
 
       // Reload the feed
-      let group = this.group$.getValue();
-      group['show_boosts'] = enable;
-      this.syncLegacyService(group);
+      this.sync();
     } catch (e) {
       console.error(e);
     }

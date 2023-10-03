@@ -1,21 +1,146 @@
-<div class="m-pageLayout__container m-group__feed">
+<div class="m-pageLayout__container m-group__feed" *ngIf="group">
   <div class="m-groupFeed__body" m-pageLayout__pane="main">
-    <!-- ----------------------------------------- -->
-    <!-- FEED  -->
-    <!-- ----------------------------------------- -->
-    <div class="m-groupFeed__list">
-      <m-group-profile__feed
-        *ngIf="service.canAccess$ | async; else privateFeedNotice"
-      ></m-group-profile__feed>
-      <ng-template #privateFeedNotice>
-        <div class="m-groupFeed__privateFeedNotice">
-          <span i18n="@@GROUP_FEED__PRIVATE_FEED_NOTICE"
-            >This discussion is only available to group members.</span
+    <ng-container
+      *ngIf="service.canAccess$ | async; else privateFeedNotice"
+      [m-clientMeta]="{ source: 'feed/group', medium: 'feed' }"
+    >
+      <!-- ----------------------------------------- -->
+      <!-- TOOLBAR -->
+      <!-- ----------------------------------------- -->
+      <div class="m-groupFeed__toolbar">
+        <m-sort-selector
+          class="m-groupFeed__sortSelector"
+          [allowedAlgorithms]="false"
+          [allowedPeriods]="false"
+          [allowedCustomTypes]="['activities', 'images', 'videos']"
+          [customType]="feedService.type$ | async"
+          [v2]="true"
+          (onChange)="onTypeChange($event.customType)"
+        ></m-sort-selector>
+      </div>
+      <!-- ----------------------------------------- -->
+      <!-- SEARCH QUERY DISPLAY -->
+      <!-- ----------------------------------------- -->
+      <div class="m-groupFeed__searchDisplay" *ngIf="service.query$ | async">
+        <span i18n="@@M__GROUP_FEED__SEARCH_RESULTS_FOR"
+          >Search results for:
+        </span>
+        <span class="m-groupFeedSearch__query"
+          >"{{ service.query$ | async }}" ·
+        </span>
+        <a i18n="@@M__GROUP_FEED__CLEAR" (click)="service.query$.next('')"
+          >Clear</a
+        >
+      </div>
+
+      <!-- ----------------------------------------- -->
+      <!-- LIST  -->
+      <!-- ----------------------------------------- -->
+      <div class="m-groupFeed__list">
+        <!-- ----------------------------------------- -->
+        <!-- COMPOSER  -->
+        <!-- ----------------------------------------- -->
+        <m-composer
+          *ngIf="service.isMember$ | async"
+          [container]="group"
+          #composer
+        ></m-composer>
+        <!-- ----------------------------------------- -->
+        <!-- POSTS  -->
+        <!-- ----------------------------------------- -->
+        <ng-container *ngIf="feed?.length > 0">
+          <div
+            class="m-groupFeedList__entities"
+            m-hotkeyScroll
+            [anchors]="feedViewChildren"
           >
-        </div>
-      </ng-template>
-    </div>
+            <ng-container *ngFor="let entity$ of feed; let i = index">
+              <m-newsfeed__entity
+                [displayOptions]="{
+                  showOnlyCommentsInput: true,
+                  isFeed: true,
+                  inSingleGroupFeed: true
+                }"
+                [entity]="patchEntity(entity$ | async)"
+                [slot]="i + 1"
+                [canDelete]="group['is:owner'] || group['is:moderator']"
+                (deleted)="feedService.onDelete($event)"
+                #feedViewChildren
+              ></m-newsfeed__entity>
+              <!-- ----------------------------------------- -->
+              <!-- BOOSTS  -->
+              <!-- ----------------------------------------- -->
+              <m-featured-content
+                *ngIf="
+                  shouldShowBoostInPosition(i) &&
+                  (group.show_boosts === undefined || group.show_boosts)
+                "
+                [slot]="i + 1"
+                [displayOptions]="{
+                  showOnlyCommentsInput: true,
+                  isFeed: true
+                }"
+                showHeader="true"
+                [servedByGuid]="service.guid$ | async"
+              ></m-featured-content>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- ----------------------------------------- -->
+      <!-- SEARCH QUERY NO RESULTS -->
+      <!-- ----------------------------------------- -->
+      <div
+        *ngIf="showNoQueryResultsNotice"
+        class="
+          m-groupFeed__emptyFeedContainer
+          m-groupFeed__emptyFeedContainer--bordered
+        "
+      >
+        <span
+          class="m-groupFeed__emptyFeedTitle"
+          i18n="@@M__GROUP_FEED__NO_RESULTS"
+          >No results for "{{ service.query$ | async }}"</span
+        >
+
+        <m-button
+          i18n="@@M__GROUP_FEED__CLEAR_SEARCH"
+          (onAction)="service.query$.next('')"
+          color="blue"
+        >
+          Clear search
+        </m-button>
+      </div>
+      <!-- ----------------------------------------- -->
+      <!-- INFINITE SCROLL  -->
+      <!-- ----------------------------------------- -->
+      <infinite-scroll
+        *ngIf="!showNoQueryResultsNotice"
+        (load)="feedService.loadNext()"
+        [moreData]="feedService.service.hasMore | async"
+        [inProgress]="feedService.service.inProgress | async"
+      ></infinite-scroll>
+    </ng-container>
+    <!-- ----------------------------------------- -->
+    <!-- PRIVATE FEED NOTICE  -->
+    <!-- ----------------------------------------- -->
+    <ng-template #privateFeedNotice>
+      <div class="m-groupFeed__privateFeedNotice">
+        <span
+          *ngIf="!(service.isBanned$ | async)"
+          i18n="@@GROUP_FEED__PRIVATE_FEED_NOTICE__MEMBERS_ONLY"
+          >This discussion is only available to group members.</span
+        >
+        <span
+          *ngIf="service.isBanned$ | async"
+          i18n="@@GROUP_FEED__PRIVATE_FEED_NOTICE__BANNED"
+          >You have been banned from this group.</span
+        >
+      </div>
+    </ng-template>
   </div>
+
   <!-- ----------------------------------------- -->
   <!-- SIDEBAR  -->
   <!-- ----------------------------------------- -->

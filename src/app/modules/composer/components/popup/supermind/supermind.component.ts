@@ -26,7 +26,6 @@ import {
   SupermindComposerPaymentOptionsType,
 } from './superminds-creation.service';
 import { Subscription } from 'rxjs';
-import { SupermindOnboardingModalService } from '../../../../supermind/onboarding-modal/onboarding-modal.service';
 import {
   EntityResolverService,
   EntityResolverServiceOptions,
@@ -40,6 +39,7 @@ import { TwitterSupermindExperimentService } from '../../../../experiments/sub-s
 import { ToasterService } from '../../../../../common/services/toaster.service';
 import { ConfirmV2Component } from '../../../../modals/confirm-v2/confirm.component';
 import { ModalService } from '../../../../../services/ux/modal.service';
+import { ExplainerScreensService } from '../../../../explainer-screens/services/explainer-screen.service';
 
 /**
  * Composer supermind popup component. Called programatically via PopupService.
@@ -134,7 +134,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
   constructor(
     protected service: ComposerService,
     private fb: UntypedFormBuilder,
-    private supermindOnboardingModal: SupermindOnboardingModalService,
+    private explainerScreenService: ExplainerScreensService,
     private mindsConfig: ConfigsService,
     private entityResolverService: EntityResolverService,
     private changeDetector: ChangeDetectorRef,
@@ -292,13 +292,7 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
         );
     }
 
-    /**
-     * Launch onboarding modal (if user hasn't seen it yet)
-     */
-    this.supermindOnboardingModal.setContentType('request');
-    if (!this.supermindOnboardingModal.hasBeenSeenAlready()) {
-      this.openSupermindOnboardingModal();
-    }
+    this.explainerScreenService.handleManualTriggerByKey('supermind_request');
   }
 
   /**
@@ -402,9 +396,6 @@ export class ComposerSupermindComponent implements OnInit, OnDestroy {
     this.dismissIntent.emit();
   }
 
-  async openSupermindOnboardingModal() {
-    await this.supermindOnboardingModal.open();
-  }
   private setMinimumPaymentAmountFromUser(user: MindsUser | null): void {
     this.cashMin = user?.supermind_settings.min_cash;
     this.tokensMin = user?.supermind_settings.min_offchain_tokens;
