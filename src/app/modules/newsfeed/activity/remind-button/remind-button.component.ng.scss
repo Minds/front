@@ -20,4 +20,13 @@
       padding-right: 0;
     }
   }
+
+  // Override disabled item styling so transition isn't jarring
+  ::ng-deep
+    .m-dropdownMenu__item--disabled
+    [class*='m-dropdownMenuItem__text'] {
+    @include m-theme() {
+      color: themed($m-textColor--primary) !important;
+    }
+  }
 }

@@ -4,7 +4,6 @@ import {
   EMPTY,
   Observable,
   of,
-  pipe,
   Subject,
   Subscription,
 } from 'rxjs';
@@ -341,7 +340,7 @@ export class ActivityService implements OnDestroy {
    * Whether the user has reminded this post (even if this entity$ isn't the reminded post)
    */
   userHasReminded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
+    null
   );
 
   /**
@@ -714,8 +713,10 @@ export class ActivityService implements OnDestroy {
         catchError(_ => of(null))
       )
       .subscribe((response: ActivityHasRemindedResponse | null) => {
-        if (response && response.has_reminded) {
+        if (response && response?.has_reminded) {
           this.userHasReminded$.next(response.has_reminded);
+        } else {
+          this.userHasReminded$.next(false);
         }
       });
   }
@@ -769,6 +770,10 @@ export class ActivityService implements OnDestroy {
     return EMPTY;
   }
 
+  /**
+   * Called after a post has been deleted. Removes it from the feed
+   * and emits to parent components so they can perform cleanup tasks
+   */
   public onDelete(): void {
     this.onDelete$.next(this.entity$.getValue());
     this.canShow$.next(false);

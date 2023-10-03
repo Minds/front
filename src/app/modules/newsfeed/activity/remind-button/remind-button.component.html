@@ -2,7 +2,7 @@
   <button
     (click)="getHasReminded($event)"
     class="m-activityRemindButton__icon"
-    [class.selected]="service.isUsersRemind$ | async"
+    [class.selected]="(service.isUsersRemind$ | async) || justReminded"
   >
     <i class="material-icons">repeat</i>
     <span
@@ -17,6 +17,7 @@
   <ul>
     <m-dropdownMenu__item
       *ngIf="!(service.userHasReminded$ | async)"
+      [disabled]="!remindOptionsEnabled"
       (click)="onRemindClick($event)"
       icon="repeat"
     >
@@ -24,6 +25,7 @@
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
       *ngIf="service.userHasReminded$ | async"
+      [disabled]="!remindOptionsEnabled"
       (click)="onUndoRemind($event)"
       icon="repeat"
     >

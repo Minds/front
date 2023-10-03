@@ -1,5 +1,11 @@
-import { Component, Injector, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  Injector,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
@@ -21,12 +27,25 @@ import { ComposerAudienceSelectorService } from '../../../composer/services/audi
   styleUrls: ['./remind-button.component.ng.scss'],
   providers: [ComposerService],
 })
-export class ActivityRemindButtonComponent {
+export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   count$: Observable<number> = this.service.entity$.pipe(
     map(entity => entity.reminds + entity.quotes)
   );
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
+
+  subscriptions: Subscription[] = [];
+
+  /**
+   * True if the user just reminded the post
+   */
+  justReminded: boolean = false;
+
+  /**
+   * Disable remind options before we've checked whether
+   * they've reminded already, and while reminding/undoing a remind is in progress
+   */
+  protected remindOptionsEnabled: boolean = true;
 
   constructor(
     public service: ActivityService,
@@ -39,15 +58,46 @@ export class ActivityRemindButtonComponent {
     private authModal: AuthModalService
   ) {}
 
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.service.userHasReminded$.subscribe(has => {
+        if (has === null) {
+          // Don't let the user create a new remind until we've checked
+          // whether they've already made one
+          this.remindOptionsEnabled = false;
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
+
   async getHasReminded(e: MouseEvent): Promise<void> {
-    this.service.getHasReminded();
+    if (this.session.isLoggedIn()) {
+      this.service.getHasReminded();
+    }
   }
 
   async onUndoRemind(e: MouseEvent): Promise<void> {
+    if (!this.remindOptionsEnabled) {
+      return;
+    }
+    this.remindOptionsEnabled = false;
     await this.service.undoRemind();
+    this.justReminded = false;
+    this.remindOptionsEnabled = true;
   }
 
   async onRemindClick(e: MouseEvent): Promise<void> {
+    if (!this.remindOptionsEnabled) {
+      return;
+    }
+    this.remindOptionsEnabled = false;
+
     if (!this.session.isLoggedIn()) {
       this.openAuthModal();
       return;
@@ -68,6 +118,8 @@ export class ActivityRemindButtonComponent {
     this.incrementCounter();
 
     this.toasterService.success('Post has been reminded');
+    this.justReminded = true;
+    this.remindOptionsEnabled = true;
   }
 
   /**

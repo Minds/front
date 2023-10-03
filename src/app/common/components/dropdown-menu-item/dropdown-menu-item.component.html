@@ -1,5 +1,6 @@
 <ng-template #itemTemplate>
   <li
+    (click)="onClick($event)"
     #item
     class="m-dropdownMenu__item"
     [ngClass]="{
