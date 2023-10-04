@@ -968,15 +968,6 @@ export class WireV2Service implements OnDestroy {
       return invalid();
     }
 
-    if (this.isUpgrade$.getValue() && !data.isSendingGift) {
-      if (this.upgradeType$.getValue() === 'pro' && this.userIsPro) {
-        return invalid('You are already a Pro member', true);
-      }
-      if (this.upgradeType$.getValue() === 'plus' && this.userIsPlus) {
-        return invalid('You are already a Minds+ member', true);
-      }
-    }
-
     if (data.isSendingGift) {
       if (!data.giftRecipientUsername && !data.isSelfGift) {
         return invalid(
