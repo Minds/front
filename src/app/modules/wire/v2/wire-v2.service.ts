@@ -1256,6 +1256,9 @@ export class WireV2Service implements OnDestroy {
    * @returns { GiftCardProductIdEnum } applicable gift card product id.
    */
   public getApplicableGiftCardProductId(): GiftCardProductIdEnum {
+    if (!this.isUpgrade$.getValue()) {
+      return null;
+    }
     switch (this.upgradeType$.getValue()) {
       case 'plus':
         return GiftCardProductIdEnum.Plus;
