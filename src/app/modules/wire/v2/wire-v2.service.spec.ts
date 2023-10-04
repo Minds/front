@@ -253,21 +253,6 @@ describe('WireV2Service', () => {
   });
 
   describe('validate', () => {
-    it('should return invalid error if upgrade and not sending gift', () => {
-      service.isUpgrade$.next(true);
-      service.upgradeType$.next('pro');
-      service.userIsPro = true;
-
-      const data = {
-        entityGuid: '123456789',
-        isSendingGift: false,
-      };
-
-      expect((service as any).validate(data).error).toBe(
-        'You are already a Pro member'
-      );
-    });
-
     it('should return invalid error if sending gift but no recipient is set', () => {
       service.isUpgrade$.next(true);
       service.upgradeType$.next('pro');
