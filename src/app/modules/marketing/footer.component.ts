@@ -1,43 +1,61 @@
+import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
 import {
-  ChangeDetectionStrategy,
-  Component,
-  ChangeDetectorRef,
-  OnInit,
-  HostListener,
-  Injector,
-  SkipSelf,
-  Input,
-} from '@angular/core';
-import { ConfigsService } from '../../common/services/configs.service';
-import { HelpdeskRedirectService } from '../../common/services/helpdesk-redirect.service';
+  Footer,
+  GetFooterGQL,
+  GetFooterQuery,
+} from '../../../graphql/generated.strapi';
+import { Subscription, take } from 'rxjs';
+import { ApolloQueryResult } from '@apollo/client';
+import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 
+/**
+ * Marketing footer component. Will conditionally load data from CMS if data is
+ * not provided as an input.
+ */
 @Component({
   selector: 'm-marketing__footer',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'footer.component.html',
   styleUrls: ['footer.component.ng.scss'],
 })
-export class MarketingFooterComponent {
-  readonly year: number = new Date().getFullYear();
-  @Input()
-  readonly slogan = $localize`:@@TAKE_BACK_CONTROL:Take back control of your social media`;
+export class MarketingFooterComponent implements OnInit, OnDestroy {
+  /**
+   * Footer data can be provided optionally. If not provided then data will be loaded
+   * with a new GraphQL call on component init. This provides you the option to batch
+   * the request for footer data in with other GraphQL queries for CMS data before
+   * rendering this component - passing it via an input instead of making
+   * duplicate calls for the data. This is useful for example when loading a product page,
+   * so that you do not have to make two calls - you can include the request for
+   * footer data in the query for the product page and pass it through.
+   */
+  @Input() public data: Footer;
 
-  readonly cdnAssetsUrl: string;
+  // subscriptions.
+  private getFooterSubscription: Subscription;
 
   constructor(
-    private configs: ConfigsService,
-    protected cd: ChangeDetectorRef,
-    @SkipSelf() private injector: Injector,
-    private helpdeskRedirectService: HelpdeskRedirectService
-  ) {
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    private getFooterGql: GetFooterGQL,
+    @Inject(STRAPI_URL) public readonly strapiUrl
+  ) {}
+
+  ngOnInit(): void {
+    if (!this.data) {
+      this.getFooterSubscription = this.getFooterGql
+        .fetch()
+        .pipe(take(1))
+        .subscribe((result: ApolloQueryResult<GetFooterQuery>): void => {
+          const footer: Footer = result.data.footer.data.attributes as Footer;
+
+          if (!footer) {
+            console.error('Failed to load footer');
+            return;
+          }
+
+          this.data = footer;
+        });
+    }
   }
 
-  /**
-   * Get helpdesk redirect URL from service.
-   * @returns { string } URL to redirect to for helpdesk.
-   */
-  public getHelpdeskRedirectUrl(): string {
-    return this.helpdeskRedirectService.getUrl();
+  ngOnDestroy(): void {
+    this.getFooterSubscription?.unsubscribe();
   }
 }

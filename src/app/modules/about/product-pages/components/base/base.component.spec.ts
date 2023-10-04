@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 import {
   Enum_Componentv2Productfeaturehighlight_Alignimage,
   Enum_Componentv2Productfeaturehighlight_Colorscheme,
-  V2ProductPage,
+  GetV2ProductPageBySlugQuery,
 } from '../../../../../../graphql/generated.strapi';
 import { ProductPageDynamicComponent } from '../../product-pages.types';
 import { By } from '@angular/platform-browser';
@@ -20,63 +20,85 @@ describe('ProductPageBaseComponent', () => {
   let fixture: ComponentFixture<ProductPageBaseComponent>;
 
   const defaultUrlSlug: string = 'upgrades';
-  const mockProductPage: V2ProductPage = {
-    slug: defaultUrlSlug,
-    metadata: {
-      id: '0',
-      title: 'metatitle',
+  const mockProductPage: GetV2ProductPageBySlugQuery = {
+    v2ProductPages: {
+      data: [
+        {
+          attributes: {
+            slug: defaultUrlSlug,
+            metadata: {
+              title: 'metatitle',
+            },
+            productPage: [
+              {
+                id: '0',
+                __typename: 'ComponentV2ProductHero',
+                text: 'text',
+              },
+              {
+                id: '1',
+                __typename: 'ComponentV2ProductPricingCards',
+                savingsText: 'text',
+                productPlans: { data: [] },
+              },
+              {
+                id: '2',
+                __typename: 'ComponentV2ProductFeatureTable',
+                title: 'text',
+                subtitle: 'text',
+                columns: { data: [] },
+              },
+              {
+                id: '3',
+                __typename: 'ComponentV2ProductFeatureShowcase',
+                items: [],
+              },
+              {
+                id: '4',
+                __typename: 'ComponentV2ProductBasicExplainer',
+                title: 'title',
+                body: 'body',
+                button: null,
+              },
+              {
+                id: '5',
+                __typename: 'ComponentV2ProductFeatureHighlight',
+                title: 'title',
+                body: 'body',
+                button: null,
+                colorScheme:
+                  Enum_Componentv2Productfeaturehighlight_Colorscheme.Light,
+                image: null,
+                backgroundColor: '#000',
+                alignImage:
+                  Enum_Componentv2Productfeaturehighlight_Alignimage.Left,
+              },
+              {
+                id: '6',
+                __typename: 'ComponentV2ProductClosingCta',
+                title: 'title',
+                body: 'body',
+                button: null,
+                borderImage: null,
+              },
+            ],
+          },
+        },
+      ],
     },
-    productPage: [
-      {
-        id: '0',
-        __typename: 'ComponentV2ProductHero',
-        text: 'text',
+    footer: {
+      data: {
+        attributes: {
+          __typename: 'Footer',
+          columns: [],
+          copyrightText: 'copyrightText',
+          logo: {},
+          showLanguageBar: true,
+          slogan: 'slogan',
+          bottomLinks: [],
+        },
       },
-      {
-        id: '1',
-        __typename: 'ComponentV2ProductPricingCards',
-        savingsText: 'text',
-        productPlans: { data: [] },
-      },
-      {
-        id: '2',
-        __typename: 'ComponentV2ProductFeatureTable',
-        title: 'text',
-        subtitle: 'text',
-        columns: { data: [] },
-      },
-      {
-        id: '3',
-        __typename: 'ComponentV2ProductFeatureShowcase',
-        items: [],
-      },
-      {
-        id: '4',
-        __typename: 'ComponentV2ProductBasicExplainer',
-        title: 'title',
-        body: 'body',
-        button: null,
-      },
-      {
-        id: '5',
-        __typename: 'ComponentV2ProductFeatureHighlight',
-        title: 'title',
-        body: 'body',
-        button: null,
-        colorScheme: Enum_Componentv2Productfeaturehighlight_Colorscheme.Light,
-        image: null,
-        backgroundColor: '#000',
-        alignImage: Enum_Componentv2Productfeaturehighlight_Alignimage.Left,
-      },
-      {
-        id: '6',
-        __typename: 'ComponentV2ProductClosingCta',
-        title: 'title',
-        body: 'body',
-        button: null,
-        borderImage: null,
-      },
-    ],
+    },
   };
 
   beforeEach(
@@ -182,10 +204,10 @@ describe('ProductPageBaseComponent', () => {
     expect((comp as any).pageLayoutService.useFullWidth).toHaveBeenCalled();
     expect((comp as any).service.getProductPageBySlug).toHaveBeenCalled();
     expect((comp as any).components$.getValue()).toBe(
-      mockProductPage.productPage
+      mockProductPage.v2ProductPages.data[0].attributes.productPage
     );
     expect((comp as any).strapiMetaService.apply).toHaveBeenCalledWith(
-      mockProductPage.metadata
+      mockProductPage.v2ProductPages.data[0].attributes.metadata
     );
     fixture.detectChanges();
 
@@ -221,7 +243,8 @@ describe('ProductPageBaseComponent', () => {
   it('should generate unique track by function id', () => {
     expect(
       comp.trackByFn(
-        mockProductPage.productPage[0] as ProductPageDynamicComponent
+        mockProductPage.v2ProductPages.data[0].attributes
+          .productPage[0] as ProductPageDynamicComponent
       )
     ).toBe('ComponentV2ProductHero0');
   });

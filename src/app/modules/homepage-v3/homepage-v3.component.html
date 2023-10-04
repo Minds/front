@@ -168,5 +168,5 @@
   <!-- ------------------------------------------------ -->
   <!-- FOOTER  -->
   <!-- ------------------------------------------------ -->
-  <m-marketing__footer [slogan]="data.attributes.hero.h1"></m-marketing__footer>
+  <m-marketing__footer *ngIf="footer" [data]="footer"></m-marketing__footer>
 </ng-container>

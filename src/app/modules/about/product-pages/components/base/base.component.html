@@ -44,3 +44,7 @@
     ></m-productPage__closingCta>
   </ng-container>
 </ng-container>
+<m-marketing__footer
+  *ngIf="loaded$ | async"
+  [data]="footer$ | async"
+></m-marketing__footer>
