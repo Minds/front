@@ -1,6 +1,6 @@
 <m-dropdownMenu [menu]="dropdownMenu" m-clientMeta>
   <button
-    (click)="getHasReminded($event)"
+    (click)="getUserHasReminded($event)"
     class="m-activityRemindButton__icon"
     [class.selected]="(service.isUsersRemind$ | async) || justReminded"
   >

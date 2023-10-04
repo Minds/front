@@ -10,6 +10,7 @@ import {
 import { MindsGroup, MindsUser } from '../../../interfaces/entities';
 import {
   catchError,
+  distinctUntilChanged,
   map,
   skip,
   switchMap,
@@ -17,7 +18,13 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
-import { Injectable, EventEmitter, OnDestroy, Optional } from '@angular/core';
+import {
+  Injectable,
+  EventEmitter,
+  OnDestroy,
+  Optional,
+  OnInit,
+} from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
@@ -146,6 +153,7 @@ type MetricsSubscribableEntity = { guid: string };
 
 @Injectable()
 export class ActivityService implements OnDestroy {
+  protected subscriptions: Subscription[] = [];
   readonly siteUrl: string;
 
   entity$ = new BehaviorSubject(null);
@@ -338,6 +346,7 @@ export class ActivityService implements OnDestroy {
 
   /**
    * Whether the user has reminded this post (even if this entity$ isn't the reminded post)
+   * Null until we've performed an async check
    */
   userHasReminded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
@@ -506,6 +515,9 @@ export class ActivityService implements OnDestroy {
 
   ngOnDestroy() {
     this.teardownMetricsSocketListener();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -686,43 +698,44 @@ export class ActivityService implements OnDestroy {
    * Whether the user has reminded this post OR
    * this is that remind
    */
-  public async getHasReminded(): Promise<void> {
-    combineLatest([this.entity$, this.isUsersRemind$])
-      .pipe(
-        take(1), // No need to unsubscribe from finite subscription
-        switchMap(
-          ([entity, isUsersRemind]): Observable<
-            ApiResponse | { redirect: boolean; errorMessage: any }
-          > => {
-            if (isUsersRemind) {
-              // We already know this is the user's remind, no need to ask api
-              this.userHasReminded$.next(true);
-              return null;
-            }
+  public async getUserHasReminded(): Promise<void> {
+    this.subscriptions.push(
+      combineLatest([this.entity$, this.isUsersRemind$])
+        .pipe(
+          distinctUntilChanged(),
+          switchMap(
+            ([entity, isUsersRemind]): Observable<
+              ApiResponse | { redirect: boolean; errorMessage: any }
+            > => {
+              if (isUsersRemind) {
+                // We already know this is the user's remind, no need to ask api
+                this.userHasReminded$.next(true);
+                return null;
+              }
 
-            if (!this.session.getLoggedInUser()) {
-              return null;
-            }
+              if (!this.session.getLoggedInUser()) {
+                this.userHasReminded$.next(false);
+                return null;
+              }
 
-            try {
-              // Check if the original post has been reminded by this user
-              return this.api.get(
-                `api/v3/newsfeed/activity/has-reminded/${entity.guid}`
-              );
-            } catch (err) {
-              return null;
+              try {
+                // Check if the original post has been reminded by this user
+                return this.api.get(
+                  `api/v3/newsfeed/activity/has-reminded/${entity.guid}`
+                );
+              } catch (err) {
+                return null;
+              }
             }
+          ),
+          catchError(_ => of(null))
+        )
+        .subscribe((response: ActivityHasRemindedResponse | null) => {
+          if (response) {
+            this.userHasReminded$.next(response?.has_reminded);
           }
-        ),
-        catchError(_ => of(null))
-      )
-      .subscribe((response: ActivityHasRemindedResponse | null) => {
-        if (response && response?.has_reminded) {
-          this.userHasReminded$.next(response.has_reminded);
-        } else {
-          this.userHasReminded$.next(false);
-        }
-      });
+        })
+    );
   }
 
   /**

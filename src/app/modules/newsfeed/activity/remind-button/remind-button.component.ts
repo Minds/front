@@ -5,7 +5,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
@@ -61,10 +61,12 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.service.userHasReminded$.subscribe(has => {
-        if (has === null) {
+        if (has === null && this.session.getLoggedInUser()) {
           // Don't let the user create a new remind until we've checked
           // whether they've already made one
           this.remindOptionsEnabled = false;
+        } else {
+          this.remindOptionsEnabled = true;
         }
       })
     );
@@ -76,9 +78,9 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     }
   }
 
-  async getHasReminded(e: MouseEvent): Promise<void> {
-    if (this.session.isLoggedIn()) {
-      this.service.getHasReminded();
+  async getUserHasReminded(e: MouseEvent): Promise<void> {
+    if (this.service.userHasReminded$.getValue() === null) {
+      this.service.getUserHasReminded();
     }
   }
 
@@ -93,15 +95,16 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   }
 
   async onRemindClick(e: MouseEvent): Promise<void> {
-    if (!this.remindOptionsEnabled) {
-      return;
-    }
-    this.remindOptionsEnabled = false;
-
     if (!this.session.isLoggedIn()) {
       this.openAuthModal();
       return;
     }
+
+    if (!this.remindOptionsEnabled) {
+      return;
+    }
+
+    this.remindOptionsEnabled = false;
 
     const entity = this.service.entity$.getValue();
     this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
