@@ -4,7 +4,7 @@ import {
   GetFooterGQL,
   GetFooterQuery,
 } from '../../../graphql/generated.strapi';
-import { Subscription, take } from 'rxjs';
+import { BehaviorSubject, Subscription, take } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
 
@@ -18,6 +18,11 @@ import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
   styleUrls: ['footer.component.ng.scss'],
 })
 export class MarketingFooterComponent implements OnInit, OnDestroy {
+  /** Whether data is loaded / ready */
+  public readonly loaded$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
   /**
    * Footer data can be provided optionally. If not provided then data will be loaded
    * with a new GraphQL call on component init. This provides you the option to batch
@@ -51,7 +56,10 @@ export class MarketingFooterComponent implements OnInit, OnDestroy {
           }
 
           this.data = footer;
+          this.loaded$.next(true);
         });
+    } else {
+      this.loaded$.next(true);
     }
   }
 

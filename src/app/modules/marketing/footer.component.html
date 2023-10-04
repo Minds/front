@@ -1,4 +1,7 @@
-<div class="m-marketing__footer">
+<div
+  *ngIf="loaded$ | async; else loadingSpinnerTemplate"
+  class="m-marketing__footer"
+>
   <!-- ------------------------------------------ -->
   <!-- LANGUAGE BAR -->
   <!-- ------------------------------------------ -->
@@ -74,3 +77,6 @@
     </ul>
   </div>
 </div>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
