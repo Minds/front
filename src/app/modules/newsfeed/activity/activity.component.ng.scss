@@ -86,6 +86,7 @@
   &.m-activity--minimalMode {
     padding: 0;
     border-radius: $borderRadius--activity !important;
+    overflow: hidden;
 
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary) !important;

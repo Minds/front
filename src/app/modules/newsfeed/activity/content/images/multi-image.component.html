@@ -2,14 +2,14 @@
 
 <mat-grid-list
   cols="2"
-  gutterSize="8px"
+  [gutterSize]="isMinimalMode ? '4px' : '8px'"
   rowHeight="fit"
   (click)="onClickImage($event, 0)"
 >
   <mat-grid-tile
     *ngFor="let image of images$ | async; let i = index; trackBy: trackByFn"
     [rowspan]="(count$ | async) === 3 && i === 1 ? 2 : 1"
-    class="m-border"
+    [ngClass]="{ 'm-border': !isMinimalMode }"
   >
     <!-- NOTE: the anchor wrapper is here to override the activity hover click -->
     <a class="m-activityContentMedia__link">
