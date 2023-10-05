@@ -24,9 +24,7 @@
         class="m-activityOwnerBlock__primaryName m-activityOwnerBlock__truncate m-activityOwnerBlock__ellipsis"
         [routerLink]="primaryUrl"
       >
-        <span [title]="primaryName | titlecase">{{
-          primaryName | titlecase
-        }}</span>
+        <span [title]="primaryName">{{ primaryName }}</span>
         <!-- Channel badges -->
         <ng-container
           *ngIf="!showUsernameInSecondRow"
@@ -71,9 +69,9 @@
         [routerLink]="['/', username]"
         class="m-activityOwnerBlock__secondaryName m-activityOwnerBlock__truncate m-activityOwnerBlock__ellipsis"
       >
-        <span [title]="secondaryName | titlecase">
+        <span [title]="secondaryName">
           <ng-container *ngIf="!showGroupContext">@</ng-container
-          >{{ showGroupContext ? (secondaryName | titlecase) : secondaryName }}
+          >{{ secondaryName }}
         </span>
       </a>
       <!-- Channel badges -->
