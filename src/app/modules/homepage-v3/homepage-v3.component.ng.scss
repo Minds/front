@@ -244,12 +244,6 @@
     }
   }
 
-  // ::ng-deep {
-  //   * {
-  //     outline: 1px solid red !important;
-  //   }
-  // }
-
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
@@ -257,21 +251,10 @@
 
   .m-marketing__main {
     &.m-marketing__section--style-2 {
-      background-color: red;
-
       .m-marketing__wrapper {
         .m-marketing__body {
           position: initial;
           z-index: 0;
-
-          // @media screen and (min-width: $m-grid-max-mobile) {
-          //   padding: 0 30px 30px;
-          //   margin: 0;
-          // }
-
-          // @media screen and (max-width: $m-grid-max-mobile) {
-          //   padding: 0 16px 0;
-          // }
 
           h1.m-homepage__title {
             margin-top: 0;
@@ -549,35 +532,29 @@
   }
 
   ::ng-deep {
-    m-marketing__footer {
-      background-color: #f9fafc !important;
-      border-top-color: #ebebeb !important;
-    }
-
     .m-marketingFooter__section--language + .m-marketingFooter__sep {
       display: none !important;
     }
 
-    .m-marketingFooter__sep {
-      border-color: #ebebeb !important;
+    .m-marketingFooter--dark {
+      .m-marketingFooter__logo {
+        background: url('../../../assets/logos/logo-dark-mode.svg') no-repeat
+          center left !important;
+      }
+    }
+
+    .m-marketingFooter--light {
+      .m-marketingFooter__logo {
+        background: url('../../../assets/logos/logo-light-mode.svg') no-repeat
+          center left !important;
+      }
     }
 
     .m-marketingFooter__logo {
       width: 116px;
       height: 43px;
       margin-bottom: $minds-margin * 4 !important;
-      background: url('../../../assets/logos/logo-light-mode.svg') no-repeat
-        center left !important;
       background-size: contain;
-    }
-
-    .m-languageBar__languageOptions::after {
-      background: linear-gradient(
-        90deg,
-        transparent,
-        #f9fafc,
-        #f9fafc
-      ) !important;
     }
 
     .marketingTitle__centered {
