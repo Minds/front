@@ -1,0 +1,11 @@
+<m-button
+  *ngIf="service.isOwner$ | async"
+  class="m-button-v2 m-button-v2--iconOnly"
+  title="Edit group"
+  i18n-title="@@GROUP_COMMON__EDIT_GROUP"
+  overlay="true"
+  iconOnly="true"
+  (onAction)="openEditModal()"
+>
+  <m-icon iconId="settings" [sizeFactor]="0"></m-icon>
+</m-button>

@@ -10,7 +10,9 @@
     'm-publisherCard--featured': featured,
     'm-publisherCard--hovercard': _isHovercard,
     'm-publisherCard--noBorder': noBorder,
-    'm-publisherCard--noPadding': noPadding
+    'm-publisherCard--noPadding': noPadding,
+    'm-publisherCard--curvyBorder': curvyBorder,
+    'm-publisherCard--backgroundFill': backgroundFill
   }"
 >
   <section class="m-publisherCard__inner m-publisherCard__flexRow--top">
@@ -158,7 +160,7 @@
 <!------------------------------>
 <ng-template #description>
   <span
-    *ngIf="publisher.briefdescription"
+    *ngIf="publisher.briefdescription && showDescription"
     class="m-publisherCard__description m-legible"
     [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags"
   ></span>

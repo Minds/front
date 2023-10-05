@@ -3,6 +3,11 @@
     class="m-groupActions__button--settings"
   ></m-group__settingsButton>
 
+  <m-group__editButton
+    *ngIf="service.isOwner$ | async"
+    class="m-groupActions__button--edit"
+  ></m-group__editButton>
+
   <m-group__membershipButton
     class="m-groupActions__button--membership"
     [group]="service.group$ | async"

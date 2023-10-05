@@ -103,20 +103,6 @@
 
   <div
     class="m-activityToolbarMetrics__metric"
-    *ngIf="entity['thumbs:down:count'] > 0"
-    (click)="openInteractions('votes-down')"
-  >
-    <span [@counterChange]="entity['thumbs:down:count']">{{
-      entity['thumbs:down:count']
-    }}</span>
-    <span
-      >{ entity['thumbs:down:count'], plural, =1 {downvote} other
-      {downvotes}}</span
-    >
-  </div>
-
-  <div
-    class="m-activityToolbarMetrics__metric"
     *ngIf="entity?.reminds > 0"
     (click)="openInteractions('reminds')"
   >

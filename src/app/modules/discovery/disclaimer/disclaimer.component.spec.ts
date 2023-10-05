@@ -164,46 +164,30 @@ describe('DiscoveryDisclaimerComponent', () => {
       );
     });
 
-    it('should have a link to boost page in anchor tag for expand your audience', () => {
+    it('should have a link to boost page in anchor tag for grow your audience', () => {
       const anchorTag = fixture.debugElement.query(
         By.css(
-          'm-sidebarWidget [data-ref="discovery-disclaimer-expand-your-audience"]'
+          'm-sidebarWidget [data-ref="discovery-disclaimer-grow-your-audience"]'
         )
       );
       expect(anchorTag.nativeElement.href).toBe('https://www.minds.com/boost');
     });
 
-    it('should have a link to chat in anchor tag for chat privately with friends', () => {
+    it('should have a link to upgrades page in anchor tag for get paid to create', () => {
       const anchorTag = fixture.debugElement.query(
         By.css(
-          'm-sidebarWidget [data-ref="discovery-disclaimer-chat-with-friends"]'
+          'm-sidebarWidget [data-ref="discovery-disclaimer-get-paid-to-create"]'
         )
-      );
-      expect(anchorTag.nativeElement.href).toBe('https://chat.minds.com/');
-    });
-
-    it('should have a link to change minds in anchor tag for engage with diverse opinions', () => {
-      const anchorTag = fixture.debugElement.query(
-        By.css(
-          'm-sidebarWidget [data-ref="discovery-disclaimer-engage-diverse-opinions"]'
-        )
-      );
-      expect(anchorTag.nativeElement.href).toBe('https://change.minds.com/');
-    });
-
-    it('should have a link to upgrades page in anchor tag for make money', () => {
-      const anchorTag = fixture.debugElement.query(
-        By.css('m-sidebarWidget [data-ref="discovery-disclaimer-make-money"]')
       );
       expect(anchorTag.nativeElement.href).toBe(
         'https://www.minds.com/upgrades'
       );
     });
 
-    it('should have a link to token page in anchor tag for earn crypto rewards', () => {
+    it('should have a link to token page in anchor tag for earn daily rewards', () => {
       const anchorTag = fixture.debugElement.query(
         By.css(
-          'm-sidebarWidget [data-ref="discovery-disclaimer-earn-crypto-rewards"]'
+          'm-sidebarWidget [data-ref="discovery-disclaimer-earn-daily-rewards"]'
         )
       );
       expect(anchorTag.nativeElement.href).toBe('https://www.minds.com/token');
