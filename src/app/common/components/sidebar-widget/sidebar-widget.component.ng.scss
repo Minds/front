@@ -44,8 +44,6 @@ $sidebarSpacing: $spacing4;
 
   .m-sidebarWidget__title {
     padding: $sidebarSpacing $spacing10 $sidebarSpacing * 0.5 $sidebarSpacing;
-    // padding-bottom: $sidebarSpacing * 0.5;
-    // padding-right: 40px; // Allow for dimiss
     margin: 0;
 
     @include heading4Bold;
@@ -68,14 +66,14 @@ $sidebarSpacing: $spacing4;
     }
   }
 
-  .m-sidebarWidget__body {
+  ::ng-deep .m-sidebarWidget__body {
     padding: 0 $sidebarSpacing;
     &.m-sidebarWidget__body--noPadding {
       padding: 0;
     }
   }
 
-  .m-sidebarWidget__seeMore {
+  ::ng-deep .m-sidebarWidget__seeMore {
     padding: $sidebarSpacing $sidebarSpacing 0;
     width: 100%;
     display: block;

@@ -10,17 +10,17 @@
         <a
           [routerLink]="['/', 'group', service.guid$ | async, 'latest']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'latest'"
-          i18n="@@GROUP__TAB_LABEL__DISCUSSION"
-          data-ref="m-groupToolbarTab--discussion"
-          >Discussion</a
+          i18n="@@GROUP__TAB_LABEL__LATEST"
+          data-ref="m-groupToolbarTab--latest"
+          >Latest</a
         >
       </div>
       <div class="m-tabs__tab">
         <a
           [routerLink]="['/', 'group', service.guid$ | async, 'top']"
           [class.m-tabs__tab--selected]="(service.view$ | async) === 'top'"
-          i18n="@@GROUP__TAB_LABEL__DISCUSSION"
-          data-ref="m-groupToolbarTab--discussion"
+          i18n="@@GROUP__TAB_LABEL__TOP"
+          data-ref="m-groupToolbarTab--top"
           >Top</a
         >
       </div>
