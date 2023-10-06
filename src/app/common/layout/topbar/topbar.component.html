@@ -5,6 +5,9 @@
 </ng-template>
 
 <div
+  *ngIf="{
+    isMinimalLightMode: isMinimalLightMode$ | async
+  } as templateVars"
   class="m-topbar__top"
   [class.m-topbar__top--hasAlert]="shouldShowTopbarAlert$ | async"
   [class.m-topbar__top--noBorder]="
@@ -15,6 +18,7 @@
   "
   [class.m-topbar--homepageV3]="onHomepage"
   [class.m-topbar__top--loggedOut]="!getCurrentUser()"
+  [class.m-topbar__top--minimalLightMode]="templateVars.isMinimalLightMode"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
   <m-topbarAlert *ngIf="shouldShowTopbarAlert$ | async"></m-topbarAlert>
@@ -31,33 +35,47 @@
             data-ref="topnav-logo"
             aria-label="Minds"
           >
-            <img
-              [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
-              class="m-topbar__logo--bulb"
-              alt="Minds"
-            />
-            <img
+            <ng-container
               *ngIf="
-                onHomepage
-                  ? !(isDarkTheme$ | async) &&
-                    (pageLayoutService.hasTopbarBackground$ | async)
-                  : !(isDarkTheme$ | async)
+                !templateVars.isMinimalLightMode;
+                else minimalLightModeLogoTemplate
               "
-              [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
-              class="m-topbar__logo--full"
-              alt="minds"
-            />
-            <img
-              *ngIf="
-                onHomepage
-                  ? (isDarkTheme$ | async) ||
-                    !(pageLayoutService.hasTopbarBackground$ | async)
-                  : (isDarkTheme$ | async)
-              "
-              [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
-              class="m-topbar__logo--full"
-              alt="minds"
-            />
+            >
+              <img
+                [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+                class="m-topbar__logo--bulb"
+                alt="Minds"
+              />
+              <img
+                *ngIf="
+                  onHomepage
+                    ? !(isDarkTheme$ | async) &&
+                      (pageLayoutService.hasTopbarBackground$ | async)
+                    : !(isDarkTheme$ | async)
+                "
+                [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+                class="m-topbar__logo--full"
+                alt="minds"
+              />
+              <img
+                *ngIf="
+                  onHomepage
+                    ? (isDarkTheme$ | async) ||
+                      !(pageLayoutService.hasTopbarBackground$ | async)
+                    : (isDarkTheme$ | async)
+                "
+                [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
+                class="m-topbar__logo--full"
+                alt="minds"
+              />
+            </ng-container>
+            <ng-template #minimalLightModeLogoTemplate>
+              <img
+                [src]="cdnAssetsUrl + 'assets/logos/logo-monotone-light.png'"
+                class="m-topbar__logo--full"
+                alt="minds"
+              />
+            </ng-template>
           </a>
         </h1>
         <m-environmentFlag></m-environmentFlag>
@@ -102,7 +120,7 @@
               data-ref="topnav-login"
               size="small"
               [color]="'blue'"
-              [borderless]="onHomepage"
+              [borderless]="onHomepage || templateVars.isMinimalLightMode"
             >
               Login
             </m-button>
@@ -113,10 +131,12 @@
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
               data-ref="topnav-join-now"
-              color="blue"
               size="small"
               [overlay]="
                 !(pageLayoutService.hasTopbarBackground$ | async) && onHomepage
+              "
+              [color]="
+                !templateVars.isMinimalLightMode ? 'blue' : 'black-always'
               "
               [solid]="pageLayoutService.hasTopbarBackground$ | async"
             >
