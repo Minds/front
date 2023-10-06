@@ -4,7 +4,9 @@
   </ng-container>
 
   <ng-container icons *ngIf="session.isLoggedIn()">
-    <m-topbar__walletBalance></m-topbar__walletBalance>
+    <m-topbar__walletBalance
+      *ngIf="!(isMinimalLightMode$ | async)"
+    ></m-topbar__walletBalance>
     <m-tooltip *ngIf="giftCardPurchaseExperimentIsActive">
       <m-icon
         m-tooltip--anchor
