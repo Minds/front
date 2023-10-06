@@ -7,6 +7,7 @@ type TopbarComponentT = TopbarComponent;
 @Injectable()
 export class TopbarService {
   private container: TopbarComponentT;
+
   /** Whether topbar is in minimal light mode (intended for use on dynamic product pages). */
   public readonly isMinimalLightMode$: BehaviorSubject<
     boolean
