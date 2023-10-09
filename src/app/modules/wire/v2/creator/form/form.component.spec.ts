@@ -10,7 +10,7 @@ import {
   WireV2Service,
 } from '../../wire-v2.service';
 import { MockService } from '../../../../../utils/mock';
-import { UpgradeOptionInterval } from '../../../../upgrades/upgrade-options.component';
+import { UpgradeOptionInterval } from '../../../../../common/types/upgrade-options.types';
 import { Wallet } from '../../../../wallet/components/wallet-v2.service';
 import { GiftCardProductIdEnum } from '../../../../../../graphql/generated.engine';
 

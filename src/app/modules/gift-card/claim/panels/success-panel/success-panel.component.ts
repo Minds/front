@@ -25,7 +25,7 @@ import { WireCreatorComponent } from '../../../../wire/v2/creator/wire-creator.c
 import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
 import { MindsUser } from '../../../../../interfaces/entities';
 import { GiftRecipientGiftDuration } from '../../../../wire/v2/creator/form/gift-recipient/gift-recipient-modal/gift-recipient-modal.types';
-import { UpgradeOptionInterval } from '../../../../upgrades/upgrade-options.component';
+import { UpgradeOptionInterval } from '../../../../../common/types/upgrade-options.types';
 
 /**
  * Panel shown on success of a gift card claim.

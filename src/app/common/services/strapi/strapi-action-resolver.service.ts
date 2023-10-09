@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { BlockchainMarketingLinksService } from '../../../modules/blockchain/marketing/v2/blockchain-marketing-links.service';
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { ModalRef, ModalService } from '../../../services/ux/modal.service';
+import { WirePaymentHandlersService } from '../../../modules/wire/wire-payment-handlers.service';
+import { Router } from '@angular/router';
+import { MindsUser } from '../../../interfaces/entities';
+import { WireCreatorComponent } from '../../../modules/wire/v2/creator/wire-creator.component';
+import { ToasterService } from '../toaster.service';
 
 export const STRAPI_ACTION_BUTTON_ATTRIBUTES = `
   text
@@ -29,7 +35,10 @@ export type StrapiAction =
   | 'open_composer'
   | 'open_uniswap_v2_liquidity'
   | 'open_onchain_transfer_modal'
-  | 'scroll_to_top';
+  | 'scroll_to_top'
+  | 'open_plus_upgrade_modal'
+  | 'open_pro_upgrade_modal'
+  | 'open_register_modal';
 
 // action button type.
 export type StrapiActionButton = {
@@ -43,6 +52,8 @@ export type StrapiActionButton = {
 const LOGGED_IN_ONLY_ACTIONS: StrapiAction[] = [
   'open_composer',
   'open_onchain_transfer_modal',
+  'open_plus_upgrade_modal',
+  'open_pro_upgrade_modal',
 ];
 
 /**
@@ -54,15 +65,20 @@ export class StrapiActionResolverService {
   constructor(
     private session: Session,
     private authModal: AuthModalService,
-    private links: BlockchainMarketingLinksService
+    private links: BlockchainMarketingLinksService,
+    private modalService: ModalService,
+    private wirePaymentHandlers: WirePaymentHandlersService,
+    private toaster: ToasterService,
+    private router: Router
   ) {}
 
   /**
    * Perform the related programmatic action for a given StrapiAction.
-   * @param action - strapi action.
+   * @param { StrapiAction } action - strapi action.
+   * @param { any } extraData - extra data to pass to the action handler.
    * @returns { void }
    */
-  public resolve(action: StrapiAction): void {
+  public resolve(action: StrapiAction, extraData: any = null): void {
     if (LOGGED_IN_ONLY_ACTIONS.includes(action) && !this.session.isLoggedIn()) {
       this.authModal.open({ formDisplay: 'register' });
       return;
@@ -81,9 +97,67 @@ export class StrapiActionResolverService {
       case 'scroll_to_top':
         window.scrollTo({ top: 0, behavior: 'smooth' });
         break;
+      case 'open_register_modal':
+        if (this.session.isLoggedIn()) {
+          this.toaster.warn('You are already logged in.');
+          return;
+        }
+        this.authModal.open({ formDisplay: 'register' });
+        break;
+      case 'open_plus_upgrade_modal':
+        this.openWireUpgradeModal('plus', extraData);
+        break;
+      case 'open_pro_upgrade_modal':
+        this.openWireUpgradeModal('pro', extraData);
+        break;
       default:
         console.warn('Action not yet implemented: ', action);
         break;
     }
+  }
+
+  /**
+   * Opens Wire upgrade modal.
+   * @param { 'plus' | 'pro' } upgradeType - type of the upgrade.
+   * @param { any } extraData - extra data to pass - may contain an `upgradeInterval`.
+   * @returns { Promise<void> }
+   */
+  private async openWireUpgradeModal(
+    upgradeType: 'plus' | 'pro',
+    extraData: any = {}
+  ): Promise<void> {
+    let entity: MindsUser;
+
+    switch (upgradeType) {
+      case 'plus':
+        entity = await this.wirePaymentHandlers.get('plus');
+        break;
+      case 'pro':
+        entity = await this.wirePaymentHandlers.get('pro');
+        break;
+      default:
+        throw new Error('Unsupported upgrade type: ' + upgradeType);
+    }
+
+    const modal: ModalRef<WireCreatorComponent> = this.modalService.present(
+      WireCreatorComponent,
+      {
+        size: 'lg',
+        data: {
+          entity: entity,
+          default: {
+            type: 'money',
+            upgradeType: upgradeType,
+            upgradeInterval: extraData?.['upgradeInterval'] ?? 'monthly',
+          },
+          onComplete: (result: boolean) => {
+            if (result) {
+              this.router.navigate(['/discovery/plus/']);
+              modal.close();
+            }
+          },
+        },
+      }
+    );
   }
 }

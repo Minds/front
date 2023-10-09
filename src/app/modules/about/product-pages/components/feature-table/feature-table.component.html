@@ -1,0 +1,213 @@
+<h1 class="m-productPageFeatTable__title">{{ title }}</h1>
+<h3 class="m-productPageFeatTable__subtitle">{{ subtitle }}</h3>
+
+<!-- Desktop Viewport -->
+<div class="m-productPageFeatTable__table m-productPageFeatTable__table--web">
+  <div
+    class="m-productPageFeatTable__row m-productPageFeatTable__row--headerRow"
+  >
+    <div class="m-productPageFeatTable__column">
+      <div class="m-productPageFeatTable__headerBoxSpacer"></div>
+    </div>
+    <ng-container *ngFor="let column of columns; let i = index">
+      <div class="m-productPageFeatTable__column">
+        <div
+          *ngIf="column.attributes.featTableHeader as featTableHeader"
+          class="m-productPageFeatTable__headerBox"
+        >
+          <h5 class="m-productPageFeatTable__headerBoxTitle">
+            {{ featTableHeader.title }}
+          </h5>
+          <span class="m-productPageFeatTable__headerBoxAmount"
+            ><strong>{{
+              getMonthlyPrice(column.attributes.tier)
+                | async
+                | currency: 'USD':true:'1.0-2'
+            }}</strong>
+            / month</span
+          >
+          <m-productPage__button
+            [data]="featTableHeader.button"
+          ></m-productPage__button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Sections -->
+  <div
+    class="m-productPageFeatTable__section"
+    *ngFor="
+      let section of columns[0].attributes.sections.data;
+      let sectionId = index
+    "
+  >
+    <!-- Section header -->
+    <div
+      class="m-productPageFeatTable__row m-productPageFeatTable__row--sectionHeaderRow"
+    >
+      <div class="m-productPageFeatTable__column">
+        <div
+          class="m-productPageFeatTable__tableCell m-productPageFeatTable__headerCell m-productPageFeatTable__tableCell--leftAlign"
+        >
+          {{ section.attributes.headerText }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Section content -->
+    <div
+      *ngFor="let item of section.attributes.items.data; let itemId = index"
+      class="m-productPageFeatTable__row m-productPageFeatTable__row--featureRow"
+    >
+      <div class="m-productPageFeatTable__column">
+        <div
+          class="m-productPageFeatTable__tableCell m-productPageFeatTable__tableCell--leftAlign m-productPageFeatTable__tableCell--verticalCenter"
+        >
+          {{ item.attributes.productFeature.data.attributes.featureName }}
+          <m-tooltip
+            *ngIf="
+              item.attributes.productFeature.data.attributes
+                .explainerText as explainerText
+            "
+            icon="help"
+            >{{ explainerText }}</m-tooltip
+          >
+        </div>
+      </div>
+      <div
+        *ngFor="let column of columns"
+        class="m-productPageFeatTable__column"
+      >
+        <div
+          *ngIf="
+            column.attributes.sections.data[sectionId].attributes.items.data[
+              itemId
+            ].attributes.checkbox;
+            else noCheckmarkTemplate
+          "
+          class="m-productPageFeatTable__tableCell"
+        >
+          <i class="material-icons">check_circle</i>
+        </div>
+        <ng-template #noCheckmarkTemplate>
+          <div class="m-productPageFeatTable__tableCell">
+            {{
+              column?.attributes?.sections?.data?.[sectionId]?.attributes?.items?.data?.[itemId]?.attributes?.columnText ?? '-'
+            }}
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Viewport -->
+<div
+  class="m-productPageFeatTable__table m-productPageFeatTable__table--mobile"
+  *ngIf="{ index: selectedMobileTabIndex$ | async } as mobileTab"
+>
+  <div class="m-productPageFeatTable__mobileTabContainer">
+    <div
+      *ngFor="let tab of mobileTabs"
+      class="m-productPageFeatTable__mobileTab"
+      [ngClass]="{
+        'm-productPageFeatTable__mobileTab--active':
+          tab.index === mobileTab.index
+      }"
+      (click)="onMobileTabClick(tab?.index)"
+    >
+      {{ tab.title }}
+    </div>
+  </div>
+
+  <!-- Comp table plans -->
+  <div
+    class="m-productPageFeatTable__row m-productPageFeatTable__row--headerRow"
+  >
+    <div class="m-productPageFeatTable__column">
+      <div
+        *ngIf="
+          columns[mobileTab.index].attributes.featTableHeader as featTableHeader
+        "
+        class="m-productPageFeatTable__headerBox"
+      >
+        <h5 class="m-productPageFeatTable__headerBoxTitle">
+          {{ featTableHeader.title }}
+        </h5>
+        <span class="m-productPageFeatTable__headerBoxAmount"
+          ><strong>{{
+            getMonthlyPrice(columns[mobileTab.index].attributes.tier)
+              | async
+              | currency: 'USD':true:'1.0-2'
+          }}</strong>
+          / month</span
+        >
+        <m-productPage__button
+          [data]="featTableHeader.button"
+        ></m-productPage__button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sections -->
+  <div
+    class="m-productPageFeatTable__section"
+    *ngFor="
+      let section of columns[mobileTab.index].attributes.sections.data;
+      let sectionId = index
+    "
+  >
+    <!-- Section header -->
+    <div class="m-productPageFeatTable__row">
+      <div class="m-productPageFeatTable__column">
+        <div
+          class="m-productPageFeatTable__tableCell m-productPageFeatTable__headerCell m-productPageFeatTable__tableCell--leftAlign"
+        >
+          {{ section.attributes.headerText }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Section content -->
+    <div
+      *ngFor="let item of section.attributes.items.data; let itemId = index"
+      class="m-productPageFeatTable__row m-productPageFeatTable__row--featureRow"
+    >
+      <div class="m-productPageFeatTable__column">
+        <div
+          class="m-productPageFeatTable__tableCell m-productPageFeatTable__tableCell--leftAlign m-productPageFeatTable__tableCell--verticalCenter"
+        >
+          {{ item.attributes.productFeature.data.attributes.featureName }}
+          <m-tooltip
+            *ngIf="
+              item.attributes.productFeature.data.attributes
+                .explainerText as explainerText
+            "
+            icon="help"
+            >{{ explainerText }}</m-tooltip
+          >
+        </div>
+      </div>
+      <div class="m-productPageFeatTable__column">
+        <div
+          *ngIf="
+            columns[mobileTab.index].attributes.sections.data[sectionId]
+              .attributes.items.data[itemId].attributes.checkbox;
+            else noCheckmarkTemplate
+          "
+          class="m-productPageFeatTable__tableCell"
+        >
+          <i class="material-icons">check_circle</i>
+        </div>
+        <ng-template #noCheckmarkTemplate>
+          <div class="m-productPageFeatTable__tableCell">
+            {{
+              columns[mobileTab.index]?.attributes?.sections?.data?.[sectionId]?.attributes?.items?.data?.[itemId]?.attributes?.columnText ?? '-'
+            }}
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
