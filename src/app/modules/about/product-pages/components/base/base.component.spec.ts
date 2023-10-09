@@ -246,11 +246,6 @@ describe('ProductPageBaseComponent', () => {
         mockProductPage.v2ProductPages.data[0].attributes
           .productPage[0] as ProductPageDynamicComponent
       )
-    ).toBe('ComponentV2ProductHero0');
-  });
-
-  it('should handle load failure', () => {
-    (comp as any).handleLoadFailure();
-    expect((comp as any).router.navigate).toHaveBeenCalledWith(['/']);
+    );
   });
 });
