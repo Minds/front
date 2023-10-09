@@ -1,0 +1,5 @@
+<div class="m-productBasicExplainer__container">
+  <h1 class="m-productBasicExplainer__title">{{ title }}</h1>
+  <markdown ngPreserveWhitespaces [data]="body"></markdown>
+  <m-productPage__button *ngIf="button" [data]="button"></m-productPage__button>
+</div>

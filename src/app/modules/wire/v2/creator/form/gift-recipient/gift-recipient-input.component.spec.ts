@@ -8,7 +8,7 @@ import { WireCreatorGiftRecipientInputComponent } from './gift-recipient-input.c
 import { WireUpgradeType, WireV2Service } from '../../../wire-v2.service';
 import { MockService } from '../../../../../../utils/mock';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { UpgradeOptionInterval } from '../../../../../upgrades/upgrade-options.component';
+import { UpgradeOptionInterval } from '../../../../../../common/types/upgrade-options.types';
 import { GiftRecipientModalLazyService } from './gift-recipient-modal/gift-recipient-modal-lazy.service';
 import { GiftCardProductIdEnum } from '../../../../../../../graphql/generated.engine';
 import { GiftRecipientGiftDuration } from './gift-recipient-modal/gift-recipient-modal.types';
