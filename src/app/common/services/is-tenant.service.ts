@@ -13,8 +13,6 @@ export class IsTenantService {
   }
 
   public is(): boolean {
-    return true;
-    // ojm UNCOMMENT when ready
-    // return this.isTenant;
+    return this.isTenant;
   }
 }

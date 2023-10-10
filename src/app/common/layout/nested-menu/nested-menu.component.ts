@@ -33,7 +33,9 @@ export class NestedMenuComponent implements OnInit {
   @Output() clickedBack: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
-    this.filterMenus();
+    if (this.menus) {
+      this.filterMenus();
+    }
   }
 
   /**

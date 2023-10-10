@@ -43,13 +43,11 @@ const routes: Routes = [
     path: 'upgrades',
     redirectTo: '/about/upgrades',
     pathMatch: 'full' as PathMatch,
-    canActivate: [TenantRedirectGuard],
   },
   {
     path: 'upgrade',
     redirectTo: '/about/upgrades',
     pathMatch: 'full' as PathMatch,
-    canActivate: [TenantRedirectGuard],
   },
 ];
 

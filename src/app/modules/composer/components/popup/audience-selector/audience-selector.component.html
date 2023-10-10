@@ -47,86 +47,90 @@
         <!-- ---------------------------- -->
         <!-- MINDS+ -->
         <!-- ---------------------------- -->
-        <m-selectableEntityCard
-          *ngIf="loggedInUser.plus"
-          monetization="plus"
-          (click)="onMonetizationSelect('plus')"
-          [selected]="(selectedMonetization$ | async)?.type === 'plus'"
-          data-ref="composer-audience-selector-selectable-entity-card"
-        ></m-selectableEntityCard>
+        <ng-container *mIfTenant="false">
+          <m-selectableEntityCard
+            *ngIf="loggedInUser.plus"
+            monetization="plus"
+            (click)="onMonetizationSelect('plus')"
+            [selected]="(selectedMonetization$ | async)?.type === 'plus'"
+            data-ref="composer-audience-selector-selectable-entity-card"
+          ></m-selectableEntityCard>
+        </ng-container>
       </div>
 
       <!-- ---------------------------- -->
       <!-- MEMBERSHIPS HEADER - EXPANDABLE -->
       <!-- ---------------------------- -->
-      <ng-container *ngIf="!(shareToGroupMode$ | async)">
-        <h4
-          class="m-composerPopup__subtitle"
-          (click)="toggleMembershipsExpand()"
-          data-ref="composer-audience-memberships-section"
-        >
-          <span
-            i18n="@@COMPOSER_AUDIENCE_SELECTOR__MEMBERSHIPS"
-            data-ref="composer-audience-selector-memberships-subtitle"
-            >Memberships</span
-          >
-          <ng-container
-            *ngIf="membershipsExpanded$ | async; else collapsedTemplate"
+      <ng-container *mIfTenant="false">
+        <ng-container *ngIf="!(shareToGroupMode$ | async)">
+          <h4
+            class="m-composerPopup__subtitle"
+            (click)="toggleMembershipsExpand()"
+            data-ref="composer-audience-memberships-section"
           >
             <span
-              class="material-icons"
-              data-ref="composer-audience-memberships-collapse"
-              >expand_more</span
+              i18n="@@COMPOSER_AUDIENCE_SELECTOR__MEMBERSHIPS"
+              data-ref="composer-audience-selector-memberships-subtitle"
+              >Memberships</span
             >
-          </ng-container>
-          <ng-template #collapsedTemplate>
-            <span
-              class="material-icons"
-              data-ref="composer-audience-memberships-expand"
-              >chevron_right</span
+            <ng-container
+              *ngIf="membershipsExpanded$ | async; else collapsedTemplate"
             >
-          </ng-template>
-        </h4>
-        <!-- ---------------------------- -->
-        <!-- LIST OF MEMBERSHIPS -->
-        <!-- ---------------------------- -->
-        <ng-container *ngIf="membershipsExpanded$ | async">
-          <ng-container *ngIf="(memberships$ | async).length < 1">
-            <div
-              class="m-composerAudience__emptyListNoticeContainer"
-              *ngIf="
-                monetizeService.loaded$ | async;
-                else membershipsLoadingSpinnerTemplate
-              "
-            >
-              <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__NO_MEMBERSHIPS"
-                >Looks like you don't have any membership tiers.</span
+              <span
+                class="material-icons"
+                data-ref="composer-audience-memberships-collapse"
+                >expand_more</span
               >
-              <m-button size="small" (click)="onSetupMembershipsClick()">
-                <ng-container
-                  i18n="@@COMPOSER_AUDIENCE_SELECTOR__SETUP_MEMBERSHIPS"
-                  >Setup memberships</ng-container
-                >
-              </m-button>
-            </div>
-            <ng-template #membershipsLoadingSpinnerTemplate>
-              <m-loadingSpinner
-                [inProgress]="!(monetizeService.loaded$ | async)"
-              ></m-loadingSpinner>
-            </ng-template>
-          </ng-container>
-          <div class="m-composerAudience__list">
-            <ng-container *ngFor="let membership of memberships$ | async">
-              <m-selectableEntityCard
-                [monetization]="membership"
-                (click)="onMonetizationSelect(membership)"
-                [selected]="
-                  (selectedMonetization$ | async)?.support_tier?.urn ===
-                  membership.urn
-                "
-              ></m-selectableEntityCard>
             </ng-container>
-          </div>
+            <ng-template #collapsedTemplate>
+              <span
+                class="material-icons"
+                data-ref="composer-audience-memberships-expand"
+                >chevron_right</span
+              >
+            </ng-template>
+          </h4>
+          <!-- ---------------------------- -->
+          <!-- LIST OF MEMBERSHIPS -->
+          <!-- ---------------------------- -->
+          <ng-container *ngIf="membershipsExpanded$ | async">
+            <ng-container *ngIf="(memberships$ | async).length < 1">
+              <div
+                class="m-composerAudience__emptyListNoticeContainer"
+                *ngIf="
+                  monetizeService.loaded$ | async;
+                  else membershipsLoadingSpinnerTemplate
+                "
+              >
+                <span i18n="@@COMPOSER_AUDIENCE_SELECTOR__NO_MEMBERSHIPS"
+                  >Looks like you don't have any membership tiers.</span
+                >
+                <m-button size="small" (click)="onSetupMembershipsClick()">
+                  <ng-container
+                    i18n="@@COMPOSER_AUDIENCE_SELECTOR__SETUP_MEMBERSHIPS"
+                    >Setup memberships</ng-container
+                  >
+                </m-button>
+              </div>
+              <ng-template #membershipsLoadingSpinnerTemplate>
+                <m-loadingSpinner
+                  [inProgress]="!(monetizeService.loaded$ | async)"
+                ></m-loadingSpinner>
+              </ng-template>
+            </ng-container>
+            <div class="m-composerAudience__list">
+              <ng-container *ngFor="let membership of memberships$ | async">
+                <m-selectableEntityCard
+                  [monetization]="membership"
+                  (click)="onMonetizationSelect(membership)"
+                  [selected]="
+                    (selectedMonetization$ | async)?.support_tier?.urn ===
+                    membership.urn
+                  "
+                ></m-selectableEntityCard>
+              </ng-container>
+            </div>
+          </ng-container>
         </ng-container>
       </ng-container>
 

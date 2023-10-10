@@ -12,6 +12,7 @@ import { TopbarAlertService } from './topbar-alert.service';
 import { MockService } from '../../../utils/mock';
 import { MarkdownModule } from 'ngx-markdown';
 import { AnalyticsService } from '../../../services/analytics';
+import { IsTenantService } from '../../services/is-tenant.service';
 
 describe('TopbarAlertComponent', () => {
   let comp: TopbarAlertComponent;
