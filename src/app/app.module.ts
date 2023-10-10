@@ -47,7 +47,6 @@ import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
-import { UpgradesModule } from './modules/upgrades/upgrades.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 import { CookieModule } from '@mindsorg/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
@@ -114,7 +113,6 @@ import { ValuePropModule } from './modules/value-prop/value-prop.module';
     BrandingModule,
     CommentsModule,
     JobsMarketingModule,
-    UpgradesModule,
     CodeHighlightModule,
     SharedModule,
     CompassModule,

@@ -23,7 +23,7 @@ import {
   WalletV2Service,
 } from '../../wallet/components/wallet-v2.service';
 import { WireService as WireV1Service, WireStruc } from '../wire.service';
-import { UpgradeOptionInterval } from '../../upgrades/upgrade-options.component';
+import { UpgradeOptionInterval } from '../../../common/types/upgrade-options.types';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { PlusService } from '../../plus/plus.service';
 import { ProService } from '../../pro/pro.service';

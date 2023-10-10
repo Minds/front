@@ -1,0 +1,57 @@
+@import 'defaults.scss';
+@import '../../stylesheets/product.pages.ng.scss';
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: $spacing3;
+  margin: $spacing33 $spacing30 $spacing33 $spacing30;
+
+  @media screen and (max-width: $min-tablet) {
+    margin: $spacing10 $spacing6 $spacing10 $spacing6;
+  }
+
+  .m-productBasicExplainer__container {
+    max-width: 948px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    text-align: center;
+
+    .m-productBasicExplainer__title {
+      @include productPageH1Black;
+      margin-bottom: $spacing10;
+
+      @media screen and (max-width: $min-tablet) {
+        @include heading3Bold;
+        font-weight: 900;
+      }
+    }
+
+    ::ng-deep markdown {
+      p {
+        margin-bottom: $spacing10;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body1Regular;
+        }
+      }
+
+      *:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    m-productPage__button {
+      display: block;
+      max-width: 300px;
+      width: fit-content;
+      margin-top: $spacing15;
+
+      @media screen and (max-width: $min-tablet) {
+        margin-top: $spacing6;
+      }
+    }
+  }
+}

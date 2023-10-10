@@ -1,0 +1,84 @@
+<markdown ngPreserveWhitespaces [data]="savingsText"></markdown>
+
+<div class="m-productPagePricingCards__periodSelector">
+  <span
+    class="m-productPagePricingCards__period"
+    [ngClass]="{
+      'm-productPagePricingCards__period--selected':
+        (selectedTimePeriod$ | async) === ProductPageUpgradeTimePeriod.Monthly
+    }"
+    (click)="toggleTimePeriod(ProductPageUpgradeTimePeriod.Monthly)"
+    >Monthly</span
+  >
+  <span
+    class="m-productPagePricingCards__period"
+    [ngClass]="{
+      'm-productPagePricingCards__period--selected':
+        (selectedTimePeriod$ | async) === ProductPageUpgradeTimePeriod.Annually
+    }"
+    (click)="toggleTimePeriod(ProductPageUpgradeTimePeriod.Annually)"
+    >Annually</span
+  >
+</div>
+<div class="m-productPagePricingCards__cards">
+  <div
+    *ngFor="let productPlan of productPlans"
+    class="m-productPagePricingCards__cardContainer"
+    [ngClass]="{
+      'm-productPagePricingCards__cardContainer--mostPopular':
+        productPlan.attributes.mostPopular
+    }"
+  >
+    <div
+      class="m-productPagePricingCards__mostPopularHeader"
+      *ngIf="productPlan.attributes?.mostPopular"
+    >
+      <span>Most Popular</span>
+      <m-icon from="custom" iconId="sparkles" [sizeFactor]="25"></m-icon>
+    </div>
+    <div class="m-productPagePricingCards__cardBody">
+      <h3 class="m-productPagePricingCards__cardTitle">
+        {{ productPlan.attributes.title }}
+      </h3>
+      <p class="m-productPagePricingCards__cardSubtitle">
+        {{ productPlan.attributes.subtitle }}
+      </p>
+      <p
+        class="m-productPagePricingCards__priceStartingAt"
+        [ngClass]="{
+          'm-productPagePricingCards__priceStartingAt--hidden': !productPlan
+            .attributes?.priceStartingAt
+        }"
+      >
+        Starting at
+      </p>
+      <p class="m-productPagePricingCards__cardPricing">
+        <strong>{{
+          getMonthlyPrice(productPlan.attributes.tier)
+            | async
+            | currency: 'USD':true:'1.0-2'
+        }}</strong>
+        / month
+      </p>
+      <m-productPage__button
+        [data]="productPlan.attributes.button"
+      ></m-productPage__button>
+      <div class="m-productPagePricingCards__cardPerks">
+        <p class="m-productPagePricingCards__cardPerkTitle">
+          {{ productPlan.attributes.perksTitle }}
+        </p>
+        <span
+          *ngFor="let perk of productPlan.attributes.perks"
+          class="m-productPagePricingCards__cardPerk"
+        >
+          <i class="material-icons m-productPagePricingCards__cardPerkIcon"
+            >check_circle</i
+          >
+          <span class="m-productPagePricingCards__cardPerkText">{{
+            perk.text
+          }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

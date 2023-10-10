@@ -1,0 +1,17 @@
+<fieldset
+  class="m-productClosingCta__container"
+  [ngClass]="{
+    'm-productClosingCta__container--noLegend': !borderImage
+  }"
+>
+  <legend *ngIf="borderImage">
+    <img
+      class="m-productClosingCta__borderImage"
+      [src]="strapiUrl + borderImage.url"
+      [alt]="borderImage.alternativeText ?? 'Border logo'"
+    />
+  </legend>
+  <h1 class="m-productClosingCta__title">{{ title }}</h1>
+  <markdown ngPreserveWhitespaces [data]="body"></markdown>
+  <m-productPage__button *ngIf="button" [data]="button"></m-productPage__button>
+</fieldset>

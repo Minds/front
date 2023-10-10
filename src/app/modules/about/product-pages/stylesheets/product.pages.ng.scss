@@ -1,0 +1,67 @@
+@import 'defaults.scss';
+@import './product-pages-typography.ng.scss';
+
+:host {
+  markdown {
+    ::ng-deep {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      p,
+      a {
+        @include m-theme() {
+          color: color-by-theme($m-bgColor--primary, 'dark');
+        }
+      }
+
+      h1 {
+        @include productPageH1Black;
+
+        @media screen and (max-width: $min-tablet) {
+          @include heading3Bold;
+          font-weight: 900;
+          margin-bottom: $spacing3;
+        }
+      }
+
+      h2 {
+        @include productPageH2Medium;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body1Medium;
+          margin-bottom: $spacing3;
+        }
+      }
+
+      h3 {
+        @include productPageH3Medium;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body2Regular;
+          margin-bottom: $spacing3;
+        }
+      }
+
+      h4 {
+        @include heading4Regular;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body2Regular;
+          margin-bottom: $spacing3;
+        }
+      }
+
+      h5,
+      p {
+        @include body1Regular;
+
+        @media screen and (max-width: $min-tablet) {
+          @include body3Regular;
+          margin-bottom: $spacing3;
+        }
+      }
+    }
+  }
+}

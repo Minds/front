@@ -1,0 +1,46 @@
+<ng-container *ngFor="let component of components$ | async; trackByFn">
+  <ng-container [ngSwitch]="component.__typename">
+    <m-productPage__hero
+      *ngSwitchCase="'ComponentV2ProductHero'"
+      [text]="component.text"
+    ></m-productPage__hero>
+    <m-productPage__pricingCards
+      *ngSwitchCase="'ComponentV2ProductPricingCards'"
+      [savingsText]="component.savingsText"
+      [productPlans]="component.productPlans?.data"
+    ></m-productPage__pricingCards>
+    <m-productPage__featureTable
+      *ngSwitchCase="'ComponentV2ProductFeatureTable'"
+      [title]="component.title"
+      [subtitle]="component.subtitle"
+      [columns]="component.columns.data"
+    ></m-productPage__featureTable>
+    <m-productPage__featureShowcase
+      *ngSwitchCase="'ComponentV2ProductFeatureShowcase'"
+      [featureShowcase]="component.items"
+    ></m-productPage__featureShowcase>
+    <m-productPage__basicExplainer
+      *ngSwitchCase="'ComponentV2ProductBasicExplainer'"
+      [title]="component.title"
+      [body]="component.body"
+      [button]="component.button"
+    ></m-productPage__basicExplainer>
+    <m-productPage__featureHighlight
+      *ngSwitchCase="'ComponentV2ProductFeatureHighlight'"
+      [title]="component.title"
+      [body]="component.body"
+      [button]="component.button"
+      [colorScheme]="component.colorScheme"
+      [image]="component.image?.data?.attributes"
+      [backgroundColor]="component.backgroundColor"
+      [alignImage]="component.alignImage"
+    ></m-productPage__featureHighlight>
+    <m-productPage__closingCta
+      *ngSwitchCase="'ComponentV2ProductClosingCta'"
+      [title]="component.title"
+      [body]="component.body"
+      [button]="component.button"
+      [borderImage]="component.borderImage?.data?.attributes"
+    ></m-productPage__closingCta>
+  </ng-container>
+</ng-container>
