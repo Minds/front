@@ -4,7 +4,7 @@
   </ng-container>
 
   <ng-container icons *ngIf="session.isLoggedIn()">
-    <m-topbar__walletBalance></m-topbar__walletBalance>
+    <m-topbar__walletBalance *mIfTenant="false"></m-topbar__walletBalance>
     <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
   </ng-container>
 </m-topbar>

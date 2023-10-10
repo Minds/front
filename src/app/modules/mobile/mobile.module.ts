@@ -8,11 +8,13 @@ import { MobileService } from './mobile.service';
 import { HttpClient } from '@angular/common/http';
 import { Session } from '../../services/session';
 import { MarketingModule } from '../marketing/marketing.module';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: MobileMarketingComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       title: 'Mobile App',
       description:

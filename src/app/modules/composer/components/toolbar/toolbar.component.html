@@ -4,11 +4,16 @@
   [class.m-composer__toolbar--small]="isCompactMode$ | async"
   #toolbarWrapper
 >
+  <!----------------------------------------------->
+  <!-- EMOJIS  -->
+  <!----------------------------------------------->
   <m-emojiPicker
     *ngIf="!isMobile()"
     (emojiSelect)="onEmoji($event)"
   ></m-emojiPicker>
-
+  <!----------------------------------------------->
+  <!-- FILE UPLOAD  -->
+  <!----------------------------------------------->
   <m-file-upload
     [wrapperClass]="[
       'm-composerToolbar__item',
@@ -32,7 +37,9 @@
       >Upload</span
     >
   </m-file-upload>
-
+  <!----------------------------------------------->
+  <!-- NSFW -->
+  <!----------------------------------------------->
   <a
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="(nsfw$ | async)?.length"
@@ -49,33 +56,41 @@
       >NSFW</span
     >
   </a>
-  <a
-    *ngIf="
-      !legacyPaywallEnabled &&
-      !(remind$ | async) &&
-      !(isGroupPost$ | async) &&
-      !isSupermindRequest
-    "
-    class="m-composerToolbar__item"
-    [class.m-composerToolbar__item--active]="monetization$ | async"
-    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
-    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
-    (click)="onMonetizeClick($event)"
-    data-ref="monetize-button"
-  >
-    <i
-      class="m-composerToolbarItem__icon m-composerToolbarItem__icon--monetize material-icons"
-      [class.m-animation__shimmer--icon]="showShimmer"
-      >attach_money</i
+  <!----------------------------------------------->
+  <!-- MONETIZE  -->
+  <!----------------------------------------------->
+  <ng-container *mIfTenant="false">
+    <a
+      *ngIf="
+        !legacyPaywallEnabled &&
+        !(remind$ | async) &&
+        !(isGroupPost$ | async) &&
+        !isSupermindRequest
+      "
+      class="m-composerToolbar__item"
+      [class.m-composerToolbar__item--active]="monetization$ | async"
+      [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+      [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+      (click)="onMonetizeClick($event)"
+      data-ref="monetize-button"
     >
-    <span
-      class="m-composerToolbarItem__label"
-      [class.m-animation__shimmer--text]="showShimmer"
-      [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
-      i18n="@@COMMON__MONETIZE"
-      >Monetize</span
-    >
-  </a>
+      <i
+        class="m-composerToolbarItem__icon m-composerToolbarItem__icon--monetize material-icons"
+        [class.m-animation__shimmer--icon]="showShimmer"
+        >attach_money</i
+      >
+      <span
+        class="m-composerToolbarItem__label"
+        [class.m-animation__shimmer--text]="showShimmer"
+        [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+        i18n="@@COMMON__MONETIZE"
+        >Monetize</span
+      >
+    </a>
+  </ng-container>
+  <!----------------------------------------------->
+  <!-- TAGS  -->
+  <!----------------------------------------------->
 
   <a
     class="m-composerToolbar__item"
@@ -98,29 +113,36 @@
       >Tags</span
     >
   </a>
-
-  <a
-    *ngIf="canCreateSupermindRequest$ | async"
-    class="m-composerToolbar__item"
-    [class.m-composerToolbar__item--active]="isSupermindRequest"
-    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
-    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
-    (click)="onSupermindClick($event)"
-    data-ref="supermind-create--button"
-  >
-    <m-icon
-      class="m-composerToolbarItem__icon"
-      from="md"
-      iconId="tips_and_updates"
-      [sizeFactor]="25"
-    ></m-icon>
-    <span
-      class="m-composerToolbarItem__label"
-      [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
-      i18n="@@COMMON__SUPERMIND"
-      >Supermind</span
+  <!----------------------------------------------->
+  <!-- SUPERMIND  -->
+  <!----------------------------------------------->
+  <ng-container *mIfTenant="false">
+    <a
+      *ngIf="canCreateSupermindRequest$ | async"
+      class="m-composerToolbar__item"
+      [class.m-composerToolbar__item--active]="isSupermindRequest"
+      [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+      [class.m-composerToolbar__item--small]="isCompactMode$ | async"
+      (click)="onSupermindClick($event)"
+      data-ref="supermind-create--button"
     >
-  </a>
+      <m-icon
+        class="m-composerToolbarItem__icon"
+        from="md"
+        iconId="tips_and_updates"
+        [sizeFactor]="25"
+      ></m-icon>
+      <span
+        class="m-composerToolbarItem__label"
+        [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+        i18n="@@COMMON__SUPERMIND"
+        >Supermind</span
+      >
+    </a>
+  </ng-container>
+  <!----------------------------------------------->
+  <!-- LIVE STREAM  -->
+  <!----------------------------------------------->
   <ng-container *ngIf="shouldShowLivestreamButton">
     <a class="m-composerToolbar__item" (click)="createLiveStream()">
       <m-icon class="m-composerToolbarItem__icon" iconId="videocam"></m-icon>
@@ -129,7 +151,9 @@
       >
     </a>
   </ng-container>
-
+  <!----------------------------------------------->
+  <!-- POST  -->
+  <!----------------------------------------------->
   <span class="m-composerToolbar__itemSpacer"></span>
   <m-button
     class="m-composerToolbar__action m-composerToolbar__action--post"

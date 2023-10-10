@@ -19,6 +19,7 @@ import {
   BlogSlugModuleLazyRoutes,
 } from './modules/blogs/blog.lazy';
 import { PathMatch } from './common/types/angular.types';
+import { TenantRedirectGuard } from './common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -56,6 +57,6 @@ const routes: Routes = [
     }),
   ],
   exports: [RouterModule],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/' }, TenantRedirectGuard],
 })
 export class AppRoutingModule {}

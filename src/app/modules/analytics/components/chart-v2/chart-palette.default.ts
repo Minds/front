@@ -11,19 +11,19 @@ const chartPalette = {
   themeMaps: [
     {
       id: 'm-bgColor--primary',
-      themeMap: ['#ffffff', '#1F252C'],
+      themeMap: ['#ffffff', '#1c1d1f'],
     },
     {
       id: 'm-borderColor--primary',
-      themeMap: ['#d3dbe3', '#414c57'],
+      themeMap: ['#d3dbe3', '#53565a'],
     },
     {
       id: 'm-borderColor--secondary',
-      themeMap: ['#E7EFF7', '#2C363A'], // m-borderColor--primary +/- 8%
+      themeMap: ['#E7EFF7', '#494c50'], // m- borderColor--primary + /- 8%
     },
     {
       id: 'm-textColor--tertiary',
-      themeMap: ['#9b9b9b', '#797b82'],
+      themeMap: ['#9b9b9b', '#a1a5ab'],
     },
     {
       id: 'm-white',

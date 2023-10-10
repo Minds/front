@@ -10,11 +10,13 @@ import { PlusVerifyComponent } from './verify/verify.component';
 import { PlusService } from './plus.service';
 import { MarketingModule } from '../marketing/marketing.module';
 import { MarkdownModule } from 'ngx-markdown';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 const plusRoutes: Routes = [
   {
     path: 'plus',
     component: PlusMarketingComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       preventLayoutReset: true,
     },

@@ -15,12 +15,14 @@ import { WireV2Module } from './v2/wire-v2.module';
 import { WireModalService } from './wire-modal.service';
 import { MarketingModule } from '../marketing/marketing.module';
 import { MarkdownModule } from 'ngx-markdown';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 const wireRoutes: Routes = [
   { path: 'wire', redirectTo: 'pay' },
   {
     path: 'pay',
     component: PayMarketingComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       preventLayoutReset: true,
     },

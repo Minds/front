@@ -4,11 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { HomepageV3Module } from '../homepage-v3/homepage-v3.module';
 import { HomepageV3Component } from '../homepage-v3/homepage-v3.component';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   {
     path: 'about',
     component: HomepageV3Component,
+    canActivate: [TenantRedirectGuard],
     data: {
       title: 'About',
       description:

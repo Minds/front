@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { ConfigsService } from '../../common/services/configs.service';
 import { HelpdeskRedirectService } from '../../common/services/helpdesk-redirect.service';
-
 @Component({
   selector: 'm-marketing__footer',
   changeDetection: ChangeDetectionStrategy.OnPush,

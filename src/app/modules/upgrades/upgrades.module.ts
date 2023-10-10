@@ -9,12 +9,18 @@ import { UpgradeOptionsComponent } from './upgrade-options.component';
 import { BuyTokensComponent } from './buy-tokens.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { PathMatch } from '../../common/types/angular.types';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 export const routes: Routes = [
-  { path: 'upgrade', pathMatch: 'full' as PathMatch, redirectTo: 'upgrades' },
+  {
+    path: 'upgrade',
+    pathMatch: 'full' as PathMatch,
+    redirectTo: 'upgrades',
+  },
   {
     path: 'upgrades',
     component: UpgradesComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       title: 'Upgrade your social media experience',
       description:
