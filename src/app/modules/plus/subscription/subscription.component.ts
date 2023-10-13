@@ -15,7 +15,7 @@ import { WirePaymentHandlersService } from '../../wire/wire-payment-handlers.ser
 import {
   UpgradeOptionCurrency,
   UpgradeOptionInterval,
-} from '../../upgrades/upgrade-options.component';
+} from '../../../common/types/upgrade-options.types';
 import currency from '../../../helpers/currency';
 import { Location } from '@angular/common';
 import { ConfigsService } from '../../../common/services/configs.service';

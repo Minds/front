@@ -1,0 +1,146 @@
+@import 'defaults.scss';
+@import '../../../../../common/layout/layout.scss';
+@import '../../stylesheets/product-pages-typography.ng.scss';
+@import '../../stylesheets/product.pages.ng.scss';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 100vh;
+
+  @media screen and (max-width: $min-tablet) {
+    flex-direction: column;
+    padding: $spacing10 $spacing6;
+    box-sizing: border-box;
+  }
+
+  &.m-productPageFeatHighlight__host--left {
+    flex-direction: row-reverse;
+
+    @media screen and (max-width: $min-tablet) {
+      flex-direction: column;
+    }
+    .m-productPageFeatHighlight__bodyContainer {
+      .m-productPageFeatHighlight__bodyContent {
+        align-self: flex-start;
+
+        @media screen and (max-width: $min-tablet) {
+          align-self: center;
+        }
+      }
+    }
+  }
+
+  &.m-productPageFeatHighlight__host--right {
+    .m-productPageFeatHighlight__bodyContainer {
+      .m-productPageFeatHighlight__bodyContent {
+        align-self: flex-end;
+
+        @media screen and (max-width: $min-tablet) {
+          align-self: center;
+        }
+      }
+    }
+  }
+
+  &.m-productPageFeatHighlight__host--dark {
+    .m-productPageFeatHighlight__bodyContainer {
+      .m-productPageFeatHighlight__bodyContent {
+        h1 {
+          @include m-theme() {
+            color: color-by-theme($m-white-always, 'dark');
+          }
+        }
+
+        ::ng-deep markdown *,
+        ::ng-deep markdown a {
+          @include m-theme() {
+            color: color-by-theme($m-textColor--primary, 'dark') !important;
+          }
+        }
+      }
+    }
+  }
+
+  &.m-productPageFeatHighlight__host--light {
+    .m-productPageFeatHighlight__bodyContainer {
+      .m-productPageFeatHighlight__bodyContent,
+      ::ng-deep markdown a {
+        @include m-theme() {
+          color: color-by-theme($m-bgColor--primary, 'dark') !important;
+        }
+      }
+    }
+  }
+
+  .m-productPageFeatHighlight__bodyContainer {
+    height: 100%;
+    width: 50%;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: $min-tablet) {
+      width: 100%;
+      height: unset;
+    }
+
+    .m-productPageFeatHighlight__bodyContent {
+      max-width: 70%;
+
+      @media screen and (max-width: $min-tablet) {
+        max-width: unset;
+      }
+
+      h1 {
+        @include productPageH1Black;
+        margin-bottom: $spacing6;
+
+        @media screen and (max-width: $min-tablet) {
+          @include heading3Bold;
+          font-weight: 900;
+          margin-bottom: $spacing4;
+        }
+      }
+
+      m-productPage__button {
+        display: block;
+        width: fit-content;
+        margin-top: $spacing8;
+
+        @media screen and (max-width: $min-tablet) {
+          margin-top: $spacing6;
+        }
+      }
+
+      markdown ::ng-deep p {
+        @include body1Regular;
+      }
+    }
+  }
+
+  .m-productPageFeatHighlight__imageContainer {
+    height: 100%;
+    width: 50%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 $spacing20 0 $spacing20;
+
+    @media screen and (max-width: $min-tablet) {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+    }
+
+    .m-productPageFeatHighlight__image {
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+}

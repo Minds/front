@@ -12,7 +12,7 @@ import { WireService as WireV1Service } from '../wire.service';
 import { lastValueFrom, of } from 'rxjs';
 import { GiftCardService } from '../../gift-card/gift-card.service';
 import { GiftCardProductIdEnum } from '../../../../graphql/generated.engine';
-import { UpgradeOptionInterval } from '../../upgrades/upgrade-options.component';
+import { UpgradeOptionInterval } from '../../../common/types/upgrade-options.types';
 
 describe('WireV2Service', () => {
   let service: WireV2Service;

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  HostBinding,
   Output,
 } from '@angular/core';
 import { map, take } from 'rxjs/operators';
@@ -24,6 +25,11 @@ export class ActivityMultiImageComponent {
   entity$ = this.service.entity$.pipe(take(1));
 
   constructor(public service: ActivityService) {}
+
+  @HostBinding('class.m-activityMultiImage--minimalMode')
+  get isMinimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
 
   onClickImage($event, index: number = 0): void {
     $event.preventDefault();
