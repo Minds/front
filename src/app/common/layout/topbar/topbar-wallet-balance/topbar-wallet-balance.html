@@ -8,19 +8,16 @@
     <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
     {{ formatTokens(tokenBalance) }}
   </div>
-  <div class="m-topbar__walletBalance__usd">
-    ${{ formatUSD(usdBalance) }}
-  </div>
 </a>
 
 <a
-  class="m-topbar__walletBalance"
+  class="m-topbar__walletBalance m-topbarWrapper__giftIcon--isConnected"
   (click)="connectWallet($event)"
   data-ref="topnav-connect-wallet"
   *ngIf="!isConnected"
 >
   <div class="m-topbar__walletBalance__connect">
-    <m-icon iconId="add_circle" m-tooltip--icon></m-icon>
+    <m-icon iconId="add_circle_outline" m-tooltip--icon></m-icon>
     <span i18n="@@MARKETING__CONNECT_WALLET">Connect Wallet</span>
   </div>
 </a>

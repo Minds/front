@@ -10,4 +10,24 @@
       display: none;
     }
   }
+
+  .m-topbarWrapper__giftIcon {
+    cursor: pointer;
+    @include unselectable;
+
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
+
+    ::ng-deep svg path {
+      @include m-theme() {
+        fill: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  m-notifications--topbar-toggle {
+    // optical alignment fix.
+    margin-top: calc($spacing1 / 2);
+  }
 }
