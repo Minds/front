@@ -78,7 +78,9 @@ export class ThemeService {
    * Emits an events that others can listen to
    */
   emitThemePreference(): void {
-    const themeConfig: ThemeConfig = this.configs.get<ThemeConfig>('theme');
+    const themeConfig: ThemeConfig = this.configs.get<ThemeConfig>(
+      'theme_override'
+    );
 
     let shouldBeDark: boolean = false;
     if (themeConfig && this.isTenantNetwork) {

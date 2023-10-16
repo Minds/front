@@ -16,7 +16,7 @@ export class ThemeColorChangeService {
    */
   public changeFromConfig(themeConfig: ThemeConfig = null): void {
     if (!themeConfig) {
-      themeConfig = this.configs.get<ThemeConfig>('theme');
+      themeConfig = this.configs.get<ThemeConfig>('theme_override');
     }
     if (themeConfig.primary_color) {
       this.changePrimaryAccent(themeConfig.primary_color);
