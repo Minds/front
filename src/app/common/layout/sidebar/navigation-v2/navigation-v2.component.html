@@ -16,14 +16,8 @@
           [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
         />
         <ng-container *ngIf="layoutMode === 'phone'">
-          <img
-            *ngIf="!isDarkTheme"
-            [src]="cdnAssetsUrl + 'assets/logos/medium-production.png'"
-          />
-          <img
-            *ngIf="isDarkTheme"
-            [src]="cdnAssetsUrl + 'assets/logos/medium-white.png'"
-          />
+          <img *ngIf="!isDarkTheme" [src]="getLogoSrc$('light') | async" />
+          <img *ngIf="isDarkTheme" [src]="getLogoSrc$('dark') | async" />
         </ng-container>
         <m-environmentFlag
           class="m-sidebarNavigation__environmentFlag"
@@ -205,6 +199,29 @@
                 class="m-sidebarNavigationItem__text m-legible"
                 i18n="@@COMMON__GROUPS"
                 >Groups</span
+              >
+            </div>
+          </a>
+        </li>
+      </ng-container>
+
+      <!-- Network -->
+      <ng-container *ngIf="isAdmin() && isTenantNetwork">
+        <li
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--network"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        >
+          <a
+            [routerLink]="['/network/admin']"
+            (click)="toggle()"
+            data-ref="sidenav-network"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">dashboard</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__GROUPS"
+                >Admin</span
               >
             </div>
           </a>

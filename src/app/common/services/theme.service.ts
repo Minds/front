@@ -10,6 +10,10 @@ import { Session } from '../../services/session';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
 import { MetaService } from './meta.service';
+import { ConfigsService } from './configs.service';
+import { ThemeColorChangeService } from './theme-color-change.service';
+import { MultiTenantColorScheme } from '../../../graphql/generated.engine';
+import { ThemeConfig } from '../types/theme-config.types';
 
 @Injectable()
 export class ThemeService {
@@ -27,7 +31,9 @@ export class ThemeService {
     private session: Session,
     @Inject(PLATFORM_ID) private platformId,
     @Inject(DOCUMENT) private dom,
-    private metaService: MetaService
+    private themeColorChangeService: ThemeColorChangeService,
+    private metaService: MetaService,
+    private configs: ConfigsService
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
     this.isDarkSubscription = this.isDark$.subscribe(isDark => {
@@ -69,11 +75,17 @@ export class ThemeService {
    * Emits an events that others can listen to
    */
   emitThemePreference(): void {
+    const themeConfig: ThemeConfig = this.configs.get<ThemeConfig>('theme');
     const shouldBeDark: boolean =
       this.session.isLoggedIn() &&
-      this.session.getLoggedInUser().theme === 'dark';
+      (this.session.getLoggedInUser().theme === 'dark' ||
+        themeConfig?.color_scheme === MultiTenantColorScheme.Dark);
     this.isDark$.next(shouldBeDark);
     this.metaService.setThemeColor(shouldBeDark);
+
+    if (themeConfig) {
+      this.themeColorChangeService.changeFromConfig(themeConfig);
+    }
   }
 
   toggleTheme(): void {

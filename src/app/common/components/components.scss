@@ -67,7 +67,7 @@ minds-button-thumbs-down {
   }
   .selected:hover {
     @include m-theme() {
-      color: rgba(themed($m-blue--contrast), 0.9) !important;
+      color: themed($m-blue--contrast) !important;
     }
   }
 }
@@ -826,7 +826,7 @@ minds-activity-preview {
 
     &:hover {
       @include m-theme() {
-        color: rgba(themed($m-blue--contrast), 0.9) !important;
+        color: themed($m-blue--contrast) !important;
       }
     }
   }

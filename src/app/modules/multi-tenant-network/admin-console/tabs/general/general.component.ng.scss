@@ -1,0 +1,70 @@
+@import 'defaults.scss';
+
+:host {
+  max-width: 700px;
+
+  .m-networkAdminGeneral__copyInviteLinkContainer {
+    margin: $spacing8 0 $spacing16 0;
+
+    .m-networkAdminGeneral__copyInviteLinkTitle {
+      @include heading4Regular;
+      margin-bottom: 4px;
+    }
+
+    .m-networkAdminGeneral__copyInviteLinkBody {
+      margin-bottom: $spacing8;
+
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-networkAdminGeneral__copyInviteLinkButton {
+      display: flex;
+      border-radius: 50px;
+      padding: $spacing3 $spacing6;
+      align-items: center;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+
+      @include m-theme() {
+        background: themed($m-borderColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+
+        &:hover {
+          background: darken(themed($m-borderColor--primary), 4%);
+          border: 1px solid darken(themed($m-borderColor--primary), 4%);
+        }
+
+        // mousedown
+        &:active:hover {
+          background: darken(themed($m-borderColor--primary), 8%);
+          border: 1px solid darken(themed($m-borderColor--primary), 8%);
+        }
+      }
+
+      .m-networkAdminGeneral__copyInviteLinkButtonIcon {
+        font-size: 16px;
+        margin-right: $spacing3;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      .m-networkAdminGeneral__copyInviteLinkButtonText {
+        @include heading4Bold;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-networkAdminGeneral__saveButton {
+    display: block;
+    margin: $spacing8 0;
+  }
+}
