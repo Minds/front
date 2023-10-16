@@ -14,6 +14,7 @@ import { ConfigsService } from './configs.service';
 import { ThemeColorChangeService } from './theme-color-change.service';
 import { MultiTenantColorScheme } from '../../../graphql/generated.engine';
 import { ThemeConfig } from '../types/theme-config.types';
+import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
 
 @Injectable()
 export class ThemeService {
@@ -31,6 +32,7 @@ export class ThemeService {
     private session: Session,
     @Inject(PLATFORM_ID) private platformId,
     @Inject(DOCUMENT) private dom,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork,
     private themeColorChangeService: ThemeColorChangeService,
     private metaService: MetaService,
     private configs: ConfigsService
@@ -56,6 +58,7 @@ export class ThemeService {
    * Toggles, saves and emits theme change
    */
   toggleUserThemePreference(): void {
+    if (this.isTenantNetwork) return;
     if (this.isDark$.value) {
       this.client.post('api/v2/settings/theme', {
         theme: 'light',
@@ -76,10 +79,15 @@ export class ThemeService {
    */
   emitThemePreference(): void {
     const themeConfig: ThemeConfig = this.configs.get<ThemeConfig>('theme');
-    const shouldBeDark: boolean =
-      this.session.isLoggedIn() &&
-      (this.session.getLoggedInUser().theme === 'dark' ||
-        themeConfig?.color_scheme === MultiTenantColorScheme.Dark);
+
+    let shouldBeDark: boolean = false;
+    if (themeConfig && this.isTenantNetwork) {
+      shouldBeDark = themeConfig?.color_scheme === MultiTenantColorScheme.Dark;
+    } else {
+      shouldBeDark =
+        this.session.isLoggedIn() &&
+        this.session.getLoggedInUser().theme === 'dark';
+    }
     this.isDark$.next(shouldBeDark);
     this.metaService.setThemeColor(shouldBeDark);
 
@@ -89,6 +97,7 @@ export class ThemeService {
   }
 
   toggleTheme(): void {
+    if (this.isTenantNetwork) return;
     this.isDark$.next(!this.isDark$.value);
     this.renderTheme();
   }
