@@ -180,20 +180,32 @@ export class NetworkAdminConsoleAppearanceComponent
    * @returns { void }
    */
   public onSubmit(): void {
+    let requests: Observable<HttpEvent<ApiResponse> | boolean>[] = [];
+
     // get list of requests for images to upload.
     let uploadRequests: Observable<
       HttpEvent<ApiResponse>
     >[] = this.buildFileUploadRequests();
+
+    if (uploadRequests.length) {
+      requests.push(...uploadRequests);
+    }
+
     // build request to update config endpoint.
     let updateConfigRequest: Observable<boolean> = this.buildUpdateConfigRequest();
+
+    if (updateConfigRequest) {
+      requests.push(updateConfigRequest);
+    }
+
+    if (!requests.length) {
+      return;
+    }
 
     this.savingInProgress$.next(true);
 
     // fire requests in parralel.
-    this.submitDataSubscription = forkJoin([
-      updateConfigRequest,
-      ...uploadRequests,
-    ])
+    this.submitDataSubscription = forkJoin(requests)
       .pipe(
         take(1),
         catchError(
@@ -287,6 +299,17 @@ export class NetworkAdminConsoleAppearanceComponent
   }
 
   /**
+   * Called when a color scheme container is clicked.
+   * @param { MultiTenantColorScheme } colorScheme - color scheme to set.
+   */
+  public onColorSchemeContainerClick(
+    colorScheme: MultiTenantColorScheme
+  ): void {
+    this.colorSchemeFormControl.setValue(colorScheme);
+    this.colorSchemeFormControl.markAsDirty();
+  }
+
+  /**
    * Builds a list of requests to upload files that have been changed / are
    * queued for upload in UI.
    * @returns { Observable<HttpEvent<ApiResponse>>[] } - array of observable requests.
@@ -332,18 +355,9 @@ export class NetworkAdminConsoleAppearanceComponent
       variables.primaryColor = this.primaryColorHexFormControl.value;
     }
 
-    return this.multiTenantConfigService.updateConfig(variables);
-  }
-
-  /**
-   * Called when a color scheme container is clicked.
-   * @param { MultiTenantColorScheme } colorScheme - color scheme to set.
-   */
-  public onColorSchemeContainerClick(
-    colorScheme: MultiTenantColorScheme
-  ): void {
-    this.colorSchemeFormControl.setValue(colorScheme);
-    this.colorSchemeFormControl.markAsDirty();
+    return Object.keys(variables).length
+      ? this.multiTenantConfigService.updateConfig(variables)
+      : null;
   }
 
   /**

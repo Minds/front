@@ -95,7 +95,7 @@ export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const siteName: string = this.formGroup.get('networkName').value;
+    const siteName: string = this.networkNameFormControl.value;
 
     this.savingInProgress$.next(true);
     const success = await lastValueFrom(
