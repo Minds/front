@@ -14,7 +14,8 @@
 
     h3 {
       @include heading3Bold;
-      margin: $spacing8 $spacing8 $spacing6 $spacing8;
+      padding: $spacing8 $spacing8 $spacing6 $spacing8;
+      margin: unset;
     }
   }
 }
