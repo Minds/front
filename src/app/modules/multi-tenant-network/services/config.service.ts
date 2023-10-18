@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   GetMultiTenantConfigGQL,
   GetMultiTenantConfigQuery,
@@ -12,6 +12,7 @@ import { ApolloQueryResult } from '@apollo/client';
 import {
   BehaviorSubject,
   Observable,
+  Subscription,
   catchError,
   map,
   of,
@@ -25,7 +26,7 @@ import { ThemeService } from '../../../common/services/theme.service';
  * Service for fetching and updating multi-tenant network config.
  */
 @Injectable({ providedIn: 'root' })
-export class MultiTenantNetworkConfigService {
+export class MultiTenantNetworkConfigService implements OnDestroy {
   /** Subject to store config values. */
   public readonly config$: BehaviorSubject<
     MultiTenantConfig
@@ -36,6 +37,8 @@ export class MultiTenantNetworkConfigService {
     boolean
   >(false);
 
+  private configFetchSubscription: Subscription;
+
   constructor(
     private getMultiTenantConfigGQL: GetMultiTenantConfigGQL,
     private setMultiTenantConfigGQL: SetMultiTenantConfigGQL,
@@ -43,15 +46,27 @@ export class MultiTenantNetworkConfigService {
     private themeColorChangeService: ThemeColorChangeService
   ) {}
 
+  ngOnDestroy(): void {
+    this.configFetchSubscription?.unsubscribe();
+  }
+
   /**
    * Fetches config from server and updates local state.
    * @returns { void }
    */
   public fetchConfig(): void {
-    this.getConfig().subscribe((config: MultiTenantConfig): void => {
-      this.configLoaded$.next(true);
-      this.config$.next(config);
-    });
+    if (this.configFetchSubscription) {
+      console.warn(
+        'A request to load multi-tenant config is already in progress'
+      );
+      return;
+    }
+    this.configFetchSubscription = this.getConfig().subscribe(
+      (config: MultiTenantConfig): void => {
+        this.configLoaded$.next(true);
+        this.config$.next(config);
+      }
+    );
   }
 
   /**
