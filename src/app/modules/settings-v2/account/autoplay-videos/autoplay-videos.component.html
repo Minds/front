@@ -7,12 +7,6 @@
     i18n="@@AUTOPLAY_VIDEOS__CONTROL_AUTOPLAY_INFORMATION"
   >
     Control whether videos in your feed play automatically.
-    <ng-container *ngIf="!isPlus"
-      ><br /><br />This feature is only available to Plus users.
-      <a class="m-form__upgradeLink" routerLink="/plus" *ngIf="!isPlus"
-        >Upgrade to Plus</a
-      ></ng-container
-    >
   </div>
 </m-settingsV2__header>
 
@@ -35,7 +29,7 @@
             formControlName="autoplay_videos"
             class="form-control"
             data-ref="m-settingsAutoplay__checkbox--videos"
-            [readonly]="inProgress || !init || !isPlus"
+            [readonly]="inProgress || !init"
           />
           <span class="m-form__customInput__checkbox"></span>
         </label>
