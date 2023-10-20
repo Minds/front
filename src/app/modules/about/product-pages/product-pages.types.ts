@@ -33,7 +33,7 @@ export type ProductPageUpgradesConfig = {
       usd: number;
     };
   };
-  networks_team: {
+  networks_team?: {
     monthly: {
       usd: number;
     };
@@ -41,7 +41,7 @@ export type ProductPageUpgradesConfig = {
       usd: number;
     };
   };
-  networks_community: {
+  networks_community?: {
     monthly: {
       usd: number;
     };
@@ -49,7 +49,7 @@ export type ProductPageUpgradesConfig = {
       usd: number;
     };
   };
-  networks_enterprise: {
+  networks_enterprise?: {
     monthly: {
       usd: number;
     };
