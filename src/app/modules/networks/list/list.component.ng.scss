@@ -1,0 +1,134 @@
+@import 'defaults.scss';
+@import '../../../common//layout/layout.scss';
+
+:host {
+  display: block;
+  height: 100vh;
+  @include borderRight;
+
+  .m-networksList__title {
+    @include heading3Bold;
+    margin: 0;
+    padding: $spacing8 $spacing8 $spacing7;
+
+    @media screen and (max-width: $min-tablet) {
+      padding: $spacing5;
+    }
+  }
+
+  .m-networksList__item {
+    padding: $spacing4 $spacing8;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    @include borderBottom;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      padding: $spacing4 $spacing5;
+      flex-flow: column wrap;
+      align-items: flex-start;
+    }
+
+    &.m-networksList__item--pending {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      .m-networksListItem__name {
+        @include body1Regular;
+      }
+
+      .m-networksListItem__actions {
+        @media screen and (max-width: $min-tablet) {
+          flex-direction: column-reverse;
+
+          ::ng-deep m-button {
+            margin-left: 0 !important;
+          }
+        }
+
+        > span {
+          @include body3Regular;
+          text-align: right;
+
+          @media screen and (max-width: $layoutMax2ColWidth) {
+            max-width: 200px;
+          }
+          @media screen and (max-width: $min-tablet) {
+            margin-top: $spacing4;
+            text-align: center;
+            max-width: unset;
+          }
+        }
+      }
+    }
+
+    .m-networksListItem__infoContainer {
+      max-width: calc(100% - 330px); // the width of the 2 buttons
+
+      @media screen and (max-width: $min-tablet) {
+        max-width: 100%;
+      }
+      display: flex;
+      flex-direction: row;
+      flex-grow: 2;
+      align-items: center;
+
+      img {
+        width: $spacing10;
+        height: $spacing10;
+        min-width: $spacing10;
+        border-radius: 50%;
+        object-fit: cover;
+        box-sizing: border-box;
+        @include border;
+        @include m-theme() {
+          background: themed($m-textColor--secondary);
+        }
+        margin-right: $spacing2;
+
+        &.m-networksListItem__avatar--placeholder {
+          object-fit: contain;
+          padding: $spacing1;
+          @include m-theme() {
+            background: themed($m-white-always);
+          }
+        }
+      }
+    }
+
+    .m-networksListItem__name {
+      @include body1Bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .m-networksListItem__actions {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+
+      @media screen and (max-width: $min-tablet) {
+        margin-top: $spacing4;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      ::ng-deep m-button {
+        @media screen and (max-width: $min-tablet) {
+          width: 100%;
+          .m-button {
+            width: 100%;
+          }
+        }
+        &:last-child {
+          margin-left: $spacing4;
+        }
+      }
+    }
+  }
+}

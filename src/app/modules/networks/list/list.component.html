@@ -1,0 +1,55 @@
+<h3 class="m-networksList__title" i18n="@@NETWORKS_LIST__TITLE__YOUR_NETWORKS">
+  Your Networks
+</h3>
+<ng-container *ngFor="let network of list$ | async">
+  <div
+    class="m-networksList__item"
+    [ngClass]="{ 'm-networksList__item--pending': !network.name }"
+  >
+    <div class="m-networksListItem__infoContainer">
+      <img
+        [src]="getIconUrl(network)"
+        [ngClass]="{
+          'm-networksListItem__avatar--placeholder': !network.iconUrl
+        }"
+      />
+      <span class="m-networksListItem__name">{{
+        network.name ? network.name : 'Your new network'
+      }}</span>
+    </div>
+    <div class="m-networksListItem__actions">
+      <ng-container *ngIf="network.name">
+        <m-button
+          (click)="clickedManageBilling(network)"
+          i18n="@@NETWORKS_LIST__MANAGE_BILLING"
+          size="small"
+          data-ref="networks-list-button-manage-billing"
+          >Manage billing</m-button
+        >
+        <m-button
+          (click)="clickedGoToNetwork(network)"
+          color="blue"
+          solid="true"
+          size="small"
+          i18n="@@NETWORKS_LIST__GO_TO_NETWORK"
+          data-ref="networks-list-button-go-to-network"
+          >Go to network</m-button
+        >
+      </ng-container>
+
+      <ng-container *ngIf="!network.name">
+        <span i18n="@@NETWORKS_LIST__GET_SET_UP_DESCRIPTION"
+          >Get yourself set up with domain, network name and theme</span
+        >
+        <m-button
+          (click)="clickedSetUpNetwork(network)"
+          color="blue"
+          size="small"
+          i18n="@@NETWORKS_LIST__SET_UP_NETWORK"
+          data-ref="networks-list-button-set-up-network"
+          >Set up network</m-button
+        >
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
