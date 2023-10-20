@@ -33,6 +33,30 @@ export type ProductPageUpgradesConfig = {
       usd: number;
     };
   };
+  networks_team: {
+    monthly: {
+      usd: number;
+    };
+    yearly: {
+      usd: number;
+    };
+  };
+  networks_community: {
+    monthly: {
+      usd: number;
+    };
+    yearly: {
+      usd: number;
+    };
+  };
+  networks_enterprise: {
+    monthly: {
+      usd: number;
+    };
+    yearly: {
+      usd: number;
+    };
+  };
 };
 
 /** Mobile tab data. */
