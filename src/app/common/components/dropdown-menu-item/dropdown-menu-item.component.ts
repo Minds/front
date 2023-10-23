@@ -26,4 +26,11 @@ export class DropdownMenuItemComponent {
 
   @Input() selectable?: boolean = false;
   @Input() selected?: boolean = false;
+
+  onClick($event: MouseEvent): void {
+    if (this.disabled) {
+      $event.preventDefault;
+      $event.stopPropagation();
+    }
+  }
 }
