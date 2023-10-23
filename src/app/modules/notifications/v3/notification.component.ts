@@ -22,6 +22,7 @@ import { BoostLocation } from '../../boost/modal-v2/boost-modal-v2.types';
 import { InteractionsModalService } from '../../newsfeed/interactions-modal/interactions-modal.service';
 import { NotificationsV3Service } from './notifications-v3.service';
 import { getGiftCardProductLabelEnum } from './enums/gift-card-product-label.enum';
+import truncateString from '../../../helpers/truncate-string';
 
 @Component({
   selector: 'm-notifications__notification',
@@ -102,6 +103,7 @@ export class NotificationsV3NotificationComponent
 
       //
       case 'gift_card_recipient_notified':
+      case 'gift_card_claimed_issuer_notified':
         return;
 
       case 'affiliate_earnings_deposited':
@@ -244,6 +246,8 @@ export class NotificationsV3NotificationComponent
         return "Don't forget to review";
       case 'gift_card_recipient_notified':
         return 'sent';
+      case 'gift_card_claimed_issuer_notified':
+        return 'claimed';
       case 'affiliate_earnings_deposited':
       case 'referrer_affiliate_earnings_deposited':
         return `You earned $${this.data.amount_usd} from Minds Affiliate Program`;
@@ -260,6 +264,7 @@ export class NotificationsV3NotificationComponent
       case 'quote':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
+      case 'gift_card_claimed_issuer_notified':
         return 'your';
       case 'group_queue_reject':
         return 'your post at';
@@ -330,6 +335,10 @@ export class NotificationsV3NotificationComponent
         return `a gift for ${getGiftCardProductLabelEnum(
           this.notification.data.gift_card.productId
         )}`;
+      case 'gift_card_claimed_issuer_notified':
+        return `gift for ${getGiftCardProductLabelEnum(
+          this.notification.data.gift_card.productId
+        )}`;
     }
     switch (this.notification.entity?.type) {
       case 'comment':
@@ -382,6 +391,8 @@ export class NotificationsV3NotificationComponent
           '/gift-cards/claim/',
           this.notification.data.gift_card.claimCode,
         ];
+      case 'gift_card_claimed_issuer_notified':
+        return ['/settings/payments/payment-history'];
       case 'affiliate_earnings_deposited':
       case 'referrer_affiliate_earnings_deposited':
         return ['/wallet/cash/earnings'];
@@ -465,7 +476,20 @@ export class NotificationsV3NotificationComponent
           'username',
           this.notification.data.sender.username
         );
-        this.senderDetails.set('name', this.notification.data.sender.name);
+        this.senderDetails.set(
+          'name',
+          truncateString(this.notification.data.sender.name, 20)
+        );
+        break;
+      case 'gift_card_claimed_issuer_notified':
+        this.senderDetails.set(
+          'username',
+          this.notification.data.claimant.username
+        );
+        this.senderDetails.set(
+          'name',
+          truncateString(this.notification.data.claimant.name, 20)
+        );
         break;
       default:
         this.senderDetails.set('username', this.notification.from.username);
@@ -521,6 +545,7 @@ export class NotificationsV3NotificationComponent
       case 'supermind_expiring_soon':
         return 'tips_and_updates';
       case 'gift_card_recipient_notified':
+      case 'gift_card_claimed_issuer_notified':
         return 'redeem';
       default:
         return null;
@@ -623,37 +648,5 @@ export class NotificationsV3NotificationComponent
     const method = readableTokens === '1' ? ' token' : ' tokens';
 
     return readableTokens + method;
-  }
-
-  /**
-   * Derive boost state query parameter value from notification type.
-   * @param { string } location - boost type to derive value from.
-   * @returns  { string } query param value for matching boost state.
-   */
-  private deriveBoostStateParamValue(type: string): string {
-    switch (type) {
-      case 'boost_completed':
-        return 'completed';
-      case 'boost_accepted':
-        return 'approved';
-      default:
-        return '';
-    }
-  }
-
-  /**
-   * Derive boost location query parameter value from a given boost location.
-   * @param { string } location - location to derive value from.
-   * @returns  { string } query param value for matching location.
-   */
-  private deriveBoostLocationParamValue(location: number): string {
-    switch (location) {
-      case BoostLocation.NEWSFEED:
-        return 'newsfeed';
-      case BoostLocation.SIDEBAR:
-        return 'sidebar';
-      default:
-        return '';
-    }
   }
 }

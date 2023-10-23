@@ -47,8 +47,8 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     { label: 'Terms', routerLink: ['/p/terms'] },
     { label: 'Contact', routerLink: ['/p/contact'] },
     { label: 'Branding', routerLink: ['/branding'] },
+    { label: 'About', routerLink: ['/about'] },
   ];
-  maxFooterLinks = 4;
 
   /** Whether experiment controlling reorganization of menu items variation is active */
   public showReorgVariation: boolean = false;
@@ -136,14 +136,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
   /** Only relevant for mobile widths */
   toggleSidebar(): void {
     this.sidebarNavigationService.toggle();
-  }
-
-  toggleFooterLinks(): void {
-    if (this.maxFooterLinks === 4) {
-      this.maxFooterLinks = Infinity;
-    } else {
-      this.maxFooterLinks = 4;
-    }
   }
 
   ngOnDestroy(): void {

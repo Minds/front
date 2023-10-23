@@ -26,6 +26,7 @@ import {
 import { Apollo, gql } from 'apollo-angular';
 import { Footer } from '../../../graphql/generated.strapi';
 import * as _ from 'lodash';
+import { ThemeService } from '../../common/services/theme.service';
 
 /**
  * Home page component
@@ -57,17 +58,13 @@ export class HomepageV3Component implements OnInit {
     private authRedirectService: AuthRedirectService,
     private appPromptService: AppPromptService,
     private apollo: Apollo,
+    protected themeService: ThemeService,
     @Inject(PLATFORM_ID) protected platformId: Object,
     @Inject(SITE_URL) protected siteUrl: string,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {}
 
   ngOnInit() {
-    if (this.session.isLoggedIn()) {
-      this.router.navigate(['/newsfeed']);
-      return;
-    }
-
     this.apollo
       .use('strapi')
       .watchQuery({

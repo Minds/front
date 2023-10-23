@@ -9,7 +9,7 @@
     line-height: 22px;
 
     @include m-theme() {
-      border: 1px solid themed($m-borderColor--primary);
+      background: themed($m-bgColor--primary);
       color: themed($m-textColor--secondary);
     }
 
@@ -17,26 +17,34 @@
     font-size: 13px;
     padding: 2px;
 
-    &:hover {
-      @include m-theme() {
-        border: 1px solid themed($m-textColor--secondary) !important;
-      }
-    }
-
     m-icon {
       line-height: 22px;
+    }
+
+    &.m-topbarWrapper__giftIcon--isConnected {
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
     }
 
     &__tokens {
       display: flex;
       align-items: center;
       border-radius: 20px;
+      padding: 0 7px;
+      padding: calc($spacing1 / 2) $spacing2;
 
-      @include m-theme() {
-        background: themed($m-borderColor--primary);
+      @include m-on-theme(light) {
+        background: color-by-theme($m-borderColor--primary, 'light');
       }
 
-      padding: 0 7px;
+      @include m-on-theme(dark) {
+        background: color-by-theme($m-bgColor--secondary, 'dark');
+      }
+
+      m-icon {
+        margin-right: $spacing1;
+      }
 
       span {
         font-size: 12px;
@@ -52,14 +60,6 @@
           margin: 1px 4px 1px 1px;
           width: 16px;
         }
-      }
-    }
-
-    &__usd {
-      padding: 0 7px;
-
-      @include mobile-only {
-        display: none;
       }
     }
 
