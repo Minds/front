@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -13,6 +12,13 @@ import { Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
 import { Subscription } from 'rxjs';
 import { ToasterService } from '../../../../common/services/toaster.service';
+
+/** Entity that actions can be performed against. */
+type ActionableActivity = {
+  guid: string;
+  urn: string;
+  activity_type?: string;
+};
 
 @Component({
   selector: 'm-groups-profile__review',
@@ -141,12 +147,15 @@ export class GroupsProfileReviewComponent implements OnInit {
 
     try {
       await this.client.put(
-        `api/v1/groups/review/${this.group.guid}/${activity.guid}`
+        `api/v1/groups/review/${
+          this.group.guid
+        }/${this.getActionableActivityGuid(activity)}`
       );
 
       this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
       this.newReviewCount.emit(this.group['adminqueue:count']);
     } catch (e) {
+      console.error(e);
       this.toasterService.error((e && e.message) || 'Internal server error');
     }
   }
@@ -160,12 +169,15 @@ export class GroupsProfileReviewComponent implements OnInit {
 
     try {
       await this.client.delete(
-        `api/v1/groups/review/${this.group.guid}/${activity.guid}`
+        `api/v1/groups/review/${
+          this.group.guid
+        }/${this.getActionableActivityGuid(activity)}`
       );
 
       this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
       this.newReviewCount.emit(this.group['adminqueue:count']);
     } catch (e) {
+      console.error(e);
       this.toasterService.error((e && e.message) || 'Internal server error');
     }
   }
@@ -179,5 +191,18 @@ export class GroupsProfileReviewComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * Gets the GUID for a given activity that properly references the entity that
+   * actions should be performed against.
+   * @param { ActionableActivity } activity - activity to get guid from.
+   * @returns { string } guid of the entity to perform actions against.
+   */
+  private getActionableActivityGuid(activity: ActionableActivity): string {
+    // If it's a remind, return the guid of remind its self, located in the URN.
+    return activity.activity_type === 'remind' && activity.urn
+      ? activity.urn.split(':')?.pop() ?? activity.guid
+      : activity.guid;
   }
 }
