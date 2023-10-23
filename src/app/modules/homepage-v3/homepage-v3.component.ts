@@ -19,12 +19,13 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 import isMobileOrTablet from '../../../app/helpers/is-mobile-or-tablet';
-import { ExperimentsService } from '../experiments/experiments.service';
 import {
   SITE_URL,
   STRAPI_URL,
 } from '../../common/injection-tokens/url-injection-tokens';
 import { Apollo, gql } from 'apollo-angular';
+import { Footer } from '../../../graphql/generated.strapi';
+import * as _ from 'lodash';
 import { ThemeService } from '../../common/services/theme.service';
 
 /**
@@ -43,6 +44,7 @@ export class HomepageV3Component implements OnInit {
 
   data: any = {};
   loading = true;
+  public footer: Footer;
 
   constructor(
     public client: Client,
@@ -102,12 +104,51 @@ export class HomepageV3Component implements OnInit {
                 }
               }
             }
+            footer {
+              data {
+                attributes {
+                  logo {
+                    data {
+                      attributes {
+                        url
+                        height
+                        width
+                        alternativeText
+                      }
+                    }
+                  }
+                  showLanguageBar
+                  slogan
+                  copyrightText
+                  columns {
+                    title
+                    links {
+                      text
+                      url
+                      dataRef
+                    }
+                  }
+                  bottomLinks {
+                    text
+                    url
+                    dataRef
+                  }
+                }
+              }
+            }
           }
         `,
       })
       .valueChanges.subscribe((result: any) => {
         this.loading = result.loading;
         this.data = result.data.homepage.data;
+
+        let footer: Footer =
+          _.cloneDeep(result.data.footer?.data?.attributes) ?? null;
+        if (this.data?.attributes?.hero?.h1) {
+          footer.slogan = this.data.attributes.hero.h1;
+        }
+        this.footer = footer;
       });
 
     this.pageLayoutService.useFullWidth();

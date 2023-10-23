@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import {
   GetV2ProductPageBySlugGQL,
   GetV2ProductPageBySlugQuery,
-  V2ProductPage,
 } from '../../../../../graphql/generated.strapi';
 import { ProductPageService } from './product-page.service';
 import { of, take, throwError } from 'rxjs';
@@ -12,9 +11,6 @@ describe('ProductPageService', () => {
   let service: ProductPageService;
 
   const urlSlug: string = 'urlSlug';
-  const mockPage: V2ProductPage = {
-    slug: urlSlug,
-  };
   const mockResponse: ApolloQueryResult<GetV2ProductPageBySlugQuery> = {
     loading: false,
     networkStatus: 7,
@@ -61,11 +57,11 @@ describe('ProductPageService', () => {
       service
         .getProductPageBySlug(urlSlug)
         .pipe(take(1))
-        .subscribe((response: V2ProductPage) => {
+        .subscribe((response: GetV2ProductPageBySlugQuery) => {
           expect(
             (service as any).getV2ProductPageBySlugGQL.fetch
           ).toHaveBeenCalledWith({ slug: urlSlug });
-          expect(response).toEqual(mockPage);
+          expect(response).toEqual(mockResponse.data);
           done();
         });
     });
@@ -80,7 +76,7 @@ describe('ProductPageService', () => {
       service
         .getProductPageBySlug(urlSlug)
         .pipe(take(1))
-        .subscribe((response: V2ProductPage) => {
+        .subscribe((response: GetV2ProductPageBySlugQuery) => {
           expect(
             (service as any).getV2ProductPageBySlugGQL.fetch
           ).toHaveBeenCalledWith({ slug: urlSlug });
