@@ -36,6 +36,7 @@ import { EntityMetricsSocketService } from '../../../common/services/entity-metr
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
+import { ComposerModalService } from '../../composer/components/modal/modal.service';
 
 const TOPBAR_HEIGHT: number = 75;
 
@@ -52,6 +53,7 @@ const TOPBAR_HEIGHT: number = 75;
   providers: [
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
+    ComposerModalService,
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
     EntityMetricsSocketService,

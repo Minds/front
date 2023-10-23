@@ -1,17 +1,61 @@
-<div
-  class="m-selectableEntityCard__avatar"
-  [style.background-image]="'url(' + avatarSrc + ')'"
-  [ngClass]="{
-    'm-selectableEntityCard__avatar--selected': selected
-  }"
->
-  <span *ngIf="selected" class="material-icons">done</span>
-</div>
-<div class="m-selectableEntityCard__infoTextContainer">
-  <span class="m-selectableEntityCard__entityName">{{
-    title | truncate: 24
-  }}</span>
-  <span class="m-selectableEntityCard__entityInfo">{{
-    subtext | truncate: 24
-  }}</span>
-</div>
+<!------------------------------------>
+<!-- SELECT ENTITY -->
+<!-- (CHANNEL / GROUP) -->
+<!------------------------------------>
+<ng-container *ngIf="entity">
+  <div
+    class="m-selectableEntityCard__avatar"
+    [style.background-image]="'url(' + avatarSrc + ')'"
+    [ngClass]="{
+      'm-selectableEntityCard__avatar--selected': selected
+    }"
+  >
+    <span *ngIf="selected" class="material-icons">done</span>
+  </div>
+  <div class="m-selectableEntityCard__infoTextContainer">
+    <span class="m-selectableEntityCard__name">{{ title | truncate: 24 }}</span>
+    <span
+      class="m-selectableEntityCard__info"
+      *ngIf="this.entity && this.entity['members:count']"
+      >{{ this.entity['members:count'] | abbr: 0 }} Members</span
+    >
+  </div>
+</ng-container>
+<!------------------------------------>
+<!-- SELECT MONETIZATION -->
+<!-- (MINDS+ / MEMBERSHIP) -->
+<!------------------------------------>
+<ng-container *ngIf="!entity && monetization">
+  <div
+    class="m-selectableEntityCard__avatar"
+    [ngClass]="{
+      'm-selectableEntityCard__avatar--selected': selected,
+      'm-selectableEntityCard__avatar--borderOnly': !selected
+    }"
+  >
+    <span *ngIf="selected" class="material-icons">done</span>
+  </div>
+  <div class="m-selectableEntityCard__infoTextContainer">
+    <ng-container *ngIf="monetization === 'plus'">
+      <span class="m-selectableEntityCard__name">
+        Minds+
+      </span>
+      <span
+        class="m-selectableEntityCard__info"
+        i18n="@@SELECTABLE_ENTITY_CARD__PLUS_SUBTEXT"
+      >
+        Submit this post to Minds+ premium content and earn a share of our
+        revenue based on how it performs.
+      </span></ng-container
+    >
+    <ng-container *ngIf="monetization !== 'plus'">
+      <span class="m-selectableEntityCard__name">{{
+        monetization.name | truncate: 24
+      }}</span>
+      <span class="m-selectableEntityCard__info"
+        >${{ monetization.usd | abbr: 0 }}+ /
+        <ng-container i18n="@@COMMON__MONTH">month</ng-container></span
+      >
+    </ng-container>
+  </div>
+</ng-container>
