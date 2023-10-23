@@ -3,6 +3,7 @@
 :host {
   .m-languageBar__wrapper {
     display: flex;
+    @include body2Regular;
 
     .m-languageBar__currentLanguage {
       display: flex;
@@ -10,7 +11,7 @@
       align-items: center;
 
       @include m-theme() {
-        color: themed($m-textColor--secondary);
+        color: themed($m-textColor--primary);
       }
 
       span {
@@ -54,13 +55,12 @@
         text-transform: capitalize;
 
         @include m-theme() {
-          color: themed($m-blue);
+          color: themed($m-textColor--primary);
         }
 
         &:hover {
-          text-decoration: none;
           @include m-theme() {
-            color: themed($m-blue--contrast);
+            color: darken(themed($m-textColor--primary), 50%);
           }
         }
       }

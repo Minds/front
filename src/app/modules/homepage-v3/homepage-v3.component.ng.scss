@@ -536,27 +536,6 @@
       display: none !important;
     }
 
-    .m-marketingFooter--dark {
-      .m-marketingFooter__logo {
-        background: url('../../../assets/logos/logo-dark-mode.svg') no-repeat
-          center left !important;
-      }
-    }
-
-    .m-marketingFooter--light {
-      .m-marketingFooter__logo {
-        background: url('../../../assets/logos/logo-light-mode.svg') no-repeat
-          center left !important;
-      }
-    }
-
-    .m-marketingFooter__logo {
-      width: 116px;
-      height: 43px;
-      margin-bottom: $minds-margin * 4 !important;
-      background-size: contain;
-    }
-
     .marketingTitle__centered {
       margin-top: $minds-margin * 2;
     }
