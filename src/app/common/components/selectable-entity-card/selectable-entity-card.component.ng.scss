@@ -31,6 +31,13 @@
     background-size: cover;
     border-radius: 50%;
     flex-basis: 100%;
+    box-sizing: border-box;
+
+    &.m-selectableEntityCard__avatar--borderOnly {
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
 
     &.m-selectableEntityCard__avatar--selected {
       display: flex;
@@ -67,7 +74,7 @@
     justify-content: center;
     margin-left: $spacing3;
 
-    .m-selectableEntityCard__entityName {
+    .m-selectableEntityCard__name {
       margin-bottom: $spacing1;
 
       @include body1Bold;
@@ -76,8 +83,8 @@
       }
     }
 
-    .m-selectableEntityCard__entityInfo {
-      @include body3Bold;
+    .m-selectableEntityCard__info {
+      @include body3Medium;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }

@@ -1,4 +1,8 @@
-<div class="m-activity__wrapper" #activityWrapper *ngIf="canShow">
+<div
+  class="m-activity__wrapper"
+  #activityWrapper
+  *ngIf="service.canShow$ | async"
+>
   <m-activity__downvoteNotice
     *ngIf="showDownvoteNotice"
     [entity]="entity$ | async"
@@ -31,10 +35,7 @@
         <m-activity__flag
           *ngIf="service.showFlagRow$ | async"
         ></m-activity__flag>
-        <m-activity__ownerBlock
-          *ngIf="service.displayOptions.showOwnerBlock"
-          (deleted)="delete()"
-        >
+        <m-activity__ownerBlock *ngIf="service.displayOptions.showOwnerBlock">
         </m-activity__ownerBlock>
         <m-activity__content
           *ngIf="service.shouldShowContent$ | async"

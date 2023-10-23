@@ -63,6 +63,7 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
 
     this.composerService.pendingMonetization$.next({
       type: 'plus',
+      name: 'Minds+',
       support_tier: support_tier,
     });
 

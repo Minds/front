@@ -139,7 +139,7 @@
       .m-sidebarNavigation__item {
         &.m-sidebarNavigation__item--supermind {
           /**
-           * Optical alignment fix caused by the icon for Supermind 
+           * Optical alignment fix caused by the icon for Supermind
            * being VERY left-side heavy.
            */
           // conditional styling for full nav.
@@ -212,6 +212,10 @@
               ::ng-deep button {
                 width: 36px;
                 height: 36px;
+
+                > div {
+                  transform: translateY(-1px);
+                }
               }
             }
           }

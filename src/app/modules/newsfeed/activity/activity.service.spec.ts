@@ -2,6 +2,8 @@ import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../mocks/responses/user.mock';
 import { ActivityService } from './activity.service';
 import { AccessId } from '../../../common/enums/access-id.enum';
+import { MockService } from '../../../utils/mock';
+import { ApiService } from '../../../common/api/api.service';
 
 describe('ActivityService', () => {
   let service: ActivityService;
@@ -23,10 +25,30 @@ describe('ActivityService', () => {
     this.thumbsDownCount$ = new BehaviorSubject<number>(0);
   })();
 
+  let apiMock, toastMock;
+
   beforeEach(() => {
+    apiMock = MockService(ApiService, {
+      get() {
+        return new BehaviorSubject<any>({
+          status: 'success',
+          'has-reminded': true,
+        });
+      },
+      delete() {
+        return new BehaviorSubject<any>({ status: 'success' });
+      },
+    });
+
+    toastMock = new (function() {
+      this.error = jasmine.createSpy('error');
+    })();
+
     service = new ActivityService(
       configsMock,
       sessionsMock,
+      apiMock,
+      toastMock,
       entityMetricsSocketMock
     );
 

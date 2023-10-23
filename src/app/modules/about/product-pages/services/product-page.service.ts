@@ -17,17 +17,16 @@ export class ProductPageService {
   /**
    * Gets a product page by a given URL slug.
    * @param { string } slug - URL slug.
-   * @returns { Observable<V2ProductPage> } - product page - null if no matching page was found.
+   * @returns { Observable<GetV2ProductPageBySlugQuery> } - query result - null if no matching page was found.
    */
-  public getProductPageBySlug(slug: string): Observable<V2ProductPage> {
+  public getProductPageBySlug(
+    slug: string
+  ): Observable<GetV2ProductPageBySlugQuery> {
     return this.getV2ProductPageBySlugGQL.fetch({ slug: slug }).pipe(
       map(
         (
           result: ApolloQueryResult<GetV2ProductPageBySlugQuery>
-        ): V2ProductPage => {
-          return result?.data?.v2ProductPages?.data?.[0]
-            ?.attributes as V2ProductPage;
-        }
+        ): GetV2ProductPageBySlugQuery => result?.data
       ),
       catchError(
         (e: unknown): Observable<null> => {

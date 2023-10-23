@@ -36,6 +36,7 @@ import { EntityMetricsSocketService } from '../../../common/services/entity-metr
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
+import { ComposerModalService } from '../../composer/components/modal/modal.service';
 
 const TOPBAR_HEIGHT: number = 75;
 
@@ -52,6 +53,7 @@ const TOPBAR_HEIGHT: number = 75;
   providers: [
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
+    ComposerModalService,
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
     EntityMetricsSocketService,
@@ -143,11 +145,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() previousBoost: EventEmitter<any> = new EventEmitter();
   @Output() nextBoost: EventEmitter<any> = new EventEmitter();
-
-  /**
-   * If false, the template will be empty (used for deleted)
-   */
-  canShow = true;
 
   /**
    * Replace the activity with notice
@@ -299,13 +296,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.service.height$.next(height);
   }
 
-  delete() {
-    this.canShow = false;
-
-    // Tell the boost rotator to go to the next boost
-    this.nextBoost.emit();
-    this.deleted.next(this.service.entity$.value);
-  }
+  // TODO reinstate if we bring back boost rotator
+  // delete() {
+  // Tell the boost rotator to go to the next boost
+  // this.nextBoost.emit();
+  // }
 
   /**
    * Keep scroll position when comments height changes
