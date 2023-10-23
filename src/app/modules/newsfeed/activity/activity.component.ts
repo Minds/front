@@ -145,11 +145,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() nextBoost: EventEmitter<any> = new EventEmitter();
 
   /**
-   * If false, the template will be empty (used for deleted)
-   */
-  canShow = true;
-
-  /**
    * Replace the activity with notice
    * when an activity has been explicitly downvoted,
    * and switch back if the 'undo' button on the
@@ -299,13 +294,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.service.height$.next(height);
   }
 
-  delete() {
-    this.canShow = false;
-
-    // Tell the boost rotator to go to the next boost
-    this.nextBoost.emit();
-    this.deleted.next(this.service.entity$.value);
-  }
+  // TODO reinstate if we bring back boost rotator
+  // delete() {
+  // Tell the boost rotator to go to the next boost
+  // this.nextBoost.emit();
+  // }
 
   /**
    * Keep scroll position when comments height changes

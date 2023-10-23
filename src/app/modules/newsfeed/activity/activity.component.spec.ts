@@ -45,11 +45,18 @@ describe('ActivityComponent', () => {
       })
         .overrideProvider(ActivityService, {
           useValue: MockService(ActivityService, {
-            has: ['entity$', 'height$', 'isLoggedIn$', 'displayOptions'],
+            has: [
+              'entity$',
+              'height$',
+              'isLoggedIn$',
+              'displayOptions',
+              'canShow$',
+            ],
             props: {
               entity$: { get: () => new BehaviorSubject<any>(null) },
               height$: { get: () => new BehaviorSubject<any>(null) },
               isLoggedIn$: { get: () => new BehaviorSubject<any>(null) },
+              canShow$: { get: () => new BehaviorSubject<any>(true) },
               displayOptions: {
                 autoplayVideo: true,
                 showOwnerBlock: true,
