@@ -38,6 +38,7 @@ import { SearchGqlExperimentService } from './search-gql-experiment.service';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   @Input() showCleanIcon: boolean = false;
+  @Input() borderedSuggestions: boolean = false;
 
   active: boolean;
   suggestionsDisabled: boolean = false;
