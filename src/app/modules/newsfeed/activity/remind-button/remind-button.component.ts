@@ -1,11 +1,16 @@
-import { Component, Injector, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  Injector,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
 import { ActivityService } from '../../activity/activity.service';
 import { Session } from '../../../../services/session';
-import { Client } from '../../../../services/api';
 import { map } from 'rxjs/operators';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
@@ -13,9 +18,8 @@ import { ClientMetaData } from '../../../../common/services/client-meta.service'
 import { ComposerAudienceSelectorService } from '../../../composer/services/audience.service';
 
 /**
- * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating a remind or a quote post.
+ * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating/undoing a remind, creating a quote post or creating a group share.
  *
- * If the post is already reminded, the dropdown menu provides an option to delete the remind.
  */
 @Component({
   selector: 'm-activity__remindButton',
@@ -23,12 +27,25 @@ import { ComposerAudienceSelectorService } from '../../../composer/services/audi
   styleUrls: ['./remind-button.component.ng.scss'],
   providers: [ComposerService],
 })
-export class ActivityRemindButtonComponent {
+export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   count$: Observable<number> = this.service.entity$.pipe(
     map(entity => entity.reminds + entity.quotes)
   );
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
+
+  subscriptions: Subscription[] = [];
+
+  /**
+   * True if the user just reminded the post
+   */
+  justReminded: boolean = false;
+
+  /**
+   * Disable remind options before we've checked whether
+   * they've reminded already, and while reminding/undoing a remind is in progress
+   */
+  protected remindOptionsEnabled: boolean = true;
 
   constructor(
     public service: ActivityService,
@@ -38,36 +55,43 @@ export class ActivityRemindButtonComponent {
     private composerModalService: ComposerModalService,
     private toasterService: ToasterService,
     private session: Session,
-    private authModal: AuthModalService,
-    private client: Client
+    private authModal: AuthModalService
   ) {}
 
-  get hasReminded(): boolean {
-    const entity = this.service.entity$.getValue();
-    if (!entity) {
-      return false;
-    }
-    return (
-      entity.remind_users &&
-      entity.remind_users.filter(
-        user => user.guid === this.session.getLoggedInUser().guid
-      ).length > 0
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.service.userHasReminded$.subscribe(has => {
+        if (has === null && this.session.getLoggedInUser()) {
+          // Don't let the user create a new remind until we've checked
+          // whether they've already made one
+          this.remindOptionsEnabled = false;
+        } else {
+          this.remindOptionsEnabled = true;
+        }
+      })
     );
   }
 
-  async onUndoRemind(e: MouseEvent): Promise<void> {
-    try {
-      await this.client.delete(
-        `api/v3/newsfeed/${this.service.entity$.getValue().urn}`
-      );
-      this.service.onDelete$.next(true);
-      this.toasterService.success('Remind has been removed');
-    } catch (e) {
-      this.toasterService.error(
-        e.message ||
-          'Sorry, there was an error removing this Remind. Please try again later.'
-      );
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
+  }
+
+  async getUserHasReminded(e: MouseEvent): Promise<void> {
+    if (this.service.userHasReminded$.getValue() === null) {
+      this.service.getUserHasReminded();
+    }
+  }
+
+  async onUndoRemind(e: MouseEvent): Promise<void> {
+    if (!this.remindOptionsEnabled) {
+      return;
+    }
+    this.remindOptionsEnabled = false;
+    await this.service.undoRemind();
+    this.justReminded = false;
+    this.remindOptionsEnabled = true;
   }
 
   async onRemindClick(e: MouseEvent): Promise<void> {
@@ -75,6 +99,12 @@ export class ActivityRemindButtonComponent {
       this.openAuthModal();
       return;
     }
+
+    if (!this.remindOptionsEnabled) {
+      return;
+    }
+
+    this.remindOptionsEnabled = false;
 
     const entity = this.service.entity$.getValue();
     this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
@@ -91,6 +121,8 @@ export class ActivityRemindButtonComponent {
     this.incrementCounter();
 
     this.toasterService.success('Post has been reminded');
+    this.justReminded = true;
+    this.remindOptionsEnabled = true;
   }
 
   /**

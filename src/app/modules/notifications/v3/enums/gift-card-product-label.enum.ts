@@ -1,8 +1,6 @@
-import { Exception } from 'sass';
-
 export const enum GiftCardProductLabelEnum {
   BOOST = 'Boost',
-  PLUS = 'Minds Plus',
+  PLUS = 'Minds+',
   PRO = 'Minds Pro',
   SUPERMIND = 'Supermind',
 }

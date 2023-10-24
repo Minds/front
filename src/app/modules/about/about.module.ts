@@ -20,6 +20,7 @@ import { ProductPageFeatureHighlightComponent } from './product-pages/components
 import { ProductPageClosingCtaComponent } from './product-pages/components/closing-cta/closing-cta.component';
 import { NoRouteReuseStrategy } from '../../common/routerReuseStrategies/no-route-reuse.strategy';
 import { PathMatch } from '../../common/types/angular.types';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const routes: Routes = [
   {
@@ -57,6 +58,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     HomepageV3Module,
+    MarketingModule,
     MarkdownModule.forChild(),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: NoRouteReuseStrategy }],
