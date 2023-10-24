@@ -7,6 +7,7 @@ import { ProductPageDynamicComponent } from '../../product-pages.types';
 import { SidebarNavigationService } from '../../../../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../../../../common/layout/page-layout.service';
 import { StrapiMetaService } from '../../../../../common/services/strapi-meta.service';
+import { TopbarService } from '../../../../../common/layout/topbar.service';
 
 /**
  * Base component for dynamic product pages. Central switch that determines
@@ -39,6 +40,7 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
     private service: ProductPageService,
     private navigationService: SidebarNavigationService,
     private pageLayoutService: PageLayoutService,
+    private topbarService: TopbarService,
     private strapiMetaService: StrapiMetaService,
     private route: ActivatedRoute,
     private router: Router
@@ -47,6 +49,7 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.navigationService.setVisible(false);
     this.pageLayoutService.useFullWidth();
+    this.topbarService.isMinimalLightMode$.next(true);
 
     const slug: string = this.route.snapshot.paramMap.get('slug') ?? null;
 
@@ -73,6 +76,7 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.topbarService.isMinimalLightMode$.next(false);
     this.navigationService.setVisible(true);
     this.pageLayoutService.cancelFullWidth();
     this.dataGetSubscription?.unsubscribe();

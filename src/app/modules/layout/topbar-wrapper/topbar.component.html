@@ -1,10 +1,17 @@
-<m-topbar>
+<m-topbar
+  *ngIf="{ isMinimalLightMode: isMinimalLightMode$ | async } as templateVars"
+>
   <ng-container search>
-    <m-search--bar [defaultSizes]="false"></m-search--bar>
+    <m-search--bar
+      [defaultSizes]="false"
+      [borderedSuggestions]="templateVars.isMinimalLightMode"
+    ></m-search--bar>
   </ng-container>
 
   <ng-container icons *ngIf="session.isLoggedIn()">
-    <m-topbar__walletBalance></m-topbar__walletBalance>
+    <m-topbar__walletBalance
+      *ngIf="!templateVars.isMinimalLightMode"
+    ></m-topbar__walletBalance>
     <m-tooltip *ngIf="giftCardPurchaseExperimentIsActive">
       <m-icon
         m-tooltip--anchor
