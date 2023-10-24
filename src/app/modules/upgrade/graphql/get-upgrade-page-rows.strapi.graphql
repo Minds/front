@@ -1,0 +1,15 @@
+# ojm how to ensure all results will be given?
+query UpgradePage {
+  upgradePages(sort: "bulletOrderWithinCard:ASC") {
+    data {
+      attributes {
+        cardId
+        rowType
+        displayText
+        iconId
+        iconSource
+        bulletOrderWithinCard
+      }
+    }
+  }
+}

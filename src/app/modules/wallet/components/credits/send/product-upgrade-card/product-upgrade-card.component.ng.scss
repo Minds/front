@@ -15,18 +15,18 @@
     @include m-theme() {
       background: linear-gradient(
         190deg,
-        darken(color-by-theme($m-grey-500, 'dark'), 20%) 0%,
-        color-by-theme($m-grey-900, 'dark') 45%
+        darken(color-by-theme($m-grey-500, 'light'), 20%) 0%,
+        color-by-theme($m-grey-900, 'light') 45%
       );
     }
   }
-
+  // ojm check this
   &.m-productUpgradeCard--pro {
     @include m-theme() {
       background: linear-gradient(
         190deg,
         darken(color-by-theme($m-action, 'dark'), 35%) 0%,
-        color-by-theme($m-grey-900, 'dark') 45%
+        color-by-theme($m-grey-900, 'light') 45%
       );
     }
   }

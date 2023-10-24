@@ -206,6 +206,7 @@ $themes: (
     m-red-dark: $red-700,
     m-red: $red-600,
     m-red-light: $red-200,
+    m-purple: $purple-500,
     m-black: $black,
     m-black-always: $black,
     m-white: $white,
@@ -259,18 +260,17 @@ $themes: (
       m-rotator-action: $grey-50,
     m-counter-action: $yellow-500,
     // legacy colors
-      // legacy colors
-      m-grey-900: $grey-900,
-    m-grey-800: $grey-800,
-    m-grey-700: $grey-700,
-    m-grey-600: $grey-600,
+      m-grey-900: $grey-100,
+    m-grey-800: $grey-200,
+    m-grey-700: $grey-300,
+    m-grey-600: $grey-400,
     m-grey-500: $grey-500,
     m-grey: $grey-500,
-    m-grey-400: $grey-400,
-    m-grey-300: $grey-300,
-    m-grey-200: $grey-200,
-    m-grey-100: $grey-100,
-    m-grey-50: $grey-50,
+    m-grey-400: $grey-600,
+    m-grey-300: $grey-700,
+    m-grey-200: $grey-800,
+    m-grey-100: $grey-900,
+    m-grey-50: $grey-900,
     m-black: $white,
     m-black-always: $black,
     m-white: #202527,
@@ -291,6 +291,7 @@ $themes: (
     m-red-dark: $red-600,
     m-red: $red-500,
     m-red-light: $red-700,
+    m-purple: $purple-500,
     m-warn-bg: $yellow-800,
     m-warn-fg: $white,
     m-facebook: $facebook,
@@ -351,6 +352,7 @@ $m-amber-light: 'm-amber-light';
 $m-red-dark: 'm-red-dark';
 $m-red: 'm-red';
 $m-red-light: 'm-red-light';
+$m-purple: 'm-purple';
 
 $m-warn-bg: 'm-warn-bg';
 $m-warn-fg: 'm-warn-fg';
@@ -403,3 +405,22 @@ $m-boxShadowOffset: 2px;
   $urlEncodedColor: str-replace('' + $color, '#', '%23'); // `#` signs are bad
   @return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" fill="#{$urlEncodedColor}"/></svg>';
 }
+
+// Gradients
+
+/**
+* Gradient used on /upgrade page
+*
+* USAGE
+* 1. To apply gradient as background color,
+* `@include supermindGradient;`
+*
+* 2. To apply as a border, apply gradient
+* to a parent wrapper element and explicitly add
+* the standard background color to child element.
+*/
+@mixin upgradeGradient {
+  background: $upgradeGradient;
+}
+
+$upgradeGradient: linear-gradient(93deg, #83e4d9 -4.6%, #ffd048 101.68%);
