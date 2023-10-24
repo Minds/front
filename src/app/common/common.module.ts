@@ -184,6 +184,8 @@ import { SelectableEntityCardComponent } from './components/selectable-entity-ca
 import { InlineFeedHeaderComponent } from './components/inline-feed-header/inline-feed-header.component';
 import { ExploreTagFeedItemComponent } from './components/explore-tag-feed-item/explore-tag-feed-item.component';
 import { ExploreFeedItemComponent } from './components/explore-feed-item/explore-feed-item.component';
+import { IfTenantDirective } from './directives/if-tenant.directive';
+import { IsTenantService } from './services/is-tenant.service';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -309,6 +311,7 @@ const MINDS_DIRECTIVES = [
   GraphSVG,
   HotkeyScrollDirective,
   IfBrowserDirective,
+  IfTenantDirective,
   InlineAutoGrow,
   PageLayoutContainerDirective,
   PageLayoutPaneDirective,
@@ -406,6 +409,7 @@ const routes: Routes = [
     RecentSubscriptionsService,
     ReportService,
     GroupMembershipService,
+    IsTenantService,
   ],
 })
 export class CommonModule {}

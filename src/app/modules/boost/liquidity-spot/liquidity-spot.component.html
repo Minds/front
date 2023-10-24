@@ -1,16 +1,18 @@
-<ng-container *ngIf="entity$ | async as entity">
-  <m-publisherCard
-    [publisher]="entity"
-    featured="true"
-    curvyBorder="true"
-    backgroundFill="true"
-  ></m-publisherCard>
+<ng-container *mIfTenant="false">
+  <ng-container *ngIf="entity$ | async as entity">
+    <m-publisherCard
+      [publisher]="entity"
+      featured="true"
+      curvyBorder="true"
+      backgroundFill="true"
+    ></m-publisherCard>
 
-  <div class="m-liquiditySpot__disclaimer" (click)="onClick($event)">
-    <m-tooltip icon="info" anchor="bottom">
-      Minds Token liquidity providers are rewarded with boosted ad space
-      relative to their % of the liquidity pool.
-    </m-tooltip>
-    <span>Want to be promoted here?</span>
-  </div>
+    <div class="m-liquiditySpot__disclaimer" (click)="onClick($event)">
+      <m-tooltip icon="info" anchor="bottom">
+        Minds Token liquidity providers are rewarded with boosted ad space
+        relative to their % of the liquidity pool.
+      </m-tooltip>
+      <span>Want to be promoted here?</span>
+    </div>
+  </ng-container>
 </ng-container>

@@ -22,12 +22,13 @@ import { NoticesModule } from '../notices/notices.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { BoostConsoleFeedComponent } from './console-v2/feed/feed.component';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 const boostRoutes: Routes = [
   {
     path: 'boost/boost-console',
     component: BoostConsoleV2Component,
-    canActivate: [loggedOutExplainerScreenGuard()],
+    canActivate: [TenantRedirectGuard, loggedOutExplainerScreenGuard()],
     data: {
       title: 'Boost Console',
       description: 'Manage and monitor your boosts',
@@ -37,6 +38,7 @@ const boostRoutes: Routes = [
   {
     path: 'boost',
     component: BoostMarketingComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       preventLayoutReset: true,
     },

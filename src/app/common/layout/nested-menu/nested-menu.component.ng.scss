@@ -1,4 +1,7 @@
-m-nestedMenu {
+@import 'defaults.scss';
+@import '../layout.scss';
+
+:host {
   display: block;
   box-sizing: border-box;
   .m-nestedMenu {
@@ -22,8 +25,47 @@ m-nestedMenu {
       }
     }
   }
+  .m-nestedMenu__backButton {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+
+    line-height: inherit;
+    display: none;
+
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @media screen and (max-width: $layoutMax2ColWidth) {
+      display: inline-block;
+    }
+    a {
+      cursor: pointer;
+      display: flex;
+      text-decoration: none;
+      margin-bottom: 0;
+      align-items: center;
+      justify-content: flex-start;
+      font-weight: 300;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    span {
+      margin-left: 5px;
+    }
+    i {
+      font-size: 17px;
+      line-height: inherit;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    &:hover {
+      i {
+        transform: scale(1.1);
+      }
+    }
+  }
   .m-nestedMenu__menuWrapper {
-    &:not(:first-child) {
+    &:not(:first-of-type) {
       margin-top: 51px;
       .m-nestedMenu__headerWrapper {
         line-height: 20px;
@@ -54,45 +96,6 @@ m-nestedMenu {
       padding: 19px 24px 22px 24px;
     }
 
-    .m-nestedMenu__backButton {
-      margin: 0 0 6px 0;
-      font-size: 15px;
-
-      line-height: inherit;
-      display: none;
-
-      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      @media screen and (max-width: $layoutMax2ColWidth) {
-        display: inline-block;
-      }
-      a {
-        cursor: pointer;
-        display: flex;
-        text-decoration: none;
-        margin-bottom: 0;
-        align-items: center;
-        justify-content: flex-start;
-        font-weight: 300;
-
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
-      }
-
-      span {
-        margin-left: 5px;
-      }
-      i {
-        font-size: 17px;
-        line-height: inherit;
-        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      }
-      &:hover {
-        i {
-          transform: scale(1.1);
-        }
-      }
-    }
     .m-nestedMenu__headerLabel {
       @include m-theme() {
         color: themed($m-textColor--primary);

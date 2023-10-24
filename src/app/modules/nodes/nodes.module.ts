@@ -7,11 +7,13 @@ import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MarketingModule } from '../marketing/marketing.module';
 import { MarkdownModule } from 'ngx-markdown';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   {
     path: 'nodes',
     component: NodesMarketingComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       preventLayoutReset: true,
     },
