@@ -27,7 +27,6 @@ export class SettingsV2AutoplayVideosComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
-  isPlus: boolean = false;
   user: MindsUser;
   settingsSubscription: Subscription;
   form;
@@ -44,7 +43,6 @@ export class SettingsV2AutoplayVideosComponent implements OnInit, OnDestroy {
       autoplay_videos: new UntypedFormControl(''),
     });
 
-    this.isPlus = this.session.getLoggedInUser().plus;
     this.settingsSubscription = this.settingsService.settings$.subscribe(
       (settings: any) => {
         this.autoplay_videos.setValue(!settings.disable_autoplay_videos);
