@@ -1,44 +1,50 @@
 <div class="m-sidebarMore">
   <ul class="m-sidebarMore__dropdown">
     <!-- ------------------------------------------------------------ -->
-    <li
-      class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser()"
-      (click)="toggleSidebar()"
-    >
-      <a (click)="onEarnClick()" data-ref="sidebarmore-earn-modal">
-        <i class="material-icons">attach_money</i>
-        <span i18n="@@COMMON__EARN">Earn</span>
-      </a>
-    </li>
+    <ng-container *mIfTenant="false">
+      <li
+        class="m-sidebarMoreDropdown__item"
+        *ngIf="getCurrentUser()"
+        (click)="toggleSidebar()"
+      >
+        <a (click)="onEarnClick()" data-ref="sidebarmore-earn-modal">
+          <i class="material-icons">attach_money</i>
+          <span i18n="@@COMMON__EARN">Earn</span>
+        </a>
+      </li>
+    </ng-container>
     <!-- ------------------------------------------------------------ -->
-    <li
-      class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser()"
-      (click)="toggleSidebar()"
-    >
-      <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
-        <i class="material-icons">insights</i>
-        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
-          >Analytics</span
-        >
-      </a>
-    </li>
+    <ng-container *mIfTenant="false">
+      <li
+        class="m-sidebarMoreDropdown__item"
+        *ngIf="getCurrentUser()"
+        (click)="toggleSidebar()"
+      >
+        <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
+          <i class="material-icons">insights</i>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
+            >Analytics</span
+          >
+        </a>
+      </li>
+    </ng-container>
     <!-- ------------------------------------------------------------ -->
-    <li
-      class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser()"
-      (click)="toggleSidebar()"
-    >
-      <a [href]="chatUrl" target="_blank" data-ref="sidebarmore-chat">
-        <m-chatIcon m-tooltip--icon></m-chatIcon>
-        <span
-          class="m-sidebarNavigationItem__text m-legible"
-          i18n="@@COMMON__CHAT"
-          >Chat</span
-        >
-      </a>
-    </li>
+    <ng-container *mIfTenant="false">
+      <li
+        class="m-sidebarMoreDropdown__item"
+        *ngIf="getCurrentUser()"
+        (click)="toggleSidebar()"
+      >
+        <a [href]="chatUrl" target="_blank" data-ref="sidebarmore-chat">
+          <m-chatIcon m-tooltip--icon></m-chatIcon>
+          <span
+            class="m-sidebarNavigationItem__text m-legible"
+            i18n="@@COMMON__CHAT"
+            >Chat</span
+          >
+        </a>
+      </li>
+    </ng-container>
     <!-- ------------------------------------------------------------ -->
     <li
       class="m-sidebarMoreDropdown__item"
@@ -53,27 +59,31 @@
       </a>
     </li>
     <!--./././././././././././././././././././././././././././././././.-->
-    <li
-      class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer"
-      *ngIf="getCurrentUser()"
-    ></li>
+    <ng-container *mIfTenant="false">
+      <li
+        class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer"
+        *ngIf="getCurrentUser()"
+      ></li>
+    </ng-container>
     <!--./././././././././././././././././././././././././././././././.-->
-    <li
-      class="m-sidebarMoreDropdown__item"
-      *ngIf="getCurrentUser()"
-      (click)="toggleSidebar()"
-    >
-      <a (click)="toggleTheme()">
-        <ng-container *ngIf="isDark">
-          <i class="material-icons">light_mode</i>
-          <span i18n="@@COMMON__LIGHT_MODE">Enter Light Mode</span>
-        </ng-container>
-        <ng-container *ngIf="!isDark">
-          <i class="material-icons">dark_mode</i>
-          <span i18n="@@COMMON__DARK_MODE">Enter Dark Mode</span>
-        </ng-container>
-      </a>
-    </li>
+    <ng-container *mIfTenant="false">
+      <li
+        class="m-sidebarMoreDropdown__item"
+        *ngIf="getCurrentUser()"
+        (click)="toggleSidebar()"
+      >
+        <a (click)="toggleTheme()">
+          <ng-container *ngIf="isDark">
+            <i class="material-icons">light_mode</i>
+            <span i18n="@@COMMON__LIGHT_MODE">Enter Light Mode</span>
+          </ng-container>
+          <ng-container *ngIf="!isDark">
+            <i class="material-icons">dark_mode</i>
+            <span i18n="@@COMMON__DARK_MODE">Enter Dark Mode</span>
+          </ng-container>
+        </a>
+      </li>
+    </ng-container>
     <!-- ------------------------------------------------------------ -->
     <li class="m-sidebarMoreDropdown__item" (click)="toggleSidebar()">
       <a
@@ -96,23 +106,103 @@
       class="m-sidebarMoreDropdown__item m-sidebarMoreDropdown__footer
       "
     >
-      <ng-container *ngFor="let link of footerLinks; let i = index">
+      <a
+        routerLink="/content-policy"
+        data-ref="sidebarmore-footer-content-policy"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__CONTENT_POLICY"
+        >Content Policy</a
+      >
+      <a
+        routerLink="/p/privacy"
+        data-ref="sidebarmore-footer-privacy"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__PRIVACY"
+        >Privacy</a
+      >
+      <ng-container *ngIf="getCurrentUser()">
         <a
-          *ngIf="link.routerLink"
-          [routerLink]="link.routerLink"
-          [data-ref]="'sidebarmore-footer' + link.label"
+          *mIfTenant="false"
+          routerLink="/settings/affiliates-program"
+          data-ref="sidebarmore-footer-affiliates"
           (click)="toggleSidebar()"
-          >{{ link.label }}</a
+          i18n="@@COMMON__AFFILIATES"
+          >Affiliates</a
         >
-        <a
-          *ngIf="link.href"
-          [href]="link.href"
-          target="_blank"
-          (click)="toggleSidebar()"
-          >{{ link.label }}</a
-        >
-        <span *ngIf="i !== footerLinks.length - 1"> · </span>
       </ng-container>
+      <a
+        *mIfTenant="false"
+        routerLink="/mobile"
+        data-ref="sidebarmore-footer-mobile"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__MOBILE"
+        >Mobile</a
+      >
+      <a
+        *mIfTenant="false"
+        href="https://www.teespring.com/stores/minds"
+        target="_blank"
+        data-ref="sidebarmore-footer-store"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__STORE"
+        >Store</a
+      >
+      <a
+        *mIfTenant="false"
+        href="https://jobs.lever.co/minds"
+        target="_blank"
+        data-ref="sidebarmore-footer-careers"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__CAREERS"
+        >Careers</a
+      >
+      <a
+        *mIfTenant="false"
+        href="https://status.minds.com/"
+        target="_blank"
+        data-ref="sidebarmore-footer-status"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__STATUS"
+        >Status</a
+      >
+      <a
+        *mIfTenant="false"
+        routerLink="/canary"
+        data-ref="sidebarmore-footer-canary"
+        (click)="toggleSidebar()"
+        i18n="@@SIDEBAR_MORE__FOOTER_LINK__CANARY_MODE"
+        >Canary Mode</a
+      >
+      <a
+        routerLink="/p/terms"
+        data-ref="sidebarmore-footer-terms"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__TERMS"
+        >Terms</a
+      >
+      <a
+        routerLink="/p/contact"
+        data-ref="sidebarmore-footer-contact"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__CONTACT"
+        >Contact</a
+      >
+      <a
+        *mIfTenant="false"
+        routerLink="/branding"
+        data-ref="sidebarmore-footer-branding"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__BRANDING"
+        >Branding</a
+      >
+      <a
+        *mIfTenant="false"
+        routerLink="'/about'"
+        data-ref="sidebarmore-footer-about"
+        (click)="toggleSidebar()"
+        i18n="@@COMMON__ABOUT"
+        >About</a
+      >
     </li>
   </ul>
 </div>

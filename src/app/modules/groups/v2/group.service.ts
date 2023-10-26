@@ -14,6 +14,7 @@ import { MindsGroup } from './group.model';
 import { GroupsService } from '../groups.service';
 import { DEFAULT_GROUP_VIEW, GroupAccessType, GroupView } from './group.types';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 /**
  * Service that holds group information using Observables
@@ -181,7 +182,8 @@ export class GroupService implements OnDestroy {
     protected route: ActivatedRoute,
     protected v1Service: GroupsService,
     protected toaster: ToasterService,
-    protected router: Router
+    protected router: Router,
+    protected isTenant: IsTenantService
   ) {
     this.listenForLogin(); //0jm
     // Set canReview observable
@@ -265,9 +267,7 @@ export class GroupService implements OnDestroy {
     this.memberCount$.next(group ? group['members:count'] : 0);
     this.requestCount$.next(group ? group['requests:count'] : 0);
     this.reviewCount$.next(group ? group['adminqueue:count'] : 0);
-    this.showBoosts$.next(
-      group ? group.show_boosts === undefined || group.show_boosts : true
-    );
+    this.showBoosts$.next(this.getShowBoosts(group));
 
     // Note the subjects preceded by "is" relate to the user
     this.isOwner$.next(group ? group['is:owner'] : false);
@@ -284,6 +284,19 @@ export class GroupService implements OnDestroy {
    */
   public syncLegacyService(group: MindsGroup): void {
     this.v1Service.load(group);
+  }
+
+  /**
+   * Never show boosts on network sites
+   */
+  private getShowBoosts(group?: MindsGroup): boolean {
+    if (this.isTenant.is()) {
+      return false;
+    } else {
+      return group
+        ? group.show_boosts === undefined || group.show_boosts
+        : true;
+    }
   }
 
   //----------------------------------------------------------

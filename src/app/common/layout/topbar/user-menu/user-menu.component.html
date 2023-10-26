@@ -21,14 +21,16 @@
     </m-dropdownMenu__item>
 
     <!-- Upgrades Option -->
-    <m-dropdownMenu__item
-      *ngIf="!getCurrentUser().pro"
-      class="m-userMenuDropdownItem__upgrade"
-      link="/upgrades"
-      data-ref="topnav-usermenu-upgrade"
-    >
-      <span i18n="@@COMMON__UPGRADE">Upgrade</span>
-    </m-dropdownMenu__item>
+    <ng-container *mIfTenant="false">
+      <m-dropdownMenu__item
+        *ngIf="!getCurrentUser().pro"
+        class="m-userMenuDropdownItem__upgrade"
+        link="/upgrades"
+        data-ref="topnav-usermenu-upgrade"
+      >
+        <span i18n="@@COMMON__UPGRADE">Upgrade</span>
+      </m-dropdownMenu__item>
+    </ng-container>
 
     <!-- Admin Option -->
     <m-dropdownMenu__item
@@ -40,12 +42,14 @@
     </m-dropdownMenu__item>
 
     <!-- Boost Channel Option -->
-    <m-dropdownMenu__item
-      (click)="openBoostChannelModal()"
-      data-ref="topnav-usermenu-boost-channel"
-    >
-      <span i18n="@@COMMON__BOOST_CHANNEL">Boost Channel</span>
-    </m-dropdownMenu__item>
+    <ng-container *mIfTenant="false">
+      <m-dropdownMenu__item
+        (click)="openBoostChannelModal()"
+        data-ref="topnav-usermenu-boost-channel"
+      >
+        <span i18n="@@COMMON__BOOST_CHANNEL">Boost Channel</span>
+      </m-dropdownMenu__item>
+    </ng-container>
 
     <!-- Settings Option -->
     <m-dropdownMenu__item link="/settings" data-ref="topnav-usermenu-settings">

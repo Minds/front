@@ -1,5 +1,5 @@
 <div class="m-tabs__container">
-  <div class="m-tabs__tab">
+  <div class="m-tabs__tab" *mIfTenant="false">
     <a
       [routerLink]="['../' + feedAlgorithm.forYou]"
       routerLinkActive="m-tabs__tab--selected"

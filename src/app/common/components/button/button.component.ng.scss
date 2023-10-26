@@ -137,6 +137,23 @@
       }
     }
 
+    &.m-button--blackAlways {
+      @include m-theme() {
+        border-color: color-by-theme($m-black-always, 'dark');
+        background-color: color-by-theme($m-black-always, 'dark');
+        color: color-by-theme($m-white-always, 'dark') !important;
+
+        &:hover {
+          background-color: color-by-theme($m-white-always, 'dark');
+          color: color-by-theme($m-black-always, 'dark') !important;
+        }
+
+        &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+          border-color: color-by-theme($m-borderColor--primary, 'dark');
+        }
+      }
+    }
+
     // Warning button
 
     &.m-button--red {
