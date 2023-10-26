@@ -12,20 +12,22 @@
     >
   </div>
 
-  <div
-    *ngIf="
-      !(isEditing$ | async) &&
-      !(hasAttachments$ | async) &&
-      !(remind$ | async) &&
-      !containerGuid &&
-      !(isSupermind$ | async)
-    "
-    class="m-composerTitleBar__createBlogTrigger"
-    [hidden]="isPosting$ | async"
-    (click)="onCreateBlogClick()"
-  >
-    <ng-container i18n="@@COMPOSER__CREATE_BLOG">Create Blog</ng-container>
-  </div>
+  <ng-container *mIfTenant="false">
+    <div
+      *ngIf="
+        !(isEditing$ | async) &&
+        !(hasAttachments$ | async) &&
+        !(remind$ | async) &&
+        !containerGuid &&
+        !(isSupermind$ | async)
+      "
+      class="m-composerTitleBar__createBlogTrigger"
+      [hidden]="isPosting$ | async"
+      (click)="onCreateBlogClick()"
+    >
+      <ng-container i18n="@@COMPOSER__CREATE_BLOG">Create Blog</ng-container>
+    </div>
+  </ng-container>
 
   <m-composerTitleBar__dropdown
     *ngIf="!(isSupermind$ | async)"

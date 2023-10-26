@@ -94,6 +94,8 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
 
   /**
    * Show list in compact format
+   * with a manual "see more" button
+   * instead of infinite scroll
    * (e.g. for moderators list)
    */
   @Input() compactView: boolean = false;
@@ -192,9 +194,9 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         }
       ),
       tap((response: any) => {
-        this.moreData$.next(response['load-next']);
         this.inProgress$.next(false);
         this.list$.next(response.members);
+        this.moreData$.next(this.getMoreDataValue(response));
         this.loaded.emit();
       }),
       shareReplay()
@@ -220,7 +222,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
             let currentList = this.list$.getValue();
             this.list$.next([...currentList, ...response.members]);
 
-            this.moreData$.next(response['load-next']);
+            this.moreData$.next(this.getMoreDataValue(response));
           } else {
             this.moreData$.next(false);
           }
@@ -271,5 +273,25 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
       (this.group['is:moderator'] &&
         !(member['is:owner'] || member['is:moderator']))
     );
+  }
+
+  /**
+   * Reduces likelihood of needlessly showing
+   * a manual "see more" button
+   * in the moderators list.
+   * Response total is unreliable - shows entire group count
+   * @param response
+   */
+  private getMoreDataValue(response): boolean {
+    if (this.compactView) {
+      return (
+        // Only true if the response has maxed out the limit
+        response.members.length >= this.requestLimit &&
+        // and there aren't theoretically more members to load
+        response.total > this.list$.getValue().length
+      );
+    } else {
+      return response['load-next'];
+    }
   }
 }

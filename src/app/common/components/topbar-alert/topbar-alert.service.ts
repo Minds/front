@@ -11,6 +11,7 @@ import {
 import { Session } from '../../../services/session';
 import { ObjectLocalStorageService } from '../../services/object-local-storage.service';
 import { Apollo, gql } from 'apollo-angular';
+import { IsTenantService } from '../../services/is-tenant.service';
 
 /** Alert key type */
 export type AlertKey = string;
@@ -80,6 +81,10 @@ export class TopbarAlertService {
         enabled,
         isLoggedIn,
       ]) => {
+        if (this.isTenant.is()) {
+          return false;
+        }
+
         return (
           dismissedAlerts.indexOf(identifier) === -1 &&
           onlyDisplayAfter < Date.now() &&
@@ -97,6 +102,7 @@ export class TopbarAlertService {
     private session: Session,
     private objectStorage: ObjectLocalStorageService,
     private apollo: Apollo,
+    private isTenant: IsTenantService,
     @Inject(PLATFORM_ID) private platformId: string
   ) {
     this.dismissedAlerts$.next(this.getDismissedAlerts());

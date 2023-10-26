@@ -101,10 +101,6 @@
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
-
-      &:hover {
-        opacity: 0.7;
-      }
     }
 
     .m-emojiPicker__placeholder {

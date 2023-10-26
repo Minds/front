@@ -12,6 +12,7 @@ import { ProService } from '../pro/pro.service';
 import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../common/components/loading-spinner/loading-spinner.component';
 import { TwitterSyncSettingsExperimentService } from '../experiments/sub-services/twitter-sync-settings-experiment.service';
+import { IsTenantService } from '../../common/services/is-tenant.service';
 
 describe('SettingsV2Component', () => {
   let component: SettingsV2Component;
@@ -44,6 +45,10 @@ describe('SettingsV2Component', () => {
           {
             provide: TwitterSyncSettingsExperimentService,
             useValue: MockService(TwitterSyncSettingsExperimentService),
+          },
+          {
+            provide: IsTenantService,
+            useValue: MockService(IsTenantService),
           },
         ],
         imports: [
