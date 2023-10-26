@@ -84,19 +84,13 @@
         border-radius: 50%;
         object-fit: cover;
         box-sizing: border-box;
-        @include border;
-        @include m-theme() {
-          background: themed($m-textColor--secondary);
-        }
         margin-right: $spacing2;
-
-        &.m-networksListItem__avatar--placeholder {
-          object-fit: contain;
-          padding: $spacing1;
-          @include m-theme() {
-            background: themed($m-white-always);
-          }
+        object-fit: contain;
+        padding: $spacing1;
+        @include m-theme() {
+          background: themed($m-white-always);
         }
+        @include border;
       }
     }
 

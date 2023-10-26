@@ -5,7 +5,7 @@
     width: 100%;
   }
 
-  .m-networks__createAdmin {
+  .m-networks__createRootUser {
     @media screen and (max-width: $max-mobile) {
       margin: 0;
       padding: 0;
@@ -16,7 +16,7 @@
     .m-formWrapper {
       margin: 0;
     }
-    p.m-networksCreateAdmin__description {
+    p.m-networksCreateRootUser__description {
       margin: $spacing4 0 $spacing6;
 
       @include body1Regular;
@@ -24,7 +24,7 @@
         color: themed($m-textColor--primary);
       }
     }
-    p.m-networksCreateAdmin__note {
+    p.m-networksCreateRootUser__note {
       margin: 0 $spacing20 $spacing8 0;
 
       @include body3Regular;
@@ -62,7 +62,7 @@
       }
     }
 
-    .m-networksCreateAdmin__footer {
+    .m-networksCreateRootUser__footer {
       padding: $spacing5 $spacing10;
       display: flex;
       justify-content: flex-end;
@@ -70,7 +70,7 @@
         border-top: 1px solid themed($m-borderColor--primary);
       }
       @media screen and (max-width: $max-mobile) {
-        .m-networksCreateAdmin__buttonsContainer {
+        .m-networksCreateRootUser__buttonsContainer {
           width: 100%;
           ::ng-deep m-button .m-button {
             width: 100%;
@@ -79,7 +79,7 @@
       }
     }
   }
-  .m-networksCreateAdmin__verticalStretch {
+  .m-networksCreateRootUser__verticalStretch {
     display: flex;
     flex-flow: column nowrap;
 

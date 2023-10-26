@@ -1,22 +1,22 @@
-<div class="m-modalV2__inner m-networks__createAdmin">
+<div class="m-modalV2__inner m-networks__createRootUser">
   <div class="m-modalV2__mobileTopBar m-modalV2__mobileTopBar--noBorder"></div>
-  <div class="m-modalV2__header m-networksCreateAdmin__header">
+  <div class="m-modalV2__header m-networksCreateRootUser__header">
     <h2
       class="m-modalV2Header__title"
-      i18n="@@NETWORKS_CREATE_ADMIN__CHOOSE_HANDLE"
+      i18n="@@NETWORKS_CREATE_ROOT_USER__CHOOSE_HANDLE"
     >
       Choose your network handle
     </h2>
   </div>
-  <div class="m-networksCreateAdmin__verticalStretch">
+  <div class="m-networksCreateRootUser__verticalStretch">
     <form
-      class="m-modalV2__body m-formWrapper m-networksCreateAdmin__form"
+      class="m-modalV2__body m-formWrapper m-networksCreateRootUser__form"
       [formGroup]="formGroup"
       (submit)="$event.preventDefault()"
     >
       <p
-        class="m-networksCreateAdmin__description"
-        i18n="@@NETWORKS_CREATE_ADMIN__DESC"
+        class="m-networksCreateRootUser__description"
+        i18n="@@NETWORKS_CREATE_ROOT_USER__DESC"
       >
         What username would you like to display on this network?
       </p>
@@ -48,29 +48,6 @@
             />
           </div>
         </div>
-        <!-- ojm old, remove <div class="m-form__field--text stretchedField">
-          <div class="m-form__row--input">
-            <m-formInput__autocompleteUserInput
-              id="username"
-              formControlName="username"
-              placeholder="@username"
-            ></m-formInput__autocompleteUserInput>
-          </div>
-        </div> -->
-
-        <!-- Validation row is outside the row wrapper b/c of
-      dropdown positioning -->
-        <!-- <div class="m-form__row--validation">
-          <p
-            i18n="@@NETWORKS_CREATE_ADMIN__INVALID_USERNAME"
-            *ngIf="
-              !inProgress &&
-              formGroup.controls.username.errors?.eligibilityInvalid
-            "
-          >
-            ojm
-          </p>
-        </div> -->
 
         <div
           class="m-form__row--validation"
@@ -99,19 +76,19 @@
         </div>
       </div>
     </form>
-    <div class="m-modalV2__body m-networksCreateAdmin__footer">
+    <div class="m-modalV2__body m-networksCreateRootUser__footer">
       <div
-        class="m-form__buttonsContainer m-networksCreateAdmin__buttonsContainer"
+        class="m-form__buttonsContainer m-networksCreateRootUser__buttonsContainer"
       >
-        <!-- ojmtodo [saving]="service.inProgress$ | async" -->
         <m-button
           type="button"
           color="blue"
           solid="true"
+          [saving]="service.inProgress$ | async"
           [disabled]="!canSubmit"
           (onAction)="onSubmit()"
           i18n="@@COMMON__CONFIRM"
-          data-ref="m-networksCreateAdmin__confirmButton"
+          data-ref="m-networksCreateRootUser__confirmButton"
           >Confirm</m-button
         >
       </div>

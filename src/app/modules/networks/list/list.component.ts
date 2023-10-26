@@ -1,28 +1,15 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { NetworksCreateRootUserModalService } from '../create-root-user/create-root-user.modal.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { QueryRef } from 'apollo-angular';
 import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-  combineLatest,
-  distinctUntilChanged,
-  map,
-  shareReplay,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
-import { NetworksListService } from './list.service';
-import { ApiResponse } from '../../../common/api/api.service';
-import { Session } from '../../../services/session';
-import { NetworksListItem } from '../network.types';
-import { NetworksCreateAdminModalService } from '../create-admin/create-admin.modal.service';
+  GetNetworksListGQL,
+  GetNetworksListQuery,
+  GetNetworksListQueryVariables,
+  Tenant,
+} from '../../../../graphql/generated.engine';
+import { ApolloQueryResult } from '@apollo/client';
 
 @Component({
   selector: 'm-networks__list',
@@ -35,49 +22,31 @@ export class NetworksListComponent implements OnInit, OnDestroy {
     boolean
   >(false);
 
-  // Whether there is more data that could be added to the list.
-  public readonly moreData$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(true);
-
   // List subject.
-  public readonly list$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(
-    []
-  );
-
-  // Number of members to request from API.
-  private readonly requestLimit: number = 12;
+  public readonly list$: BehaviorSubject<Tenant[]> = new BehaviorSubject<
+    Tenant[]
+  >([]);
 
   private subscriptions: Subscription[] = [];
 
-  ojmFakeData = {
-    status: 'success',
-    tenants: [
-      {
-        id: '123',
-      },
-      {
-        name: 'Valuetainment network',
-      },
-      {
-        name:
-          'BubblesBubblesBubblesBubblesBubblesBubblesBubblesBubblesBubblesBubbles ',
-      },
-    ],
-  };
+  readonly cdnAssetsUrl: string;
+
+  /** Query reference for networks list query. */
+  private getNetworksListQuery: QueryRef<
+    GetNetworksListQuery,
+    GetNetworksListQueryVariables
+  >;
+
   constructor(
-    private service: NetworksListService,
-    private session: Session,
-    private createAdminModal: NetworksCreateAdminModalService
-  ) {}
+    private createRootUserModal: NetworksCreateRootUserModalService,
+    private getNetworksListGQL: GetNetworksListGQL,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit(): void {
-    if (this.session.getLoggedInUser()) {
-      this.service.user$.next(this.session.getLoggedInUser());
-
-      /** sub to load/reload the list */
-      this.subscriptions.push(this.load$().subscribe());
-    }
+    this.load();
   }
 
   ngOnDestroy(): void {
@@ -87,90 +56,58 @@ export class NetworksListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Load members list.
-   * @returns { Observable<ApiResponse> }
+   * Load list
    */
-  public load$(): Observable<
-    ApiResponse | { redirect: boolean; errorMessage: any }
-  > {
-    return this.service.user$.pipe(
-      distinctUntilChanged(),
-      tap(_ => {
-        this.inProgress$.next(true);
-        this.list$.next([]);
-      }),
-      switchMap(
-        (): Observable<
-          ApiResponse | { redirect: boolean; errorMessage: any }
-        > => {
-          return this.service.getList$(this.requestLimit, 0);
-        }
-      ),
-      tap((response: any) => {
-        // ojm uncomment this.moreData$.next(response['load-next']);
-        this.inProgress$.next(false);
-        // ojm uncomment and delete
-        this.list$.next(this.ojmFakeData.tenants);
-        // this.list$.next(response.tenants);
-      }),
-      shareReplay()
-    );
-  }
-
-  /**
-   * Load more from service based on list type and list length for offset.
-   * @return { void }
-   */
-  public loadNext(): void {
-    if (this.inProgress$.getValue()) {
-      return;
-    }
+  private load(): void {
     this.inProgress$.next(true);
 
+    this.getNetworksListQuery = this.getNetworksListGQL.watch({
+      limit: 12,
+      offset: 0,
+    });
+
     this.subscriptions.push(
-      this.service
-        .getList$(this.requestLimit, this.list$.getValue().length ?? null)
-        .pipe(take(1))
-        .subscribe((response: any) => {
-          if (response && response.networks && response.networks.length) {
-            let currentList = this.list$.getValue();
-            this.list$.next([...currentList, ...response.networks]);
-
-            this.moreData$.next(response['load-next']);
-          } else {
-            this.moreData$.next(false);
+      this.getNetworksListQuery.valueChanges.subscribe(
+        (result: ApolloQueryResult<GetNetworksListQuery>): void => {
+          if (result.loading) {
+            return;
           }
-          this.inProgress$.next(false);
-        })
-    );
-  }
 
-  /**
-   * Show a bulb if the network doesn't have an icon yet
-   */
-  getIconUrl(network: NetworksListItem): string {
-    return network.iconUrl ? network.iconUrl : '/assets/logos/bulb.jpg';
+          this.list$.next(result.data.networks);
+          this.inProgress$.next(false);
+        }
+      )
+    );
   }
 
   /**
    * Go to the billing details for the clicked network
    */
-  clickedManageBilling(network: NetworksListItem): void {
-    // ojm todo
+  clickedManageBilling(network: Tenant): void {
+    if (!network.rootUserGuid) {
+      return;
+    }
+    //TODO
   }
 
   /**
    * Go to the clicked network
    */
-  clickedGoToNetwork(network: NetworksListItem): void {
-    // ojm todo
+  clickedGoToNetwork(network: Tenant): void {
+    if (!network.rootUserGuid) {
+      return;
+    }
+    // TODO
   }
 
   /**
-   * Setup to the clicked network
+   * Open the create network root user modal
    */
-  async clickedSetUpNetwork(network: NetworksListItem): Promise<void> {
+  async clickedSetUpNetwork(network: Tenant): Promise<void> {
+    if (network.rootUserGuid) {
+      return;
+    }
     // Create handle modal
-    this.createAdminModal.present(network.id);
+    this.createRootUserModal.present(network);
   }
 }

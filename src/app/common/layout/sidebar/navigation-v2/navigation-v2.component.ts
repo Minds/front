@@ -272,7 +272,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    * Only show the networks link when flag is on
    */
   get showNetworksLink(): boolean {
-    // ojm uncomment return this.experiments.hasVariation('minds-4384-sidenav-networks-link');
-    return true;
+    return this.experiments.hasVariation('minds-4384-sidenav-networks-link');
   }
 }

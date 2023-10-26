@@ -1,0 +1,8 @@
+mutation CreateNetworkRootUser($networkUserInput: NetworkUserInput) {
+  createNetworkRootUser(networkUser: $networkUserInput) {
+    guid
+    username
+    tenantId
+    role
+  }
+}

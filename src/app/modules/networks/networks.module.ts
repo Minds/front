@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { NetworksListComponent } from './list/list.component';
-import { NetworksListService } from './list/list.service';
-import { NetworksCreateAdminModalService } from './create-admin/create-admin.modal.service';
-import { NetworksCreateAdminComponent } from './create-admin/create-admin.component';
+import { NetworksCreateRootUserModalService } from './create-root-user/create-root-user.modal.service';
+import { NetworksCreateRootUserComponent } from './create-root-user/create-root-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NetworksCreateRootUserService } from './create-root-user/create-root-user.service';
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [NetworksListComponent, NetworksCreateAdminComponent],
+  declarations: [NetworksListComponent, NetworksCreateRootUserComponent],
   imports: [
     RouterModule.forChild(routes),
     NgCommonModule,
@@ -24,6 +24,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [NetworksListService, NetworksCreateAdminModalService],
+  providers: [
+    NetworksCreateRootUserModalService,
+    NetworksCreateRootUserService,
+  ],
 })
 export class NetworksModule {}

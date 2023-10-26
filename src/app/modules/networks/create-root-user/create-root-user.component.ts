@@ -9,28 +9,22 @@ import {
   AbstractControl,
   UntypedFormBuilder,
   UntypedFormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import {
-  Subscription,
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-} from 'rxjs';
+import { Subscription, debounceTime } from 'rxjs';
+import { NetworksCreateRootUserService } from './create-root-user.service';
 
 /**
- * Create admin modal component
- * For creating a network admin account
+ * Create root user modal component
+ * For creating a network root user account
  */
 @Component({
-  selector: 'm-networks__createAdmin',
+  selector: 'm-networks__createRootUser',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './create-admin.component.html',
-  styleUrls: ['./create-admin.component.ng.scss'],
+  templateUrl: './create-root-user.component.html',
+  styleUrls: ['./create-root-user.component.ng.scss'],
 })
-export class NetworksCreateAdminComponent implements OnInit, OnDestroy {
+export class NetworksCreateRootUserComponent implements OnInit, OnDestroy {
   /**
    * Modal save handler
    */
@@ -41,13 +35,9 @@ export class NetworksCreateAdminComponent implements OnInit, OnDestroy {
    */
   onDismissIntent: () => void = () => {};
 
-  /**
-   * Whether the username validator is in progress ojm
-   * */
-  inProgress: boolean = false;
-
   formGroup: UntypedFormGroup;
 
+  /** The pattern of allowed username characters */
   alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
   subscriptions: Subscription[] = [];
@@ -57,7 +47,7 @@ export class NetworksCreateAdminComponent implements OnInit, OnDestroy {
    */
   constructor(
     private fb: UntypedFormBuilder,
-    private changeDetector: ChangeDetectorRef
+    protected service: NetworksCreateRootUserService
   ) {}
 
   ngOnInit(): void {
@@ -74,7 +64,7 @@ export class NetworksCreateAdminComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(
-      // Has username been touched
+      // Has username been touched? For not showing validation error immediately
       this.formGroup
         .get('username')
         .valueChanges.pipe(debounceTime(450))
@@ -100,23 +90,25 @@ export class NetworksCreateAdminComponent implements OnInit, OnDestroy {
   /**
    * Modal options
    *
+   * @param network
    * @param onSave
    * @param onDismissIntent
    */
-  setModalData({ onSave, onDismissIntent }) {
+  setModalData({ network, onSave, onDismissIntent }) {
+    this.service.network$.next(network);
     this.onSave = onSave || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
   }
 
   get canSubmit(): boolean {
-    return !this.inProgress && this.formGroup.valid && this.formGroup.dirty;
+    return this.formGroup.valid && this.formGroup.dirty;
   }
 
   /**
    * On click confirm button
    */
   async onSubmit(): Promise<void> {
-    // ojm todo
+    this.service.submitUsername(this.username.value);
   }
 
   showError(field: string) {

@@ -1,0 +1,11 @@
+query GetNetworksList($limit: Int!, $offset: Int!) {
+  networks(limit: $limit, offset: $offset) {
+    id
+    domain
+    ownerGuid
+    rootUserGuid
+    config {
+      siteName
+    }
+  }
+}
