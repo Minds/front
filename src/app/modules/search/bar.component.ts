@@ -40,6 +40,7 @@ import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injectio
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   @Input() showCleanIcon: boolean = false;
+  @Input() borderedSuggestions: boolean = false;
 
   active: boolean;
   suggestionsDisabled: boolean = false;

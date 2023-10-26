@@ -14,3 +14,8 @@
     }
   }
 }
+
+.m-topbar__top--minimalLightMode :host .minds-avatar {
+  border: 1px solid color-by-theme($m-borderColor--primary, 'light');
+  background-color: color-by-theme($m-bgColor--primary, 'light');
+}

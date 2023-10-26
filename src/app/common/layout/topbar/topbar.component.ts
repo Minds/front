@@ -21,7 +21,7 @@ import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map, of, BehaviorSubject } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { TopbarAlertService } from '../../components/topbar-alert/topbar-alert.service';
@@ -62,6 +62,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
   /** Whether topbar alert should be shown. */
   protected readonly shouldShowTopbarAlert$: Observable<boolean> = this
     .topbarAlertService.shouldShow$;
+
+  /** Whether topbar is to be displayed in minimal light mode. */
+  public readonly isMinimalLightMode$: BehaviorSubject<boolean> = this
+    .topbarService.isMinimalLightMode$;
 
   constructor(
     protected sidebarService: SidebarNavigationService,
