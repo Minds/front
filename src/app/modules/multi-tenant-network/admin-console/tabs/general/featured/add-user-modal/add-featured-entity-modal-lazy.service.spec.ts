@@ -6,7 +6,7 @@ import { AddFeaturedEntityModalLazyService } from './add-featured-entity-modal-l
 import { AddFeaturedEntityModalEntityType } from './add-featured-entity-modal.types';
 import { AddFeaturedEntityModalComponent } from './add-featured-entity-modal.component';
 
-describe('GiftRecipientModalLazyService', () => {
+describe('AddFeaturedEntityModalLazyService', () => {
   let service: AddFeaturedEntityModalLazyService;
 
   beforeEach(() => {

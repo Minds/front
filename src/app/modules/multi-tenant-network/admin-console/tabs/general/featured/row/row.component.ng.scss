@@ -45,41 +45,49 @@
     }
   }
 
-  m-dropdownMenu {
-    ul {
-      li {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        padding: $spacing3 $spacing4;
-        @include body2Medium;
+  .m-featuredEntityRow__chipBadge {
+    display: flex;
+    align-items: center;
+    gap: $spacing2;
+    box-sizing: border-box;
+    padding: $spacing2 $spacing2 $spacing2 $spacing4;
+    border-radius: 24px;
+    max-height: 36px;
 
-        &:hover {
-          @include m-on-theme(dark) {
-            background: m-lighten(
-              color-by-theme($m-bgColor--primary, 'dark'),
-              5%
-            );
-          }
-          @include m-on-theme(light) {
-            background: m-darken(
-              color-by-theme($m-bgColor--primary, 'light'),
-              5%
-            );
-          }
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    .m-featuredEntityRow__chipBadgeText {
+      @include body2Regular;
+    }
+
+    .m-featuredEntityRow__deleteIcon {
+      display: flex;
+      width: 16px;
+      height: 16px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      cursor: pointer;
+
+      @include body3Medium;
+
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
+        color: themed($m-textColor--primary);
+      }
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-alert);
         }
 
-        i {
-          font-size: 16px;
-          font-weight: 900;
+        @include m-on-theme(light) {
+          color: color-by-theme($m-white-always, 'light');
+        }
 
-          @include m-theme() {
-            color: themed($m-action);
-          }
-
-          &.m-featuredEntityRow__dropdownIcon--hidden {
-            visibility: hidden;
-          }
+        @include m-on-theme(dark) {
+          color: color-by-theme($m-black-always, 'dark');
         }
       }
     }

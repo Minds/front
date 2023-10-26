@@ -60,10 +60,12 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
   }
 
   /**
-   * Called on option toggle for row. Will delete the entity from the DB.
+   * Called on delete clicked on row. Will delete the entity from the DB.
+   * In future we may want to make this function work with different chip badges
+   * such that you can "delete" recommended entities OR featured entities.
    * @returns { Promise<void> }
    */
-  public async onOptionToggle(): Promise<void> {
+  public async onDeleteClicked(): Promise<void> {
     try {
       this.inProgress$.next(true);
       const result: MutationResult<DeleteFeaturedEntityMutation> = await lastValueFrom(

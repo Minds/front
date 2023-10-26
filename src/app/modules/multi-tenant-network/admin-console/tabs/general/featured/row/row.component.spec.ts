@@ -69,6 +69,7 @@ describe('NetworkAdminConsoleFeaturedEntityRowComponent', () => {
 
   describe('buildAvatarEntity', () => {
     it('should build avatar entity', () => {
+      comp.featuredEntity.__typename = 'FeaturedUser';
       const avatarEntity: MindsAvatarObject = comp.buildAvatarEntity();
       expect(avatarEntity.guid).toEqual(mockFeaturedUser.entityGuid);
       expect(avatarEntity.type).toEqual('user');
@@ -76,7 +77,7 @@ describe('NetworkAdminConsoleFeaturedEntityRowComponent', () => {
   });
 
   describe('onOptionToggle', () => {
-    it('should emit onDeletion event when onOptionToggle is called', async () => {
+    it('should emit onDeletion event when onDeleteClicked is called', async () => {
       (comp as any).deleteFeaturedEntityGQL.mutate.and.returnValue(
         of({
           data: {
@@ -85,17 +86,17 @@ describe('NetworkAdminConsoleFeaturedEntityRowComponent', () => {
         })
       );
       spyOn(comp.onDeletion, 'emit');
-      await comp.onOptionToggle();
+      await comp.onDeleteClicked();
       expect(comp.onDeletion.emit).toHaveBeenCalledWith(
         comp.featuredEntity.entityGuid
       );
     });
 
-    it('should show error toaster when onOptionToggle mutation throws an error', async () => {
+    it('should show error toaster when onDeleteClicked mutation throws an error', async () => {
       (comp as any).deleteFeaturedEntityGQL.mutate.and.returnValue(
         of(throwError(() => new Error()))
       );
-      await comp.onOptionToggle();
+      await comp.onDeleteClicked();
       expect((comp as any).toaster.error).toHaveBeenCalledWith(
         'Failed to make entity non-featured.'
       );
