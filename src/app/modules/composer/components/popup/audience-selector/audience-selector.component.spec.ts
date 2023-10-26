@@ -12,6 +12,20 @@ import { BehaviorSubject } from 'rxjs';
 import { SelectableEntity } from '../../../../../common/components/selectable-entity-card/selectable-entity-card.component';
 import userMock from '../../../../../mocks/responses/user.mock';
 import { ComposerService } from '../../../services/composer.service';
+import { ComposerMonetizeV2Service } from '../monetize/v2/components/monetize.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
+import {
+  SupportTier,
+  SupportTiersService,
+} from '../../../../wire/v2/support-tiers.service';
+
+let configMock = new (function() {
+  this.get = jasmine.createSpy('get').and.returnValue({
+    plus: {
+      support_tier_urn: 'urn:123',
+    },
+  });
+})();
 
 const mockSelectableEntities: SelectableEntity[] = [
   {
@@ -128,8 +142,42 @@ describe('ComposerAudienceSelectorPanelComponent', () => {
           provide: ComposerModalService,
           useValue: MockService(ComposerModalService),
         },
+        {
+          provide: ComposerMonetizeV2Service,
+          useValue: MockService(ComposerMonetizeV2Service),
+        },
+        {
+          provide: SupportTiersService,
+          useValue: MockService(SupportTiersService),
+        },
+        {
+          provide: ComposerService,
+          useValue: MockService(ComposerService),
+        },
+        {
+          provide: ConfigsService,
+          useValue: configMock,
+        },
       ],
-    }).compileComponents();
+    })
+      .overrideProvider(SupportTiersService, {
+        useValue: MockService(SupportTiersService),
+      })
+      .overrideProvider(ComposerMonetizeV2Service, {
+        useValue: MockService(ComposerMonetizeV2Service, {
+          has: ['loaded$', 'supportTiers$'],
+          props: {
+            loaded$: {
+              get: () => new BehaviorSubject<boolean>(false),
+            },
+            supporTiers$: {
+              get: () => new BehaviorSubject<SupportTier>(null),
+            },
+          },
+        }),
+      })
+
+      .compileComponents();
 
     fixture = TestBed.createComponent(ComposerAudienceSelectorPanelComponent);
     comp = fixture.componentInstance;

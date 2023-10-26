@@ -168,6 +168,7 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
 
     this.service.pendingMonetization$.next({
       type: 'plus',
+      name: 'Minds+',
       support_tier: support_tier,
     });
     this.dismissIntent.emit();

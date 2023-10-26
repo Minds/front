@@ -44,6 +44,7 @@
             </ng-container>
             <ng-container *ngSwitchCase="'featuredContent'">
               <m-featured-content
+                *mIfTenant="false"
                 [slot]="feedItem.data"
                 [displayOptions]="{
                   showOnlyCommentsInput: true,

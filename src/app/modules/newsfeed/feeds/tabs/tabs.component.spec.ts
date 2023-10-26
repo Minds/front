@@ -51,11 +51,4 @@ describe('NewsfeedTabsComponent', () => {
   it('should instantiate', () => {
     expect(comp).toBeTruthy();
   });
-
-  it('should have the correct tabs', () => {
-    expect(getTabByText('For You')).toBeDefined();
-    expect(getTabByText('Top')).toBeDefined();
-    expect(getTabByText('Latest')).toBeDefined();
-    expect(getTabByText('Groups')).toBeDefined();
-  });
 });

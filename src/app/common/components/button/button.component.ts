@@ -25,7 +25,14 @@ import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component'
  */
 
 export type ButtonSize = 'xsmall' | 'small' | 'medium' | 'large';
-export type ButtonColor = 'blue' | 'grey' | 'red' | 'primary' | 'secondary';
+export type ButtonColor =
+  | 'blue'
+  | 'grey'
+  | 'red'
+  | 'primary'
+  | 'secondary'
+  | 'black-always';
+
 @Component({
   selector: 'm-button',
   templateUrl: './button.component.html',

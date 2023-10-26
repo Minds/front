@@ -46,6 +46,7 @@ import { WalletV2CreditsTransactionHistoryComponent } from './components/credits
 import { GiftCardClaimExperimentGuard } from '../experiments/guards/gift-card-claim-experiment.guard';
 import { WalletV2CreditsSendComponent } from './components/credits/send/send.component';
 import { WalletV2CreditsProductUpgradeCardComponent } from './components/credits/send/product-upgrade-card/product-upgrade-card.component';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' as PathMatch },
@@ -53,6 +54,7 @@ export const WALLET_ROUTES: Routes = [
     path: '',
     pathMatch: 'prefix' as PathMatch,
     component: WalletDashboardComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       title: 'Wallet',
       description: 'Manage all of your transactions and earnings on Minds',

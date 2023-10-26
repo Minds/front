@@ -56,15 +56,18 @@
       service.displayOptions.showComments
     "
   ></minds-button-comment>
+
   <m-supermind__button
+    *mIfTenant="false"
     [entity]="entity"
     [iconOnly]="true"
     data-ref="activity-icon-supermind-action"
   ></m-supermind__button>
 
   <!-- Show boost if own post -->
-  <ng-container *ngIf="isOwner">
+  <ng-container *mIfTenant="false">
     <m-activity__boostButton
+      *ngIf="isOwner"
       (click)="openBoostModal($event)"
     ></m-activity__boostButton>
   </ng-container>

@@ -8,6 +8,7 @@ import { ToasterService } from '../../common/services/toaster.service';
 import { ProService } from '../pro/pro.service';
 import { Subscription } from 'rxjs';
 import { TwitterSyncSettingsExperimentService } from '../experiments/sub-services/twitter-sync-settings-experiment.service';
+import { IsTenantService } from '../../common/services/is-tenant.service';
 
 /**
  * Container that determines what form/menu(s)
@@ -43,7 +44,11 @@ export class SettingsV2Component implements OnInit {
           label: $localize`:@@SETTINGS__ACCOUNT__LABEL:Account`,
           id: 'account',
         },
-        { label: $localize`:@@SETTINGS__PRO__LABEL:Pro`, id: 'pro_canary' }, // :user param added later
+        {
+          label: $localize`:@@SETTINGS__PRO__LABEL:Pro`,
+          id: 'pro_canary', // :user param added later
+          shouldShow: this.isNotNetwork.bind(this),
+        },
         {
           label: $localize`:@@SETTINGS__SECURITY__LABEL:Security`,
           id: 'security',
@@ -55,12 +60,16 @@ export class SettingsV2Component implements OnInit {
         {
           label: $localize`:@@SETTINGS__AFFILIATES_PROGRAM__LABEL:Affiliates Program`,
           id: 'affiliates-program',
+          shouldShow: this.isNotNetwork.bind(this),
         },
         { label: $localize`:@@SETTINGS__OTHER__LABEL:Other`, id: 'other' },
       ],
     },
   ];
-  secondaryMenus = {
+
+  secondaryMenus: {
+    [key: string]: NestedMenu[];
+  } = {
     account: [
       {
         header: {
@@ -87,6 +96,7 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__ACCOUNT__BOOST__LABEL:Boosted Content`,
             id: 'boosted-content',
+            shouldShow: this.isNotNetwork.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__ACCOUNT__NSFW__LABEL:NSFW Content`,
@@ -103,10 +113,12 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger`,
             id: 'messenger',
+            shouldShow: this.isNotNetwork.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__ACCOUNT__NOSTR__LABEL:Nostr`,
             id: 'nostr',
+            shouldShow: this.isNotNetwork.bind(this),
           },
         ],
       },
@@ -184,14 +196,17 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__PAYMENTS__METHOD__LABEL:Payment History`,
             id: 'payment-history',
+            shouldShow: this.isNotNetwork.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__PAYMENTS__RECURRING__LABEL:Recurring Payments`,
             id: 'recurring-payments',
+            shouldShow: this.isNotNetwork.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__SUPERMIND__HEADER__LABEL:Supermind`,
             id: 'supermind',
+            shouldShow: this.isNotNetwork.bind(this),
           },
         ],
       },
@@ -199,6 +214,7 @@ export class SettingsV2Component implements OnInit {
 
     pro_canary: [
       {
+        shouldShow: this.isNotNetwork.bind(this),
         header: {
           label: $localize`:@@SETTINGS__PRO__HEADER__LABEL:Pro Settings`,
           id: 'pro_canary',
@@ -235,6 +251,7 @@ export class SettingsV2Component implements OnInit {
         ],
       },
       {
+        shouldShow: this.isNotNetwork.bind(this),
         header: {
           label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL:Pro Subscription Management`,
           id: 'pro-subscription',
@@ -254,6 +271,7 @@ export class SettingsV2Component implements OnInit {
     ],
     other: [
       {
+        shouldShow: this.isNotNetwork.bind(this),
         header: {
           label: $localize`:@@SETTINGS__OTHER__PRIVACY__HEADER__LABEL:Privacy`,
           id: 'privacy',
@@ -282,6 +300,7 @@ export class SettingsV2Component implements OnInit {
         ],
       },
       {
+        shouldShow: this.isNotNetwork.bind(this),
         header: {
           label: $localize`:@@SETTINGS__OTHER__PAIDCONTENT__HEADER__LABEL:Paid Content`,
           id: 'paid-content',
@@ -294,6 +313,7 @@ export class SettingsV2Component implements OnInit {
         ],
       },
       {
+        shouldShow: this.isNotNetwork.bind(this),
         header: {
           label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__HEADER__LABEL:Content Migration`,
           id: 'content-migration',
@@ -331,7 +351,8 @@ export class SettingsV2Component implements OnInit {
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
     protected toasterService: ToasterService,
-    private twitterSyncSettingsExperiment: TwitterSyncSettingsExperimentService
+    private twitterSyncSettingsExperiment: TwitterSyncSettingsExperimentService,
+    private IsTenantService: IsTenantService
   ) {}
 
   ngOnInit() {
@@ -471,15 +492,22 @@ export class SettingsV2Component implements OnInit {
   }
 
   shouldShowUpgradesMenu(): boolean {
-    return this.shouldShowPlusMenuItem() || this.shouldShowProMenuItem();
+    return (
+      (this.shouldShowPlusMenuItem() || this.shouldShowProMenuItem()) &&
+      !this.isTenant
+    );
   }
 
   shouldShowProMenuItem(): boolean {
-    return !this.session.getLoggedInUser().pro;
+    return !this.session.getLoggedInUser().pro && !this.isTenant;
   }
 
   shouldShowPlusMenuItem(): boolean {
-    return !this.session.getLoggedInUser().plus;
+    return !this.session.getLoggedInUser().plus && !this.isTenant;
+  }
+
+  isNotNetwork(): boolean {
+    return !this.isTenant;
   }
 
   /**
@@ -487,7 +515,7 @@ export class SettingsV2Component implements OnInit {
    * @returns { void }
    */
   private injectExperimentItems(): void {
-    if (this.twitterSyncSettingsExperiment.isActive()) {
+    if (this.twitterSyncSettingsExperiment.isActive() && !this.isTenant) {
       this.secondaryMenus.other
         .find(x => x.header.id === 'content-migration')
         .items.push({
@@ -495,5 +523,9 @@ export class SettingsV2Component implements OnInit {
           id: 'twitter-sync',
         });
     }
+  }
+
+  get isTenant(): boolean {
+    return this.IsTenantService.is();
   }
 }
