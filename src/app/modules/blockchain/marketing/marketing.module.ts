@@ -12,6 +12,7 @@ import { BlockchainMarketingRewardsV2Component } from './v2/rewards.component';
 import { OnchainTransferModalService } from '../../wallet/components/components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet/components/wallet-v2.service';
 import { MarkdownModule } from 'ngx-markdown';
+import { TenantRedirectGuard } from '../../../common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
   {
     path: 'token',
     component: BlockchainMarketingTokenV2Component,
+    canActivate: [TenantRedirectGuard],
     data: {
       preventLayoutReset: true,
     },
@@ -32,6 +34,7 @@ const routes: Routes = [
   {
     path: 'rewards',
     component: BlockchainMarketingRewardsV2Component,
+    canActivate: [TenantRedirectGuard],
     data: {
       preventLayoutReset: true,
     },

@@ -3,7 +3,7 @@
   <!-- CHANNEL OWNER -->
   <!-- ------------------------------------------ -->
   <ng-container *ngIf="service.isOwner$ | async; else nonOwner">
-    <m-channelActions__boost></m-channelActions__boost>
+    <m-channelActions__boost *mIfTenant="false"></m-channelActions__boost>
     <m-channelActions__edit></m-channelActions__edit>
     <m-channelActions__proChannel></m-channelActions__proChannel>
   </ng-container>
@@ -23,20 +23,26 @@
     </m-channelActions__menu>
 
     <ng-container *ngIf="service.canInteract$ | async">
-      <m-channelActions__wire></m-channelActions__wire>
+      <m-channelActions__wire *mIfTenant="false"></m-channelActions__wire>
 
       <div class="m-hideOnSmall">
-        <m-channelActions__message
-          *ngIf="service.isSubscribed$ | async"
-        ></m-channelActions__message>
+        <ng-container *mIfTenant="false">
+          <m-channelActions__message
+            *ngIf="service.isSubscribed$ | async"
+          ></m-channelActions__message>
+        </ng-container>
       </div>
 
       <m-channelActions__subscribe
         *ngIf="!(service.isSubscribed$ | async)"
       ></m-channelActions__subscribe>
 
-      <m-channelActions__proChannel></m-channelActions__proChannel>
-      <m-channelActions__supermind></m-channelActions__supermind>
+      <m-channelActions__proChannel
+        *mIfTenant="false"
+      ></m-channelActions__proChannel>
+      <m-channelActions__supermind
+        *mIfTenant="false"
+      ></m-channelActions__supermind>
     </ng-container>
   </ng-template>
 </div>
