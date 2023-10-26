@@ -1,0 +1,52 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h4
+      class="m-addFeaturedEntity__title"
+      i18n="@@ADD_FEATURED_ENTITY_MODAL__ADD_A_FEATURED_USER"
+    >
+      Add a featured user
+    </h4>
+    <p
+      class="m-addFeaturedEntity__subtitle"
+      i18n="@@ADD_FEATURED_ENTITY_MODAL__ADD_A_USER_FOR_AUTO_SUBSCRIBE"
+    >
+      Add a user for new members of your network to automatically subscribe to.
+    </p>
+  </div>
+  <div class="m-modalV2__body" [formGroup]="formGroup">
+    <div class="m-addFeaturedEntity__inputContainer">
+      <label
+        class="m-addFeaturedEntity__inputLabel"
+        for="username"
+        i18n="@@ADD_FEATURED_ENTITY_MODAL__USERNAME"
+        >Username</label
+      >
+      <m-formInput__autocompleteUserInput
+        class="m-addFeaturedEntity__input"
+        id="username"
+        name="username"
+        formControlName="username"
+        placeholder="@username"
+        (keyup.enter)="onConfirmClick()"
+      ></m-formInput__autocompleteUserInput>
+    </div>
+
+    <div class="m-modalV2__footer">
+      <m-button
+        class="m-addFeaturedEntity__confirmRecipientButton"
+        solid="true"
+        color="blue"
+        size="large"
+        (onAction)="onConfirmClick()"
+        [disabled]="
+          !formGroup.valid || !formGroup.dirty || (confirmInProgress$ | async)
+        "
+        [saving]="confirmInProgress$ | async"
+      >
+        <ng-container i18n="@@COMMON_CONFIRM">
+          Confirm
+        </ng-container>
+      </m-button>
+    </div>
+  </div>
+</div>

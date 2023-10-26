@@ -1,0 +1,65 @@
+@import 'defaults.scss';
+
+:host {
+  .m-modalV2__inner {
+    .m-modalV2__header {
+      .m-addFeaturedEntity__title {
+        @include heading3Bold;
+        margin: 0 0 $spacing1 0;
+      }
+
+      .m-addFeaturedEntity__subtitle {
+        @include body1Regular;
+        margin-bottom: $spacing2;
+      }
+    }
+
+    .m-modalV2__body {
+      .m-addFeaturedEntity__inputContainer {
+        display: flex;
+        flex-flow: column;
+        position: relative;
+        margin-bottom: $spacing10;
+
+        .m-addFeaturedEntity__inputLabel {
+          @include m-theme() {
+            @include body1Regular;
+            color: themed($m-textColor--secondary);
+            margin-bottom: $spacing1;
+          }
+        }
+
+        .m-addFeaturedEntity__input {
+          ::ng-deep input {
+            max-width: 100%;
+            width: 100%;
+            outline: none;
+            padding: $spacing3 $spacing4;
+            border-radius: 4px;
+
+            @include m-theme() {
+              border: 1px solid themed($m-borderColor--primary);
+              background: themed($m-bgColor--primary);
+              color: themed($m-textColor--primary);
+            }
+          }
+        }
+      }
+
+      .m-modalV2__footer {
+        display: flex;
+        justify-content: flex-end;
+
+        @media screen and (max-width: $min-tablet) {
+          .m-addFeaturedEntity__confirmRecipientButton {
+            width: 100%;
+
+            ::ng-deep button {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -32,16 +32,6 @@
       </div>
     </div>
 
-    <!-- Copy link container -->
-    <!-- <div class="m-networkAdminGeneral__copyInviteLinkContainer">
-      <h4 class="m-networkAdminGeneral__copyInviteLinkTitle" i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__INVITE_USERS_TITLE">Invite users to your network</h4>
-      <p class="m-networkAdminGeneral__copyInviteLinkBody" i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__INVITE_USERS_BODY">Invite new users’ to your network by copying the invite link on the button. Once a user signs up through that link, they will be on your server upon completing sign up.</p>
-      <button class="m-networkAdminGeneral__copyInviteLinkButton" (click)="onCopyInviteLinkClick()">
-        <i class="material-icons m-networkAdminGeneral__copyInviteLinkButtonIcon">content_copy</i>
-        <span class="m-networkAdminGeneral__copyInviteLinkButtonText" i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__COPY_LINK">Copy invite link</span>
-      </button>
-    </div> -->
-
     <!-- Submit button -->
     <m-button
       *ngIf="{
@@ -64,6 +54,19 @@
       ></m-button
     >
   </form>
+
+  <!-- Copy link container -->
+  <!-- <div class="m-networkAdminGeneral__copyInviteLinkContainer">
+    <h4 class="m-networkAdminGeneral__copyInviteLinkTitle" i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__INVITE_USERS_TITLE">Invite users to your network</h4>
+    <p class="m-networkAdminGeneral__copyInviteLinkBody" i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__INVITE_USERS_BODY">Invite new users’ to your network by copying the invite link on the button. Once a user signs up through that link, they will be on your server upon completing sign up.</p>
+    <button class="m-networkAdminGeneral__copyInviteLinkButton" (click)="onCopyInviteLinkClick()">
+      <i class="material-icons m-networkAdminGeneral__copyInviteLinkButtonIcon">content_copy</i>
+      <span class="m-networkAdminGeneral__copyInviteLinkButtonText" i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__COPY_LINK">Copy invite link</span>
+    </button>
+  </div> -->
+
+  <!-- Featured channels and groups section. -->
+  <m-networkAdminConsole__featured></m-networkAdminConsole__featured>
 </ng-container>
 <ng-template #loadingSpinnerTemplate>
   <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>

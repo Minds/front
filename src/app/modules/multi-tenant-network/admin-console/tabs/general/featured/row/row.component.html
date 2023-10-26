@@ -1,0 +1,89 @@
+<div class="m-featuredEntityRow__infoContainer" (click)="navigateToEntity()">
+  <minds-avatar
+    class="m-featuredEntityRow__avatar"
+    [object]="buildAvatarEntity()"
+  ></minds-avatar>
+  <div class="m-featuredEntityRow__infoContainerRight">
+    <ng-container [ngSwitch]="featuredEntity.__typename">
+      <ng-container *ngSwitchCase="'FeaturedGroup'">
+        <span class="m-featuredEntityRow__infoContainerName">{{
+          featuredEntity.name | truncate: 30
+        }}</span>
+        <span class="m-featuredEntityRow__infoContainerSubtext"
+          ><strong>{{ featuredEntity.membersCount }}</strong
+          >&nbsp;<span
+            i18n="
+               group members|@@NETWORK_ADMIN_CONSOLE__FEATURED_ENTITY__MEMBERS
+            "
+            >members</span
+          ></span
+        >
+      </ng-container>
+      <ng-container *ngSwitchCase="'FeaturedUser'">
+        <span class="m-featuredEntityRow__infoContainerName">{{
+          featuredEntity.name | truncate: 30
+        }}</span>
+        <span class="m-featuredEntityRow__infoContainerSubtext"
+          >@{{ featuredEntity.username | truncate: 30 }}</span
+        >
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<m-dropdownMenu
+  [menu]="dropdownTemplate"
+  [anchorPosition]="{ top: '100%', right: '0' }"
+  triggerClass="m-featuredEntityRow__dropdownButton"
+  menuClass="m-button__dropdownMenu"
+  (click)="$event.preventDefault(); $event.stopPropagation()"
+  [disabled]="inProgress$ | async"
+>
+  <m-button
+    class="m-featuredEntityRow__dropdownButton"
+    size="small"
+    [saving]="inProgress$ | async"
+    ><ng-container
+      i18n="featured user|@@NETWORK_ADMIN_CONSOLE__FEATURED_ENTITY__FEATURED"
+      >Featured</ng-container
+    ></m-button
+  >
+</m-dropdownMenu>
+
+<ng-template #dropdownTemplate>
+  <ul *ngIf="!(inProgress$ | async)">
+    <!--
+      Currently rows will only ever be shown if an entity IS featured. 
+      In future this behavior may change.
+    -->
+    <li>
+      <span
+        i18n="featured user|@@NETWORK_ADMIN_CONSOLE__FEATURED_ENTITY__FEATURED"
+        >Featured</span
+      >
+      <i
+        class="material-icons"
+        [ngClass]="{
+          'm-featuredEntityRow__dropdownIcon--hidden': !featuredEntity.autoSubscribe
+        }"
+        >done</i
+      >
+    </li>
+    <li (click)="onOptionToggle()">
+      <span
+        i18n="
+           member of website|@@NETWORK_ADMIN_CONSOLE__FEATURED_ENTITY__MEMBER
+        "
+        >Member</span
+      >
+      <i
+        class="material-icons"
+        [ngClass]="{
+          'm-featuredEntityRow__dropdownIcon--hidden':
+            featuredEntity.autoSubscribe
+        }"
+        >done</i
+      >
+    </li>
+  </ul>
+</ng-template>

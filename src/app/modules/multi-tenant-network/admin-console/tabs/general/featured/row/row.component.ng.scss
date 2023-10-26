@@ -1,0 +1,87 @@
+@import 'defaults.scss';
+@import '../../../../stylesheets/console.component.ng.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap !important;
+  justify-content: space-between;
+  padding-top: $spacing4;
+  padding-bottom: $spacing4;
+
+  @include horizontalPadding;
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-featuredEntityRow__infoContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-right: $spacing4;
+    cursor: pointer;
+
+    ::ng-deep .minds-avatar {
+      margin: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-position: center;
+      background-size: cover;
+      margin-right: $spacing2;
+    }
+
+    .m-featuredEntityRow__infoContainerRight {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-featuredEntityRow__infoContainerName {
+        @include body1Bold;
+        word-wrap: anywhere;
+      }
+
+      .m-featuredEntityRow__infoContainerSubtext {
+        @include body2Regular;
+        word-wrap: anywhere;
+      }
+    }
+  }
+
+  m-dropdownMenu {
+    ul {
+      li {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        padding: $spacing3 $spacing4;
+        @include body2Medium;
+
+        &:hover {
+          @include m-on-theme(dark) {
+            background: m-lighten(
+              color-by-theme($m-bgColor--primary, 'dark'),
+              5%
+            );
+          }
+          @include m-on-theme(light) {
+            background: m-darken(
+              color-by-theme($m-bgColor--primary, 'light'),
+              5%
+            );
+          }
+        }
+
+        i {
+          font-size: 16px;
+          font-weight: 900;
+
+          @include m-theme() {
+            color: themed($m-action);
+          }
+
+          &.m-featuredEntityRow__dropdownIcon--hidden {
+            visibility: hidden;
+          }
+        }
+      }
+    }
+  }
+}

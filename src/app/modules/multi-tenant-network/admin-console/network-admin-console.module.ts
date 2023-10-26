@@ -9,6 +9,8 @@ import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.comp
 import { NetworkAdminConsoleAppearanceComponent } from './tabs/appearance/appearance.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworkSettingsAuthGuard } from './guards/network-settings-auth.guard';
+import { NetworkAdminConsoleFeaturedComponent } from './tabs/general/featured/featured.component';
+import { NetworkAdminConsoleFeaturedEntityRowComponent } from './tabs/general/featured/row/row.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -36,6 +38,8 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleTabsComponent,
     NetworkAdminConsoleGeneralComponent,
     NetworkAdminConsoleAppearanceComponent,
+    NetworkAdminConsoleFeaturedComponent,
+    NetworkAdminConsoleFeaturedEntityRowComponent,
   ],
 })
 export class NetworkAdminConsoleModule {}
