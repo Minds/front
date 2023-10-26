@@ -62,8 +62,8 @@ export class NetworksListComponent implements OnInit, OnDestroy {
     this.inProgress$.next(true);
 
     this.getNetworksListQuery = this.getNetworksListGQL.watch({
-      limit: 12,
-      offset: 0,
+      first: 12,
+      last: 0,
     });
 
     this.subscriptions.push(

@@ -1,5 +1,5 @@
-query GetNetworksList($limit: Int!, $offset: Int!) {
-  networks(limit: $limit, offset: $offset) {
+query GetNetworksList($first: Int!, $last: Int!) {
+  networks(first: $first, last: $last) {
     id
     domain
     ownerGuid

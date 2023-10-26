@@ -395,12 +395,12 @@ export type NetworkUser = {
   __typename?: 'NetworkUser';
   guid: Scalars['String']['output'];
   role: NetworkUserRoleEnum;
-  tenantId: Scalars['String']['output'];
+  tenantId: Scalars['Int']['output'];
   username: Scalars['String']['output'];
 };
 
 export type NetworkUserInput = {
-  tenantId?: InputMaybe<Scalars['String']['input']>;
+  tenantId?: InputMaybe<Scalars['Int']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -571,8 +571,8 @@ export type QueryGiftCardsArgs = {
 };
 
 export type QueryNetworksArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -639,8 +639,9 @@ export type Tenant = {
   __typename?: 'Tenant';
   config?: Maybe<MultiTenantConfig>;
   domain?: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
   ownerGuid?: Maybe<Scalars['Int']['output']>;
+  rootUserGuid?: Maybe<Scalars['Int']['output']>;
 };
 
 export type TenantInput = {
@@ -943,30 +944,27 @@ export type CreateNetworkRootUserMutation = {
     __typename?: 'NetworkUser';
     guid: string;
     username: string;
-    tenantId: string;
+    tenantId: number;
     role: NetworkUserRoleEnum;
   };
 };
 
 export type GetNetworksListQueryVariables = Exact<{
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
+  first: Scalars['Int']['input'];
+  last: Scalars['Int']['input'];
 }>;
 
 export type GetNetworksListQuery = {
   __typename?: 'Query';
   networks: Array<{
     __typename?: 'Tenant';
-    id: string;
+    id: number;
     domain?: string | null;
     ownerGuid?: number | null;
+    rootUserGuid?: number | null;
     config?: {
       __typename?: 'MultiTenantConfig';
       siteName?: string | null;
-      siteEmail?: string | null;
-      colorScheme?: MultiTenantColorScheme | null;
-      primaryColor?: string | null;
-      updatedTimestamp?: number | null;
     } | null;
   }>;
 };
@@ -2217,17 +2215,14 @@ export class CreateNetworkRootUserGQL extends Apollo.Mutation<
   }
 }
 export const GetNetworksListDocument = gql`
-  query GetNetworksList($limit: Int!, $offset: Int!) {
-    networks(limit: $limit, offset: $offset) {
+  query GetNetworksList($first: Int!, $last: Int!) {
+    networks(first: $first, last: $last) {
       id
       domain
       ownerGuid
+      rootUserGuid
       config {
         siteName
-        siteEmail
-        colorScheme
-        primaryColor
-        updatedTimestamp
       }
     }
   }
