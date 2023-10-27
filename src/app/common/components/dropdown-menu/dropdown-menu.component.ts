@@ -60,9 +60,6 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
 
   @Input('data-ref') dataRef: string;
 
-  /** Whether clicking on dropdown menu is disabled. */
-  @Input() disabled: boolean = false;
-
   isOpen: boolean = false;
 
   protected windowSize$: Subject<{
@@ -93,10 +90,6 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
     if ($event) {
       $event.preventDefault();
       $event.stopPropagation();
-    }
-
-    if (this.disabled) {
-      return;
     }
 
     // track the click event manually because stopPropagation will

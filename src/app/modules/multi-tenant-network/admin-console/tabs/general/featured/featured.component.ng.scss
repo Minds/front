@@ -39,6 +39,7 @@
 
   .m-tabs__container {
     max-width: calc(100% - 1px);
+
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }

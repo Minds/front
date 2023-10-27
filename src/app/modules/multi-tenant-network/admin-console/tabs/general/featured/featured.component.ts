@@ -17,8 +17,8 @@ import { MindsGroup, MindsUser } from '../../../../../../interfaces/entities';
 import { AddFeaturedEntityModalEntityType } from './add-user-modal/add-featured-entity-modal.types';
 
 /**
- * Featured entities section of admin console. Allows viewing and changing the list
- * of featured entities for the network.
+ * Featured entities section of admin console. Allows viewing and changing
+ * and opening a modal to add to the list of featured entities for the network.
  */
 @Component({
   selector: 'm-networkAdminConsole__featured',
@@ -140,7 +140,7 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
    * @returns { string } Unique track by key.
    */
   public trackBy(featuredEntity: FeaturedEntity): string {
-    return featuredEntity.entityGuid;
+    return featuredEntity?.entityGuid;
   }
 
   /**

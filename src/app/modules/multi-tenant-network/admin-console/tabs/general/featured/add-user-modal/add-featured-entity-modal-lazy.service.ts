@@ -35,7 +35,7 @@ export class AddFeaturedEntityModalLazyService {
   ) {}
 
   /**
-   * Lazy load modules and open modal.
+   * Lazy load module and open modal.
    * @param { AddFeaturedEntityModalEntityType } entityType - type of entity that can be selected.
    * @returns { Promise<ModalRef<AddFeaturedEntityModalComponent>> } - modal reference.
    */

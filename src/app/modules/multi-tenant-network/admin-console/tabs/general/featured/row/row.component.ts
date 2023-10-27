@@ -35,7 +35,7 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
   >();
 
   /** Enum for consumption in template. */
-  public FeaturedEntityRowOption: typeof FeaturedEntityRowOption = FeaturedEntityRowOption;
+  public readonly FeaturedEntityRowOption: typeof FeaturedEntityRowOption = FeaturedEntityRowOption;
 
   /** Whether action is in progres. */
   public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
@@ -62,7 +62,7 @@ export class NetworkAdminConsoleFeaturedEntityRowComponent {
   /**
    * Called on delete clicked on row. Will delete the entity from the DB.
    * In future we may want to make this function work with different chip badges
-   * such that you can "delete" recommended entities OR featured entities.
+   * such that you can "delete" featured entities OR recommended entities.
    * @returns { Promise<void> }
    */
   public async onDeleteClicked(): Promise<void> {
