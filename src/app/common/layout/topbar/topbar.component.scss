@@ -70,6 +70,7 @@ h1 {
 .m-topbar__leftColumn {
   display: flex;
   align-items: center;
+  overflow-x: hidden;
 
   @media screen and (max-width: $m-grid-max-mobile) {
     // margin-left: 23px;
@@ -423,6 +424,7 @@ h1 {
 
     .m-topbar__logo--full {
       height: 42px;
+      max-width: 150px;
       @media screen and (max-width: $layoutMax3ColWidth) {
         display: none;
       }

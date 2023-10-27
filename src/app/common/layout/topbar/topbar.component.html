@@ -42,7 +42,7 @@
               "
             >
               <img
-                [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+                [src]="getSmallLogoSrc$() | async"
                 class="m-topbar__logo--bulb"
                 alt="Minds"
               />
@@ -53,7 +53,7 @@
                       (pageLayoutService.hasTopbarBackground$ | async)
                     : !(isDarkTheme$ | async)
                 "
-                [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+                [src]="getFullLogoSrc$('light') | async"
                 class="m-topbar__logo--full"
                 alt="minds"
               />
@@ -64,7 +64,7 @@
                       !(pageLayoutService.hasTopbarBackground$ | async)
                     : (isDarkTheme$ | async)
                 "
-                [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
+                [src]="getFullLogoSrc$('dark') | async"
                 class="m-topbar__logo--full"
                 alt="minds"
               />
