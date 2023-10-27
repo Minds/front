@@ -91,7 +91,7 @@ export class NetworkAdminConsoleModerationGuidelinesComponent
    */
   public async onSubmit(): Promise<void> {
     if (!this.communityGuidelinesFormControl.dirty) {
-      this.toaster.error('There are no changes to save.');
+      this.toaster.error('There are no changes to save');
       return;
     }
 
@@ -111,7 +111,13 @@ export class NetworkAdminConsoleModerationGuidelinesComponent
     }
 
     this.savingInProgress$.next(false);
-    this.toaster.success('Successfully updated content policy.');
+
+    this.toaster.success(
+      this.communityGuidelinesFormControl.value === ''
+        ? 'Network community guidelines removed'
+        : 'Network community guidelines updated'
+    );
+
     this.formGroup.markAsPristine();
   }
 }

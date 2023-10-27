@@ -61,14 +61,14 @@ describe('NetworkAdminConsoleModerationGuidelinesComponent', () => {
   });
 
   describe('onSubmit', () => {
-    it('should show an error message if submitted while from is pristine', fakeAsync(() => {
+    it('should show an error message if submitted while form is pristine', fakeAsync(() => {
       comp.communityGuidelinesFormControl.markAsPristine();
 
       comp.onSubmit();
       tick();
 
       expect((comp as any).toaster.error).toHaveBeenCalledWith(
-        'There are no changes to save.'
+        'There are no changes to save'
       );
       expect(
         (comp as any).multiTenantConfigService.updateConfig
@@ -77,7 +77,7 @@ describe('NetworkAdminConsoleModerationGuidelinesComponent', () => {
       expect((comp as any).formGroup.pristine).toBeTrue();
     }));
 
-    it('should show an error message if an unknown error occurs', fakeAsync(() => {
+    it('should save the community guidelines and show a success message', fakeAsync(() => {
       const communityGuidelines: string = 'Community Guidelines Test';
       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
         of(true)
@@ -93,12 +93,33 @@ describe('NetworkAdminConsoleModerationGuidelinesComponent', () => {
         (comp as any).multiTenantConfigService.updateConfig
       ).toHaveBeenCalledWith({ communityGuidelines: communityGuidelines });
       expect((comp as any).toaster.success).toHaveBeenCalledWith(
-        'Successfully updated content policy.'
+        'Network community guidelines updated'
       );
       expect((comp as any).formGroup.pristine).toBeTrue();
     }));
 
-    it('should save the community guidelines and show a success message', fakeAsync(() => {
+    it('should remove the community guidelines and show a success message', fakeAsync(() => {
+      const communityGuidelines: string = '';
+      (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
+        of(true)
+      );
+      comp.communityGuidelinesFormControl.markAsDirty();
+      comp.communityGuidelinesFormControl.setValue(communityGuidelines);
+
+      comp.onSubmit();
+      tick();
+
+      expect((comp as any).toaster.error).not.toHaveBeenCalled();
+      expect(
+        (comp as any).multiTenantConfigService.updateConfig
+      ).toHaveBeenCalledWith({ communityGuidelines: communityGuidelines });
+      expect((comp as any).toaster.success).toHaveBeenCalledWith(
+        'Network community guidelines removed'
+      );
+      expect((comp as any).formGroup.pristine).toBeTrue();
+    }));
+
+    it('should show an error message if an unknown error occurs', fakeAsync(() => {
       const communityGuidelines: string = 'Community Guidelines Test';
       const errorMessage: string = 'Test Error';
       (comp as any).multiTenantConfigService.updateConfig.and.returnValue(
