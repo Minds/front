@@ -1,0 +1,10 @@
+<div class="m-pageLayout__pane--main">
+  <h3>
+    <ng-container *ngIf="configLoaded$ | async; else loadingTitleTemplate">{{
+      title$ | async
+    }}</ng-container>
+    <ng-template #loadingTitleTemplate>...</ng-template>
+  </h3>
+  <m-networkAdminConsole__tabs></m-networkAdminConsole__tabs>
+  <router-outlet></router-outlet>
+</div>
