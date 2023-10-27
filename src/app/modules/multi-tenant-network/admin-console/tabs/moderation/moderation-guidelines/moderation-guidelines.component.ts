@@ -98,11 +98,15 @@ export class NetworkAdminConsoleModerationGuidelinesComponent
     this.savingInProgress$.next(true);
 
     try {
-      await lastValueFrom(
+      const success: boolean = await lastValueFrom(
         this.multiTenantConfigService.updateConfig({
           communityGuidelines: this.communityGuidelinesFormControl.value,
         })
       );
+
+      if (!success) {
+        throw new Error('An error occurred whilst saving');
+      }
     } catch (e) {
       console.error(e);
       this.toaster.error(e?.message ?? 'An unknown error has occurred');
