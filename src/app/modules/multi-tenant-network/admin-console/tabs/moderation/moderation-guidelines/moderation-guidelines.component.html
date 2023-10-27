@@ -30,21 +30,20 @@
       <label
         class="m-networkAdminConsole__formLabel"
         i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__COMMUNITY_GUIDELINES_LABEL"
-        for="networkName"
+        for="communityGuidelines"
         >Community Guidelines</label
       >
       <textarea
         class="m-networkAdminConsole__formTextAreaInput"
         id="communityGuidelines"
+        name="communityGuidelines"
         formControlName="communityGuidelines"
         placeholder="1. Type your community guidelines here. You can leave this section blank if you want"
         autocomplete="off"
         data-ref="network-admin-general-community-guidelines-input"
       ></textarea>
       <m-formError
-        *ngIf="
-          communityGuidelinesFormControl && communityGuidelinesFormControl.dirty
-        "
+        *ngIf="communityGuidelinesFormControl?.dirty"
         [errors]="communityGuidelinesFormControl?.errors"
       >
       </m-formError>
