@@ -3,18 +3,29 @@ import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
+  ID: { input: string | number; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
 };
 
 export type ActivityEdge = EdgeInterface & {
@@ -109,25 +120,27 @@ export type EdgeInterface = {
   node?: Maybe<NodeInterface>;
 };
 
-export type FeaturedEntity = FeaturedEntityInterface & NodeInterface & {
-  __typename?: 'FeaturedEntity';
-  autoSubscribe: Scalars['Boolean']['output'];
-  entityGuid: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  /** Gets entity name. */
-  name: Scalars['String']['output'];
-  recommended: Scalars['Boolean']['output'];
-  tenantId: Scalars['String']['output'];
-};
+export type FeaturedEntity = FeaturedEntityInterface &
+  NodeInterface & {
+    __typename?: 'FeaturedEntity';
+    autoSubscribe: Scalars['Boolean']['output'];
+    entityGuid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    /** Gets entity name. */
+    name: Scalars['String']['output'];
+    recommended: Scalars['Boolean']['output'];
+    tenantId: Scalars['String']['output'];
+  };
 
-export type FeaturedEntityConnection = ConnectionInterface & NodeInterface & {
-  __typename?: 'FeaturedEntityConnection';
-  /** Gets connections edges. */
-  edges: Array<EdgeInterface>;
-  /** ID for GraphQL. */
-  id: Scalars['ID']['output'];
-  pageInfo: PageInfo;
-};
+export type FeaturedEntityConnection = ConnectionInterface &
+  NodeInterface & {
+    __typename?: 'FeaturedEntityConnection';
+    /** Gets connections edges. */
+    edges: Array<EdgeInterface>;
+    /** ID for GraphQL. */
+    id: Scalars['ID']['output'];
+    pageInfo: PageInfo;
+  };
 
 export type FeaturedEntityEdge = EdgeInterface & {
   __typename?: 'FeaturedEntityEdge';
@@ -159,33 +172,35 @@ export type FeaturedEntityInterface = {
 
 export enum FeaturedEntityTypeEnum {
   Group = 'GROUP',
-  User = 'USER'
+  User = 'USER',
 }
 
-export type FeaturedGroup = FeaturedEntityInterface & NodeInterface & {
-  __typename?: 'FeaturedGroup';
-  autoSubscribe: Scalars['Boolean']['output'];
-  entityGuid: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  /** Gets count of members. */
-  membersCount: Scalars['Int']['output'];
-  /** Gets group name. */
-  name: Scalars['String']['output'];
-  recommended: Scalars['Boolean']['output'];
-  tenantId: Scalars['String']['output'];
-};
+export type FeaturedGroup = FeaturedEntityInterface &
+  NodeInterface & {
+    __typename?: 'FeaturedGroup';
+    autoSubscribe: Scalars['Boolean']['output'];
+    entityGuid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    /** Gets count of members. */
+    membersCount: Scalars['Int']['output'];
+    /** Gets group name. */
+    name: Scalars['String']['output'];
+    recommended: Scalars['Boolean']['output'];
+    tenantId: Scalars['String']['output'];
+  };
 
-export type FeaturedUser = FeaturedEntityInterface & NodeInterface & {
-  __typename?: 'FeaturedUser';
-  autoSubscribe: Scalars['Boolean']['output'];
-  entityGuid: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  /** Gets user's display name, or username. */
-  name: Scalars['String']['output'];
-  recommended: Scalars['Boolean']['output'];
-  tenantId: Scalars['String']['output'];
-  username?: Maybe<Scalars['String']['output']>;
-};
+export type FeaturedUser = FeaturedEntityInterface &
+  NodeInterface & {
+    __typename?: 'FeaturedUser';
+    autoSubscribe: Scalars['Boolean']['output'];
+    entityGuid: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    /** Gets user's display name, or username. */
+    name: Scalars['String']['output'];
+    recommended: Scalars['Boolean']['output'];
+    tenantId: Scalars['String']['output'];
+    username?: Maybe<Scalars['String']['output']>;
+  };
 
 export type FeedExploreTagEdge = EdgeInterface & {
   __typename?: 'FeedExploreTagEdge';
@@ -215,13 +230,14 @@ export type FeedHeaderNode = NodeInterface & {
   text: Scalars['String']['output'];
 };
 
-export type FeedHighlightsConnection = ConnectionInterface & NodeInterface & {
-  __typename?: 'FeedHighlightsConnection';
-  /** Explicitly will only return activity edges */
-  edges: Array<ActivityEdge>;
-  id: Scalars['ID']['output'];
-  pageInfo: PageInfo;
-};
+export type FeedHighlightsConnection = ConnectionInterface &
+  NodeInterface & {
+    __typename?: 'FeedHighlightsConnection';
+    /** Explicitly will only return activity edges */
+    edges: Array<ActivityEdge>;
+    id: Scalars['ID']['output'];
+    pageInfo: PageInfo;
+  };
 
 export type FeedHighlightsEdge = EdgeInterface & {
   __typename?: 'FeedHighlightsEdge';
@@ -284,7 +300,6 @@ export type GiftCardNode = NodeInterface & {
   transactions: GiftCardTransactionsConnection;
 };
 
-
 export type GiftCardNodeTransactionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -296,19 +311,19 @@ export enum GiftCardOrderingEnum {
   CreatedAsc = 'CREATED_ASC',
   CreatedDesc = 'CREATED_DESC',
   ExpiringAsc = 'EXPIRING_ASC',
-  ExpiringDesc = 'EXPIRING_DESC'
+  ExpiringDesc = 'EXPIRING_DESC',
 }
 
 export enum GiftCardProductIdEnum {
   Boost = 'BOOST',
   Plus = 'PLUS',
   Pro = 'PRO',
-  Supermind = 'SUPERMIND'
+  Supermind = 'SUPERMIND',
 }
 
 export enum GiftCardStatusFilterEnum {
   Active = 'ACTIVE',
-  Expired = 'EXPIRED'
+  Expired = 'EXPIRED',
 }
 
 export type GiftCardTargetInput = {
@@ -377,7 +392,7 @@ export type KeyValuePairInput = {
 
 export enum MultiTenantColorScheme {
   Dark = 'DARK',
-  Light = 'LIGHT'
+  Light = 'LIGHT',
 }
 
 export type MultiTenantConfig = {
@@ -417,18 +432,15 @@ export type Mutation = {
   updateAccount: Array<Scalars['String']['output']>;
 };
 
-
 export type MutationClaimGiftCardArgs = {
   claimCode: Scalars['String']['input'];
 };
-
 
 export type MutationCompleteOnboardingStepArgs = {
   additionalData?: InputMaybe<Array<KeyValuePairInput>>;
   stepKey: Scalars['String']['input'];
   stepType: Scalars['String']['input'];
 };
-
 
 export type MutationCreateGiftCardArgs = {
   amount: Scalars['Float']['input'];
@@ -438,41 +450,33 @@ export type MutationCreateGiftCardArgs = {
   targetInput: GiftCardTargetInput;
 };
 
-
 export type MutationCreateNetworkArgs = {
   tenant?: InputMaybe<TenantInput>;
 };
-
 
 export type MutationCreateNetworkRootUserArgs = {
   networkUser?: InputMaybe<NetworkUserInput>;
 };
 
-
 export type MutationDeleteFeaturedEntityArgs = {
   entityGuid: Scalars['String']['input'];
 };
-
 
 export type MutationDismissArgs = {
   key: Scalars['String']['input'];
 };
 
-
 export type MutationMultiTenantConfigArgs = {
   multiTenantConfigInput: MultiTenantConfigInput;
 };
-
 
 export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
 };
 
-
 export type MutationStoreFeaturedEntityArgs = {
   featuredEntity: FeaturedEntityInput;
 };
-
 
 export type MutationUpdateAccountArgs = {
   currentUsername: Scalars['String']['input'];
@@ -497,7 +501,7 @@ export type NetworkUserInput = {
 export enum NetworkUserRoleEnum {
   Admin = 'ADMIN',
   Owner = 'OWNER',
-  User = 'USER'
+  User = 'USER',
 }
 
 export type NewsfeedConnection = ConnectionInterface & {
@@ -545,17 +549,18 @@ export type PaymentMethod = {
   name: Scalars['String']['output'];
 };
 
-export type PublisherRecsConnection = ConnectionInterface & NodeInterface & {
-  __typename?: 'PublisherRecsConnection';
-  dismissible: Scalars['Boolean']['output'];
-  /**
-   * TODO: clean this up to help with typing. Union types wont work due to the following error being outputted
-   * `Error: ConnectionInterface.edges expects type "[EdgeInterface!]!" but PublisherRecsConnection.edges provides type "[UnionUserEdgeBoostEdge!]!".`
-   */
-  edges: Array<EdgeInterface>;
-  id: Scalars['ID']['output'];
-  pageInfo: PageInfo;
-};
+export type PublisherRecsConnection = ConnectionInterface &
+  NodeInterface & {
+    __typename?: 'PublisherRecsConnection';
+    dismissible: Scalars['Boolean']['output'];
+    /**
+     * TODO: clean this up to help with typing. Union types wont work due to the following error being outputted
+     * `Error: ConnectionInterface.edges expects type "[EdgeInterface!]!" but PublisherRecsConnection.edges provides type "[UnionUserEdgeBoostEdge!]!".`
+     */
+    edges: Array<EdgeInterface>;
+    id: Scalars['ID']['output'];
+    pageInfo: PageInfo;
+  };
 
 export type PublisherRecsEdge = EdgeInterface & {
   __typename?: 'PublisherRecsEdge';
@@ -608,11 +613,9 @@ export type Query = {
   search: SearchResultsConnection;
 };
 
-
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
 };
-
 
 export type QueryBoostsArgs = {
   after?: InputMaybe<Scalars['Int']['input']>;
@@ -625,11 +628,9 @@ export type QueryBoostsArgs = {
   targetLocation?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type QueryDismissalByKeyArgs = {
   key: Scalars['String']['input'];
 };
-
 
 export type QueryFeaturedEntitiesArgs = {
   after?: InputMaybe<Scalars['Int']['input']>;
@@ -637,16 +638,13 @@ export type QueryFeaturedEntitiesArgs = {
   type: FeaturedEntityTypeEnum;
 };
 
-
 export type QueryGiftCardArgs = {
   guid: Scalars['String']['input'];
 };
 
-
 export type QueryGiftCardByClaimCodeArgs = {
   claimCode: Scalars['String']['input'];
 };
-
 
 export type QueryGiftCardTransactionLedgerArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -656,14 +654,12 @@ export type QueryGiftCardTransactionLedgerArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type QueryGiftCardTransactionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type QueryGiftCardsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -676,12 +672,10 @@ export type QueryGiftCardsArgs = {
   statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
 };
 
-
 export type QueryNetworksArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type QueryNewsfeedArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -692,11 +686,9 @@ export type QueryNewsfeedArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
 };
-
 
 export type QuerySearchArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -713,14 +705,14 @@ export enum SearchFilterEnum {
   Group = 'GROUP',
   Latest = 'LATEST',
   Top = 'TOP',
-  User = 'USER'
+  User = 'USER',
 }
 
 export enum SearchMediaTypeEnum {
   All = 'ALL',
   Blog = 'BLOG',
   Image = 'IMAGE',
-  Video = 'VIDEO'
+  Video = 'VIDEO',
 }
 
 export enum SearchNsfwEnum {
@@ -729,7 +721,7 @@ export enum SearchNsfwEnum {
   Pornography = 'PORNOGRAPHY',
   Profanity = 'PROFANITY',
   RaceReligion = 'RACE_RELIGION',
-  Violence = 'VIOLENCE'
+  Violence = 'VIOLENCE',
 }
 
 export type SearchResultsConnection = ConnectionInterface & {
@@ -808,20 +800,41 @@ export type DismissMutationVariables = Exact<{
   key: Scalars['String']['input'];
 }>;
 
-
-export type DismissMutation = { __typename?: 'Mutation', dismiss: { __typename?: 'Dismissal', userGuid: string, key: string, dismissalTimestamp: number } };
+export type DismissMutation = {
+  __typename?: 'Mutation';
+  dismiss: {
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  };
+};
 
 export type GetDismissalByKeyQueryVariables = Exact<{
   key: Scalars['String']['input'];
 }>;
 
+export type GetDismissalByKeyQuery = {
+  __typename?: 'Query';
+  dismissalByKey?: {
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  } | null;
+};
 
-export type GetDismissalByKeyQuery = { __typename?: 'Query', dismissalByKey?: { __typename?: 'Dismissal', userGuid: string, key: string, dismissalTimestamp: number } | null };
+export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetDismissalsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetDismissalsQuery = { __typename?: 'Query', dismissals: Array<{ __typename?: 'Dismissal', userGuid: string, key: string, dismissalTimestamp: number }> };
+export type GetDismissalsQuery = {
+  __typename?: 'Query';
+  dismissals: Array<{
+    __typename?: 'Dismissal';
+    userGuid: string;
+    key: string;
+    dismissalTimestamp: number;
+  }>;
+};
 
 export type AdminUpdateAccountMutationVariables = Exact<{
   currentUsername: Scalars['String']['input'];
@@ -830,8 +843,10 @@ export type AdminUpdateAccountMutationVariables = Exact<{
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
-
-export type AdminUpdateAccountMutation = { __typename?: 'Mutation', updateAccount: Array<string> };
+export type AdminUpdateAccountMutation = {
+  __typename?: 'Mutation';
+  updateAccount: Array<string>;
+};
 
 export type GetBoostFeedQueryVariables = Exact<{
   targetLocation?: InputMaybe<Scalars['Int']['input']>;
@@ -840,15 +855,44 @@ export type GetBoostFeedQueryVariables = Exact<{
   source: Scalars['String']['input'];
 }>;
 
-
-export type GetBoostFeedQuery = { __typename?: 'Query', boosts: { __typename?: 'BoostsConnection', edges: Array<{ __typename?: 'BoostEdge', node: { __typename?: 'BoostNode', guid: string, activity: { __typename?: 'ActivityNode', legacy: string } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } };
+export type GetBoostFeedQuery = {
+  __typename?: 'Query';
+  boosts: {
+    __typename?: 'BoostsConnection';
+    edges: Array<{
+      __typename?: 'BoostEdge';
+      node: {
+        __typename?: 'BoostNode';
+        guid: string;
+        activity: { __typename?: 'ActivityNode'; legacy: string };
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+      startCursor?: string | null;
+    };
+  };
+};
 
 export type ClaimGiftCardMutationVariables = Exact<{
   claimCode: Scalars['String']['input'];
 }>;
 
-
-export type ClaimGiftCardMutation = { __typename?: 'Mutation', claimGiftCard: { __typename?: 'GiftCardNode', guid?: string | null, productId: GiftCardProductIdEnum, amount: number, balance: number, expiresAt: number, claimedAt?: number | null, claimedByGuid?: string | null } };
+export type ClaimGiftCardMutation = {
+  __typename?: 'Mutation';
+  claimGiftCard: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+    claimedByGuid?: string | null;
+  };
+};
 
 export type CreateGiftCardMutationVariables = Exact<{
   productIdEnum: Scalars['Int']['input'];
@@ -857,25 +901,58 @@ export type CreateGiftCardMutationVariables = Exact<{
   targetInput: GiftCardTargetInput;
 }>;
 
+export type CreateGiftCardMutation = {
+  __typename?: 'Mutation';
+  createGiftCard: { __typename?: 'GiftCardNode'; guid?: string | null };
+};
 
-export type CreateGiftCardMutation = { __typename?: 'Mutation', createGiftCard: { __typename?: 'GiftCardNode', guid?: string | null } };
+export type GetGiftCardBalancesWithExpiryDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
 
-export type GetGiftCardBalancesWithExpiryDataQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetGiftCardBalancesWithExpiryDataQuery = {
+  __typename?: 'Query';
+  giftCardsBalances: Array<{
+    __typename?: 'GiftCardBalanceByProductId';
+    productId: GiftCardProductIdEnum;
+    balance: number;
+    earliestExpiringGiftCard?: {
+      __typename?: 'GiftCardNode';
+      guid?: string | null;
+      balance: number;
+      expiresAt: number;
+    } | null;
+  }>;
+};
 
+export type GetGiftCardBalancesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetGiftCardBalancesWithExpiryDataQuery = { __typename?: 'Query', giftCardsBalances: Array<{ __typename?: 'GiftCardBalanceByProductId', productId: GiftCardProductIdEnum, balance: number, earliestExpiringGiftCard?: { __typename?: 'GiftCardNode', guid?: string | null, balance: number, expiresAt: number } | null }> };
-
-export type GetGiftCardBalancesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetGiftCardBalancesQuery = { __typename?: 'Query', giftCardsBalances: Array<{ __typename?: 'GiftCardBalanceByProductId', productId: GiftCardProductIdEnum, balance: number }> };
+export type GetGiftCardBalancesQuery = {
+  __typename?: 'Query';
+  giftCardsBalances: Array<{
+    __typename?: 'GiftCardBalanceByProductId';
+    productId: GiftCardProductIdEnum;
+    balance: number;
+  }>;
+};
 
 export type GetGiftCardByCodeQueryVariables = Exact<{
   claimCode: Scalars['String']['input'];
 }>;
 
-
-export type GetGiftCardByCodeQuery = { __typename?: 'Query', giftCardByClaimCode: { __typename?: 'GiftCardNode', guid?: string | null, productId: GiftCardProductIdEnum, amount: number, balance: number, expiresAt: number, claimedAt?: number | null, issuedByUsername?: string | null } };
+export type GetGiftCardByCodeQuery = {
+  __typename?: 'Query';
+  giftCardByClaimCode: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+    issuedByUsername?: string | null;
+  };
+};
 
 export type GetGiftCardTransactionsLedgerQueryVariables = Exact<{
   giftCardGuid: Scalars['String']['input'];
@@ -883,15 +960,50 @@ export type GetGiftCardTransactionsLedgerQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type GetGiftCardTransactionsLedgerQuery = { __typename?: 'Query', giftCardTransactionLedger: { __typename?: 'GiftCardTransactionsConnection', edges: Array<{ __typename?: 'GiftCardTransactionEdge', node: { __typename?: 'GiftCardTransaction', paymentGuid?: string | null, giftCardGuid?: string | null, amount: number, createdAt: number, refundedAt?: number | null, boostGuid?: string | null, id: string, giftCardIssuerGuid?: string | null, giftCardIssuerName?: string | null } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null, startCursor?: string | null } } };
+export type GetGiftCardTransactionsLedgerQuery = {
+  __typename?: 'Query';
+  giftCardTransactionLedger: {
+    __typename?: 'GiftCardTransactionsConnection';
+    edges: Array<{
+      __typename?: 'GiftCardTransactionEdge';
+      node: {
+        __typename?: 'GiftCardTransaction';
+        paymentGuid?: string | null;
+        giftCardGuid?: string | null;
+        amount: number;
+        createdAt: number;
+        refundedAt?: number | null;
+        boostGuid?: string | null;
+        id: string;
+        giftCardIssuerGuid?: string | null;
+        giftCardIssuerName?: string | null;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+      startCursor?: string | null;
+    };
+  };
+};
 
 export type GetGiftCardQueryVariables = Exact<{
   guid: Scalars['String']['input'];
 }>;
 
-
-export type GetGiftCardQuery = { __typename?: 'Query', giftCard: { __typename?: 'GiftCardNode', guid?: string | null, productId: GiftCardProductIdEnum, amount: number, balance: number, expiresAt: number, claimedAt?: number | null } };
+export type GetGiftCardQuery = {
+  __typename?: 'Query';
+  giftCard: {
+    __typename?: 'GiftCardNode';
+    guid?: string | null;
+    productId: GiftCardProductIdEnum;
+    amount: number;
+    balance: number;
+    expiresAt: number;
+    claimedAt?: number | null;
+  };
+};
 
 export type GetGiftCardsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -901,8 +1013,27 @@ export type GetGiftCardsQueryVariables = Exact<{
   statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
 }>;
 
-
-export type GetGiftCardsQuery = { __typename?: 'Query', giftCards: { __typename?: 'GiftCardsConnection', edges: Array<{ __typename?: 'GiftCardEdge', node: { __typename?: 'GiftCardNode', guid?: string | null, productId: GiftCardProductIdEnum, balance: number, expiresAt: number } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null } } };
+export type GetGiftCardsQuery = {
+  __typename?: 'Query';
+  giftCards: {
+    __typename?: 'GiftCardsConnection';
+    edges: Array<{
+      __typename?: 'GiftCardEdge';
+      node: {
+        __typename?: 'GiftCardNode';
+        guid?: string | null;
+        productId: GiftCardProductIdEnum;
+        balance: number;
+        expiresAt: number;
+      };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      endCursor?: string | null;
+    };
+  };
+};
 
 export type GetFeaturedEntitiesQueryVariables = Exact<{
   type: FeaturedEntityTypeEnum;
@@ -910,28 +1041,201 @@ export type GetFeaturedEntitiesQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
-
-export type GetFeaturedEntitiesQuery = { __typename?: 'Query', featuredEntities: { __typename?: 'FeaturedEntityConnection', id: string, edges: Array<{ __typename?: 'ActivityEdge', cursor: string, node: { __typename?: 'ActivityNode', id: string } } | { __typename?: 'BoostEdge', cursor: string, node: { __typename?: 'BoostNode', id: string } } | { __typename?: 'EdgeImpl', cursor: string, node?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename: 'FeaturedGroup', entityGuid: string, id: string, autoSubscribe: boolean, name: string, membersCount: number } | { __typename: 'FeaturedUser', entityGuid: string, id: string, autoSubscribe: boolean, name: string, username?: string | null } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', id: string } | null } | { __typename?: 'FeaturedEntityEdge', cursor: string, node?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename: 'FeaturedGroup', entityGuid: string, id: string, autoSubscribe: boolean, name: string, membersCount: number } | { __typename: 'FeaturedUser', entityGuid: string, id: string, autoSubscribe: boolean, name: string, username?: string | null } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', id: string } | null } | { __typename?: 'FeedExploreTagEdge', cursor: string, node: { __typename?: 'FeedExploreTagNode', id: string } } | { __typename?: 'FeedHeaderEdge', cursor: string, node: { __typename?: 'FeedHeaderNode', id: string } } | { __typename?: 'FeedHighlightsEdge', cursor: string, node: { __typename?: 'FeedHighlightsConnection', id: string } } | { __typename?: 'FeedNoticeEdge', cursor: string, node: { __typename?: 'FeedNoticeNode', id: string } } | { __typename?: 'GiftCardEdge', cursor: string, node: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', cursor: string, node: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', cursor: string, node: { __typename?: 'GroupNode', id: string } } | { __typename?: 'PublisherRecsEdge', cursor: string, node: { __typename?: 'PublisherRecsConnection', id: string } } | { __typename?: 'UserEdge', cursor: string, node: { __typename?: 'UserNode', id: string } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type GetFeaturedEntitiesQuery = {
+  __typename?: 'Query';
+  featuredEntities: {
+    __typename?: 'FeaturedEntityConnection';
+    id: string;
+    edges: Array<
+      | {
+          __typename?: 'ActivityEdge';
+          cursor: string;
+          node: { __typename?: 'ActivityNode'; id: string };
+        }
+      | {
+          __typename?: 'BoostEdge';
+          cursor: string;
+          node: { __typename?: 'BoostNode'; id: string };
+        }
+      | {
+          __typename?: 'EdgeImpl';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; id: string }
+            | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
+            | {
+                __typename: 'FeaturedGroup';
+                entityGuid: string;
+                id: string;
+                autoSubscribe: boolean;
+                name: string;
+                membersCount: number;
+              }
+            | {
+                __typename: 'FeaturedUser';
+                entityGuid: string;
+                id: string;
+                autoSubscribe: boolean;
+                name: string;
+                username?: string | null;
+              }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
+            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | { __typename?: 'FeedNoticeNode'; id: string }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | { __typename?: 'PublisherRecsConnection'; id: string }
+            | { __typename?: 'UserNode'; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeaturedEntityEdge';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; id: string }
+            | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
+            | {
+                __typename: 'FeaturedGroup';
+                entityGuid: string;
+                id: string;
+                autoSubscribe: boolean;
+                name: string;
+                membersCount: number;
+              }
+            | {
+                __typename: 'FeaturedUser';
+                entityGuid: string;
+                id: string;
+                autoSubscribe: boolean;
+                name: string;
+                username?: string | null;
+              }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
+            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | { __typename?: 'FeedNoticeNode'; id: string }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | { __typename?: 'PublisherRecsConnection'; id: string }
+            | { __typename?: 'UserNode'; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHighlightsEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHighlightsConnection'; id: string };
+        }
+      | {
+          __typename?: 'FeedNoticeEdge';
+          cursor: string;
+          node: { __typename?: 'FeedNoticeNode'; id: string };
+        }
+      | {
+          __typename?: 'GiftCardEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardNode'; id: string };
+        }
+      | {
+          __typename?: 'GiftCardTransactionEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardTransaction'; id: string };
+        }
+      | {
+          __typename?: 'GroupEdge';
+          cursor: string;
+          node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
+          __typename?: 'PublisherRecsEdge';
+          cursor: string;
+          node: { __typename?: 'PublisherRecsConnection'; id: string };
+        }
+      | {
+          __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
+    >;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
 
 export type DeleteFeaturedEntityMutationVariables = Exact<{
   entityGuid: Scalars['String']['input'];
 }>;
 
-
-export type DeleteFeaturedEntityMutation = { __typename?: 'Mutation', deleteFeaturedEntity: boolean };
+export type DeleteFeaturedEntityMutation = {
+  __typename?: 'Mutation';
+  deleteFeaturedEntity: boolean;
+};
 
 export type StoreFeaturedEntityMutationVariables = Exact<{
   entityGuid: Scalars['String']['input'];
   autoSubscribe?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
+export type StoreFeaturedEntityMutation = {
+  __typename?: 'Mutation';
+  storeFeaturedEntity:
+    | {
+        __typename?: 'FeaturedEntity';
+        tenantId: string;
+        entityGuid: string;
+        autoSubscribe: boolean;
+      }
+    | {
+        __typename?: 'FeaturedGroup';
+        tenantId: string;
+        entityGuid: string;
+        autoSubscribe: boolean;
+      }
+    | {
+        __typename?: 'FeaturedUser';
+        tenantId: string;
+        entityGuid: string;
+        autoSubscribe: boolean;
+      };
+};
 
-export type StoreFeaturedEntityMutation = { __typename?: 'Mutation', storeFeaturedEntity: { __typename?: 'FeaturedEntity', tenantId: string, entityGuid: string, autoSubscribe: boolean } | { __typename?: 'FeaturedGroup', tenantId: string, entityGuid: string, autoSubscribe: boolean } | { __typename?: 'FeaturedUser', tenantId: string, entityGuid: string, autoSubscribe: boolean } };
+export type GetMultiTenantConfigQueryVariables = Exact<{
+  [key: string]: never;
+}>;
 
-export type GetMultiTenantConfigQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetMultiTenantConfigQuery = { __typename?: 'Query', multiTenantConfig?: { __typename?: 'MultiTenantConfig', siteName?: string | null, siteEmail?: string | null, colorScheme?: MultiTenantColorScheme | null, primaryColor?: string | null } | null };
+export type GetMultiTenantConfigQuery = {
+  __typename?: 'Query';
+  multiTenantConfig?: {
+    __typename?: 'MultiTenantConfig';
+    siteName?: string | null;
+    siteEmail?: string | null;
+    colorScheme?: MultiTenantColorScheme | null;
+    primaryColor?: string | null;
+  } | null;
+};
 
 export type SetMultiTenantConfigMutationVariables = Exact<{
   siteName?: InputMaybe<Scalars['String']['input']>;
@@ -939,20 +1243,694 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   primaryColor?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type SetMultiTenantConfigMutation = { __typename?: 'Mutation', multiTenantConfig: boolean };
+export type SetMultiTenantConfigMutation = {
+  __typename?: 'Mutation';
+  multiTenantConfig: boolean;
+};
 
 export type FetchNewsfeedQueryVariables = Exact<{
   algorithm: Scalars['String']['input'];
   limit: Scalars['Int']['input'];
   cursor?: InputMaybe<Scalars['String']['input']>;
-  inFeedNoticesDelivered?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  inFeedNoticesDelivered?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
 }>;
 
+export type FetchNewsfeedQuery = {
+  __typename?: 'Query';
+  newsfeed: {
+    __typename?: 'NewsfeedConnection';
+    edges: Array<
+      | {
+          __typename?: 'ActivityEdge';
+          explicitVotes: boolean;
+          cursor: string;
+          node: { __typename?: 'ActivityNode'; legacy: string; id: string };
+        }
+      | {
+          __typename?: 'BoostEdge';
+          cursor: string;
+          node: {
+            __typename?: 'BoostNode';
+            goalButtonUrl?: string | null;
+            goalButtonText?: number | null;
+            legacy: string;
+            id: string;
+          };
+        }
+      | {
+          __typename?: 'EdgeImpl';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | {
+                __typename?: 'BoostNode';
+                goalButtonUrl?: string | null;
+                goalButtonText?: number | null;
+                legacy: string;
+                id: string;
+              }
+            | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
+            | { __typename?: 'FeaturedGroup'; id: string }
+            | { __typename?: 'FeaturedUser'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; tag: string; id: string }
+            | { __typename?: 'FeedHeaderNode'; text: string; id: string }
+            | {
+                __typename?: 'FeedHighlightsConnection';
+                id: string;
+                edges: Array<{
+                  __typename?: 'ActivityEdge';
+                  node: {
+                    __typename?: 'ActivityNode';
+                    id: string;
+                    legacy: string;
+                  };
+                }>;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | {
+                __typename?: 'FeedNoticeNode';
+                location: string;
+                key: string;
+                dismissible: boolean;
+                id: string;
+              }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | {
+                __typename?: 'PublisherRecsConnection';
+                dismissible: boolean;
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: {
+                        __typename?: 'ActivityNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename?: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename?: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename?: 'UserNode'; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeaturedEntityEdge';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | {
+                __typename?: 'BoostNode';
+                goalButtonUrl?: string | null;
+                goalButtonText?: number | null;
+                legacy: string;
+                id: string;
+              }
+            | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
+            | { __typename?: 'FeaturedGroup'; id: string }
+            | { __typename?: 'FeaturedUser'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; tag: string; id: string }
+            | { __typename?: 'FeedHeaderNode'; text: string; id: string }
+            | {
+                __typename?: 'FeedHighlightsConnection';
+                id: string;
+                edges: Array<{
+                  __typename?: 'ActivityEdge';
+                  node: {
+                    __typename?: 'ActivityNode';
+                    id: string;
+                    legacy: string;
+                  };
+                }>;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | {
+                __typename?: 'FeedNoticeNode';
+                location: string;
+                key: string;
+                dismissible: boolean;
+                id: string;
+              }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | {
+                __typename?: 'PublisherRecsConnection';
+                dismissible: boolean;
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: {
+                        __typename?: 'ActivityNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename?: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename?: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename?: 'UserNode'; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; tag: string; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; text: string; id: string };
+        }
+      | {
+          __typename?: 'FeedHighlightsEdge';
+          cursor: string;
+          node: {
+            __typename?: 'FeedHighlightsConnection';
+            id: string;
+            edges: Array<{
+              __typename?: 'ActivityEdge';
+              node: { __typename?: 'ActivityNode'; id: string; legacy: string };
+            }>;
+            pageInfo: {
+              __typename?: 'PageInfo';
+              hasPreviousPage: boolean;
+              hasNextPage: boolean;
+              startCursor?: string | null;
+              endCursor?: string | null;
+            };
+          };
+        }
+      | {
+          __typename?: 'FeedNoticeEdge';
+          cursor: string;
+          node: {
+            __typename?: 'FeedNoticeNode';
+            location: string;
+            key: string;
+            dismissible: boolean;
+            id: string;
+          };
+        }
+      | {
+          __typename?: 'GiftCardEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardNode'; id: string };
+        }
+      | {
+          __typename?: 'GiftCardTransactionEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardTransaction'; id: string };
+        }
+      | {
+          __typename?: 'GroupEdge';
+          cursor: string;
+          node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
+          __typename?: 'PublisherRecsEdge';
+          cursor: string;
+          node: {
+            __typename?: 'PublisherRecsConnection';
+            dismissible: boolean;
+            id: string;
+            edges: Array<
+              | {
+                  __typename?: 'ActivityEdge';
+                  publisherNode: { __typename?: 'ActivityNode'; id: string };
+                }
+              | {
+                  __typename?: 'BoostEdge';
+                  publisherNode: {
+                    __typename?: 'BoostNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'EdgeImpl';
+                  publisherNode?:
+                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeaturedEntity'; id: string }
+                    | { __typename?: 'FeaturedEntityConnection'; id: string }
+                    | { __typename?: 'FeaturedGroup'; id: string }
+                    | { __typename?: 'FeaturedUser'; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
+                    | { __typename?: 'FeedHighlightsConnection'; id: string }
+                    | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'NodeImpl'; id: string }
+                    | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'UserNode'; legacy: string; id: string }
+                    | null;
+                }
+              | {
+                  __typename?: 'FeaturedEntityEdge';
+                  publisherNode?:
+                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeaturedEntity'; id: string }
+                    | { __typename?: 'FeaturedEntityConnection'; id: string }
+                    | { __typename?: 'FeaturedGroup'; id: string }
+                    | { __typename?: 'FeaturedUser'; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
+                    | { __typename?: 'FeedHighlightsConnection'; id: string }
+                    | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'NodeImpl'; id: string }
+                    | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'UserNode'; legacy: string; id: string }
+                    | null;
+                }
+              | {
+                  __typename?: 'FeedExploreTagEdge';
+                  publisherNode: {
+                    __typename?: 'FeedExploreTagNode';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedHeaderEdge';
+                  publisherNode: { __typename?: 'FeedHeaderNode'; id: string };
+                }
+              | {
+                  __typename?: 'FeedHighlightsEdge';
+                  publisherNode: {
+                    __typename?: 'FeedHighlightsConnection';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedNoticeEdge';
+                  publisherNode: { __typename?: 'FeedNoticeNode'; id: string };
+                }
+              | {
+                  __typename?: 'GiftCardEdge';
+                  publisherNode: { __typename?: 'GiftCardNode'; id: string };
+                }
+              | {
+                  __typename?: 'GiftCardTransactionEdge';
+                  publisherNode: {
+                    __typename?: 'GiftCardTransaction';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'GroupEdge';
+                  publisherNode: {
+                    __typename?: 'GroupNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'PublisherRecsEdge';
+                  publisherNode: {
+                    __typename?: 'PublisherRecsConnection';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'UserEdge';
+                  publisherNode: {
+                    __typename?: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+            >;
+            pageInfo: {
+              __typename?: 'PageInfo';
+              hasPreviousPage: boolean;
+              hasNextPage: boolean;
+              startCursor?: string | null;
+              endCursor?: string | null;
+            };
+          };
+        }
+      | {
+          __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
+    >;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
 
-export type FetchNewsfeedQuery = { __typename?: 'Query', newsfeed: { __typename?: 'NewsfeedConnection', edges: Array<{ __typename?: 'ActivityEdge', explicitVotes: boolean, cursor: string, node: { __typename?: 'ActivityNode', legacy: string, id: string } } | { __typename?: 'BoostEdge', cursor: string, node: { __typename?: 'BoostNode', goalButtonUrl?: string | null, goalButtonText?: number | null, legacy: string, id: string } } | { __typename?: 'EdgeImpl', cursor: string, node?: { __typename?: 'ActivityNode', legacy: string, id: string } | { __typename?: 'BoostNode', goalButtonUrl?: string | null, goalButtonText?: number | null, legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', tag: string, id: string } | { __typename?: 'FeedHeaderNode', text: string, id: string } | { __typename?: 'FeedHighlightsConnection', id: string, edges: Array<{ __typename?: 'ActivityEdge', node: { __typename?: 'ActivityNode', id: string, legacy: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } | { __typename?: 'FeedNoticeNode', location: string, key: string, dismissible: boolean, id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', dismissible: boolean, id: string, edges: Array<{ __typename?: 'ActivityEdge', publisherNode: { __typename?: 'ActivityNode', id: string } } | { __typename?: 'BoostEdge', publisherNode: { __typename?: 'BoostNode', legacy: string, id: string } } | { __typename?: 'EdgeImpl', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeaturedEntityEdge', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeedExploreTagEdge', publisherNode: { __typename?: 'FeedExploreTagNode', id: string } } | { __typename?: 'FeedHeaderEdge', publisherNode: { __typename?: 'FeedHeaderNode', id: string } } | { __typename?: 'FeedHighlightsEdge', publisherNode: { __typename?: 'FeedHighlightsConnection', id: string } } | { __typename?: 'FeedNoticeEdge', publisherNode: { __typename?: 'FeedNoticeNode', id: string } } | { __typename?: 'GiftCardEdge', publisherNode: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', publisherNode: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', publisherNode: { __typename?: 'GroupNode', legacy: string, id: string } } | { __typename?: 'PublisherRecsEdge', publisherNode: { __typename?: 'PublisherRecsConnection', id: string } } | { __typename?: 'UserEdge', publisherNode: { __typename?: 'UserNode', legacy: string, id: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } | { __typename?: 'UserNode', id: string } | null } | { __typename?: 'FeaturedEntityEdge', cursor: string, node?: { __typename?: 'ActivityNode', legacy: string, id: string } | { __typename?: 'BoostNode', goalButtonUrl?: string | null, goalButtonText?: number | null, legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', tag: string, id: string } | { __typename?: 'FeedHeaderNode', text: string, id: string } | { __typename?: 'FeedHighlightsConnection', id: string, edges: Array<{ __typename?: 'ActivityEdge', node: { __typename?: 'ActivityNode', id: string, legacy: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } | { __typename?: 'FeedNoticeNode', location: string, key: string, dismissible: boolean, id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', dismissible: boolean, id: string, edges: Array<{ __typename?: 'ActivityEdge', publisherNode: { __typename?: 'ActivityNode', id: string } } | { __typename?: 'BoostEdge', publisherNode: { __typename?: 'BoostNode', legacy: string, id: string } } | { __typename?: 'EdgeImpl', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeaturedEntityEdge', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeedExploreTagEdge', publisherNode: { __typename?: 'FeedExploreTagNode', id: string } } | { __typename?: 'FeedHeaderEdge', publisherNode: { __typename?: 'FeedHeaderNode', id: string } } | { __typename?: 'FeedHighlightsEdge', publisherNode: { __typename?: 'FeedHighlightsConnection', id: string } } | { __typename?: 'FeedNoticeEdge', publisherNode: { __typename?: 'FeedNoticeNode', id: string } } | { __typename?: 'GiftCardEdge', publisherNode: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', publisherNode: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', publisherNode: { __typename?: 'GroupNode', legacy: string, id: string } } | { __typename?: 'PublisherRecsEdge', publisherNode: { __typename?: 'PublisherRecsConnection', id: string } } | { __typename?: 'UserEdge', publisherNode: { __typename?: 'UserNode', legacy: string, id: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } | { __typename?: 'UserNode', id: string } | null } | { __typename?: 'FeedExploreTagEdge', cursor: string, node: { __typename?: 'FeedExploreTagNode', tag: string, id: string } } | { __typename?: 'FeedHeaderEdge', cursor: string, node: { __typename?: 'FeedHeaderNode', text: string, id: string } } | { __typename?: 'FeedHighlightsEdge', cursor: string, node: { __typename?: 'FeedHighlightsConnection', id: string, edges: Array<{ __typename?: 'ActivityEdge', node: { __typename?: 'ActivityNode', id: string, legacy: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } } | { __typename?: 'FeedNoticeEdge', cursor: string, node: { __typename?: 'FeedNoticeNode', location: string, key: string, dismissible: boolean, id: string } } | { __typename?: 'GiftCardEdge', cursor: string, node: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', cursor: string, node: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', cursor: string, node: { __typename?: 'GroupNode', id: string } } | { __typename?: 'PublisherRecsEdge', cursor: string, node: { __typename?: 'PublisherRecsConnection', dismissible: boolean, id: string, edges: Array<{ __typename?: 'ActivityEdge', publisherNode: { __typename?: 'ActivityNode', id: string } } | { __typename?: 'BoostEdge', publisherNode: { __typename?: 'BoostNode', legacy: string, id: string } } | { __typename?: 'EdgeImpl', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeaturedEntityEdge', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeedExploreTagEdge', publisherNode: { __typename?: 'FeedExploreTagNode', id: string } } | { __typename?: 'FeedHeaderEdge', publisherNode: { __typename?: 'FeedHeaderNode', id: string } } | { __typename?: 'FeedHighlightsEdge', publisherNode: { __typename?: 'FeedHighlightsConnection', id: string } } | { __typename?: 'FeedNoticeEdge', publisherNode: { __typename?: 'FeedNoticeNode', id: string } } | { __typename?: 'GiftCardEdge', publisherNode: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', publisherNode: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', publisherNode: { __typename?: 'GroupNode', legacy: string, id: string } } | { __typename?: 'PublisherRecsEdge', publisherNode: { __typename?: 'PublisherRecsConnection', id: string } } | { __typename?: 'UserEdge', publisherNode: { __typename?: 'UserNode', legacy: string, id: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } } | { __typename?: 'UserEdge', cursor: string, node: { __typename?: 'UserNode', id: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
-
-export type PageInfoFragment = { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null };
+export type PageInfoFragment = {
+  __typename?: 'PageInfo';
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  startCursor?: string | null;
+  endCursor?: string | null;
+};
 
 export type CompleteOnboardingStepMutationVariables = Exact<{
   stepKey: Scalars['String']['input'];
@@ -960,32 +1938,71 @@ export type CompleteOnboardingStepMutationVariables = Exact<{
   additionalData?: InputMaybe<Array<KeyValuePairInput> | KeyValuePairInput>;
 }>;
 
+export type CompleteOnboardingStepMutation = {
+  __typename?: 'Mutation';
+  completeOnboardingStep: {
+    __typename?: 'OnboardingStepProgressState';
+    userGuid?: string | null;
+    stepKey: string;
+    stepType: string;
+    completedAt?: number | null;
+  };
+};
 
-export type CompleteOnboardingStepMutation = { __typename?: 'Mutation', completeOnboardingStep: { __typename?: 'OnboardingStepProgressState', userGuid?: string | null, stepKey: string, stepType: string, completedAt?: number | null } };
+export type GetOnboardingStateQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetOnboardingStateQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetOnboardingStateQuery = {
+  __typename?: 'Query';
+  onboardingState?: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  } | null;
+};
 
+export type GetOnboardingStepProgressQueryVariables = Exact<{
+  [key: string]: never;
+}>;
 
-export type GetOnboardingStateQuery = { __typename?: 'Query', onboardingState?: { __typename?: 'OnboardingState', userGuid?: string | null, startedAt: number, completedAt?: number | null } | null };
-
-export type GetOnboardingStepProgressQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetOnboardingStepProgressQuery = { __typename?: 'Query', onboardingStepProgress: Array<{ __typename?: 'OnboardingStepProgressState', userGuid?: string | null, stepKey: string, stepType: string, completedAt?: number | null }> };
+export type GetOnboardingStepProgressQuery = {
+  __typename?: 'Query';
+  onboardingStepProgress: Array<{
+    __typename?: 'OnboardingStepProgressState';
+    userGuid?: string | null;
+    stepKey: string;
+    stepType: string;
+    completedAt?: number | null;
+  }>;
+};
 
 export type SetOnboardingStateMutationVariables = Exact<{
   completed: Scalars['Boolean']['input'];
 }>;
 
-
-export type SetOnboardingStateMutation = { __typename?: 'Mutation', setOnboardingState: { __typename?: 'OnboardingState', userGuid?: string | null, startedAt: number, completedAt?: number | null } };
+export type SetOnboardingStateMutation = {
+  __typename?: 'Mutation';
+  setOnboardingState: {
+    __typename?: 'OnboardingState';
+    userGuid?: string | null;
+    startedAt: number;
+    completedAt?: number | null;
+  };
+};
 
 export type FetchPaymentMethodsQueryVariables = Exact<{
   giftCardProductId?: InputMaybe<GiftCardProductIdEnum>;
 }>;
 
-
-export type FetchPaymentMethodsQuery = { __typename?: 'Query', paymentMethods: Array<{ __typename?: 'PaymentMethod', id: string, name: string, balance?: number | null }> };
+export type FetchPaymentMethodsQuery = {
+  __typename?: 'Query';
+  paymentMethods: Array<{
+    __typename?: 'PaymentMethod';
+    id: string;
+    name: string;
+    balance?: number | null;
+  }>;
+};
 
 export type FetchSearchQueryVariables = Exact<{
   query: Scalars['String']['input'];
@@ -996,8 +2013,615 @@ export type FetchSearchQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type FetchSearchQuery = { __typename?: 'Query', search: { __typename?: 'SearchResultsConnection', edges: Array<{ __typename?: 'ActivityEdge', cursor: string, node: { __typename?: 'ActivityNode', legacy: string, id: string } } | { __typename?: 'BoostEdge', cursor: string, node: { __typename?: 'BoostNode', goalButtonUrl?: string | null, goalButtonText?: number | null, legacy: string, id: string } } | { __typename?: 'EdgeImpl', cursor: string, node?: { __typename?: 'ActivityNode', legacy: string, id: string } | { __typename?: 'BoostNode', goalButtonUrl?: string | null, goalButtonText?: number | null, legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', location: string, key: string, id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string, edges: Array<{ __typename?: 'ActivityEdge', publisherNode: { __typename?: 'ActivityNode', id: string } } | { __typename?: 'BoostEdge', publisherNode: { __typename?: 'BoostNode', legacy: string, id: string } } | { __typename?: 'EdgeImpl', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeaturedEntityEdge', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeedExploreTagEdge', publisherNode: { __typename?: 'FeedExploreTagNode', id: string } } | { __typename?: 'FeedHeaderEdge', publisherNode: { __typename?: 'FeedHeaderNode', id: string } } | { __typename?: 'FeedHighlightsEdge', publisherNode: { __typename?: 'FeedHighlightsConnection', id: string } } | { __typename?: 'FeedNoticeEdge', publisherNode: { __typename?: 'FeedNoticeNode', id: string } } | { __typename?: 'GiftCardEdge', publisherNode: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', publisherNode: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', publisherNode: { __typename?: 'GroupNode', legacy: string, id: string } } | { __typename?: 'PublisherRecsEdge', publisherNode: { __typename?: 'PublisherRecsConnection', id: string } } | { __typename?: 'UserEdge', publisherNode: { __typename?: 'UserNode', legacy: string, id: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeaturedEntityEdge', cursor: string, node?: { __typename?: 'ActivityNode', legacy: string, id: string } | { __typename?: 'BoostNode', goalButtonUrl?: string | null, goalButtonText?: number | null, legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', location: string, key: string, id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string, edges: Array<{ __typename?: 'ActivityEdge', publisherNode: { __typename?: 'ActivityNode', id: string } } | { __typename?: 'BoostEdge', publisherNode: { __typename?: 'BoostNode', legacy: string, id: string } } | { __typename?: 'EdgeImpl', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeaturedEntityEdge', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeedExploreTagEdge', publisherNode: { __typename?: 'FeedExploreTagNode', id: string } } | { __typename?: 'FeedHeaderEdge', publisherNode: { __typename?: 'FeedHeaderNode', id: string } } | { __typename?: 'FeedHighlightsEdge', publisherNode: { __typename?: 'FeedHighlightsConnection', id: string } } | { __typename?: 'FeedNoticeEdge', publisherNode: { __typename?: 'FeedNoticeNode', id: string } } | { __typename?: 'GiftCardEdge', publisherNode: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', publisherNode: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', publisherNode: { __typename?: 'GroupNode', legacy: string, id: string } } | { __typename?: 'PublisherRecsEdge', publisherNode: { __typename?: 'PublisherRecsConnection', id: string } } | { __typename?: 'UserEdge', publisherNode: { __typename?: 'UserNode', legacy: string, id: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeedExploreTagEdge', cursor: string, node: { __typename?: 'FeedExploreTagNode', id: string } } | { __typename?: 'FeedHeaderEdge', cursor: string, node: { __typename?: 'FeedHeaderNode', id: string } } | { __typename?: 'FeedHighlightsEdge', cursor: string, node: { __typename?: 'FeedHighlightsConnection', id: string } } | { __typename?: 'FeedNoticeEdge', cursor: string, node: { __typename?: 'FeedNoticeNode', location: string, key: string, id: string } } | { __typename?: 'GiftCardEdge', cursor: string, node: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', cursor: string, node: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', cursor: string, node: { __typename?: 'GroupNode', legacy: string, id: string } } | { __typename?: 'PublisherRecsEdge', cursor: string, node: { __typename?: 'PublisherRecsConnection', id: string, edges: Array<{ __typename?: 'ActivityEdge', publisherNode: { __typename?: 'ActivityNode', id: string } } | { __typename?: 'BoostEdge', publisherNode: { __typename?: 'BoostNode', legacy: string, id: string } } | { __typename?: 'EdgeImpl', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeaturedEntityEdge', publisherNode?: { __typename?: 'ActivityNode', id: string } | { __typename?: 'BoostNode', legacy: string, id: string } | { __typename?: 'FeaturedEntity', id: string } | { __typename?: 'FeaturedEntityConnection', id: string } | { __typename?: 'FeaturedGroup', id: string } | { __typename?: 'FeaturedUser', id: string } | { __typename?: 'FeedExploreTagNode', id: string } | { __typename?: 'FeedHeaderNode', id: string } | { __typename?: 'FeedHighlightsConnection', id: string } | { __typename?: 'FeedNoticeNode', id: string } | { __typename?: 'GiftCardNode', id: string } | { __typename?: 'GiftCardTransaction', id: string } | { __typename?: 'GroupNode', legacy: string, id: string } | { __typename?: 'NodeImpl', id: string } | { __typename?: 'PublisherRecsConnection', id: string } | { __typename?: 'UserNode', legacy: string, id: string } | null } | { __typename?: 'FeedExploreTagEdge', publisherNode: { __typename?: 'FeedExploreTagNode', id: string } } | { __typename?: 'FeedHeaderEdge', publisherNode: { __typename?: 'FeedHeaderNode', id: string } } | { __typename?: 'FeedHighlightsEdge', publisherNode: { __typename?: 'FeedHighlightsConnection', id: string } } | { __typename?: 'FeedNoticeEdge', publisherNode: { __typename?: 'FeedNoticeNode', id: string } } | { __typename?: 'GiftCardEdge', publisherNode: { __typename?: 'GiftCardNode', id: string } } | { __typename?: 'GiftCardTransactionEdge', publisherNode: { __typename?: 'GiftCardTransaction', id: string } } | { __typename?: 'GroupEdge', publisherNode: { __typename?: 'GroupNode', legacy: string, id: string } } | { __typename?: 'PublisherRecsEdge', publisherNode: { __typename?: 'PublisherRecsConnection', id: string } } | { __typename?: 'UserEdge', publisherNode: { __typename?: 'UserNode', legacy: string, id: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } } | { __typename?: 'UserEdge', cursor: string, node: { __typename?: 'UserNode', legacy: string, id: string } }>, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type FetchSearchQuery = {
+  __typename?: 'Query';
+  search: {
+    __typename?: 'SearchResultsConnection';
+    edges: Array<
+      | {
+          __typename?: 'ActivityEdge';
+          cursor: string;
+          node: { __typename?: 'ActivityNode'; legacy: string; id: string };
+        }
+      | {
+          __typename?: 'BoostEdge';
+          cursor: string;
+          node: {
+            __typename?: 'BoostNode';
+            goalButtonUrl?: string | null;
+            goalButtonText?: number | null;
+            legacy: string;
+            id: string;
+          };
+        }
+      | {
+          __typename?: 'EdgeImpl';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | {
+                __typename?: 'BoostNode';
+                goalButtonUrl?: string | null;
+                goalButtonText?: number | null;
+                legacy: string;
+                id: string;
+              }
+            | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
+            | { __typename?: 'FeaturedGroup'; id: string }
+            | { __typename?: 'FeaturedUser'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
+            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | {
+                __typename?: 'FeedNoticeNode';
+                location: string;
+                key: string;
+                id: string;
+              }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | {
+                __typename?: 'PublisherRecsConnection';
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: {
+                        __typename?: 'ActivityNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename?: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename?: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename?: 'UserNode'; legacy: string; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeaturedEntityEdge';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; legacy: string; id: string }
+            | {
+                __typename?: 'BoostNode';
+                goalButtonUrl?: string | null;
+                goalButtonText?: number | null;
+                legacy: string;
+                id: string;
+              }
+            | { __typename?: 'FeaturedEntity'; id: string }
+            | { __typename?: 'FeaturedEntityConnection'; id: string }
+            | { __typename?: 'FeaturedGroup'; id: string }
+            | { __typename?: 'FeaturedUser'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
+            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | {
+                __typename?: 'FeedNoticeNode';
+                location: string;
+                key: string;
+                id: string;
+              }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | {
+                __typename?: 'PublisherRecsConnection';
+                id: string;
+                edges: Array<
+                  | {
+                      __typename?: 'ActivityEdge';
+                      publisherNode: {
+                        __typename?: 'ActivityNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'BoostEdge';
+                      publisherNode: {
+                        __typename?: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'EdgeImpl';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeaturedEntityEdge';
+                      publisherNode?:
+                        | { __typename?: 'ActivityNode'; id: string }
+                        | {
+                            __typename?: 'BoostNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | {
+                            __typename?: 'FeaturedEntityConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeaturedGroup'; id: string }
+                        | { __typename?: 'FeaturedUser'; id: string }
+                        | { __typename?: 'FeedExploreTagNode'; id: string }
+                        | { __typename?: 'FeedHeaderNode'; id: string }
+                        | {
+                            __typename?: 'FeedHighlightsConnection';
+                            id: string;
+                          }
+                        | { __typename?: 'FeedNoticeNode'; id: string }
+                        | { __typename?: 'GiftCardNode'; id: string }
+                        | { __typename?: 'GiftCardTransaction'; id: string }
+                        | {
+                            __typename?: 'GroupNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | { __typename?: 'NodeImpl'; id: string }
+                        | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | {
+                            __typename?: 'UserNode';
+                            legacy: string;
+                            id: string;
+                          }
+                        | null;
+                    }
+                  | {
+                      __typename?: 'FeedExploreTagEdge';
+                      publisherNode: {
+                        __typename?: 'FeedExploreTagNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHeaderEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHeaderNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedHighlightsEdge';
+                      publisherNode: {
+                        __typename?: 'FeedHighlightsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'FeedNoticeEdge';
+                      publisherNode: {
+                        __typename?: 'FeedNoticeNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GiftCardTransactionEdge';
+                      publisherNode: {
+                        __typename?: 'GiftCardTransaction';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      publisherNode: {
+                        __typename?: 'GroupNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'PublisherRecsEdge';
+                      publisherNode: {
+                        __typename?: 'PublisherRecsConnection';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                >;
+                pageInfo: {
+                  __typename?: 'PageInfo';
+                  hasPreviousPage: boolean;
+                  hasNextPage: boolean;
+                  startCursor?: string | null;
+                  endCursor?: string | null;
+                };
+              }
+            | { __typename?: 'UserNode'; legacy: string; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHighlightsEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHighlightsConnection'; id: string };
+        }
+      | {
+          __typename?: 'FeedNoticeEdge';
+          cursor: string;
+          node: {
+            __typename?: 'FeedNoticeNode';
+            location: string;
+            key: string;
+            id: string;
+          };
+        }
+      | {
+          __typename?: 'GiftCardEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardNode'; id: string };
+        }
+      | {
+          __typename?: 'GiftCardTransactionEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardTransaction'; id: string };
+        }
+      | {
+          __typename?: 'GroupEdge';
+          cursor: string;
+          node: { __typename?: 'GroupNode'; legacy: string; id: string };
+        }
+      | {
+          __typename?: 'PublisherRecsEdge';
+          cursor: string;
+          node: {
+            __typename?: 'PublisherRecsConnection';
+            id: string;
+            edges: Array<
+              | {
+                  __typename?: 'ActivityEdge';
+                  publisherNode: { __typename?: 'ActivityNode'; id: string };
+                }
+              | {
+                  __typename?: 'BoostEdge';
+                  publisherNode: {
+                    __typename?: 'BoostNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'EdgeImpl';
+                  publisherNode?:
+                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeaturedEntity'; id: string }
+                    | { __typename?: 'FeaturedEntityConnection'; id: string }
+                    | { __typename?: 'FeaturedGroup'; id: string }
+                    | { __typename?: 'FeaturedUser'; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
+                    | { __typename?: 'FeedHighlightsConnection'; id: string }
+                    | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'NodeImpl'; id: string }
+                    | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'UserNode'; legacy: string; id: string }
+                    | null;
+                }
+              | {
+                  __typename?: 'FeaturedEntityEdge';
+                  publisherNode?:
+                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'FeaturedEntity'; id: string }
+                    | { __typename?: 'FeaturedEntityConnection'; id: string }
+                    | { __typename?: 'FeaturedGroup'; id: string }
+                    | { __typename?: 'FeaturedUser'; id: string }
+                    | { __typename?: 'FeedExploreTagNode'; id: string }
+                    | { __typename?: 'FeedHeaderNode'; id: string }
+                    | { __typename?: 'FeedHighlightsConnection'; id: string }
+                    | { __typename?: 'FeedNoticeNode'; id: string }
+                    | { __typename?: 'GiftCardNode'; id: string }
+                    | { __typename?: 'GiftCardTransaction'; id: string }
+                    | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'NodeImpl'; id: string }
+                    | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'UserNode'; legacy: string; id: string }
+                    | null;
+                }
+              | {
+                  __typename?: 'FeedExploreTagEdge';
+                  publisherNode: {
+                    __typename?: 'FeedExploreTagNode';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedHeaderEdge';
+                  publisherNode: { __typename?: 'FeedHeaderNode'; id: string };
+                }
+              | {
+                  __typename?: 'FeedHighlightsEdge';
+                  publisherNode: {
+                    __typename?: 'FeedHighlightsConnection';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'FeedNoticeEdge';
+                  publisherNode: { __typename?: 'FeedNoticeNode'; id: string };
+                }
+              | {
+                  __typename?: 'GiftCardEdge';
+                  publisherNode: { __typename?: 'GiftCardNode'; id: string };
+                }
+              | {
+                  __typename?: 'GiftCardTransactionEdge';
+                  publisherNode: {
+                    __typename?: 'GiftCardTransaction';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'GroupEdge';
+                  publisherNode: {
+                    __typename?: 'GroupNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'PublisherRecsEdge';
+                  publisherNode: {
+                    __typename?: 'PublisherRecsConnection';
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'UserEdge';
+                  publisherNode: {
+                    __typename?: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+            >;
+            pageInfo: {
+              __typename?: 'PageInfo';
+              hasPreviousPage: boolean;
+              hasNextPage: boolean;
+              startCursor?: string | null;
+              endCursor?: string | null;
+            };
+          };
+        }
+      | {
+          __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; legacy: string; id: string };
+        }
+    >;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
 
 export type CountSearchQueryVariables = Exact<{
   query: Scalars['String']['input'];
@@ -1007,751 +2631,903 @@ export type CountSearchQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type CountSearchQuery = { __typename?: 'Query', search: { __typename?: 'SearchResultsConnection', count: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type CountSearchQuery = {
+  __typename?: 'Query';
+  search: {
+    __typename?: 'SearchResultsConnection';
+    count: number;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
 
 export const PageInfoFragmentDoc = gql`
-    fragment PageInfo on PageInfo {
-  hasPreviousPage
-  hasNextPage
-  startCursor
-  endCursor
-}
-    `;
+  fragment PageInfo on PageInfo {
+    hasPreviousPage
+    hasNextPage
+    startCursor
+    endCursor
+  }
+`;
 export const DismissDocument = gql`
-    mutation Dismiss($key: String!) {
-  dismiss(key: $key) {
-    userGuid
-    key
-    dismissalTimestamp
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DismissGQL extends Apollo.Mutation<DismissMutation, DismissMutationVariables> {
-    document = DismissDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  mutation Dismiss($key: String!) {
+    dismiss(key: $key) {
+      userGuid
+      key
+      dismissalTimestamp
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DismissGQL extends Apollo.Mutation<
+  DismissMutation,
+  DismissMutationVariables
+> {
+  document = DismissDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetDismissalByKeyDocument = gql`
-    query GetDismissalByKey($key: String!) {
-  dismissalByKey(key: $key) {
-    userGuid
-    key
-    dismissalTimestamp
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetDismissalByKeyGQL extends Apollo.Query<GetDismissalByKeyQuery, GetDismissalByKeyQueryVariables> {
-    document = GetDismissalByKeyDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  query GetDismissalByKey($key: String!) {
+    dismissalByKey(key: $key) {
+      userGuid
+      key
+      dismissalTimestamp
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetDismissalByKeyGQL extends Apollo.Query<
+  GetDismissalByKeyQuery,
+  GetDismissalByKeyQueryVariables
+> {
+  document = GetDismissalByKeyDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetDismissalsDocument = gql`
-    query GetDismissals {
-  dismissals {
-    userGuid
-    key
-    dismissalTimestamp
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetDismissalsGQL extends Apollo.Query<GetDismissalsQuery, GetDismissalsQueryVariables> {
-    document = GetDismissalsDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  query GetDismissals {
+    dismissals {
+      userGuid
+      key
+      dismissalTimestamp
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetDismissalsGQL extends Apollo.Query<
+  GetDismissalsQuery,
+  GetDismissalsQueryVariables
+> {
+  document = GetDismissalsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const AdminUpdateAccountDocument = gql`
-    mutation AdminUpdateAccount($currentUsername: String!, $newUsername: String, $newEmail: String, $resetMFA: Boolean) {
-  updateAccount(
-    currentUsername: $currentUsername
-    newUsername: $newUsername
-    newEmail: $newEmail
-    resetMFA: $resetMFA
-  )
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AdminUpdateAccountGQL extends Apollo.Mutation<AdminUpdateAccountMutation, AdminUpdateAccountMutationVariables> {
-    document = AdminUpdateAccountDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetBoostFeedDocument = gql`
-    query GetBoostFeed($targetLocation: Int, $first: Int, $after: Int!, $source: String!) {
-  boosts(
-    targetLocation: $targetLocation
-    first: $first
-    after: $after
-    source: $source
+  mutation AdminUpdateAccount(
+    $currentUsername: String!
+    $newUsername: String
+    $newEmail: String
+    $resetMFA: Boolean
   ) {
-    edges {
-      node {
-        guid
-        activity {
-          legacy
+    updateAccount(
+      currentUsername: $currentUsername
+      newUsername: $newUsername
+      newEmail: $newEmail
+      resetMFA: $resetMFA
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminUpdateAccountGQL extends Apollo.Mutation<
+  AdminUpdateAccountMutation,
+  AdminUpdateAccountMutationVariables
+> {
+  document = AdminUpdateAccountDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetBoostFeedDocument = gql`
+  query GetBoostFeed(
+    $targetLocation: Int
+    $first: Int
+    $after: Int!
+    $source: String!
+  ) {
+    boosts(
+      targetLocation: $targetLocation
+      first: $first
+      after: $after
+      source: $source
+    ) {
+      edges {
+        node {
+          guid
+          activity {
+            legacy
+          }
         }
       }
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-      startCursor
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetBoostFeedGQL extends Apollo.Query<GetBoostFeedQuery, GetBoostFeedQueryVariables> {
-    document = GetBoostFeedDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const ClaimGiftCardDocument = gql`
-    mutation ClaimGiftCard($claimCode: String!) {
-  claimGiftCard(claimCode: $claimCode) {
-    guid
-    productId
-    amount
-    balance
-    expiresAt
-    claimedAt
-    claimedByGuid
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class ClaimGiftCardGQL extends Apollo.Mutation<ClaimGiftCardMutation, ClaimGiftCardMutationVariables> {
-    document = ClaimGiftCardDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateGiftCardDocument = gql`
-    mutation CreateGiftCard($productIdEnum: Int!, $amount: Float!, $stripePaymentMethodId: String!, $targetInput: GiftCardTargetInput!) {
-  createGiftCard(
-    productIdEnum: $productIdEnum
-    amount: $amount
-    stripePaymentMethodId: $stripePaymentMethodId
-    targetInput: $targetInput
-  ) {
-    guid
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateGiftCardGQL extends Apollo.Mutation<CreateGiftCardMutation, CreateGiftCardMutationVariables> {
-    document = CreateGiftCardDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGiftCardBalancesWithExpiryDataDocument = gql`
-    query GetGiftCardBalancesWithExpiryData {
-  giftCardsBalances {
-    productId
-    balance
-    earliestExpiringGiftCard {
-      guid
-      balance
-      expiresAt
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiftCardBalancesWithExpiryDataGQL extends Apollo.Query<GetGiftCardBalancesWithExpiryDataQuery, GetGiftCardBalancesWithExpiryDataQueryVariables> {
-    document = GetGiftCardBalancesWithExpiryDataDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGiftCardBalancesDocument = gql`
-    query GetGiftCardBalances {
-  giftCardsBalances {
-    productId
-    balance
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiftCardBalancesGQL extends Apollo.Query<GetGiftCardBalancesQuery, GetGiftCardBalancesQueryVariables> {
-    document = GetGiftCardBalancesDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGiftCardByCodeDocument = gql`
-    query GetGiftCardByCode($claimCode: String!) {
-  giftCardByClaimCode(claimCode: $claimCode) {
-    guid
-    productId
-    amount
-    balance
-    expiresAt
-    claimedAt
-    issuedByUsername
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiftCardByCodeGQL extends Apollo.Query<GetGiftCardByCodeQuery, GetGiftCardByCodeQueryVariables> {
-    document = GetGiftCardByCodeDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGiftCardTransactionsLedgerDocument = gql`
-    query GetGiftCardTransactionsLedger($giftCardGuid: String!, $first: Int, $after: String) {
-  giftCardTransactionLedger(
-    giftCardGuid: $giftCardGuid
-    first: $first
-    after: $after
-  ) {
-    edges {
-      node {
-        paymentGuid
-        giftCardGuid
-        amount
-        createdAt
-        refundedAt
-        boostGuid
-        id
-        giftCardIssuerGuid
-        giftCardIssuerName
+      pageInfo {
+        hasNextPage
+        endCursor
+        startCursor
       }
     }
-    pageInfo {
-      hasNextPage
-      endCursor
-      startCursor
-    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetBoostFeedGQL extends Apollo.Query<
+  GetBoostFeedQuery,
+  GetBoostFeedQueryVariables
+> {
+  document = GetBoostFeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiftCardTransactionsLedgerGQL extends Apollo.Query<GetGiftCardTransactionsLedgerQuery, GetGiftCardTransactionsLedgerQueryVariables> {
-    document = GetGiftCardTransactionsLedgerDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const ClaimGiftCardDocument = gql`
+  mutation ClaimGiftCard($claimCode: String!) {
+    claimGiftCard(claimCode: $claimCode) {
+      guid
+      productId
+      amount
+      balance
+      expiresAt
+      claimedAt
+      claimedByGuid
     }
   }
-export const GetGiftCardDocument = gql`
-    query GetGiftCard($guid: String!) {
-  giftCard(guid: $guid) {
-    guid
-    productId
-    amount
-    balance
-    expiresAt
-    claimedAt
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ClaimGiftCardGQL extends Apollo.Mutation<
+  ClaimGiftCardMutation,
+  ClaimGiftCardMutationVariables
+> {
+  document = ClaimGiftCardDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiftCardGQL extends Apollo.Query<GetGiftCardQuery, GetGiftCardQueryVariables> {
-    document = GetGiftCardDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGiftCardsDocument = gql`
-    query GetGiftCards($first: Int, $after: String, $ordering: GiftCardOrderingEnum, $productId: GiftCardProductIdEnum, $statusFilter: GiftCardStatusFilterEnum) {
-  giftCards(
-    first: $first
-    after: $after
-    ordering: $ordering
-    productId: $productId
-    statusFilter: $statusFilter
+export const CreateGiftCardDocument = gql`
+  mutation CreateGiftCard(
+    $productIdEnum: Int!
+    $amount: Float!
+    $stripePaymentMethodId: String!
+    $targetInput: GiftCardTargetInput!
   ) {
-    edges {
-      node {
+    createGiftCard(
+      productIdEnum: $productIdEnum
+      amount: $amount
+      stripePaymentMethodId: $stripePaymentMethodId
+      targetInput: $targetInput
+    ) {
+      guid
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateGiftCardGQL extends Apollo.Mutation<
+  CreateGiftCardMutation,
+  CreateGiftCardMutationVariables
+> {
+  document = CreateGiftCardDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardBalancesWithExpiryDataDocument = gql`
+  query GetGiftCardBalancesWithExpiryData {
+    giftCardsBalances {
+      productId
+      balance
+      earliestExpiringGiftCard {
         guid
-        productId
         balance
         expiresAt
       }
     }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardBalancesWithExpiryDataGQL extends Apollo.Query<
+  GetGiftCardBalancesWithExpiryDataQuery,
+  GetGiftCardBalancesWithExpiryDataQueryVariables
+> {
+  document = GetGiftCardBalancesWithExpiryDataDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiftCardsGQL extends Apollo.Query<GetGiftCardsQuery, GetGiftCardsQueryVariables> {
-    document = GetGiftCardsDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+export const GetGiftCardBalancesDocument = gql`
+  query GetGiftCardBalances {
+    giftCardsBalances {
+      productId
+      balance
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardBalancesGQL extends Apollo.Query<
+  GetGiftCardBalancesQuery,
+  GetGiftCardBalancesQueryVariables
+> {
+  document = GetGiftCardBalancesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardByCodeDocument = gql`
+  query GetGiftCardByCode($claimCode: String!) {
+    giftCardByClaimCode(claimCode: $claimCode) {
+      guid
+      productId
+      amount
+      balance
+      expiresAt
+      claimedAt
+      issuedByUsername
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardByCodeGQL extends Apollo.Query<
+  GetGiftCardByCodeQuery,
+  GetGiftCardByCodeQueryVariables
+> {
+  document = GetGiftCardByCodeDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardTransactionsLedgerDocument = gql`
+  query GetGiftCardTransactionsLedger(
+    $giftCardGuid: String!
+    $first: Int
+    $after: String
+  ) {
+    giftCardTransactionLedger(
+      giftCardGuid: $giftCardGuid
+      first: $first
+      after: $after
+    ) {
+      edges {
+        node {
+          paymentGuid
+          giftCardGuid
+          amount
+          createdAt
+          refundedAt
+          boostGuid
+          id
+          giftCardIssuerGuid
+          giftCardIssuerName
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+        startCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardTransactionsLedgerGQL extends Apollo.Query<
+  GetGiftCardTransactionsLedgerQuery,
+  GetGiftCardTransactionsLedgerQueryVariables
+> {
+  document = GetGiftCardTransactionsLedgerDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardDocument = gql`
+  query GetGiftCard($guid: String!) {
+    giftCard(guid: $guid) {
+      guid
+      productId
+      amount
+      balance
+      expiresAt
+      claimedAt
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardGQL extends Apollo.Query<
+  GetGiftCardQuery,
+  GetGiftCardQueryVariables
+> {
+  document = GetGiftCardDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetGiftCardsDocument = gql`
+  query GetGiftCards(
+    $first: Int
+    $after: String
+    $ordering: GiftCardOrderingEnum
+    $productId: GiftCardProductIdEnum
+    $statusFilter: GiftCardStatusFilterEnum
+  ) {
+    giftCards(
+      first: $first
+      after: $after
+      ordering: $ordering
+      productId: $productId
+      statusFilter: $statusFilter
+    ) {
+      edges {
+        node {
+          guid
+          productId
+          balance
+          expiresAt
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetGiftCardsGQL extends Apollo.Query<
+  GetGiftCardsQuery,
+  GetGiftCardsQueryVariables
+> {
+  document = GetGiftCardsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetFeaturedEntitiesDocument = gql`
-    query GetFeaturedEntities($type: FeaturedEntityTypeEnum!, $after: Int, $first: Int) {
-  featuredEntities(type: $type, after: $after, first: $first) {
-    edges {
-      node {
-        id
-        ... on FeaturedUser {
-          __typename
-          entityGuid
+  query GetFeaturedEntities(
+    $type: FeaturedEntityTypeEnum!
+    $after: Int
+    $first: Int
+  ) {
+    featuredEntities(type: $type, after: $after, first: $first) {
+      edges {
+        node {
           id
-          autoSubscribe
-          name
-          username
+          ... on FeaturedUser {
+            __typename
+            entityGuid
+            id
+            autoSubscribe
+            name
+            username
+          }
+          ... on FeaturedGroup {
+            __typename
+            entityGuid
+            id
+            autoSubscribe
+            name
+            membersCount
+          }
         }
-        ... on FeaturedGroup {
-          __typename
-          entityGuid
-          id
-          autoSubscribe
-          name
-          membersCount
-        }
+        cursor
       }
-      cursor
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      id
     }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    id
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetFeaturedEntitiesGQL extends Apollo.Query<
+  GetFeaturedEntitiesQuery,
+  GetFeaturedEntitiesQueryVariables
+> {
+  document = GetFeaturedEntitiesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetFeaturedEntitiesGQL extends Apollo.Query<GetFeaturedEntitiesQuery, GetFeaturedEntitiesQueryVariables> {
-    document = GetFeaturedEntitiesDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const DeleteFeaturedEntityDocument = gql`
-    mutation deleteFeaturedEntity($entityGuid: String!) {
-  deleteFeaturedEntity(entityGuid: $entityGuid)
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteFeaturedEntityGQL extends Apollo.Mutation<DeleteFeaturedEntityMutation, DeleteFeaturedEntityMutationVariables> {
-    document = DeleteFeaturedEntityDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+  mutation deleteFeaturedEntity($entityGuid: String!) {
+    deleteFeaturedEntity(entityGuid: $entityGuid)
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DeleteFeaturedEntityGQL extends Apollo.Mutation<
+  DeleteFeaturedEntityMutation,
+  DeleteFeaturedEntityMutationVariables
+> {
+  document = DeleteFeaturedEntityDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const StoreFeaturedEntityDocument = gql`
-    mutation StoreFeaturedEntity($entityGuid: String!, $autoSubscribe: Boolean) {
-  storeFeaturedEntity(
-    featuredEntity: {entityGuid: $entityGuid, autoSubscribe: $autoSubscribe}
-  ) {
-    tenantId
-    entityGuid
-    autoSubscribe
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class StoreFeaturedEntityGQL extends Apollo.Mutation<StoreFeaturedEntityMutation, StoreFeaturedEntityMutationVariables> {
-    document = StoreFeaturedEntityDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  mutation StoreFeaturedEntity($entityGuid: String!, $autoSubscribe: Boolean) {
+    storeFeaturedEntity(
+      featuredEntity: { entityGuid: $entityGuid, autoSubscribe: $autoSubscribe }
+    ) {
+      tenantId
+      entityGuid
+      autoSubscribe
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class StoreFeaturedEntityGQL extends Apollo.Mutation<
+  StoreFeaturedEntityMutation,
+  StoreFeaturedEntityMutationVariables
+> {
+  document = StoreFeaturedEntityDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetMultiTenantConfigDocument = gql`
-    query GetMultiTenantConfig {
-  multiTenantConfig {
-    siteName
-    siteEmail
-    colorScheme
-    primaryColor
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetMultiTenantConfigGQL extends Apollo.Query<GetMultiTenantConfigQuery, GetMultiTenantConfigQueryVariables> {
-    document = GetMultiTenantConfigDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  query GetMultiTenantConfig {
+    multiTenantConfig {
+      siteName
+      siteEmail
+      colorScheme
+      primaryColor
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMultiTenantConfigGQL extends Apollo.Query<
+  GetMultiTenantConfigQuery,
+  GetMultiTenantConfigQueryVariables
+> {
+  document = GetMultiTenantConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const SetMultiTenantConfigDocument = gql`
-    mutation SetMultiTenantConfig($siteName: String, $colorScheme: MultiTenantColorScheme, $primaryColor: String) {
-  multiTenantConfig(
-    multiTenantConfigInput: {siteName: $siteName, colorScheme: $colorScheme, primaryColor: $primaryColor}
-  )
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class SetMultiTenantConfigGQL extends Apollo.Mutation<SetMultiTenantConfigMutation, SetMultiTenantConfigMutationVariables> {
-    document = SetMultiTenantConfigDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+  mutation SetMultiTenantConfig(
+    $siteName: String
+    $colorScheme: MultiTenantColorScheme
+    $primaryColor: String
+  ) {
+    multiTenantConfig(
+      multiTenantConfigInput: {
+        siteName: $siteName
+        colorScheme: $colorScheme
+        primaryColor: $primaryColor
+      }
+    )
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetMultiTenantConfigGQL extends Apollo.Mutation<
+  SetMultiTenantConfigMutation,
+  SetMultiTenantConfigMutationVariables
+> {
+  document = SetMultiTenantConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const FetchNewsfeedDocument = gql`
-    query FetchNewsfeed($algorithm: String!, $limit: Int!, $cursor: String, $inFeedNoticesDelivered: [String!]) {
-  newsfeed(
-    algorithm: $algorithm
-    first: $limit
-    after: $cursor
-    inFeedNoticesDelivered: $inFeedNoticesDelivered
+  query FetchNewsfeed(
+    $algorithm: String!
+    $limit: Int!
+    $cursor: String
+    $inFeedNoticesDelivered: [String!]
   ) {
-    edges {
-      cursor
-      ... on ActivityEdge {
-        explicitVotes
-      }
-      node {
-        id
-        ... on ActivityNode {
-          legacy
+    newsfeed(
+      algorithm: $algorithm
+      first: $limit
+      after: $cursor
+      inFeedNoticesDelivered: $inFeedNoticesDelivered
+    ) {
+      edges {
+        cursor
+        ... on ActivityEdge {
+          explicitVotes
         }
-        ... on BoostNode {
-          goalButtonUrl
-          goalButtonText
-          legacy
-        }
-        ... on FeedNoticeNode {
-          location
-          key
-          dismissible
-        }
-        ... on FeedHighlightsConnection {
-          edges {
-            node {
-              id
-              legacy
-            }
+        node {
+          id
+          ... on ActivityNode {
+            legacy
           }
-          pageInfo {
-            ...PageInfo
+          ... on BoostNode {
+            goalButtonUrl
+            goalButtonText
+            legacy
           }
-        }
-        ... on PublisherRecsConnection {
-          dismissible
-          edges {
-            publisherNode: node {
-              id
-              ... on UserNode {
-                legacy
-              }
-              ... on BoostNode {
-                legacy
-              }
-              ... on GroupNode {
+          ... on FeedNoticeNode {
+            location
+            key
+            dismissible
+          }
+          ... on FeedHighlightsConnection {
+            edges {
+              node {
+                id
                 legacy
               }
             }
+            pageInfo {
+              ...PageInfo
+            }
           }
-          pageInfo {
-            ...PageInfo
+          ... on PublisherRecsConnection {
+            dismissible
+            edges {
+              publisherNode: node {
+                id
+                ... on UserNode {
+                  legacy
+                }
+                ... on BoostNode {
+                  legacy
+                }
+                ... on GroupNode {
+                  legacy
+                }
+              }
+            }
+            pageInfo {
+              ...PageInfo
+            }
           }
-        }
-        ... on FeedHeaderNode {
-          text
-        }
-        ... on FeedExploreTagNode {
-          tag
+          ... on FeedHeaderNode {
+            text
+          }
+          ... on FeedExploreTagNode {
+            tag
+          }
         }
       }
+      pageInfo {
+        ...PageInfo
+      }
     }
-    pageInfo {
-      ...PageInfo
-    }
+  }
+  ${PageInfoFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchNewsfeedGQL extends Apollo.Query<
+  FetchNewsfeedQuery,
+  FetchNewsfeedQueryVariables
+> {
+  document = FetchNewsfeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    ${PageInfoFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FetchNewsfeedGQL extends Apollo.Query<FetchNewsfeedQuery, FetchNewsfeedQueryVariables> {
-    document = FetchNewsfeedDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const CompleteOnboardingStepDocument = gql`
-    mutation CompleteOnboardingStep($stepKey: String!, $stepType: String!, $additionalData: [KeyValuePairInput!]) {
-  completeOnboardingStep(
-    stepKey: $stepKey
-    stepType: $stepType
-    additionalData: $additionalData
+  mutation CompleteOnboardingStep(
+    $stepKey: String!
+    $stepType: String!
+    $additionalData: [KeyValuePairInput!]
   ) {
-    userGuid
-    stepKey
-    stepType
-    completedAt
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CompleteOnboardingStepGQL extends Apollo.Mutation<CompleteOnboardingStepMutation, CompleteOnboardingStepMutationVariables> {
-    document = CompleteOnboardingStepDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+    completeOnboardingStep(
+      stepKey: $stepKey
+      stepType: $stepType
+      additionalData: $additionalData
+    ) {
+      userGuid
+      stepKey
+      stepType
+      completedAt
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CompleteOnboardingStepGQL extends Apollo.Mutation<
+  CompleteOnboardingStepMutation,
+  CompleteOnboardingStepMutationVariables
+> {
+  document = CompleteOnboardingStepDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetOnboardingStateDocument = gql`
-    query GetOnboardingState {
-  onboardingState {
-    userGuid
-    startedAt
-    completedAt
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetOnboardingStateGQL extends Apollo.Query<GetOnboardingStateQuery, GetOnboardingStateQueryVariables> {
-    document = GetOnboardingStateDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  query GetOnboardingState {
+    onboardingState {
+      userGuid
+      startedAt
+      completedAt
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetOnboardingStateGQL extends Apollo.Query<
+  GetOnboardingStateQuery,
+  GetOnboardingStateQueryVariables
+> {
+  document = GetOnboardingStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetOnboardingStepProgressDocument = gql`
-    query GetOnboardingStepProgress {
-  onboardingStepProgress {
-    userGuid
-    stepKey
-    stepType
-    completedAt
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetOnboardingStepProgressGQL extends Apollo.Query<GetOnboardingStepProgressQuery, GetOnboardingStepProgressQueryVariables> {
-    document = GetOnboardingStepProgressDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  query GetOnboardingStepProgress {
+    onboardingStepProgress {
+      userGuid
+      stepKey
+      stepType
+      completedAt
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetOnboardingStepProgressGQL extends Apollo.Query<
+  GetOnboardingStepProgressQuery,
+  GetOnboardingStepProgressQueryVariables
+> {
+  document = GetOnboardingStepProgressDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const SetOnboardingStateDocument = gql`
-    mutation SetOnboardingState($completed: Boolean!) {
-  setOnboardingState(completed: $completed) {
-    userGuid
-    startedAt
-    completedAt
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class SetOnboardingStateGQL extends Apollo.Mutation<SetOnboardingStateMutation, SetOnboardingStateMutationVariables> {
-    document = SetOnboardingStateDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  mutation SetOnboardingState($completed: Boolean!) {
+    setOnboardingState(completed: $completed) {
+      userGuid
+      startedAt
+      completedAt
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetOnboardingStateGQL extends Apollo.Mutation<
+  SetOnboardingStateMutation,
+  SetOnboardingStateMutationVariables
+> {
+  document = SetOnboardingStateDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const FetchPaymentMethodsDocument = gql`
-    query FetchPaymentMethods($giftCardProductId: GiftCardProductIdEnum) {
-  paymentMethods(productId: $giftCardProductId) {
-    id
-    name
-    balance
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FetchPaymentMethodsGQL extends Apollo.Query<FetchPaymentMethodsQuery, FetchPaymentMethodsQueryVariables> {
-    document = FetchPaymentMethodsDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  query FetchPaymentMethods($giftCardProductId: GiftCardProductIdEnum) {
+    paymentMethods(productId: $giftCardProductId) {
+      id
+      name
+      balance
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchPaymentMethodsGQL extends Apollo.Query<
+  FetchPaymentMethodsQuery,
+  FetchPaymentMethodsQueryVariables
+> {
+  document = FetchPaymentMethodsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const FetchSearchDocument = gql`
-    query FetchSearch($query: String!, $filter: SearchFilterEnum!, $mediaType: SearchMediaTypeEnum!, $nsfw: [SearchNsfwEnum!], $limit: Int!, $cursor: String) {
-  search(
-    query: $query
-    filter: $filter
-    mediaType: $mediaType
-    nsfw: $nsfw
-    first: $limit
-    after: $cursor
+  query FetchSearch(
+    $query: String!
+    $filter: SearchFilterEnum!
+    $mediaType: SearchMediaTypeEnum!
+    $nsfw: [SearchNsfwEnum!]
+    $limit: Int!
+    $cursor: String
   ) {
-    edges {
-      cursor
-      node {
-        id
-        ... on ActivityNode {
-          legacy
-        }
-        ... on UserNode {
-          legacy
-        }
-        ... on GroupNode {
-          legacy
-        }
-        ... on BoostNode {
-          goalButtonUrl
-          goalButtonText
-          legacy
-        }
-        ... on FeedNoticeNode {
-          location
-          key
-        }
-        ... on PublisherRecsConnection {
-          edges {
-            publisherNode: node {
-              id
-              ... on UserNode {
-                legacy
-              }
-              ... on BoostNode {
-                legacy
-              }
-              ... on GroupNode {
-                legacy
+    search(
+      query: $query
+      filter: $filter
+      mediaType: $mediaType
+      nsfw: $nsfw
+      first: $limit
+      after: $cursor
+    ) {
+      edges {
+        cursor
+        node {
+          id
+          ... on ActivityNode {
+            legacy
+          }
+          ... on UserNode {
+            legacy
+          }
+          ... on GroupNode {
+            legacy
+          }
+          ... on BoostNode {
+            goalButtonUrl
+            goalButtonText
+            legacy
+          }
+          ... on FeedNoticeNode {
+            location
+            key
+          }
+          ... on PublisherRecsConnection {
+            edges {
+              publisherNode: node {
+                id
+                ... on UserNode {
+                  legacy
+                }
+                ... on BoostNode {
+                  legacy
+                }
+                ... on GroupNode {
+                  legacy
+                }
               }
             }
-          }
-          pageInfo {
-            ...PageInfo
+            pageInfo {
+              ...PageInfo
+            }
           }
         }
       }
+      pageInfo {
+        ...PageInfo
+      }
     }
-    pageInfo {
-      ...PageInfo
-    }
+  }
+  ${PageInfoFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchSearchGQL extends Apollo.Query<
+  FetchSearchQuery,
+  FetchSearchQueryVariables
+> {
+  document = FetchSearchDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    ${PageInfoFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FetchSearchGQL extends Apollo.Query<FetchSearchQuery, FetchSearchQueryVariables> {
-    document = FetchSearchDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const CountSearchDocument = gql`
-    query CountSearch($query: String!, $filter: SearchFilterEnum!, $mediaType: SearchMediaTypeEnum!, $nsfw: [SearchNsfwEnum!], $cursor: String) {
-  search(
-    query: $query
-    filter: $filter
-    mediaType: $mediaType
-    nsfw: $nsfw
-    before: $cursor
+  query CountSearch(
+    $query: String!
+    $filter: SearchFilterEnum!
+    $mediaType: SearchMediaTypeEnum!
+    $nsfw: [SearchNsfwEnum!]
+    $cursor: String
   ) {
-    count
-    pageInfo {
-      ...PageInfo
+    search(
+      query: $query
+      filter: $filter
+      mediaType: $mediaType
+      nsfw: $nsfw
+      before: $cursor
+    ) {
+      count
+      pageInfo {
+        ...PageInfo
+      }
     }
+  }
+  ${PageInfoFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CountSearchGQL extends Apollo.Query<
+  CountSearchQuery,
+  CountSearchQueryVariables
+> {
+  document = CountSearchDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
 }
-    ${PageInfoFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CountSearchGQL extends Apollo.Query<CountSearchQuery, CountSearchQueryVariables> {
-    document = CountSearchDocument;
-    client = 'default';
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
