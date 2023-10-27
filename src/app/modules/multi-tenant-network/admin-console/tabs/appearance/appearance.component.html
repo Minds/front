@@ -1,0 +1,231 @@
+<ng-container *ngIf="!(loading$ | async); else loadingSpinnerTemplate">
+  <h4
+    class="m-networkAdminConsole__title"
+    i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__APPEARANCE"
+  >
+    Appearance
+  </h4>
+  <p
+    class="m-networkAdminConsole__subtitle"
+    i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__SUBTITLE"
+  >
+    Use the appearance tab to personalize your network with your best brand
+    color and upload your own custom logos
+  </p>
+
+  <form [formGroup]="formGroup" class="m-networkAdminConsole__form">
+    <!-- Color selectors -->
+    <div class="m-networkAdminAppearance__colourSelectors">
+      <label
+        class="m-networkAdminConsole__formSectionLabel"
+        i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__NETWORK_NAME_LABEL"
+        >Change your network’s brand color</label
+      >
+
+      <div class="m-networkAdminConsole__formInputContainer">
+        <div class="m-networkAdminAppearance__formColorLabelContainer">
+          <label
+            class="m-networkAdminAppearance__formColorLabel"
+            i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__PRIMARY_COLOR"
+            >Primary</label
+          >
+          <span class="m-networkAdminAppearance__formColorText">{{
+            formGroup.get('primaryColorHex')?.value
+          }}</span>
+        </div>
+        <input
+          class="m-networkAdminAppearance__formColorInput"
+          id="primaryColorHex"
+          type="color"
+          formControlName="primaryColorHex"
+          data-ref="network-admin-general-color-input"
+        />
+      </div>
+    </div>
+
+    <!-- Dark-mode / Light-mode inputs -->
+    <div class="m-networkAdminConsole__formInputContainer">
+      <label
+        class="m-networkAdminConsole__formSectionLabel"
+        i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__DEFAULT_COLOR_SCHEME"
+        >Default color scheme</label
+      >
+      <fieldset class="m-networkAdminConsole__radioFieldset--horizontal">
+        <div
+          class="m-networkAdminConsole__radioButtonInputContainer"
+          (click)="onColorSchemeContainerClick(MultiTenantColorScheme.Light)"
+        >
+          <input
+            class="m-networkAdminConsole__radioButtonInput"
+            name="colorScheme"
+            type="radio"
+            id="colorScheme"
+            formControlName="colorScheme"
+            [value]="MultiTenantColorScheme.Light"
+          />
+          <label class="m-networkAdminConsole__radioButtonInputLabel--hidden"
+            ><!--Icon positioning element--></label
+          >
+          <label
+            class="m-networkAdminConsole__radioButtonLabel"
+            i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__LIGHT_OPTION"
+            >Light</label
+          >
+        </div>
+
+        <div
+          class="m-networkAdminConsole__radioButtonInputContainer"
+          (click)="onColorSchemeContainerClick(MultiTenantColorScheme.Dark)"
+        >
+          <input
+            class="m-networkAdminConsole__radioButtonInput"
+            name="colorScheme"
+            type="radio"
+            id="colorScheme"
+            formControlName="colorScheme"
+            [value]="MultiTenantColorScheme.Dark"
+          />
+          <label class="m-networkAdminConsole__radioButtonInputLabel--hidden"
+            ><!--Icon positioning element--></label
+          >
+          <label
+            class="m-networkAdminConsole__radioButtonLabel"
+            i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__DARK_OPTION"
+            >Dark</label
+          >
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- Branding logo inputs -->
+    <div class="m-networkAdminAppearance__imageUploadInputs">
+      <div class="m-networkAdminAppearance__imageUploadInputContainer">
+        <label
+          class="m-networkAdminAppearance__imageUploadLabelTitle"
+          for="squareLogoUpload"
+          >Square logo</label
+        >
+        <label
+          class="m-networkAdminAppearance__imageUploadLabelSubtitle"
+          for="squareLogoUpload"
+          >Upload should at least be 160x160. <br /><strong
+            >For best results, upload a png file.</strong
+          ></label
+        >
+
+        <input
+          class="m-networkAdminAppearance__imageUploadInput"
+          type="file"
+          accept="image/*"
+          id="squareLogoUpload"
+          [multiple]="false"
+          (change)="onSquareLogoSelected($event.target.files[0])"
+          #squareLogoUpload
+        />
+        <div
+          class="m-networkAdminAppearance__imageInputArea m-networkAdminAppearance__imageInputArea--square"
+          (click)="squareLogoUpload.click()"
+          [ngStyle]="{ backgroundImage: squareLogoFileUrl$ | async }"
+        >
+          <i
+            class="material-icons m-networkAdminAppearance__imageInputUploadLogo"
+            >upload</i
+          >
+        </div>
+      </div>
+
+      <div class="m-networkAdminAppearance__imageUploadInputContainer">
+        <label
+          class="m-networkAdminAppearance__imageUploadLabelTitle"
+          for="faviconUpload"
+          >Favicon</label
+        >
+        <label
+          class="m-networkAdminAppearance__imageUploadLabelSubtitle"
+          for="faviconUpload"
+          >Upload should at least be 32x32. <br /><strong
+            >For best results, upload a png file.</strong
+          ></label
+        >
+
+        <input
+          class="m-networkAdminAppearance__imageUploadInput"
+          type="file"
+          accept="image/*"
+          id="faviconUpload"
+          [multiple]="false"
+          (change)="onFaviconSelected($event.target.files[0])"
+          #faviconUpload
+        />
+        <div
+          class="m-networkAdminAppearance__imageInputArea m-networkAdminAppearance__imageInputArea--square"
+          (click)="faviconUpload.click()"
+          [ngStyle]="{ backgroundImage: faviconFileUrl$ | async }"
+        >
+          <i
+            class="material-icons m-networkAdminAppearance__imageInputUploadLogo"
+            >upload</i
+          >
+        </div>
+      </div>
+
+      <div class="m-networkAdminAppearance__imageUploadInputContainer">
+        <label
+          class="m-networkAdminAppearance__imageUploadLabelTitle"
+          for="horizontalLogoUpload"
+          >Horizontal logo</label
+        >
+        <label
+          class="m-networkAdminAppearance__imageUploadLabelSubtitle"
+          for="horizontalLogoUpload"
+          >Upload should at least be 400x100.<br /><strong
+            >For best results, upload a png file.</strong
+          ></label
+        >
+
+        <input
+          class="m-networkAdminAppearance__imageUploadInput"
+          type="file"
+          accept="image/*"
+          id="horizontalLogoUpload"
+          [multiple]="false"
+          (change)="onHorizontalLogoSelected($event.target.files[0])"
+          #horizontalLogoUpload
+        />
+        <div
+          class="m-networkAdminAppearance__imageInputArea m-networkAdminAppearance__imageInputArea--rectangular"
+          (click)="horizontalLogoUpload.click()"
+          [ngStyle]="{ backgroundImage: horizontalLogoFileUrl$ | async }"
+        >
+          <i
+            class="material-icons m-networkAdminAppearance__imageInputUploadLogo"
+            >upload</i
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <m-button
+      *ngIf="{
+        inProgress: savingInProgress$ | async
+      } as buttonTemplateVariables"
+      color="blue"
+      size="large"
+      [solid]="false"
+      [disabled]="
+        !formGroup.valid ||
+        !formGroup.dirty ||
+        buttonTemplateVariables.inProgress
+      "
+      [saving]="buttonTemplateVariables.inProgress"
+      (onAction)="onSubmit()"
+      ><ng-container i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__SAVE_ASSETS"
+        >Save assets</ng-container
+      ></m-button
+    >
+  </form>
+</ng-container>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

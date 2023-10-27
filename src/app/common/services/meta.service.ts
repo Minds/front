@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { ConfigsService } from './configs.service';
 import { DOCUMENT } from '@angular/common';
 import maxNum from '../../helpers/max';
+import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
@@ -13,6 +14,7 @@ const DEFAULT_META_AUTHOR = 'Minds';
 const DEFAULT_OG_IMAGE = '/assets/og-images/default-v3.png';
 const DEFAULT_OG_IMAGE_WIDTH = 1200;
 const DEFAULT_OG_IMAGE_HEIGHT = 1200;
+const DEFAULT_TENANT_FAVICON = '/api/v3/multi-tenant/configs/image/favicon';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +32,8 @@ export class MetaService {
     private location: Location,
     private configs: ConfigsService,
     @Inject(DOCUMENT) private dom,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {
     this.reset();
   }
@@ -38,7 +41,15 @@ export class MetaService {
   get defaultTitle(): string {
     return this.site.isProDomain
       ? this.site.title + ' - ' + this.site.oneLineHeadline
+      : this.isTenantNetwork
+      ? this.configs.get<string>('site_name')
       : DEFAULT_META_TITLE;
+  }
+
+  get defaultAuthor(): string {
+    return this.isTenantNetwork
+      ? this.configs.get<string>('site_name')
+      : DEFAULT_META_AUTHOR;
   }
 
   /**
@@ -71,7 +82,7 @@ export class MetaService {
 
       if (join) {
         // Add ' | Minds' to the end of every og:title
-        ogTitle = ogTitle + `${this.sep}${DEFAULT_META_TITLE}`;
+        ogTitle = ogTitle + `${this.sep}${this.defaultTitle}`;
       }
     }
 
@@ -368,8 +379,8 @@ export class MetaService {
           : { width: DEFAULT_OG_IMAGE_WIDTH, height: DEFAULT_OG_IMAGE_HEIGHT }
       )
       .setThumbnail(data.ogImage ?? DEFAULT_OG_IMAGE)
-      .setAuthor(data.author || DEFAULT_META_AUTHOR)
-      .setOgAuthor(data.ogAuthor || DEFAULT_META_AUTHOR)
+      .setAuthor(data.author || this.defaultAuthor)
+      .setOgAuthor(data.ogAuthor || this.defaultAuthor)
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
       .setRobots(data.robots || 'all')
       .setNsfw(false)
@@ -377,6 +388,10 @@ export class MetaService {
       .resetTwitterCard()
       .resetDynamicFavicon()
       .resetOEmbed();
+
+    if (this.isTenantNetwork) {
+      this.setDynamicFavicon(DEFAULT_TENANT_FAVICON);
+    }
   }
 
   private applyTitle(): void {
