@@ -138,6 +138,8 @@ m-search--bar {
 }
 
 .m-topbar__top--minimalLightMode m-search--bar {
+  max-height: 40px;
+
   > .mdl-textfield {
     background-color: color-by-theme($m-bgColor--primaryInverted, 'light');
     border-radius: 10px;
