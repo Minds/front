@@ -17,15 +17,17 @@ import { Session } from '../../../../services/session';
 import { DynamicHostDirective } from '../../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from '../navigation.service';
 import { ConfigsService } from '../../../services/configs.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { Router, NavigationEnd, Event } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { BoostModalV2LazyService } from '../../../../modules/boost/modal-v2/boost-modal-v2-lazy.service';
 import { ComposerModalService } from '../../../../modules/composer/components/modal/modal.service';
 import { ThemeService } from '../../../services/theme.service';
 import { ComposerService } from '../../../../modules/composer/services/composer.service';
 import { AuthModalService } from '../../../../modules/auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../../../modules/experiments/experiments.service';
+import { MultiTenantConfigImageRefreshService } from '../../../../modules/multi-tenant-network/services/config-image-refresh.service';
+import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-tokens';
 
 /**
  * V2 version of sidebar component.
@@ -109,7 +111,9 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private themeService: ThemeService,
     private sidebarNavigationService: SidebarNavigationService,
     private authModal: AuthModalService,
-    private experiments: ExperimentsService
+    private experiments: ExperimentsService,
+    private configImageRefresh: MultiTenantConfigImageRefreshService,
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -173,6 +177,14 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     this.user = this.session.getLoggedInUser(user => {
       this.user = user;
     });
+  }
+
+  /**
+   * Whether session logged in user is an admin.
+   * @returns { boolean } true if user is an admin.
+   */
+  public isAdmin(): boolean {
+    return this.session.isAdmin();
   }
 
   /**
@@ -273,5 +285,28 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
    */
   get showNetworksLink(): boolean {
     return this.experiments.hasVariation('minds-4384-sidenav-networks-link');
+  }
+
+  /**
+   * Gets logo src depending on whether we're on a multi-tenant network and if the
+   * user is in dark / light mode. Will change as refresh count goes up to force reloads
+   * on change.
+   * @param { 'dark' | 'light' } mode - dark or light mode.
+   * @returns { Observable<string> } - observable of logo src.
+   */
+  public getLogoSrc$(mode: 'light' | 'dark'): Observable<string> {
+    if (!this.isTenantNetwork) {
+      return of(
+        `${this.cdnAssetsUrl}assets/logos/` +
+          (mode === 'light' ? 'medium-production.png' : 'medium-white.png')
+      );
+    }
+    return this.configImageRefresh.squareLogoCount$.pipe(
+      map((count: number): string => {
+        return (
+          '/api/v3/multi-tenant/configs/image/square_logo?refresh=' + count
+        );
+      })
+    );
   }
 }

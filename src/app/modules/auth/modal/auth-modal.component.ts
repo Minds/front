@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MindsUser } from '../../../interfaces/entities';
 import { SiteService } from '../../../common/services/site.service';
-import { ConfigsService } from '../../../common/services/configs.service';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import { CDN_ASSETS_URL } from '../../../common/injection-tokens/url-injection-tokens';
+import { SITE_NAME } from '../../../common/injection-tokens/common-injection-tokens';
 
 /**
  * Auth modal that can display either login or register form
@@ -15,6 +17,17 @@ export class AuthModalComponent implements OnInit {
   formDisplay: 'register' | 'login' = 'register';
 
   /**
+   * Gets title for modal.
+   * @returns { string } title for modal.
+   */
+  get title(): string {
+    if (this.formDisplay == 'register') {
+      return this.isTenantNetwork ? `Join ${this.siteName}` : 'Join Minds';
+    }
+    return 'Login';
+  }
+
+  /**
    * Completion intent
    */
   onComplete: (any) => any = () => {};
@@ -24,11 +37,12 @@ export class AuthModalComponent implements OnInit {
    */
   onDismissIntent: () => void = () => {};
 
-  public readonly cdnAssetsUrl: string;
-
-  constructor(public siteService: SiteService, configs: ConfigsService) {
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-  }
+  constructor(
+    public siteService: SiteService,
+    @Inject(CDN_ASSETS_URL) private readonly cdnAssetsUrl: boolean,
+    @Inject(SITE_NAME) private readonly siteName: boolean,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
+  ) {}
 
   ngOnInit(): void {}
 
@@ -75,5 +89,15 @@ export class AuthModalComponent implements OnInit {
     this.formDisplay = formDisplay;
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
+  }
+
+  /**
+   * Gets logo src depending on whether we're on a multi-tenant network.
+   * @returns { string } - logo src.
+   */
+  public getLogoSrc(): string {
+    return !this.isTenantNetwork
+      ? `${this.cdnAssetsUrl}assets/logos/bulb.svg`
+      : '/api/v3/multi-tenant/configs/image/square_logo';
   }
 }

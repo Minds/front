@@ -968,6 +968,31 @@ export type GetNetworksListQuery = {
     } | null;
   }>;
 };
+export type GetMultiTenantConfigQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMultiTenantConfigQuery = {
+  __typename?: 'Query';
+  multiTenantConfig?: {
+    __typename?: 'MultiTenantConfig';
+    siteName?: string | null;
+    siteEmail?: string | null;
+    colorScheme?: MultiTenantColorScheme | null;
+    primaryColor?: string | null;
+  } | null;
+};
+
+export type SetMultiTenantConfigMutationVariables = Exact<{
+  siteName?: InputMaybe<Scalars['String']['input']>;
+  colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  primaryColor?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SetMultiTenantConfigMutation = {
+  __typename?: 'Mutation';
+  multiTenantConfig: boolean;
+};
 
 export type FetchNewsfeedQueryVariables = Exact<{
   algorithm: Scalars['String']['input'];
@@ -2200,6 +2225,16 @@ export const CreateTenantRootUserDocument = gql`
     }
   }
 `;
+export const GetMultiTenantConfigDocument = gql`
+  query GetMultiTenantConfig {
+    multiTenantConfig {
+      siteName
+      siteEmail
+      colorScheme
+      primaryColor
+    }
+  }
+`;
 
 @Injectable({
   providedIn: 'root',
@@ -2209,6 +2244,19 @@ export class CreateTenantRootUserGQL extends Apollo.Mutation<
   CreateTenantRootUserMutationVariables
 > {
   document = CreateTenantRootUserDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMultiTenantConfigGQL extends Apollo.Query<
+  GetMultiTenantConfigQuery,
+  GetMultiTenantConfigQueryVariables
+> {
+  document = GetMultiTenantConfigDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -2227,6 +2275,21 @@ export const GetNetworksListDocument = gql`
     }
   }
 `;
+export const SetMultiTenantConfigDocument = gql`
+  mutation SetMultiTenantConfig(
+    $siteName: String
+    $colorScheme: MultiTenantColorScheme
+    $primaryColor: String
+  ) {
+    multiTenantConfig(
+      multiTenantConfigInput: {
+        siteName: $siteName
+        colorScheme: $colorScheme
+        primaryColor: $primaryColor
+      }
+    )
+  }
+`;
 
 @Injectable({
   providedIn: 'root',
@@ -2236,6 +2299,19 @@ export class GetNetworksListGQL extends Apollo.Query<
   GetNetworksListQueryVariables
 > {
   document = GetNetworksListDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+@Injectable({
+  providedIn: 'root',
+})
+export class SetMultiTenantConfigGQL extends Apollo.Mutation<
+  SetMultiTenantConfigMutation,
+  SetMultiTenantConfigMutationVariables
+> {
+  document = SetMultiTenantConfigDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

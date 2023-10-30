@@ -20,6 +20,7 @@ import {
 } from './modules/blogs/blog.lazy';
 import { PathMatch } from './common/types/angular.types';
 import { NetworksModuleLazyRoutes } from './modules/networks/networks.lazy';
+import { NetworkAdminConsoleModuleLazyRoutes } from './modules/multi-tenant-network/admin-console/network-admin-console.lazy';
 import { TenantRedirectGuard } from './common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
   CanaryModuleLazyRoutes,
   MobileModuleLazyRoutes,
   AuxModuleLazyRoutes,
+  NetworkAdminConsoleModuleLazyRoutes,
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,
   NetworksModuleLazyRoutes,
