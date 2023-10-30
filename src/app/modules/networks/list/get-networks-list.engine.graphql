@@ -1,5 +1,5 @@
 query GetNetworksList($first: Int!, $last: Int!) {
-  networks(first: $first, last: $last) {
+  tenants(first: $first, last: $last) {
     id
     domain
     ownerGuid

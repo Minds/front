@@ -73,7 +73,7 @@ export class NetworksListComponent implements OnInit, OnDestroy {
             return;
           }
 
-          this.list$.next(result.data.networks);
+          this.list$.next(result.data.tenants);
           this.inProgress$.next(false);
         }
       )
@@ -107,7 +107,7 @@ export class NetworksListComponent implements OnInit, OnDestroy {
     if (network.rootUserGuid) {
       return;
     }
-    // Create handle modal
+    // "Create handle" modal
     this.createRootUserModal.present(network);
   }
 }
