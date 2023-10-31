@@ -237,6 +237,7 @@
       <!-- Upgrade -->
       <ng-container *mIfTenant="false">
         <li
+          *ngIf="user"
           class="m-sidebarNavigation__item m-sidebarNavigation__item--upgrade"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
