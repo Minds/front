@@ -6,7 +6,7 @@ import { SidebarNavigationService } from '../../../../../common/layout/sidebar/n
 import { PageLayoutService } from '../../../../../common/layout/page-layout.service';
 import { StrapiMetaService } from '../../../../../common/services/strapi-meta.service';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import {
   Enum_Componentv2Productfeaturehighlight_Alignimage,
   Enum_Componentv2Productfeaturehighlight_Colorscheme,
@@ -14,6 +14,7 @@ import {
 } from '../../../../../../graphql/generated.strapi';
 import { ProductPageDynamicComponent } from '../../product-pages.types';
 import { By } from '@angular/platform-browser';
+import { TopbarService } from '../../../../../common/layout/topbar.service';
 
 describe('ProductPageBaseComponent', () => {
   let comp: ProductPageBaseComponent;
@@ -157,6 +158,17 @@ describe('ProductPageBaseComponent', () => {
             useValue: MockService(PageLayoutService),
           },
           {
+            provide: TopbarService,
+            useValue: MockService(TopbarService, {
+              has: ['isMinimalLightMode$'],
+              props: {
+                isMinimalLightMode$: {
+                  get: () => new BehaviorSubject<boolean>(true),
+                },
+              },
+            }),
+          },
+          {
             provide: StrapiMetaService,
             useValue: MockService(StrapiMetaService),
           },
@@ -183,6 +195,7 @@ describe('ProductPageBaseComponent', () => {
     (comp as any).service.getProductPageBySlug.and.returnValue(
       of(mockProductPage)
     );
+    (comp as any).topbarService.isMinimalLightMode$.next(false);
 
     fixture.detectChanges();
 
@@ -202,6 +215,9 @@ describe('ProductPageBaseComponent', () => {
       false
     );
     expect((comp as any).pageLayoutService.useFullWidth).toHaveBeenCalled();
+    expect(
+      (comp as any).topbarService.isMinimalLightMode$.getValue()
+    ).toBeTrue();
     expect((comp as any).service.getProductPageBySlug).toHaveBeenCalled();
     expect((comp as any).components$.getValue()).toBe(
       mockProductPage.v2ProductPages.data[0].attributes.productPage

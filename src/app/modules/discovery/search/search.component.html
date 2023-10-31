@@ -88,15 +88,17 @@
       <!-- ---------------------- -->
       <!-- BOOSTS -->
       <!-- ---------------------- -->
-      <ng-container *ngIf="isLoggedIn()">
-        <m-featured-content
-          *ngIf="(i > 0 && i % 5 === 0) || i === 1"
-          [slot]="i + 1"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-        ></m-featured-content>
+      <ng-container *mIfTenant="false">
+        <ng-container *ngIf="isLoggedIn()">
+          <m-featured-content
+            *ngIf="(i > 0 && i % 5 === 0) || i === 1"
+            [slot]="i + 1"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+          ></m-featured-content>
+        </ng-container>
       </ng-container>
       <!-- ---------------------- -->
     </ng-container>

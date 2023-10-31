@@ -23,6 +23,7 @@ import { recentServiceMock } from '../../mocks/services/ux/recent-mock.spec';
 import { MockDirective, MockService } from '../../utils/mock';
 import { SharedModule } from '../../common/shared.module';
 import { SearchGqlExperimentService } from './search-gql-experiment.service';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 // Mocks
 
@@ -75,6 +76,7 @@ describe('SearchBarComponent', () => {
             provide: SearchGqlExperimentService,
             useValue: MockService(SearchGqlExperimentService),
           },
+          { provide: IS_TENANT_NETWORK, useValue: false },
         ],
       }).compileComponents();
     })

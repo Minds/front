@@ -56,15 +56,16 @@
         </m-dropdownMenu__item>
       </ng-template>
     </ng-container>
-
-    <m-dropdownMenu__item
-      (click)="onSelectedOption('boost')"
-      *ngIf="shouldShowBoost()"
-    >
-      <span i18n="@@M__ACTION__BOOST_POST">
-        Boost post
-      </span>
-    </m-dropdownMenu__item>
+    <ng-container *mIfTenant="false">
+      <m-dropdownMenu__item
+        (click)="onSelectedOption('boost')"
+        *ngIf="shouldShowBoost()"
+      >
+        <span i18n="@@M__ACTION__BOOST_POST">
+          Boost post
+        </span>
+      </m-dropdownMenu__item>
+    </ng-container>
     <m-dropdownMenu__item
       *ngIf="options.includes('view-federated') && entity?.canonical_url"
       [externalLink]="entity.canonical_url"
@@ -91,15 +92,16 @@
         Download
       </span>
     </m-dropdownMenu__item>
-
-    <m-dropdownMenu__item
-      (click)="onSelectedOption('wire')"
-      *ngIf="options.indexOf('wire') !== -1"
-    >
-      <span i18n="@@M__ACTION__WIRE">
-        Tip
-      </span>
-    </m-dropdownMenu__item>
+    <ng-container *mIfTenant="false">
+      <m-dropdownMenu__item
+        (click)="onSelectedOption('wire')"
+        *ngIf="options.indexOf('wire') !== -1"
+      >
+        <span i18n="@@M__ACTION__WIRE">
+          Tip
+        </span>
+      </m-dropdownMenu__item>
+    </ng-container>
 
     <ng-container *ngIf="service.canPin$ | async">
       <m-dropdownMenu__item
@@ -209,6 +211,7 @@
     </ng-container>
 
     <!-- ADMIN EDIT FLAGS -->
+
     <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && canEdit">
       <m-dropdownMenu__item class="m-postMenu__item--nsfw">
         <m-nsfwSelector
@@ -218,12 +221,14 @@
         ></m-nsfwSelector>
       </m-dropdownMenu__item>
     </ng-container>
-    <ng-container *ngIf="session.isAdmin()">
-      <m-dropdownMenu__item [externalLink]="getUserSupersetUrl()">
-        <span>
-          View Superset dashboard
-        </span>
-      </m-dropdownMenu__item>
+    <ng-container *mIfTenant="false">
+      <ng-container *ngIf="session.isAdmin()">
+        <m-dropdownMenu__item [externalLink]="getUserSupersetUrl()">
+          <span>
+            View Superset dashboard
+          </span>
+        </m-dropdownMenu__item>
+      </ng-container>
     </ng-container>
 
     <!-- INJECTED POST ACTIONS -->

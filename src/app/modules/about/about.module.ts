@@ -7,6 +7,7 @@ import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { HomepageV3Module } from '../homepage-v3/homepage-v3.module';
 import { HomepageV3Component } from '../homepage-v3/homepage-v3.component';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 import { ProductPageBaseComponent } from './product-pages/components/base/base.component';
 import { ProductPageHeroComponent } from './product-pages/components/hero/hero.component';
 import { MarkdownModule } from 'ngx-markdown';
@@ -26,10 +27,12 @@ const routes: Routes = [
     path: 'about/:slug',
     component: ProductPageBaseComponent,
     data: { reloadOnRouteChange: true },
+    canActivate: [TenantRedirectGuard],
   },
   {
     path: 'about',
     component: HomepageV3Component,
+    canActivate: [TenantRedirectGuard],
     data: {
       title: 'About',
       description:

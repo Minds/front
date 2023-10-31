@@ -26,14 +26,16 @@
       *ngIf="isLoggedIn() && i > 0 && i % 6 === 0"
       location="inline"
     ></m-feedNotice__outlet>
-    <m-featured-content
-      *ngIf="shouldShowBoostInPosition(i)"
-      [slot]="i + 1"
-      [displayOptions]="{
-        showOnlyCommentsInput: true,
-        isFeed: true
-      }"
-    ></m-featured-content>
+    <ng-container *mIfTenant="false">
+      <m-featured-content
+        *ngIf="shouldShowBoostInPosition(i)"
+        [slot]="i + 1"
+        [displayOptions]="{
+          showOnlyCommentsInput: true,
+          isFeed: true
+        }"
+      ></m-featured-content
+    ></ng-container>
     <m-activity
       *ngIf="shouldShowActivity(activity$ | async)"
       [entity]="activity$ | async"

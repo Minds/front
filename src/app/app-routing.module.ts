@@ -20,6 +20,8 @@ import {
 } from './modules/blogs/blog.lazy';
 import { PathMatch } from './common/types/angular.types';
 import { UpgradeModuleLazyRoutes } from './modules/upgrade/upgrade-lazy';
+import { NetworkAdminConsoleModuleLazyRoutes } from './modules/multi-tenant-network/admin-console/network-admin-console.lazy';
+import { TenantRedirectGuard } from './common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -31,6 +33,7 @@ const routes: Routes = [
   CanaryModuleLazyRoutes,
   MobileModuleLazyRoutes,
   AuxModuleLazyRoutes,
+  NetworkAdminConsoleModuleLazyRoutes,
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,
   UpgradeModuleLazyRoutes,
@@ -58,6 +61,6 @@ const routes: Routes = [
     }),
   ],
   exports: [RouterModule],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/' }, TenantRedirectGuard],
 })
 export class AppRoutingModule {}
