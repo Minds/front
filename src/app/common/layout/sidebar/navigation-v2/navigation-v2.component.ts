@@ -256,14 +256,4 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   public onSidebarMoreToggle($event): void {
     this.sidebarMoreOpened = $event;
   }
-
-  /**
-   * Only show the upgrade link when the user isn't pro and the flag is on
-   */
-  get showUpgradeLink(): boolean {
-    return true;
-    //ojm show always b/c networks?
-    // return this.user && !this.user.pro;
-    // ojm todo - delete from growthbook 'front-6084-sidenav-upgrade-link'
-  }
 }

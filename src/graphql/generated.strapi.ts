@@ -3612,7 +3612,6 @@ export type UpgradePageQuery = {
         displayText: string;
         iconId?: string | null;
         iconSource?: Enum_Upgradepage_Iconsource | null;
-        bulletOrderWithinCard?: number | null;
       } | null;
     }>;
   } | null;
@@ -4132,7 +4131,6 @@ export const UpgradePageDocument = gql`
           displayText
           iconId
           iconSource
-          bulletOrderWithinCard
         }
       }
     }

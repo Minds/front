@@ -1,4 +1,3 @@
-# ojm how to ensure all results will be given?
 query UpgradePage {
   upgradePages(sort: "bulletOrderWithinCard:ASC") {
     data {
@@ -8,7 +7,6 @@ query UpgradePage {
         displayText
         iconId
         iconSource
-        bulletOrderWithinCard
       }
     }
   }

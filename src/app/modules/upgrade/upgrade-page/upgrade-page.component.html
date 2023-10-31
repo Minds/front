@@ -1,4 +1,4 @@
-<h2 i18n="@@COMMON__UPGRADE">Upgrade</h2>
+<h2><span *ngIf="!isModal" i18n="@@COMMON__UPGRADE">Upgrade</span></h2>
 <!-- --------------------------------- -->
 <!-- --------------------------------- -->
 <!-- --------------------------------- -->
@@ -10,32 +10,37 @@
   <div class="m-upgradePage__hero">
     <img
       class="m-upgradePageHero__flourish--topLeft"
-      src="assets/icons/concave-diamond.svg"
+      [src]="cdnAssetsUrl + 'assets/icons/concave-diamond.svg'"
     />
     <img
       class="m-upgradePageHero__flourish--bottomRight"
-      src="assets/icons/concave-diamond.svg"
+      [src]="cdnAssetsUrl + 'assets/icons/concave-diamond.svg'"
     />
-    <!-- ojm put back in both icons [src]="cdnAssetsUrl + 'assets/icons/concave-diamond.svg'" -->
-    <ng-container *ngFor="let row of hero; trackBy: rowTrackByFn"
-      ><h3 *ngIf="row.rowType === 'title'">
-        {{ row.displayText }}
-      </h3>
-      <p *ngIf="row.rowType === 'price' && row.priceTextArray">
-        <span>{{ row.priceTextArray[0] }}</span>
-        <strong *ngIf="row.priceTextArray[1]">{{
-          row.priceTextArray[1]
-        }}</strong>
-        <span *ngIf="row.priceTextArray[2]">{{ row.priceTextArray[2] }}</span>
-      </p>
-      <a
-        *ngIf="row.rowType === 'linkText'"
-        [routerLink]="'/about/upgrades'"
-        data-ref="m-upgradePageHero__learnMoreLink"
-      >
-        <span>{{ row.displayText }}</span>
-        <i class="material-icons">arrow_forward</i>
-      </a>
+    <ng-container *ngFor="let card of upgradeCards; trackBy: cardTrackByFn">
+      <ng-container *ngIf="isHero(card)">
+        <ng-container *ngFor="let row of card; trackBy: rowTrackByFn"
+          ><h3 *ngIf="row.rowType === 'title'">
+            {{ row.displayText }}
+          </h3>
+          <p *ngIf="row.rowType === 'price' && row.priceTextArray">
+            <span>{{ row.priceTextArray[0] }}</span>
+            <strong *ngIf="row.priceTextArray[1]"
+              >${{ row.priceTextArray[1] }}</strong
+            >
+            <span *ngIf="row.priceTextArray[2]">{{
+              row.priceTextArray[2]
+            }}</span>
+          </p>
+          <a
+            *ngIf="row.rowType === 'linkText'"
+            [routerLink]="'/about/upgrades'"
+            data-ref="m-upgradePageHero__learnMoreLink"
+          >
+            <span>{{ row.displayText }}</span>
+            <i class="material-icons">arrow_forward</i>
+          </a>
+        </ng-container>
+      </ng-container>
     </ng-container>
     <div class="m-upgradePage__toggle">
       <m-toggle
@@ -56,105 +61,113 @@
 <!-- --------------------------------- -->
 <!-- --------------------------------- -->
 <div class="m-upgradePage__cards">
-  <div
-    *ngFor="let card of upgradeCards; trackBy: cardTrackByFn"
-    class="m-upgradePage__card"
-    [ngClass]="getCardIdClass(card[0].cardId)"
-  >
-    <div>
-      <ng-container *ngFor="let row of card; trackBy: rowTrackByFn">
-        <!-- --------------------------------- -->
-        <!-- TITLE -->
-        <!-- --------------------------------- -->
-        <div
-          class="m-upgradePageCard__titleWrapper"
-          *ngIf="row.rowType === 'title'"
-        >
-          <h4>{{ row.displayText }}</h4>
+  <ng-container *ngFor="let card of upgradeCards; trackBy: cardTrackByFn">
+    <div
+      *ngIf="!isHero(card)"
+      class="m-upgradePage__card"
+      [ngClass]="getCardIdClass(card[0].cardId)"
+    >
+      <div>
+        <ng-container *ngFor="let row of card; trackBy: rowTrackByFn">
+          <!-- --------------------------------- -->
+          <!-- TITLE -->
+          <!-- --------------------------------- -->
           <div
-            *ngIf="row.iconId && row.iconSource"
-            class="m-upgradePageCardTitle__iconWrapper"
+            class="m-upgradePageCard__titleWrapper"
+            *ngIf="row.rowType === 'title'"
           >
-            <i *ngIf="row.iconSource === 'material'" class="material-icons">{{
-              row.iconId
-            }}</i>
-            <!-- ojm change the src [src]="cdnAssetsUrl + 'assets/icons/ -->
-            <img
-              *ngIf="row.iconSource === 'svg'"
-              [src]="'assets/' + row.iconId"
-            />
+            <h4>{{ row.displayText }}</h4>
+            <div
+              *ngIf="row.iconId && row.iconSource"
+              class="m-upgradePageCardTitle__iconWrapper"
+            >
+              <i *ngIf="row.iconSource === 'material'" class="material-icons">{{
+                row.iconId
+              }}</i>
+              <img
+                *ngIf="row.iconSource === 'svg'"
+                [src]="cdnAssetsUrl + 'assets' + row.iconId"
+              />
+            </div>
           </div>
-        </div>
-        <!-- --------------------------------- -->
-        <!-- PRICE -->
-        <!-- --------------------------------- -->
-        <p *ngIf="row.rowType === 'price' && row.priceTextArray">
-          <span>{{ row.priceTextArray[0] }}</span>
-          <strong *ngIf="row.priceTextArray[1]">{{
-            row.priceTextArray[1]
-          }}</strong>
-          <span *ngIf="row.priceTextArray[2]">{{ row.priceTextArray[2] }}</span>
-        </p>
+          <!-- --------------------------------- -->
+          <!-- PRICE -->
+          <!-- --------------------------------- -->
+          <p *ngIf="row.rowType === 'price' && row.priceTextArray">
+            <span>{{ row.priceTextArray[0] }}</span>
+            <strong *ngIf="row.priceTextArray[1]"
+              >${{ row.priceTextArray[1] }}</strong
+            >
+            <span *ngIf="row.priceTextArray[2]">{{
+              row.priceTextArray[2]
+            }}</span>
+          </p>
 
-        <!-- --------------------------------- -->
-        <!-- BULLET(S) -->
-        <!-- --------------------------------- -->
-        <div
-          *ngIf="row.rowType === 'bullet' && !!row.iconId && !!row.iconSource"
-          class="m-upgradePageCard__bullet"
-        >
-          <div class="m-upgradePageCardBullet__iconWrapper">
-            <i *ngIf="row.iconSource === 'material'" class="material-icons">{{
-              row.iconId
-            }}</i>
-            <!-- ojm change the src [src]="cdnAssetsUrl + 'assets/icons/ -->
-            <img
-              *ngIf="row.iconSource === 'svg'"
-              [src]="'assets/' + row.iconId"
-            />
+          <!-- --------------------------------- -->
+          <!-- BULLET(S) -->
+          <!-- --------------------------------- -->
+          <div
+            *ngIf="row.rowType === 'bullet' && !!row.iconId && !!row.iconSource"
+            class="m-upgradePageCard__bullet"
+          >
+            <div class="m-upgradePageCardBullet__iconWrapper">
+              <i *ngIf="row.iconSource === 'material'" class="material-icons">{{
+                row.iconId
+              }}</i>
+              <img
+                *ngIf="row.iconSource === 'svg'"
+                [src]="cdnAssetsUrl + 'assets' + row.iconId"
+              />
+            </div>
+            <span>{{ row.displayText }}</span>
           </div>
-          <span>{{ row.displayText }}</span>
-        </div>
-      </ng-container>
-    </div>
-    <!-- --------------------------------- -->
-    <!-- BUTTON -->
-    <!-- --------------------------------- -->
-    <div class="m-upgradePageCard__buttonWrapper">
-      <m-button
-        *ngIf="card[0].cardId === 'plus'"
-        [solid]="true"
-        (onAction)="clickedPlusButton($event)"
-        data-ref="m-upgradePageCard__button--plus"
-        size="small"
-        ><ng-container *ngIf="(toggle$ | async) === 'upgrade'"
-          >Get</ng-container
-        >
-        <ng-container *ngIf="(toggle$ | async) === 'gift'">Gift</ng-container>
-        Minds+</m-button
-      >
+        </ng-container>
+      </div>
       <!-- --------------------------------- -->
-      <m-button
-        *ngIf="card[0].cardId === 'pro'"
-        [solid]="true"
-        (onAction)="clickedProButton($event)"
-        data-ref="m-upgradePageCard__button--pro"
-        size="small"
-        ><ng-container *ngIf="(toggle$ | async) === 'upgrade'"
-          >Get</ng-container
-        >
-        <ng-container *ngIf="(toggle$ | async) === 'gift'">Gift</ng-container>
-        Minds Pro</m-button
-      >
+      <!-- BUTTON -->
       <!-- --------------------------------- -->
-      <m-button
-        *ngIf="card[0].cardId === 'networks'"
-        (onAction)="clickedProButton($event)"
-        data-ref="m-upgradePageCard__button--networks"
-        size="small"
-      >
-        Learn more</m-button
-      >
+      <div class="m-upgradePageCard__buttonWrapper">
+        <m-button
+          *ngIf="card[0].cardId === 'plus'"
+          [solid]="true"
+          (onAction)="openWireModal('plus')"
+          data-ref="m-upgradePageCard__button--plus"
+          size="small"
+          ><ng-container *ngIf="(toggle$ | async) === 'upgrade'"
+            >Get</ng-container
+          >
+          <ng-container *ngIf="(toggle$ | async) === 'gift'">Gift</ng-container>
+          Minds+</m-button
+        >
+        <!-- --------------------------------- -->
+        <m-button
+          *ngIf="card[0].cardId === 'pro'"
+          [solid]="true"
+          (onAction)="openWireModal('pro')"
+          data-ref="m-upgradePageCard__button--pro"
+          size="small"
+          ><ng-container *ngIf="(toggle$ | async) === 'upgrade'"
+            >Get</ng-container
+          >
+          <ng-container *ngIf="(toggle$ | async) === 'gift'">Gift</ng-container>
+          Minds Pro</m-button
+        >
+        <!-- --------------------------------- -->
+        <a routerLink="../about/networks">
+          <m-button
+            (onAction)="onDismissIntent()"
+            *ngIf="card[0].cardId === 'networks'"
+            data-ref="m-upgradePageCard__button--networks"
+            size="small"
+          >
+            Learn more</m-button
+          ></a
+        >
+      </div>
     </div>
-  </div>
+  </ng-container>
 </div>
+<m-modalCloseButton
+  *ngIf="isModal"
+  class="noAbsolutePosition"
+></m-modalCloseButton>

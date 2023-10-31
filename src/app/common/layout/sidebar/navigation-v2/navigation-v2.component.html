@@ -212,9 +212,8 @@
       </ng-container>
 
       <!-- Upgrade -->
-      <ng-container>
+      <ng-container *mIfTenant="false">
         <li
-          *ngIf="showUpgradeLink"
           class="m-sidebarNavigation__item m-sidebarNavigation__item--upgrade"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
