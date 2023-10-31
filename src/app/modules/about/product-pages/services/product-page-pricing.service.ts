@@ -35,21 +35,37 @@ export class ProductPagePricingService {
     return this.selectedTimePeriod$.pipe(
       map((timePeriod: ProductPageUpgradeTimePeriod): number => {
         switch (tier) {
-          case 'free':
+          case ProductPlanTier.Free:
             return 0;
-          case 'plus':
+          case ProductPlanTier.Plus:
             if (timePeriod === ProductPageUpgradeTimePeriod.Annually) {
               return this.upgradesConfig.plus.yearly.usd / 12;
             }
             return this.upgradesConfig.plus.monthly.usd;
-          case 'pro':
+          case ProductPlanTier.Pro:
             if (timePeriod === ProductPageUpgradeTimePeriod.Annually) {
               return this.upgradesConfig.pro.yearly.usd / 12;
             }
             return this.upgradesConfig.pro.monthly.usd;
-          case 'networks':
-            // TODO: Get from config on release of networks.
-            return 48;
+          case ProductPlanTier.Networks:
+            // General item for networks - this represents the
+            // lowest tier with longest time span.
+            return this.upgradesConfig.networks_team.yearly.usd / 12;
+          case ProductPlanTier.NetworksTeam:
+            if (timePeriod === ProductPageUpgradeTimePeriod.Annually) {
+              return this.upgradesConfig.networks_team.yearly.usd / 12;
+            }
+            return this.upgradesConfig.networks_team.monthly.usd;
+          case ProductPlanTier.NetworksCommunity:
+            if (timePeriod === ProductPageUpgradeTimePeriod.Annually) {
+              return this.upgradesConfig.networks_community.yearly.usd / 12;
+            }
+            return this.upgradesConfig.networks_community.monthly.usd;
+          case ProductPlanTier.NetworksEnterprise:
+            if (timePeriod === ProductPageUpgradeTimePeriod.Annually) {
+              return this.upgradesConfig.networks_enterprise.yearly.usd / 12;
+            }
+            return this.upgradesConfig.networks_enterprise.monthly.usd;
         }
       })
     );

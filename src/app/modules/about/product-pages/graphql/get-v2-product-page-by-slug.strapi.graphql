@@ -65,6 +65,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                   tier
                   featTableHeader {
                     title
+                    priceStartingAt
                   	button {
                       text
                       dataRef
