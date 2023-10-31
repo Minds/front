@@ -18,9 +18,10 @@ describe('OnboardingV5ModalComponent', () => {
         {
           provide: OnboardingV5Service,
           useValue: MockService(OnboardingV5Service, {
-            has: ['dismiss$'],
+            has: ['dismiss$', 'onboardingCompleted$'],
             props: {
               dismiss$: { get: () => new Subject<boolean>() },
+              onboardingCompleted$: { get: () => new Subject<boolean>() },
             },
           }),
         },

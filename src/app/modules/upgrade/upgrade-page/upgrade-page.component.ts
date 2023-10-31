@@ -77,9 +77,9 @@ export class UpgradePageComponent implements OnInit {
     private upgradePageGQL: UpgradePageGQL,
     private modalService: ModalService,
     private readonly wirePaymentHandlers: WirePaymentHandlersService,
-    protected configs: ConfigsService
+    configs: ConfigsService
   ) {
-    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.upgradesConfig = configs.get<ProductPageUpgradesConfig>('upgrades');
   }
 
