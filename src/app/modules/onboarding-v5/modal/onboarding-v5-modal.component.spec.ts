@@ -40,8 +40,12 @@ describe('OnboardingV5ModalComponent', () => {
 
   it('should call onDismissIntention when dismiss subject emits from service', () => {
     const mockonDismissIntention = jasmine.createSpy('onDismissIntention');
+    const mockOnComplete = jasmine.createSpy('onComplete');
 
-    comp.setModalData({ onDismissIntention: mockonDismissIntention });
+    comp.setModalData({
+      onComplete: mockOnComplete,
+      onDismissIntention: mockonDismissIntention,
+    });
     comp.ngOnInit();
 
     (comp as any).service.dismiss$.next(true);
@@ -58,7 +62,12 @@ describe('OnboardingV5ModalComponent', () => {
 
   it('should set onDismissIntention via setModalData', () => {
     const mockonDismissIntention = jasmine.createSpy('onDismissIntention');
-    comp.setModalData({ onDismissIntention: mockonDismissIntention });
+    const mockOnComplete = jasmine.createSpy('onComplete');
+
+    comp.setModalData({
+      onComplete: mockOnComplete,
+      onDismissIntention: mockonDismissIntention,
+    });
     expect((comp as any).onDismissIntention).toBe(mockonDismissIntention);
   });
 });
