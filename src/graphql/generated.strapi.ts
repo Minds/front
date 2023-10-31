@@ -4123,7 +4123,7 @@ export class FetchOnboardingV5VersionsGQL extends Apollo.Query<
 }
 export const UpgradePageDocument = gql`
   query UpgradePage {
-    upgradePages(sort: "bulletOrderWithinCard:ASC") {
+    upgradePages(sort: "bulletOrderWithinCard:ASC", pagination: { limit: 30 }) {
       data {
         attributes {
           cardId
