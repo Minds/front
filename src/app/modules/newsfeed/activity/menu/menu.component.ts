@@ -36,7 +36,6 @@ import { ApiService } from '../../../../common/api/api.service';
   styleUrls: ['menu.component.ng.scss'],
 })
 export class ActivityMenuComponent implements OnInit, OnDestroy {
-  @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
   @Output() translate: EventEmitter<any> = new EventEmitter<any>();
   private entitySubscription: Subscription;
 
@@ -127,18 +126,12 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
 
         break;
       case 'undo-remind':
-        try {
-          await this.client.delete(`api/v3/newsfeed/${this.entity.urn}`);
-          this.deleted.emit();
-        } catch (e) {
-          this.toasterService.error(e.message);
-        }
-
+        await this.service.undoRemind();
         break;
       case 'delete':
         try {
           await this.client.delete(`api/v1/newsfeed/${this.entity.guid}`);
-          this.deleted.emit();
+          this.service.onDelete();
         } catch (e) {
           this.toasterService.error(e.message);
           console.error(e);
@@ -155,7 +148,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
           await this.apiService
             .put(`api/v3/newsfeed/hide-entities/` + this.entity.guid)
             .toPromise();
-          this.deleted.emit(); // Will remove from feeds
+          this.service.onDelete();
         } catch (e) {
           this.toasterService.error(e.message);
         }
@@ -163,7 +156,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
       case 'block':
         // !! This doesn't actually delete the post
         // It just hides the post from which user blocked its owner
-        this.deleted.emit();
+        this.service.onDelete();
         break;
       case 'wire':
         await this.wireModalService.present(this.entity);

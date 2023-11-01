@@ -7,7 +7,6 @@
 
   @include m-theme() {
     color: themed($m-textColor--primary);
-    border-top: 1px solid themed($m-borderColor--primary);
     background-color: themed($m-bgColor--primary);
   }
   .m-marketing__footer {
@@ -87,12 +86,7 @@
             }
 
             .m-marketingFooter__logo {
-              width: 116px;
               height: 43px;
-              margin-bottom: 18px;
-              background: url('../../../assets/logos/bulb.svg') no-repeat center
-                left;
-              background-size: contain;
             }
             h4.m-marketingFooter__slogan {
               font-weight: 600;
@@ -115,6 +109,8 @@
             }
             h4 {
               font-weight: 500;
+              margin-bottom: $spacing4;
+              @include body2Medium;
             }
             .m-marketingFooter__mainLinksCategory {
               flex: 1 0 22%;
@@ -165,7 +161,7 @@
 
     .m-marketingFooter__text {
       font-size: 14px;
-      line-height: 26px;
+      line-height: 23px;
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
@@ -191,9 +187,8 @@
 
         a {
           color: inherit;
-          font-weight: normal;
           text-decoration: none;
-
+          @include body3Regular;
           &:hover {
             @include m-theme() {
               color: themed($m-textColor--primary);

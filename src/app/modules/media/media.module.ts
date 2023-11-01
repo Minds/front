@@ -19,6 +19,7 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 // import { BlogModule } from '../blogs/blog.module';
 import { YoutubeMigrationMarketingComponent } from './youtube-migration/marketing/marketing.component';
 import { TranslateModule } from '../translate/translate.module';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   { path: 'media/videos/:filter', redirectTo: 'newsfeed/global/top' },
@@ -38,6 +39,7 @@ const routes: Routes = [
   {
     path: 'youtube-migration',
     component: YoutubeMigrationMarketingComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       preventLayoutReset: true,
     },

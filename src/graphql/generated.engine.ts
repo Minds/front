@@ -208,6 +208,7 @@ export type GiftCardNode = NodeInterface & {
   id: Scalars['ID']['output'];
   issuedAt: Scalars['Int']['output'];
   issuedByGuid?: Maybe<Scalars['String']['output']>;
+  /** Username of the gift card issuer */
   issuedByUsername?: Maybe<Scalars['String']['output']>;
   productId: GiftCardProductIdEnum;
   /**
@@ -307,6 +308,27 @@ export type KeyValuePairInput = {
   value: Scalars['String']['input'];
 };
 
+export enum MultiTenantColorScheme {
+  Dark = 'DARK',
+  Light = 'LIGHT',
+}
+
+export type MultiTenantConfig = {
+  __typename?: 'MultiTenantConfig';
+  colorScheme?: Maybe<MultiTenantColorScheme>;
+  primaryColor?: Maybe<Scalars['String']['output']>;
+  siteEmail?: Maybe<Scalars['String']['output']>;
+  siteName?: Maybe<Scalars['String']['output']>;
+  updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export type MultiTenantConfigInput = {
+  colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  primaryColor?: InputMaybe<Scalars['String']['input']>;
+  siteEmail?: InputMaybe<Scalars['String']['input']>;
+  siteName?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   claimGiftCard: GiftCardNode;
@@ -315,6 +337,7 @@ export type Mutation = {
   createGiftCard: GiftCardNode;
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
+  multiTenantConfig: Scalars['Boolean']['output'];
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
   updateAccount: Array<Scalars['String']['output']>;
@@ -340,6 +363,10 @@ export type MutationCreateGiftCardArgs = {
 
 export type MutationDismissArgs = {
   key: Scalars['String']['input'];
+};
+
+export type MutationMultiTenantConfigArgs = {
+  multiTenantConfigInput: MultiTenantConfigInput;
 };
 
 export type MutationSetOnboardingStateArgs = {
@@ -447,6 +474,7 @@ export type Query = {
   giftCardsBalance: Scalars['Float']['output'];
   /** The available balances of each gift card types */
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
+  multiTenantConfig?: Maybe<MultiTenantConfig>;
   newsfeed: NewsfeedConnection;
   /** Gets onboarding state for the currently logged in user. */
   onboardingState?: Maybe<OnboardingState>;
@@ -852,6 +880,32 @@ export type GetGiftCardsQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type GetMultiTenantConfigQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMultiTenantConfigQuery = {
+  __typename?: 'Query';
+  multiTenantConfig?: {
+    __typename?: 'MultiTenantConfig';
+    siteName?: string | null;
+    siteEmail?: string | null;
+    colorScheme?: MultiTenantColorScheme | null;
+    primaryColor?: string | null;
+  } | null;
+};
+
+export type SetMultiTenantConfigMutationVariables = Exact<{
+  siteName?: InputMaybe<Scalars['String']['input']>;
+  colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  primaryColor?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SetMultiTenantConfigMutation = {
+  __typename?: 'Mutation';
+  multiTenantConfig: boolean;
 };
 
 export type FetchNewsfeedQueryVariables = Exact<{
@@ -2070,6 +2124,59 @@ export class GetGiftCardsGQL extends Apollo.Query<
   GetGiftCardsQueryVariables
 > {
   document = GetGiftCardsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetMultiTenantConfigDocument = gql`
+  query GetMultiTenantConfig {
+    multiTenantConfig {
+      siteName
+      siteEmail
+      colorScheme
+      primaryColor
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMultiTenantConfigGQL extends Apollo.Query<
+  GetMultiTenantConfigQuery,
+  GetMultiTenantConfigQueryVariables
+> {
+  document = GetMultiTenantConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetMultiTenantConfigDocument = gql`
+  mutation SetMultiTenantConfig(
+    $siteName: String
+    $colorScheme: MultiTenantColorScheme
+    $primaryColor: String
+  ) {
+    multiTenantConfig(
+      multiTenantConfigInput: {
+        siteName: $siteName
+        colorScheme: $colorScheme
+        primaryColor: $primaryColor
+      }
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetMultiTenantConfigGQL extends Apollo.Mutation<
+  SetMultiTenantConfigMutation,
+  SetMultiTenantConfigMutationVariables
+> {
+  document = SetMultiTenantConfigDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

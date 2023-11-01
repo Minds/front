@@ -1,7 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Session } from '../../../services/session';
-import { MindsUser } from '../../../interfaces/entities';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 export interface NestedMenuItem {
   label: string;
@@ -25,14 +22,36 @@ export interface NestedMenu {
 @Component({
   selector: 'm-nestedMenu',
   templateUrl: './nested-menu.component.html',
+  styleUrls: ['./nested-menu.component.ng.scss'],
 })
-export class NestedMenuComponent {
+export class NestedMenuComponent implements OnInit {
   @Input() isNested: boolean = false; // Determines whether to display the back button
   @Input() menus: NestedMenu[];
   @Input() parentRoute: string;
   @Input() disableActiveClass: boolean = false;
   @Output() itemSelected: EventEmitter<any> = new EventEmitter();
   @Output() clickedBack: EventEmitter<any> = new EventEmitter();
+
+  ngOnInit(): void {
+    if (this.menus) {
+      this.filterMenus();
+    }
+  }
+
+  /**
+   * Remove items where shouldShow is explicitly false
+   */
+  private filterMenus() {
+    this.menus = this.menus.filter(menu => {
+      return !menu.shouldShow || menu.shouldShow();
+    });
+
+    for (let menu of this.menus) {
+      menu.items = menu.items.filter(item => {
+        return !item.shouldShow || item.shouldShow();
+      });
+    }
+  }
 
   itemClicked(menuHeaderId, itemId): void {
     const item = { menuHeaderId: menuHeaderId, itemId: itemId };

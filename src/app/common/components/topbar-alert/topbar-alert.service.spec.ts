@@ -17,6 +17,7 @@ import {
   ApolloTestingModule,
 } from 'apollo-angular/testing';
 import userMock from '../../../mocks/responses/user.mock';
+import { IsTenantService } from '../../services/is-tenant.service';
 
 describe('TopbarAlertService', () => {
   let service: TopbarAlertService;
@@ -45,6 +46,10 @@ describe('TopbarAlertService', () => {
           }),
         },
         { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: IsTenantService,
+          useValue: MockService(IsTenantService),
+        },
       ],
     });
 

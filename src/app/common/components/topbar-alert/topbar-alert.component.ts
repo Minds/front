@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, firstValueFrom, map } from 'rxjs';
 import { TopbarAlertService } from './topbar-alert.service';
 import { AnalyticsService } from '../../../services/analytics';
+import { IsTenantService } from '../../services/is-tenant.service';
 
 /**
  * Topbar alert component - intended to show above normal site topbar

@@ -26,6 +26,7 @@
           </p>
 
           <m-button
+            *ngIf="!session.isLoggedIn()"
             class="m-homepage__joinButton--blueOutline"
             (click)="onRegister()"
             i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
@@ -150,7 +151,7 @@
             <ng-container>{{ data.attributes.sectionTail.h3 }}</ng-container>
           </h3>
 
-          <div class="m-marketing__actionButtons">
+          <div class="m-marketing__actionButtons" *ngIf="!session.isLoggedIn()">
             <m-button
               class="m-homepage__joinButton--blueOutline"
               (click)="onRegister()"
@@ -168,5 +169,5 @@
   <!-- ------------------------------------------------ -->
   <!-- FOOTER  -->
   <!-- ------------------------------------------------ -->
-  <m-marketing__footer [slogan]="data.attributes.hero.h1"></m-marketing__footer>
+  <m-marketing__footer *ngIf="footer" [data]="footer"></m-marketing__footer>
 </ng-container>

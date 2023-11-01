@@ -8,6 +8,7 @@ import {
 @Injectable()
 export class ComposerMonetizeV2Service {
   supportTiers$: Observable<SupportTier[]> = this.supportTiersService.list$;
+  loaded$: Observable<boolean> = this.supportTiersService.loaded$;
 
   constructor(private supportTiersService: SupportTiersService) {}
 

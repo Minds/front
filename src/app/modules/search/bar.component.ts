@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostBinding,
   HostListener,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
@@ -27,6 +28,7 @@ import {
 } from '../discovery/feeds/feeds.service';
 import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
 import { SearchGqlExperimentService } from './search-gql-experiment.service';
+import { IS_TENANT_NETWORK } from '../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Base component for the search bar used in the topbar
@@ -38,6 +40,7 @@ import { SearchGqlExperimentService } from './search-gql-experiment.service';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   @Input() showCleanIcon: boolean = false;
+  @Input() borderedSuggestions: boolean = false;
 
   active: boolean;
   suggestionsDisabled: boolean = false;
@@ -70,7 +73,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public session: Session,
     private recentService: RecentService,
     private pageLayoutService: PageLayoutService,
-    private searchExp: SearchGqlExperimentService
+    private searchExp: SearchGqlExperimentService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {}
 
   ngOnInit() {
@@ -183,7 +187,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   updatePlaceholder(): void {
-    this.placeholder = $localize`:@@COMMON__SEARCH:Search Minds`;
+    if (!this.isTenantNetwork) {
+      this.placeholder = $localize`:@@COMMON__SEARCH:Search Minds`;
+    } else {
+      this.placeholder = $localize`:@@COMMON__SEARCH:Search`;
+    }
     if (window.innerWidth < 550) {
       this.placeholder = $localize`:@@COMMON__SEARCH__SHORT:Search`;
     }

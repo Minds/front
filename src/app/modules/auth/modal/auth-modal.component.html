@@ -1,12 +1,7 @@
 <div class="m-auth__modal m-modalV2__inner">
   <div class="m-modalV2__header">
-    <img
-      [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
-      class="m-modalV2__headerLogoBulb"
-    />
-    <h2 class="m-modalV2Header__title">
-      {{ formDisplay == 'register' ? 'Join Minds' : 'Login' }}
-    </h2>
+    <img [src]="getLogoSrc()" class="m-modalV2__headerLogoBulb" />
+    <h2 class="m-modalV2Header__title">{{ title }}</h2>
   </div>
 
   <div class="m-modalV2__body">

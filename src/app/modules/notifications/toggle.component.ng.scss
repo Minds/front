@@ -1,5 +1,9 @@
 @import 'defaults.scss';
 
+.m-topbar__top--minimalLightMode :host i {
+  color: color-by-theme($m-bgColor--primaryInverted, 'light');
+}
+
 :host {
   .m-notifications--topbar-toggle--icon {
     font-size: 15px;

@@ -18,6 +18,14 @@
           <h5 class="m-productPageFeatTable__headerBoxTitle">
             {{ featTableHeader.title }}
           </h5>
+          <p
+            class="m-productPageFeatTable__priceStartingAt"
+            [ngClass]="{
+              'm-productPageFeatTable__priceStartingAt--hidden': !featTableHeader?.priceStartingAt
+            }"
+          >
+            Starting at
+          </p>
           <span class="m-productPageFeatTable__headerBoxAmount"
             ><strong>{{
               getMonthlyPrice(column.attributes.tier)
@@ -135,6 +143,14 @@
         <h5 class="m-productPageFeatTable__headerBoxTitle">
           {{ featTableHeader.title }}
         </h5>
+        <p
+          class="m-productPageFeatTable__priceStartingAt"
+          [ngClass]="{
+            'm-productPageFeatTable__priceStartingAt--hidden': !featTableHeader?.priceStartingAt
+          }"
+        >
+          Starting at
+        </p>
         <span class="m-productPageFeatTable__headerBoxAmount"
           ><strong>{{
             getMonthlyPrice(columns[mobileTab.index].attributes.tier)

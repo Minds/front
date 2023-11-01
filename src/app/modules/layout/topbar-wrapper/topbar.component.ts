@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Session } from '../../../services/session';
 import { GiftCardPurchaseExperimentService } from '../../experiments/sub-services/gift-card-purchase-experiment.service';
 import { Router } from '@angular/router';
+import { TopbarService } from '../../../common/layout/topbar.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'm-topbarwrapper',
@@ -11,10 +13,15 @@ import { Router } from '@angular/router';
 export class TopbarWrapperComponent implements OnInit {
   public giftCardPurchaseExperimentIsActive: boolean = false;
 
+  /** Whether topbar is being displayed in minimal light mode. */
+  public readonly isMinimalLightMode$: BehaviorSubject<boolean> = this
+    .topbarService.isMinimalLightMode$;
+
   constructor(
     public session: Session,
     private router: Router,
-    private giftCardPurchaseExperiment: GiftCardPurchaseExperimentService
+    private giftCardPurchaseExperiment: GiftCardPurchaseExperimentService,
+    private topbarService: TopbarService
   ) {}
 
   ngOnInit(): void {
