@@ -6,6 +6,7 @@ import {
   CreateTenantRootUserMutation,
   Tenant,
 } from '../../../../graphql/generated.engine';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 /**
  * Service to create the network root user
@@ -23,7 +24,10 @@ export class NetworksCreateRootUserService {
     Tenant
   >(null);
 
-  constructor(private createTenantRootUserGQL: CreateTenantRootUserGQL) {}
+  constructor(
+    private createTenantRootUserGQL: CreateTenantRootUserGQL,
+    private toaster: ToasterService
+  ) {}
 
   /**
    * Submit the username and create the user
@@ -36,6 +40,7 @@ export class NetworksCreateRootUserService {
       const response = await this.createRootUser(username);
     } catch (e) {
       console.error(e);
+      this.toaster.error(e);
     }
 
     this.inProgress$.next(false);

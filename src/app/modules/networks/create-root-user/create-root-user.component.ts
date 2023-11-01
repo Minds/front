@@ -28,7 +28,7 @@ export class NetworksCreateRootUserComponent implements OnInit, OnDestroy {
   /**
    * Modal save handler
    */
-  onSave: (any) => any = () => {};
+  onSave: () => any = () => {};
 
   /**
    * Modal dismiss intent handler
@@ -109,6 +109,7 @@ export class NetworksCreateRootUserComponent implements OnInit, OnDestroy {
    */
   async onSubmit(): Promise<void> {
     this.service.submitUsername(this.username.value);
+    this.onSave();
   }
 
   showError(field: string) {

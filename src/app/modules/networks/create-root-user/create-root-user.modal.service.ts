@@ -3,6 +3,15 @@ import { ModalService } from '../../../services/ux/modal.service';
 import { NetworksCreateRootUserComponent } from './create-root-user.component';
 import { Tenant } from '../../../../graphql/generated.engine';
 
+export enum CreateRootUserEventType {
+  Completed = 1,
+  Cancelled,
+}
+
+export interface CreateRootUserEvent {
+  type: CreateRootUserEventType;
+}
+
 /**
  * Service to present create network root user modal and handle its response
  */
@@ -16,19 +25,34 @@ export class NetworksCreateRootUserModalService {
   /**
    * Presents the modal to create the network root user account
    */
-  async present(network: Tenant): Promise<null> {
+  public async present(network: Tenant): Promise<CreateRootUserEvent | null> {
     const modal = this.modalService.present(NetworksCreateRootUserComponent, {
       data: {
         network: network,
         onSave: () => {
-          modal.dismiss();
           // TODO SSO to network > admin panel > domain tab
+          modal.close({
+            type: CreateRootUserEventType.Completed,
+          });
         },
       },
       injector: this.injector,
       windowClass: 'm-modalV2__mobileFullCover',
     });
 
-    return modal.result;
+    const result = await modal.result;
+    if (!result) {
+      return {
+        type: CreateRootUserEventType.Cancelled,
+      };
+    }
+    return result;
+  }
+
+  /**
+   * Dismisses the modal
+   */
+  public dismiss() {
+    this.modalService.dismissAll();
   }
 }

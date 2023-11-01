@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { NetworksCreateRootUserModalService } from '../create-root-user/create-root-user.modal.service';
+import {
+  CreateRootUserEventType,
+  NetworksCreateRootUserModalService,
+} from '../create-root-user/create-root-user.modal.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { QueryRef } from 'apollo-angular';
 import {
@@ -10,6 +13,7 @@ import {
   Tenant,
 } from '../../../../graphql/generated.engine';
 import { ApolloQueryResult } from '@apollo/client';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-networks__list',
@@ -108,6 +112,11 @@ export class NetworksListComponent implements OnInit, OnDestroy {
       return;
     }
     // "Create handle" modal
-    this.createRootUserModal.present(network);
+    const result = await this.createRootUserModal.present(network);
+
+    // Reload the list when user saves their root username
+    if (result.type === CreateRootUserEventType.Completed) {
+      this.load();
+    }
   }
 }
