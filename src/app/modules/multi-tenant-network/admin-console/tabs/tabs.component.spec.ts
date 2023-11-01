@@ -34,4 +34,12 @@ describe('NetworkAdminConsoleTabsComponent', () => {
       )
     ).toBeTruthy();
   });
+
+  it('should have an moderation tab', () => {
+    expect(
+      fixture.debugElement.query(
+        By.css('[data-ref=network-admin-console-tab-moderation]')
+      )
+    ).toBeTruthy();
+  });
 });
