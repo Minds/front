@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 /**
+ * ojm i think this one is obsolete
  * Banner, to be used as an alternative to the giant supermind
  * button on single activity pages
  */

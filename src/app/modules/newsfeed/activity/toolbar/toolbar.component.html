@@ -1,34 +1,36 @@
 <!-- ---------------------------------------------------  -->
 <!-- SUPERMIND BANNER/BUTTON -->
 <!-- ---------------------------------------------------  -->
-<div
-  class="m-activityToolbar__largeActions"
-  *ngIf="
-    service.displayOptions.showInteractions && !service.displayOptions.isFeed
-  "
->
-  <ng-container *ngIf="!isOwner">
-    <m-supermind__banner
-      *ngIf="supermindButtonExperiment"
-      [entity]="entity"
-      data-ref="activity-large-supermind-action--alt"
-    ></m-supermind__banner>
-    <m-supermind__button
-      *ngIf="!supermindButtonExperiment"
-      [entity]="entity"
-      [iconOnly]="false"
-      size="large"
-      data-ref="activity-large-supermind-action"
-    ></m-supermind__button>
-  </ng-container>
-  <!-- Show boost if own post -->
-  <ng-container *ngIf="isOwner">
-    <m-activity__boostButton
-      (click)="openBoostModal($event)"
-      [iconOnly]="false"
-    ></m-activity__boostButton>
-  </ng-container>
-</div>
+<ng-container *mIfTenant="false">
+  <div
+    class="m-activityToolbar__largeActions"
+    *ngIf="
+      service.displayOptions.showInteractions && !service.displayOptions.isFeed
+    "
+  >
+    <ng-container *ngIf="!isOwner">
+      <m-supermind__banner
+        *ngIf="supermindButtonExperiment"
+        [entity]="entity"
+        data-ref="activity-large-supermind-action--alt"
+      ></m-supermind__banner>
+      <m-supermind__button
+        *ngIf="!supermindButtonExperiment"
+        [entity]="entity"
+        [iconOnly]="false"
+        size="large"
+        data-ref="activity-large-supermind-action"
+      ></m-supermind__button>
+    </ng-container>
+    <!-- Show boost if own post -->
+    <ng-container *ngIf="isOwner">
+      <m-activity__boostButton
+        (click)="openBoostModal($event)"
+        [iconOnly]="false"
+      ></m-activity__boostButton>
+    </ng-container>
+  </div>
+</ng-container>
 <!-- ---------------------------------------------------  -->
 <!-- TOOLBAR BUTTONS ROW -->
 <!-- ---------------------------------------------------  -->

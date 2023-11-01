@@ -11,9 +11,8 @@
   <span>&nbsp;</span>
   <span
     class="m-giftCardLoggedOut__joinNowLink"
-    i18n="@@GIFT_CARD_PANEL__LOGGED_OUT__JOIN_MINDS_NOW"
     (click)="openAuthModal('register')"
-    >Join Minds Now</span
+    >Join<ng-container *mIfTenant="false"> Minds</ng-container> Now</span
   >
 </p>
 <m-button

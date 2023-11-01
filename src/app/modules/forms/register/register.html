@@ -20,8 +20,13 @@
 
 <ng-template #errorTemplate> {{ errorMessage }} </ng-template>
 
-<h3 *ngIf="showTitle" i18n="@@REGISTER__JOIN__TITLE">
-  Join the Minds Revolution
+<h3 *ngIf="showTitle">
+  <span i18n="@@REGISTER__JOIN__TITLE" *mIfTenant="false"
+    >Join the Minds Revolution</span
+  >
+  <span i18n="@@REGISTER__JOIN__TITLE" *mIfTenant="true"
+    >Create an account</span
+  >
 </h3>
 <span
   class="m-register__alreadyAUser"
@@ -267,6 +272,7 @@
     <!-- ------------------------------- -->
     <div class="m-register__checkboxes">
       <m-formInput__checkbox
+        *mIfTenant="false"
         formControlName="exclusive_promotions"
         customId="receive_exclusive_promotions"
       >
