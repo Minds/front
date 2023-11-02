@@ -799,6 +799,7 @@ export type ComponentV2ProductFeatureTableHeader = {
   __typename?: 'ComponentV2ProductFeatureTableHeader';
   button: ComponentV2ProductActionButton;
   id: Scalars['ID']['output'];
+  priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
   title: Scalars['String']['output'];
 };
 
@@ -811,12 +812,14 @@ export type ComponentV2ProductFeatureTableHeaderFiltersInput = {
   or?: InputMaybe<
     Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
   >;
+  priceStartingAt?: InputMaybe<BooleanFilterInput>;
   title?: InputMaybe<StringFilterInput>;
 };
 
 export type ComponentV2ProductFeatureTableHeaderInput = {
   button?: InputMaybe<ComponentV2ProductActionButtonInput>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -923,6 +926,9 @@ export enum Enum_Componentv2Productfeaturehighlight_Colorscheme {
 export enum Enum_Feattablecolumn_Tier {
   Free = 'free',
   Networks = 'networks',
+  NetworksCommunity = 'networks_community',
+  NetworksEnterprise = 'networks_enterprise',
+  NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
 }
@@ -930,6 +936,9 @@ export enum Enum_Feattablecolumn_Tier {
 export enum Enum_Productplan_Tier {
   Free = 'free',
   Networks = 'networks',
+  NetworksCommunity = 'networks_community',
+  NetworksEnterprise = 'networks_enterprise',
+  NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
 }
@@ -3245,6 +3254,7 @@ export type GetV2ProductPageBySlugQuery = {
                     featTableHeader?: {
                       __typename?: 'ComponentV2ProductFeatureTableHeader';
                       title: string;
+                      priceStartingAt?: boolean | null;
                       button: {
                         __typename?: 'ComponentV2ProductActionButton';
                         text: string;
@@ -3715,6 +3725,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                     tier
                     featTableHeader {
                       title
+                      priceStartingAt
                       button {
                         text
                         dataRef
