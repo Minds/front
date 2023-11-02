@@ -285,6 +285,7 @@ export class UpgradePageComponent implements OnInit {
         onComplete: (result: boolean) => {
           if (result) {
             modal.close();
+            this.onUpgradeComplete();
           }
         },
       },
