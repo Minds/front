@@ -300,7 +300,7 @@ export class RegisterForm implements OnInit, OnDestroy {
   }
 
   get password() {
-    return this.form.get('username');
+    return this.form.get('password');
   }
 
   public trackView(): void {

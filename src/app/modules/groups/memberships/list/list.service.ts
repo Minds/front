@@ -37,7 +37,7 @@ export class GroupsMembershipsListService {
   > = new BehaviorSubject<boolean>(false);
 
   /**
-   * Get list of members from API
+   * Get list of groups from API
    * @param { number } limit - limit to request from API.
    * @param { number } offset - offset to request from API.
    * @returns { Observable<ApiResponse> } response from API.
