@@ -37,6 +37,7 @@ import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-ser
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 const TOPBAR_HEIGHT: number = 75;
 
@@ -167,6 +168,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private intersectionObserver: IntersectionObserverService,
     private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
+    private isTenant: IsTenantService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -315,10 +317,16 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Called when a downvote event is received.
-   * Handles showing of downvote notice.
+   * Handles removing item from the feed and
+   * showing of downvote notice.
+   * (Tenant sites excluded)
    * @returns { void }
    */
   public onDownvote(): void {
+    // Don't remove from feed on tenant sites
+    if (this.isTenant.is()) {
+      return;
+    }
     if (!this.isSingle) {
       if (!this.topOfPostIsVisible()) {
         this.scrollToTopOfPost();

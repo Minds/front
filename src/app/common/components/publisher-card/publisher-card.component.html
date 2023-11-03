@@ -96,7 +96,8 @@
         class="m-publisherCard__name--primary m-legible"
       >
         <span>{{ publisher.name }}</span>
-        <m-accountQualityScore [targetUser]="publisher"></m-accountQualityScore>
+        <!-- Removing until performance/AI improves -->
+        <!-- <m-accountQualityScore [targetUser]="publisher"></m-accountQualityScore> -->
         <m-channel--badges
           *ngIf="type === 'user'"
           class="m-channel--badges-activity"

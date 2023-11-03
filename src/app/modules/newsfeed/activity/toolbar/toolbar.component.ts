@@ -20,6 +20,7 @@ import { CounterChangeFadeIn } from '../../../../animations';
 import { PersistentFeedExperimentService } from '../../../experiments/sub-services/persistent-feed-experiment.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { IsTenantService } from '../../../../common/services/is-tenant.service';
 
 /**
  * Button icons for quick-access actions (upvote, downvote, comment, remind, boost (for owners),
@@ -55,7 +56,8 @@ export class ActivityToolbarComponent {
     private persistentFeedExperiment: PersistentFeedExperimentService,
     public experimentsService: ExperimentsService,
     private cd: ChangeDetectorRef,
-    private toast: ToasterService
+    private toast: ToasterService,
+    private isTenant: IsTenantService
   ) {}
 
   ngOnInit() {
@@ -138,7 +140,7 @@ export class ActivityToolbarComponent {
   }
 
   /**
-   * Remove item from the feed.
+   * Asks activity container to remove item from the feed.
    * @param { boolean } $event - true if was downvoted.
    * @returns { void }
    */

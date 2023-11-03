@@ -8,6 +8,7 @@ import {
   EmailNotificationSetting,
   EmailNotificationTopic,
 } from '../notifications-settings-v3.type';
+import { IsTenantService } from '../../../../../common/services/is-tenant.service';
 
 /**
  * Settings form for controlling what email notifications you receive, and when.
@@ -51,7 +52,10 @@ export class SettingsV2EmailNotificationsV3Component
     'top_posts',
   ];
 
-  constructor(private service: NotificationsSettingsV2Service) {
+  constructor(
+    private service: NotificationsSettingsV2Service,
+    private isTenant: IsTenantService
+  ) {
     super();
   }
 
@@ -60,6 +64,18 @@ export class SettingsV2EmailNotificationsV3Component
       this.service.emailSettings$
         .pipe(
           map(response => {
+            // Email topics are limited for tenants
+            if (this.isTenant.is()) {
+              const allowedTenantEmailTopics = ['unread_notifications'];
+
+              const filteredNotifications = response.notifications.filter(
+                notification => {
+                  return allowedTenantEmailTopics.includes(notification.topic);
+                }
+              );
+              response.notifications = filteredNotifications;
+            }
+
             /**
              * patch over select box topics to ensure current values are digestible
              * this can be an issue for legacy settings that you could
