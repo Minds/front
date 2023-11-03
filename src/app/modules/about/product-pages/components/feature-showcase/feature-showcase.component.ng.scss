@@ -44,10 +44,13 @@
       word-break: break-word;
     }
 
-    .m-featureShowcase__body {
-      @include body3Regular;
+    ::ng-deep markdown {
       text-align: center;
       word-break: break-word;
+
+      p {
+        @include body3Regular;
+      }
     }
   }
 }

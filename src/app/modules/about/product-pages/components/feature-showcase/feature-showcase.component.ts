@@ -9,7 +9,10 @@ import { STRAPI_URL } from '../../../../../common/injection-tokens/url-injection
 @Component({
   selector: 'm-productPage__featureShowcase',
   templateUrl: 'feature-showcase.component.html',
-  styleUrls: ['feature-showcase.component.ng.scss'],
+  styleUrls: [
+    'feature-showcase.component.ng.scss',
+    '../../stylesheets/product.pages.ng.scss',
+  ],
 })
 export class ProductPageFeatureShowcaseComponent {
   /** Input containing data for feature showcase. */
