@@ -211,7 +211,31 @@
         </li>
       </ng-container>
 
-      <!-- Network -->
+      <!-- Networks list (on minds.com)-->
+      <ng-container *mIfTenant="false">
+        <li
+          *ngIf="showNetworksLink"
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--networks"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['/networks']"
+            (click)="toggle()"
+            data-ref="sidenav-networks-list"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">dashboard</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__NETWORKS"
+                >Networks</span
+              >
+            </div>
+          </a>
+        </li>
+      </ng-container>
+      <!-- Network admin (on tenant sites) -->
       <ng-container *ngIf="isAdmin() && isTenantNetwork">
         <li
           class="m-sidebarNavigation__item m-sidebarNavigation__item--network"
@@ -220,7 +244,7 @@
           <a
             [routerLink]="['/network/admin']"
             (click)="toggle()"
-            data-ref="sidenav-network"
+            data-ref="sidenav-network-admin"
           >
             <div class="m-sidebarNavigationItem__hoverArea">
               <i class="material-icons">dashboard</i>
@@ -251,7 +275,7 @@
               <i class="material-icons">verified</i>
               <span
                 class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__Upgrade"
+                i18n="@@COMMON__UPGRADE"
                 >Upgrade</span
               >
             </div>

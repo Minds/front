@@ -14,6 +14,7 @@ import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../services/configs.service';
+import { IsTenantService } from '../../services/is-tenant.service';
 
 @Component({
   selector: 'm-sidebarMore',
