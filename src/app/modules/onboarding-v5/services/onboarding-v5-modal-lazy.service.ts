@@ -62,7 +62,7 @@ export class OnboardingV5ModalLazyService {
    */
   private async openUpgradeModal() {
     if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => this.upgradeModal.open(), 400);
+      setTimeout(() => this.upgradeModal.open(), 800);
     }
   }
 }

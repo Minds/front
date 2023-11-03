@@ -1,4 +1,6 @@
-<h2><span *ngIf="!isModal" i18n="@@COMMON__UPGRADE">Upgrade</span></h2>
+<h2>
+  <span *ngIf="!isModal" i18n="@@COMMON__UPGRADE">Upgrade</span>
+</h2>
 <!-- --------------------------------- -->
 <!-- --------------------------------- -->
 <!-- --------------------------------- -->
@@ -6,7 +8,7 @@
 <!-- --------------------------------- -->
 <!-- --------------------------------- -->
 <!-- --------------------------------- -->
-<div class="m-upgradePage__heroWrapper">
+<div class="m-upgradePage__heroWrapper" *ngIf="upgradeCards.length">
   <div class="m-upgradePage__hero">
     <img
       class="m-upgradePageHero__flourish--topLeft"
@@ -170,4 +172,5 @@
 <m-modalCloseButton
   *ngIf="isModal"
   class="noAbsolutePosition"
+  data-ref="m-upgradePage__button--modalClose"
 ></m-modalCloseButton>
