@@ -14,6 +14,7 @@ import {
 } from '../../../../graphql/generated.engine';
 import { ApolloQueryResult } from '@apollo/client';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { AutoLoginService } from '../auto-login.service';
 
 @Component({
   selector: 'm-networks__list',
@@ -44,6 +45,7 @@ export class NetworksListComponent implements OnInit, OnDestroy {
   constructor(
     private createRootUserModal: NetworksCreateRootUserModalService,
     private getNetworksListGQL: GetNetworksListGQL,
+    private autoLoginService: AutoLoginService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -101,7 +103,8 @@ export class NetworksListComponent implements OnInit, OnDestroy {
     if (!network.rootUserGuid) {
       return;
     }
-    // TODO
+
+    this.autoLoginService.login(network.id);
   }
 
   /**
