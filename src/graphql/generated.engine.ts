@@ -316,6 +316,7 @@ export enum MultiTenantColorScheme {
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
   colorScheme?: Maybe<MultiTenantColorScheme>;
+  communityGuidelines?: Maybe<Scalars['String']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
@@ -324,6 +325,7 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
@@ -980,6 +982,7 @@ export type GetMultiTenantConfigQuery = {
     siteEmail?: string | null;
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
+    communityGuidelines?: string | null;
   } | null;
 };
 
@@ -987,6 +990,7 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   siteName?: InputMaybe<Scalars['String']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
@@ -2232,6 +2236,7 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
+      communityGuidelines
     }
   }
 `;
@@ -2280,12 +2285,14 @@ export const SetMultiTenantConfigDocument = gql`
     $siteName: String
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
+    $communityGuidelines: String
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
         siteName: $siteName
         colorScheme: $colorScheme
         primaryColor: $primaryColor
+        communityGuidelines: $communityGuidelines
       }
     )
   }

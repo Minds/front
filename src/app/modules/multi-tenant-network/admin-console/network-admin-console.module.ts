@@ -9,6 +9,8 @@ import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.comp
 import { NetworkAdminConsoleAppearanceComponent } from './tabs/appearance/appearance.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworkSettingsAuthGuard } from './guards/network-settings-auth.guard';
+import { NetworkAdminConsoleModerationComponent } from './tabs/moderation/moderation.component';
+import { NetworkAdminConsoleModerationGuidelinesComponent } from './tabs/moderation/moderation-guidelines/moderation-guidelines.component';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -19,6 +21,21 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
       { path: '', redirectTo: 'general', pathMatch: 'full' as PathMatch },
       { path: 'general', component: NetworkAdminConsoleGeneralComponent },
       { path: 'appearance', component: NetworkAdminConsoleAppearanceComponent },
+      {
+        path: 'moderation',
+        component: NetworkAdminConsoleModerationComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'guidelines',
+            pathMatch: 'full' as PathMatch,
+          },
+          {
+            path: 'guidelines',
+            component: NetworkAdminConsoleModerationGuidelinesComponent,
+          },
+        ],
+      },
     ],
   },
 ];
@@ -36,6 +53,8 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleTabsComponent,
     NetworkAdminConsoleGeneralComponent,
     NetworkAdminConsoleAppearanceComponent,
+    NetworkAdminConsoleModerationComponent,
+    NetworkAdminConsoleModerationGuidelinesComponent,
   ],
 })
 export class NetworkAdminConsoleModule {}
