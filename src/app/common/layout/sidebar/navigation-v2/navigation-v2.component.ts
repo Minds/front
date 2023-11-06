@@ -281,6 +281,13 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
+   * Only show the networks link when flag is on
+   */
+  get showNetworksLink(): boolean {
+    return this.experiments.hasVariation('minds-4384-sidenav-networks-link');
+  }
+
+  /**
    * Gets logo src depending on whether we're on a multi-tenant network and if the
    * user is in dark / light mode. Will change as last cache timestamp changes to force reloads
    * on change.

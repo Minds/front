@@ -108,10 +108,26 @@
 
           .m-productPageFeatTable__headerBoxTitle {
             margin-top: 0;
+            margin-bottom: $spacing2;
+
             @include heading4Bold;
 
             @include m-theme() {
               color: color-by-theme($m-bgColor--primary, 'dark');
+            }
+          }
+
+          .m-productPageFeatTable__priceStartingAt {
+            margin: unset;
+            margin-bottom: 0;
+            font-family: Inter;
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 115%;
+
+            &.m-productPageFeatTable__priceStartingAt--hidden {
+              visibility: hidden;
             }
           }
 
