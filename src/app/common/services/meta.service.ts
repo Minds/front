@@ -390,7 +390,11 @@ export class MetaService {
       .resetOEmbed();
 
     if (this.isTenantNetwork) {
-      this.setDynamicFavicon(DEFAULT_TENANT_FAVICON);
+      this.setDynamicFavicon(
+        `${DEFAULT_TENANT_FAVICON}?lastCache=${this.configs.get<number>(
+          'last_cache'
+        ) ?? 0}`
+      );
     }
   }
 

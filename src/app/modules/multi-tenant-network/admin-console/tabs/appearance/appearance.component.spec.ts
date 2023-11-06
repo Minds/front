@@ -24,9 +24,9 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
   let comp: NetworkAdminConsoleAppearanceComponent;
   let fixture: ComponentFixture<NetworkAdminConsoleAppearanceComponent>;
 
-  const squareLogoCount$ = new BehaviorSubject<number>(0);
-  const faviconCount$ = new BehaviorSubject<number>(0);
-  const horizontalLogoCount$ = new BehaviorSubject<number>(0);
+  const squareLogoLastCacheTimestamp$ = new BehaviorSubject<number>(0);
+  const faviconLastCacheTimestamp$ = new BehaviorSubject<number>(0);
+  const horizontalLogoLastCacheTimestamp$ = new BehaviorSubject<number>(0);
 
   const siteUrl: string = 'https://example.minds.com/';
 
@@ -54,16 +54,20 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
         {
           provide: MultiTenantConfigImageRefreshService,
           useValue: MockService(MultiTenantConfigImageRefreshService, {
-            has: ['squareLogoCount$', 'faviconCount$', 'horizontalLogoCount$'],
+            has: [
+              'squareLogoLastCacheTimestamp$',
+              'faviconLastCacheTimestamp$',
+              'horizontalLogoLastCacheTimestamp$',
+            ],
             props: {
-              squareLogoCount$: {
-                get: () => squareLogoCount$,
+              squareLogoLastCacheTimestamp$: {
+                get: () => squareLogoLastCacheTimestamp$,
               },
-              faviconCount$: {
-                get: () => faviconCount$,
+              faviconLastCacheTimestamp$: {
+                get: () => faviconLastCacheTimestamp$,
               },
-              horizontalLogoCount$: {
-                get: () => horizontalLogoCount$,
+              horizontalLogoLastCacheTimestamp$: {
+                get: () => horizontalLogoLastCacheTimestamp$,
               },
             },
           }),
@@ -82,9 +86,9 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
     comp.squareLogoFile$.next(null);
     comp.horizontalLogoFile$.next(null);
     comp.faviconFile$.next(null);
-    squareLogoCount$.next(0);
-    faviconCount$.next(0);
-    horizontalLogoCount$.next(0);
+    squareLogoLastCacheTimestamp$.next(0);
+    faviconLastCacheTimestamp$.next(0);
+    horizontalLogoLastCacheTimestamp$.next(0);
   });
 
   it('should create the component', fakeAsync(() => {
@@ -123,17 +127,19 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
 
       expect((comp as any).configImageService.upload).toHaveBeenCalledTimes(3);
       expect(
-        (comp as any).configImageRefreshCountService.incremenetSquareLogoCount
+        (comp as any).configImageRefreshCountService
+          .updateSquareLogoLastCacheTimestamp
       ).toHaveBeenCalled();
       expect(
         (comp as any).configImageRefreshCountService
-          .incremenetHorizontalLogoCount
+          .updateHorizontalLogoLastCacheTimestamp
       ).toHaveBeenCalled();
       expect(
-        (comp as any).configImageRefreshCountService.incremenetFaviconCount
+        (comp as any).configImageRefreshCountService
+          .updateFaviconLastCacheTimestamp
       ).toHaveBeenCalled();
       expect((comp as any).metaService.setDynamicFavicon).toHaveBeenCalledWith(
-        `/api/v3/multi-tenant/configs/image/favicon?refresh=${faviconCount$.getValue()}`
+        `/api/v3/multi-tenant/configs/image/favicon?lastCache=${faviconLastCacheTimestamp$.getValue()}`
       );
       expect(
         (comp as any).multiTenantConfigService.updateConfig

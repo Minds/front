@@ -1,12 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { MultiTenantConfigImageRefreshService } from './config-image-refresh.service';
+import { MockService } from '../../../utils/mock';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('MultiTenantConfigImageRefreshService', () => {
   let service: MultiTenantConfigImageRefreshService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [MultiTenantConfigImageRefreshService],
+      providers: [
+        MultiTenantConfigImageRefreshService,
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+      ],
     });
 
     service = TestBed.inject(MultiTenantConfigImageRefreshService);
@@ -17,26 +25,32 @@ describe('MultiTenantConfigImageRefreshService', () => {
   });
 
   it('should increment square logo count', () => {
-    expect(service.squareLogoCount$.getValue()).toBe(0);
-    service.incremenetSquareLogoCount();
-    expect(service.squareLogoCount$.getValue()).toBe(1);
-    service.incremenetSquareLogoCount();
-    expect(service.squareLogoCount$.getValue()).toBe(2);
+    service.squareLogoLastCacheTimestamp$.next(0);
+    let timestampValue: number = service.squareLogoLastCacheTimestamp$.getValue();
+
+    service.updateSquareLogoLastCacheTimestamp();
+    expect(service.squareLogoLastCacheTimestamp$.getValue()).toBeGreaterThan(
+      timestampValue
+    );
   });
 
   it('should increment favicon logo count', () => {
-    expect(service.faviconCount$.getValue()).toBe(0);
-    service.incremenetFaviconCount();
-    expect(service.faviconCount$.getValue()).toBe(1);
-    service.incremenetFaviconCount();
-    expect(service.faviconCount$.getValue()).toBe(2);
+    service.faviconLastCacheTimestamp$.next(0);
+    let timestampValue: number = service.faviconLastCacheTimestamp$.getValue();
+
+    service.updateFaviconLastCacheTimestamp();
+    expect(service.faviconLastCacheTimestamp$.getValue()).toBeGreaterThan(
+      timestampValue
+    );
   });
 
   it('should increment horizontal logo count', () => {
-    expect(service.horizontalLogoCount$.getValue()).toBe(0);
-    service.incremenetHorizontalLogoCount();
-    expect(service.horizontalLogoCount$.getValue()).toBe(1);
-    service.incremenetHorizontalLogoCount();
-    expect(service.horizontalLogoCount$.getValue()).toBe(2);
+    service.horizontalLogoLastCacheTimestamp$.next(0);
+    let timestampValue: number = service.horizontalLogoLastCacheTimestamp$.getValue();
+
+    service.updateHorizontalLogoLastCacheTimestamp();
+    expect(
+      service.horizontalLogoLastCacheTimestamp$.getValue()
+    ).toBeGreaterThan(timestampValue);
   });
 });
