@@ -23,7 +23,7 @@ import {
   AdminUpdateAccountGQL,
   AdminUpdateAccountMutation,
 } from '../../../../../graphql/generated.engine';
-import { ApolloQueryResult } from '@apollo/client';
+import { ApolloError, ApolloQueryResult } from '@apollo/client';
 import { ToasterService } from '../../../../common/services/toaster.service';
 
 @Component({
@@ -115,8 +115,8 @@ export class AdminAccountsFormComponent implements OnInit, OnDestroy {
         tap((success: boolean) => {
           this.toaster.success('Account updated');
         }),
-        catchError(error => {
-          this.toaster.error('An error occurred');
+        catchError((err: ApolloError) => {
+          this.toaster.error(err.message);
           return of(false);
         })
       )
@@ -134,7 +134,6 @@ export class AdminAccountsFormComponent implements OnInit, OnDestroy {
       .pipe(
         map(
           (result: ApolloQueryResult<AdminUpdateAccountMutation>): boolean => {
-            console.log('result', result);
             return true;
           }
         )
