@@ -36,22 +36,25 @@
           >Un-ban globally</span
         >
       </m-dropdownMenu__item>
-      <m-dropdownMenu__item (click)="viewLedger()"
+      <m-dropdownMenu__item *mIfTenant="false" (click)="viewLedger()"
         ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER"
           >View Ledger</span
         >
       </m-dropdownMenu__item>
-      <m-dropdownMenu__item [externalLink]="getUserSupersetUrl()">
+      <m-dropdownMenu__item
+        *mIfTenant="false"
+        [externalLink]="getUserSupersetUrl()"
+      >
         <span>
           View Superset Dashboard
         </span>
       </m-dropdownMenu__item>
-      <m-dropdownMenu__item (click)="viewWithdrawals()"
+      <m-dropdownMenu__item *mIfTenant="false" (click)="viewWithdrawals()"
         ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS"
           >View Withdrawals</span
         >
       </m-dropdownMenu__item>
-      <m-dropdownMenu__item (click)="viewBoosts()"
+      <m-dropdownMenu__item *mIfTenant="false" (click)="viewBoosts()"
         ><span i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_BOOSTS"
           >View Boosts</span
         >
@@ -62,19 +65,21 @@
         >
       </m-dropdownMenu__item>
 
-      <m-dropdownMenu__item (click)="proAdminToggle()"
+      <m-dropdownMenu__item *mIfTenant="false" (click)="proAdminToggle()"
         ><span>{{
           !(service.channel$ | async)?.pro ? 'Make Pro' : 'Remove Pro'
         }}</span>
       </m-dropdownMenu__item>
 
-      <m-dropdownMenu__item
-        (click)="plusAdminToggle()"
-        *ngIf="!(service.channel$ | async)?.pro"
-        ><span>{{
-          !(service.channel$ | async)?.plus ? 'Make Plus' : 'Remove Plus'
-        }}</span>
-      </m-dropdownMenu__item>
+      <ng-container *mIfTenant="false">
+        <m-dropdownMenu__item
+          (click)="plusAdminToggle()"
+          *ngIf="!(service.channel$ | async)?.pro"
+          ><span>{{
+            !(service.channel$ | async)?.plus ? 'Make Plus' : 'Remove Plus'
+          }}</span>
+        </m-dropdownMenu__item>
+      </ng-container>
 
       <ng-container *ngIf="service.isExplicit$ | async">
         <m-dropdownMenu__item (click)="setExplicit(false)"
@@ -92,7 +97,7 @@
       >
       </m-nsfwSelector>
 
-      <m-dropdownMenu__item (click)="reIndex()"
+      <m-dropdownMenu__item *mIfTenant="false" (click)="reIndex()"
         ><span i18n="@@M__ACTION__REINDEX">Reindex</span>
       </m-dropdownMenu__item>
     </ng-container>

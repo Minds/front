@@ -1,0 +1,11 @@
+query GetNetworksList($first: Int!, $last: Int!) {
+  tenants(first: $first, last: $last) {
+    id
+    domain
+    ownerGuid
+    rootUserGuid
+    config {
+      siteName
+    }
+  }
+}

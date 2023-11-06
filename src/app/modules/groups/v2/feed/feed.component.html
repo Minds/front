@@ -70,19 +70,20 @@
               <!-- ----------------------------------------- -->
               <!-- BOOSTS  -->
               <!-- ----------------------------------------- -->
-              <m-featured-content
-                *ngIf="
-                  shouldShowBoostInPosition(i) &&
-                  (group.show_boosts === undefined || group.show_boosts)
-                "
-                [slot]="i + 1"
-                [displayOptions]="{
-                  showOnlyCommentsInput: true,
-                  isFeed: true
-                }"
-                showHeader="true"
-                [servedByGuid]="service.guid$ | async"
-              ></m-featured-content>
+              <ng-container *mIfTenant="false">
+                <m-featured-content
+                  *ngIf="
+                    shouldShowBoostInPosition(i) && service.showBoosts$ | async
+                  "
+                  [slot]="i + 1"
+                  [displayOptions]="{
+                    showOnlyCommentsInput: true,
+                    isFeed: true
+                  }"
+                  showHeader="true"
+                  [servedByGuid]="service.guid$ | async"
+                ></m-featured-content>
+              </ng-container>
             </ng-container>
           </div>
         </ng-container>

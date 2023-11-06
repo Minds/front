@@ -18,6 +18,7 @@ import { ContentSettingsModule } from '../content-settings/content-settings.modu
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
 import { SearchComponent } from '../search/search.component';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 @NgModule({
   imports: [
@@ -123,6 +124,7 @@ import { SearchComponent } from '../search/search.component';
           {
             path: 'plus',
             data: { plus: true },
+            canActivate: [TenantRedirectGuard],
             children: [
               {
                 path: '',

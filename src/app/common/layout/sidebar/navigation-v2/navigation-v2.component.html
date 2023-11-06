@@ -16,14 +16,8 @@
           [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
         />
         <ng-container *ngIf="layoutMode === 'phone'">
-          <img
-            *ngIf="!isDarkTheme"
-            [src]="cdnAssetsUrl + 'assets/logos/medium-production.png'"
-          />
-          <img
-            *ngIf="isDarkTheme"
-            [src]="cdnAssetsUrl + 'assets/logos/medium-white.png'"
-          />
+          <img *ngIf="!isDarkTheme" [src]="getLogoSrc$('light') | async" />
+          <img *ngIf="isDarkTheme" [src]="getLogoSrc$('dark') | async" />
         </ng-container>
         <m-environmentFlag
           class="m-sidebarNavigation__environmentFlag"
@@ -82,6 +76,7 @@
 
       <!-- Boost -->
       <li
+        *mIfTenant="false"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--boost"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
@@ -103,6 +98,7 @@
 
       <!-- Minds+ -->
       <li
+        *mIfTenant="false"
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         [routerLinkActiveOptions]="{ exact: !plusPageActive }"
@@ -125,6 +121,7 @@
 
       <!-- Supermind -->
       <li
+        *mIfTenant="false"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--supermind"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
@@ -145,29 +142,32 @@
       </li>
 
       <!-- Wallet -->
-      <li
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        *ngIf="user"
-      >
-        <a
-          [routerLink]="['/wallet']"
-          (click)="toggle()"
-          data-ref="sidenav-wallet"
+      <ng-container *mIfTenant="false">
+        <li
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          *ngIf="user"
         >
-          <div class="m-sidebarNavigationItem__hoverArea">
-            <i class="material-icons">account_balance</i>
-            <span
-              class="m-sidebarNavigationItem__text m-legible"
-              i18n="@@COMMON__WALLET"
-              >Wallet</span
-            >
-          </div>
-        </a>
-      </li>
+          <a
+            [routerLink]="['/wallet']"
+            (click)="toggle()"
+            data-ref="sidenav-wallet"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">account_balance</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__WALLET"
+                >Wallet</span
+              >
+            </div>
+          </a>
+        </li>
+      </ng-container>
 
       <!-- Affiliate -->
       <li
+        *mIfTenant="false"
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
@@ -211,8 +211,55 @@
         </li>
       </ng-container>
 
+      <!-- Networks list (on minds.com)-->
+      <ng-container *mIfTenant="false">
+        <li
+          *ngIf="showNetworksLink"
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--networks"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['/networks']"
+            (click)="toggle()"
+            data-ref="sidenav-networks-list"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">dashboard</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__NETWORKS"
+                >Networks</span
+              >
+            </div>
+          </a>
+        </li>
+      </ng-container>
+      <!-- Network admin (on tenant sites) -->
+      <ng-container *ngIf="isAdmin() && isTenantNetwork">
+        <li
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--network"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        >
+          <a
+            [routerLink]="['/network/admin']"
+            (click)="toggle()"
+            data-ref="sidenav-network-admin"
+          >
+            <div class="m-sidebarNavigationItem__hoverArea">
+              <i class="material-icons">dashboard</i>
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__ADMIN"
+                >Admin</span
+              >
+            </div>
+          </a>
+        </li>
+      </ng-container>
+
       <!-- Upgrade -->
-      <ng-container>
+      <ng-container *mIfTenant="false">
         <li
           *ngIf="showUpgradeLink"
           class="m-sidebarNavigation__item m-sidebarNavigation__item--upgrade"
@@ -228,7 +275,7 @@
               <i class="material-icons">verified</i>
               <span
                 class="m-sidebarNavigationItem__text m-legible"
-                i18n="@@COMMON__Upgrade"
+                i18n="@@COMMON__UPGRADE"
                 >Upgrade</span
               >
             </div>

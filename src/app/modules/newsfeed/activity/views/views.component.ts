@@ -12,7 +12,7 @@ import { Session } from '../../../../services/session';
 @Component({
   selector: 'm-activity__views',
   templateUrl: './views.component.html',
-  styleUrls: ['./views.component.scss'],
+  styleUrls: ['./views.component.ng.scss'],
 })
 export class ActivityViewsComponent implements OnInit {
   private entitySubscription: Subscription;
@@ -35,8 +35,9 @@ export class ActivityViewsComponent implements OnInit {
         this.entity = entity;
 
         this.showViews =
-          this.session.isAdmin() ||
-          entity.ownerObj.guid === this.session.getLoggedInUser().guid;
+          (this.session.isAdmin() ||
+            entity.ownerObj.guid === this.session.getLoggedInUser().guid) &&
+          !this.service.displayOptions.isComposerPreview;
 
         if (this.showViews) {
           this.views = entity.impressions;

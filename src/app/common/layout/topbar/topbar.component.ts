@@ -21,10 +21,12 @@ import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { Observable } from 'rxjs';
+import { Observable, map, of, BehaviorSubject } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { TopbarAlertService } from '../../components/topbar-alert/topbar-alert.service';
+import { MultiTenantConfigImageRefreshService } from '../../../modules/multi-tenant-network/services/config-image-refresh.service';
+import { IS_TENANT_NETWORK } from '../../injection-tokens/tenant-injection-tokens';
 
 /**
  * The topbar of the site, visible almost everywhere
@@ -61,6 +63,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
   protected readonly shouldShowTopbarAlert$: Observable<boolean> = this
     .topbarAlertService.shouldShow$;
 
+  /** Whether topbar is to be displayed in minimal light mode. */
+  public readonly isMinimalLightMode$: BehaviorSubject<boolean> = this
+    .topbarService.isMinimalLightMode$;
+
   constructor(
     protected sidebarService: SidebarNavigationService,
     protected themeService: ThemeService,
@@ -75,7 +81,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
     private guestModeExperiment: GuestModeExperimentService,
-    private topbarAlertService: TopbarAlertService
+    private topbarAlertService: TopbarAlertService,
+    private configImageRefresh: MultiTenantConfigImageRefreshService,
+    @Inject(IS_TENANT_NETWORK) private readonly isTenantNetwork: boolean
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -196,6 +204,45 @@ export class TopbarComponent implements OnInit, OnDestroy {
    */
   public getMainLogoUrl(): string {
     return this.session.getLoggedInUser() ? '/newsfeed/subscriptions' : '/';
+  }
+
+  /**
+   * Gets full width logo src depending on whether we're on a multi-tenant network.
+   * Will change as refresh count goes up to force reloads on change.
+   * @returns { Observable<string> } - observable of logo src.
+   */
+  public getFullLogoSrc$(mode: 'light' | 'dark'): Observable<string> {
+    if (!this.isTenantNetwork) {
+      return of(
+        `${this.cdnAssetsUrl}assets/logos/` +
+          (mode === 'light' ? 'logo-light-mode.svg' : 'logo-dark-mode.svg')
+      );
+    }
+    return this.configImageRefresh.squareLogoCount$.pipe(
+      map((count: number): string => {
+        return (
+          '/api/v3/multi-tenant/configs/image/square_logo?refresh=' + count
+        );
+      })
+    );
+  }
+
+  /**
+   * Gets small logo src depending on whether we're on a multi-tenant network.
+   * Will change as refresh count goes up to force reloads on change.
+   * @returns { Observable<string> } - observable of logo src.
+   */
+  public getSmallLogoSrc$(): Observable<string> {
+    if (!this.isTenantNetwork) {
+      return of('assets/logos/bulb.svg');
+    }
+    return this.configImageRefresh.squareLogoCount$.pipe(
+      map((count: number): string => {
+        return (
+          '/api/v3/multi-tenant/configs/image/square_logo?refresh=' + count
+        );
+      })
+    );
   }
 
   /**

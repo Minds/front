@@ -41,6 +41,14 @@
   @return map-get($themes, $theme-name, $color-name);
 }
 
+// CSS variables can be changes programatically. Note that any colours
+// styled using these may have issues when being used within SCSS functions
+// such as "lighten()".
+:root {
+  --primary-action-light: #1b85d6;
+  --primary-action-dark: #ffd048;
+}
+
 // Dark theme lighten percentage
 $percent: 5%;
 
@@ -172,8 +180,9 @@ $themes: (
     m-overlay: rgba(176, 176, 176, 0.5),
     m-alert: #e03c20,
     m-positive: #95c064,
-    m-action: $blue,
-    m-action--contrast: $blue-dark,
+    m-action: var(--primary-action-light),
+    m-action--contrast:
+      color-mix(in srgb, var(--primary-action-light), #000 20%),
     m-action-text: $white,
     m-link-text: $blue,
     m-link-text-contrast: $blue-light,
@@ -193,8 +202,8 @@ $themes: (
     m-grey-200: $grey-200,
     m-grey-100: $grey-100,
     m-grey-50: $grey-50,
-    m-blue: $blue,
-    m-blue--contrast: $blue-dark,
+    m-blue: var(--primary-action-light),
+    m-blue--contrast: color-mix(in srgb, var(--primary-action-light), #000 20%),
     m-aqua: $green-300,
     m-green-dark: $green-700,
     m-green: $green-500,
@@ -249,8 +258,8 @@ $themes: (
     m-overlay: rgba(0, 0, 0, 0.5),
     m-alert: #fd8b7c,
     m-positive: #95c064,
-    m-action: $yellow-500,
-    m-action--contrast: $yellow-400,
+    m-action: var(--primary-action-dark),
+    m-action--contrast: color-mix(in srgb, var(--primary-action-dark), #000 20%),
     m-action-text: $grey-900,
     m-link-text: $yellow-500,
     m-link-text-contrast: $yellow-400,
@@ -278,8 +287,8 @@ $themes: (
     m-marketing-bg-gradient-start: #202527,
     m-marketing-bg-colored-gradient-start: #4e5965,
     m-marketing-bg-colored-gradient-end: #58565c,
-    m-blue: $yellow-500,
-    m-blue--contrast: $yellow-400,
+    m-blue: var(--primary-action-dark),
+    m-blue--contrast: color-mix(in srgb, var(--primary-action-dark), #000 20%),
     m-aqua: $green-300,
     m-green-dark: $green-200,
     m-green: $green-500,
@@ -402,4 +411,12 @@ $m-boxShadowOffset: 2px;
 @function checkmark-image($color) {
   $urlEncodedColor: str-replace('' + $color, '#', '%23'); // `#` signs are bad
   @return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" fill="#{$urlEncodedColor}"/></svg>';
+}
+
+@function m-darken($color, $percent: 20%) {
+  @return color-mix(in srgb, $color, #000 $percent);
+}
+
+@function m-lighten($color, $percent: 20%) {
+  @return color-mix(in srgb, $color, #fff $percent);
 }

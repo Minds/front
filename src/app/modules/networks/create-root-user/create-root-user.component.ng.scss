@@ -1,0 +1,91 @@
+@import 'defaults.scss';
+
+:host {
+  @media screen and (max-width: $max-mobile) {
+    width: 100%;
+  }
+
+  .m-networks__createRootUser {
+    @media screen and (max-width: $max-mobile) {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      border-radius: 0;
+    }
+    .m-formWrapper {
+      margin: 0;
+    }
+    p.m-networksCreateRootUser__description {
+      margin: $spacing4 0 $spacing6;
+
+      @include body1Regular;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    p.m-networksCreateRootUser__note {
+      margin: 0 $spacing20 $spacing8 0;
+
+      @include body3Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-right: $spacing8;
+      }
+    }
+
+    ::ng-deep m-formInput__autocompleteUserInput {
+      .m-formInputAutocompleteUserInput__popout {
+        top: 28px;
+        max-height: 290px;
+        overflow-y: scroll;
+      }
+    }
+
+    .m-formWrapper {
+      .m-form__field--text {
+        margin-bottom: 0;
+      }
+      .m-form__row--label {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      .m-form__row--validation {
+        margin: $spacing2 0 $spacing5;
+        display: flex;
+        height: $spacing8;
+        @include body2Regular;
+      }
+    }
+
+    .m-networksCreateRootUser__footer {
+      padding: $spacing5 $spacing10;
+      display: flex;
+      justify-content: flex-end;
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+      }
+      @media screen and (max-width: $max-mobile) {
+        .m-networksCreateRootUser__buttonsContainer {
+          width: 100%;
+          ::ng-deep m-button .m-button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .m-networksCreateRootUser__verticalStretch {
+    display: flex;
+    flex-flow: column nowrap;
+
+    @media screen and (max-width: $max-mobile) {
+      justify-content: space-between;
+      height: 100%;
+    }
+  }
+}

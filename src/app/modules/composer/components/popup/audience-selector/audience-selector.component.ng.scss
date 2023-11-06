@@ -33,17 +33,26 @@
       }
     }
 
+    .m-composerAudience__scrollableWrapper {
+      max-height: 500px;
+      overflow-y: auto;
+
+      @media screen and (max-width: $max-mobile) {
+        max-height: unset;
+      }
+    }
+
     .m-composerAudience__myChannelContainer {
       m-selectableEntityCard {
         margin: 0 0 $spacing4 0;
       }
     }
 
-    .m-composerAudience__noGroupsContainer {
+    .m-composerAudience__emptyListNoticeContainer {
       display: flex;
       flex-flow: column nowrap;
 
-      .m-composerAudience__noGroupsSpan {
+      > span {
         margin-bottom: $spacing6;
 
         @include m-theme() {
@@ -56,11 +65,9 @@
       }
     }
 
-    .m-composerAudience__groupsList {
+    .m-composerAudience__list {
       display: flex;
       flex-flow: column nowrap;
-      overflow-y: auto;
-      max-height: 340px;
 
       @media screen and (max-width: $max-mobile) {
         flex-grow: 1;
@@ -68,10 +75,8 @@
         max-height: unset;
       }
 
-      @include vertical-scroll;
-
       m-selectableEntityCard {
-        margin-bottom: $spacing4;
+        margin-bottom: $spacing3;
       }
 
       infinite-scroll {

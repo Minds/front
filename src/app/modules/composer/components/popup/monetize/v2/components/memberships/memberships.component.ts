@@ -133,6 +133,7 @@ export class ComposerMonetizeV2MembershipsComponent
     } else {
       this.service.pendingMonetization$.next({
         type: 'membership',
+        name: this.supportTiers.find(tier => tier.urn === this.urn.value).name,
         support_tier: {
           urn: this.urn.value,
         },

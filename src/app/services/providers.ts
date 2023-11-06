@@ -71,6 +71,8 @@ import {
   STRAPI_URL,
 } from '../common/injection-tokens/url-injection-tokens';
 import { APOLLO_PROIVDERS } from '../common/graphql/apollo-providers';
+import { IS_TENANT_NETWORK } from '../common/injection-tokens/tenant-injection-tokens';
+import { SITE_NAME } from '../common/injection-tokens/common-injection-tokens';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -266,6 +268,16 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: STRAPI_URL,
     useFactory: configs => configs.get('strapi')?.url,
+    deps: [ConfigsService],
+  },
+  {
+    provide: IS_TENANT_NETWORK,
+    useFactory: configs => configs.get('is_tenant') ?? false,
+    deps: [ConfigsService],
+  },
+  {
+    provide: SITE_NAME,
+    useFactory: configs => configs.get('site_name') ?? 'Minds',
     deps: [ConfigsService],
   },
   {

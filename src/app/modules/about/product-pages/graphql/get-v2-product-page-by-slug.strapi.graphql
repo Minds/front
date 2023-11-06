@@ -65,6 +65,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                   tier
                   featTableHeader {
                     title
+                    priceStartingAt
                   	button {
                       text
                       dataRef
@@ -180,6 +181,38 @@ query GetV2ProductPageBySlug($slug: String!) {
               action
             }
           }
+        }
+      }
+    }
+  }
+  footer {
+    data {
+      attributes {
+        logo {
+          data {
+            attributes {
+              url
+              height
+              width
+              alternativeText
+            }
+          }
+        }
+        showLanguageBar
+        slogan
+        copyrightText
+        columns {
+          title
+          links {
+            text
+            url
+            dataRef
+          }
+        }
+        bottomLinks {
+          text
+          url
+          dataRef
         }
       }
     }

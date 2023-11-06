@@ -51,8 +51,6 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   /** Is this activity the quoted/reminded post? */
   @Input() wasQuoted: boolean = false;
 
-  @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
-
   isFeed: boolean;
   isModal: boolean;
   isSidebarBoost: boolean;

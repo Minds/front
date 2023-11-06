@@ -3,6 +3,7 @@
   (mousedown)="mousedown($event)"
   *ngIf="session.isLoggedIn()"
   [hidden]="hidden"
+  [ngClass]="{ 'm-searchBarSuggestions--bordered': bordered }"
 >
   <m-loadingEllipsis *ngIf="inProgress"></m-loadingEllipsis>
 

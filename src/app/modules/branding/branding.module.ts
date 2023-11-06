@@ -12,11 +12,13 @@ import { MindsFormsModule } from '../forms/forms.module';
 
 import { BrandingComponent } from './branding.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   {
     path: 'branding',
     component: BrandingComponent,
+    canActivate: [TenantRedirectGuard],
     data: {
       title: 'Branding',
       description: 'Logos, assets and styling guides',

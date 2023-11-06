@@ -33,7 +33,6 @@ import {
 import { TopbarService } from '../../common/layout/topbar.service';
 import { MockService, MockComponent } from '../../utils/mock';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
-import { MarketingFooterComponent } from '../../modules/marketing/footer.component';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { LanguageBarComponent } from '../language/language-bar.component';
 import { LanguageModalComponent } from '../language/language-modal/language-modal.component';
@@ -75,7 +74,7 @@ describe('LoginComponent', () => {
           MindsFormLoginMock,
           MindsFormRegisterMock,
           LoginComponent,
-          MarketingFooterComponent,
+          MockComponent({ selector: 'm-marketing__footer' }),
           MockComponent({ selector: 'm-tooltip', inputs: ['icon', 'i18n'] }),
           MockComponent({ selector: 'm-language__bar' }),
         ],

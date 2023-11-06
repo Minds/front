@@ -1,88 +1,95 @@
-<div class="m-toolbar">
-  <div class="m-topbar--row">
-    <div
-      class="m-topbar--navigation m-topbar--navigation__centered m-topbar--navigation--text-only"
-    >
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/interactions"
-        routerLinkActive="m-topbar--navigation--item-active"
+<ng-container *mIfTenant="false">
+  <div class="m-toolbar">
+    <div class="m-topbar--row">
+      <div
+        class="m-topbar--navigation m-topbar--navigation__centered m-topbar--navigation--text-only"
       >
-        <span>Interactions</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/boosts"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Boosts</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/firehose"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Firehose</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/moderation/juryduty/initial"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Appeals</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/withdrawals"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Withdrawals</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/verify"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Verify</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/liquidity-providers"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Liquidity Providers</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/push-notifications"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Push Notifications</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/accounts"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Accounts</span>
-      </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/admin/interactions"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Interactions</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/admin/boosts"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Boosts</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/admin/firehose"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Firehose</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/moderation/juryduty/initial"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Appeals</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/admin/withdrawals"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Withdrawals</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/admin/verify"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Verify</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/admin/liquidity-providers"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Liquidity Providers</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/admin/push-notifications"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Push Notifications</span>
+        </a>
+        <a
+          class="m-topbar--navigation--item"
+          routerLink="/admin/accounts"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Accounts</span>
+        </a>
+      </div>
     </div>
   </div>
-</div>
-<m-admin--interactions *ngIf="filter == 'interactions'"></m-admin--interactions>
-<minds-admin-firehose *ngIf="filter == 'firehose'"></minds-admin-firehose>
-<minds-admin-reports
-  *ngIf="filter == 'reports' || filter == 'appeals'"
-></minds-admin-reports>
-<m-admin-withdrawals *ngIf="filter == 'withdrawals'"></m-admin-withdrawals>
-<minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
-<m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
-<m-admin--pushNotifications
-  *ngIf="filter == 'push-notifications'"
-></m-admin--pushNotifications>
-<m-admin--accounts *ngIf="filter == 'accounts'"></m-admin--accounts>
-<m-admin__liquidityProviders
-  *ngIf="filter === 'liquidity-providers'"
-></m-admin__liquidityProviders>
-<minds-admin-boosts *ngIf="filter == 'boosts-v1'"></minds-admin-boosts>
-<m-boostConsole *ngIf="filter == 'boosts'" adminContext="true"></m-boostConsole>
+  <m-admin--interactions
+    *ngIf="filter == 'interactions'"
+  ></m-admin--interactions>
+  <minds-admin-firehose *ngIf="filter == 'firehose'"></minds-admin-firehose>
+  <minds-admin-reports
+    *ngIf="filter == 'reports' || filter == 'appeals'"
+  ></minds-admin-reports>
+  <m-admin-withdrawals *ngIf="filter == 'withdrawals'"></m-admin-withdrawals>
+  <minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
+  <m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
+  <m-admin--pushNotifications
+    *ngIf="filter == 'push-notifications'"
+  ></m-admin--pushNotifications>
+  <m-admin--accounts *ngIf="filter == 'accounts'"></m-admin--accounts>
+  <m-admin__liquidityProviders
+    *ngIf="filter === 'liquidity-providers'"
+  ></m-admin__liquidityProviders>
+  <minds-admin-boosts *ngIf="filter == 'boosts-v1'"></minds-admin-boosts>
+  <m-boostConsole
+    *ngIf="filter == 'boosts'"
+    adminContext="true"
+  ></m-boostConsole>
+</ng-container>

@@ -1,0 +1,136 @@
+@import 'defaults.scss';
+
+:host {
+  padding: $spacing7 $spacing8;
+  max-width: 860px;
+
+  .m-networkAdminConsole__title {
+    margin-bottom: unset;
+  }
+
+  .m-networkAdminConsole__subtitle {
+    margin: $spacing1 0 $spacing8 0;
+
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-networkAdminConsole__formSectionLabel {
+    @include body1Regular;
+  }
+
+  .m-networkAdminConsole__form {
+    .m-networkAdminAppearance__colourSelectors {
+      .m-networkAdminConsole__formInputContainer {
+        display: flex;
+        flex-flow: row nowrap;
+        min-height: 38px;
+
+        .m-networkAdminAppearance__formColorLabelContainer {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: center;
+          margin-right: $spacing4;
+
+          .m-networkAdminAppearance__formColorLabel {
+            @include body3Regular;
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+
+          .m-networkAdminAppearance__formColorText {
+            @include body3Regular;
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+        }
+        .m-networkAdminAppearance__formColorInput {
+          align-self: center;
+          width: 150px;
+          height: 24px;
+          padding: 0;
+          border: unset;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+
+  .m-networkAdminConsole__radioButtonInputContainer {
+    &,
+    * {
+      cursor: pointer;
+    }
+  }
+
+  .m-networkAdminAppearance__imageUploadInputs {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin-bottom: $spacing16;
+    gap: $spacing10;
+
+    .m-networkAdminAppearance__imageUploadInputContainer {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .m-networkAdminAppearance__imageUploadLabelTitle {
+        display: block;
+        margin-bottom: $spacing2;
+        @include body1Regular;
+      }
+
+      .m-networkAdminAppearance__imageUploadLabelSubtitle {
+        display: block;
+        margin-bottom: $spacing6;
+        @include body3Regular;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        strong {
+          @include body3Medium;
+        }
+      }
+
+      .m-networkAdminAppearance__imageUploadInput {
+        display: none;
+      }
+
+      .m-networkAdminAppearance__imageInputArea {
+        align-self: center;
+        cursor: pointer;
+        background-size: 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        position: relative;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        &--square {
+          height: 132px;
+          width: 132px;
+        }
+
+        &--rectangular {
+          height: 132px;
+          width: 255px;
+        }
+
+        .m-networkAdminAppearance__imageInputUploadLogo {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          margin: $spacing2;
+        }
+      }
+    }
+  }
+}

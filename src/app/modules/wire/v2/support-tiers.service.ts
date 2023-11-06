@@ -5,6 +5,7 @@ import {
   map,
   shareReplay,
   switchAll,
+  tap,
 } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { deepDiff } from '../../../helpers/deep-diff';
@@ -55,6 +56,13 @@ export class SupportTiersService {
   );
 
   /**
+   * List has been loaded
+   */
+  readonly loaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
    * List of Support Tiers as they come from API
    */
   readonly list$: Observable<Array<SupportTier>>;
@@ -85,6 +93,7 @@ export class SupportTiersService {
             ? this.api.get(`api/v3/wire/supporttiers/all/${entityGuid}`)
             : of(null)
       ),
+      tap(() => this.loaded$.next(true)),
       switchAll(),
       shareReplay({ bufferSize: 1, refCount: true }),
       map(response => (response && response.support_tiers) || [])
