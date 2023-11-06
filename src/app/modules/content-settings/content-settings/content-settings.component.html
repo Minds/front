@@ -24,14 +24,16 @@
           >Tags</a
         >
       </div>
-      <div class="m-tabs__tab" *ngIf="!hideCompass">
-        <a
-          [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'compass' }"
-          (click)="service.activeTab$.next('compass')"
-          data-ref="content-settings-modal-tab-compass"
-          >Compass</a
-        >
-      </div>
+      <ng-container *mIfTenant="false">
+        <div class="m-tabs__tab" *ngIf="!hideCompass">
+          <a
+            [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'compass' }"
+            (click)="service.activeTab$.next('compass')"
+            data-ref="content-settings-modal-tab-compass"
+            >Compass</a
+          >
+        </div>
+      </ng-container>
       <!-- <div class="m-tabs__tab">
         <a
           [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'nsfw' }"
@@ -62,11 +64,13 @@
             recommend relevant content.</ng-container
           ></ng-container
         >
-        <ng-container
-          *ngIf="activeTab === 'compass'"
-          i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__COMPASS"
-          >The Compass allows Minds to best recommend content and channels. Find
-          out more.</ng-container
+        <ng-container *mIfTenant="false">
+          <ng-container
+            *ngIf="activeTab === 'compass'"
+            i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__COMPASS"
+            >The Compass allows Minds to best recommend content and channels.
+            Find out more.</ng-container
+          ></ng-container
         >
         <!-- <ng-container
         *ngIf="activeTab === 'nsfw'"

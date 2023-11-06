@@ -14,7 +14,7 @@
       >{{ error.maxLength / 60 }}
       <ng-container i18n="unit of time|@@COMMON__MINUTES">minutes</ng-container>
     </p>
-    <p>
+    <p *mIfTenant="false">
       <a routerLink="/plus" target="_blank">Upgrade to Minds+</a> or
       <a routerLink="/pro" target="_blank">Minds Pro</a> to upload videos up to
       {{ error.maxLengthPlus / 60 }}
@@ -31,7 +31,7 @@
 </span>
 
 <hr class="m-attachmentError__divider" />
-<span class="m-attachmentError__seeMoreSpan"
+<span class="m-attachmentError__seeMoreSpan" *mIfTenant="false"
   >See
   <a
     href="https://support.minds.com/hc/en-us/articles/4402686683284-Various-File-Metrics"
