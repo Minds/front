@@ -24,16 +24,14 @@
           >Tags</a
         >
       </div>
-      <ng-container *mIfTenant="false">
-        <div class="m-tabs__tab" *ngIf="!hideCompass">
-          <a
-            [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'compass' }"
-            (click)="service.activeTab$.next('compass')"
-            data-ref="content-settings-modal-tab-compass"
-            >Compass</a
-          >
-        </div>
-      </ng-container>
+      <div class="m-tabs__tab" *ngIf="!hideCompass">
+        <a
+          [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'compass' }"
+          (click)="service.activeTab$.next('compass')"
+          data-ref="content-settings-modal-tab-compass"
+          >Compass</a
+        >
+      </div>
       <!-- <div class="m-tabs__tab">
         <a
           [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'nsfw' }"
