@@ -398,6 +398,7 @@ export enum MultiTenantColorScheme {
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
   colorScheme?: Maybe<MultiTenantColorScheme>;
+  communityGuidelines?: Maybe<Scalars['String']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
@@ -406,6 +407,7 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
@@ -417,8 +419,8 @@ export type Mutation = {
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
-  createNetwork: Tenant;
-  createNetworkRootUser: NetworkUser;
+  createNetworkRootUser: TenantUser;
+  createTenant: Tenant;
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
@@ -450,12 +452,12 @@ export type MutationCreateGiftCardArgs = {
   targetInput: GiftCardTargetInput;
 };
 
-export type MutationCreateNetworkArgs = {
-  tenant?: InputMaybe<TenantInput>;
+export type MutationCreateNetworkRootUserArgs = {
+  networkUser?: InputMaybe<TenantUserInput>;
 };
 
-export type MutationCreateNetworkRootUserArgs = {
-  networkUser?: InputMaybe<NetworkUserInput>;
+export type MutationCreateTenantArgs = {
+  tenant?: InputMaybe<TenantInput>;
 };
 
 export type MutationDeleteFeaturedEntityArgs = {
@@ -484,25 +486,6 @@ export type MutationUpdateAccountArgs = {
   newUsername?: InputMaybe<Scalars['String']['input']>;
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
-
-export type NetworkUser = {
-  __typename?: 'NetworkUser';
-  guid: Scalars['String']['output'];
-  role: NetworkUserRoleEnum;
-  tenantId: Scalars['String']['output'];
-  username: Scalars['String']['output'];
-};
-
-export type NetworkUserInput = {
-  tenantId?: InputMaybe<Scalars['String']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
-};
-
-export enum NetworkUserRoleEnum {
-  Admin = 'ADMIN',
-  Owner = 'OWNER',
-  User = 'USER',
-}
 
 export type NewsfeedConnection = ConnectionInterface & {
   __typename?: 'NewsfeedConnection';
@@ -602,7 +585,6 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
-  networks: Array<Tenant>;
   newsfeed: NewsfeedConnection;
   /** Gets onboarding state for the currently logged in user. */
   onboardingState?: Maybe<OnboardingState>;
@@ -611,6 +593,7 @@ export type Query = {
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
   search: SearchResultsConnection;
+  tenants: Array<Tenant>;
 };
 
 export type QueryActivityArgs = {
@@ -672,11 +655,6 @@ export type QueryGiftCardsArgs = {
   statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
 };
 
-export type QueryNetworksArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-};
-
 export type QueryNewsfeedArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   algorithm: Scalars['String']['input'];
@@ -699,6 +677,11 @@ export type QuerySearchArgs = {
   mediaType: SearchMediaTypeEnum;
   nsfw?: InputMaybe<Array<SearchNsfwEnum>>;
   query: Scalars['String']['input'];
+};
+
+export type QueryTenantsArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export enum SearchFilterEnum {
@@ -741,8 +724,9 @@ export type Tenant = {
   __typename?: 'Tenant';
   config?: Maybe<MultiTenantConfig>;
   domain?: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
-  ownerGuid?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  ownerGuid?: Maybe<Scalars['String']['output']>;
+  rootUserGuid?: Maybe<Scalars['String']['output']>;
 };
 
 export type TenantInput = {
@@ -750,6 +734,25 @@ export type TenantInput = {
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
 };
+
+export type TenantUser = {
+  __typename?: 'TenantUser';
+  guid: Scalars['String']['output'];
+  role: TenantUserRoleEnum;
+  tenantId: Scalars['Int']['output'];
+  username: Scalars['String']['output'];
+};
+
+export type TenantUserInput = {
+  tenantId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum TenantUserRoleEnum {
+  Admin = 'ADMIN',
+  Owner = 'OWNER',
+  User = 'USER',
+}
 
 export type UserEdge = EdgeInterface & {
   __typename?: 'UserEdge';
@@ -1234,6 +1237,7 @@ export type GetMultiTenantConfigQuery = {
     siteEmail?: string | null;
     colorScheme?: MultiTenantColorScheme | null;
     primaryColor?: string | null;
+    communityGuidelines?: string | null;
   } | null;
 };
 
@@ -1241,11 +1245,47 @@ export type SetMultiTenantConfigMutationVariables = Exact<{
   siteName?: InputMaybe<Scalars['String']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type SetMultiTenantConfigMutation = {
   __typename?: 'Mutation';
   multiTenantConfig: boolean;
+};
+
+export type CreateTenantRootUserMutationVariables = Exact<{
+  networkUserInput?: InputMaybe<TenantUserInput>;
+}>;
+
+export type CreateTenantRootUserMutation = {
+  __typename?: 'Mutation';
+  createNetworkRootUser: {
+    __typename?: 'TenantUser';
+    guid: string;
+    username: string;
+    tenantId: number;
+    role: TenantUserRoleEnum;
+  };
+};
+
+export type GetNetworksListQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  last: Scalars['Int']['input'];
+}>;
+
+export type GetNetworksListQuery = {
+  __typename?: 'Query';
+  tenants: Array<{
+    __typename?: 'Tenant';
+    id: number;
+    domain?: string | null;
+    ownerGuid?: string | null;
+    rootUserGuid?: string | null;
+    config?: {
+      __typename?: 'MultiTenantConfig';
+      siteName?: string | null;
+    } | null;
+  }>;
 };
 
 export type FetchNewsfeedQueryVariables = Exact<{
@@ -3149,6 +3189,7 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
+      communityGuidelines
     }
   }
 `;
@@ -3171,12 +3212,14 @@ export const SetMultiTenantConfigDocument = gql`
     $siteName: String
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
+    $communityGuidelines: String
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
         siteName: $siteName
         colorScheme: $colorScheme
         primaryColor: $primaryColor
+        communityGuidelines: $communityGuidelines
       }
     )
   }
@@ -3190,6 +3233,57 @@ export class SetMultiTenantConfigGQL extends Apollo.Mutation<
   SetMultiTenantConfigMutationVariables
 > {
   document = SetMultiTenantConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateTenantRootUserDocument = gql`
+  mutation CreateTenantRootUser($networkUserInput: TenantUserInput) {
+    createNetworkRootUser(networkUser: $networkUserInput) {
+      guid
+      username
+      tenantId
+      role
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateTenantRootUserGQL extends Apollo.Mutation<
+  CreateTenantRootUserMutation,
+  CreateTenantRootUserMutationVariables
+> {
+  document = CreateTenantRootUserDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetNetworksListDocument = gql`
+  query GetNetworksList($first: Int!, $last: Int!) {
+    tenants(first: $first, last: $last) {
+      id
+      domain
+      ownerGuid
+      rootUserGuid
+      config {
+        siteName
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetNetworksListGQL extends Apollo.Query<
+  GetNetworksListQuery,
+  GetNetworksListQueryVariables
+> {
+  document = GetNetworksListDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

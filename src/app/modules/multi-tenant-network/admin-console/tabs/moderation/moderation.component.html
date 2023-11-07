@@ -1,0 +1,36 @@
+<h4
+  class="m-networkAdminConsole__title"
+  i18n="@@NETWORK_ADMIN_CONSOLE_MODERATION__MODERATION"
+>
+  Moderation
+</h4>
+<p
+  class="m-networkAdminConsole__subtitle"
+  i18n="@@NETWORK_ADMIN_CONSOLE_MODERATION__SUBTEXT"
+>
+  Use the moderation tab to keep an eye on content that people are posting on
+  the network, update your community guidelines and control user bans.
+</p>
+
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a
+      [routerLink]="['./guidelines']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-guidelines"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_GUIDELINES"
+      >Guidelines</a
+    >
+  </div>
+  <!-- <div class="m-tabs__tab">
+    <a
+      [routerLink]="['./reports']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-reports"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_REPORTS"
+      >Reports</a
+    >
+  </div> -->
+</div>
+
+<router-outlet></router-outlet>

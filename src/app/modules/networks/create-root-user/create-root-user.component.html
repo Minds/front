@@ -1,0 +1,99 @@
+<div class="m-modalV2__inner m-networks__createRootUser">
+  <div class="m-modalV2__mobileTopBar m-modalV2__mobileTopBar--noBorder"></div>
+  <div class="m-modalV2__header m-networksCreateRootUser__header">
+    <h2
+      class="m-modalV2Header__title"
+      i18n="@@NETWORKS_CREATE_ROOT_USER__CHOOSE_HANDLE"
+    >
+      Choose your network handle
+    </h2>
+  </div>
+  <div class="m-networksCreateRootUser__verticalStretch">
+    <form
+      class="m-modalV2__body m-formWrapper m-networksCreateRootUser__form"
+      [formGroup]="formGroup"
+      (submit)="$event.preventDefault()"
+    >
+      <p
+        class="m-networksCreateRootUser__description"
+        i18n="@@NETWORKS_CREATE_ROOT_USER__DESC"
+      >
+        What username would you like to display on this network?
+      </p>
+
+      <div class="m-form__fieldsContainer">
+        <!-- ------------------------------- -->
+        <!-- USERNAME FIELD -->
+        <!-- ------------------------------- -->
+        <div class="m-form__field--text stretchedField">
+          <div class="m-form__input--details">
+            <div
+              class="m-form__row--label m-form__row--label--username m-legible"
+            >
+              <label for="username" i18n="@@M__COMMON__USERNAME"
+                >Username</label
+              >
+            </div>
+          </div>
+          <div class="m-form__row--input">
+            <input
+              type="text"
+              id="username"
+              formControlName="username"
+              readonly
+              onfocus="this.removeAttribute('readonly');"
+              ontouchstart="this.removeAttribute('readonly');"
+              [pattern]="alphanumericPattern"
+              data-ref="data-minds-register-username-input"
+            />
+          </div>
+        </div>
+
+        <div
+          class="m-form__row--validation"
+          [style.visibility]="showError('username') ? 'visible' : 'hidden'"
+          aria-live="polite"
+        >
+          <ng-container
+            *ngIf="this.formGroup.get('username').errors?.minlength"
+            i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_SHORT"
+          >
+            Must be at least 4 characters long.
+          </ng-container>
+          <ng-container
+            *ngIf="this.formGroup.get('username').errors?.maxlength"
+            i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_LONG"
+          >
+            Cannot be longer than 50 characters.
+          </ng-container>
+          <ng-container
+            *ngIf="this.formGroup.get('username').errors?.pattern"
+            i18n="@@MINDS__REGISTER__EXCEPTION__NOT_ALPHANUMERIC"
+          >
+            Usernames can only have letters, numbers or underscores. Special
+            characters (e.g. @^%.) and spaces are not allowed.
+          </ng-container>
+        </div>
+      </div>
+    </form>
+    <div class="m-modalV2__body m-networksCreateRootUser__footer">
+      <div
+        class="m-form__buttonsContainer m-networksCreateRootUser__buttonsContainer"
+      >
+        <m-button
+          type="button"
+          color="blue"
+          solid="true"
+          [saving]="service.inProgress$ | async"
+          [disabled]="!canSubmit"
+          (onAction)="onSubmit()"
+          i18n="@@COMMON__CONFIRM"
+          data-ref="m-networksCreateRootUser__confirmButton"
+          >Confirm</m-button
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<m-modalCloseButton></m-modalCloseButton>
