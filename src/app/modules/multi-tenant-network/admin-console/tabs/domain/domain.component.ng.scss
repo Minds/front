@@ -16,6 +16,7 @@
     }
 
     .m-networkAdminDomainCurrentDomain__name {
+      display: inline-block;
       @include body2Medium;
       margin-bottom: 2px;
     }
@@ -23,8 +24,9 @@
     .m-networkAdminDomainCurrentDomain__statusDotRow {
       display: flex;
       margin-bottom: $spacing4;
+      align-items: center;
 
-      [class*='m-networkAdminDomainCurrentDomain__statusDot'] {
+      [class*='m-networkAdminDomainCurrentDomain__statusDot--'] {
         display: block;
         height: $spacing2;
         width: $spacing2;
@@ -45,6 +47,7 @@
         }
       }
       .m-networkAdminDomainCurrentDomain__statusDotDesc {
+        display: inline-block;
         @include body3Regular;
         @include m-theme() {
           color: themed($m-textColor--tertiary);
@@ -90,9 +93,7 @@
       color: themed($m-action);
     }
   }
-  .m-networkAdminDomainInstructions__recordType {
-    margin-bottom: $spacing8;
-  }
+
   .m-networkAdminDomainInstructionsRecordType__title {
     @include heading4Medium;
     display: inline-block;
@@ -105,8 +106,12 @@
     display: flex;
     flex-flow: row nowrap;
     gap: $spacing6;
-    width: fit-content;
     border-radius: $spacing1;
+    overflow-x: scroll;
+
+    @media screen and (max-width: $min-tablet) {
+      gap: $spacing3;
+    }
 
     @include m-theme() {
       background-color: themed($m-bgColor--secondary);
@@ -121,7 +126,7 @@
         @include body3Bold;
         padding: 8px;
 
-        &:last-child {
+        &:not(:first-child) {
           font-weight: 500 !important;
           font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
         }

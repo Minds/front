@@ -1,7 +1,7 @@
 import { MultiTenantDomain } from '../../../../../../graphql/generated.engine';
 
 /**
- * tenantId is not returned
+ * The MultiTenantDomain type, but without the tenantId
  */
 export type ReturnedMultiTenantDomain = Omit<MultiTenantDomain, 'tenantId'>;
 

@@ -1,0 +1,115 @@
+<div class="m-modalV2__inner m-editDomainModal">
+  <div class="m-modalV2__mobileTopBar m-modalV2__mobileTopBar--noBorder"></div>
+  <div class="m-modalV2__header">
+    <h2 class="m-modalV2Header__title">
+      <ng-container
+        *ngIf="!(service.isActive$ | async) || saved; else areYouSure"
+        i18n="@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__CUSTOM_DOMAIN"
+        >Custom domain</ng-container
+      >
+      <ng-template #areYouSure
+        ><ng-container
+          i18n="@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__ARE_YOU_SURE"
+          >Are you sure about this?</ng-container
+        ></ng-template
+      >
+    </h2>
+  </div>
+  <form class="m-modalV2__body m-formWrapper" [formGroup]="formGroup">
+    <ng-container *ngIf="!saved">
+      <ng-container *ngIf="!(service.isActive$ | async)">
+        <p class="m-editDomainModal__description">
+          Specify the URL on your custom domain where you’d like your new
+          network to appear. Once set, we recommend you not change this setting
+          as it will become the basis of your user identities and
+          <a href="https://www.minds.com/p/networks-federation" target="_blank"
+            >federated</a
+          >
+          connections.
+        </p>
+        <p
+          class="m-editDomainModal__description"
+          i18n="@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__EFFECT_MOBILE"
+        >
+          This will also effect any mobile app add-ons that you might have
+          purchased as part of your Network plan.
+        </p>
+      </ng-container>
+      <p
+        *ngIf="service.isActive$ | async"
+        class="m-editDomainModal__description"
+        i18n="@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__BREAK_CONNECTIONS"
+      >
+        Your custom domain is the basis for your user identities. Changing your
+        domain will change your federated usernames and effectively break
+        existing connections with users on other networks.
+      </p></ng-container
+    >
+    <ng-container *ngIf="saved">
+      <p
+        class="m-editDomainModal__description"
+        i18n="@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__DOMAIN_SET"
+      >
+        Your domain has been set at
+        <strong>{{ (service.domain$ | async)?.domain }}</strong
+        >. Make sure to configure your domain with your DNS provider. Here’s a
+        <a
+          href="https://www.minds.com/p/networks-dns-configuration"
+          target="_blank"
+          >useful link</a
+        >
+        to get started.
+      </p></ng-container
+    >
+
+    <div class="m-form__fieldsContainer" *ngIf="!saved">
+      <!------------------------>
+      <!-- Select user      -->
+      <!------------------------>
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label ">
+          <label>Domain URL</label>
+        </div>
+        <div class="m-form__row--input">
+          <input type="text" id="hostname" formControlName="hostname" />
+        </div>
+      </div>
+      <div class="m-form__row--validation">
+        <p
+          *ngIf="formGroup.controls.hostname.errors?.invalidUrl"
+          i18n="@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__INVALID_DOMAIN"
+        >
+          This is an invalid domain name
+        </p>
+      </div>
+    </div>
+  </form>
+  <div class="m-modalV2__body m-editDomainModal__footer">
+    <div class="m-form__buttonsContainer m-editDomainModal__buttonsContainer">
+      <m-button
+        *ngIf="!saved"
+        type="button"
+        color="blue"
+        solid="true"
+        [disabled]="formGroup.invalid"
+        [saving]="savingInProgress$ | async"
+        (onAction)="onSubmit()"
+        i18n="@@NETWORK_ADMIN_CONSOLE__EDIT_DOMAIN_MODAL__SET_DOMAIN"
+        data-ref="m-editDomainModal__setDomainButton"
+        >Set domain</m-button
+      >
+      <m-button
+        *ngIf="saved"
+        type="button"
+        color="blue"
+        solid="true"
+        (onAction)="onDismissIntent()"
+        i18n="@@COMMON__DONE"
+        data-ref="m-editDomainModal__doneButton"
+        >Done</m-button
+      >
+    </div>
+  </div>
+</div>
+
+<m-modalCloseButton></m-modalCloseButton>

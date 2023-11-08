@@ -10,6 +10,15 @@
   </div>
   <div class="m-tabs__tab">
     <a
+      [routerLink]="['/network/admin/domain']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-tab-domain"
+      i18n="@@NETWORK_ADMIN_CONSOLE__TAB_DOMAIN"
+      >Domain</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
       [routerLink]="['/network/admin/appearance']"
       [routerLinkActive]="'m-tabs__tab--selected'"
       data-ref="network-admin-console-tab-appearance"
