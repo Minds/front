@@ -2,7 +2,7 @@
 
 :host {
   display: block;
-  height: 100vh;
+  height: 100%;
 
   @include m-theme() {
     border-right: 1px solid themed($m-borderColor--primary);

@@ -102,12 +102,37 @@ export type ConnectionInterface = {
   pageInfo: PageInfo;
 };
 
+export enum CustomHostnameStatusEnum {
+  Active = 'ACTIVE',
+  ActiveRedeploying = 'ACTIVE_REDEPLOYING',
+  Blocked = 'BLOCKED',
+  Deleted = 'DELETED',
+  Moved = 'MOVED',
+  Pending = 'PENDING',
+  PendingBlocked = 'PENDING_BLOCKED',
+  PendingDeletion = 'PENDING_DELETION',
+  PendingMigration = 'PENDING_MIGRATION',
+  PendingProvisioned = 'PENDING_PROVISIONED',
+  Provisioned = 'PROVISIONED',
+  TestActive = 'TEST_ACTIVE',
+  TestActiveApex = 'TEST_ACTIVE_APEX',
+  TestBlocked = 'TEST_BLOCKED',
+  TestFailed = 'TEST_FAILED',
+  TestPending = 'TEST_PENDING',
+}
+
 export type Dismissal = {
   __typename?: 'Dismissal';
   dismissalTimestamp: Scalars['Int']['output'];
   key: Scalars['String']['output'];
   userGuid: Scalars['String']['output'];
 };
+
+export enum DnsRecordEnum {
+  A = 'A',
+  Cname = 'CNAME',
+  Txt = 'TXT',
+}
 
 export type EdgeImpl = EdgeInterface & {
   __typename?: 'EdgeImpl';
@@ -316,6 +341,7 @@ export enum MultiTenantColorScheme {
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
   colorScheme?: Maybe<MultiTenantColorScheme>;
+  communityGuidelines?: Maybe<Scalars['String']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
@@ -324,9 +350,26 @@ export type MultiTenantConfig = {
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MultiTenantDomain = {
+  __typename?: 'MultiTenantDomain';
+  dnsRecord?: Maybe<MultiTenantDomainDnsRecord>;
+  domain: Scalars['String']['output'];
+  ownershipVerificationDnsRecord?: Maybe<MultiTenantDomainDnsRecord>;
+  status: CustomHostnameStatusEnum;
+  tenantId: Scalars['Int']['output'];
+};
+
+export type MultiTenantDomainDnsRecord = {
+  __typename?: 'MultiTenantDomainDnsRecord';
+  name: Scalars['String']['output'];
+  type: DnsRecordEnum;
+  value: Scalars['String']['output'];
 };
 
 export type Mutation = {
@@ -335,6 +378,7 @@ export type Mutation = {
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
+  createMultiTenantDomain: MultiTenantDomain;
   createNetworkRootUser: TenantUser;
   createTenant: Tenant;
   /** Dismiss a notice by its key. */
@@ -362,6 +406,10 @@ export type MutationCreateGiftCardArgs = {
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
   targetInput: GiftCardTargetInput;
+};
+
+export type MutationCreateMultiTenantDomainArgs = {
+  hostname: Scalars['String']['input'];
 };
 
 export type MutationCreateNetworkRootUserArgs = {
@@ -487,6 +535,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
+  multiTenantDomain: MultiTenantDomain;
   newsfeed: NewsfeedConnection;
   /** Gets onboarding state for the currently logged in user. */
   onboardingState?: Maybe<OnboardingState>;
@@ -934,6 +983,82 @@ export type GetGiftCardsQuery = {
   };
 };
 
+export type GetMultiTenantConfigQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMultiTenantConfigQuery = {
+  __typename?: 'Query';
+  multiTenantConfig?: {
+    __typename?: 'MultiTenantConfig';
+    siteName?: string | null;
+    siteEmail?: string | null;
+    colorScheme?: MultiTenantColorScheme | null;
+    primaryColor?: string | null;
+  } | null;
+};
+
+export type GetMultiTenantDomainQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMultiTenantDomainQuery = {
+  __typename?: 'Query';
+  multiTenantDomain: {
+    __typename?: 'MultiTenantDomain';
+    domain: string;
+    status: CustomHostnameStatusEnum;
+    dnsRecord?: {
+      __typename?: 'MultiTenantDomainDnsRecord';
+      name: string;
+      type: DnsRecordEnum;
+      value: string;
+    } | null;
+    ownershipVerificationDnsRecord?: {
+      __typename?: 'MultiTenantDomainDnsRecord';
+      name: string;
+      type: DnsRecordEnum;
+      value: string;
+    } | null;
+  };
+};
+
+export type SetMultiTenantConfigMutationVariables = Exact<{
+  siteName?: InputMaybe<Scalars['String']['input']>;
+  colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  primaryColor?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SetMultiTenantConfigMutation = {
+  __typename?: 'Mutation';
+  multiTenantConfig: boolean;
+};
+
+export type CreateMultiTenantDomainMutationVariables = Exact<{
+  hostname: Scalars['String']['input'];
+}>;
+
+export type CreateMultiTenantDomainMutation = {
+  __typename?: 'Mutation';
+  createMultiTenantDomain: {
+    __typename?: 'MultiTenantDomain';
+    domain: string;
+    status: CustomHostnameStatusEnum;
+    dnsRecord?: {
+      __typename?: 'MultiTenantDomainDnsRecord';
+      name: string;
+      type: DnsRecordEnum;
+      value: string;
+    } | null;
+    ownershipVerificationDnsRecord?: {
+      __typename?: 'MultiTenantDomainDnsRecord';
+      name: string;
+      type: DnsRecordEnum;
+      value: string;
+    } | null;
+  };
+};
+
 export type CreateTenantRootUserMutationVariables = Exact<{
   networkUserInput?: InputMaybe<TenantUserInput>;
 }>;
@@ -967,31 +1092,6 @@ export type GetNetworksListQuery = {
       siteName?: string | null;
     } | null;
   }>;
-};
-export type GetMultiTenantConfigQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetMultiTenantConfigQuery = {
-  __typename?: 'Query';
-  multiTenantConfig?: {
-    __typename?: 'MultiTenantConfig';
-    siteName?: string | null;
-    siteEmail?: string | null;
-    colorScheme?: MultiTenantColorScheme | null;
-    primaryColor?: string | null;
-  } | null;
-};
-
-export type SetMultiTenantConfigMutationVariables = Exact<{
-  siteName?: InputMaybe<Scalars['String']['input']>;
-  colorScheme?: InputMaybe<MultiTenantColorScheme>;
-  primaryColor?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-export type SetMultiTenantConfigMutation = {
-  __typename?: 'Mutation';
-  multiTenantConfig: boolean;
 };
 
 export type FetchNewsfeedQueryVariables = Exact<{
@@ -2215,16 +2315,6 @@ export class GetGiftCardsGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const CreateTenantRootUserDocument = gql`
-  mutation CreateTenantRootUser($networkUserInput: TenantUserInput) {
-    createNetworkRootUser(networkUser: $networkUserInput) {
-      guid
-      username
-      tenantId
-      role
-    }
-  }
-`;
 export const GetMultiTenantConfigDocument = gql`
   query GetMultiTenantConfig {
     multiTenantConfig {
@@ -2239,19 +2329,6 @@ export const GetMultiTenantConfigDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class CreateTenantRootUserGQL extends Apollo.Mutation<
-  CreateTenantRootUserMutation,
-  CreateTenantRootUserMutationVariables
-> {
-  document = CreateTenantRootUserDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-@Injectable({
-  providedIn: 'root',
-})
 export class GetMultiTenantConfigGQL extends Apollo.Query<
   GetMultiTenantConfigQuery,
   GetMultiTenantConfigQueryVariables
@@ -2262,19 +2339,38 @@ export class GetMultiTenantConfigGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetNetworksListDocument = gql`
-  query GetNetworksList($first: Int!, $last: Int!) {
-    tenants(first: $first, last: $last) {
-      id
+export const GetMultiTenantDomainDocument = gql`
+  query GetMultiTenantDomain {
+    multiTenantDomain {
       domain
-      ownerGuid
-      rootUserGuid
-      config {
-        siteName
+      dnsRecord {
+        name
+        type
+        value
+      }
+      status
+      ownershipVerificationDnsRecord {
+        name
+        type
+        value
       }
     }
   }
 `;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetMultiTenantDomainGQL extends Apollo.Query<
+  GetMultiTenantDomainQuery,
+  GetMultiTenantDomainQueryVariables
+> {
+  document = GetMultiTenantDomainDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const SetMultiTenantConfigDocument = gql`
   mutation SetMultiTenantConfig(
     $siteName: String
@@ -2294,24 +2390,94 @@ export const SetMultiTenantConfigDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class GetNetworksListGQL extends Apollo.Query<
-  GetNetworksListQuery,
-  GetNetworksListQueryVariables
-> {
-  document = GetNetworksListDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-@Injectable({
-  providedIn: 'root',
-})
 export class SetMultiTenantConfigGQL extends Apollo.Mutation<
   SetMultiTenantConfigMutation,
   SetMultiTenantConfigMutationVariables
 > {
   document = SetMultiTenantConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateMultiTenantDomainDocument = gql`
+  mutation CreateMultiTenantDomain($hostname: String!) {
+    createMultiTenantDomain(hostname: $hostname) {
+      domain
+      dnsRecord {
+        name
+        type
+        value
+      }
+      status
+      ownershipVerificationDnsRecord {
+        name
+        type
+        value
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateMultiTenantDomainGQL extends Apollo.Mutation<
+  CreateMultiTenantDomainMutation,
+  CreateMultiTenantDomainMutationVariables
+> {
+  document = CreateMultiTenantDomainDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateTenantRootUserDocument = gql`
+  mutation CreateTenantRootUser($networkUserInput: TenantUserInput) {
+    createNetworkRootUser(networkUser: $networkUserInput) {
+      guid
+      username
+      tenantId
+      role
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateTenantRootUserGQL extends Apollo.Mutation<
+  CreateTenantRootUserMutation,
+  CreateTenantRootUserMutationVariables
+> {
+  document = CreateTenantRootUserDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetNetworksListDocument = gql`
+  query GetNetworksList($first: Int!, $last: Int!) {
+    tenants(first: $first, last: $last) {
+      id
+      domain
+      ownerGuid
+      rootUserGuid
+      config {
+        siteName
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetNetworksListGQL extends Apollo.Query<
+  GetNetworksListQuery,
+  GetNetworksListQueryVariables
+> {
+  document = GetNetworksListDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

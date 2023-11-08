@@ -1,0 +1,131 @@
+@import 'defaults.scss';
+
+:host {
+  max-width: 700px;
+
+  .m-networkAdminDomain__currentDomainContainer {
+    margin: $spacing8 0 $spacing6;
+    @include border;
+    padding: $spacing6;
+    max-width: 485px;
+    border-radius: $spacing1;
+
+    .m-networkAdminDomainCurrentDomain__title {
+      margin: 0 0 $spacing1;
+      @include heading4Bold;
+    }
+
+    .m-networkAdminDomainCurrentDomain__name {
+      @include body2Medium;
+      margin-bottom: 2px;
+    }
+
+    .m-networkAdminDomainCurrentDomain__statusDotRow {
+      display: flex;
+      margin-bottom: $spacing4;
+
+      [class*='m-networkAdminDomainCurrentDomain__statusDot'] {
+        display: block;
+        height: $spacing2;
+        width: $spacing2;
+        border-radius: 50%;
+        margin-right: $spacing2;
+
+        @include m-theme() {
+          &.m-networkAdminDomainCurrentDomain__statusDot--green {
+            background-color: themed($m-green);
+          }
+
+          &.m-networkAdminDomainCurrentDomain__statusDot--purple {
+            background-color: #b355c2;
+          }
+          &.m-networkAdminDomainCurrentDomain__statusDot--red {
+            background-color: themed($m-red);
+          }
+        }
+      }
+      .m-networkAdminDomainCurrentDomain__statusDotDesc {
+        @include body3Regular;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+    }
+    .m-networkAdminDomainCurrentDomain__desc {
+      margin: 0;
+      @include body3Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      margin-bottom: $spacing4;
+
+      &:last-child {
+        margin-top: $spacing8;
+      }
+    }
+    .m-networkAdminDomain__record {
+      width: auto;
+    }
+    .m-networkAdminDomainCurrentDomain__buttonWrapper {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  // *****************************
+  .m-networkAdminDomainInstructions__title {
+    @include heading3Regular;
+    margin-bottom: $spacing5;
+  }
+  .m-networkAdminDomainInstructions__desc {
+    margin: 0 0 $spacing1;
+    @include body1Regular;
+  }
+
+  .m-networkAdminDomainInstructions__link {
+    display: inline-block;
+    @include body1Bold;
+    margin: $spacing2 0 $spacing6;
+
+    @include m-theme() {
+      color: themed($m-action);
+    }
+  }
+  .m-networkAdminDomainInstructions__recordType {
+    margin-bottom: $spacing8;
+  }
+  .m-networkAdminDomainInstructionsRecordType__title {
+    @include heading4Medium;
+    display: inline-block;
+    margin-bottom: $spacing1;
+  }
+
+  .m-networkAdminDomain__record {
+    margin: $spacing6 0 $spacing8;
+    padding: $spacing3 $spacing4;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing6;
+    width: fit-content;
+    border-radius: $spacing1;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+
+    > div {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: $spacing4;
+
+      > span {
+        @include body3Bold;
+        padding: 8px;
+
+        &:last-child {
+          font-weight: 500 !important;
+          font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        }
+      }
+    }
+  }
+}
