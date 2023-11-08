@@ -80,36 +80,36 @@ export class NetworkAdminConsoleAppearanceComponent
   /** URL for square logo  - if no file is stored pre-upload, points to server. */
   public readonly squareLogoFileUrl$: Observable<string> = combineLatest([
     this.squareLogoFile$,
-    this.configImageRefreshCountService.squareLogoCount$,
+    this.configImageRefreshCountService.squareLogoLastCacheTimestamp$,
   ]).pipe(
-    map(([file, count]) => {
+    map(([file, lastCacheTimestamp]) => {
       return file
         ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/square_logo?refresh=${count})`;
+        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/square_logo?lastCache=${lastCacheTimestamp})`;
     })
   );
 
   /** URL for favicon - if no file is stored pre-upload, points to server. */
   public readonly faviconFileUrl$: Observable<string> = combineLatest([
     this.faviconFile$,
-    this.configImageRefreshCountService.faviconCount$,
+    this.configImageRefreshCountService.faviconLastCacheTimestamp$,
   ]).pipe(
-    map(([file, count]) => {
+    map(([file, lastCacheTimestamp]) => {
       return file
         ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/favicon?refresh=${count})`;
+        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/favicon?lastCache=${lastCacheTimestamp})`;
     })
   );
 
   /** URL for horizontal logo - if no file is stored pre-upload, points to server. */
   public readonly horizontalLogoFileUrl$: Observable<string> = combineLatest([
     this.horizontalLogoFile$,
-    this.configImageRefreshCountService.horizontalLogoCount$,
+    this.configImageRefreshCountService.horizontalLogoLastCacheTimestamp$,
   ]).pipe(
-    map(([file, count]) => {
+    map(([file, lastCacheTimestamp]) => {
       return file
         ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/horizontal_logo?refresh=${count})`;
+        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/horizontal_logo?lastCache=${lastCacheTimestamp})`;
     })
   );
 
@@ -226,19 +226,19 @@ export class NetworkAdminConsoleAppearanceComponent
         // increment counts so that images can be refreshed at other locations around the site.
         if (uploadRequests?.length) {
           if (this.squareLogoFile$.getValue()) {
-            this.configImageRefreshCountService.incremenetSquareLogoCount();
+            this.configImageRefreshCountService.updateSquareLogoLastCacheTimestamp();
           }
 
           if (this.horizontalLogoFile$.getValue()) {
-            this.configImageRefreshCountService.incremenetHorizontalLogoCount();
+            this.configImageRefreshCountService.updateHorizontalLogoLastCacheTimestamp();
           }
 
           if (this.faviconFile$.getValue()) {
-            this.configImageRefreshCountService.incremenetFaviconCount();
+            this.configImageRefreshCountService.updateFaviconLastCacheTimestamp();
 
             // refresh favicon.
             this.metaService.setDynamicFavicon(
-              `/api/v3/multi-tenant/configs/image/favicon?refresh=${this.configImageRefreshCountService.faviconCount$.getValue()}`
+              `/api/v3/multi-tenant/configs/image/favicon?lastCache=${this.configImageRefreshCountService.faviconLastCacheTimestamp$.getValue()}`
             );
           }
 

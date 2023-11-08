@@ -208,7 +208,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   /**
    * Gets full width logo src depending on whether we're on a multi-tenant network.
-   * Will change as refresh count goes up to force reloads on change.
+   * Will change as last cache timestamp changes, to force reloads on change.
    * @returns { Observable<string> } - observable of logo src.
    */
   public getFullLogoSrc$(mode: 'light' | 'dark'): Observable<string> {
@@ -218,10 +218,11 @@ export class TopbarComponent implements OnInit, OnDestroy {
           (mode === 'light' ? 'logo-light-mode.svg' : 'logo-dark-mode.svg')
       );
     }
-    return this.configImageRefresh.squareLogoCount$.pipe(
-      map((count: number): string => {
+    return this.configImageRefresh.squareLogoLastCacheTimestamp$.pipe(
+      map((lastCacheTimestamp: number): string => {
         return (
-          '/api/v3/multi-tenant/configs/image/square_logo?refresh=' + count
+          '/api/v3/multi-tenant/configs/image/square_logo?lastCache=' +
+          lastCacheTimestamp
         );
       })
     );
@@ -236,10 +237,11 @@ export class TopbarComponent implements OnInit, OnDestroy {
     if (!this.isTenantNetwork) {
       return of('assets/logos/bulb.svg');
     }
-    return this.configImageRefresh.squareLogoCount$.pipe(
-      map((count: number): string => {
+    return this.configImageRefresh.squareLogoLastCacheTimestamp$.pipe(
+      map((lastCacheTimestamp: number): string => {
         return (
-          '/api/v3/multi-tenant/configs/image/square_logo?refresh=' + count
+          '/api/v3/multi-tenant/configs/image/square_logo?lastCache=' +
+          lastCacheTimestamp
         );
       })
     );
