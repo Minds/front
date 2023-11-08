@@ -1,9 +1,6 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, interval, map, takeWhile } from 'rxjs';
-import {
-  MultiTenantDomainService,
-  ojmFakeData2,
-} from '../../../services/domain.service';
+import { MultiTenantDomainService } from '../../../services/domain.service';
 import { ModalService } from '../../../../../services/ux/modal.service';
 import { NetworkAdminConsoleEditDomainModalComponent } from './edit-domain-modal/edit-domain-modal.component';
 import {

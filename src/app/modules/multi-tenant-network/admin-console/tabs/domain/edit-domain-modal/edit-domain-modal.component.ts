@@ -9,11 +9,7 @@ import {
 } from '@angular/forms';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { ToasterService } from '../../../../../../common/services/toaster.service';
-import {
-  MultiTenantDomainService,
-  ojmFakeData1,
-  ojmFakeData2,
-} from '../../../../services/domain.service';
+import { MultiTenantDomainService } from '../../../../services/domain.service';
 
 /**
  * Modal for editing the domain of a tenant site
@@ -80,9 +76,6 @@ export class NetworkAdminConsoleEditDomainModalComponent {
 
     this.savingInProgress$.next(false);
     if (success) {
-      // ojm remove this line
-      this.service.domain$.next(ojmFakeData1);
-
       this.saved = true;
     } else {
       this.toaster.error('Unable to submit changes, please try again later.');

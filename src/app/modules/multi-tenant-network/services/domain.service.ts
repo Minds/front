@@ -3,6 +3,7 @@ import {
   BehaviorSubject,
   Observable,
   Subscription,
+  catchError,
   map,
   of,
   take,
@@ -10,6 +11,7 @@ import {
 } from 'rxjs';
 import {
   CreateMultiTenantDomainGQL,
+  CreateMultiTenantDomainMutation,
   CreateMultiTenantDomainMutationVariables,
   CustomHostnameStatusEnum,
   DnsRecordEnum,
@@ -21,36 +23,6 @@ import {
   MultiTenantDomainStatus,
   ReturnedMultiTenantDomain,
 } from '../admin-console/tabs/domain/domain.types';
-
-export const ojmFakeData1: ReturnedMultiTenantDomain = {
-  domain: 'mortynet.kramnorth.com',
-  dnsRecord: {
-    name: 'mortynet.kramnorth.com',
-    type: DnsRecordEnum.Cname,
-    value: 'networks.minds.com',
-  },
-  status: CustomHostnameStatusEnum.Pending,
-  ownershipVerificationDnsRecord: {
-    name: '_cf-custom-hostname.mortynet.kramnorth.com',
-    type: DnsRecordEnum.Txt,
-    value: 'deeb89f4-9912-4c77-9e78-cb4dbfe9b6d2',
-  },
-};
-
-export const ojmFakeData2: ReturnedMultiTenantDomain = {
-  domain: 'mortynet2.kramnorth.com',
-  dnsRecord: {
-    name: 'mortynet2.kramnorth.com',
-    type: DnsRecordEnum.Cname,
-    value: 'networks.minds.com',
-  },
-  status: CustomHostnameStatusEnum.Active,
-  ownershipVerificationDnsRecord: {
-    name: '_cf-custom-hostname.mortynet.kramnorth.com',
-    type: DnsRecordEnum.Txt,
-    value: 'deeb89f4-9912-4c77-9e78-cb4dbfe9b6d2',
-  },
-};
 
 /**
  * Service for fetching and updating multi-tenant network domains.
@@ -65,7 +37,7 @@ export class MultiTenantDomainService implements OnDestroy {
   /** Subject to store whether domain has been loaded. */
   public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
-  >(false); // ojm set to true
+  >(true);
 
   private domainFetchSubscription: Subscription;
 
@@ -145,15 +117,6 @@ export class MultiTenantDomainService implements OnDestroy {
       return;
     }
 
-    // ojm remove
-    this.inProgress$.next(false);
-    if (this.domain$.getValue()) {
-      this.domain$.next(ojmFakeData1);
-    } else {
-      this.domain$.next(null);
-    }
-    console.log('ojm fetchdomain', this.domain$.getValue());
-
     this.domainFetchSubscription = this.getDomain().subscribe(
       (domain: ReturnedMultiTenantDomain): void => {
         this.inProgress$.next(false);
@@ -185,21 +148,18 @@ export class MultiTenantDomainService implements OnDestroy {
   public updateDomain(
     values: CreateMultiTenantDomainMutationVariables
   ): Observable<boolean> {
-    return of(true);
-
-    // ojm uncomment
-    // return this.createMultiTenantDomainGQL.mutate(values).pipe(
-    //   take(1),
-    //   map((result: ApolloQueryResult<CreateMultiTenantDomainMutation>) => {
-    //     this.domain$.next(result?.data?.createMultiTenantDomain);
-    //     return Boolean(result?.data?.createMultiTenantDomain);
-    //   }),
-    //   catchError(
-    //     (e: unknown): Observable<boolean> => {
-    //       console.error(e);
-    //       return of(false);
-    //     }
-    //   )
-    // );
+    return this.createMultiTenantDomainGQL.mutate(values).pipe(
+      take(1),
+      map((result: ApolloQueryResult<CreateMultiTenantDomainMutation>) => {
+        this.domain$.next(result?.data?.createMultiTenantDomain);
+        return Boolean(result?.data?.createMultiTenantDomain);
+      }),
+      catchError(
+        (e: unknown): Observable<boolean> => {
+          console.error(e);
+          return of(false);
+        }
+      )
+    );
   }
 }
