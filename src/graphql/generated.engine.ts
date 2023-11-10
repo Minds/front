@@ -983,25 +983,6 @@ export type GetGiftCardsQuery = {
   };
 };
 
-export type GetMultiTenantConfigQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetMultiTenantConfigQuery = {
-  __typename?: 'Query';
-  multiTenantConfig?: {
-    __typename?: 'MultiTenantConfig';
-    siteName?: string | null;
-    siteEmail?: string | null;
-    colorScheme?: MultiTenantColorScheme | null;
-    primaryColor?: string | null;
-  } | null;
-};
-
-export type GetMultiTenantDomainQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
 export type GetMultiTenantDomainQuery = {
   __typename?: 'Query';
   multiTenantDomain: {
@@ -1021,17 +1002,6 @@ export type GetMultiTenantDomainQuery = {
       value: string;
     } | null;
   };
-};
-
-export type SetMultiTenantConfigMutationVariables = Exact<{
-  siteName?: InputMaybe<Scalars['String']['input']>;
-  colorScheme?: InputMaybe<MultiTenantColorScheme>;
-  primaryColor?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-export type SetMultiTenantConfigMutation = {
-  __typename?: 'Mutation';
-  multiTenantConfig: boolean;
 };
 
 export type CreateMultiTenantDomainMutationVariables = Exact<{
@@ -1092,6 +1062,33 @@ export type GetNetworksListQuery = {
       siteName?: string | null;
     } | null;
   }>;
+};
+export type GetMultiTenantConfigQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMultiTenantConfigQuery = {
+  __typename?: 'Query';
+  multiTenantConfig?: {
+    __typename?: 'MultiTenantConfig';
+    siteName?: string | null;
+    siteEmail?: string | null;
+    colorScheme?: MultiTenantColorScheme | null;
+    primaryColor?: string | null;
+    communityGuidelines?: string | null;
+  } | null;
+};
+
+export type SetMultiTenantConfigMutationVariables = Exact<{
+  siteName?: InputMaybe<Scalars['String']['input']>;
+  colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  primaryColor?: InputMaybe<Scalars['String']['input']>;
+  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SetMultiTenantConfigMutation = {
+  __typename?: 'Mutation';
+  multiTenantConfig: boolean;
 };
 
 export type FetchNewsfeedQueryVariables = Exact<{
