@@ -9,6 +9,9 @@ import { NetworkAdminConsoleGeneralComponent } from './tabs/general/general.comp
 import { NetworkAdminConsoleAppearanceComponent } from './tabs/appearance/appearance.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworkSettingsAuthGuard } from './guards/network-settings-auth.guard';
+import { NetworkAdminConsoleDomainComponent } from './tabs/domain/domain.component';
+import { NetworkAdminConsoleEditDomainModalComponent } from './tabs/domain/edit-domain-modal/edit-domain-modal.component';
+import { MultiTenantDomainService } from '../services/domain.service';
 import { NetworkAdminConsoleModerationComponent } from './tabs/moderation/moderation.component';
 import { NetworkAdminConsoleModerationGuidelinesComponent } from './tabs/moderation/moderation-guidelines/moderation-guidelines.component';
 
@@ -21,6 +24,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
       { path: '', redirectTo: 'general', pathMatch: 'full' as PathMatch },
       { path: 'general', component: NetworkAdminConsoleGeneralComponent },
       { path: 'appearance', component: NetworkAdminConsoleAppearanceComponent },
+      { path: 'domain', component: NetworkAdminConsoleDomainComponent },
       {
         path: 'moderation',
         component: NetworkAdminConsoleModerationComponent,
@@ -53,8 +57,11 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleTabsComponent,
     NetworkAdminConsoleGeneralComponent,
     NetworkAdminConsoleAppearanceComponent,
+    NetworkAdminConsoleDomainComponent,
+    NetworkAdminConsoleEditDomainModalComponent,
     NetworkAdminConsoleModerationComponent,
     NetworkAdminConsoleModerationGuidelinesComponent,
   ],
+  providers: [MultiTenantDomainService],
 })
 export class NetworkAdminConsoleModule {}
