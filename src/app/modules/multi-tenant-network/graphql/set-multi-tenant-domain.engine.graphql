@@ -1,0 +1,16 @@
+mutation CreateMultiTenantDomain($hostname: String!) {
+  createMultiTenantDomain(hostname: $hostname) {
+    domain
+    dnsRecord {
+      name
+      type
+      value
+    }
+    status
+    ownershipVerificationDnsRecord {
+      name
+      type
+      value
+    }
+  }
+}
