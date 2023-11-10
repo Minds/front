@@ -129,23 +129,27 @@ export class MultiTenantDomainService implements OnDestroy {
    * @returns { Observable<ReturnedMultiTenantDomain | null> } domain from server.
    */
   public getDomain(): Observable<ReturnedMultiTenantDomain | null> {
-    return this.getMultiTenantDomainGQL.fetch().pipe(
-      take(1),
-      tap(() => {
-        this.inProgress$.next(true);
-      }),
-      map((result: ApolloQueryResult<GetMultiTenantDomainQuery>) => {
-        return result?.data?.multiTenantDomain ?? null;
-      }),
-      tap(() => {
-        this.inProgress$.next(false);
-      }),
-      catchError(
-        (e: unknown): Observable<null> => {
-          return of(null);
-        }
-      )
-    );
+    return this.getMultiTenantDomainGQL
+      .fetch(null, {
+        fetchPolicy: 'network-only',
+      })
+      .pipe(
+        take(1),
+        tap(() => {
+          this.inProgress$.next(true);
+        }),
+        map((result: ApolloQueryResult<GetMultiTenantDomainQuery>) => {
+          return result?.data?.multiTenantDomain ?? null;
+        }),
+        tap(() => {
+          this.inProgress$.next(false);
+        }),
+        catchError(
+          (e: unknown): Observable<null> => {
+            return of(null);
+          }
+        )
+      );
   }
 
   /**
