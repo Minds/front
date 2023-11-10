@@ -64,6 +64,9 @@ export class NetworkAdminConsoleEditDomainModalComponent {
    * @returns { Promise<void> }
    */
   public async onSubmit(): Promise<void> {
+    if (!this.formGroup.valid) {
+      return;
+    }
     const hostname: string = this.hostnameFormControl.value;
 
     this.savingInProgress$.next(true);
@@ -95,7 +98,8 @@ export class NetworkAdminConsoleEditDomainModalComponent {
       return null;
     }
 
-    const urlPattern = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+    // Don't allow spaces
+    const urlPattern = /^\S*$/;
 
     if (!urlPattern.test(control.value)) {
       return {
@@ -109,7 +113,6 @@ export class NetworkAdminConsoleEditDomainModalComponent {
 
   /**
    * Modal options
-   *
    * @param onDismissIntent
    */
   public setModalData({ onDismissIntent }) {

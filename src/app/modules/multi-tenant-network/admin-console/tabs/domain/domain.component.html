@@ -1,6 +1,4 @@
-<ng-container
-  *ngIf="!(service.inProgress$ | async); else loadingSpinnerTemplate"
->
+<ng-container *ngIf="service.init$ | async; else loadingSpinnerTemplate">
   <h4
     class="m-networkAdminConsole__title"
     i18n="@@NETWORK_ADMIN_CONSOLE_DOMAIN__TITLE"

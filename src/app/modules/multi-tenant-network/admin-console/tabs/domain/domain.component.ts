@@ -59,13 +59,20 @@ export class NetworkAdminConsoleDomainComponent implements OnInit, OnDestroy {
       this.service.status$.subscribe(status => {
         // If pending, start polling for change in status
         if (status === MultiTenantDomainStatus.PENDING) {
-          this.startPolling();
+          if (!this.pollingSubscription) {
+            this.startPolling();
+          }
         } else {
-          // Stop the poll if not pending anymore
-          this.stopPolling();
-          if (status === MultiTenantDomainStatus.ACTIVE) {
+          // If we're polling for changes and the status switches to active
+          // let the user know
+          if (
+            this.pollingSubscription &&
+            status === MultiTenantDomainStatus.ACTIVE
+          ) {
             this.toaster.success('Custom domain successfully configured');
           }
+          // Stop the poll if not pending anymore
+          this.stopPolling();
         }
       })
     );
@@ -78,10 +85,10 @@ export class NetworkAdminConsoleDomainComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * When status is pending, poll for status changes every 30sec
+   * When status is pending, poll for status changes every 15sec
    */
   startPolling(): void {
-    this.pollingSubscription = interval(30000).subscribe(() => {
+    this.pollingSubscription = interval(15000).subscribe(() => {
       this.service.fetchDomain();
     });
   }

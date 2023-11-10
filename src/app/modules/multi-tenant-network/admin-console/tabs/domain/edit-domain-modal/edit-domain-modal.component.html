@@ -15,7 +15,11 @@
       >
     </h2>
   </div>
-  <form class="m-modalV2__body m-formWrapper" [formGroup]="formGroup">
+  <form
+    class="m-modalV2__body m-formWrapper"
+    [formGroup]="formGroup"
+    (keyup.enter)="onSubmit()"
+  >
     <ng-container *ngIf="!saved">
       <ng-container *ngIf="!(service.isActive$ | async)">
         <p class="m-editDomainModal__description">
