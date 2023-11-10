@@ -14,124 +14,130 @@
 <hr />
 <m-loadingSpinner [inProgress]="initializing$ | async"></m-loadingSpinner>
 <ng-container *ngIf="!(initializing$ | async)">
-  <h5
-    class="
+  <ng-container *ngIf="(filterByCampaign$('when') | async).length">
+    <h5
+      class="
       m-pushNotifSettings__categoryTitle
       m-pushNotifSettings__categoryTitle--first
     "
-    i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WHEN"
-  >
-    Email me when
-  </h5>
-  <div
-    class="m-pushNotifSettings__optionContainer"
-    *ngFor="let option of filterByCampaign$('when') | async"
-  >
-    <ng-container
-      [ngTemplateOutlet]="optionTemplate"
-      [ngTemplateOutletContext]="{ option: option }"
+      i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WHEN"
     >
-    </ng-container>
-  </div>
-
-  <h5
-    class="m-pushNotifSettings__categoryTitle"
-    i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WITH"
-  >
-    Email me with
-  </h5>
-  <div
-    class="m-pushNotifSettings__optionContainer"
-    *ngFor="let option of filterByCampaign$('with') | async"
-  >
-    <ng-container
-      [ngTemplateOutlet]="optionTemplate"
-      [ngTemplateOutletContext]="{ option: option }"
+      Email me when
+    </h5>
+    <div
+      class="m-pushNotifSettings__optionContainer"
+      *ngFor="let option of filterByCampaign$('when') | async"
     >
-    </ng-container>
-  </div>
-
-  <h5
-    class="m-pushNotifSettings__categoryTitle"
-    i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__KEEP_ME_UPDATED"
-  >
-    Keep me updated with
-  </h5>
-  <div
-    class="m-pushNotifSettings__optionContainer"
-    *ngFor="let option of filterByCampaign$('global') | async"
-  >
-    <ng-container
-      [ngTemplateOutlet]="optionTemplate"
-      [ngTemplateOutletContext]="{ option: option }"
-    >
-    </ng-container>
-  </div>
-</ng-container>
-
-<ng-template #optionTemplate let-option="option">
-  <ng-container
-    *ngIf="
-      selectBoxTopics.indexOf(option.topic) === -1 || option.value === '0';
-      else selectBoxTopic
-    "
-  >
-    <div class="m-pushNotifSettings__optionContainerButtonRow">
-      <m-toggle
-        [mModel]="option.value"
-        (mModelChange)="toggle(option)"
-        [offState]="getToggleValue(option, 'left')"
-        [rightValue]="getToggleValue(option, 'right')"
-      ></m-toggle>
-      <div class="m-pushNotifSettings__optionContainerLabels">
-        <span class="m-pushNotifSettings__optionSubtext">{{
-          textMap[option.topic] | titlecase
-        }}</span>
-      </div>
+      <ng-container
+        [ngTemplateOutlet]="optionTemplate"
+        [ngTemplateOutletContext]="{ option: option }"
+      >
+      </ng-container>
     </div>
   </ng-container>
 
-  <ng-template #selectBoxTopic>
-    <div class="m-pushNotifSettings__optionContainerButtonRow">
-      <m-toggle
-        [mModel]="option.value"
-        (mModelChange)="toggle(option)"
-        [leftValue]="0"
-        [rightValue]="option.value"
-      ></m-toggle>
-      <div class="m-pushNotifSettings__optionContainerLabels">
-        <span class="m-pushNotifSettings__optionSubtext">{{
-          textMap[option.topic] | titlecase
-        }}</span>
-      </div>
-    </div>
-    <div class="m-pushNotifSettings__optionContainerSelectContainer">
-      <h6 i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__NOTIFICATION_FREQUENCY">
-        Notification Frequency
-      </h6>
-      <select
-        [(ngModel)]="option.value"
-        (change)="onSelectChange(option.topic, $event)"
+  <ng-container *ngIf="(filterByCampaign$('with') | async).length">
+    <h5
+      class="m-pushNotifSettings__categoryTitle"
+      i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WITH"
+    >
+      Email me with
+    </h5>
+    <div
+      class="m-pushNotifSettings__optionContainer"
+      *ngFor="let option of filterByCampaign$('with') | async"
+    >
+      <ng-container
+        [ngTemplateOutlet]="optionTemplate"
+        [ngTemplateOutletContext]="{ option: option }"
       >
-        <option
-          value="daily"
-          i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_DAILY"
-        >
-          Daily
-        </option>
-        <option
-          value="weekly"
-          i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WEEKLY"
-        >
-          Weekly
-        </option>
-        <option
-          value="periodically"
-          i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_PERIODICALLY"
-        >
-          Periodically
-        </option>
-      </select>
+      </ng-container>
     </div>
+  </ng-container>
+
+  <ng-container *ngIf="(filterByCampaign$('global') | async).length">
+    <h5
+      class="m-pushNotifSettings__categoryTitle"
+      i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__KEEP_ME_UPDATED"
+    >
+      Keep me updated with
+    </h5>
+    <div
+      class="m-pushNotifSettings__optionContainer"
+      *ngFor="let option of filterByCampaign$('global') | async"
+    >
+      <ng-container
+        [ngTemplateOutlet]="optionTemplate"
+        [ngTemplateOutletContext]="{ option: option }"
+      >
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-template #optionTemplate let-option="option">
+    <ng-container
+      *ngIf="
+        selectBoxTopics.indexOf(option.topic) === -1 || option.value === '0';
+        else selectBoxTopic
+      "
+    >
+      <div class="m-pushNotifSettings__optionContainerButtonRow">
+        <m-toggle
+          [mModel]="option.value"
+          (mModelChange)="toggle(option)"
+          [offState]="getToggleValue(option, 'left')"
+          [rightValue]="getToggleValue(option, 'right')"
+        ></m-toggle>
+        <div class="m-pushNotifSettings__optionContainerLabels">
+          <span class="m-pushNotifSettings__optionSubtext">{{
+            textMap[option.topic] | titlecase
+          }}</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #selectBoxTopic>
+      <div class="m-pushNotifSettings__optionContainerButtonRow">
+        <m-toggle
+          [mModel]="option.value"
+          (mModelChange)="toggle(option)"
+          [leftValue]="0"
+          [rightValue]="option.value"
+        ></m-toggle>
+        <div class="m-pushNotifSettings__optionContainerLabels">
+          <span class="m-pushNotifSettings__optionSubtext">{{
+            textMap[option.topic] | titlecase
+          }}</span>
+        </div>
+      </div>
+      <div class="m-pushNotifSettings__optionContainerSelectContainer">
+        <h6 i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__NOTIFICATION_FREQUENCY">
+          Notification Frequency
+        </h6>
+        <select
+          [(ngModel)]="option.value"
+          (change)="onSelectChange(option.topic, $event)"
+        >
+          <option
+            value="daily"
+            i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_DAILY"
+          >
+            Daily
+          </option>
+          <option
+            value="weekly"
+            i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WEEKLY"
+          >
+            Weekly
+          </option>
+          <option
+            value="periodically"
+            i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_PERIODICALLY"
+          >
+            Periodically
+          </option>
+        </select>
+      </div>
+    </ng-template>
   </ng-template>
-</ng-template>
+</ng-container>

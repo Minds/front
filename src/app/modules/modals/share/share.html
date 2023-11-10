@@ -9,35 +9,37 @@
         Link to post
       </span>
     </label>
-    <div
-      class="m-share__referrerParamCheckboxContainer"
-      *ngIf="session.isLoggedIn()"
-    >
-      <input
-        type="checkbox"
-        checked
-        id="referrer-param"
-        name="referrer-param"
-        (click)="toggleReferrerParam()"
-      />
-      <label for="referrer-param">
-        <span i18n="@@M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL">
-          Include referral code
-        </span>
-      </label>
-      <m-tooltip anchor="right" icon="help">
-        <ng-container i18n="@@M_SHARE__AFFILIATES_CODE_EXPLANATION">
-          Use your code to earn tokens for referring new users to Minds. Learn
-          more at the
-          <a [routerLink]="['/settings/affiliates-program']" target="_blank"
-            >Affiliates Program page&nbsp;<i
-              class="material-icons m-share__newWindowIcon"
-              >open_in_new</i
-            ></a
-          >
-        </ng-container>
-      </m-tooltip>
-    </div>
+    <ng-container *mIfTenant="false">
+      <div
+        class="m-share__referrerParamCheckboxContainer"
+        *ngIf="session.isLoggedIn()"
+      >
+        <input
+          type="checkbox"
+          checked
+          id="referrer-param"
+          name="referrer-param"
+          (click)="toggleReferrerParam()"
+        />
+        <label for="referrer-param">
+          <span i18n="@@M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL">
+            Include referral code
+          </span>
+        </label>
+        <m-tooltip anchor="right" icon="help">
+          <ng-container i18n="@@M_SHARE__AFFILIATES_CODE_EXPLANATION">
+            Use your code to earn tokens for referring new users to Minds. Learn
+            more at the
+            <a [routerLink]="['/settings/affiliates-program']" target="_blank"
+              >Affiliates Program page&nbsp;<i
+                class="material-icons m-share__newWindowIcon"
+                >open_in_new</i
+              ></a
+            >
+          </ng-container>
+        </m-tooltip>
+      </div>
+    </ng-container>
   </div>
   <div
     class="m-share__input m-border"

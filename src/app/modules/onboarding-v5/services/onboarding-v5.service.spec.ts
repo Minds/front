@@ -28,6 +28,7 @@ import { CarouselItem } from '../../../common/components/feature-carousel/featur
 import { OnboardingStep } from '../types/onboarding-v5.types';
 import userMock from '../../../mocks/responses/user.mock';
 import { mockOnboardingV5VersionsData } from './mocks/onboardingV5Versions.mock';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 const mockActiveStep: OnboardingStep = {
   completed: true,
@@ -85,6 +86,10 @@ describe('OnboardingV5Service', () => {
         {
           provide: Session,
           useValue: MockService(Session),
+        },
+        {
+          provide: IsTenantService,
+          useValue: MockService(IsTenantService),
         },
         {
           provide: STRAPI_URL,
