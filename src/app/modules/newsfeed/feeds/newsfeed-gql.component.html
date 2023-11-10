@@ -88,7 +88,7 @@
               [displayOptions]="{
                 showOnlyCommentsInput: true,
                 isFeed: true,
-                showExplicitVoteButtons: edge.explicitVotes,
+                showExplicitVoteButtons: edge.explicitVotes && !isTenant.is(),
                 hideTopBorder: edges?.[i - 1]?.__typename === 'FeedHeaderEdge'
               }"
               [slot]="i + 1"
