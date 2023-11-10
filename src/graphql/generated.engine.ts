@@ -983,6 +983,10 @@ export type GetGiftCardsQuery = {
   };
 };
 
+export type GetMultiTenantDomainQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
 export type GetMultiTenantDomainQuery = {
   __typename?: 'Query';
   multiTenantDomain: {
