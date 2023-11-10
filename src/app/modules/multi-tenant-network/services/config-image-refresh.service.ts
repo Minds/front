@@ -1,47 +1,57 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 /**
- * Service for tracking counts of config image refreshes.
+ * Service for updating the last cache timestamp locally for config images.
  * This allows images used as background images to be refreshed, by updating
- * a query parameter with the count to cache-bust.
+ * a query parameter with the timestamp to cache-bust.
  */
 @Injectable({ providedIn: 'root' })
 export class MultiTenantConfigImageRefreshService {
-  /** Count of times square logo has been uploaded.  */
-  public squareLogoCount$: BehaviorSubject<number> = new BehaviorSubject<
+  constructor(config: ConfigsService) {
+    const lastCacheTimestamp: number = config.get<number>('last_cache');
+    this.squareLogoLastCacheTimestamp$.next(lastCacheTimestamp);
+    this.faviconLastCacheTimestamp$.next(lastCacheTimestamp);
+    this.horizontalLogoLastCacheTimestamp$.next(lastCacheTimestamp);
+  }
+
+  /** Last cache timestamp for the square logo. */
+  public squareLogoLastCacheTimestamp$: BehaviorSubject<
     number
-  >(0);
-  /** Count of times favicon has been uploaded.  */
-  public faviconCount$: BehaviorSubject<number> = new BehaviorSubject<number>(
-    0
-  );
-  /** Count of times horizontal logo has been uploaded.  */
-  public horizontalLogoCount$: BehaviorSubject<number> = new BehaviorSubject<
+  > = new BehaviorSubject<number>(0);
+
+  /** Last cache timestamp for the favicon. */
+  public faviconLastCacheTimestamp$: BehaviorSubject<
     number
-  >(0);
+  > = new BehaviorSubject<number>(0);
+
+  /** Last cache timestamp for the horizontal logo. */
+  public horizontalLogoLastCacheTimestamp$: BehaviorSubject<
+    number
+  > = new BehaviorSubject<number>(0);
 
   /**
-   * Increments the count of the square logo.
+   * Updates the last cache timestamp for the square logo.
    * @returns { void }
    */
-  public incremenetSquareLogoCount(): void {
-    this.squareLogoCount$.next(this.squareLogoCount$.getValue() + 1);
+  public updateSquareLogoLastCacheTimestamp(): void {
+    this.squareLogoLastCacheTimestamp$.next(Date.now());
   }
 
   /**
-   * Increments the count of the favicon.
+   * Updates the last cache timestamp for the favicon.
    * @returns { void }
    */
-  public incremenetFaviconCount(): void {
-    this.faviconCount$.next(this.faviconCount$.getValue() + 1);
+  public updateFaviconLastCacheTimestamp(): void {
+    this.faviconLastCacheTimestamp$.next(Date.now());
   }
 
   /**
-   * Increments the count of the horizontal logo.
+   * Updates the last cache timestamp for the horizontal logo.
    * @returns { void }
    */
-  public incremenetHorizontalLogoCount(): void {
-    this.horizontalLogoCount$.next(this.horizontalLogoCount$.getValue() + 1);
+  public updateHorizontalLogoLastCacheTimestamp(): void {
+    this.horizontalLogoLastCacheTimestamp$.next(Date.now());
   }
 }

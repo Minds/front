@@ -1,0 +1,75 @@
+<ng-container *ngIf="!(loading$ | async); else loadingSpinnerTemplate">
+  <h4
+    class="m-networkAdminConsole__title"
+    i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__APPEARANCE"
+  >
+    Network community guidelines
+  </h4>
+  <p class="m-networkAdminConsole__subtitle">
+    <span
+      i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__ADD_YOUR_NETWORKS_GUIDELINES"
+      >Add your network's own guidelines so that you can set expectations for
+      users on your own network, and have a baseline for people when they are
+      interacting with other users on the network.
+    </span>
+    <a
+      href="https://www.minds.com/content-policy"
+      target="_blank"
+      i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__HERE_IS"
+      >Here's</a
+    >&nbsp;<span
+      i18n="
+         @@NETWORK_ADMIN_CONSOLE_APPEARANCE__AN_EXAMPLE_OF_COMMUNITY_GUIDELINES
+      "
+      >an example of what a Network's community guidelines might look
+      like.</span
+    >
+  </p>
+  <form [formGroup]="formGroup" class="m-networkAdminConsole__form">
+    <div class="m-networkAdminConsole__formInputContainer">
+      <label
+        class="m-networkAdminConsole__formLabel"
+        i18n="@@NETWORK_ADMIN_CONSOLE_GENERAL__COMMUNITY_GUIDELINES_LABEL"
+        for="communityGuidelines"
+        >Community Guidelines</label
+      >
+      <textarea
+        class="m-networkAdminConsole__formTextAreaInput"
+        id="communityGuidelines"
+        name="communityGuidelines"
+        formControlName="communityGuidelines"
+        placeholder="1. Type your community guidelines here. You can leave this section blank if you want"
+        autocomplete="off"
+        data-ref="network-admin-general-community-guidelines-input"
+      ></textarea>
+      <m-formError
+        *ngIf="communityGuidelinesFormControl?.dirty"
+        [errors]="communityGuidelinesFormControl?.errors"
+      >
+      </m-formError>
+    </div>
+
+    <!-- Submit button -->
+    <m-button
+      *ngIf="{
+        inProgress: savingInProgress$ | async
+      } as buttonTemplateVariables"
+      color="blue"
+      size="medium"
+      [solid]="false"
+      [disabled]="
+        !formGroup.valid ||
+        !formGroup.dirty ||
+        buttonTemplateVariables.inProgress
+      "
+      [saving]="buttonTemplateVariables.inProgress"
+      (onAction)="onSubmit()"
+      ><ng-container i18n="@@NETWORK_ADMIN_CONSOLE_APPEARANCE__SAVE"
+        >Save</ng-container
+      ></m-button
+    >
+  </form>
+</ng-container>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

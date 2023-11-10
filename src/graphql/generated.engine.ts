@@ -2322,6 +2322,7 @@ export const GetMultiTenantConfigDocument = gql`
       siteEmail
       colorScheme
       primaryColor
+      communityGuidelines
     }
   }
 `;
@@ -2376,12 +2377,14 @@ export const SetMultiTenantConfigDocument = gql`
     $siteName: String
     $colorScheme: MultiTenantColorScheme
     $primaryColor: String
+    $communityGuidelines: String
   ) {
     multiTenantConfig(
       multiTenantConfigInput: {
         siteName: $siteName
         colorScheme: $colorScheme
         primaryColor: $primaryColor
+        communityGuidelines: $communityGuidelines
       }
     )
   }
