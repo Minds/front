@@ -1,0 +1,98 @@
+<div class="m-networkAdminFeatured__header">
+  <h4
+    class="m-networkAdminConsole__title"
+    i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__FEATURED"
+  >
+    Featured
+  </h4>
+  <p
+    class="m-networkAdminConsole__subtitle"
+    i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__SUBTITLE"
+  >
+    Set the users and groups that new users on your Network are automatically
+    subscribed to.
+  </p>
+</div>
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a
+      (click)="onTabClick(FeaturedEntityTypeEnum.User)"
+      [class.m-tabs__tab--selected]="
+        (type$ | async) === FeaturedEntityTypeEnum.User
+      "
+      data-ref="network-admin-console-feat-entity-tab-users"
+      i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__TAB_USERS"
+      >Users</a
+    >
+  </div>
+  <!-- <div class="m-tabs__tab">
+    <a
+      (click)="onTabClick(FeaturedEntityTypeEnum.Group)"
+      [class.m-tabs__tab--selected]="(type$ | async) === FeaturedEntityTypeEnum.Group"
+      data-ref="network-admin-console-feat-entity-tab-groups"
+      i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__TAB_GROUPS"
+      >Groups</a
+    >
+  </div> -->
+</div>
+
+<div class="m-networkAdminFeatured__addFeaturedEntityContainer">
+  <m-button
+    solid="true"
+    color="blue"
+    size="small"
+    (onAction)="onAddFeaturedEntityClick()"
+  >
+    <ng-container [ngSwitch]="type$ | async">
+      <ng-container
+        *ngSwitchCase="FeaturedEntityTypeEnum.User"
+        i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__ADD_FEATURED_USER"
+        >Add Featured User</ng-container
+      >
+      <ng-container
+        *ngSwitchCase="FeaturedEntityTypeEnum.Group"
+        i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__ADD_FEATURED_GROUP"
+        >Add Featured Group</ng-container
+      >
+    </ng-container>
+  </m-button>
+</div>
+
+<ng-container
+  *ngFor="let featuredEntity of featuredEntities$ | async; trackBy: trackBy"
+>
+  <m-networkAdminConsole__featuredEntityRow
+    [featuredEntity]="featuredEntity"
+    (onDeletion)="onRowDeletion($event)"
+  ></m-networkAdminConsole__featuredEntityRow>
+</ng-container>
+
+<div
+  *ngIf="!(featuredEntities$ | async)?.length && !(inProgress$ | async)"
+  class="m-networkAdminFeatured__noResultsContainer"
+>
+  <ng-container [ngSwitch]="type$ | async">
+    <span
+      *ngSwitchCase="FeaturedEntityTypeEnum.User"
+      i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__ADD_A_FEATURED_USER"
+      >Add a featured user</span
+    >
+    <span
+      *ngSwitchCase="FeaturedEntityTypeEnum.Group"
+      i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__ADD_A_FEATURED_GROUP"
+      >Add a featured group</span
+    >
+  </ng-container>
+</div>
+
+<infinite-scroll
+  *ngIf="hasNextPage$ | async as hasNextPage"
+  (load)="fetchMore()"
+  [moreData]="hasNextPage"
+  [inProgress]="inProgress$ | async"
+  [hideManual]="true"
+></infinite-scroll>
+
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

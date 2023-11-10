@@ -1,0 +1,53 @@
+@import 'defaults.scss';
+@import '../../../stylesheets/console.component.ng.scss';
+
+:host {
+  .m-networkAdminFeatured__header,
+  .m-tabs__container,
+  .m-networkAdminFeatured__addFeaturedEntityContainer {
+    @include horizontalPadding;
+  }
+
+  .m-networkAdminFeatured__header {
+    .m-networkAdminConsole__title {
+      margin-bottom: 0;
+    }
+  }
+
+  .m-networkAdminFeatured__addFeaturedEntityContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    padding-top: $spacing4;
+    padding-bottom: $spacing4;
+    position: relative;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      m-button {
+        width: 100%;
+
+        ::ng-deep button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .m-tabs__container {
+    max-width: calc(100% - 1px);
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+
+  .m-networkAdminFeatured__noResultsContainer {
+    text-align: center;
+    padding: $spacing8;
+    @include heading4Bold;
+  }
+}
