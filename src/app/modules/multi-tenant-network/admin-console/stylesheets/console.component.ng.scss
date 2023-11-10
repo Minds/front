@@ -54,6 +54,19 @@
         }
       }
 
+      .m-networkAdminConsole__formTextAreaInput {
+        padding: $spacing3 $spacing4;
+        border-radius: 3px;
+        outline: none;
+        @include body1Regular;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+          background-color: themed($m-bgColor--primary);
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
       .m-networkAdminConsole__formErrorWrapper {
         min-height: $spacing10;
       }
