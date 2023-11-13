@@ -62,11 +62,13 @@
             recommend relevant content.</ng-container
           ></ng-container
         >
-        <ng-container
-          *ngIf="activeTab === 'compass'"
-          i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__COMPASS"
-          >The Compass allows Minds to best recommend content and channels. Find
-          out more.</ng-container
+        <ng-container *mIfTenant="false">
+          <ng-container
+            *ngIf="activeTab === 'compass'"
+            i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__COMPASS"
+            >The Compass allows Minds to best recommend content and channels.
+            Find out more.</ng-container
+          ></ng-container
         >
         <!-- <ng-container
         *ngIf="activeTab === 'nsfw'"

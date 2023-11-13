@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'm-networkAdminConsole__tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.ng.scss'],
+  styleUrls: ['../stylesheets/console.component.ng.scss'],
+  host: { class: 'm-networkAdminConsole__container--noHorizontalPadding' },
 })
 export class NetworkAdminConsoleTabsComponent {}

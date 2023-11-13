@@ -1,25 +1,27 @@
-<div class="m-appDownloadModal" data-ref="app-download-modal">
-  <div class="m-appDownloadModal__header" i18n="@@APP_DOWNLOAD_MODAL__HEADER">
-    Get the Minds app
+<ng-container *mIfTenant="false">
+  <div class="m-appDownloadModal" data-ref="app-download-modal">
+    <div class="m-appDownloadModal__header" i18n="@@APP_DOWNLOAD_MODAL__HEADER">
+      Get the Minds app
+    </div>
+    <div
+      class="m-appDownloadModal__subheader"
+      i18n="@@APP_DOWNLOAD_MODAL__SUBHEADER"
+    >
+      Scan QR code to download Minds for Android or iOS
+    </div>
+    <div class="m-appDownloadModal__body">
+      <m-qr-code [data]="link"></m-qr-code>
+      <p>
+        <a
+          i18n="@@APP_DOWNLOAD_MODAL__MINDS_MOBILE"
+          href="https://www.minds.com/mobile"
+          >Minds Mobile</a
+        >
+      </p>
+    </div>
   </div>
-  <div
-    class="m-appDownloadModal__subheader"
-    i18n="@@APP_DOWNLOAD_MODAL__SUBHEADER"
-  >
-    Scan QR code to download Minds for Android or iOS
-  </div>
-  <div class="m-appDownloadModal__body">
-    <m-qr-code [data]="link"></m-qr-code>
-    <p>
-      <a
-        i18n="@@APP_DOWNLOAD_MODAL__MINDS_MOBILE"
-        href="https://www.minds.com/mobile"
-        >Minds Mobile</a
-      >
-    </p>
-  </div>
-</div>
 
-<m-modalCloseButton
-  data-ref="app-download-modal-close-button"
-></m-modalCloseButton>
+  <m-modalCloseButton
+    data-ref="app-download-modal-close-button"
+  ></m-modalCloseButton>
+</ng-container>

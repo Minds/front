@@ -138,7 +138,7 @@ export class ActivityToolbarComponent {
   }
 
   /**
-   * Remove item from the feed.
+   * Asks activity container to remove item from the feed.
    * @param { boolean } $event - true if was downvoted.
    * @returns { void }
    */

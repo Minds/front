@@ -8,11 +8,11 @@
   <div class="m-settingsV2__desc" [ngSwitch]="activePanel$ | async">
     <ng-container
       *ngSwitchCase="'root'"
-      i18n="@@SETTINGS__SECURITY__2FA__ADDS_SECURITY_DESCRIPTION"
+      i18n="@@SETTINGS__SECURITY__2FA__ADDS_SECURITY_DESC"
     >
       Two-factor authentication adds an extra layer of security to your account.
       In addition to your username and password, you'll need to enter a code
-      that Minds sends you via text or an app on your phone.
+      that we'll send you via text or an app on your phone.
     </ng-container>
     <ng-container
       *ngSwitchCase="'password'"

@@ -33,7 +33,7 @@
             title="Home"
             i18n-title="@@COMMON__HOME"
             data-ref="topnav-logo"
-            aria-label="Minds"
+            aria-label="Home"
           >
             <ng-container
               *ngIf="
@@ -44,7 +44,7 @@
               <img
                 [src]="getSmallLogoSrc$() | async"
                 class="m-topbar__logo--bulb"
-                alt="Minds"
+                alt="Home"
               />
               <img
                 *ngIf="
@@ -128,8 +128,8 @@
             <m-button
               class="m-topbarLoginWrapper__joinMindsNow"
               (onAction)="onJoinNowClick()"
-              title="Join Minds Now"
-              i18n-title="@@COMMON__JOIN_MINDS_NOW"
+              title="Join Now"
+              i18n-title="@@COMMON__JOIN_NOW"
               data-ref="topnav-join-now"
               size="small"
               [overlay]="

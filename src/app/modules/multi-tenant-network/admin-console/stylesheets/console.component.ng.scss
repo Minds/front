@@ -1,9 +1,19 @@
 @import 'defaults.scss';
 
+@mixin horizontalPadding {
+  padding-left: $spacing8;
+  padding-right: $spacing8;
+}
+
 :host {
-  padding: $spacing7 $spacing8;
+  padding: 0 $spacing8 $spacing7 $spacing8;
   display: flex;
   flex-flow: column nowrap;
+
+  &.m-networkAdminConsole__container--noHorizontalPadding {
+    padding-left: unset;
+    padding-right: unset;
+  }
 
   .m-networkAdminConsole__title {
     margin-top: 0;
@@ -143,6 +153,22 @@
             color: themed($m-action);
             border: 1px solid themed($m-action);
           }
+        }
+      }
+    }
+  }
+
+  .m-tabs__container {
+    overflow-x: auto;
+    padding: 0 $spacing8;
+
+    .m-tabs__tab {
+      a {
+        padding: $spacing2 0;
+
+        @include body1Medium;
+        &.m-tabs__tab--selected {
+          border-width: 5px;
         }
       }
     }

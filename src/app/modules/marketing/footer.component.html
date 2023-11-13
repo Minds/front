@@ -5,12 +5,14 @@
   <!-- ------------------------------------------ -->
   <!-- LANGUAGE BAR -->
   <!-- ------------------------------------------ -->
-  <div
-    class="m-marketingFooter__section--language"
-    *ngIf="data?.showLanguageBar"
-  >
-    <m-language__bar></m-language__bar>
-  </div>
+  <ng-container *mIfTenant="false">
+    <div
+      class="m-marketingFooter__section--language"
+      *ngIf="data?.showLanguageBar"
+    >
+      <m-language__bar></m-language__bar>
+    </div>
+  </ng-container>
   <!-- ------------------------------------------ -->
   <!-- LINE -->
   <!-- ------------------------------------------ -->

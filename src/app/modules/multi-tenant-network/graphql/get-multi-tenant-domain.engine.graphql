@@ -1,0 +1,16 @@
+query GetMultiTenantDomain {
+  multiTenantDomain {
+    domain
+    dnsRecord {
+      name
+      type
+      value
+    }
+    status
+    ownershipVerificationDnsRecord {
+      name
+      type
+      value
+    }
+  }
+}

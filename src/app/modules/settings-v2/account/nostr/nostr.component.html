@@ -2,8 +2,11 @@
   <div class="m-settingsV2__headerLabel">
     <span i18n="@@SETTINGS__ACCOUNT__NOSTR">Nostr</span>
   </div>
-  <div class="m-settingsV2__desc" i18n="@@SETTINGS__ACCOUNT__NOSTR__DESC">
-    Configure your Minds channel to interact with the
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__ACCOUNT__NOSTR__DESCRIPTION"
+  >
+    Configure your channel to interact with the
     <a
       href="https://github.com/nostr-protocol/nostr"
       target="_blank"
@@ -30,8 +33,8 @@
   <h3>
     <span>Your Nostr Public Key</span>
     <m-tooltip icon="help">
-      <ng-container i18n="@@NOSTR_MINDSPUBKEY_TOOLTIP"
-        >Minds will sign your posts via this address address</ng-container
+      <ng-container i18n="@@NOSTR_PUBKEY_TOOLTIP"
+        >We will sign your posts via this address address</ng-container
       >
     </m-tooltip>
   </h3>
@@ -43,8 +46,8 @@
     <span>Delegated Signing</span>
     <m-tooltip icon="help">
       <ng-container i18n="@@NOSTR_NIP26_TOOLTIP"
-        >Pairing your sovereign key to your Minds key allows Minds to publish
-        posts and events on your behalf</ng-container
+        >Pairing your sovereign key to your site key allows us to publish posts
+        and events on your behalf</ng-container
       >
     </m-tooltip>
   </h3>
@@ -112,7 +115,7 @@
           <h4>Delegation Tag</h4>
 
           <span
-            >Minds will send the below tag alongside all your events to support
+            >We will send the below tag alongside all your events to support
             <a
               href="https://github.com/nostr-protocol/nips/blob/master/26.md"
               target="_blank"
