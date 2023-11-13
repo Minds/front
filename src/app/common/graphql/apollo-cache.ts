@@ -21,6 +21,7 @@ export const cache = new InMemoryCache({
           'nsfw',
         ]),
         boosts: relayStylePagination(['targetLocation', 'first']),
+        reports: relayStylePagination(['first']),
       },
     },
   },

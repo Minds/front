@@ -536,7 +536,7 @@
         <!--(NOT EDIT MODE) -->
         <!-- --------------------- -->
         <m-dropdownMenu
-          *ngIf="!editing"
+          *ngIf="!hideMenuButton && !editing"
           [menu]="dropdownMenu"
           [anchorPosition]="{ top: '-20%', right: '0' }"
           class="m-comment__menuButton"

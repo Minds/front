@@ -91,6 +91,28 @@ export type BoostsConnection = ConnectionInterface & {
   pageInfo: PageInfo;
 };
 
+export type CommentEdge = EdgeInterface & {
+  __typename?: 'CommentEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  node: CommentNode;
+  type: Scalars['String']['output'];
+};
+
+export type CommentNode = NodeInterface & {
+  __typename?: 'CommentNode';
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  legacy: Scalars['String']['output'];
+  nsfw: Array<Scalars['Int']['output']>;
+  nsfwLock: Array<Scalars['Int']['output']>;
+  /** Unix timestamp representation of time created */
+  timeCreated: Scalars['Int']['output'];
+  /** ISO 8601 timestamp representation of time created */
+  timeCreatedISO8601: Scalars['String']['output'];
+  urn: Scalars['String']['output'];
+};
+
 export type Connection = ConnectionInterface & {
   __typename?: 'Connection';
   edges: Array<EdgeInterface>;
@@ -303,6 +325,16 @@ export type GroupNode = NodeInterface & {
   urn: Scalars['String']['output'];
 };
 
+export enum IllegalSubReasonEnum {
+  AnimalAbuse = 'ANIMAL_ABUSE',
+  Extortion = 'EXTORTION',
+  Fraud = 'FRAUD',
+  MinorsSexualization = 'MINORS_SEXUALIZATION',
+  RevengePorn = 'REVENGE_PORN',
+  Terrorism = 'TERRORISM',
+  Trafficking = 'TRAFFICKING',
+}
+
 export type KeyValuePairInput = {
   key: Scalars['String']['input'];
   value: Scalars['String']['input'];
@@ -317,6 +349,7 @@ export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
   colorScheme?: Maybe<MultiTenantColorScheme>;
   communityGuidelines?: Maybe<Scalars['String']['output']>;
+  lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
@@ -338,11 +371,15 @@ export type Mutation = {
   completeOnboardingStep: OnboardingStepProgressState;
   createGiftCard: GiftCardNode;
   createNetworkRootUser: TenantUser;
+  /** Create a new report. */
+  createNewReport: Scalars['Boolean']['output'];
   createTenant: Tenant;
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
+  /** Provide a verdict for a report. */
+  provideVerdict: Scalars['Boolean']['output'];
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
   updateAccount: Array<Scalars['String']['output']>;
@@ -370,6 +407,10 @@ export type MutationCreateNetworkRootUserArgs = {
   networkUser?: InputMaybe<TenantUserInput>;
 };
 
+export type MutationCreateNewReportArgs = {
+  reportInput: ReportInput;
+};
+
 export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
 };
@@ -380,6 +421,10 @@ export type MutationDismissArgs = {
 
 export type MutationMultiTenantConfigArgs = {
   multiTenantConfigInput: MultiTenantConfigInput;
+};
+
+export type MutationProvideVerdictArgs = {
+  verdictInput: VerdictInput;
 };
 
 export type MutationSetOnboardingStateArgs = {
@@ -407,6 +452,14 @@ export type NodeImpl = NodeInterface & {
 export type NodeInterface = {
   id: Scalars['ID']['output'];
 };
+
+export enum NsfwSubReasonEnum {
+  Nudity = 'NUDITY',
+  Pornography = 'PORNOGRAPHY',
+  Profanity = 'PROFANITY',
+  RaceReligionGender = 'RACE_RELIGION_GENDER',
+  ViolenceGore = 'VIOLENCE_GORE',
+}
 
 export type OnboardingState = {
   __typename?: 'OnboardingState';
@@ -496,6 +549,8 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  /** Gets reports. */
+  reports: ReportsConnection;
   search: SearchResultsConnection;
   tenants: Array<Tenant>;
 };
@@ -566,6 +621,12 @@ export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
 };
 
+export type QueryReportsArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  status?: InputMaybe<ReportStatusEnum>;
+};
+
 export type QuerySearchArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -580,6 +641,88 @@ export type QuerySearchArgs = {
 export type QueryTenantsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Report = NodeInterface & {
+  __typename?: 'Report';
+  action?: Maybe<ReportActionEnum>;
+  createdTimestamp: Scalars['Int']['output'];
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** Gets entity edge from entityUrn. */
+  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdge>;
+  entityGuid?: Maybe<Scalars['String']['output']>;
+  entityUrn: Scalars['String']['output'];
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  illegalSubReason?: Maybe<IllegalSubReasonEnum>;
+  moderatedByGuid?: Maybe<Scalars['String']['output']>;
+  nsfwSubReason?: Maybe<NsfwSubReasonEnum>;
+  reason: ReportReasonEnum;
+  reportGuid?: Maybe<Scalars['String']['output']>;
+  reportedByGuid?: Maybe<Scalars['String']['output']>;
+  /** Gets reported user edge from reportedByGuid. */
+  reportedByUserEdge?: Maybe<UserEdge>;
+  securitySubReason?: Maybe<SecuritySubReasonEnum>;
+  status: ReportStatusEnum;
+  tenantId?: Maybe<Scalars['String']['output']>;
+  updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export enum ReportActionEnum {
+  Ban = 'BAN',
+  Delete = 'DELETE',
+  Ignore = 'IGNORE',
+}
+
+export type ReportEdge = EdgeInterface & {
+  __typename?: 'ReportEdge';
+  /** Gets cursor for GraphQL. */
+  cursor: Scalars['String']['output'];
+  /** Gets ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** Gets node. */
+  node?: Maybe<Report>;
+  /** Gets type for GraphQL. */
+  type: Scalars['String']['output'];
+};
+
+export type ReportInput = {
+  entityUrn: Scalars['String']['input'];
+  illegalSubReason?: InputMaybe<IllegalSubReasonEnum>;
+  nsfwSubReason?: InputMaybe<NsfwSubReasonEnum>;
+  reason: ReportReasonEnum;
+  securitySubReason?: InputMaybe<SecuritySubReasonEnum>;
+};
+
+export enum ReportReasonEnum {
+  ActivityPubReport = 'ACTIVITY_PUB_REPORT',
+  AnotherReason = 'ANOTHER_REASON',
+  Harassment = 'HARASSMENT',
+  Illegal = 'ILLEGAL',
+  Impersonation = 'IMPERSONATION',
+  InauthenticEngagement = 'INAUTHENTIC_ENGAGEMENT',
+  IncitementToViolence = 'INCITEMENT_TO_VIOLENCE',
+  IntellectualPropertyViolation = 'INTELLECTUAL_PROPERTY_VIOLATION',
+  Malware = 'MALWARE',
+  Nsfw = 'NSFW',
+  PersonalConfidentialInformation = 'PERSONAL_CONFIDENTIAL_INFORMATION',
+  Security = 'SECURITY',
+  Spam = 'SPAM',
+  ViolatesPremiumContentPolicy = 'VIOLATES_PREMIUM_CONTENT_POLICY',
+}
+
+export enum ReportStatusEnum {
+  Actioned = 'ACTIONED',
+  Pending = 'PENDING',
+}
+
+export type ReportsConnection = ConnectionInterface & {
+  __typename?: 'ReportsConnection';
+  /** Gets connections edges. */
+  edges: Array<EdgeInterface>;
+  /** ID for GraphQL. */
+  id: Scalars['ID']['output'];
+  pageInfo: PageInfo;
 };
 
 export enum SearchFilterEnum {
@@ -618,6 +761,10 @@ export type SearchResultsCount = {
   count: Scalars['Int']['output'];
 };
 
+export enum SecuritySubReasonEnum {
+  HackedAccount = 'HACKED_ACCOUNT',
+}
+
 export type Tenant = {
   __typename?: 'Tenant';
   config?: Maybe<MultiTenantConfig>;
@@ -651,6 +798,12 @@ export enum TenantUserRoleEnum {
   Owner = 'OWNER',
   User = 'USER',
 }
+
+export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdge =
+  | ActivityEdge
+  | CommentEdge
+  | GroupEdge
+  | UserEdge;
 
 export type UserEdge = EdgeInterface & {
   __typename?: 'UserEdge';
@@ -695,6 +848,11 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type VerdictInput = {
+  action: ReportActionEnum;
+  reportGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DismissMutationVariables = Exact<{
@@ -936,6 +1094,240 @@ export type GetGiftCardsQuery = {
   };
 };
 
+export type CreateNewReportMutationVariables = Exact<{
+  entityUrn: Scalars['String']['input'];
+  reason: ReportReasonEnum;
+  illegalSubReason?: InputMaybe<IllegalSubReasonEnum>;
+  nsfwSubReason?: InputMaybe<NsfwSubReasonEnum>;
+  securitySubReason?: InputMaybe<SecuritySubReasonEnum>;
+}>;
+
+export type CreateNewReportMutation = {
+  __typename?: 'Mutation';
+  createNewReport: boolean;
+};
+
+export type GetReportsQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after: Scalars['Int']['input'];
+  status?: InputMaybe<ReportStatusEnum>;
+}>;
+
+export type GetReportsQuery = {
+  __typename?: 'Query';
+  reports: {
+    __typename?: 'ReportsConnection';
+    id: string;
+    edges: Array<
+      | {
+          __typename?: 'ActivityEdge';
+          cursor: string;
+          node: { __typename?: 'ActivityNode'; id: string };
+        }
+      | {
+          __typename?: 'BoostEdge';
+          cursor: string;
+          node: { __typename?: 'BoostNode'; id: string };
+        }
+      | {
+          __typename?: 'CommentEdge';
+          cursor: string;
+          node: { __typename?: 'CommentNode'; id: string };
+        }
+      | {
+          __typename?: 'EdgeImpl';
+          cursor: string;
+          node?:
+            | { __typename?: 'ActivityNode'; id: string }
+            | { __typename?: 'BoostNode'; id: string }
+            | { __typename?: 'CommentNode'; id: string }
+            | { __typename?: 'FeedExploreTagNode'; id: string }
+            | { __typename?: 'FeedHeaderNode'; id: string }
+            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | { __typename?: 'FeedNoticeNode'; id: string }
+            | { __typename?: 'GiftCardNode'; id: string }
+            | { __typename?: 'GiftCardTransaction'; id: string }
+            | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'NodeImpl'; id: string }
+            | { __typename?: 'PublisherRecsConnection'; id: string }
+            | {
+                __typename?: 'Report';
+                tenantId?: string | null;
+                reportGuid?: string | null;
+                entityUrn: string;
+                entityGuid?: string | null;
+                reportedByGuid?: string | null;
+                moderatedByGuid?: string | null;
+                createdTimestamp: number;
+                reason: ReportReasonEnum;
+                nsfwSubReason?: NsfwSubReasonEnum | null;
+                illegalSubReason?: IllegalSubReasonEnum | null;
+                securitySubReason?: SecuritySubReasonEnum | null;
+                id: string;
+                reportedByUserEdge?: {
+                  __typename?: 'UserEdge';
+                  node: {
+                    __typename?: 'UserNode';
+                    guid: string;
+                    username: string;
+                  };
+                } | null;
+                entityEdge?:
+                  | {
+                      __typename?: 'ActivityEdge';
+                      node: { __typename?: 'ActivityNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'CommentEdge';
+                      node: { __typename?: 'CommentNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'GroupEdge';
+                      node: { __typename?: 'GroupNode'; legacy: string };
+                    }
+                  | {
+                      __typename?: 'UserEdge';
+                      node: { __typename?: 'UserNode'; legacy: string };
+                    }
+                  | null;
+              }
+            | { __typename?: 'UserNode'; id: string }
+            | null;
+        }
+      | {
+          __typename?: 'FeedExploreTagEdge';
+          cursor: string;
+          node: { __typename?: 'FeedExploreTagNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHeaderEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHeaderNode'; id: string };
+        }
+      | {
+          __typename?: 'FeedHighlightsEdge';
+          cursor: string;
+          node: { __typename?: 'FeedHighlightsConnection'; id: string };
+        }
+      | {
+          __typename?: 'FeedNoticeEdge';
+          cursor: string;
+          node: { __typename?: 'FeedNoticeNode'; id: string };
+        }
+      | {
+          __typename?: 'GiftCardEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardNode'; id: string };
+        }
+      | {
+          __typename?: 'GiftCardTransactionEdge';
+          cursor: string;
+          node: { __typename?: 'GiftCardTransaction'; id: string };
+        }
+      | {
+          __typename?: 'GroupEdge';
+          cursor: string;
+          node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
+          __typename?: 'PublisherRecsEdge';
+          cursor: string;
+          node: { __typename?: 'PublisherRecsConnection'; id: string };
+        }
+      | {
+          __typename?: 'ReportEdge';
+          cursor: string;
+          node?: {
+            __typename?: 'Report';
+            tenantId?: string | null;
+            reportGuid?: string | null;
+            entityUrn: string;
+            entityGuid?: string | null;
+            reportedByGuid?: string | null;
+            moderatedByGuid?: string | null;
+            createdTimestamp: number;
+            reason: ReportReasonEnum;
+            nsfwSubReason?: NsfwSubReasonEnum | null;
+            illegalSubReason?: IllegalSubReasonEnum | null;
+            securitySubReason?: SecuritySubReasonEnum | null;
+            id: string;
+            reportedByUserEdge?: {
+              __typename?: 'UserEdge';
+              node: { __typename?: 'UserNode'; guid: string; username: string };
+            } | null;
+            entityEdge?:
+              | {
+                  __typename?: 'ActivityEdge';
+                  node: { __typename?: 'ActivityNode'; legacy: string };
+                }
+              | {
+                  __typename?: 'CommentEdge';
+                  node: { __typename?: 'CommentNode'; legacy: string };
+                }
+              | {
+                  __typename?: 'GroupEdge';
+                  node: { __typename?: 'GroupNode'; legacy: string };
+                }
+              | {
+                  __typename?: 'UserEdge';
+                  node: { __typename?: 'UserNode'; legacy: string };
+                }
+              | null;
+          } | null;
+        }
+      | {
+          __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
+    >;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
+};
+
+export type ProvideVerdictMutationVariables = Exact<{
+  reportGuid: Scalars['String']['input'];
+  action: ReportActionEnum;
+}>;
+
+export type ProvideVerdictMutation = {
+  __typename?: 'Mutation';
+  provideVerdict: boolean;
+};
+
+export type GetMultiTenantConfigQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetMultiTenantConfigQuery = {
+  __typename?: 'Query';
+  multiTenantConfig?: {
+    __typename?: 'MultiTenantConfig';
+    siteName?: string | null;
+    siteEmail?: string | null;
+    colorScheme?: MultiTenantColorScheme | null;
+    primaryColor?: string | null;
+    communityGuidelines?: string | null;
+  } | null;
+};
+
+export type SetMultiTenantConfigMutationVariables = Exact<{
+  siteName?: InputMaybe<Scalars['String']['input']>;
+  colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  primaryColor?: InputMaybe<Scalars['String']['input']>;
+  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SetMultiTenantConfigMutation = {
+  __typename?: 'Mutation';
+  multiTenantConfig: boolean;
+};
+
 export type CreateTenantRootUserMutationVariables = Exact<{
   networkUserInput?: InputMaybe<TenantUserInput>;
 }>;
@@ -970,33 +1362,6 @@ export type GetNetworksListQuery = {
     } | null;
   }>;
 };
-export type GetMultiTenantConfigQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetMultiTenantConfigQuery = {
-  __typename?: 'Query';
-  multiTenantConfig?: {
-    __typename?: 'MultiTenantConfig';
-    siteName?: string | null;
-    siteEmail?: string | null;
-    colorScheme?: MultiTenantColorScheme | null;
-    primaryColor?: string | null;
-    communityGuidelines?: string | null;
-  } | null;
-};
-
-export type SetMultiTenantConfigMutationVariables = Exact<{
-  siteName?: InputMaybe<Scalars['String']['input']>;
-  colorScheme?: InputMaybe<MultiTenantColorScheme>;
-  primaryColor?: InputMaybe<Scalars['String']['input']>;
-  communityGuidelines?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-export type SetMultiTenantConfigMutation = {
-  __typename?: 'Mutation';
-  multiTenantConfig: boolean;
-};
 
 export type FetchNewsfeedQueryVariables = Exact<{
   algorithm: Scalars['String']['input'];
@@ -1030,6 +1395,11 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'CommentEdge';
+          cursor: string;
+          node: { __typename?: 'CommentNode'; id: string };
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
@@ -1041,6 +1411,7 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'FeedExploreTagNode'; tag: string; id: string }
             | { __typename?: 'FeedHeaderNode'; text: string; id: string }
             | {
@@ -1094,6 +1465,10 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename?: 'ActivityNode'; id: string }
@@ -1102,6 +1477,7 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'FeedExploreTagNode'; id: string }
                         | { __typename?: 'FeedHeaderNode'; id: string }
                         | {
@@ -1118,6 +1494,7 @@ export type FetchNewsfeedQuery = {
                           }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
                         | {
                             __typename?: 'UserNode';
                             legacy: string;
@@ -1183,6 +1560,13 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename?: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'UserEdge';
                       publisherNode: {
                         __typename?: 'UserNode';
@@ -1199,6 +1583,7 @@ export type FetchNewsfeedQuery = {
                   endCursor?: string | null;
                 };
               }
+            | { __typename?: 'Report'; id: string }
             | { __typename?: 'UserNode'; id: string }
             | null;
         }
@@ -1278,10 +1663,15 @@ export type FetchNewsfeedQuery = {
                   };
                 }
               | {
+                  __typename?: 'CommentEdge';
+                  publisherNode: { __typename?: 'CommentNode'; id: string };
+                }
+              | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'FeedExploreTagNode'; id: string }
                     | { __typename?: 'FeedHeaderNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
@@ -1291,6 +1681,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'Report'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
@@ -1343,6 +1734,10 @@ export type FetchNewsfeedQuery = {
                   };
                 }
               | {
+                  __typename?: 'ReportEdge';
+                  publisherNode?: { __typename?: 'Report'; id: string } | null;
+                }
+              | {
                   __typename?: 'UserEdge';
                   publisherNode: {
                     __typename?: 'UserNode';
@@ -1359,6 +1754,11 @@ export type FetchNewsfeedQuery = {
               endCursor?: string | null;
             };
           };
+        }
+      | {
+          __typename?: 'ReportEdge';
+          cursor: string;
+          node?: { __typename?: 'Report'; id: string } | null;
         }
       | {
           __typename?: 'UserEdge';
@@ -1487,6 +1887,11 @@ export type FetchSearchQuery = {
           };
         }
       | {
+          __typename?: 'CommentEdge';
+          cursor: string;
+          node: { __typename?: 'CommentNode'; id: string };
+        }
+      | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
@@ -1498,6 +1903,7 @@ export type FetchSearchQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename?: 'CommentNode'; id: string }
             | { __typename?: 'FeedExploreTagNode'; id: string }
             | { __typename?: 'FeedHeaderNode'; id: string }
             | { __typename?: 'FeedHighlightsConnection'; id: string }
@@ -1531,6 +1937,10 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'CommentEdge';
+                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                    }
+                  | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
                         | { __typename?: 'ActivityNode'; id: string }
@@ -1539,6 +1949,7 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'CommentNode'; id: string }
                         | { __typename?: 'FeedExploreTagNode'; id: string }
                         | { __typename?: 'FeedHeaderNode'; id: string }
                         | {
@@ -1555,6 +1966,7 @@ export type FetchSearchQuery = {
                           }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
+                        | { __typename?: 'Report'; id: string }
                         | {
                             __typename?: 'UserNode';
                             legacy: string;
@@ -1620,6 +2032,13 @@ export type FetchSearchQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ReportEdge';
+                      publisherNode?: {
+                        __typename?: 'Report';
+                        id: string;
+                      } | null;
+                    }
+                  | {
                       __typename?: 'UserEdge';
                       publisherNode: {
                         __typename?: 'UserNode';
@@ -1636,6 +2055,7 @@ export type FetchSearchQuery = {
                   endCursor?: string | null;
                 };
               }
+            | { __typename?: 'Report'; id: string }
             | { __typename?: 'UserNode'; legacy: string; id: string }
             | null;
         }
@@ -1699,10 +2119,15 @@ export type FetchSearchQuery = {
                   };
                 }
               | {
+                  __typename?: 'CommentEdge';
+                  publisherNode: { __typename?: 'CommentNode'; id: string };
+                }
+              | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
                     | { __typename?: 'ActivityNode'; id: string }
                     | { __typename?: 'BoostNode'; legacy: string; id: string }
+                    | { __typename?: 'CommentNode'; id: string }
                     | { __typename?: 'FeedExploreTagNode'; id: string }
                     | { __typename?: 'FeedHeaderNode'; id: string }
                     | { __typename?: 'FeedHighlightsConnection'; id: string }
@@ -1712,6 +2137,7 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
+                    | { __typename?: 'Report'; id: string }
                     | { __typename?: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
@@ -1764,6 +2190,10 @@ export type FetchSearchQuery = {
                   };
                 }
               | {
+                  __typename?: 'ReportEdge';
+                  publisherNode?: { __typename?: 'Report'; id: string } | null;
+                }
+              | {
                   __typename?: 'UserEdge';
                   publisherNode: {
                     __typename?: 'UserNode';
@@ -1780,6 +2210,11 @@ export type FetchSearchQuery = {
               endCursor?: string | null;
             };
           };
+        }
+      | {
+          __typename?: 'ReportEdge';
+          cursor: string;
+          node?: { __typename?: 'Report'; id: string } | null;
         }
       | {
           __typename?: 'UserEdge';
@@ -2219,16 +2654,132 @@ export class GetGiftCardsGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const CreateTenantRootUserDocument = gql`
-  mutation CreateTenantRootUser($networkUserInput: TenantUserInput) {
-    createNetworkRootUser(networkUser: $networkUserInput) {
-      guid
-      username
-      tenantId
-      role
+export const CreateNewReportDocument = gql`
+  mutation CreateNewReport(
+    $entityUrn: String!
+    $reason: ReportReasonEnum!
+    $illegalSubReason: IllegalSubReasonEnum
+    $nsfwSubReason: NsfwSubReasonEnum
+    $securitySubReason: SecuritySubReasonEnum
+  ) {
+    createNewReport(
+      reportInput: {
+        entityUrn: $entityUrn
+        reason: $reason
+        securitySubReason: $securitySubReason
+        illegalSubReason: $illegalSubReason
+        nsfwSubReason: $nsfwSubReason
+      }
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateNewReportGQL extends Apollo.Mutation<
+  CreateNewReportMutation,
+  CreateNewReportMutationVariables
+> {
+  document = CreateNewReportDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetReportsDocument = gql`
+  query GetReports($first: Int!, $after: Int!, $status: ReportStatusEnum) {
+    reports(first: $first, after: $after, status: $status) {
+      edges {
+        node {
+          id
+          ... on Report {
+            tenantId
+            reportGuid
+            entityUrn
+            entityGuid
+            reportedByGuid
+            reportedByUserEdge {
+              node {
+                guid
+                username
+              }
+            }
+            moderatedByGuid
+            createdTimestamp
+            reason
+            nsfwSubReason
+            illegalSubReason
+            securitySubReason
+            createdTimestamp
+            entityEdge {
+              ... on ActivityEdge {
+                node {
+                  legacy
+                }
+              }
+              ... on UserEdge {
+                node {
+                  legacy
+                }
+              }
+              ... on GroupEdge {
+                node {
+                  legacy
+                }
+              }
+              ... on CommentEdge {
+                node {
+                  legacy
+                }
+              }
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        startCursor
+        endCursor
+      }
+      id
     }
   }
 `;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetReportsGQL extends Apollo.Query<
+  GetReportsQuery,
+  GetReportsQueryVariables
+> {
+  document = GetReportsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ProvideVerdictDocument = gql`
+  mutation ProvideVerdict($reportGuid: String!, $action: ReportActionEnum!) {
+    provideVerdict(verdictInput: { reportGuid: $reportGuid, action: $action })
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProvideVerdictGQL extends Apollo.Mutation<
+  ProvideVerdictMutation,
+  ProvideVerdictMutationVariables
+> {
+  document = ProvideVerdictDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetMultiTenantConfigDocument = gql`
   query GetMultiTenantConfig {
     multiTenantConfig {
@@ -2244,19 +2795,6 @@ export const GetMultiTenantConfigDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class CreateTenantRootUserGQL extends Apollo.Mutation<
-  CreateTenantRootUserMutation,
-  CreateTenantRootUserMutationVariables
-> {
-  document = CreateTenantRootUserDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-@Injectable({
-  providedIn: 'root',
-})
 export class GetMultiTenantConfigGQL extends Apollo.Query<
   GetMultiTenantConfigQuery,
   GetMultiTenantConfigQueryVariables
@@ -2267,19 +2805,6 @@ export class GetMultiTenantConfigGQL extends Apollo.Query<
     super(apollo);
   }
 }
-export const GetNetworksListDocument = gql`
-  query GetNetworksList($first: Int!, $last: Int!) {
-    tenants(first: $first, last: $last) {
-      id
-      domain
-      ownerGuid
-      rootUserGuid
-      config {
-        siteName
-      }
-    }
-  }
-`;
 export const SetMultiTenantConfigDocument = gql`
   mutation SetMultiTenantConfig(
     $siteName: String
@@ -2301,24 +2826,62 @@ export const SetMultiTenantConfigDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class GetNetworksListGQL extends Apollo.Query<
-  GetNetworksListQuery,
-  GetNetworksListQueryVariables
-> {
-  document = GetNetworksListDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-@Injectable({
-  providedIn: 'root',
-})
 export class SetMultiTenantConfigGQL extends Apollo.Mutation<
   SetMultiTenantConfigMutation,
   SetMultiTenantConfigMutationVariables
 > {
   document = SetMultiTenantConfigDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateTenantRootUserDocument = gql`
+  mutation CreateTenantRootUser($networkUserInput: TenantUserInput) {
+    createNetworkRootUser(networkUser: $networkUserInput) {
+      guid
+      username
+      tenantId
+      role
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateTenantRootUserGQL extends Apollo.Mutation<
+  CreateTenantRootUserMutation,
+  CreateTenantRootUserMutationVariables
+> {
+  document = CreateTenantRootUserDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetNetworksListDocument = gql`
+  query GetNetworksList($first: Int!, $last: Int!) {
+    tenants(first: $first, last: $last) {
+      id
+      domain
+      ownerGuid
+      rootUserGuid
+      config {
+        siteName
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetNetworksListGQL extends Apollo.Query<
+  GetNetworksListQuery,
+  GetNetworksListQueryVariables
+> {
+  document = GetNetworksListDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

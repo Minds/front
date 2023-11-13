@@ -1,0 +1,25 @@
+<m-networkAdminConsole__report
+  *ngFor="let reportEdge of reportEdges$ | async; trackBy: trackBy"
+  [reportEdge]="reportEdge"
+  (verdictProvided)="onVerdictProvided(reportEdge)"
+></m-networkAdminConsole__report>
+
+<div
+  *ngIf="!(reportEdges$ | async).length && !(inProgress$ | async)"
+  class="m-reportV2List__emptyListContainer"
+>
+  <p
+    class="m-reportV2List__emptyListText"
+    i18n="@@REPORT_V2__LIST__NO_PENDING_REPORTS"
+  >
+    No pending reports
+  </p>
+</div>
+
+<infinite-scroll
+  *ngIf="hasNextPage$ | async as hasNextPage"
+  (load)="fetchMore()"
+  [moreData]="hasNextPage"
+  [inProgress]="inProgress$ | async"
+  [hideManual]="true"
+></infinite-scroll>

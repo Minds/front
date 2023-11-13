@@ -1,0 +1,19 @@
+@import 'defaults.scss';
+
+:host {
+  padding: $spacing6 $spacing8;
+
+  m-networkAdminConsole__report {
+    margin-bottom: $spacing6;
+  }
+
+  .m-reportV2List__emptyListContainer {
+    width: 100%;
+
+    .m-reportV2List__emptyListText {
+      margin: $spacing8;
+      text-align: center;
+      @include heading4Bold;
+    }
+  }
+}
