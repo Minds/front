@@ -9,7 +9,7 @@
       class="m-twoColumnLayout__leftContainer"
       *ngIf="activeStep$ | async as activeStep"
     >
-      <m-onboardingV5__stepper></m-onboardingV5__stepper>
+      <m-onboardingV5__stepper *mIfTenant="false"></m-onboardingV5__stepper>
       <ng-container [ngSwitch]="activeStep.stepType">
         <m-onboardingV5__verifyEmailContent
           *ngSwitchCase="'verify_email'"

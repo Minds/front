@@ -1,54 +1,56 @@
-<div [@fader]="state$ | async">
-  <div class="m-appPrompt__container">
-    <div class="m-appPrompt__header" (click)="onClick($event)">
-      <img
-        class="m-appPrompt__header__logo"
-        [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
-      />
-      <span class="m-appPrompt__header__title">
-        Switch to App
-      </span>
-
-      <m-icon
-        (click)="onClose($event)"
-        class="m-appPrompt__header__closeIcon"
-        from="ion"
-        iconId="close"
-      ></m-icon>
-    </div>
-
-    <div class="m-appPrompt__body">
-      <div class="m-appPrompt__body__logoContainer">
+<ng-container *mIfTenant="false">
+  <div [@fader]="state$ | async">
+    <div class="m-appPrompt__container">
+      <div class="m-appPrompt__header" (click)="onClick($event)">
         <img
-          class="m-appPrompt__body__logo"
+          class="m-appPrompt__header__logo"
           [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
         />
+        <span class="m-appPrompt__header__title">
+          Switch to App
+        </span>
+
+        <m-icon
+          (click)="onClose($event)"
+          class="m-appPrompt__header__closeIcon"
+          from="ion"
+          iconId="close"
+        ></m-icon>
       </div>
 
-      <span class="m-appPrompt__body__title">Minds</span>
-      <span
-        class="m-appPrompt__body__description"
-        i18n="@@HOMEPAGE__V2__TAKE_BACK_CONTROL_SUBHEADER"
-      >
-        Take back control of your social media!
-      </span>
+      <div class="m-appPrompt__body">
+        <div class="m-appPrompt__body__logoContainer">
+          <img
+            class="m-appPrompt__body__logo"
+            [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+          />
+        </div>
 
-      <div class="m-appPrompt__body__downloadContainer">
-        <a
-          href="https://cdn-assets.minds.com/mobile/Minds-stable-4-17-0.apk"
-          target="_blank"
-          ><img
-            src="{{ cdnAssetsUrl }}assets/marketing/mobile/download-minds.svg"
-            height="70"
-        /></a>
-        <a
-          href="https://play.google.com/store/apps/details?id=com.minds.mobile&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
-          target="_blank"
-          ><img
-            src="{{ cdnAssetsUrl }}assets/marketing/mobile/google-play.svg"
-            height="66"
-        /></a>
+        <span class="m-appPrompt__body__title">Minds</span>
+        <span
+          class="m-appPrompt__body__description"
+          i18n="@@HOMEPAGE__V2__TAKE_BACK_CONTROL_SUBHEADER"
+        >
+          Take back control of your social media!
+        </span>
+
+        <div class="m-appPrompt__body__downloadContainer">
+          <a
+            href="https://cdn-assets.minds.com/mobile/Minds-stable-4-17-0.apk"
+            target="_blank"
+            ><img
+              src="{{ cdnAssetsUrl }}assets/marketing/mobile/download-minds.svg"
+              height="70"
+          /></a>
+          <a
+            href="https://play.google.com/store/apps/details?id=com.minds.mobile&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+            target="_blank"
+            ><img
+              src="{{ cdnAssetsUrl }}assets/marketing/mobile/google-play.svg"
+              height="66"
+          /></a>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

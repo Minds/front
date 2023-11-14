@@ -41,6 +41,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { OnboardingV5CompletionStorageService } from './onboarding-v5-completion-storage.service';
 import { Session } from '../../../services/session';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 /**
  * Service for the management of the onboarding (v5) process.
@@ -120,6 +121,11 @@ export class OnboardingV5Service implements OnDestroy {
   /** Subscription to completion step showing. */
   private completionStepShowSubscription: Subscription;
 
+  /**
+   * Tenant users end onboarding after this step is completed
+   */
+  private finalStepKeyForTenantUsers: string = 'verify_email';
+
   constructor(
     private authRedirect: AuthRedirectService,
     private fetchOnboardingV5VersionsGql: FetchOnboardingV5VersionsGQL,
@@ -130,6 +136,7 @@ export class OnboardingV5Service implements OnDestroy {
     private completionStorage: OnboardingV5CompletionStorageService,
     private configs: ConfigsService,
     private session: Session,
+    private isTenant: IsTenantService,
     @Inject(STRAPI_URL) public strapiUrl: string
   ) {
     this.releaseTimestamp =
@@ -293,10 +300,14 @@ export class OnboardingV5Service implements OnDestroy {
       if (steps[i].stepType === currentlyActiveStep.stepType) {
         steps[i].completed = true;
 
-        if (steps?.[i + 1]) {
-          this.activeStep$.next(steps[i + 1]);
-        } else {
+        const isFinalTenantStep =
+          this.isTenant.is() &&
+          currentlyActiveStep.data.stepKey === this.finalStepKeyForTenantUsers;
+
+        if (!steps?.[i + 1] || isFinalTenantStep) {
           this.finishOnboarding();
+        } else {
+          this.activeStep$.next(steps[i + 1]);
         }
 
         break;
