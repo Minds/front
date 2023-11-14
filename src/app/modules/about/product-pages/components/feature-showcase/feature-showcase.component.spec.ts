@@ -7,6 +7,7 @@ import {
 } from '../../../../../../graphql/generated.strapi';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { MockComponent } from '../../../../../utils/mock';
 
 describe('ProductPageFeatureShowcaseComponent', () => {
   let comp: ProductPageFeatureShowcaseComponent;
@@ -64,7 +65,13 @@ describe('ProductPageFeatureShowcaseComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [ProductPageFeatureShowcaseComponent],
+        declarations: [
+          ProductPageFeatureShowcaseComponent,
+          MockComponent({
+            selector: 'markdown',
+            inputs: ['data'],
+          }),
+        ],
         providers: [{ provide: STRAPI_URL, useValue: mockStrapiUrl }],
       }).compileComponents();
     })
@@ -101,7 +108,7 @@ describe('ProductPageFeatureShowcaseComponent', () => {
       By.css('.m-featureShowcase__title')
     );
     const bodyElements: DebugElement[] = fixture.debugElement.queryAll(
-      By.css('.m-featureShowcase__body')
+      By.css('markdown')
     );
 
     expect(itemElements.length).toBe(3);
@@ -136,16 +143,6 @@ describe('ProductPageFeatureShowcaseComponent', () => {
     );
     expect(titleElements[2].nativeElement.textContent).toBe(
       defaultFeatureShowcase[2].title
-    );
-
-    expect(bodyElements[0].nativeElement.textContent).toBe(
-      defaultFeatureShowcase[0].body
-    );
-    expect(bodyElements[1].nativeElement.textContent).toBe(
-      defaultFeatureShowcase[1].body
-    );
-    expect(bodyElements[2].nativeElement.textContent).toBe(
-      defaultFeatureShowcase[2].body
     );
   });
 });
