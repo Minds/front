@@ -62,7 +62,10 @@ describe('MindsRichEmbed', () => {
             provide: ClientMetaDirective,
             useValue: MockService(ClientMetaDirective),
           },
-          LivestreamService,
+          {
+            provide: LivestreamService,
+            useValue: MockService(LivestreamService),
+          },
         ],
       }).compileComponents();
       service = TestBed.inject(LivestreamService);

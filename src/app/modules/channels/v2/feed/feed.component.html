@@ -81,7 +81,9 @@
     <!-- ----------------------------------------- -->
     <div class="m-channelFeed__list" *ngIf="!isGrid">
       <ng-container *ngIf="feed?.length > 0">
-        <m-composer *ngIf="service.isOwner$ | async"></m-composer>
+        <ng-container *ngIf="permissions.canPost()">
+          <m-composer *ngIf="service.isOwner$ | async"></m-composer>
+        </ng-container>
         <div
           class="m-channelFeedList__entities"
           m-hotkeyScroll
@@ -127,6 +129,7 @@
         !(service.query$ | async) && !(feedService.dateRangeEnabled$ | async)
       "
     >
+      <!-- EMPTY NOTICE: NOT OWNER / NO QUERY / NO DATE RANGE -->
       <div
         *ngIf="
           !(feedService.service.inProgress | async) &&
@@ -169,8 +172,9 @@
           <span
             *ngSwitchCaseDefault
             class="m-channelFeed__emptyFeedTitle"
-            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
-            >Looks like you haven't posted any content of this type yet</span
+            i18n="@@M__CHANNEL_FEED__THEY_HAVENT_POSTED__YET_GENERIC*"
+            >Looks like this channel haven't posted any content of this type
+            yet</span
           >
         </ng-container>
       </div>
@@ -187,50 +191,63 @@
           m-channelFeed__emptyFeedContainer--bordered
         "
       >
-        <ng-container [ngSwitch]="feedService.type$ | async">
-          <span
-            *ngSwitchCase="'images'"
-            class="m-channelFeed__emptyFeedTitle"
-            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_IMAGES_YET"
-            >Looks like you haven't posted images yet</span
-          >
-          <span
-            *ngSwitchCase="'videos'"
-            class="m-channelFeed__emptyFeedTitle"
-            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_VIDEOS_YET"
-            >Looks like you haven't posted videos yet</span
-          >
-          <span
-            *ngSwitchCase="'blogs'"
-            class="m-channelFeed__emptyFeedTitle"
-            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_BLOGS_YET"
-            >Looks like you haven't posted blogs yet</span
-          >
-          <span
-            *ngSwitchCase="'activities'"
-            class="m-channelFeed__emptyFeedTitle"
-            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_YET"
-            >Looks like you haven't posted yet</span
-          >
-          <!-- Catch issues with any future additions -->
-          <span
-            *ngSwitchCaseDefault
-            class="m-channelFeed__emptyFeedTitle"
-            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
-            >Looks like you haven't posted any content of this type yet</span
-          >
-        </ng-container>
+        <!-- EMPTY NOTICE: OWNER / NO QUERY / NO DATE RANGE / HAS CREATE POST PERMISSIONS  -->
+        <ng-container *ngIf="permissions.canPost()">
+          <ng-container [ngSwitch]="feedService.type$ | async">
+            <span
+              *ngSwitchCase="'images'"
+              class="m-channelFeed__emptyFeedTitle"
+              i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_IMAGES_YET"
+              >Looks like you haven't posted images yet</span
+            >
+            <span
+              *ngSwitchCase="'videos'"
+              class="m-channelFeed__emptyFeedTitle"
+              i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_VIDEOS_YET"
+              >Looks like you haven't posted videos yet</span
+            >
+            <span
+              *ngSwitchCase="'blogs'"
+              class="m-channelFeed__emptyFeedTitle"
+              i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_BLOGS_YET"
+              >Looks like you haven't posted blogs yet</span
+            >
+            <span
+              *ngSwitchCase="'activities'"
+              class="m-channelFeed__emptyFeedTitle"
+              i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_YET"
+              >Looks like you haven't posted yet
+            </span>
+            <!-- Catch issues with any future additions -->
+            <span
+              *ngSwitchCaseDefault
+              class="m-channelFeed__emptyFeedTitle"
+              i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
+              >Looks like you haven't posted any content of this type yet</span
+            >
+          </ng-container>
 
-        <m-button
-          i18n="@@M__CHANNEL_FEED__CREATE_YOUR_FIRST_POST"
-          (onAction)="onFirstPostButtonClick()"
-          color="blue"
+          <m-button
+            i18n="@@M__CHANNEL_FEED__CREATE_YOUR_FIRST_POST"
+            (onAction)="onFirstPostButtonClick()"
+            color="blue"
+          >
+            Create your first post
+          </m-button>
+        </ng-container>
+        <!-- EMPTY NOTICE: OWNER / NO QUERY / NO DATE RANGE / NO CREATE POST PERMISSIONS -->
+        <ng-container *ngIf="!permissions.canPost()">
+          <span
+            class="m-channelFeed__emptyFeedTitle"
+            i18n="@@M__CHANNEL_FEED__NO_RESULTS_NO_POSTS__NO_POST_PERMISSION"
+          >
+            Your account does not have posting permissions</span
+          ></ng-container
         >
-          Create your first post
-        </m-button>
       </div>
     </ng-container>
 
+    <!-- EMPTY NOTICE: SEARCH QUERY ONLY   -->
     <ng-container
       *ngIf="
         (service.query$ | async) && !(feedService.dateRangeEnabled$ | async)
@@ -260,6 +277,7 @@
         </m-button>
       </div>
     </ng-container>
+    <!-- EMPTY NOTICE: DATE RANGE  -->
     <ng-container *ngIf="feedService.dateRangeEnabled$ | async">
       <div
         *ngIf="

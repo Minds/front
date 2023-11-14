@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '../../../common.module';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { PermissionsService } from '../../../services/permissions.service';
 
 /**
  * Buttons that allow users to create/discover groups
@@ -16,7 +17,10 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
   styleUrls: ['./find-groups-buttons.component.ng.scss'],
 })
 export class FindGroupsButtonsComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    protected permissions: PermissionsService
+  ) {}
 
   onClickCreate($event): void {
     this.router.navigate['/groups/create'];

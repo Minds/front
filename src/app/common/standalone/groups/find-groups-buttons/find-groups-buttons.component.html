@@ -1,4 +1,7 @@
-<a routerLink="/groups/create" data-ref="find-groups-buttons-create-group"
+<a
+  *ngIf="permissions.canCreateGroup()"
+  routerLink="/groups/create"
+  data-ref="find-groups-buttons-create-group"
   ><m-button color="blue"
     ><span i18n="@@FIND_GROUPS_BUTTONS__CREATE">Create</span
     ><span class="m-hideOnTablet">&nbsp;</span

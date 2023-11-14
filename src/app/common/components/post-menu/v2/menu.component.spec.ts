@@ -5,6 +5,7 @@ import { PostMenuService } from '../post-menu.service';
 import { PostMenuV2Component } from './menu.component';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { AdminSupersetLinkService } from '../../../services/admin-superset-link.service';
+import { PermissionsService } from '../../../services/permissions.service';
 
 describe('PostMenuV2Component', () => {
   let comp: PostMenuV2Component;
@@ -32,6 +33,10 @@ describe('PostMenuV2Component', () => {
         {
           provide: AdminSupersetLinkService,
           useValue: MockService(AdminSupersetLinkService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
         },
       ],
     })

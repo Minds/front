@@ -10,6 +10,7 @@ import {
 import { Session } from '../../../../services/session';
 import { PostMenuService } from '../post-menu.service';
 import { AdminSupersetLinkService } from '../../../services/admin-superset-link.service';
+import { PermissionsService } from '../../../services/permissions.service';
 
 type Option =
   | 'edit'
@@ -61,7 +62,8 @@ export class PostMenuV2Component implements OnInit {
     public session: Session,
     private cd: ChangeDetectorRef,
     public service: PostMenuService,
-    private adminSupersetLink: AdminSupersetLinkService
+    private adminSupersetLink: AdminSupersetLinkService,
+    protected permissions: PermissionsService
   ) {}
 
   ngOnInit() {
@@ -79,7 +81,11 @@ export class PostMenuV2Component implements OnInit {
   }
 
   shouldShowEdit(): boolean {
-    if (this.mediaModal || this.entity.permaweb_id) {
+    if (
+      this.mediaModal ||
+      this.entity.permaweb_id ||
+      !this.permissions.canPost()
+    ) {
       return false;
     }
     return (
