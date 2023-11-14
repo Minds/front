@@ -244,7 +244,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * @returns { Promise<void> } - awaitable.
    */
   public async openComposerModal(): Promise<void> {
-    if (!this.permissions.canPost()) {
+    if (!this.permissions.canCreatePost()) {
       return;
     }
     try {

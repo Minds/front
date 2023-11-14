@@ -34,18 +34,18 @@ describe('PermissionsService', () => {
   it('should disallow posting if permission is not in whitelist and experiment is enabled', () => {
     configsServiceSpy.get.and.returnValue(['CAN_COMMENT']);
     experimentsServiceSpy.hasVariation.and.returnValue(true);
-    expect(service.canPost()).toBe(false);
+    expect(service.canCreatePost()).toBe(false);
   });
 
   it('should allow posting if experiment is not enabled regardless of whitelist', () => {
     configsServiceSpy.get.and.returnValue([]);
     experimentsServiceSpy.hasVariation.and.returnValue(false);
-    expect(service.canPost()).toBe(true);
+    expect(service.canCreatePost()).toBe(true);
   });
 
   it('should allow posting if permission is not in whitelist and experiment is not enabled', () => {
     configsServiceSpy.get.and.returnValue(['CAN_COMMENT']);
     experimentsServiceSpy.hasVariation.and.returnValue(false);
-    expect(service.canPost()).toBe(true);
+    expect(service.canCreatePost()).toBe(true);
   });
 });

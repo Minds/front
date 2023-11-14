@@ -54,7 +54,7 @@ export class PermissionsService {
   }
 
   // Is the user allowed to create posts?
-  public canPost(): boolean {
+  public canCreatePost(): boolean {
     return this.has(Permission.CanCreatePost);
   }
 

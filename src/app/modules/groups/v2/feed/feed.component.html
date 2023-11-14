@@ -40,7 +40,7 @@
         <!-- ----------------------------------------- -->
         <!-- COMPOSER  -->
         <!-- ----------------------------------------- -->
-        <ng-container *ngIf="permissions.canPost()">
+        <ng-container *ngIf="permissions.canCreatePost()">
           <m-composer
             *ngIf="service.isMember$ | async"
             [container]="group"

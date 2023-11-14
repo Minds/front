@@ -84,7 +84,7 @@ export class PostMenuV2Component implements OnInit {
     if (
       this.mediaModal ||
       this.entity.permaweb_id ||
-      !this.permissions.canPost()
+      !this.permissions.canCreatePost()
     ) {
       return false;
     }

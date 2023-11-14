@@ -81,7 +81,7 @@
     <!-- ----------------------------------------- -->
     <div class="m-channelFeed__list" *ngIf="!isGrid">
       <ng-container *ngIf="feed?.length > 0">
-        <ng-container *ngIf="permissions.canPost()">
+        <ng-container *ngIf="permissions.canCreatePost()">
           <m-composer *ngIf="service.isOwner$ | async"></m-composer>
         </ng-container>
         <div
@@ -192,7 +192,7 @@
         "
       >
         <!-- EMPTY NOTICE: OWNER / NO QUERY / NO DATE RANGE / HAS CREATE POST PERMISSIONS  -->
-        <ng-container *ngIf="permissions.canPost()">
+        <ng-container *ngIf="permissions.canCreatePost()">
           <ng-container [ngSwitch]="feedService.type$ | async">
             <span
               *ngSwitchCase="'images'"
@@ -236,7 +236,7 @@
           </m-button>
         </ng-container>
         <!-- EMPTY NOTICE: OWNER / NO QUERY / NO DATE RANGE / NO CREATE POST PERMISSIONS -->
-        <ng-container *ngIf="!permissions.canPost()">
+        <ng-container *ngIf="!permissions.canCreatePost()">
           <span
             class="m-channelFeed__emptyFeedTitle"
             i18n="@@M__CHANNEL_FEED__NO_RESULTS_NO_POSTS__NO_POST_PERMISSION"

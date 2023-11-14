@@ -32,7 +32,7 @@
       <span>Undo Remind</span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
-      *ngIf="permissions.canPost()"
+      *ngIf="permissions.canCreatePost()"
       (click)="onQuotePostClick($event)"
       icon="create"
       [m-clientMeta]="getClientMetaDetails(service.entity$.getValue())"
@@ -40,7 +40,7 @@
       <span>Quote post</span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
-      *ngIf="permissions.canPost()"
+      *ngIf="permissions.canCreatePost()"
       (click)="onGroupShareClick($event)"
       icon="group"
       data-ref="remind-button-group-share"
