@@ -60,7 +60,11 @@ export class ProductPageButtonComponent {
   public onClick(): void {
     // if there is a navigationUrl, navigate to it.
     if (Boolean(this.data.navigationUrl)) {
-      this.router.navigate([this.data.navigationUrl]);
+      if (this.data.navigationUrl.startsWith('http')) {
+        window.open(this.data.navigationUrl, '_blank');
+      } else {
+        this.router.navigate([this.data.navigationUrl]);
+      }
       return;
     }
     // else, if there is an action, handle it.
