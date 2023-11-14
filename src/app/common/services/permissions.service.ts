@@ -7,6 +7,7 @@ export enum Permission {
   CanComment = 'CAN_COMMENT',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanCreateGroup = 'CAN_CREATE_GROUP',
+  CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
 }
 
 export const VIDEO_PERMISSIONS_ERROR_MESSAGE =
@@ -70,5 +71,10 @@ export class PermissionsService {
   // Is the user allowed to create a group?
   public canCreateGroup(): boolean {
     return this.has(Permission.CanCreateGroup);
+  }
+
+  // Is the user allowed to assign permissions?
+  public canAssignPermisions(): boolean {
+    return this.has(Permission.CanAssignPermissions);
   }
 }
