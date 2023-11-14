@@ -5,5 +5,5 @@
     [alt]="item.image.data?.attributes?.alternativeText ?? 'Feature image'"
   />
   <h4 class="m-featureShowcase__title">{{ item.title }}</h4>
-  <p class="m-featureShowcase__body">{{ item.body }}</p>
+  <markdown ngPreserveWhitespaces [data]="text">{{ item.body }}</markdown>
 </div>
