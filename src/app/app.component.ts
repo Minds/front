@@ -259,6 +259,16 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   /**
+   * Whether this is the main Minds domain (www.minds.com).
+   * @returns { boolean } - true if we are on the main Minds domain.
+   */
+  public isMindsMainDomain(): boolean {
+    return isPlatformBrowser(this.platformId)
+      ? window.location.href.includes('www.minds.com')
+      : false;
+  }
+
+  /**
    * Whether onboarding v5 should be shown.
    * @returns { Promise<boolean> } true if onboarding v5 should be shown.
    */
