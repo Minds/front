@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import {
   GetReportsGQL,
@@ -21,6 +27,7 @@ import { ApolloQueryResult } from '@apollo/client';
     './reports-list.component.ng.scss',
     '../../../stylesheets/console.component.ng.scss',
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NetworkAdminConsoleReportsListComponent
   implements OnInit, OnDestroy {
@@ -51,7 +58,10 @@ export class NetworkAdminConsoleReportsListComponent
   // Subscriptions
   private getReportsValueChangeSubscription: Subscription;
 
-  constructor(private getReportsGQL: GetReportsGQL) {}
+  constructor(
+    private getReportsGQL: GetReportsGQL,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.getReportsQuery = this.getReportsGQL.watch(
@@ -128,6 +138,7 @@ export class NetworkAdminConsoleReportsListComponent
     ) {
       this.fetchMore();
     }
+    this.detectChanges();
   }
 
   /**
@@ -151,5 +162,15 @@ export class NetworkAdminConsoleReportsListComponent
       result?.data?.reports?.pageInfo?.hasNextPage ?? false
     );
     this.endCursor = Number(result?.data?.reports?.pageInfo?.endCursor ?? null);
+    this.detectChanges();
+  }
+
+  /**
+   * Run change detection.
+   * @returns { void }
+   */
+  private detectChanges(): void {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

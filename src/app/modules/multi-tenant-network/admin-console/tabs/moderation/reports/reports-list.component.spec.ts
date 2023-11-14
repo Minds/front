@@ -8,11 +8,11 @@ import {
   ReportActionEnum,
   ReportEdge,
   ReportStatusEnum,
-  UserEdge,
 } from '../../../../../../../graphql/generated.engine';
 import { NetworkAdminConsoleReportsListComponent } from './reports-list.component';
 import { MockComponent } from '../../../../../../utils/mock';
 import userMock from '../../../../../../mocks/responses/user.mock';
+import { ChangeDetectorRef } from '@angular/core';
 
 describe('NetworkAdminConsoleReportsListComponent', () => {
   let comp: NetworkAdminConsoleReportsListComponent;
@@ -153,6 +153,7 @@ describe('NetworkAdminConsoleReportsListComponent', () => {
             provide: GetReportsGQL,
             useValue: jasmine.createSpyObj<GetReportsGQL>(['watch']),
           },
+          ChangeDetectorRef,
         ],
       }).compileComponents();
     })
