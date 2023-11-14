@@ -1,0 +1,54 @@
+<div class="m-featuredEntityRow__infoContainer" (click)="navigateToEntity()">
+  <minds-avatar
+    class="m-featuredEntityRow__avatar"
+    [object]="buildAvatarEntity()"
+  ></minds-avatar>
+  <div class="m-featuredEntityRow__infoContainerRight">
+    <ng-container [ngSwitch]="featuredEntity.__typename">
+      <ng-container *ngSwitchCase="'FeaturedGroup'">
+        <span class="m-featuredEntityRow__infoContainerName">{{
+          featuredEntity.name | truncate: 30
+        }}</span>
+        <span class="m-featuredEntityRow__infoContainerSubtext"
+          ><strong>{{ featuredEntity.membersCount }}</strong
+          >&nbsp;<span
+            i18n="
+               group members|@@NETWORK_ADMIN_CONSOLE__FEATURED_ENTITY__MEMBERS
+            "
+            >members</span
+          ></span
+        >
+      </ng-container>
+      <ng-container *ngSwitchCase="'FeaturedUser'">
+        <span class="m-featuredEntityRow__infoContainerName">{{
+          featuredEntity.name | truncate: 30
+        }}</span>
+        <span class="m-featuredEntityRow__infoContainerSubtext"
+          >@{{ featuredEntity.username | truncate: 30 }}</span
+        >
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<div class="m-featuredEntityRow__chipBadge">
+  <span
+    class="m-featuredEntityRow__chipBadgeText"
+    i18n="featured user|@@NETWORK_ADMIN_CONSOLE__FEATURED_ENTITY__FEATURED"
+    >Featured</span
+  >
+  <ng-container *ngIf="!(inProgress$ | async); else deleteInProgressTemplate">
+    <i
+      class="material-icons m-featuredEntityRow__deleteIcon"
+      (click)="onDeleteClicked()"
+      >close</i
+    >
+  </ng-container>
+  <ng-template #deleteInProgressTemplate>
+    <m-sizeableLoadingSpinner
+      [inProgress]="true"
+      [spinnerHeight]="16"
+      [spinnerWidth]="16"
+    ></m-sizeableLoadingSpinner>
+  </ng-template>
+</div>

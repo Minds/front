@@ -61,6 +61,9 @@ export class ProductPageBaseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // force scroll to top for when the component reloads with a different slug.
+    window.scroll(0, 0);
+
     this.navigationService.setVisible(false);
     this.pageLayoutService.useFullWidth();
     this.topbarService.isMinimalLightMode$.next(true);

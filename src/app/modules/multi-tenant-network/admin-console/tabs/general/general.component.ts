@@ -29,6 +29,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
     './general.component.ng.scss',
     '../../stylesheets/console.component.ng.scss',
   ],
+  host: { class: 'm-networkAdminConsole__container--noHorizontalPadding' },
 })
 export class NetworkAdminConsoleGeneralComponent implements OnInit, OnDestroy {
   /** Whether config is being loaded. */

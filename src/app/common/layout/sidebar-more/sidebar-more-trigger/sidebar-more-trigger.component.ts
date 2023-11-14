@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 import { Session } from '../../../../services/session';
+import { IsTenantService } from '../../../services/is-tenant.service';
 
 @Component({
   selector: 'm-sidebarMore__trigger',
@@ -46,7 +47,7 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
 
   shown: boolean = false;
 
-  constructor(public session: Session) {}
+  constructor(public session: Session, protected isTenant: IsTenantService) {}
 
   ngAfterViewInit(): void {
     this.onResize();
@@ -111,7 +112,8 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
      * Align popperEl top with triggerEl top to start
      */
     const triggerHeight = 35;
-    const popperHeight = this.session.isLoggedIn() ? 396 : 133;
+    const popperHeight =
+      this.session.isLoggedIn() && !this.isTenant.is() ? 396 : 133;
 
     let x = popperHeight / 2 - triggerHeight / 2;
     // ************************************
