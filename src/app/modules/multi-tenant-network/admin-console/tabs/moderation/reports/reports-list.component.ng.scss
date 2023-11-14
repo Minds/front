@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  padding: $spacing6 $spacing8;
+  padding: $spacing6 $spacing8 !important;
 
   m-networkAdminConsole__report {
     margin-bottom: $spacing6;
