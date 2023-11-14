@@ -47,6 +47,7 @@ import { BoostFeedService } from '../services/boost-feed.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { FeedAlgorithm } from '../../../common/services/feeds.service';
 import { FeedNoticeDismissalService } from '../../notices/services/feed-notice-dismissal.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 const PAGE_SIZE = 12;
@@ -166,6 +167,7 @@ export class NewsfeedGqlComponent implements OnInit, OnDestroy, AfterViewInit {
     private fetchNewsfeed: FetchNewsfeedGQL,
     protected boostFeedService: BoostFeedService,
     protected experimentsService: ExperimentsService,
+    protected permissions: PermissionsService,
     protected isTenant: IsTenantService
   ) {
     if (isPlatformServer(this.platformId)) return;

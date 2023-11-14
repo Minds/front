@@ -27,6 +27,7 @@ import { catchError, take } from 'rxjs/operators';
 import { AnalyticsService } from '../../../../services/analytics';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ComposerService } from '../../../composer/services/composer.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Container for channel feed, including filters and composer (if user is channel owner)
@@ -109,6 +110,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private injector: Injector,
     private analyticsService: AnalyticsService,
     private clientMeta: ClientMetaDirective,
+    protected permissions: PermissionsService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -242,6 +244,9 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * @returns { Promise<void> } - awaitable.
    */
   public async openComposerModal(): Promise<void> {
+    if (!this.permissions.canCreatePost()) {
+      return;
+    }
     try {
       await this.composerModal.setInjector(this.injector).present();
     } catch (e) {

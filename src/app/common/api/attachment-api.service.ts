@@ -8,7 +8,13 @@ import {
   mapTo,
   mergeAll,
 } from 'rxjs/operators';
-import { Observable, of, OperatorFunction, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  of,
+  OperatorFunction,
+  throwError,
+} from 'rxjs';
 import {
   HttpClient,
   HttpEvent,
@@ -16,6 +22,11 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import getFileType from '../../helpers/get-file-type';
+import {
+  PermissionsService,
+  VIDEO_PERMISSIONS_ERROR_MESSAGE,
+} from '../services/permissions.service';
+import { ToasterService } from '../services/toaster.service';
 
 /**
  * Upload event type
@@ -123,12 +134,21 @@ export const httpEventToUploadEvent = (
  */
 @Injectable()
 export class AttachmentApiService {
+  public readonly videoPermissionsError$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   /**
    * Constructor
    * @param api
    * @param http
    */
-  constructor(protected api: ApiService, protected http: HttpClient) {}
+  constructor(
+    protected api: ApiService,
+    protected http: HttpClient,
+    private permissions: PermissionsService,
+    private toaster: ToasterService
+  ) {}
 
   /**
    * Uploads a file using a "smart" strategy.
@@ -139,6 +159,8 @@ export class AttachmentApiService {
     file: File | null,
     metadata: { [key: string]: any }
   ): Observable<UploadEvent | null> {
+    this.videoPermissionsError$.next(false);
+
     if (!file) {
       return of(null);
     }
@@ -146,6 +168,12 @@ export class AttachmentApiService {
     if (/image\/.+/.test(file.type)) {
       return this.uploadToApi(file, metadata);
     } else if (/video\/.+/.test(file.type)) {
+      if (!this.permissions.canUploadVideo()) {
+        this.toaster.error(VIDEO_PERMISSIONS_ERROR_MESSAGE);
+
+        this.videoPermissionsError$.next(true);
+        return throwError(new Error(VIDEO_PERMISSIONS_ERROR_MESSAGE));
+      }
       return this.uploadToS3(file, metadata);
     }
 

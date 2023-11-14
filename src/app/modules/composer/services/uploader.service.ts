@@ -18,6 +18,7 @@ import {
   mergeMap,
   scan,
   share,
+  shareReplay,
   startWith,
   take,
   takeUntil,
@@ -53,6 +54,14 @@ export class UploaderService implements OnDestroy {
    * Emit to here to remove a File from the upload
    */
   public stopFile$$: Subject<File> = new Subject();
+
+  /**
+   * Emit here when the user tries to upload a video
+   * but doesn't have permission
+   */
+  public videoPermissionsError$ = this.attachmentApi.videoPermissionsError$.pipe(
+    shareReplay()
+  );
 
   /**
    * Will retry a failed file
@@ -115,17 +124,28 @@ export class UploaderService implements OnDestroy {
         takeUntil(
           this.stopFile$$.pipe(filter(stopFile => stopFile.name === file.name))
         ),
-        catchError(() => of({ error: true })),
+        catchError(e => of({ error: true })),
         scan(
           (
             acc,
             curr:
-              | { type: AttachmentType; guid: string; progress: number }
+              | {
+                  type: AttachmentType;
+                  guid: string;
+                  progress: number;
+                  error?: undefined;
+                }
               | { error: true }
-          ) => ({
-            ...acc,
-            ...curr,
-          }),
+          ) => {
+            // Update toRemove only when there's an error
+            const toRemove = curr?.error === true;
+
+            return {
+              ...acc,
+              ...curr,
+              toRemove,
+            };
+          },
           {
             file,
             guid: null,

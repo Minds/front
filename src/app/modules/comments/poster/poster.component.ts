@@ -29,6 +29,11 @@ import isMobile from '../../../helpers/is-mobile';
 import moveCursorToEnd from '../../../helpers/move-cursor-to-end';
 import { SupermindBannerPopupService } from '../../supermind/supermind-banner/supermind-banner-popup.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import {
+  COMMENT_PERMISSIONS_ERROR_MESSAGE,
+  PermissionsService,
+} from '../../../common/services/permissions.service';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 @Component({
   selector: 'm-comment__poster',
@@ -87,7 +92,9 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     private authModal: AuthModalService,
     private isCommentingService: IsCommentingService,
     public elRef: ElementRef,
-    public supermindBannerPopup: SupermindBannerPopupService
+    public supermindBannerPopup: SupermindBannerPopupService,
+    protected permissions: PermissionsService,
+    protected toaster: ToasterService
   ) {}
 
   ngOnInit() {
@@ -176,6 +183,10 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   }
 
   async post(e) {
+    if (!this.postEnabled()) {
+      console.error(COMMENT_PERMISSIONS_ERROR_MESSAGE);
+      return;
+    }
     e.preventDefault();
 
     // Don't try to show banner if comment is already posted
@@ -352,7 +363,10 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   }
 
   postEnabled() {
-    if (this.content.length > this.maxLength) {
+    if (
+      this.content.length > this.maxLength ||
+      !this.permissions.canComment()
+    ) {
       return false;
     }
     return true; // TODO: fix
@@ -400,6 +414,9 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   focus(shouldMoveCursorToEnd: boolean = true) {
+    if (!this.permissions.canComment()) {
+      return;
+    }
     const el = this.textArea?.editorControl?.nativeElement;
     if (el) {
       el.focus({
@@ -408,6 +425,15 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
       if (shouldMoveCursorToEnd) {
         moveCursorToEnd(el);
       }
+    }
+  }
+
+  protected checkPermissions($event): void {
+    if (!this.permissions.canComment()) {
+      this.toaster.error(COMMENT_PERMISSIONS_ERROR_MESSAGE);
+
+      $event.preventDefault();
+      $event.stopPropagation();
     }
   }
 }

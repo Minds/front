@@ -48,8 +48,8 @@
             <a
               class="m-commentOwnerRowItem__name"
               [routerLink]="['/', comment.ownerObj.username]"
-              [title]="comment.ownerObj.name | titlecase"
-              >{{ comment.ownerObj.name | truncate: 20 | titlecase
+              [title]="comment.ownerObj.ngTemplateOutlet"
+              >{{ comment.ownerObj.name | truncate: 20
               }}<ng-container [ngTemplateOutlet]="badges"></ng-container
             ></a>
           </ng-template>
@@ -296,7 +296,7 @@
                   #edit
                   name="description"
                   [(mModel)]="content"
-                  [disabled]="inProgress"
+                  [disabled]="inProgress || !permissions.canComment()"
                   (keypress)="keypress($event)"
                   (keyup)="getPostPreview(edit)"
                   (filePaste)="uploadAttachment($event)"
@@ -519,17 +519,19 @@
               ><i class="material-icons">ios_share</i></a
             >
           </div>
-          <div
-            class="m-commentToolbarButton"
-            (click)="toggleReplies()"
-            *ngIf="session.isLoggedIn()"
-          >
-            <a
-              ><span *ngIf="activityService.allowComment$ | async"
-                >Reply</span
-              ></a
+          <ng-container *ngIf="permissions.canComment()">
+            <div
+              class="m-commentToolbarButton"
+              (click)="toggleReplies()"
+              *ngIf="session.isLoggedIn()"
             >
-          </div>
+              <a
+                ><span *ngIf="activityService.allowComment$ | async"
+                  >Reply</span
+                ></a
+              >
+            </div>
+          </ng-container>
         </div>
         <!-- --------------------- -->
         <!-- COMMENT ACTIONS DROPDOWN -->
@@ -554,9 +556,10 @@
             <!-- Edit -->
             <m-dropdownMenu__item
               *ngIf="
-                comment.owner_guid == session.getLoggedInUser()?.guid ||
-                session.isAdmin() ||
-                canEdit
+                (_compact.owner_guid == session.getLoggedInUser()?.guid ||
+                  session.isAdmin() ||
+                  canEdit) &&
+                permissions.canComment()
               "
               (click)="editing = !editing"
             >
