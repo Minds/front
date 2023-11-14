@@ -12,6 +12,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm-discovery__plusUpgrade',
   templateUrl: './plus-upgrade.component.html',
   styleUrls: ['./plus-upgrade.component.ng.scss'],
+  providers: [ComposerService],
 })
 export class DiscoveryPlusUpgradeComponent implements OnInit {
   isPlus: boolean = false;
@@ -62,12 +63,13 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
 
     this.composerService.pendingMonetization$.next({
       type: 'plus',
+      name: 'Minds+',
       support_tier: support_tier,
     });
 
     await this.composerModal.setInjector(this.injector).present();
 
-    // Resest on close
+    // Reset on close
     this.composerService.reset();
   }
 }

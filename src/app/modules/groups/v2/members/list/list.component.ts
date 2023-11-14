@@ -11,7 +11,6 @@ import {
   Observable,
   Subscription,
   combineLatest,
-  debounceTime,
   distinctUntilChanged,
   map,
   shareReplay,
@@ -95,6 +94,8 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
 
   /**
    * Show list in compact format
+   * with a manual "see more" button
+   * instead of infinite scroll
    * (e.g. for moderators list)
    */
   @Input() compactView: boolean = false;
@@ -172,7 +173,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
       this.group$,
       this.groupMembershipLevel$,
       this.membershipLevelGte$,
-      // this.searchQuery$,
+      this.searchQuery$,
     ]).pipe(
       distinctUntilChanged(),
       tap(_ => {
@@ -180,21 +181,22 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         this.list$.next([]);
       }),
       switchMap(
-        ([group, groupMembershipLevel, membershipLevelGte]: [
+        ([group, groupMembershipLevel, membershipLevelGte, q]: [
           MindsGroup,
           GroupMembershipLevel,
-          boolean
-          // string
+          boolean,
+          string
         ]): Observable<
           ApiResponse | { redirect: boolean; errorMessage: any }
         > => {
+          //this.service.searchQuery$.next(q);
           return this.service.getList$(this.requestLimit, 0);
         }
       ),
       tap((response: any) => {
-        this.moreData$.next(response['load-next']);
         this.inProgress$.next(false);
         this.list$.next(response.members);
+        this.moreData$.next(this.getMoreDataValue(response));
         this.loaded.emit();
       }),
       shareReplay()
@@ -220,7 +222,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
             let currentList = this.list$.getValue();
             this.list$.next([...currentList, ...response.members]);
 
-            this.moreData$.next(response['load-next']);
+            this.moreData$.next(this.getMoreDataValue(response));
           } else {
             this.moreData$.next(false);
           }
@@ -258,5 +260,38 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
         return !inProgress && (!list || !list.length);
       })
     );
+  }
+
+  /**
+   * Whether group member actions should be shown.
+   * @param { unknown } member - member to check.
+   * @returns { boolean } - true if group member actions should be shown.
+   */
+  public shouldShowGroupMemberActions(member: unknown): boolean {
+    return (
+      this.group['is:owner'] ||
+      (this.group['is:moderator'] &&
+        !(member['is:owner'] || member['is:moderator']))
+    );
+  }
+
+  /**
+   * Reduces likelihood of needlessly showing
+   * a manual "see more" button
+   * in the moderators list.
+   * Response total is unreliable - shows entire group count
+   * @param response
+   */
+  private getMoreDataValue(response): boolean {
+    if (this.compactView) {
+      return (
+        // Only true if the response has maxed out the limit
+        response.members.length >= this.requestLimit &&
+        // and there aren't theoretically more members to load
+        response.total > this.list$.getValue().length
+      );
+    } else {
+      return response['load-next'];
+    }
   }
 }

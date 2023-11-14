@@ -26,7 +26,8 @@
       sizeOverride="medium"
       [showSubscribeButton]="member.guid !== session.getLoggedInUser().guid"
       ><m-group__memberActions
-        *ngIf="member.guid !== session.getLoggedInUser().guid"
+        additionalActions
+        *ngIf="shouldShowGroupMemberActions(member)"
         class="m-publisherCard__actionsButton"
         [group]="group"
         [user]="member"
@@ -51,7 +52,8 @@
         </m-tooltip>
       </div>
       <m-group__memberActions
-        *ngIf="member.guid !== session.getLoggedInUser().guid"
+        additionalActions
+        *ngIf="shouldShowGroupMemberActions(member)"
         class="m-publisherCard__actionsButton"
         [group]="group"
         [user]="member"

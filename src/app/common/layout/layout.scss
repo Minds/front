@@ -102,6 +102,8 @@ $layoutMin1ColWidth: 280px;
 
 .m-pageLayout__pane--left {
   min-width: $layoutSidebarFullWidth;
+  max-width: $layoutSidebarFullWidth;
+
   @include m-theme() {
     border-right: 1px solid themed($m-borderColor--primary);
   }

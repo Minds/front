@@ -12,8 +12,6 @@ import { GroupsProfileRequests } from './profile/requests/requests';
 import { GroupsTileComponent } from './tile/tile.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
-import { GroupProfileFeedComponent } from './profile/feed/feed.component';
-import { GroupProfileFeedSortedComponent } from './profile/feed/sorted.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { GroupsProfileReviewComponent } from './profile/review/review.component';
 import { GroupsKickModalComponent } from './kick-modal/kick-modal.component';
@@ -21,7 +19,6 @@ import { TextInputAutocompleteModule } from '../../common/components/autocomplet
 import { ComposerModule } from '../composer/composer.module';
 import { GroupsCreator } from './create/create';
 import { GroupsMembershipsComponent } from './memberships/memberships.component';
-import { GroupsSearchService } from './profile/feed/search.service';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { PathMatch } from '../../common/types/angular.types';
 import { FindGroupsButtonsComponent } from '../../common/standalone/groups/find-groups-buttons/find-groups-buttons.component';
@@ -37,12 +34,12 @@ const routes: Routes = [
   },
   {
     path: 'groups/profile/:guid/feed',
-    redirectTo: 'group/:guid/feed',
+    redirectTo: 'group/:guid/latest',
     pathMatch: 'full' as PathMatch,
   },
   {
     path: 'groups/profile/:guid/activity',
-    redirectTo: 'group/:guid/feed',
+    redirectTo: 'group/:guid/latest',
     pathMatch: 'full' as PathMatch,
   },
   {
@@ -101,8 +98,6 @@ const routes: Routes = [
   declarations: [
     GroupsCreator,
     GroupsCard,
-    GroupProfileFeedComponent,
-    GroupProfileFeedSortedComponent,
     GroupsProfileRequests,
     GroupsTileComponent,
     GroupsProfileReviewComponent,
@@ -115,8 +110,6 @@ const routes: Routes = [
     GroupsCard,
     GroupsProfileRequests,
     GroupsProfileReviewComponent,
-    GroupProfileFeedComponent,
   ],
-  providers: [GroupsSearchService],
 })
 export class GroupsModule {}

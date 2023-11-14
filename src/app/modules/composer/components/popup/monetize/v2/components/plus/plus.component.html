@@ -2,10 +2,10 @@
   <ng-container *ngIf="isPlus"
     ><p
       class="m-form__row--label m-composerPopup__text"
-      i18n="@@COMPOSER__MONETIZE_PLUS__POOL_DESC"
+      i18n="@@COMPOSER__MONETIZE_PLUS__SUBSCRIPTIONS_DESC"
     >
-      Submit this post to Minds+ members only and earn a share of our revenue
-      based on how it performs.
+      Submit a paywalled post for Minds+ members and earn 45% of new
+      subscriptions that it refers.
     </p>
 
     <div class="m-composerPopup__checkbox">
@@ -36,7 +36,7 @@
         >
       </m-formInput__checkbox>
     </div>
-    <div class="m-form__field--textboxToggle" hidden>
+    <!-- <div class="m-form__field--textboxToggle" hidden>
       <div
         class="m-form__row--label m-composerPopup__text"
         i18n="@@COMPOSER__MONETIZE_PLUS__EXCLUSIVITY_PERIOD"
@@ -59,7 +59,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </ng-container>
 
   <ng-container *ngIf="!isPlus"

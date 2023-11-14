@@ -1,0 +1,15 @@
+mutation CreateGiftCard(
+  $productIdEnum: Int!,
+  $amount: Float!,
+  $stripePaymentMethodId: String!,
+  $targetInput: GiftCardTargetInput!
+) {
+  createGiftCard(
+    productIdEnum: $productIdEnum
+    amount: $amount
+    stripePaymentMethodId: $stripePaymentMethodId
+    targetInput: $targetInput
+  ) {
+    guid
+  }
+}

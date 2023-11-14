@@ -1,0 +1,220 @@
+query GetV2ProductPageBySlug($slug: String!) {
+  v2ProductPages(filters: { slug: { eq: $slug } }) {
+    data {
+      attributes {
+        slug
+        metadata {
+          title
+          description
+          canonicalUrl
+          robots
+          author
+          ogUrl
+          ogType
+          ogAuthor
+          ogImage {
+            data {
+              attributes {
+                url
+                height
+                width
+              }
+            }
+          }
+        }
+        productPage {
+          __typename
+          ... on ComponentV2ProductHero {
+            id
+            text
+          }
+          ... on ComponentV2ProductPricingCards {
+            id
+            savingsText
+            productPlans {
+              data {
+                attributes {
+                  tier
+                  title
+                  subtitle
+                  mostPopular
+                  priceStartingAt
+                  button {
+                    text
+                    dataRef
+                    solid
+                    rounded
+                    navigationUrl
+                    action
+                  }
+                  perksTitle
+                  perks {
+                    text
+                  }
+                }
+              }
+            }
+          }
+          ... on ComponentV2ProductFeatureTable {
+            id
+            title
+            subtitle
+            columns {
+              data {
+                attributes {
+                  tier
+                  featTableHeader {
+                    title
+                    priceStartingAt
+                  	button {
+                      text
+                      dataRef
+                      solid
+                      rounded
+                      navigationUrl
+                      action
+                  	}
+                  }
+                  sections {
+                    data {
+                      attributes {
+                        headerText
+                        items {
+                          data {
+                            attributes {
+                              checkbox
+                              columnText
+                              productFeature {
+                                data {
+                                  attributes {
+                                    featureName
+                                    explainerText
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ... on ComponentV2ProductFeatureShowcase {
+            id
+            items {
+              image {
+                data {
+                  attributes {
+                    url
+                    height
+                    width
+                    alternativeText
+                  }
+                }
+              }
+              title
+              body
+            }
+          }
+          ... on ComponentV2ProductBasicExplainer {
+            id
+            title
+            body
+            button {
+              text
+              dataRef
+              solid
+              rounded
+              navigationUrl
+              action
+            }
+          }
+          ... on ComponentV2ProductFeatureHighlight {
+            id
+            backgroundColor
+            colorScheme
+            title
+            body
+            image {
+              data {
+                attributes {
+                  url
+                  height
+                  width
+                  alternativeText
+                }
+              }
+            }
+            alignImage
+            button {
+              text
+              dataRef
+              solid
+              rounded
+              navigationUrl
+              action
+            }
+          }
+          ... on ComponentV2ProductClosingCta {
+            id
+            title
+            body
+            borderImage {
+              data {
+                attributes {
+                  url
+                  height
+                  width
+                  alternativeText
+                }
+              }
+            }
+            button {
+              text
+              dataRef
+              solid
+              rounded
+              navigationUrl
+              action
+            }
+          }
+        }
+      }
+    }
+  }
+  footer {
+    data {
+      attributes {
+        logo {
+          data {
+            attributes {
+              url
+              height
+              width
+              alternativeText
+            }
+          }
+        }
+        showLanguageBar
+        slogan
+        copyrightText
+        columns {
+          title
+          links {
+            text
+            url
+            dataRef
+          }
+        }
+        bottomLinks {
+          text
+          url
+          dataRef
+        }
+      }
+    }
+  }
+}

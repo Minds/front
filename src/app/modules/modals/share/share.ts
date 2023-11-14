@@ -4,6 +4,7 @@ import { Session } from '../../../services/session';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 @Component({
   selector: 'm-modal-share',
@@ -31,7 +32,8 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   constructor(
     public session: Session,
     configs: ConfigsService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private isTenant: IsTenantService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -51,6 +53,10 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Disable referrer param for tenant sites
+    if (this.isTenant.is()) {
+      this.includeReferrerParam = false;
+    }
     if (this.session.getLoggedInUser()) {
       // Create custom referral param for current user
       this.referrerParam =

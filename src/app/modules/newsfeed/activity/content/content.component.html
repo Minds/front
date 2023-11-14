@@ -137,7 +137,7 @@ post content to trigger upgrade modal -->
         "
         [style.height.px]="imageHeight"
         [style.width.px]="imageWidth"
-        [ngClass]="{ 'm-border': !isModal }"
+        [ngClass]="{ 'm-border': !isModal && !isMinimalMode }"
         [loading]="hasLoadingPriority ? 'eager' : 'lazy'"
       />
     </ng-template>
@@ -187,6 +187,10 @@ post content to trigger upgrade modal -->
   <ng-container *ngTemplateOutlet="textTemplate"></ng-container>
 </ng-container>
 <!-- ----------------------------------- -->
+<!-- SECONDARY HASHTAGS -->
+<!-- ----------------------------------- -->
+<ng-container *ngTemplateOutlet="secondaryTagsTemplate"></ng-container>
+<!-- ----------------------------------- -->
 <!-- FIXED HEIGHT SPACER (BOOST ROTATOR ONLY)-->
 <!-- ----------------------------------- -->
 <div
@@ -222,6 +226,16 @@ post content to trigger upgrade modal -->
   *ngIf="showPermalink"
   class="m-activityContent__permalink"
 ></m-activity__permalink>
+<!-- ----------------------------------- -->
+<!-- TEMPLATE: SECONDARY TAGS -->
+<!-- (Formerly hidden hashtags) -->
+<!-- ----------------------------------- -->
+<ng-template #secondaryTagsTemplate
+  ><ng-container *ngIf="!hideText && entity?.tags && entity?.tags.length > 0">
+    <div class="m-activityContent__secondaryTagsWrapper">
+      <span *ngFor="let tag of entity.tags" [innerHTML]="'#' + tag | tags">
+      </span></div></ng-container
+></ng-template>
 <!-- ----------------------------------- -->
 <!-- TEMPLATE: TEXT-->
 <!-- ----------------------------------- -->

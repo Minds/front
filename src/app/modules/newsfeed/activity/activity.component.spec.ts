@@ -11,6 +11,7 @@ import { MockService } from '../../../utils/mock';
 import { BehaviorSubject, of } from 'rxjs';
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 describe('ActivityComponent', () => {
   let comp: ActivityComponent;
@@ -41,15 +42,23 @@ describe('ActivityComponent', () => {
             provide: PersistentFeedExperimentService,
             useValue: MockService(PersistentFeedExperimentService),
           },
+          { provide: IsTenantService, useValue: MockService(IsTenantService) },
         ],
       })
         .overrideProvider(ActivityService, {
           useValue: MockService(ActivityService, {
-            has: ['entity$', 'height$', 'isLoggedIn$', 'displayOptions'],
+            has: [
+              'entity$',
+              'height$',
+              'isLoggedIn$',
+              'displayOptions',
+              'canShow$',
+            ],
             props: {
               entity$: { get: () => new BehaviorSubject<any>(null) },
               height$: { get: () => new BehaviorSubject<any>(null) },
               isLoggedIn$: { get: () => new BehaviorSubject<any>(null) },
+              canShow$: { get: () => new BehaviorSubject<any>(true) },
               displayOptions: {
                 autoplayVideo: true,
                 showOwnerBlock: true,
@@ -75,6 +84,7 @@ describe('ActivityComponent', () => {
                 isFeed: false,
                 isSingle: false,
                 permalinkBelowContent: false,
+                hideTopBorder: false,
               },
             },
           }),

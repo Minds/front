@@ -20,20 +20,19 @@
       border-radius: 0;
       .m-composer__trigger {
         @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary);
           border-bottom: 4px solid themed($m-borderColor--primary);
         }
       }
     }
 
     [class*='m-pageLayout__pane'] {
-      .m-groupFeed__list,
-      .m-groupFeed__toolbar {
-        padding-left: $spacing8;
-        padding-right: $spacing8;
+      .m-groupFeed__toolbar,
+      .m-groupFeed__searchDisplay {
+        padding: $spacing5 $spacing10;
 
         @media screen and (max-width: $layoutMin3ColWidth) {
-          padding-left: $spacing4;
-          padding-right: $spacing4;
+          padding: $spacing5;
         }
       }
 
@@ -45,21 +44,12 @@
         }
       }
     }
-    .m-groupFeed__toolbar {
-      padding-top: $spacing5;
-      padding-bottom: $spacing5;
-
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-borderColor--primary);
-      }
-    }
 
     .m-groupFeed__searchDisplay {
-      padding: 25px 20px 0 20px;
+      font-size: 14px;
 
-      @media screen and (min-width: $layoutMin3ColWidth + 1) {
-        padding-left: 40px;
-        padding-right: 40px;
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
       }
 
       span {
@@ -112,52 +102,6 @@
         }
       }
 
-      .m-groupFeed__emptyFeedSubtitle {
-        font-size: 18px;
-        margin-top: 20px;
-
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
-      }
-
-      .m-groupFeed__firstPostButton {
-        margin-top: 30px;
-        border-radius: 20px;
-        padding: 10px 20px;
-        font-size: 18px;
-        font-weight: 500;
-        border: unset;
-        cursor: pointer;
-
-        @include m-theme() {
-          color: themed($m-textColor--primary);
-          background-color: themed($m-black);
-        }
-
-        &.m-groupFeed__firstPostButton--light {
-          @include m-theme() {
-            color: themed($m-white-always);
-            background-color: themed($m-grey-500);
-
-            &:hover {
-              background-color: themed($m-grey-700);
-            }
-          }
-        }
-
-        &.m-groupFeed__firstPostButton--dark {
-          @include m-theme() {
-            color: themed($m-bgColor--secondary);
-            background-color: themed($m-white-always);
-
-            &:hover {
-              background-color: themed($m-grey-700);
-            }
-          }
-        }
-      }
-
       &.m-groupFeed__emptyFeedContainer--bordered {
         padding: 50px 30px;
         margin: 60px;
@@ -177,70 +121,30 @@
       min-width: 310px;
     }
 
-    ::ng-deep {
-      m-newsfeed__entity {
-        display: block;
+    ::ng-deep .m-groupFeed__sortSelector {
+      > * {
         margin: 0;
-
-        &:first-child {
-          m-activity {
-            @include m-theme() {
-              border-top: none;
-            }
-          }
-        }
-      }
-
-      m-feedFilter {
-        .m-groupFeed__filter {
-          display: block;
-          padding: 0 0 20px;
-        }
-
-        .m-groupFeedFilter__scheduled {
-          display: flex;
-          align-items: center;
-          font-size: 15px;
-          font-weight: 300;
-          line-height: 20px;
-          text-decoration: none;
-
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-
-          i {
-            font-size: 20px;
-            margin: 0 8px 0 20px;
-            @include m-theme() {
-              color: themed($m-textColor--secondary);
-            }
-          }
-        }
       }
     }
-  }
-  ::ng-deep .m-comments__startConversation {
-    display: none !important;
-  }
 
-  .m-groupFeed__privateFeedNotice {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: $spacing20;
-    @include heading4Medium;
+    .m-groupFeed__privateFeedNotice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: $spacing20;
+      @include heading4Medium;
 
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
 
-    @media screen and (max-width: $max-mobile) {
-      margin: $spacing15;
-    }
+      @media screen and (max-width: $max-mobile) {
+        margin: $spacing15;
+      }
 
-    span {
-      text-align: center;
+      span {
+        text-align: center;
+      }
     }
   }
 }

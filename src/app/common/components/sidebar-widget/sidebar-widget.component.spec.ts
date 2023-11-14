@@ -58,18 +58,4 @@ describe('SidebarWidgetComponent', () => {
     );
     expect(component.hidden).toBeTruthy();
   });
-
-  it('should display h1 when headerLevel is set to 1', () => {
-    component.headerLevel = 1;
-    fixture.detectChanges();
-    const title = fixture.debugElement.nativeElement.querySelector('h1');
-    expect(title).toBeTruthy();
-  });
-
-  it('should display h2 when headerLevel is set to null', () => {
-    component.headerLevel = null;
-    fixture.detectChanges();
-    const title = fixture.debugElement.nativeElement.querySelector('h2');
-    expect(title).toBeTruthy();
-  });
 });

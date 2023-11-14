@@ -1,0 +1,134 @@
+@import 'defaults.scss';
+@import '../../../../../../common/layout/layout.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 12px;
+  padding: $spacing6;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  &.m-productUpgradeCard--plus {
+    @include m-theme() {
+      background: linear-gradient(
+        190deg,
+        darken(color-by-theme($m-grey-500, 'dark'), 20%) 0%,
+        color-by-theme($m-grey-900, 'dark') 45%
+      );
+    }
+  }
+
+  &.m-productUpgradeCard--pro {
+    @include m-theme() {
+      background: linear-gradient(
+        190deg,
+        darken(color-by-theme($m-amber-medium, 'dark'), 35%) 0%,
+        color-by-theme($m-grey-900, 'dark') 45%
+      );
+    }
+  }
+
+  .m-productUpgradeCard__topbarContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing2;
+
+    .m-productUpgradeCard__topbarTitle {
+      margin: 0;
+
+      @include heading4Bold;
+      @include m-theme() {
+        color: color-by-theme($m-textColor--primary, 'dark');
+      }
+    }
+
+    .m-productUpgradeCard__topbarIcon {
+      font-size: 24px;
+      padding: $spacing2;
+
+      @include m-theme() {
+        color: color-by-theme($m-textColor--primary, 'dark');
+      }
+    }
+
+    .m-productUpgradeCard__topbarbadgeText {
+      border-radius: 3px;
+      width: fit-content;
+      padding: calc($spacing1 * 0.75) $spacing1;
+
+      @include body3Bold;
+      @include m-theme() {
+        border: 1px solid color-by-theme($m-textColor--primary, 'dark');
+        color: color-by-theme($m-textColor--primary, 'dark');
+      }
+    }
+  }
+
+  .m-productUpgradeCard__pricingTierContainer {
+    margin-bottom: $spacing5;
+
+    .m-productUpgradeCard__pricingTier {
+      margin-bottom: $spacing1;
+
+      @include body3Regular;
+      @include m-theme() {
+        color: color-by-theme($m-textColor--primary, 'dark');
+      }
+
+      .m-productUpgradeCard__pricingTier--bold {
+        @include body2Bold;
+      }
+    }
+  }
+
+  .m-productUpgradeCard__benefit {
+    margin-bottom: $spacing3;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    .m-productUpgradeCard__benefitIconContainer {
+      padding: $spacing2;
+      border-radius: 50%;
+      margin-right: $spacing3;
+
+      @include m-theme() {
+        background-color: color-by-theme($m-borderColor--primary, 'dark');
+      }
+
+      .m-productUpgradeCard__benefitIcon {
+        font-size: 16px;
+
+        @include m-theme() {
+          color: color-by-theme($m-textColor--primary, 'dark');
+        }
+      }
+    }
+
+    .m-productUpgradeCard__benefitText {
+      margin-right: $spacing6;
+
+      @include body2Regular;
+      @include m-theme() {
+        color: color-by-theme($m-textColor--primary, 'dark');
+      }
+    }
+  }
+
+  .m-productUpgradeCard__footer {
+    height: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    margin-top: $spacing1;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      margin-top: $spacing4;
+    }
+  }
+}

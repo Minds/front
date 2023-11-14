@@ -1,10 +1,18 @@
-<div class="m-marketing__footer">
+<div
+  *ngIf="loaded$ | async; else loadingSpinnerTemplate"
+  class="m-marketing__footer"
+>
   <!-- ------------------------------------------ -->
   <!-- LANGUAGE BAR -->
   <!-- ------------------------------------------ -->
-  <div class="m-marketingFooter__section--language">
-    <m-language__bar></m-language__bar>
-  </div>
+  <ng-container *mIfTenant="false">
+    <div
+      class="m-marketingFooter__section--language"
+      *ngIf="data?.showLanguageBar"
+    >
+      <m-language__bar></m-language__bar>
+    </div>
+  </ng-container>
   <!-- ------------------------------------------ -->
   <!-- LINE -->
   <!-- ------------------------------------------ -->
@@ -13,232 +21,35 @@
   <!-- ------------------------------------------ -->
   <!-- MAIN: LOGO AND LINKS -->
   <!-- ------------------------------------------ -->
-  <div class="m-marketingFooter__section--main">
+  <div class="m-marketingFooter__section--main" *mIfTenant="false">
     <div class="m-marketingFooter__mainSubsection--brand">
       <div>
-        <div class="m-marketingFooter__logo"></div>
+        <img
+          class="m-marketingFooter__logo"
+          [src]="strapiUrl + data?.logo?.data?.attributes?.url"
+          [alt]="data?.logo?.data?.attributes?.alternativeText ?? 'Footer logo'"
+        />
         <h4 class="m-marketingFooter__slogan">
-          {{ slogan }}
+          {{ data?.slogan }}
         </h4>
-        <div class="m-marketingFooter__text">&copy; {{ year }} Minds, Inc.</div>
+        <div class="m-marketingFooter__text">{{ data?.copyrightText }}</div>
       </div>
     </div>
     <div class="m-marketingFooter__mainSubsection--links">
-      <div class="m-marketingFooter__mainLinksCategory">
-        <h4 i18n="@@COMMON_FOOTER__ABOUT">About</h4>
+      <div
+        *ngFor="let column of data?.columns"
+        class="m-marketingFooter__mainLinksCategory"
+      >
+        <h4>{{ column?.title }}</h4>
 
         <ul>
-          <li>
-            <a routerLink="/mobile" i18n="@@COMMON_FOOTER__MOBILE">
-              Mobile
-            </a>
-          </li>
-
-          <li>
+          <li *ngFor="let link of column?.links">
             <a
-              href="https://jobs.lever.co/minds"
-              i18n="@@COMMON_FOOTER__CAREERS"
+              [href]="link?.url"
               target="_blank"
+              [attr.data-ref]="link?.dataRef ?? 'footer-link-generic'"
+              >{{ link?.text }}</a
             >
-              Careers
-            </a>
-          </li>
-
-          <li hidden>
-            <a href="https://carta.com/minds" i18n="@@COMMON_FOOTER__INVESTORS">
-              Investors
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/minds/blogs" i18n="@@COMMON_FOOTER__BLOG">
-              Blog
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://cdn-assets.minds.com/front/dist/browser/en/assets/documents/Minds-Whitepaper-v2.pdf"
-              target="_blank"
-              i18n="@@COMMON_FOOTER__WHITEPAPER"
-            >
-              Whitepaper
-            </a>
-          </li>
-
-          <li>
-            <a
-              routerLink="/p/billofrights"
-              i18n="@@COMMON_FOOTER__BILL_OF_RIGHTS"
-            >
-              Bill of Rights
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://change.minds.com/"
-              target="_blank"
-              i18n="@@COMMON_FOOTER__EVENTS"
-            >
-              Events
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://teespring.com/stores/minds"
-              i18n="@@COMMON_FOOTER__STORE"
-            >
-              Store
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="m-marketingFooter__mainLinksCategory">
-        <h4 i18n="@@COMMON_FOOTER__BUSINESS">Business</h4>
-
-        <ul>
-          <li>
-            <a routerLink="/upgrades" i18n="@@COMMON_FOOTER__UPGRADE">
-              Upgrade
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/token" i18n="@@COMMON_FOOTER__TOKEN">
-              Token
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/plus" i18n="@@COMMON_FOOTER__PLUS">
-              Plus
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/pro" i18n="@@COMMON_FOOTER__PRO">
-              Pro
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/pay" i18n="@@COMMON_FOOTER__PAY">
-              Pay
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/nodes" i18n="@@COMMON_FOOTER__NODES">
-              Nodes
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/boost" i18n="@@COMMON_FOOTER__BOOST">
-              Boost
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/rewards" i18n="@@COMMON_FOOTER__REWARDS">
-              Rewards
-            </a>
-          </li>
-
-          <li>
-            <a
-              routerLink="/youtube-migration"
-              i18n="@@COMMON_FOOTER__YOUTUBE_MIGRATION"
-            >
-              YouTube Migration
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="m-marketingFooter__mainLinksCategory">
-        <h4 i18n="@@COMMON_FOOTER__DEVELOPERS">Developers</h4>
-
-        <ul>
-          <li>
-            <a
-              href="https://developers.minds.com"
-              target="_blank"
-              i18n="@@COMMON_FOOTER__DOCUMENTATION"
-            >
-              Docs
-            </a>
-          </li>
-
-          <li>
-            <a
-              routerLink="/group/365903183068794880"
-              i18n="@@COMMON_FOOTER__COMMUNITY"
-            >
-              Community
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://gitlab.com/minds"
-              target="_blank"
-              i18n="@@COMMON_FOOTER__CODE"
-            >
-              Code
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/canary" i18n="@@COMMON_FOOTER__CANARY">
-              Canary
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/branding" i18n="@@COMMON_FOOTER__BRANDING">
-              Branding
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="m-marketingFooter__mainLinksCategory">
-        <h4 i18n="@@COMMON_FOOTER__SUPPORT">Support</h4>
-
-        <ul>
-          <li>
-            <a
-              [href]="getHelpdeskRedirectUrl()"
-              target="_blank"
-              i18n="@@COMMON_FOOTER__HELP_DESK"
-            >
-              Help Desk
-            </a>
-          </li>
-          <li>
-            <a routerLink="/p/contact" i18n="@@COMMON_FOOTER__CONTACT">
-              Contact
-            </a>
-          </li>
-
-          <li>
-            <a routerLink="/localization" i18n="@@COMMON_FOOTER__LANGUAGES">
-              Languages
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://status.minds.com"
-              target="_blank"
-              i18n="@@COMMON_FOOTER__STATUS"
-            >
-              Status
-            </a>
           </li>
         </ul>
       </div>
@@ -247,35 +58,27 @@
   <!-- ------------------------------------------ -->
   <!-- LINE -->
   <!-- ------------------------------------------ -->
-  <div class="m-marketingFooter__sep"></div>
+  <div class="m-marketingFooter__sep" *mIfTenant="false"></div>
   <!-- ------------------------------------------ -->
   <!-- LEGAL LINKS -->
   <!-- ------------------------------------------ -->
-  <div class="m-marketingFooter__section--legal">
+  <div
+    *ngIf="data?.bottomLinks?.length"
+    class="m-marketingFooter__section--legal"
+  >
     <ul>
-      <li>
-        <a routerLink="/p/terms" i18n="@@COMMON_FOOTER__TERMS_OF_SERVICE">
-          Terms of Service
-        </a>
-      </li>
-
-      <li>
-        <a routerLink="/p/privacy" i18n="@@COMMON_FOOTER__PRIVACY_POLICY">
-          Privacy Policy
-        </a>
-      </li>
-
-      <li>
-        <a routerLink="/content-policy" i18n="@@COMMON_FOOTER__CONTENT_POLICY">
-          Content Policy
-        </a>
-      </li>
-
-      <li>
-        <a routerLink="/p/dmca" i18n="@@COMMON_FOOTER__DMCA">
-          DMCA
+      <li *ngFor="let link of data?.bottomLinks">
+        <a
+          [href]="link?.url"
+          target="_blank"
+          [attr.data-ref]="link?.dataRef ?? 'footer-link-generic'"
+        >
+          {{ link?.text }}
         </a>
       </li>
     </ul>
   </div>
 </div>
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>

@@ -1,11 +1,11 @@
 <ng-container *ngIf="shouldShow$ | async">
-  <m-sidebarWidget title="" dismissibleId="language-sidebar-2020">
+  <m-sidebarWidget titleText="" dismissibleId="language-sidebar-2020">
     <div class="m-sidebarWidget__body">
       <p
         class="m-languageSidebarPrompt__text"
         i18n="@@LANGUAGE_SIDEBAR__PROMPT"
       >
-        Did you know that Minds will soon be available in
+        Did you know that we will soon be available in
         {{ languageName$ | async }}?
       </p>
 

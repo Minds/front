@@ -3,7 +3,7 @@
 :host {
   display: block;
   .m-sidebarMore {
-    width: 220px;
+    width: 225px;
 
     @media screen and (max-width: $max-mobile) {
       width: 316px;
@@ -111,8 +111,7 @@
             margin: 0 1px;
           }
 
-          a,
-          span {
+          a {
             text-decoration: none;
             font-size: 13px;
             line-height: 16px;
@@ -123,6 +122,11 @@
             @include m-theme() {
               color: themed($m-textColor--secondary) !important;
             }
+
+            &:not(:last-child)::after {
+              content: ' · '; // Add the separator content
+            }
+
             &:hover {
               @include m-theme() {
                 color: themed($m-textColor--primary) !important;

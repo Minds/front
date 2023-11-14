@@ -1,21 +1,33 @@
 /**
  * Views available from a group's page
+ * (Top level tabs)
  */
-export type GroupView =
-  | 'feed' // a.k.a. 'discussion'
-  | 'members'
-  | 'review';
+export type GroupView = 'latest' | 'top' | 'members' | 'review';
 
 /**
  * Filters available to apply to a group's feed
  */
-export type GroupFeedFilter =
+export type GroupFeedTypeFilter =
   | 'activities' // e.g. show everything
   | 'images'
   | 'videos';
 
-export const DEFAULT_GROUP_VIEW: GroupView = 'feed';
-export const DEFAULT_GROUP_FEED_FILTER: GroupFeedFilter = 'activities';
+/**
+ * Algorithms used for group feeds
+ * (note: top actually uses GroupTop sorting algo)
+ */
+export const groupFeedAlgorithms = ['latest', 'top'] as const;
+export type GroupFeedAlgorithm = typeof groupFeedAlgorithms[number];
+
+export function isOfTypeGroupFeedAlgorithm(
+  algo: string
+): algo is GroupFeedAlgorithm {
+  return (groupFeedAlgorithms as readonly string[]).includes(algo);
+}
+
+export const DEFAULT_GROUP_VIEW: GroupView = 'latest';
+export const DEFAULT_GROUP_FEED_ALGORITHM: GroupFeedAlgorithm = 'latest';
+export const DEFAULT_GROUP_FEED_TYPE_FILTER: GroupFeedTypeFilter = 'activities';
 
 /**
  * Tabs in the group moderator console
@@ -72,4 +84,5 @@ export type GroupInvitePutParams = {
 export type GroupInvitePutResponse = {
   done: boolean;
   status: string;
+  error?: string;
 };

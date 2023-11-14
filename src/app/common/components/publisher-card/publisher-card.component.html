@@ -10,7 +10,9 @@
     'm-publisherCard--featured': featured,
     'm-publisherCard--hovercard': _isHovercard,
     'm-publisherCard--noBorder': noBorder,
-    'm-publisherCard--noPadding': noPadding
+    'm-publisherCard--noPadding': noPadding,
+    'm-publisherCard--curvyBorder': curvyBorder,
+    'm-publisherCard--backgroundFill': backgroundFill
   }"
 >
   <section class="m-publisherCard__inner m-publisherCard__flexRow--top">
@@ -33,6 +35,7 @@
       >
         <ng-container *ngTemplateOutlet="button"></ng-container>
       </div>
+      <ng-content select="[additionalActions]"></ng-content>
     </ng-container>
     <!-- ------------------------------------------------- -->
     <ng-container *ngIf="size === 'small'">
@@ -93,7 +96,8 @@
         class="m-publisherCard__name--primary m-legible"
       >
         <span>{{ publisher.name }}</span>
-        <m-accountQualityScore [targetUser]="publisher"></m-accountQualityScore>
+        <!-- Removing until performance/AI improves -->
+        <!-- <m-accountQualityScore [targetUser]="publisher"></m-accountQualityScore> -->
         <m-channel--badges
           *ngIf="type === 'user'"
           class="m-channel--badges-activity"
@@ -157,7 +161,7 @@
 <!------------------------------>
 <ng-template #description>
   <span
-    *ngIf="publisher.briefdescription"
+    *ngIf="publisher.briefdescription && showDescription"
     class="m-publisherCard__description m-legible"
     [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags"
   ></span>

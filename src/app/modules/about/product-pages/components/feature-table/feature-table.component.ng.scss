@@ -1,0 +1,225 @@
+@import 'defaults.scss';
+@import '../../stylesheets/product-pages-typography.ng.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  text-align: center;
+  padding: 0 $spacing30;
+  margin-top: $spacing25;
+  margin-bottom: $spacing8;
+
+  @media screen and (max-width: $min-desktop) {
+    padding: 0 $spacing5;
+    margin-top: $spacing9;
+  }
+
+  .m-productPageFeatTable__title {
+    text-align: center;
+    @include productPageH1Black;
+
+    @media screen and (max-width: $min-tablet) {
+      @include heading3Bold;
+      font-weight: 900;
+    }
+  }
+
+  .m-productPageFeatTable__subtitle {
+    margin: $spacing5 0 $spacing12 0;
+    @include heading4Regular;
+
+    @media screen and (max-width: $min-tablet) {
+      @include body1Regular;
+    }
+  }
+
+  .m-productPageFeatTable__table {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    max-width: 1200px;
+
+    &.m-productPageFeatTable__table--mobile {
+      @media screen and (min-width: $min-tablet) {
+        display: none;
+      }
+    }
+
+    &.m-productPageFeatTable__table--web {
+      @media screen and (max-width: $min-tablet) {
+        display: none;
+      }
+    }
+
+    .m-productPageFeatTable__row--featureRow {
+      @include m-theme() {
+        border-bottom: 1px solid
+          color-by-theme($m-borderColor--primary, 'light');
+      }
+    }
+
+    .m-productPageFeatTable__section {
+      .m-productPageFeatTable__row--featureRow:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .m-productPageFeatTable__section:last-of-type {
+      .m-productPageFeatTable__row--featureRow:last-child {
+        @include m-theme() {
+          border-bottom: 1px solid
+            color-by-theme($m-borderColor--primary, 'light');
+        }
+      }
+    }
+
+    .m-productPageFeatTable__row {
+      flex: 1;
+      display: flex;
+      width: 100%;
+      flex-flow: row nowrap;
+
+      .m-productPageFeatTable__column {
+        flex: 1;
+        align-self: center;
+
+        .m-productPageFeatTable__headerBox,
+        .m-productPageFeatTable__headerBoxSpacer {
+          margin: $spacing2;
+          box-sizing: border-box;
+          height: calc(100% - $spacing4);
+
+          @media screen and (max-width: $min-tablet) {
+            margin: 0 0 $spacing6 0;
+          }
+        }
+
+        .m-productPageFeatTable__headerBox {
+          display: flex;
+          flex-flow: column nowrap;
+          border-radius: 8px;
+          padding: $spacing6 $spacing4 $spacing4 $spacing4;
+          text-align: left;
+
+          @include m-theme() {
+            border: 1px solid color-by-theme($m-borderColor--primary, 'light');
+          }
+
+          .m-productPageFeatTable__headerBoxTitle {
+            margin-top: 0;
+            margin-bottom: $spacing2;
+
+            @include heading4Bold;
+
+            @include m-theme() {
+              color: color-by-theme($m-bgColor--primary, 'dark');
+            }
+          }
+
+          .m-productPageFeatTable__priceStartingAt {
+            margin: unset;
+            margin-bottom: 0;
+            font-family: Inter;
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 115%;
+
+            &.m-productPageFeatTable__priceStartingAt--hidden {
+              visibility: hidden;
+            }
+          }
+
+          .m-productPageFeatTable__headerBoxAmount {
+            margin-bottom: $spacing6;
+            @include body3Regular;
+
+            strong {
+              @include heading2Bold;
+            }
+          }
+        }
+        .m-productPageFeatTable__tableCell {
+          padding: $spacing4;
+          box-sizing: border-box;
+          text-align: center;
+          @include body1Medium;
+
+          &--leftAlign {
+            text-align: left;
+          }
+
+          &--verticalCenter {
+            display: flex;
+            align-items: center;
+          }
+
+          m-tooltip {
+            margin-left: $spacing1;
+
+            ::ng-deep i {
+              font-size: 20px;
+
+              @include m-theme() {
+                color: color-by-theme($m-borderColor--primary, 'light');
+              }
+            }
+          }
+        }
+
+        .m-productPageFeatTable__headerCell {
+          padding: $spacing4 $spacing3;
+          border-radius: 8px;
+
+          @include heading4Bold;
+
+          @include m-theme() {
+            color: color-by-theme($m-bgColor--primary, 'dark');
+            background-color: color-by-theme($m-grey-100, 'light');
+          }
+        }
+      }
+    }
+  }
+
+  .m-productPageFeatTable__mobileTabContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: $spacing4;
+    margin-bottom: $spacing4;
+
+    .m-productPageFeatTable__mobileTab {
+      border-radius: 8px;
+      padding: $spacing2;
+      width: 100%;
+      cursor: pointer;
+      @include body1Bold;
+
+      @include m-theme() {
+        color: color-by-theme($m-textColor--secondary, 'dark');
+      }
+
+      &:hover {
+        @include m-theme() {
+          background-color: darken(themed($m-bgColor--primary), 6%);
+          color: darken(color-by-theme($m-textColor--secondary, 'dark'), 6%);
+        }
+      }
+
+      &--active {
+        @include m-theme() {
+          background-color: themed($m-grey-100);
+          color: color-by-theme($m-bgColor--primary, 'dark');
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: darken(themed($m-grey-300), 4%);
+            color: color-by-theme($m-bgColor--primary, 'dark');
+          }
+        }
+      }
+    }
+  }
+}

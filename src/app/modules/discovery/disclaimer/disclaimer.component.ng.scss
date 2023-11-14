@@ -1,12 +1,14 @@
-@import 'defaults';
+@import 'defaults.scss';
 @import '../../../common/layout/layout.scss';
 
 :host {
+  ::ng-deep .m-sidebarWidget {
+    padding-bottom: 0 !important;
+  }
+
   ::ng-deep .m-sidebarWidget__title {
-    @include heading4Bold;
-    margin-bottom: $spacing1;
-    padding-right: $spacing7;
-    padding-top: $spacing4;
+    padding-right: $spacing7 !important;
+    padding-top: $spacing4 !important;
   }
 
   ::ng-deep .m-sidebarWidget__dismiss {
@@ -30,31 +32,41 @@
   }
 
   .m-sidebarWidget__body {
+    padding: 0;
     .m-discoveryDisclaimer__list {
       margin: 0;
       padding: 0;
       list-style: none;
 
-      > * + * {
-        padding-top: $spacing4;
-      }
-
       .m-discoveryDisclaimer__listItem {
         @include m-theme() {
-          color: themed($m-textColor--secondary);
+          color: themed($m-textColor--primary);
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--primary);
+          }
+        }
+
+        &:last-child {
+          border-bottom-left-radius: $m-borderRadius--curvy;
+          border-bottom-right-radius: $m-borderRadius--curvy;
         }
 
         a {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
           text-decoration: none;
-          @include body2Regular;
+          padding: $spacing4;
+          @include body1Medium;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
 
-          &:hover {
-            text-decoration: underline;
-
-            @include body2Medium;
-            @include m-theme() {
-              color: themed($m-textColor--primary);
-            }
+          i {
+            font-size: $spacing5;
           }
         }
       }

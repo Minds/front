@@ -1,13 +1,21 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { MindsUser } from '../../../interfaces/entities';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  lastValueFrom,
+  Observable,
+  of,
+} from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { Session } from '../../../services/session';
 import {
+  catchError,
   distinctUntilChanged,
   map,
   shareReplay,
   switchAll,
+  take,
 } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
@@ -296,5 +304,25 @@ export class ChannelsV2Service {
     this.rating$.next(channel ? channel.rating : 1);
     this.seed$.next(channel ? channel.seed : null);
     return this;
+  }
+
+  /**
+   * Get a channel by identifier.
+   * @param { string } identifier - channel identifier (username or guid).
+   * @returns { Promise<MindsUser> } user, or null if none found or an error in encountered.
+   */
+  public async getChannelByIdentifier(identifier: string): Promise<MindsUser> {
+    return lastValueFrom(
+      this.api.get(`api/v1/channel/${identifier}`).pipe(
+        take(1),
+        map(response => response?.channel),
+        catchError(
+          (e: unknown): Observable<null> => {
+            console.error(e);
+            return of(null);
+          }
+        )
+      )
+    );
   }
 }

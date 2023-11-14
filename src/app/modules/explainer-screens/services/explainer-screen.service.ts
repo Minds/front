@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   ExplainerScreenWeb,
   GetExplainerScreensGQL,
@@ -80,10 +80,13 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
         .subscribe((triggerRoutes: string[]): void => {
           // Find matched route taking into account wildcards.
           const matchedRoute: string = triggerRoutes.filter(
-            (triggerRoute: string) =>
-              new RegExp('^' + triggerRoute.replace('*', '.*') + '$').test(
-                route
-              )
+            (triggerRoute: string) => {
+              if (triggerRoute) {
+                return new RegExp(
+                  '^' + triggerRoute.replace('*', '.*') + '$'
+                ).test(route);
+              }
+            }
           )?.[0];
 
           if (matchedRoute) {
@@ -119,6 +122,52 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
 
           if (!explainerScreen) {
             console.error(`No explainer screen found for route: ${route}`);
+            return;
+          }
+
+          // check if explainer screen has already been dismissed.
+          if (
+            dismissals.some(
+              (dismissal: Dismissal): boolean =>
+                dismissal.key === explainerScreen.key
+            )
+          ) {
+            return;
+          }
+
+          // open explainer screen modal.
+          this.explainerScreenModal.open(explainerScreen);
+        }
+      )
+    );
+  }
+
+  /**
+   * Handles manual triggering of an explainer modal - will trigger a modal for the passed key
+   * if a matching explainer screen is found and it has not already been dismissed.
+   * @param { string } key - key of explainer screen to trigger.
+   * @returns { void }
+   */
+  public handleManualTriggerByKey(key: string): void {
+    this.subscriptions.push(
+      // get both in parallel.
+      forkJoin([
+        this.getExplainerScreens$,
+        this.dismissalV2Service.getDismissals(),
+      ]).subscribe(
+        ([explainerScreens, dismissals]: [
+          ExplainerScreenWeb[],
+          Dismissal[]
+        ]): void => {
+          // get matching explainer screen for passed key
+          const explainerScreen: ExplainerScreenWeb = explainerScreens.filter(
+            (explainerScreen: ExplainerScreenWeb) => {
+              return explainerScreen.key === key;
+            }
+          )?.[0];
+
+          if (!explainerScreen) {
+            console.error(`No explainer screen found for key: ${key}`);
             return;
           }
 

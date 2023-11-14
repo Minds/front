@@ -1,25 +1,36 @@
 <!-- ---------------------------------------------------  -->
 <!-- SUPERMIND BANNER/BUTTON -->
 <!-- ---------------------------------------------------  -->
-<div
-  class="m-activityToolbar__largeActions"
-  *ngIf="
-    service.displayOptions.showInteractions && !service.displayOptions.isFeed
-  "
->
-  <m-supermind__banner
-    *ngIf="supermindButtonExperiment"
-    [entity]="entity"
-    data-ref="activity-large-supermind-action--alt"
-  ></m-supermind__banner>
-  <m-supermind__button
-    *ngIf="!supermindButtonExperiment"
-    [entity]="entity"
-    [iconOnly]="false"
-    size="large"
-    data-ref="activity-large-supermind-action"
-  ></m-supermind__button>
-</div>
+<ng-container *mIfTenant="false">
+  <div
+    class="m-activityToolbar__largeActions"
+    *ngIf="
+      service.displayOptions.showInteractions && !service.displayOptions.isFeed
+    "
+  >
+    <ng-container *ngIf="!isOwner">
+      <m-supermind__banner
+        *ngIf="supermindButtonExperiment"
+        [entity]="entity"
+        data-ref="activity-large-supermind-action--alt"
+      ></m-supermind__banner>
+      <m-supermind__button
+        *ngIf="!supermindButtonExperiment"
+        [entity]="entity"
+        [iconOnly]="false"
+        size="large"
+        data-ref="activity-large-supermind-action"
+      ></m-supermind__button>
+    </ng-container>
+    <!-- Show boost if own post -->
+    <ng-container *ngIf="isOwner">
+      <m-activity__boostButton
+        (click)="openBoostModal($event)"
+        [iconOnly]="false"
+      ></m-activity__boostButton>
+    </ng-container>
+  </div>
+</ng-container>
 <!-- ---------------------------------------------------  -->
 <!-- TOOLBAR BUTTONS ROW -->
 <!-- ---------------------------------------------------  -->
@@ -47,20 +58,18 @@
       service.displayOptions.showComments
     "
   ></minds-button-comment>
+
   <m-supermind__button
+    *mIfTenant="false"
     [entity]="entity"
     [iconOnly]="true"
     data-ref="activity-icon-supermind-action"
   ></m-supermind__button>
 
   <!-- Show boost if own post -->
-  <ng-container
-    *ngIf="
-      session.getLoggedInUser() &&
-      session.getLoggedInUser().guid == entity.ownerObj.guid
-    "
-  >
+  <ng-container *mIfTenant="false">
     <m-activity__boostButton
+      *ngIf="isOwner"
       (click)="openBoostModal($event)"
     ></m-activity__boostButton>
   </ng-container>
@@ -94,20 +103,6 @@
     }}</span>
     <span
       >{ entity['thumbs:up:count'], plural, =1 {upvote} other {upvotes}}</span
-    >
-  </div>
-
-  <div
-    class="m-activityToolbarMetrics__metric"
-    *ngIf="entity['thumbs:down:count'] > 0"
-    (click)="openInteractions('votes-down')"
-  >
-    <span [@counterChange]="entity['thumbs:down:count']">{{
-      entity['thumbs:down:count']
-    }}</span>
-    <span
-      >{ entity['thumbs:down:count'], plural, =1 {downvote} other
-      {downvotes}}</span
     >
   </div>
 

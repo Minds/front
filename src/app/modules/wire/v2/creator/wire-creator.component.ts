@@ -84,6 +84,8 @@ export class WireCreatorComponent implements OnDestroy {
     entity,
     supportTier,
     sourceEntity,
+    isSendingGift,
+    isReceivingGift,
   }: {
     onComplete;
     onDismissIntent;
@@ -91,6 +93,8 @@ export class WireCreatorComponent implements OnDestroy {
     entity;
     supportTier?;
     sourceEntity?;
+    isSendingGift?: boolean;
+    isReceivingGift?: boolean;
   }) {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
@@ -108,6 +112,15 @@ export class WireCreatorComponent implements OnDestroy {
       this.service.setType('usd');
       this.service.setRecurring(true);
       this.service.setAmount(supportTier.usd);
+    }
+
+    if (isSendingGift) {
+      this.service.setIsSendingGift(true);
+      this.service.setType('usd');
+    }
+
+    if (isReceivingGift) {
+      this.service.setIsReceivingGift(true);
     }
 
     if (defaultValues) {
@@ -129,6 +142,9 @@ export class WireCreatorComponent implements OnDestroy {
         this.service.setUpgradeInterval(
           defaultValues.upgradeInterval || 'yearly'
         );
+        if (isSendingGift) {
+          this.service.setRecurring(false);
+        }
         return;
       }
       this.service.setAmount(parseFloat(defaultValues.min || '0'));
@@ -168,7 +184,7 @@ export class WireCreatorComponent implements OnDestroy {
     if (this.ownerSubscription) {
       this.ownerSubscription.unsubscribe();
     }
-    this.supportTierSubscription.unsubscribe();
+    this.supportTierSubscription?.unsubscribe();
   }
 
   /**

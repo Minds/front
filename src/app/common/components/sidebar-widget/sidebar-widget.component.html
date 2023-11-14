@@ -1,13 +1,12 @@
 <div
   class="m-sidebarWidget"
   [ngClass]="{
-    'm-sidebarWidget__border--primary': borderColor === 'primary'
+    'm-sidebarWidget__border--primary': borderColor === 'primary',
+    'm-sidebarWidget__border--none': borderColor === 'none',
+    'm-sidebarWidget__border--noBackgroundFill': !backgroundFill
   }"
 >
-  <ng-container [ngSwitch]="headerLevel">
-    <h1 *ngSwitchCase="1" class="m-sidebarWidget__title">{{ title }}</h1>
-    <h2 *ngSwitchDefault class="m-sidebarWidget__title">{{ title }}</h2>
-  </ng-container>
+  <h1 class="m-sidebarWidget__title">{{ titleText }}</h1>
 
   <div
     class="m-sidebarWidget__dismiss"

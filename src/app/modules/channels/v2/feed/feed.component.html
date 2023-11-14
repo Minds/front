@@ -97,16 +97,18 @@
             <!-- ----------------------------------------- -->
             <!-- BOOSTS  -->
             <!-- ----------------------------------------- -->
-            <m-featured-content
-              *ngIf="shouldShowBoostInPosition(i)"
-              [slot]="i + 1"
-              [displayOptions]="{
-                showOnlyCommentsInput: true,
-                isFeed: true
-              }"
-              showHeader="true"
-              [servedByGuid]="service.guid$ | async"
-            ></m-featured-content>
+            <ng-container *mIfTenant="false">
+              <m-featured-content
+                *ngIf="shouldShowBoostInPosition(i)"
+                [slot]="i + 1"
+                [displayOptions]="{
+                  showOnlyCommentsInput: true,
+                  isFeed: true
+                }"
+                showHeader="true"
+                [servedByGuid]="service.guid$ | async"
+              ></m-featured-content>
+            </ng-container>
           </ng-container>
         </div>
       </ng-container>
@@ -304,9 +306,11 @@
     <div class="m-pageLayoutPane__inner">
       <m-channelAbout__brief location="sidebar"></m-channelAbout__brief>
       <ng-container *mIfBrowser>
-        <m-channelShop__lazy
-          component="m-channelShop__brief"
-        ></m-channelShop__lazy>
+        <ng-container *mIfTenant="false">
+          <m-channelShop__lazy
+            component="m-channelShop__brief"
+          ></m-channelShop__lazy>
+        </ng-container>
       </ng-container>
     </div>
   </div>

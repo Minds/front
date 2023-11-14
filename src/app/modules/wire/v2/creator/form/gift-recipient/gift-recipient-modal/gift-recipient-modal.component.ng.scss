@@ -1,0 +1,111 @@
+@import 'defaults.scss';
+
+:host {
+  .m-modalV2__inner {
+    .m-modalV2__header {
+      .m-giftRecipientModal__title {
+        text-align: center;
+        margin: 0 0 $spacing4 0;
+
+        @include heading3Bold;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      .m-giftRecipientModal__subtitle {
+        text-align: center;
+        margin: 0;
+
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    .m-modalV2__body {
+      padding-top: $spacing6;
+      padding-bottom: 0;
+
+      .m-giftRecipientModal__giftRecipientInputContainer {
+        display: flex;
+        flex-flow: column nowrap;
+        position: relative;
+        margin-bottom: $spacing8;
+
+        .m-giftRecipientModal__giftRecipientLabel {
+          margin-bottom: $spacing2;
+
+          @include body1Medium;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+
+        ::ng-deep .m-giftRecipientModal__giftRecipientInput input {
+          border-radius: 2px;
+          width: 100%;
+          padding: $spacing3;
+
+          @include body2Regular;
+          @include m-theme() {
+            background: themed($m-bgColor--primary);
+            color: themed($m-textColor--primary);
+            border: 1px solid themed($m-borderColor--primary);
+          }
+
+          &:focus {
+            outline: hidden;
+            outline: 0;
+          }
+
+          .m-formInputAutocompleteUserInput__popout {
+            top: $spacing10;
+          }
+        }
+      }
+
+      .m-giftRecipientModal__sendShareableLinkContainer {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        margin-bottom: $spacing8;
+
+        .m-giftRecipientModal__sendShareableLinkLabel {
+          margin-right: $spacing4;
+
+          @include body1Bold;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+
+        .m-giftRecipientModal__sendShareableLinkToggle {
+          // prevent z-index issues with autocomplete input due to stacking contexts.
+          ::ng-deep .m-toggle__track,
+          ::ng-deep .m-toggle__switch {
+            z-index: unset;
+          }
+        }
+      }
+
+      .m-modalV2__footer {
+        padding: $spacing6 0 $spacing8 0;
+
+        @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary);
+        }
+
+        .m-giftRecipientModal__footerText {
+          margin-bottom: $spacing10;
+          text-align: center;
+
+          @include body2Regular;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+  }
+}

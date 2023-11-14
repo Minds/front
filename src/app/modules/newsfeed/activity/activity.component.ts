@@ -36,6 +36,8 @@ import { EntityMetricsSocketService } from '../../../common/services/entity-metr
 import { EntityMetricsSocketsExperimentService } from '../../experiments/sub-services/entity-metrics-sockets-experiment.service';
 import { PersistentFeedExperimentService } from '../../experiments/sub-services/persistent-feed-experiment.service';
 import { MutualSubscriptionsService } from '../../channels/v2/mutual-subscriptions/mutual-subscriptions.service';
+import { ComposerModalService } from '../../composer/components/modal/modal.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 const TOPBAR_HEIGHT: number = 75;
 
@@ -52,6 +54,7 @@ const TOPBAR_HEIGHT: number = 75;
   providers: [
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
+    ComposerModalService,
     ComposerService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
     EntityMetricsSocketService,
@@ -66,6 +69,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   entity$: Observable<ActivityEntity> = this.service.entity$;
 
   @Input() set canDelete(value: boolean) {
+    if (value == null) {
+      return;
+    }
     this.service.canDeleteOverride$.next(value);
   }
 
@@ -123,6 +129,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--modal')
   isModal: boolean = false;
 
+  @HostBinding('class.m-activity--hideTopBorder')
+  hideTopBorder: boolean = false;
+
   heightSubscription: Subscription;
   guestModeSubscription: Subscription;
   private intersectionObserverSubscription: Subscription;
@@ -137,11 +146,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() previousBoost: EventEmitter<any> = new EventEmitter();
   @Output() nextBoost: EventEmitter<any> = new EventEmitter();
-
-  /**
-   * If false, the template will be empty (used for deleted)
-   */
-  canShow = true;
 
   /**
    * Replace the activity with notice
@@ -164,6 +168,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private intersectionObserver: IntersectionObserverService,
     private entityMetricSocketsExperiment: EntityMetricsSocketsExperimentService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
+    private isTenant: IsTenantService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -178,6 +183,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
     this.isModal = this.service.displayOptions.isModal;
     this.isSingle = this.service.displayOptions.isSingle;
+    this.hideTopBorder = this.service.displayOptions.hideTopBorder;
 
     // if this is a supermind request with a reply AND on the feed, then
     // we don't want to show the View comments link
@@ -292,13 +298,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.service.height$.next(height);
   }
 
-  delete() {
-    this.canShow = false;
-
-    // Tell the boost rotator to go to the next boost
-    this.nextBoost.emit();
-    this.deleted.next(this.service.entity$.value);
-  }
+  // TODO reinstate if we bring back boost rotator
+  // delete() {
+  // Tell the boost rotator to go to the next boost
+  // this.nextBoost.emit();
+  // }
 
   /**
    * Keep scroll position when comments height changes
@@ -313,10 +317,16 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Called when a downvote event is received.
-   * Handles showing of downvote notice.
+   * Handles removing item from the feed and
+   * showing of downvote notice.
+   * (Tenant sites excluded)
    * @returns { void }
    */
   public onDownvote(): void {
+    // Don't remove from feed on tenant sites
+    if (this.isTenant.is()) {
+      return;
+    }
     if (!this.isSingle) {
       if (!this.topOfPostIsVisible()) {
         this.scrollToTopOfPost();

@@ -19,6 +19,9 @@ import {
   BlogSlugModuleLazyRoutes,
 } from './modules/blogs/blog.lazy';
 import { PathMatch } from './common/types/angular.types';
+import { NetworksModuleLazyRoutes } from './modules/networks/networks.lazy';
+import { NetworkAdminConsoleModuleLazyRoutes } from './modules/multi-tenant-network/admin-console/network-admin-console.lazy';
+import { TenantRedirectGuard } from './common/guards/tenant-redirect.guard';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -30,8 +33,10 @@ const routes: Routes = [
   CanaryModuleLazyRoutes,
   MobileModuleLazyRoutes,
   AuxModuleLazyRoutes,
+  NetworkAdminConsoleModuleLazyRoutes,
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,
+  NetworksModuleLazyRoutes,
   // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
   {
     path: ':username',
@@ -56,6 +61,6 @@ const routes: Routes = [
     }),
   ],
   exports: [RouterModule],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/' }, TenantRedirectGuard],
 })
 export class AppRoutingModule {}

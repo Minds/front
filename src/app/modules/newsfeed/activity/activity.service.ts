@@ -1,19 +1,39 @@
 import {
   BehaviorSubject,
   combineLatest,
+  EMPTY,
   Observable,
+  of,
   Subject,
   Subscription,
 } from 'rxjs';
 import { MindsGroup, MindsUser } from '../../../interfaces/entities';
-import { map, skip, tap, withLatestFrom } from 'rxjs/operators';
-import { Injectable, EventEmitter, OnDestroy, Optional } from '@angular/core';
+import {
+  catchError,
+  distinctUntilChanged,
+  map,
+  skip,
+  switchMap,
+  take,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
+import {
+  Injectable,
+  EventEmitter,
+  OnDestroy,
+  Optional,
+  OnInit,
+} from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { EntityMetricsSocketService } from '../../../common/services/entity-metrics-socket';
 import { BoostGoalButtonText } from '../../boost/boost.types';
 import { AccessId } from '../../../common/enums/access-id.enum';
+import { ApiResponse, ApiService } from '../../../common/api/api.service';
+import { ActivityHasRemindedResponse } from './activity.types';
+import { ToasterService } from '../../../common/services/toaster.service';
 
 export interface Supermind {
   request_guid: string;
@@ -52,6 +72,7 @@ export type ActivityDisplayOptions = {
   hasLoadingPriority: boolean; // whether to load image content eagerly - should usually be first 1 or 2 activities in a feed.
   inSingleGroupFeed: boolean; // whether the activity is being presented in the feed of a single specific group page
   isComposerPreview: boolean; // is the activity being presented in the composer as a preview (e.g. to display a quote post)
+  hideTopBorder: boolean; // hides the top border of an activity.
 };
 
 export type ActivityEntity = {
@@ -133,6 +154,7 @@ type MetricsSubscribableEntity = { guid: string };
 
 @Injectable()
 export class ActivityService implements OnDestroy {
+  protected subscriptions: Subscription[] = [];
   readonly siteUrl: string;
 
   entity$ = new BehaviorSubject(null);
@@ -146,6 +168,11 @@ export class ActivityService implements OnDestroy {
       return this.buildCanonicalUrl(entity, false);
     })
   );
+
+  /**
+   * If false, the template will be empty (used for deleted)
+   */
+  canShow$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   /**
    * Subject for Activity's canDelete property
@@ -295,12 +322,35 @@ export class ActivityService implements OnDestroy {
   );
 
   /**
-   * If the post is a remind this will emit true
+   * True if this post is a remind
    */
   isRemind$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return entity && entity.subtype && entity.subtype === 'remind';
     })
+  );
+
+  /**
+   * True if this post is a remind from this user
+   */
+  isUsersRemind$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return entity &&
+        entity?.remind_users &&
+        entity.remind_users.filter(
+          user => user.guid === this.session.getLoggedInUser().guid
+        ).length > 0
+        ? true
+        : false;
+    })
+  );
+
+  /**
+   * Whether the user has reminded this post (even if this entity$ isn't the reminded post)
+   * Null until we've performed an async check
+   */
+  userHasReminded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    null
   );
 
   /**
@@ -446,17 +496,19 @@ export class ActivityService implements OnDestroy {
     hasLoadingPriority: false,
     inSingleGroupFeed: false,
     isComposerPreview: false,
+    hideTopBorder: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
 
   // subscriptions for metric events.
   private thumbsUpMetricSubscription: Subscription;
-  private thumbsDownMetricSubscription: Subscription;
 
   constructor(
     private configs: ConfigsService,
     private session: Session,
+    private api: ApiService,
+    private toast: ToasterService,
     @Optional() private entityMetricsSocket: EntityMetricsSocketService
   ) {
     this.siteUrl = configs.get('site_url');
@@ -464,6 +516,9 @@ export class ActivityService implements OnDestroy {
 
   ngOnDestroy() {
     this.teardownMetricsSocketListener();
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -580,36 +635,20 @@ export class ActivityService implements OnDestroy {
       )
       .subscribe();
 
-    this.thumbsDownMetricSubscription = this.entityMetricsSocket.thumbsDownCount$
-      .pipe(
-        skip(1),
-        withLatestFrom(this.entity$),
-        tap(([thumbsDownCount, entity]) => {
-          entity['thumbs:down:count'] = thumbsDownCount;
-          this.entity$.next(entity);
-        })
-      )
-      .subscribe();
-
     this.entityMetricsSocket.listen(this.getMetricSubscriptionGuid());
     return this;
   }
 
   /**
    * Teardown listener for metrics socket for this activity.
-   * @param { MetricsSubscribableEntity } subscribableEntity - entity to teardown listeners for.
    * @returns { this }
    */
   public teardownMetricsSocketListener(): this {
     if (!this.entityMetricsSocket) {
       return;
     }
-    if (this.thumbsUpMetricSubscription) {
-      this.thumbsUpMetricSubscription.unsubscribe();
-    }
-    if (this.thumbsDownMetricSubscription) {
-      this.thumbsDownMetricSubscription.unsubscribe();
-    }
+
+    this.thumbsUpMetricSubscription?.unsubscribe();
     this.entityMetricsSocket.leave(this.getMetricSubscriptionGuid());
     return this;
   }
@@ -639,5 +678,107 @@ export class ActivityService implements OnDestroy {
     );
 
     this.entity$.next(entity);
+  }
+
+  /**
+   * Whether the user has reminded this post OR
+   * this is that remind
+   */
+  public async getUserHasReminded(): Promise<void> {
+    this.subscriptions.push(
+      combineLatest([this.entity$, this.isUsersRemind$])
+        .pipe(
+          distinctUntilChanged(),
+          switchMap(
+            ([entity, isUsersRemind]): Observable<
+              ApiResponse | { redirect: boolean; errorMessage: any }
+            > => {
+              if (isUsersRemind) {
+                // We already know this is the user's remind, no need to ask api
+                this.userHasReminded$.next(true);
+                return null;
+              }
+
+              if (!this.session.getLoggedInUser()) {
+                this.userHasReminded$.next(false);
+                return null;
+              }
+
+              try {
+                // Check if the original post has been reminded by this user
+                return this.api.get(
+                  `api/v3/newsfeed/activity/has-reminded/${entity.guid}`
+                );
+              } catch (err) {
+                return null;
+              }
+            }
+          ),
+          catchError(_ => of(null))
+        )
+        .subscribe((response: ActivityHasRemindedResponse | null) => {
+          if (response) {
+            this.userHasReminded$.next(response?.has_reminded);
+          }
+        })
+    );
+  }
+
+  /**
+   * Delete all the reminds this user has made of this post
+   */
+  public async undoRemind(): Promise<void> {
+    this.entity$
+      .pipe(
+        take(1), // No need to unsubscribe from finite subscription
+        switchMap(entity => {
+          try {
+            //
+            return this.api.delete(
+              `api/v3/newsfeed/activity/remind/${entity.guid}`
+            );
+          } catch (err) {
+            return null;
+          }
+        }),
+        catchError(e =>
+          this.handleError(
+            e,
+            'Sorry, there was an error removing this Remind. Please try again later.'
+          )
+        ),
+        withLatestFrom(this.isUsersRemind$)
+      )
+      .subscribe(([response, isUsersRemind]) => {
+        if (response && response.status === 'success') {
+          this.userHasReminded$.next(false);
+        }
+        if (isUsersRemind) {
+          this.onDelete();
+        }
+      });
+  }
+
+  /**
+   * Handles error.
+   * @param e error.
+   * @returns { Observable<null> } returns EMPTY.
+   */
+  private handleError(
+    e,
+    altMessage: string = 'An unexpected error occured'
+  ): Observable<null> {
+    console.error(e);
+    this.toast.error(e.message ?? altMessage);
+    return EMPTY;
+  }
+
+  /**
+   * Called after a post has been deleted. Removes it from the feed
+   * and emits to parent components so they can perform cleanup tasks
+   */
+  public onDelete(): void {
+    this.onDelete$.next(this.entity$.getValue());
+    this.canShow$.next(false);
   }
 }

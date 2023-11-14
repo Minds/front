@@ -12,7 +12,10 @@
   <div class="m-defaultFeedContainer__sidebar" m-pageLayout__pane="right">
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-        <m-discovery__disclaimer></m-discovery__disclaimer>
+        <ng-container *mIfTenant="false">
+          <m-discovery__disclaimer></m-discovery__disclaimer>
+        </ng-container>
+        <m-discovery__sidebarTags></m-discovery__sidebarTags>
       </div>
     </div>
   </div>

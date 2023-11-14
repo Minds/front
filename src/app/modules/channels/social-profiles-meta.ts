@@ -294,7 +294,7 @@ export function buildFromV1ChannelProfile(
   profiles: Array<KeyVal>
 ): Array<KeyVal> {
   for (let i = 0; i < profiles.length; i++) {
-    if (profiles[i].key != 'other' && !profiles[i].value.includes('/')) {
+    if (profiles[i].key !== 'other' && !profiles[i].value.includes('/')) {
       profiles[i].value = getSocialProfileMeta(
         profiles[i].key
       ).linkFormat.replace(':value', profiles[i].value);
@@ -307,13 +307,26 @@ export function buildFromV1ChannelProfile(
 export function buildKeyVal(url: string): KeyVal {
   for (let meta of socialProfileMeta) {
     if (url.includes(meta.domain)) {
+      if (meta.domain === 'x.com') {
+        // if the url includes x.com, check it's not
+        // just another url that happens to end in 'x.com'
+        // by ensuring if it was preceded by anything,
+        // the beginning of that url was http(s):// or www.
+        const urlBeginning = url.substring(0, url.indexOf('x.com'));
+        const precedingChar = urlBeginning.charAt(urlBeginning.length - 1);
+        if (precedingChar && precedingChar !== '/' && precedingChar !== '.') {
+          return {
+            key: 'other',
+            value: url,
+          };
+        }
+      }
       return {
         key: meta.key,
         value: url,
       };
     }
   }
-
   return {
     key: 'other',
     value: url,

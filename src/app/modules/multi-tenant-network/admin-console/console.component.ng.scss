@@ -1,0 +1,21 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  height: 100%;
+
+  @include m-theme() {
+    border-right: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-pageLayout__pane--main {
+    width: 100%;
+    max-width: unset;
+
+    h3 {
+      @include heading3Bold;
+      padding: $spacing8 $spacing8 $spacing6 $spacing8;
+      margin: unset;
+    }
+  }
+}

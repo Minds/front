@@ -26,7 +26,7 @@
       <!--actual feed-->
       <ng-container
         *ngFor="
-          let edge of edges$ | async | slice: 0:(pageSize$ | async);
+          let edge of edges$ | async | slice: 0:(pageSize$ | async) as edges;
           let i = index;
           trackBy: trackByFn
         "
@@ -34,12 +34,14 @@
         <!---------------------------
           Display the boost rotator
         ----------------------------->
-        <ng-container *mIfBrowser>
-          <m-newsfeed--boost-rotator
-            *ngIf="i === 1 && showBoostRotator"
-            #feedViewChildren
-            #boostRotator
-          ></m-newsfeed--boost-rotator>
+        <ng-container *mIfTenant="false">
+          <ng-container *mIfBrowser>
+            <m-newsfeed--boost-rotator
+              *ngIf="i === 1 && showBoostRotator"
+              #feedViewChildren
+              #boostRotator
+            ></m-newsfeed--boost-rotator>
+          </ng-container>
         </ng-container>
 
         <ng-container [ngSwitch]="edge.__typename">
@@ -70,6 +72,12 @@
             ></m-activity>
           </ng-template>
 
+          <ng-template ngSwitchCase="FeedHeaderEdge">
+            <m-feedHeader--inline
+              [text]="edge.node.text"
+            ></m-feedHeader--inline>
+          </ng-template>
+
           <!----------------
             Activity
           ----------------->
@@ -80,7 +88,8 @@
               [displayOptions]="{
                 showOnlyCommentsInput: true,
                 isFeed: true,
-                showExplicitVoteButtons: edge.explicitVotes
+                showExplicitVoteButtons: edge.explicitVotes && !isTenant.is(),
+                hideTopBorder: edges?.[i - 1]?.__typename === 'FeedHeaderEdge'
               }"
               [slot]="i + 1"
               (deleted)="delete(edge.node)"
@@ -99,9 +108,13 @@
             <m-publisherRecommendations
               *ngIf="!(isPublisherRecommendationsDismissed$ | async)"
               location="newsfeed"
-              [dismissible]="true"
+              [dismissible]="edge.dismissible"
               [connection]="edge.node"
             ></m-publisherRecommendations>
+          </ng-template>
+
+          <ng-template ngSwitchCase="FeedExploreTagEdge">
+            <m-exploreTagFeedItem [tag]="edge.node.tag"></m-exploreTagFeedItem>
           </ng-template>
         </ng-container>
       </ng-container>

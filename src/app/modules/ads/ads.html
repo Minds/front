@@ -1,25 +1,27 @@
-<h3
-  class="m-newsfeedSidebar__header m-adsBoost__header"
-  *ngIf="boosts.length > 0"
->
-  <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
-</h3>
-<div class="m-ad-boost-entity" *ngFor="let entity of boosts">
-  <ng-container *ngIf="['user', 'group'].includes(entity?.type); else notUser">
-    <m-publisherCard [publisher]="entity"></m-publisherCard
-  ></ng-container>
-  <ng-template #notUser>
-    <minds-card
-      [object]="entity"
-      [displayOptions]="{
-        sidebarMode: true,
-        isSidebarBoost: true,
-        showToolbar: false,
-        showComments: false,
-        autoplayVideo: false,
-        showPostMenu: false
-       }"
-      class="mdl-card m-border"
-    ></minds-card
-  ></ng-template>
-</div>
+<ng-container *mIfTenant="false">
+  <m-sidebarWidget *ngIf="boosts.length > 0" titleText="Boosted">
+    <div class="m-sidebarWidget__body">
+      <ng-container *ngFor="let entity of boosts">
+        <m-publisherCard
+          *ngIf="['user', 'group'].includes(entity?.type)"
+          [publisher]="entity"
+          noPadding="true"
+          noBorder="true"
+          sizeOverride="small"
+        ></m-publisherCard>
+      </ng-container>
+      <m-button
+        *ngIf="session.getLoggedInUser()"
+        class="m-adsBoost__boostChannelButton"
+        color="blue"
+        size="small"
+        (onAction)="openBoostChannelModal()"
+        solid="true"
+        stretch="true"
+        ><ng-container i18n="@@ADS_BOOST__BOOST_CHANNEL"
+          >Boost channel</ng-container
+        ></m-button
+      >
+    </div>
+  </m-sidebarWidget>
+</ng-container>

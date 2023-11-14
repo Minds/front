@@ -22,6 +22,36 @@ $cardWidth: 552px;
     @include m-theme() {
       background-color: themed($m-action);
     }
+
+    &.m-giftCard__top--boost {
+      @include m-theme() {
+        background: linear-gradient(
+          190deg,
+          color-by-theme($m-green, 'dark') 0%,
+          color-by-theme($m-grey-900, 'dark') 85%
+        );
+      }
+    }
+
+    &.m-giftCard__top--pro {
+      @include m-theme() {
+        background: linear-gradient(
+          190deg,
+          color-by-theme($m-action, 'dark') 0%,
+          color-by-theme($m-grey-900, 'dark') 85%
+        );
+      }
+    }
+
+    &.m-giftCard__top--plus {
+      @include m-theme() {
+        background: linear-gradient(
+          190deg,
+          color-by-theme($m-grey-500, 'dark') 0%,
+          color-by-theme($m-grey-900, 'dark') 85%
+        );
+      }
+    }
   }
 
   .m-giftCard__bottom {
@@ -30,7 +60,7 @@ $cardWidth: 552px;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-    padding: $spacing7;
+    padding: $spacing4 $spacing6;
     box-sizing: border-box;
     min-height: 88px;
 
@@ -52,12 +82,42 @@ $cardWidth: 552px;
       }
     }
 
+    .m-giftCard__cardText--heading3Bold {
+      @include heading3Bold;
+    }
+
+    .m-giftCard__cardText--heading4Regular {
+      @include heading4Regular;
+    }
+
+    .m-giftCard__cardText--heading4Medium {
+      @include heading4Medium;
+    }
+
+    .m-giftCard__cardText--heading4Bold {
+      @include heading4Bold;
+    }
+
+    .m-giftCard__cardText--body3Regular {
+      @include body3Regular;
+    }
+
+    .m-giftCard__cardText--body3Medium {
+      @include body3Medium;
+    }
+
+    .m-giftCard__cardText--smallTopMargin {
+      margin-top: $spacing2;
+    }
+
     .m-giftCard__cardText--left {
+      display: flex;
+      flex-flow: column nowrap;
+
       @include heading3Medium;
     }
 
     .m-giftCard__cardText--right {
-      @include heading3Bold;
       margin-left: 12px;
     }
   }

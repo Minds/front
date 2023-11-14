@@ -31,6 +31,7 @@ import { SearchGqlExperimentService } from '../search-gql-experiment.service';
 export class SearchBarSuggestionsComponent implements OnInit {
   @Output() mousedownEvent: EventEmitter<any> = new EventEmitter();
 
+  @Input() bordered: boolean = true;
   @Input() active: boolean; // a.k.a. search bar is focused
   @Input() disabled: boolean = false;
 

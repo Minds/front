@@ -10,4 +10,32 @@
       display: none;
     }
   }
+
+  .m-topbarWrapper__giftIcon {
+    cursor: pointer;
+    @include unselectable;
+
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
+
+    ::ng-deep svg path {
+      @include m-theme() {
+        fill: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  ::ng-deep .m-topbar__top--minimalLightMode .m-topbarWrapper__giftIcon {
+    svg path {
+      @include m-theme() {
+        fill: color-by-theme($m-bgColor--primaryInverted, 'light');
+      }
+    }
+  }
+
+  m-notifications--topbar-toggle {
+    // optical alignment fix.
+    margin-top: calc($spacing1 / 2);
+  }
 }

@@ -20,6 +20,8 @@ export const cache = new InMemoryCache({
           'mediaType',
           'nsfw',
         ]),
+        boosts: relayStylePagination(['targetLocation', 'first']),
+        featuredEntities: relayStylePagination(['type', 'first']),
       },
     },
   },

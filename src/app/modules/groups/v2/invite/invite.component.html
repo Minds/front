@@ -16,7 +16,7 @@
       class="m-modalV2__body m-formWrapper m-groupInvite__form"
       [formGroup]="formGroup"
     >
-      <p class="m-groupInvite__description">
+      <p class="m-groupInvite__description" i18n="@@GROUP_INVITE__DESC">
         Invite a user who is subscribed to you to join this group.
       </p>
 
@@ -47,7 +47,7 @@
           </p>
         </div>
       </div>
-      <p class="m-groupInvite__note">
+      <p class="m-groupInvite__note" *ngIf="isModerator(group)">
         Note: If the user was previously banned from the group, inviting them
         will lift the ban.
       </p>

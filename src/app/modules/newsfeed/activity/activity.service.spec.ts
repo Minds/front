@@ -2,6 +2,8 @@ import { BehaviorSubject } from 'rxjs';
 import userMock from '../../../mocks/responses/user.mock';
 import { ActivityService } from './activity.service';
 import { AccessId } from '../../../common/enums/access-id.enum';
+import { MockService } from '../../../utils/mock';
+import { ApiService } from '../../../common/api/api.service';
 
 describe('ActivityService', () => {
   let service: ActivityService;
@@ -23,10 +25,30 @@ describe('ActivityService', () => {
     this.thumbsDownCount$ = new BehaviorSubject<number>(0);
   })();
 
+  let apiMock, toastMock;
+
   beforeEach(() => {
+    apiMock = MockService(ApiService, {
+      get() {
+        return new BehaviorSubject<any>({
+          status: 'success',
+          'has-reminded': true,
+        });
+      },
+      delete() {
+        return new BehaviorSubject<any>({ status: 'success' });
+      },
+    });
+
+    toastMock = new (function() {
+      this.error = jasmine.createSpy('error');
+    })();
+
     service = new ActivityService(
       configsMock,
       sessionsMock,
+      apiMock,
+      toastMock,
       entityMetricsSocketMock
     );
 
@@ -58,7 +80,6 @@ describe('ActivityService', () => {
     service.setupMetricsSocketListener();
 
     (service as any).entityMetricsSocket.thumbsUpCount$.next(5);
-    (service as any).entityMetricsSocket.thumbsDownCount$.next(4);
 
     expect((service as any).entityMetricsSocket.listen).toHaveBeenCalledWith(
       '321'
@@ -67,7 +88,6 @@ describe('ActivityService', () => {
     service.entity$
       .subscribe(entity => {
         expect(entity['thumbs:up:count']).toBe(5);
-        expect(entity['thumbs:down:count']).toBe(4);
       })
       .unsubscribe();
   });
@@ -77,7 +97,6 @@ describe('ActivityService', () => {
     service.setupMetricsSocketListener();
 
     (service as any).entityMetricsSocket.thumbsUpCount$.next(2);
-    (service as any).entityMetricsSocket.thumbsDownCount$.next(3);
 
     expect((service as any).entityMetricsSocket.listen).toHaveBeenCalledWith(
       '123'
@@ -86,7 +105,6 @@ describe('ActivityService', () => {
     service.entity$
       .subscribe(entity => {
         expect(entity['thumbs:up:count']).toBe(2);
-        expect(entity['thumbs:down:count']).toBe(3);
       })
       .unsubscribe();
   });
@@ -283,6 +301,43 @@ describe('ActivityService', () => {
     service.shouldShowNsfwConsent$.subscribe(shouldShowNsfwConsent => {
       expect(shouldShowNsfwConsent).toBeFalse();
       done();
+    });
+  });
+
+  describe('displayOptions', () => {
+    it('should have correctly defaulted displayOptions', () => {
+      expect((service as any).displayOptions).toEqual({
+        autoplayVideo: true,
+        showOwnerBlock: true,
+        showComments: true,
+        showOnlyCommentsInput: true,
+        showOnlyCommentsToggle: false,
+        showToolbar: true,
+        showToolbarButtonsRow: true,
+        showExplicitVoteButtons: false,
+        showInteractions: false,
+        showEditedTag: false,
+        showVisibilityState: false,
+        showTranslation: false,
+        showPostMenu: true,
+        showPinnedBadge: true,
+        showMetrics: true,
+        fixedHeight: false,
+        fixedHeightContainer: false,
+        isModal: false,
+        minimalMode: false,
+        bypassMediaModal: false,
+        sidebarMode: false,
+        boostRotatorMode: false,
+        isSidebarBoost: false,
+        isFeed: false,
+        isSingle: false,
+        permalinkBelowContent: false,
+        hasLoadingPriority: false,
+        inSingleGroupFeed: false,
+        isComposerPreview: false,
+        hideTopBorder: false,
+      });
     });
   });
 

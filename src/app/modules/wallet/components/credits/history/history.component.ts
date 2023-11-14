@@ -16,7 +16,6 @@ import { Filter, Option } from '../../../../../interfaces/dashboard';
 import { DropdownSelectorSelection } from '../../../../../common/components/dropdown-selector/dropdown-selector.component';
 import { QueryRef } from 'apollo-angular';
 import { ApolloQueryResult } from '@apollo/client';
-import { ThemeService } from '../../../../../common/services/theme.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 /** Status filter options. */
@@ -35,6 +34,8 @@ type StatusFilterOptions = {
   styleUrls: ['./history.component.ng.scss'],
 })
 export class WalletV2CreditsHistoryComponent implements OnInit, OnDestroy {
+  public readonly GiftCardProductIdEnum: typeof GiftCardProductIdEnum = GiftCardProductIdEnum;
+
   /** Dropdown menu options for status filter. */
   public readonly statusFilter: Filter = {
     id: 'status',
@@ -71,9 +72,6 @@ export class WalletV2CreditsHistoryComponent implements OnInit, OnDestroy {
     boolean
   > = new BehaviorSubject<boolean>(true);
 
-  /** Whether theme is dark. */
-  public readonly isDarkTheme$: Observable<boolean> = this.themeService.isDark$;
-
   /** Limit / pagesize of batches of cards. */
   private readonly limit: number = 10;
 
@@ -99,8 +97,7 @@ export class WalletV2CreditsHistoryComponent implements OnInit, OnDestroy {
     private giftCardService: GiftCardService,
     private getGiftCardsGQL: GetGiftCardsGQL,
     private route: ActivatedRoute,
-    private router: Router,
-    private themeService: ThemeService
+    private router: Router
   ) {}
 
   ngOnInit(): void {

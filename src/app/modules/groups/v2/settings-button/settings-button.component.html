@@ -18,28 +18,32 @@
     <!-- OWNER FUNCTIONS -->
     <!-- ----------------------------- -->
     <ng-container *ngIf="service.isOwner$ | async">
-      <m-dropdownMenu__item (click)="openEditModal()">
-        <span i18n="@@COMMON__EDIT">Edit group</span>
-      </m-dropdownMenu__item>
       <!---------------------------->
-      <m-dropdownMenu__item
-        *ngIf="boostGroupsExperimentIsActive"
-        (click)="onBoostGroupClick()"
-        i18n="@@GROUP_SETTINGS__BOOST_GROUP"
-        >Boost group</m-dropdownMenu__item
-      >
-      <!---------------------------->
-      <m-dropdownMenu__item
-        *ngIf="service.showBoosts$ | async; else enableBoosts"
-        (click)="toggleShowBoosts(false)"
-      >
-        <ng-container i18n="@@GROUP_SETTINGS__DISABLE_BOOSTS"
-          >Disable boosts</ng-container
+      <ng-container *mIfTenant="false">
+        <m-dropdownMenu__item
+          *ngIf="boostGroupsExperimentIsActive"
+          (click)="onBoostGroupClick()"
+          i18n="@@GROUP_SETTINGS__BOOST_GROUP"
+          >Boost group</m-dropdownMenu__item
         >
-      </m-dropdownMenu__item>
+      </ng-container>
+      <!---------------------------->
+      <ng-container *mIfTenant="false">
+        <m-dropdownMenu__item
+          *ngIf="service.showBoosts$ | async; else enableBoosts"
+          (click)="toggleShowBoosts(false)"
+        >
+          <ng-container i18n="@@GROUP_SETTINGS__DISABLE_BOOSTS"
+            >Disable boosts</ng-container
+          >
+        </m-dropdownMenu__item>
+      </ng-container>
 
       <ng-template #enableBoosts>
-        <m-dropdownMenu__item (click)="toggleShowBoosts(true)">
+        <m-dropdownMenu__item
+          *mIfTenant="false"
+          (click)="toggleShowBoosts(true)"
+        >
           <ng-container i18n="@@GROUP_SETTINGS__ENABLE_BOOSTS"
             >Enable boosts</ng-container
           >

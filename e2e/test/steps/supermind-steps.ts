@@ -1,10 +1,5 @@
 namespace SupermindSteps {
-  const {
-    I,
-    composerModalComponent,
-    supermindOnboardingModalComponent,
-    channelPage,
-  } = inject();
+  const { I, composerModalComponent, channelPage } = inject();
 
   When('I click the supermind icon on the composer toolbar', () => {
     composerModalComponent.clickSupermindIcon();
@@ -41,27 +36,7 @@ namespace SupermindSteps {
     I.click('[data-ref=activity-icon-supermind-action] m-button');
   });
 
-  When('I see the supermind request onboarding modal', () => {
-    supermindOnboardingModalComponent.requestModalShouldBeVisible(true);
-  });
-
-  When('I see the supermind request onboarding modal', () => {
-    supermindOnboardingModalComponent.requestModalShouldBeVisible(true);
-  });
-
-  When('I click the action button in the Supermind onboarding modal', () => {
-    supermindOnboardingModalComponent.clickContinue();
-  });
-
   //
-
-  Then('I should see the supermind request onboarding modal', num => {
-    supermindOnboardingModalComponent.requestModalShouldBeVisible(true);
-  });
-
-  Then('I should see the supermind reply onboarding modal', num => {
-    supermindOnboardingModalComponent.replyModalShouldBeVisible(true);
-  });
 
   Then('I should see the supermind popout screen', num => {
     I.seeElement(composerModalComponent.getSupermindPopup());

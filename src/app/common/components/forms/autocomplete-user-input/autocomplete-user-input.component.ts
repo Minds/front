@@ -58,6 +58,9 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Input() allowEmpty: boolean = false;
 
+  /** Limit of users to return. */
+  @Input() limit: number = 8;
+
   /**
    * The username, current value of input
    */
@@ -78,7 +81,7 @@ export class AutocompleteUserInputComponent implements ControlValueAccessor {
       this.inProgress$$.next(true);
       return this.api.get(`api/v2/search/suggest/user`, {
         q: searchTerm,
-        limit: 8,
+        limit: this.limit,
         hydrate: 1,
       });
     }),

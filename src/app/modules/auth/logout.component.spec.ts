@@ -1,22 +1,32 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { LogoutComponent } from './logout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Session } from '../../services/session';
-import { sessionMock } from '../../../tests/session-mock.spec';
-import { clientMock } from '../../../tests/client-mock.spec';
-import { Client } from '../../services/api/client';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { RegisterForm } from '../forms/register/register';
+import { MockService } from '../../utils/mock';
+import { AuthService } from '../../services/auth.service';
+import { BehaviorSubject } from 'rxjs';
 
-let routerMock = new (function() {
-  this.navigate = jasmine.createSpy('navigate');
-})();
-
-xdescribe('LogoutComponent', () => {
+describe('LogoutComponent', () => {
   let comp: LogoutComponent;
   let fixture: ComponentFixture<LogoutComponent>;
+  const logoutUrlSegments: UrlSegment[] = [
+    {
+      path: 'logout',
+      parameterMap: null,
+      parameters: null,
+    },
+  ];
+  const urlSegments: BehaviorSubject<UrlSegment[]> = new BehaviorSubject<
+    UrlSegment[]
+  >(logoutUrlSegments);
 
   beforeEach(
     waitForAsync(() => {
@@ -24,30 +34,55 @@ xdescribe('LogoutComponent', () => {
         declarations: [LogoutComponent, RegisterForm],
         imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: Router, useValue: routerMock },
+          { provide: Router, useValue: MockService(Router) },
+          {
+            provide: ActivatedRoute,
+            useValue: MockService(ActivatedRoute, {
+              has: ['snapshot'],
+              props: {
+                snapshot: {
+                  get: () => {
+                    return {
+                      url: urlSegments.getValue(),
+                    };
+                  },
+                },
+              },
+            }),
+          },
+          { provide: AuthService, useValue: MockService(AuthService) },
         ],
       }).compileComponents();
     })
   );
 
-  // synchronous beforeEach
   beforeEach(() => {
+    urlSegments.next(logoutUrlSegments);
+
     fixture = TestBed.createComponent(LogoutComponent);
 
     comp = fixture.componentInstance;
 
+    (comp as any).router.navigate.calls.reset();
+    (comp as any).auth.logout.calls.reset();
+    (comp as any).auth.logout.and.returnValue(Promise.resolve(true));
+
     fixture.detectChanges();
   });
 
-  it('should logout just after instantiating', () => {
-    expect(clientMock.delete).toHaveBeenCalled();
-    expect(clientMock.delete.calls.mostRecent().args[0]).toBe(
-      'api/v1/authenticate'
-    );
-    expect(sessionMock.logout).toHaveBeenCalled();
-    expect(routerMock.navigate).toHaveBeenCalled();
-    expect(routerMock.navigate.calls.mostRecent().args[0]).toEqual(['/login']);
-  });
+  it('should init', fakeAsync(() => {
+    expect(comp).toBeTruthy();
+  }));
+
+  it('should logout on init without all parameter', fakeAsync(() => {
+    (comp as any).router.navigate.calls.reset();
+    (comp as any).auth.logout.calls.reset();
+
+    comp.ngOnInit();
+
+    tick();
+    expect((comp as any).auth.logout).toHaveBeenCalledWith(false);
+    tick();
+    expect((comp as any).router.navigate).toHaveBeenCalledWith(['/login']);
+  }));
 });

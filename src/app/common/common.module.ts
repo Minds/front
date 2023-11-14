@@ -181,7 +181,11 @@ import { FormErrorComponent } from './components/form-error/form-error.component
 import { GroupMembershipButtonComponent } from './components/group-membership-button/group-membership-button.component';
 import { GroupMembershipService } from './services/group-membership.service';
 import { SelectableEntityCardComponent } from './components/selectable-entity-card/selectable-entity-card.component';
+import { InlineFeedHeaderComponent } from './components/inline-feed-header/inline-feed-header.component';
+import { ExploreTagFeedItemComponent } from './components/explore-tag-feed-item/explore-tag-feed-item.component';
 import { ExploreFeedItemComponent } from './components/explore-feed-item/explore-feed-item.component';
+import { IfTenantDirective } from './directives/if-tenant.directive';
+import { IsTenantService } from './services/is-tenant.service';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -289,6 +293,8 @@ const MINDS_COMMON_COMPONENTS = [
   ChatwootWidgetComponent,
   FormErrorComponent,
   SelectableEntityCardComponent,
+  InlineFeedHeaderComponent,
+  ExploreTagFeedItemComponent,
 ];
 // ------------------------------------
 // ------------------------------------
@@ -305,6 +311,7 @@ const MINDS_DIRECTIVES = [
   GraphSVG,
   HotkeyScrollDirective,
   IfBrowserDirective,
+  IfTenantDirective,
   InlineAutoGrow,
   PageLayoutContainerDirective,
   PageLayoutPaneDirective,
@@ -402,6 +409,7 @@ const routes: Routes = [
     RecentSubscriptionsService,
     ReportService,
     GroupMembershipService,
+    IsTenantService,
   ],
 })
 export class CommonModule {}

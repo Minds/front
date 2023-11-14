@@ -15,6 +15,9 @@ import {
   styleUrls: ['./gift-card.component.ng.scss'],
 })
 export class GiftCardComponent {
+  /** Product id enum for use in template. */
+  public readonly GiftCardProductIdEnum: typeof GiftCardProductIdEnum = GiftCardProductIdEnum;
+
   /** Gift card node to display. */
   @Input() public giftCardNode: GiftCardNode;
 
