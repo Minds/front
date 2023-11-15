@@ -78,7 +78,7 @@
 </ng-template>
 
 <div class="m-login__title">
-  <h3 *ngIf="showTitle">Login to Minds</h3>
+  <h3 *ngIf="showTitle">Login<span *mIfTenant="false"> to Minds</span></h3>
 
   <a
     *ngIf="showTitle"
@@ -161,7 +161,7 @@
     (click)="onJoinNowClick()"
     i18n="@@LOGIN__JOIN_MINDS_NOW"
   >
-    Join Minds Now
+    Join <span *mIfTenant="false"> Minds </span>Now
   </a>
 
   <div class="m-layout__row m-login__actions">
@@ -222,9 +222,8 @@
       <a
         class="m-login__joinTheConversation"
         (click)="onShowRegisterFormClick()"
-        i18n="@@LOGIN__JOIN_MINDS_NOW"
       >
-        Join Minds Now
+        Join<ng-container *mIfTenant="false"> Minds</ng-container> Now
       </a>
     </span>
     <div class="m-layout__spacer"></div>

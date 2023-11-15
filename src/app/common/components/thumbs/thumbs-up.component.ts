@@ -19,6 +19,7 @@ import { ToasterService } from '../../services/toaster.service';
 import { CounterChangeFadeIn } from '../../../animations';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { ExplicitVotesExperimentService } from '../../../modules/experiments/sub-services/explicit-votes-experiment.service';
+import { IsTenantService } from '../../services/is-tenant.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -72,7 +73,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     private cd: ChangeDetectorRef,
     private experiments: ExperimentsService,
     private toast: ToasterService,
-    private explicitVotesExperiment: ExplicitVotesExperimentService
+    private explicitVotesExperiment: ExplicitVotesExperimentService,
+    private isTenant: IsTenantService
   ) {}
 
   set _object(value: any) {
@@ -204,6 +206,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    */
   private showImproveRecsToast(): void {
     if (
+      // don't show for tenants
+      !this.isTenant.is() &&
       // don't show for comments.
       this.object['type'] !== 'comment' &&
       // only show if experiment is active.

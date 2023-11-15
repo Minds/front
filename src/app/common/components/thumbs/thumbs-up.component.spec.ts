@@ -8,6 +8,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { ChangeDetectorRef } from '@angular/core';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { ExplicitVotesExperimentService } from '../../../modules/experiments/sub-services/explicit-votes-experiment.service';
+import { IsTenantService } from '../../services/is-tenant.service';
 
 describe('ThumbsUpButton', () => {
   let comp: ThumbsUpButton;
@@ -37,6 +38,10 @@ describe('ThumbsUpButton', () => {
           {
             provide: ExplicitVotesExperimentService,
             useValue: MockService(ExplicitVotesExperimentService),
+          },
+          {
+            provide: IsTenantService,
+            useValue: MockService(IsTenantService),
           },
         ],
       }).compileComponents();

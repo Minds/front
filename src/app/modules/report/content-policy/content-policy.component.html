@@ -2,9 +2,11 @@
   <div class="m-marketing__main">
     <h1>Content Policy</h1>
 
-    <m-button *ngIf="session.isAdmin()" (onAction)="startJuryDuty()">
-      Start Admin Review
-    </m-button>
+    <ng-container *mIfTenant="false">
+      <m-button *ngIf="session.isAdmin()" (onAction)="startJuryDuty()">
+        Start Admin Review
+      </m-button>
+    </ng-container>
     <p>
       The goal of Minds is to have fair, transparent and ethical moderation
       practices.

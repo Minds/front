@@ -278,7 +278,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
 
   /**
    * Gets logo src depending on whether we're on a multi-tenant network and if the
-   * user is in dark / light mode. Will change as refresh count goes up to force reloads
+   * user is in dark / light mode. Will change as last cache timestamp changes to force reloads
    * on change.
    * @param { 'dark' | 'light' } mode - dark or light mode.
    * @returns { Observable<string> } - observable of logo src.
@@ -290,10 +290,11 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
           (mode === 'light' ? 'medium-production.png' : 'medium-white.png')
       );
     }
-    return this.configImageRefresh.squareLogoCount$.pipe(
-      map((count: number): string => {
+    return this.configImageRefresh.squareLogoLastCacheTimestamp$.pipe(
+      map((lastCacheTimestamp: number): string => {
         return (
-          '/api/v3/multi-tenant/configs/image/square_logo?refresh=' + count
+          '/api/v3/multi-tenant/configs/image/square_logo?lastCache=' +
+          lastCacheTimestamp
         );
       })
     );

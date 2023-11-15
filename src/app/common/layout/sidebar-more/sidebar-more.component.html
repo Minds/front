@@ -85,16 +85,18 @@
       </li>
     </ng-container>
     <!-- ------------------------------------------------------------ -->
-    <li class="m-sidebarMoreDropdown__item" (click)="toggleSidebar()">
-      <a
-        [href]="getHelpdeskRedirectUrl()"
-        target="_blank"
-        data-ref="sidebarmore-help-zendesk"
-      >
-        <i class="material-icons">help</i>
-        <span i18n="@@COMMON__HELP">Help</span>
-      </a>
-    </li>
+    <ng-container *mIfTenant="false">
+      <li class="m-sidebarMoreDropdown__item" (click)="toggleSidebar()">
+        <a
+          [href]="getHelpdeskRedirectUrl()"
+          target="_blank"
+          data-ref="sidebarmore-help-zendesk"
+        >
+          <i class="material-icons">help</i>
+          <span i18n="@@COMMON__HELP">Help</span>
+        </a>
+      </li>
+    </ng-container>
 
     <!--./././././././././././././././././././././././././././././././.-->
     <li

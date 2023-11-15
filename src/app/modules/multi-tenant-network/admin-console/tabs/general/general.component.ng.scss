@@ -1,7 +1,17 @@
 @import 'defaults.scss';
+@import '../../stylesheets/console.component.ng.scss';
 
 :host {
-  max-width: 700px;
+  .m-networkAdminConsole__title,
+  .m-networkAdminConsole__form,
+  .m-networkAdminGeneral__copyInviteLinkContainer {
+    max-width: 700px;
+    @include horizontalPadding;
+  }
+
+  .m-networkAdminConsole__form {
+    margin-bottom: $spacing14;
+  }
 
   .m-networkAdminGeneral__copyInviteLinkContainer {
     margin: $spacing8 0 $spacing16 0;
@@ -61,10 +71,5 @@
         }
       }
     }
-  }
-
-  .m-networkAdminGeneral__saveButton {
-    display: block;
-    margin: $spacing8 0;
   }
 }

@@ -6,6 +6,13 @@ import { of, Observable } from 'rxjs';
 import { ConfigsService } from '../../services/configs.service';
 import { Session } from '../../../services/session';
 
+/** Object that can be passed in to display an avatar. */
+export type MindsAvatarObject = {
+  guid: string;
+  type: 'user' | 'group';
+  icontime?: number;
+};
+
 /**
  * Displays the avatar for a channel
  *

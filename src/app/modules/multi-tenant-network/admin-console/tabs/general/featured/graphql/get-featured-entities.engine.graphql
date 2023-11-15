@@ -1,0 +1,37 @@
+query GetFeaturedEntities(
+  $type: FeaturedEntityTypeEnum!,
+  $after: Int,
+  $first: Int
+) {
+  featuredEntities(type: $type, after: $after, first: $first) {
+    edges {
+      node {
+        id
+        ... on FeaturedUser {
+          __typename
+          entityGuid
+          id
+          autoSubscribe
+          name
+          username
+        }
+        ... on FeaturedGroup {
+          __typename
+          entityGuid
+          id 
+          autoSubscribe
+          name
+          membersCount
+        }
+      } 
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    id
+  }
+}

@@ -26,7 +26,8 @@ import { STRAPI_URL } from '../../../../common/injection-tokens/url-injection-to
         >
       </ng-template>
       <h3 class="m-onboardingV5CompletedSplash__message" aria-live="polite">
-        {{ message }}
+        <ng-container *mIfTenant="false">{{ message }}</ng-container>
+        <ng-container *mIfTenant="true">Welcome</ng-container>
       </h3>
     </div>
   `,

@@ -1,0 +1,13 @@
+mutation StoreFeaturedEntity(
+  $entityGuid: String!,
+  $autoSubscribe: Boolean,
+){
+  storeFeaturedEntity(featuredEntity: {
+    entityGuid: $entityGuid
+    autoSubscribe: $autoSubscribe
+  })  {
+    tenantId,
+    entityGuid,
+    autoSubscribe
+  }
+}
