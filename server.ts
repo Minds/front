@@ -58,6 +58,12 @@ export function app() {
     res.send('There was problem');
   });
 
+  // /api should not be getting called
+  server.get('/api/*', (req, res) => {
+    res.send('There was problem');
+    res.end();
+  });
+
   // cache
   // const NodeCache = require('node-cache');
   // const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
