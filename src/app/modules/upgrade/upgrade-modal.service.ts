@@ -1,6 +1,7 @@
 import { Injectable, Injector, createNgModuleRef } from '@angular/core';
 import { ModalRef, ModalService } from '../../services/ux/modal.service';
 import { UpgradePageComponent } from './upgrade-page/upgrade-page.component';
+import { IsTenantService } from '../../common/services/is-tenant.service';
 
 /**
  * Service that lazy loads and presents
@@ -10,7 +11,8 @@ import { UpgradePageComponent } from './upgrade-page/upgrade-page.component';
 export class UpgradeModalService {
   constructor(
     protected modalService: ModalService,
-    private injector: Injector
+    private injector: Injector,
+    private isTenant: IsTenantService
   ) {}
 
   /**
@@ -18,6 +20,10 @@ export class UpgradeModalService {
    * @returns { Promise<ModalRef<UpgradePageComponentt>> }
    */
   public async open(): Promise<ModalRef<UpgradePageComponent>> {
+    // Don't show on tenant sites
+    if (this.isTenant.is()) {
+      return;
+    }
     const { UpgradeModule } = await import('./upgrade.module');
 
     const moduleRef = createNgModuleRef(UpgradeModule, this.injector);
