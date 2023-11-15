@@ -457,6 +457,8 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Assigns a user to a role */
+  assignUserToRole: Role;
   claimGiftCard: GiftCardNode;
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
@@ -472,9 +474,18 @@ export type Mutation = {
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  /** Sets a permission for that a role has */
+  setRolePermission: Role;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
+  /** Un-ssigns a user to a role */
+  unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+};
+
+export type MutationAssignUserToRoleArgs = {
+  roleId: Scalars['Int']['input'];
+  userGuid: Scalars['String']['input'];
 };
 
 export type MutationClaimGiftCardArgs = {
@@ -523,8 +534,19 @@ export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
 };
 
+export type MutationSetRolePermissionArgs = {
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  permission: PermissionsEnum;
+  roleId: Scalars['Int']['input'];
+};
+
 export type MutationStoreFeaturedEntityArgs = {
   featuredEntity: FeaturedEntityInput;
+};
+
+export type MutationUnassignUserFromRoleArgs = {
+  roleId: Scalars['Int']['input'];
+  userGuid: Scalars['String']['input'];
 };
 
 export type MutationUpdateAccountArgs = {
@@ -579,6 +601,16 @@ export type PaymentMethod = {
   name: Scalars['String']['output'];
 };
 
+export enum PermissionsEnum {
+  CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
+  CanBoost = 'CAN_BOOST',
+  CanComment = 'CAN_COMMENT',
+  CanCreateGroup = 'CAN_CREATE_GROUP',
+  CanCreatePost = 'CAN_CREATE_POST',
+  CanInteract = 'CAN_INTERACT',
+  CanUploadVideo = 'CAN_UPLOAD_VIDEO',
+}
+
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
@@ -603,6 +635,14 @@ export type PublisherRecsEdge = EdgeInterface & {
 export type Query = {
   __typename?: 'Query';
   activity: ActivityNode;
+  /** Returns all permissions that exist on the site */
+  allPermissions: Array<PermissionsEnum>;
+  /** Returns all roles that exist on the site and their permission assignments */
+  allRoles: Array<Role>;
+  /** Returns the permissions that the current session holds */
+  assignedPermissions: Array<Scalars['String']['output']>;
+  /** Returns the roles the session holds */
+  assignedRoles: Array<Role>;
   /** Gets Boosts. */
   boosts: BoostsConnection;
   /** Get dismissal by key. */
@@ -730,6 +770,13 @@ export type QuerySearchArgs = {
 export type QueryTenantsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Role = {
+  __typename?: 'Role';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  permissions: Array<PermissionsEnum>;
 };
 
 export enum SearchFilterEnum {
@@ -1273,6 +1320,49 @@ export type StoreFeaturedEntityMutation = {
       };
 };
 
+export type AssignUserToRoleMutationVariables = Exact<{
+  userGuid: Scalars['String']['input'];
+  roleId: Scalars['Int']['input'];
+}>;
+
+export type AssignUserToRoleMutation = {
+  __typename?: 'Mutation';
+  assignUserToRole: {
+    __typename?: 'Role';
+    id: number;
+    name: string;
+    permissions: Array<PermissionsEnum>;
+  };
+};
+
+export type GetRolesAndPermissionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetRolesAndPermissionsQuery = {
+  __typename?: 'Query';
+  allPermissions: Array<PermissionsEnum>;
+  allRoles: Array<{
+    __typename?: 'Role';
+    id: number;
+    name: string;
+    permissions: Array<PermissionsEnum>;
+  }>;
+};
+
+export type GetAssignedRolesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAssignedRolesQuery = {
+  __typename?: 'Query';
+  assignedPermissions: Array<string>;
+  assignedRoles: Array<{
+    __typename?: 'Role';
+    id: number;
+    name: string;
+    permissions: Array<PermissionsEnum>;
+  }>;
+};
+
 export type GetMultiTenantConfigQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -1349,6 +1439,30 @@ export type CreateMultiTenantDomainMutation = {
       value: string;
     } | null;
   };
+};
+
+export type SetRolePermissionMutationVariables = Exact<{
+  permission: PermissionsEnum;
+  roleId: Scalars['Int']['input'];
+  enabled: Scalars['Boolean']['input'];
+}>;
+
+export type SetRolePermissionMutation = {
+  __typename?: 'Mutation';
+  setRolePermission: {
+    __typename?: 'Role';
+    permissions: Array<PermissionsEnum>;
+  };
+};
+
+export type UnassignUserFromRoleMutationVariables = Exact<{
+  userGuid: Scalars['String']['input'];
+  roleId: Scalars['Int']['input'];
+}>;
+
+export type UnassignUserFromRoleMutation = {
+  __typename?: 'Mutation';
+  unassignUserFromRole: boolean;
 };
 
 export type CreateTenantRootUserMutationVariables = Exact<{
@@ -3280,6 +3394,77 @@ export class StoreFeaturedEntityGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const AssignUserToRoleDocument = gql`
+  mutation AssignUserToRole($userGuid: String!, $roleId: Int!) {
+    assignUserToRole(userGuid: $userGuid, roleId: $roleId) {
+      id
+      name
+      permissions
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AssignUserToRoleGQL extends Apollo.Mutation<
+  AssignUserToRoleMutation,
+  AssignUserToRoleMutationVariables
+> {
+  document = AssignUserToRoleDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetRolesAndPermissionsDocument = gql`
+  query GetRolesAndPermissions {
+    allRoles {
+      id
+      name
+      permissions
+    }
+    allPermissions
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetRolesAndPermissionsGQL extends Apollo.Query<
+  GetRolesAndPermissionsQuery,
+  GetRolesAndPermissionsQueryVariables
+> {
+  document = GetRolesAndPermissionsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetAssignedRolesDocument = gql`
+  query GetAssignedRoles {
+    assignedRoles {
+      id
+      name
+      permissions
+    }
+    assignedPermissions
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetAssignedRolesGQL extends Apollo.Query<
+  GetAssignedRolesQuery,
+  GetAssignedRolesQueryVariables
+> {
+  document = GetAssignedRolesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetMultiTenantConfigDocument = gql`
   query GetMultiTenantConfig {
     multiTenantConfig {
@@ -3395,6 +3580,54 @@ export class CreateMultiTenantDomainGQL extends Apollo.Mutation<
   CreateMultiTenantDomainMutationVariables
 > {
   document = CreateMultiTenantDomainDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetRolePermissionDocument = gql`
+  mutation SetRolePermission(
+    $permission: PermissionsEnum!
+    $roleId: Int!
+    $enabled: Boolean!
+  ) {
+    setRolePermission(
+      permission: $permission
+      roleId: $roleId
+      enabled: $enabled
+    ) {
+      permissions
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetRolePermissionGQL extends Apollo.Mutation<
+  SetRolePermissionMutation,
+  SetRolePermissionMutationVariables
+> {
+  document = SetRolePermissionDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UnassignUserFromRoleDocument = gql`
+  mutation UnassignUserFromRole($userGuid: String!, $roleId: Int!) {
+    unassignUserFromRole(userGuid: $userGuid, roleId: $roleId)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UnassignUserFromRoleGQL extends Apollo.Mutation<
+  UnassignUserFromRoleMutation,
+  UnassignUserFromRoleMutationVariables
+> {
+  document = UnassignUserFromRoleDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

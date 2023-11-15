@@ -1,0 +1,13 @@
+<div class="m-expansionPanel">
+  <div class="m-expansionPanel__top" (click)="toggleExpansion()">
+    <ng-content select="[visibleAlways]"></ng-content>
+    <i class="material-icons"
+      ><ng-container *ngIf="!(expanded$ | async)">chevron_right</ng-container>
+      <ng-container *ngIf="expanded$ | async">expand_more</ng-container></i
+    >
+  </div>
+
+  <div class="m-expansionPanel__bottom" *ngIf="expanded$ | async">
+    <ng-content select="[visibleWhenExpanded]"></ng-content>
+  </div>
+</div>

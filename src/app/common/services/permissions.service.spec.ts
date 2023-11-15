@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ExperimentsService } from '../../modules/experiments/experiments.service';
 import { ConfigsService } from './configs.service';
-import { PermissionsService, Permission } from './permissions.service';
+import { PermissionsService } from './permissions.service';
 
 describe('PermissionsService', () => {
   let service: PermissionsService;

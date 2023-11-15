@@ -187,6 +187,7 @@ import { ExploreFeedItemComponent } from './components/explore-feed-item/explore
 import { IfTenantDirective } from './directives/if-tenant.directive';
 import { IsTenantService } from './services/is-tenant.service';
 import { PermissionsService } from './services/permissions.service';
+import { ExpansionPanelComponent } from './components/expansion-panel/expansion-panel.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -217,6 +218,7 @@ const MINDS_COMMON_COMPONENTS = [
   DynamicFormComponent,
   EnvironmentFlagComponent,
   ErrorSplashComponent,
+  ExpansionPanelComponent,
   ExplicitOverlayComponent,
   ExploreFeedItemComponent,
   FeaturedContentComponent,

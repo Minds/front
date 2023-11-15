@@ -1,0 +1,7 @@
+mutation AssignUserToRole($userGuid: String!, $roleId: Int!) {
+  assignUserToRole(userGuid: $userGuid, roleId: $roleId) {
+    id
+    name
+    permissions
+  }
+}

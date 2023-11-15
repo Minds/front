@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ExperimentsService } from '../../modules/experiments/experiments.service';
 import { ConfigsService } from './configs.service';
-
-export enum Permission {
-  CanCreatePost = 'CAN_CREATE_POST',
-  CanComment = 'CAN_COMMENT',
-  CanUploadVideo = 'CAN_UPLOAD_VIDEO',
-  CanCreateGroup = 'CAN_CREATE_GROUP',
-  CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
-}
+import { PermissionsEnum } from '../../../graphql/generated.engine';
 
 export const VIDEO_PERMISSIONS_ERROR_MESSAGE =
   'Your user role does not allow uploading video.';
@@ -44,7 +37,7 @@ export class PermissionsService {
    * @param permission
    * @returns whether the user has permission
    */
-  private has(permission: Permission): boolean {
+  private has(permission: PermissionsEnum): boolean {
     // Don't implement restrictions if the experiment isn't enabled
     if (!this.isActive()) {
       return true;
@@ -55,26 +48,26 @@ export class PermissionsService {
 
   // Is the user allowed to create posts?
   public canCreatePost(): boolean {
-    return this.has(Permission.CanCreatePost);
+    return this.has(PermissionsEnum.CanCreatePost);
   }
 
   // Is the user allowed to comment?
   public canComment(): boolean {
-    return this.has(Permission.CanComment);
+    return this.has(PermissionsEnum.CanComment);
   }
 
   // Is the user allowed to upload video?
   public canUploadVideo(): boolean {
-    return this.has(Permission.CanUploadVideo);
+    return this.has(PermissionsEnum.CanUploadVideo);
   }
 
   // Is the user allowed to create a group?
   public canCreateGroup(): boolean {
-    return this.has(Permission.CanCreateGroup);
+    return this.has(PermissionsEnum.CanCreateGroup);
   }
 
   // Is the user allowed to assign permissions?
-  public canAssignPermisions(): boolean {
-    return this.has(Permission.CanAssignPermissions);
+  public canAssignPermissions(): boolean {
+    return this.has(PermissionsEnum.CanAssignPermissions);
   }
 }
