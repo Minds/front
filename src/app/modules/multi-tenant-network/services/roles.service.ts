@@ -105,9 +105,9 @@ export class MultiTenantRolesService implements OnDestroy {
       .pipe(
         take(1),
         // ojm remove map
-        map(() => {
-          return ojmFakeData;
-        }),
+        // map(() => {
+        //   return ojmFakeData;
+        // }),
         catchError(
           (e: unknown): Observable<null> => {
             console.error('getRolesAndPermissions Error: ', e);
@@ -178,6 +178,7 @@ export class MultiTenantRolesService implements OnDestroy {
       case PermissionsEnum.CanCreateGroup:
         return 'Create group';
       // Below aren't used as display text anywhere
+      //
       // case PermissionsEnum.CanInteract:
       //   return 'Interact';
       // case PermissionsEnum.CanBoost:
@@ -214,10 +215,10 @@ export const ojmFakeData: ApolloQueryResult<GetRolesAndPermissionsQuery> = {
         permissions: [
           PermissionsEnum.CanCreatePost,
           PermissionsEnum.CanComment,
-          // PermissionsEnum.CanCreateGroup,
-          // PermissionsEnum.CanUploadVideo,
-          // PermissionsEnum.CanInteract,
-          // PermissionsEnum.CanBoost,
+          PermissionsEnum.CanCreateGroup,
+          PermissionsEnum.CanUploadVideo,
+          PermissionsEnum.CanInteract,
+          PermissionsEnum.CanBoost,
         ],
       },
       {

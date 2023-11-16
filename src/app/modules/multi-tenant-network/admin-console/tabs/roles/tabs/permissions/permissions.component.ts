@@ -34,11 +34,8 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
     this.subscriptions.push(
       this.service.allRoles$.subscribe(roles => {
         this.allRoles = roles;
-        console.log('ojm allRoles', roles);
       }),
-      this.service.allPermissions$.subscribe(permissions => {
-        console.log('ojm allPermissions', permissions);
-      })
+      this.service.allPermissions$.subscribe(permissions => {})
     );
   }
 
@@ -49,15 +46,9 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
     roleId: number,
     permission: PermissionsEnum
   ): RolePermissionToggleValue {
-    console.log('ojm getPermission for role', roleId, ' + ', permission);
     const role = this.allRoles.find(r => r.id === roleId);
 
     if (role && role.permissions) {
-      console.log(
-        'ojm getPermission is included?',
-        role.permissions.includes(permission)
-      );
-
       return role.permissions.includes(permission) ? 'on' : 'off';
     }
 

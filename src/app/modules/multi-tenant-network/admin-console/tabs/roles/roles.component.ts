@@ -1,6 +1,6 @@
-import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Subscription, interval } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { MultiTenantRolesView } from './roles.types';
 import { MultiTenantRolesService } from '../../../services/roles.service';
 
@@ -15,9 +15,7 @@ import { MultiTenantRolesService } from '../../../services/roles.service';
     '../../stylesheets/console.component.ng.scss',
   ],
 })
-export class NetworkAdminConsoleRolesComponent implements OnInit, OnDestroy {
-  // subscriptions.
-  private subscriptions: Subscription[] = [];
+export class NetworkAdminConsoleRolesComponent implements OnInit {
   /**
    * Allows us to use enum in the template
    */
@@ -41,13 +39,5 @@ export class NetworkAdminConsoleRolesComponent implements OnInit, OnDestroy {
     });
 
     this.service.fetchRolesAndPermissions();
-
-    //  ojm this.subscriptions.push();
-  }
-
-  ngOnDestroy(): void {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
   }
 }
