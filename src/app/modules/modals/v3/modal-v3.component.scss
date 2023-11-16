@@ -60,6 +60,9 @@ body.modal-open {
     display: none;
   }
   @media screen and (max-width: $max-mobile) {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
     .modal-dialog {
       margin: 0;
       min-height: 100% !important;

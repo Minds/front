@@ -35,6 +35,7 @@ type contentSettingsComponent = typeof import('./fragments/contentSettingsCompon
 type multiFactorModalComponent = typeof import('./fragments/multiFactorModalComponent');
 type publisherRecommendationsModalComponent = typeof import('./fragments/publisherRecommendationsModalComponent');
 type reportModalComponent = typeof import('./fragments/reportModalComponent');
+type upradeModalComponent = typeof import('./fragments/upgradeModalComponent');
 type onboardingV5ModalComponent = typeof import('./fragments/onboardingV5/onboardingV5ModalComponent');
 type onboardingV5VerifyEmailComponent = typeof import('./fragments/onboardingV5/onboardingV5VerifyEmailComponent');
 type onboardingV5TagSelectorComponent = typeof import('./fragments/onboardingV5/onboardingV5TagSelectorComponent');
@@ -84,6 +85,7 @@ declare namespace CodeceptJS {
     multiFactorModalComponent: multiFactorModalComponent;
     publisherRecommendationsModalComponent: publisherRecommendationsModalComponent;
     reportModalComponent: reportModalComponent;
+    upgradeModalComponent: upgradeModalComponent;
     onboardingV5ModalComponent: onboardingV5ModalComponent;
     onboardingV5VerifyEmailComponent: onboardingV5VerifyEmailComponent;
     onboardingV5TagSelectorComponent: onboardingV5TagSelectorComponent;
