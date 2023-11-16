@@ -1,0 +1,152 @@
+@import 'defaults.scss';
+
+:host {
+  padding: $spacing3 $spacing6;
+  border-radius: 4px;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-reportV2__reasonText {
+    @include body2Bold;
+  }
+
+  .m-reportV2__reportedByContainer {
+    display: flex;
+    align-items: center;
+
+    .m-reportV2__reportedByText {
+      @include body2Bold;
+      margin-right: $spacing3;
+    }
+
+    .m-reportV2__reportedByAvatar {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      margin-right: $spacing2;
+
+      &:focus {
+        outline: none;
+      }
+
+      ::ng-deep .minds-avatar {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-position: center;
+        background-size: cover;
+      }
+    }
+
+    .m-reportV2__reportedByUsername {
+      text-decoration: unset;
+
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .m-reportV2__activity {
+    border-radius: 4px;
+    margin: $spacing6 0;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-reportV2__comment {
+    display: block;
+    margin: $spacing6 0;
+    border-radius: 4px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    ::ng-deep .m-comment__row--top {
+      padding: $spacing4 $spacing4 $spacing2 $spacing4;
+
+      @media screen and (max-width: $max-mobile) {
+        overflow-x: scroll;
+        overflow-y: hidden;
+      }
+    }
+
+    ::ng-deep .m-comment__toolbar {
+      display: none;
+    }
+  }
+
+  .m-reportV2__activity {
+    border-radius: 4px;
+    margin: $spacing6 0;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    ::ng-deep .m-activity__top {
+      margin-bottom: $spacing4;
+    }
+  }
+
+  .m-reportV2__group,
+  .m-reportV2__user {
+    display: block;
+    margin: $spacing6 0;
+
+    ::ng-deep .m-publisherCard {
+      border-radius: 4px;
+    }
+  }
+
+  .m-reportV2__actionBar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing4;
+    padding: $spacing3 0;
+
+    @media screen and (max-width: $min-tablet) {
+      flex-direction: column;
+    }
+
+    .m-reportV2__actionBarLeft,
+    .m-reportV2__actionBarRight {
+      display: flex;
+      gap: $spacing4;
+
+      @media screen and (max-width: $min-tablet) {
+        flex-direction: column;
+        width: 100%;
+      }
+    }
+
+    m-button {
+      gap: $spacing6;
+
+      @media screen and (max-width: $min-tablet) {
+        flex-direction: column;
+        width: 100%;
+
+        ::ng-deep button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
