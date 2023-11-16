@@ -26,7 +26,7 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
 
   private subscriptions: Subscription[] = [];
 
-  protected allRoles: Role[];
+  allRoles: Role[];
 
   constructor(protected service: MultiTenantRolesService) {}
 
@@ -42,7 +42,7 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
   /**
    * Gets specific toggle value for role
    */
-  protected getPermission(
+  getPermission(
     roleId: number,
     permission: PermissionsEnum
   ): RolePermissionToggleValue {
@@ -60,7 +60,7 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
    * @param roleId
    * @param permission
    */
-  protected async setPermission(
+  async setPermission(
     roleId: number,
     permission: PermissionsEnum
   ): Promise<void> {
