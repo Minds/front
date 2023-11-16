@@ -45,11 +45,6 @@ const routes: Routes = [
     redirectTo: '/about/upgrades',
     pathMatch: 'full' as PathMatch,
   },
-  {
-    path: 'upgrade',
-    redirectTo: '/about/upgrades',
-    pathMatch: 'full' as PathMatch,
-  },
 ];
 
 @NgModule({

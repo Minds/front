@@ -270,17 +270,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
   }
 
   /**
-   * Only show the upgrade link when the user isn't pro and the flag is on
-   */
-  get showUpgradeLink(): boolean {
-    return (
-      this.user &&
-      !this.user.pro &&
-      this.experiments.hasVariation('front-6084-sidenav-upgrade-link')
-    );
-  }
-
-  /**
    * Only show the networks link when flag is on
    */
   get showNetworksLink(): boolean {

@@ -1,11 +1,15 @@
-m-toggle {
-  position: relative;
-  display: inline-block;
-  width: 27px;
-  height: 19px;
-  margin: 0 0.35em;
-  cursor: pointer;
-  user-select: none;
+@import 'defaults.scss';
+
+:host {
+  &:not(.m-toggle--large) {
+    position: relative;
+    display: inline-block;
+    width: 27px;
+    height: 19px;
+    margin: 0 0.35em;
+    cursor: pointer;
+    user-select: none;
+  }
 
   .m-toggle__track {
     display: inline-block;
@@ -70,6 +74,41 @@ m-toggle {
       @include m-theme() {
         background: themed($m-textColor--tertiary);
         color: themed($m-borderColor--secondary);
+      }
+    }
+  }
+
+  // ***********************************************
+  // LARGE (TEXT ON TOGGLE)
+  // ***********************************************
+  &.m-toggle--large {
+    .m-toggle {
+      display: flex;
+      flex-flow: row nowrap;
+      padding: $spacing1;
+      border-radius: 100px;
+      cursor: pointer;
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+      }
+
+      .m-toggle__textSwitch {
+        padding: $spacing2 $spacing8;
+        border-radius: 100px;
+        flex: 1;
+        @include unselectable;
+        @include body2Regular;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        &--selected {
+          @include body2Bold;
+          @include m-theme() {
+            background-color: themed($m-bgColor--primary);
+          }
+        }
       }
     }
   }
