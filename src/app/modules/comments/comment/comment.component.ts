@@ -106,6 +106,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() canDelete: boolean = false;
   @Input() hideToolbar: boolean = false;
 
+  /** Whether menu button should be hidden. */
+  @Input() hideMenuButton: boolean = false;
+
   @Input() poster: CommentPosterComponent;
 
   @Output() onReply = new EventEmitter();
