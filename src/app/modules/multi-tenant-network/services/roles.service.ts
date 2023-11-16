@@ -4,11 +4,14 @@ import {
   Observable,
   Subscription,
   catchError,
+  firstValueFrom,
+  lastValueFrom,
   map,
   of,
   take,
+  tap,
 } from 'rxjs';
-import { ApolloQueryResult } from '@apollo/client';
+import { ApolloQueryResult, MutationResult } from '@apollo/client';
 import {
   AssignUserToRoleGQL,
   GetRolesAndPermissionsGQL,
@@ -22,6 +25,7 @@ import {
 } from '../../../../graphql/generated.engine';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
+import { RoleId } from '../admin-console/tabs/roles/roles.types';
 
 /**
  * Service for fetching and updating multi-tenant network domains.
@@ -104,10 +108,6 @@ export class MultiTenantRolesService implements OnDestroy {
       })
       .pipe(
         take(1),
-        // ojm remove map
-        // map(() => {
-        //   return ojmFakeData;
-        // }),
         catchError(
           (e: unknown): Observable<null> => {
             console.error('getRolesAndPermissions Error: ', e);
@@ -131,27 +131,10 @@ export class MultiTenantRolesService implements OnDestroy {
 
     return this.setRolePermissionGQL.mutate(values).pipe(
       take(1),
-      map((result: ApolloQueryResult<SetRolePermissionMutation>) => {
+      map((result: MutationResult<SetRolePermissionMutation>) => {
         const updatedPermissions = result?.data?.setRolePermission.permissions;
-        const roleId = values.roleId;
 
-        if (updatedPermissions && roleId) {
-          // Update the permissions for the role in allRoles$
-          this.allRoles$.pipe(take(1)).subscribe(roles => {
-            const updatedRoles = roles.map(role => {
-              if (role.id === roleId) {
-                return {
-                  ...role,
-                  permissions: updatedPermissions,
-                };
-              }
-              return role;
-            });
-
-            // Emit the updated array of roles
-            this.allRoles$.next(updatedRoles);
-          });
-        }
+        this.updateLocalState(values.roleId, updatedPermissions);
 
         return Boolean(updatedPermissions);
       }),
@@ -167,6 +150,27 @@ export class MultiTenantRolesService implements OnDestroy {
     );
   }
 
+  private updateLocalState(
+    roleId: RoleId,
+    updatedPermissions: PermissionsEnum[]
+  ): void {
+    // Update the permissions for the role in allRoles$
+    this.allRoles$.pipe(take(1)).subscribe(roles => {
+      const updatedRoles = roles.map(role => {
+        if (role.id === roleId) {
+          return {
+            ...role,
+            permissions: updatedPermissions,
+          };
+        }
+        return role;
+      });
+
+      // Emit the updated array of roles
+      this.allRoles$.next(updatedRoles);
+    });
+  }
+
   getPermissionDisplayText(permission: PermissionsEnum): string {
     switch (permission) {
       case PermissionsEnum.CanCreatePost:
@@ -177,95 +181,9 @@ export class MultiTenantRolesService implements OnDestroy {
         return 'Write comment';
       case PermissionsEnum.CanCreateGroup:
         return 'Create group';
-      // Below aren't used as display text anywhere
-      //
-      // case PermissionsEnum.CanInteract:
-      //   return 'Interact';
-      // case PermissionsEnum.CanBoost:
-      //   return 'Boost';
-      // case PermissionsEnum.CanAssignPermissions:
-      //   return 'Assign permissions';
+      // The remaining PermissionsEnum values aren't displayed anywhere
     }
 
     return permission;
   }
 }
-
-export const ojmFakeData: ApolloQueryResult<GetRolesAndPermissionsQuery> = {
-  networkStatus: 7,
-  loading: false,
-  data: {
-    allRoles: [
-      {
-        id: 0,
-        name: 'OWNER',
-        permissions: [
-          PermissionsEnum.CanCreatePost,
-          PermissionsEnum.CanComment,
-          PermissionsEnum.CanCreateGroup,
-          PermissionsEnum.CanUploadVideo,
-          PermissionsEnum.CanInteract,
-          PermissionsEnum.CanBoost,
-          PermissionsEnum.CanAssignPermissions,
-        ],
-      },
-      {
-        id: 1,
-        name: 'ADMIN',
-        permissions: [
-          PermissionsEnum.CanCreatePost,
-          PermissionsEnum.CanComment,
-          PermissionsEnum.CanCreateGroup,
-          PermissionsEnum.CanUploadVideo,
-          PermissionsEnum.CanInteract,
-          PermissionsEnum.CanBoost,
-        ],
-      },
-      {
-        id: 2,
-        name: 'MODERATOR',
-        permissions: [
-          PermissionsEnum.CanCreatePost,
-          PermissionsEnum.CanComment,
-          PermissionsEnum.CanCreateGroup,
-          PermissionsEnum.CanUploadVideo,
-          PermissionsEnum.CanInteract,
-          PermissionsEnum.CanBoost,
-        ],
-      },
-      {
-        id: 3,
-        name: 'VERIFIED',
-        permissions: [
-          PermissionsEnum.CanCreatePost,
-          PermissionsEnum.CanComment,
-          PermissionsEnum.CanCreateGroup,
-          PermissionsEnum.CanUploadVideo,
-          PermissionsEnum.CanInteract,
-          PermissionsEnum.CanBoost,
-        ],
-      },
-      {
-        id: 4,
-        name: 'DEFAULT',
-        permissions: [
-          PermissionsEnum.CanCreatePost,
-          PermissionsEnum.CanComment,
-          PermissionsEnum.CanCreateGroup,
-          PermissionsEnum.CanUploadVideo,
-          PermissionsEnum.CanInteract,
-          PermissionsEnum.CanBoost,
-        ],
-      },
-    ],
-    allPermissions: [
-      PermissionsEnum.CanCreatePost,
-      PermissionsEnum.CanUploadVideo,
-      PermissionsEnum.CanComment,
-      PermissionsEnum.CanInteract,
-      PermissionsEnum.CanCreateGroup,
-      PermissionsEnum.CanBoost,
-      PermissionsEnum.CanAssignPermissions,
-    ],
-  },
-};

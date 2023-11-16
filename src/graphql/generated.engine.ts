@@ -682,10 +682,16 @@ export type Query = {
   paymentMethods: Array<PaymentMethod>;
   search: SearchResultsConnection;
   tenants: Array<Tenant>;
+  /** Returns users and their roles */
+  usersByRole: UserRoleConnection;
 };
 
 export type QueryActivityArgs = {
   guid: Scalars['String']['input'];
+};
+
+export type QueryAssignedRolesArgs = {
+  userGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryBoostsArgs = {
@@ -770,6 +776,12 @@ export type QuerySearchArgs = {
 export type QueryTenantsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryUsersByRoleArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  roleId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Role = {
@@ -892,6 +904,19 @@ export type UserNode = NodeInterface & {
   timeCreatedISO8601: Scalars['String']['output'];
   urn: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type UserRoleConnection = ConnectionInterface & {
+  __typename?: 'UserRoleConnection';
+  edges: Array<UserRoleEdge>;
+  pageInfo: PageInfo;
+};
+
+export type UserRoleEdge = EdgeInterface & {
+  __typename?: 'UserRoleEdge';
+  cursor: Scalars['String']['output'];
+  node: UserNode;
+  roles: Array<Role>;
 };
 
 export type DismissMutationVariables = Exact<{
@@ -1269,6 +1294,11 @@ export type GetFeaturedEntitiesQuery = {
         }
       | {
           __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
+      | {
+          __typename?: 'UserRoleEdge';
           cursor: string;
           node: { __typename?: 'UserNode'; id: string };
         }
@@ -1742,6 +1772,14 @@ export type FetchNewsfeedQuery = {
                         id: string;
                       };
                     }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
                 >;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -1965,6 +2003,14 @@ export type FetchNewsfeedQuery = {
                         id: string;
                       };
                     }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
                 >;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -2150,6 +2196,14 @@ export type FetchNewsfeedQuery = {
                     id: string;
                   };
                 }
+              | {
+                  __typename?: 'UserRoleEdge';
+                  publisherNode: {
+                    __typename?: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
             >;
             pageInfo: {
               __typename?: 'PageInfo';
@@ -2162,6 +2216,11 @@ export type FetchNewsfeedQuery = {
         }
       | {
           __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
+      | {
+          __typename?: 'UserRoleEdge';
           cursor: string;
           node: { __typename?: 'UserNode'; id: string };
         }
@@ -2477,6 +2536,14 @@ export type FetchSearchQuery = {
                         id: string;
                       };
                     }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
                 >;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -2680,6 +2747,14 @@ export type FetchSearchQuery = {
                         id: string;
                       };
                     }
+                  | {
+                      __typename?: 'UserRoleEdge';
+                      publisherNode: {
+                        __typename?: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
                 >;
                 pageInfo: {
                   __typename?: 'PageInfo';
@@ -2849,6 +2924,14 @@ export type FetchSearchQuery = {
                     id: string;
                   };
                 }
+              | {
+                  __typename?: 'UserRoleEdge';
+                  publisherNode: {
+                    __typename?: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
             >;
             pageInfo: {
               __typename?: 'PageInfo';
@@ -2861,6 +2944,11 @@ export type FetchSearchQuery = {
         }
       | {
           __typename?: 'UserEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; legacy: string; id: string };
+        }
+      | {
+          __typename?: 'UserRoleEdge';
           cursor: string;
           node: { __typename?: 'UserNode'; legacy: string; id: string };
         }

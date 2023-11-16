@@ -12,11 +12,11 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./expansion-panel.component.ng.scss'],
 })
 export class ExpansionPanelComponent {
-  public expanded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+  protected expanded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
 
-  public toggleExpansion(): void {
+  protected toggleExpansion(): void {
     this.expanded$.next(!this.expanded$.value);
   }
 }

@@ -1,23 +1,22 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { ExpansionPanelComponent } from './expansion-panel.component';
+import { ExpansionPanelComponent } from './expansion-panel.component';
 
-// // ojm
-// describe('ExpansionPanelComponent', () => {
-//   let component: ExpansionPanelComponent;
-//   let fixture: ComponentFixture<ExpansionPanelComponent>;
+describe('ExpansionPanelComponent', () => {
+  let component: ExpansionPanelComponent;
+  let fixture: ComponentFixture<ExpansionPanelComponent>;
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ExpansionPanelComponent],
-//     }).compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ExpansionPanelComponent],
+    }).compileComponents();
 
-//     fixture = TestBed.createComponent(ExpansionPanelComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+    fixture = TestBed.createComponent(ExpansionPanelComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

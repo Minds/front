@@ -67,10 +67,18 @@ export class NetworkAdminConsoleRolesPermissionsComponent implements OnInit {
     const currentValue =
       this.getPermission(roleId, permission) === 'on' ? true : false;
 
-    await this.service.setRolePermission({
-      permission: permission,
-      roleId: roleId,
-      enabled: !currentValue,
-    });
+    this.subscriptions.push(
+      await this.service
+        .setRolePermission({
+          permission: permission,
+          roleId: roleId,
+          enabled: !currentValue,
+        })
+        .subscribe()
+    );
+  }
+
+  trackByRoleId(index: number, role: any): any {
+    return role.id;
   }
 }

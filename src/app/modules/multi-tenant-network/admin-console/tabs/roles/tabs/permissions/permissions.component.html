@@ -4,7 +4,9 @@
     else loadingSpinnerTemplate
   "
 >
-  <ng-container *ngFor="let role of service.allRoles$ | async">
+  <ng-container
+    *ngFor="let role of service.allRoles$ | async; trackBy: trackByRoleId"
+  >
     <!-------------------------------->
     <!--- Owner ----------->
     <!-------------------------------->

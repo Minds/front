@@ -236,9 +236,7 @@
         </li>
       </ng-container>
       <!-- Network admin (on tenant sites) -->
-      <!-- ojm uncomment and switch -->
-      <!-- <ng-container *ngIf="isAdmin() && isTenantNetwork"> -->
-      <ng-container *ngIf="true">
+      <ng-container *ngIf="isAdmin() && isTenantNetwork">
         <li
           class="m-sidebarNavigation__item m-sidebarNavigation__item--network"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"

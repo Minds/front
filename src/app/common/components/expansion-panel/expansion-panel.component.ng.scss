@@ -12,13 +12,13 @@
   }
 
   .m-expansionPanel__top {
-    cursor: pointer;
-
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    > i {
-      margin-left: $spacing2;
+    .m-expansionPanelTop__toggle {
+      margin-left: $spacing6;
+      margin-top: 6px;
+      cursor: pointer;
     }
   }
 

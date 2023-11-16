@@ -33,8 +33,6 @@ export class NetworkSettingsAuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    // return true;
-    // ojm reenable for local testing
     if (this.session.isAdmin() && this.configs.get<boolean>('is_tenant')) {
       return true;
     }
