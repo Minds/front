@@ -4,12 +4,9 @@ import {
   Observable,
   Subscription,
   catchError,
-  firstValueFrom,
-  lastValueFrom,
   map,
   of,
   take,
-  tap,
 } from 'rxjs';
 import { ApolloQueryResult, MutationResult } from '@apollo/client';
 import {
@@ -87,6 +84,7 @@ export class MultiTenantRolesService implements OnDestroy {
     const toggleablePermissions = [
       PermissionsEnum.CanCreatePost,
       PermissionsEnum.CanComment,
+      PermissionsEnum.CanInteract,
       PermissionsEnum.CanCreateGroup,
       PermissionsEnum.CanUploadVideo,
     ];
@@ -181,6 +179,8 @@ export class MultiTenantRolesService implements OnDestroy {
         return 'Write comment';
       case PermissionsEnum.CanCreateGroup:
         return 'Create group';
+      case PermissionsEnum.CanInteract:
+        return 'Vote and remind';
       // The remaining PermissionsEnum values aren't displayed anywhere
     }
 

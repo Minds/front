@@ -17,13 +17,15 @@ export class PermissionsService {
    * User has permission to use
    * these permissions-restricted features
    */
-  private whitelist: string[];
+  private whitelist: string[] = [];
 
   constructor(
     private experimentsService: ExperimentsService,
     configs: ConfigsService
   ) {
-    this.whitelist = configs.get('permissions') || [];
+    if (configs.get('permissions')) {
+      this.whitelist = Object.values(configs.get('permissions'));
+    }
   }
 
   /**
