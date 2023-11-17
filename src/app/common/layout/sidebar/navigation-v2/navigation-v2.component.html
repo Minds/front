@@ -261,13 +261,13 @@
       <!-- Upgrade -->
       <ng-container *mIfTenant="false">
         <li
-          *ngIf="showUpgradeLink"
+          *ngIf="user"
           class="m-sidebarNavigation__item m-sidebarNavigation__item--upgrade"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
         >
           <a
-            [routerLink]="['/upgrades']"
+            [routerLink]="['/upgrade']"
             (click)="toggle()"
             data-ref="sidenav-upgrade"
           >

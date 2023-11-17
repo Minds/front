@@ -1,0 +1,100 @@
+<ng-container *ngIf="entity">
+  <p class="m-reportV2__reasonText">{{ reasonLabel }}</p>
+  <div
+    *ngIf="reportedByUser?.username as username"
+    class="m-reportV2__reportedByContainer"
+  >
+    <span
+      class="m-reportV2__reportedByText"
+      i18n="@@REPORT_V2__REPORTED_BY_LABEL"
+      >Reported by:</span
+    >
+    <minds-avatar
+      (click)="navigateToChannel($event, username)"
+      (auxclick)="navigateToChannel($event, username)"
+      class="m-reportV2__reportedByAvatar"
+      [object]="{
+        guid: reportedByUser?.guid,
+        type: 'user'
+      }"
+    ></minds-avatar>
+    <a class="m-reportV2__reportedByUsername" [href]="'/' + username"
+      >@{{ username }}</a
+    >
+  </div>
+  <ng-container [ngSwitch]="reportEdge.node.entityEdge.node.__typename">
+    <m-activity
+      *ngSwitchCase="'ActivityNode'"
+      class="m-reportV2__activity"
+      [entity]="entity"
+      [canDelete]="false"
+      [displayOptions]="{
+        isFeed: true,
+        showToolbar: false,
+        showPostMenu: false,
+        showComments: false
+      }"
+      [autoplayVideo]="false"
+      [canRecordAnalytics]="false"
+    ></m-activity>
+    <m-publisherCard
+      *ngSwitchCase="'UserNode'"
+      class="m-reportV2__user"
+      [publisher]="entity"
+    ></m-publisherCard>
+    <m-comment
+      *ngSwitchCase="'CommentNode'"
+      class="m-reportV2__comment"
+      [comment]="entity"
+      [hideMenuButton]="true"
+      [hideToolbar]="true"
+    ></m-comment>
+    <m-publisherCard
+      *ngSwitchCase="'GroupNode'"
+      class="m-reportV2__group"
+      [publisher]="entity"
+    ></m-publisherCard>
+  </ng-container>
+  <div
+    class="m-reportV2__actionBar"
+    *ngIf="{
+      actionInProgress: actionInProgress$ | async
+    } as inProgressVars"
+  >
+    <div class="m-reportV2__actionBarLeft">
+      <m-button
+        *ngIf="shouldShowDeleteButton"
+        [color]="'blue'"
+        [size]="'medium'"
+        [saving]="inProgressVars.actionInProgress"
+        [disabled]="inProgressVars.actionInProgress"
+        (click)="deleteButtonClick()"
+        data-ref="m-reportV2__deleteButton"
+        >{{ deletePostButtonText }}</m-button
+      >
+      <m-button
+        *ngIf="shouldShowBanButton"
+        [color]="shouldShowDeleteButton ? 'primary' : 'blue'"
+        [size]="'medium'"
+        [saving]="inProgressVars.actionInProgress"
+        [disabled]="inProgressVars.actionInProgress"
+        (click)="banButtonClick()"
+        data-ref="m-reportV2__banButton"
+        >{{ banButtonText }}</m-button
+      >
+    </div>
+    <div class="m-reportV2__actionBarRight">
+      <m-button
+        [color]="'primary'"
+        [size]="'medium'"
+        [saving]="inProgressVars.actionInProgress"
+        [disabled]="inProgressVars.actionInProgress"
+        (click)="ignoreButtonClick()"
+        data-ref="m-reportV2__ignoreButton"
+        ><ng-container i18n="@@REPORT_V2__ACTION_BAR__IGNORE"
+          >Ignore</ng-container
+        ></m-button
+      >
+    </div>
+  </div>
+</ng-container>

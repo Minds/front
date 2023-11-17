@@ -43,6 +43,12 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
             path: 'guidelines',
             component: NetworkAdminConsoleModerationGuidelinesComponent,
           },
+          {
+            path: 'reports',
+            loadChildren: async () =>
+              (await import('./tabs/moderation/reports/reports-lazy.module'))
+                .NetworkAdminReportLazyModule,
+          },
         ],
       },
       {

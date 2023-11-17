@@ -1,0 +1,353 @@
+@import 'defaults.scss';
+@import '../../../common/layout/layout.scss';
+
+:host {
+  display: block;
+  margin: $spacing6;
+
+  h2 {
+    margin: 0 0 $spacing12 0;
+    @include heading3Bold;
+    @media screen and (max-width: $max-mobile) {
+      margin: 0 0 $spacing8 0;
+    }
+  }
+
+  // **********************************************
+  // ** HERO **
+  // **********************************************
+  .m-upgradePage__heroWrapper {
+    @include upgradeGradient;
+    border-radius: $m-borderRadius--curvy;
+    padding: 3px; // thickness of gradient border
+    margin-bottom: $spacing12;
+
+    .m-upgradePage__hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      border-radius: $m-borderRadius--curvy;
+      padding: $spacing6 $spacing16;
+      @include m-theme() {
+        background: themed($m-bgColor--primary);
+        color: themed($m-textColor--primary);
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        padding: $spacing10;
+      }
+
+      h3 {
+        @include heading2Bold;
+        margin: 0 0 $spacing2 0;
+        text-align: center;
+      }
+      p {
+        @include body3Regular;
+        margin-bottom: $spacing11;
+        text-align: center;
+        white-space: nowrap;
+      }
+      a {
+        display: flex;
+        align-items: center;
+        margin-bottom: $spacing10;
+        text-decoration: none;
+        white-space: nowrap;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        span {
+          text-decoration: underline;
+          @include body2Regular;
+        }
+        i {
+          text-decoration: none;
+          font-size: $spacing5;
+          margin-left: $spacing1;
+        }
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        h3 {
+          @include heading3Bold;
+          margin: 0 0 $spacing2 0;
+        }
+        p {
+          @include body3Regular;
+          margin-bottom: $spacing5;
+        }
+        a {
+          margin-bottom: $spacing8;
+        }
+      }
+
+      [class*='m-upgradePageHero__flourish'] {
+        position: absolute;
+        width: $spacing8;
+        height: $spacing8;
+        @media screen and (max-width: $max-mobile) {
+          width: $spacing7;
+          height: $spacing7;
+        }
+        &.m-upgradePageHero__flourish--topLeft {
+          top: $spacing6;
+          left: $spacing4;
+          @media screen and (max-width: $max-mobile) {
+            top: $spacing3;
+            left: $spacing3;
+          }
+        }
+        &.m-upgradePageHero__flourish--bottomRight {
+          bottom: $spacing6;
+          right: $spacing4;
+          @media screen and (max-width: $max-mobile) {
+            bottom: $spacing3;
+            right: $spacing3;
+          }
+        }
+      }
+    }
+  }
+
+  // **********************************************
+  // ** PRODUCT CARDS **
+  // **********************************************
+  .m-upgradePage__cards {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding-bottom: $spacing5;
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      flex-flow: row wrap;
+      justify-content: center;
+      gap: $spacing5;
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      flex-flow: column nowrap;
+      width: 100%;
+    }
+
+    .m-upgradePage__card {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: space-between;
+      @include border;
+      border-radius: $m-borderRadius--curvy;
+      padding: $spacing5 $spacing6;
+      max-width: 240px;
+      box-sizing: border-box;
+
+      @include m-theme() {
+        color: themed($m-white-always);
+      }
+
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        width: 47%;
+        max-width: 47%;
+      }
+
+      @media screen and (max-width: $min-tablet) {
+        width: 100%;
+        max-width: unset;
+      }
+      .m-upgradePageCard__titleWrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: $spacing2;
+        @media screen and (max-width: $min-tablet) {
+          display: flex;
+          justify-content: space-between;
+        }
+        h4 {
+          @include heading4Bold;
+          margin: 0;
+        }
+
+        .m-upgradePageCardTitle__iconWrapper {
+          margin-left: $spacing2;
+          .material-icons {
+            font-size: $spacing4;
+          }
+          img {
+            height: $spacing4;
+          }
+        }
+      }
+      p {
+        margin: 0 0 $spacing4 0;
+        text-align: center;
+
+        @media screen and (max-width: $layoutMin3ColWidth) {
+          margin-bottom: $spacing7;
+        }
+        @media screen and (max-width: $min-tablet) {
+          text-align: unset;
+        }
+      }
+      .m-upgradePageCard__bullet {
+        margin-bottom: $spacing4;
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        padding-right: $spacing2;
+        .m-upgradePageCardBullet__iconWrapper {
+          border-radius: 50%;
+          height: $spacing6;
+          width: $spacing6;
+          min-width: $spacing6;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: $spacing3;
+
+          .material-icons {
+            font-size: $spacing3;
+          }
+          img {
+            height: $spacing3;
+          }
+        }
+
+        span {
+          display: inline-block;
+          @include body3Regular;
+        }
+      }
+
+      .m-upgradePageCard__buttonWrapper {
+        margin-top: $spacing6;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  // **********************************************
+  // ** CARD-SPECIFIC COLORS **
+  // These are the same in light/dark mode
+  // **********************************************
+
+  .m-upgradePage__cards {
+    .m-upgradePage__card {
+      // **********************************************
+      // ** PLUS **
+      // **********************************************
+      &.m-upgradePage__card--plus {
+        @include m-theme() {
+          background: linear-gradient(
+            190deg,
+            darken(color-by-theme($m-grey-800, 'light'), 0%) 0%,
+            color-by-theme($m-grey-900, 'light') 45%
+          );
+
+          .m-upgradePageCardBullet__iconWrapper {
+            background-color: darken(color-by-theme($m-grey-200, 'light'), 35%);
+          }
+
+          ::ng-deep m-button .m-button {
+            border-color: color-by-theme($m-grey-800, 'light');
+            background-color: color-by-theme($m-grey-800, 'light');
+
+            &:hover {
+              border-color: lighten(color-by-theme($m-grey-800, 'light'), 10%);
+              background-color: lighten(
+                color-by-theme($m-grey-800, 'light'),
+                10%
+              );
+            }
+            > * {
+              color: themed($m-white-always);
+            }
+          }
+        }
+      }
+      // **********************************************
+      // ** PRO **
+      // **********************************************
+      &.m-upgradePage__card--pro {
+        .m-upgradePageCardTitle__iconWrapper {
+          img {
+            height: 14px !important; // make this smaller than the others because it's oblong so looks imbalanced otherwise
+          }
+        }
+        @include m-theme() {
+          background: linear-gradient(
+            190deg,
+            darken(color-by-theme($m-amber-medium, 'dark'), 35%) 0%,
+            color-by-theme($m-grey-900, 'light') 45%
+          );
+
+          .m-upgradePageCardBullet__iconWrapper {
+            background-color: darken(
+              color-by-theme($m-amber-medium, 'dark'),
+              35%
+            );
+          }
+
+          ::ng-deep m-button .m-button {
+            border-color: color-by-theme($m-amber-medium, 'dark');
+            background-color: color-by-theme($m-amber-medium, 'dark');
+
+            &:hover {
+              border-color: darken(
+                color-by-theme($m-amber-medium, 'dark'),
+                10%
+              );
+              background-color: darken(
+                color-by-theme($m-amber-medium, 'dark'),
+                10%
+              );
+            }
+            > * {
+              color: color-by-theme($m-bgColor--primary, 'dark');
+            }
+          }
+        }
+      }
+      // **********************************************
+      // ** NETWORKS **
+      // **********************************************
+      &.m-upgradePage__card--networks {
+        @include m-theme() {
+          background: linear-gradient(
+            190deg,
+            darken(color-by-theme($m-purple, 'dark'), 10%) 0%,
+            color-by-theme($m-grey-900, 'light') 45%
+          );
+
+          .m-upgradePageCardBullet__iconWrapper {
+            background-color: darken(
+              saturate(
+                adjust-hue(color-by-theme($m-purple, 'light'), -28),
+                8.04
+              ),
+              1.37
+            ); // Monstrosity for getting to #5B21B6
+
+            img {
+              height: $spacing4;
+            }
+          }
+
+          ::ng-deep m-button .m-button {
+            border-color: themed($m-purple) !important;
+
+            &:hover {
+              background-color: rgba(color-by-theme($m-purple, 'dark'), 20%);
+            }
+            > * {
+              color: themed($m-white-always) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

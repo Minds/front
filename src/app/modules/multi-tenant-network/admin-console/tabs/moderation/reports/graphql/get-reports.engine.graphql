@@ -1,0 +1,62 @@
+query GetReports(
+  $first: Int!,
+  $after: Int!,
+  $status: ReportStatusEnum
+) {
+  reports(first: $first, after: $after, status: $status) {
+    edges {
+      node {
+        id
+      	... on Report {
+          tenantId
+          reportGuid
+          entityUrn
+          entityGuid
+          reportedByGuid
+          reportedByUserEdge {
+            node {
+              guid
+              username
+            }
+          }
+          moderatedByGuid
+          createdTimestamp
+          reason
+          nsfwSubReason
+          illegalSubReason
+          securitySubReason
+          createdTimestamp
+          entityEdge {
+            ... on ActivityEdge {
+              node {
+                legacy
+              }
+            }
+            ... on UserEdge {
+              node {
+                legacy
+              }
+            }
+            ... on GroupEdge {
+							node {
+                legacy
+              }
+            }
+            ... on CommentEdge {
+              node {
+                legacy
+              }
+            }
+          }
+        }
+      }
+      cursor
+    } 
+    pageInfo {
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    id
+  }
+}
