@@ -20,6 +20,7 @@ const DEFAULT_META_AUTHOR = 'Minds';
 const DEFAULT_OG_IMAGE = '/assets/og-images/default-v3.png';
 const DEFAULT_OG_IMAGE_WIDTH = 1200;
 const DEFAULT_OG_IMAGE_HEIGHT = 1200;
+const DEFAULT_FAVICON = '/static/en/assets/logos/bulb.svg';
 const DEFAULT_TENANT_FAVICON = '/api/v3/multi-tenant/configs/image/favicon';
 
 @Injectable({
@@ -180,13 +181,22 @@ export class MetaService {
    * Used for pro / tenant domains
    */
   setDynamicFavicon(href: string): MetaService {
-    const existingLink = this.dom.head.querySelector('#dynamicFavicon');
+    const existingDynamicFavicon = this.dom.head.querySelector(
+      '#dynamicFavicon'
+    );
+    const favicon = this.dom.head.querySelector('#favicon');
 
-    if (existingLink) {
-      existingLink.setAttribute('href', href);
+    // remove default favicon if present.
+    if (favicon) {
+      this.dom.head.removeChild(favicon);
+    }
+
+    // if there is already a dynamic favicon, change the href
+    // else create a new one.
+    if (existingDynamicFavicon) {
+      existingDynamicFavicon.setAttribute('href', href);
     } else {
-      let link: HTMLLinkElement;
-      link = this.dom.createElement('link');
+      const link: HTMLLinkElement = this.dom.createElement('link');
       link.setAttribute('rel', 'icon');
       link.setAttribute('type', 'image/png');
       link.setAttribute('href', href);
@@ -215,10 +225,23 @@ export class MetaService {
   }
 
   resetDynamicFavicon(): MetaService {
-    const link = this.dom.head.querySelector('#dynamicFavicon');
+    const favicon = this.dom.head.querySelector('#favicon');
+    const dynamicFaviconLink = this.dom.head.querySelector('#dynamicFavicon');
 
-    if (link) {
-      this.dom.head.removeChild(link);
+    // remove any dynamic favicons.
+    if (dynamicFaviconLink) {
+      this.dom.head.removeChild(dynamicFaviconLink);
+    }
+
+    // re-add default favicon.
+    if (!favicon) {
+      let link: HTMLLinkElement = this.dom.createElement('link');
+      link.setAttribute('rel', 'icon');
+      link.setAttribute('type', 'image/svg');
+      link.setAttribute('href', DEFAULT_FAVICON);
+      link.setAttribute('id', 'favicon');
+
+      this.dom.head.appendChild(link);
     }
     return this;
   }
