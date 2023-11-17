@@ -1,4 +1,10 @@
-import { Injectable, Optional, Inject, SecurityContext } from '@angular/core';
+import {
+  Injectable,
+  Optional,
+  Inject,
+  SecurityContext,
+  ElementRef,
+} from '@angular/core';
 import { Title, Meta, DomSanitizer } from '@angular/platform-browser';
 import { SiteService } from './site.service';
 import { Location } from '@angular/common';
@@ -171,7 +177,7 @@ export class MetaService {
   }
 
   /**
-   * Used for pro domains
+   * Used for pro / tenant domains
    */
   setDynamicFavicon(href: string): MetaService {
     const existingLink = this.dom.head.querySelector('#dynamicFavicon');
@@ -187,6 +193,24 @@ export class MetaService {
       link.setAttribute('id', 'dynamicFavicon');
       this.dom.head.appendChild(link);
     }
+
+    const appleTouchLogo: ElementRef = this.dom.head.querySelector(
+      '#appleTouchIcon'
+    );
+    if (appleTouchLogo) {
+      this.dom.head.removeChild(appleTouchLogo);
+    }
+
+    const icon32: ElementRef = this.dom.head.querySelector('#icon32');
+    if (icon32) {
+      this.dom.head.removeChild(icon32);
+    }
+
+    const icon16: ElementRef = this.dom.head.querySelector('#icon16');
+    if (icon16) {
+      this.dom.head.removeChild(icon16);
+    }
+
     return this;
   }
 
