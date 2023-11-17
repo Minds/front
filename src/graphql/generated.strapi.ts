@@ -943,6 +943,25 @@ export enum Enum_Productplan_Tier {
   Pro = 'pro',
 }
 
+export enum Enum_Upgradepage_Cardid {
+  Hero = 'hero',
+  Networks = 'networks',
+  Plus = 'plus',
+  Pro = 'pro',
+}
+
+export enum Enum_Upgradepage_Iconsource {
+  Material = 'material',
+  Svg = 'svg',
+}
+
+export enum Enum_Upgradepage_Rowtype {
+  Bullet = 'bullet',
+  LinkText = 'linkText',
+  Price = 'price',
+  Title = 'title',
+}
+
 export type Error = {
   __typename?: 'Error';
   code: Scalars['String']['output'];
@@ -1375,6 +1394,7 @@ export type GenericMorph =
   | ProductPlan
   | TopbarAlert
   | TwitterSyncTweetText
+  | UpgradePage
   | UploadFile
   | UploadFolder
   | UsersPermissionsPermission
@@ -1555,6 +1575,8 @@ export type Mutation = {
   createProductFeature?: Maybe<ProductFeatureEntityResponse>;
   createProductPage?: Maybe<ProductPageEntityResponse>;
   createProductPlan?: Maybe<ProductPlanEntityResponse>;
+  createUpgradePage?: Maybe<UpgradePageEntityResponse>;
+  createUpgradePageLocalization?: Maybe<UpgradePageEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -1578,6 +1600,7 @@ export type Mutation = {
   deleteProductPlan?: Maybe<ProductPlanEntityResponse>;
   deleteTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   deleteTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
+  deleteUpgradePage?: Maybe<UpgradePageEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -1612,6 +1635,7 @@ export type Mutation = {
   updateProductPlan?: Maybe<ProductPlanEntityResponse>;
   updateTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   updateTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
+  updateUpgradePage?: Maybe<UpgradePageEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -1667,6 +1691,17 @@ export type MutationCreateProductPageArgs = {
 
 export type MutationCreateProductPlanArgs = {
   data: ProductPlanInput;
+};
+
+export type MutationCreateUpgradePageArgs = {
+  data: UpgradePageInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+export type MutationCreateUpgradePageLocalizationArgs = {
+  data?: InputMaybe<UpgradePageInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationCreateUploadFileArgs = {
@@ -1738,6 +1773,11 @@ export type MutationDeleteProductPageArgs = {
 
 export type MutationDeleteProductPlanArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteUpgradePageArgs = {
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationDeleteUploadFileArgs = {
@@ -1867,6 +1907,12 @@ export type MutationUpdateTopbarAlertArgs = {
 
 export type MutationUpdateTwitterSyncTweetTextArgs = {
   data: TwitterSyncTweetTextInput;
+};
+
+export type MutationUpdateUpgradePageArgs = {
+  data: UpgradePageInput;
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 export type MutationUpdateUploadFileArgs = {
@@ -2185,6 +2231,8 @@ export type Query = {
   productPlans?: Maybe<ProductPlanEntityResponseCollection>;
   topbarAlert?: Maybe<TopbarAlertEntityResponse>;
   twitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
+  upgradePage?: Maybe<UpgradePageEntityResponse>;
+  upgradePages?: Maybe<UpgradePageEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -2335,6 +2383,19 @@ export type QueryTwitterSyncTweetTextArgs = {
   publicationState?: InputMaybe<PublicationState>;
 };
 
+export type QueryUpgradePageArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+export type QueryUpgradePagesArgs = {
+  filters?: InputMaybe<UpgradePageFiltersInput>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type QueryUploadFileArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -2482,6 +2543,78 @@ export type TwitterSyncTweetTextEntityResponse = {
 export type TwitterSyncTweetTextInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   tweetText?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpgradePage = {
+  __typename?: 'UpgradePage';
+  bulletOrderWithinCard?: Maybe<Scalars['Float']['output']>;
+  cardId: Enum_Upgradepage_Cardid;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  displayText: Scalars['String']['output'];
+  iconId?: Maybe<Scalars['String']['output']>;
+  iconSource?: Maybe<Enum_Upgradepage_Iconsource>;
+  locale?: Maybe<Scalars['String']['output']>;
+  localizations?: Maybe<UpgradePageRelationResponseCollection>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  rowType: Enum_Upgradepage_Rowtype;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type UpgradePageLocalizationsArgs = {
+  filters?: InputMaybe<UpgradePageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type UpgradePageEntity = {
+  __typename?: 'UpgradePageEntity';
+  attributes?: Maybe<UpgradePage>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type UpgradePageEntityResponse = {
+  __typename?: 'UpgradePageEntityResponse';
+  data?: Maybe<UpgradePageEntity>;
+};
+
+export type UpgradePageEntityResponseCollection = {
+  __typename?: 'UpgradePageEntityResponseCollection';
+  data: Array<UpgradePageEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type UpgradePageFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<UpgradePageFiltersInput>>>;
+  bulletOrderWithinCard?: InputMaybe<FloatFilterInput>;
+  cardId?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  displayText?: InputMaybe<StringFilterInput>;
+  iconId?: InputMaybe<StringFilterInput>;
+  iconSource?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
+  localizations?: InputMaybe<UpgradePageFiltersInput>;
+  not?: InputMaybe<UpgradePageFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<UpgradePageFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  rowType?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type UpgradePageInput = {
+  bulletOrderWithinCard?: InputMaybe<Scalars['Float']['input']>;
+  cardId?: InputMaybe<Enum_Upgradepage_Cardid>;
+  displayText?: InputMaybe<Scalars['String']['input']>;
+  iconId?: InputMaybe<Scalars['String']['input']>;
+  iconSource?: InputMaybe<Enum_Upgradepage_Iconsource>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  rowType?: InputMaybe<Enum_Upgradepage_Rowtype>;
+};
+
+export type UpgradePageRelationResponseCollection = {
+  __typename?: 'UpgradePageRelationResponseCollection';
+  data: Array<UpgradePageEntity>;
 };
 
 export type UploadFile = {
@@ -3474,6 +3607,26 @@ export type FetchOnboardingV5VersionsQuery = {
   } | null;
 };
 
+export type UpgradePageQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UpgradePageQuery = {
+  __typename?: 'Query';
+  upgradePages?: {
+    __typename?: 'UpgradePageEntityResponseCollection';
+    data: Array<{
+      __typename?: 'UpgradePageEntity';
+      attributes?: {
+        __typename?: 'UpgradePage';
+        cardId: Enum_Upgradepage_Cardid;
+        rowType: Enum_Upgradepage_Rowtype;
+        displayText: string;
+        iconId?: string | null;
+        iconSource?: Enum_Upgradepage_Iconsource | null;
+      } | null;
+    }>;
+  } | null;
+};
+
 export type GetValuePropCardsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetValuePropCardsQuery = {
@@ -3974,6 +4127,35 @@ export class FetchOnboardingV5VersionsGQL extends Apollo.Query<
   FetchOnboardingV5VersionsQueryVariables
 > {
   document = FetchOnboardingV5VersionsDocument;
+  client = 'strapi';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UpgradePageDocument = gql`
+  query UpgradePage {
+    upgradePages(sort: "bulletOrderWithinCard:ASC", pagination: { limit: 30 }) {
+      data {
+        attributes {
+          cardId
+          rowType
+          displayText
+          iconId
+          iconSource
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UpgradePageGQL extends Apollo.Query<
+  UpgradePageQuery,
+  UpgradePageQueryVariables
+> {
+  document = UpgradePageDocument;
   client = 'strapi';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

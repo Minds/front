@@ -1,9 +1,19 @@
-<div class="m-app__loadingContainer" *ngIf="!ready">
-  <img
-    class="m-app__loadingLogo"
-    src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
-  />
-</div>
+<ng-container *ngIf="!ready">
+  <div
+    class="m-app__loadingContainer m-app__loadingContainer--fadeAnimated"
+    *ngIf="isMindsMainDomain(); else genericLoadingTemplate"
+  >
+    <img
+      class="m-app__loadingLogo"
+      src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
+    />
+  </div>
+  <ng-template #genericLoadingTemplate>
+    <div class="m-app__loadingContainer">
+      <div class="m-app__genericLoadingSpinner"></div>
+    </div>
+  </ng-template>
+</ng-container>
 <ng-container m-clientMeta *ngIf="ready">
   <ng-container *ngIf="!isProDomain">
     <m-topbarwrapper></m-topbarwrapper>

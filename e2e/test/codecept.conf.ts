@@ -84,6 +84,7 @@ export const config: CustomMainConfig = {
     publisherRecommendationsModalComponent:
       './fragments/publisherRecommendationsModalComponent.ts',
     reportModalComponent: './fragments/reportModalComponent.ts',
+    upgradeModalComponent: './fragments/upgradeModalComponent.ts',
     onboardingV5ModalComponent:
       './fragments/onboardingV5/onboardingV5ModalComponent.ts',
     onboardingV5VerifyEmailComponent:

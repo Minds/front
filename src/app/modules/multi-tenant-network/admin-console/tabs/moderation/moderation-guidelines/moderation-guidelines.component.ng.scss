@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  padding: $spacing7 $spacing8;
+  padding: $spacing7 $spacing8 !important;
   max-width: 860px;
 
   .m-networkAdminConsole__title {
