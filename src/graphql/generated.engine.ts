@@ -4045,8 +4045,9 @@ export const AssignUserToRoleDocument = gql`
       id
       name
       permissions
-    };
-  }`;
+    }
+  }
+`;
 
 export const CreateNewReportDocument = gql`
   mutation CreateNewReport(
@@ -4179,6 +4180,7 @@ export const GetRolesAndPermissionsDocument = gql`
     allPermissions
   }
 `;
+
 export const ProvideVerdictDocument = gql`
   mutation ProvideVerdict($reportGuid: String!, $action: ReportActionEnum!) {
     provideVerdict(verdictInput: { reportGuid: $reportGuid, action: $action })
