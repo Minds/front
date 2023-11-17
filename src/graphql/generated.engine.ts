@@ -26,6 +26,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** The `Void` scalar type represents no value being returned. */
+  Void: { input: any; output: any };
 };
 
 export type ActivityEdge = EdgeInterface & {
@@ -497,6 +499,7 @@ export type Mutation = {
   createNetworkRootUser: TenantUser;
   /** Create a new report. */
   createNewReport: Scalars['Boolean']['output'];
+  createRssFeed: RssFeed;
   createTenant: Tenant;
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
@@ -506,6 +509,8 @@ export type Mutation = {
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
   provideVerdict: Scalars['Boolean']['output'];
+  refreshRssFeed: RssFeed;
+  removeRssFeed?: Maybe<Scalars['Void']['output']>;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
   /** Stores featured entity. */
@@ -543,6 +548,10 @@ export type MutationCreateNewReportArgs = {
   reportInput: ReportInput;
 };
 
+export type MutationCreateRssFeedArgs = {
+  rssFeed: RssFeedInput;
+};
+
 export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
 };
@@ -561,6 +570,14 @@ export type MutationMultiTenantConfigArgs = {
 
 export type MutationProvideVerdictArgs = {
   verdictInput: VerdictInput;
+};
+
+export type MutationRefreshRssFeedArgs = {
+  feedId: Scalars['String']['input'];
+};
+
+export type MutationRemoveRssFeedArgs = {
+  feedId: Scalars['String']['input'];
 };
 
 export type MutationSetOnboardingStateArgs = {
@@ -694,6 +711,8 @@ export type Query = {
   paymentMethods: Array<PaymentMethod>;
   /** Gets reports. */
   reports: ReportsConnection;
+  rssFeed: RssFeed;
+  rssFeeds: Array<RssFeed>;
   search: SearchResultsConnection;
   tenants: Array<Tenant>;
 };
@@ -774,6 +793,10 @@ export type QueryReportsArgs = {
   after?: InputMaybe<Scalars['Int']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<ReportStatusEnum>;
+};
+
+export type QueryRssFeedArgs = {
+  feedId: Scalars['String']['input'];
 };
 
 export type QuerySearchArgs = {
@@ -873,6 +896,28 @@ export type ReportsConnection = ConnectionInterface & {
   id: Scalars['ID']['output'];
   pageInfo: PageInfo;
 };
+
+export type RssFeed = {
+  __typename?: 'RssFeed';
+  createdAtTimestamp?: Maybe<Scalars['Int']['output']>;
+  feedId: Scalars['String']['output'];
+  lastFetchAtTimestamp?: Maybe<Scalars['Int']['output']>;
+  lastFetchStatus?: Maybe<RssFeedLastFetchStatusEnum>;
+  tenantId?: Maybe<Scalars['Int']['output']>;
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+  userGuid: Scalars['String']['output'];
+};
+
+export type RssFeedInput = {
+  url: Scalars['String']['input'];
+};
+
+export enum RssFeedLastFetchStatusEnum {
+  FailedToConnect = 'FAILED_TO_CONNECT',
+  FailedToParse = 'FAILED_TO_PARSE',
+  Success = 'SUCCESS',
+}
 
 export enum SearchFilterEnum {
   Group = 'GROUP',
@@ -3341,6 +3386,64 @@ export type CountSearchQuery = {
   };
 };
 
+export type CreateRssFeedMutationVariables = Exact<{
+  input: RssFeedInput;
+}>;
+
+export type CreateRssFeedMutation = {
+  __typename?: 'Mutation';
+  createRssFeed: {
+    __typename?: 'RssFeed';
+    feedId: string;
+    title: string;
+    url: string;
+    createdAtTimestamp?: number | null;
+    lastFetchAtTimestamp?: number | null;
+    lastFetchStatus?: RssFeedLastFetchStatusEnum | null;
+  };
+};
+
+export type FetchRssFeedsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type FetchRssFeedsQuery = {
+  __typename?: 'Query';
+  rssFeeds: Array<{
+    __typename?: 'RssFeed';
+    feedId: string;
+    title: string;
+    url: string;
+    createdAtTimestamp?: number | null;
+    lastFetchAtTimestamp?: number | null;
+    lastFetchStatus?: RssFeedLastFetchStatusEnum | null;
+  }>;
+};
+
+export type RefreshRssFeedMutationVariables = Exact<{
+  feedId: Scalars['String']['input'];
+}>;
+
+export type RefreshRssFeedMutation = {
+  __typename?: 'Mutation';
+  refreshRssFeed: {
+    __typename?: 'RssFeed';
+    feedId: string;
+    title: string;
+    url: string;
+    createdAtTimestamp?: number | null;
+    lastFetchAtTimestamp?: number | null;
+    lastFetchStatus?: RssFeedLastFetchStatusEnum | null;
+  };
+};
+
+export type RemoveRssFeedMutationVariables = Exact<{
+  feedId: Scalars['String']['input'];
+}>;
+
+export type RemoveRssFeedMutation = {
+  __typename?: 'Mutation';
+  removeRssFeed?: any | null;
+};
+
 export const PageInfoFragmentDoc = gql`
   fragment PageInfo on PageInfo {
     hasPreviousPage
@@ -4465,6 +4568,103 @@ export class CountSearchGQL extends Apollo.Query<
   CountSearchQueryVariables
 > {
   document = CountSearchDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateRssFeedDocument = gql`
+  mutation CreateRSSFeed($input: RssFeedInput!) {
+    createRssFeed(rssFeed: $input) {
+      feedId
+      title
+      url
+      createdAtTimestamp
+      lastFetchAtTimestamp
+      lastFetchStatus
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateRssFeedGQL extends Apollo.Mutation<
+  CreateRssFeedMutation,
+  CreateRssFeedMutationVariables
+> {
+  document = CreateRssFeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FetchRssFeedsDocument = gql`
+  query FetchRSSFeeds {
+    rssFeeds {
+      feedId
+      title
+      url
+      createdAtTimestamp
+      lastFetchAtTimestamp
+      lastFetchStatus
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchRssFeedsGQL extends Apollo.Query<
+  FetchRssFeedsQuery,
+  FetchRssFeedsQueryVariables
+> {
+  document = FetchRssFeedsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const RefreshRssFeedDocument = gql`
+  mutation RefreshRSSFeed($feedId: String!) {
+    refreshRssFeed(feedId: $feedId) {
+      feedId
+      title
+      url
+      createdAtTimestamp
+      lastFetchAtTimestamp
+      lastFetchStatus
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RefreshRssFeedGQL extends Apollo.Mutation<
+  RefreshRssFeedMutation,
+  RefreshRssFeedMutationVariables
+> {
+  document = RefreshRssFeedDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const RemoveRssFeedDocument = gql`
+  mutation RemoveRSSFeed($feedId: String!) {
+    removeRssFeed(feedId: $feedId)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RemoveRssFeedGQL extends Apollo.Mutation<
+  RemoveRssFeedMutation,
+  RemoveRssFeedMutationVariables
+> {
+  document = RemoveRssFeedDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

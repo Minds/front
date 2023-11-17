@@ -75,6 +75,8 @@ import { SettingsV2AffiliatesComponent } from './affiliates/affiliates.component
 import { experimentVariationGuard } from '../experiments/experiment-variation.guard';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
 import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
+import { SettingsV2RssSyncComponent } from './other/rss-sync/rss-sync.component';
+import { LoggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -496,6 +498,15 @@ const SETTINGS_V2_ROUTES: Routes = [
             ],
           },
           {
+            path: 'rss-sync',
+            component: SettingsV2RssSyncComponent,
+            canActivate: [LoggedInRedirectGuard],
+            data: {
+              title: 'RSS Sync',
+              standardHeader: false,
+            },
+          },
+          {
             path: 'twitter-sync',
             canActivate: [
               TenantRedirectGuard,
@@ -614,6 +625,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     //
     SettingsV2MessengerComponent,
     SettingsV2WalletComponent,
+    SettingsV2RssSyncComponent,
     SettingsV2NostrComponent,
     SettingsV2AffiliatesComponent,
   ],

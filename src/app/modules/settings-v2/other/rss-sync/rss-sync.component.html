@@ -1,0 +1,96 @@
+<div class="m-settingsV2__headerWrapper">
+  <div class="m-settingsV2__backButton">
+    <a routerLink="..">
+      <i class="material-icons">arrow_back</i
+      ><span i18n="@@COMMON__ACTIONS__BACK">Back</span>
+    </a>
+  </div>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__OTHER__WALLET__LABEL">RSS Sync</span>
+  </div>
+</div>
+
+<div class="m-settingsV2__desc">
+  Sync an RSS feed to your channel and automatically post links from the RSS
+  feed to your social media channel. This is a great way to share new articles,
+  blogs, or videos from an RSS feed with your audience, automatically.
+</div>
+
+<form *ngIf="form" [formGroup]="form" class="m-settingsV2RSSSync__form">
+  <h4>
+    <span>Add RSS feed</span>
+  </h4>
+
+  <div class="m-form__field--text stretchedField">
+    <div class="m-form__row--input">
+      <input
+        type="text"
+        id="rss_feed_url"
+        name="rss_feed_url"
+        formControlName="rssFeedUrl"
+        class="form-control"
+      />
+    </div>
+  </div>
+
+  <m-button
+    color="blue"
+    (onAction)="createRssFeed()"
+    [disabled]="!form.valid || inProgress"
+  >
+    <ng-container i18n="@@SETTINGS_V2_RSS_SYNC_BUTTONS__ADD_FEED">
+      Add feed
+    </ng-container>
+  </m-button>
+</form>
+
+<div>
+  <h4>
+    <span>Active RSS feeds</span>
+  </h4>
+
+  <div class="m-settingsV2__desc">
+    The feed should sync around every 5 minutes. If you want to manually check
+    for new updates, simply hit refresh
+  </div>
+
+  <div class="m-settingsV2RSSSync__feeds_container">
+    <div
+      *ngIf="(rssFeeds$ | async)?.length > 0"
+      class="m-settingsV2RSSSync__feeds--headers"
+    >
+      <div class="m-settingsV2RSSSync__feeds--headers--header">
+        Feed name
+      </div>
+      <div class="m-settingsV2RSSSync__feeds--headers--header">
+        URL
+      </div>
+    </div>
+    <div
+      *ngFor="let rssFeed of rssFeeds$ | async"
+      class="m-settingsV2RSSSync__feed"
+    >
+      <div class="m-settingsV2RSSSync__feed--basic_details">
+        <div>{{ rssFeed.title }}</div>
+        <div>
+          {{ (rssFeed.lastFetchAtTimestamp | friendlydatediff : "" :true ) ?? "" }}
+        </div>
+      </div>
+      <div class="m-settingsV2RSSSync__feed--advanced_details">
+        <span>{{ rssFeed.url }}</span>
+      </div>
+      <div class="m-settingsV2RSSSync__feed--actions">
+        <span *ngIf="rssFeed.lastFetchAtTimestamp !== null">
+          <i class="material-icons" (click)="refreshRssFeed(rssFeed.feedId)"
+            >refresh</i
+          >
+        </span>
+        <span>
+          <i class="material-icons" (click)="removeRssFeed(rssFeed.feedId)"
+            >clear</i
+          >
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
