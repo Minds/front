@@ -11,6 +11,10 @@ import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ToasterService } from '../../services/toaster.service';
+import {
+  INTERACTION_PERMISSIONS_ERROR_MESSAGE,
+  PermissionsService,
+} from '../../services/permissions.service';
 
 @Component({
   selector: 'minds-button-thumbs-down',
@@ -45,7 +49,8 @@ export class ThumbsDownButton {
     public session: Session,
     public client: Client,
     private authModal: AuthModalService,
-    private toast: ToasterService
+    private toast: ToasterService,
+    protected permissions: PermissionsService
   ) {}
 
   set _object(value: any) {
@@ -55,6 +60,10 @@ export class ThumbsDownButton {
   }
 
   async thumb(): Promise<void> {
+    if (!this.permissions.canInteract()) {
+      this.toast.error(INTERACTION_PERMISSIONS_ERROR_MESSAGE);
+      return;
+    }
     if (this.inProgress) {
       return;
     }

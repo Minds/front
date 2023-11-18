@@ -121,7 +121,8 @@ export class PostMenuV2Component implements OnInit {
       this.entity.remind_users &&
       this.entity.remind_users.filter(
         user => user.guid === this.session.getLoggedInUser().guid
-      ).length > 0
+      ).length > 0 &&
+      this.permissions.canInteract()
     );
   }
 

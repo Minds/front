@@ -8,6 +8,7 @@ export enum Permission {
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanCreateGroup = 'CAN_CREATE_GROUP',
   CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
+  CanInteract = 'CAN_INTERACT',
 }
 
 export const VIDEO_PERMISSIONS_ERROR_MESSAGE =
@@ -15,6 +16,9 @@ export const VIDEO_PERMISSIONS_ERROR_MESSAGE =
 
 export const COMMENT_PERMISSIONS_ERROR_MESSAGE =
   'Your user role does not allow commenting.';
+
+export const INTERACTION_PERMISSIONS_ERROR_MESSAGE =
+  'Your user role does not allow interactions on posts.';
 
 @Injectable({
   providedIn: 'root',
@@ -24,13 +28,15 @@ export class PermissionsService {
    * User has permission to use
    * these permissions-restricted features
    */
-  private whitelist: string[];
+  private whitelist: string[] = [];
 
   constructor(
     private experimentsService: ExperimentsService,
     configs: ConfigsService
   ) {
-    this.whitelist = configs.get('permissions') || [];
+    if (configs.get('permissions')) {
+      this.whitelist = Object.values(configs.get('permissions'));
+    }
   }
 
   /**
@@ -73,8 +79,13 @@ export class PermissionsService {
     return this.has(Permission.CanCreateGroup);
   }
 
+  // Is the user allowed to vote and remind?
+  public canInteract(): boolean {
+    return this.has(Permission.CanInteract);
+  }
+
   // Is the user allowed to assign permissions?
-  public canAssignPermisions(): boolean {
+  public canAssignPermissions(): boolean {
     return this.has(Permission.CanAssignPermissions);
   }
 }

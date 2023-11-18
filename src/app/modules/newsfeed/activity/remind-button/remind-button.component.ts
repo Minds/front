@@ -186,6 +186,18 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     this.composerModalService.setInjector(this.injector).present();
   }
 
+  /**
+   * If a user doesn't have permission to do anything
+   * inside the dropdown menu, show an explanatory toast
+   */
+  onClickTrigger(): void {
+    if (!this.permissions.canInteract() && !this.permissions.canCreatePost()) {
+      this.toasterService.error(
+        'Your user role does not allow you to remind or quote post.'
+      );
+    }
+  }
+
   incrementCounter(): void {
     const entity = this.service.entity$.getValue();
     if (!entity.reminds) {

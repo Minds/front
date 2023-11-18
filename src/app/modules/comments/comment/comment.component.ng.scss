@@ -409,6 +409,21 @@
           margin-right: 0;
         }
 
+        // No hover fx when no permission
+        > [class*='--noPermission'] {
+          &:hover {
+            @include m-theme() {
+              color: themed($m-textColor--secondary) !important;
+            }
+          }
+
+          &.selected:hover {
+            @include m-theme() {
+              color: themed($m-blue) !important;
+            }
+          }
+        }
+
         > a {
           @include m-theme() {
             color: themed($m-textColor--secondary);
