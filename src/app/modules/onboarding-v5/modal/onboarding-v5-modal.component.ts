@@ -2,6 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OnboardingV5Service } from '../services/onboarding-v5.service';
 import { Subscription, take } from 'rxjs';
 
+export type OnboardingModalData = {
+  onComplete: () => any;
+  onDismissIntention: () => any;
+};
+
 /**
  * Onboarding V5 modal component. Contains the onboarding V5 component and
  * acts as a wrapper handling functionality related to the display state and
@@ -15,20 +20,32 @@ import { Subscription, take } from 'rxjs';
   styleUrls: ['onboarding-v5-modal.component.ng.scss'],
 })
 export class OnboardingV5ModalComponent implements OnInit, OnDestroy {
+  /** subscription to onboarding completion. */
+  private completeSubscription: Subscription;
+
   /** subscription to calls to dismissal. */
   private dismissSubscription: Subscription;
 
   constructor(private service: OnboardingV5Service) {}
 
   ngOnInit(): void {
+    this.completeSubscription = this.service.onboardingCompleted$
+      .pipe(take(1))
+      .subscribe((completed: boolean): void => {
+        if (completed) {
+          this.onComplete();
+        }
+      });
+
     this.dismissSubscription = this.service.dismiss$
       .pipe(take(1))
       .subscribe((dismiss: boolean): void => {
-        this.onDismissIntent();
+        this.onDismissIntention();
       });
   }
 
   ngOnDestroy(): void {
+    this.completeSubscription?.unsubscribe();
     this.dismissSubscription?.unsubscribe();
   }
 
@@ -46,16 +63,23 @@ export class OnboardingV5ModalComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Set the modal data - note, params listed are destructured.
-   * @param { Function } onDismissIntent - on dismiss intent function.
+   * Set the modal data
+   * @param { OnboardingModalData } data - data for onboarding modal
    */
-  public setModalData({ onDismissIntent }: { onDismissIntent: () => void }) {
-    this.onDismissIntent = onDismissIntent ?? (() => {});
+  public setModalData({ onComplete, onDismissIntention }: OnboardingModalData) {
+    this.onComplete = onComplete ?? (() => {});
+    this.onDismissIntention = onDismissIntention ?? (() => {});
   }
+
+  /**
+   * On complete - set via modal options.
+   * @returns { void }
+   */
+  private onComplete: () => void = () => {};
 
   /**
    * Dismiss intent - set via modal options.
    * @returns { void }
    */
-  private onDismissIntent: () => void = () => {};
+  private onDismissIntention: () => void = () => {};
 }

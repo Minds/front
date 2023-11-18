@@ -18,9 +18,10 @@ describe('OnboardingV5ModalComponent', () => {
         {
           provide: OnboardingV5Service,
           useValue: MockService(OnboardingV5Service, {
-            has: ['dismiss$'],
+            has: ['dismiss$', 'onboardingCompleted$'],
             props: {
               dismiss$: { get: () => new Subject<boolean>() },
+              onboardingCompleted$: { get: () => new Subject<boolean>() },
             },
           }),
         },
@@ -38,15 +39,19 @@ describe('OnboardingV5ModalComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should call onDismissIntent when dismiss subject emits from service', () => {
-    const mockOnDismissIntent = jasmine.createSpy('onDismissIntent');
+  it('should call onDismissIntention when dismiss subject emits from service', () => {
+    const mockonDismissIntention = jasmine.createSpy('onDismissIntention');
+    const mockOnComplete = jasmine.createSpy('onComplete');
 
-    comp.setModalData({ onDismissIntent: mockOnDismissIntent });
+    comp.setModalData({
+      onComplete: mockOnComplete,
+      onDismissIntention: mockonDismissIntention,
+    });
     comp.ngOnInit();
 
     (comp as any).service.dismiss$.next(true);
 
-    expect(mockOnDismissIntent).toHaveBeenCalled();
+    expect(mockonDismissIntention).toHaveBeenCalled();
   });
 
   it('should return modal options with fixed canDismiss as false', async () => {
@@ -56,9 +61,14 @@ describe('OnboardingV5ModalComponent', () => {
     expect(await modalOptions.canDismiss()).toBe(false);
   });
 
-  it('should set onDismissIntent via setModalData', () => {
-    const mockOnDismissIntent = jasmine.createSpy('onDismissIntent');
-    comp.setModalData({ onDismissIntent: mockOnDismissIntent });
-    expect((comp as any).onDismissIntent).toBe(mockOnDismissIntent);
+  it('should set onDismissIntention via setModalData', () => {
+    const mockonDismissIntention = jasmine.createSpy('onDismissIntention');
+    const mockOnComplete = jasmine.createSpy('onComplete');
+
+    comp.setModalData({
+      onComplete: mockOnComplete,
+      onDismissIntention: mockonDismissIntention,
+    });
+    expect((comp as any).onDismissIntention).toBe(mockonDismissIntention);
   });
 });

@@ -39,12 +39,26 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+      }
+
+      .m-app__loadingContainer--fadeAnimated {
         animation: fadein 2s;
         animation-iteration-count: infinite;
       }
 
       .m-app__loadingLogo {
         max-width: 60px;
+      }
+
+      .m-app__genericLoadingSpinner {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border-width: 6px;
+        border-style: solid;
+        border-color: #000 #e8e8ea #e8e8ea #e8e8ea;
+        animation: spin 1s linear infinite;
+        -webkit-animation: spin 1s linear infinite;
       }
 
       @keyframes fadein {
@@ -58,22 +72,55 @@
           opacity: 0;
         }
       }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
     <title>Minds</title>
   </head>
   <body class="m-theme__light">
     <!-- The app component created in app.ts -->
     <m-app>
-      <div class="m-app__loadingContainer">
+      <div
+        class="m-app__loadingContainer m-app__loadingContainer--fadeAnimated"
+        id="minds-loading-logo-container"
+        style="display: none;"
+      >
         <img
           class="m-app__loadingLogo"
           src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
         />
       </div>
+      <div
+        class="m-app__loadingContainer"
+        id="generic-loading-logo-container"
+        style="display: none;"
+      >
+        <div class="m-app__genericLoadingSpinner"></div>
+      </div>
     </m-app>
 
     <script>
       function module() {} // Fixes undefined module function in SystemJS bundle
+      if (window.location.href.includes('www.minds.com')) {
+        document.getElementById(
+          'generic-loading-logo-container'
+        ).style.display = 'none';
+        document.getElementById('minds-loading-logo-container').style.display =
+          'flex';
+      } else {
+        document.getElementById('minds-loading-logo-container').style.display =
+          'none';
+        document.getElementById(
+          'generic-loading-logo-container'
+        ).style.display = 'flex';
+      }
     </script>
 
     <!-- shims:js -->

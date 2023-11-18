@@ -1,7 +1,29 @@
-<div class="m-toggle__track"></div>
-<div
-  class="m-toggle__switch"
-  [class.m-toggle__switch--left]="mModel === leftValue"
-  [class.m-toggle__switch--right]="mModel === rightValue"
-  [class.m-toggle__switch--off]="mModel === offState"
-></div>
+<ng-container *ngIf="size === 'small'; else large">
+  <div class="m-toggle__track" (click)="clickedSmallToggle()"></div>
+  <div
+    class="m-toggle__switch"
+    [class.m-toggle__switch--left]="mModel === leftValue"
+    [class.m-toggle__switch--right]="mModel === rightValue"
+    [class.m-toggle__switch--off]="mModel === offState"
+    (click)="clickedSmallToggle()"
+  ></div>
+</ng-container>
+<!-- --------------------------------- -->
+<ng-template #large>
+  <div class="m-toggle">
+    <div
+      class="m-toggle__textSwitch"
+      [class.m-toggle__textSwitch--selected]="mModel === leftValue"
+      (click)="clickedLargeToggle(leftValue)"
+    >
+      {{ getToggleText('left') | titlecase }}
+    </div>
+    <div
+      class="m-toggle__textSwitch"
+      [class.m-toggle__textSwitch--selected]="mModel === rightValue"
+      (click)="clickedLargeToggle(rightValue)"
+    >
+      {{ getToggleText('right') | titlecase }}
+    </div>
+  </div>
+</ng-template>

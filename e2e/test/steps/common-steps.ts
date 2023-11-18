@@ -10,6 +10,7 @@ namespace CommonSteps {
     channelPage,
     confirmationModalComponent,
     onboardingV5ModalComponent,
+    upgradeModalComponent,
     explainerScreenModalComponent,
   } = inject();
 
@@ -33,6 +34,8 @@ namespace CommonSteps {
       I.waitForNavigation({ timeout: 30000 });
 
       await onboardingV5ModalComponent.completeOnboarding();
+      upgradeModalComponent.isVisible();
+      upgradeModalComponent.dismiss();
     }
   );
 
