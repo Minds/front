@@ -24,4 +24,7 @@ export const permissionsServiceMock = new (function() {
   this.canCreateGroup = jasmine
     .createSpy('canCreateGroup')
     .and.callFake(() => this.has(Permission.CanCreateGroup));
+  this.canInteract = jasmine
+    .createSpy('canCreateGroup')
+    .and.callFake(() => this.has(Permission.CanInteract));
 })();
