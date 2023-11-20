@@ -45,6 +45,42 @@ const routes: Routes = [
     redirectTo: '/about/upgrades',
     pathMatch: 'full' as PathMatch,
   },
+  {
+    path: 'boost',
+    redirectTo: '/about/boost',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'nodes',
+    redirectTo: '/about/networks',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'wire',
+    redirectTo: '/about/monetization',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'pay',
+    redirectTo: '/about/monetization',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'plus',
+    redirectTo: '/about/plus',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'token',
+    redirectTo: '/about/token',
+    pathMatch: 'full' as PathMatch,
+  },
+  {
+    path: 'tokens',
+    redirectTo: '/about/token',
+    pathMatch: 'full' as PathMatch,
+  },
+  // Note: Pro route handled in pro module.
 ];
 
 @NgModule({
