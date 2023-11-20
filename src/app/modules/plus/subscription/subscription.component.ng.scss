@@ -1,0 +1,161 @@
+@import 'defaults.scss';
+@import '../../../foundation/grid-values';
+
+:host {
+  .m-plusSubscriptionPlan__toggleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 23px;
+
+    @media screen and (max-width: $min-tablet) {
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+  }
+
+  .m-plusSubscriptionPlan__toggle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    margin-right: 50px;
+
+    @media screen and (max-width: $min-tablet) {
+      margin-right: 30px;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.m-plusSubscriptionPlan__toggle--hidden {
+      visibility: hidden;
+    }
+  }
+
+  .m-plusSubscriptionPlan__trial {
+    h4 {
+      font-weight: 700;
+      font-size: 26;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-plusSubscriptionPlan__trial {
+    @media screen and (max-width: $min-tablet) {
+      text-align: center;
+    }
+  }
+
+  .m-plusSubscriptionPlan__pricing {
+    margin-bottom: 24px;
+    min-height: 55px;
+
+    @media screen and (max-width: $min-tablet) {
+      margin-bottom: 40px;
+      text-align: center;
+      min-height: 75px;
+    }
+
+    // @media screen and (max-width: $max-mobile) {
+    //   display: block;
+    //   text-align: center;
+    //   min-height: 75px;
+    // }
+
+    .m-plusSubscriptionPlanPricing__amount {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 24px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      @media screen and (max-width: $m-grid-max-tablet) {
+        display: block;
+      }
+
+      span {
+        font-size: 24px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+
+    .m-plusSubscriptionPlanPricing__offer {
+      display: inline-block;
+      font-size: 14px;
+      text-decoration: line-through;
+      margin-left: 10px;
+
+      @include m-theme() {
+        color: themed($m-red);
+      }
+
+      @media screen and (max-width: $m-grid-max-tablet) {
+        display: block;
+        margin-left: 0;
+      }
+    }
+
+    .m-plusSubscriptionPlanPricing__intervalDesc {
+      font-size: 16px;
+      line-height: 21px;
+      margin-top: 8px;
+      min-width: 170px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-plusSubscription__button {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+
+    @media screen and (max-width: $min-tablet) {
+      align-items: center;
+      flex-direction: column;
+
+      button {
+        margin-right: 0 !important;
+      }
+
+      .m-plusSubscriptionButton__notice {
+        margin: 20px 0 0 0;
+        max-width: none;
+      }
+    }
+
+    ::ng-deep m-button {
+      margin-right: 0;
+    }
+  }
+  .m-plusSubscriptionButton__notice {
+    max-width: 175px;
+    line-height: 20px;
+    margin-left: 10px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-plusSubscription__error {
+    display: block;
+    font-weight: bold;
+    margin: 8px 0 0 5px;
+
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+}
