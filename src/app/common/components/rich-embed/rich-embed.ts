@@ -22,6 +22,7 @@ import {
 } from '../../services/client-meta.service';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { LivestreamService } from '../../../modules/composer/services/livestream.service';
+import { Url } from 'url';
 
 interface InlineEmbed {
   id: string;
@@ -398,13 +399,19 @@ export class MindsRichEmbed {
       if (matches[0]) {
         this.mediaSource = 'livepeer';
         this.playbackId = matches[4];
+
+        const autoplayDisabled: boolean =
+          this.session.getLoggedInUser()?.disable_autoplay_videos ?? true;
+        const url: URL = new URL(matches[0]);
+        url.searchParams.set('autoplay', autoplayDisabled ? 'false' : 'true');
+
         return {
           id: `video-livepeer-${matches[4]}`,
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
           html: this.sanitizer.bypassSecurityTrustHtml(
             '<iframe class="livepeer" width="640" height="360" src="' +
-              matches[0] +
+              `${url.href}` +
               '" frameborder="0" allowfullscreen></iframe>'
           ),
           playable: true,
