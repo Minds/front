@@ -60,6 +60,11 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
 
   @Input('data-ref') dataRef: string;
 
+  /**
+   * When true, dropdown menu doesn't open on click
+   */
+  @Input() disabled: boolean = false;
+
   isOpen: boolean = false;
 
   protected windowSize$: Subject<{
@@ -87,6 +92,10 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
   }
 
   open($event: MouseEvent) {
+    if (this.disabled) {
+      return;
+    }
+
     if ($event) {
       $event.preventDefault();
       $event.stopPropagation();

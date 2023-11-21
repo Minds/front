@@ -20,6 +20,10 @@ import { CounterChangeFadeIn } from '../../../animations';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { ExplicitVotesExperimentService } from '../../../modules/experiments/sub-services/explicit-votes-experiment.service';
 import { IsTenantService } from '../../services/is-tenant.service';
+import {
+  INTERACTION_PERMISSIONS_ERROR_MESSAGE,
+  PermissionsService,
+} from '../../services/permissions.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -74,7 +78,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     private experiments: ExperimentsService,
     private toast: ToasterService,
     private explicitVotesExperiment: ExplicitVotesExperimentService,
-    private isTenant: IsTenantService
+    private isTenant: IsTenantService,
+    protected permissions: PermissionsService
   ) {}
 
   set _object(value: any) {
@@ -90,6 +95,11 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
    * @returns void
    */
   onClick(e: MouseEvent): void {
+    if (!this.permissions.canInteract()) {
+      this.toast.error(INTERACTION_PERMISSIONS_ERROR_MESSAGE);
+      return;
+    }
+
     if (this.inProgress) {
       return;
     }

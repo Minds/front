@@ -30,6 +30,7 @@ import { AnalyticsService } from './../../../services/analytics';
 import { debounceTime, Subscription } from 'rxjs';
 import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
 import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -95,7 +96,8 @@ export class RegisterForm implements OnInit, OnDestroy {
     private passwordRiskValidator: PasswordRiskValidator,
     private analytics: AnalyticsService,
     private onboardingV5Service: OnboardingV5Service,
-    private onboardingV5ExperimentService: OnboardingV5ExperimentService
+    private onboardingV5ExperimentService: OnboardingV5ExperimentService,
+    private permissionsService: PermissionsService
   ) {}
 
   ngOnInit(): void {
@@ -213,6 +215,9 @@ export class RegisterForm implements OnInit, OnDestroy {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
         this.inProgress = false;
+
+        // Set permissions
+        this.permissionsService.setWhitelist(data.permissions);
 
         // If onboarding v5 is globally enabled, and enrollment is enabled,
         // set completed state to false. Modal showing is delegated to app component

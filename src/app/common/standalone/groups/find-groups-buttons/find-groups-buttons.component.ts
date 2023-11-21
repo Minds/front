@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '../../../common.module';
+import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PermissionsService } from '../../../services/permissions.service';
 
@@ -12,7 +13,7 @@ import { PermissionsService } from '../../../services/permissions.service';
 @Component({
   standalone: true,
   selector: 'm-findGroupsButtons',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, NgCommonModule, RouterLink],
   templateUrl: './find-groups-buttons.component.html',
   styleUrls: ['./find-groups-buttons.component.ng.scss'],
 })

@@ -9,6 +9,9 @@ export const VIDEO_PERMISSIONS_ERROR_MESSAGE =
 export const COMMENT_PERMISSIONS_ERROR_MESSAGE =
   'Your user role does not allow commenting.';
 
+export const INTERACTION_PERMISSIONS_ERROR_MESSAGE =
+  'Your user role does not allow interactions on posts.';
+
 @Injectable({
   providedIn: 'root',
 })
