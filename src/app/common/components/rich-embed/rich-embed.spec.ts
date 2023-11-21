@@ -20,6 +20,7 @@ import { SiteService } from '../../services/site.service';
 import { MindsRichEmbed } from './rich-embed';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LivestreamService } from '../../../modules/composer/services/livestream.service';
+import userMock from '../../../mocks/responses/user.mock';
 
 describe('MindsRichEmbed', () => {
   let comp: MindsRichEmbed;
@@ -33,7 +34,12 @@ describe('MindsRichEmbed', () => {
         declarations: [MindsRichEmbed],
 
         providers: [
-          { provide: DomSanitizer, useValue: MockService(DomSanitizer) },
+          {
+            provide: DomSanitizer,
+            useValue: {
+              bypassSecurityTrustHtml: (val: string) => val,
+            },
+          },
           { provide: Session, useValue: MockService(Session) },
           {
             provide: RichEmbedService,
@@ -50,10 +56,7 @@ describe('MindsRichEmbed', () => {
           { provide: ConfigsService, useValue: MockService(ConfigsService) },
           { provide: SiteService, useValue: MockService(SiteService) },
           { provide: ModalService, useValue: MockService(ModalService) },
-          {
-            provide: EmbedLinkWhitelistService,
-            useValue: MockService(EmbedLinkWhitelistService),
-          },
+          EmbedLinkWhitelistService,
           {
             provide: ClientMetaService,
             useValue: MockService(ClientMetaService),
@@ -137,4 +140,60 @@ describe('MindsRichEmbed', () => {
       {}
     );
   }));
+
+  describe('livepeer', () => {
+    it('should have autoplay false when user is not logged in', () => {
+      comp.src = {
+        perma_url: 'https://minds-player.withlivepeer.com?v=1234567890',
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue(null);
+
+      expect(comp.parseInlineEmbed()).toEqual({
+        id: 'video-livepeer-1234567890',
+        className:
+          'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
+        html:
+          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.withlivepeer.com/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
+        playable: true,
+      });
+    });
+
+    it('should have autoplay true when user has not disabled autoplay', () => {
+      comp.src = {
+        perma_url: 'https://minds-player.withlivepeer.com?v=1234567890',
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        ...userMock,
+        disable_autoplay_videos: false,
+      });
+
+      expect(comp.parseInlineEmbed()).toEqual({
+        id: 'video-livepeer-1234567890',
+        className:
+          'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
+        html:
+          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.withlivepeer.com/?v=1234567890&autoplay=true" frameborder="0" allowfullscreen></iframe>',
+        playable: true,
+      });
+    });
+
+    it('should have autoplay false when user has disabled autoplay', () => {
+      comp.src = {
+        perma_url: 'https://minds-player.withlivepeer.com?v=1234567890',
+      };
+      (comp as any).session.getLoggedInUser.and.returnValue({
+        ...userMock,
+        disable_autoplay_videos: true,
+      });
+
+      expect(comp.parseInlineEmbed()).toEqual({
+        id: 'video-livepeer-1234567890',
+        className:
+          'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-livepeer',
+        html:
+          '<iframe class="livepeer" width="640" height="360" src="https://minds-player.withlivepeer.com/?v=1234567890&autoplay=false" frameborder="0" allowfullscreen></iframe>',
+        playable: true,
+      });
+    });
+  });
 });

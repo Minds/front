@@ -9,6 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 import { ExplicitVotesExperimentService } from '../../../modules/experiments/sub-services/explicit-votes-experiment.service';
 import { IsTenantService } from '../../services/is-tenant.service';
+import { PermissionsService } from '../../services/permissions.service';
 
 describe('ThumbsUpButton', () => {
   let comp: ThumbsUpButton;
@@ -42,6 +43,10 @@ describe('ThumbsUpButton', () => {
           {
             provide: IsTenantService,
             useValue: MockService(IsTenantService),
+          },
+          {
+            provide: PermissionsService,
+            useValue: MockService(PermissionsService),
           },
         ],
       }).compileComponents();

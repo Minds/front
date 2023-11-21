@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ConfigsService } from './configs.service';
 import { ThemeConfig } from '../types/theme-config.types';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 /**
  * Service that handles the dynamic changing of the sites theme.
  */
 @Injectable({ providedIn: 'root' })
 export class ThemeColorChangeService {
-  constructor(private configs: ConfigsService) {}
+  constructor(
+    @Inject(DOCUMENT) private dom,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private configs: ConfigsService
+  ) {}
 
   /**
    * Change site theme based on given theme config object.
@@ -29,7 +34,23 @@ export class ThemeColorChangeService {
    * @returns { void }
    */
   private changePrimaryAccent(color: string): void {
-    document.documentElement.style.setProperty('--primary-action-light', color);
-    document.documentElement.style.setProperty('--primary-action-dark', color);
+    if (isPlatformBrowser(this.platformId)) {
+      this.dom.documentElement.style.setProperty(
+        '--primary-action-light',
+        color
+      );
+      this.dom.documentElement.style.setProperty(
+        '--primary-action-dark',
+        color
+      );
+    } else {
+      const styleString = `--primary-action-light: ${color}; --primary-action-dark: ${color};`;
+
+      let style: HTMLLinkElement;
+      style = this.dom.createElement('style');
+      style.setAttribute('id', 'dynamicSsrTheme');
+      style.innerHTML = styleString;
+      this.dom.head.appendChild(style);
+    }
   }
 }
