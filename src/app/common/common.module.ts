@@ -186,7 +186,6 @@ import { ExploreTagFeedItemComponent } from './components/explore-tag-feed-item/
 import { ExploreFeedItemComponent } from './components/explore-feed-item/explore-feed-item.component';
 import { IfTenantDirective } from './directives/if-tenant.directive';
 import { IsTenantService } from './services/is-tenant.service';
-import { PermissionsService } from './services/permissions.service';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -411,7 +410,6 @@ const routes: Routes = [
     ReportService,
     GroupMembershipService,
     IsTenantService,
-    PermissionsService,
   ],
 })
 export class CommonModule {}
