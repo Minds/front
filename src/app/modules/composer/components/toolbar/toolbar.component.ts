@@ -50,6 +50,7 @@ import { Supermind } from '../../../supermind/supermind.types';
 import { LiveStreamComponent } from '../livestream/livestream.component';
 import { LivestreamService } from '../../services/livestream.service';
 import { ExperimentsService } from '../../../experiments/experiments.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Composer toolbar. Displays important actions
@@ -176,6 +177,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) protected platformId: Object,
     public modalService: ModalService,
     private injector: Injector,
+    private permissions: PermissionsService,
     private readonly experimentService: ExperimentsService
   ) {}
 
@@ -330,7 +332,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public get shouldShowLivestreamButton(): boolean {
-    return this.experimentService.hasVariation('minds-4157-livepeer');
+    return (
+      this.experimentService.hasVariation('minds-4157-livepeer') &&
+      this.permissions.canUploadVideo()
+    );
   }
 
   /**

@@ -27,6 +27,7 @@ import { Input, forwardRef } from '@angular/core';
 import { Component } from '@angular/core';
 import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
 import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 @Component({
   selector: 'm-friendlyCaptcha',
@@ -122,6 +123,10 @@ describe('RegisterForm', () => {
         {
           provide: OnboardingV5ExperimentService,
           useValue: MockService(OnboardingV5ExperimentService),
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
         },
       ],
     }).compileComponents();

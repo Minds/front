@@ -1,4 +1,13 @@
-<m-dropdownMenu [menu]="dropdownMenu" m-clientMeta>
+<m-dropdownMenu
+  [menu]="dropdownMenu"
+  [disabled]="!permissions.canInteract() && !permissions.canCreatePost()"
+  m-clientMeta
+  [ngClass]="{
+    'm-activity__remindButton--noPermission':
+      !permissions.canInteract() && !permissions.canCreatePost()
+  }"
+  (click)="onClickTrigger()"
+>
   <button
     (click)="getUserHasReminded($event)"
     class="m-activityRemindButton__icon"
@@ -16,7 +25,7 @@
 <ng-template #dropdownMenu>
   <ul>
     <m-dropdownMenu__item
-      *ngIf="!(service.userHasReminded$ | async)"
+      *ngIf="!(service.userHasReminded$ | async) && permissions.canInteract()"
       [disabled]="!remindOptionsEnabled"
       (click)="onRemindClick($event)"
       icon="repeat"
@@ -24,7 +33,7 @@
       <span>Remind</span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
-      *ngIf="service.userHasReminded$ | async"
+      *ngIf="(service.userHasReminded$ | async) && permissions.canInteract()"
       [disabled]="!remindOptionsEnabled"
       (click)="onUndoRemind($event)"
       icon="repeat"
@@ -32,6 +41,7 @@
       <span>Undo Remind</span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
+      *ngIf="permissions.canCreatePost()"
       (click)="onQuotePostClick($event)"
       icon="create"
       [m-clientMeta]="getClientMetaDetails(service.entity$.getValue())"
@@ -39,6 +49,7 @@
       <span>Quote post</span>
     </m-dropdownMenu__item>
     <m-dropdownMenu__item
+      *ngIf="permissions.canCreatePost()"
       (click)="onGroupShareClick($event)"
       icon="group"
       data-ref="remind-button-group-share"

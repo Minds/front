@@ -45,6 +45,7 @@ import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal
 import { ShareModalComponent } from '../../modals/share/share';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 @Component({
   selector: 'm-comment',
@@ -151,6 +152,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     private injector: Injector,
     public suggestions: AutocompleteSuggestionsService,
     private clientMetaService: ClientMetaService,
+    protected permissions: PermissionsService,
     @SkipSelf() @Optional() private parentClientMeta: ClientMetaDirective
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -216,7 +218,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       !this.inProgress &&
       this.canPost &&
       ((this.comment.description && this.comment.description.trim() !== '') ||
-        this.attachment.has())
+        this.attachment.has()) &&
+      this.permissions.canComment()
     );
   }
 

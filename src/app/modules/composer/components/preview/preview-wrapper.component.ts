@@ -6,10 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {
-  ComposerService,
-  DEFAULT_RICH_EMBED_VALUE,
-} from '../../services/composer.service';
+import { ComposerService } from '../../services/composer.service';
 import { AttachmentPreviewResource } from '../../services/preview.service';
 import { UploaderService } from '../../services/uploader.service';
 

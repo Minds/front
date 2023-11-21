@@ -2,6 +2,12 @@
 
 :host {
   position: relative;
+
+  .m-activity__remindButton--noPermission {
+    opacity: 0.5;
+    cursor: default !important;
+  }
+
   .m-dropdown--v2 {
     z-index: 4;
   }

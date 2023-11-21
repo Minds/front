@@ -3,6 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
+import {
+  PermissionsService,
+  VIDEO_PERMISSIONS_ERROR_MESSAGE,
+} from '../../../common/services/permissions.service';
 @Injectable({ providedIn: 'root' })
 export class LivestreamService {
   private apiUrl = 'https://livepeer.studio/api/stream';
@@ -11,10 +15,15 @@ export class LivestreamService {
   constructor(
     private http: HttpClient,
     private session: Session,
-    private mindsConfigService: ConfigsService
+    private mindsConfigService: ConfigsService,
+    private permissions: PermissionsService
   ) {}
 
   async createLiveStream(): Promise<any> {
+    if (!this.permissions.canUploadVideo()) {
+      console.error(VIDEO_PERMISSIONS_ERROR_MESSAGE);
+      return;
+    }
     const timestamp = new Date().getTime();
     const streamData = {
       name: `web_${timestamp}_${this.session.getLoggedInUser().guid}`,

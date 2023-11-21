@@ -3,10 +3,12 @@ import {
   BehaviorSubject,
   combineLatest,
   Observable,
+  of,
   Subscription,
   take,
 } from 'rxjs';
 import {
+  catchError,
   debounceTime,
   distinctUntilChanged,
   map,
@@ -14,6 +16,7 @@ import {
   share,
   startWith,
   tap,
+  throttleTime,
 } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
@@ -57,6 +60,7 @@ import {
   ComposerAudienceSelectorService,
 } from './audience.service';
 import { LivestreamService } from './livestream.service';
+import { VIDEO_PERMISSIONS_ERROR_MESSAGE } from '../../../common/services/permissions.service';
 
 /**
  * Default values
@@ -365,6 +369,11 @@ export class ComposerService implements OnDestroy {
    */
   protected readonly richEmbedExtractorSubscription: Subscription;
 
+  /**
+   * Subscription to attachment upload progress
+   */
+  protected readonly videoPermissionsErrorSubscription: Subscription;
+
   /** Container for this instance */
   protected container: ActivityContainer = null;
 
@@ -470,8 +479,9 @@ export class ComposerService implements OnDestroy {
         this.uploaderService.files$.pipe(
           startWith([]), // will not ever resolve combineLatest unless we do this
           map(fileUpload => {
-            if (!fileUpload) return [];
-
+            if (!fileUpload) {
+              return [];
+            }
             this.setPreview(fileUpload);
 
             return fileUpload.map(fileUpload => fileUpload.guid);
@@ -673,6 +683,19 @@ export class ComposerService implements OnDestroy {
       }
     );
 
+    this.videoPermissionsErrorSubscription = this.uploaderService.videoPermissionsError$
+      .pipe(
+        throttleTime(2000) // Fire at most 2x/sec
+      )
+      .subscribe(error => {
+        if (error) {
+          // Reset attachments & previews
+          this.uploaderService.reset();
+          this.attachments$.next(DEFAULT_ATTACHMENT_VALUE);
+          this.setPreview(null);
+        }
+      });
+
     // Subscribe to pending monetization and format monetization$
     this.pendingMonetizationSubscription = this.pendingMonetization$.subscribe(
       pendingMonetization => {
@@ -760,6 +783,8 @@ export class ComposerService implements OnDestroy {
 
     // Unsubscribe from rich embed extractor
     this.richEmbedExtractorSubscription.unsubscribe();
+
+    this.videoPermissionsErrorSubscription?.unsubscribe();
 
     this.livestreamSubscription?.unsubscribe();
   }
