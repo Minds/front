@@ -26,6 +26,7 @@ import { ComposerComponent } from '../../../composer/composer.component';
 import { GroupFeedTypeFilter } from '../group.types';
 import { MindsGroup } from '../group.model';
 import { ToasterService } from '../../../../common/services/toaster.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Container for group feed, including filters, search and composer (if user is member)
@@ -66,6 +67,7 @@ export class GroupFeedComponent implements OnDestroy, OnInit {
     private injector: Injector,
     private clientMeta: ClientMetaDirective,
     private toast: ToasterService,
+    protected permissions: PermissionsService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {}
 

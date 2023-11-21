@@ -2,6 +2,12 @@
 
 .m-commentPoster {
   width: 100%;
+  &.m-commentPoster--disabled {
+    opacity: 0.5;
+    .m-commentPoster__wrapper {
+      pointer-events: none;
+    }
+  }
 }
 
 .m-commentPoster--nested .m-commentPoster__wrapper {
@@ -28,8 +34,10 @@
   transition: 0.125s border-color ease-out;
 
   &:focus-within {
-    @include m-theme() {
-      border: 1px solid themed($m-blue) !important;
+    &:not(.m-commentPoster__wrapper--disabled) {
+      @include m-theme() {
+        border: 1px solid themed($m-blue) !important;
+      }
     }
   }
 
@@ -108,8 +116,10 @@
       }
 
       &:hover {
-        @include m-theme() {
-          color: themed($m-textColor--tertiary);
+        &:not(.m-button-disabled, .m-button-disabled-icon) {
+          @include m-theme() {
+            color: themed($m-textColor--tertiary);
+          }
         }
       }
     }

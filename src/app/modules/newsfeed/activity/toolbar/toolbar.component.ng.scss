@@ -254,6 +254,24 @@
         flex-basis: auto;
       }
 
+      // No hover fx when no permission
+      > [class*='--noPermission'] {
+        &:not(.selected) {
+          &:hover {
+            i.material-icons,
+            .minds-counter {
+              @include m-theme() {
+                color: themed($m-textColor--secondary) !important;
+              }
+            }
+          }
+        }
+        > a,
+        ::ng-deep .m-activityRemindButton__icon {
+          cursor: default;
+        }
+      }
+
       > a,
       ::ng-deep .m-activityRemindButton__icon {
         line-height: 20px;

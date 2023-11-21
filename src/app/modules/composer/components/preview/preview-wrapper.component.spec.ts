@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import fileMock from '../../../../mocks/dom/file.mock';
 import { MockComponent, MockService } from '../../../../utils/mock';
@@ -15,10 +15,13 @@ describe('Composer Preview', () => {
       return true;
     },
     //
-    has: ['attachmentPreviews$', 'richEmbedPreview$'],
+    has: ['attachmentPreviews$', 'richEmbedPreview$', 'videoPermissionsError$'],
     props: {
       attachmentPreviews$: { get: () => new Subject() },
       richEmbedPreview$: { get: () => new Subject() },
+      videoPermissionsError$: {
+        get: () => new BehaviorSubject<boolean>(false),
+      }, // Provide an initial value if needed
     },
   });
 
@@ -51,7 +54,14 @@ describe('Composer Preview', () => {
           },
           {
             provide: AttachmentApiService,
-            useValue: MockService(AttachmentApiService),
+            useValue: MockService(AttachmentApiService, {
+              has: ['videoPermissionsError$'],
+              props: {
+                videoPermissionsError$: {
+                  get: () => new BehaviorSubject<boolean>(false),
+                },
+              },
+            }),
           },
         ],
       }).compileComponents();
@@ -80,7 +90,6 @@ describe('Composer Preview', () => {
     const image = fileMock('image');
     comp.removeAttachment(image);
     expect(window.confirm).toHaveBeenCalled();
-    // expect(composerServiceMock.removeAttachment).toHaveBeenCalled();
   });
 
   it('should remove a rich embed', () => {

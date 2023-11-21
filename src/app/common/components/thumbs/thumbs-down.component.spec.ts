@@ -12,6 +12,8 @@ import { Session } from '../../../services/session';
 import { Client } from '../../api/client.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import userMock from '../../../mocks/responses/user.mock';
+import { PermissionsService } from '../../services/permissions.service';
+import { permissionsServiceMock } from '../../../../tests/permissions-service-mock.spec';
 
 describe('ThumbsDownButton', () => {
   let comp: ThumbsDownButton;
@@ -30,6 +32,10 @@ describe('ThumbsDownButton', () => {
             useValue: MockService(AuthModalService),
           },
           { provide: ToasterService, useValue: MockService(ToasterService) },
+          {
+            provide: PermissionsService,
+            useValue: permissionsServiceMock,
+          },
         ],
       }).compileComponents();
     })

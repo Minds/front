@@ -9,6 +9,8 @@ import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../modules/blockchain/token-purchase/uniswap/uniswap-modal.service';
 import { ToasterService } from './services/toaster.service';
 import { ResetPasswordModalService } from '../modules/auth/reset-password-modal/reset-password-modal.service';
+import { PermissionsService } from './services/permissions.service';
+import { ExperimentsService } from '../modules/experiments/experiments.service';
 
 @NgModule({
   imports: [Web3ModalModule],
@@ -36,6 +38,12 @@ import { ResetPasswordModalService } from '../modules/auth/reset-password-modal/
         Web3ModalService,
         ToasterService,
       ],
+    },
+    {
+      provide: PermissionsService,
+      useFactory: (experimentsService, configsService): PermissionsService =>
+        new PermissionsService(experimentsService, configsService),
+      deps: [ExperimentsService, ConfigsService],
     },
   ],
 })

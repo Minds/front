@@ -22,6 +22,9 @@ import {
 import { ConfigsService } from '../common/services/configs.service';
 import { MockService } from '../utils/mock';
 import { TextParserService } from '../common/services/text-parser.service';
+import { PermissionsService } from '../common/services/permissions.service';
+import { ToasterService } from '../common/services/toaster.service';
+import { permissionsServiceMock } from '../../tests/permissions-service-mock.spec';
 
 /* tslint:disable */
 
@@ -29,6 +32,11 @@ describe('Service: Attachment Service', () => {
   let service: AttachmentService;
   let mockObject;
   let httpMock;
+  let toasterMock = new (function() {
+    this.error = jasmine.createSpy('error');
+    this.success = jasmine.createSpy('success');
+  })();
+
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
@@ -40,6 +48,14 @@ describe('Service: Attachment Service', () => {
           { provide: Client, useValue: clientMock },
           { provide: TextParserService, useValue: TextParserService },
           { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          {
+            provide: PermissionsService,
+            useValue: MockService(PermissionsService),
+          },
+          {
+            provide: ToasterService,
+            useValue: MockService(ToasterService),
+          },
         ],
       });
       clientMock.response = {};
@@ -53,6 +69,8 @@ describe('Service: Attachment Service', () => {
         uploadMock,
         httpMock,
         new TextParserService(),
+        permissionsServiceMock,
+        toasterMock,
         TestBed.inject(ConfigsService)
       );
 

@@ -28,6 +28,7 @@ import { AuthModalService } from '../../../../modules/auth/modal/auth-modal.serv
 import { ExperimentsService } from '../../../../modules/experiments/experiments.service';
 import { MultiTenantConfigImageRefreshService } from '../../../../modules/multi-tenant-network/services/config-image-refresh.service';
 import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-tokens';
+import { PermissionsService } from '../../../services/permissions.service';
 
 /**
  * V2 version of sidebar component.
@@ -113,6 +114,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private authModal: AuthModalService,
     private experiments: ExperimentsService,
     private configImageRefresh: MultiTenantConfigImageRefreshService,
+    protected permissions: PermissionsService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
