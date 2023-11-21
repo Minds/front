@@ -162,4 +162,67 @@ describe('MetaService', () => {
       expect(service.defaultAuthor).toBe('Minds');
     });
   });
+
+  describe('setDynamicFavicon', () => {
+    afterEach(() => {
+      const favicon = mockDocument.head.querySelector('#favicon');
+      const dynamicFavicon = mockDocument.head.querySelector('#dynamicFavicon');
+
+      if (favicon) {
+        mockDocument.head.removeChild(favicon);
+      }
+
+      if (dynamicFavicon) {
+        mockDocument.head.removeChild(dynamicFavicon);
+      }
+    });
+
+    it('should set dynamic favicon and remove any existing favicon', () => {
+      const href: string = '/dynamicFavicon.png';
+      if (!mockDocument.head.querySelector('#favicon')) {
+        const link: HTMLLinkElement = document.createElement('link');
+        link.setAttribute('rel', 'icon');
+        link.setAttribute('type', 'image/png');
+        link.setAttribute('href', '/favicon.svg');
+        link.setAttribute('id', 'favicon');
+        mockDocument.head.appendChild(link);
+      }
+
+      service.setDynamicFavicon(href);
+
+      expect(mockDocument.head.querySelector('#dynamicFavicon')).toBeTruthy();
+      expect(mockDocument.head.querySelector('#favicon')).toBeNull();
+    });
+  });
+
+  describe('resetDynamicFavicon', () => {
+    afterEach(() => {
+      const favicon = mockDocument.head.querySelector('#favicon');
+      const dynamicFavicon = mockDocument.head.querySelector('#dynamicFavicon');
+
+      if (favicon) {
+        mockDocument.head.removeChild(favicon);
+      }
+
+      if (dynamicFavicon) {
+        mockDocument.head.removeChild(dynamicFavicon);
+      }
+    });
+
+    it('should set dynamic favicon and remove any existing favicon', () => {
+      if (!mockDocument.head.querySelector('#dynamicFavicon')) {
+        const link: HTMLLinkElement = document.createElement('link');
+        link.setAttribute('rel', 'icon');
+        link.setAttribute('type', 'image/png');
+        link.setAttribute('href', '/dynamicFavicon.svg');
+        link.setAttribute('id', 'favicon');
+        mockDocument.head.appendChild(link);
+      }
+
+      service.resetDynamicFavicon();
+
+      expect(mockDocument.head.querySelector('#favicon')).toBeTruthy();
+      expect(mockDocument.head.querySelector('#dynamicFavicon')).toBeNull();
+    });
+  });
 });
