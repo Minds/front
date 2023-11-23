@@ -37,6 +37,10 @@
   <a [routerLink]="'/login'" queryParamsHandling="merge">Login</a>
 </span>
 
+<m-oidcLoginButtons
+  (hasOidcProviders)="setHasOidcProviders($event)"
+></m-oidcLoginButtons>
+
 <!-- START: Register -->
 <form
   (submit)="$event.preventDefault()"

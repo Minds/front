@@ -311,4 +311,8 @@ export class RegisterForm implements OnInit, OnDestroy {
   public trackView(): void {
     this.analytics.trackView('signup:start');
   }
+
+  public setHasOidcProviders(has: boolean): void {
+    this.hideLogin = !!has;
+  }
 }

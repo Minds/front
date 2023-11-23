@@ -1,0 +1,16 @@
+<div *ngIf="providers?.length > 0">
+  <ng-container *ngFor="let provider of providers">
+    <a [href]="provider.loginUrl" (click)="onLoginClick($event)">
+      <m-button
+        color="blue"
+        stretch="true"
+        solid="true"
+        [saving]="hasClickedLoginMethod"
+      >
+        <span>Login with {{ provider.name }}</span>
+      </m-button>
+    </a>
+  </ng-container>
+
+  <br />
+</div>
