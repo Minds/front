@@ -47,6 +47,9 @@ export class MultiTenantDomainService implements OnDestroy {
 
   private domainFetchSubscription: Subscription;
 
+  /**
+   * Map the response status to one of our predefined display statuses
+   */
   public readonly status$ = this.domain$.pipe(
     map(domain => {
       if (!domain || !domain?.status) {

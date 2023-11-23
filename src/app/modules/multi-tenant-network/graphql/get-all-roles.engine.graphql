@@ -1,0 +1,8 @@
+query GetRolesAndPermissions {
+  allRoles {
+    id
+    name
+    permissions
+  }
+  allPermissions
+}
