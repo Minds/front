@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ExperimentsService } from '../../modules/experiments/experiments.service';
 import { ConfigsService } from './configs.service';
-import { PermissionsEnum } from '../../../graphql/generated.engine';
+
+export enum Permission {
+  CanCreatePost = 'CAN_CREATE_POST',
+  CanComment = 'CAN_COMMENT',
+  CanUploadVideo = 'CAN_UPLOAD_VIDEO',
+  CanCreateGroup = 'CAN_CREATE_GROUP',
+  CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
+  CanInteract = 'CAN_INTERACT',
+}
 
 export const VIDEO_PERMISSIONS_ERROR_MESSAGE =
   'Your user role does not allow uploading video.';
@@ -32,6 +40,14 @@ export class PermissionsService {
   }
 
   /**
+   * Sets the permissions that a user has (used for rehydration from login/register)
+   * @param permissions
+   */
+  public setWhitelist(permissions: string[]): void {
+    this.whitelist = Object.values(permissions);
+  }
+
+  /**
    * True if the `front-6121-rbac-permissions` experiment is enabled in growthbook
    */
   private isActive(): boolean {
@@ -42,7 +58,7 @@ export class PermissionsService {
    * @param permission
    * @returns whether the user has permission
    */
-  private has(permission: PermissionsEnum): boolean {
+  private has(permission: Permission): boolean {
     // Don't implement restrictions if the experiment isn't enabled
     if (!this.isActive()) {
       return true;
@@ -53,26 +69,31 @@ export class PermissionsService {
 
   // Is the user allowed to create posts?
   public canCreatePost(): boolean {
-    return this.has(PermissionsEnum.CanCreatePost);
+    return this.has(Permission.CanCreatePost);
   }
 
   // Is the user allowed to comment?
   public canComment(): boolean {
-    return this.has(PermissionsEnum.CanComment);
+    return this.has(Permission.CanComment);
   }
 
   // Is the user allowed to upload video?
   public canUploadVideo(): boolean {
-    return this.has(PermissionsEnum.CanUploadVideo);
+    return this.has(Permission.CanUploadVideo);
   }
 
   // Is the user allowed to create a group?
   public canCreateGroup(): boolean {
-    return this.has(PermissionsEnum.CanCreateGroup);
+    return this.has(Permission.CanCreateGroup);
+  }
+
+  // Is the user allowed to vote and remind?
+  public canInteract(): boolean {
+    return this.has(Permission.CanInteract);
   }
 
   // Is the user allowed to assign permissions?
   public canAssignPermissions(): boolean {
-    return this.has(PermissionsEnum.CanAssignPermissions);
+    return this.has(Permission.CanAssignPermissions);
   }
 }
