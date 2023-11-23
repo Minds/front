@@ -1,0 +1,51 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h4
+      class="m-assignRoles__title"
+      i18n="@@ASSIGN_ROLES_MODAL__MODIFY_USER_ROLES"
+    >
+      Modify user roles
+    </h4>
+    <p
+      class="m-assignRoles__subtitle"
+      i18n="@@ASSIGN_ROLES_MODAL__WHAT_ROLES_YOU_WANT"
+    >
+      What roles would you like this user to have?
+    </p>
+  </div>
+  <div class="m-modalV2__body">
+    <div class="m-assignRoles__checkboxesWrapper">
+      <div class="m-assignRoles__checkboxesContainer">
+        <ng-container *ngFor="let role of allRoles">
+          <div
+            class="m-assignRoles__checkboxRow"
+            [ngClass]="{
+              'm-assignRoles__checkboxRow--disabled': !isCheckboxEnabled(
+                role.id
+              )
+            }"
+          >
+            <div
+              class="m-assignRoles__checkboxWrapper"
+              (click)="clickedCheckbox(role.id, isCheckboxEnabled(role.id))"
+            >
+              <div class="m-assignRoles__checkboxLabel">
+                <m-networkAdminConsoleRole__icon
+                  [roleId]="role.id"
+                  scale="0.75"
+                ></m-networkAdminConsoleRole__icon>
+                <span>{{ role.name | titlecase }}</span>
+              </div>
+              <m-formInput__checkbox
+                [ngModel]="userHasRole(role.id)"
+                (ngModelChange)="confirmCheckboxClick(role.id)"
+                [disabled]="!isCheckboxEnabled(role.id)"
+              ></m-formInput__checkbox>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<m-modalCloseButton></m-modalCloseButton>

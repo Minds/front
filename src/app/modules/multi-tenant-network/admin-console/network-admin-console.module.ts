@@ -19,6 +19,8 @@ import { NetworkAdminConsoleModerationGuidelinesComponent } from './tabs/moderat
 import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component';
 import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
 import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
+import { NetworkAdminConsoleRoleIconComponent } from './tabs/roles/role-icon/role-icon.component';
+import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -71,6 +73,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
+    NetworkAdminConsoleSharedModule,
   ],
   declarations: [
     NetworkAdminConsoleComponent,

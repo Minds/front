@@ -32,6 +32,14 @@ export class PermissionsService {
   }
 
   /**
+   * Sets the permissions that a user has (used for rehyration from login/register)
+   * @param permissions
+   */
+  public setWhitelist(permissions: string[]): void {
+    this.whitelist = Object.values(permissions);
+  }
+
+  /**
    * True if the `front-6121-rbac-permissions` experiment is enabled in growthbook
    */
   private isActive(): boolean {
@@ -69,6 +77,11 @@ export class PermissionsService {
   // Is the user allowed to create a group?
   public canCreateGroup(): boolean {
     return this.has(PermissionsEnum.CanCreateGroup);
+  }
+
+  // Is the user allowed to vote and remind?
+  public canInteract(): boolean {
+    return this.has(PermissionsEnum.CanInteract);
   }
 
   // Is the user allowed to assign permissions?

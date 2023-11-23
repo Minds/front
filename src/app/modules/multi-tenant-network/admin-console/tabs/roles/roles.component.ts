@@ -39,5 +39,7 @@ export class NetworkAdminConsoleRolesComponent implements OnInit {
     });
 
     this.service.fetchRolesAndPermissions();
+    this.service.getLoggedInUserRoles();
+    this.service.fetchOwners();
   }
 }

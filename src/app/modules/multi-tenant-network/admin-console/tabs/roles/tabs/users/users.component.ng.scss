@@ -1,0 +1,179 @@
+@import 'defaults.scss';
+
+:host {
+  padding: 0 !important;
+  .m-networkAdminConsoleRolesUsers__row {
+    padding: $spacing4 $spacing8;
+    @include borderBottom;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: $spacing4;
+    }
+  }
+
+  .m-networkAdminConsoleRolesUsers__headerRow {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    div:first-child {
+      span {
+        @include body1Bold;
+      }
+    }
+
+    .m-networkAdminConsoleRolesUsersHeaderRow__filtersWrapper {
+      display: flex;
+      .m-networkAdminConsoleRolesUsersHeaderRow__filter--dropdown {
+        display: flex;
+        align-items: center;
+        span:first-child {
+          @include body3Regular;
+        }
+        ::ng-deep m-dropdownSelector {
+          margin: 0;
+          .m-dropdownSelector__wrapper.expanded {
+            .m-dropdownSelector__header {
+              border-bottom-right-radius: 0;
+              border-bottom-left-radius: 0;
+            }
+          }
+          .m-dropdownSelector__header {
+            border-radius: $spacing1;
+          }
+          .m-dropdownSelector__option {
+            border-radius: $spacing1;
+          }
+        }
+      }
+
+      .m-networkAdminConsoleRolesUsersHeaderRow__filter--search {
+        display: flex;
+        align-items: center;
+        @include border;
+        border-radius: $spacing1;
+        margin-left: $spacing4;
+        padding: $spacing1 $spacing1 $spacing1 $spacing3;
+
+        input {
+          border: none;
+          background-color: transparent;
+          font-size: 14px;
+          outline: none;
+
+          ::placeholder {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+        }
+        .material-icons {
+          margin: $spacing1;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .m-networkAdminConsoleRolesUsers__userRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (max-width: $min-tablet) {
+      flex-flow: column nowrap;
+      align-items: flex-start;
+
+      .m-networkAdminConsoleRolesUserRow__userWrapper {
+        width: 100%;
+      }
+      .m-networkAdminConsoleRolesUserRow__roles {
+        margin-left: $spacing8;
+      }
+    }
+    .m-networkAdminConsoleRolesUserRow__userWrapper {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: $spacing2;
+      white-space: nowrap;
+      overflow: hidden;
+      .m-networkAdminConsoleRolesUserRow__avatarWrapper {
+        img {
+          border-radius: 50%;
+          object-fit: cover;
+          box-sizing: border-box;
+          @include border;
+          @include m-theme() {
+            background: themed($m-textColor--secondary);
+          }
+          width: $activityAvatarWidth;
+          height: $activityAvatarWidth;
+        }
+      }
+      .m-networkAdminConsoleRolesUserRow__namesContainer {
+        display: flex;
+        flex-flow: column nowrap;
+        white-space: nowrap;
+        overflow: hidden;
+
+        span {
+          @include body1Bold;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &:last-child {
+            @include body2Regular;
+          }
+        }
+      }
+    }
+    .m-networkAdminConsoleRolesUserRow__roles {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: flex-end;
+      @media screen and (max-width: $min-tablet) {
+        margin-top: $spacing4;
+      }
+
+      ::ng-deep m-button {
+        margin-left: $spacing4;
+        .m-button.m-button--iconOnly i {
+          font-size: $spacing4 !important;
+        }
+      }
+
+      .m-networkAdminConsoleRolesUserRow__role {
+        margin-left: $spacing4;
+        display: flex;
+        border-radius: $spacing6;
+        gap: $spacing2;
+        @include border;
+        padding: $spacing2 $spacing4;
+        cursor: default;
+        span {
+          display: inline-block;
+          margin-left: $spacing2;
+        }
+      }
+      .m-networkAdminConsoleRolesUserRow__additionalRoleCount {
+        display: inline-block;
+        margin-left: $spacing2;
+        width: $spacing14;
+        cursor: default;
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+
+  .m-networkAdminConsoleRoles__noResultsNotice {
+    @include body2Regular;
+    display: flex;
+    justify-content: space-around;
+    margin: $spacing12;
+  }
+}
