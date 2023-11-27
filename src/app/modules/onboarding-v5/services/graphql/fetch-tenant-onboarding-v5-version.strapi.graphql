@@ -1,0 +1,70 @@
+query FetchTenantOnboardingV5Versions {
+  onboardingV5Versions {
+    data {
+      attributes {
+        publishedAt
+        steps {
+          __typename
+          ... on ComponentOnboardingV5OnboardingStep {
+            id
+            title
+            description
+            stepKey
+            stepType
+            verifyEmailForm {
+              id
+              __typename
+              inputLabel
+              inputPlaceholder
+              resendCodeText
+              resendCodeActionText
+              changeEmailActionText
+              changeEmailTitle
+              changeEmailDescription
+              changeEmailInputLabel
+              changeEmailInputPlaceholder
+              changeEmailActionButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+            }
+            actionButton {
+              id
+              __typename
+              text
+              dataRef
+            }
+            skipButton {
+              id
+              __typename
+              text
+              dataRef
+            }
+          }
+        }
+        completionStep {
+          id
+          __typename
+          message
+          media {
+            data {
+              attributes {
+                url
+                height
+                width
+                alternativeText
+                hash
+                mime
+                name
+                provider
+                size
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,6 +5,8 @@ import {
   ComponentOnboardingV5OnboardingStep,
   FetchOnboardingV5VersionsGQL,
   FetchOnboardingV5VersionsQuery,
+  FetchTenantOnboardingV5VersionsGQL,
+  FetchTenantOnboardingV5VersionsQuery,
   OnboardingV5Version,
   OnboardingV5VersionStepsDynamicZone,
 } from '../../../../graphql/generated.strapi';
@@ -129,6 +131,7 @@ export class OnboardingV5Service implements OnDestroy {
   constructor(
     private authRedirect: AuthRedirectService,
     private fetchOnboardingV5VersionsGql: FetchOnboardingV5VersionsGQL,
+    private fetchTenantOnboardingV5VersionsGql: FetchTenantOnboardingV5VersionsGQL,
     private getOnboardingStateGQL: GetOnboardingStateGQL,
     private setOnboardingStateGQL: SetOnboardingStateGQL,
     private getOnboardingStepProgressGQL: GetOnboardingStepProgressGQL,
@@ -249,8 +252,12 @@ export class OnboardingV5Service implements OnDestroy {
       }
 
       // get steps from CMS.
-      const stepsResponse: ApolloQueryResult<FetchOnboardingV5VersionsQuery> = await firstValueFrom(
-        this.fetchOnboardingV5VersionsGql.fetch()
+      const stepsResponse: ApolloQueryResult<
+        FetchOnboardingV5VersionsQuery | FetchTenantOnboardingV5VersionsQuery
+      > = await firstValueFrom(
+        this.isTenant.is()
+          ? this.fetchTenantOnboardingV5VersionsGql.fetch()
+          : this.fetchOnboardingV5VersionsGql.fetch()
       );
 
       const cmsData: OnboardingV5Version = stepsResponse?.data

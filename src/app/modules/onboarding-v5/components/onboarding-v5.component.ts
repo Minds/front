@@ -1,10 +1,18 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { OnboardingV5Service } from '../services/onboarding-v5.service';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { CarouselItem } from '../../../common/components/feature-carousel/feature-carousel.component';
 import { OnboardingStep } from '../types/onboarding-v5.types';
 import { isIos } from '../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../helpers/is-mobile';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import { MultiTenantConfigImageService } from '../../multi-tenant-network/services/config-image.service';
 
 /**
  * Onboarding V5 component. Acts as a root container that handles the layout and internal
@@ -38,13 +46,21 @@ export class OnboardingV5Component implements OnInit, OnDestroy {
   public readonly onboardingCompleted$: Observable<boolean> = this.service
     .onboardingCompleted$;
 
+  /** Tenant logo path for display instead of the carousel on tenant networks. */
+  public readonly tenantLogoPath$: Observable<string> = this
+    .tenantConfigImageService.horizontalLogoPath$;
+
   /** Subscription to popstate. */
   private popStateSubscription: Subscription;
 
   @HostBinding('class.m-onboardingV5--isIosMobile')
   isIosMobile: boolean = false;
 
-  constructor(private service: OnboardingV5Service) {}
+  constructor(
+    private service: OnboardingV5Service,
+    private tenantConfigImageService: MultiTenantConfigImageService,
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
+  ) {}
 
   ngOnInit(): void {
     this.isIosMobile = isIos() && isMobile();
