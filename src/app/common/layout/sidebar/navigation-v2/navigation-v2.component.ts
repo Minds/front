@@ -291,6 +291,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
           (mode === 'light' ? 'medium-production.png' : 'medium-white.png')
       );
     }
-    return this.tenantConfigImageService.squareLogoPath$;
+    return this.tenantConfigImageService.horizontalLogoPath$;
   }
 }

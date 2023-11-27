@@ -416,6 +416,10 @@ h1 {
         4px
       ); // overlap effect while still retaining flexbox.
 
+      &.m-topbar__tenantLogo--square {
+        max-width: 100%;
+      }
+
       //display: none;
       @media screen and (min-width: $layoutMax3ColWidth) {
         display: none;
@@ -423,10 +427,18 @@ h1 {
     }
 
     .m-topbar__logo--full {
-      height: 42px;
       max-width: 150px;
+
       @media screen and (max-width: $layoutMax3ColWidth) {
         display: none;
+      }
+
+      &:not(.m-topbar__tenantLogo--horizontal) {
+        height: 42px;
+      }
+
+      &.m-topbar__tenantLogo--horizontal {
+        height: unset;
       }
     }
   }

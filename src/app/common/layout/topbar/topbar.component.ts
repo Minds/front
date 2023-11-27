@@ -217,7 +217,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
           (mode === 'light' ? 'logo-light-mode.svg' : 'logo-dark-mode.svg')
       );
     }
-    return this.tenantConfigImageService.squareLogoPath$;
+    return this.tenantConfigImageService.horizontalLogoPath$;
   }
 
   /**
