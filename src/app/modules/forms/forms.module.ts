@@ -11,6 +11,7 @@ import { CaptchaModule } from '../captcha/captcha.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { PopoverComponent } from './popover-validation/popover.component';
 import { MultiFactorAuthLazyModule } from '../auth/multi-factor-auth/multi-factor-auth-lazy.module';
+import { OidcLoginButtons } from '../../common/standalone/oidc/oidc-login-buttons/oidc-login-buttons.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { MultiFactorAuthLazyModule } from '../auth/multi-factor-auth/multi-facto
     CaptchaModule,
     ExperimentsModule,
     MultiFactorAuthLazyModule,
+    OidcLoginButtons, // standalone
   ],
   declarations: [LoginForm, RegisterForm, PopoverComponent],
   exports: [LoginForm, RegisterForm, PopoverComponent],

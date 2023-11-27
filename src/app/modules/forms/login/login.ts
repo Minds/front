@@ -55,6 +55,8 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
 
   usernameError: string;
 
+  hasOidcProviders: boolean = false;
+
   form: UntypedFormGroup;
 
   constructor(
@@ -192,5 +194,13 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     } else {
       this.router.navigate(['/forgot-password']);
     }
+  }
+
+  /**
+   * If oidc providers are found, we will hide the login screen
+   */
+  public setHasOidcProviders(has: boolean): void {
+    this.hideLogin = !!has;
+    this.hasOidcProviders = has;
   }
 }
