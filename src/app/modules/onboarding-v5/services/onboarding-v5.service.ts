@@ -334,6 +334,12 @@ export class OnboardingV5Service implements OnDestroy {
       console.error(e);
     }
 
+    if (!this.completionStep$.getValue()) {
+      this.completionInProgress$.next(false);
+      this.dismiss$.next(true);
+      return;
+    }
+
     this.completionStepShowSubscription = timer(1000)
       .pipe(take(1))
       .subscribe(() => {
