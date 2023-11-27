@@ -3663,29 +3663,6 @@ export type FetchTenantOnboardingV5VersionsQuery = {
           | { __typename: 'Error' }
           | null
         >;
-        completionStep: {
-          __typename: 'ComponentOnboardingV5CompletionStep';
-          id: string;
-          message: string;
-          media?: {
-            __typename?: 'UploadFileEntityResponse';
-            data?: {
-              __typename?: 'UploadFileEntity';
-              attributes?: {
-                __typename?: 'UploadFile';
-                url: string;
-                height?: number | null;
-                width?: number | null;
-                alternativeText?: string | null;
-                hash: string;
-                mime: string;
-                name: string;
-                provider: string;
-                size: number;
-              } | null;
-            } | null;
-          } | null;
-        };
       } | null;
     }>;
   } | null;
@@ -4260,26 +4237,6 @@ export const FetchTenantOnboardingV5VersionsDocument = gql`
                 __typename
                 text
                 dataRef
-              }
-            }
-          }
-          completionStep {
-            id
-            __typename
-            message
-            media {
-              data {
-                attributes {
-                  url
-                  height
-                  width
-                  alternativeText
-                  hash
-                  mime
-                  name
-                  provider
-                  size
-                }
               }
             }
           }
