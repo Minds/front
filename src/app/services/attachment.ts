@@ -14,7 +14,6 @@ import { Session } from './session';
 import { ConfigsService } from '../common/services/configs.service';
 import { TextParserService } from '../common/services/text-parser.service';
 import {
-  Permission,
   PermissionsService,
   VIDEO_PERMISSIONS_ERROR_MESSAGE,
 } from '../common/services/permissions.service';

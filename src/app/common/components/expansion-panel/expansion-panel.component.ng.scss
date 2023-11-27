@@ -1,0 +1,28 @@
+@import 'defaults.scss';
+
+:host {
+  .m-expansionPanel {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  .m-expansionPanel__top,
+  .m-expansionPanel__bottom {
+    padding: $spacing4;
+  }
+
+  .m-expansionPanel__top {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    .m-expansionPanelTop__toggle {
+      margin-left: $spacing6;
+      margin-top: 6px;
+      cursor: pointer;
+    }
+  }
+
+  .m-expansionPanel__bottom {
+    overflow: hidden;
+  }
+}

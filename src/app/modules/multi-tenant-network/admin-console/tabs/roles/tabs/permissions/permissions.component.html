@@ -1,0 +1,238 @@
+<ng-container
+  *ngIf="
+    (service.allRoles$ | async) && (service.allPermissions$ | async);
+    else loadingSpinnerTemplate
+  "
+>
+  <ng-container
+    *ngFor="let role of service.allRoles$ | async; trackBy: trackByRoleId"
+  >
+    <!-------------------------------->
+    <!--- Owner ----------->
+    <!-------------------------------->
+    <m-expansionPanel
+      *ngIf="role.id === roleId.OWNER"
+      class="m-networkAdminConsoleRolesPermissionsRoleCard"
+    >
+      <div
+        visibleAlways
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleAlways"
+      >
+        <div>
+          <div
+            class="m-networkAdminConsoleRolesPermissionsRoleCard__iconWrapper"
+          >
+            <i class="material-icons pushDown">diamond</i>
+          </div>
+          <span i18n="@@COMMON__OWNER">Owner</span>
+        </div>
+        <div>
+          <span i18n="@@NETWORK_ADMIN_CONSOLE_PERMISSIONS__OWNER_DESC"
+            >The highest role on a network site, and is the only role to be able
+            to purchase upgrades and delete a network</span
+          >
+        </div>
+      </div>
+      <div
+        visibleWhenExpanded
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleWhenExpanded"
+      >
+        <ng-container
+          [ngTemplateOutlet]="toggles"
+          [ngTemplateOutletContext]="{
+            roleId: role.id
+          }"
+        ></ng-container>
+      </div>
+    </m-expansionPanel>
+    <!-------------------------------->
+    <!--- Admin ----------->
+    <!-------------------------------->
+    <m-expansionPanel
+      *ngIf="role.id === roleId.ADMIN"
+      class="m-networkAdminConsoleRolesPermissionsRoleCard"
+    >
+      <div
+        visibleAlways
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleAlways"
+      >
+        <div>
+          <div
+            class="m-networkAdminConsoleRolesPermissionsRoleCard__iconWrapper alreadyCircular"
+          >
+            <i class="material-icons">account_circle</i>
+          </div>
+          <span i18n="@@COMMON__ADMIN">Admin</span>
+        </div>
+        <div>
+          <span i18n="@@NETWORK_ADMIN_CONSOLE_PERMISSIONS__ADMIN_DESC"
+            >Administrators help the network run site smoothly. You can give
+            them a whole host of permissions</span
+          >
+        </div>
+      </div>
+      <div
+        visibleWhenExpanded
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleWhenExpanded"
+      >
+        <ng-container
+          [ngTemplateOutlet]="toggles"
+          [ngTemplateOutletContext]="{
+            roleId: role.id
+          }"
+        ></ng-container>
+      </div>
+    </m-expansionPanel>
+
+    <!-------------------------------->
+    <!--- Moderator ----------->
+    <!-------------------------------->
+    <m-expansionPanel
+      *ngIf="role.id === roleId.MODERATOR"
+      class="m-networkAdminConsoleRolesPermissionsRoleCard"
+    >
+      <div
+        visibleAlways
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleAlways"
+      >
+        <div>
+          <div
+            class="m-networkAdminConsoleRolesPermissionsRoleCard__iconWrapper"
+          >
+            <i class="material-icons">star</i>
+          </div>
+          <span i18n="@@COMMON__MODERATOR">Moderator</span>
+        </div>
+        <div>
+          <span i18n="@@NETWORK_ADMIN_CONSOLE_PERMISSIONS__MODERATOR_DESC"
+            >The moderator can help out with monitoring reports and moderating
+            content on your network</span
+          >
+        </div>
+      </div>
+      <div
+        visibleWhenExpanded
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleWhenExpanded"
+      >
+        <ng-container
+          [ngTemplateOutlet]="toggles"
+          [ngTemplateOutletContext]="{
+            roleId: role.id
+          }"
+        ></ng-container>
+      </div>
+    </m-expansionPanel>
+
+    <!-------------------------------->
+    <!--- Verified ----------->
+    <!-------------------------------->
+    <m-expansionPanel
+      *ngIf="role.id === roleId.VERIFIED"
+      class="m-networkAdminConsoleRolesPermissionsRoleCard"
+    >
+      <div
+        visibleAlways
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleAlways"
+      >
+        <div>
+          <div
+            class="m-networkAdminConsoleRolesPermissionsRoleCard__iconWrapper"
+          >
+            <i class="material-icons">check</i>
+          </div>
+          <span i18n="@@COMMON__VERIFIED">Verified</span>
+        </div>
+        <div>
+          <span i18n="@@NETWORK_ADMIN_CONSOLE_PERMISSIONS__VERIFIED_DESC"
+            >Versatile network role that can be customized and is a higher tier
+            than the default user role</span
+          >
+        </div>
+      </div>
+      <div
+        visibleWhenExpanded
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleWhenExpanded"
+      >
+        <ng-container
+          [ngTemplateOutlet]="toggles"
+          [ngTemplateOutletContext]="{
+            roleId: role.id
+          }"
+        ></ng-container>
+      </div>
+    </m-expansionPanel>
+    <!-------------------------------->
+    <!--- Default ----------->
+    <!-------------------------------->
+    <m-expansionPanel
+      *ngIf="role.id === roleId.DEFAULT"
+      class="m-networkAdminConsoleRolesPermissionsRoleCard"
+    >
+      <div
+        visibleAlways
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleAlways"
+      >
+        <div>
+          <div
+            class="m-networkAdminConsoleRolesPermissionsRoleCard__iconWrapper"
+          >
+            <!-- Placeholder for empty icon -->
+            <span></span>
+          </div>
+          <span i18n="@@COMMON__DEFAULT">Default</span>
+        </div>
+        <div>
+          <span i18n="@@NETWORK_ADMIN_CONSOLE_PERMISSIONS__DEFAULT_DESC"
+            >Default role for new members</span
+          >
+        </div>
+      </div>
+      <div
+        visibleWhenExpanded
+        class="m-networkAdminConsoleRolesPermissionsRoleCard__visibleWhenExpanded"
+      >
+        <ng-container
+          [ngTemplateOutlet]="toggles"
+          [ngTemplateOutletContext]="{
+            roleId: role.id
+          }"
+        ></ng-container>
+      </div>
+    </m-expansionPanel>
+    <!-------------------------------->
+  </ng-container>
+</ng-container>
+<!-------------------------------->
+<!-- TEMPLATE : TOGGLES  -->
+<!-------------------------------->
+<ng-template #toggles let-roleId="roleId">
+  <span
+    class="m-networkAdminConsoleRolesPermissionsRoleCard__togglesTitle"
+    i18n="@@COMMON__PERMISSIONS"
+    >Permissions</span
+  >
+  <div class="m-networkAdminConsoleRolesPermissionsRoleCard__togglesContainer">
+    <ng-container *ngFor="let permission of service.allPermissions$ | async">
+      <div class="m-networkAdminConsoleRolesPermissionsRoleCard__toggleRow">
+        <div
+          class="m-networkAdminConsoleRolesPermissionsRoleCard__toggleWrapper"
+        >
+          <span>{{ service.getPermissionDisplayText(permission) }}</span
+          ><m-toggle
+            [mModel]="getPermission(roleId, permission)"
+            (mModelChange)="setPermission(roleId, permission)"
+            leftValue="off"
+            rightValue="on"
+            offState="off"
+          ></m-toggle>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
+<!-------------------------------->
+<!-- TEMPLATE: LOADING SPINNER  -->
+<!-------------------------------->
+<ng-template #loadingSpinnerTemplate>
+  <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
+</ng-template>
