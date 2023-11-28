@@ -48,9 +48,7 @@ post content to trigger upgrade modal -->
       [src]="entity"
       [maxheight]="isModal ? null : 320"
       [isModal]="isModal"
-      [displayAsColumn]="
-        isMinimalMode || isModal || service.displayOptions.boostRotatorMode
-      "
+      [displayAsColumn]="true"
     >
     </minds-rich-embed>
   </div>
