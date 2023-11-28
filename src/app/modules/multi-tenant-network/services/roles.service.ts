@@ -26,8 +26,6 @@ import {
   AssignUserToRoleMutationVariables,
   UnassignUserFromRoleMutation,
   UserRoleEdge,
-  GetUsersByRoleQuery,
-  GetUsersByRoleGQL,
 } from '../../../../graphql/generated.engine';
 import { ToasterService } from '../../../common/services/toaster.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
@@ -51,11 +49,6 @@ export class MultiTenantRolesService implements OnDestroy {
     PermissionsEnum[]
   > = new BehaviorSubject<PermissionsEnum[]>(null);
 
-  /** Subject to store all users with the owner role */
-  public readonly owners$: BehaviorSubject<
-    UserRoleEdge[]
-  > = new BehaviorSubject<UserRoleEdge[]>(null);
-
   /**
    * All the roles assigned to the current logged in user
    */
@@ -71,7 +64,6 @@ export class MultiTenantRolesService implements OnDestroy {
     private assignUserToRoleGQL: AssignUserToRoleGQL,
     private unassignUserFromRoleGQL: UnassignUserFromRoleGQL,
     private getAssignedRolesGQL: GetAssignedRolesGQL,
-    private getUsersByRoleGQL: GetUsersByRoleGQL,
     private toaster: ToasterService,
     private permissions: PermissionsService,
     private session: Session
@@ -200,69 +192,6 @@ export class MultiTenantRolesService implements OnDestroy {
         )
         .subscribe()
     );
-  }
-
-  /**
-   * Fetches list of network owners from server
-   */
-  public fetchOwners(): void {
-    this.subscriptions.push(
-      this.getOwners().subscribe(
-        (result: ApolloQueryResult<GetUsersByRoleQuery> | null): void => {
-          if (result && result.data) {
-            const owners: UserRoleEdge[] = [];
-            for (let edge of result?.data?.usersByRole?.edges ?? []) {
-              if (edge && typeof edge.node.legacy === 'string') {
-                // Create a new object with parsed legacy property
-                const newNode = {
-                  ...edge.node,
-                  legacy: JSON.parse(edge.node.legacy),
-                };
-                edge = {
-                  ...edge,
-                  node: newNode,
-                };
-              }
-
-              owners.push(edge as UserRoleEdge);
-            }
-            this.owners$.next(owners);
-          }
-        },
-        (error: any): void => {
-          console.error('Error fetching owners:', error);
-        }
-      )
-    );
-  }
-
-  /**
-   * Gets all users in the network that have the OWNER role
-   * @returns { Observable<ApolloQueryResult<GetUsersByRoleQuery> | null>}
-   */
-  private getOwners(): Observable<ApolloQueryResult<
-    GetUsersByRoleQuery
-  > | null> {
-    return this.getUsersByRoleGQL
-      .fetch(
-        {
-          roleId: RoleId.OWNER,
-          first: 5,
-          after: null,
-        },
-        {
-          fetchPolicy: 'network-only',
-        }
-      )
-      .pipe(
-        take(1),
-        catchError(
-          (e: unknown): Observable<null> => {
-            console.error('getOwners Error: ', e);
-            return of(null);
-          }
-        )
-      );
   }
 
   /**

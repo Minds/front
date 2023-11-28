@@ -10,7 +10,7 @@
     [ngModel]="value"
     (ngModelChange)="updateValue($event)"
     [id]="customId"
-    [disabled]="disabled"
+    [disabled]="disabled || ignoreClick"
   />
   <div class="m-formInputCheckbox__visibleWrapper">
     <span

@@ -27,7 +27,7 @@
           >
             <div
               class="m-assignRoles__checkboxWrapper"
-              (click)="clickedCheckbox(role.id, isCheckboxEnabled(role.id))"
+              (click)="clickedCheckbox(role.id)"
             >
               <div class="m-assignRoles__checkboxLabel">
                 <m-networkAdminConsoleRole__icon
@@ -38,8 +38,9 @@
               </div>
               <m-formInput__checkbox
                 [ngModel]="userHasRole(role.id)"
-                (ngModelChange)="confirmCheckboxClick(role.id)"
+                (ngModelChange)="toggleRole(role.id)"
                 [disabled]="!isCheckboxEnabled(role.id)"
+                [ignoreClick]="!isCheckboxClickable(role.id)"
               ></m-formInput__checkbox>
             </div>
           </div>

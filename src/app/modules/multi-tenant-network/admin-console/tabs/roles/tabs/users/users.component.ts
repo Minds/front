@@ -102,7 +102,6 @@ export class NetworkAdminConsoleRolesUsersComponent
     this.subscriptions.push(
       this.getUsersByRoleQuery.valueChanges.subscribe(
         (result: ApolloQueryResult<GetUsersByRoleQuery>): void => {
-          // ojm this isn't firing on fetch
           if (result.loading) {
             return;
           }
@@ -143,7 +142,8 @@ export class NetworkAdminConsoleRolesUsersComponent
     // Append new users to the existing list
     const users: UserRoleEdge[] = this.users$.getValue();
 
-    for (let edge of result?.data?.usersByRole?.edges ?? []) {
+    for (let edge of result?.data?.usersByRole?.edges.slice(users.length) ??
+      []) {
       if (edge && typeof edge.node.legacy === 'string') {
         // Create a new object with parsed legacy property
         const newNode = {
@@ -165,6 +165,7 @@ export class NetworkAdminConsoleRolesUsersComponent
     this.hasNextPage$.next(
       result?.data?.usersByRole?.pageInfo?.hasNextPage ?? false
     );
+
     this.endCursor = result?.data?.usersByRole?.pageInfo?.endCursor ?? null;
   }
 
@@ -173,6 +174,9 @@ export class NetworkAdminConsoleRolesUsersComponent
    * @returns { void }
    */
   public fetchMore(): void {
+    if (this.inProgress$.getValue()) {
+      return;
+    }
     this.inProgress$.next(true);
 
     this.getUsersByRoleQuery.fetchMore({
@@ -246,8 +250,8 @@ export class NetworkAdminConsoleRolesUsersComponent
    * @param updatedUser
    */
   public updateUsersList(updatedUser: UserRoleEdge): void {
-    if (updatedUser.node.guid === this.session.getLoggedInUser().guid) {
-      // Get out of the admin console if the user revoked their own ownership
+    if (!updatedUser.node) {
+      return;
     }
 
     const currentUsers = this.users$.getValue();
@@ -277,14 +281,6 @@ export class NetworkAdminConsoleRolesUsersComponent
    */
   public onAssignRolesClick(userWithRoles: UserRoleEdge): void {
     this.assignRolesModal.open(userWithRoles);
-  }
-
-  /**
-   * Provide trackBy function for for-loop.
-   * @returns { string } Unique track by key.
-   */
-  public trackBy(user: UserRoleEdge): string {
-    return user.node.guid;
   }
 
   protected toTitleCase(str: string) {

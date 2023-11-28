@@ -10,6 +10,7 @@ import { ToasterService } from '../../../../../../../../common/services/toaster.
 import { Session } from '../../../../../../../../services/session';
 import { ModalService } from '../../../../../../../../services/ux/modal.service';
 import { ConfirmV2Component } from '../../../../../../../modals/confirm-v2/confirm.component';
+import { Router } from '@angular/router';
 
 export type AssignRolesModalInputParams = {
   userWithRoles: UserRoleEdge;
@@ -46,20 +47,13 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
    */
   onRoleChange: (updatedUserWithRoles: UserRoleEdge) => void = () => {};
 
-  /**
-   * Query reference for checking owner count
-   * so we know whether an owner is allowed
-   * to remove their own ownership
-   */
-
-  protected owners: UserRoleEdge[] = [];
-
   constructor(
     protected service: MultiTenantRolesService,
     private toaster: ToasterService,
     private session: Session,
     private modalService: ModalService,
-    private injector: Injector
+    private injector: Injector,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -69,9 +63,6 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
       }),
       this.service.loggedInUserRoles$.subscribe(roles => {
         this.loggedInUserRoles = roles;
-      }),
-      this.service.owners$.subscribe(owners => {
-        this.owners = owners;
       })
     );
   }
@@ -83,37 +74,9 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * If you're revoking your own ownership, confirm before toggling.
-   * For everything else, toggle the role
-   * @param roleId
-   */
-  confirmCheckboxClick(roleId: RoleId) {
-    if (
-      roleId === RoleId.OWNER &&
-      this.userWithRoles.node.guid === this.session.getLoggedInUser().guid &&
-      this.userHasRole(roleId)
-    ) {
-      // ojm this doesn't work - the checkbox un-checks even when you click the cancel button
-      const modal = this.modalService.present(ConfirmV2Component, {
-        data: {
-          title: 'Are you sure',
-          body:
-            'Are you sure you want to revoke your owner role on this network? This action is irreversible, unless another owner grants you ownership again. Are you certain you want to proceed?',
-          confirmButtonColor: 'red',
-          onConfirm: () => {
-            this.toggleRole(roleId);
-            modal.dismiss();
-          },
-        },
-        injector: this.injector,
-      });
-    } else {
-      this.toggleRole(roleId);
-    }
-  }
-
-  /**
    * Toggle a role on or off
+   *
+   * Anyone who is an owner/admin automatically gets Minds admin capabilities
    * @param roleId
    */
   async toggleRole(roleId: RoleId): Promise<void> {
@@ -147,46 +110,46 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
                 return;
               }
 
-              // ojm sometimes this isn't working "Cannot add property x, object is not extensible"
-              this.userWithRoles.roles.push(addedRole);
+              const updatedUserWithRoles: UserRoleEdge = {
+                ...this.userWithRoles,
+                roles: [...this.userWithRoles.roles, addedRole],
+              };
+
               // Keep the roles in decreasing order of id
-              this.userWithRoles.roles.sort((a, b) => b.id - a.id);
+              // This ensures the highest ranking role is displayed
+              updatedUserWithRoles.roles.sort((a, b) => b.id - a.id);
+
+              this.userWithRoles = updatedUserWithRoles;
+
               this.onRoleChange(this.userWithRoles);
             }
           })
       );
     }
-
-    /**
-     * Refresh list of owners
-     */
-    if (roleId === RoleId.OWNER) {
-      this.service.fetchOwners();
-    }
   }
 
   /**
-   * Called when a checkbox is clicked
+   * When a checkbox is clicked:
    * If the checkbox was disabled, show a toaster
+   * If the user is disabling their own ownership, show a confirmation modal
    */
-  clickedCheckbox(roleId: RoleId, enabled: boolean): void {
-    if (enabled) {
+  clickedCheckbox(roleId: RoleId): void {
+    if (this.isCheckboxClickable(roleId) && this.isCheckboxEnabled(roleId)) {
       return;
     }
 
-    /**
-     * Show different toasts explaining why they can't click an owner checkbox
-     */
+    if (this.isOwnActiveOwnership(roleId)) {
+      this.openOwnerConfirmationModal();
+    }
     if (roleId === RoleId.OWNER) {
+      /**
+       * Explain why they can't click an owner checkbox
+       */
       if (!this.loggedInUserRoles.some(role => role.id === RoleId.OWNER)) {
         this.toaster.error(
           'Your user role is not permitted to edit the owner role'
         );
         return;
-      } else if (this.owners.length < 2) {
-        this.toaster.error(
-          'You must grant the owner role to at least one other user before you can disable your ownership'
-        );
       }
     }
   }
@@ -199,27 +162,62 @@ export class AssignRolesModalComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Should the logged in user be able to click the checkbox?
-   * @param checkboxRoleId
+   * Should the checkbox be presented as disabled?
+   * @param roleId
    */
-  isCheckboxEnabled(checkboxRoleId: RoleId) {
-    if (checkboxRoleId === RoleId.OWNER) {
-      // We have to check some things first to see if they can toggle owner role
+  isCheckboxEnabled(roleId: RoleId) {
+    if (roleId === RoleId.OWNER) {
+      // Are they allowed to toggle the owner role?
       if (!this.loggedInUserRoles.some(role => role.id === RoleId.OWNER)) {
         // Only owners can toggle owner roles
         return false;
       }
-
-      if (
-        this.userWithRoles.node.guid === this.session.getLoggedInUser().guid &&
-        this.userHasRole(checkboxRoleId) &&
-        this.owners.length < 2
-      ) {
-        // The network needs at least one owner
-        return false;
-      }
     }
     return true;
+  }
+
+  /**
+   * False if clicking the checkbox should open a confirmation modal
+   * So it looks enabled, but isn't actually clickable until confirmed
+   * @param roleId
+   */
+  isCheckboxClickable(roleId: RoleId) {
+    // Are they trying to disable their own ownership?
+    if (this.isOwnActiveOwnership(roleId)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  isOwnActiveOwnership(roleId: RoleId) {
+    return (
+      roleId === RoleId.OWNER &&
+      this.userWithRoles.node.guid === this.session.getLoggedInUser().guid &&
+      this.userHasRole(roleId)
+    );
+  }
+
+  /**
+   * If you're revoking your own ownership, confirm before toggling.
+   * (If you try to do this but you're the network creator, it's not going to stick)
+   * @param roleId
+   */
+  openOwnerConfirmationModal() {
+    const modal = this.modalService.present(ConfirmV2Component, {
+      data: {
+        title: 'Are you sure',
+        body:
+          "Are you sure you want to revoke your owner role on this network? You can't undo this action. Do you want to proceed?",
+        confirmButtonColor: 'red',
+        onConfirm: () => {
+          this.toggleRole(RoleId.OWNER);
+          this.router.navigate(['/newsfeed']);
+          this.modalService.dismissAll();
+        },
+      },
+      injector: this.injector,
+    });
   }
 
   /**

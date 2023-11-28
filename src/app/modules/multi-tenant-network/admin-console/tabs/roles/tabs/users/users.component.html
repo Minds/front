@@ -77,9 +77,9 @@
   </div>
 </ng-container>
 <infinite-scroll
-  *ngIf="hasNextPage$ | async as hasNextPage"
+  *ngIf="hasNextPage$ | async"
   (load)="fetchMore()"
-  [moreData]="hasNextPage"
+  [moreData]="hasNextPage$ | async"
   [inProgress]="inProgress$ | async"
   [hideManual]="true"
 ></infinite-scroll>

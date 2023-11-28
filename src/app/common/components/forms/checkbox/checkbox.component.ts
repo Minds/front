@@ -28,7 +28,17 @@ export class FormInputCheckboxComponent implements ControlValueAccessor {
 
   value: boolean = false;
 
+  /**
+   * Display the checkbox in a disabled state
+   * and don't allow clicks
+   */
   @Input() disabled: boolean = false;
+
+  /**
+   * Don't display the checkbox as disabled, but
+   * don't allow clicks
+   */
+  @Input() ignoreClick: boolean = false;
 
   @ViewChild('input', { static: true }) input: ElementRef;
 
