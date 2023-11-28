@@ -32,7 +32,7 @@ export class PermissionsService {
   }
 
   /**
-   * Sets the permissions that a user has (used for rehyration from login/register)
+   * Sets the permissions that a user has (used for rehydration from login/register)
    * @param permissions
    */
   public setWhitelist(permissions: string[]): void {

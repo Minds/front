@@ -623,6 +623,13 @@ export enum NsfwSubReasonEnum {
   ViolenceGore = 'VIOLENCE_GORE',
 }
 
+export type OidcProviderPublic = {
+  __typename?: 'OidcProviderPublic';
+  id: Scalars['Int']['output'];
+  loginUrl: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type OnboardingState = {
   __typename?: 'OnboardingState';
   completedAt?: Maybe<Scalars['Int']['output']>;
@@ -726,6 +733,7 @@ export type Query = {
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
   newsfeed: NewsfeedConnection;
+  oidcProviders: Array<OidcProviderPublic>;
   /** Gets onboarding state for the currently logged in user. */
   onboardingState?: Maybe<OnboardingState>;
   /** Get the currently logged in users onboarding step progress. */
@@ -1113,6 +1121,18 @@ export type GetDismissalsQuery = {
     userGuid: string;
     key: string;
     dismissalTimestamp: number;
+  }>;
+};
+
+export type FetchOidcProvidersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type FetchOidcProvidersQuery = {
+  __typename?: 'Query';
+  oidcProviders: Array<{
+    __typename?: 'OidcProviderPublic';
+    id: number;
+    name: string;
+    loginUrl: string;
   }>;
 };
 
@@ -3659,6 +3679,29 @@ export class GetDismissalsGQL extends Apollo.Query<
   GetDismissalsQueryVariables
 > {
   document = GetDismissalsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FetchOidcProvidersDocument = gql`
+  query FetchOidcProviders {
+    oidcProviders {
+      id
+      name
+      loginUrl
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchOidcProvidersGQL extends Apollo.Query<
+  FetchOidcProvidersQuery,
+  FetchOidcProvidersQueryVariables
+> {
+  document = FetchOidcProvidersDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
