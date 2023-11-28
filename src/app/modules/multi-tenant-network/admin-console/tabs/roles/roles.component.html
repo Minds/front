@@ -1,0 +1,47 @@
+<h4
+  class="m-networkAdminConsole__title"
+  i18n="@@NETWORK_ADMIN_CONSOLE_ROLES__TITLE"
+>
+  Network roles
+</h4>
+<p
+  class="m-networkAdminConsole__subtitle"
+  i18n="@@NETWORK_ADMIN_CONSOLE_ROLES__SUBTITLE"
+>
+  Use roles to group your network members and assign permissions.
+</p>
+<!-- ------------------------------ -->
+<!-- TABS  -->
+<!-- ------------------------------ -->
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a
+      [routerLink]="['/network/admin/roles/permissions']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-roles-tab-permissions"
+      i18n="@@NETWORK_ADMIN_CONSOLE_ROLES_TAB__CURRENT_PERMISSIONS"
+      >Current permissions</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      [routerLink]="['/network/admin/roles/users']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-roles-tab-users"
+      i18n="@@COMMON__USERS"
+      >Users</a
+    >
+  </div>
+</div>
+<!-- ------------------------------ -->
+<!-- PERMISSIONS TAB  -->
+<!-- ------------------------------ -->
+<ng-container *ngIf="(view$ | async) === multiTenantRolesView.PERMISSIONS"
+  ><m-networkAdminConsoleRoles__permissions></m-networkAdminConsoleRoles__permissions
+></ng-container>
+<!-- ------------------------------ -->
+<!-- USERS TAB  -->
+<!-- ------------------------------ -->
+<ng-container *ngIf="(view$ | async) === multiTenantRolesView.USERS"
+  ><m-networkAdminConsoleRoles__users></m-networkAdminConsoleRoles__users
+></ng-container>

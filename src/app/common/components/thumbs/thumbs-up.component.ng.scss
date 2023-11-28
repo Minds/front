@@ -1,6 +1,10 @@
 @import 'defaults.scss';
 
 :host {
+  .m-thumbButton--noPermission {
+    opacity: 0.5;
+    cursor: default !important;
+  }
   a {
     cursor: pointer;
   }

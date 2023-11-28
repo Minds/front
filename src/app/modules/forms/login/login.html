@@ -81,11 +81,21 @@
   <h3 *ngIf="showTitle">Login<span *mIfTenant="false"> to Minds</span></h3>
 
   <a
-    *ngIf="showTitle"
+    *ngIf="showTitle && !(hasOidcProviders && hideLogin)"
     (click)="onForgotPasswordClick()"
     data-ref="data-minds-forgot-password-button"
   >
     Forgot your Password?
+  </a>
+</div>
+
+<m-oidcLoginButtons
+  (hasOidcProviders)="setHasOidcProviders($event)"
+></m-oidcLoginButtons>
+
+<div class="m-login__oidcOther" *ngIf="hasOidcProviders && hideLogin">
+  <a (click)="hideLogin = false" data-ref="data-minds-oidc-other">
+    Login with username / password
   </a>
 </div>
 

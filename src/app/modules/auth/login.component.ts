@@ -85,6 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.topbarService.toggleVisibility(true);
 
     this.navigationService.setVisible(true);
+    this.pageLayoutService.cancelFullWidth();
   }
 
   loggedin() {

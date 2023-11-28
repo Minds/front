@@ -16,6 +16,7 @@ import { ComposerSupermindComponent } from '../popup/supermind/supermind.compone
 import { LivestreamService } from '../../../../modules/composer/services/livestream.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExperimentsService } from '../../../experiments/experiments.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -144,6 +145,10 @@ describe('Composer Toolbar', () => {
           {
             provide: ExperimentsService,
             useValue: MockService(ExperimentsService),
+          },
+          {
+            provide: PermissionsService,
+            useValue: MockService(PermissionsService),
           },
         ],
       }).compileComponents();

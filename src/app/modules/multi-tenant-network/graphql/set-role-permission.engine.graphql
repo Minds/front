@@ -1,0 +1,13 @@
+mutation SetRolePermission(
+  $permission: PermissionsEnum!
+  $roleId: Int!
+  $enabled: Boolean!
+) {
+  setRolePermission(
+    permission: $permission
+    roleId: $roleId
+    enabled: $enabled
+  ) {
+    permissions
+  }
+}

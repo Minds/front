@@ -1,4 +1,10 @@
-import { Injectable, Optional, Inject, SecurityContext } from '@angular/core';
+import {
+  Injectable,
+  Optional,
+  Inject,
+  SecurityContext,
+  ElementRef,
+} from '@angular/core';
 import { Title, Meta, DomSanitizer } from '@angular/platform-browser';
 import { SiteService } from './site.service';
 import { Location } from '@angular/common';
@@ -14,6 +20,7 @@ const DEFAULT_META_AUTHOR = 'Minds';
 const DEFAULT_OG_IMAGE = '/assets/og-images/default-v3.png';
 const DEFAULT_OG_IMAGE_WIDTH = 1200;
 const DEFAULT_OG_IMAGE_HEIGHT = 1200;
+const DEFAULT_FAVICON = '/static/en/assets/logos/bulb.svg';
 const DEFAULT_TENANT_FAVICON = '/api/v3/multi-tenant/configs/image/favicon';
 
 @Injectable({
@@ -171,30 +178,70 @@ export class MetaService {
   }
 
   /**
-   * Used for pro domains
+   * Used for pro / tenant domains
    */
   setDynamicFavicon(href: string): MetaService {
-    const existingLink = this.dom.head.querySelector('#dynamicFavicon');
+    const existingDynamicFavicon = this.dom.head.querySelector(
+      '#dynamicFavicon'
+    );
+    const favicon = this.dom.head.querySelector('#favicon');
 
-    if (existingLink) {
-      existingLink.setAttribute('href', href);
+    // remove default favicon if present.
+    if (favicon) {
+      this.dom.head.removeChild(favicon);
+    }
+
+    // if there is already a dynamic favicon, change the href
+    // else create a new one.
+    if (existingDynamicFavicon) {
+      existingDynamicFavicon.setAttribute('href', href);
     } else {
-      let link: HTMLLinkElement;
-      link = this.dom.createElement('link');
+      const link: HTMLLinkElement = this.dom.createElement('link');
       link.setAttribute('rel', 'icon');
       link.setAttribute('type', 'image/png');
       link.setAttribute('href', href);
       link.setAttribute('id', 'dynamicFavicon');
       this.dom.head.appendChild(link);
     }
+
+    const appleTouchLogo: ElementRef = this.dom.head.querySelector(
+      '#appleTouchIcon'
+    );
+    if (appleTouchLogo) {
+      this.dom.head.removeChild(appleTouchLogo);
+    }
+
+    const icon32: ElementRef = this.dom.head.querySelector('#icon32');
+    if (icon32) {
+      this.dom.head.removeChild(icon32);
+    }
+
+    const icon16: ElementRef = this.dom.head.querySelector('#icon16');
+    if (icon16) {
+      this.dom.head.removeChild(icon16);
+    }
+
     return this;
   }
 
   resetDynamicFavicon(): MetaService {
-    const link = this.dom.head.querySelector('#dynamicFavicon');
+    const favicon = this.dom.head.querySelector('#favicon');
+    const dynamicFaviconLink = this.dom.head.querySelector('#dynamicFavicon');
 
-    if (link) {
-      this.dom.head.removeChild(link);
+    // remove any dynamic favicons.
+    if (dynamicFaviconLink) {
+      this.dom.head.removeChild(dynamicFaviconLink);
+    }
+
+    // re-add default favicon.
+    if (!favicon) {
+      let link: HTMLLinkElement = this.dom.createElement('link');
+      link.setAttribute('rel', 'icon');
+      link.setAttribute('type', 'image/svg');
+      link.setAttribute('href', DEFAULT_FAVICON);
+      link.setAttribute('id', 'favicon');
+
+      this.dom.head.appendChild(link);
     }
     return this;
   }

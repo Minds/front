@@ -3,9 +3,13 @@
 <!-- ----------------------------- -->
 <div
   class="m-comment m-commentPoster"
-  [ngClass]="{ 'm-commentPoster--nested': parent.child_path }"
+  [ngClass]="{
+    'm-commentPoster--nested': parent.child_path,
+    'm-commentPoster--disabled': !permissions.canComment()
+  }"
   *ngIf="!readonly && isLoggedIn"
   m-clientMeta
+  (click)="checkPermissions($event)"
 >
   <div
     *ngIf="canShowSupermindBannerPopup"
@@ -21,9 +25,7 @@
 
   <div class="m-comments-composer m-commentPoster__wrapper">
     <div class="m-commentPoster__avatar">
-      <a [routerLink]="['/', session.getLoggedInUser().username]">
-        <img [src]="getAvatar() | async" />
-      </a>
+      <img [src]="getAvatar() | async" />
     </div>
 
     <form (submit)="post($event)" class="m-commentPoster__form">
@@ -42,8 +44,9 @@
           #message="Textarea"
           [(mModel)]="content"
           [disabled]="
-            (ascendingInProgress || descendingInProgress) &&
-            attachment.hasFile()
+            ((ascendingInProgress || descendingInProgress) &&
+              attachment.hasFile()) ||
+            !permissions.canComment()
           "
           (keyup)="keyup($event)"
           (click)="updateCaretPosition()"
@@ -87,8 +90,13 @@
           [menu]="dropdownMenu"
           [anchorPosition]="{ top: '20%', right: '0' }"
           class="m-commentPoster__menuButton"
+          [ngClass]="{ 'm-button-disabled': !postEnabled() }"
         >
-          <i class="material-icons">more_vert</i>
+          <i
+            class="material-icons"
+            [ngClass]="{ 'm-button-disabled-icon': !postEnabled() }"
+            >more_vert</i
+          >
         </m-dropdownMenu>
 
         <!-- Dropdown menu -->

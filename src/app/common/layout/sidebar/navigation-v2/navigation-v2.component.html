@@ -333,6 +333,7 @@
 
       <!-- Compose button -->
       <li
+        *ngIf="permissions.canCreatePost()"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--compose"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         [routerLinkActiveOptions]="{ exact: true }"
