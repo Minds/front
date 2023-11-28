@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -20,7 +20,6 @@ import {
   of,
   take,
 } from 'rxjs';
-import { SITE_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 import { MultiTenantConfigImageService } from '../../../services/config-image.service';
 import { HttpEvent } from '@angular/common/http';
 import { ApiResponse } from '../../../../../common/api/api.service';
@@ -86,7 +85,7 @@ export class NetworkAdminConsoleAppearanceComponent
     map(([file, squareLogoPath]) => {
       return file
         ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}${squareLogoPath}`;
+        : `url(${squareLogoPath}`;
     })
   );
 
@@ -96,9 +95,7 @@ export class NetworkAdminConsoleAppearanceComponent
     this.configImageService.faviconPath$,
   ]).pipe(
     map(([file, faviconPath]) => {
-      return file
-        ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}${faviconPath}`;
+      return file ? `url(${URL.createObjectURL(file)})` : `url(${faviconPath}`;
     })
   );
 
@@ -110,7 +107,7 @@ export class NetworkAdminConsoleAppearanceComponent
     map(([file, horizontalLogoPath]) => {
       return file
         ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}${horizontalLogoPath}`;
+        : `url(${horizontalLogoPath}`;
     })
   );
 
@@ -124,8 +121,7 @@ export class NetworkAdminConsoleAppearanceComponent
     private configImageRefreshCountService: MultiTenantConfigImageRefreshService,
     private formBuilder: FormBuilder,
     private toaster: ToasterService,
-    private metaService: MetaService,
-    @Inject(SITE_URL) private siteUrl
+    private metaService: MetaService
   ) {
     this.formGroup = this.formBuilder.group({
       primaryColorHex: new FormControl<string>('', [

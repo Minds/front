@@ -6,7 +6,7 @@ import { MultiTenantConfigImageRefreshService } from './config-image-refresh.ser
 
 export type ConfigImageType = 'square_logo' | 'horizontal_logo' | 'favicon';
 
-const CONFIG_IMAGE_BASE_PATH = 'api/v3/multi-tenant/configs/image/';
+const CONFIG_IMAGE_BASE_PATH: string = '/api/v3/multi-tenant/configs/image/';
 export const HORIZONTAL_LOGO_PATH: string = `${CONFIG_IMAGE_BASE_PATH}horizontal_logo`;
 export const SQUARE_LOGO_PATH: string = `${CONFIG_IMAGE_BASE_PATH}square_logo`;
 export const FAVICON_PATH: string = `${CONFIG_IMAGE_BASE_PATH}favicon`;
@@ -21,54 +21,38 @@ export class MultiTenantConfigImageService {
     private configImageRefreshService: MultiTenantConfigImageRefreshService
   ) {}
 
-  /**
-   * Gets horizontal logo path, with cache-busting query parameter.
-   * @returns { Observable<string> } - observable of logo path.
-   */
-  public get horizontalLogoPath$(): Observable<string> {
-    if (
-      !this.configImageRefreshService.horizontalLogoLastCacheTimestamp$.getValue()
-    ) {
-      return of(HORIZONTAL_LOGO_PATH);
-    }
-    return this.configImageRefreshService.horizontalLogoLastCacheTimestamp$.pipe(
-      map((lastCacheTimestamp: number): string => {
-        return `${HORIZONTAL_LOGO_PATH}?lastCache=${lastCacheTimestamp}`;
-      })
-    );
-  }
+  /** Horizontal logo path, with cache-busting query parameter. */
+  public readonly horizontalLogoPath$: Observable<
+    string
+  > = this.configImageRefreshService.horizontalLogoLastCacheTimestamp$.pipe(
+    map((lastCacheTimestamp: number): string => {
+      return Boolean(lastCacheTimestamp)
+        ? `${HORIZONTAL_LOGO_PATH}?lastCache=${lastCacheTimestamp}`
+        : HORIZONTAL_LOGO_PATH;
+    })
+  );
 
-  /**
-   * Gets square logo path, with cache-busting query parameter.
-   * @returns { Observable<string> } - observable of logo path.
-   */
-  public get squareLogoPath$(): Observable<string> {
-    if (
-      !this.configImageRefreshService.squareLogoLastCacheTimestamp$.getValue()
-    ) {
-      return of(SQUARE_LOGO_PATH);
-    }
-    return this.configImageRefreshService.squareLogoLastCacheTimestamp$.pipe(
-      map((lastCacheTimestamp: number): string => {
-        return `${SQUARE_LOGO_PATH}?lastCache=${lastCacheTimestamp}`;
-      })
-    );
-  }
+  /** Square logo path, with cache-busting query parameter. */
+  public readonly squareLogoPath$: Observable<
+    string
+  > = this.configImageRefreshService.squareLogoLastCacheTimestamp$.pipe(
+    map((lastCacheTimestamp: number): string => {
+      return Boolean(lastCacheTimestamp)
+        ? `${SQUARE_LOGO_PATH}?lastCache=${lastCacheTimestamp}`
+        : SQUARE_LOGO_PATH;
+    })
+  );
 
-  /**
-   * Gets favicon path, with cache-busting query parameter.
-   * @returns { Observable<string> } - observable of logo path.
-   */
-  public get faviconPath$(): Observable<string> {
-    if (!this.configImageRefreshService.faviconLastCacheTimestamp$.getValue()) {
-      return of(FAVICON_PATH);
-    }
-    return this.configImageRefreshService.faviconLastCacheTimestamp$.pipe(
-      map((lastCacheTimestamp: number): string => {
-        return `${FAVICON_PATH}?lastCache=${lastCacheTimestamp}`;
-      })
-    );
-  }
+  /** Favicon path, with cache-busting query parameter. */
+  public readonly faviconPath$: Observable<
+    string
+  > = this.configImageRefreshService.faviconLastCacheTimestamp$.pipe(
+    map((lastCacheTimestamp: number): string => {
+      return Boolean(lastCacheTimestamp)
+        ? `${FAVICON_PATH}?lastCache=${lastCacheTimestamp}`
+        : FAVICON_PATH;
+    })
+  );
 
   /**
    * Upload a file to the config image upload endpoint/
