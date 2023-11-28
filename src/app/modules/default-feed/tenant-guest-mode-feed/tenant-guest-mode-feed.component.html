@@ -1,0 +1,43 @@
+<div class="m-newsfeed__inner">
+  <div class="m-newsfeed__list">
+    <!--actual feed-->
+    <ng-container
+      *ngFor="
+        let edge of edges$ | async | slice: 0:(pageSize$ | async) as edges;
+        let i = index;
+        trackBy: trackByFn
+      "
+    >
+      <ng-container [ngSwitch]="edge.__typename">
+        <ng-template ngSwitchCase="FeedHeaderEdge">
+          <m-feedHeader--inline [text]="edge.node.text"></m-feedHeader--inline>
+        </ng-template>
+
+        <!----------------
+            Activity
+          ----------------->
+        <ng-template ngSwitchCase="ActivityEdge">
+          <m-activity
+            *ngIf="edge.node"
+            [entity]="edge.node.legacy"
+            [displayOptions]="{
+                showOnlyCommentsInput: true,
+                isFeed: true,
+                showExplicitVoteButtons: false,
+                hideTopBorder: edges?.[i - 1]?.__typename === 'FeedHeaderEdge'
+              }"
+            [slot]="i + 1"
+          ></m-activity>
+        </ng-template>
+      </ng-container>
+    </ng-container>
+
+    <infinite-scroll
+      (load)="fetchMore()"
+      [moreData]="canShowMoreEdges$ | async"
+      [inProgress]="inProgress"
+      [endText]="newsfeedEndText"
+    >
+    </infinite-scroll>
+  </div>
+</div>
