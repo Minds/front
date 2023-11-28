@@ -623,6 +623,13 @@ export enum NsfwSubReasonEnum {
   ViolenceGore = 'VIOLENCE_GORE',
 }
 
+export type OidcProviderPublic = {
+  __typename?: 'OidcProviderPublic';
+  id: Scalars['Int']['output'];
+  loginUrl: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type OnboardingState = {
   __typename?: 'OnboardingState';
   completedAt?: Maybe<Scalars['Int']['output']>;
@@ -692,7 +699,7 @@ export type Query = {
   /** Returns all roles that exist on the site and their permission assignments */
   allRoles: Array<Role>;
   /** Returns the permissions that the current session holds */
-  assignedPermissions: Array<Scalars['String']['output']>;
+  assignedPermissions: Array<PermissionsEnum>;
   /** Returns the roles the session holds */
   assignedRoles: Array<Role>;
   /** Gets Boosts. */
@@ -726,6 +733,7 @@ export type Query = {
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
   newsfeed: NewsfeedConnection;
+  oidcProviders: Array<OidcProviderPublic>;
   /** Gets onboarding state for the currently logged in user. */
   onboardingState?: Maybe<OnboardingState>;
   /** Get the currently logged in users onboarding step progress. */
@@ -844,13 +852,6 @@ export type QueryUsersByRoleArgs = {
   roleId?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type Role = {
-  __typename?: 'Role';
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  permissions: Array<PermissionsEnum>;
-};
-
 export type Report = NodeInterface & {
   __typename?: 'Report';
   action?: Maybe<ReportActionEnum>;
@@ -931,6 +932,13 @@ export type ReportsConnection = ConnectionInterface & {
   /** ID for GraphQL. */
   id: Scalars['ID']['output'];
   pageInfo: PageInfo;
+};
+
+export type Role = {
+  __typename?: 'Role';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  permissions: Array<PermissionsEnum>;
 };
 
 export enum SearchFilterEnum {
@@ -1113,6 +1121,18 @@ export type GetDismissalsQuery = {
     userGuid: string;
     key: string;
     dismissalTimestamp: number;
+  }>;
+};
+
+export type FetchOidcProvidersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type FetchOidcProvidersQuery = {
+  __typename?: 'Query';
+  oidcProviders: Array<{
+    __typename?: 'OidcProviderPublic';
+    id: number;
+    name: string;
+    loginUrl: string;
   }>;
 };
 
@@ -1521,49 +1541,6 @@ export type StoreFeaturedEntityMutation = {
       };
 };
 
-export type AssignUserToRoleMutationVariables = Exact<{
-  userGuid: Scalars['String']['input'];
-  roleId: Scalars['Int']['input'];
-}>;
-
-export type AssignUserToRoleMutation = {
-  __typename?: 'Mutation';
-  assignUserToRole: {
-    __typename?: 'Role';
-    id: number;
-    name: string;
-    permissions: Array<PermissionsEnum>;
-  };
-};
-
-export type GetRolesAndPermissionsQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetRolesAndPermissionsQuery = {
-  __typename?: 'Query';
-  allPermissions: Array<PermissionsEnum>;
-  allRoles: Array<{
-    __typename?: 'Role';
-    id: number;
-    name: string;
-    permissions: Array<PermissionsEnum>;
-  }>;
-};
-
-export type GetAssignedRolesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetAssignedRolesQuery = {
-  __typename?: 'Query';
-  assignedPermissions: Array<string>;
-  assignedRoles: Array<{
-    __typename?: 'Role';
-    id: number;
-    name: string;
-    permissions: Array<PermissionsEnum>;
-  }>;
-};
-
 export type CreateNewReportMutationVariables = Exact<{
   entityUrn: Scalars['String']['input'];
   reason: ReportReasonEnum;
@@ -1818,6 +1795,11 @@ export type GetReportsQuery = {
           cursor: string;
           node: { __typename?: 'UserNode'; id: string };
         }
+      | {
+          __typename?: 'UserRoleEdge';
+          cursor: string;
+          node: { __typename?: 'UserNode'; id: string };
+        }
     >;
     pageInfo: {
       __typename?: 'PageInfo';
@@ -1836,6 +1818,49 @@ export type ProvideVerdictMutationVariables = Exact<{
 export type ProvideVerdictMutation = {
   __typename?: 'Mutation';
   provideVerdict: boolean;
+};
+
+export type AssignUserToRoleMutationVariables = Exact<{
+  userGuid: Scalars['String']['input'];
+  roleId: Scalars['Int']['input'];
+}>;
+
+export type AssignUserToRoleMutation = {
+  __typename?: 'Mutation';
+  assignUserToRole: {
+    __typename?: 'Role';
+    id: number;
+    name: string;
+    permissions: Array<PermissionsEnum>;
+  };
+};
+
+export type GetRolesAndPermissionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetRolesAndPermissionsQuery = {
+  __typename?: 'Query';
+  allPermissions: Array<PermissionsEnum>;
+  allRoles: Array<{
+    __typename?: 'Role';
+    id: number;
+    name: string;
+    permissions: Array<PermissionsEnum>;
+  }>;
+};
+
+export type GetAssignedRolesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAssignedRolesQuery = {
+  __typename?: 'Query';
+  assignedPermissions: Array<PermissionsEnum>;
+  assignedRoles: Array<{
+    __typename?: 'Role';
+    id: number;
+    name: string;
+    permissions: Array<PermissionsEnum>;
+  }>;
 };
 
 export type GetMultiTenantConfigQueryVariables = Exact<{
@@ -3620,6 +3645,29 @@ export class GetDismissalsGQL extends Apollo.Query<
     super(apollo);
   }
 }
+export const FetchOidcProvidersDocument = gql`
+  query FetchOidcProviders {
+    oidcProviders {
+      id
+      name
+      loginUrl
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchOidcProvidersGQL extends Apollo.Query<
+  FetchOidcProvidersQuery,
+  FetchOidcProvidersQueryVariables
+> {
+  document = FetchOidcProvidersDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const AdminUpdateAccountDocument = gql`
   mutation AdminUpdateAccount(
     $currentUsername: String!
@@ -4039,16 +4087,6 @@ export class StoreFeaturedEntityGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
-export const AssignUserToRoleDocument = gql`
-  mutation AssignUserToRole($userGuid: String!, $roleId: Int!) {
-    assignUserToRole(userGuid: $userGuid, roleId: $roleId) {
-      id
-      name
-      permissions
-    }
-  }
-`;
-
 export const CreateNewReportDocument = gql`
   mutation CreateNewReport(
     $entityUrn: String!
@@ -4146,25 +4184,53 @@ export const GetReportsDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class AssignUserToRoleGQL extends Apollo.Mutation<
-  AssignUserToRoleMutation,
-  AssignUserToRoleMutationVariables
-> {
-  document = AssignUserToRoleDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-
-@Injectable({
-  providedIn: 'root',
-})
 export class GetReportsGQL extends Apollo.Query<
   GetReportsQuery,
   GetReportsQueryVariables
 > {
   document = GetReportsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ProvideVerdictDocument = gql`
+  mutation ProvideVerdict($reportGuid: String!, $action: ReportActionEnum!) {
+    provideVerdict(verdictInput: { reportGuid: $reportGuid, action: $action })
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProvideVerdictGQL extends Apollo.Mutation<
+  ProvideVerdictMutation,
+  ProvideVerdictMutationVariables
+> {
+  document = ProvideVerdictDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const AssignUserToRoleDocument = gql`
+  mutation AssignUserToRole($userGuid: String!, $roleId: Int!) {
+    assignUserToRole(userGuid: $userGuid, roleId: $roleId) {
+      id
+      name
+      permissions
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AssignUserToRoleGQL extends Apollo.Mutation<
+  AssignUserToRoleMutation,
+  AssignUserToRoleMutationVariables
+> {
+  document = AssignUserToRoleDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -4178,12 +4244,6 @@ export const GetRolesAndPermissionsDocument = gql`
       permissions
     }
     allPermissions
-  }
-`;
-
-export const ProvideVerdictDocument = gql`
-  mutation ProvideVerdict($reportGuid: String!, $action: ReportActionEnum!) {
-    provideVerdict(verdictInput: { reportGuid: $reportGuid, action: $action })
   }
 `;
 
@@ -4219,20 +4279,6 @@ export class GetAssignedRolesGQL extends Apollo.Query<
   GetAssignedRolesQueryVariables
 > {
   document = GetAssignedRolesDocument;
-  client = 'default';
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ProvideVerdictGQL extends Apollo.Mutation<
-  ProvideVerdictMutation,
-  ProvideVerdictMutationVariables
-> {
-  document = ProvideVerdictDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

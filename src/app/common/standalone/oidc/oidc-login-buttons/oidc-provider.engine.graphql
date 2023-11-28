@@ -1,0 +1,7 @@
+query FetchOidcProviders {
+    oidcProviders {
+        id
+        name
+        loginUrl
+    }
+}

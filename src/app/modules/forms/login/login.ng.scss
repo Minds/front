@@ -172,6 +172,16 @@
     cursor: pointer;
     text-decoration: underline;
   }
+
+  .m-login__oidcOther {
+    text-align: center;
+    a {
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
 }
 
 // .m-login-box {
