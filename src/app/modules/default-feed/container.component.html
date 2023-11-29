@@ -7,7 +7,8 @@
     m-pageLayout__pane="main"
     style="position: relative;"
   >
-    <m-defaultFeed></m-defaultFeed>
+    <m-defaultFeed *mIfTenant="false"></m-defaultFeed>
+    <m-tenant_guest_mode_feed *mIfTenant="true"></m-tenant_guest_mode_feed>
   </div>
   <div class="m-defaultFeedContainer__sidebar" m-pageLayout__pane="right">
     <div class="m-pageLayoutPane__inner">
