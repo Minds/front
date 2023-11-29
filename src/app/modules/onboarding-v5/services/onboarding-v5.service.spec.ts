@@ -12,6 +12,7 @@ import {
   ComponentOnboardingV5CompletionStep,
   ComponentOnboardingV5OnboardingStep,
   FetchOnboardingV5VersionsGQL,
+  FetchTenantOnboardingV5VersionsGQL,
 } from '../../../../graphql/generated.strapi';
 import {
   CompleteOnboardingStepGQL,
@@ -27,7 +28,10 @@ import { of, take, throwError } from 'rxjs';
 import { CarouselItem } from '../../../common/components/feature-carousel/feature-carousel.component';
 import { OnboardingStep } from '../types/onboarding-v5.types';
 import userMock from '../../../mocks/responses/user.mock';
-import { mockOnboardingV5VersionsData } from './mocks/onboardingV5Versions.mock';
+import {
+  mockOnboardingV5VersionsData,
+  mockTenantOnboardingV5VersionsData,
+} from './mocks/onboardingV5Versions.mock';
 import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 const mockActiveStep: OnboardingStep = {
@@ -54,6 +58,12 @@ describe('OnboardingV5Service', () => {
         {
           provide: FetchOnboardingV5VersionsGQL,
           useValue: jasmine.createSpyObj<FetchOnboardingV5VersionsGQL>([
+            'fetch',
+          ]),
+        },
+        {
+          provide: FetchTenantOnboardingV5VersionsGQL,
+          useValue: jasmine.createSpyObj<FetchTenantOnboardingV5VersionsGQL>([
             'fetch',
           ]),
         },
@@ -106,6 +116,7 @@ describe('OnboardingV5Service', () => {
     (service as any).session.getLoggedInUser.and.returnValue(userMock);
     (service as any).completionStorage.isCompleted.and.returnValue(false);
     (service as any).firstLoad = false;
+    (service as any).isTenant.is.and.returnValue(false);
   });
 
   afterEach(() => {
@@ -360,7 +371,11 @@ describe('OnboardingV5Service', () => {
     });
   });
 
-  describe('start', () => {
+  describe('start - non-tenant', () => {
+    beforeEach(() => {
+      (service as any).isTenant.is.and.returnValue(false);
+    });
+
     it('should start onboarding when progress check is not skipped and user has no onboarding progress', async () => {
       (service as any).getOnboardingStepProgressGQL.fetch.and.returnValue(
         of({
@@ -635,6 +650,145 @@ describe('OnboardingV5Service', () => {
       );
       (service as any).fetchOnboardingV5VersionsGql.fetch.and.returnValue(
         of(mockOnboardingV5VersionsData)
+      );
+      (service as any).firstLoad = false;
+
+      await service.start();
+
+      expect(
+        (service as any).getOnboardingStepProgressGQL.fetch
+      ).toHaveBeenCalled();
+      expect((service as any).authRedirect.redirect).toHaveBeenCalled();
+      expect((service as any).dismiss$.next).toHaveBeenCalled();
+    });
+  });
+
+  describe('start - tenant', () => {
+    beforeEach(() => {
+      (service as any).isTenant.is.and.returnValue(true);
+    });
+
+    it('should start onboarding when progress check is not skipped and user has no onboarding progress', async () => {
+      (service as any).getOnboardingStepProgressGQL.fetch.and.returnValue(
+        of({
+          data: {
+            onboardingStepProgress: [],
+          },
+        })
+      );
+      (service as any).fetchTenantOnboardingV5VersionsGql.fetch.and.returnValue(
+        of(mockTenantOnboardingV5VersionsData)
+      );
+      (service as any).firstLoad = false;
+
+      await service.start();
+
+      expect(
+        (service as any).getOnboardingStepProgressGQL.fetch
+      ).toHaveBeenCalled();
+      expect(service.steps$.getValue()).toEqual([
+        {
+          completed: false,
+          stepType: 'verify_email',
+          data: mockTenantOnboardingV5VersionsData.data.onboardingV5Versions
+            .data[0].attributes.steps[0] as ComponentOnboardingV5OnboardingStep,
+        },
+      ]);
+      expect(service.activeStep$.getValue()).toEqual({
+        completed: false,
+        stepType: 'verify_email',
+        data: mockTenantOnboardingV5VersionsData.data.onboardingV5Versions
+          .data[0].attributes.steps[0] as ComponentOnboardingV5OnboardingStep,
+      });
+      expect(service.completionStep$.getValue()).toEqual(
+        mockTenantOnboardingV5VersionsData.data.onboardingV5Versions.data[0]
+          .attributes.completionStep as ComponentOnboardingV5CompletionStep
+      );
+    });
+
+    it('should start onboarding when progress check is not skipped and user is part way through onboarding', async () => {
+      (service as any).getOnboardingStepProgressGQL.fetch.and.returnValue(
+        of({
+          data: {
+            onboardingStepProgress: [
+              {
+                userGuid: '123',
+                stepKey: 'verify_email',
+                stepType: 'verify_email',
+                completedAt: null,
+              },
+            ],
+          },
+        })
+      );
+      (service as any).fetchTenantOnboardingV5VersionsGql.fetch.and.returnValue(
+        of(mockTenantOnboardingV5VersionsData)
+      );
+      (service as any).firstLoad = false;
+
+      await service.start();
+
+      expect(
+        (service as any).getOnboardingStepProgressGQL.fetch
+      ).toHaveBeenCalled();
+      expect(service.steps$.getValue()).toEqual([
+        {
+          completed: false,
+          stepType: 'verify_email',
+          data: mockTenantOnboardingV5VersionsData.data.onboardingV5Versions
+            .data[0].attributes.steps[0] as ComponentOnboardingV5OnboardingStep,
+        },
+      ]);
+      expect(service.activeStep$.getValue()).toEqual({
+        completed: false,
+        stepType: 'verify_email',
+        data: mockTenantOnboardingV5VersionsData.data.onboardingV5Versions
+          .data[0].attributes.steps[0] as ComponentOnboardingV5OnboardingStep,
+      });
+      expect(service.completionStep$.getValue()).toEqual(
+        mockTenantOnboardingV5VersionsData.data.onboardingV5Versions.data[0]
+          .attributes.completionStep as ComponentOnboardingV5CompletionStep
+      );
+    });
+
+    it('should start onboarding when progress check IS skipped and user has no onboarding progress', async () => {
+      (service as any).fetchTenantOnboardingV5VersionsGql.fetch.and.returnValue(
+        of(mockTenantOnboardingV5VersionsData)
+      );
+      (service as any).firstLoad = true;
+
+      await service.start();
+
+      expect(
+        (service as any).getOnboardingStepProgressGQL.fetch
+      ).not.toHaveBeenCalled();
+      expect(service.steps$.getValue()).toEqual([
+        {
+          completed: false,
+          stepType: 'verify_email',
+          data: mockTenantOnboardingV5VersionsData.data.onboardingV5Versions
+            .data[0].attributes.steps[0] as ComponentOnboardingV5OnboardingStep,
+        },
+      ]);
+      expect(service.activeStep$.getValue()).toEqual({
+        completed: false,
+        stepType: 'verify_email',
+        data: mockTenantOnboardingV5VersionsData.data.onboardingV5Versions
+          .data[0].attributes.steps[0] as ComponentOnboardingV5OnboardingStep,
+      });
+      expect(service.completionStep$.getValue()).toEqual(
+        mockTenantOnboardingV5VersionsData.data.onboardingV5Versions.data[0]
+          .attributes.completionStep as ComponentOnboardingV5CompletionStep
+      );
+    });
+
+    it('should redirect and dismiss when an error occurs whilst starting onboarding', async () => {
+      spyOn((service as any).dismiss$, 'next').and.callThrough();
+      (service as any).getOnboardingStepProgressGQL.fetch.and.returnValue(
+        throwError(() => new Error('error'))
+      );
+      (service as any).fetchTenantOnboardingV5VersionsGql.fetch.and.returnValue(
+        of(mockTenantOnboardingV5VersionsData)
       );
       (service as any).firstLoad = false;
 
