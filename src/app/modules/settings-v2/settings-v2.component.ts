@@ -313,7 +313,6 @@ export class SettingsV2Component implements OnInit {
         ],
       },
       {
-        shouldShow: this.isNotNetwork.bind(this),
         header: {
           label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__HEADER__LABEL:Content Migration`,
           id: 'content-migration',
@@ -322,6 +321,7 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__YOUTUBE__LABEL:Youtube`,
             id: 'youtube-migration',
+            shouldShow: this.isNotNetwork.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__RSS_SYNC__LABEL:RSS Sync`,
