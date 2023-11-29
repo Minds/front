@@ -18,4 +18,11 @@
       height: calc(100% - 50px);
     }
   }
+
+  .m-onboardingV5__tenantLogo {
+    width: 572px;
+    max-width: 100%;
+    padding: $spacing10;
+    box-sizing: border-box;
+  }
 }

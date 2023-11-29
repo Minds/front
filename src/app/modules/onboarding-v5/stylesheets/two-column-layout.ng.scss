@@ -44,12 +44,20 @@ $leftContainerPaddingX: $spacing12;
       justify-content: center;
       align-items: center;
 
-      @include m-theme() {
-        background-color: themed($m-action);
-      }
-
       @media screen and (max-width: $mobileCollapseWidth) {
         display: none;
+      }
+
+      &:not(&--tenant) {
+        @include m-theme() {
+          background-color: themed($m-action);
+        }
+      }
+
+      &--tenant {
+        @include m-theme() {
+          border-left: 1px solid themed($m-borderColor--primary);
+        }
       }
     }
   }

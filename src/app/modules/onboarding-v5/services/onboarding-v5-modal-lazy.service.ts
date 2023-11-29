@@ -10,6 +10,7 @@ import { OnboardingV5ModalComponent } from '../modal/onboarding-v5-modal.compone
 import { OnboardingV5LazyModule } from '../onboarding-v5-modal-lazy.module';
 import { isPlatformBrowser } from '@angular/common';
 import { UpgradeModalService } from '../../upgrade/upgrade-modal.service';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * Service for opening the onboarding v5 modal and lazy loading in needed components..
@@ -20,6 +21,7 @@ export class OnboardingV5ModalLazyService {
     private modalService: ModalService,
     private injector: Injector,
     private upgradeModal: UpgradeModalService,
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -39,7 +41,10 @@ export class OnboardingV5ModalLazyService {
         },
       },
       fullscreen: true,
-      modalDialogClass: 'm-theme--wrapper m-theme--wrapper__dark',
+      // force dark mode for non-tenant sites.
+      modalDialogClass: !this.isTenantNetwork
+        ? 'm-theme--wrapper m-theme--wrapper__dark'
+        : '',
     });
     return modal;
   }
