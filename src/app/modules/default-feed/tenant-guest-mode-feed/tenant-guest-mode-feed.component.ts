@@ -30,7 +30,7 @@ const PAGE_SIZE = 12;
 export class TenantGuestModeFeedComponent implements OnInit {
   private isFirstRun = true;
 
-  public inProgress = false;
+  public inProgress = true;
 
   newsfeedEndText = $localize`:@@COMMON__FEED_END:End of your newsfeed`;
 
@@ -133,7 +133,10 @@ export class TenantGuestModeFeedComponent implements OnInit {
 
         return edges;
       }),
-      tap(() => (this.isFirstRun = false)) // Do not delay on future runs
+      tap(() => {
+        this.isFirstRun = false; // Do not delay on future runs
+        this.inProgress = false;
+      })
     );
 
     this.totalEdgeCount$ = this.feedData.pipe(
