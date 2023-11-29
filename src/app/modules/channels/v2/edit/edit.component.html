@@ -6,7 +6,11 @@
     <h2 class="m-modalV2Header__title" i18n="@@CHANNEL_EDIT__EDIT_PROFILE">
       Edit Profile
     </h2>
-    <a [routerLink]="getProSettingsRouterLink(channel)" ngPreserveWhitespaces>
+    <a
+      [routerLink]="getProSettingsRouterLink(channel)"
+      *mIfTenant="false"
+      ngPreserveWhitespaces
+    >
       <ng-container i18n="@@CHANNEL_EDIT__PRO_SETTINGS"
         >Pro Settings</ng-container
       >
