@@ -1,0 +1,93 @@
+@import 'defaults.scss';
+
+:host {
+  .m-settingsV2__desc {
+    margin-bottom: 10px;
+    @include body1Regular;
+  }
+
+  .m-settingsV2RSSSync__form {
+    display: flex;
+    flex-flow: column nowrap;
+
+    h4 {
+      margin-top: 0;
+    }
+  }
+
+  .m-settingsV2RSSSync__feeds_container {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: 20px;
+    width: 100%;
+
+    .m-settingsV2RSSSync__feeds--headers {
+      display: flex;
+      @include body2Medium;
+      width: 100%;
+      gap: $spacing2;
+
+      .m-settingsV2RSSSync__feeds--headers--header {
+        display: flex;
+
+        &:first-child {
+          flex: 0.4;
+        }
+
+        &:last-child {
+          flex: 0.6;
+        }
+      }
+    }
+
+    .m-settingsV2RSSSync__feed {
+      display: flex;
+      width: 100%;
+      flex-flow: row nowrap;
+      overflow-wrap: anywhere;
+      padding: $spacing2 0 $spacing2 0;
+      gap: $spacing2;
+
+      .m-settingsV2RSSSync__feed--basic_details {
+        flex: 0 0 40%;
+        flex-flow: row wrap;
+        @include body2Regular;
+
+        div:last-child {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+          @include body3Regular;
+        }
+      }
+
+      .m-settingsV2RSSSync__feed--advanced_details {
+        flex: 0 0 45%;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        @include body3Regular;
+      }
+
+      .m-settingsV2RSSSync__feed--actions {
+        display: flex;
+        flex: 0 0 15%;
+        justify-content: flex-end;
+        gap: $spacing2;
+
+        i {
+          width: $spacing4;
+          height: $spacing4;
+          cursor: pointer;
+          border-radius: 50%;
+          @include m-theme() {
+            background: themed($m-borderColor--primary);
+          }
+
+          @include body1Regular;
+          line-height: 1;
+        }
+      }
+    }
+  }
+}
