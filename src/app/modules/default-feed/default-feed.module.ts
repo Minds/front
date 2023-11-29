@@ -13,6 +13,9 @@ import { NoticesModule } from '../notices/notices.module';
 import { DefaultFeedHeaderComponent } from './feed/default-feed-header/default-feed-header.component';
 import { ValuePropModule } from '../value-prop/value-prop.module';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
+import { TenantGuestModeFeedComponent } from './tenant-guest-mode-feed/tenant-guest-mode-feed.component';
+import { ComposerModule } from '../composer/composer.module';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 
 @NgModule({
   imports: [
@@ -26,12 +29,19 @@ import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
     NoticesModule,
     ValuePropModule,
     DiscoverySharedModule,
+    ComposerModule,
+    NewsfeedModule,
   ],
   declarations: [
     DefaultFeedComponent,
     DefaultFeedContainerComponent,
     DefaultFeedHeaderComponent,
+    TenantGuestModeFeedComponent,
   ],
-  exports: [DefaultFeedComponent, DefaultFeedContainerComponent],
+  exports: [
+    DefaultFeedComponent,
+    DefaultFeedContainerComponent,
+    TenantGuestModeFeedComponent,
+  ],
 })
 export class DefaultFeedModule {}
