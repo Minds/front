@@ -80,5 +80,8 @@
   </ng-template>
   <!-- SETTINGS COG -------------------------------->
   <div class="m-layout__spacer"></div>
-  <m-discovery__settingsButton modalType="tags"></m-discovery__settingsButton>
+  <m-discovery__settingsButton
+    modalType="tags"
+    *mIfTenant="false"
+  ></m-discovery__settingsButton>
 </div>
