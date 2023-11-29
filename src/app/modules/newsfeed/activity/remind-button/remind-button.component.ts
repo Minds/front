@@ -16,6 +16,7 @@ import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ClientMetaData } from '../../../../common/services/client-meta.service';
 import { ComposerAudienceSelectorService } from '../../../composer/services/audience.service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
 
 /**
  * Button used in the activity toolbar. When clicked, a dropdown menu appears and users choose between creating/undoing a remind, creating a quote post or creating a group share.
@@ -55,7 +56,8 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     private composerModalService: ComposerModalService,
     private toasterService: ToasterService,
     private session: Session,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    protected permissions: PermissionsService
   ) {}
 
   ngOnInit(): void {
@@ -182,6 +184,18 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
     // Open the composer modal
     this.composerModalService.setInjector(this.injector).present();
+  }
+
+  /**
+   * If a user doesn't have permission to do anything
+   * inside the dropdown menu, show an explanatory toast
+   */
+  onClickTrigger(): void {
+    if (!this.permissions.canInteract() && !this.permissions.canCreatePost()) {
+      this.toasterService.error(
+        'Your user role does not allow you to remind or quote post.'
+      );
+    }
   }
 
   incrementCounter(): void {

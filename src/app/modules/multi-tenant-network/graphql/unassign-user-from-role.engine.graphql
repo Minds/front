@@ -1,0 +1,3 @@
+mutation UnassignUserFromRole($userGuid: String!, $roleId: Int!) {
+  unassignUserFromRole(userGuid: $userGuid, roleId: $roleId)
+}

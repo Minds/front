@@ -1,7 +1,10 @@
 <a
   *ngIf="!explicit"
   (click)="onClick($event)"
-  [ngClass]="{ selected: has() }"
+  [ngClass]="{
+    selected: has(),
+    'm-thumbButton--noPermission': !permissions.canInteract()
+  }"
   data-ref="data-minds-thumbs-up-button"
   m-clientMeta
 >
@@ -24,6 +27,9 @@
 <m-button
   *ngIf="explicit"
   class="m-thumbButton--explicit"
+  [ngClass]="{
+    'm-thumbButton--noPermission': !permissions.canInteract()
+  }"
   (onAction)="onClick($event)"
   [highlightText]="has()"
   size="xsmall"

@@ -25,6 +25,7 @@ import { MindsUser } from '../../../interfaces/entities';
 import { RegexService } from '../../../common/services/regex.service';
 import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { Router } from '@angular/router';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 export class RouterStub {
   url = '';
@@ -132,6 +133,10 @@ describe('LoginForm', () => {
           {
             provide: ResetPasswordExperimentService,
             useValue: MockService(ResetPasswordExperimentService),
+          },
+          {
+            provide: PermissionsService,
+            useValue: MockService(PermissionsService),
           },
         ],
       }).compileComponents(); // compile template and css

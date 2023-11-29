@@ -1,0 +1,82 @@
+@import 'defaults.scss';
+
+:host {
+  margin: $spacing8 0;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: $spacing6;
+  .m-networkAdminConsoleRolesPermissionsRoleCard {
+    border-radius: $m-borderRadius;
+    padding: 0 $spacing4;
+    @media screen and (max-width: $max-mobile) {
+      padding: 0;
+    }
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    .m-networkAdminConsoleRolesPermissionsRoleCard__visibleAlways {
+      display: flex;
+      flex-flow: column nowrap;
+
+      > div {
+        // Title row
+        &:first-child {
+          display: flex;
+          flex-flow: row nowrap;
+          margin: $spacing2 0 $spacing3;
+          > span {
+            display: inline-block;
+            margin-left: $spacing2;
+            @include body1Bold;
+          }
+        }
+        // Description row
+        &:last-child {
+          span {
+            @include body3Regular;
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+        }
+      }
+    }
+
+    .m-networkAdminConsoleRolesPermissionsRoleCard__visibleWhenExpanded {
+      .m-networkAdminConsoleRolesPermissionsRoleCard__togglesTitle {
+        @include body2Bold;
+        display: inline-block;
+        margin-bottom: $spacing2;
+      }
+      .m-networkAdminConsoleRolesPermissionsRoleCard__togglesContainer {
+        display: flex;
+        flex-flow: row wrap;
+        gap: $spacing1;
+
+        .m-networkAdminConsoleRolesPermissionsRoleCard__toggleRow {
+          display: flex;
+          flex-flow: row nowrap;
+          flex-grow: 2;
+          flex-basis: 49%;
+          max-width: 300px;
+
+          @media screen and (max-width: 650px) {
+            flex-basis: 90%;
+          }
+          .m-networkAdminConsoleRolesPermissionsRoleCard__toggleWrapper {
+            display: flex;
+            flex-flow: row nowrap;
+            flex-basis: 165px;
+            max-width: 165px;
+            padding: $spacing2 $spacing2 $spacing2 0;
+            justify-content: space-between;
+            align-items: center;
+            span {
+              @include body3Regular;
+            }
+          }
+        }
+      }
+    }
+  }
+}

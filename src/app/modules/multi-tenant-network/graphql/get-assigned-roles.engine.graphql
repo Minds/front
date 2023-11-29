@@ -1,0 +1,9 @@
+query GetAssignedRoles($userGuid: String!) {
+  assignedRoles(userGuid: $userGuid) {
+    id
+    name
+    permissions
+  }
+
+  assignedPermissions
+}

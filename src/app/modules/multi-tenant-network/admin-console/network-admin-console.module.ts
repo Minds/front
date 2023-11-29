@@ -16,6 +16,10 @@ import { NetworkAdminConsoleEditDomainModalComponent } from './tabs/domain/edit-
 import { MultiTenantDomainService } from '../services/domain.service';
 import { NetworkAdminConsoleModerationComponent } from './tabs/moderation/moderation.component';
 import { NetworkAdminConsoleModerationGuidelinesComponent } from './tabs/moderation/moderation-guidelines/moderation-guidelines.component';
+import { NetworkAdminConsoleRolesComponent } from './tabs/roles/roles.component';
+import { NetworkAdminConsoleRolesPermissionsComponent } from './tabs/roles/tabs/permissions/permissions.component';
+import { NetworkAdminConsoleRolesUsersComponent } from './tabs/roles/tabs/users/users.component';
+import { NetworkAdminConsoleSharedModule } from './network-admin-console-shared.module';
 
 const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
   {
@@ -48,6 +52,15 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
           },
         ],
       },
+      {
+        path: 'roles',
+        redirectTo: 'roles/permissions',
+        pathMatch: 'full' as PathMatch,
+      },
+      {
+        path: 'roles/:view',
+        component: NetworkAdminConsoleRolesComponent,
+      },
     ],
   },
 ];
@@ -59,6 +72,7 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(NETWORK_ADMIN_CONSOLE_ROUTES),
+    NetworkAdminConsoleSharedModule,
   ],
   declarations: [
     NetworkAdminConsoleComponent,
@@ -71,6 +85,9 @@ const NETWORK_ADMIN_CONSOLE_ROUTES: Routes = [
     NetworkAdminConsoleEditDomainModalComponent,
     NetworkAdminConsoleModerationComponent,
     NetworkAdminConsoleModerationGuidelinesComponent,
+    NetworkAdminConsoleRolesComponent,
+    NetworkAdminConsoleRolesPermissionsComponent,
+    NetworkAdminConsoleRolesUsersComponent,
   ],
   providers: [MultiTenantDomainService],
 })

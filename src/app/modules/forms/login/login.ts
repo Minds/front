@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 import { RegexService } from '../../../common/services/regex.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -54,6 +55,8 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
 
   usernameError: string;
 
+  hasOidcProviders: boolean = false;
+
   form: UntypedFormGroup;
 
   constructor(
@@ -65,7 +68,8 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     private authModal: AuthModalService,
     private router: Router,
     private regex: RegexService,
-    private resetPasswordExperiment: ResetPasswordExperimentService
+    private resetPasswordExperiment: ResetPasswordExperimentService,
+    private permissionsService: PermissionsService
   ) {
     super();
     this.form = fb.group({
@@ -131,6 +135,10 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
         this.inProgress = false;
+
+        // Set permissions
+        this.permissionsService.setWhitelist(data.permissions);
+
         this.session.login(data.user);
         this.userAvatarService.init();
         this.done.next(data.user);
@@ -186,5 +194,13 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     } else {
       this.router.navigate(['/forgot-password']);
     }
+  }
+
+  /**
+   * If oidc providers are found, we will hide the login screen
+   */
+  public setHasOidcProviders(has: boolean): void {
+    this.hideLogin = !!has;
+    this.hasOidcProviders = has;
   }
 }
