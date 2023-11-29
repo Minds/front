@@ -1850,7 +1850,9 @@ export type GetRolesAndPermissionsQuery = {
   }>;
 };
 
-export type GetAssignedRolesQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAssignedRolesQueryVariables = Exact<{
+  userGuid: Scalars['String']['input'];
+}>;
 
 export type GetAssignedRolesQuery = {
   __typename?: 'Query';
@@ -1901,6 +1903,43 @@ export type GetMultiTenantDomainQuery = {
       type: DnsRecordEnum;
       value: string;
     } | null;
+  };
+};
+
+export type GetUsersByRoleQueryVariables = Exact<{
+  roleId?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetUsersByRoleQuery = {
+  __typename?: 'Query';
+  usersByRole: {
+    __typename?: 'UserRoleConnection';
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+    edges: Array<{
+      __typename?: 'UserRoleEdge';
+      cursor: string;
+      node: {
+        __typename?: 'UserNode';
+        guid: string;
+        username: string;
+        name: string;
+        legacy: string;
+      };
+      roles: Array<{
+        __typename?: 'Role';
+        name: string;
+        id: number;
+        permissions: Array<PermissionsEnum>;
+      }>;
+    }>;
   };
 };
 
@@ -4261,8 +4300,8 @@ export class GetRolesAndPermissionsGQL extends Apollo.Query<
   }
 }
 export const GetAssignedRolesDocument = gql`
-  query GetAssignedRoles {
-    assignedRoles {
+  query GetAssignedRoles($userGuid: String!) {
+    assignedRoles(userGuid: $userGuid) {
       id
       name
       permissions
@@ -4336,6 +4375,46 @@ export class GetMultiTenantDomainGQL extends Apollo.Query<
   GetMultiTenantDomainQueryVariables
 > {
   document = GetMultiTenantDomainDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetUsersByRoleDocument = gql`
+  query GetUsersByRole($roleId: Int, $first: Int, $after: String) {
+    usersByRole(roleId: $roleId, first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          guid
+          username
+          name
+          legacy
+        }
+        cursor
+        roles {
+          name
+          id
+          permissions
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetUsersByRoleGQL extends Apollo.Query<
+  GetUsersByRoleQuery,
+  GetUsersByRoleQueryVariables
+> {
+  document = GetUsersByRoleDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

@@ -1,0 +1,47 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkAdminConsole__roleIconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    @include m-theme() {
+      border: 1px solid themed($m-action);
+      background-color: themed($m-action);
+    }
+    &.alreadyCircular {
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+      i.material-icons {
+        font-size: 26px;
+        @include m-theme() {
+          color: themed($m-action);
+        }
+      }
+    }
+    i.material-icons {
+      font-size: 17px;
+      @include m-theme() {
+        color: themed($m-bgColor--primary);
+      }
+
+      &.pushDown {
+        margin-top: 3px;
+      }
+    }
+    // This is the 'default' icon
+    span {
+      display: inline-block;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+  }
+}

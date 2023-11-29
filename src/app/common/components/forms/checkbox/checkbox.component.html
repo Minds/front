@@ -1,10 +1,16 @@
-<label class="m-formInput__checkbox" [for]="customId">
+<label
+  class="m-formInput__checkbox"
+  [for]="customId"
+  [ngClass]="{
+    'm-formInput__checkbox--disabled': disabled
+  }"
+>
   <input
     type="checkbox"
     [ngModel]="value"
     (ngModelChange)="updateValue($event)"
     [id]="customId"
-    [disabled]="disabled"
+    [disabled]="disabled || ignoreClick"
   />
   <div class="m-formInputCheckbox__visibleWrapper">
     <span
