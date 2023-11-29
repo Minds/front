@@ -4,7 +4,11 @@
 <div
   class="m-rich-embed-src"
   *ngIf="src && type == 'src' && !isLivestream()"
-  [ngClass]="{ 'm-has-inline-embed' : hasInlineContentLoaded(), 'm-richEmbedPreview--noThumbnail' : !src.thumbnail_src }"
+  [ngClass]="{
+    'm-has-inline-embed' : hasInlineContentLoaded(),
+    'm-richEmbedPreview--noThumbnail' : !src.thumbnail_src,
+    'm-richEmbedPreview--modal' : _isModal
+  }"
 >
   <!-- ----------------------------------- -->
   <!-- MEDIA -->
