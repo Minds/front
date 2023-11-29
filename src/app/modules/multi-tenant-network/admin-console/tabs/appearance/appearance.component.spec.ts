@@ -6,7 +6,12 @@ import {
 } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
-import { MultiTenantConfigImageService } from '../../../services/config-image.service';
+import {
+  FAVICON_PATH,
+  HORIZONTAL_LOGO_PATH,
+  MultiTenantConfigImageService,
+  SQUARE_LOGO_PATH,
+} from '../../../services/config-image.service';
 import { NetworkAdminConsoleAppearanceComponent } from './appearance.component';
 import { MockService } from '../../../../../utils/mock';
 import { MultiTenantNetworkConfigService } from '../../../services/config.service';
@@ -24,9 +29,9 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
   let comp: NetworkAdminConsoleAppearanceComponent;
   let fixture: ComponentFixture<NetworkAdminConsoleAppearanceComponent>;
 
-  const squareLogoLastCacheTimestamp$ = new BehaviorSubject<number>(0);
-  const faviconLastCacheTimestamp$ = new BehaviorSubject<number>(0);
-  const horizontalLogoLastCacheTimestamp$ = new BehaviorSubject<number>(0);
+  const squareLogoPath$ = new BehaviorSubject<string>(SQUARE_LOGO_PATH);
+  const faviconPath$ = new BehaviorSubject<string>(FAVICON_PATH);
+  const horizontalLogoPath$ = new BehaviorSubject<string>(HORIZONTAL_LOGO_PATH);
 
   const siteUrl: string = 'https://example.minds.com/';
 
@@ -37,7 +42,20 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
       providers: [
         {
           provide: MultiTenantConfigImageService,
-          useValue: MockService(MultiTenantConfigImageService),
+          useValue: MockService(MultiTenantConfigImageService, {
+            has: ['squareLogoPath$', 'faviconPath$', 'horizontalLogoPath$'],
+            props: {
+              squareLogoPath$: {
+                get: () => squareLogoPath$,
+              },
+              faviconPath$: {
+                get: () => faviconPath$,
+              },
+              horizontalLogoPath$: {
+                get: () => horizontalLogoPath$,
+              },
+            },
+          }),
         },
         {
           provide: MultiTenantNetworkConfigService,
@@ -53,24 +71,7 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
         },
         {
           provide: MultiTenantConfigImageRefreshService,
-          useValue: MockService(MultiTenantConfigImageRefreshService, {
-            has: [
-              'squareLogoLastCacheTimestamp$',
-              'faviconLastCacheTimestamp$',
-              'horizontalLogoLastCacheTimestamp$',
-            ],
-            props: {
-              squareLogoLastCacheTimestamp$: {
-                get: () => squareLogoLastCacheTimestamp$,
-              },
-              faviconLastCacheTimestamp$: {
-                get: () => faviconLastCacheTimestamp$,
-              },
-              horizontalLogoLastCacheTimestamp$: {
-                get: () => horizontalLogoLastCacheTimestamp$,
-              },
-            },
-          }),
+          useValue: MockService(MultiTenantConfigImageRefreshService),
         },
         FormBuilder,
         { provide: ToasterService, useValue: MockService(ToasterService) },
@@ -86,9 +87,9 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
     comp.squareLogoFile$.next(null);
     comp.horizontalLogoFile$.next(null);
     comp.faviconFile$.next(null);
-    squareLogoLastCacheTimestamp$.next(0);
-    faviconLastCacheTimestamp$.next(0);
-    horizontalLogoLastCacheTimestamp$.next(0);
+    squareLogoPath$.next(SQUARE_LOGO_PATH);
+    faviconPath$.next(FAVICON_PATH);
+    horizontalLogoPath$.next(HORIZONTAL_LOGO_PATH);
   });
 
   it('should create the component', fakeAsync(() => {
@@ -139,7 +140,7 @@ describe('NetworkAdminConsoleAppearanceComponent', () => {
           .updateFaviconLastCacheTimestamp
       ).toHaveBeenCalled();
       expect((comp as any).metaService.setDynamicFavicon).toHaveBeenCalledWith(
-        `/api/v3/multi-tenant/configs/image/favicon?lastCache=${faviconLastCacheTimestamp$.getValue()}`
+        FAVICON_PATH
       );
       expect(
         (comp as any).multiTenantConfigService.updateConfig

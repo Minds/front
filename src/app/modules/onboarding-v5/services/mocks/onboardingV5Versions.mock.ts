@@ -451,3 +451,76 @@ export const mockOnboardingV5VersionsData = {
     },
   },
 };
+
+// mock data for tenant onboarding v5 versions response.
+export const mockTenantOnboardingV5VersionsData = {
+  data: {
+    onboardingV5Versions: {
+      data: [
+        {
+          attributes: {
+            publishedAt: '2023-06-14T10:39:05.268Z',
+            steps: [
+              {
+                __typename: 'ComponentOnboardingV5OnboardingStep',
+                id: '13',
+                title: 'Verify your email',
+                description:
+                  'Minds just sent a 6-digit authentication code to your registered email address.',
+                stepKey: 'verify_email',
+                stepType: 'verify_email',
+                verifyEmailForm: {
+                  id: '4',
+                  __typename: 'ComponentOnboardingV5VerifyEmailStep',
+                  inputLabel: 'Verification code',
+                  inputPlaceholder: null,
+                  resendCodeText:
+                    'Didn’t get a code? Check your spam folder, or {action}.',
+                  resendCodeActionText: 'resend code',
+                },
+                tagSelector: null,
+                radioSurveyQuestion: null,
+                radioSurvey: [],
+                userSelector: null,
+                groupSelector: null,
+                actionButton: {
+                  id: '12',
+                  __typename: 'ComponentOnboardingV5ActionButton',
+                  text: 'Verify',
+                  dataRef: 'onboarding-verify-email-button',
+                },
+                skipButton: null,
+              },
+            ],
+            completionStep: {
+              id: '4',
+              __typename: 'ComponentOnboardingV5CompletionStep',
+              message: 'Welcome to Minds',
+              media: {
+                data: {
+                  attributes: {
+                    url: '/uploads/check_ef70ab0cb4.png',
+                    height: 128,
+                    width: 128,
+                    alternativeText: 'Alt text for checkmark',
+                    hash: 'check_ef70ab0cb4',
+                    mime: 'image/png',
+                    name: 'check.png',
+                    provider: 'local',
+                    size: 0.91,
+                    __typename: 'UploadFile',
+                  },
+                  __typename: 'UploadFileEntity',
+                },
+                __typename: 'UploadFileEntityResponse',
+              },
+            },
+            __typename: 'OnboardingV5Version',
+          },
+          __typename: 'OnboardingV5VersionEntity',
+        },
+      ],
+      __typename: 'OnboardingV5VersionEntityResponseCollection',
+    },
+  },
+};
