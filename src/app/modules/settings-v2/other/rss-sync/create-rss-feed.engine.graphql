@@ -1,0 +1,10 @@
+mutation CreateRSSFeed($input: RssFeedInput!) {
+    createRssFeed(rssFeed: $input) {
+        feedId
+        title
+        url
+        createdAtTimestamp
+        lastFetchAtTimestamp
+        lastFetchStatus
+    }
+}
