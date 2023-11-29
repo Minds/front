@@ -10,6 +10,7 @@ import {
   HostBinding,
   Injector,
   ChangeDetectorRef,
+  Inject,
 } from '@angular/core';
 import { Observable, Subscription, timer } from 'rxjs';
 
@@ -40,6 +41,7 @@ import { PersistentFeedExperimentService } from '../../../experiments/sub-servic
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 import { PaywallContextExperimentService } from '../../../experiments/sub-services/paywall-context-experiment.service';
 import getMetaAutoCaption from '../../../../helpers/meta-auto-caption';
+import { IS_TENANT_NETWORK } from '../../../../common/injection-tokens/tenant-injection-tokens';
 
 /**
  * The content of the activity and the paywall, if applicable.
@@ -239,7 +241,8 @@ export class ActivityContentComponent
     private activityModalCreator: ActivityModalCreatorService,
     private persistentFeedExperiment: PersistentFeedExperimentService,
     private paywallContextExperiment: PaywallContextExperimentService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
