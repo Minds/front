@@ -26,9 +26,9 @@ import { ThemeService } from '../../../services/theme.service';
 import { ComposerService } from '../../../../modules/composer/services/composer.service';
 import { AuthModalService } from '../../../../modules/auth/modal/auth-modal.service';
 import { ExperimentsService } from '../../../../modules/experiments/experiments.service';
-import { MultiTenantConfigImageRefreshService } from '../../../../modules/multi-tenant-network/services/config-image-refresh.service';
 import { IS_TENANT_NETWORK } from '../../../injection-tokens/tenant-injection-tokens';
 import { PermissionsService } from '../../../services/permissions.service';
+import { MultiTenantConfigImageService } from '../../../../modules/multi-tenant-network/services/config-image.service';
 
 /**
  * V2 version of sidebar component.
@@ -113,7 +113,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
     private sidebarNavigationService: SidebarNavigationService,
     private authModal: AuthModalService,
     private experiments: ExperimentsService,
-    private configImageRefresh: MultiTenantConfigImageRefreshService,
+    private tenantConfigImageService: MultiTenantConfigImageService,
     protected permissions: PermissionsService,
     @Inject(IS_TENANT_NETWORK) public readonly isTenantNetwork: boolean
   ) {
@@ -280,8 +280,7 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
 
   /**
    * Gets logo src depending on whether we're on a multi-tenant network and if the
-   * user is in dark / light mode. Will change as last cache timestamp changes to force reloads
-   * on change.
+   * user is in dark / light mode.
    * @param { 'dark' | 'light' } mode - dark or light mode.
    * @returns { Observable<string> } - observable of logo src.
    */
@@ -292,13 +291,6 @@ export class SidebarNavigationV2Component implements OnInit, OnDestroy {
           (mode === 'light' ? 'medium-production.png' : 'medium-white.png')
       );
     }
-    return this.configImageRefresh.squareLogoLastCacheTimestamp$.pipe(
-      map((lastCacheTimestamp: number): string => {
-        return (
-          '/api/v3/multi-tenant/configs/image/square_logo?lastCache=' +
-          lastCacheTimestamp
-        );
-      })
-    );
+    return this.tenantConfigImageService.squareLogoPath$;
   }
 }

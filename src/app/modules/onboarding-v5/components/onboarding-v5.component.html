@@ -50,8 +50,24 @@
         ></m-onboardingV5__channelRecommendationsContent>
       </ng-container>
     </div>
-    <div class="m-twoColumnLayout__rightContainer">
-      <m-featureCarousel [carouselItems$]="carouselItems$"></m-featureCarousel>
+    <div
+      class="m-twoColumnLayout__rightContainer"
+      [ngClass]="{
+        'm-twoColumnLayout__rightContainer--tenant': isTenantNetwork
+      }"
+    >
+      <ng-container *ngIf="!isTenantNetwork; else tenantLogoTemplate">
+        <m-featureCarousel
+          [carouselItems$]="carouselItems$"
+        ></m-featureCarousel>
+      </ng-container>
+      <ng-template #tenantLogoTemplate>
+        <img
+          [src]="tenantLogoPath$ | async"
+          class="m-onboardingV5__tenantLogo"
+          alt="Site logo"
+        />
+      </ng-template>
     </div>
   </div>
   <ng-template #completionSplashTemplate>

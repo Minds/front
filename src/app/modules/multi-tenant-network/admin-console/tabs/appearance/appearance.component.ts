@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -14,12 +14,12 @@ import {
   catchError,
   combineLatest,
   filter,
+  firstValueFrom,
   forkJoin,
   map,
   of,
   take,
 } from 'rxjs';
-import { SITE_URL } from '../../../../../common/injection-tokens/url-injection-tokens';
 import { MultiTenantConfigImageService } from '../../../services/config-image.service';
 import { HttpEvent } from '@angular/common/http';
 import { ApiResponse } from '../../../../../common/api/api.service';
@@ -80,36 +80,34 @@ export class NetworkAdminConsoleAppearanceComponent
   /** URL for square logo  - if no file is stored pre-upload, points to server. */
   public readonly squareLogoFileUrl$: Observable<string> = combineLatest([
     this.squareLogoFile$,
-    this.configImageRefreshCountService.squareLogoLastCacheTimestamp$,
+    this.configImageService.squareLogoPath$,
   ]).pipe(
-    map(([file, lastCacheTimestamp]) => {
+    map(([file, squareLogoPath]) => {
       return file
         ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/square_logo?lastCache=${lastCacheTimestamp})`;
+        : `url(${squareLogoPath}`;
     })
   );
 
   /** URL for favicon - if no file is stored pre-upload, points to server. */
   public readonly faviconFileUrl$: Observable<string> = combineLatest([
     this.faviconFile$,
-    this.configImageRefreshCountService.faviconLastCacheTimestamp$,
+    this.configImageService.faviconPath$,
   ]).pipe(
-    map(([file, lastCacheTimestamp]) => {
-      return file
-        ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/favicon?lastCache=${lastCacheTimestamp})`;
+    map(([file, faviconPath]) => {
+      return file ? `url(${URL.createObjectURL(file)})` : `url(${faviconPath}`;
     })
   );
 
   /** URL for horizontal logo - if no file is stored pre-upload, points to server. */
   public readonly horizontalLogoFileUrl$: Observable<string> = combineLatest([
     this.horizontalLogoFile$,
-    this.configImageRefreshCountService.horizontalLogoLastCacheTimestamp$,
+    this.configImageService.horizontalLogoPath$,
   ]).pipe(
-    map(([file, lastCacheTimestamp]) => {
+    map(([file, horizontalLogoPath]) => {
       return file
         ? `url(${URL.createObjectURL(file)})`
-        : `url(${this.siteUrl}api/v3/multi-tenant/configs/image/horizontal_logo?lastCache=${lastCacheTimestamp})`;
+        : `url(${horizontalLogoPath}`;
     })
   );
 
@@ -123,8 +121,7 @@ export class NetworkAdminConsoleAppearanceComponent
     private configImageRefreshCountService: MultiTenantConfigImageRefreshService,
     private formBuilder: FormBuilder,
     private toaster: ToasterService,
-    private metaService: MetaService,
-    @Inject(SITE_URL) private siteUrl
+    private metaService: MetaService
   ) {
     this.formGroup = this.formBuilder.group({
       primaryColorHex: new FormControl<string>('', [
@@ -237,9 +234,7 @@ export class NetworkAdminConsoleAppearanceComponent
             this.configImageRefreshCountService.updateFaviconLastCacheTimestamp();
 
             // refresh favicon.
-            this.metaService.setDynamicFavicon(
-              `/api/v3/multi-tenant/configs/image/favicon?lastCache=${this.configImageRefreshCountService.faviconLastCacheTimestamp$.getValue()}`
-            );
+            this.refreshDynamicFavicon();
           }
 
           // reset images or the next submit request will re-upload the same images.
@@ -367,5 +362,15 @@ export class NetworkAdminConsoleAppearanceComponent
    */
   private validateFileType(file: File): boolean {
     return this.configImageService.validateFileType(file);
+  }
+
+  /**
+   * Sets the site favicon to the last uploaded favicon.
+   * @returns { Promise<void> }
+   */
+  private async refreshDynamicFavicon(): Promise<void> {
+    this.metaService.setDynamicFavicon(
+      await firstValueFrom(this.configImageService.faviconPath$)
+    );
   }
 }

@@ -23,6 +23,7 @@ export const cache = new InMemoryCache({
         boosts: relayStylePagination(['targetLocation', 'first']),
         featuredEntities: relayStylePagination(['type', 'first']),
         reports: relayStylePagination(['first']),
+        usersByRole: relayStylePagination(['first', 'roleId']),
       },
     },
   },

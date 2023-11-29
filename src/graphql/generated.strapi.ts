@@ -3617,6 +3617,67 @@ export type FetchOnboardingV5VersionsQuery = {
   } | null;
 };
 
+export type FetchTenantOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type FetchTenantOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              stepKey: string;
+              stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
+              verifyEmailForm?: {
+                __typename: 'ComponentOnboardingV5VerifyEmailStep';
+                id: string;
+                inputLabel: string;
+                inputPlaceholder?: string | null;
+                resendCodeText: string;
+                resendCodeActionText: string;
+                changeEmailActionText: string;
+                changeEmailTitle: string;
+                changeEmailDescription: string;
+                changeEmailInputLabel: string;
+                changeEmailInputPlaceholder?: string | null;
+                changeEmailActionButton: {
+                  __typename: 'ComponentOnboardingV5ActionButton';
+                  id: string;
+                  text: string;
+                  dataRef?: string | null;
+                };
+              } | null;
+              actionButton?: {
+                __typename: 'ComponentOnboardingV5ActionButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+              skipButton?: {
+                __typename: 'ComponentOnboardingV5SkipButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+            }
+          | { __typename: 'Error' }
+          | null
+        >;
+      } | null;
+    }>;
+  } | null;
+};
+
 export type UpgradePageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type UpgradePageQuery = {
@@ -4139,6 +4200,72 @@ export class FetchOnboardingV5VersionsGQL extends Apollo.Query<
   FetchOnboardingV5VersionsQueryVariables
 > {
   document = FetchOnboardingV5VersionsDocument;
+  client = 'strapi';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FetchTenantOnboardingV5VersionsDocument = gql`
+  query FetchTenantOnboardingV5Versions {
+    onboardingV5Versions {
+      data {
+        attributes {
+          publishedAt
+          steps {
+            __typename
+            ... on ComponentOnboardingV5OnboardingStep {
+              id
+              title
+              description
+              stepKey
+              stepType
+              verifyEmailForm {
+                id
+                __typename
+                inputLabel
+                inputPlaceholder
+                resendCodeText
+                resendCodeActionText
+                changeEmailActionText
+                changeEmailTitle
+                changeEmailDescription
+                changeEmailInputLabel
+                changeEmailInputPlaceholder
+                changeEmailActionButton {
+                  id
+                  __typename
+                  text
+                  dataRef
+                }
+              }
+              actionButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+              skipButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchTenantOnboardingV5VersionsGQL extends Apollo.Query<
+  FetchTenantOnboardingV5VersionsQuery,
+  FetchTenantOnboardingV5VersionsQueryVariables
+> {
+  document = FetchTenantOnboardingV5VersionsDocument;
   client = 'strapi';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

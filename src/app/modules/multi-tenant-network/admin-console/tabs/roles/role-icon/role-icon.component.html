@@ -1,0 +1,16 @@
+<div
+  class="m-networkAdminConsole__roleIconWrapper"
+  [ngClass]="{ alreadyCircular: roleId === RoleId.ADMIN }"
+  [ngStyle]="getScaleCss()"
+>
+  <i
+    *ngIf="roleId !== RoleId.DEFAULT"
+    class="material-icons"
+    [ngClass]="{
+      pushDown: roleId === roleId.OWNER
+    }"
+    >{{ rolesService.getIconByRoleId(roleId) }}</i
+  >
+
+  <span *ngIf="roleId === RoleId.DEFAULT"></span>
+</div>
