@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
@@ -8,6 +8,10 @@ import { DiscoveryService } from '../discovery.service';
 import { Location } from '@angular/common';
 import { Session } from '../../../services/session';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { ToasterService } from '../../../common/services/toaster.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 /**
  * List of suggested groups or users.
@@ -41,15 +45,23 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
    */
   exploreTabContext: boolean = false;
 
+  siteUrl: string;
+
   constructor(
     private route: ActivatedRoute,
     private service: SuggestionsService,
     private discoveryService: DiscoveryService,
     public location: Location,
     private session: Session,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private router: Router,
+    protected isTenant: IsTenantService,
+    private toaster: ToasterService,
+    protected permissions: PermissionsService,
+    configs: ConfigsService
   ) {
     super();
+    this.siteUrl = configs.get('site_url');
   }
 
   ngOnInit() {
@@ -94,6 +106,38 @@ export class DiscoverySuggestionsComponent extends AbstractSubscriberComponent
       limit: this.limit,
       refresh: false,
       type: this.type,
+    });
+  }
+
+  /**
+   * Copy invite link to clipboard
+   */
+  protected copyInviteLinkToClipboard(): void {
+    const url = this.isTenant.is()
+      ? this.siteUrl
+      : `${this.siteUrl}?referrer=${this.session.getLoggedInUser().username}`;
+
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = url;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
+    this.toaster.success('Link copied to clipboard');
+  }
+
+  /**
+   * Redirect to group create page
+   */
+  protected clickedCreateGroup(): void {
+    this.router.navigate(['/groups/create'], {
+      queryParams: { explore: true },
     });
   }
 }

@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   HostBinding,
+  Injector,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -45,6 +46,8 @@ import {
 } from '../../../graphql/generated.engine';
 import { QueryRef } from 'apollo-angular';
 import { FeedsService } from '../../common/services/feeds.service';
+import { PermissionsService } from '../../common/services/permissions.service';
+import { ComposerModalService } from '../composer/components/modal/modal.service';
 
 const PAGE_SIZE = 12;
 
@@ -105,6 +108,14 @@ export class SearchComponent {
   totalEdgeCount$: Observable<number>;
 
   /**
+   * True if we have at least one activity edge in memory
+   * (used to determine whether we have an empty feed)
+   */
+  hasActivityEdges$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
    * Connection pagination information.
    * Contains the most recent cursors and paging stats
    */
@@ -138,6 +149,16 @@ export class SearchComponent {
    */
   public exploreTabContext: boolean = false;
 
+  /**
+   * Show a notice when the feed is empty
+   */
+  showEmptyFeedNotice$: Observable<boolean>;
+
+  /**
+   * True after the first load has been completed
+   */
+  init$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(
     private fetchSearch: FetchSearchGQL,
     private countSearch: CountSearchGQL,
@@ -146,9 +167,21 @@ export class SearchComponent {
     configs: ConfigsService,
     private metaService: MetaService,
     private cd: ChangeDetectorRef,
-    private legacyDiscoveryFeedsService: DiscoveryFeedsService
+    private legacyDiscoveryFeedsService: DiscoveryFeedsService,
+    protected permissions: PermissionsService,
+    private composerModal: ComposerModalService,
+    private injector: Injector
   ) {
     this.cdnUrl = configs.get('cdn_url');
+
+    this.showEmptyFeedNotice$ = combineLatest([
+      this.init$,
+      this.hasActivityEdges$,
+    ]).pipe(
+      map(([init, hasActivityEdges]) => {
+        return init && !hasActivityEdges;
+      })
+    );
   }
 
   ngOnInit() {
@@ -208,6 +241,7 @@ export class SearchComponent {
             }
           }
         }
+        this.init$.next(true);
 
         return edges;
       }),
@@ -281,6 +315,7 @@ export class SearchComponent {
           this.legacyDiscoveryFeedsService.type$.next(this.mediaType);
 
           this.isFirstRun = true;
+          this.init$.next(false);
 
           this.searchQuery.refetch({
             ...this.searchQuery.variables,
@@ -363,7 +398,7 @@ export class SearchComponent {
   }
 
   /**
-   * The lastest post component will call this when clicked
+   * The latest post component will call this when clicked
    * It resets the counter and refreshes the feed
    */
   async refreshResults() {
@@ -424,6 +459,18 @@ export class SearchComponent {
 
     // Set the new page size limit
     this.pageSize$.next(currentPageSize + result.data.search.edges.length);
+  }
+
+  /**
+   * Open composer modal
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async openComposerModal(): Promise<void> {
+    try {
+      await this.composerModal.setInjector(this.injector).present();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   /**

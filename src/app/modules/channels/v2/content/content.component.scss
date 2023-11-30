@@ -58,7 +58,7 @@ m-channel__content {
 
       a {
         @include m-theme() {
-          color: themed($m-link-text) !important;
+          color: themed($m-action) !important;
         }
       }
     }

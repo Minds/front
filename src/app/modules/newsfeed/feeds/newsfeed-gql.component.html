@@ -10,7 +10,7 @@
       <!---------------------------------------------------------
         Only show the new composer post when on the 'latest' tab
       ----------------------------------------------------------->
-      <ng-container *ngIf="algorithm === 'latest'">
+      <ng-container *ngIf="(algorithm$ | async) === 'latest'">
         <ng-container *ngFor="let preActivity of prepended; let i = index">
           <m-activity
             [entity]="preActivity"
@@ -120,21 +120,156 @@
       </ng-container>
 
       <infinite-scroll
+        *ngIf="!(showEmptyFeedNotice$ | async)"
         (load)="fetchMore()"
         [moreData]="canShowMoreEdges$ | async"
         [inProgress]="inProgress"
-        [endText]="newsfeedEndText"
+        hideManual="true"
       >
       </infinite-scroll>
+
+      <!----------------
+            Empty feed notices
+          ----------------->
+      <ng-container *ngIf="showEmptyFeedNotice$ | async">
+        <!-- ------------------------ -->
+        <!-- EMPTY FEED: TOP -->
+        <!-- ------------------------ -->
+        <ng-container *ngIf="(algorithm$ | async) === 'top'">
+          <m-notice iconId="rocket_launch">
+            <span
+              m-notice__title
+              i18n="@@NEWSFEED__TOP_FEED__EMPTY_NOTICE_TITLE"
+              >There’s nothing topping the charts just yet</span
+            >
+            <span
+              m-notice__description
+              i18n="@@NEWSFEED__TOP_FEED__EMPTY_NOTICE_DESC"
+              >Top posts from channels you subscribe to will appear here.</span
+            >
+            <ng-container m-notice__actions>
+              <ng-container
+                [ngTemplateOutlet]="topLatestEmptyFeedActions"
+              ></ng-container>
+            </ng-container>
+          </m-notice>
+        </ng-container>
+        <!-- ------------------------ -->
+        <!-- EMPTY FEED: LATEST -->
+        <!-- ------------------------ -->
+        <ng-container *ngIf="(algorithm$ | async) === 'latest'">
+          <m-notice iconId="history">
+            <span
+              m-notice__title
+              i18n="@@NEWSFEED__LATEST_FEED__EMPTY_NOTICE_TITLE"
+              >Latest stories are just around the corner</span
+            >
+            <span
+              m-notice__description
+              i18n="@@NEWSFEED__LATEST_FEED__EMPTY_NOTICE_DESC"
+              >The latest posts from channels you subscribe to will appear
+              here.</span
+            >
+            <ng-container m-notice__actions>
+              <ng-container
+                *ngTemplateOutlet="topLatestEmptyFeedActions"
+              ></ng-container>
+            </ng-container>
+          </m-notice>
+        </ng-container>
+        <!-- ------------------------ -->
+        <!-- EMPTY FEED: GROUPS -->
+        <!-- ------------------------ -->
+        <ng-container *ngIf="(algorithm$ | async) === 'groups'">
+          <m-notice iconId="rocket_launch">
+            <span
+              m-notice__title
+              i18n="@@NEWSFEED__GROUP_FEED__EMPTY_NOTICE_TITLE"
+              >You are not in any groups at the moment</span
+            >
+            <span
+              m-notice__description
+              i18n="@@NEWSFEED__GROUP_FEED__EMPTY_NOTICE_DESC"
+              >The latest posts from groups you've joined will appear
+              here.</span
+            >
+            <ng-container m-notice__actions>
+              <m-button
+                *ngIf="permissions.canCreateGroup()"
+                color="blue"
+                (onAction)="clickedCreateGroup()"
+                data-ref="m-newsfeedGqlEmptyFeedNotice__createGroupButton"
+                i18n="@@NEWSFEED_NOTICE__CREATE_GROUP"
+                >Create group</m-button
+              >
+              <m-button
+                color="blue"
+                solid="true"
+                (onAction)="clickedDiscoverGroups()"
+                data-ref="m-newsfeedGqlEmptyFeedNotice__discoverGroupsButton"
+                i18n="@@NEWSFEED_NOTICE__DISCOVER_GROUPS"
+                >Discover groups</m-button
+              >
+            </ng-container>
+          </m-notice>
+        </ng-container>
+        <!-- ------------------------ -->
+        <!-- EMPTY FEED: FOR YOU -->
+        <!-- ------------------------ -->
+        <ng-container *ngIf="(algorithm$ | async) === 'for-you'">
+          <!-- ojm TODO <m-notice iconId="rocket_launch">
+            <span
+              m-notice__title
+              i18n="@@NEWSFEED__GROUP_FEED__EMPTY_NOTICE_TITLE"
+              >You are not in any groups at the moment</span
+            >
+            <span
+              m-notice__description
+              i18n="@@NEWSFEED__GROUP_FEED__EMPTY_NOTICE_DESC"
+              >The latest posts from groups you've joined will appear
+              here.</span
+            >
+            <ng-container m-notice__actions>
+              <m-button
+                *ngIf="permissions.canCreateGroup()"
+                color="blue"
+                (onAction)="clickedCreateGroup()"
+                data-ref="m-newsfeedGqlEmptyFeedNotice__createGroupButton"
+                i18n="@@NEWSFEED_NOTICE__CREATE_GROUP"
+                >Create group</m-button
+              >
+              <m-button
+                color="blue"
+                solid="true"
+                (onAction)="clickedDiscoverGroups()"
+                data-ref="m-newsfeedGqlEmptyFeedNotice__discoverGroupsButton"
+                i18n="@@NEWSFEED_NOTICE__DISCOVER_GROUPS"
+                >Discover groups</m-button
+              >
+            </ng-container>
+          </m-notice> -->
+        </ng-container>
+      </ng-container>
     </div>
   </ng-container>
 </div>
 
-<!-- <ng-container *ngIf="algorithm === 'latest'">
-  <ng-container *mIfBrowser>
-    <m-seeLatestPostsButton
-      [feedService]="feedService"
-      (click)="scrollToUnderBoostRotator()"
-    ></m-seeLatestPostsButton>
-  </ng-container>
-</ng-container> -->
+<ng-template #topLatestEmptyFeedActions>
+  <m-button
+    color="blue"
+    data-ref="m-newsfeedGqlEmptyFeedNotice__copyLinkButton"
+    (onAction)="copyInviteLinkToClipboard()"
+    ><i class="material-icons">content_copy</i>
+    <ng-container i18n="@@NEWSFEED_NOTICE__COPY_INVITE_LINK"
+      >Copy invite link</ng-container
+    ></m-button
+  >
+  <m-button
+    (onAction)="clickedDiscoverChannels()"
+    color="blue"
+    solid="true"
+    data-ref="m-newsfeedGqlEmptyFeedNotice__discoverChannelsButton"
+    i18n="@@NEWSFEED_NOTICE__DISCOVER_CHANNELS"
+    >Discover channels</m-button
+  >
+</ng-template>

@@ -1,13 +1,28 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, Input, Injector } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  combineLatest,
+  map,
+} from 'rxjs';
 import { DiscoveryTagsService } from './tags.service';
 import { SearchGqlExperimentService } from '../../search/search-gql-experiment.service';
 import { Session } from '../../../services/session';
+import { ComposerModalService } from '../../composer/components/modal/modal.service';
+import { ToasterService } from '../../../common/services/toaster.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 /**
  * Display tags 'for you', trending Minds+, or related to an activity post
  */
 export type DiscoverySidebarTagsContext = 'user' | 'plus' | 'activity';
+
+/**
+ * The source of tags that will be displayed
+ */
+export type DiscoverySidebarTagsSource = 'trending' | 'activityRelated';
+
 @Component({
   selector: 'm-discovery__sidebarTags',
   templateUrl: './sidebar-tags.component.html',
@@ -22,21 +37,36 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
   @Input() entityGuid: string;
 
+  /**
+   * What is the source/category of the tags we want to display
+   */
+  protected source$: BehaviorSubject<
+    DiscoverySidebarTagsSource
+  > = new BehaviorSubject<DiscoverySidebarTagsSource>(null);
+
+  /**
+   * Do we have tags to display?
+   */
+  protected hasTags$: Observable<boolean>;
+
+  /**
+   * Should we show the widget at all?
+   */
+  visible$: Observable<boolean>;
+
   public _context: DiscoverySidebarTagsContext;
 
   readonly DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT: number = 5;
   limit: number = this.DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT;
 
-  visible = true;
-  trending$: Observable<any> = this.tagsService.trending$;
-  foryou$: Observable<any> = this.tagsService.foryou$;
-  activityRelated$: Observable<any> = this.tagsService.activityRelated$;
   inProgress$: Observable<boolean> = this.tagsService.inProgress$;
+
+  trending$: Observable<any> = this.tagsService.trending$;
+  activityRelated$: Observable<any> = this.tagsService.activityRelated$;
 
   parentPathSubscription: Subscription;
   parentPath: string = '/discovery';
 
-  activityRelatedTagsSubscription: Subscription;
   isLoggedInSubscription: Subscription;
 
   isPlusPage: boolean = false;
@@ -44,7 +74,11 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   constructor(
     public tagsService: DiscoveryTagsService,
     private searchExp: SearchGqlExperimentService,
-    private session: Session
+    private session: Session,
+    private composerModal: ComposerModalService,
+    private injector: Injector,
+    private toaster: ToasterService,
+    protected permissions: PermissionsService
   ) {}
 
   ngOnInit() {
@@ -58,18 +92,41 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
     if (this.entityGuid) {
       this.tagsService.loadTags(true, this.entityGuid);
+      this.source$.next('activityRelated');
     } else if (!this.tagsService.trending$.value.length) {
       this.tagsService.loadTags();
+      this.source$.next('trending');
     }
 
-    this.activityRelatedTagsSubscription = this.tagsService.activityRelated$.subscribe(
-      tags => {
-        if (this.entityGuid) {
-          this.visible = tags && tags.length > 0 ? true : false;
+    /**
+     * Do we have any tags to show
+     */
+    this.hasTags$ = combineLatest([
+      this.source$,
+      this.activityRelated$,
+      this.trending$,
+    ]).pipe(
+      map(([source, activityRelated, trending]) => {
+        if (source === 'activityRelated') {
+          return activityRelated.length > 0;
         } else {
-          this.visible = true;
+          return trending.length > 0;
         }
-      }
+      })
+    );
+
+    /**
+     * Hide the widget if we are in an activity context and
+     * there aren't any activity related tags
+     */
+    this.visible$ = combineLatest([this.source$, this.hasTags$]).pipe(
+      map(([source, hasTags]) => {
+        if (source === 'activityRelated') {
+          return hasTags;
+        } else {
+          return true;
+        }
+      })
     );
 
     if (!this.session.isLoggedIn()) {
@@ -84,14 +141,32 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.activityRelatedTagsSubscription) {
-      this.activityRelatedTagsSubscription.unsubscribe();
-    }
     this.isLoggedInSubscription?.unsubscribe();
   }
 
   seeMore() {
     this.limit = 20;
+  }
+
+  /**
+   * Open composer modal
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async openComposerModal(): Promise<void> {
+    try {
+      await this.composerModal
+        .setInjector(this.injector)
+        .onPost(activity => {
+          if (this.source$.value === 'trending') {
+            this.toaster.success(
+              "Nice! If you added hashtags to your post, they'll show up in the sidebar in a few minutes"
+            );
+          }
+        })
+        .present();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   get title(): string {

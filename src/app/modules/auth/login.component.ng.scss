@@ -155,7 +155,7 @@
 
     a {
       @include m-theme() {
-        color: themed($m-link-text);
+        color: themed($m-action);
       }
 
       &.m-login__joinTheConversation {

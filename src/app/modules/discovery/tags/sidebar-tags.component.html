@@ -1,12 +1,17 @@
-<ng-container *ngIf="visible">
+<ng-container *ngIf="visible$ | async">
   <m-sidebarWidget [titleText]="title">
     <div class="m-sidebarWidget__body">
       <m-loadingSpinner
-        *ngIf="!entityGuid"
+        *ngIf="(source$ | async) !== 'activityRelated'"
         [inProgress]="inProgress$ | async"
       ></m-loadingSpinner>
       <ul>
-        <ng-container *ngIf="entityGuid; else forYou">
+        <!-- --------------------------------->
+        <!-- ACTIVITY RELATED  -->
+        <!-- --------------------------------->
+        <ng-container
+          *ngIf="(source$ | async) === 'activityRelated'; else trendingTags"
+        >
           <li
             *ngFor="let tag of activityRelated$ | async | slice: 0:limit"
             class="m-discoveryTrends__trend"
@@ -17,24 +22,52 @@
             ></ng-container>
           </li>
         </ng-container>
-        <ng-template #forYou>
+        <!-- --------------------------------->
+        <!-- TRENDING -->
+        <!-- --------------------------------->
+        <ng-template #trendingTags>
+          <ng-container *ngIf="hasTags$ | async; else createATag">
+            <li
+              *ngFor="let tag of trending$ | async | slice: 0:limit"
+              class="m-discoveryTrends__trend"
+            >
+              <ng-container
+                [ngTemplateOutlet]="tagTemplate"
+                [ngTemplateOutletContext]="{ tag: tag }"
+              ></ng-container>
+            </li>
+          </ng-container>
+        </ng-template>
+        <!-- --------------------------------->
+        <!-- NO TAGS -->
+        <!-- --------------------------------->
+        <ng-template #createATag>
           <li
-            *ngFor="let tag of trending$ | async | slice: 0:limit"
-            class="m-discoveryTrends__trend"
+            *ngIf="!(inProgress$ | async)"
+            class="m-discoveryTrends__trend m-discoverySidebarTags__emptyStateTag"
           >
-            <ng-container
-              [ngTemplateOutlet]="tagTemplate"
-              [ngTemplateOutletContext]="{ tag: tag }"
-            ></ng-container>
+            <div>
+              <h4>#yourtag</h4>
+              <div class="m-discoveryTrendListItem__supportingText--below">
+                <span
+                  i18n="@@DISCOVERY_SIDEBAR_TAGS__USE_TAGS_TO_START_DISCUSSIONS"
+                  >Use tags to start new discussions on your posts</span
+                >
+              </div>
+            </div>
           </li>
         </ng-template>
       </ul>
     </div>
+    <!-- --------------------------------->
+    <!-- SEE MORE BUTTON -->
+    <!-- --------------------------------->
     <m-button
       *ngIf="
         limit === DEFAULT_DISCOVERY_SIDEBAR_TAGS_LIMIT &&
-        !(inProgress$ | async) &&
-        !entityGuid
+          !(inProgress$ | async) &&
+          (source$ | async) !== 'activityRelated' &&
+          hasTags$ | async
       "
       class="m-sidebarWidget__seeMore"
       (onAction)="seeMore()"
@@ -45,8 +78,29 @@
       data-ref="sidebar-tags-more"
       >See more</m-button
     >
+    <!-- --------------------------------->
+    <!-- CREATE A TAG BUTTON -->
+    <!-- --------------------------------->
+    <m-button
+      *ngIf="
+        !(inProgress$ | async) &&
+        (source$ | async) !== 'activityRelated' &&
+        !(hasTags$ | async) &&
+        permissions.canCreatePost()
+      "
+      class="m-sidebarWidget__seeMore"
+      (onAction)="openComposerModal()"
+      size="small"
+      stretch="true"
+      [solid]="true"
+      i18n="@@COMMON__CREATE_A_TAG__ACTION"
+      data-ref="sidebar-tags-create-a-tag-button"
+      >Create a tag</m-button
+    >
   </m-sidebarWidget>
-
+  <!-- --------------------------------->
+  <!-- TEMPLATE: TAG -->
+  <!-- --------------------------------->
   <ng-template #tagTemplate let-tag="tag">
     <ng-container>
       <a

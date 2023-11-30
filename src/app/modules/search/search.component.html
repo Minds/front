@@ -112,15 +112,66 @@
           </ng-container>
         </ng-container>
         <infinite-scroll
+          *ngIf="!(showEmptyFeedNotice$ | async)"
           (load)="fetchMore()"
           [moreData]="canShowMoreEdges$ | async"
           [inProgress]="inProgress"
+          hideManual="true"
         >
         </infinite-scroll>
+        <!-- --------------------------  -->
+        <!-- NO RESULTS  -->
+        <!-- --------------------------  -->
+        <ng-container *ngIf="showEmptyFeedNotice$ | async">
+          <!-- NO SEARCH RESULTS -->
+          <ng-container *ngIf="!exploreTabContext">
+            <m-notice iconId="search">
+              <span m-notice__title i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_TITLE"
+                >We couldn’t find any results for “{{ query }}”.</span
+              >
+              <span
+                m-notice__description
+                i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_DESC"
+                >Try searching for something else, or check back later.</span
+              >
+              <ng-container
+                m-notice__actions
+                *ngIf="permissions.canCreatePost()"
+              >
+                <ng-container
+                  [ngTemplateOutlet]="noResultsActions"
+                ></ng-container>
+              </ng-container> </m-notice
+          ></ng-container>
+          <!-- NO RESULTS ON TRENDING TAB -->
+          <ng-container *ngIf="exploreTabContext">
+            <m-notice iconId="local_fire_department">
+              <span
+                m-notice__title
+                i18n="@@SEARCH__TRENDING__EMPTY_NOTICE_TITLE"
+                >Ignite the conversation</span
+              >
+              <span
+                m-notice__description
+                i18n="@@SEARCH__TRENDING__EMPTY_NOTICE_DESC"
+                >The top posts from across the network will appear here.</span
+              >
+              <ng-container
+                m-notice__actions
+                *ngIf="permissions.canCreatePost()"
+              >
+                <ng-container
+                  [ngTemplateOutlet]="noResultsActions"
+                ></ng-container>
+              </ng-container> </m-notice
+          ></ng-container>
+        </ng-container>
       </div>
     </ng-container>
   </div>
-
+  <!-- --------------------------  -->
+  <!-- SIDEBAR  -->
+  <!-- --------------------------  -->
   <div
     *ngIf="!exploreTabContext"
     class="m-discovery__sidebar"
@@ -128,9 +179,23 @@
   >
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-        <!-- SIDEBAR ------------------------------------->
         <m-discovery__sidebarTags></m-discovery__sidebarTags>
       </div>
     </div>
   </div>
 </div>
+<!-- --------------------------  -->
+<!-- TEMPLATE: CREATE A POST BUTTON -->
+<!-- --------------------------  -->
+<ng-template #noResultsActions>
+  <m-button
+    color="blue"
+    solid="true"
+    data-ref="m-search__createAPostButton"
+    (onAction)="openComposerModal()"
+  >
+    <ng-container i18n="@@SEARCH__CREATE_A_POST"
+      >Create a post</ng-container
+    ></m-button
+  ></ng-template
+>

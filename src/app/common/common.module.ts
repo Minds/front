@@ -187,6 +187,7 @@ import { ExploreFeedItemComponent } from './components/explore-feed-item/explore
 import { IfTenantDirective } from './directives/if-tenant.directive';
 import { IsTenantService } from './services/is-tenant.service';
 import { ExpansionPanelComponent } from './components/expansion-panel/expansion-panel.component';
+import { NoticeComponent } from './components/notice/notice.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -297,6 +298,7 @@ const MINDS_COMMON_COMPONENTS = [
   SelectableEntityCardComponent,
   InlineFeedHeaderComponent,
   ExploreTagFeedItemComponent,
+  NoticeComponent,
 ];
 // ------------------------------------
 // ------------------------------------

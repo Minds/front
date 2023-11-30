@@ -1,3 +1,6 @@
+<!-- --------------------------  -->
+<!-- TABS -->
+<!-- --------------------------  -->
 <div *ngIf="exploreTabContext">
   <m-discovery__tabs></m-discovery__tabs>
 </div>
@@ -19,7 +22,9 @@
     >
   </div>
 </div>
-
+<!-- --------------------------  -->
+<!-- BACK BUTTON  -->
+<!-- --------------------------  -->
 <div class="m-goBack" *ngIf="!exploreTabContext">
   <a
     href="#"
@@ -29,18 +34,83 @@
     ><span i18n="@@DISCOVERY_SUGGESTIONS__BACK">Back</span>
   </a>
 </div>
-
+<!-- --------------------------  -->
+<!-- SUGGESTIONS LIST -->
+<!-- --------------------------  -->
 <div class="m-discoveryFeeds__feed">
   <m-discovery__feedItem
     *ngFor="let entity of entities$ | async"
     [entity]="entity"
     [openComments]="false"
   ></m-discovery__feedItem>
-
-  <infinite-scroll
-    (load)="loadMore()"
-    [moreData]="hasMoreData$ | async"
-    [inProgress]="inProgress$ | async"
-  >
-  </infinite-scroll>
 </div>
+<!-- --------------------------  -->
+<!-- NO SUGGESTIONS  -->
+<!-- --------------------------  -->
+<ng-container *ngIf="!(inProgress$ | async) && (entities$ | async).length < 1">
+  <!-- NO USERS -->
+  <ng-container *ngIf="type === 'user'">
+    <m-notice iconId="person">
+      <span
+        m-notice__title
+        i18n="@@DISCOVERY_SUGGESTIONS__USER__EMPTY_NOTICE_TITLE"
+        >Get ready for exploration</span
+      >
+      <span
+        m-notice__description
+        i18n="@@DISCOVERY_SUGGESTIONS__USER__EMPTY_NOTICE_DESC"
+        >There are no channels to recommend for you yet. Check back later for
+        personalized recommendations.</span
+      >
+      <ng-container m-notice__actions>
+        <m-button
+          color="blue"
+          solid="true"
+          data-ref="m-discoverySuggestions__copyLinkButton"
+          (onAction)="copyInviteLinkToClipboard()"
+          ><i class="material-icons">content_copy</i>
+          <ng-container i18n="@@DISCOVERY_SUGGESTIONS__COPY_INVITE_LINK"
+            >Copy invite link</ng-container
+          ></m-button
+        >
+      </ng-container>
+    </m-notice></ng-container
+  >
+  <!-- NO GROUPS -->
+  <ng-container *ngIf="type === 'group'">
+    <m-notice iconId="group">
+      <span
+        m-notice__title
+        i18n="@@DISCOVERY_SUGGESTIONS__GROUP__EMPTY_NOTICE_TITLE"
+        >Be a pioneer in group exploration</span
+      >
+      <span
+        m-notice__description
+        i18n="@@DISCOVERY_SUGGESTIONS__GROUP__EMPTY_NOTICE_DESC"
+        >There are no groups to recommend for you yet. Check back later for
+        personalized recommendations.</span
+      >
+      <ng-container m-notice__actions>
+        <m-button
+          *ngIf="permissions.canCreateGroup()"
+          color="blue"
+          solid="true"
+          (onAction)="clickedCreateGroup()"
+          data-ref="m-discoverySuggestions__createGroupButton"
+          i18n="@@DISCOVERY_SUGGESTIONS__CREATE_GROUP"
+          >Create group</m-button
+        >
+      </ng-container>
+    </m-notice></ng-container
+  >
+</ng-container>
+<!-- --------------------------  -->
+<!-- INFINITE SCROLL  -->
+<!-- --------------------------  -->
+<infinite-scroll
+  (load)="loadMore()"
+  [moreData]="hasMoreData$ | async"
+  [inProgress]="inProgress$ | async"
+  hideManual="true"
+>
+</infinite-scroll>
