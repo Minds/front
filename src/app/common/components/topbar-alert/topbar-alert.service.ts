@@ -4,6 +4,7 @@ import {
   combineLatest,
   filter,
   firstValueFrom,
+  from,
   map,
   Observable,
   ReplaySubject,
@@ -40,60 +41,22 @@ export const GET_TOPBAR_QUERY = gql`
 @Injectable({ providedIn: 'root' })
 export class TopbarAlertService {
   /** Copy data to be returned from strapi */
-  copyData$: Observable<any> = this.apollo
-    .use('strapi')
-    .watchQuery({
-      query: GET_TOPBAR_QUERY,
-    })
-    .valueChanges.pipe(map((result: any) => result.data.topbarAlert.data));
+  copyData$: Observable<any>;
 
   /** Identifier, used for dismissing */
-  identifier$: Observable<string> = this.copyData$.pipe(
-    map(copyData => copyData.attributes.identifier)
-  );
+  identifier$: Observable<string>;
 
   /** Enabled (on/off) */
-  enabled$: Observable<boolean> = this.copyData$.pipe(
-    map(copyData => Boolean(copyData.attributes.enabled))
-  );
+  enabled$: Observable<boolean>;
 
   /** Timestamp at which we will show to alert */
-  onlyDisplayAfter$: Observable<number> = this.copyData$.pipe(
-    map(copyData => Date.parse(copyData.attributes.onlyDisplayAfter))
-  );
+  onlyDisplayAfter$: Observable<number>;
 
   /** Array of alerts that have been dismissed (hyrdated on construct) */
   dismissedAlerts$: ReplaySubject<AlertKey[]> = new ReplaySubject();
 
   /** Logic for dictating if the alert should display */
-  shouldShow$: Observable<boolean> = combineLatest([
-    this.identifier$,
-    this.dismissedAlerts$,
-    this.onlyDisplayAfter$,
-    this.enabled$,
-    this.session.user$.pipe(map(user => !!user)),
-  ]).pipe(
-    map(
-      ([
-        identifier,
-        dismissedAlerts,
-        onlyDisplayAfter,
-        enabled,
-        isLoggedIn,
-      ]) => {
-        if (this.isTenant.is()) {
-          return false;
-        }
-
-        return (
-          dismissedAlerts.indexOf(identifier) === -1 &&
-          onlyDisplayAfter < Date.now() &&
-          enabled &&
-          isLoggedIn
-        );
-      }
-    )
-  );
+  shouldShow$: Observable<boolean>;
 
   /** storage key */
   private readonly storageKey = 'topbar-alert:dismissed';
@@ -106,6 +69,56 @@ export class TopbarAlertService {
     @Inject(PLATFORM_ID) private platformId: string
   ) {
     this.dismissedAlerts$.next(this.getDismissedAlerts());
+
+    this.copyData$ = isPlatformBrowser(this.platformId)
+      ? this.apollo
+          .use('strapi')
+          .watchQuery({
+            query: GET_TOPBAR_QUERY,
+          })
+          .valueChanges.pipe(map((result: any) => result.data.topbarAlert.data))
+      : from([]);
+
+    this.identifier$ = this.copyData$.pipe(
+      map(copyData => copyData.attributes.identifier)
+    );
+
+    this.enabled$ = this.copyData$.pipe(
+      map(copyData => Boolean(copyData.attributes.enabled))
+    );
+
+    this.onlyDisplayAfter$ = this.copyData$.pipe(
+      map(copyData => Date.parse(copyData.attributes.onlyDisplayAfter))
+    );
+
+    this.shouldShow$ = combineLatest([
+      this.identifier$,
+      this.dismissedAlerts$,
+      this.onlyDisplayAfter$,
+      this.enabled$,
+      this.session.user$.pipe(map(user => !!user)),
+    ]).pipe(
+      map(
+        ([
+          identifier,
+          dismissedAlerts,
+          onlyDisplayAfter,
+          enabled,
+          isLoggedIn,
+        ]) => {
+          if (this.isTenant.is()) {
+            return false;
+          }
+
+          return (
+            dismissedAlerts.indexOf(identifier) === -1 &&
+            onlyDisplayAfter < Date.now() &&
+            enabled &&
+            isLoggedIn
+          );
+        }
+      )
+    );
   }
 
   /**
