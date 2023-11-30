@@ -113,7 +113,7 @@ export class ChannelSocialLinksComponent implements OnInit {
   }
 
   getCustomIconCss(icon): any {
-    const maskImage = `url(${this.cdnAssetsUrl}static/en/assets/icons/${icon}.svg)`;
+    const maskImage = `url(assets/icons/${icon}.svg)`;
 
     return {
       '-webkit-mask-image': `${maskImage}`,

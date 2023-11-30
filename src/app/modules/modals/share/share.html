@@ -112,7 +112,7 @@
       class="m-share__button m-share__button--twitter"
       (click)="openTwitter()"
     >
-      <img [src]="cdnAssetsUrl + 'static/en/assets/icons/twitter.svg'" />
+      <img [src]="'assets/icons/twitter.svg'" />
     </button>
 
     <button
@@ -121,7 +121,7 @@
       class="m-share__button m-share__button--facebook"
       (click)="openFacebook()"
     >
-      <img [src]="cdnAssetsUrl + 'static/en/assets/icons/facebook.svg'" />
+      <img [src]="'assets/icons/facebook.svg'" />
     </button>
 
     <button
@@ -131,7 +131,7 @@
       *ngIf="isMobileOrTablet()"
       (click)="openMessenger()"
     >
-      <img [src]="cdnAssetsUrl + 'static/en/assets/icons/messenger.svg'" />
+      <img [src]="'assets/icons/messenger.svg'" />
     </button>
 
     <button
@@ -141,7 +141,7 @@
       *ngIf="isMobileOrTablet()"
       (click)="openWhatsapp()"
     >
-      <img [src]="cdnAssetsUrl + 'static/en/assets/icons/whatsapp.svg'" />
+      <img [src]="'assets/icons/whatsapp.svg'" />
     </button>
 
     <button
@@ -151,7 +151,7 @@
       *ngIf="isMobile()"
       (click)="openSMS()"
     >
-      <img [src]="cdnAssetsUrl + 'static/en/assets/icons/sms.svg'" />
+      <img [src]="'assets/icons/sms.svg'" />
     </button>
 
     <button
@@ -160,7 +160,7 @@
       class="m-share__button m-share__button--email"
       (click)="openEmail()"
     >
-      <img [src]="cdnAssetsUrl + 'static/en/assets/icons/email.svg'" />
+      <img [src]="'assets/icons/email.svg'" />
     </button>
   </div>
 </div>
