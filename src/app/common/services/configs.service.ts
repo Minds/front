@@ -24,6 +24,9 @@ export class ConfigsService {
       this.isReady$.next(true);
       this.redirectToRootIfInvalidDomain();
     } catch (err) {
+      if (err.status === 404) {
+        throw `Invalid domain. Site not found`;
+      }
       console.error(err);
     }
   }
