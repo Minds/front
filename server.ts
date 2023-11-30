@@ -126,7 +126,6 @@ export function app() {
       });
     } catch (err) {
       html = err.toString();
-      res.setHea;
     } finally {
       res.send(html);
       console.timeEnd(`GET: ${url}`);
