@@ -25,6 +25,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 @Component({
   selector: 'minds-activity',
@@ -120,6 +121,10 @@ describe('NewsfeedSingleComponent', () => {
           {
             provide: PLATFORM_ID,
             useValue: 'browser',
+          },
+          {
+            provide: IsTenantService,
+            useValue: MockService(IsTenantService),
           },
         ],
       }).compileComponents();

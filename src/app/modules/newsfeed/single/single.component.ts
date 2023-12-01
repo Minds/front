@@ -27,7 +27,7 @@ import { RouterHistoryService } from '../../../common/services/router-history.se
 import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 import getMetaAutoCaption from '../../../helpers/meta-auto-caption';
 import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
-import { SiteService } from '../../../common/services/site.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -48,6 +48,8 @@ export class NewsfeedSingleComponent {
   focusedCommentGuid: string = '';
   editing = false;
   fixedHeight = false;
+  private siteName: string;
+  private siteTitle: string;
 
   private paramsSubscription: Subscription;
   private queryParamsSubscription: Subscription;
@@ -75,15 +77,18 @@ export class NewsfeedSingleComponent {
     private routerHistory: RouterHistoryService,
     private boostModal: BoostModalV2LazyService,
     private embedLinkWhitelist: EmbedLinkWhitelistService,
-    private site: SiteService,
+    private isTenant: IsTenantService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteName = configs.get('site_name');
   }
 
   ngOnInit() {
     this.context.set('activity');
+
+    this.siteTitle = this.isTenant.is() ? this.siteName : 'Minds';
 
     // If the user arrived at this page by clicking a link
     // somewhere within the site, they will see a back button
@@ -240,14 +245,14 @@ export class NewsfeedSingleComponent {
     const isImage = activity.custom_type && activity.custom_type === 'batch';
 
     if (this.isLivestream(activity)) {
-      title = `${activity.ownerObj.username} is streaming live on ${this.site.title}`;
+      title = `${activity.ownerObj.username} is streaming live on ${this.siteTitle}`;
       addTitleSuffix = false;
-      description = `Subscribe to @${activity.ownerObj.username} on ${this.site.title}`;
+      description = `Subscribe to @${activity.ownerObj.username} on ${this.siteTitle}`;
     } else {
       title =
         activity.title ||
         activity.message ||
-        `@${activity.ownerObj.username}'s post on ${this.site.title}`;
+        `@${activity.ownerObj.username}'s post on ${this.siteTitle}`;
       title = title.trim();
 
       // Cut off the end of long titles and put them in the beginning of the description
@@ -273,7 +278,7 @@ export class NewsfeedSingleComponent {
           description = `Image from @${activity.ownerObj.username}.`;
         }
       } else {
-        description += `Subscribe to @${activity.ownerObj.username} on ${this.site.title}`;
+        description += `Subscribe to @${activity.ownerObj.username} on ${this.siteTitle}`;
       }
     }
 
@@ -344,13 +349,13 @@ export class NewsfeedSingleComponent {
 
     if (activity.supermind?.is_reply) {
       this.metaService.setTwitterSummaryCard(
-        activity.ownerObj.name + `'s reply on ${this.site.title}`,
+        activity.ownerObj.name + `'s reply on ${this.siteTitle}`,
         this.siteUrl +
           'api/v3/newsfeed/activity/og-image/' +
           activity.remind_object.guid,
         'Get replies from ' +
           activity.ownerObj.name +
-          ` and elevate the discourse on ${this.site.title}.`
+          ` and elevate the discourse on ${this.siteTitle}.`
       );
     }
   }

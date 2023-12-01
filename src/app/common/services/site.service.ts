@@ -16,11 +16,13 @@ export class SiteService {
   }
 
   get title(): string {
-    return this.isProDomain
-      ? this.pro.title || ''
-      : this.isTenant.is()
-      ? this.configs.get('site_name')
-      : 'Minds';
+    if (this.isProDomain) {
+      return this.pro.title || '';
+    } else if (this.isTenant.is()) {
+      return this.configs.get('site_name');
+    } else {
+      return 'Minds';
+    }
   }
 
   get oneLineHeadline(): string {
