@@ -15,6 +15,7 @@ import * as snowplow from '@snowplow/browser-tracker';
 import { SelfDescribingJson } from '@snowplow/tracker-core';
 import { MindsUser } from './../interfaces/entities';
 import { ActivityEntity } from '../modules/newsfeed/activity/activity.service';
+import { ConfigsService } from '../common/services/configs.service';
 
 export type SnowplowContext = SelfDescribingJson<Record<string, unknown>>;
 
@@ -43,7 +44,8 @@ export class AnalyticsService implements OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private cookieService: CookieService,
     private sessionService: Session,
-    private rendererFactory2: RendererFactory2
+    private rendererFactory2: RendererFactory2,
+    private configService: ConfigsService
   ) {
     this.initSnowplow();
 
@@ -85,8 +87,14 @@ export class AnalyticsService implements OnDestroy {
     if (isPlatformServer(this.platformId)) return;
     const snowplowUrl = 'https://sp.minds.com'; // Todo: allow config service to configure this
 
+    let appId = 'minds';
+
+    if (this.configService.get('tenant_id')) {
+      appId = 'minds-tenant-' + this.configService.get('tenant_id');
+    }
+
     snowplow.newTracker('ma', snowplowUrl, {
-      appId: 'minds',
+      appId: appId,
       postPath: '/com.minds/t',
     });
 
