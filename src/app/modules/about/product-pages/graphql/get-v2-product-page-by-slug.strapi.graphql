@@ -39,6 +39,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                   subtitle
                   mostPopular
                   priceStartingAt
+                  noPrice
                   button {
                     text
                     dataRef
@@ -66,6 +67,7 @@ query GetV2ProductPageBySlug($slug: String!) {
                   featTableHeader {
                     title
                     priceStartingAt
+                    noPrice
                   	button {
                       text
                       dataRef
