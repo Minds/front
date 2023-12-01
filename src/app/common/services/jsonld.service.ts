@@ -4,6 +4,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { ConfigsService } from './configs.service';
+import { SiteService } from './site.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class JsonLdService {
 
   constructor(
     @Inject(DOCUMENT) private _document: Document,
+    private site: SiteService,
     configs: ConfigsService
   ) {
     this.siteUrl = configs.get('site_url');
@@ -57,7 +59,7 @@ export class JsonLdService {
       return;
     }
 
-    const fallback = `@${entity.ownerObj.username}'s video on Minds`;
+    const fallback = `@${entity.ownerObj.username}'s video on ${this.site.title}`;
     const parsedDesc = this.parseDescriptionText(entity.description);
 
     /**

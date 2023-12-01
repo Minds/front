@@ -27,6 +27,7 @@ import { RouterHistoryService } from '../../../common/services/router-history.se
 import { BoostModalV2LazyService } from '../../boost/modal-v2/boost-modal-v2-lazy.service';
 import getMetaAutoCaption from '../../../helpers/meta-auto-caption';
 import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
+import { SiteService } from '../../../common/services/site.service';
 
 /**
  * Base component to display an activity on a standalone page
@@ -74,6 +75,7 @@ export class NewsfeedSingleComponent {
     private routerHistory: RouterHistoryService,
     private boostModal: BoostModalV2LazyService,
     private embedLinkWhitelist: EmbedLinkWhitelistService,
+    private site: SiteService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.siteUrl = configs.get('site_url');
@@ -238,14 +240,14 @@ export class NewsfeedSingleComponent {
     const isImage = activity.custom_type && activity.custom_type === 'batch';
 
     if (this.isLivestream(activity)) {
-      title = `${activity.ownerObj.username} is streaming live on Minds`;
+      title = `${activity.ownerObj.username} is streaming live on ${this.site.title}`;
       addTitleSuffix = false;
-      description = `Subscribe to @${activity.ownerObj.username} on Minds`;
+      description = `Subscribe to @${activity.ownerObj.username} on ${this.site.title}`;
     } else {
       title =
         activity.title ||
         activity.message ||
-        `@${activity.ownerObj.username}'s post on Minds`;
+        `@${activity.ownerObj.username}'s post on ${this.site.title}`;
       title = title.trim();
 
       // Cut off the end of long titles and put them in the beginning of the description
@@ -271,7 +273,7 @@ export class NewsfeedSingleComponent {
           description = `Image from @${activity.ownerObj.username}.`;
         }
       } else {
-        description += `Subscribe to @${activity.ownerObj.username} on Minds`;
+        description += `Subscribe to @${activity.ownerObj.username} on ${this.site.title}`;
       }
     }
 
@@ -342,13 +344,13 @@ export class NewsfeedSingleComponent {
 
     if (activity.supermind?.is_reply) {
       this.metaService.setTwitterSummaryCard(
-        activity.ownerObj.name + "'s reply on Minds",
+        activity.ownerObj.name + `'s reply on ${this.site.title}`,
         this.siteUrl +
           'api/v3/newsfeed/activity/og-image/' +
           activity.remind_object.guid,
         'Get replies from ' +
           activity.ownerObj.name +
-          ' and elevate the discourse on Minds.'
+          ` and elevate the discourse on ${this.site.title}.`
       );
     }
   }

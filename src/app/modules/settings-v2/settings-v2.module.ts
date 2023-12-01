@@ -527,7 +527,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Deactivate Account',
               description:
-                'Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.',
+                'Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return.',
               id: 'deactivate-account',
             },
           },

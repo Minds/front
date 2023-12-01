@@ -12,6 +12,7 @@ import { ConfigsService } from './configs.service';
 import { DOCUMENT } from '@angular/common';
 import maxNum from '../../helpers/max';
 import { IS_TENANT_NETWORK } from '../injection-tokens/tenant-injection-tokens';
+import { HORIZONTAL_LOGO_PATH as DEFAULT_TENANT_HORIZONTAL_LOGO } from '../../modules/multi-tenant-network/services/config-image.service';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
@@ -414,18 +415,6 @@ export class MetaService {
       .setDescription(data.description || DEFAULT_META_DESCRIPTION)
       .setOgType('website')
       .setOgUrl(data.ogUrl || this.location.path())
-      .setOgImage(
-        data.ogImage || DEFAULT_OG_IMAGE,
-        data.ogImage
-          ? data.ogImageWidth && data.ogImageHeight
-            ? {
-                width: data.ogImageWidth,
-                height: data.ogImageHeight,
-              }
-            : null
-          : { width: DEFAULT_OG_IMAGE_WIDTH, height: DEFAULT_OG_IMAGE_HEIGHT }
-      )
-      .setThumbnail(data.ogImage ?? DEFAULT_OG_IMAGE)
       .setAuthor(data.author || this.defaultAuthor)
       .setOgAuthor(data.ogAuthor || this.defaultAuthor)
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
@@ -441,6 +430,20 @@ export class MetaService {
         `${DEFAULT_TENANT_FAVICON}?lastCache=${this.configs.get<number>(
           'last_cache'
         ) ?? 0}`
+      )
+        .setOgImage(DEFAULT_TENANT_HORIZONTAL_LOGO)
+        .setThumbnail(DEFAULT_TENANT_HORIZONTAL_LOGO);
+    } else {
+      this.setThumbnail(data.ogImage ?? DEFAULT_OG_IMAGE).setOgImage(
+        data.ogImage || DEFAULT_OG_IMAGE,
+        data.ogImage
+          ? data.ogImageWidth && data.ogImageHeight
+            ? {
+                width: data.ogImageWidth,
+                height: data.ogImageHeight,
+              }
+            : null
+          : { width: DEFAULT_OG_IMAGE_WIDTH, height: DEFAULT_OG_IMAGE_HEIGHT }
       );
     }
   }

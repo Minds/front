@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { proRoutes } from '../../modules/pro/pro.routes';
 import { ConfigsService } from './configs.service';
+import { IsTenantService } from './is-tenant.service';
 
 @Injectable()
 export class SiteService {
@@ -15,7 +16,11 @@ export class SiteService {
   }
 
   get title(): string {
-    return this.isProDomain ? this.pro.title || '' : 'Minds';
+    return this.isProDomain
+      ? this.pro.title || ''
+      : this.isTenant.is()
+      ? this.configs.get('site_name')
+      : 'Minds';
   }
 
   get oneLineHeadline(): string {
@@ -28,7 +33,11 @@ export class SiteService {
 
   private router$: Subscription;
 
-  constructor(private router: Router, private configs: ConfigsService) {}
+  constructor(
+    private router: Router,
+    private configs: ConfigsService,
+    private isTenant: IsTenantService
+  ) {}
 
   listen(): void {
     this.router$ = this.router.events.subscribe(
