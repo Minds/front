@@ -123,49 +123,56 @@
         <!-- NO RESULTS  -->
         <!-- --------------------------  -->
         <ng-container *ngIf="showEmptyFeedNotice$ | async">
-          <!-- NO SEARCH RESULTS -->
-          <ng-container *ngIf="!exploreTabContext">
-            <m-notice iconId="search">
-              <span m-notice__title i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_TITLE"
-                >We couldn’t find any results for “{{ query }}”.</span
-              >
-              <span
-                m-notice__description
-                i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_DESC"
-                >Try searching for something else, or check back later.</span
-              >
-              <ng-container
-                m-notice__actions
-                *ngIf="permissions.canCreatePost()"
-              >
+          <ng-container
+            *ngIf="session.getLoggedInUser(); else loggedOutEmptyFeedNotice"
+          >
+            <!-- NO SEARCH RESULTS -->
+            <ng-container *ngIf="!exploreTabContext">
+              <m-notice iconId="search">
+                <span
+                  m-notice__title
+                  i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_TITLE"
+                  >We couldn’t find any results for “{{ query }}”.</span
+                >
+                <span
+                  m-notice__description
+                  i18n="@@SEARCH__SEARCH__EMPTY_NOTICE_DESC"
+                  >Try searching for something else, or check back later.</span
+                >
                 <ng-container
-                  [ngTemplateOutlet]="noResultsActions"
-                ></ng-container>
-              </ng-container> </m-notice
-          ></ng-container>
-          <!-- NO RESULTS ON TRENDING TAB -->
-          <ng-container *ngIf="exploreTabContext">
-            <m-notice iconId="local_fire_department">
-              <span
-                m-notice__title
-                i18n="@@SEARCH__TRENDING__EMPTY_NOTICE_TITLE"
-                >Ignite the conversation</span
-              >
-              <span
-                m-notice__description
-                i18n="@@SEARCH__TRENDING__EMPTY_NOTICE_DESC"
-                >The top posts from across the network will appear here.</span
-              >
-              <ng-container
-                m-notice__actions
-                *ngIf="permissions.canCreatePost()"
-              >
+                  m-notice__actions
+                  *ngIf="permissions.canCreatePost()"
+                >
+                  <ng-container
+                    [ngTemplateOutlet]="noResultsActions"
+                  ></ng-container>
+                </ng-container> </m-notice
+            ></ng-container>
+            <!-- NO RESULTS ON TRENDING TAB -->
+            <ng-container *ngIf="exploreTabContext">
+              <m-notice iconId="local_fire_department">
+                <span
+                  m-notice__title
+                  i18n="@@SEARCH__TRENDING__EMPTY_NOTICE_TITLE"
+                  >Ignite the conversation</span
+                >
+                <span
+                  m-notice__description
+                  i18n="@@SEARCH__TRENDING__EMPTY_NOTICE_DESC"
+                  >The top posts from across the network will appear here.</span
+                >
                 <ng-container
-                  [ngTemplateOutlet]="noResultsActions"
-                ></ng-container>
-              </ng-container> </m-notice
+                  m-notice__actions
+                  *ngIf="permissions.canCreatePost()"
+                >
+                  <ng-container
+                    [ngTemplateOutlet]="noResultsActions"
+                  ></ng-container> </ng-container></m-notice></ng-container
           ></ng-container>
         </ng-container>
+        <ng-template #loggedOutEmptyFeedNotice>
+          <m-discovery__emptyGuestFeedNotice></m-discovery__emptyGuestFeedNotice>
+        </ng-template>
       </div>
     </ng-container>
   </div>

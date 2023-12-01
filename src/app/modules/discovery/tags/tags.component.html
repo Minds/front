@@ -91,23 +91,32 @@
 <!-- NO TAGS  -->
 <!-- --------------------------  -->
 <ng-template #noTags>
-  <m-notice iconId="tag" *ngIf="!(inProgress$ | async)">
-    <span m-notice__title i18n="@@DISCOVERY_TAGS__EMPTY_NOTICE_TITLE"
-      >Explore topics that are heating up</span
-    >
-    <span m-notice__description i18n="@@DISCOVERY_TAGS__EMPTY_NOTICE_DESC"
-      >The most frequently-used tags on the network will appear here.</span
-    >
-    <ng-container m-notice__actions>
-      <m-button
-        *ngIf="!(inProgress$ | async) && permissions.canCreatePost()"
-        (onAction)="openComposerModal()"
-        [solid]="true"
-        color="blue"
-        i18n="@@COMMON__CREATE_A_TAG__ACTION"
-        data-ref="sidebar-tags-create-a-tag-button"
-        >Create a tag</m-button
+  <ng-container
+    *ngIf="session.getLoggedInUser(); else loggedOutEmptyFeedNotice"
+  >
+    <m-notice iconId="tag" *ngIf="!(inProgress$ | async)">
+      <span m-notice__title i18n="@@DISCOVERY_TAGS__EMPTY_NOTICE_TITLE"
+        >Explore topics that are heating up</span
       >
-    </ng-container>
-  </m-notice>
+      <span m-notice__description i18n="@@DISCOVERY_TAGS__EMPTY_NOTICE_DESC"
+        >The most frequently-used tags on the network will appear here.</span
+      >
+      <ng-container m-notice__actions>
+        <m-button
+          *ngIf="!(inProgress$ | async) && permissions.canCreatePost()"
+          (onAction)="openComposerModal()"
+          [solid]="true"
+          color="blue"
+          i18n="@@COMMON__CREATE_A_TAG__ACTION"
+          data-ref="sidebar-tags-create-a-tag-button"
+          >Create a tag</m-button
+        >
+      </ng-container>
+    </m-notice></ng-container
+  >
+  <ng-template #loggedOutEmptyFeedNotice>
+    <m-discovery__emptyGuestFeedNotice
+      *ngIf="!(inProgress$ | async)"
+    ></m-discovery__emptyGuestFeedNotice>
+  </ng-template>
 </ng-template>

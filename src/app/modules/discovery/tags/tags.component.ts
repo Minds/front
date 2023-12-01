@@ -7,6 +7,7 @@ import { DiscoveryService } from '../discovery.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-discovery__tags',
@@ -27,7 +28,8 @@ export class DiscoveryTagsComponent implements OnInit, OnDestroy {
     private discoveryService: DiscoveryService,
     protected permissions: PermissionsService,
     private composerModal: ComposerModalService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    protected session: Session
   ) {}
 
   ngOnInit() {

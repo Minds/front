@@ -39,6 +39,7 @@ import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 import { LanguageModule } from '../language/language.module';
 import { AdsModule } from '../ads/ads.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { DiscoveryEmptyGuestFeedNoticeComponent } from './empty-guest-feed-notice/empty-guest-feed-notice.component';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoveryLatestFeedComponent,
     DiscoveryCardCarouselComponent,
     DiscoveryBuildYourAlgorithmComponent,
+    DiscoveryEmptyGuestFeedNoticeComponent,
   ],
   exports: [
     DiscoverySidebarTagsComponent,
@@ -95,6 +97,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoverySidebarTagsComponent,
     DiscoveryBuildYourAlgorithmComponent,
     DiscoverySettingsButtonComponent,
+    DiscoveryEmptyGuestFeedNoticeComponent,
   ],
   providers: [
     DiscoveryTrendsService,
