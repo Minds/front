@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { ProService } from './pro.service';
-import { ProMarketingComponent } from './marketing.component';
 import { ProSubscriptionComponent } from './subscription/subscription.component';
 import { ProChannelComponent } from './channel/channel.component';
 import { ProChannelLoginComponent } from './channel/login/login.component';
@@ -41,11 +40,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ProMarketingComponent,
-        canActivate: [TenantRedirectGuard],
-        data: {
-          preventLayoutReset: true,
-        },
+        redirectTo: '/about/pro',
+        pathMatch: 'full' as PathMatch,
       },
       {
         path: ':username/settings',
@@ -151,7 +147,6 @@ export const PRO_DOMAIN_ROUTES: Routes = [
   ],
   providers: [ProService, ChannelsV2Service],
   declarations: [
-    ProMarketingComponent,
     ProSubscriptionComponent,
     ProCategoriesComponent,
     ProChannelComponent,
