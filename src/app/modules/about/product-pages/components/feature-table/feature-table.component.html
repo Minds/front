@@ -21,12 +21,15 @@
           <p
             class="m-productPageFeatTable__priceStartingAt"
             [ngClass]="{
-              'm-productPageFeatTable__priceStartingAt--hidden': !featTableHeader?.priceStartingAt
+              'm-productPageFeatTable__priceStartingAt--hidden':
+                !featTableHeader?.priceStartingAt || featTableHeader?.noPrice
             }"
           >
             Starting at
           </p>
-          <span class="m-productPageFeatTable__headerBoxAmount"
+          <span
+            *ngIf="!featTableHeader?.noPrice; else noPriceSpacerTemplate"
+            class="m-productPageFeatTable__headerBoxAmount"
             ><strong>{{
               getMonthlyPrice(column.attributes.tier)
                 | async
@@ -146,12 +149,15 @@
         <p
           class="m-productPageFeatTable__priceStartingAt"
           [ngClass]="{
-            'm-productPageFeatTable__priceStartingAt--hidden': !featTableHeader?.priceStartingAt
+            'm-productPageFeatTable__priceStartingAt--hidden':
+              !featTableHeader?.priceStartingAt || featTableHeader?.noPrice
           }"
         >
           Starting at
         </p>
-        <span class="m-productPageFeatTable__headerBoxAmount"
+        <span
+          *ngIf="!featTableHeader?.noPrice; else noPriceSpacerTemplate"
+          class="m-productPageFeatTable__headerBoxAmount"
           ><strong>{{
             getMonthlyPrice(columns[mobileTab.index].attributes.tier)
               | async
@@ -227,3 +233,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #noPriceSpacerTemplate>
+  <div class="m-productPageFeatTable__headerBoxAmount--spacer"></div>
+</ng-template>

@@ -13,6 +13,8 @@ import { AnalyticsService, SnowplowContext } from './analytics';
 import { Client } from './api';
 import { Session } from './session';
 import { siteServiceMock } from '../mocks/services/site-service-mock.spec';
+import { ConfigsService } from '../common/services/configs.service';
+import { MockService } from '../utils/mock';
 
 describe('AnalyticsService', () => {
   let service: AnalyticsService;
@@ -30,6 +32,7 @@ describe('AnalyticsService', () => {
         },
         AnalyticsService,
         { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     });
     service = TestBed.inject(AnalyticsService);
