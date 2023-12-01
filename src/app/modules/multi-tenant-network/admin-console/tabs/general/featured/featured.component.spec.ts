@@ -303,11 +303,39 @@ describe('NetworkAdminConsoleFeaturedComponent', () => {
         name: 'Test User',
         type: 'user',
       };
+
+      (comp as any).onUserAdd(user);
+      tick();
+
+      expect(comp.featuredEntities$.getValue()).toEqual([
+        {
+          __typename: 'FeaturedUser',
+          id: '123',
+          entityGuid: '123',
+          username: 'testuser',
+          name: 'Test User',
+          autoSubscribe: true,
+          recommended: false,
+          tenantId: null,
+        } as any,
+      ]);
+    }));
+  });
+
+  describe('onGroupAdd', () => {
+    it('should add user to featuredEntities and call storeFeaturedEntityGQL.mutate', fakeAsync(() => {
+      comp.featuredEntities$.next([]);
+      const group: any = {
+        guid: '123',
+        name: 'Test Group',
+        'members:count': 2,
+        type: 'group',
+      };
       (comp as any).storeFeaturedEntityGQL.mutate.and.returnValue(
         of({ data: {} })
       );
 
-      (comp as any).onUserAdd(user);
+      (comp as any).onGroupAdd(group);
       tick();
 
       expect((comp as any).storeFeaturedEntityGQL.mutate).toHaveBeenCalledWith({
@@ -316,11 +344,67 @@ describe('NetworkAdminConsoleFeaturedComponent', () => {
       });
       expect(comp.featuredEntities$.getValue()).toEqual([
         {
-          __typename: 'FeaturedUser',
-          id: '123',
-          entityGuid: '123',
-          username: 'testuser',
-          name: 'Test User',
+          __typename: 'FeaturedGroup',
+          id: group.guid,
+          entityGuid: group.guid,
+          name: group.name,
+          membersCount: group['members:count'],
+          autoSubscribe: true,
+          recommended: false,
+          tenantId: null,
+        } as any,
+      ]);
+    }));
+
+    it('should show error toaster if storeFeaturedEntityGQL.mutate throws an error', fakeAsync(() => {
+      const group: any = {
+        guid: '123',
+        name: 'Test Group',
+        'members:count': 2,
+        type: 'group',
+      };
+      (comp as any).storeFeaturedEntityGQL.mutate.and.returnValue(
+        throwError(() => new Error('Error'))
+      );
+
+      (comp as any).onUserAdd(group);
+      tick();
+
+      expect((comp as any).toaster.error).toHaveBeenCalled();
+      expect((comp as any).featuredEntities$.getValue()).toEqual([]);
+    }));
+
+    it('should show warn toaster if group is already featured', fakeAsync(() => {
+      const group: any = {
+        guid: '123',
+        name: 'Test Group',
+        'members:count': 2,
+        type: 'group',
+      };
+
+      comp.featuredEntities$.next([
+        {
+          __typename: 'FeaturedGroup',
+          id: group.guid,
+          entityGuid: group.guid,
+          name: group.name,
+          membersCount: group['members:count'] ?? 0,
+          autoSubscribe: true,
+          recommended: false,
+          tenantId: null,
+        } as any,
+      ]);
+
+      (comp as any).onGroupAdd(group);
+      tick();
+
+      expect(comp.featuredEntities$.getValue()).toEqual([
+        {
+          __typename: 'FeaturedGroup',
+          id: group.guid,
+          entityGuid: group.guid,
+          name: group.name,
+          membersCount: group['members:count'] ?? 0,
           autoSubscribe: true,
           recommended: false,
           tenantId: null,
