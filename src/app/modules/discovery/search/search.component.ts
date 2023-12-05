@@ -18,6 +18,7 @@ import { MetaService } from '../../../common/services/meta.service';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
 import { Session } from '../../../services/session';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
+import { SiteService } from '../../../common/services/site.service';
 
 @Component({
   selector: 'm-discovery__search',
@@ -67,7 +68,8 @@ export class DiscoverySearchComponent {
     private cd: ChangeDetectorRef,
     private session: Session,
     public cardCarouselService: CardCarouselService,
-    private routerHistory: RouterHistoryService
+    private routerHistory: RouterHistoryService,
+    private site: SiteService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -124,21 +126,21 @@ export class DiscoverySearchComponent {
   }
 
   setSeo() {
-    this.metaService.setTitle(this.getPageTitle());
-    this.metaService.setDescription(`Discover ${this.q} posts on Minds.`);
+    this.metaService.setTitle(this.getPageTitle(), false);
+    this.metaService.setDescription(
+      `Discover ${this.q} on ${this.site.title}.`
+    );
     this.metaService.setCanonicalUrl(
       `/discovery/search?q=${this.q}&f=${this.filter}&t=${this.type$.value}`
     );
   }
 
   getPageTitle(): string {
-    let title;
     if (this.exploreTabContext) {
-      title = 'Discovery / Trending';
+      return 'Discovery / Trending';
     } else {
-      title = this.q ? `${this.q} - Minds Search` : `Minds Search`;
+      return this.q ? `${this.q} - ${this.site.title}` : `${this.site.title}`;
     }
-    return title;
   }
 
   ngOnDestroy() {
