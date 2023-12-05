@@ -1,5 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 import { EmbedService } from '../../../services/embed.service';
+import { SiteService } from '../../services/site.service';
 
 /**
  * Social media icons that allow users to easily share links to blogs and single activity pages.
@@ -14,15 +15,14 @@ import { EmbedService } from '../../../services/embed.service';
 })
 export class SocialIcons {
   url: string = '';
-  title: string = 'Shared via Minds.com';
+  title: string = `Shared via ${this.site.title}`;
   encodedUrl: string = '';
-  encodedTitle: string = 'Shared%20via%20Minds.com';
 
   embedCode: string = '';
   embedModalOpen: boolean = false;
   embedModalClosed: EventEmitter<any> = new EventEmitter();
 
-  constructor(public embed: EmbedService) {}
+  constructor(public embed: EmbedService, private site: SiteService) {}
 
   set _url(value: string) {
     this.url = value;
@@ -31,11 +31,14 @@ export class SocialIcons {
 
   set _title(value: string) {
     this.title = value;
-    this.encodedTitle = encodeURI(this.title);
   }
 
   set _embed(object: any) {
     this.embedCode = this.embed.getIframeFromObject(object);
+  }
+
+  get encodedTitle() {
+    return encodeURI(this.title);
   }
 
   copy(e) {

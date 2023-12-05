@@ -23,7 +23,7 @@ const routes: Routes = [
     component: LoginComponent,
     data: {
       title: 'Login',
-      description: 'Login to Minds or create a channel',
+      description: 'Login or create a channel',
       preventLayoutReset: true,
     },
   },
@@ -48,7 +48,7 @@ const routes: Routes = [
     component: ForgotPasswordComponent,
     data: {
       title: 'Forgot Password',
-      description: 'Reset your password on Minds',
+      description: 'Reset your password',
       preventLayoutReset: true,
     },
   },

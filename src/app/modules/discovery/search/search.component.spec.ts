@@ -16,6 +16,7 @@ import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { DiscoverySearchComponent } from './search.component';
+import { SiteService } from '../../../common/services/site.service';
 
 describe('DiscoverySearchComponent', () => {
   let comp: DiscoverySearchComponent;
@@ -80,6 +81,10 @@ describe('DiscoverySearchComponent', () => {
           {
             provider: RouterHistoryService,
             useValue: MockService(RouterHistoryService),
+          },
+          {
+            provide: SiteService,
+            useValue: MockService(SiteService),
           },
         ],
       })

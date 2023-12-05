@@ -22,6 +22,7 @@ import { Navigation as NavigationService } from '../../services/navigation';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { BehaviorSubject } from 'rxjs';
 import { ContentSettingsModalService } from '../content-settings/content-settings-modal.service';
+import { SiteService } from '../../common/services/site.service';
 
 let activatedRouteMock = new (function() {
   this.queryParams = new BehaviorSubject({
@@ -85,6 +86,10 @@ describe('RegisterComponent', () => {
           {
             provide: ContentSettingsModalService,
             useValue: MockService(ContentSettingsModalService),
+          },
+          {
+            provide: SiteService,
+            useValue: MockService(SiteService),
           },
         ],
       }).compileComponents();
