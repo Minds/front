@@ -4,6 +4,8 @@ import { AbstractSubscriberComponent } from '../../../../../common/components/ab
 import { NotificationsSettingsV2Service } from '../notifications-settings-v3.service';
 import { PushNotificationGroup } from '../notifications-settings-v3.type';
 import { PushNotificationService } from './../../../../../common/services/push-notification.service';
+import { Storage } from '../../../../../services/storage';
+import { FALSE } from 'sass';
 
 // toggle state
 export type ToggleState = 'on' | 'off';
@@ -14,6 +16,8 @@ export type PushNotificationToggleType = {
   state: ToggleState;
   subtext?: string;
 };
+
+export const NOTIFICATION_SOUNDS_STORAGE_KEY = 'play_notification_sounds';
 
 /**
  * Push notification settings component.
@@ -62,9 +66,15 @@ export class SettingsV2PushNotificationsV3Component
     all: '',
   };
 
+  /**
+   * This one is standalone because it is not a push notif setting
+   */
+  protected soundToggleState: ToggleState;
+
   constructor(
     private service: NotificationsSettingsV2Service,
-    public pushNotificationService: PushNotificationService
+    public pushNotificationService: PushNotificationService,
+    private storage: Storage
   ) {
     super();
   }
@@ -72,6 +82,7 @@ export class SettingsV2PushNotificationsV3Component
   ngOnInit(): void {
     this.subscriptions.push(
       this.service.pushSettings$.subscribe(response => {
+        // Initialize all the push notification settings
         for (const setting of response.settings) {
           this.toggles.push({
             notificationGroup: setting.notification_group as PushNotificationGroup,
@@ -79,6 +90,10 @@ export class SettingsV2PushNotificationsV3Component
             subtext: this.subtextMap[setting.notification_group],
           });
         }
+
+        // Initialize notification sound setting
+        this.soundToggleState = this.initializeSoundToggleState();
+
         this.initializing$.next(false);
       })
     );
@@ -177,5 +192,29 @@ export class SettingsV2PushNotificationsV3Component
     } catch (e) {
       console.error(e);
     }
+  }
+
+  /**
+   * Get sound toggle state from local storage. On by default
+   */
+  private initializeSoundToggleState(): ToggleState {
+    const fromStorage = this.storage.get(NOTIFICATION_SOUNDS_STORAGE_KEY);
+
+    return fromStorage === 'true' || fromStorage === null ? 'on' : 'off';
+  }
+
+  /**
+   * Update sound toggle and save state to local storage
+   */
+  protected toggleSound(state: ToggleState): void {
+    this.inProgress$.next(true);
+
+    this.soundToggleState = state;
+    this.storage.set(
+      NOTIFICATION_SOUNDS_STORAGE_KEY,
+      state === 'on' ? true : false
+    );
+
+    this.inProgress$.next(false);
   }
 }
