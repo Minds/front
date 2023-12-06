@@ -2,6 +2,9 @@
 
 :host {
   .m-defaultFeedContainer__pageContainer {
+    .m-pageLayout__pane--main {
+      width: 100%;
+    }
     .m-defaultFeedContainer__sidebar {
       padding: 20px 0 20px 40px;
 

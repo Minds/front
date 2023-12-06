@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NestedMenu } from '../../common/layout/nested-menu/nested-menu.component';
 import { Session } from '../../services/session';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SettingsV2Service } from './settings-v2.service';
 import { ToasterService } from '../../common/services/toaster.service';
@@ -313,7 +313,6 @@ export class SettingsV2Component implements OnInit {
         ],
       },
       {
-        shouldShow: this.isNotNetwork.bind(this),
         header: {
           label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__HEADER__LABEL:Content Migration`,
           id: 'content-migration',
@@ -322,6 +321,11 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__YOUTUBE__LABEL:Youtube`,
             id: 'youtube-migration',
+            shouldShow: this.isNotNetwork.bind(this),
+          },
+          {
+            label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__RSS_SYNC__LABEL:RSS Sync`,
+            id: 'rss-sync',
           },
         ],
       },

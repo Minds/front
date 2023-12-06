@@ -140,6 +140,12 @@
             }
           }
         }
+
+        .m-productPageFeatTable__headerBoxAmount--spacer {
+          height: 38px;
+          margin-bottom: $spacing6;
+        }
+
         .m-productPageFeatTable__tableCell {
           padding: $spacing4;
           box-sizing: border-box;

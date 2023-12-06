@@ -799,6 +799,7 @@ export type ComponentV2ProductFeatureTableHeader = {
   __typename?: 'ComponentV2ProductFeatureTableHeader';
   button: ComponentV2ProductActionButton;
   id: Scalars['ID']['output'];
+  noPrice?: Maybe<Scalars['Boolean']['output']>;
   priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
   title: Scalars['String']['output'];
 };
@@ -808,6 +809,7 @@ export type ComponentV2ProductFeatureTableHeaderFiltersInput = {
     Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
   >;
   button?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
+  noPrice?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>;
   or?: InputMaybe<
     Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
@@ -819,6 +821,7 @@ export type ComponentV2ProductFeatureTableHeaderFiltersInput = {
 export type ComponentV2ProductFeatureTableHeaderInput = {
   button?: InputMaybe<ComponentV2ProductActionButtonInput>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  noPrice?: InputMaybe<Scalars['Boolean']['input']>;
   priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -931,6 +934,7 @@ export enum Enum_Feattablecolumn_Tier {
   NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
+  SelfHosted = 'self_hosted',
 }
 
 export enum Enum_Productplan_Tier {
@@ -941,6 +945,7 @@ export enum Enum_Productplan_Tier {
   NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
+  SelfHosted = 'self_hosted',
 }
 
 export enum Enum_Upgradepage_Cardid {
@@ -2129,6 +2134,7 @@ export type ProductPlan = {
   button: ComponentV2ProductActionButton;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   mostPopular?: Maybe<Scalars['Boolean']['output']>;
+  noPrice?: Maybe<Scalars['Boolean']['output']>;
   perks?: Maybe<Array<Maybe<ComponentV2ProductPerk>>>;
   perksTitle: Scalars['String']['output'];
   priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
@@ -2168,6 +2174,7 @@ export type ProductPlanFiltersInput = {
   createdAt?: InputMaybe<DateTimeFilterInput>;
   id?: InputMaybe<IdFilterInput>;
   mostPopular?: InputMaybe<BooleanFilterInput>;
+  noPrice?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<ProductPlanFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ProductPlanFiltersInput>>>;
   perks?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
@@ -2183,6 +2190,7 @@ export type ProductPlanFiltersInput = {
 export type ProductPlanInput = {
   button?: InputMaybe<ComponentV2ProductActionButtonInput>;
   mostPopular?: InputMaybe<Scalars['Boolean']['input']>;
+  noPrice?: InputMaybe<Scalars['Boolean']['input']>;
   perks?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkInput>>>;
   perksTitle?: InputMaybe<Scalars['String']['input']>;
   priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3255,6 +3263,7 @@ export type GetV2ProductPageBySlugQuery = {
                       __typename?: 'ComponentV2ProductFeatureTableHeader';
                       title: string;
                       priceStartingAt?: boolean | null;
+                      noPrice?: boolean | null;
                       button: {
                         __typename?: 'ComponentV2ProductActionButton';
                         text: string;
@@ -3317,6 +3326,7 @@ export type GetV2ProductPageBySlugQuery = {
                     subtitle: string;
                     mostPopular?: boolean | null;
                     priceStartingAt?: boolean | null;
+                    noPrice?: boolean | null;
                     perksTitle: string;
                     button: {
                       __typename?: 'ComponentV2ProductActionButton';
@@ -3607,6 +3617,67 @@ export type FetchOnboardingV5VersionsQuery = {
   } | null;
 };
 
+export type FetchTenantOnboardingV5VersionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type FetchTenantOnboardingV5VersionsQuery = {
+  __typename?: 'Query';
+  onboardingV5Versions?: {
+    __typename?: 'OnboardingV5VersionEntityResponseCollection';
+    data: Array<{
+      __typename?: 'OnboardingV5VersionEntity';
+      attributes?: {
+        __typename?: 'OnboardingV5Version';
+        publishedAt?: any | null;
+        steps: Array<
+          | {
+              __typename: 'ComponentOnboardingV5OnboardingStep';
+              id: string;
+              title: string;
+              description: string;
+              stepKey: string;
+              stepType: Enum_Componentonboardingv5Onboardingstep_Steptype;
+              verifyEmailForm?: {
+                __typename: 'ComponentOnboardingV5VerifyEmailStep';
+                id: string;
+                inputLabel: string;
+                inputPlaceholder?: string | null;
+                resendCodeText: string;
+                resendCodeActionText: string;
+                changeEmailActionText: string;
+                changeEmailTitle: string;
+                changeEmailDescription: string;
+                changeEmailInputLabel: string;
+                changeEmailInputPlaceholder?: string | null;
+                changeEmailActionButton: {
+                  __typename: 'ComponentOnboardingV5ActionButton';
+                  id: string;
+                  text: string;
+                  dataRef?: string | null;
+                };
+              } | null;
+              actionButton?: {
+                __typename: 'ComponentOnboardingV5ActionButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+              skipButton?: {
+                __typename: 'ComponentOnboardingV5SkipButton';
+                id: string;
+                text: string;
+                dataRef?: string | null;
+              } | null;
+            }
+          | { __typename: 'Error' }
+          | null
+        >;
+      } | null;
+    }>;
+  } | null;
+};
+
 export type UpgradePageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type UpgradePageQuery = {
@@ -3699,6 +3770,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                     subtitle
                     mostPopular
                     priceStartingAt
+                    noPrice
                     button {
                       text
                       dataRef
@@ -3726,6 +3798,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                     featTableHeader {
                       title
                       priceStartingAt
+                      noPrice
                       button {
                         text
                         dataRef
@@ -4127,6 +4200,72 @@ export class FetchOnboardingV5VersionsGQL extends Apollo.Query<
   FetchOnboardingV5VersionsQueryVariables
 > {
   document = FetchOnboardingV5VersionsDocument;
+  client = 'strapi';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FetchTenantOnboardingV5VersionsDocument = gql`
+  query FetchTenantOnboardingV5Versions {
+    onboardingV5Versions {
+      data {
+        attributes {
+          publishedAt
+          steps {
+            __typename
+            ... on ComponentOnboardingV5OnboardingStep {
+              id
+              title
+              description
+              stepKey
+              stepType
+              verifyEmailForm {
+                id
+                __typename
+                inputLabel
+                inputPlaceholder
+                resendCodeText
+                resendCodeActionText
+                changeEmailActionText
+                changeEmailTitle
+                changeEmailDescription
+                changeEmailInputLabel
+                changeEmailInputPlaceholder
+                changeEmailActionButton {
+                  id
+                  __typename
+                  text
+                  dataRef
+                }
+              }
+              actionButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+              skipButton {
+                id
+                __typename
+                text
+                dataRef
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchTenantOnboardingV5VersionsGQL extends Apollo.Query<
+  FetchTenantOnboardingV5VersionsQuery,
+  FetchTenantOnboardingV5VersionsQueryVariables
+> {
+  document = FetchTenantOnboardingV5VersionsDocument;
   client = 'strapi';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

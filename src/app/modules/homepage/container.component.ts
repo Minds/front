@@ -3,6 +3,8 @@ import { MetaService } from '../../common/services/meta.service';
 import { GuestModeExperimentService } from '../experiments/sub-services/guest-mode-experiment.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ResetPasswordModalService } from '../auth/reset-password-modal/reset-password-modal.service';
+import { SiteService } from '../../common/services/site.service';
+import { IsTenantService } from '../../common/services/is-tenant.service';
 
 /**
  * Routes users to a "homepage" depending on active experiments.
@@ -18,7 +20,9 @@ export class HomepageContainerComponent implements OnInit {
     private guestModeExperiment: GuestModeExperimentService,
     private route: ActivatedRoute,
     private router: Router,
-    private resetPasswordModal: ResetPasswordModalService
+    private resetPasswordModal: ResetPasswordModalService,
+    private site: SiteService,
+    private isTenant: IsTenantService
   ) {}
 
   isGuestMode: boolean;
@@ -48,11 +52,14 @@ export class HomepageContainerComponent implements OnInit {
       }
     });
 
+    const siteName = this.site.title;
+    const siteDescription = !this.isTenant.is()
+      ? 'Elevate the global conversation through Internet freedom. Speak freely, protect your privacy, earn crypto, and take back control of your social media'
+      : ' A social app.';
+
     this.metaService
-      .setTitle(`Minds`, false)
-      .setDescription(
-        'Elevate the global conversation through Internet freedom. Speak freely, protect your privacy, earn crypto, and take back control of your social media'
-      )
+      .setTitle(siteName, false)
+      .setDescription(siteDescription)
       .setCanonicalUrl('/')
       .setOgUrl('/');
 

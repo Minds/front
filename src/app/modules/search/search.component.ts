@@ -48,6 +48,7 @@ import { QueryRef } from 'apollo-angular';
 import { FeedsService } from '../../common/services/feeds.service';
 import { PermissionsService } from '../../common/services/permissions.service';
 import { ComposerModalService } from '../composer/components/modal/modal.service';
+import { SiteService } from '../../common/services/site.service';
 
 const PAGE_SIZE = 12;
 
@@ -170,7 +171,8 @@ export class SearchComponent {
     private legacyDiscoveryFeedsService: DiscoveryFeedsService,
     protected permissions: PermissionsService,
     private composerModal: ComposerModalService,
-    private injector: Injector
+    private injector: Injector,
+    private site: SiteService
   ) {
     this.cdnUrl = configs.get('cdn_url');
 
@@ -418,8 +420,9 @@ export class SearchComponent {
   }
 
   setSeo() {
-    this.metaService.setTitle(`${this.query} - Minds Search`);
-    this.metaService.setDescription(`Discover ${this.query} posts on Minds.`);
+    const siteTitle = this.site.title;
+    this.metaService.setTitle(`${this.query} - ${siteTitle}`, false);
+    this.metaService.setDescription(`Discover ${this.query} on ${siteTitle}.`);
     this.metaService.setCanonicalUrl(
       `/search?q=${this.query}&f=${this.filter}&t=${this.mediaType}`
     );

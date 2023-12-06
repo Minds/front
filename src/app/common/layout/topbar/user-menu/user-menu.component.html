@@ -60,6 +60,7 @@
     <m-dropdownMenu__item
       [externalLink]="getHelpdeskRedirectUrl()"
       data-ref="topnav-usermenu-help-zendesk"
+      *mIfTenant="false"
     >
       <span i18n="@@COMMON__HELP">Help</span>
     </m-dropdownMenu__item>

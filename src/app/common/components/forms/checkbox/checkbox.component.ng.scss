@@ -17,6 +17,10 @@
     }
     font-size: 13px;
 
+    &.m-formInput__checkbox--disabled {
+      cursor: default;
+    }
+
     .m-formInputCheckbox__visibleWrapper {
       display: flex;
     }
@@ -74,6 +78,10 @@
       cursor: pointer;
       height: 0;
       width: 0;
+
+      &[disabled] {
+        cursor: default;
+      }
 
       &:checked ~ .m-formInputCheckbox__visibleWrapper {
         .m-formInputCheckbox__custom {

@@ -39,6 +39,9 @@
     </p>
   </ng-container>
 
+  <!-- ---------------------------------- -->
+  <!-- ALL ON/OFF -->
+  <!-- ---------------------------------- -->
   <div
     class="
       m-pushNotifSettings__optionContainer
@@ -57,9 +60,31 @@
       >All push notifications enabled</span
     >
   </div>
+  <!-- ---------------------------------- -->
+  <!-- SOUND TOGGLE -->
+  <!-- ---------------------------------- -->
+  <div
+    class="
+      m-pushNotifSettings__optionContainer
+      m-pushNotifSettings__optionContainer--horizontal
+    "
+  >
+    <m-toggle
+      [mModel]="soundToggleState"
+      (mModelChange)="toggleSound($event)"
+      leftValue="off"
+      rightValue="on"
+      offState="off"
+    ></m-toggle>
+    <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__SOUND_ENABLED"
+      >Notification sounds enabled</span
+    >
+  </div>
 
   <hr />
-
+  <!-- ---------------------------------- -->
+  <!-- ALL OTHER TOGGLES -->
+  <!-- ---------------------------------- -->
   <h5 i18n="@@SETTINGS_NOTIFICATIONS_PUSH__RELATED_TO_POSTS">
     Related to your posts and channel
   </h5>

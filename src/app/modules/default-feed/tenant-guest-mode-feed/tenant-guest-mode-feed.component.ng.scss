@@ -1,0 +1,9 @@
+@import 'defaults';
+
+:host {
+  m-activity {
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary) !important;
+    }
+  }
+}

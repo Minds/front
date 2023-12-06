@@ -43,6 +43,7 @@
             >
               <img
                 [src]="getSmallLogoSrc$() | async"
+                [ngClass]="{ 'm-topbar__tenantLogo--square': isTenantNetwork }"
                 class="m-topbar__logo--bulb"
                 alt="Home"
               />
@@ -54,6 +55,9 @@
                     : !(isDarkTheme$ | async)
                 "
                 [src]="getFullLogoSrc$('light') | async"
+                [ngClass]="{
+                  'm-topbar__tenantLogo--horizontal': isTenantNetwork
+                }"
                 class="m-topbar__logo--full"
                 alt="minds"
               />
@@ -65,6 +69,9 @@
                     : (isDarkTheme$ | async)
                 "
                 [src]="getFullLogoSrc$('dark') | async"
+                [ngClass]="{
+                  'm-topbar__tenantLogo--horizontal': isTenantNetwork
+                }"
                 class="m-topbar__logo--full"
                 alt="minds"
               />
@@ -78,7 +85,7 @@
             </ng-template>
           </a>
         </h1>
-        <m-environmentFlag></m-environmentFlag>
+        <m-environmentFlag *ngIf="!isTenantNetwork"></m-environmentFlag>
         <div
           class="m-topbarNav__item m-topbarNav__item--hamburger"
           (click)="toggleSidebarNav()"

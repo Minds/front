@@ -1,0 +1,10 @@
+mutation RefreshRSSFeed($feedId: String!) {
+    refreshRssFeed(feedId: $feedId) {
+        feedId
+        title
+        url
+        createdAtTimestamp
+        lastFetchAtTimestamp
+        lastFetchStatus
+    }
+}

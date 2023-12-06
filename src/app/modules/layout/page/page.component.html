@@ -59,7 +59,9 @@
   [open]="false"
 ></m-modal-signup>
 
-<m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
-<m-toaster></m-toaster>
-<!-- <m-appPrompt *ngIf="isMobileOrTablet()"></m-appPrompt> -->
-<m-chatwootWidget *ngIf="isChatwootExperimentActive()"></m-chatwootWidget>
+<ng-container *mIfBrowser>
+  <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
+  <m-toaster></m-toaster>
+  <!-- <m-appPrompt *ngIf="isMobileOrTablet()"></m-appPrompt> -->
+  <m-chatwootWidget *ngIf="isChatwootExperimentActive()"></m-chatwootWidget>
+</ng-container>

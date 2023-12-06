@@ -1,0 +1,34 @@
+<div class="m-defaultFeed__feed">
+  <!--actual feed-->
+  <ng-container
+    *ngFor="
+      let edge of edges$ | async | slice: 0:(pageSize$ | async) as edges;
+      let i = index;
+      trackBy: trackByFn
+    "
+  >
+    <!----------------
+        Activity
+      ----------------->
+    <m-activity
+      *ngIf="edge.node"
+      class="m-defaultFeed__activity"
+      [entity]="edge.node.legacy"
+      [displayOptions]="{
+        showOnlyCommentsInput: true,
+        isFeed: true,
+        showExplicitVoteButtons: false,
+        hideTopBorder: i === 0
+      }"
+      [slot]="i + 1"
+    ></m-activity>
+  </ng-container>
+
+  <infinite-scroll
+    (load)="fetchMore()"
+    [moreData]="canShowMoreEdges$ | async"
+    [inProgress]="inProgress"
+    [endText]="newsfeedEndText"
+  >
+  </infinite-scroll>
+</div>

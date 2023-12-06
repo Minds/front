@@ -152,6 +152,11 @@ $maxPricingCardWidth: 278px;
           }
         }
 
+        .m-productPagePricingCards__cardPricing--spacer {
+          height: 38px;
+          margin-bottom: $spacing7;
+        }
+
         m-productPage__button {
           display: block;
           margin-bottom: $spacing10;

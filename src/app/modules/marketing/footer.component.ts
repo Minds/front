@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import {
   Footer,
   GetFooterGQL,
@@ -7,6 +14,7 @@ import {
 import { BehaviorSubject, Subscription, take } from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client';
 import { STRAPI_URL } from '../../common/injection-tokens/url-injection-tokens';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Marketing footer component. Will conditionally load data from CMS if data is
@@ -39,11 +47,12 @@ export class MarketingFooterComponent implements OnInit, OnDestroy {
 
   constructor(
     private getFooterGql: GetFooterGQL,
-    @Inject(STRAPI_URL) public readonly strapiUrl
+    @Inject(STRAPI_URL) public readonly strapiUrl,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    if (!this.data) {
+    if (!this.data && isPlatformBrowser(this.platformId)) {
       this.getFooterSubscription = this.getFooterGql
         .fetch()
         .pipe(take(1))

@@ -4,6 +4,10 @@ $layoutMax2ColWidth: '1040px';
 
 :host {
   .m-newsfeed__single {
+    .m-pageLayout__pane--main {
+      width: 100%;
+    }
+
     .minds-list {
       padding: 0;
     }

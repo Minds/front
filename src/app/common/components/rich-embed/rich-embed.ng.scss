@@ -4,7 +4,7 @@
   .m-rich-embed-src {
     margin-bottom: $spacing4;
 
-    &.m-has-inline-embed {
+    &.m-richEmbedPreview--modal.m-has-inline-embed {
       border: none !important;
     }
   }

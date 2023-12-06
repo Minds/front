@@ -75,6 +75,8 @@ import { SettingsV2AffiliatesComponent } from './affiliates/affiliates.component
 import { experimentVariationGuard } from '../experiments/experiment-variation.guard';
 import { loggedOutExplainerScreenGuard } from '../explainer-screens/guards/logged-out-explainer-screen.guard';
 import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
+import { SettingsV2RssSyncComponent } from './other/rss-sync/rss-sync.component';
+import { LoggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -496,6 +498,15 @@ const SETTINGS_V2_ROUTES: Routes = [
             ],
           },
           {
+            path: 'rss-sync',
+            component: SettingsV2RssSyncComponent,
+            canActivate: [LoggedInRedirectGuard],
+            data: {
+              title: 'RSS Sync',
+              standardHeader: false,
+            },
+          },
+          {
             path: 'twitter-sync',
             canActivate: [
               TenantRedirectGuard,
@@ -516,7 +527,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Deactivate Account',
               description:
-                'Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.',
+                'Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return.',
               id: 'deactivate-account',
             },
           },
@@ -614,6 +625,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     //
     SettingsV2MessengerComponent,
     SettingsV2WalletComponent,
+    SettingsV2RssSyncComponent,
     SettingsV2NostrComponent,
     SettingsV2AffiliatesComponent,
   ],

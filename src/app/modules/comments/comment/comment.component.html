@@ -556,7 +556,7 @@
             <!-- Edit -->
             <m-dropdownMenu__item
               *ngIf="
-                (_compact.owner_guid == session.getLoggedInUser()?.guid ||
+                (comment.owner_guid == session.getLoggedInUser()?.guid ||
                   session.isAdmin() ||
                   canEdit) &&
                 permissions.canComment()

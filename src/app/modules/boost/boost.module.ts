@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdsModule } from '../ads/ads.module';
-
-import { BoostMarketingComponent } from './marketing.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { BoostConsoleV2Component } from './console-v2/console-v2.component';
 import { BoostConsoleFilterBarComponent } from './console-v2/list/filter-bar/filter-bar.component';
@@ -35,14 +32,6 @@ const boostRoutes: Routes = [
       ogImage: '/assets/product-pages/boost/boost-1.jpg',
     },
   },
-  {
-    path: 'boost',
-    component: BoostMarketingComponent,
-    canActivate: [TenantRedirectGuard],
-    data: {
-      preventLayoutReset: true,
-    },
-  },
 ];
 
 @NgModule({
@@ -59,7 +48,6 @@ const boostRoutes: Routes = [
     NoticesModule,
   ],
   declarations: [
-    BoostMarketingComponent,
     BoostConsoleV2Component,
     BoostConsoleFilterBarComponent,
     BoostConsoleListComponent,

@@ -1,8 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OnboardingV5Component } from './onboarding-v5.component';
 import { OnboardingV5Service } from '../services/onboarding-v5.service';
-import { Subscription, fromEvent } from 'rxjs';
+import { BehaviorSubject, Subscription, fromEvent } from 'rxjs';
 import { MockService } from '../../../utils/mock';
+import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import {
+  HORIZONTAL_LOGO_PATH,
+  MultiTenantConfigImageService,
+} from '../../multi-tenant-network/services/config-image.service';
 
 describe('OnboardingV5Component', () => {
   let comp: OnboardingV5Component;
@@ -15,6 +20,21 @@ describe('OnboardingV5Component', () => {
         {
           provide: OnboardingV5Service,
           useValue: MockService(OnboardingV5Service),
+        },
+        {
+          provide: MultiTenantConfigImageService,
+          useValue: MockService(MultiTenantConfigImageService, {
+            has: ['horizontalLogoPath$'],
+            props: {
+              horizontalLogoPath$: {
+                get: () => new BehaviorSubject<string>(HORIZONTAL_LOGO_PATH),
+              },
+            },
+          }),
+        },
+        {
+          provide: IS_TENANT_NETWORK,
+          useValue: false,
         },
       ],
     }).compileComponents();

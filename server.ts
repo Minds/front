@@ -64,42 +64,6 @@ export function app() {
     res.end();
   });
 
-  // cache
-  // const NodeCache = require('node-cache');
-  // const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
-
-  // const cache = () => {
-  //   return (req, res, next) => {
-  //     const sessKey =
-  //       Object.entries(req.cookies)
-  //         .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
-  //         .join(':') || 'loggedout';
-  //     const key =
-  //       `__express__/${sessKey}/` +
-  //       `${req.headers.host}` +
-  //       (req.originalUrl || req.url) +
-  //       `/${req.headers['x-minds-locale']}` +
-  //       (isMobileOrTablet() ? '/mobile' : '/desktop');
-  //     const exists = myCache.has(key);
-  //     if (exists) {
-  //       console.log(`from cache: ${key}`);
-  //       const cachedBody = myCache.get(key);
-  //       res.send(cachedBody);
-  //       res.end();
-  //       return;
-  //     } else {
-  //       res.sendResponse = res.send;
-  //       res.send = body => {
-  //         if (res.status === 200) {
-  //           myCache.set(key, body);
-  //         }
-  //         res.sendResponse(body);
-  //       };
-  //       next();
-  //     }
-  //   };
-  // };
-
   const render = (
     bootstrap: any,
     getDocument?: (locale: string) => string
@@ -114,51 +78,59 @@ export function app() {
 
     // tslint:disable-next-line:no-console
     console.time(`GET: ${url}`);
-    const html = await renderModule(bootstrap, {
-      url: `${req.protocol}://${req.get('host') || ''}${req.originalUrl}`,
-      document: getDocument(locale),
-      extraProviders: [
-        // for http and cookies
-        {
-          provide: REQUEST,
-          useValue: req,
-        },
-        {
-          provide: RESPONSE,
-          useValue: res,
-        },
-        // for cookie
-        {
-          provide: NgxRequest,
-          useValue: req,
-        },
-        {
-          provide: NgxResponse,
-          useValue: res,
-        },
-        // for absolute path
-        {
-          provide: 'ORIGIN_URL',
-          useValue: `${http}://${req.headers.host}`,
-        },
-        // for initial query params before router loads
-        {
-          provide: 'QUERY_STRING',
-          useFactory: () => _url.parse(req.url, true).search || '',
-          deps: [],
-        },
-        {
-          provide: TRANSLATIONS,
-          useValue: getLocaleTranslations(locale),
-        },
-        { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
-        // { provide: LOCALE_ID, useValue: locale },
-        { provide: SENTRY, useValue: Sentry },
-      ],
-    });
-    res.send(html);
-    console.timeEnd(`GET: ${url}`);
-    res.end();
+
+    let html: string;
+
+    try {
+      html = await renderModule(bootstrap, {
+        url: `${req.protocol}://${req.get('host') || ''}${req.originalUrl}`,
+        document: getDocument(locale),
+        extraProviders: [
+          // for http and cookies
+          {
+            provide: REQUEST,
+            useValue: req,
+          },
+          {
+            provide: RESPONSE,
+            useValue: res,
+          },
+          // for cookie
+          {
+            provide: NgxRequest,
+            useValue: req,
+          },
+          {
+            provide: NgxResponse,
+            useValue: res,
+          },
+          // for absolute path
+          {
+            provide: 'ORIGIN_URL',
+            useValue: `${http}://${req.headers.host}`,
+          },
+          // for initial query params before router loads
+          {
+            provide: 'QUERY_STRING',
+            useFactory: () => _url.parse(req.url, true).search || '',
+            deps: [],
+          },
+          {
+            provide: TRANSLATIONS,
+            useValue: getLocaleTranslations(locale),
+          },
+          { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+          // { provide: LOCALE_ID, useValue: locale },
+          { provide: SENTRY, useValue: Sentry },
+        ],
+      });
+    } catch (err) {
+      html = err.toString();
+    } finally {
+      res.send(html);
+      console.timeEnd(`GET: ${url}`);
+      res.end();
+    }
   };
 
   // embed route loads its own module
