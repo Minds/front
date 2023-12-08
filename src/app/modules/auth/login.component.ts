@@ -13,6 +13,7 @@ import { SidebarNavigationService } from '../../common/layout/sidebar/navigation
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { AuthModalService } from './modal/auth-modal.service';
+import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 
 /**
  * Standalone login page
@@ -56,7 +57,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private navigationService: SidebarNavigationService,
     private pageLayoutService: PageLayoutService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private authRedirectService: AuthRedirectService
   ) {}
 
   ngOnInit() {
@@ -124,9 +126,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.redirectTo) {
       this.navigateToRedirection();
     } else {
-      this.loginReferrer.navigate({
-        defaultUrl: '/' + this.session.getLoggedInUser().username,
-      });
+      /**
+       * If a redirect hasn't already been defined,
+       * use the experiment to determine where to go
+       */
+      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
   }
 
