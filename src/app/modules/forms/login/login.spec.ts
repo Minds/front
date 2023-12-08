@@ -176,12 +176,6 @@ describe('LoginForm', () => {
     expect(loginButton).toBeDefined();
   });
 
-  it("should have 'forgot password' link", () => {
-    expect(
-      fixture.debugElement.query(By.css('.m-reset-password-link'))
-    ).toBeDefined();
-  });
-
   it("should have 'migrate from facebook' button", () => {
     expect(
       fixture.debugElement.query(By.css('.m-fb-login-button button'))

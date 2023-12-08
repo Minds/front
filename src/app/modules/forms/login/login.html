@@ -1,20 +1,129 @@
-<div
-  class="
-    mdl-card
-    mdl-color--red-500
-    mdl-color-text--blue-grey-50
-    m-error-box
-    mdl-shadow--2dp
-    minds-login-box
-    m-error-box
-  "
-  style="min-height: 0"
-  [hidden]="showInlineErrors || !errorMessage"
->
-  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-    <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
+<div class="m-twoColumnLayout__contentContainer">
+  <!-- -------------------------------->
+  <!-- OIDC BUTTON & TOGGLE -->
+  <!-- -------------------------------->
+  <m-oidcLoginButtons
+    (hasOidcProviders)="setHasOidcProviders($event)"
+  ></m-oidcLoginButtons>
+
+  <div class="m-login__oidcOther" *ngIf="hasOidcProviders && hideLogin">
+    <span class="m-auth__toggleFormMessage m-auth__toggleFormMessage--oidc"
+      ><a (click)="hideLogin = false" data-ref="data-minds-oidc-other">
+        Login with username / password
+      </a></span
+    >
   </div>
+
+  <!-- -------------------------------->
+  <!-- LOGIN FORM -->
+  <!-- -------------------------------->
+  <form
+    (submit)="$event.preventDefault()"
+    [formGroup]="form"
+    class="m-form m-login-box m-formWrapper"
+    [hidden]="hideLogin"
+  >
+    <div class="m-layout__grid">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__input--details">
+          <div class="m-form__row--label">
+            <label for="username" i18n="@@COMMON__USERNAME">
+              Username
+            </label>
+          </div>
+          <div class="m-login__error" *ngIf="!!usernameError">
+            <ng-container
+              *ngIf="usernameError == 'LoginException::EmailAddress'"
+              i18n="@@MINDS__LOGIN__EXCEPTION__ENTERED_EMAIL_ADDRESS_NOT_USERNAME"
+            >
+              Enter username, not email
+            </ng-container>
+            <ng-container
+              *ngIf="usernameError == 'LoginException::UsernameRequired'"
+              i18n="@@MINDS__LOGIN__EXCEPTION__USERNAME_REQUIRED"
+            >
+              Username is required.
+            </ng-container>
+          </div>
+        </div>
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            id="username"
+            formControlName="username"
+            autocomplete="username"
+            (keydown.enter)="login(); $event.preventDefault();"
+            data-ref="data-minds-login-username-input"
+          />
+        </div>
+      </div>
+
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label for="password" i18n="@@COMMON__PASSWORD">
+            Password
+          </label>
+        </div>
+        <div class="m-form__row--input">
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            autocomplete="current-password"
+            (keydown.enter)="login(); $event.preventDefault();"
+            data-ref="data-minds-login-password-input"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="m-layout__row m-login__actions">
+      <div>
+        <a
+          class="m-auth__underlinedLink"
+          (click)="onForgotPasswordClick()"
+          data-ref="data-minds-forgot-password-button"
+        >
+          <ng-container i18n="@@FORMS__LOGIN__FORGOT_PASSWORD_LINK">
+            Forgot Password?
+          </ng-container>
+        </a>
+        <div class="m-login__formError" *ngIf="errorMessage">
+          <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
+
+<div class="m-twoColumnLayout__footer">
+  <span class="m-auth__toggleFormMessage">
+    Don't have an account?
+    <a (click)="onShowRegisterFormClick()">
+      Join {{site.title}} Now
+    </a>
+  </span>
+  <m-button
+    class="m-login__button--login"
+    type="button"
+    [saving]="inProgress"
+    (onAction)="login()"
+    color="blue"
+    [solid]="true"
+    data-ref="data-minds-login-button"
+  >
+    <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
+  </m-button>
+</div>
+
+<!-- -------------------------------->
+<!-- TWO FACTOR -->
+<!-- -------------------------------->
+<m-multiFactorAuth *ngIf="!hideMFA" [embedded]="true"></m-multiFactorAuth>
+
+<!-- -------------------------------->
+<!-- TEMPLATE: ERROR MESSAGES -->
+<!-- -------------------------------->
 
 <ng-template #errorTemplate>
   <ng-container [ngSwitch]="errorMessage">
@@ -76,182 +185,3 @@
     </ng-template>
   </ng-container>
 </ng-template>
-
-<div class="m-login__title">
-  <h3 *ngIf="showTitle">Login<span *mIfTenant="false"> to Minds</span></h3>
-
-  <a
-    *ngIf="showTitle && !(hasOidcProviders && hideLogin)"
-    (click)="onForgotPasswordClick()"
-    data-ref="data-minds-forgot-password-button"
-  >
-    Forgot your Password?
-  </a>
-</div>
-
-<m-oidcLoginButtons
-  (hasOidcProviders)="setHasOidcProviders($event)"
-></m-oidcLoginButtons>
-
-<div class="m-login__oidcOther" *ngIf="hasOidcProviders && hideLogin">
-  <a (click)="hideLogin = false" data-ref="data-minds-oidc-other">
-    Login with username / password
-  </a>
-</div>
-
-<!-- START: LOGIN -->
-<form
-  (submit)="$event.preventDefault()"
-  [formGroup]="form"
-  class="m-form m-login-box m-formWrapper"
-  [class.m-loginBox__bigButton]="showBigButton"
-  [hidden]="hideLogin"
->
-  <div class="m-layout__grid">
-    <div class="m-form__field--text stretchedField">
-      <div class="m-form__input--details">
-        <div class="m-form__row--label">
-          <label for="username" *ngIf="showLabels" i18n="@@COMMON__USERNAME">
-            Username
-          </label>
-        </div>
-        <div class="m-login__error" *ngIf="!!usernameError">
-          <ng-container
-            *ngIf="usernameError == 'LoginException::EmailAddress'"
-            i18n="@@MINDS__LOGIN__EXCEPTION__ENTERED_EMAIL_ADDRESS_NOT_USERNAME"
-          >
-            Enter username, not email
-          </ng-container>
-          <ng-container
-            *ngIf="usernameError == 'LoginException::UsernameRequired'"
-            i18n="@@MINDS__LOGIN__EXCEPTION__USERNAME_REQUIRED"
-          >
-            Username is required.
-          </ng-container>
-        </div>
-      </div>
-      <div class="m-form__row--input">
-        <input
-          type="text"
-          id="username"
-          formControlName="username"
-          [placeholder]="showLabels ? '' : 'Username'"
-          i18n-placeholder="@@M__COMMON__USERNAME"
-          autocomplete="username"
-          (keydown.enter)="login(); $event.preventDefault();"
-          data-ref="data-minds-login-username-input"
-        />
-      </div>
-    </div>
-
-    <div class="m-form__field--text stretchedField">
-      <div class="m-form__row--label">
-        <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
-          Password
-        </label>
-      </div>
-      <div class="m-form__row--input">
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          [placeholder]="showLabels ? '' : 'Password'"
-          i18n-placeholder="@@M__COMMON__PASSWORD"
-          autocomplete="current-password"
-          (keydown.enter)="login(); $event.preventDefault();"
-          data-ref="data-minds-login-password-input"
-        />
-      </div>
-    </div>
-  </div>
-
-  <a
-    class="m-login__joinTheConversation"
-    *ngIf="showTitle"
-    (click)="onJoinNowClick()"
-    i18n="@@LOGIN__JOIN_MINDS_NOW"
-  >
-    Join <span *mIfTenant="false"> Minds </span>Now
-  </a>
-
-  <div class="m-layout__row m-login__actions">
-    <div>
-      <a
-        class="m-reset-password-link"
-        (click)="onForgotPasswordClick()"
-        *ngIf="!showTitle"
-        data-ref="data-minds-forgot-password-button"
-      >
-        <ng-container i18n="@@FORMS__LOGIN__FORGOT_PASSWORD_LINK">
-          Forgot Password?
-        </ng-container>
-      </a>
-      <div
-        class="m-login__formError"
-        *ngIf="showInlineErrors && showBigButton && errorMessage"
-      >
-        <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
-      </div>
-    </div>
-
-    <ng-container *ngIf='source !== "auth-modal"'>
-      <div class="m-login__spacer" *ngIf="showBigButton"></div>
-
-      <m-button
-        class="m-login__button--login"
-        color="blue"
-        (onAction)="login()"
-        [saving]="inProgress"
-        *ngIf="!showBigButton"
-        data-ref="data-minds-login-button"
-      >
-        <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-      </m-button>
-      <m-button
-        class="m-login__button--login"
-        *ngIf="showBigButton"
-        type="button"
-        [saving]="inProgress"
-        (onAction)="login()"
-        color="blue"
-        data-ref="data-minds-login-button"
-      >
-        <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-      </m-button>
-    </ng-container>
-  </div>
-</form>
-
-<ng-container *ngIf='this.source == "auth-modal"'>
-  <div class="m-login__divider">
-    <span></span>
-  </div>
-  <div class="m-login__footer">
-    <span class="m-register__alreadyAUser">
-      Don't have an account?
-      <a
-        class="m-login__joinTheConversation"
-        (click)="onShowRegisterFormClick()"
-      >
-        Join<ng-container *mIfTenant="false"> Minds</ng-container> Now
-      </a>
-    </span>
-    <div class="m-layout__spacer"></div>
-    <m-button
-      class="m-login__button--login"
-      type="button"
-      [saving]="inProgress"
-      (onAction)="login()"
-      color="blue"
-      [solid]="true"
-      data-ref="data-minds-login-button"
-    >
-      <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-    </m-button>
-  </div>
-</ng-container>
-
-<!-- END: LOGIN -->
-
-<!-- START: TWOFACTOR -->
-<m-multiFactorAuth *ngIf="!hideMFA" [embedded]="true"></m-multiFactorAuth>
