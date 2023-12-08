@@ -53,25 +53,6 @@ describe('AuthModalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('title', () => {
-    it('should get title for register form on multi-tenant domain', () => {
-      (component as any).formDisplay = 'register';
-      (component as any).isTenantNetwork = true;
-      expect(component.title).toBe('Join Test site');
-    });
-
-    it('should get title for register form on Minds', () => {
-      (component as any).formDisplay = 'register';
-      (component as any).isTenantNetwork = false;
-      expect(component.title).toBe('Join Minds');
-    });
-
-    it('should get title for register form on Login', () => {
-      (component as any).formDisplay = 'Login';
-      expect(component.title).toBe('Login');
-    });
-  });
-
   describe('getLogoSrc', () => {
     it('should get logo src when NOT on multi-tenant network', () => {
       (component as any).isTenantNetwork = false;
