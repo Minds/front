@@ -5,6 +5,7 @@ import { Client } from '../../../services/api';
 import { REPORT_ACTIONS } from '../../../services/list-options';
 import { ReportService } from './../../../common/services/report.service';
 import { ToasterService } from '../../../common/services/toaster.service';
+import { SiteService } from '../../../common/services/site.service';
 
 @Component({
   moduleId: module.id,
@@ -26,7 +27,8 @@ export class AdminReports {
     public client: Client,
     private route: ActivatedRoute,
     protected toasterService: ToasterService,
-    protected reportService: ReportService
+    protected reportService: ReportService,
+    private site: SiteService
   ) {}
 
   ngOnInit() {
@@ -190,7 +192,9 @@ export class AdminReports {
   }
 
   async delete(report: any, index: number) {
-    if (!confirm('This will delete this from Minds. Are you sure?')) {
+    if (
+      !confirm(`This will delete this from ${this.site.title}. Are you sure?`)
+    ) {
       return;
     }
 
