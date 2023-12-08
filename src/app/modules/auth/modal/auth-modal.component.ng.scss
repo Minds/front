@@ -1,7 +1,8 @@
 @import 'defaults.scss';
 
 :host {
-  display: contents;
+  height: 100%;
+  max-height: 100%;
 
   .m-modalV2__inner {
     @media screen and (max-width: $max-mobile) {
@@ -73,35 +74,16 @@
   }
 
   ::ng-deep {
-    .m-login-box {
-      margin-top: 0;
-
-      .m-layout__row {
-        align-items: center;
-      }
-
-      [class*='m-form__field--'] {
-        margin-bottom: 15px;
-      }
-
-      .m-form__row--label {
-        margin-bottom: 10px;
-      }
+    .m-layout__row {
+      align-items: center;
     }
 
-    m-modalCloseButton {
-      a {
-        @include m-theme() {
-          background-color: rgba(themed($m-borderColor--primary), 0.025);
-          color: themed($m-textColor--primary);
-        }
+    [class*='m-form__field--'] {
+      margin-bottom: 15px;
+    }
 
-        &:hover {
-          @include m-theme() {
-            background-color: rgba(themed($m-borderColor--primary), 0.05);
-          }
-        }
-      }
+    .m-form__row--label {
+      margin-bottom: 10px;
     }
 
     @media screen and (max-width: $max-mobile) {

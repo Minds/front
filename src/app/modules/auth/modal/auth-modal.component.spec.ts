@@ -20,25 +20,12 @@ describe('AuthModalComponent', () => {
           AuthModalComponent,
           MockComponent({
             selector: 'm-loginForm',
-            inputs: [
-              'showBigButton',
-              'showInlineErrors',
-              'showLabels',
-              'showTitle',
-              'source',
-            ],
+            inputs: ['source'],
             outputs: ['done', 'doneRegistered', 'showRegisterForm'],
           }),
           MockComponent({
             selector: 'm-registerForm',
-            inputs: [
-              'showTitle',
-              'showBigButton',
-              'showPromotions',
-              'showLabels',
-              'showInlineErrors',
-              'source',
-            ],
+            inputs: ['source'],
             outputs: ['done', 'showLoginForm'],
           }),
           MockComponent({

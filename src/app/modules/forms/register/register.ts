@@ -31,6 +31,8 @@ import { debounceTime, Subscription } from 'rxjs';
 import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
 import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
+import { SiteService } from '../../../common/services/site.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -42,16 +44,15 @@ export type Source = 'auth-modal' | 'other' | null;
 @Component({
   selector: 'm-registerForm',
   templateUrl: 'register.html',
-  styleUrls: ['./register.ng.scss'],
+  styleUrls: [
+    './register.ng.scss',
+    '../../../../stylesheets/two-column-layout.ng.scss',
+    '../../../modules/auth/auth.module.ng.scss',
+  ],
 })
 export class RegisterForm implements OnInit, OnDestroy {
   @Input() referrer: string;
   @Input() parentId: string = '';
-  @Input() showTitle: boolean = false;
-  @Input() showBigButton: boolean = false;
-  @Input() showPromotions: boolean = true;
-  @Input() showLabels: boolean = false;
-  @Input() showInlineErrors: boolean = false;
   @Input() source: Source = null;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
@@ -97,7 +98,9 @@ export class RegisterForm implements OnInit, OnDestroy {
     private analytics: AnalyticsService,
     private onboardingV5Service: OnboardingV5Service,
     private onboardingV5ExperimentService: OnboardingV5ExperimentService,
-    private permissionsService: PermissionsService
+    private permissionsService: PermissionsService,
+    protected site: SiteService,
+    private isTenant: IsTenantService
   ) {}
 
   ngOnInit(): void {
@@ -124,6 +127,7 @@ export class RegisterForm implements OnInit, OnDestroy {
         ],
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
+        policies: [false, this.getPoliciesCheckboxValidators()],
         exclusive_promotions: [true],
         captcha: ['', Validators.required],
         previousUrl: this.routerHistoryService.getPreviousUrl(),
@@ -177,6 +181,13 @@ export class RegisterForm implements OnInit, OnDestroy {
     this.usernameTouchedSubscription?.unsubscribe();
   }
 
+  /**
+   * Only tenant sites need to check the policies checkbox
+   */
+  private getPoliciesCheckboxValidators() {
+    return this.isTenant.is() ? [Validators.requiredTrue] : [];
+  }
+
   // Confirm the two passwords match each other
   passwordsMatchValidator(c: AbstractControl): ValidationErrors | null {
     if (c.get('password').value !== c.get('password2').value) {
@@ -190,6 +201,12 @@ export class RegisterForm implements OnInit, OnDestroy {
     if (!this.form.value.tos) {
       this.errorMessage =
         'To create an account you need to accept terms and conditions.';
+      return;
+    }
+
+    if (this.isTenant.is() && !this.form.value.policies) {
+      this.errorMessage =
+        'To create an account you need to accept the content and privacy policies.';
       return;
     }
 
@@ -293,7 +310,6 @@ export class RegisterForm implements OnInit, OnDestroy {
 
   showError(field: string) {
     return (
-      this.showInlineErrors &&
       this.form.get(field).invalid &&
       this.form.get(field).touched &&
       this.form.get(field).dirty
