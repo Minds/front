@@ -11,7 +11,9 @@
         Only show the new composer post when on the 'latest' tab
       ----------------------------------------------------------->
       <ng-container *ngIf="(algorithm$ | async) === 'latest'">
-        <ng-container *ngFor="let preActivity of prepended$; let i = index">
+        <ng-container
+          *ngFor="let preActivity of prepended$ | async; let i = index"
+        >
           <m-activity
             [entity]="preActivity"
             [displayOptions]="{
