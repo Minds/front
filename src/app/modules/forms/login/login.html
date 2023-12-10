@@ -88,7 +88,7 @@
             Forgot Password?
           </ng-container>
         </a>
-        <div class="m-login__formError" *ngIf="errorMessage">
+        <div class="m-login__formError" [hidden]="!errorMessage">
           <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
         </div>
       </div>

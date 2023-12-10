@@ -5,6 +5,8 @@ import { MockComponent, MockService } from '../../../utils/mock';
 import { CDN_ASSETS_URL } from '../../../common/injection-tokens/url-injection-tokens';
 import { SITE_NAME } from '../../../common/injection-tokens/common-injection-tokens';
 import { IS_TENANT_NETWORK } from '../../../common/injection-tokens/tenant-injection-tokens';
+import { AuthModalImageService } from './auth-modal-image.service';
+import { MultiTenantConfigImageService } from '../../multi-tenant-network/services/config-image.service';
 
 describe('AuthModalComponent', () => {
   let component: AuthModalComponent;
@@ -38,6 +40,14 @@ describe('AuthModalComponent', () => {
           { provide: CDN_ASSETS_URL, useValue: cdnAssetsUrl },
           { provide: SITE_NAME, useValue: siteName },
           { provide: IS_TENANT_NETWORK, useValue: isTenantNetwork },
+          {
+            provide: AuthModalImageService,
+            useValue: MockService(AuthModalImageService),
+          },
+          {
+            provide: MultiTenantConfigImageService,
+            useValue: MockService(MultiTenantConfigImageService),
+          },
         ],
       }).compileComponents();
     })
