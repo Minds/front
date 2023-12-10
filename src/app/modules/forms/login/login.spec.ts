@@ -43,7 +43,6 @@ describe('LoginForm', () => {
   let password: DebugElement;
   let loginButton: DebugElement;
   let errorMessage: DebugElement;
-  let inlineErrorMessage: DebugElement;
 
   let session: Session;
 
@@ -164,7 +163,6 @@ describe('LoginForm', () => {
       By.css('.m-login__button--login button')
     );
     errorMessage = fixture.debugElement.query(By.css('.m-login__formError'));
-    inlineErrorMessage = fixture.debugElement.query(By.css('.m-login__error'));
 
     session = comp.session;
 
