@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToasterService } from '../../../../../../../common/services/toaster.service';
-import { ChannelsV2Service } from '../../../../../../channels/v2/channels-v2.service';
 import { BehaviorSubject } from 'rxjs';
 import {
   MindsGroup,
@@ -11,6 +10,7 @@ import {
   AddFeaturedEntityInputParams,
   AddFeaturedEntityModalEntityType,
 } from './add-featured-entity-modal.types';
+import { AutoCompleteEntityTypeEnum } from '../../../../../../../common/components/forms/autocomplete-entity-input/autocomplete-entity-input.component';
 
 /**
  * Modal for the addition of featured entities. Will pass out chosen entity
@@ -27,6 +27,12 @@ export class AddFeaturedEntityModalComponent {
   /** Form group. */
   public formGroup: FormGroup;
 
+  /** Enum of featured entity types for modal */
+  public readonly AddFeaturedEntityModalEntityType: typeof AddFeaturedEntityModalEntityType = AddFeaturedEntityModalEntityType;
+
+  /** Enum of auto-completable entities for use in modal */
+  public readonly AutoCompleteEntityTypeEnum: typeof AutoCompleteEntityTypeEnum = AutoCompleteEntityTypeEnum;
+
   /** Entity type to display suggestions for. */
   public entityType: AddFeaturedEntityModalEntityType =
     AddFeaturedEntityModalEntityType.User;
@@ -38,11 +44,10 @@ export class AddFeaturedEntityModalComponent {
 
   constructor(
     private toaster: ToasterService,
-    private formBuilder: FormBuilder,
-    private channelService: ChannelsV2Service
+    private formBuilder: FormBuilder
   ) {
     this.formGroup = this.formBuilder.group({
-      username: ['', { validators: [Validators.required] }],
+      entity: ['', { validators: [Validators.required] }],
     });
   }
 
@@ -76,40 +81,17 @@ export class AddFeaturedEntityModalComponent {
   }
 
   /**
-   * On confirm option click. Will check if user exists (to account
-   * for manual typing without clicking the menu) and then pass back.
+   * On confirm option click.
    * @returns { Promise<void> }
    */
   public async onConfirmClick(): Promise<void> {
-    if (this.entityType === AddFeaturedEntityModalEntityType.Group) {
-      this.toaster.warn('Group support is not yet implemented.');
+    const entity: MindsGroup | MindsUser = this.formGroup.get('entity').value;
+
+    if (!entity) {
+      this.toaster.warn('An entity must be selected');
       return;
     }
 
-    const identifier: string = this.formGroup.get('username').value;
-
-    if (!identifier?.length) {
-      this.toaster.warn('You must enter a username.');
-      return;
-    }
-
-    this.confirmInProgress$.next(true);
-
-    let user: MindsUser;
-    try {
-      user = await this.channelService.getChannelByIdentifier(identifier);
-    } catch (e) {
-      console.error(e);
-      user = null;
-    }
-
-    this.confirmInProgress$.next(false);
-
-    if (!user) {
-      this.toaster.warn('No user found with this username.');
-      return;
-    }
-
-    this.onSaveIntent(user);
+    this.onSaveIntent(entity);
   }
 }
