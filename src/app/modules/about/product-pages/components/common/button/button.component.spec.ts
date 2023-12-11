@@ -236,9 +236,9 @@ describe('ProductPageButtonComponent', () => {
       comp.data.navigationUrl = navigationUrl;
       comp.onClick();
 
-      expect((comp as any).router.navigate).toHaveBeenCalledWith([
-        navigationUrl,
-      ]);
+      expect((comp as any).router.navigateByUrl).toHaveBeenCalledWith(
+        navigationUrl
+      );
     });
 
     it('should handle button click when action is set', () => {
@@ -247,7 +247,7 @@ describe('ProductPageButtonComponent', () => {
       comp.data.navigationUrl = '';
       comp.onClick();
 
-      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).router.navigateByUrl).not.toHaveBeenCalled();
       expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
         action,
         {}
@@ -313,6 +313,114 @@ describe('ProductPageButtonComponent', () => {
         ProductPageUpgradeTimePeriod.Monthly
       );
       const action: StrapiAction = StrapiAction.OpenProUpgradeModal;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'monthly',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of yearly when action is set to NetworksCommunityCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Annually
+      );
+      const action: StrapiAction = StrapiAction.NetworksCommunityCheckout;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'yearly',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of monthly when action is set to NetworksCommunityCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Monthly
+      );
+      const action: StrapiAction = StrapiAction.NetworksCommunityCheckout;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'monthly',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of yearly when action is set to NetworksTeamCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Annually
+      );
+      const action: StrapiAction = StrapiAction.NetworksTeamCheckout;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'yearly',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of monthly when action is set to NetworksTeamCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Monthly
+      );
+      const action: StrapiAction = StrapiAction.NetworksTeamCheckout;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'monthly',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of yearly when action is set to NetworksEnterpriseCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Annually
+      );
+      const action: StrapiAction = StrapiAction.NetworksEnterpriseCheckout;
+      (comp as any).data.action = action;
+      comp.data.navigationUrl = '';
+      comp.onClick();
+
+      expect((comp as any).router.navigate).not.toHaveBeenCalled();
+      expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
+        action,
+        {
+          upgradeInterval: 'yearly',
+        }
+      );
+    });
+
+    it('should handle button click with an upgradeInterval of monthly when action is set to NetworksEnterpriseCheckout', () => {
+      (comp as any).pricingService.selectedTimePeriod$.next(
+        ProductPageUpgradeTimePeriod.Monthly
+      );
+      const action: StrapiAction = StrapiAction.NetworksEnterpriseCheckout;
       (comp as any).data.action = action;
       comp.data.navigationUrl = '';
       comp.onClick();

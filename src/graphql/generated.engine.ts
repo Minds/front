@@ -68,6 +68,26 @@ export type ActivityNode = NodeInterface & {
   votesUpCount: Scalars['Int']['output'];
 };
 
+export type AddOn = {
+  __typename?: 'AddOn';
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  inBasket: Scalars['Boolean']['output'];
+  monthlyFeeCents: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
+  perks: Array<Scalars['String']['output']>;
+  perksTitle: Scalars['String']['output'];
+};
+
+export type AddOnSummary = {
+  __typename?: 'AddOnSummary';
+  id: Scalars['String']['output'];
+  monthlyFeeCents: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
+};
+
 export type AssetConnection = ConnectionInterface & {
   __typename?: 'AssetConnection';
   edges: Array<EdgeInterface>;
@@ -98,6 +118,29 @@ export type BoostsConnection = ConnectionInterface & {
   edges: Array<BoostEdge>;
   pageInfo: PageInfo;
 };
+
+export type CheckoutPage = {
+  __typename?: 'CheckoutPage';
+  addOns: Array<AddOn>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: CheckoutPageKeyEnum;
+  plan: Plan;
+  summary: Summary;
+  termsMarkdown?: Maybe<Scalars['String']['output']>;
+  timePeriod: CheckoutTimePeriodEnum;
+  title: Scalars['String']['output'];
+  totalAnnualSavingsCents: Scalars['Int']['output'];
+};
+
+export enum CheckoutPageKeyEnum {
+  Addons = 'ADDONS',
+  Confirmation = 'CONFIRMATION',
+}
+
+export enum CheckoutTimePeriodEnum {
+  Monthly = 'MONTHLY',
+  Yearly = 'YEARLY',
+}
 
 export type CommentEdge = EdgeInterface & {
   __typename?: 'CommentEdge';
@@ -693,6 +736,25 @@ export enum PermissionsEnum {
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
 }
 
+export type Plan = {
+  __typename?: 'Plan';
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  monthlyFeeCents: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
+  perks: Array<Scalars['String']['output']>;
+  perksTitle: Scalars['String']['output'];
+};
+
+export type PlanSummary = {
+  __typename?: 'PlanSummary';
+  id: Scalars['String']['output'];
+  monthlyFeeCents: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
+};
+
 export type PublisherRecsConnection = ConnectionInterface &
   NodeInterface & {
     __typename?: 'PublisherRecsConnection';
@@ -727,6 +789,8 @@ export type Query = {
   assignedRoles: Array<Role>;
   /** Gets Boosts. */
   boosts: BoostsConnection;
+  checkoutLink: Scalars['String']['output'];
+  checkoutPage: CheckoutPage;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
@@ -794,6 +858,19 @@ export type QueryBoostsArgs = {
   source?: InputMaybe<Scalars['String']['input']>;
   targetAudience?: InputMaybe<Scalars['Int']['input']>;
   targetLocation?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryCheckoutLinkArgs = {
+  addOnIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  planId: Scalars['String']['input'];
+  timePeriod: CheckoutTimePeriodEnum;
+};
+
+export type QueryCheckoutPageArgs = {
+  addOnIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  page: CheckoutPageKeyEnum;
+  planId: Scalars['String']['input'];
+  timePeriod: CheckoutTimePeriodEnum;
 };
 
 export type QueryDismissalByKeyArgs = {
@@ -1053,6 +1130,14 @@ export type SearchResultsCount = {
 export enum SecuritySubReasonEnum {
   HackedAccount = 'HACKED_ACCOUNT',
 }
+
+export type Summary = {
+  __typename?: 'Summary';
+  addonsSummary: Array<AddOn>;
+  planSummary: PlanSummary;
+  totalInitialFeeCents: Scalars['Int']['output'];
+  totalMonthlyFeeCents: Scalars['Int']['output'];
+};
 
 export type Tenant = {
   __typename?: 'Tenant';
@@ -2075,6 +2160,81 @@ export type UnassignUserFromRoleMutationVariables = Exact<{
 export type UnassignUserFromRoleMutation = {
   __typename?: 'Mutation';
   unassignUserFromRole: boolean;
+};
+
+export type GetCheckoutLinkQueryVariables = Exact<{
+  planId: Scalars['String']['input'];
+  addOnIds?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
+  timePeriod: CheckoutTimePeriodEnum;
+}>;
+
+export type GetCheckoutLinkQuery = {
+  __typename?: 'Query';
+  checkoutLink: string;
+};
+
+export type GetCheckoutPageQueryVariables = Exact<{
+  planId: Scalars['String']['input'];
+  page: CheckoutPageKeyEnum;
+  timePeriod: CheckoutTimePeriodEnum;
+  addOnIds?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
+}>;
+
+export type GetCheckoutPageQuery = {
+  __typename?: 'Query';
+  checkoutPage: {
+    __typename?: 'CheckoutPage';
+    id: CheckoutPageKeyEnum;
+    title: string;
+    description?: string | null;
+    timePeriod: CheckoutTimePeriodEnum;
+    totalAnnualSavingsCents: number;
+    termsMarkdown?: string | null;
+    plan: {
+      __typename?: 'Plan';
+      id: string;
+      name: string;
+      description: string;
+      perksTitle: string;
+      perks: Array<string>;
+      monthlyFeeCents: number;
+      oneTimeFeeCents?: number | null;
+    };
+    addOns: Array<{
+      __typename?: 'AddOn';
+      id: string;
+      name: string;
+      description: string;
+      perksTitle: string;
+      perks: Array<string>;
+      monthlyFeeCents: number;
+      oneTimeFeeCents?: number | null;
+      inBasket: boolean;
+    }>;
+    summary: {
+      __typename?: 'Summary';
+      totalInitialFeeCents: number;
+      totalMonthlyFeeCents: number;
+      planSummary: {
+        __typename?: 'PlanSummary';
+        id: string;
+        name: string;
+        monthlyFeeCents: number;
+        oneTimeFeeCents?: number | null;
+      };
+      addonsSummary: Array<{
+        __typename?: 'AddOn';
+        id: string;
+        name: string;
+        monthlyFeeCents: number;
+        oneTimeFeeCents?: number | null;
+      }>;
+    };
+  };
 };
 
 export type CreateTenantRootUserMutationVariables = Exact<{
@@ -4657,6 +4817,100 @@ export class UnassignUserFromRoleGQL extends Apollo.Mutation<
   UnassignUserFromRoleMutationVariables
 > {
   document = UnassignUserFromRoleDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetCheckoutLinkDocument = gql`
+  query GetCheckoutLink(
+    $planId: String!
+    $addOnIds: [String!]
+    $timePeriod: CheckoutTimePeriodEnum!
+  ) {
+    checkoutLink(planId: $planId, addOnIds: $addOnIds, timePeriod: $timePeriod)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetCheckoutLinkGQL extends Apollo.Query<
+  GetCheckoutLinkQuery,
+  GetCheckoutLinkQueryVariables
+> {
+  document = GetCheckoutLinkDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetCheckoutPageDocument = gql`
+  query GetCheckoutPage(
+    $planId: String!
+    $page: CheckoutPageKeyEnum!
+    $timePeriod: CheckoutTimePeriodEnum!
+    $addOnIds: [String!]
+  ) {
+    checkoutPage(
+      planId: $planId
+      page: $page
+      timePeriod: $timePeriod
+      addOnIds: $addOnIds
+    ) {
+      id
+      title
+      description
+      timePeriod
+      totalAnnualSavingsCents
+      termsMarkdown
+      plan {
+        id
+        name
+        description
+        perksTitle
+        perks
+        monthlyFeeCents
+        oneTimeFeeCents
+      }
+      addOns {
+        id
+        name
+        description
+        perksTitle
+        perks
+        monthlyFeeCents
+        oneTimeFeeCents
+        inBasket
+      }
+      summary {
+        planSummary {
+          id
+          name
+          monthlyFeeCents
+          oneTimeFeeCents
+        }
+        addonsSummary {
+          id
+          name
+          monthlyFeeCents
+          oneTimeFeeCents
+        }
+        totalInitialFeeCents
+        totalMonthlyFeeCents
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetCheckoutPageGQL extends Apollo.Query<
+  GetCheckoutPageQuery,
+  GetCheckoutPageQueryVariables
+> {
+  document = GetCheckoutPageDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

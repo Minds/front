@@ -799,6 +799,7 @@ export type ComponentV2ProductFeatureTableHeader = {
   __typename?: 'ComponentV2ProductFeatureTableHeader';
   button: ComponentV2ProductActionButton;
   id: Scalars['ID']['output'];
+  noPrice?: Maybe<Scalars['Boolean']['output']>;
   priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
   title: Scalars['String']['output'];
 };
@@ -808,6 +809,7 @@ export type ComponentV2ProductFeatureTableHeaderFiltersInput = {
     Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
   >;
   button?: InputMaybe<ComponentV2ProductActionButtonFiltersInput>;
+  noPrice?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>;
   or?: InputMaybe<
     Array<InputMaybe<ComponentV2ProductFeatureTableHeaderFiltersInput>>
@@ -819,6 +821,7 @@ export type ComponentV2ProductFeatureTableHeaderFiltersInput = {
 export type ComponentV2ProductFeatureTableHeaderInput = {
   button?: InputMaybe<ComponentV2ProductActionButtonInput>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  noPrice?: InputMaybe<Scalars['Boolean']['input']>;
   priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -904,6 +907,9 @@ export enum Enum_Componentonboardingv5Onboardingstep_Steptype {
 }
 
 export enum Enum_Componentv2Productactionbutton_Action {
+  NetworksCommunityCheckout = 'networks_community_checkout',
+  NetworksEnterpriseCheckout = 'networks_enterprise_checkout',
+  NetworksTeamCheckout = 'networks_team_checkout',
   OpenComposer = 'open_composer',
   OpenOnchainTransferModal = 'open_onchain_transfer_modal',
   OpenPlusUpgradeModal = 'open_plus_upgrade_modal',
@@ -931,6 +937,12 @@ export enum Enum_Feattablecolumn_Tier {
   NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
+  SelfHosted = 'self_hosted',
+}
+
+export enum Enum_Networkscheckoutpage_Key {
+  Addons = 'addons',
+  Confirmation = 'confirmation',
 }
 
 export enum Enum_Productplan_Tier {
@@ -941,6 +953,13 @@ export enum Enum_Productplan_Tier {
   NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
+  SelfHosted = 'self_hosted',
+}
+
+export enum Enum_Tenantaddon_Key {
+  MobileApp = 'mobile_app',
+  Moderation = 'moderation',
+  TechnicalSupport = 'technical_support',
 }
 
 export enum Enum_Upgradepage_Cardid {
@@ -1388,10 +1407,12 @@ export type GenericMorph =
   | Footer
   | Homepage
   | I18NLocale
+  | NetworksCheckoutPage
   | OnboardingV5Version
   | ProductFeature
   | ProductPage
   | ProductPlan
+  | TenantAddOn
   | TopbarAlert
   | TwitterSyncTweetText
   | UpgradePage
@@ -1571,10 +1592,12 @@ export type Mutation = {
   createFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
   createFeatTableItem?: Maybe<FeatTableItemEntityResponse>;
   createFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
+  createNetworksCheckoutPage?: Maybe<NetworksCheckoutPageEntityResponse>;
   createOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   createProductFeature?: Maybe<ProductFeatureEntityResponse>;
   createProductPage?: Maybe<ProductPageEntityResponse>;
   createProductPlan?: Maybe<ProductPlanEntityResponse>;
+  createTenantAddOn?: Maybe<TenantAddOnEntityResponse>;
   createUpgradePage?: Maybe<UpgradePageEntityResponse>;
   createUpgradePageLocalization?: Maybe<UpgradePageEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -1594,10 +1617,12 @@ export type Mutation = {
   deleteFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
   deleteFooter?: Maybe<FooterEntityResponse>;
   deleteHomepage?: Maybe<HomepageEntityResponse>;
+  deleteNetworksCheckoutPage?: Maybe<NetworksCheckoutPageEntityResponse>;
   deleteOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   deleteProductFeature?: Maybe<ProductFeatureEntityResponse>;
   deleteProductPage?: Maybe<ProductPageEntityResponse>;
   deleteProductPlan?: Maybe<ProductPlanEntityResponse>;
+  deleteTenantAddOn?: Maybe<TenantAddOnEntityResponse>;
   deleteTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   deleteTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   deleteUpgradePage?: Maybe<UpgradePageEntityResponse>;
@@ -1629,10 +1654,12 @@ export type Mutation = {
   updateFileInfo: UploadFileEntityResponse;
   updateFooter?: Maybe<FooterEntityResponse>;
   updateHomepage?: Maybe<HomepageEntityResponse>;
+  updateNetworksCheckoutPage?: Maybe<NetworksCheckoutPageEntityResponse>;
   updateOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   updateProductFeature?: Maybe<ProductFeatureEntityResponse>;
   updateProductPage?: Maybe<ProductPageEntityResponse>;
   updateProductPlan?: Maybe<ProductPlanEntityResponse>;
+  updateTenantAddOn?: Maybe<TenantAddOnEntityResponse>;
   updateTopbarAlert?: Maybe<TopbarAlertEntityResponse>;
   updateTwitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   updateUpgradePage?: Maybe<UpgradePageEntityResponse>;
@@ -1677,6 +1704,10 @@ export type MutationCreateFeatTableSectionArgs = {
   data: FeatTableSectionInput;
 };
 
+export type MutationCreateNetworksCheckoutPageArgs = {
+  data: NetworksCheckoutPageInput;
+};
+
 export type MutationCreateOnboardingV5VersionArgs = {
   data: OnboardingV5VersionInput;
 };
@@ -1691,6 +1722,10 @@ export type MutationCreateProductPageArgs = {
 
 export type MutationCreateProductPlanArgs = {
   data: ProductPlanInput;
+};
+
+export type MutationCreateTenantAddOnArgs = {
+  data: TenantAddOnInput;
 };
 
 export type MutationCreateUpgradePageArgs = {
@@ -1759,6 +1794,10 @@ export type MutationDeleteFeatTableSectionArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type MutationDeleteNetworksCheckoutPageArgs = {
+  id: Scalars['ID']['input'];
+};
+
 export type MutationDeleteOnboardingV5VersionArgs = {
   id: Scalars['ID']['input'];
 };
@@ -1772,6 +1811,10 @@ export type MutationDeleteProductPageArgs = {
 };
 
 export type MutationDeleteProductPlanArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteTenantAddOnArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1881,6 +1924,11 @@ export type MutationUpdateHomepageArgs = {
   data: HomepageInput;
 };
 
+export type MutationUpdateNetworksCheckoutPageArgs = {
+  data: NetworksCheckoutPageInput;
+  id: Scalars['ID']['input'];
+};
+
 export type MutationUpdateOnboardingV5VersionArgs = {
   data: OnboardingV5VersionInput;
   id: Scalars['ID']['input'];
@@ -1898,6 +1946,11 @@ export type MutationUpdateProductPageArgs = {
 
 export type MutationUpdateProductPlanArgs = {
   data: ProductPlanInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateTenantAddOnArgs = {
+  data: TenantAddOnInput;
   id: Scalars['ID']['input'];
 };
 
@@ -1952,6 +2005,56 @@ export type MutationUploadArgs = {
   info?: InputMaybe<FileInfoInput>;
   ref?: InputMaybe<Scalars['String']['input']>;
   refId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type NetworksCheckoutPage = {
+  __typename?: 'NetworksCheckoutPage';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  key: Enum_Networkscheckoutpage_Key;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  termsMarkdown?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type NetworksCheckoutPageEntity = {
+  __typename?: 'NetworksCheckoutPageEntity';
+  attributes?: Maybe<NetworksCheckoutPage>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type NetworksCheckoutPageEntityResponse = {
+  __typename?: 'NetworksCheckoutPageEntityResponse';
+  data?: Maybe<NetworksCheckoutPageEntity>;
+};
+
+export type NetworksCheckoutPageEntityResponseCollection = {
+  __typename?: 'NetworksCheckoutPageEntityResponseCollection';
+  data: Array<NetworksCheckoutPageEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type NetworksCheckoutPageFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<NetworksCheckoutPageFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  key?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<NetworksCheckoutPageFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<NetworksCheckoutPageFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  termsMarkdown?: InputMaybe<StringFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type NetworksCheckoutPageInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  key?: InputMaybe<Enum_Networkscheckoutpage_Key>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  termsMarkdown?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OnboardingV5Version = {
@@ -2129,6 +2232,7 @@ export type ProductPlan = {
   button: ComponentV2ProductActionButton;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   mostPopular?: Maybe<Scalars['Boolean']['output']>;
+  noPrice?: Maybe<Scalars['Boolean']['output']>;
   perks?: Maybe<Array<Maybe<ComponentV2ProductPerk>>>;
   perksTitle: Scalars['String']['output'];
   priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
@@ -2168,6 +2272,7 @@ export type ProductPlanFiltersInput = {
   createdAt?: InputMaybe<DateTimeFilterInput>;
   id?: InputMaybe<IdFilterInput>;
   mostPopular?: InputMaybe<BooleanFilterInput>;
+  noPrice?: InputMaybe<BooleanFilterInput>;
   not?: InputMaybe<ProductPlanFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ProductPlanFiltersInput>>>;
   perks?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
@@ -2183,6 +2288,7 @@ export type ProductPlanFiltersInput = {
 export type ProductPlanInput = {
   button?: InputMaybe<ComponentV2ProductActionButtonInput>;
   mostPopular?: InputMaybe<Scalars['Boolean']['input']>;
+  noPrice?: InputMaybe<Scalars['Boolean']['input']>;
   perks?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkInput>>>;
   perksTitle?: InputMaybe<Scalars['String']['input']>;
   priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2221,6 +2327,8 @@ export type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  networksCheckoutPage?: Maybe<NetworksCheckoutPageEntityResponse>;
+  networksCheckoutPages?: Maybe<NetworksCheckoutPageEntityResponseCollection>;
   onboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   onboardingV5Versions?: Maybe<OnboardingV5VersionEntityResponseCollection>;
   productFeature?: Maybe<ProductFeatureEntityResponse>;
@@ -2229,6 +2337,8 @@ export type Query = {
   productPages?: Maybe<ProductPageEntityResponseCollection>;
   productPlan?: Maybe<ProductPlanEntityResponse>;
   productPlans?: Maybe<ProductPlanEntityResponseCollection>;
+  tenantAddOn?: Maybe<TenantAddOnEntityResponse>;
+  tenantAddOns?: Maybe<TenantAddOnEntityResponseCollection>;
   topbarAlert?: Maybe<TopbarAlertEntityResponse>;
   twitterSyncTweetText?: Maybe<TwitterSyncTweetTextEntityResponse>;
   upgradePage?: Maybe<UpgradePageEntityResponse>;
@@ -2331,6 +2441,17 @@ export type QueryI18NLocalesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type QueryNetworksCheckoutPageArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryNetworksCheckoutPagesArgs = {
+  filters?: InputMaybe<NetworksCheckoutPageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type QueryOnboardingV5VersionArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -2370,6 +2491,17 @@ export type QueryProductPlanArgs = {
 
 export type QueryProductPlansArgs = {
   filters?: InputMaybe<ProductPlanFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryTenantAddOnArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryTenantAddOnsArgs = {
+  filters?: InputMaybe<TenantAddOnFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -2487,6 +2619,65 @@ export type StringFilterInput = {
   null?: InputMaybe<Scalars['Boolean']['input']>;
   or?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TenantAddOn = {
+  __typename?: 'TenantAddOn';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description: Scalars['String']['output'];
+  key: Enum_Tenantaddon_Key;
+  name: Scalars['String']['output'];
+  perks: Array<Maybe<ComponentV2ProductPerk>>;
+  perksTitle: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TenantAddOnPerksArgs = {
+  filters?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TenantAddOnEntity = {
+  __typename?: 'TenantAddOnEntity';
+  attributes?: Maybe<TenantAddOn>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type TenantAddOnEntityResponse = {
+  __typename?: 'TenantAddOnEntityResponse';
+  data?: Maybe<TenantAddOnEntity>;
+};
+
+export type TenantAddOnEntityResponseCollection = {
+  __typename?: 'TenantAddOnEntityResponseCollection';
+  data: Array<TenantAddOnEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type TenantAddOnFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<TenantAddOnFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  key?: InputMaybe<StringFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<TenantAddOnFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<TenantAddOnFiltersInput>>>;
+  perks?: InputMaybe<ComponentV2ProductPerkFiltersInput>;
+  perksTitle?: InputMaybe<StringFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type TenantAddOnInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  key?: InputMaybe<Enum_Tenantaddon_Key>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  perks?: InputMaybe<Array<InputMaybe<ComponentV2ProductPerkInput>>>;
+  perksTitle?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type TopbarAlert = {

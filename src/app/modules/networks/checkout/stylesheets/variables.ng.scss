@@ -1,0 +1,5 @@
+@import '../../../../common/layout/layout.scss';
+
+$collapseWidth: $min-tablet;
+$containerOuterPadding: $spacing4;
+$containerTopPosition: $topbarHeight + 16px; // can't use $spacing4 as that is rem-based.

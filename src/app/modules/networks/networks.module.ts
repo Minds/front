@@ -8,11 +8,26 @@ import { NetworksCreateRootUserComponent } from './create-root-user/create-root-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworksCreateRootUserService } from './create-root-user/create-root-user.service';
 import { AutoLoginService } from './auto-login.service';
+import { loggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
+import { NetworksCheckoutBaseComponent } from './checkout/components/base/base.component';
+import { PathMatch } from '../../common/types/angular.types';
 
 const routes: Routes = [
   {
     path: '',
-    component: NetworksListComponent,
+    children: [
+      {
+        path: 'checkout', // '/networks/checkout'
+        canActivate: [loggedInRedirectGuard('/about/networks')],
+        loadChildren: () =>
+          import('./checkout/checkout.module').then(m => m.CheckoutModule),
+      },
+      {
+        path: '', // '/networks'
+        pathMatch: 'full' as PathMatch,
+        component: NetworksListComponent,
+      },
+    ],
   },
 ];
 

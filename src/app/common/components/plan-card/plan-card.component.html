@@ -1,0 +1,92 @@
+<div class="m-planCard__topbar">
+  <h3 class="m-planCard__title">{{ title }}</h3>
+  <m-button
+    *ngIf="!hideCta"
+    class="m-planCard__cta--desktop"
+    [color]="ctaSolid ? 'black-always' : 'primary'"
+    size="xsmall"
+    [solid]="ctaSolid"
+    [softSquare]="true"
+    [stretch]="true"
+    [saving]="ctaSaving"
+    [disabled]="ctaDisabled"
+    (onAction)="ctaClick.emit($event)"
+    >{{ ctaText }}</m-button
+  >
+</div>
+
+<markdown
+  *ngIf="description"
+  class="m-planCard__description"
+  ngPreserveWhitespaces
+  [data]="description"
+></markdown>
+
+<p *ngIf="priceCents" class="m-planCard__primaryPriceByTime">
+  <ng-container
+    *ngIf="!priceChangeInProgress; else priceChangeInProgressTemplate"
+    [ngTemplateOutlet]="priceStringTemplate"
+    [ngTemplateOutletContext]="{
+      price: priceCents,
+      timePeriod: priceTimePeriod
+    }"
+  ></ng-container>
+</p>
+
+<p *ngIf="secondaryPriceCents" class="m-planCard__secondaryPriceByTime">
+  <ng-container
+    *ngIf="!priceChangeInProgress; else priceChangeInProgressTemplate"
+    [ngTemplateOutlet]="priceStringTemplate"
+    [ngTemplateOutletContext]="{
+      price: secondaryPriceCents,
+      timePeriod: secondaryPriceTimePeriod
+    }"
+  ></ng-container>
+</p>
+
+<m-button
+  *ngIf="!hideCta"
+  class="m-planCard__cta--mobile"
+  [color]="ctaSolid ? 'black-always' : 'primary'"
+  size="medium"
+  [stretch]="true"
+  [solid]="ctaSolid"
+  [softSquare]="true"
+  [saving]="ctaSaving"
+  [disabled]="ctaDisabled"
+  (onAction)="ctaClick.emit($event)"
+  >{{ ctaText }}</m-button
+>
+
+<h5 class="m-planCard__perksTitle">{{ perksTitle }}</h5>
+
+<ul class="m-planCard__perksList">
+  <li *ngFor="let perk of perks" class="m-planCard__perk">
+    <i class="material-icons m-planCard__perkIcon">check_circle</i>
+    <span class="m-planCard__perkText">{{ perk }}</span>
+  </li>
+</ul>
+
+<ng-template #priceStringTemplate let-timePeriod="timePeriod" let-price="price">
+  <span class="m-planCard__price">{{
+    price / 100 | currency: 'USD':'symbol':'1.0-2'
+  }}</span>
+  <span [ngSwitch]="timePeriod" class="m-planCard__priceTimePeriod"
+    >&nbsp;<ng-container
+      *ngSwitchCase="PlanCardPriceTimePeriodEnum.Annually"
+      i18n="@@PLAN_CARD__PER_YEAR"
+      >/ year</ng-container
+    >
+    <ng-container
+      *ngSwitchCase="PlanCardPriceTimePeriodEnum.OneTimeSetup"
+      i18n="@@PLAN_CARD__ONE_TIME_SETUP_COST"
+    >
+      / one time set up</ng-container
+    >
+    <span *ngSwitchDefault i18n="@@PLAN_CARD__PER_MONTH">/ month</span>
+  </span>
+</ng-template>
+
+<ng-template #priceChangeInProgressTemplate>
+  <span class="m-planCard__price">...</span>
+</ng-template>

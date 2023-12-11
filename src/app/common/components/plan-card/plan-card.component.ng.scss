@@ -1,0 +1,89 @@
+@import 'defaults.scss';
+
+$collapseWidth: $min-tablet;
+
+:host {
+  display: block;
+  width: 100%;
+  padding: $spacing6;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-planCard__topbar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .m-planCard__title {
+      @include heading3Bold;
+      margin: unset;
+    }
+
+    @media screen and (max-width: $collapseWidth) {
+      .m-planCard__cta--desktop {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (min-width: calc($collapseWidth + 1px)) {
+    .m-planCard__cta--mobile {
+      display: none;
+    }
+  }
+
+  .m-planCard__description {
+    @include body2Regular;
+  }
+
+  .m-planCard__primaryPriceByTime {
+    .m-planCard__price {
+      @include heading2Bold;
+    }
+
+    .m-planCard__priceTimePeriod {
+      @include body3Regular;
+    }
+  }
+
+  .m-planCard__secondaryPriceByTime {
+    .m-planCard__price {
+      @include body1Bold;
+    }
+
+    .m-planCard__priceTimePeriod {
+      @include body3Regular;
+    }
+  }
+
+  .m-planCard__perksTitle {
+    @include body1Bold;
+  }
+
+  .m-planCard__perksList {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing4;
+    padding: unset;
+    list-style: none;
+
+    .m-planCard__perk {
+      display: flex;
+      align-items: center;
+
+      .m-planCard__perkIcon {
+        font-size: 24px;
+        margin-right: $spacing4;
+      }
+
+      .m-planCard__perkText {
+        @include body2Regular;
+      }
+    }
+  }
+}

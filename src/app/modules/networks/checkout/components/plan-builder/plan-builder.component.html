@@ -1,0 +1,63 @@
+<ng-container
+  *ngIf="{
+    summaryChangeInProgress: summaryChangeInProgress$ | async,
+    activePage: activePage$ | async,
+    addOnsToDisplay: addOnsToDisplay$ | async
+  } as templateVars"
+>
+  <h1 class="m-networksCheckoutBase__pageTitle">{{ pageTitle$ | async }}</h1>
+  <p
+    *ngIf="pageDescription$ | async as pageDescription"
+    class="m-networksCheckoutBase__pageDescription"
+  >
+    {{ pageDescription }}
+  </p>
+
+  <m-planCard
+    *ngIf="plan$ | async as plan"
+    class="m-networksCheckoutBase__planCard"
+    [title]="plan.name"
+    [description]="plan.description"
+    [priceCents]="plan.monthlyFeeCents"
+    [priceTimePeriod]="PlanCardPriceTimePeriodEnum.Monthly"
+    [priceChangeInProgress]="templateVars.summaryChangeInProgress"
+    [perksTitle]="plan.perksTitle"
+    [perks]="plan.perks"
+    [ctaSolid]="true"
+    [ctaSaving]="templateVars.summaryChangeInProgress"
+    [ctaDisabled]="templateVars.summaryChangeInProgress"
+    [hideCta]="templateVars.activePage !== CheckoutPageKeyEnum.Addons"
+    ctaText="Change"
+    (ctaClick)="onPlanChangeClick()"
+  ></m-planCard>
+
+  <h1
+    class="m-networksCheckoutBase__pageTitle"
+    *ngIf="templateVars.addOnsToDisplay?.length"
+    i18n="@@CHECKOUT__PLAN_BUILDER__ADDONS"
+  >
+    Add-ons
+  </h1>
+
+  <div class="m-networksCheckoutBase__addonsContainer">
+    <m-planCard
+      *ngFor="let addon of templateVars.addOnsToDisplay; trackBy: trackAddOnsBy"
+      class="m-networksCheckoutBase__addonPlanCard"
+      [title]="addon.name"
+      [description]="addon.description"
+      [priceCents]="addon.monthlyFeeCents"
+      [priceTimePeriod]="PlanCardPriceTimePeriodEnum.Monthly"
+      [secondaryPriceCents]="addon.oneTimeFeeCents"
+      [secondaryPriceTimePeriod]="PlanCardPriceTimePeriodEnum.OneTimeSetup"
+      [priceChangeInProgress]="templateVars.summaryChangeInProgress"
+      [perksTitle]="addon.perksTitle"
+      [perks]="addon.perks"
+      [ctaText]="addon.inBasket ? 'Remove' : 'Add'"
+      [ctaSaving]="templateVars.summaryChangeInProgress"
+      [ctaDisabled]="templateVars.summaryChangeInProgress"
+      [hideCta]="templateVars.activePage !== CheckoutPageKeyEnum.Addons"
+      [ctaSolid]="!addon.inBasket"
+      (ctaClick)="toggleAddOn(addon)"
+    ></m-planCard>
+  </div>
+</ng-container>

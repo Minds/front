@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: 'about/:slug',
     component: ProductPageBaseComponent,
-    data: { reloadOnRouteChange: true },
+    data: { reloadOnRouteChange: true, preventLayoutReset: true },
     canActivate: [TenantRedirectGuard],
   },
   {
