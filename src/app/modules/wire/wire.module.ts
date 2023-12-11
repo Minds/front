@@ -10,42 +10,23 @@ import { WireButtonComponent } from './button/button.component';
 import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.component';
 import { WireService } from './wire.service';
 import { WirePaymentHandlersService } from './wire-payment-handlers.service';
-import { PayMarketingComponent } from './marketing/marketing.component';
 import { WireV2Module } from './v2/wire-v2.module';
 import { WireModalService } from './wire-modal.service';
 import { MarketingModule } from '../marketing/marketing.module';
 import { MarkdownModule } from 'ngx-markdown';
-import { TenantRedirectGuard } from '../../common/guards/tenant-redirect.guard';
-
-const wireRoutes: Routes = [
-  { path: 'wire', redirectTo: 'pay' },
-  {
-    path: 'pay',
-    component: PayMarketingComponent,
-    canActivate: [TenantRedirectGuard],
-    data: {
-      preventLayoutReset: true,
-    },
-  },
-];
 
 @NgModule({
   imports: [
     NgCommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(wireRoutes),
     MarkdownModule.forRoot(),
     CommonModule,
     PaymentsModule,
     WireV2Module,
     MarketingModule,
   ],
-  declarations: [
-    WireLockScreenComponent,
-    WireButtonComponent,
-    PayMarketingComponent,
-  ],
+  declarations: [WireLockScreenComponent, WireButtonComponent],
   providers: [WireService, WirePaymentHandlersService, WireModalService],
   exports: [WireLockScreenComponent, WireButtonComponent],
 })

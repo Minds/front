@@ -15,6 +15,7 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import { SiteService } from '../../common/services/site.service';
 
 /**
  * Standalone register page for new users to sign up
@@ -58,7 +59,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
-    private authRedirectService: AuthRedirectService
+    private authRedirectService: AuthRedirectService,
+    private site: SiteService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -133,7 +135,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
    * @return { void }
    */
   setReferrerTitle(name: string = 'us'): void {
-    this.metaService.setTitle(`Join ${name} on Minds`, false);
+    this.metaService.setTitle(`Join ${name} on ${this.site.title}`, false);
   }
 
   setPlaceholderMetaImage(): void {

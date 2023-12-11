@@ -3446,6 +3446,7 @@ export type GetV2ProductPageBySlugQuery = {
                       __typename?: 'ComponentV2ProductFeatureTableHeader';
                       title: string;
                       priceStartingAt?: boolean | null;
+                      noPrice?: boolean | null;
                       button: {
                         __typename?: 'ComponentV2ProductActionButton';
                         text: string;
@@ -3508,6 +3509,7 @@ export type GetV2ProductPageBySlugQuery = {
                     subtitle: string;
                     mostPopular?: boolean | null;
                     priceStartingAt?: boolean | null;
+                    noPrice?: boolean | null;
                     perksTitle: string;
                     button: {
                       __typename?: 'ComponentV2ProductActionButton';
@@ -3951,6 +3953,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                     subtitle
                     mostPopular
                     priceStartingAt
+                    noPrice
                     button {
                       text
                       dataRef
@@ -3978,6 +3981,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                     featTableHeader {
                       title
                       priceStartingAt
+                      noPrice
                       button {
                         text
                         dataRef

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PlusService {
   protected cachedResponse: any;
 

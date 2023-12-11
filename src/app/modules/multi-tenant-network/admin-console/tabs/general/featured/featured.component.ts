@@ -3,6 +3,7 @@ import { BehaviorSubject, Subscription, filter, lastValueFrom } from 'rxjs';
 import {
   FeaturedEntity,
   FeaturedEntityTypeEnum,
+  FeaturedGroup,
   FeaturedUser,
   GetFeaturedEntitiesGQL,
   GetFeaturedEntitiesQuery,
@@ -109,8 +110,10 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
     this.entityAddedSubscription = this.addFeaturedEntityModal.entity$
       .pipe(filter(Boolean))
       .subscribe((entity: MindsUser | MindsGroup): void => {
-        if ((entity.type = 'user')) {
+        if (entity.type === 'user') {
           this.onUserAdd(entity as MindsUser);
+        } else if (entity.type === 'group') {
+          this.onGroupAdd(entity as MindsGroup);
         }
       });
   }
@@ -188,7 +191,11 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   public onAddFeaturedEntityClick(): void {
-    this.addFeaturedEntityModal.open(AddFeaturedEntityModalEntityType.User);
+    this.addFeaturedEntityModal.open(
+      this.type$.getValue() === FeaturedEntityTypeEnum.User
+        ? AddFeaturedEntityModalEntityType.User
+        : AddFeaturedEntityModalEntityType.Group
+    );
   }
 
   /**
@@ -220,44 +227,94 @@ export class NetworkAdminConsoleFeaturedComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> }
    */
   private async onUserAdd(user: MindsUser): Promise<void> {
-    const featuredUser: FeaturedUser = {
-      __typename: 'FeaturedUser',
-      id: user.guid,
-      entityGuid: user.guid,
-      username: user.username,
-      name: user.name,
-      autoSubscribe: true,
-      recommended: false,
-      tenantId: null,
-    };
+    if (this.isEntityAlreadyInList(user.guid)) {
+      this.toaster.warn('User is already featured.');
+      return;
+    }
 
+    if (await this.autoSubscribeToEntityByGuid(user.guid)) {
+      this.addFeaturedEntityToList({
+        __typename: 'FeaturedUser',
+        id: user.guid,
+        entityGuid: user.guid,
+        username: user.username,
+        name: user.name,
+        autoSubscribe: true,
+        recommended: false,
+        tenantId: null,
+      });
+    }
+  }
+
+  /**
+   * On a new group being added.
+   * @param { MindsGroup } group - group that was added.
+   * @returns { Promise<void> }
+   */
+  private async onGroupAdd(group: MindsGroup): Promise<void> {
+    if (this.isEntityAlreadyInList(group.guid)) {
+      this.toaster.warn('Group is already featured.');
+      return;
+    }
+
+    if (await this.autoSubscribeToEntityByGuid(group.guid)) {
+      this.addFeaturedEntityToList({
+        __typename: 'FeaturedGroup',
+        id: group.guid,
+        entityGuid: group.guid,
+        name: group.name,
+        membersCount: group['members:count'] ?? 0,
+        autoSubscribe: true,
+        recommended: false,
+        tenantId: null,
+      });
+    }
+  }
+
+  /**
+   * Call API to add featured entity as auto-subscribed.
+   * @param { string } guid - guid of entity to add.
+   * @returns { Promise<boolean> } - whether the operation was successful.
+   */
+  private async autoSubscribeToEntityByGuid(guid: string): Promise<boolean> {
     try {
       await lastValueFrom(
         this.storeFeaturedEntityGQL.mutate({
-          entityGuid: user.guid,
+          entityGuid: guid,
           autoSubscribe: true,
         })
       );
+      return true;
     } catch (e) {
       console.error(e);
       this.toaster.error(
         e?.message ?? 'An error occurred whilst adding user to featured list.'
       );
-      return;
+      return false;
     }
+  }
 
-    if (
-      this.featuredEntities$
-        .getValue()
-        .some((entity: FeaturedEntity) => entity.entityGuid === user.guid)
-    ) {
-      this.toaster.warn('User is already featured.');
-      return;
-    }
-
+  /**
+   * Add a featured entity to the list.
+   * @param { void } featuredEntity - featuredEntity to add.
+   */
+  private addFeaturedEntityToList(
+    featuredEntity: FeaturedGroup | FeaturedUser
+  ): void {
     this.featuredEntities$.next([
-      featuredUser as any,
+      featuredEntity as any,
       ...this.featuredEntities$.getValue(),
     ]);
+  }
+
+  /**
+   * Whether an entity is already in the list.
+   * @param { string } guid - guid of entity to check.
+   * @returns { boolean } - whether the entity is already in the list.
+   */
+  private isEntityAlreadyInList(guid: string): boolean {
+    return this.featuredEntities$
+      .getValue()
+      .some((entity: FeaturedEntity) => entity.entityGuid === guid);
   }
 }

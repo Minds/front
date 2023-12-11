@@ -16,10 +16,13 @@
           [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
         />
         <ng-container *ngIf="layoutMode === 'phone'">
-          <img *ngIf="!isDarkTheme" [src]="getLogoSrc$('light') | async" />
-          <img *ngIf="isDarkTheme" [src]="getLogoSrc$('dark') | async" />
+          <img
+            [ngClass]="{ 'm-sidebarNavigation__tenantLogo': isTenantNetwork }"
+            [src]="getLogoSrc$(isDarkTheme ? 'dark' : 'light') | async"
+          />
         </ng-container>
         <m-environmentFlag
+          *ngIf="!isTenantNetwork"
           class="m-sidebarNavigation__environmentFlag"
         ></m-environmentFlag>
       </a>

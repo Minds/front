@@ -76,22 +76,6 @@
       flex-direction: row;
       flex-grow: 2;
       align-items: center;
-
-      img {
-        width: $spacing10;
-        height: $spacing10;
-        min-width: $spacing10;
-        border-radius: 50%;
-        object-fit: cover;
-        box-sizing: border-box;
-        margin-right: $spacing2;
-        object-fit: contain;
-        padding: $spacing1;
-        @include m-theme() {
-          background: themed($m-white-always);
-        }
-        @include border;
-      }
     }
 
     .m-networksListItem__name {

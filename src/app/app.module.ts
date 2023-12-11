@@ -17,7 +17,6 @@ import { Minds } from './app.component';
 import { MINDS_PROVIDERS } from './services/providers';
 
 import { CommonModule } from './common/common.module';
-import { PlusModule } from './modules/plus/plus.module';
 import { I18nModule } from './modules/i18n/i18n.module';
 
 import { AdsModule } from './modules/ads/ads.module';
@@ -42,7 +41,6 @@ import { BlockchainModule } from './modules/blockchain/blockchain.module';
 import { BlockchainMarketingModule } from './modules/blockchain/marketing/marketing.module';
 import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
-import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
@@ -86,7 +84,6 @@ import { ValuePropModule } from './modules/value-prop/value-prop.module';
     MindsFormsModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
-    PlusModule,
     AboutModule,
     AdsModule,
     BoostModule,
@@ -109,7 +106,6 @@ import { ValuePropModule } from './modules/value-prop/value-prop.module';
     AuthModule,
     BlockchainModule,
     BlockchainMarketingModule,
-    NodesMarketingModule,
     BrandingModule,
     CommentsModule,
     JobsMarketingModule,

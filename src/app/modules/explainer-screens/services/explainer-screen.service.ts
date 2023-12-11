@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
   ExplainerScreenWeb,
   GetExplainerScreensGQL,
@@ -18,6 +18,7 @@ import { ExplainerScreenModalService } from './explainer-screen-lazy-modal.servi
 import { DismissalV2Service } from '../../../common/services/dismissal-v2.service';
 import { Dismissal } from '../../../../graphql/generated.engine';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { isPlatformServer } from '@angular/common';
 
 /**
  * Service handling the showing and loading of data for explainer screens.
@@ -28,7 +29,8 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
   constructor(
     private getExplainerScreensGQL: GetExplainerScreensGQL,
     private explainerScreenModal: ExplainerScreenModalService,
-    private dismissalV2Service: DismissalV2Service
+    private dismissalV2Service: DismissalV2Service,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     super();
   }
@@ -74,6 +76,9 @@ export class ExplainerScreensService extends AbstractSubscriberComponent {
    * @returns { void }
    */
   public handleRouteChange(route: string): void {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
     this.subscriptions.push(
       this.triggerRoutes$
         .pipe(take(1))

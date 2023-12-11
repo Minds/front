@@ -6,7 +6,9 @@ import {
 } from '@angular/core/testing';
 import {
   AbstractControl,
+  DefaultValueAccessor,
   FormBuilder,
+  NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -16,6 +18,26 @@ import { AddFeaturedEntityModalEntityType } from './add-featured-entity-modal.ty
 import { AddFeaturedEntityModalComponent } from './add-featured-entity-modal.component';
 import { MockComponent, MockService } from '../../../../../../../utils/mock';
 import userMock from '../../../../../../../mocks/responses/user.mock';
+import { Component, Input } from '@angular/core';
+import {
+  MindsGroup,
+  MindsUser,
+} from '../../../../../../../interfaces/entities';
+import { groupMock } from '../../../../../../../mocks/responses/group.mock';
+
+@Component({
+  selector: 'm-formInput__autocompleteEntityInput',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: MockAutocompleteEntityInputComponent,
+      multi: true,
+    },
+  ],
+})
+class MockAutocompleteEntityInputComponent extends DefaultValueAccessor {
+  @Input() entityType: any;
+}
 
 describe('AddFeaturedEntityModalComponent', () => {
   let comp: AddFeaturedEntityModalComponent;
@@ -30,10 +52,7 @@ describe('AddFeaturedEntityModalComponent', () => {
           inputs: ['disabled', 'saving'],
           outputs: ['onAction'],
         }),
-        MockComponent({
-          selector: 'm-formInput__autocompleteUserInput',
-          outputs: ['keyup.enter'],
-        }),
+        MockAutocompleteEntityInputComponent,
       ],
       imports: [ReactiveFormsModule],
       providers: [
@@ -48,6 +67,8 @@ describe('AddFeaturedEntityModalComponent', () => {
 
     fixture = TestBed.createComponent(AddFeaturedEntityModalComponent);
     comp = fixture.componentInstance;
+    comp.entityType = AddFeaturedEntityModalEntityType.User;
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -55,89 +76,62 @@ describe('AddFeaturedEntityModalComponent', () => {
     expect(comp.formGroup).toBeDefined();
   });
 
-  describe('username input', () => {
-    it('should have a username input', () => {
-      const usernameInput = fixture.debugElement.query(
-        By.css('m-formInput__autocompleteUserInput[name="username"]')
+  describe('entity input', () => {
+    it('should have an entity input', () => {
+      const entityInput = fixture.debugElement.query(
+        By.css('m-formInput__autocompleteEntityInput')
       );
-      expect(usernameInput).toBeTruthy();
+      expect(entityInput).toBeTruthy();
     });
 
-    it('should require a username', () => {
-      const usernameInput: AbstractControl<string> = comp.formGroup.get(
-        'username'
-      );
-      usernameInput.setValue('');
-      expect(usernameInput.valid).toBeFalsy();
+    it('should require an entity', () => {
+      const entityInput: AbstractControl<string> = comp.formGroup.get('entity');
+      entityInput.setValue(null);
+      expect(entityInput.valid).toBeFalsy();
     });
 
-    it('should allow a valid username', () => {
+    it('should allow a valid entity', () => {
       const usernameInput: AbstractControl<string> = comp.formGroup.get(
-        'username'
+        'entity'
       );
-      usernameInput.setValue('testuser');
+      usernameInput.setValue(userMock);
       expect(usernameInput.valid).toBeTruthy();
     });
   });
 
   describe('onConfirmClick', () => {
-    it('should warn that group support is not implemented', fakeAsync(() => {
-      comp.entityType = AddFeaturedEntityModalEntityType.Group;
-
-      comp.onConfirmClick();
-      tick();
-
-      expect((comp as any).toaster.warn).toHaveBeenCalledWith(
-        'Group support is not yet implemented.'
-      );
-    }));
-
-    it('should warn if no username is entered', fakeAsync(() => {
-      comp.formGroup.get('username').setValue('');
+    it('should warn if no entity is set', fakeAsync(() => {
+      comp.formGroup.get('entity').setValue(null);
       comp.onConfirmClick();
 
       tick();
       expect((comp as any).toaster.warn).toHaveBeenCalledWith(
-        'You must enter a username.'
+        'An entity must be selected'
       );
     }));
 
-    it('should warn if no user is found with the entered username', fakeAsync(() => {
-      const identifier: string = 'testuser';
+    it('should call onSaveIntent when entity is set to a user', fakeAsync(() => {
+      const entity: MindsUser = userMock;
       comp.onSaveIntent = jasmine.createSpy('onSaveIntent');
-      (comp as any).channelService.getChannelByIdentifier.and.returnValue(
-        Promise.resolve(null)
-      );
-      comp.formGroup.get('username').setValue(identifier);
+      comp.formGroup.get('entity').setValue(entity);
 
       comp.onConfirmClick();
       tick();
 
-      expect(
-        (comp as any).channelService.getChannelByIdentifier
-      ).toHaveBeenCalledWith(identifier);
-      expect((comp as any).toaster.warn).toHaveBeenCalledWith(
-        'No user found with this username.'
-      );
-      expect(comp.onSaveIntent).not.toHaveBeenCalled();
-    }));
-
-    it('should call onSaveIntent with the found user', fakeAsync(() => {
-      const identifier: string = 'testuser';
-      comp.onSaveIntent = jasmine.createSpy('onSaveIntent');
-      (comp as any).channelService.getChannelByIdentifier.and.returnValue(
-        Promise.resolve(userMock)
-      );
-      comp.formGroup.get('username').setValue(identifier);
-
-      comp.onConfirmClick();
-      tick();
-
-      expect(
-        (comp as any).channelService.getChannelByIdentifier
-      ).toHaveBeenCalledWith(identifier);
       expect((comp as any).toaster.warn).not.toHaveBeenCalled();
-      expect(comp.onSaveIntent).toHaveBeenCalledWith(userMock);
+      expect(comp.onSaveIntent).toHaveBeenCalledWith(entity);
+    }));
+
+    it('should call onSaveIntent when entity is set to a group', fakeAsync(() => {
+      const entity: MindsGroup = groupMock as any;
+      comp.onSaveIntent = jasmine.createSpy('onSaveIntent');
+      comp.formGroup.get('entity').setValue(entity);
+
+      comp.onConfirmClick();
+      tick();
+
+      expect((comp as any).toaster.warn).not.toHaveBeenCalled();
+      expect(comp.onSaveIntent).toHaveBeenCalledWith(entity);
     }));
   });
 

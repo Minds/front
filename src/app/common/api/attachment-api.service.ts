@@ -13,6 +13,7 @@ import {
   Observable,
   of,
   OperatorFunction,
+  ReplaySubject,
   throwError,
 } from 'rxjs';
 import {
@@ -134,9 +135,9 @@ export const httpEventToUploadEvent = (
  */
 @Injectable()
 export class AttachmentApiService {
-  public readonly videoPermissionsError$: BehaviorSubject<
+  public readonly videoPermissionsError$: ReplaySubject<
     boolean
-  > = new BehaviorSubject<boolean>(false);
+  > = new ReplaySubject<boolean>();
 
   /**
    * Constructor
