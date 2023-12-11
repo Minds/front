@@ -187,6 +187,7 @@ import { ExploreFeedItemComponent } from './components/explore-feed-item/explore
 import { IfTenantDirective } from './directives/if-tenant.directive';
 import { IsTenantService } from './services/is-tenant.service';
 import { ExpansionPanelComponent } from './components/expansion-panel/expansion-panel.component';
+import { AutocompleteEntityInputComponent } from './components/forms/autocomplete-entity-input/autocomplete-entity-input.component';
 
 const MINDS_COMMON_COMPONENTS = [
   AccordionComponent,
@@ -287,6 +288,7 @@ const MINDS_COMMON_COMPONENTS = [
   UserCard,
   UserMenuComponent,
   AutocompleteUserInputComponent,
+  AutocompleteEntityInputComponent,
   AddBankPromptComponent,
   ChipBadgeComponent,
   BoostedFlagComponent,

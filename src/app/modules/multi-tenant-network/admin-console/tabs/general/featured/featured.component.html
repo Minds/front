@@ -25,15 +25,17 @@
       >Users</a
     >
   </div>
-  <!-- <div class="m-tabs__tab">
+  <div class="m-tabs__tab">
     <a
       (click)="onTabClick(FeaturedEntityTypeEnum.Group)"
-      [class.m-tabs__tab--selected]="(type$ | async) === FeaturedEntityTypeEnum.Group"
+      [class.m-tabs__tab--selected]="
+        (type$ | async) === FeaturedEntityTypeEnum.Group
+      "
       data-ref="network-admin-console-feat-entity-tab-groups"
       i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__TAB_GROUPS"
       >Groups</a
     >
-  </div> -->
+  </div>
 </div>
 
 <div class="m-networkAdminFeatured__addFeaturedEntityContainer">
@@ -47,12 +49,12 @@
       <ng-container
         *ngSwitchCase="FeaturedEntityTypeEnum.User"
         i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__ADD_FEATURED_USER"
-        >Add Featured User</ng-container
+        >Add featured user</ng-container
       >
       <ng-container
         *ngSwitchCase="FeaturedEntityTypeEnum.Group"
         i18n="@@NETWORK_ADMIN_CONSOLE_FEATURED__ADD_FEATURED_GROUP"
-        >Add Featured Group</ng-container
+        >Add featured group</ng-container
       >
     </ng-container>
   </m-button>
