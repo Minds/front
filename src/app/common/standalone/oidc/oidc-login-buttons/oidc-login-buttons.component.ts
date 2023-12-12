@@ -8,6 +8,9 @@ import {
   OidcProviderPublic,
 } from '../../../../../graphql/generated.engine';
 import { firstValueFrom, take } from 'rxjs';
+import { ConfigsService } from '../../../services/configs.service';
+import { UserAvatarService } from '../../../services/user-avatar.service';
+import { Session } from '../../../../services/session';
 
 /**
  * Buttons that allow users to create/discover groups
@@ -25,11 +28,16 @@ import { firstValueFrom, take } from 'rxjs';
 export class OidcLoginButtons {
   providers: OidcProviderPublic[];
   @Output() hasOidcProviders: EventEmitter<boolean> = new EventEmitter();
+  @Output('done') onDone: EventEmitter<boolean> = new EventEmitter();
   hasClickedLoginMethod = false;
+  windowPoller;
 
   constructor(
     protected permissions: PermissionsService,
-    protected fetchOidcProviders: FetchOidcProvidersGQL
+    protected fetchOidcProviders: FetchOidcProvidersGQL,
+    protected configs: ConfigsService,
+    protected userAvatarService: UserAvatarService,
+    protected session: Session
   ) {}
 
   ngOnInit() {
@@ -40,7 +48,48 @@ export class OidcLoginButtons {
     });
   }
 
-  public onLoginClick(e: MouseEvent): void {
+  ngOnDestroy() {
+    if (this.windowPoller) {
+      clearInterval(this.windowPoller);
+    }
+  }
+
+  public async onLoginClick(e: MouseEvent, loginUrl: string): Promise<void> {
+    e.preventDefault();
     this.hasClickedLoginMethod = true;
+
+    if (this.windowPoller) clearInterval(this.windowPoller);
+
+    const ref = window.open(loginUrl, '_blank');
+
+    if (ref) {
+      this.windowPoller = setInterval(async () => {
+        if (ref.closed && document.hasFocus()) {
+          // Stop polling
+          clearInterval(this.windowPoller);
+
+          // Was login successful? Refetch configs.
+          await this.configs.loadFromRemote();
+
+          const user = this.configs.get('user');
+
+          if (user) {
+            // Update avatar
+            this.userAvatarService.init();
+
+            // Update permissions
+            this.permissions.initFromConfigs();
+
+            // Update session
+            this.session.login(this.configs.get('user'));
+
+            // Tell the parent we are done
+            this.onDone.emit(true);
+          }
+
+          this.hasClickedLoginMethod = false;
+        }
+      }, 500);
+    }
   }
 }

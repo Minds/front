@@ -91,6 +91,7 @@
 
 <m-oidcLoginButtons
   (hasOidcProviders)="setHasOidcProviders($event)"
+  (done)="done.next($event)"
 ></m-oidcLoginButtons>
 
 <div class="m-login__oidcOther" *ngIf="hasOidcProviders && hideLogin">

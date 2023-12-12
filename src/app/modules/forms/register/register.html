@@ -39,6 +39,7 @@
 
 <m-oidcLoginButtons
   (hasOidcProviders)="setHasOidcProviders($event)"
+  (done)="done.next($event)"
 ></m-oidcLoginButtons>
 
 <!-- START: Register -->
