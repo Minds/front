@@ -43,7 +43,7 @@ post content to trigger upgrade modal -->
       *ngTemplateOutlet="paywallTemplate"
       [ngTemplateOutletContext]="{ hideText: sidebarMode }"
     ></ng-container>
-    <minds-rich-embed
+    <m-richEmbed
       (mediaModalRequested)="onModalRequested($event)"
       [src]="entity"
       [maxheight]="isModal ? null : 320"
@@ -55,7 +55,7 @@ post content to trigger upgrade modal -->
         isTenantNetwork
       "
     >
-    </minds-rich-embed>
+    </m-richEmbed>
   </div>
   <!-- ----------------------------------- -->
   <!-- VIDEO -->

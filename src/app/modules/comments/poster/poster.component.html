@@ -177,11 +177,11 @@
       class="m-attachmentPreviewWrapper m-attachmentPreviewWrapper--richEmbed"
     >
       <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
-        <minds-rich-embed
+        <m-richEmbed
           [preview]="attachment.getMeta()"
           [cropImage]="true"
           [maxheight]="240"
-        ></minds-rich-embed>
+        ></m-richEmbed>
         <div class="attachment-preview-delete" (click)="resetPreview()">
           <i class="material-icons">clear</i>
         </div>

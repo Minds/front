@@ -359,8 +359,8 @@ m-comments__entityOutlet,
         border: 1px solid themed($m-borderColor--primary);
       }
 
-      minds-rich-embed .m-rich-embed-src,
-      minds-rich-embed .m-rich-embed-preview {
+      m-richEmbed .m-rich-embed-src,
+      m-richEmbed .m-rich-embed-preview {
         display: flex;
         flex-flow: row nowrap;
         position: relative;

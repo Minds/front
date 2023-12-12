@@ -8,6 +8,10 @@ import {
   HostBinding,
   SkipSelf,
   HostListener,
+  ElementRef,
+  OnDestroy,
+  Renderer2,
+  ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RichEmbedService } from '../../../services/rich-embed';
@@ -22,7 +26,9 @@ import {
 } from '../../services/client-meta.service';
 import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { LivestreamService } from '../../../modules/composer/services/livestream.service';
-import { Url } from 'url';
+import { IsTenantService } from '../../services/is-tenant.service';
+import { IntersectionObserverService } from '../../services/intersection-observer.service';
+import { Subscription, debounceTime, filter } from 'rxjs';
 
 interface InlineEmbed {
   id: string;
@@ -34,12 +40,27 @@ interface InlineEmbed {
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-rich-embed',
+  selector: 'm-richEmbed',
   inputs: ['_src: src', '_preview: preview', 'maxheight', 'cropImage'],
   templateUrl: 'rich-embed.html',
   styleUrls: ['rich-embed.ng.scss'],
 })
-export class MindsRichEmbed {
+export class MindsRichEmbed implements OnDestroy {
+  @Input() displayAsColumn: boolean = false;
+
+  @Input() set isModal(value: boolean) {
+    this._isModal = value;
+    if (value) {
+      this.hasModalRequestObservers = false;
+      if (this.mediaSource !== 'minds') {
+        this.embeddedInline = true;
+      }
+      this.detectChanges();
+    }
+  }
+
+  @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
+
   type: string = '';
   mediaSource: string = '';
   playbackId?: string = '';
@@ -50,8 +71,8 @@ export class MindsRichEmbed {
   maxheight: number = 320;
   inlineEmbed: InlineEmbed = null;
   cropImage: boolean = false;
-  modalRequestSubscribed: boolean = false;
-  @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
+  hasModalRequestObservers: boolean = false;
+
   private lastInlineEmbedParsed: string;
   public isPaywalled: boolean = false;
   _isModal: boolean = false;
@@ -59,20 +80,14 @@ export class MindsRichEmbed {
   // set to true once a click is recorded.
   private clickRecorded: boolean = false;
 
-  @Input() embeddedInline: boolean = false;
+  embeddedInline: boolean = false;
 
-  @Input() displayAsColumn: boolean = false;
-
-  @Input() set isModal(value: boolean) {
-    this._isModal = value;
-    if (value) {
-      this.modalRequestSubscribed = false;
-      if (this.mediaSource !== 'minds') {
-        this.embeddedInline = true;
-      }
-      this.detectChanges();
-    }
-  }
+  //---------------
+  // these are used just for youtube vids on tenant sites for now
+  private intersectionObserverSubscription: Subscription;
+  youtubeVideoId: string;
+  userDisabledAutoplay: boolean = false;
+  // ---------------
 
   @HostBinding('class.m-richEmbed__display--rows')
   get displayAsRows(): boolean {
@@ -101,9 +116,16 @@ export class MindsRichEmbed {
     private embedLinkWhitelist: EmbedLinkWhitelistService,
     private clientMetaService: ClientMetaService,
     private livestreamService: LivestreamService,
+    private isTenant: IsTenantService,
+    private el: ElementRef,
+    private intersectionObserver: IntersectionObserverService,
     @SkipSelf() private parentClientMeta: ClientMetaDirective
   ) {}
 
+  /**
+   * The entity that has a rich embed.
+   * Can be activity or comment
+   */
   set _src(value: any) {
     if (!value) {
       return;
@@ -122,13 +144,11 @@ export class MindsRichEmbed {
       );
     }
 
-    const isOwner =
+    this.isOwner =
       this.src.ownerObj.guid === this.session.getLoggedInUser().guid;
 
-    this.isOwner = isOwner;
-
     this.isPaywalled =
-      this.src.paywall && !this.src.paywall_unlocked && !isOwner;
+      this.src.paywall && !this.src.paywall_unlocked && !this.isOwner;
 
     this.init();
   }
@@ -155,8 +175,11 @@ export class MindsRichEmbed {
     // Create inline embed object
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
-    if (this.mediaSource === 'minds' || this.mediaSource === 'youtube') {
-      this.modalRequestSubscribed =
+    if (
+      this.mediaSource === 'minds' ||
+      (this.mediaSource === 'youtube' && !this.isTenant.is())
+    ) {
+      this.hasModalRequestObservers =
         this.mediaModalRequested.observers.length > 0;
     }
 
@@ -175,14 +198,19 @@ export class MindsRichEmbed {
     }
 
     this.inlineEmbed = inlineEmbed;
-
     if (inlineEmbed?.playable) {
+      // Embed youtube inline for tenants
+      if (this.mediaSource === 'youtube' && this.isTenant.is()) {
+        this.embeddedInline = true;
+      }
+      // If you can open it in a modal, only render html
+      // if a parent is listening for the modal request
       if (this.modalService.canOpenInModal()) {
-        if (this.modalRequestSubscribed) {
-          this.renderHtml();
+        if (this.hasModalRequestObservers) {
+          this.provisionHtml();
         }
       } else {
-        this.renderHtml();
+        this.provisionHtml();
       }
     }
 
@@ -192,13 +220,13 @@ export class MindsRichEmbed {
   }
 
   /**
-   * renders the html of the inlineEmbed unto the component
+   * Provisions the html of the inlineEmbed unto the component
+   * if there is an html provisioner (i.e. if mediaSource is soundcloud)
    * @returns { void }
    */
-  renderHtml(): void {
+  provisionHtml(): void {
     this.inlineEmbed.htmlProvisioner?.().then(html => {
-      this.inlineEmbed.html = html;
-      this.detectChanges();
+      this.inlineEmbed = { ...this.inlineEmbed, html: html };
     });
     // @todo: catch any error here and forcefully window.open to destination
   }
@@ -206,7 +234,7 @@ export class MindsRichEmbed {
   action($event) {
     this.recordClick();
 
-    if (this.modalRequestSubscribed && this.modalService.canOpenInModal()) {
+    if (this.hasModalRequestObservers && this.modalService.canOpenInModal()) {
       $event.preventDefault();
       $event.stopPropagation();
 
@@ -219,7 +247,7 @@ export class MindsRichEmbed {
       $event.stopPropagation();
 
       this.embeddedInline = true;
-      this.renderHtml();
+      this.provisionHtml();
     }
   }
 
@@ -229,9 +257,9 @@ export class MindsRichEmbed {
     }
 
     let url = this.src.perma_url,
-      origin = window.location.host,
       matches;
 
+    // Don't reparse if we've already done it
     if (url === this.lastInlineEmbedParsed) {
       return current;
     }
@@ -247,15 +275,24 @@ export class MindsRichEmbed {
 
     if ((matches = youtube.exec(url)) !== null) {
       if (matches[1]) {
+        this.youtubeVideoId = matches[1];
         this.mediaSource = 'youtube';
+
+        // Set up for handling autoplaying youtube videos in the feed
+        // on tenant sites
+        if (this.isTenant.is() && !this.isModal) {
+          this.setUserDisabledAutoplay();
+
+          if (!this.userDisabledAutoplay) {
+            this.setupIntersectionObserver();
+          }
+        }
+
         return {
-          id: `video-youtube-${matches[1]}`,
+          id: `video-youtube-${this.youtubeVideoId}`,
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-youtube',
-          html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
-          src="https://www.youtube.com/embed/${matches[1]}?controls=1&modestbranding=1&origin=${origin}&rel=0&autoplay=1&mute=1"
-          frameborder="0"
-          allowfullscreen ></iframe>`),
+          html: this.getYoutubeHtml(),
           playable: true,
         };
       }
@@ -423,6 +460,9 @@ export class MindsRichEmbed {
     return null;
   }
 
+  /**
+   * Make these ones big (displayed as column)
+   */
   get isFeaturedSource(): boolean {
     return this.mediaSource === 'youtube' || this.mediaSource === 'minds';
   }
@@ -451,8 +491,8 @@ export class MindsRichEmbed {
     return (
       this.embeddedInline &&
       this.inlineEmbed &&
-      this.inlineEmbed.html &&
-      (!this.modalRequestSubscribed || !this.modalService.canOpenInModal())
+      this.inlineEmbed?.html &&
+      (!this.hasModalRequestObservers || !this.modalService.canOpenInModal())
     );
   }
 
@@ -486,5 +526,75 @@ export class MindsRichEmbed {
       this.parentClientMeta,
       extraClientMetaData
     );
+  }
+
+  private setUserDisabledAutoplay(): void {
+    if (this.session.getLoggedInUser()?.disable_autoplay_videos) {
+      this.userDisabledAutoplay = true;
+    }
+  }
+
+  /**
+   * Get the html for youtube iframe.
+   * Allows autoplay flag to be set
+   * So we can customize for different scenarios
+   * (e.g. we want youtube to autoplay in feed on tenant sites)
+   * @returns SafeHtml
+   */
+  private getYoutubeHtml(autoplayOverride?: boolean): SafeHtml {
+    let origin = window.location.host;
+
+    // On minds.com, we can always enable autoplay bc
+    // the video will only autoplay in the modal.
+    let autoplay = '1';
+
+    // On tenant sites, we want youtube to autoplay in the feed.
+    // we need to wait until it scrolls into view so we start by turning
+    // autoplay off
+    if (this.isTenant.is()) {
+      autoplay = '0';
+    }
+
+    if (autoplayOverride) {
+      autoplay = autoplayOverride ? '1' : '0';
+    }
+
+    return this.sanitizer.bypassSecurityTrustHtml(`<iframe
+      src="https://www.youtube.com/embed/${this.youtubeVideoId}?controls=1&modestbranding=1&origin=${origin}&rel=0&autoplay=${autoplay}&mute=1"
+      frameborder="0"
+      allowfullscreen ></iframe>`);
+  }
+
+  /**
+   * Setup IntersectionObserver to watch for rich embeds entering
+   * and leaving the viewport - emits once one has entered for more than a
+   * half second
+   * @returns { void }
+   */
+  private setupIntersectionObserver(): void {
+    if (this.intersectionObserverSubscription) {
+      console.warn('Attempted to re-register rich embed IntersectionObserver');
+      return;
+    }
+
+    this.intersectionObserverSubscription = this.intersectionObserver
+      .createAndObserve(this.el)
+      .subscribe((isVisible: boolean) => {
+        // We only want to change autoplay when visible on tenant sites when the user
+        // hasn't disabled autoplay
+        if (!this.isTenant.is() || this.isModal || this.userDisabledAutoplay) {
+          return;
+        }
+        if (isVisible) {
+          this.inlineEmbed.html = this.getYoutubeHtml(true);
+        } else {
+          this.inlineEmbed.html = this.getYoutubeHtml(false);
+        }
+        this.detectChanges();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.intersectionObserverSubscription?.unsubscribe();
   }
 }

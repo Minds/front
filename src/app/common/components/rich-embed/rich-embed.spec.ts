@@ -1,4 +1,4 @@
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -21,6 +21,8 @@ import { MindsRichEmbed } from './rich-embed';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LivestreamService } from '../../../modules/composer/services/livestream.service';
 import userMock from '../../../mocks/responses/user.mock';
+import { IsTenantService } from '../../services/is-tenant.service';
+import { IntersectionObserverService } from '../../services/intersection-observer.service';
 
 describe('MindsRichEmbed', () => {
   let comp: MindsRichEmbed;
@@ -68,6 +70,18 @@ describe('MindsRichEmbed', () => {
           {
             provide: LivestreamService,
             useValue: MockService(LivestreamService),
+          },
+          {
+            provide: IsTenantService,
+            useValue: MockService(IsTenantService),
+          },
+          {
+            provide: ElementRef,
+            useValue: MockService(ElementRef),
+          },
+          {
+            provide: IntersectionObserverService,
+            useValue: MockService(IntersectionObserverService),
           },
         ],
       }).compileComponents();
