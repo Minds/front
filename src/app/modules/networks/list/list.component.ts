@@ -119,7 +119,8 @@ export class NetworksListComponent implements OnInit, OnDestroy {
 
     // Reload the list when user saves their root username
     if (result.type === CreateRootUserEventType.Completed) {
-      this.load();
+      this.inProgress$.next(true);
+      this.getNetworksListQuery.refetch();
     }
   }
 }
