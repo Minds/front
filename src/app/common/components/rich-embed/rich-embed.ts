@@ -10,8 +10,6 @@ import {
   HostListener,
   ElementRef,
   OnDestroy,
-  Renderer2,
-  ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RichEmbedService } from '../../../services/rich-embed';
@@ -28,7 +26,7 @@ import { ClientMetaDirective } from '../../directives/client-meta.directive';
 import { LivestreamService } from '../../../modules/composer/services/livestream.service';
 import { IsTenantService } from '../../services/is-tenant.service';
 import { IntersectionObserverService } from '../../services/intersection-observer.service';
-import { Subscription, debounceTime, filter } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 interface InlineEmbed {
   id: string;
