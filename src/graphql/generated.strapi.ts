@@ -690,6 +690,7 @@ export type ComponentV2ProductActionButton = {
   navigationUrl?: Maybe<Scalars['String']['output']>;
   rounded?: Maybe<Scalars['Boolean']['output']>;
   solid?: Maybe<Scalars['Boolean']['output']>;
+  stripeProductKey?: Maybe<Scalars['String']['output']>;
   text: Scalars['String']['output'];
 };
 
@@ -706,6 +707,7 @@ export type ComponentV2ProductActionButtonFiltersInput = {
   >;
   rounded?: InputMaybe<BooleanFilterInput>;
   solid?: InputMaybe<BooleanFilterInput>;
+  stripeProductKey?: InputMaybe<StringFilterInput>;
   text?: InputMaybe<StringFilterInput>;
 };
 
@@ -716,6 +718,7 @@ export type ComponentV2ProductActionButtonInput = {
   navigationUrl?: InputMaybe<Scalars['String']['input']>;
   rounded?: InputMaybe<Scalars['Boolean']['input']>;
   solid?: InputMaybe<Scalars['Boolean']['input']>;
+  stripeProductKey?: InputMaybe<Scalars['String']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2237,6 +2240,7 @@ export type ProductPlan = {
   perksTitle: Scalars['String']['output'];
   priceStartingAt?: Maybe<Scalars['Boolean']['output']>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  stripeProductKey?: Maybe<Scalars['String']['output']>;
   subtitle: Scalars['String']['output'];
   tier: Enum_Productplan_Tier;
   title?: Maybe<Scalars['String']['output']>;
@@ -2279,6 +2283,7 @@ export type ProductPlanFiltersInput = {
   perksTitle?: InputMaybe<StringFilterInput>;
   priceStartingAt?: InputMaybe<BooleanFilterInput>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
+  stripeProductKey?: InputMaybe<StringFilterInput>;
   subtitle?: InputMaybe<StringFilterInput>;
   tier?: InputMaybe<StringFilterInput>;
   title?: InputMaybe<StringFilterInput>;
@@ -2293,6 +2298,7 @@ export type ProductPlanInput = {
   perksTitle?: InputMaybe<Scalars['String']['input']>;
   priceStartingAt?: InputMaybe<Scalars['Boolean']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  stripeProductKey?: InputMaybe<Scalars['String']['input']>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
   tier?: InputMaybe<Enum_Productplan_Tier>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -3347,6 +3353,7 @@ export type GetV2ProductPageBySlugQuery = {
                 rounded?: boolean | null;
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
+                stripeProductKey?: string | null;
               } | null;
             }
           | {
@@ -3375,6 +3382,7 @@ export type GetV2ProductPageBySlugQuery = {
                 rounded?: boolean | null;
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
+                stripeProductKey?: string | null;
               } | null;
             }
           | {
@@ -3406,6 +3414,7 @@ export type GetV2ProductPageBySlugQuery = {
                 rounded?: boolean | null;
                 navigationUrl?: string | null;
                 action?: Enum_Componentv2Productactionbutton_Action | null;
+                stripeProductKey?: string | null;
               } | null;
             }
           | {
@@ -3455,6 +3464,7 @@ export type GetV2ProductPageBySlugQuery = {
                         rounded?: boolean | null;
                         navigationUrl?: string | null;
                         action?: Enum_Componentv2Productactionbutton_Action | null;
+                        stripeProductKey?: string | null;
                       };
                     } | null;
                     sections?: {
@@ -3518,6 +3528,7 @@ export type GetV2ProductPageBySlugQuery = {
                       solid?: boolean | null;
                       rounded?: boolean | null;
                       navigationUrl?: string | null;
+                      stripeProductKey?: string | null;
                       action?: Enum_Componentv2Productactionbutton_Action | null;
                     };
                     perks?: Array<{
@@ -3960,6 +3971,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                       solid
                       rounded
                       navigationUrl
+                      stripeProductKey
                       action
                     }
                     perksTitle
@@ -3989,6 +4001,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                         rounded
                         navigationUrl
                         action
+                        stripeProductKey
                       }
                     }
                     sections {
@@ -4046,6 +4059,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 rounded
                 navigationUrl
                 action
+                stripeProductKey
               }
             }
             ... on ComponentV2ProductFeatureHighlight {
@@ -4072,6 +4086,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 rounded
                 navigationUrl
                 action
+                stripeProductKey
               }
             }
             ... on ComponentV2ProductClosingCta {
@@ -4095,6 +4110,7 @@ export const GetV2ProductPageBySlugDocument = gql`
                 rounded
                 navigationUrl
                 action
+                stripeProductKey
               }
             }
           }

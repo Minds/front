@@ -119,7 +119,7 @@ export class StrapiActionResolverService {
       case 'networks_team_checkout':
         this.router.navigate(['/networks/checkout'], {
           queryParams: {
-            planId: 'networks_team',
+            planId: extraData?.stripeProductKey ?? 'networks:team',
             timePeriod: extraData?.upgradeInterval,
           },
         });
@@ -127,7 +127,7 @@ export class StrapiActionResolverService {
       case 'networks_community_checkout':
         this.router.navigate(['/networks/checkout'], {
           queryParams: {
-            planId: 'networks_community',
+            planId: extraData?.stripeProductKey ?? 'networks:community',
             timePeriod: extraData?.upgradeInterval,
           },
         });
@@ -135,7 +135,7 @@ export class StrapiActionResolverService {
       case 'networks_enterprise_checkout':
         this.router.navigate(['/networks/checkout'], {
           queryParams: {
-            planId: 'networks_enterprise',
+            planId: extraData?.stripeProductKey ?? 'networks:enterprise',
             timePeriod: extraData?.upgradeInterval,
           },
         });

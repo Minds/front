@@ -89,6 +89,10 @@ export class ProductPageButtonComponent {
           : 'monthly';
     }
 
+    if (this.data.stripeProductKey) {
+      extraData.stripeProductKey = this.data.stripeProductKey;
+    }
+
     this.strapiActionResolver.resolve(this.data.action, extraData);
   }
 
