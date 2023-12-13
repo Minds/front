@@ -27,6 +27,7 @@ describe('ProductPageButtonComponent', () => {
     navigationUrl: '',
     solid: true,
     text: 'text',
+    stripeProductKey: null,
   };
 
   const defaultColorScheme: ColorScheme = ColorScheme.Light;
@@ -72,6 +73,7 @@ describe('ProductPageButtonComponent', () => {
     Object.defineProperty(comp, 'colorScheme', { writable: true });
 
     (comp as any).data = mockData;
+    (comp as any).data.stripeProductKey = null;
     (comp as any).colorScheme = defaultColorScheme;
     (comp as any).pricingService.selectedTimePeriod$.next(
       defaultSelectedTimePeriod
@@ -332,6 +334,7 @@ describe('ProductPageButtonComponent', () => {
       );
       const action: StrapiAction = StrapiAction.NetworksCommunityCheckout;
       (comp as any).data.action = action;
+      (comp as any).data.stripeProductKey = 'networks:community';
       comp.data.navigationUrl = '';
       comp.onClick();
 
@@ -339,6 +342,7 @@ describe('ProductPageButtonComponent', () => {
       expect((comp as any).strapiActionResolver.resolve).toHaveBeenCalledWith(
         action,
         {
+          stripeProductKey: 'networks:community',
           upgradeInterval: 'yearly',
         }
       );
@@ -351,6 +355,7 @@ describe('ProductPageButtonComponent', () => {
       const action: StrapiAction = StrapiAction.NetworksCommunityCheckout;
       (comp as any).data.action = action;
       comp.data.navigationUrl = '';
+      (comp as any).data.stripeProductKey = 'networks:community';
       comp.onClick();
 
       expect((comp as any).router.navigate).not.toHaveBeenCalled();
@@ -358,6 +363,7 @@ describe('ProductPageButtonComponent', () => {
         action,
         {
           upgradeInterval: 'monthly',
+          stripeProductKey: 'networks:community',
         }
       );
     });
@@ -369,6 +375,7 @@ describe('ProductPageButtonComponent', () => {
       const action: StrapiAction = StrapiAction.NetworksTeamCheckout;
       (comp as any).data.action = action;
       comp.data.navigationUrl = '';
+      (comp as any).data.stripeProductKey = 'networks:team';
       comp.onClick();
 
       expect((comp as any).router.navigate).not.toHaveBeenCalled();
@@ -376,6 +383,7 @@ describe('ProductPageButtonComponent', () => {
         action,
         {
           upgradeInterval: 'yearly',
+          stripeProductKey: 'networks:team',
         }
       );
     });
@@ -386,6 +394,7 @@ describe('ProductPageButtonComponent', () => {
       );
       const action: StrapiAction = StrapiAction.NetworksTeamCheckout;
       (comp as any).data.action = action;
+      (comp as any).data.stripeProductKey = 'networks:team';
       comp.data.navigationUrl = '';
       comp.onClick();
 
@@ -394,6 +403,7 @@ describe('ProductPageButtonComponent', () => {
         action,
         {
           upgradeInterval: 'monthly',
+          stripeProductKey: 'networks:team',
         }
       );
     });
@@ -405,6 +415,7 @@ describe('ProductPageButtonComponent', () => {
       const action: StrapiAction = StrapiAction.NetworksEnterpriseCheckout;
       (comp as any).data.action = action;
       comp.data.navigationUrl = '';
+      (comp as any).data.stripeProductKey = 'networks:enterprise';
       comp.onClick();
 
       expect((comp as any).router.navigate).not.toHaveBeenCalled();
@@ -412,6 +423,7 @@ describe('ProductPageButtonComponent', () => {
         action,
         {
           upgradeInterval: 'yearly',
+          stripeProductKey: 'networks:enterprise',
         }
       );
     });
@@ -422,6 +434,7 @@ describe('ProductPageButtonComponent', () => {
       );
       const action: StrapiAction = StrapiAction.NetworksEnterpriseCheckout;
       (comp as any).data.action = action;
+      (comp as any).data.stripeProductKey = 'networks:enterprise';
       comp.data.navigationUrl = '';
       comp.onClick();
 
@@ -430,6 +443,7 @@ describe('ProductPageButtonComponent', () => {
         action,
         {
           upgradeInterval: 'monthly',
+          stripeProductKey: 'networks:enterprise',
         }
       );
     });
