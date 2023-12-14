@@ -26,6 +26,7 @@ import { RegexService } from '../../../common/services/regex.service';
 import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { Router } from '@angular/router';
 import { PermissionsService } from '../../../common/services/permissions.service';
+import { SiteService } from '../../../common/services/site.service';
 
 export class RouterStub {
   url = '';
@@ -138,6 +139,10 @@ describe('LoginForm', () => {
             provide: PermissionsService,
             useValue: MockService(PermissionsService),
           },
+          {
+            provide: SiteService,
+            useValue: MockService(SiteService),
+          },
         ],
       }).compileComponents(); // compile template and css
     })
@@ -157,7 +162,7 @@ describe('LoginForm', () => {
     loginButton = fixture.debugElement.query(
       By.css('.m-login__button--login button')
     );
-    errorMessage = fixture.debugElement.query(By.css('.m-error-box'));
+    errorMessage = fixture.debugElement.query(By.css('.m-login__formError'));
 
     session = comp.session;
 
@@ -174,12 +179,6 @@ describe('LoginForm', () => {
 
   it('should have login button', () => {
     expect(loginButton).toBeDefined();
-  });
-
-  it("should have 'forgot password' link", () => {
-    expect(
-      fixture.debugElement.query(By.css('.m-reset-password-link'))
-    ).toBeDefined();
   });
 
   it("should have 'migrate from facebook' button", () => {
@@ -305,8 +304,7 @@ describe('LoginForm', () => {
   it('should spawn error message when an email is entered as a username', fakeAsync(() => {
     username.nativeElement.value = 'test@minds.com';
     login({ status: 'error' }, 'test@minds.com');
-    expect(comp.errorMessage).toBe('LoginException::EmailAddress');
-    expect(errorMessage.nativeElement.hidden).toBeFalsy();
+    expect(comp.usernameError).toBe('LoginException::EmailAddress');
   }));
 
   it('should emit done and navigate on forgot password click', () => {

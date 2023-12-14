@@ -54,11 +54,6 @@
   ></m-web3-modal>
 </ng-container>
 
-<m-modal-signup
-  *ngIf="!isProDomain && !session.getLoggedInUser()"
-  [open]="false"
-></m-modal-signup>
-
 <ng-container *mIfBrowser>
   <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
   <m-toaster></m-toaster>

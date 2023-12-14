@@ -28,6 +28,8 @@ import { Component } from '@angular/core';
 import { OnboardingV5ExperimentService } from '../../experiments/sub-services/onboarding-v5-experiment.service';
 import { OnboardingV5Service } from '../../onboarding-v5/services/onboarding-v5.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
+import { SiteService } from '../../../common/services/site.service';
+import { IsTenantService } from '../../../common/services/is-tenant.service';
 
 @Component({
   selector: 'm-friendlyCaptcha',
@@ -128,6 +130,14 @@ describe('RegisterForm', () => {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
         },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService),
+        },
+        {
+          provide: IsTenantService,
+          useValue: MockService(IsTenantService),
+        },
       ],
     }).compileComponents();
 
@@ -167,6 +177,7 @@ describe('RegisterForm', () => {
     expect(comp.form.contains('exclusive_promotions')).toBeTruthy();
     expect(comp.form.contains('captcha')).toBeTruthy();
     expect(comp.form.contains('previousUrl')).toBeTruthy();
+    expect(comp.form.contains('policies')).toBeTruthy();
   });
 
   it('should register successfully a new user', () => {
@@ -196,6 +207,7 @@ describe('RegisterForm', () => {
       previousUrl: null,
       referrer: undefined,
       parentId: '',
+      policies: false,
     });
   });
 
@@ -233,6 +245,7 @@ describe('RegisterForm', () => {
       previousUrl: null,
       referrer: undefined,
       parentId: '',
+      policies: false,
     });
     discardPeriodicTasks();
     flush();

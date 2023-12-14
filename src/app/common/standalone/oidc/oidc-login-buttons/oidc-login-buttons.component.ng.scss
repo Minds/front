@@ -2,6 +2,7 @@
 
 :host {
   display: block;
-  padding-top: $spacing4;
-  padding-bottom: $spacing6;
+  > div {
+    padding-bottom: $spacing6;
+  }
 }
