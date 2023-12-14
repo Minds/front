@@ -1,11 +1,11 @@
 @import 'defaults.scss';
 
 :host {
-  .m-form__row--label {
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-  }
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%;
+  max-height: 100%;
 
   .m-form__input--details {
     display: flex;
@@ -13,34 +13,9 @@
     justify-content: space-between;
   }
 
-  .m-login__title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 16px;
-
-    a {
-      @include m-theme() {
-        color: themed($m-blue);
-      }
-    }
-
-    @media screen and (max-width: 680px) {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-right: 0;
-      margin-bottom: 24px;
-
-      h3 {
-        margin-bottom: 0;
-      }
-    }
-  }
-
   .m-login__error,
   .m-login__formError {
-    font-size: 14px;
-    line-height: 19px;
+    @include body1Regular;
     margin-top: 3px;
 
     @include m-theme() {
@@ -52,54 +27,12 @@
     text-align: right;
   }
 
-  .m-login__spacer {
-    flex-grow: 1;
-  }
-  a {
-    font-weight: 400;
-  }
-
-  .m-login__divider {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    padding: 10px 0;
-    box-sizing: border-box;
-
-    span:not(.m-login__divider__text) {
-      flex: 1;
-      margin: 0 -40px;
-      @include m-theme() {
-        border-bottom: 2px solid themed($m-borderColor--primary);
-      }
-    }
-    .m-login__divider__text {
-      padding: 0 20px;
-      font-size: 15px;
-      font-weight: 600;
-    }
-  }
-
   .m-login__footer {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
     padding: 18px 0 8px 0;
-
-    .m-register__alreadyAUser {
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-
-      .m-login__joinTheConversation {
-        @include m-theme() {
-          color: themed($m-blue);
-          cursor: pointer;
-        }
-      }
-    }
   }
 
   @media screen and (max-width: $max-mobile) {
@@ -109,10 +42,6 @@
 
     .m-login__footer {
       flex-flow: column-reverse nowrap;
-    }
-
-    .m-register__alreadyAUser {
-      margin-top: 16px;
     }
 
     ::ng-deep {
@@ -167,10 +96,6 @@
         }
       }
     }
-  }
-  .m-reset-password-link {
-    cursor: pointer;
-    text-decoration: underline;
   }
 
   .m-login__oidcOther {

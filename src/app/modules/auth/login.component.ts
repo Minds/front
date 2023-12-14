@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { SignupModalService } from '../modals/signup/service';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
@@ -13,6 +12,8 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { ConfigsService } from '../../common/services/configs.service';
+import { AuthModalService } from './modal/auth-modal.service';
+import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 
 /**
  * Standalone login page
@@ -20,15 +21,19 @@ import { ConfigsService } from '../../common/services/configs.service';
 @Component({
   selector: 'm-login',
   templateUrl: 'login.component.html',
-  styleUrls: ['./login.component.ng.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   twofactorToken: string = '';
-  hideLogin: boolean = false;
   inProgress: boolean = false;
   referrer: string;
   private redirectTo: string;
+
+  /**
+   * Hides the default login form
+   * e.g. when using oidc provider
+   */
+  hideLogin: boolean = false;
 
   @HostBinding('class.m-login__iosFallback')
   iosFallback: boolean = false;
@@ -38,6 +43,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   };
 
   paramsSubscription: Subscription;
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     public session: Session,
@@ -49,7 +56,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private cookieService: CookieService,
     private topbarService: TopbarService,
     private navigationService: SidebarNavigationService,
-    private pageLayoutService: PageLayoutService
+    private pageLayoutService: PageLayoutService,
+    private authModal: AuthModalService,
+    private authRedirectService: AuthRedirectService
   ) {}
 
   ngOnInit() {
@@ -57,6 +66,21 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginReferrer.register('/newsfeed/subscriptions');
       this.loginReferrer.navigate();
     }
+
+    this.subscriptions.push(
+      this.authModal.onLoggedIn$.subscribe(loggedIn => {
+        if (loggedIn) {
+          this.loggedin();
+        }
+      }),
+      this.authModal.onRegistered$.subscribe(registered => {
+        if (registered) {
+          this.registered();
+        }
+      })
+    );
+
+    this.authModal.open({ formDisplay: 'login', standalonePage: true });
 
     this.redirectTo = this.cookieService.get('redirect');
 
@@ -102,9 +126,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.redirectTo) {
       this.navigateToRedirection();
     } else {
-      this.loginReferrer.navigate({
-        defaultUrl: '/' + this.session.getLoggedInUser().username,
-      });
+      /**
+       * If a redirect hasn't already been defined,
+       * use the experiment to determine where to go
+       */
+      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
   }
 

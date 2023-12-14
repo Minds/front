@@ -1,0 +1,94 @@
+@import 'defaults.scss';
+@import '../../../stylesheets/two-column-layout.ng.scss';
+
+:host {
+  @include body1Regular;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+
+  .m-twoColumnLayout__leftContainer {
+    padding-top: $spacing12;
+  }
+
+  .m-twoColumnLayout__contentContainer {
+    margin-top: 0;
+    flex-grow: 2;
+    padding-top: $spacing10;
+  }
+
+  .m-twoColumnLayout__footer {
+    gap: $spacing2;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-flow: column-reverse nowrap;
+      gap: $spacing4;
+
+      .m-auth__toggleFormMessage {
+        text-align: center;
+      }
+    }
+  }
+
+  .m-auth__titleRow {
+    display: flex;
+    align-items: center;
+    padding-left: $leftContainerPaddingX;
+    padding-right: $leftContainerPaddingX;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    a {
+      text-decoration: none;
+      font-weight: inherit;
+      font-size: $spacing5;
+      padding-right: $spacing2;
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      i {
+      }
+    }
+    h2 {
+      margin: 0;
+      @include heading3Bold;
+    }
+  }
+
+  .m-form__row--label label,
+  .m-auth__formText {
+    @include body1Regular;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-auth__toggleFormMessage {
+    a {
+      font-weight: inherit;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+    &:not(.m-auth__toggleFormMessage--oidc) {
+      a {
+        @include m-theme() {
+          color: themed($m-action);
+        }
+      }
+    }
+  }
+
+  a.m-auth__underlinedLink {
+    font-weight: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+    @include m-theme() {
+      color: themed($m-action);
+    }
+  }
+}

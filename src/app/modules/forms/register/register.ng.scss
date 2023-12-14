@@ -1,6 +1,12 @@
 @import 'defaults.scss';
 
 :host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%;
+  max-height: 100%;
+
   form {
     overflow: visible !important;
   }
@@ -30,16 +36,22 @@
   }
 
   .m-register__checkboxes {
-    // width: 100%;
     margin-right: 20px;
-    m-formInput__checkbox {
+    ::ng-deep m-formInput__checkbox {
       display: block;
-      margin-bottom: $minds-margin * 0.5;
-      font-size: 11px;
+      margin: $spacing2 0;
 
       a {
+        font-weight: 400;
         @include m-theme() {
-          color: themed($m-grey-400);
+          color: themed($m-action);
+        }
+      }
+
+      .m-formInputCheckbox__customLabel {
+        @include body1Regular;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
         }
       }
     }
@@ -89,6 +101,8 @@
 
   .m-register__error--multiLine {
     min-height: 40px;
+    display: flex;
+    align-items: center;
   }
 
   .ng-invalid.ng-dirty {
@@ -109,10 +123,6 @@
 
   .mdl-checkbox {
     padding-top: 5px;
-  }
-
-  input.m-input--hide-placeholder::placeholder {
-    color: transparent;
   }
 
   .m-register__divider {
@@ -142,20 +152,7 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 0 8px 0;
-
-    .m-register__alreadyAUser {
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-
-      .m-register__loginToMinds {
-        @include m-theme() {
-          color: themed($m-blue);
-          cursor: pointer;
-        }
-      }
-    }
+    padding-bottom: $spacing2;
   }
 
   @media screen and (max-width: $max-mobile) {
@@ -169,10 +166,6 @@
 
     .m-register__actions {
       align-items: flex-start;
-    }
-
-    .m-register__alreadyAUser {
-      margin-top: 16px;
     }
 
     ::ng-deep {
@@ -192,6 +185,10 @@
   ::ng-deep m-friendlyCaptcha {
     .frc-icon {
       margin-left: 0;
+      @include m-theme() {
+        fill: themed($m-textColor--tertiary);
+        stroke: themed($m-textColor--tertiary);
+      }
     }
   }
 }

@@ -18,7 +18,6 @@ import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
-import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
 import { Observable, Subscription } from 'rxjs';
@@ -81,7 +80,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     public session: Session,
     public client: Client,
     private router: Router,
-    private signupModal: SignupModalService,
     public attachment: AttachmentService,
     public sockets: SocketsService,
     public suggestions: AutocompleteSuggestionsService,

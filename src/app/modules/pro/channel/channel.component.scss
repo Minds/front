@@ -67,19 +67,6 @@ m-pro--channel {
   m-boostButton {
     display: none !important;
   }
-
-  m-modal-signup {
-    m-modal {
-      .m-modal-container .mdl-card {
-        background-color: var(--m-pro--transparent-background-color);
-        color: var(--m-pro--text-color);
-
-        .m-modal-signup-apps {
-          display: none;
-        }
-      }
-    }
-  }
 }
 
 .m-overlayModal--unsubscribe {

@@ -13,10 +13,8 @@ import { Client } from '../../../services/api/client';
 import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
-import { SignupModalService } from '../../modals/signup/service';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { signupModalServiceMock } from '../../../mocks/modules/modals/signup/signup-modal-service.mock';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
 import { WireModalService } from '../wire-modal.service';
@@ -62,7 +60,6 @@ xdescribe('WireLockScreenComponent', () => {
             provide: WirePaymentHandlersService,
             useValue: MockService(WirePaymentHandlersService),
           },
-          { provide: SignupModalService, useValue: signupModalServiceMock },
           {
             provide: ConfigsService,
             useValue: MockService(ConfigsService, {
