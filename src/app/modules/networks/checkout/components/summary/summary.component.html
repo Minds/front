@@ -79,7 +79,10 @@
               <h6 class="m-networksCheckoutSummary__sectionSubtitle">
                 {{ addon.name }}
               </h6>
-              <p class="m-networksCheckoutSummary__sectionText">
+              <p
+                class="m-networksCheckoutSummary__sectionText"
+                *ngIf="addon.monthlyFeeCents"
+              >
                 {{
                   addon.monthlyFeeCents / 100 | currency: 'USD':'symbol':'1.2-2'
                 }}

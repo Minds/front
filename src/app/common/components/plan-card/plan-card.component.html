@@ -22,18 +22,24 @@
   [data]="description"
 ></markdown>
 
-<p *ngIf="priceCents" class="m-planCard__primaryPriceByTime">
+<p
+  *ngIf="priceCents || secondaryPriceCents"
+  class="m-planCard__primaryPriceByTime"
+>
   <ng-container
     *ngIf="!priceChangeInProgress; else priceChangeInProgressTemplate"
     [ngTemplateOutlet]="priceStringTemplate"
     [ngTemplateOutletContext]="{
-      price: priceCents,
-      timePeriod: priceTimePeriod
+      price: priceCents ?? secondaryPriceCents,
+      timePeriod: priceCents ? priceTimePeriod : secondaryPriceTimePeriod
     }"
   ></ng-container>
 </p>
 
-<p *ngIf="secondaryPriceCents" class="m-planCard__secondaryPriceByTime">
+<p
+  *ngIf="priceCents && secondaryPriceCents"
+  class="m-planCard__secondaryPriceByTime"
+>
   <ng-container
     *ngIf="!priceChangeInProgress; else priceChangeInProgressTemplate"
     [ngTemplateOutlet]="priceStringTemplate"
