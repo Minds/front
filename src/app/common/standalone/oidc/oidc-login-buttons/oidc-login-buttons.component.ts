@@ -26,7 +26,7 @@ import { Session } from '../../../../services/session';
   styleUrls: ['./oidc-login-buttons.component.ng.scss'],
 })
 export class OidcLoginButtons {
-  providers: OidcProviderPublic[];
+  providers: Partial<OidcProviderPublic>[];
   @Output() hasOidcProviders: EventEmitter<boolean> = new EventEmitter();
   @Output('done') onDone: EventEmitter<boolean> = new EventEmitter();
   hasClickedLoginMethod = false;
