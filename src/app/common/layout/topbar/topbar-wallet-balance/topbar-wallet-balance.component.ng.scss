@@ -21,6 +21,12 @@
       line-height: 22px;
     }
 
+    &.m-topbarWrapper__giftIcon--isConnected {
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
     &__tokens {
       display: flex;
       align-items: center;
@@ -54,6 +60,20 @@
           margin: 1px 4px 1px 1px;
           width: 16px;
         }
+      }
+    }
+
+    &__connect {
+      padding: 0 5px 0 3px;
+      display: flex;
+      align-items: center;
+
+      span {
+        padding-left: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 130px;
       }
     }
   }
