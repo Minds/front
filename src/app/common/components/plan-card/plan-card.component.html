@@ -64,9 +64,9 @@
   >{{ ctaText }}</m-button
 >
 
-<h5 class="m-planCard__perksTitle">{{ perksTitle }}</h5>
+<h5 class="m-planCard__perksTitle" *ngIf="perks">{{ perksTitle }}</h5>
 
-<ul class="m-planCard__perksList">
+<ul class="m-planCard__perksList" *ngIf="perks">
   <li *ngFor="let perk of perks" class="m-planCard__perk">
     <i class="material-icons m-planCard__perkIcon">check_circle</i>
     <span class="m-planCard__perkText">{{ perk }}</span>
