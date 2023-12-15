@@ -56,6 +56,7 @@ export class SettingsV2Component implements OnInit {
         {
           label: $localize`:@@SETTINGS__PAYMENTS__LABEL:Payments`,
           id: 'payments',
+          shouldShow: this.isNotNetwork.bind(this),
         },
         {
           label: $localize`:@@SETTINGS__AFFILIATES_PROGRAM__LABEL:Affiliates Program`,
@@ -196,17 +197,14 @@ export class SettingsV2Component implements OnInit {
           {
             label: $localize`:@@SETTINGS__PAYMENTS__METHOD__LABEL:Payment History`,
             id: 'payment-history',
-            shouldShow: this.isNotNetwork.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__PAYMENTS__RECURRING__LABEL:Recurring Payments`,
             id: 'recurring-payments',
-            shouldShow: this.isNotNetwork.bind(this),
           },
           {
             label: $localize`:@@SETTINGS__SUPERMIND__HEADER__LABEL:Supermind`,
             id: 'supermind',
-            shouldShow: this.isNotNetwork.bind(this),
           },
         ],
       },
