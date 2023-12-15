@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { WireModalService } from '../wire-modal.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
@@ -54,7 +53,6 @@ export class WireLockScreenComponent implements OnInit {
     private client: Client,
     private cd: ChangeDetectorRef,
     private wireModal: WireModalService,
-    private signupModal: SignupModalService,
     private configs: ConfigsService,
     private wirePaymentHandlers: WirePaymentHandlersService,
     private authModal: AuthModalService

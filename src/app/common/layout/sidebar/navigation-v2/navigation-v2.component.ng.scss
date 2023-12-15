@@ -3,8 +3,9 @@
 
 .m-pageLayout__container--fullWidth :host {
   display: none !important;
+
   @media screen and (max-width: $layoutMax1ColWidth) {
-    display: block;
+    display: block !important;
   }
 }
 

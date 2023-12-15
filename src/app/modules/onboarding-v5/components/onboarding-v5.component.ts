@@ -23,7 +23,7 @@ import { MultiTenantConfigImageService } from '../../multi-tenant-network/servic
   templateUrl: './onboarding-v5.component.html',
   styleUrls: [
     'onboarding-v5.component.ng.scss',
-    '../stylesheets/two-column-layout.ng.scss',
+    '../../../../stylesheets/two-column-layout.ng.scss',
   ],
 })
 export class OnboardingV5Component implements OnInit, OnDestroy {
