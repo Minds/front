@@ -41,7 +41,6 @@ export class OnboardingV5ModalLazyService {
         },
       },
       fullscreen: true,
-      // force dark mode for non-tenant sites.
       modalDialogClass: !this.isTenantNetwork
         ? 'm-theme--wrapper m-theme--wrapper__dark'
         : '',

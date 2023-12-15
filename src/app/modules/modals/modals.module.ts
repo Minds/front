@@ -10,7 +10,6 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { ConfirmModal } from './confirm/confirm';
 import { ShareModalComponent } from './share/share';
 import { ConfirmPasswordModalComponent } from './confirm-password/modal.component';
-import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { PhotoBannerModalComponent } from './photo-banner/photo-banner-modal.component';
@@ -33,7 +32,6 @@ import { MarkdownModule } from 'ngx-markdown';
     ConfirmModal,
     PhotoBannerModalComponent,
     ShareModalComponent,
-    SignupModal,
     ConfirmPasswordModalComponent,
     TOSUpdatedModal,
     SupermindReplyConfirmModalComponent,
@@ -41,7 +39,6 @@ import { MarkdownModule } from 'ngx-markdown';
   exports: [
     ConfirmModal,
     ShareModalComponent,
-    SignupModal,
     TOSUpdatedModal,
     PhotoBannerModalComponent,
   ],

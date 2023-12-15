@@ -1,17 +1,21 @@
 @import 'defaults.scss';
-@import './two-column-layout.ng.scss';
+@import '../../../../stylesheets/two-column-layout.ng.scss';
 
 :host {
   .m-onboardingV5__stepContentContainer {
     margin-top: $leftContainerPaddingY;
     padding-left: $leftContainerPaddingX;
     padding-right: $leftContainerPaddingX;
-    overflow-y: scroll;
+    overflow-y: auto;
     @include vertical-scroll;
 
     @include vertical-scroll(
       $scrollbarContrastColor: '#{$m-bgColor--contrast}'
     );
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .m-onboardingV5__stepTitle {
       margin-top: $spacing12;

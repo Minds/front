@@ -108,7 +108,7 @@ export class NetworksCreateRootUserComponent implements OnInit, OnDestroy {
    * On click confirm button
    */
   async onSubmit(): Promise<void> {
-    this.service.submitUsername(this.username.value);
+    await this.service.submitUsername(this.username.value);
     this.onSave();
   }
 

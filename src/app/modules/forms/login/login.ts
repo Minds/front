@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   Input,
   NgZone,
   OnInit,
@@ -21,25 +22,26 @@ import { RegexService } from '../../../common/services/regex.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { ResetPasswordExperimentService } from '../../experiments/sub-services/reset-password-experiment.service';
 import { PermissionsService } from '../../../common/services/permissions.service';
+import { SiteService } from '../../../common/services/site.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
 /**
  * The login form for users that have already registered on the site.
  *
- * Includes name/password inputs and a link to join Minds
+ * Includes name/password inputs and a link to register
  */
 @Component({
   moduleId: module.id,
   selector: 'm-loginForm',
   templateUrl: 'login.html',
-  styleUrls: ['./login.ng.scss'],
+  styleUrls: [
+    './login.ng.scss',
+    '../../../../stylesheets/two-column-layout.ng.scss',
+    '../../../modules/auth/auth.module.ng.scss',
+  ],
 })
 export class LoginForm extends AbstractSubscriberComponent implements OnInit {
-  @Input() showBigButton: boolean = false;
-  @Input() showInlineErrors: boolean = false;
-  @Input() showTitle: boolean = false;
-  @Input() showLabels: boolean = false;
   @Input() source: Source = null;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
@@ -69,7 +71,8 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     private router: Router,
     private regex: RegexService,
     private resetPasswordExperiment: ResetPasswordExperimentService,
-    private permissionsService: PermissionsService
+    private permissionsService: PermissionsService,
+    protected site: SiteService
   ) {
     super();
     this.form = fb.group({
@@ -101,20 +104,12 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     }
 
     if (username === '') {
-      if (this.showInlineErrors) {
-        this.usernameError = 'LoginException::UsernameRequired';
-      } else {
-        this.errorMessage = 'LoginException::UsernameRequired';
-      }
+      this.usernameError = 'LoginException::UsernameRequired';
       return;
     }
 
     if (this.regex.getRegex('mail').test(username)) {
-      if (this.showInlineErrors) {
-        this.usernameError = 'LoginException::EmailAddress';
-      } else {
-        this.errorMessage = 'LoginException::EmailAddress';
-      }
+      this.usernameError = 'LoginException::EmailAddress';
       return;
     }
 
