@@ -32,27 +32,31 @@
         [mdl]
       ></div>
     </ng-container>
-    <!-- ---- -->
+    <!-- ----------------------------------- -->
+    <!-- THUMBNAIL -->
+    <!-- ----------------------------------- -->
     <img
       *ngIf="!cropImage && (src.thumbnail_src || !inlineEmbed)"
       [hidden]="hasInlineContentLoaded()"
       [src]="src.thumbnail_src"
       (error)="src.thumbnail_src = null"
     />
-    <!-- ---- -->
+    <!-- Cropped -->
     <div
       class="m-rich-embed-thumbnail-wrapper"
       *ngIf="cropImage && (src.thumbnail_src || !inlineEmbed)"
       [hidden]="hasInlineContentLoaded()"
       [ngStyle]="{ 'background-image': 'url(' + src.thumbnail_src + ')' }"
     ></div>
-    <!-- ---- -->
+    <!-- Placeholder -->
     <div
       class="m-rich-embed-thumbnail-wrapper m-rich-embed-thumbnail-placeholder"
       *ngIf="!src.thumbnail_src"
       [hidden]="hasInlineContentLoaded()"
     ></div>
-    <!-- ---- -->
+    <!-- ----------------------------------- -->
+    <!-- OVERLAY with icons (e.g. plau button)-->
+    <!-- ----------------------------------- -->
     <div
       *ngIf="!embeddedInline && inlineEmbed"
       class="m-rich-embed-action-overlay"
@@ -65,11 +69,14 @@
         >file_download</i
       >
     </div>
-    <!-- ---- -->
-
-    <div *ngIf="hasInlineContentLoaded()" [class]="inlineEmbed.className">
-      <div [outerHTML]="inlineEmbed.html"></div>
-    </div>
+    <!-- ----------------------------------- -->
+    <!--THE ACTUAL EMBEDED CONTENT -->
+    <!-- ----------------------------------- -->
+    <div
+      *ngIf="hasInlineContentLoaded()"
+      [class]="inlineEmbed.className"
+      [innerHTML]="inlineEmbed.html"
+    ></div>
   </a>
   <!-- ----------------------------------- -->
   <!-- TITLE/BLURB -->
@@ -95,13 +102,16 @@
   </a>
 </div>
 <!-- ----------------------------------- -->
+<!-- ----------------------------------- -->
+<!-- ----------------------------------- -->
+<!-- ----------------------------------- -->
 <!-- TYPE: PREVIEW -->
 <!-- (Currently used in comments) -->
 <!-- ----------------------------------- -->
 <div
+  *ngIf="preview && type == 'preview' && !isLivestream()"
   class="m-rich-embed-preview"
   [ngClass]="{'m-richEmbedPreview--noThumbnail' : !preview.thumbnail}"
-  *ngIf="preview && type == 'preview' && !isLivestream()"
 >
   <a class="thumbnail" *ngIf="preview.thumbnail">
     <img *ngIf="!cropImage" src="{{preview.thumbnail}}" />
