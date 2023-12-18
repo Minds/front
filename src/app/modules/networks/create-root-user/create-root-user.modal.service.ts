@@ -2,6 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { ModalService } from '../../../services/ux/modal.service';
 import { NetworksCreateRootUserComponent } from './create-root-user.component';
 import { Tenant } from '../../../../graphql/generated.engine';
+import { AutoLoginService } from '../auto-login.service';
 
 export enum CreateRootUserEventType {
   Completed = 1,
@@ -19,6 +20,7 @@ export interface CreateRootUserEvent {
 export class NetworksCreateRootUserModalService {
   constructor(
     protected modalService: ModalService,
+    private autoLoginService: AutoLoginService,
     private injector: Injector
   ) {}
 
@@ -30,7 +32,7 @@ export class NetworksCreateRootUserModalService {
       data: {
         network: network,
         onSave: () => {
-          // TODO SSO to network > admin panel > domain tab
+          this.autoLoginService.login(network.id);
           modal.close({
             type: CreateRootUserEventType.Completed,
           });

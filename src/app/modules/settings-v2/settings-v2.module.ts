@@ -353,6 +353,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       {
         path: 'payments',
         component: SettingsV2Component,
+        canActivate: [TenantRedirectGuard],
         data: {
           isMenu: true,
           title: 'Billing Settings',
