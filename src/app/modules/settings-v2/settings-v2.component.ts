@@ -331,6 +331,18 @@ export class SettingsV2Component implements OnInit {
       },
       {
         header: {
+          label: $localize`:@@SETTINGS__OTHER__PLUGINS__HEADER__LABEL:Plugins`,
+          id: 'plugins',
+        },
+        items: [
+          {
+            label: $localize`:@@SETTINGS__OTHER__PLUIGINS__EMBEDDED_COMMENTS__LABEL:Embedded Comments`,
+            id: 'embedded-comments',
+          },
+        ],
+      },
+      {
+        header: {
           label: $localize`:@@SETTINGS__OTHER__LEAVE__HEADER__LABEL:Deactivate and Delete Account`,
           id: 'deactivate-account',
         },

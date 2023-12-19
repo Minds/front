@@ -1,0 +1,11 @@
+mutation SetEmbeddedCommentsSettings($domain: String!, $pathRegex:String!, $autoImportsEnabled: Boolean!) {
+  setEmbeddedCommentsSettings (
+      domain: $domain
+      pathRegex: $pathRegex
+      autoImportsEnabled: $autoImportsEnabled
+  ) {
+    domain
+    pathRegex
+    autoImportsEnabled
+  }
+}
