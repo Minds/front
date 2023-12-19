@@ -8,6 +8,7 @@ import { NetworksCreateRootUserComponent } from './create-root-user/create-root-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworksCreateRootUserService } from './create-root-user/create-root-user.service';
 import { AutoLoginService } from './auto-login.service';
+import { ExperimentsModule } from '../experiments/experiments.module';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    ExperimentsModule,
   ],
   providers: [
     NetworksCreateRootUserModalService,

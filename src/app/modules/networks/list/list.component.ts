@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, firstValueFrom } from 'rxjs';
 import {
   CreateRootUserEventType,
   NetworksCreateRootUserModalService,
@@ -7,6 +7,7 @@ import {
 import { ConfigsService } from '../../../common/services/configs.service';
 import { QueryRef } from 'apollo-angular';
 import {
+  CreateTenantGQL,
   GetNetworksListGQL,
   GetNetworksListQuery,
   GetNetworksListQueryVariables,
@@ -45,6 +46,7 @@ export class NetworksListComponent implements OnInit, OnDestroy {
   constructor(
     private createRootUserModal: NetworksCreateRootUserModalService,
     private getNetworksListGQL: GetNetworksListGQL,
+    private createTenantGQL: CreateTenantGQL,
     private autoLoginService: AutoLoginService,
     configs: ConfigsService
   ) {
@@ -122,5 +124,10 @@ export class NetworksListComponent implements OnInit, OnDestroy {
       this.inProgress$.next(true);
       this.getNetworksListQuery.refetch();
     }
+  }
+
+  async createNetwork() {
+    await firstValueFrom(this.createTenantGQL.mutate());
+    this.getNetworksListQuery.refetch();
   }
 }

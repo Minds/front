@@ -2159,6 +2159,13 @@ export type CreateTenantRootUserMutation = {
   };
 };
 
+export type CreateTenantMutationVariables = Exact<{ [key: string]: never }>;
+
+export type CreateTenantMutation = {
+  __typename?: 'Mutation';
+  createTenant: { __typename?: 'Tenant'; id: number };
+};
+
 export type GetNetworksListQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   last: Scalars['Int']['input'];
@@ -4778,6 +4785,27 @@ export class CreateTenantRootUserGQL extends Apollo.Mutation<
   CreateTenantRootUserMutationVariables
 > {
   document = CreateTenantRootUserDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateTenantDocument = gql`
+  mutation CreateTenant {
+    createTenant(tenant: {}) {
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateTenantGQL extends Apollo.Mutation<
+  CreateTenantMutation,
+  CreateTenantMutationVariables
+> {
+  document = CreateTenantDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
