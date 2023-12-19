@@ -1,0 +1,74 @@
+<div class="m-settingsV2__headerWrapper">
+  <div class="m-settingsV2__backButton">
+    <a routerLink="..">
+      <i class="material-icons">arrow_back</i
+      ><span i18n="@@COMMON__ACTIONS__BACK">Back</span>
+    </a>
+  </div>
+  <div class="m-settingsV2__headerLabel">
+    <span>Embedded Comments</span>
+  </div>
+</div>
+
+<div class="m-settingsV2__desc">
+  Embed a comments section on your blog website and auto import your posts.
+  <a
+    href="https://developers.minds.com/docs/plugins/embedded-comments"
+    target="_blank"
+    >Learn more</a
+  >.
+</div>
+
+<form *ngIf="form" [formGroup]="form">
+  <div class="m-form__field--text stretchedField">
+    <div class="m-form__row--label">
+      <label for="domain">Your domain</label>
+    </div>
+    <div class="m-form__row--input">
+      <input
+        type="text"
+        name="domain"
+        formControlName="domain"
+        class="form-control"
+      />
+    </div>
+  </div>
+
+  <div class="m-form__field--text stretchedField">
+    <div class="m-form__row--label">
+      <label for="path_regex">Your path pattern</label>
+    </div>
+    <div class="m-form__row--input">
+      <input
+        type="text"
+        name="path_regex"
+        formControlName="pathRegex"
+        class="form-control"
+      />
+    </div>
+  </div>
+
+  <div class="m-form__field--checkbox">
+    <input
+      type="checkbox"
+      name="auto_import"
+      formControlName="autoImportsEnabled"
+      class="form-control"
+      [readonly]="inProgress || !init"
+    />
+    <label for="auto_import">Auto import posts</label>
+  </div>
+
+  <div class="m-form__buttonsContainer">
+    <m-button
+      color="blue"
+      (onAction)="onSave()"
+      [saving]="saving"
+      [disabled]="!form.valid || inProgress"
+    >
+      <ng-container>
+        Save
+      </ng-container>
+    </m-button>
+  </div>
+</form>
