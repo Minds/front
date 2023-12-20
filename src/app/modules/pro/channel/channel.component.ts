@@ -19,7 +19,6 @@ import { Subscription, Observable } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { ProChannelService } from './channel.service';
-import { SignupModalService } from '../../modals/signup/service';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
 import { captureEvent } from '@sentry/core';
@@ -38,18 +37,13 @@ import { ModalService } from '../../../services/ux/modal.service';
  * Base container for pro sites
  */
 @Component({
-  providers: [
-    ProChannelService,
-    ModalService,
-    SignupModalService,
-    SupportTiersService,
-  ],
+  providers: [ProChannelService, ModalService, SupportTiersService],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   styleUrls: ['channel.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProChannelComponent implements OnInit, OnDestroy {
   username: string;
 
   type: string;
@@ -196,7 +190,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    protected modal: SignupModalService,
     protected sessionStorage: SessionsStorageService,
     protected site: SiteService,
     protected injector: Injector,
@@ -217,13 +210,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.pageLayoutService.useFullWidth();
 
     this.channelService.isLoggedIn$.next(this.session.isLoggedIn());
-  }
-
-  ngAfterViewInit() {
-    // TODO: make sure this is okay
-    // this.modalService
-    //   .setContainer(this.overlayModal)
-    //   .setRoot(this.element.nativeElement);
   }
 
   listen() {

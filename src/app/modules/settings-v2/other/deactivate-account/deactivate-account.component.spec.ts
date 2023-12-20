@@ -13,6 +13,7 @@ import { Client } from '../../../../services/api';
 import { MockComponent, MockService } from '../../../../utils/mock';
 
 import { SettingsV2DeactivateAccountComponent } from './deactivate-account.component';
+import { Session } from '../../../../services/session';
 
 describe('DeactivateAccountComponent', () => {
   let component: SettingsV2DeactivateAccountComponent;
@@ -47,6 +48,7 @@ describe('DeactivateAccountComponent', () => {
         { provide: Client, useValue: MockService(Client) },
         { provide: Router, useValue: MockService(Router) },
         { provide: ToasterService, useValue: MockService(ToasterService) },
+        { provide: Session, useValue: MockService(Session) },
       ],
     }).compileComponents();
   }));
@@ -73,7 +75,13 @@ describe('DeactivateAccountComponent', () => {
     component.submit();
     tick();
 
-    expect((component as any).router.navigate).toHaveBeenCalled();
+    expect((component as any).toasterService.success).toHaveBeenCalledOnceWith(
+      'Successfully deactivated channel'
+    );
+    expect((component as any).session.logout).toHaveBeenCalledTimes(1);
+    expect((component as any).router.navigateByUrl).toHaveBeenCalledOnceWith(
+      '/login'
+    );
     expect(component.inProgress).toBeFalse();
   }));
 

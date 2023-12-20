@@ -15,7 +15,6 @@ import { LogoutComponent } from './logout.component';
 import { RegisterComponent } from './register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MarketingModule } from '../marketing/marketing.module';
-import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 
 const routes: Routes = [
   {
@@ -33,13 +32,8 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     data: {
-      title: 'Join Minds, and Elevate the Conversation',
-      description:
-        'Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.',
+      title: 'Join',
       canonicalUrl: '/register',
-      ogImage: '/assets/og-images/register-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
       preventLayoutReset: true,
     },
   },

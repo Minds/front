@@ -38,7 +38,7 @@ namespace LoginSteps {
   });
 
   Then('I am still on Login page', () => {
-    I.seeElement(locate('h3').withText('Login to Minds'));
+    I.seeElement(locate('.m-auth__titleRow'));
   });
 
   Then('I see incorrect credentials error', () => {

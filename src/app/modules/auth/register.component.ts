@@ -15,7 +15,10 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import { AuthModalService } from './modal/auth-modal.service';
+import { IsTenantService } from '../../common/services/is-tenant.service';
 import { SiteService } from '../../common/services/site.service';
+import { HORIZONTAL_LOGO_PATH as TENANT_HORIZONTAL_LOGO } from '../multi-tenant-network/services/config-image.service';
 
 /**
  * Standalone register page for new users to sign up
@@ -23,7 +26,6 @@ import { SiteService } from '../../common/services/site.service';
 @Component({
   selector: 'm-register',
   templateUrl: 'register.component.html',
-  styleUrls: ['./register.component.ng.scss'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;
@@ -46,6 +48,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   paramsSubscription: Subscription;
 
+  subscriptions: Subscription[] = [];
+
   constructor(
     public client: Client,
     public router: Router,
@@ -60,6 +64,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
     private authRedirectService: AuthRedirectService,
+    private authModal: AuthModalService,
+    private isTenant: IsTenantService,
     private site: SiteService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -75,6 +81,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.loginReferrer.register('/newsfeed');
       this.loginReferrer.navigate();
     }
+
+    this.subscriptions.push(
+      this.authModal.onLoggedIn$.subscribe(loggedIn => {
+        if (loggedIn) {
+          this.loginReferrer.register('/newsfeed');
+          this.loginReferrer.navigate();
+        }
+      }),
+      this.authModal.onRegistered$.subscribe(registered => {
+        if (registered) {
+          this.registered();
+        }
+      })
+    );
+
+    this.authModal.open({ formDisplay: 'register', standalonePage: true });
 
     this.topbarService.toggleVisibility(false);
     this.iosFallback = iOSVersion() !== null;
@@ -98,16 +120,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
 
     // set here rather than in auth module so we can set join to false.
-    this.metaService.setTitle(
-      'Join Minds, and Elevate the Conversation',
-      false
-    );
+    this.metaService
+      .setTitle(
+        this.isTenant.is()
+          ? `Join us on ${this.site.title}`
+          : 'Join Minds, and Elevate the Conversation',
+        false
+      )
+      .setDescription(
+        this.isTenant.is()
+          ? `...`
+          : 'Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.'
+      );
 
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
   }
 
+  /**
+   * If there's a referrer, make their avatar the meta ogImage
+   */
   async setReferrerMetaImage(): Promise<void> {
     try {
       const response: any = await this.client.get(
@@ -139,7 +172,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   setPlaceholderMetaImage(): void {
-    this.metaService.setOgImage('/assets/og-images/default-v3.png');
+    if (this.isTenant.is()) {
+      this.metaService.setOgImage(TENANT_HORIZONTAL_LOGO);
+    } else {
+      this.metaService.setOgImage('/assets/og-images/default-v3.png', {
+        width: 1200,
+        height: 1200,
+      });
+    }
   }
 
   registered() {
@@ -159,6 +199,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }

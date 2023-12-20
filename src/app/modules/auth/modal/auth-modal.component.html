@@ -1,17 +1,20 @@
-<div class="m-auth__modal m-modalV2__inner">
-  <div class="m-modalV2__header">
-    <img [src]="getLogoSrc()" class="m-modalV2__headerLogoBulb" />
-    <h2 class="m-modalV2Header__title">{{ title }}</h2>
-  </div>
-
-  <div class="m-modalV2__body">
+<div class="m-twoColumnLayout">
+  <div class="m-twoColumnLayout__leftContainer">
+    <div class="m-auth__titleRow">
+      <a (click)="clickedBackButton()"
+        ><i class="material-icons">chevron_left</i></a
+      >
+      <h2>
+        <ng-container *ngIf="formDisplay === 'login'"
+          >Login to {{ site.title }}</ng-container
+        >
+        <ng-container *ngIf="formDisplay === 'register'"
+          >Join {{ site.title }}</ng-container
+        >
+      </h2>
+    </div>
     <ng-container *ngIf="formDisplay === 'register'">
       <m-registerForm
-        [showTitle]="false"
-        [showBigButton]="true"
-        [showPromotions]="false"
-        [showLabels]="true"
-        [showInlineErrors]="true"
         [source]="'auth-modal'"
         (done)="onRegisterDone($event)"
         (showLoginForm)="showLoginForm($event)"
@@ -20,10 +23,6 @@
     </ng-container>
     <ng-container *ngIf="formDisplay === 'login'">
       <m-loginForm
-        [showBigButton]="true"
-        [showInlineErrors]="true"
-        [showLabels]="true"
-        [showTitle]="false"
         [source]="'auth-modal'"
         (done)="onLoginDone($event)"
         (doneRegistered)="onRegisterDone($event)"
@@ -32,6 +31,28 @@
       </m-loginForm>
     </ng-container>
   </div>
+  <div
+    class="m-twoColumnLayout__rightContainer"
+    [ngClass]="{
+      'm-twoColumnLayout__rightContainer--tenant': isTenantNetwork
+    }"
+  >
+    <ng-container *ngIf="!isTenantNetwork; else tenantLogoTemplate">
+      <m-loadingSpinner
+        *ngIf="authModalImageService.inProgress$ | async"
+        inProgress="true"
+      ></m-loadingSpinner>
+      <ng-container *ngIf="(carouselItems$ | async)?.length > 0">
+        <m-featureCarousel [carouselItems$]="carouselItems$">
+        </m-featureCarousel>
+      </ng-container>
+    </ng-container>
+    <ng-template #tenantLogoTemplate>
+      <img
+        [src]="tenantLogoPath$ | async"
+        class="m-authModal__tenantLogo"
+        alt="Site logo"
+      />
+    </ng-template>
+  </div>
 </div>
-
-<m-modalCloseButton [color]="'grey'"></m-modalCloseButton>

@@ -41,7 +41,7 @@ export class FeatureCarouselComponent implements OnInit, OnDestroy {
   public readonly CarouselMoveDirection: typeof CarouselMoveDirection = CarouselMoveDirection;
 
   /** Items to be shown in carousel. */
-  @Input() public readonly carouselItems$: Observable<CarouselItem[]>;
+  @Input() public carouselItems$: Observable<CarouselItem[]>;
 
   /** Index of currently visible carousel item. */
   public readonly visibleCarouselIndex$: BehaviorSubject<

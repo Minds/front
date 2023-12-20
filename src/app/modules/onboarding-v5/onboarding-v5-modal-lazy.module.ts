@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OnboardingV5ModalComponent } from './modal/onboarding-v5-modal.component';
 import { OnboardingV5Component } from './components/onboarding-v5.component';
 import { OnboardingV5StepperComponent } from './components/stepper/stepper.component';
-import { FeatureCarouselComponent } from '../../common/components/feature-carousel/feature-carousel.component';
 import { OnboardingV5VerifyEmailContentComponent } from './components/steps/verify-email/verify-email.component';
 import { OnboardingV5TagSelectorContentComponent } from './components/steps/tag-selector/tag-selector.component';
 import { OnboardingV5FooterComponent } from './components/footer/footer.component';
@@ -30,7 +29,6 @@ import { OnboardingV5ChangeEmailContentComponent } from './components/steps/veri
     OnboardingV5Component,
     OnboardingV5ModalComponent,
     OnboardingV5StepperComponent,
-    FeatureCarouselComponent,
     OnboardingV5FooterComponent,
     OnboardingV5VerifyEmailContentComponent,
     OnboardingV5ChangeEmailContentComponent,

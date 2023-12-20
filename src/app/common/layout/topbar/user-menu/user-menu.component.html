@@ -20,8 +20,8 @@
       @{{ getCurrentUser().username }}
     </m-dropdownMenu__item>
 
-    <!-- Upgrades Option -->
     <ng-container *mIfTenant="false">
+      <!-- Upgrades Option -->
       <m-dropdownMenu__item
         *ngIf="!getCurrentUser().pro"
         class="m-userMenuDropdownItem__upgrade"
@@ -30,19 +30,17 @@
       >
         <span i18n="@@COMMON__UPGRADE">Upgrade</span>
       </m-dropdownMenu__item>
-    </ng-container>
 
-    <!-- Admin Option -->
-    <m-dropdownMenu__item
-      *ngIf="isAdmin()"
-      link="/admin/interactions"
-      data-ref="topnav-usermenu-admin"
-    >
-      <span i18n="@@COMMON__ADMIN">Admin</span>
-    </m-dropdownMenu__item>
+      <!-- Admin Option -->
+      <m-dropdownMenu__item
+        *ngIf="isAdmin()"
+        link="/admin/interactions"
+        data-ref="topnav-usermenu-admin"
+      >
+        <span i18n="@@COMMON__ADMIN">Admin</span>
+      </m-dropdownMenu__item>
 
-    <!-- Boost Channel Option -->
-    <ng-container *mIfTenant="false">
+      <!-- Boost Channel Option -->
       <m-dropdownMenu__item
         (click)="openBoostChannelModal()"
         data-ref="topnav-usermenu-boost-channel"

@@ -1,7 +1,6 @@
 import { NgModule, PLATFORM_ID } from '@angular/core';
 import { PageLayoutService } from './layout/page-layout.service';
 import { ConfigsService } from './services/configs.service';
-import { AuthModalService } from '../modules/auth/modal/auth-modal.service';
 import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
 import { createWeb3ModalConfig } from '../helpers/web3modal-configuration';
 import { TransactionOverlayService } from '../modules/blockchain/transaction-overlay/transaction-overlay.service';
@@ -18,7 +17,6 @@ import { ExperimentsService } from '../modules/experiments/experiments.service';
     ConfigsService,
     PageLayoutService,
     UniswapModalService,
-    AuthModalService,
     ResetPasswordModalService,
     {
       provide: Web3ModalService,

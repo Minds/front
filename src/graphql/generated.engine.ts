@@ -102,22 +102,33 @@ export type BoostsConnection = ConnectionInterface & {
 export type CommentEdge = EdgeInterface & {
   __typename?: 'CommentEdge';
   cursor: Scalars['String']['output'];
+  hasVotedDown: Scalars['Boolean']['output'];
+  hasVotedUp: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   node: CommentNode;
+  repliesCount: Scalars['Int']['output'];
   type: Scalars['String']['output'];
+  votesUpCount: Scalars['Int']['output'];
 };
 
 export type CommentNode = NodeInterface & {
   __typename?: 'CommentNode';
+  body: Scalars['String']['output'];
+  childPath: Scalars['String']['output'];
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   legacy: Scalars['String']['output'];
+  /** Still used for votes, to be removed soon */
+  luid: Scalars['String']['output'];
   nsfw: Array<Scalars['Int']['output']>;
   nsfwLock: Array<Scalars['Int']['output']>;
+  owner: UserNode;
+  parentPath: Scalars['String']['output'];
   /** Unix timestamp representation of time created */
   timeCreated: Scalars['Int']['output'];
   /** ISO 8601 timestamp representation of time created */
   timeCreatedISO8601: Scalars['String']['output'];
+  url: Scalars['String']['output'];
   urn: Scalars['String']['output'];
 };
 
@@ -173,6 +184,24 @@ export type EdgeImpl = EdgeInterface & {
 export type EdgeInterface = {
   cursor: Scalars['String']['output'];
   node?: Maybe<NodeInterface>;
+};
+
+export type EmbeddedCommentsConnection = ConnectionInterface & {
+  __typename?: 'EmbeddedCommentsConnection';
+  /** The url of the activity post */
+  activityUrl: Scalars['String']['output'];
+  edges: Array<CommentEdge>;
+  pageInfo: PageInfo;
+  /** The number of comments found */
+  totalCount: Scalars['Int']['output'];
+};
+
+export type EmbeddedCommentsSettings = {
+  __typename?: 'EmbeddedCommentsSettings';
+  autoImportsEnabled: Scalars['Boolean']['output'];
+  domain: Scalars['String']['output'];
+  pathRegex: Scalars['String']['output'];
+  userGuid: Scalars['Int']['output'];
 };
 
 export type FeaturedEntity = FeaturedEntityInterface &
@@ -502,6 +531,8 @@ export type Mutation = {
   claimGiftCard: GiftCardNode;
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
+  /** Creates a comment on a remote url */
+  createEmbeddedComment: CommentEdge;
   createGiftCard: GiftCardNode;
   createMultiTenantDomain: MultiTenantDomain;
   createNetworkRootUser: TenantUser;
@@ -519,6 +550,8 @@ export type Mutation = {
   provideVerdict: Scalars['Boolean']['output'];
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
+  /** Creates a comment on a remote url */
+  setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
   /** Sets a permission for that a role has */
@@ -543,6 +576,13 @@ export type MutationCompleteOnboardingStepArgs = {
   additionalData?: InputMaybe<Array<KeyValuePairInput>>;
   stepKey: Scalars['String']['input'];
   stepType: Scalars['String']['input'];
+};
+
+export type MutationCreateEmbeddedCommentArgs = {
+  body: Scalars['String']['input'];
+  ownerGuid: Scalars['String']['input'];
+  parentPath: Scalars['String']['input'];
+  url: Scalars['String']['input'];
 };
 
 export type MutationCreateGiftCardArgs = {
@@ -597,6 +637,12 @@ export type MutationRemoveRssFeedArgs = {
   feedId: Scalars['String']['input'];
 };
 
+export type MutationSetEmbeddedCommentsSettingsArgs = {
+  autoImportsEnabled: Scalars['Boolean']['input'];
+  domain: Scalars['String']['input'];
+  pathRegex: Scalars['String']['input'];
+};
+
 export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
 };
@@ -648,7 +694,9 @@ export enum NsfwSubReasonEnum {
 
 export type OidcProviderPublic = {
   __typename?: 'OidcProviderPublic';
+  clientId: Scalars['String']['output'];
   id: Scalars['Int']['output'];
+  issuer: Scalars['String']['output'];
   loginUrl: Scalars['String']['output'];
   name: Scalars['String']['output'];
 };
@@ -731,6 +779,14 @@ export type Query = {
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
   dismissals: Array<Dismissal>;
+  /**
+   * Returns comments to be shown in the embedded comments app.
+   * The comments will be associated with an activity post. If the activity post
+   * does not exist, we will attempt to create it
+   */
+  embeddedComments: EmbeddedCommentsConnection;
+  /** Returns the configured embedded-comments plugin settings for a user */
+  embeddedCommentsSettings?: Maybe<EmbeddedCommentsSettings>;
   /** Gets featured entities. */
   featuredEntities: FeaturedEntityConnection;
   /** Returns an individual gift card */
@@ -798,6 +854,16 @@ export type QueryBoostsArgs = {
 
 export type QueryDismissalByKeyArgs = {
   key: Scalars['String']['input'];
+};
+
+export type QueryEmbeddedCommentsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  ownerGuid: Scalars['String']['input'];
+  parentPath?: InputMaybe<Scalars['String']['input']>;
+  url: Scalars['String']['input'];
 };
 
 export type QueryFeaturedEntitiesArgs = {
@@ -1108,6 +1174,7 @@ export type UserNode = NodeInterface & {
   /** The users public ETH address */
   ethAddress?: Maybe<Scalars['String']['output']>;
   guid: Scalars['String']['output'];
+  iconUrl: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   /** The number of views the users has received. Includes views from their posts */
   impressionsCount: Scalars['Int']['output'];
@@ -2090,6 +2157,13 @@ export type CreateTenantRootUserMutation = {
     tenantId: number;
     role: TenantUserRoleEnum;
   };
+};
+
+export type CreateTenantMutationVariables = Exact<{ [key: string]: never }>;
+
+export type CreateTenantMutation = {
+  __typename?: 'Mutation';
+  createTenant: { __typename?: 'Tenant'; id: number };
 };
 
 export type GetNetworksListQueryVariables = Exact<{
@@ -3680,6 +3754,36 @@ export type CountSearchQuery = {
   };
 };
 
+export type FetchEmbeddedCommentsSettingsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type FetchEmbeddedCommentsSettingsQuery = {
+  __typename?: 'Query';
+  embeddedCommentsSettings?: {
+    __typename?: 'EmbeddedCommentsSettings';
+    domain: string;
+    pathRegex: string;
+    autoImportsEnabled: boolean;
+  } | null;
+};
+
+export type SetEmbeddedCommentsSettingsMutationVariables = Exact<{
+  domain: Scalars['String']['input'];
+  pathRegex: Scalars['String']['input'];
+  autoImportsEnabled: Scalars['Boolean']['input'];
+}>;
+
+export type SetEmbeddedCommentsSettingsMutation = {
+  __typename?: 'Mutation';
+  setEmbeddedCommentsSettings: {
+    __typename?: 'EmbeddedCommentsSettings';
+    domain: string;
+    pathRegex: string;
+    autoImportsEnabled: boolean;
+  };
+};
+
 export type CreateRssFeedMutationVariables = Exact<{
   input: RssFeedInput;
 }>;
@@ -4686,6 +4790,27 @@ export class CreateTenantRootUserGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const CreateTenantDocument = gql`
+  mutation CreateTenant {
+    createTenant(tenant: {}) {
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateTenantGQL extends Apollo.Mutation<
+  CreateTenantMutation,
+  CreateTenantMutationVariables
+> {
+  document = CreateTenantDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetNetworksListDocument = gql`
   query GetNetworksList($first: Int!, $last: Int!) {
     tenants(first: $first, last: $last) {
@@ -5044,6 +5169,60 @@ export class CountSearchGQL extends Apollo.Query<
   CountSearchQueryVariables
 > {
   document = CountSearchDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const FetchEmbeddedCommentsSettingsDocument = gql`
+  query FetchEmbeddedCommentsSettings {
+    embeddedCommentsSettings {
+      domain
+      pathRegex
+      autoImportsEnabled
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FetchEmbeddedCommentsSettingsGQL extends Apollo.Query<
+  FetchEmbeddedCommentsSettingsQuery,
+  FetchEmbeddedCommentsSettingsQueryVariables
+> {
+  document = FetchEmbeddedCommentsSettingsDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const SetEmbeddedCommentsSettingsDocument = gql`
+  mutation SetEmbeddedCommentsSettings(
+    $domain: String!
+    $pathRegex: String!
+    $autoImportsEnabled: Boolean!
+  ) {
+    setEmbeddedCommentsSettings(
+      domain: $domain
+      pathRegex: $pathRegex
+      autoImportsEnabled: $autoImportsEnabled
+    ) {
+      domain
+      pathRegex
+      autoImportsEnabled
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SetEmbeddedCommentsSettingsGQL extends Apollo.Mutation<
+  SetEmbeddedCommentsSettingsMutation,
+  SetEmbeddedCommentsSettingsMutationVariables
+> {
+  document = SetEmbeddedCommentsSettingsDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

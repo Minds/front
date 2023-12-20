@@ -188,6 +188,7 @@ import { IfTenantDirective } from './directives/if-tenant.directive';
 import { IsTenantService } from './services/is-tenant.service';
 import { ExpansionPanelComponent } from './components/expansion-panel/expansion-panel.component';
 import { NoticeComponent } from './components/notice/notice.component';
+import { FeatureCarouselComponent } from './components/feature-carousel/feature-carousel.component';
 import { AutocompleteEntityInputComponent } from './components/forms/autocomplete-entity-input/autocomplete-entity-input.component';
 
 const MINDS_COMMON_COMPONENTS = [
@@ -223,6 +224,7 @@ const MINDS_COMMON_COMPONENTS = [
   ExplicitOverlayComponent,
   ExploreFeedItemComponent,
   FeaturedContentComponent,
+  FeatureCarouselComponent,
   FeedFilterComponent,
   FileUploadComponent,
   FooterComponent,

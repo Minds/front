@@ -57,15 +57,6 @@ export class TopbarWalletBalance {
   }
 
   /**
-   * Connect wallet
-   * @param e
-   */
-  async connectWallet(e: MouseEvent): Promise<void> {
-    const onComplete = () => (this.isConnected = undefined);
-    await this.connectWalletModalService.joinRewards(onComplete);
-  }
-
-  /**
    * True if wallet balance should be shown.
    * @returns { boolean } true if balance should be shown.
    */
