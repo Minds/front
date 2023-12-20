@@ -363,6 +363,7 @@ m-comments__entityOutlet,
       minds-rich-embed .m-rich-embed-preview {
         display: flex;
         flex-flow: row nowrap;
+        margin-bottom: 0;
         position: relative;
         height: $spacing24;
         width: 100%;
@@ -416,7 +417,7 @@ m-comments__entityOutlet,
           display: flex !important;
           flex-direction: column;
           justify-content: center;
-          padding: 0 $spacing4 !important;
+          padding: $spacing2 $spacing4 !important;
           box-sizing: border-box;
           width: 100%;
           text-decoration: none;
