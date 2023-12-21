@@ -1,0 +1,130 @@
+@import 'defaults.scss';
+@import '../../stylesheets/variables.ng.scss';
+
+:host {
+  padding: $containerOuterPadding;
+  box-sizing: border-box;
+
+  @media screen and (max-width: $collapseWidth) {
+    margin-bottom: $spacing6;
+
+    m-networksCheckout__summaryStepper {
+      display: none;
+    }
+  }
+
+  m-networksCheckout__summaryStepper {
+    margin: $spacing3 0 $spacing7 0;
+  }
+
+  .m-networksCheckoutSummary__pageTitle {
+    @include heading4Bold;
+  }
+
+  .m-networksCheckoutSummary__body {
+    display: flex;
+    flex-flow: column nowrap;
+
+    @media screen and (max-width: $collapseWidth) {
+      flex-direction: column-reverse;
+    }
+
+    .m-networksCheckoutSummary__summary {
+      .m-networksCheckoutSummary__priceBreakdownSection {
+        margin-bottom: $spacing3;
+
+        .m-networksCheckoutSummary__sectionTitle {
+          @include body1Bold;
+          font-weight: 600;
+          margin: $spacing2 0;
+        }
+
+        .m-networksCheckoutSummary__sectionSubtitle {
+          @include body2Medium;
+          margin: unset;
+          line-height: 24px;
+        }
+
+        .m-networksCheckoutSummary__sectionText {
+          @include body2Regular;
+          margin: unset;
+          line-height: 24px;
+        }
+
+        .m-networksCheckoutSummary__sectionText--emphasized {
+          @include body2Bold;
+          font-style: italic;
+          margin: unset;
+          line-height: 24px;
+        }
+
+        .m-networksCheckoutSummary__addOnSummary {
+          margin-bottom: $spacing2;
+        }
+      }
+
+      .m-networksCheckoutSummary__monthlyTotalContainer {
+        padding: $spacing3 0;
+        margin-bottom: $spacing2;
+
+        @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary);
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+
+        .m-networksCheckoutSummary__monthlyTotal {
+          @include body1Bold;
+        }
+
+        .m-networksCheckoutSummary__monthlyTotalTimePeriod {
+          @include body3Regular;
+        }
+      }
+
+      .m-networksCheckoutSummary__totalPaidTodayTitle {
+        @include body1Regular;
+        margin-bottom: $spacing2;
+      }
+
+      .m-networksCheckoutSummary__totalPaidToday {
+        @include body1Bold;
+        margin-bottom: $spacing6;
+      }
+    }
+
+    .m-networksCheckoutSummary__ctaTermsContainer {
+      &--noText {
+        margin-top: $spacing4;
+      }
+
+      @media screen and (max-width: $collapseWidth) {
+        margin-bottom: $spacing6;
+      }
+
+      ::ng-deep markdown {
+        @include body2Regular;
+        margin: unset;
+
+        p {
+          line-height: 20px;
+        }
+
+        a {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+            font-weight: 700;
+          }
+        }
+
+        ul {
+          padding: 0 0 0 $spacing4;
+        }
+      }
+    }
+  }
+
+  m-sizeableLoadingSpinner {
+    display: block;
+    margin: $spacing8 0;
+  }
+}
