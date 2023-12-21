@@ -1,0 +1,23 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networksCheckoutBase__pageTitle {
+    @include heading1Bold;
+    margin-bottom: $spacing4;
+  }
+
+  .m-networksCheckoutBase__pageDescription {
+    @include heading4Medium;
+    margin-bottom: $spacing12;
+  }
+
+  .m-networksCheckoutBase__planCard {
+    margin-bottom: $spacing8;
+  }
+
+  .m-networksCheckoutBase__addonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing6;
+  }
+}

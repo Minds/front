@@ -1,0 +1,24 @@
+<ng-container *ngIf="loaded$ | async; else loadingTemplate">
+  <!-- Left container -->
+  <m-networksCheckout__planBuilder
+    class="m-networksCheckoutBase__leftContainer"
+  ></m-networksCheckout__planBuilder>
+
+  <!-- Right container -->
+  <m-networksCheckout__summary
+    class="m-networksCheckoutBase__rightContainer"
+    [ngClass]="{
+      'm-networksCheckoutBase__rightContainer--topbarAlertShown':
+        topbarAlertShown$ | async
+    }"
+  ></m-networksCheckout__summary>
+</ng-container>
+
+<!-- Loading state template -->
+<ng-template #loadingTemplate>
+  <m-sizeableLoadingSpinner
+    spinnerWidth="3em"
+    spinnerHeight="3rem"
+    [inProgress]="true"
+  ></m-sizeableLoadingSpinner>
+</ng-template>

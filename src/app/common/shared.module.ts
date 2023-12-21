@@ -10,6 +10,7 @@ import { ToasterService } from './services/toaster.service';
 import { ResetPasswordModalService } from '../modules/auth/reset-password-modal/reset-password-modal.service';
 import { PermissionsService } from './services/permissions.service';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
+import { TopbarService } from './layout/topbar.service';
 
 @NgModule({
   imports: [Web3ModalModule],
@@ -41,6 +42,11 @@ import { ExperimentsService } from '../modules/experiments/experiments.service';
       provide: PermissionsService,
       useFactory: (experimentsService, configsService): PermissionsService =>
         new PermissionsService(experimentsService, configsService),
+      deps: [ExperimentsService, ConfigsService],
+    },
+    {
+      provide: TopbarService,
+      useFactory: (): TopbarService => new TopbarService(),
       deps: [ExperimentsService, ConfigsService],
     },
   ],
