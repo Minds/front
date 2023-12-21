@@ -159,7 +159,7 @@ export class ChatwootWidgetComponent implements OnInit, OnDestroy {
    * @returns { void }
    */
   private resetChatwoot(): void {
-    (window as any).$chatwoot.reset();
+    (window as any).$chatwoot?.reset();
   }
 
   /**

@@ -10,6 +10,7 @@
     @include heading3Bold;
     margin: 0;
     padding: $spacing8 $spacing8 $spacing7;
+    display: flex;
 
     @media screen and (max-width: $min-tablet) {
       padding: $spacing5;

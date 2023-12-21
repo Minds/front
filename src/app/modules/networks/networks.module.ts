@@ -9,8 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetworksCreateRootUserService } from './create-root-user/create-root-user.service';
 import { AutoLoginService } from './auto-login.service';
 import { loggedInRedirectGuard } from '../../common/guards/logged-in-redirect.guard';
-import { NetworksCheckoutBaseComponent } from './checkout/components/base/base.component';
 import { PathMatch } from '../../common/types/angular.types';
+import { ExperimentsModule } from '../experiments/experiments.module';
 
 const routes: Routes = [
   {
@@ -39,6 +39,7 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    ExperimentsModule,
   ],
   providers: [
     NetworksCreateRootUserModalService,
