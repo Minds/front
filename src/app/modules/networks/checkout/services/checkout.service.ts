@@ -130,8 +130,7 @@ export class NetworksCheckoutService implements OnDestroy {
     private getCheckoutPageGQL: GetCheckoutPageGQL,
     private getCheckoutLinkGQL: GetCheckoutLinkGQL,
     private toasterService: ToasterService,
-    private router: Router,
-    @Inject(DOCUMENT) private document: Document
+    private router: Router
   ) {}
 
   ngOnDestroy(): void {
@@ -315,7 +314,7 @@ export class NetworksCheckoutService implements OnDestroy {
               return;
             }
 
-            this.document.defaultView.location.replace(checkoutUrl);
+            window.open(checkoutUrl, '_self');
           }
         )
     );
