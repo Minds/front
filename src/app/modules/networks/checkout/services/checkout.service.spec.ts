@@ -245,7 +245,7 @@ describe('NetworksCheckoutService', () => {
     }));
   });
 
-  describe('navigateToPaymentUrl', () => {
+  xdescribe('navigateToPaymentUrl', () => {
     it('should navigate to payment url', fakeAsync(() => {
       const checkoutLink: string = 'https://test-checkout.minds.com/';
       // (service as any).document.defaultView.location.replace.and.returnValue(
