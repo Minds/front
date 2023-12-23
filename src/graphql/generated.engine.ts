@@ -102,22 +102,33 @@ export type BoostsConnection = ConnectionInterface & {
 export type CommentEdge = EdgeInterface & {
   __typename?: 'CommentEdge';
   cursor: Scalars['String']['output'];
+  hasVotedDown: Scalars['Boolean']['output'];
+  hasVotedUp: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   node: CommentNode;
+  repliesCount: Scalars['Int']['output'];
   type: Scalars['String']['output'];
+  votesUpCount: Scalars['Int']['output'];
 };
 
 export type CommentNode = NodeInterface & {
   __typename?: 'CommentNode';
+  body: Scalars['String']['output'];
+  childPath: Scalars['String']['output'];
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   legacy: Scalars['String']['output'];
+  /** Still used for votes, to be removed soon */
+  luid: Scalars['String']['output'];
   nsfw: Array<Scalars['Int']['output']>;
   nsfwLock: Array<Scalars['Int']['output']>;
+  owner: UserNode;
+  parentPath: Scalars['String']['output'];
   /** Unix timestamp representation of time created */
   timeCreated: Scalars['Int']['output'];
   /** ISO 8601 timestamp representation of time created */
   timeCreatedISO8601: Scalars['String']['output'];
+  url: Scalars['String']['output'];
   urn: Scalars['String']['output'];
 };
 
@@ -173,6 +184,24 @@ export type EdgeImpl = EdgeInterface & {
 export type EdgeInterface = {
   cursor: Scalars['String']['output'];
   node?: Maybe<NodeInterface>;
+};
+
+export type EmbeddedCommentsConnection = ConnectionInterface & {
+  __typename?: 'EmbeddedCommentsConnection';
+  /** The url of the activity post */
+  activityUrl: Scalars['String']['output'];
+  edges: Array<CommentEdge>;
+  pageInfo: PageInfo;
+  /** The number of comments found */
+  totalCount: Scalars['Int']['output'];
+};
+
+export type EmbeddedCommentsSettings = {
+  __typename?: 'EmbeddedCommentsSettings';
+  autoImportsEnabled: Scalars['Boolean']['output'];
+  domain: Scalars['String']['output'];
+  pathRegex: Scalars['String']['output'];
+  userGuid: Scalars['Int']['output'];
 };
 
 export type FeaturedEntity = FeaturedEntityInterface &
@@ -450,6 +479,42 @@ export enum IllegalSubReasonEnum {
   Trafficking = 'TRAFFICKING',
 }
 
+export type Invite = NodeInterface & {
+  __typename?: 'Invite';
+  bespokeMessage: Scalars['String']['output'];
+  createdTimestamp: Scalars['Int']['output'];
+  email: Scalars['String']['output'];
+  groups?: Maybe<Array<Scalars['Int']['output']>>;
+  id: Scalars['ID']['output'];
+  inviteId: Scalars['Int']['output'];
+  roles?: Maybe<Array<Role>>;
+  sendTimestamp?: Maybe<Scalars['Int']['output']>;
+  status: InviteEmailStatusEnum;
+};
+
+export type InviteConnection = ConnectionInterface &
+  NodeInterface & {
+    __typename?: 'InviteConnection';
+    edges: Array<InviteEdge>;
+    id: Scalars['ID']['output'];
+    pageInfo: PageInfo;
+  };
+
+export type InviteEdge = EdgeInterface & {
+  __typename?: 'InviteEdge';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Invite>;
+};
+
+export enum InviteEmailStatusEnum {
+  Accepted = 'ACCEPTED',
+  Cancelled = 'CANCELLED',
+  Failed = 'FAILED',
+  Pending = 'PENDING',
+  Sending = 'SENDING',
+  Sent = 'SENT',
+}
+
 export type KeyValuePairInput = {
   key: Scalars['String']['input'];
   value: Scalars['String']['input'];
@@ -499,9 +564,12 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Assigns a user to a role */
   assignUserToRole: Role;
+  cancelInvite?: Maybe<Scalars['Void']['output']>;
   claimGiftCard: GiftCardNode;
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
+  /** Creates a comment on a remote url */
+  createEmbeddedComment: CommentEdge;
   createGiftCard: GiftCardNode;
   createMultiTenantDomain: MultiTenantDomain;
   createNetworkRootUser: TenantUser;
@@ -513,12 +581,16 @@ export type Mutation = {
   deleteFeaturedEntity: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
+  invite?: Maybe<Scalars['Void']['output']>;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
   provideVerdict: Scalars['Boolean']['output'];
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
+  resendInvite?: Maybe<Scalars['Void']['output']>;
+  /** Creates a comment on a remote url */
+  setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
   /** Sets a permission for that a role has */
@@ -535,6 +607,10 @@ export type MutationAssignUserToRoleArgs = {
   userGuid: Scalars['String']['input'];
 };
 
+export type MutationCancelInviteArgs = {
+  inviteId: Scalars['Int']['input'];
+};
+
 export type MutationClaimGiftCardArgs = {
   claimCode: Scalars['String']['input'];
 };
@@ -543,6 +619,13 @@ export type MutationCompleteOnboardingStepArgs = {
   additionalData?: InputMaybe<Array<KeyValuePairInput>>;
   stepKey: Scalars['String']['input'];
   stepType: Scalars['String']['input'];
+};
+
+export type MutationCreateEmbeddedCommentArgs = {
+  body: Scalars['String']['input'];
+  ownerGuid: Scalars['String']['input'];
+  parentPath: Scalars['String']['input'];
+  url: Scalars['String']['input'];
 };
 
 export type MutationCreateGiftCardArgs = {
@@ -581,6 +664,13 @@ export type MutationDismissArgs = {
   key: Scalars['String']['input'];
 };
 
+export type MutationInviteArgs = {
+  bespokeMessage: Scalars['String']['input'];
+  emails: Scalars['String']['input'];
+  groups?: InputMaybe<Array<Scalars['Int']['input']>>;
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
 export type MutationMultiTenantConfigArgs = {
   multiTenantConfigInput: MultiTenantConfigInput;
 };
@@ -595,6 +685,16 @@ export type MutationRefreshRssFeedArgs = {
 
 export type MutationRemoveRssFeedArgs = {
   feedId: Scalars['String']['input'];
+};
+
+export type MutationResendInviteArgs = {
+  inviteId: Scalars['Int']['input'];
+};
+
+export type MutationSetEmbeddedCommentsSettingsArgs = {
+  autoImportsEnabled: Scalars['Boolean']['input'];
+  domain: Scalars['String']['input'];
+  pathRegex: Scalars['String']['input'];
 };
 
 export type MutationSetOnboardingStateArgs = {
@@ -648,7 +748,9 @@ export enum NsfwSubReasonEnum {
 
 export type OidcProviderPublic = {
   __typename?: 'OidcProviderPublic';
+  clientId: Scalars['String']['output'];
   id: Scalars['Int']['output'];
+  issuer: Scalars['String']['output'];
   loginUrl: Scalars['String']['output'];
   name: Scalars['String']['output'];
 };
@@ -731,6 +833,14 @@ export type Query = {
   dismissalByKey?: Maybe<Dismissal>;
   /** Get all of a users dismissals. */
   dismissals: Array<Dismissal>;
+  /**
+   * Returns comments to be shown in the embedded comments app.
+   * The comments will be associated with an activity post. If the activity post
+   * does not exist, we will attempt to create it
+   */
+  embeddedComments: EmbeddedCommentsConnection;
+  /** Returns the configured embedded-comments plugin settings for a user */
+  embeddedCommentsSettings?: Maybe<EmbeddedCommentsSettings>;
   /** Gets featured entities. */
   featuredEntities: FeaturedEntityConnection;
   /** Returns an individual gift card */
@@ -752,6 +862,8 @@ export type Query = {
   giftCardsBalance: Scalars['Float']['output'];
   /** The available balances of each gift card types */
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
+  invite: Invite;
+  invites: InviteConnection;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
   multiTenantDomain: MultiTenantDomain;
@@ -800,6 +912,16 @@ export type QueryDismissalByKeyArgs = {
   key: Scalars['String']['input'];
 };
 
+export type QueryEmbeddedCommentsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  ownerGuid: Scalars['String']['input'];
+  parentPath?: InputMaybe<Scalars['String']['input']>;
+  url: Scalars['String']['input'];
+};
+
 export type QueryFeaturedEntitiesArgs = {
   after?: InputMaybe<Scalars['Int']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -838,6 +960,16 @@ export type QueryGiftCardsArgs = {
   ordering?: InputMaybe<GiftCardOrderingEnum>;
   productId?: InputMaybe<GiftCardProductIdEnum>;
   statusFilter?: InputMaybe<GiftCardStatusFilterEnum>;
+};
+
+export type QueryInviteArgs = {
+  inviteId: Scalars['Int']['input'];
+};
+
+export type QueryInvitesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -1108,6 +1240,7 @@ export type UserNode = NodeInterface & {
   /** The users public ETH address */
   ethAddress?: Maybe<Scalars['String']['output']>;
   guid: Scalars['String']['output'];
+  iconUrl: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   /** The number of views the users has received. Includes views from their posts */
   impressionsCount: Scalars['Int']['output'];
@@ -1467,6 +1600,8 @@ export type GetFeaturedEntitiesQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | { __typename?: 'PublisherRecsConnection'; id: string }
             | { __typename?: 'Report'; id: string }
@@ -1505,6 +1640,8 @@ export type GetFeaturedEntitiesQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | { __typename?: 'PublisherRecsConnection'; id: string }
             | { __typename?: 'Report'; id: string }
@@ -1545,6 +1682,11 @@ export type GetFeaturedEntitiesQuery = {
           __typename?: 'GroupEdge';
           cursor: string;
           node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
+          __typename?: 'InviteEdge';
+          cursor: string;
+          node?: { __typename?: 'Invite'; id: string } | null;
         }
       | {
           __typename?: 'PublisherRecsEdge';
@@ -1672,6 +1814,8 @@ export type GetReportsQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | { __typename?: 'PublisherRecsConnection'; id: string }
             | {
@@ -1736,6 +1880,8 @@ export type GetReportsQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | { __typename?: 'PublisherRecsConnection'; id: string }
             | {
@@ -1816,6 +1962,11 @@ export type GetReportsQuery = {
           __typename?: 'GroupEdge';
           cursor: string;
           node: { __typename?: 'GroupNode'; id: string };
+        }
+      | {
+          __typename?: 'InviteEdge';
+          cursor: string;
+          node?: { __typename?: 'Invite'; id: string } | null;
         }
       | {
           __typename?: 'PublisherRecsEdge';
@@ -1908,6 +2059,27 @@ export type AssignUserToRoleMutation = {
   };
 };
 
+export type CancelInviteMutationVariables = Exact<{
+  inviteId: Scalars['Int']['input'];
+}>;
+
+export type CancelInviteMutation = {
+  __typename?: 'Mutation';
+  cancelInvite?: any | null;
+};
+
+export type CreateInviteMutationVariables = Exact<{
+  emails: Scalars['String']['input'];
+  bespokeMessage: Scalars['String']['input'];
+  roles?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  groups?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+}>;
+
+export type CreateInviteMutation = {
+  __typename?: 'Mutation';
+  invite?: any | null;
+};
+
 export type GetRolesAndPermissionsQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -1936,6 +2108,73 @@ export type GetAssignedRolesQuery = {
     name: string;
     permissions: Array<PermissionsEnum>;
   }>;
+};
+
+export type GetInviteQueryVariables = Exact<{
+  inviteId: Scalars['Int']['input'];
+}>;
+
+export type GetInviteQuery = {
+  __typename?: 'Query';
+  invite: {
+    __typename?: 'Invite';
+    inviteId: number;
+    email: string;
+    status: InviteEmailStatusEnum;
+    bespokeMessage: string;
+    createdTimestamp: number;
+    sendTimestamp?: number | null;
+    id: string;
+    groups?: Array<number> | null;
+    roles?: Array<{
+      __typename?: 'Role';
+      id: number;
+      name: string;
+      permissions: Array<PermissionsEnum>;
+    }> | null;
+  };
+};
+
+export type GetInvitesQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetInvitesQuery = {
+  __typename?: 'Query';
+  invites: {
+    __typename?: 'InviteConnection';
+    id: string;
+    edges: Array<{
+      __typename?: 'InviteEdge';
+      cursor: string;
+      node?: {
+        __typename?: 'Invite';
+        inviteId: number;
+        email: string;
+        status: InviteEmailStatusEnum;
+        bespokeMessage: string;
+        createdTimestamp: number;
+        sendTimestamp?: number | null;
+        id: string;
+        groups?: Array<number> | null;
+        roles?: Array<{
+          __typename?: 'Role';
+          id: number;
+          name: string;
+          permissions: Array<PermissionsEnum>;
+        }> | null;
+      } | null;
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+  };
 };
 
 export type GetMultiTenantConfigQueryVariables = Exact<{
@@ -2014,6 +2253,15 @@ export type GetUsersByRoleQuery = {
       }>;
     }>;
   };
+};
+
+export type ResendInviteMutationVariables = Exact<{
+  inviteId: Scalars['Int']['input'];
+}>;
+
+export type ResendInviteMutation = {
+  __typename?: 'Mutation';
+  resendInvite?: any | null;
 };
 
 export type SetMultiTenantConfigMutationVariables = Exact<{
@@ -2196,6 +2444,8 @@ export type FetchNewsfeedQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -2252,6 +2502,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -2293,6 +2545,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -2352,6 +2606,13 @@ export type FetchNewsfeedQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'InviteEdge';
+                      publisherNode?: {
+                        __typename?: 'Invite';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
@@ -2444,6 +2705,8 @@ export type FetchNewsfeedQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -2500,6 +2763,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -2541,6 +2806,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -2600,6 +2867,13 @@ export type FetchNewsfeedQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'InviteEdge';
+                      publisherNode?: {
+                        __typename?: 'Invite';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
@@ -2700,6 +2974,11 @@ export type FetchNewsfeedQuery = {
           node: { __typename?: 'GroupNode'; id: string };
         }
       | {
+          __typename?: 'InviteEdge';
+          cursor: string;
+          node?: { __typename?: 'Invite'; id: string } | null;
+        }
+      | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
@@ -2740,6 +3019,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'Invite'; id: string }
+                    | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'Report'; id: string }
@@ -2763,6 +3044,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'Invite'; id: string }
+                    | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'Report'; id: string }
@@ -2809,6 +3092,10 @@ export type FetchNewsfeedQuery = {
                     legacy: string;
                     id: string;
                   };
+                }
+              | {
+                  __typename?: 'InviteEdge';
+                  publisherNode?: { __typename?: 'Invite'; id: string } | null;
                 }
               | {
                   __typename?: 'PublisherRecsEdge';
@@ -3017,6 +3304,8 @@ export type FetchSearchQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -3072,6 +3361,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -3113,6 +3404,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -3172,6 +3465,13 @@ export type FetchSearchQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'InviteEdge';
+                      publisherNode?: {
+                        __typename?: 'Invite';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
@@ -3245,6 +3545,8 @@ export type FetchSearchQuery = {
             | { __typename?: 'GiftCardNode'; id: string }
             | { __typename?: 'GiftCardTransaction'; id: string }
             | { __typename?: 'GroupNode'; legacy: string; id: string }
+            | { __typename?: 'Invite'; id: string }
+            | { __typename?: 'InviteConnection'; id: string }
             | { __typename?: 'NodeImpl'; id: string }
             | {
                 __typename?: 'PublisherRecsConnection';
@@ -3300,6 +3602,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -3341,6 +3645,8 @@ export type FetchSearchQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename?: 'Invite'; id: string }
+                        | { __typename?: 'InviteConnection'; id: string }
                         | { __typename?: 'NodeImpl'; id: string }
                         | { __typename?: 'PublisherRecsConnection'; id: string }
                         | { __typename?: 'Report'; id: string }
@@ -3400,6 +3706,13 @@ export type FetchSearchQuery = {
                         legacy: string;
                         id: string;
                       };
+                    }
+                  | {
+                      __typename?: 'InviteEdge';
+                      publisherNode?: {
+                        __typename?: 'Invite';
+                        id: string;
+                      } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
@@ -3485,6 +3798,11 @@ export type FetchSearchQuery = {
           node: { __typename?: 'GroupNode'; legacy: string; id: string };
         }
       | {
+          __typename?: 'InviteEdge';
+          cursor: string;
+          node?: { __typename?: 'Invite'; id: string } | null;
+        }
+      | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
@@ -3524,6 +3842,8 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'Invite'; id: string }
+                    | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'Report'; id: string }
@@ -3547,6 +3867,8 @@ export type FetchSearchQuery = {
                     | { __typename?: 'GiftCardNode'; id: string }
                     | { __typename?: 'GiftCardTransaction'; id: string }
                     | { __typename?: 'GroupNode'; legacy: string; id: string }
+                    | { __typename?: 'Invite'; id: string }
+                    | { __typename?: 'InviteConnection'; id: string }
                     | { __typename?: 'NodeImpl'; id: string }
                     | { __typename?: 'PublisherRecsConnection'; id: string }
                     | { __typename?: 'Report'; id: string }
@@ -3593,6 +3915,10 @@ export type FetchSearchQuery = {
                     legacy: string;
                     id: string;
                   };
+                }
+              | {
+                  __typename?: 'InviteEdge';
+                  publisherNode?: { __typename?: 'Invite'; id: string } | null;
                 }
               | {
                   __typename?: 'PublisherRecsEdge';
@@ -4406,6 +4732,54 @@ export class AssignUserToRoleGQL extends Apollo.Mutation<
     super(apollo);
   }
 }
+export const CancelInviteDocument = gql`
+  mutation cancelInvite($inviteId: Int!) {
+    cancelInvite(inviteId: $inviteId)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CancelInviteGQL extends Apollo.Mutation<
+  CancelInviteMutation,
+  CancelInviteMutationVariables
+> {
+  document = CancelInviteDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateInviteDocument = gql`
+  mutation createInvite(
+    $emails: String!
+    $bespokeMessage: String!
+    $roles: [Int!]
+    $groups: [Int!]
+  ) {
+    invite(
+      emails: $emails
+      bespokeMessage: $bespokeMessage
+      roles: $roles
+      groups: $groups
+    )
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateInviteGQL extends Apollo.Mutation<
+  CreateInviteMutation,
+  CreateInviteMutationVariables
+> {
+  document = CreateInviteDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
 export const GetRolesAndPermissionsDocument = gql`
   query GetRolesAndPermissions {
     allRoles {
@@ -4449,6 +4823,84 @@ export class GetAssignedRolesGQL extends Apollo.Query<
   GetAssignedRolesQueryVariables
 > {
   document = GetAssignedRolesDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetInviteDocument = gql`
+  query getInvite($inviteId: Int!) {
+    invite(inviteId: $inviteId) {
+      inviteId
+      email
+      status
+      bespokeMessage
+      createdTimestamp
+      sendTimestamp
+      id
+      roles {
+        id
+        name
+        permissions
+      }
+      groups
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetInviteGQL extends Apollo.Query<
+  GetInviteQuery,
+  GetInviteQueryVariables
+> {
+  document = GetInviteDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const GetInvitesDocument = gql`
+  query getInvites($first: Int!, $after: String, $search: String) {
+    invites(first: $first, after: $after, search: $search) {
+      edges {
+        node {
+          inviteId
+          email
+          status
+          bespokeMessage
+          createdTimestamp
+          sendTimestamp
+          id
+          roles {
+            id
+            name
+            permissions
+          }
+          groups
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetInvitesGQL extends Apollo.Query<
+  GetInvitesQuery,
+  GetInvitesQueryVariables
+> {
+  document = GetInvitesDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);
@@ -4546,6 +4998,25 @@ export class GetUsersByRoleGQL extends Apollo.Query<
   GetUsersByRoleQueryVariables
 > {
   document = GetUsersByRoleDocument;
+  client = 'default';
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ResendInviteDocument = gql`
+  mutation resendInvite($inviteId: Int!) {
+    resendInvite(inviteId: $inviteId)
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ResendInviteGQL extends Apollo.Mutation<
+  ResendInviteMutation,
+  ResendInviteMutationVariables
+> {
+  document = ResendInviteDocument;
   client = 'default';
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

@@ -1,0 +1,13 @@
+mutation createInvite(
+  $emails: String!
+  $bespokeMessage: String!
+  $roles: [Int!]
+  $groups: [Int!]
+) {
+  invite(
+    emails: $emails
+    bespokeMessage: $bespokeMessage
+    roles: $roles
+    groups: $groups
+  )
+}

@@ -14,22 +14,22 @@
     </p>
   </div>
   <div class="m-modalV2__body">
-    <div class="m-assignRoles__checkboxesWrapper">
-      <div class="m-assignRoles__checkboxesContainer">
+    <div class="m-networkAdminConsole__checkboxesWrapper">
+      <div class="m-networkAdminConsole__checkboxesContainer">
         <ng-container *ngFor="let role of allRoles">
           <div
-            class="m-assignRoles__checkboxRow"
+            class="m-networkAdminConsole__checkboxRow"
             [ngClass]="{
-              'm-assignRoles__checkboxRow--disabled': !isCheckboxEnabled(
+              'm-networkAdminConsole__checkboxRow--disabled': !isCheckboxEnabled(
                 role.id
               )
             }"
           >
             <div
-              class="m-assignRoles__checkboxWrapper"
+              class="m-networkAdminConsole__checkboxWrapper"
               (click)="clickedCheckbox(role.id)"
             >
-              <div class="m-assignRoles__checkboxLabel">
+              <div class="m-networkAdminConsole__checkboxLabel">
                 <m-networkAdminConsoleRole__icon
                   [roleId]="role.id"
                   scale="0.75"

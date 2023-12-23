@@ -1,0 +1,44 @@
+<h4 class="m-networkAdminConsole__title" i18n="@@COMMON__INVITE">
+  Invite
+</h4>
+<p
+  class="m-networkAdminConsole__subtitle"
+  i18n="@@NETWORK_ADMIN_CONSOLE_INVITE__SUBTITLE"
+>
+  Send a personalized invite via email and grow your network site.
+</p>
+<!-- ------------------------------ -->
+<!-- TABS  -->
+<!-- ------------------------------ -->
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a
+      [routerLink]="['/network/admin/invite/send']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-invite-tab-send"
+      i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_TAB__SEND_INVITES"
+      >Send invites</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      [routerLink]="['/network/admin/invite/invitations']"
+      [routerLinkActive]="'m-tabs__tab--selected'"
+      data-ref="network-admin-console-invite-tab-invitations"
+      i18n="@@NETWORK_ADMIN_CONSOLE_INVITE_TAB__INVITATIONS"
+      >Invitations</a
+    >
+  </div>
+</div>
+<!-- ------------------------------ -->
+<!-- SEND INVITES TAB  -->
+<!-- ------------------------------ -->
+<ng-container *ngIf="(view$ | async) === multiTenantInviteView.SEND"
+  ><m-networkAdminConsoleInvite__send></m-networkAdminConsoleInvite__send
+></ng-container>
+<!-- ------------------------------ -->
+<!-- INVITATIONS TAB  -->
+<!-- ------------------------------ -->
+<ng-container *ngIf="(view$ | async) === multiTenantInviteView.INVITATIONS"
+  ><m-networkAdminConsoleInvite__invitations></m-networkAdminConsoleInvite__invitations
+></ng-container>

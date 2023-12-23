@@ -25,7 +25,7 @@
     <ng-container *ngIf="service.canInteract$ | async">
       <m-channelActions__wire *mIfTenant="false"></m-channelActions__wire>
 
-      <div class="m-hideOnSmall">
+      <div class="m-hideOnMobile">
         <ng-container *mIfTenant="false">
           <m-channelActions__message
             *ngIf="service.isSubscribed$ | async"

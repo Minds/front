@@ -54,6 +54,11 @@ export class RegisterForm implements OnInit, OnDestroy {
   @Input() showInlineErrors: boolean = false;
   @Input() source: Source = null;
 
+  /**
+   * jwt token for users registering via an invite link
+   */
+  @Input() inviteToken: string = '';
+
   @Output() done: EventEmitter<any> = new EventEmitter();
   @Output() showLoginForm: EventEmitter<any> = new EventEmitter();
 
@@ -204,6 +209,7 @@ export class RegisterForm implements OnInit, OnDestroy {
 
     this.form.value.referrer = this.referrer;
     this.form.value.parentId = this.parentId;
+    this.form.value.invite_token = this.inviteToken;
 
     this.inProgress = true;
 

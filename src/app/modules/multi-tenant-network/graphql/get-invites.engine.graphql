@@ -1,0 +1,29 @@
+query getInvites($first: Int!, $after: String, $search: String) {
+  invites(first: $first, after: $after, search: $search) {
+    edges {
+      node {
+        inviteId
+        email
+        status
+        bespokeMessage
+        createdTimestamp
+        sendTimestamp
+        id
+        roles {
+          id
+          name
+          permissions
+        }
+        groups
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    id
+  }
+}

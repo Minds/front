@@ -35,6 +35,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   videoError: boolean = false;
   referrer: string;
 
+  /**
+   * jwt token for users registering via an invite link
+   */
+  inviteToken: string;
+
   @HostBinding('class.m-register__iosFallback')
   iosFallback: boolean = false;
 
@@ -94,6 +99,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
       if (params['redirectUrl']) {
         this.redirectTo = decodeURI(params['redirectUrl']);
+      }
+      if (params['invite_token']) {
       }
     });
 
